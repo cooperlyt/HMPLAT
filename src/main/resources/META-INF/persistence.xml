@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Persistence deployment descriptor for prod profile -->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="systemEntityManagerFactory" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:jboss/datasources/DGSystemXADS</jta-data-source>
+
+        <class>com.dgsoft.common.system.model.BusinessCategory</class>
+        <class>com.dgsoft.common.system.model.BusinessDefine</class>
+        <class>com.dgsoft.common.system.model.BusinessInstance</class>
+        <class>com.dgsoft.common.system.model.BusinessTask</class>
+        <class>com.dgsoft.common.system.model.ComplexVarSubscribe</class>
+        <class>com.dgsoft.common.system.model.Employee</class>
+        <class>com.dgsoft.common.system.model.FileSubscribe</class>
+        <class>com.dgsoft.common.system.model.FuncCategory</class>
+        <class>com.dgsoft.common.system.model.Function</class>
+        <class>com.dgsoft.common.system.model.Organization</class>
+        <class>com.dgsoft.common.system.model.Person</class>
+        <class>com.dgsoft.common.system.model.Rate</class>
+        <class>com.dgsoft.common.system.model.RateSubscribe</class>
+        <class>com.dgsoft.common.system.model.Report</class>
+        <class>com.dgsoft.common.system.model.ReportSubscribe</class>
+        <class>com.dgsoft.common.system.model.Role</class>
+
+        <class>com.dgsoft.common.system.model.SimpleVarDefine</class>
+        <class>com.dgsoft.common.system.model.SimpleVarSubscribe</class>
+        <class>com.dgsoft.common.system.model.SystemParam</class>
+        <class>com.dgsoft.common.system.model.Word</class>
+        <class>com.dgsoft.common.system.model.WordCategory</class>
+        <class>com.dgsoft.common.system.model.Province</class>
+        <class>com.dgsoft.common.system.model.City</class>
+        <class>com.dgsoft.common.system.model.NumberPool</class>
+        <exclude-unlisted-classes/>
+        <properties>
+            <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.jdbc.batch_size" value="27"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/systemEntityManagerFactory"/>
+        </properties>
+    </persistence-unit>
+
+
+    <!-- ERP -->
+
+    <persistence-unit name="erpEntityManagerFactory" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:jboss/datasources/MINIERPXADS</jta-data-source>
+
+
+        <exclude-unlisted-classes/>
+        <properties>
+            <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.jdbc.batch_size" value="27"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/erpEntityManagerFactory"/>
+        </properties>
+    </persistence-unit>
+
+
+</persistence>

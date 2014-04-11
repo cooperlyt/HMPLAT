@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="stockChange">
+
+
+	<start-state name="库存更改申请">
+		<transition to="审核"></transition>
+	</start-state>
+
+
+	<task-node name="审核">
+		<task name="库存变动审核">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/taskOperator/erp/store/StockChangeCheck.xhtml&quot;}
+			</description>
+			<assignment pooled-actors=""></assignment>
+		</task>
+		<transition to="end-state1"></transition>
+	</task-node>
+
+
+	<end-state name="end-state1"></end-state>
+
+
+</process-definition>

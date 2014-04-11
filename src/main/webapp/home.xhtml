@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="layout/template.xhtml">
+
+    <ui:define name="functionTitle">
+        <h1>Welcome to MINI ERP!</h1>
+    </ui:define>
+
+    <ui:define name="body">
+
+
+        <h:panelGrid columns="2">
+            <h:graphicImage width="200px" height="200px" style="padding: 10px" value="/img/seamlogo.png" alt="Seam logo"/>
+            <s:div styleClass="info">
+                <p>
+                    <strong>#{messages.release_version}</strong> #{' '} #{messages.updateLog}
+                </p>
+                <ul class="bullets">
+
+
+                    <li>#{messages.version1}</li>
+                    <li>#{messages.version2}</li>
+                    <li>#{messages.version3}</li>
+                    <li>#{messages.version4}</li>
+                    <li>#{messages.version5}</li>
+                    <li>#{messages.version6}</li>
+                    <li>#{messages.version7}</li>
+                    <li>#{messages.version8}</li>
+                    <li>#{messages.version9}</li>
+                    <li>#{messages.version10}</li>
+                    <li>#{messages.version11}</li>
+                    <li>#{messages.version12}</li>
+                    <li>#{messages.version13}</li>
+                    <li>#{messages.version14}</li>
+                    <li>#{messages.version15}</li>
+                    <li>#{messages.version16}</li>
+                </ul>
+            </s:div>
+        </h:panelGrid>
+
+
+    </ui:define>
+</ui:composition>
