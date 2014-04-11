@@ -7,7 +7,7 @@
 
     <persistence-unit name="systemEntityManagerFactory" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:jboss/datasources/DGSystemXADS</jta-data-source>
+        <jta-data-source>java:jboss/datasources/HMPLATXADS</jta-data-source>
 
         <class>com.dgsoft.common.system.model.BusinessCategory</class>
         <class>com.dgsoft.common.system.model.BusinessDefine</class>
@@ -46,11 +46,11 @@
     </persistence-unit>
 
 
-    <!-- ERP -->
+    <!-- House Info -->
 
-    <persistence-unit name="erpEntityManagerFactory" transaction-type="JTA">
+    <persistence-unit name="houseEntityManagerFactory" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:jboss/datasources/MINIERPXADS</jta-data-source>
+        <jta-data-source>java:jboss/datasources/HOUSEINFOXADS</jta-data-source>
 
 
         <exclude-unlisted-classes/>
@@ -64,5 +64,20 @@
         </properties>
     </persistence-unit>
 
+    <persistence-unit name="ownerEntityManagerFactory" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:jboss/datasources/HOUSEOWNERXADS</jta-data-source>
+
+
+        <exclude-unlisted-classes/>
+        <properties>
+            <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.jdbc.batch_size" value="27"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/erpEntityManagerFactory"/>
+        </properties>
+    </persistence-unit>
 
 </persistence>

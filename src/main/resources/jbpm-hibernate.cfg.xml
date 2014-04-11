@@ -10,7 +10,7 @@
     <!-- The prefix "hibernate." is automatically prepended to these properties names -->
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
-    <property name="connection.datasource">java:jboss/datasources/JbpmDS</property>
+    <property name="connection.datasource">java:jboss/datasources/HMPLATJBPMXADS</property>
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</property>
     <property name="transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>

@@ -1,0 +1,19 @@
+<components xmlns="http://jboss.org/schema/seam/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:persistence="http://jboss.org/schema/seam/persistence"
+            xsi:schemaLocation=
+                    "http://jboss.org/schema/seam/components http://jboss.org/schema/seam/components-2.3.xsd">
+
+    <persistence:managed-persistence-context name="ownerEntityManager" auto-create="true"
+                                             persistence-unit-jndi-name="java:/ownerEntityManagerFactory"/>
+
+
+    <component name="ownerEntityConverter" scope="conversation" precedence="20"
+               class="org.jboss.seam.ui.EntityConverter">
+        <property name="entityLoader">#{ownerEntityLoader}</property>
+    </component>
+
+
+
+
+</components>

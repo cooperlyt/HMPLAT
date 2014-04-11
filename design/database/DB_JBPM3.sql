@@ -21,7 +21,7 @@
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `DG_JBPM` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `DG_JBPM`;
+USE `DB_JBPM`;
 
 --
 -- Table structure for table `JBPM_ACTION`
