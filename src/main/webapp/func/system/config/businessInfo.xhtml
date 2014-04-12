@@ -14,10 +14,11 @@
 
         <h:form id="businessDefine" styleClass="edit">
 
-            <s:decorate id="idField" template="/layout/edit.xhtml">
+            <s:decorate id="idField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_id}</ui:define>
                 <a:outputPanel id="idInputPanel">
                     <h:inputText id="id"
+                                 label="#{messages.businessDefine_field_id}"
                                  name="#{messages.businessDefine_field_id}"
                                  disabled="#{businessDefineHome.managed}"
                                  required="true"
@@ -63,7 +64,7 @@
                 </rich:select>
             </s:decorate>
 
-            <s:decorate template="/layout/edit.xhtml">
+            <s:decorate template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_name}</ui:define>
                 <h:inputText id="name"
                              name="#{messages.businessDefine_field_name}"
@@ -79,41 +80,8 @@
                 </ui:define>
             </s:decorate>
 
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.businessDefine_field_taskService}</ui:define>
-                <h:inputText id="taskService"
-                             name="#{messages.businessDefine_field_taskService}"
-                             size="27"
-                             required="true"
-                             maxlength="100"
-                             value="#{businessDefineHome.instance.taskService}">
-                    <rich:validator event="blur"/>
 
-                </h:inputText>
-                <ui:define name="tail">
-                    <rich:message for="taskService"
-                                  showDetail="true" showSummary="false" tooltip="true"/>
-                </ui:define>
-            </s:decorate>
-
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.businessDefine_field_startDataValidator}</ui:define>
-                <h:inputText id="startService"
-                             name="#{messages.businessDefine_field_startDataValidator}"
-                             size="27"
-                             maxlength="100"
-                             value="#{businessDefineHome.instance.startDataValidator}">
-                    <rich:validator event="blur"/>
-
-                </h:inputText>
-                <ui:define name="tail">
-                    <rich:message for="startService"
-                                  showDetail="true" showSummary="false" tooltip="true"/>
-                </ui:define>
-            </s:decorate>
-
-
-            <s:decorate template="/layout/edit.xhtml">
+            <s:decorate template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_operpage}</ui:define>
                 <h:inputText id="operPage"
                              name="#{messages.businessDefine_field_operpage}"
@@ -128,7 +96,7 @@
                 </ui:define>
             </s:decorate>
 
-            <s:decorate template="/layout/edit.xhtml">
+            <s:decorate template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_memo}</ui:define>
                 <h:inputTextarea value="#{businessDefineHome.instance.memo}" id="memo" cols="49"
                                  name="#{messages.businessDefine_field_memo}">

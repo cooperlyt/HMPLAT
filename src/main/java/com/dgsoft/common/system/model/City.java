@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * Time: 12:27 PM
  */
 @Entity
-@Table(name = "CITY", catalog = "DG_SYSTEM")
+@Table(name = "CITY")
 public class City implements java.io.Serializable {
 
     private int id;

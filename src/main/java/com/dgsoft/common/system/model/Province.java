@@ -13,7 +13,7 @@ import java.util.Set;
  * Time: 12:24 PM
  */
 @Entity
-@Table(name = "PROVINCE", catalog = "DG_SYSTEM")
+@Table(name = "PROVINCE")
 public class Province implements java.io.Serializable{
 
     private int id;

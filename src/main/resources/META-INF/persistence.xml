@@ -60,7 +60,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="27"/>
-            <property name="jboss.entity.manager.factory.jndi.name" value="java:/erpEntityManagerFactory"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/houseEntityManagerFactory"/>
         </properties>
     </persistence-unit>
 
@@ -76,7 +76,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="27"/>
-            <property name="jboss.entity.manager.factory.jndi.name" value="java:/erpEntityManagerFactory"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/ownerEntityManagerFactory"/>
         </properties>
     </persistence-unit>
 

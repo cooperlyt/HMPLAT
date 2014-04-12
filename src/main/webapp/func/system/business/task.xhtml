@@ -87,7 +87,7 @@
             <h:graphicImage style="float:right" alt="rf" value="/img/new_messages.png"
                             rendered="#{pooledTaskInstanceCacheList.isNewTask(_task.id)}"/>
 
-            <h:outputText value="#{_task.variables.businessName}"/>
+            <h:outputText value="#{_task.}"/>
         </rich:column>
         <rich:column width="90px" sortBy="#{_task.name}" filterValue="#{pooledTaskSortFilter.taskNameFilter}"
                      filterExpression="#{empty _filterValue or fn:startsWith(_task.name, _filterValue)}">

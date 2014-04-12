@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  * Time: 10:28 AM
  */
 @Entity
-@Table(name = "SIMPLE_VAR_DEFINE", catalog = "DG_SYSTEM")
+@Table(name = "SIMPLE_VAR_DEFINE")
 public class SimpleVarDefine {
 
 
