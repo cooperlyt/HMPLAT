@@ -4,7 +4,7 @@
 USE DB_PLAT_SYSTEM;
 
 -- 系统参数
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('system.business.forwordToTask','BOOLEAN','true','业务建立后是否自动跳转到业务处理页面,是:true');
+-- INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('system.business.forwordToTask','BOOLEAN','true','业务建立后是否自动跳转到业务处理页面,是:true');
 
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.bankAccount','STRING','1002','银行总帐科目代码');
@@ -13,8 +13,7 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.cashAccount','S
 
 
 -- 业务类别
-
--- INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('erp.sale','销售业务',1);
+INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.initReg','初始登记',1);
 
 
 

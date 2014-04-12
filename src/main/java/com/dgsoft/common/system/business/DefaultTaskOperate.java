@@ -64,7 +64,7 @@ public class DefaultTaskOperate {
         businessDefineHome.setId(businessDefineId);
         log.debug("run taskOperate init [" + "version:" + String.valueOf(taskInstance.getProcessInstance().getProcessDefinition().getVersion()) + ",taskName:" + taskInstance.getName() + "]");
         List<SimpleVarSubscribe> simpleVarSubscribes = businessDefineHome.getSimpleVarDefineList(String.valueOf(taskInstance.getProcessInstance().getProcessDefinition().getVersion()), taskInstance.getName());
-        businessOperator = (BusinessOperator) Component.getInstance(businessDefineHome.getInstance().getTaskService(), true, true);
+        //businessOperator = (BusinessOperator) Component.getInstance(businessDefineHome.getInstance().getTaskService(), true, true);
         Map<String, SimpleVarSubscribeStore> simpleVarStores = businessOperator.getSimpleVars(taskInstance.getProcessInstance().getKey());
         writeSimpleVarList = new ArrayList<SimpleVar>();
         Map<String, List<SimpleVar>> readSimpleVars = new HashMap<String, List<SimpleVar>>();
