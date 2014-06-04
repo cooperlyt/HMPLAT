@@ -5,12 +5,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich" xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 template="/layout/full-template.xhtml">
 
     <ui:define name="body">
 
-        <rich:panel>
+        <r:panel>
             <f:facet name="header">Business define Details</f:facet>
 
             <s:decorate id="category" template="/layout/display.xhtml">
@@ -49,14 +49,14 @@
             </s:decorate>
 
             <div style="clear:both"/>
-        </rich:panel>
+        </r:panel>
 
 
-        <a:outputPanel rendered="#{empty from}">
+        <r:outputPanel rendered="#{empty from}">
             <s:button value="save" action="#{businessDefineHome.persist}" rendered="#{not businessDefineHome.managed}"/>
             <s:button value="update" action="#{businessDefineHome.update}" rendered="#{businessDefineHome.managed}"/>
             <s:button value="cancel" action="cancel"/>
-        </a:outputPanel>
+        </r:outputPanel>
 
         <s:button rendered="#{not empty from}" value="ok" view="#{from}"/>
 

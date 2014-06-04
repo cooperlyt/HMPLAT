@@ -2,8 +2,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 template="message_dialog.xhtml">
 
@@ -16,7 +15,7 @@
     </ui:define>
     <ui:define name="actionButtons">
         <ui:insert/>
-        <a:commandButton value="#{messages.cancel}" immediate="true" execute="@this"
+        <r:commandButton value="#{messages.cancel}" immediate="true" execute="@this"
                          onclick="#{rich:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
     </ui:define>
 

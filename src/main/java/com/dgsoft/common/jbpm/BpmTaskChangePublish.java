@@ -4,8 +4,8 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.annotations.async.Asynchronous;
 import org.jboss.seam.log.Log;
-import org.richfaces.application.push.TopicKey;
-import org.richfaces.application.push.TopicsContext;
+import org.richfaces.push.TopicKey;
+import org.richfaces.push.TopicsContext;
 
 import java.util.ArrayList;
 import java.util.List;

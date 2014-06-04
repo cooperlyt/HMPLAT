@@ -20,28 +20,28 @@ public class TaskImg extends TokenImg {
 
     @In(create=true)
     TaskInstance taskInstance;
-
-    @Unwrap
-    @BeginTask(flushMode = FlushModeType.MANUAL)
-    public byte[] getTaskProcessImg() {
-        return super.getImage();
-    }
-
-    //@In
-    // JbpmContext jbpmContext;
-
-    @Override
-    protected ProcessDefinition getProcessDefinition() {
-        return taskInstance.getProcessInstance().getProcessDefinition();
-    }
-
-    @Override
-    protected Token getCurrentToken() {
-        return taskInstance.getToken();
-    }
-
-    @Override
-    protected boolean drawChild() {
-        return false;
-    }
+//
+//    @Unwrap
+//    @BeginTask(flushMode = FlushModeType.MANUAL)
+//    public byte[] getTaskProcessImg() {
+//        return super.getImage();
+//    }
+//
+//    //@In
+//    // JbpmContext jbpmContext;
+//
+//    @Override
+//    protected ProcessDefinition getProcessDefinition() {
+//        return taskInstance.getProcessInstance().getProcessDefinition();
+//    }
+//
+//    @Override
+//    protected Token getCurrentToken() {
+//        return taskInstance.getToken();
+//    }
+//
+//    @Override
+//    protected boolean drawChild() {
+//        return false;
+//    }
 }

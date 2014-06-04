@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich" xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 template="/layout/full-template.xhtml">
 
     <ui:param name="functionTitle" value="Business Mgr"/>
@@ -16,7 +16,7 @@
 
             <s:decorate id="idField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_id}</ui:define>
-                <a:outputPanel id="idInputPanel">
+                <r:outputPanel id="idInputPanel">
                     <h:inputText id="id"
                                  label="#{messages.businessDefine_field_id}"
                                  name="#{messages.businessDefine_field_id}"
@@ -28,40 +28,40 @@
                                  value="#{businessDefineHome.instance.id}">
 
                         <s:validate/>
-                        <a:ajax event="blur" bypassUpdates="true" execute="@this" render="idInputPanel"/>
+                        <r:ajax event="blur" bypassUpdates="true" execute="@this" render="idInputPanel"/>
                     </h:inputText>
 
-                </a:outputPanel>
+                </r:outputPanel>
                 <ui:define name="tail">
-                    <rich:message for="id"
+                    <r:message for="id"
                                   showDetail="true" showSummary="true" tooltip="true"/>
                 </ui:define>
             </s:decorate>
 
             <s:decorate id="wfnameField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_wfname}</ui:define>
-                <rich:select id="wfName" value="#{businessDefineHome.instance.wfName}"
+                <r:select id="wfName" value="#{businessDefineHome.instance.wfName}"
                                  label="#{messages.businessDefine_field_wfname}" required="true"
                                  style="width:150px;" disabled="#{businessDefineHome.managed}">
                     <s:selectItems value="#{jpdlNameList}" var="_jpdlName" label="#{_jpdlName}"
                                    noSelectionLabel="#{messages.noSelectLabel}"/>
-                    <rich:validator event="change"/>
-                    <a:ajax event="change" render="wfnameField" />
-                </rich:select>
+                    <r:validator event="change"/>
+                    <r:ajax event="change" render="wfnameField" />
+                </r:select>
 
             </s:decorate>
 
 
             <s:decorate id="categoryField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_category}</ui:define>
-                <rich:select style="width:150px;" id="category"
+                <r:select style="width:150px;" id="category"
                                  value="#{businessDefineHome.instance.businessCategory}"
                                  label="#{messages.businessDefine_category}" required="true">
                     <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
                                    noSelectionLabel="#{messages.noSelectLabel}" label="#{_category.name}"/>
-                    <a:ajax event="change" render="categoryField" />
+                    <r:ajax event="change" render="categoryField" />
                     <f:converter converterId="systemEntityConverter"/>
-                </rich:select>
+                </r:select>
             </s:decorate>
 
             <s:decorate template="/layout/seam-edit.xhtml">
@@ -72,10 +72,10 @@
                              size="27"
                              maxlength="50"
                              value="#{businessDefineHome.instance.name}">
-                    <rich:validator event="blur"/>
+                    <r:validator event="blur"/>
                 </h:inputText>
                 <ui:define name="tail">
-                    <rich:message for="name"
+                    <r:message for="name"
                                   showDetail="true" showSummary="false" tooltip="true"/>
                 </ui:define>
             </s:decorate>
@@ -88,10 +88,10 @@
                              size="50"
                              maxlength="200"
                              value="#{businessDefineHome.instance.startPage}">
-                    <rich:validator event="blur"/>
+                    <r:validator event="blur"/>
                 </h:inputText>
                 <ui:define name="tail">
-                    <rich:message for="operPage"
+                    <r:message for="operPage"
                                   showDetail="true" showSummary="false" tooltip="true"/>
                 </ui:define>
             </s:decorate>
@@ -100,10 +100,10 @@
                 <ui:define name="label">#{messages.businessDefine_field_memo}</ui:define>
                 <h:inputTextarea value="#{businessDefineHome.instance.memo}" id="memo" cols="49"
                                  name="#{messages.businessDefine_field_memo}">
-                    <rich:validator event="blur"/>
+                    <r:validator event="blur"/>
                 </h:inputTextarea>
                 <ui:define name="tail">
-                    <rich:message for="memo"
+                    <r:message for="memo"
                                   showDetail="true" showSummary="false" tooltip="true"/>
                 </ui:define>
             </s:decorate>

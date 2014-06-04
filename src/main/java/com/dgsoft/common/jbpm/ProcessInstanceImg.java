@@ -21,27 +21,27 @@ import org.jbpm.graph.exe.Token;
 @Install(precedence = 11, dependencies = "org.jboss.seam.bpm.jbpm")
 public class ProcessInstanceImg  extends TokenImg{
 
-    @In(create = true)
-    private ProcessInstance processInstance;
+//    @In(create = true)
+//    private ProcessInstance processInstance;
 
-    @Unwrap
-    @ResumeProcess
-    public byte[] getProcessInstanceImg(){
-        return super.getImage();
-    }
-
-    @Override
-    protected ProcessDefinition getProcessDefinition() {
-        return processInstance.getProcessDefinition();
-    }
-
-    @Override
-    protected Token getCurrentToken() {
-        return processInstance.getRootToken();
-    }
-
-    @Override
-    protected boolean drawChild() {
-        return true;
-    }
+//    @Unwrap
+//    @ResumeProcess
+//    public byte[] getProcessInstanceImg(){
+//        return super.getImage();
+//    }
+//
+//    @Override
+//    protected ProcessDefinition getProcessDefinition() {
+//        return processInstance.getProcessDefinition();
+//    }
+//
+//    @Override
+//    protected Token getCurrentToken() {
+//        return processInstance.getRootToken();
+//    }
+//
+//    @Override
+//    protected boolean drawChild() {
+//        return true;
+//    }
 }

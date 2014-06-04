@@ -5,73 +5,73 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich" xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 template="/layout/template.xhtml">
 
     <ui:define name="body">
         <h:panelGrid width="100%" columns="2" columnClasses="gridFunctionCategory">
 
 
-            <rich:dataTable style="width:300px" id="allProcessDef" value="#{processDefinitionListForName}" var="_processDefGroup">
+            <r:dataTable style="width:300px" id="allProcessDef" value="#{processDefinitionListForName}" var="_processDefGroup">
                 <f:facet name="header">
-                    <rich:columnGroup>
-                        <rich:column colspan="4">
+                    <r:columnGroup>
+                        <r:column colspan="4">
                             #{messages.deployedJpdl}
-                        </rich:column>
-                        <rich:column breakRowBefore="true">
+                        </r:column>
+                        <r:column breakRowBefore="true">
                             #{messages.name}
-                        </rich:column>
-                        <rich:column>
+                        </r:column>
+                        <r:column>
                             #{messages.description}
-                        </rich:column>
-                        <rich:column>
+                        </r:column>
+                        <r:column>
                             #{messages.version}
-                        </rich:column>
-                        <rich:column>
+                        </r:column>
+                        <r:column>
                             #{messages.action}
-                        </rich:column>
-                    </rich:columnGroup>
+                        </r:column>
+                    </r:columnGroup>
                 </f:facet>
-                <rich:column colspan="4">
-                    <rich:collapsibleSubTableToggler for="processDefinitionTable"/>
+                <r:column colspan="4">
+                    <r:collapsibleSubTableToggler for="processDefinitionTable"/>
                     <h:outputText value="#{_processDefGroup.name} - #{_processDefGroup.description}"/>
-                </rich:column>
-                <rich:collapsibleSubTable expandMode="client"
+                </r:column>
+                <r:collapsibleSubTable expandMode="client"
                                           value="#{_processDefGroup.processDefinitions}" var="_processDefinition"
                                           id="processDefinitionTable">
-                    <rich:column>
+                    <r:column>
                         <h:outputText value="#{_processDefinition.name}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{_processDefinition.description}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{_processDefinition.version}"/>
-                    </rich:column>
-                    <rich:column>
-                        <a:commandLink value="#{messages.viewProcessImg}" execute="@this"
+                    </r:column>
+                    <r:column>
+                        <r:commandLink value="#{messages.viewProcessImg}" execute="@this"
                                        immediate="true"
-                                       oncomplete="#{rich:component('imagePanel')}.show();"
+                                       oncomplete="#{r:component('imagePanel')}.show();"
                                        render="processDefImg">
-                            <a:attachQueue requestDelay="0"/>
-                            <a:param name="processDefinitionId" value="#{_processDefinition.id}"
+                            <r:attachQueue requestDelay="0"/>
+                            <r:param name="processDefinitionId" value="#{_processDefinition.id}"
                                      assignTo="#{processDefinitionHome.id}"/>
-                        </a:commandLink>
+                        </r:commandLink>
                         #{' '}
-                        <a:commandLink value="#{messages.remove}"
+                        <r:commandLink value="#{messages.remove}"
                                        execute="@this" immediate="true"
-                                       render="deleteButton" oncomplete="#{rich:component('deleteConfirm')}.show()">
-                            <a:attachQueue requestDelay="0"/>
-                            <a:param name="processDefinitionId" value="#{_processDefinition.id}"
+                                       render="deleteButton" oncomplete="#{r:component('deleteConfirm')}.show()">
+                            <r:attachQueue requestDelay="0"/>
+                            <r:param name="processDefinitionId" value="#{_processDefinition.id}"
                                      assignTo="#{processDefinitionHome.id}"/>
-                        </a:commandLink>
-                    </rich:column>
-                </rich:collapsibleSubTable>
-            </rich:dataTable>
+                        </r:commandLink>
+                    </r:column>
+                </r:collapsibleSubTable>
+            </r:dataTable>
 
 
             <h:form enctype="multipart/form-data">
-                <rich:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
+                <r:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
                                  serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
                                  deleteLabel="#{messages.fileUpload_deleteLabel}"
                                  doneLabel="#{messages.fileUpload_doneLabel}"
@@ -88,24 +88,24 @@
                                  ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
                                  acceptedTypes="par">
 
-                    <a:ajax event="uploadcomplete" execute="@none" render="allProcessDef"/>
-                </rich:fileUpload>
+                    <r:ajax event="uploadcomplete" execute="@none" render="allProcessDef"/>
+                </r:fileUpload>
             </h:form>
         </h:panelGrid>
 
         <s:decorate template="/layout/delete_confirm_dialog.xhtml">
             <ui:param name="panelId" value="deleteConfirm"/>
-            <a:commandButton render="allProcessDef" id="deleteButton" execute="@this" value="#{messages.remove}"
+            <r:commandButton render="allProcessDef" id="deleteButton" execute="@this" value="#{messages.remove}"
                              action="#{processDefinitionHome.removeDeploy}"
-                             oncomplete="#{rich:component('deleteConfirm')}.hide()">
-                <a:attachQueue requestDelay="0"/>
-                <a:param name="processDefinitionId" value="#{processDefinitionHome.id}"
+                             oncomplete="#{r:component('deleteConfirm')}.hide()">
+                <r:attachQueue requestDelay="0"/>
+                <r:param name="processDefinitionId" value="#{processDefinitionHome.id}"
                          assignTo="#{processDefinitionHome.id}"/>
-            </a:commandButton>
+            </r:commandButton>
         </s:decorate>
 
 
-        <rich:popupPanel id="imagePanel" modal="false" autosized="true"
+        <r:popupPanel id="imagePanel" modal="false" autosized="true"
                          moveable="true" resizeable="false">
 
             <f:facet name="header">
@@ -116,19 +116,19 @@
             <f:facet name="controls">
                 <h:panelGroup>
                     <ui:insert name="controls"/>
-                    <a:commandButton immediate="true" execute="@this" image="/img/close.png"
-                                     onclick="#{rich:component('imagePanel')}.hide();return false;">
-                    </a:commandButton>
+                    <r:commandButton immediate="true" execute="@this" image="/img/close.png"
+                                     onclick="#{r:component('imagePanel')}.hide();return false;">
+                    </r:commandButton>
                 </h:panelGroup>
             </f:facet>
-            <a:outputPanel ajaxRendered="false" id="processDefImg">
-                <a:mediaOutput id="img" element="img" cacheable="false" session="true"
+            <r:outputPanel ajaxRendered="false" id="processDefImg">
+                <r:mediaOutput id="img" element="img" cacheable="false" session="true"
                                createContent="#{processDefinitionHome.processDefinitionImg}"
                                value="#{processDefinitionHome.id}"
                                rendered="#{processDefinitionHome.define}"
                                mimeType="image/png"/>
-            </a:outputPanel>
+            </r:outputPanel>
 
-        </rich:popupPanel>
+        </r:popupPanel>
     </ui:define>
 </ui:composition>

@@ -5,7 +5,7 @@ import org.jboss.seam.annotations.*;
 import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.log.Log;
 import org.jbpm.graph.def.ProcessDefinition;
-import org.richfaces.event.FileUploadEvent;
+import org.richfaces.ui.input.fileUpload.FileUploadEvent;
 
 import java.io.OutputStream;
 import java.util.zip.ZipInputStream;

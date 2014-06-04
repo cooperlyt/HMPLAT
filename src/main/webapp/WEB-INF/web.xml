@@ -271,17 +271,6 @@
         <param-value>#{skinBean.skin}</param-value>
     </context-param>
 
-    <servlet>
-        <servlet-name>Push Servlet</servlet-name>
-        <servlet-class>org.richfaces.webapp.PushServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-        <async-supported>true</async-supported>
-    </servlet>
-
-    <context-param>
-        <param-name>org.atmosphere.useBlocking</param-name>
-        <param-value>true</param-value>
-    </context-param>
 
     <!-- built-in sorting and Filtering -->
     <context-param>
@@ -319,16 +308,13 @@
         <param-value>true</param-value>
     </context-param>
 
-    <!-- createTempFiles boolean attribute which defines whether the uploaded files are stored in temporary files or available in the listener directly as byte[] data (false for this example). -->
     <context-param>
-        <param-name>createTempFiles</param-name>
-        <param-value>false</param-value>
-    </context-param>
-
-    <!--maxRequestSize attribute defines max size in bytes of the uploaded files (1000000 for this example).-->
-    <context-param>
-        <param-name>maxRequestSize</param-name>
+        <param-name>org.richfaces.fileUpload.maxRequestSize</param-name>
         <param-value>1000000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
+        <param-value>false</param-value>
     </context-param>
 
     <context-param>
@@ -337,6 +323,47 @@
     </context-param>
 
 
+    <!-- Configures Push -->
+
+
+    <servlet>
+        <servlet-name>Push Servlet</servlet-name>
+        <servlet-class>org.richfaces.servlet.PushServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+
+    <context-param>
+        <param-name>org.atmosphere.useBlocking</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+
+    <context-param>
+        <param-name>org.richfaces.push.initializeOnStartup</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.push.jms.enabled</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.push.jms.connectionUsername</param-name>
+        <param-value>guest</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.push.jms.connectionPassword</param-name>
+        <param-value>p@ssw0rd</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.push.session.maxInactiveInterval</param-name>
+        <!-- interval in miliseconds; default value: 5 minutes -->
+        <param-value>300000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.atmosphere.cpr.CometSupport.maxInactiveActivity</param-name>
+        <param-value>35000</param-value>
+    </context-param>
     <!--
    <listener>
        <listener-class>com.dgsoft.common.persistence.HibImportEncodeListener</listener-class>

@@ -5,8 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+                xmlns:r="http://richfaces.org"
+                template="/layout/template.xhtml">
 
 <ui:define name="body">
 
@@ -18,12 +18,12 @@
     <ui:param name="panelId" value="funcCategoryEditPanel"/>
 
     <ui:define name="controls">
-        <a:commandLink id="funcCategoryEditPanelClose" immediate="true"
+        <r:commandLink id="funcCategoryEditPanelClose" immediate="true"
                        execute="@this" value="X"
-                       oncomplete="#{rich:component('funcCategoryEditPanel')}.hide(); return false;">
+                       oncomplete="#{r:component('funcCategoryEditPanel')}.hide(); return false;">
             <s:conversationPropagation type="join"/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandLink>
+            <r:attachQueue requestDelay="0"/>
+        </r:commandLink>
     </ui:define>
 
     <s:decorate id="funcCategory_nameField" template="/layout/seam-edit.xhtml">
@@ -37,7 +37,7 @@
                      valueChangeListener="#{funcCategoryHome.verifyIdAvailable}"
                      value="#{funcCategoryHome.instance.name}">
             <s:validate/>
-            <a:ajax event="blur" execute="@this"
+            <r:ajax event="blur" execute="@this"
                     render="funcCategory_nameField"/>
         </h:inputText>
     </s:decorate>
@@ -48,7 +48,7 @@
                      label="#{messages.field_icon}"
                      maxlength="100" value="#{funcCategoryHome.instance.icon}">
 
-            <a:ajax event="blur" execute="@this"
+            <r:ajax event="blur" execute="@this"
                     render="iconField"/>
         </h:inputText>
 
@@ -59,44 +59,44 @@
         <ui:define name="label">#{messages.field_memo}</ui:define>
         <h:inputTextarea name="#{messages.field_memo}" id="memo" cols="27"
                          value="#{funcCategoryHome.instance.memo}">
-            <a:ajax event="blur" execute="@this"
+            <r:ajax event="blur" execute="@this"
                     render="iconField"/>
         </h:inputTextarea>
 
     </s:decorate>
 
     <ui:define name="actionButtons">
-        <a:outputPanel id="operButtons">
-            <a:commandButton execute="@form" render="funcCategorys,funcCategoryEditPanel_inputs"
+        <r:outputPanel id="operButtons">
+            <r:commandButton execute="@form" render="funcCategorys,funcCategoryEditPanel_inputs"
                              value="#{messages.save}" action="#{funcCategoryHome.persist}"
                              rendered="#{!funcCategoryHome.managed}"
                              data="#{funcCategoryHome.lastState}"
-                             oncomplete="if (event.data == 'persisted'){#{rich:component('funcCategoryEditPanel')}.hide();}">
+                             oncomplete="if (event.data == 'persisted'){#{r:component('funcCategoryEditPanel')}.hide();}">
 
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
+                <r:attachQueue requestDelay="0"/>
+            </r:commandButton>
 
 
-            <a:commandButton
+            <r:commandButton
                     value="#{messages.update}" execute="@form"
                     render="funcCategorys,funcCategoryHome_op,funcCategoryEditPanel_inputs"
                     action="#{funcCategoryHome.update}"
                     rendered="#{funcCategoryHome.managed}"
                     data="#{funcCategoryHome.lastState}"
-                    oncomplete="if(event.data == 'updated'){#{rich:component('funcCategoryEditPanel')}.hide(); return true;} else return false;">
-                <a:param id="id" value="#{funcCategoryHome.id}" assignTo="#{funcCategoryHome.id}"/>
+                    oncomplete="if(event.data == 'updated'){#{r:component('funcCategoryEditPanel')}.hide(); return true;} else return false;">
+                <r:param id="id" value="#{funcCategoryHome.id}" assignTo="#{funcCategoryHome.id}"/>
 
                 <s:conversationPropagation type="join"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-        </a:outputPanel>
+                <r:attachQueue requestDelay="0"/>
+            </r:commandButton>
+        </r:outputPanel>
 
-        <a:commandButton immediate="true" execute="@this"
+        <r:commandButton immediate="true" execute="@this"
                          value="#{messages.cancel}"
-                         oncomplete="#{rich:component('funcCategoryEditPanel')}.hide();return false;">
+                         oncomplete="#{r:component('funcCategoryEditPanel')}.hide();return false;">
             <s:conversationPropagation type="join"/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
+            <r:attachQueue requestDelay="0"/>
+        </r:commandButton>
     </ui:define>
 </s:decorate>
 
@@ -108,12 +108,12 @@
     <ui:param name="panelId" value="funcEditPanel"/>
 
     <ui:define name="controls">
-        <a:commandLink id="funcEditPanelClose" immediate="true"
+        <r:commandLink id="funcEditPanelClose" immediate="true"
                        execute="@this" value="X"
-                       oncomplete="#{rich:component('funcEditPanel')}.hide(); return false;">
+                       oncomplete="#{r:component('funcEditPanel')}.hide(); return false;">
             <s:conversationPropagation type="join"/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandLink>
+            <r:attachQueue requestDelay="0"/>
+        </r:commandLink>
     </ui:define>
 
     <s:decorate id="function_nameField" template="/layout/seam-edit.xhtml">
@@ -126,7 +126,7 @@
                          valueChangeListener="#{functionHome.verifyIdAvailableaa}"
                          value="#{functionHome.instance.name}">
                 <s:validate/>
-                <a:ajax event="blur" execute="@this"
+                <r:ajax event="blur" execute="@this"
                         render="function_nameField"/>>
             </h:inputText>
     </s:decorate>
@@ -136,7 +136,7 @@
         <h:inputText id="func_icon" name="func_icon" required="true" size="27"
                      label="#{messages.field_icon}"
                      maxlength="100" value="#{functionHome.instance.icon}">
-            <a:ajax event="blur" execute="@this"
+            <r:ajax event="blur" execute="@this"
                     render="func_iconField"/>>
         </h:inputText>
 
@@ -147,7 +147,7 @@
         <h:inputText id="func_location" name="func_location" required="true" size="27"
                      label="#{messages.function_field_locateName}"
                      maxlength="100" value="#{functionHome.instance.location}">
-            <a:ajax event="blur" execute="@this"
+            <r:ajax event="blur" execute="@this"
                     render="func_locationField"/>>
         </h:inputText>
 
@@ -160,173 +160,173 @@
         </h:inputTextarea>
     </s:decorate>
     <ui:define name="actionButtons">
-        <a:outputPanel id="operfuncButtons">
-            <a:commandButton execute="@form" render="function_Panel,funcEditPanel_inputs"
+        <r:outputPanel id="operfuncButtons">
+            <r:commandButton execute="@form" render="function_Panel,funcEditPanel_inputs"
                              value="#{messages.save}" action="#{functionHome.persist}"
                              rendered="#{!functionHome.managed}"
                              data="#{functionHome.lastState}"
-                             oncomplete="if (event.data == 'persisted'){#{rich:component('funcEditPanel')}.hide();}">
+                             oncomplete="if (event.data == 'persisted'){#{r:component('funcEditPanel')}.hide();}">
                 <s:conversationPropagation type="join"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
+                <r:attachQueue requestDelay="0"/>
+            </r:commandButton>
 
 
-            <a:commandButton
+            <r:commandButton
                     value="#{messages.update}" execute="@form" render="function_Panel,funcEditPanel_inputs"
                     action="#{functionHome.update}"
                     rendered="#{functionHome.managed}"
                     data="#{functionHome.lastState}"
-                    oncomplete="if(event.data == 'updated'){#{rich:component('funcEditPanel')}.hide(); return true;} else return false;">
+                    oncomplete="if(event.data == 'updated'){#{r:component('funcEditPanel')}.hide(); return true;} else return false;">
                 <s:conversationPropagation type="join"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-        </a:outputPanel>
+                <r:attachQueue requestDelay="0"/>
+            </r:commandButton>
+        </r:outputPanel>
 
-        <a:commandButton immediate="true" execute="@this"
+        <r:commandButton immediate="true" execute="@this"
                          value="#{messages.cancel}"
-                         oncomplete="#{rich:component('funcEditPanel')}.hide();return false;">
+                         oncomplete="#{r:component('funcEditPanel')}.hide();return false;">
             <s:conversationPropagation type="join"/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
+            <r:attachQueue requestDelay="0"/>
+        </r:commandButton>
     </ui:define>
 
 </s:decorate>
 
 
-<rich:panel id="controlFunc">
-    <rich:toolbar id="functionToolBar" height="34" itemSeparator="grid">
-        <rich:toolbarGroup>
-            <a:outputPanel id="funcCategoryHome_op">
+<r:panel id="controlFunc">
+    <r:toolbar id="functionToolBar" height="34" itemSeparator="grid">
+        <r:toolbarGroup>
+            <r:outputPanel id="funcCategoryHome_op">
                 <h:outputText value="#{funcCategoryHome.instance.name}"/>
-            </a:outputPanel>
-        </rich:toolbarGroup>
+            </r:outputPanel>
+        </r:toolbarGroup>
 
 
-        <rich:toolbarGroup>
+        <r:toolbarGroup>
             <h:graphicImage value="/img/icons/create_doc.gif"/>
-            <a:commandLink id="create_funcGroup" value="#{messages.funcCategory_add}"
+            <r:commandLink id="create_funcGroup" value="#{messages.funcCategory_add}"
                            immediate="true" styleClass="ltool" execute="@this"
                            render="funcCategoryEditPanel_inputs,funcCategoryEditPanel_buttons,funcCategoryEditPanelTitle,funcCategoryEditPanelClose,funcCategoryHome_op,function_Panel,updata_funcGroup_outputPanel,add_function_outputPanel"
-                           oncomplete="#{rich:component('funcCategoryEditPanel')}.show()">
-                <a:param name="funcCategory_id" value=""
+                           oncomplete="#{r:component('funcCategoryEditPanel')}.show()">
+                <r:param name="funcCategory_id" value=""
                          assignTo="#{funcCategoryHome.id}"/>
                 <s:conversationPropagation type="join"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
-        </rich:toolbarGroup>
+                <r:attachQueue requestDelay="0"/>
+            </r:commandLink>
+        </r:toolbarGroup>
 
 
-        <rich:toolbarGroup>
-            <a:outputPanel id="updata_funcGroup_outputPanel">
+        <r:toolbarGroup>
+            <r:outputPanel id="updata_funcGroup_outputPanel">
                 <h:graphicImage value="/img/icons/edit.gif"/>
-                <a:commandLink id="updata_funcGroup" value="#{messages.funcCategory_update}"
+                <r:commandLink id="updata_funcGroup" value="#{messages.funcCategory_update}"
                                immediate="true" styleClass="no-decor" execute="@this"
                                render="funcCategorys,funcCategoryEditPanel_inputs,funcCategoryEditPanel_buttons,funcCategoryEditPanelTitle"
-                               oncomplete="if (#{funcCategoryHome.managed}) {#{rich:component('funcCategoryEditPanel')}.show()}">
+                               oncomplete="if (#{funcCategoryHome.managed}) {#{r:component('funcCategoryEditPanel')}.show()}">
                     <s:conversationPropagation type="join"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandLink>
-            </a:outputPanel>
-        </rich:toolbarGroup>
+                    <r:attachQueue requestDelay="0"/>
+                </r:commandLink>
+            </r:outputPanel>
+        </r:toolbarGroup>
 
 
-        <rich:toolbarGroup>
-            <a:outputPanel id="add_function_outputPanel">
+        <r:toolbarGroup>
+            <r:outputPanel id="add_function_outputPanel">
                 <h:graphicImage value="/img/icons/create_doc.gif"/>
-                <a:commandLink id="add_function" value="#{messages.function_add}"
+                <r:commandLink id="add_function" value="#{messages.function_add}"
                                immediate="true" styleClass="no-decor" execute="@this"
                                action="#{functionHome.addFuncCategoryInfo}"
                                render="funcCategorys,funcEditPanel_inputs,funcEditPanel_buttons,funcEditPanelTitle,funcEditPanelClose"
-                               oncomplete="if (#{funcCategoryHome.managed}) {#{rich:component('funcEditPanel')}.show()}">
-                    <a:param name="functionHome_id" value="" assignTo="#{functionHome.id}"/>
+                               oncomplete="if (#{funcCategoryHome.managed}) {#{r:component('funcEditPanel')}.show()}">
+                    <r:param name="functionHome_id" value="" assignTo="#{functionHome.id}"/>
 
                     <s:conversationPropagation type="join"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandLink>
-            </a:outputPanel>
-        </rich:toolbarGroup>
-    </rich:toolbar>
-</rich:panel>
+                    <r:attachQueue requestDelay="0"/>
+                </r:commandLink>
+            </r:outputPanel>
+        </r:toolbarGroup>
+    </r:toolbar>
+</r:panel>
 <h:panelGrid width="100%" columns="2" columnClasses="gridFunctionCategory">
 
-    <rich:dataTable id="funcCategorys" var="_funcCategory"
+    <r:dataTable id="funcCategorys" var="_funcCategory"
                     value="#{funcCategoryListInfo.resultList}">
 
         <f:facet name="header">
-            <rich:columnGroup>
-                <rich:column>
+            <r:columnGroup>
+                <r:column>
                     <h:outputText value="#{messages.funcCategory_field_name}"/>
-                </rich:column>
-            </rich:columnGroup>
+                </r:column>
+            </r:columnGroup>
 
         </f:facet>
-        <rich:column>
-            <a:commandLink id="link"
+        <r:column>
+            <r:commandLink id="link"
                            render="function_Panel,updata_funcGroup_outputPanel,add_function_outputPanel,funcCategoryHome_op,funcCategorys"
                            value="#{_funcCategory.name}" execute="@this">
-                <a:param name="funcCategory_id" value="#{_funcCategory.id}"
+                <r:param name="funcCategory_id" value="#{_funcCategory.id}"
                          assignTo="#{funcCategoryHome.id}"/>
                 <s:conversationPropagation type="join"/>
 
-            </a:commandLink>
-        </rich:column>
-    </rich:dataTable>
+            </r:commandLink>
+        </r:column>
+    </r:dataTable>
 
-    <a:outputPanel id="function_Panel">
-        <rich:dataTable id="functiontable" width="100%" rendered="#{funcCategoryHome.idDefined}"
+    <r:outputPanel id="function_Panel">
+        <r:dataTable id="functiontable" width="100%" rendered="#{funcCategoryHome.idDefined}"
                         value="#{funcList.resultList}" var="_functions">
             <f:facet name="header">
-                <rich:columnGroup>
-                    <rich:column width="20%">
+                <r:columnGroup>
+                    <r:column width="20%">
                         <h:outputText value="#{messages.function_field_name}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{messages.function_field_locateName}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{messages.field_memo}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{messages.action}"/>
-                    </rich:column>
-                </rich:columnGroup>
+                    </r:column>
+                </r:columnGroup>
             </f:facet>
-            <rich:column width="100">
+            <r:column width="100">
                 <h:outputText value="#{_functions.name}"/>
-            </rich:column>
-            <rich:column>
+            </r:column>
+            <r:column>
                 <h:outputText value="#{_functions.location}"/>
-            </rich:column>
-            <rich:column>
+            </r:column>
+            <r:column>
                 <h:outputText value="#{_functions.memo}"/>
-            </rich:column>
-            <rich:column>
+            </r:column>
+            <r:column>
 
                 <h:graphicImage value="/img/icons/edit.gif"/>
-                <a:commandLink id="update_function" value="#{messages.update}"
+                <r:commandLink id="update_function" value="#{messages.update}"
                                immediate="true" styleClass="no-decor" execute="@this"
                                render="funcEditPanel_inputs,funcEditPanel_buttons,funcEditPanelTitle,funcEditPanelClose"
-                               oncomplete="#{rich:component('funcEditPanel')}.show()">
-                    <a:param id="id" value="#{_functions.id}" assignTo="#{functionHome.id}"/>
+                               oncomplete="#{r:component('funcEditPanel')}.show()">
+                    <r:param id="id" value="#{_functions.id}" assignTo="#{functionHome.id}"/>
                     <s:conversationPropagation type="join"/>
-                    <a:attachQueue requestDelay="0"/>
+                    <r:attachQueue requestDelay="0"/>
 
-                </a:commandLink>
+                </r:commandLink>
 
 
-                <a:commandLink styleClass="no-decor" immediate="true" execute="@this"
+                <r:commandLink styleClass="no-decor" immediate="true" execute="@this"
                                value="#{messages.delete}"
                                render="function_Panel"
                                action="#{functionHome.remove}"
                                onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
 
-                    <a:param name="id" value="#{_functions.id}" assignTo="#{functionHome.id}"/>
+                    <r:param name="id" value="#{_functions.id}" assignTo="#{functionHome.id}"/>
 
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandLink>
-            </rich:column>
-        </rich:dataTable>
-    </a:outputPanel>
+                    <r:attachQueue requestDelay="0"/>
+                </r:commandLink>
+            </r:column>
+        </r:dataTable>
+    </r:outputPanel>
 </h:panelGrid>
 </ui:define>
 </ui:composition>
