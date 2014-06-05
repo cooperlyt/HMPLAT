@@ -2,11 +2,10 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich">
+                xmlns:h="http://java.sun.com/jsf/html">
     <!-- params:
         var
         lable
@@ -18,16 +17,16 @@
         <h:panelGrid columns="2" columnClasses="small_label,small_value">
 
 
-            <a:outputPanel>
+            <r:outputPanel>
                 <h:outputText value="#{lable}"/> <s:span styleClass="required"
                                                          rendered="#{required}">*</s:span>
-                <rich:tooltip followMouse="false"
+                <r:tooltip followMouse="false"
                               showDelay="500" styleClass="tooltip"
                               rendered="#{not empty var.simpleVarSubscribe.simpleVarDefine.description}">
 				<span style="white-space: nowrap"> <h:outputText
                         value="#{var.simpleVarSubscribe.simpleVarDefine.description}"></h:outputText> </span>
-                </rich:tooltip>
-            </a:outputPanel>
+                </r:tooltip>
+            </r:outputPanel>
 
                 <h:selectBooleanCheckbox label="#{lable}" value="#{var.booleanValue}" required="#{required}"
                                          rendered="#{var.booleanType}" readonly="#{readonly}"/>
@@ -101,21 +100,21 @@
                              onafterpaste="this.value=this.value.replace(/\D/g,'')">
                 </h:inputText>
 
-                <rich:calendar defaultLabel="#{lable}" value="#{var.dateValue}" cellWidth="24px"
+                <r:calendar defaultLabel="#{lable}" value="#{var.dateValue}" cellWidth="24px"
                                cellHeight="22px" style="width:200px" datePattern="#{messages.datePattern}"
                                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
                                showApplyButton="#{calendarBean.showApply}"  popup="#{calendarBean.popup}"
                                rendered="#{var.dateType and not readonly}" inputStyle="width:80%"
                                required="#{required}" enableManualInput="true">
-                </rich:calendar>
+                </r:calendar>
 
-                <rich:calendar defaultLabel="#{lable}" value="#{var.dateValue}" cellWidth="24px"
+                <r:calendar defaultLabel="#{lable}" value="#{var.dateValue}" cellWidth="24px"
                                cellHeight="22px" style="width:200px" datePattern="#{messages.datetimepattern}"
                                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
                                showApplyButton="#{calendarBean.showApply}"  popup="#{calendarBean.popup}"
                                rendered="#{var.datetimeType and not readonly}" inputStyle="width:80%"
                                required="#{required}" enableManualInput="true">
-                </rich:calendar>
+                </r:calendar>
 
 
                 <h:inputText label="#{lable}" value="#{var.dateValue}"
@@ -131,7 +130,7 @@
                 </h:inputText>
 
 
-                <rich:select label="#{lable}" value="#{var.wordValue}"
+                <r:select label="#{lable}" value="#{var.wordValue}"
                                  rendered="#{var.wordType}"
                                  readonly="#{readonly}" style="width: 30px;"
                                  required="#{required}">
@@ -139,7 +138,7 @@
                     <f:converter converterId="systemEntityConverter"/>
                     <s:selectItems value="#{var.simpleVarSubscribe.simpleVarDefine.wordCategory.wordList}" var="_word"
                                    label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
-                </rich:select>
+                </r:select>
 
 
         </h:panelGrid>

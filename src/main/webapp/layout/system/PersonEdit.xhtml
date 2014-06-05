@@ -5,8 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j"
-                xmlns:rich="http://richfaces.org/rich">
+                xmlns:r="http://richfaces.org">
 
     <h:outputStylesheet>
         .sexSelectWidth input[type="text"]{
@@ -25,26 +24,26 @@
                              label="#{messages.person_field_name}"
                              maxlength="50" readonly="#{empty readonly?'false':readonly}"
                              value="#{personHome.instance.name}">
-                    <a:ajax event="blur" render="nameField" disabled="#{empty readonly?'false':readonly}"/>
+                    <r:ajax event="blur" render="nameField" disabled="#{empty readonly?'false':readonly}"/>
                 </h:inputText>
             </s:decorate>
 
             <s:decorate id="sexField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.person_field_sex}</ui:define>
-                <rich:select id="sex" styleClass="sexSelectWidth" listWidth="60px" disabled="#{empty readonly?'false':readonly}"
+                <r:select id="sex" styleClass="sexSelectWidth" listWidth="60px" disabled="#{empty readonly?'false':readonly}"
                                  label="#{messages.person_field_sex}"
                                  value="#{personHome.instance.sex}">
                     <s:selectItems var="_sex" value="#{sexs}" label="#{messages[_sex.name()]}"
                                    noSelectionLabel="#{messages.noSelectLabel}"/>
                     <s:convertEnum/>
-                    <a:ajax event="selectitem" render="sexField" disabled="#{empty readonly?'false':readonly}"/>
-                </rich:select>
+                    <r:ajax event="selectitem" render="sexField" disabled="#{empty readonly?'false':readonly}"/>
+                </r:select>
 
             </s:decorate>
 
             <s:decorate id="dateOfBirthField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.person_field_birth}</ui:define>
-                <rich:calendar id="dateOfBirth" enableManualInput="true" timeZone="#{calendarBean.timeZone}"
+                <r:calendar id="dateOfBirth" enableManualInput="true" timeZone="#{calendarBean.timeZone}"
                                locale="#{calendarBean.locale}"
                                showApplyButton="#{calendarBean.showApply}" popup="#{calendarBean.popup}"
                                value="#{personHome.instance.dateOfBirth}" datePattern="#{messages.datePattern}"/>
@@ -65,7 +64,7 @@
                              maxlength="50"
                              readonly="#{empty readonly?'false':readonly}"
                              value="#{personHome.instance.phone}">
-                    <a:ajax event="valueChange" render="phoneField" disabled="#{empty readonly?'false':readonly}"/>
+                    <r:ajax event="valueChange" render="phoneField" disabled="#{empty readonly?'false':readonly}"/>
                 </h:inputText>
             </s:decorate>
 
@@ -75,7 +74,7 @@
                              readonly="#{empty readonly?'false':readonly}"
                              maxlength="20"
                              value="#{personHome.instance.ethnic}">
-                    <a:ajax event="blur" render="ethnicField" disabled="#{empty readonly?'false':readonly}"/>
+                    <r:ajax event="blur" render="ethnicField" disabled="#{empty readonly?'false':readonly}"/>
                 </h:inputText>
             </s:decorate>
 
@@ -87,7 +86,7 @@
                              readonly="#{empty readonly?'false':readonly}"
                              label="#{messages.person_field_city}"
                              value="#{personHome.instance.city}">
-                    <a:ajax event="blur" render="cityField" disabled="#{empty readonly?'false':readonly}"/>
+                    <r:ajax event="blur" render="cityField" disabled="#{empty readonly?'false':readonly}"/>
                 </h:inputText>
             </s:decorate>
 
@@ -100,7 +99,7 @@
                              readonly="#{empty readonly?'false':readonly}"
                              label="#{messages.person_field_nationality}"
                              value="#{personHome.instance.nationality}">
-                    <a:ajax event="blur" render="nationalityField" disabled="#{empty readonly?'false':readonly}"/>
+                    <r:ajax event="blur" render="nationalityField" disabled="#{empty readonly?'false':readonly}"/>
                 </h:inputText>
             </s:decorate>
 
@@ -118,7 +117,7 @@
                          readonly="#{empty readonly?'false':readonly}"
                          label="#{messages.person_field_address}"
                          value="#{personHome.instance.address}">
-                <a:ajax event="blur" render="addressField" disabled="#{empty readonly?'false':readonly}"/>
+                <r:ajax event="blur" render="addressField" disabled="#{empty readonly?'false':readonly}"/>
             </h:inputText>
         </s:decorate>
 
@@ -128,7 +127,7 @@
                          label="#{messages.person_field_nowAddress}"
                          size="70" readonly="#{empty readonly?'false':readonly}"
                          value="#{personHome.instance.nowAddress}">
-                <a:ajax event="blur" render="nowAddressField" disabled="#{empty readonly?'false':readonly}"/>
+                <r:ajax event="blur" render="nowAddressField" disabled="#{empty readonly?'false':readonly}"/>
             </h:inputText>
         </s:decorate>
 

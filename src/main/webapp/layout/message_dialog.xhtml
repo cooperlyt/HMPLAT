@@ -2,12 +2,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
 
-    <rich:popupPanel id="#{empty panelId ?'messagePopPanel': panelId}" width="220" modal="true" autosized="true"
+    <r:popupPanel id="#{empty panelId ?'messagePopPanel': panelId}" width="220" modal="true" autosized="true"
                      moveable="true" minWidth="220" resizeable="false">
         <f:facet name="header">
             <ui:insert name="title">
@@ -18,10 +17,10 @@
         </f:facet>
 
         <f:facet name="controls">
-            <a:commandButton immediate="true" execute="@this" image="/img/close.png"
-                             onclick="#{rich:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
+            <r:commandButton immediate="true" execute="@this" image="/img/close.png"
+                             onclick="#{r:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
         </f:facet>
-        <rich:panel>
+        <r:panel>
             <h:panelGrid columns="2">
                 <h:graphicImage value="/img/msg_warning_big.gif" rendered="#{type == 'warning'}"
                                 id="warningImg"/>
@@ -33,17 +32,17 @@
                     <h:outputText value="#{msg}"/>
                 </ui:insert>
             </h:panelGrid>
-        </rich:panel>
+        </r:panel>
         <h:panelGrid columns="1" style="width: 100%; text-align: right">
-            <a:outputPanel id="#{panelId}_buttons">
+            <r:outputPanel id="#{panelId}_buttons">
                 <div class="actionButtons">
                     <ui:insert name="actionButtons">
-                        <a:commandButton value="#{messages.ok}" immediate="true" execute="@this"
-                                         onclick="#{rich:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
+                        <r:commandButton value="#{messages.ok}" immediate="true" execute="@this"
+                                         onclick="#{r:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
                     </ui:insert>
                 </div>
-            </a:outputPanel>
+            </r:outputPanel>
         </h:panelGrid>
-    </rich:popupPanel>
+    </r:popupPanel>
 
 </ui:composition>

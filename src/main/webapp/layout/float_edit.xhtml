@@ -1,9 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:a="http://richfaces.org/a4j">
+                xmlns:r="http://richfaces.org"
+                xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <div style="float:left;#{((not empty autoHeight) and autoHeight)?'':(empty height?'height: 32px;':'height:' + height + 'px;')} ">
 
@@ -21,13 +20,13 @@
         <span class="error">
             <s:div style="width:21px;height:14px" rendered="#{not invalid}"/>
 
-            <a:outputPanel rendered="#{invalid}">
+            <r:outputPanel rendered="#{invalid}">
                 <h:graphicImage value="/img/error.gif" rendered="#{invalid}" styleClass="errors">
                 </h:graphicImage>
-                <rich:tooltip layout="block" followMouse="false" mode="client">
+                <r:tooltip layout="block" followMouse="false" mode="client">
                     <s:message styleClass="errors"/>
-                </rich:tooltip>
-            </a:outputPanel>
+                </r:tooltip>
+            </r:outputPanel>
 
         </span>
 

@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich" xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org"
                 template="/layout/template.xhtml">
                      taskChangePush
     <ui:define name="taskChangePush"/>
@@ -18,32 +18,32 @@
     <ui:define name="pageContent">
 
         <h:panelGrid columns="2" width="100%" columnClasses=",column-right-align">
-            <a:outputPanel>
+            <r:outputPanel>
                 <h1> #{functionTitle}</h1>
-            </a:outputPanel>
-            <a:status>
+            </r:outputPanel>
+            <r:status>
                 <f:facet name="start">
                     <h:graphicImage value="/img/connect.gif"/>
                 </f:facet>
                 <f:facet name="stop">
                     <h:graphicImage value="/img/connect_idle.gif"/>
                 </f:facet>
-            </a:status>
+            </r:status>
 
         </h:panelGrid>
 
 
-        <rich:panel styleClass="func-body">
+        <r:panel styleClass="func-body">
             <ui:insert name="func-body">
                 <ui:insert name="toolbar"/>
                 <br/>
-                <rich:messages ajaxRendered="true" globalOnly="true"/>
+                <r:messages ajaxRendered="true" globalOnly="true"/>
                 <br/>
                 <ui:insert name="body">
                     Body content missed
                 </ui:insert>
             </ui:insert>
-        </rich:panel>
+        </r:panel>
 
     </ui:define>
 </ui:composition>
