@@ -674,6 +674,125 @@
             </plugin-->
 
 
+            <!--<plugin>-->
+                <!--<groupId>org.richfaces.cdk</groupId>-->
+                <!--<artifactId>maven-richfaces-resources-plugin</artifactId>-->
+                <!--<version>4.3.1.Final</version>-->
+                <!--<configuration>-->
+
+
+
+                    <!--<skins>-->
+                        <!--&lt;!&ndash; the name of your skin &ndash;&gt;-->
+                        <!--<skin>customBlueSky</skin>-->
+                        <!--<skin>customClassic</skin>-->
+                        <!--<skin>customDeepMarine</skin>-->
+                        <!--<skin>customEmeraldTown</skin>-->
+                        <!--<skin>customJapanCherry</skin>-->
+                        <!--<skin>customRuby</skin>-->
+                        <!--<skin>customWine</skin>-->
+                    <!--</skins>-->
+
+                    <!--<excludedFiles>-->
+
+                        <!--<exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>-->
+                        <!--<exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>-->
+                    <!--</excludedFiles>-->
+                    <!--<includedContentTypes>-->
+                        <!--<include>text/css</include>-->
+                        <!--<include>image/.+</include>-->
+                    <!--</includedContentTypes>-->
+                    <!--<fileNameMappings>-->
+                        <!--<property>-->
+                            <!--<name>^.*showcase.*/([^/]+\.css)$</name>-->
+                            <!--<value>org.richfaces.showcase.css/$1</value>-->
+                        <!--</property>-->
+                        <!--<property>-->
+                            <!--<name>^.+/([^/]+\.(png|gif|jpg))$</name>-->
+                            <!--<value>org.richfaces.images/$1</value>-->
+                        <!--</property>-->
+                        <!--<property>-->
+                            <!--<name>^.+/([^/]+\.css)$</name>-->
+                            <!--<value>org.richfaces.css/$1</value>-->
+                        <!--</property>-->
+                    <!--</fileNameMappings>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>process-resources</id>-->
+                        <!--<goals>-->
+                            <!--<goal>process</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--&lt;!&ndash; the actual name of this file is not important but it should be inside the META-INF folder &ndash;&gt;-->
+                            <!--<staticResourceMappingFile>-->
+                                <!--${project.build.outputDirectory}/META-INF/richfaces/custom-packedcompressed-resource-mappings.properties-->
+                            <!--</staticResourceMappingFile>-->
+
+                            <!--&lt;!&ndash; the URL part goes after /META-INF/resources/ &ndash;&gt;-->
+                            <!--<resourcesOutputDir>-->
+                                <!--${project.build.outputDirectory}/META-INF/resources/org.richfaces.staticResource/${version.richfaces}/PackedCompressed/-->
+                            <!--</resourcesOutputDir>-->
+
+                            <!--&lt;!&ndash; replace completely with the URL part &ndash;&gt;-->
+                            <!--<staticResourcePrefix>org.richfaces.staticResource/${version.richfaces}/PackedCompressed-->
+                            <!--</staticResourcePrefix>-->
+
+                            <!--<pack>true</pack>-->
+                            <!--<compress>true</compress>-->
+
+                            <!--<excludedFiles>-->
+                                <!--<exclude>^javax.faces</exclude>-->
+                                <!--<exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>-->
+                                <!--<exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>-->
+                                <!--<exclude>^jquery\.js$</exclude>-->
+                            <!--</excludedFiles>-->
+
+
+                        <!--</configuration>-->
+                    <!--</execution>-->
+
+                    <!--&lt;!&ndash; If you are in Development stage the compression is ignored, include this execution to generate uncompressed files &ndash;&gt;-->
+
+                    <!--<execution>-->
+                        <!--<id>process-resources-packed</id>-->
+                        <!--<goals>-->
+                            <!--<goal>process</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<staticResourceMappingFile>-->
+                                <!--${project.build.outputDirectory}/META-INF/richfaces/photoalbum-packed-resource-mappings.properties-->
+                            <!--</staticResourceMappingFile>-->
+
+                            <!--&lt;!&ndash; the directory is named “Packed”, not “PackedCompressed” as in the previous execution &ndash;&gt;-->
+                            <!--<resourcesOutputDir>-->
+                                <!--${project.build.outputDirectory}/META-INF/resources/org.richfaces.staticResource/${version.richfaces}/Packed/-->
+                            <!--</resourcesOutputDir>-->
+                            <!--<staticResourcePrefix>org.richfaces.staticResource/${version.richfaces/Packed-->
+                            <!--</staticResourcePrefix>-->
+
+                            <!--<pack>true</pack>-->
+                            <!--<compress>false</compress>-->
+                            <!--&lt;!&ndash; do not compress &ndash;&gt;-->
+
+                            <!--<excludedFiles>-->
+                                <!--<exclude>^javax.faces</exclude>-->
+                                <!--<exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>-->
+                                <!--<exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>-->
+                                <!--<exclude>^jquery\.js$</exclude>-->
+                            <!--</excludedFiles>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.slf4j</groupId>-->
+                        <!--<artifactId>slf4j-log4j12</artifactId>-->
+                        <!--<version>${slf4j.version}</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+
         </plugins>
 
 

@@ -19,36 +19,17 @@ public class District implements java.io.Serializable,TreeNode {
 
 	private String id;
 	private Integer version;
-	private ProvinceCity provinceCity;
 	private String name;
 	private String shortName;
-	private String memo;
 	private Set<Section> sections = new HashSet<Section>(0);
 
 	public District() {
 	}
 
-	public District(String id, ProvinceCity provinceCity) {
-		this.id = id;
-		this.provinceCity = provinceCity;
-	}
-	public District(String id, ProvinceCity provinceCity, String name,
-			String shortName, String memo, Set<Section> sections) {
-		this.id = id;
-		this.provinceCity = provinceCity;
-		this.name = name;
-		this.shortName = shortName;
-		this.memo = memo;
-		this.sections = sections;
-	}
-
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
-    @GeneratedValue(generator = "paymentableGenerator")
-    @GenericGenerator(name = "paymentableGenerator",strategy = "uuid")
 	@NotNull
 	@Size(max = 32)
-
 	public String getId() {
 		return this.id;
 	}
@@ -65,17 +46,6 @@ public class District implements java.io.Serializable,TreeNode {
 
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PROVINCECITYID", nullable = false)
-	@NotNull
-	public ProvinceCity getProvinceCity() {
-		return this.provinceCity;
-	}
-
-	public void setProvinceCity(ProvinceCity provinceCity) {
-		this.provinceCity = provinceCity;
 	}
 
 	@Column(name = "NAME", length = 100,nullable = false)
@@ -97,16 +67,6 @@ public class District implements java.io.Serializable,TreeNode {
 
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
-	}
-
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "district")
@@ -139,7 +99,7 @@ public class District implements java.io.Serializable,TreeNode {
     @Override
     @Transient
     public TreeNode getParent() {
-        return getProvinceCity();
+        return null;
     }
 
     @Override

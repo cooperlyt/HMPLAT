@@ -14,4 +14,10 @@
     </component>
 
 
+    <component name="allDistrict" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select district from District district order by funcCategory.priority desc</property>
+    </component>
+
+
+
 </components>

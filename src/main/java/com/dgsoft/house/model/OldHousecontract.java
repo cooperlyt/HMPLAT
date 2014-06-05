@@ -17,18 +17,18 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "OLDHOUSECONTRACT", catalog = "HOUSE_INFO")
-public class Oldhousecontract implements java.io.Serializable {
+public class OldHousecontract implements java.io.Serializable {
 
 	private String id;
 	private int version;
 	private SellEmployee sellEmployee;
 	private HouseContract houseContract;
 
-	public Oldhousecontract() {
+	public OldHousecontract() {
 	}
 
-	public Oldhousecontract(String id, SellEmployee sellEmployee,
-			HouseContract houseContract) {
+	public OldHousecontract(String id, SellEmployee sellEmployee,
+                            HouseContract houseContract) {
 		this.id = id;
 		this.sellEmployee = sellEmployee;
 		this.houseContract = houseContract;

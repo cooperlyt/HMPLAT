@@ -7,7 +7,7 @@
 
     <!--required param:  panelId -->
 
-    <rich:popupPanel id="#{panelId}" modal="true" autosized="#{empty autosized? 'true': autosized}"
+    <r:popupPanel id="#{panelId}" modal="true" autosized="#{empty autosized? 'true': autosized}"
                      moveable="true" resizeable="false" height="#{height}" width="#{width}">
 
         <f:facet name="header">
@@ -20,35 +20,35 @@
         </f:facet>
         <f:facet name="controls">
             <h:panelGrid columns="3">
-                <a:status>
+                <r:status>
                     <f:facet name="start">
                         <h:graphicImage value="/img/connect_title_active.gif"/>
                     </f:facet>
                     <f:facet name="stop">
                         <h:graphicImage value="/img/connect_title.gif"/>
                     </f:facet>
-                </a:status>
+                </r:status>
 
                 <br/>
 
                 <h:panelGroup id="#{panelId}_controls">
                     <ui:insert name="controls">
-                        <a:commandButton immediate="true"
+                        <r:commandButton immediate="true"
                                          execute="@this" image="/img/close.png"
-                                         oncomplete="#{rich:component(panelId)}.hide(); return false;">
+                                         oncomplete="#{r:component(panelId)}.hide(); return false;">
                             <s:conversationPropagation type="end"/>
-                            <a:attachQueue requestDelay="0"/>
-                        </a:commandButton>
+                            <r:attachQueue requestDelay="0"/>
+                        </r:commandButton>
                     </ui:insert>
                 </h:panelGroup>
             </h:panelGrid>
         </f:facet>
-        <rich:messages ajaxRendered="true" globalOnly="true"/>
+        <r:messages ajaxRendered="true" globalOnly="true"/>
         <ui:insert name="panelContent">
             <h:form id="#{panelId}_form">
                 <ui:insert name="formContent">
 
-                    <rich:panel id="#{panelId}_inputs">
+                    <r:panel id="#{panelId}_inputs">
                         <div class="edit">
                             <ui:insert/>
 
@@ -57,20 +57,20 @@
                                 #{messages.requiredFields}
                             </div>
                         </div>
-                    </rich:panel>
+                    </r:panel>
 
 
                     <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                        <a:outputPanel id="#{panelId}_buttons">
+                        <r:outputPanel id="#{panelId}_buttons">
                             <div class="actionButtons">
                                 <ui:insert name="actionButtons"/>
                             </div>
-                        </a:outputPanel>
+                        </r:outputPanel>
                     </h:panelGrid>
                 </ui:insert>
             </h:form>
         </ui:insert>
 
-    </rich:popupPanel>
+    </r:popupPanel>
 
 </ui:composition>
