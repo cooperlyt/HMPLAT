@@ -4,13 +4,12 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:s="http://jboss.org/schema/seam/taglib"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org"
+      xmlns:s="http://jboss.org/schema/seam/taglib">
 
 <ui:composition>
     <ul id="skin-menu" class="layout">
-        <a4j:repeat var="_skin" value="#{skinBean.skins}"
+        <r:repeat var="_skin" value="#{skinBean.skins}"
                     iterationStatusVar="iterStatus">
             <li class="#{(_skin==skinBean.skin) ? 'current-skin' : ''}">
                 <span>
@@ -19,7 +18,7 @@
                     </s:link>
                 </span>
             </li>
-        </a4j:repeat>
+        </r:repeat>
         <li class="label"><span>#{messages.selectSkin}:</span></li>
     </ul>
 </ui:composition>

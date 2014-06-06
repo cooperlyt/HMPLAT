@@ -48,43 +48,6 @@ public class Project implements java.io.Serializable, TreeNode {
         this.developer = developer;
     }
 
-    public Project(String id, String name, Date openTime, Date finishDate,
-                   Date comeDate, int state, Date mapTime) {
-        this.id = id;
-        this.name = name;
-        this.openTime = openTime;
-        this.finishDate = finishDate;
-        this.comeDate = comeDate;
-        this.state = state;
-        this.mapTime = mapTime;
-    }
-
-    public Project(String id, Section section, Developer developer,
-                   String name, String address, Date openTime, String buildSize,
-                   Integer buildCount, Date finishDate, BigDecimal area,
-                   BigDecimal sumArea, Date comeDate, int state, String memo,
-                   Date mapTime, String mapMemo, Boolean canSell, Set<Build> builds,
-                   Set<ProjectBuildProcess> projectBuildProcesses) {
-        this.id = id;
-        this.section = section;
-        this.developer = developer;
-        this.name = name;
-        this.address = address;
-        this.openTime = openTime;
-        this.buildSize = buildSize;
-        this.buildCount = buildCount;
-        this.finishDate = finishDate;
-        this.area = area;
-        this.sumArea = sumArea;
-        this.comeDate = comeDate;
-        this.state = state;
-        this.memo = memo;
-        this.mapTime = mapTime;
-        this.mapMemo = mapMemo;
-        this.canSell = canSell;
-        this.builds = builds;
-        this.projectBuildProcesses = projectBuildProcesses;
-    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -111,8 +74,9 @@ public class Project implements java.io.Serializable, TreeNode {
         this.version = version;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SECTIONID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "SECTIONID", nullable = false)
+    @NotNull
     public Section getSection() {
         return this.section;
     }

@@ -1,0 +1,31 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.District}
+        </ui:define>
+        <h:selectOneMenu value="#{sectionSearchCondition.districtId}">
+             <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                            itemValue="#{_district.id}" label="#{_district.name}"
+                            noSelectionLabel="#{messages.searchNoSelectLabel}"/>
+        </h:selectOneMenu>
+
+    </s:decorate>
+
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Section_name}
+        </ui:define>
+        <h:inputText value="#{sectionSearchCondition.sectionName}" size="50"/>
+    </s:decorate>
+
+
+</ui:composition>

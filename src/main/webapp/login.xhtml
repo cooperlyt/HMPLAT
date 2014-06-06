@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich"
+                xmlns:r="http://richfaces.org"
                 template="layout/template.xhtml">
 
     <ui:define name="pageContent">
@@ -13,7 +13,7 @@
                     rendered="#{showGlobalMessages != 'false'}"/>
 
         <h1>#{messages.Welcome} ! #{messages.PleaseLoginHere}</h1>
-        <rich:panel>
+        <r:panel>
             <h:panelGrid columns="2">
                 <h:graphicImage style="padding-left: 20px; padding-right: 20px" width="190px" height="190px" value="/img/seamlogo.png" alt="Seam logo"/>
                 <h:form id="loginForm">
@@ -33,7 +33,7 @@
                     </div>
                 </h:form>
             </h:panelGrid>
-        </rich:panel>
+        </r:panel>
 
 
     </ui:define>
