@@ -96,6 +96,12 @@
         </navigation>
     </page>
 
+     <!-- house data -->
+
+    <page view-id="/func/house/datas/*" login-required="true">
+        <restrict>#{s:hasRole('house.data.manager')}</restrict>
+    </page>
+
 
 
     <exception class="org.jboss.seam.framework.EntityNotFoundException">

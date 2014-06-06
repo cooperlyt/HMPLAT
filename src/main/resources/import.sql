@@ -28,6 +28,8 @@ INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.initReg','
 INSERT INTO FUNC_CATEGORY (ID, NAME, ICON, PRIORITY, MEMO) VALUES ('system.config', '系统设置', '', '1', '超级管理员,一般由实施方有此权限');
 INSERT INTO FUNC_CATEGORY (ID, NAME, ICON, PRIORITY, MEMO) VALUES ('system.manager', '系统管理', '', '2', '管理员');
 
+INSERT INTO FUNC_CATEGORY (ID, NAME, ICON, PRIORITY, MEMO) VALUES ('house.datas', '房屋信息管理', '', '3', '一般为测绘');
+
 
 -- 功能
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.param', '系统参数管理', 'system.config', '', '/func/system/config/SystemParams.seam', '', '2', '系统运行方式设置');
@@ -37,7 +39,9 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.role','角色管理','system.config','','/func/system/config/RoleMgr.seam','','4','角色管理和角色分配启动业务');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.word','字典管理','system.manager','','/func/system/manager/WordMgr.seam','','5','字典管理');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.jbpmProcessDeployment','流程部署','system.config','','/func/system/jbpm/ProcessDefinition.seam','',7,'部署JBPM PAR 流程');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.processInstanceMgr', '流程管理', 'system.manager', '', '/func/system/jbpm/ProcessInstanceMgr.seam', '', '6', '');
+
+
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.districtMgr', '行政区管理', 'house.datas', '', '/func/house/datas/DistrictMgr.seam', '', '1', '');
 
 
 -- 角色
@@ -46,7 +50,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
 
-
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('house.data.manager', '房屋信息数据维护', '房屋信息数据维护', 3);
 
 -- ROLE_FUNCTION 角色种类
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.param');
@@ -63,6 +67,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.per
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.word');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.processInstanceMgr');
 
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.districtMgr');
 
 
 -- ADMIN INSERY

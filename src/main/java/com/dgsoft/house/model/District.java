@@ -1,8 +1,11 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.NamedEntity;
+import com.dgsoft.common.utils.persistence.UniqueVerify;
 import com.google.common.collect.Iterators;
 import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.international.StatusMessage;
 
 import java.util.*;
 import javax.persistence.*;
@@ -15,7 +18,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "DISTRICT", catalog = "HOUSE_INFO")
-public class District implements java.io.Serializable,TreeNode {
+@UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
+public class District implements java.io.Serializable,TreeNode,NamedEntity {
 
 	private String id;
 	private Integer version;
@@ -59,8 +63,9 @@ public class District implements java.io.Serializable,TreeNode {
 		this.name = name;
 	}
 
-	@Column(name = "SHORT_NAME", length = 50)
-	@Size(max = 50)
+	@Column(name = "SHORT_NAME", nullable = false, length = 10)
+	@Size(max = 10)
+    @NotNull
 	public String getShortName() {
 		return this.shortName;
 	}

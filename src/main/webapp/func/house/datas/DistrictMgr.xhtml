@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org"
+                template="/layout/simpleDataCURD.xhtml">
+
+    <ui:param name="dataList" value="#{allDistrict.resultList}"/>
+    <ui:param name="dataHome" value="#{districtHome}"/>
+    <ui:param name="dataListHeaderTitle" value="#{messages.District}"/>
+    <ui:param name="detailsRender" value="idField"/>
+
+    <ui:define name="editFields">
+
+        <s:decorate id="idField" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.District_id}
+            </ui:define>
+            <h:inputText id="idInput" value="#{districtHome.instance.id}"
+                         label="#{messages.District_id}"
+                         readonly="#{(not districtHome.editing) or (districtHome.managed)}"
+                         required="true" maxlength="32" size="20"
+                         valueChangeListener="#{districtHome.verifyIdAvailable}">
+                <r:ajax event="blur" render="idMessages" execute="@this"
+                        disabled="#{(not districtHome.editing) or (districtHome.managed)}"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message ajaxRendered="false" id="idMessages" for="idInput"/>
+            </ui:define>
+        </s:decorate>
+
+        <s:decorate id="nameField" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.District_name}
+            </ui:define>
+            <h:inputText id="nameInput" value="#{districtHome.instance.name}"
+                         label="#{messages.District_name}"
+                         readonly="#{not districtHome.editing}"
+                         required="true" maxlength="100" size="30"
+                         valueChangeListener="#{districtHome.verifyUniqueAvailable}"
+                         unique="name">
+                <r:ajax event="blur" execute="@this" disabled="#{not districtHome.editing}" render="nameMessages"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message ajaxRendered="false" for="nameInput" id="nameMessages"/>
+            </ui:define>
+
+        </s:decorate>
+
+        <s:decorate id="shortNameField" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.District_shortName}
+            </ui:define>
+            <h:inputText id="shortNameInput" value="#{districtHome.instance.shortName}"
+                         label="#{messages.District_shortName}"
+                         readonly="#{not districtHome.editing}"
+                         required="true" maxlength="10" size="10">
+                <r:validator event="blur" disabled="#{not districtHome.editing}"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message ajaxRendered="false" id="shortNameMessages" for="shortNameInput"/>
+            </ui:define>
+        </s:decorate>
+
+    </ui:define>
+
+</ui:composition>

@@ -11,6 +11,9 @@ import com.dgsoft.common.SimpleEntityHome;
  */
 public class HouseSimpleEntityHome<E extends NamedEntity> extends SimpleEntityHome<E>{
 
-
+    @Override
+    protected String getPersistenceContextName() {
+        return "houseEntityManager";
+    }
 
 }
