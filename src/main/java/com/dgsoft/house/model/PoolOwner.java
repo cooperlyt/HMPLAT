@@ -20,29 +20,12 @@ import javax.validation.constraints.Size;
 public class PoolOwner implements java.io.Serializable {
 
 	private String id;
-	private Card card;
 	private House house;
 	private HouseOwner houseOwner;
 	private String relation;
 	private BigDecimal owneScale;
 
 	public PoolOwner() {
-	}
-
-	public PoolOwner(String id, Card card, House house, HouseOwner houseOwner) {
-		this.id = id;
-		this.card = card;
-		this.house = house;
-		this.houseOwner = houseOwner;
-	}
-	public PoolOwner(String id, Card card, House house, HouseOwner houseOwner,
-			String relation, BigDecimal owneScale) {
-		this.id = id;
-		this.card = card;
-		this.house = house;
-		this.houseOwner = houseOwner;
-		this.relation = relation;
-		this.owneScale = owneScale;
 	}
 
 	@Id
@@ -55,17 +38,6 @@ public class PoolOwner implements java.io.Serializable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD_ID", nullable = false)
-	@NotNull
-	public Card getCard() {
-		return this.card;
-	}
-
-	public void setCard(Card card) {
-		this.card = card;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

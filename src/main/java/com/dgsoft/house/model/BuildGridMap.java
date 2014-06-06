@@ -18,7 +18,6 @@ public class BuildGridMap implements java.io.Serializable {
     private String id;
     private String name;
     private int order;
-    private Integer houseOrderBuilder;
     private Set<GridRow> gridRows = new HashSet<GridRow>(0);
     private Set<HouseGridTitle> houseGridTitles = new HashSet<HouseGridTitle>(0);
     private Build build;
@@ -65,15 +64,6 @@ public class BuildGridMap implements java.io.Serializable {
 
     public void setOrder(int order) {
         this.order = order;
-    }
-
-    @Column(name = "HOUSE_ORDER_BUILDER")
-    public Integer getHouseOrderBuilder() {
-        return this.houseOrderBuilder;
-    }
-
-    public void setHouseOrderBuilder(Integer houseOrderBuilder) {
-        this.houseOrderBuilder = houseOrderBuilder;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "buildGridMap")

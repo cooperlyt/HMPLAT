@@ -29,31 +29,12 @@ public class Smsubcompany implements java.io.Serializable {
 	private String manager;
 	private String phone;
 	private Date registerTime;
-	private Boolean enable;
+    private boolean destroyed;
 	private String memo;
 
 	public Smsubcompany() {
 	}
 
-	public Smsubcompany(String id, Section section, Date registerTime) {
-		this.id = id;
-		this.section = section;
-		this.registerTime = registerTime;
-	}
-	public Smsubcompany(String id, Section section, Mcompany mcompany,
-			String name, String address, String manager, String phone,
-			Date registerTime, Boolean enable, String memo) {
-		this.id = id;
-		this.section = section;
-		this.mcompany = mcompany;
-		this.name = name;
-		this.address = address;
-		this.manager = manager;
-		this.phone = phone;
-		this.registerTime = registerTime;
-		this.enable = enable;
-		this.memo = memo;
-	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -139,14 +120,14 @@ public class Smsubcompany implements java.io.Serializable {
 		this.registerTime = registerTime;
 	}
 
-	@Column(name = "ENABLE")
-	public Boolean getEnable() {
-		return this.enable;
-	}
+    @Column(name = "DESTROYED", nullable = false)
+    public boolean isDestroyed() {
+        return destroyed;
+    }
 
-	public void setEnable(Boolean enable) {
-		this.enable = enable;
-	}
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
 
 	@Column(name = "MEMO", length = 200)
 	@Size(max = 200)

@@ -2,16 +2,10 @@ package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,7 +17,6 @@ import javax.validation.constraints.Size;
 public class ProjectSellCard implements java.io.Serializable {
 
 	private String id;
-	private Card card;
 	private Integer houseCount;
 	private Integer buildCount;
 	private BigDecimal area;
@@ -33,30 +26,11 @@ public class ProjectSellCard implements java.io.Serializable {
 	private String yearNumber;
 	private String orderNumber;
 	private Set<Build> builds = new HashSet<Build>(0);
+    private Date printTime;
 
 	public ProjectSellCard() {
 	}
 
-	public ProjectSellCard(String id, Card card) {
-		this.id = id;
-		this.card = card;
-	}
-	public ProjectSellCard(String id, Card card, Integer houseCount,
-			Integer buildCount, BigDecimal area, Boolean prepareSell,
-			String useType, String sellObject, String yearNumber,
-			String orderNumber, Set<Build> builds) {
-		this.id = id;
-		this.card = card;
-		this.houseCount = houseCount;
-		this.buildCount = buildCount;
-		this.area = area;
-		this.prepareSell = prepareSell;
-		this.useType = useType;
-		this.sellObject = sellObject;
-		this.yearNumber = yearNumber;
-		this.orderNumber = orderNumber;
-		this.builds = builds;
-	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -68,17 +42,6 @@ public class ProjectSellCard implements java.io.Serializable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD_ID", nullable = false)
-	@NotNull
-	public Card getCard() {
-		return this.card;
-	}
-
-	public void setCard(Card card) {
-		this.card = card;
 	}
 
 	@Column(name = "HOUSE_COUNT")
@@ -166,4 +129,14 @@ public class ProjectSellCard implements java.io.Serializable {
 		this.builds = builds;
 	}
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "PRINT_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getPrintTime() {
+        return printTime;
+    }
+
+    public void setPrintTime(Date printTime) {
+        this.printTime = printTime;
+    }
 }

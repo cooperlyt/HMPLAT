@@ -78,9 +78,6 @@ public class House implements java.io.Serializable {
 	private String memo;
 	private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
-	private Set<HouseCard> houseCards = new HashSet<HouseCard>(0);
-	private Set<RecordAttachWoner> recordAttachWoners = new HashSet<RecordAttachWoner>(
-			0);
 	private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
 
 	public House() {
@@ -608,24 +605,6 @@ public class House implements java.io.Serializable {
 
 	public void setHouseStates(Set<HouseState> houseStates) {
 		this.houseStates = houseStates;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-	public Set<HouseCard> getHouseCards() {
-		return this.houseCards;
-	}
-
-	public void setHouseCards(Set<HouseCard> houseCards) {
-		this.houseCards = houseCards;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-	public Set<RecordAttachWoner> getRecordAttachWoners() {
-		return this.recordAttachWoners;
-	}
-
-	public void setRecordAttachWoners(Set<RecordAttachWoner> recordAttachWoners) {
-		this.recordAttachWoners = recordAttachWoners;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
