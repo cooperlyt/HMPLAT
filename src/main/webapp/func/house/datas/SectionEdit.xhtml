@@ -1,17 +1,73 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:r="http://richfaces.org"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/full-template.xhtml">
 
-    <ui:define name="toolbar">
+    <ui:param name="functionTitle" value="#{messages.Section}"/>
 
+    <ui:define name="func-body">
+        <h:form>
+            <r:toolbar>
+                <r:toolbarGroup location="right">
+                    <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
+                </r:toolbarGroup>
+
+                <r:toolbarGroup location="right">
+                    <h:commandButton styleClass="toolBarBtn" value="#{messages.Next}" action="next"/>
+                </r:toolbarGroup>
+
+                <r:toolbarGroup location="right">
+                    <h:commandButton styleClass="toolBarBtn" value="#{messages.complete}" action="complete"/>
+                </r:toolbarGroup>
+            </r:toolbar>
+
+            <br/>
+            <r:messages ajaxRendered="true" globalOnly="false"/>
+            <br/>
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.District}
+                </ui:define>
+                <h:selectOneMenu value="#{sectionHome.instance.district}"
+                                 label="#{messages.District}" required="true">
+                    <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                   itemValue="#{_district}" label="#{_district.name}"/>
+                    <f:converter converterId="houseEntityConverter"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Section_name}
+                </ui:define>
+                <h:inputText id="nameInput" value="#{sectionHome.instance.name}" required="true"
+                             label="#{messages.Section_name}" size="50" maxlength="50"
+                             unique="name"
+                             valueChangeListener="#{sectionHome.verifyUniqueAvailable}">
+                    <r:ajax event="blur" execute="@this" render="nameMessages"/>
+                </h:inputText>
+
+                <ui:define name="tail">
+                    <r:message ajaxRendered="false" id="nameMessages" for="nameInput"/>
+                </ui:define>
+
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Section_address}
+                </ui:define>
+                <h:inputText value="#{sectionHome.instance.address}"
+                             label="#{messages.Section_address}" size="100" maxlength="200"/>
+            </s:decorate>
+
+
+        </h:form>
     </ui:define>
-
-
-    <ui:define name=""
 
 </ui:composition>

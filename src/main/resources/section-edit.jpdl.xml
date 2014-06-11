@@ -3,21 +3,23 @@
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xsi:schemaLocation=
                              "http://jboss.org/schema/seam/pageflow http://jboss.org/schema/seam/pageflow-2.3.xsd"
-                     name="section-edit">
-
-    <start-state>
-        <transition to="sectionEdit"/>
-    </start-state>
+                     name="sectionEdit">
+    
+    <start-page view-id="/func/house/datas/SectionMgr.xhtml" name="start" redirect="true">
+        <transition name="create" to="sectionEdit" />
+        <transition name="edit" to="sectionEdit"/>
+    </start-page>
 
     <page view-id="/func/house/datas/SectionEdit.xhtml" name="sectionEdit"  redirect="true"
                 no-conversation-view-id="/func/house/datas/SectionMgr.xhtml">
-        <transition to="simpleVarSubscribe" name="next"/>
+        <transition to="view" name="next"/>
         <transition to="done" name="cancel"/>
+        <transition to="view" name="complete"/>
     </page>
 
-    <page view-id="/func/system/config/ViewBusiness.xhtml" name="view">
-        <redirect/>
-        <transition to="rateSubscribe" name="previous"/>
+    <page view-id="/func/system/config/ViewBusiness.xhtml" name="view" redirect="true"
+          no-conversation-view-id="/func/house/datas/SectionMgr.xhtml">
+        <transition to="sectionEdit" name="previous"/>
         <transition to="done" name="persisted"/>
         <transition to="done" name="updated"/>
         <transition to="done" name="cancel"/>

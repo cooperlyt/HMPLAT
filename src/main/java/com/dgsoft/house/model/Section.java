@@ -1,8 +1,10 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.utils.persistence.UniqueVerify;
 import com.google.common.collect.Iterators;
 import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.international.StatusMessage;
 
 import java.util.*;
 import javax.persistence.*;
@@ -15,6 +17,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "SECTION", catalog = "HOUSE_INFO")
+@UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
 public class Section implements java.io.Serializable,TreeNode {
 
 	private String id;
@@ -22,7 +25,6 @@ public class Section implements java.io.Serializable,TreeNode {
 	private District district;
 	private String name;
 	private String address;
-	private String memo;
 	private Set<Project> projects = new HashSet<Project>(0);
 	private Set<Smsubcompany> smsubcompanies = new HashSet<Smsubcompany>(0);
 	private Set<OwnerGroup> ownerGroups = new HashSet<OwnerGroup>(0);
@@ -34,23 +36,6 @@ public class Section implements java.io.Serializable,TreeNode {
     public Section(District district){
         this.district = district;
     }
-
-	public Section(String id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-	public Section(String id, District district, String name, String address,
-			String memo, Set<Project> projects,
-			Set<Smsubcompany> smsubcompanies, Set<OwnerGroup> ownerGroups) {
-		this.id = id;
-		this.district = district;
-		this.name = name;
-		this.address = address;
-		this.memo = memo;
-		this.projects = projects;
-		this.smsubcompanies = smsubcompanies;
-		this.ownerGroups = ownerGroups;
-	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -109,15 +94,6 @@ public class Section implements java.io.Serializable,TreeNode {
 		this.address = address;
 	}
 
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "section")
 	public Set<Project> getProjects() {

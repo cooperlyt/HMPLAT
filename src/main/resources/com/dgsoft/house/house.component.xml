@@ -19,5 +19,11 @@
     </component>
 
 
+    <component name="allDeveloper" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select developer from Developer developer</property>
+    </component>
 
+    <component name="validDeveloper" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select developer from Developer developer where destroyed = false</property>
+    </component>
 </components>

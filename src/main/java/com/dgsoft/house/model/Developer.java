@@ -1,6 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.NamedEntity;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "DEVELOPER", catalog = "HOUSE_INFO")
-public class Developer implements java.io.Serializable {
+public class Developer implements java.io.Serializable,NamedEntity {
 
     private String id;
     private int version;

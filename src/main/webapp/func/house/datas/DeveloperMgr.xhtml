@@ -1,0 +1,61 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/simpleDataCURD.xhtml">
+
+    <ui:param name="dataHome" value="#{developerHome}"/>
+
+    <ui:define name="navigation">
+        <r:extendedDataTable value="#{allDeveloper.resultList}" var="_dataItem" filterVar="_filterValue"
+                     noDataLabel="#{messages.emptyResult}" style="width: 200px;height: 400px;">
+            <ui:insert name="listColumns">
+
+                <r:column width="180px"
+                          filterExpression="#{empty _filterValue or fn:startsWith(_dataItem.name,_filterValue)}">
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.Developer}"/>
+                    </f:facet>
+                    <r:commandLink value="#{_dataItem.name}" immediate="true"
+                                   execute="@this" image="/img/edit.png"
+                                   style="#{_dataItem.destroyed ? 'color: red;text-decoration:line-through;' : ''}"
+                                   render="details">
+                        <r:param value="#{_dataItem.id}" assignTo="#{developerHome.id}"/>
+                        <s:conversationPropagation type="end"/>
+                    </r:commandLink>
+                </r:column>
+            </ui:insert>
+        </r:extendedDataTable>
+    </ui:define>
+
+    <ui:define name="editFields">
+
+
+        <s:decorate id="nameField" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.District_name}
+            </ui:define>
+            <h:inputText id="nameInput" value="#{districtHome.instance.name}"
+                         label="#{messages.District_name}"
+                         readonly="#{not districtHome.editing}"
+                         required="true" maxlength="100" size="30"
+                         valueChangeListener="#{districtHome.verifyUniqueAvailable}"
+                         unique="name">
+                <r:ajax event="blur" execute="@this" disabled="#{not districtHome.editing}" render="nameMessages"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message ajaxRendered="false" for="nameInput" id="nameMessages"/>
+            </ui:define>
+
+        </s:decorate>
+
+
+    </ui:define>
+
+</ui:composition>
