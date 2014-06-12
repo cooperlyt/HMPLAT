@@ -38,19 +38,22 @@
 
         <s:decorate id="nameField" template="/layout/edit.xhtml">
             <ui:define name="label">
-                #{messages.District_name}
+                #{messages.Developer_name}
             </ui:define>
-            <h:inputText id="nameInput" value="#{districtHome.instance.name}"
-                         label="#{messages.District_name}"
-                         readonly="#{not districtHome.editing}"
+            <h:inputText id="nameInput" value="#{developerHome.instance.name}"
+                         label="#{messages.Developer_name}"
+                         readonly="#{not developerHome.editing}"
                          required="true" maxlength="100" size="30"
-                         valueChangeListener="#{districtHome.verifyUniqueAvailable}"
+                         valueChangeListener="#{developerHome.verifyUniqueAvailable}"
                          unique="name">
-                <r:ajax event="blur" execute="@this" disabled="#{not districtHome.editing}" render="nameMessages"/>
+                <r:ajax event="blur" execute="@this" disabled="#{not developerHome.editing}" render="nameMessages"/>
             </h:inputText>
 
             <ui:define name="tail">
-                <r:message ajaxRendered="false" for="nameInput" id="nameMessages"/>
+
+                <h:panelGrid columns="2">
+                <h:selectBooleanCheckbox value="#{developerHome.instance.destroyed}"/>
+                <r:message ajaxRendered="false" for="nameInput" id="nameMessages"/> </h:panelGrid>
             </ui:define>
 
         </s:decorate>
