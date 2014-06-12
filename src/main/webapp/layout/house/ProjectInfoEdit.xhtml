@@ -1,0 +1,196 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_name}
+        </ui:define>
+        <h:inputText id="nameInput" value="#{projectHome.instance.name}" rendered="true"
+                     label="#{messages.Project_name}" unique="name" maxlength="50" size="30"
+                     valueChangeListener="#{projectHome.verifyUniqueAvailable}">
+            <r:ajax event="blur" execute="@this" render="nameMessages"/>
+
+        </h:inputText>
+
+        <ui:define name="tail">
+            <r:message ajaxRendered="false" for="nameInput" id="nameMessages"/>
+        </ui:define>
+    </s:decorate>
+
+
+    <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/mootools.js"/>
+    <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/pinyin.js"/>
+
+
+    <s:decorate id="developerField" template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Developer}
+        </ui:define>
+        <r:autocomplete id="pinyinSearchDeveloper"
+                        mode="client" minChars="1" autofill="false"
+                        showButton="true"
+                        selectFirst="true" required="true"
+                        label="#{messages.Developer}"
+                        clientFilterFunction="pinyinFilter"
+                        autocompleteList="#{validDeveloper.resultList}"
+                        value="#{developerHome.pinyinSearchName}"
+                        fetchValue="[#{_developer.name}][id:#{_developer.id}]" var="_developer">
+
+            <h:outputText value="#{_developer.name}"/>
+            <r:ajax event="selectitem" render="developerField" execute="@this">
+                <r:attachQueue requestDelay="0"/>
+            </r:ajax>
+            <r:ajax event="blur" execute="@this" render="developerField">
+                <r:attachQueue requestDelay="0"/>
+            </r:ajax>
+        </r:autocomplete>
+
+    </s:decorate>
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_buildSize}
+        </ui:define>
+        <h:selectOneMenu value="#{projectHome.instance.buildSize}"
+                         label="#{messages.Project_buildSize}">
+            <s:selectItems value="#{dictionary.getWordList('house.project.buildSize')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_buildCount}
+        </ui:define>
+        <r:inputNumberSpinner label="#{messages.Project_buildCount}" value="#{projectHome.instance.buildCount}" step="1"
+                              minValue="1"/>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_area}
+        </ui:define>
+        <h:inputText id="areaInput" value="#{projectHome.instance.area}"
+                     converter="javax.faces.BigDecimal"
+                     label="#{messages.Project_area}" size="20">
+            <f:convertNumber pattern="#0.##"/>
+            <r:validator event="blur"/>
+        </h:inputText>
+
+        <ui:define name="tail">
+            <r:message ajaxRendered="false" id="areaInputMessages" for="areaInput"/>
+        </ui:define>
+    </s:decorate>
+
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_sumArea}
+        </ui:define>
+        <h:inputText id="sumAreaInput" value="#{projectHome.instance.sumArea}"
+                     converter="javax.faces.BigDecimal"
+                     label="#{messages.Project_sumArea}" size="20">
+            <f:convertNumber pattern="#0.##"/>
+            <r:validator event="blur"/>
+        </h:inputText>
+
+        <ui:define name="tail">
+            <r:message ajaxRendered="false" id="sumAreaInputMessages" for="sumAreaInput"/>
+        </ui:define>
+    </s:decorate>
+
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_mapTime}
+        </ui:define>
+
+        <r:calendar
+                enableManualInput="true"
+                inputSize="10"
+                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                datePattern="#{messages.datePattern}"
+                label="#{messages.Project_mapTime}"
+                value="#{projectHome.instance.mapTime}">
+        </r:calendar>
+
+    </s:decorate>
+
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_openTime}
+        </ui:define>
+
+        <r:calendar
+                enableManualInput="true"
+                inputSize="10"
+                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                datePattern="#{messages.datePattern}"
+                label="#{messages.Project_openTime}"
+                value="#{projectHome.instance.openTime}">
+        </r:calendar>
+
+    </s:decorate>
+
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_finishDate}
+        </ui:define>
+
+        <r:calendar
+                enableManualInput="true"
+                inputSize="10"
+                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                datePattern="#{messages.datePattern}"
+                label="#{messages.Project_finishDate}"
+                value="#{projectHome.instance.finishDate}">
+        </r:calendar>
+
+    </s:decorate>
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_comeDate}
+        </ui:define>
+
+        <r:calendar
+                enableManualInput="true"
+                inputSize="10"
+                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                datePattern="#{messages.datePattern}"
+                label="#{messages.Project_comeDate}"
+                value="#{projectHome.instance.comeDate}">
+        </r:calendar>
+    </s:decorate>
+
+    <s:decorate template="/layout/seam-edit.xhtml">
+        <ui:define name="label">
+            #{messages.Project_address}
+        </ui:define>
+        <h:inputText value="#{projectHome.instance.address}" maxlength="200" size="50"
+                     label="#{messages.Project_address}"/>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.field_memo}
+        </ui:define>
+        <h:inputTextarea id="memoInput" value="#{projectHome.instance.memo}" label="#{messages.field_memo}"
+                         cols="100" rows="2">
+            <f:validateLength maximum="200"/>
+            <r:validator event="blur"/>
+        </h:inputTextarea>
+        <ui:define name="tail">
+            <r:message for="memoInput"/>
+        </ui:define>
+    </s:decorate>
+
+</ui:composition>

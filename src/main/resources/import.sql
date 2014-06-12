@@ -88,6 +88,12 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'hou
 
 -- WORD
 
+INSERT INTO WORD_CATEGORY(ID, NAME, MEMO, SYSTEM) VALUES ('house.project.buildSize','建筑规模','',b'1');
+
+INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('buildSize.small','small','小','house.project.buildSize','','1',b'1');
+INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('buildSize.big','big','大','house.project.buildSize','','2',b'1');
+
+
 INSERT INTO WORD_CATEGORY(ID, NAME, MEMO, SYSTEM) VALUES ('system.empJob','职位','',b'1');
 
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('system.empJob.manager','manager','科长','system.empJob','','3',b'1');

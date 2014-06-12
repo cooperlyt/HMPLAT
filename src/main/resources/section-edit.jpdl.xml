@@ -12,10 +12,17 @@
 
     <page view-id="/func/house/datas/SectionEdit.xhtml" name="sectionEdit"  redirect="true"
                 no-conversation-view-id="/func/house/datas/SectionMgr.xhtml">
-        <transition to="view" name="next"/>
+        <transition to="projectEdit" name="next"/>
         <transition to="done" name="cancel"/>
         <transition to="view" name="complete"/>
     </page>
+
+    <page view-id="/func/house/datas/ProjectEdit.xhtml" name="projectEdit"  redirect="true"
+          no-conversation-view-id="/func/house/datas/SectionMgr.xhtml">
+        <transition to="done" name="cancel"/>
+        <transition to="view" name="complete"/>
+    </page>
+
 
     <page view-id="/func/system/config/ViewBusiness.xhtml" name="view" redirect="true"
           no-conversation-view-id="/func/house/datas/SectionMgr.xhtml">

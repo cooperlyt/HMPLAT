@@ -23,9 +23,7 @@ import java.util.*;
 public class CalendarBean implements java.io.Serializable {
 
     private Locale locale;
-    private boolean popup;
     //private String pattern;
-    private boolean showApply = false;
     private boolean useCustomDayLabels;
     private TimeZone timeZone;
 
@@ -34,7 +32,6 @@ public class CalendarBean implements java.io.Serializable {
 
         locale = Locale.CHINA;
         timeZone = TimeZone.getTimeZone("GMT+8");
-        popup = true;
         //pattern = this.getMsgs("calendarPattern");
     }
 
@@ -48,14 +45,6 @@ public class CalendarBean implements java.io.Serializable {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
-    }
-
-    public boolean isPopup() {
-        return popup;
-    }
-
-    public void setPopup(boolean popup) {
-        this.popup = popup;
     }
 
     public void selectLocale(ValueChangeEvent event) {
@@ -74,14 +63,6 @@ public class CalendarBean implements java.io.Serializable {
 
     public void setUseCustomDayLabels(boolean useCustomDayLabels) {
         this.useCustomDayLabels = useCustomDayLabels;
-    }
-
-    public boolean isShowApply() {
-        return showApply;
-    }
-
-    public void setShowApply(boolean showApply) {
-        this.showApply = showApply;
     }
 
     public TimeZone getTimeZone() {

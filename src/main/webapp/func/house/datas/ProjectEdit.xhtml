@@ -1,12 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:r="http://richfaces.org"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/full-template.xhtml">
 
-</body>
-</html>
+    <ui:param name="functionTitle" value="#{sectionHome.instance.name} - #{messages.Project}"/>
+
+    <ui:define name="func-body">
+
+        <r:panel>
+            <ui:include src="/layout/house/ProjectInfoEdit.xhtml"/>
+
+            <div style="clear:both">
+                <hr style="border:1px dashed #{a4jSkin.panelBorderColor}" width="95%" size="1"/>
+            </div>
+            <h:panelGrid columns="1" style="width: 100%; text-align: center">
+                <s:div styleClass="actionButtons">
+
+                    <r:commandButton immediate="true" value="#{messages.reset}"
+                                     action="#{orderFinanceReveiveAction.reset}"
+                                     execute="@this" render="receiveDetails">
+                        <r:attachQueue requestDelay="0"/>
+                    </r:commandButton>
+                    <r:commandButton value="#{messages.receviceMoney}" execute="@form"
+                                     action="#{orderFinanceReveiveAction.receiveMoney}"
+                                     render="receiveDetails">
+                        <r:attachQueue requestDelay="0"/>
+
+                    </r:commandButton>
+
+                </s:div>
+
+            </h:panelGrid>
+        </r:panel>
+
+        <br/>
+
+        <r:dataTable value="#{sectionHome.projects}" var="_project"
+                     noDataLabel="#{messages.SectionNoProject}" style="width:100%">
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Project_name}
+                </f:facet>
+                #{_project.name}
+            </r:column>
+
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Developer}
+                </f:facet>
+                #{_project.developer.name}
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Project_buildSize}
+                </f:facet>
+                #{dictionary.getWordValue(_project.buildSize)}
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                     #{messages.Project_buildCount}
+                </f:facet>
+                #{_project.buildCount}
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Project_area}
+                </f:facet>
+                #{_project.area}
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Project_area}
+                </f:facet>
+                <h:outputText value="#{_project.area}" >
+                    <f:convertNumber pattern="#0.###"/>
+                </h:outputText>
+
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Project_sumArea}
+                </f:facet>
+                <h:outputText value="#{_project.sumArea}" >
+                    <f:convertNumber pattern="#0.###"/>
+                </h:outputText>
+            </r:column>
+
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Project_state}
+                </f:facet>
+                <h:outputText value="#{messages[_project.state.name()]}"/>
+            </r:column>
+
+            <r:column rendered="#{not sectionHome.managed}">
+                <f:facet name="header">
+                </f:facet>
+
+            </r:column>
+
+        </r:dataTable>
+    </ui:define>
+
+</ui:composition>
