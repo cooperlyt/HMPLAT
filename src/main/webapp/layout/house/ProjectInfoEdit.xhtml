@@ -24,33 +24,19 @@
     </s:decorate>
 
 
-    <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/mootools.js"/>
-    <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/pinyin.js"/>
-
-
-    <s:decorate id="developerField" template="/layout/seam-edit.xhtml">
+    <s:decorate template="/layout/seam-edit.xhtml">
         <ui:define name="label">
             #{messages.Developer}
         </ui:define>
-        <r:autocomplete id="pinyinSearchDeveloper"
-                        mode="client" minChars="1" autofill="false"
-                        showButton="true"
-                        selectFirst="true" required="true"
-                        label="#{messages.Developer}"
-                        clientFilterFunction="pinyinFilter"
-                        autocompleteList="#{validDeveloper.resultList}"
-                        value="#{developerHome.pinyinSearchName}"
-                        fetchValue="[#{_developer.name}][id:#{_developer.id}]" var="_developer">
-
-            <h:outputText value="#{_developer.name}"/>
-            <r:ajax event="selectitem" render="developerField" execute="@this">
-                <r:attachQueue requestDelay="0"/>
-            </r:ajax>
-            <r:ajax event="blur" execute="@this" render="developerField">
-                <r:attachQueue requestDelay="0"/>
-            </r:ajax>
-        </r:autocomplete>
-
+        <h:panelGrid columns="2">
+            <r:select id="developerSelect" value="#{developerHome.id}" label="#{messages.Developer}"
+                      required="true">
+                <s:selectItems value="#{validDeveloper.resultList}" var="_developer"
+                               label="#{_developer.name}" itemValue="#{_developer.id}"
+                               noSelectionLabel="#{messages.noSelectLabel}"/>
+            </r:select>
+            <r:commandButton value="..." onclick="#{r:component('developerSearchSelectPanel')}.show(); return false;"/>
+        </h:panelGrid>
     </s:decorate>
 
     <s:decorate template="/layout/seam-edit.xhtml">
@@ -60,7 +46,7 @@
         <h:selectOneMenu value="#{projectHome.instance.buildSize}"
                          label="#{messages.Project_buildSize}">
             <s:selectItems value="#{dictionary.getWordList('house.project.buildSize')}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>
     </s:decorate>
 
@@ -80,11 +66,12 @@
                      converter="javax.faces.BigDecimal"
                      label="#{messages.Project_area}" size="20">
             <f:convertNumber pattern="#0.##"/>
+            <f:validateDoubleRange minimum="0"/>
             <r:validator event="blur"/>
         </h:inputText>
 
         <ui:define name="tail">
-            <r:message ajaxRendered="false" id="areaInputMessages" for="areaInput"/>
+            <r:message for="areaInput"/>
         </ui:define>
     </s:decorate>
 
@@ -97,11 +84,12 @@
                      converter="javax.faces.BigDecimal"
                      label="#{messages.Project_sumArea}" size="20">
             <f:convertNumber pattern="#0.##"/>
-            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+            <r:validator event="blur" />
         </h:inputText>
 
         <ui:define name="tail">
-            <r:message ajaxRendered="false" id="sumAreaInputMessages" for="sumAreaInput"/>
+            <r:message for="sumAreaInput"/>
         </ui:define>
     </s:decorate>
 

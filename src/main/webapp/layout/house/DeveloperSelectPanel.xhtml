@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+    <h:outputStylesheet>
+        .searchBtn {
+            width: 10px;
+        }
+    </h:outputStylesheet>
+
+    <r:popupPanel id="developerSearchSelectPanel" modal="true"
+                  autosized="false"
+                  moveable="true" resizeable="false" height="500" width="300">
+
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:outputText value="#{messages.Developer}"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGrid columns="3">
+
+
+                <h:panelGroup>
+                    <r:commandButton image="/img/close.png"
+                                     onclick="#{r:component('developerSearchSelectPanel')}.hide(); return false;"/>
+                </h:panelGroup>
+            </h:panelGrid>
+        </f:facet>
+        <h:form>
+            <r:region>
+
+                <h:panelGrid columns="2" columnClasses=",searchBtn" width="100%">
+                    <h:inputText style="width: 100%" value="#{developerList.name}"/>
+
+                    <r:commandButton style="padding-left: 2px; padding-right: 2px" execute="@region"
+                                     image="/img/icons/search.png" action="#{developerList.first}" render="dataListResult">
+                        <r:attachQueue requestDelay="0"/>
+                    </r:commandButton>
+                </h:panelGrid>
+
+            </r:region>
+
+            <r:dataTable value="#{developerList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
+                         id="dataListResult" style="width: 100%">
+                <f:facet name="footer">
+
+
+                    <r:outputPanel rendered="#{not empty sectionList.resultList}">
+                        <ui:include src="/layout/pageA4jNavigation.xhtml">
+                            <ui:param name="entityList" value="#{sectionList}"/>
+                        </ui:include>
+                    </r:outputPanel>
+                </f:facet>
+
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Developer_name}
+                    </f:facet>
+                    <r:commandLink value="#{_item.name}" execute="@this" render="#{render}"
+                                   oncomplete="#{r:component('developerSearchSelectPanel')}.hide()">
+                        <r:attachQueue requestDelay="0"/>
+                        <r:param value="#{_item.id}" assignTo="#{developerHome.id}"/>
+                    </r:commandLink>
+
+                </r:column>
+
+            </r:dataTable>
+        </h:form>
+    </r:popupPanel>
+
+
+
+</ui:composition>

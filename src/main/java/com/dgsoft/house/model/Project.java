@@ -125,8 +125,7 @@ public class Project implements java.io.Serializable, TreeNode {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "OPEN_TIME", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "OPEN_TIME", nullable = true, length = 19)
     public Date getOpenTime() {
         return this.openTime;
     }
@@ -155,8 +154,7 @@ public class Project implements java.io.Serializable, TreeNode {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "FINISH_DATE", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "FINISH_DATE", nullable = true, length = 19)
     public Date getFinishDate() {
         return this.finishDate;
     }
@@ -184,8 +182,7 @@ public class Project implements java.io.Serializable, TreeNode {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "COME_DATE", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "COME_DATE", nullable = true, length = 19)
     public Date getComeDate() {
         return this.comeDate;
     }
@@ -216,8 +213,7 @@ public class Project implements java.io.Serializable, TreeNode {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "MAP_TIME", nullable = true, length = 19)
     public Date getMapTime() {
         return this.mapTime;
     }

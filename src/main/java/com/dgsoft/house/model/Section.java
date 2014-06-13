@@ -41,8 +41,8 @@ public class Section implements java.io.Serializable,TreeNode {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-    @GeneratedValue(generator = "paymentableGenerator")
-    @GenericGenerator(name = "paymentableGenerator",strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -69,7 +69,6 @@ public class Section implements java.io.Serializable,TreeNode {
 	}
 
 	public void setDistrict(District district) {
-        System.out.print("sadfafasfasdfa");
 		this.district = district;
 	}
 

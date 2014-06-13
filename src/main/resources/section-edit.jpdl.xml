@@ -24,7 +24,7 @@
     </page>
 
 
-    <page view-id="/func/system/config/ViewBusiness.xhtml" name="view" redirect="true"
+    <page view-id="/func/house/datas/SectionView.xhtml" name="view" redirect="true"
           no-conversation-view-id="/func/house/datas/SectionMgr.xhtml">
         <transition to="sectionEdit" name="previous"/>
         <transition to="done" name="persisted"/>

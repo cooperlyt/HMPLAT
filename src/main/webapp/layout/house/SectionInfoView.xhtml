@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+    <s:decorate template="/layout/seam-display.xhtml">
+        <ui:define name="label">
+            #{messages.District}
+        </ui:define>
+        #{section.district.name}
+    </s:decorate>
+
+    <s:decorate template="/layout/seam-display.xhtml">
+        <ui:define name="label">
+            #{messages.Section_name}
+        </ui:define>
+        #{section.name}
+    </s:decorate>
+
+
+    <s:decorate template="/layout/seam-display.xhtml">
+        <ui:define name="label">
+            #{messages.Section_address}
+        </ui:define>
+        #{section.address}
+    </s:decorate>
+
+    <div style="clear: both;"/>
+
+    <r:dataTable style="width: 100%" value="#{section.projectList}" var="_project" noDataLabel="#{messages.emptyResult}" >
+        <r:column>
+            <f:facet name="header">
+                #{messages.Project_name}
+            </f:facet>
+            #{_project.name}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Developer}
+            </f:facet>
+            #{_project.developer.name}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Project_buildSize}
+            </f:facet>
+            #{dictionary.getWordValue(_project.buildSize)}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Project_buildCount}
+            </f:facet>
+            #{_project.buildCount}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Project_area}
+            </f:facet>
+            <h:outputText value="#{_project.area}">
+                <f:convertNumber pattern="#0.###"/>
+            </h:outputText>
+
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Project_sumArea}
+            </f:facet>
+            <h:outputText value="#{_project.sumArea}">
+                <f:convertNumber pattern="#0.###"/>
+            </h:outputText>
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Project_state}
+            </f:facet>
+            <h:outputText value="#{messages[_project.state.name()]}"/>
+        </r:column>
+    </r:dataTable>
+
+</ui:composition>

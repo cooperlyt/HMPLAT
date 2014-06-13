@@ -14,6 +14,7 @@ import org.jboss.seam.annotations.FlushModeType;
 public class SimpleEntityHome<E extends NamedEntity> extends EntityHomeAdapter<E> {
 
     public void setPinyinSearchName(String searchStr) {
+        log.debug("setPinyinSearchName :" + searchStr );
         String id = PinyinTools.splitPinyinId(searchStr);
         log.debug("setPinyinSearchName id is:" + searchStr + "|" + id);
         if (id == null) {

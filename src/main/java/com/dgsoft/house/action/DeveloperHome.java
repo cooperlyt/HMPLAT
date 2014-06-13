@@ -29,4 +29,6 @@ public class DeveloperHome extends HouseSimpleEntityHome<Developer> {
         return true;
     }
 
+
+
 }

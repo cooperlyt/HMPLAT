@@ -10,108 +10,130 @@
 
     <ui:param name="functionTitle" value="#{sectionHome.instance.name} - #{messages.Project}"/>
 
-    <ui:define name="func-body">
+    <ui:define name="toolbar">
+        <r:toolbar >
+            <r:toolbarGroup location="right">
+                <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
+            </r:toolbarGroup>
+
+            <r:toolbarGroup location="right">
+                <s:button action="complete" styleClass="toolBarBtn" value="#{messages.complete}"/>
+            </r:toolbarGroup>
+        </r:toolbar>
+    </ui:define>
+
+    <ui:define name="body">
+
+
+
+        <ui:include src="/layout/house/DeveloperSelectPanel.xhtml">
+            <ui:param name="render" value="developerSelect"/>
+        </ui:include>
 
         <r:panel>
-            <ui:include src="/layout/house/ProjectInfoEdit.xhtml"/>
+            <h:form id="projectDetails">
 
-            <div style="clear:both">
-                <hr style="border:1px dashed #{a4jSkin.panelBorderColor}" width="95%" size="1"/>
-            </div>
-            <h:panelGrid columns="1" style="width: 100%; text-align: center">
-                <s:div styleClass="actionButtons">
+                <ui:include src="/layout/house/ProjectInfoEdit.xhtml"/>
 
-                    <r:commandButton immediate="true" value="#{messages.reset}"
-                                     action="#{orderFinanceReveiveAction.reset}"
-                                     execute="@this" render="receiveDetails">
-                        <r:attachQueue requestDelay="0"/>
-                    </r:commandButton>
-                    <r:commandButton value="#{messages.receviceMoney}" execute="@form"
-                                     action="#{orderFinanceReveiveAction.receiveMoney}"
-                                     render="receiveDetails">
-                        <r:attachQueue requestDelay="0"/>
+                <div style="clear:both">
+                    <hr style="border:1px dashed #{richSkin.panelBorderColor}" width="95%" size="1"/>
+                </div>
+                <h:panelGrid columns="1" style="width: 100%; text-align: center">
+                    <s:div styleClass="actionButtons">
 
-                    </r:commandButton>
+                        <r:commandButton immediate="true" value="#{messages.reset}"
+                                         action="#{projectHome.refresh}"
+                                         execute="@this" render="projectDetails">
+                            <r:attachQueue requestDelay="0"/>
+                        </r:commandButton>
+                        <r:commandButton value="#{messages.add}" execute="@form"
+                                         action="#{sectionHome.addNewProject}"
+                                         render="projectDetails,projects">
+                            <r:attachQueue requestDelay="0"/>
 
-                </s:div>
+                        </r:commandButton>
 
-            </h:panelGrid>
+                    </s:div>
+
+                </h:panelGrid>
+            </h:form>
         </r:panel>
 
         <br/>
+        <h:form>
 
-        <r:dataTable value="#{sectionHome.projects}" var="_project"
-                     noDataLabel="#{messages.SectionNoProject}" style="width:100%">
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Project_name}
-                </f:facet>
-                #{_project.name}
-            </r:column>
-
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Developer}
-                </f:facet>
-                #{_project.developer.name}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Project_buildSize}
-                </f:facet>
-                #{dictionary.getWordValue(_project.buildSize)}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                     #{messages.Project_buildCount}
-                </f:facet>
-                #{_project.buildCount}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Project_area}
-                </f:facet>
-                #{_project.area}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Project_area}
-                </f:facet>
-                <h:outputText value="#{_project.area}" >
-                    <f:convertNumber pattern="#0.###"/>
-                </h:outputText>
-
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Project_sumArea}
-                </f:facet>
-                <h:outputText value="#{_project.sumArea}" >
-                    <f:convertNumber pattern="#0.###"/>
-                </h:outputText>
-            </r:column>
+            <r:dataTable value="#{projects}" var="_project" id="projects"
+                         noDataLabel="#{messages.SectionNoProject}" style="width:100%">
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Project_name}
+                    </f:facet>
+                    #{_project.name}
+                </r:column>
 
 
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Project_state}
-                </f:facet>
-                <h:outputText value="#{messages[_project.state.name()]}"/>
-            </r:column>
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Developer}
+                    </f:facet>
+                    #{_project.developer.name}
+                </r:column>
 
-            <r:column rendered="#{not sectionHome.managed}">
-                <f:facet name="header">
-                </f:facet>
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Project_buildSize}
+                    </f:facet>
+                    #{dictionary.getWordValue(_project.buildSize)}
+                </r:column>
 
-            </r:column>
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Project_buildCount}
+                    </f:facet>
+                    #{_project.buildCount}
+                </r:column>
 
-        </r:dataTable>
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Project_area}
+                    </f:facet>
+                    <h:outputText value="#{_project.area}">
+                        <f:convertNumber pattern="#0.###"/>
+                    </h:outputText>
+
+                </r:column>
+
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Project_sumArea}
+                    </f:facet>
+                    <h:outputText value="#{_project.sumArea}">
+                        <f:convertNumber pattern="#0.###"/>
+                    </h:outputText>
+                </r:column>
+
+
+                <r:column>
+                    <f:facet name="header">
+                        #{messages.Project_state}
+                    </f:facet>
+                    <h:outputText value="#{messages[_project.state.name()]}"/>
+                </r:column>
+
+                <r:column rendered="#{not sectionHome.managed}" style="text-align:center;">
+                    <f:facet name="header">
+                    </f:facet>
+
+                    <r:commandButton image="/img/icons/delete.png" immediate="true" rendered="#{empty _project.id}"
+                                     render="projects"
+                                     title="#{messages.delete}" execute="@this" action="#{sectionHome.removeNewProject}">
+                        <r:attachQueue requestDelay="0"/>
+                    </r:commandButton>
+                </r:column>
+
+            </r:dataTable>
+
+        </h:form>
     </ui:define>
 
 </ui:composition>
