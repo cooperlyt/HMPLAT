@@ -41,10 +41,10 @@ public class Project implements java.io.Serializable, TreeNode {
     private ProjectState state;
     private String memo;
     private Date mapTime;
-    private String mapMemo;
+
     private Set<Build> builds = new HashSet<Build>(0);
-    private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(
-            0);
+    private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
+    private Set<PoolBuild> poolBuilds = new HashSet<PoolBuild>(0);
 
     public Project() {
     }
@@ -222,15 +222,6 @@ public class Project implements java.io.Serializable, TreeNode {
         this.mapTime = mapTime;
     }
 
-    @Column(name = "MAP_MEMO", length = 200)
-    @Size(max = 200)
-    public String getMapMemo() {
-        return this.mapMemo;
-    }
-
-    public void setMapMemo(String mapMemo) {
-        this.mapMemo = mapMemo;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     public Set<Build> getBuilds() {
@@ -251,6 +242,14 @@ public class Project implements java.io.Serializable, TreeNode {
         this.projectBuildProcesses = projectBuildProcesses;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    public Set<PoolBuild> getPoolBuilds() {
+        return poolBuilds;
+    }
+
+    public void setPoolBuilds(Set<PoolBuild> poolBuilds) {
+        this.poolBuilds = poolBuilds;
+    }
 
     @Transient
     public List<Build> getBuildList() {

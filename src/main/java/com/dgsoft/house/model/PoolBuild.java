@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 public class PoolBuild implements java.io.Serializable {
 
 	private String id;
-	private Section section;
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
@@ -29,28 +28,9 @@ public class PoolBuild implements java.io.Serializable {
 	private String memo;
     private Date regTime;
     private Integer floorCount;
+    private Project project;
 
 	public PoolBuild() {
-	}
-
-	public PoolBuild(Section section) {
-		this.section = section;
-	}
-	public PoolBuild(String id, Section section, String mapNumber,
-			String blockNo, String buildNo, String houseNumber,
-			String buildName, String structure, String address,
-			BigDecimal area, String memo) {
-		this.id = id;
-		this.section = section;
-		this.mapNumber = mapNumber;
-		this.blockNo = blockNo;
-		this.buildNo = buildNo;
-		this.houseNumber = houseNumber;
-		this.buildName = buildName;
-		this.structure = structure;
-		this.address = address;
-		this.area = area;
-		this.memo = memo;
 	}
 
 	@Id
@@ -70,17 +50,17 @@ public class PoolBuild implements java.io.Serializable {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SECTION_ID", nullable = false)
-	@NotNull
-    public Section getSection() {
-        return section;
+    @JoinColumn(name = "PROJECT", nullable = false)
+    @NotNull
+    public Project getProject() {
+        return project;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-	@Column(name = "MAP_NUMBER", length = 50)
+    @Column(name = "MAP_NUMBER", length = 50)
 	@Size(max = 50)
 	public String getMapNumber() {
 		return this.mapNumber;
@@ -187,4 +167,6 @@ public class PoolBuild implements java.io.Serializable {
     public void setFloorCount(Integer floorCount) {
         this.floorCount = floorCount;
     }
+
+
 }

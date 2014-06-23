@@ -28,7 +28,7 @@ public class Section implements java.io.Serializable,TreeNode {
 	private Set<Project> projects = new HashSet<Project>(0);
 	private Set<Smsubcompany> smsubcompanies = new HashSet<Smsubcompany>(0);
 	private Set<OwnerGroup> ownerGroups = new HashSet<OwnerGroup>(0);
-    private Set<PoolBuild> poolBuilds = new HashSet<PoolBuild>(0);
+
 
 	public Section() {
 	}
@@ -166,15 +166,5 @@ public class Section implements java.io.Serializable,TreeNode {
     @Transient
     public Enumeration children() {
         return Iterators.asEnumeration(getProjects().iterator());
-    }
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "section")
-    public Set<PoolBuild> getPoolBuilds() {
-        return poolBuilds;
-    }
-
-    public void setPoolBuilds(Set<PoolBuild> poolBuilds) {
-        this.poolBuilds = poolBuilds;
     }
 }

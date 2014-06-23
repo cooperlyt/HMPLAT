@@ -1,8 +1,10 @@
 package com.dgsoft.common;
 
+import com.dgsoft.common.helper.ActionExecuteState;
 import com.dgsoft.common.utils.persistence.UniqueVerify;
 import com.dgsoft.common.utils.persistence.UniqueVerifys;
 import org.jboss.seam.annotations.End;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
@@ -37,14 +39,16 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     @Logger
     protected Log log;
 
-    protected String lastState = "";
+    //protected String lastState = "";
 
     private Expressions.ValueExpression conflictMessage;
 
+    @In(create = true)
+    private ActionExecuteState actionExecuteState;
 
-    @BypassInterceptors
+
     public String getLastState() {
-        return lastState;
+        return actionExecuteState.getLastState();
     }
 
 
@@ -98,7 +102,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
                     }
 
                     for (E record : getEntityManager().createQuery(createQueryFieldsEq(fields)).getResultList()) {
-                        if (!isManaged() || !getInstanceId(record,true).equals(getInstanceId(getInstance(),true))) {
+                        if (!isManaged() || !getInstanceId(record, true).equals(getInstanceId(getInstance(), true))) {
                             getStatusMessages().addFromResourceBundleOrDefault(unique.severity(),
                                     getMessageKeyPrefix() + unique.name() + "_conflict", unique.name() + " conflict");
                             if (unique.severity().compareTo(StatusMessage.Severity.ERROR) >= 0) {
@@ -155,7 +159,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
                 fields.put(unique.field()[0], e.getNewValue());
 
                 for (E record : getEntityManager().createQuery(createQueryFieldsEq(fields)).getResultList()) {
-                    if (!isManaged() || !getInstanceId(record,true).equals(getInstanceId(getInstance(),true))) {
+                    if (!isManaged() || !getInstanceId(record, true).equals(getInstanceId(getInstance(), true))) {
                         getStatusMessages().addToControlFromResourceBundleOrDefault(e.getComponent().getId(),
                                 unique.severity(),
                                 getMessageKeyPrefix() + unique.name() + "_conflict", unique.name() + " conflict");
@@ -208,7 +212,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
                 getConflictMessageKey(), getConflictMessage().getExpressionString());
     }
 
-    private Object getInstanceId(E entityObj,boolean generated) {
+    private Object getInstanceId(E entityObj, boolean generated) {
         for (Field field : getEntityClass().getDeclaredFields()) {
 
             if (field.isAnnotationPresent(Id.class)
@@ -242,7 +246,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
 
     private boolean verifyPersist() {
         boolean result = verifyPersistAvailable() & verifyUnique();
-        Object idValue = getInstanceId(getInstance(),false);
+        Object idValue = getInstanceId(getInstance(), false);
         if ((idValue != null) &&
                 (getEntityManager().find(getEntityClass(), idValue) != null)) {
             conflictMessage();
@@ -290,28 +294,28 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     @Override
     public void create() {
         super.create();
-        lastState = "";
+        actionExecuteState.clearState();
     }
 
     @Override
     public String update() {
-        lastState = "";
+        actionExecuteState.clearState();
         if (wire() && verifyUpdate()) {
-            lastState = super.update();
+            actionExecuteState.setLastState(super.update());
         } else
             return null;
-        return lastState;
+        return actionExecuteState.getLastState();
     }
 
     @Override
     public String persist() {
-        lastState = "";
+        actionExecuteState.clearState();
         if (wire() && verifyPersist())
-            lastState = super.persist();
+            actionExecuteState.setLastState(super.persist());
         else
             return null;
 
-        return lastState;
+        return actionExecuteState.getLastState();
     }
 
     public String removeAndClear() {
@@ -324,29 +328,29 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
 
     @Override
     public String remove() {
-        lastState = "";
+        actionExecuteState.clearState();
         if (verifyRemoveAvailable())
-            lastState = super.remove();
+            actionExecuteState.setLastState(super.remove());
         else
             return null;
-        return lastState;
+        return actionExecuteState.getLastState();
     }
 
     @Override
     public E find() {
-        lastState = "";
+        actionExecuteState.clearState();
         return super.find();
     }
 
     @Override
     protected E loadInstance() {
-        lastState = "";
+        actionExecuteState.clearState();
         return super.loadInstance();
     }
 
     @Override
     protected E createInstance() {
-        lastState = "";
+        actionExecuteState.clearState();
         return super.createInstance();
     }
 

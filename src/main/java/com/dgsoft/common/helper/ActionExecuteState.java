@@ -4,6 +4,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +19,7 @@ public class ActionExecuteState {
 
     private String lastState = "";
 
+    @BypassInterceptors
     public String getLastState() {
         return lastState;
     }

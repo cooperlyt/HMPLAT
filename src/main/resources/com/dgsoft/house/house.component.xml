@@ -26,4 +26,10 @@
     <component name="validDeveloper" scope="event" class="com.dgsoft.house.HouseEntityQuery">
         <property name="ejbql">select developer from Developer developer left join fetch developer.attachCorporation where destroyed = false</property>
     </component>
+
+
+
+    <event type="org.jboss.seam.afterTransactionSuccess.Section">
+        <action execute="#{sectionList.refresh}"/>
+    </event>
 </components>

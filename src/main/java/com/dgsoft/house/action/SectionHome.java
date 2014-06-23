@@ -8,6 +8,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
 /**
@@ -21,6 +23,9 @@ public class SectionHome extends HouseEntityHome<Section>{
 
     @In(required = false)
     private ProjectHome projectHome;
+
+    @In
+    private FacesMessages facesMessages;
 
     @DataModel(value = "projects")
     private SetLinkList<Project> projects;
@@ -48,5 +53,13 @@ public class SectionHome extends HouseEntityHome<Section>{
         projects.remove(project);
     }
 
+    @Override
+    protected boolean verifyRemoveAvailable() {
+        if (getInstance().getSmsubcompanies().isEmpty() && getInstance().getOwnerGroups().isEmpty() && getInstance().getProjects().isEmpty()){
+            return true;
+        }
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"SectionCantRemove");
+        return false;
 
+    }
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+
+    <h:form>
+        <r:collapsiblePanel switchType="client" header="#{messages.search_conditions}">
+            <ui:include src="/layout/house/condition/SectionSearchCondition.xhtml"/>
+
+
+            <h:panelGrid columns="1" style="width: 100%; text-align: right">
+                <r:outputPanel id="search_buttons">
+                    <div class="actionButtons">
+
+                        <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
+
+
+                        <r:outputPanel id="searchButton">
+                            <r:commandButton value="#{messages.search}"
+                                             execute="@form" render="dataListResult"
+                                             action="#{sectionList.first}">
+                                <r:attachQueue requestDelay="0"/>
+                            </r:commandButton>
+                        </r:outputPanel>
+                    </div>
+                </r:outputPanel>
+            </h:panelGrid>
+        </r:collapsiblePanel>
+    </h:form>
+    <br/>
+
+    <h:form>
+        <r:dataTable value="#{sectionList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
+                     id="dataListResult" style="width: 100%">
+            <f:facet name="footer">
+                <r:outputPanel rendered="#{not empty sectionList.resultList}">
+                    <ui:include src="/layout/pageA4jNavigation.xhtml">
+                        <ui:param name="entityList" value="#{sectionList}"/>
+                    </ui:include>
+                </r:outputPanel>
+            </f:facet>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{sectionList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Section_name}"/>
+                        <ui:param name="propertyPath" value="section.name"/>
+                    </ui:include>
+                </f:facet>
+                <s:link value="#{_item.name}" target="_blank" view="/func/house/datas/SectionView.xhtml">
+                    <f:param name="sectionId" value="#{_item.id}"/>
+                </s:link>
+
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{sectionList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.District}"/>
+                        <ui:param name="propertyPath" value="section.district.name"/>
+                    </ui:include>
+                </f:facet>
+
+                #{_item.district.name}
+
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    #{messages.Section_address}
+                </f:facet>
+                #{_item.address}
+            </r:column>
+
+            <ui:insert/>
+
+
+        </r:dataTable>
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.District}
+        </ui:define>
+        <h:selectOneMenu value="#{section.district}"
+                         label="#{messages.District}" required="true">
+            <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                           itemValue="#{_district}" label="#{_district.name}"/>
+            <f:converter converterId="houseEntityConverter"/>
+        </h:selectOneMenu>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Section_name}
+        </ui:define>
+        <h:inputText id="nameInput" value="#{section.name}" required="true"
+                     label="#{messages.Section_name}" size="40" maxlength="50"
+                     unique="name"
+                     valueChangeListener="#{sectionHome.verifyUniqueAvailable}">
+            <r:ajax event="blur" execute="@this" render="nameMessages"/>
+        </h:inputText>
+
+        <ui:define name="tail">
+            <r:message for="nameInput" rendered="#{not tip}"/>
+
+            <r:message for="nameInput" styleClass="message-icon"
+                          showDetail="true" showSummary="true" tooltip="true" rendered="#{tip}"/>
+        </ui:define>
+
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Section_address}
+        </ui:define>
+        <h:inputText value="#{section.address}"
+                     label="#{messages.Section_address}" size="50" maxlength="200"/>
+    </s:decorate>
+
+
+</ui:composition>

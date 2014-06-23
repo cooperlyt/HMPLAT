@@ -9,95 +9,83 @@
                 template="/layout/template.xhtml">
 
 
-    <ui:define name="func-body">
-        <h:form>
-            <r:collapsiblePanel switchType="client" header="#{messages.search_conditions}">
-                <ui:include src="/layout/house/condition/SectionSearchCondition.xhtml"/>
+    <ui:define name="body">
 
+        <s:decorate template="/layout/house/SectionMgrBase.xhtml">
 
-                <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                    <r:outputPanel id="search_buttons">
-                        <div class="actionButtons">
-
-                            <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
-
-
-                            <r:outputPanel id="searchButton">
-                                <r:commandButton value="#{messages.search}"
-                                                 execute="@form" render="dataListResult"
-                                                 action="#{sectionList.first}">
-                                    <r:attachQueue requestDelay="0"/>
-                                </r:commandButton>
-                            </r:outputPanel>
-                        </div>
-                    </r:outputPanel>
-                </h:panelGrid>
-            </r:collapsiblePanel>
-        </h:form>
-        <br/>
-        <h:form>
-            <r:dataTable value="#{sectionList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
-                         id="dataListResult" style="width: 100%">
-                <f:facet name="footer">
-                    <r:outputPanel rendered="#{not empty sectionList.resultList}">
-                        <ui:include src="/layout/pageA4jNavigation.xhtml">
-                            <ui:param name="entityList" value="#{sectionList}"/>
-                        </ui:include>
-                    </r:outputPanel>
-                </f:facet>
-
-                <r:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{sectionList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Section_name}"/>
-                            <ui:param name="propertyPath" value="section.name"/>
-                        </ui:include>
-                    </f:facet>
-
-                    #{_item.name}
-                </r:column>
-
-                <r:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{sectionList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.District}"/>
-                            <ui:param name="propertyPath" value="section.district.name"/>
-                        </ui:include>
-                    </f:facet>
-
-                    #{_item.district.name}
-
-                </r:column>
-
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Section_address}
-                    </f:facet>
-                    #{_item.address}
-                </r:column>
-
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.field_memo}
-                    </f:facet>
-                    #{_item.memo}
-                </r:column>
-
-
-                <r:column>
-                    <f:facet name="header">
+            <r:column style="width: 50px;text-align:center;">
+                <f:facet name="header">
+                    <ui:remove>
                         <s:link action="create" pageflow="sectionEdit" propagation="begin">
                             <s:graphicImage value="/img/icons/create.gif"/>
-                        </s:link>
-                    </f:facet>
+                        </s:link></ui:remove>
+                    <r:commandButton immediate="true" execute="@this" image="/img/icons/create.gif"
+                                     title="#{messages.add}"
+                                     oncomplete="#{r:component('editPanel')}.show()" render="editPanel_form">
+                        <r:attachQueue requestDelay="0"/>
+                        <r:param value="" assignTo="#{sectionHome.id}"/>
+                        <s:conversationPropagation type="begin"/>
+                    </r:commandButton>
+                </f:facet>
+                <r:commandButton image="/img/icons/delete.png" action="#{sectionHome.remove}" immediate="true"
+                                 onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
+                                 execute="@this" title="#{messages.delete}" render="dataListResult">
+                    <r:attachQueue requestDelay="0"/>
+                    <r:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
+                </r:commandButton>
 
-                </r:column>
+                <r:commandButton image="/img/icons/edit.png" render="editPanel_form" immediate="true"
+                                 execute="@this"
+                                 title="#{messages.edit}" oncomplete="#{r:component('editPanel')}.show()">
+                    <r:attachQueue requestDelay="0"/>
+                    <r:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
+                    <s:conversationPropagation type="begin"/>
+                </r:commandButton>
+            </r:column>
+        </s:decorate>
 
-            </r:dataTable>
 
-        </h:form>
+        <s:decorate template="/layout/edit-modalpanel.xhtml">
+            <ui:param name="panelId" value="editPanel"/>
+            <ui:param name="panelTitle"
+                      value="#{messages.Section} #{' '} #{sectionHome.idDefined ? messages.add : messages.edit}"/>
+            <r:outputPanel>
+                <ui:include src="/layout/house/SectionEdit.xhtml">
+                    <ui:param name="section" value="#{sectionHome.instance}"/>
+                    <ui:param name="tip" value="true"/>
+                </ui:include>
+            </r:outputPanel>
+
+            <ui:define name="actionButtons">
+                <r:commandButton id="cancelButton" immediate="true" execute="@this" value="#{messages.cancel}"
+                                 oncomplete="#{r:component(panelId)}.hide();return false;">
+                    <s:conversationPropagation type="end"/>
+                    <r:attachQueue requestDelay="0"/>
+                </r:commandButton>
+                <r:outputPanel id="operButtons">
+                    <r:commandButton render="dataListResult" execute="@form" value="#{messages.save}"
+                                     action="#{sectionHome.persistEnd}"
+                                     rendered="#{!sectionHome.managed}"
+                                     data="#{sectionHome.lastState}"
+                                     oncomplete="if (event.data == 'persisted'){#{r:component(panelId)}.hide(); return true;} else return false;">
+                        <r:attachQueue requestDelay="0"/>
+                    </r:commandButton>
+
+
+                    <r:commandButton render="dataListResult" value="#{messages.update}" execute="@form"
+                                     action="#{sectionHome.updateEnd}"
+                                     rendered="#{sectionHome.managed}"
+                                     data="#{sectionHome.lastState}"
+                                     oncomplete="if(event.data == 'updated'){#{r:component(panelId)}.hide(); return true;} else return false;">
+                        <r:attachQueue requestDelay="0"/>
+                    </r:commandButton>
+                </r:outputPanel>
+
+
+            </ui:define>
+
+        </s:decorate>
+
     </ui:define>
 
 
