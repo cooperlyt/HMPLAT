@@ -84,7 +84,17 @@
                     </ui:include>
                 </f:facet>
 
-                #{}
+                #{dictionary.getWordValue(_item.buildSize)}
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_buildSize}"/>
+                        <ui:param name="propertyPath" value="project.buildSize"/>
+                    </ui:include>
+                </f:facet>
             </r:column>
 
         </r:dataTable>
