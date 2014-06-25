@@ -91,10 +91,26 @@
                 <f:facet name="header">
                     <ui:include src="/layout/a4jSort.xhtml">
                         <ui:param name="entityList" value="#{projectList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.Project_buildSize}"/>
-                        <ui:param name="propertyPath" value="project.buildSize"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
+                        <ui:param name="propertyPath" value="project.area"/>
                     </ui:include>
                 </f:facet>
+                <h:outputText value="#{_item.area}">
+                    <f:convertNumber pattern="#0.###"/>
+                </h:outputText>
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
+                        <ui:param name="propertyPath" value="project.area"/>
+                    </ui:include>
+                </f:facet>
+                <h:outputText value="#{_item.area}">
+                    <f:convertNumber pattern="#0.###"/>
+                </h:outputText>
             </r:column>
 
         </r:dataTable>

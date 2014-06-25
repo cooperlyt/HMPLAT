@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>0.75</zoom>
 	<x>-272</x>
-	<y>410</y>
+	<y>465</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -110,7 +110,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-26 15:09:45</creation_date>
-			<updated_date>2014-06-25 17:35:23</updated_date>
+			<updated_date>2014-06-25 17:43:16</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -233,7 +233,7 @@
 			<binary>false</binary>
 			<args></args>
 			<description></description>
-			<logical_name>面积</logical_name>
+			<logical_name>建筑面积</logical_name>
 			<physical_name>AREA</physical_name>
 			<type>decimal(p,s)</type>
 		</word>
@@ -2603,7 +2603,7 @@
 			<binary>false</binary>
 			<args></args>
 			<description></description>
-			<logical_name>总面积</logical_name>
+			<logical_name>占地面积</logical_name>
 			<physical_name>SUM_AREA</physical_name>
 			<type>decimal(p,s)</type>
 		</word>
@@ -7510,7 +7510,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>4</word_id>
+					<word_id>5</word_id>
 					<id>102</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -13951,7 +13951,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>6</word_id>
+					<word_id>4</word_id>
 					<id>267</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -14736,7 +14736,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>5</word_id>
+					<word_id>6</word_id>
 					<id>289</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -15445,7 +15445,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>6</word_id>
+					<word_id>4</word_id>
 					<id>308</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
