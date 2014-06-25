@@ -16,7 +16,7 @@ import java.util.Arrays;
 @Name("sectionList")
 public class SectionList extends HouseEntityQuery<Section> {
 
-    private static final String EJBQL = "select section from Section section left join fetch section.district";
+    private static final String EJBQL = "select section from Section section left join fetch section.district order by section.createTime";
 
     private static final String[] RESTRICTIONS = {
             "lower(section.name) like lower(concat('%',#{sectionSearchCondition.sectionName},'%'))",

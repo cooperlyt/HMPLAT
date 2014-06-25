@@ -25,6 +25,7 @@ public class Section implements java.io.Serializable,TreeNode {
 	private District district;
 	private String name;
 	private String address;
+    private Date createTime;
 	private Set<Project> projects = new HashSet<Project>(0);
 	private Set<Smsubcompany> smsubcompanies = new HashSet<Smsubcompany>(0);
 	private Set<OwnerGroup> ownerGroups = new HashSet<OwnerGroup>(0);
@@ -120,6 +121,17 @@ public class Section implements java.io.Serializable,TreeNode {
 	public void setOwnerGroups(Set<OwnerGroup> ownerGroups) {
 		this.ownerGroups = ownerGroups;
 	}
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME",nullable = false)
+    @NotNull
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     @Transient
     public List<Project> getProjectList(){

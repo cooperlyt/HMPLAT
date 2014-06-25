@@ -9,7 +9,9 @@ import javax.persistence.*;
 import javax.swing.tree.TreeNode;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import com.dgsoft.common.utils.persistence.UniqueVerify;
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -21,8 +23,8 @@ import java.util.*;
 @UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
 public class Project implements java.io.Serializable, TreeNode {
 
-    public enum ProjectState{
-        BUILDING,SALE,LOCKED;
+    public enum ProjectState {
+        BUILDING, SALE, LOCKED;
     }
 
     private String id;
@@ -31,16 +33,14 @@ public class Project implements java.io.Serializable, TreeNode {
     private Developer developer;
     private String name;
     private String address;
-    private Date openTime;
     private String buildSize;
     private Integer buildCount;
-    private Date finishDate;
     private BigDecimal area;
     private BigDecimal sumArea;
-    private Date comeDate;
     private ProjectState state;
     private String memo;
     private Date mapTime;
+    private Date createTime;
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
@@ -60,8 +60,6 @@ public class Project implements java.io.Serializable, TreeNode {
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     @NotNull
     @Size(max = 32)
     public String getId() {
@@ -103,7 +101,7 @@ public class Project implements java.io.Serializable, TreeNode {
         this.developer = developer;
     }
 
-    @Column(name = "NAME", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 50, unique = true)
     @NotNull
     @Size(max = 50)
     public String getName() {
@@ -124,15 +122,6 @@ public class Project implements java.io.Serializable, TreeNode {
         this.address = address;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "OPEN_TIME", nullable = true, length = 19)
-    public Date getOpenTime() {
-        return this.openTime;
-    }
-
-    public void setOpenTime(Date openTime) {
-        this.openTime = openTime;
-    }
 
     @Column(name = "BUILD_SIZE", length = 32)
     @Size(max = 32)
@@ -153,15 +142,6 @@ public class Project implements java.io.Serializable, TreeNode {
         this.buildCount = buildCount;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "FINISH_DATE", nullable = true, length = 19)
-    public Date getFinishDate() {
-        return this.finishDate;
-    }
-
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
-    }
 
     @Column(name = "AREA", precision = 18, scale = 3)
     public BigDecimal getArea() {
@@ -181,15 +161,6 @@ public class Project implements java.io.Serializable, TreeNode {
         this.sumArea = sumArea;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "COME_DATE", nullable = true, length = 19)
-    public Date getComeDate() {
-        return this.comeDate;
-    }
-
-    public void setComeDate(Date comeDate) {
-        this.comeDate = comeDate;
-    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATE", nullable = false)
@@ -200,6 +171,17 @@ public class Project implements java.io.Serializable, TreeNode {
 
     public void setState(ProjectState state) {
         this.state = state;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME",nullable = false)
+    @NotNull
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Column(name = "MEMO", length = 200)

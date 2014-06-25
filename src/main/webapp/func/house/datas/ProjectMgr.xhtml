@@ -7,5 +7,87 @@
                 xmlns:r="http://richfaces.org"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/template.xhtml">
+    <ui:define name="body">
+        <r:collapsiblePanel switchType="client" header="#{messages.search_conditions}">
+            <ui:include src="/layout/house/condition/SectionSearchCondition.xhtml"/>
+            <ui:include src="/layout/house/condition/ProjectSearchCondition.xhtml"/>
+            <h:panelGrid columns="1" style="width: 100%; text-align: right">
+                <r:outputPanel id="search_buttons">
+                    <div class="actionButtons">
+
+                        <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
+
+
+                        <r:outputPanel id="searchButton">
+                            <r:commandButton value="#{messages.search}"
+                                             execute="@form" render="dataListResult"
+                                             action="#{projectList.first}">
+                                <r:attachQueue requestDelay="0"/>
+                            </r:commandButton>
+                        </r:outputPanel>
+                    </div>
+                </r:outputPanel>
+            </h:panelGrid>
+        </r:collapsiblePanel>
+        <br/>
+        <r:dataTable value="#{projectList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
+                     id="dataListResult" style="width: 100%">
+            <f:facet name="footer">
+                <r:outputPanel rendered="#{not empty projectList.resultList}">
+                    <ui:include src="/layout/pageA4jNavigation.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                    </ui:include>
+                </r:outputPanel>
+            </f:facet>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_id}"/>
+                        <ui:param name="propertyPath" value="project.id"/>
+                    </ui:include>
+                </f:facet>
+                <s:link value="#{_item.id}" target="_blank" view="/func/house/datas/ProjectView.xhtml">
+                    <f:param name="projectId" value="#{_item.id}"/>
+                </s:link>
+
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_name}"/>
+                        <ui:param name="propertyPath" value="project.name"/>
+                    </ui:include>
+                </f:facet>
+                #{_item.name}
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Developer}"/>
+                        <ui:param name="propertyPath" value="project.developer.name"/>
+                    </ui:include>
+                </f:facet>
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
+                    <ui:include src="/layout/a4jSort.xhtml">
+                        <ui:param name="entityList" value="#{projectList}"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_buildSize}"/>
+                        <ui:param name="propertyPath" value="project.buildSize"/>
+                    </ui:include>
+                </f:facet>
+
+                #{}
+            </r:column>
+
+        </r:dataTable>
+    </ui:define>
 
 </ui:composition>
