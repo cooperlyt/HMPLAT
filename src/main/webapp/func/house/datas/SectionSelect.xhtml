@@ -12,9 +12,14 @@
 
     <ui:define name="body">
 
-        <ui:include src="/layout/house/SectionMgrBase.xhtml">
-            
-        </ui:include>
+        <s:decorate template="/layout/house/SectionMgrBase.xhtml">
+            <r:column>
+                <s:link value="#{messages.select}" action="next">
+                    <f:param name="sectionId" value="#{_item.id}"/>
+                </s:link>
+            </r:column>
+        </s:decorate>
+
     </ui:define>
 
 </ui:composition>

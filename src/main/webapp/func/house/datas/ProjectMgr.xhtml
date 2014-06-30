@@ -30,6 +30,11 @@
             </h:panelGrid>
         </r:collapsiblePanel>
         <br/>
+        <h:panelGrid columns="2">
+        <h:graphicImage value="/img/icons/create.gif"/>
+            <s:link action="create" value="#{messages.CreateNewProject}" pageflow="projectEdit" propagation="begin">
+            </s:link>
+        </h:panelGrid>
         <r:dataTable value="#{projectList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
                      id="dataListResult" style="width: 100%">
             <f:facet name="footer">

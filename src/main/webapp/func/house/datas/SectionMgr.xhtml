@@ -15,10 +15,7 @@
 
             <r:column style="width: 50px;text-align:center;">
                 <f:facet name="header">
-                    <ui:remove>
-                        <s:link action="create" pageflow="sectionEdit" propagation="begin">
-                            <s:graphicImage value="/img/icons/create.gif"/>
-                        </s:link></ui:remove>
+
                     <r:commandButton immediate="true" execute="@this" image="/img/icons/create.gif"
                                      title="#{messages.add}"
                                      oncomplete="#{r:component('editPanel')}.show()" render="editPanel_form">

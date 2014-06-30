@@ -12,6 +12,8 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: cooperlee
@@ -33,6 +35,10 @@ public class SectionHome extends HouseEntityHome<Section>{
     @DataModelSelection
     private Project project;
 
+    @Override
+    protected Section createInstance(){
+       return new Section(new Date());
+    }
 
     @Override
     protected void initInstance(){

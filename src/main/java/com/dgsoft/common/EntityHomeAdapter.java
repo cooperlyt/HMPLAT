@@ -44,7 +44,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     private Expressions.ValueExpression conflictMessage;
 
     @In(create = true)
-    private ActionExecuteState actionExecuteState;
+    protected ActionExecuteState actionExecuteState;
 
 
     public String getLastState() {

@@ -34,6 +34,10 @@ public class Section implements java.io.Serializable,TreeNode {
 	public Section() {
 	}
 
+    public Section(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public Section(District district){
         this.district = district;
     }
