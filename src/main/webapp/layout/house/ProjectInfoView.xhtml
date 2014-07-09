@@ -9,6 +9,13 @@
 
     <s:decorate template="/layout/display.xhtml">
         <ui:define name="label">
+            #{messages.Project_id}
+        </ui:define>
+        #{project.id}
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
             #{messages.Project_name}
         </ui:define>
         #{project.name}

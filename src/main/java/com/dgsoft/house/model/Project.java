@@ -54,8 +54,10 @@ public class Project implements java.io.Serializable, TreeNode {
         this.developer = developer;
     }
 
-    public Project(ProjectState state) {
+    public Project(String id, ProjectState state, Date createTime) {
         this.state = state;
+        this.createTime = createTime;
+        this.id = id;
     }
 
     @Id

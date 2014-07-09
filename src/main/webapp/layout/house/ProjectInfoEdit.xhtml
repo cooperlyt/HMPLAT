@@ -9,6 +9,22 @@
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
+            #{messages.Project_id}
+        </ui:define>
+        <h:inputText id="idInput" value="#{projectHome.instance.id}" required="true"
+                     label="#{messages.Project_id}" maxlength="32" size="30"
+                     valueChangeListener="#{projectHome.verifyIdAvailable}"
+                     disabled="#{projectHome.managed}">
+            <r:ajax event="blur" render="idMessages" execute="@this"/>
+        </h:inputText>
+
+        <ui:define name="tail">
+            <r:message ajaxRendered="false" for="idInput" id="idMessages"/>
+        </ui:define>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
             #{messages.Project_name}
         </ui:define>
         <h:inputText id="nameInput" value="#{projectHome.instance.name}" required="true"
@@ -85,7 +101,7 @@
                      label="#{messages.Project_sumArea}" size="20">
             <f:convertNumber pattern="#0.##"/>
             <f:validateDoubleRange minimum="0"/>
-            <r:validator event="blur" />
+            <r:validator event="blur"/>
         </h:inputText>
 
         <ui:define name="tail">

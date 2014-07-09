@@ -10,7 +10,16 @@
 
     <ui:param name="functionTitle" value="#{projectHome.instance.name}"/>
 
-    <ui:define name="func-body">
+    <ui:define name="toolbar">
+        <r:toolbar>
+            <r:toolbarGroup location="right">
+                <s:button value="#{messages.save}" styleClass="toolBarBtn" action="#{projectHome.persist}"/>
+                <s:button value="#{messages.cancel}" styleClass="toolBarBtn" action="cancel"/>
+            </r:toolbarGroup>
+        </r:toolbar>
+    </ui:define>
+
+    <ui:define name="body">
         <r:panel>
 
             <ui:include src="/layout/house/ProjectInfoView.xhtml">
