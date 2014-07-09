@@ -53,10 +53,11 @@
                         <ui:param name="propertyPath" value="section.name"/>
                     </ui:include>
                 </f:facet>
-                <s:link value="#{_item.name}" target="_blank" view="/func/house/datas/SectionView.xhtml">
-                    <f:param name="sectionId" value="#{_item.id}"/>
-                </s:link>
-
+                <ui:insert name="sectionName">
+                    <s:link value="#{_item.name}" target="_blank" view="/func/house/datas/SectionView.xhtml">
+                        <f:param name="sectionId" value="#{_item.id}"/>
+                    </s:link>
+                </ui:insert>
             </r:column>
 
             <r:column>

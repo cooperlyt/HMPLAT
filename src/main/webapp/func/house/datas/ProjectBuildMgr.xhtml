@@ -113,7 +113,8 @@
                 <r:commandButton value="#{messages.cancel}" immediate="true"
                                  onclick="#{r:component(panelId)}.hide(); return false;"/>
                 <r:commandButton value="#{messages.save}" execute="@from" action="#{projectHome.saveBuild}"
-                                 data="#{actionExecuteState.state}" oncomplete=""
+                                 data="#{actionExecuteState.state}"
+                                 oncomplete="if (event.data == 'persisted'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
             </ui:define>
         </s:decorate>
     </ui:define>

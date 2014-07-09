@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:r="http://richfaces.org">
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_name}
+        </ui:define>
+        #{project.name}
+    </s:decorate>
+
+    <div style="clear:both"/>
+    <s:decorate template="/layout/view-details.xhtml">
+        <ui:param name="openLabel" value="#{messages.Section}"/>
+        <ui:param name="labelValue" value="#{sectionHome.instance.name}"/>
+        <ui:include src="/layout/house/SectionInfoView.xhtml">
+            <ui:param name="section" value="#{sectionHome.instance}"/>
+        </ui:include>
+    </s:decorate>
+    <div style="clear:both"/>
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Developer}
+        </ui:define>
+        #{project.developer.name}
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_buildSize}
+        </ui:define>
+        #{dictionary.getWordValue(project.buildSize)}
+
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_buildCount}
+        </ui:define>
+       #{project.buildCount}
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_area}
+        </ui:define>
+        <h:outputText value="#{project.area}">
+            <f:convertNumber pattern="#0.000"/>
+        </h:outputText>
+    </s:decorate>
+
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_sumArea}
+        </ui:define>
+        <h:outputText value="#{project.sumArea}">
+            <f:convertNumber pattern="#0.000"/>
+        </h:outputText>
+
+    </s:decorate>
+
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_mapTime}
+        </ui:define>
+        <h:outputText value="#{project.mapTime}">
+            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+        </h:outputText>
+
+    </s:decorate>
+
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Project_address}
+        </ui:define>
+        #{project.address}
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.field_memo}
+        </ui:define>
+        #{project.memo}
+    </s:decorate>
+    <div style="clear:both"/>
+</ui:composition>

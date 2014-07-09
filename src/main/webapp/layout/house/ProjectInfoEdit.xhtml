@@ -11,7 +11,7 @@
         <ui:define name="label">
             #{messages.Project_name}
         </ui:define>
-        <h:inputText id="nameInput" value="#{projectHome.instance.name}" rendered="true"
+        <h:inputText id="nameInput" value="#{projectHome.instance.name}" required="true"
                      label="#{messages.Project_name}" unique="name" maxlength="50" size="30"
                      valueChangeListener="#{projectHome.verifyUniqueAvailable}">
             <r:ajax event="blur" execute="@this" render="nameMessages"/>
@@ -110,54 +110,6 @@
 
     </s:decorate>
 
-
-    <s:decorate template="/layout/seam-edit.xhtml">
-        <ui:define name="label">
-            #{messages.Project_openTime}
-        </ui:define>
-
-        <r:calendar
-                enableManualInput="true"
-                inputSize="10"
-                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                datePattern="#{messages.datePattern}"
-                label="#{messages.Project_openTime}"
-                value="#{projectHome.instance.openTime}">
-        </r:calendar>
-
-    </s:decorate>
-
-
-    <s:decorate template="/layout/seam-edit.xhtml">
-        <ui:define name="label">
-            #{messages.Project_finishDate}
-        </ui:define>
-
-        <r:calendar
-                enableManualInput="true"
-                inputSize="10"
-                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                datePattern="#{messages.datePattern}"
-                label="#{messages.Project_finishDate}"
-                value="#{projectHome.instance.finishDate}">
-        </r:calendar>
-
-    </s:decorate>
-
-    <s:decorate template="/layout/seam-edit.xhtml">
-        <ui:define name="label">
-            #{messages.Project_comeDate}
-        </ui:define>
-
-        <r:calendar
-                enableManualInput="true"
-                inputSize="10"
-                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                datePattern="#{messages.datePattern}"
-                label="#{messages.Project_comeDate}"
-                value="#{projectHome.instance.comeDate}">
-        </r:calendar>
-    </s:decorate>
 
     <s:decorate template="/layout/seam-edit.xhtml">
         <ui:define name="label">

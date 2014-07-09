@@ -12,7 +12,7 @@
 
     <page view-id="/func/house/datas/SectionSelect.xhtml" name="sectionSelect" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
-        <transition to="projectBuildMgr" name="next"/>
+        <transition to="projectEdit" name="next"/>
         <transition to="createSection" name="createSection"/>
         <transition to="done" name="cancel"/>
 
@@ -21,14 +21,15 @@
     <page view-id="/func/house/datas/SectionEdit.xhtml" name="createSection" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
         <transition to="done" name="cancel"/>
-        <transition to="projectBuildMgr" name="next"/>
+        <transition to="projectEdit" name="next"/>
     </page>
 
 
     <page view-id="/func/house/datas/ProjectBuildMgr.xhtml" name="projectBuildMgr" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
         <transition to="done" name="cancel"/>
-        <transition to="projectEdit" name="next"/>
+        <transition to="view" name="complete"/>
+        <transition to="poolBuildMgr" name="next"/>
     </page>
 
     <page view-id="/func/house/datas/ProjectEdit.xhtml" name="projectEdit" redirect="true"
@@ -52,7 +53,7 @@
         <transition to="done" name="cancel"/>
     </page>
 
-    <page view-id="/func/house/datas/SectionMgr.xhtml" name="done">
+    <page view-id="/func/house/datas/ProjectMgr.xhtml" name="done">
         <end-conversation before-redirect="true"/>
         <redirect/>
     </page>
