@@ -35,7 +35,7 @@
     <page view-id="/func/house/datas/ProjectEdit.xhtml" name="projectEdit" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
         <transition to="done" name="cancel"/>
-        <transition to="poolBuildMgr" name="next"/>
+        <transition to="projectBuildMgr" name="next"/>
         <transition to="view" name="complete"/>
     </page>
 

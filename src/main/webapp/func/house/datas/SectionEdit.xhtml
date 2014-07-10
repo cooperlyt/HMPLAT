@@ -21,16 +21,16 @@
                     <h:commandButton styleClass="toolBarBtn" value="#{messages.Next}" action="next"/>
                 </r:toolbarGroup>
 
-                <r:toolbarGroup location="right">
-                    <h:commandButton styleClass="toolBarBtn" value="#{messages.complete}" action="complete"/>
-                </r:toolbarGroup>
+
             </r:toolbar>
 
             <br/>
             <r:messages ajaxRendered="true" globalOnly="false"/>
             <br/>
 
-
+            <ui:include src="/layout/house/SectionEdit.xhtml">
+                <ui:param name="section" value="#{sectionHome.instance}"/>
+            </ui:include>
 
         </h:form>
     </ui:define>

@@ -10,6 +10,16 @@
 
     <ui:param name="functionTitle" value="#{messages.SectionSelect}"/>
 
+    <ui:define name="toolbar">
+        <r:toolbar>
+            <r:toolbarGroup location="right">
+                <s:button styleClass="toolBarBtn" value="#{messages.cancel}" action="cancel"/>
+                <s:button styleClass="toolBarBtn" value="#{messages.CreateNewSection}" action="createSection">
+                    <f:param name="sectionId" value=""/>
+                </s:button>
+            </r:toolbarGroup>
+        </r:toolbar>
+    </ui:define>
     <ui:define name="body">
 
         <s:decorate template="/layout/house/SectionMgrBase.xhtml">

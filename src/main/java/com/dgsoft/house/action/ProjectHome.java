@@ -50,7 +50,6 @@ public class ProjectHome extends HouseEntityHome<Project> {
     }
 
     public Build getEditingBuild() {
-
         return editingBuild;
     }
 
@@ -58,7 +57,55 @@ public class ProjectHome extends HouseEntityHome<Project> {
         this.editingBuild = editingBuild;
     }
 
+    private void addBuildMBBConflictMessages(){
+        //TODO messages
+        actionExecuteState.setLastState("MBBConfict");
+    }
+
+    private void addBuildPBConflictMessages(){
+        //TODO messages
+        actionExecuteState.setLastState("MBBConfict");
+    }
+
     public void saveBuild() {
+        if (getEntityManager().createQuery("select count(build.id) from Build build " +
+                "where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and " +
+                "build.buildNo = :buildNumber and build.id <> :buildId",Integer.class)
+                .setParameter("mapNumber",editingBuild.getMapNumber())
+                .setParameter("blockNumber",editingBuild.getBlockNo())
+                .setParameter("buildNumber",editingBuild.getBuildNo())
+                .setParameter("buildId",editingBuild.getId()).getSingleResult() > 0){
+            addBuildMBBConflictMessages();
+            return;
+        }
+        for (Build build: projectBuilds){
+            if ((build != editingBuild) && (build.getMapNumber().equals(editingBuild.getMapNumber()))
+                    && (build.getBlockNo().equals(editingBuild.getBlockNo()))
+                    && (build.getBuildNo().equals(editingBuild.getBuildNo()))){
+                addBuildMBBConflictMessages();
+                return;
+            }
+            if (build.getBuildNo().equals(editingBuild.getBuildNo())){
+                addBuildPBConflictMessages();
+                return;
+            }
+        }
+
+        if (isManaged()){
+            if (getEntityManager().createQuery("select count(build.id) from Build build " +
+                    "where build.project.id = :projectId and " +
+                    "build.buildNo = :buildNumber and build.id <> :buildId",Integer.class)
+                    .setParameter("projectId",getInstance().getId())
+                    .setParameter("buildNumber",editingBuild.getBuildNo())
+                    .setParameter("buildId",editingBuild.getId()).getSingleResult() > 0){
+                addBuildPBConflictMessages();
+                return;
+            }
+        }
+
+
+
+
         if (!projectBuilds.contains(editingBuild)) {
             projectBuilds.add(editingBuild);
         }

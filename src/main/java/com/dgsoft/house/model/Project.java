@@ -82,7 +82,7 @@ public class Project implements java.io.Serializable, TreeNode {
         this.version = version;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE})
     @JoinColumn(name = "SECTIONID", nullable = false)
     @NotNull
     public Section getSection() {
@@ -207,7 +207,7 @@ public class Project implements java.io.Serializable, TreeNode {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project",cascade = {CascadeType.ALL})
     public Set<Build> getBuilds() {
         return this.builds;
     }
