@@ -10,6 +10,17 @@
 
     <ui:param name="functionTitle" value="#{projectHome.instance.name} - #{messages.Build}"/>
 
+    <ui:define name="toolbar">
+        <r:toolbar>
+            <r:toolbarGroup location="right">
+                <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
+
+                <s:button action="next" styleClass="toolBarBtn" value="#{messages.Next}"/>
+
+                <s:button action="complete" styleClass="toolBarBtn" value="#{messages.complete}"/>
+            </r:toolbarGroup>
+        </r:toolbar>
+    </ui:define>
 
     <ui:define name="body">
         <h:form>
@@ -59,15 +70,16 @@
                     <f:facet name="header">
                         <r:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
                                          execute="@this" immediate="true" render="editPanel_form"
-                                oncomplete="#{r:component('editPanel')}.show();">
-                            <r:attachQueue rendered="0"/>
-                        </r:commandButton>
-                    </f:facet>
-                    <r:commandButton image="/img/icons/edit.png" title="#{messages.edit}" action="#{projectHome.beginEditBuild}"
-                                         execute="@this" immediate="true" render="editPanel_form"
                                          oncomplete="#{r:component('editPanel')}.show();">
                             <r:attachQueue rendered="0"/>
                         </r:commandButton>
+                    </f:facet>
+                    <r:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
+                                     action="#{projectHome.beginEditBuild}"
+                                     execute="@this" immediate="true" render="editPanel_form"
+                                     oncomplete="#{r:component('editPanel')}.show();">
+                        <r:attachQueue rendered="0"/>
+                    </r:commandButton>
 
                 </r:column>
             </r:dataTable>
@@ -88,7 +100,8 @@
                     <ui:define name="label">
                         #{messages.Build_MapNO}
                     </ui:define>
-                    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}" value="#{projectHome.editingBuild.mapNumber}" required="true">
+                    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}"
+                                 value="#{projectHome.editingBuild.mapNumber}" required="true">
                         <r:validator event="blur"/>
                     </h:inputText>
                     <ui:define name="tail">
@@ -100,7 +113,8 @@
                     <ui:define name="label">
                         #{messages.Build_BlockNO}
                     </ui:define>
-                    <h:inputText id="blockNoInput" label="#{messages.Build_BlockNO}" value="#{projectHome.editingBuild.blockNo}" required="true">
+                    <h:inputText id="blockNoInput" label="#{messages.Build_BlockNO}"
+                                 value="#{projectHome.editingBuild.blockNo}" required="true">
                         <r:validator event="blur"/>
                     </h:inputText>
 
@@ -113,7 +127,8 @@
                     <ui:define name="label">
                         #{messages.Build_BuildNO}
                     </ui:define>
-                    <h:inputText id="buildNoInput" value="#{projectHome.editingBuild.buildNo}" label="#{messages.Build_BuildNO}" required="true">
+                    <h:inputText id="buildNoInput" value="#{projectHome.editingBuild.buildNo}"
+                                 label="#{messages.Build_BuildNO}" required="true">
                         <r:validator event="blur"/>
                     </h:inputText>
                     <ui:define name="tail">
@@ -131,7 +146,7 @@
                     <ui:define name="label">
                         #{messages.Build_Name}
                     </ui:define>
-                    <h:inputText value="#{projectHome.editingBuild.name}" />
+                    <h:inputText value="#{projectHome.editingBuild.name}"/>
                 </s:decorate>
 
 

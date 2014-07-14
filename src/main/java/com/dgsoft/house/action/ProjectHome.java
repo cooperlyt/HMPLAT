@@ -9,6 +9,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 
 import java.util.Date;
 
@@ -25,6 +27,9 @@ public class ProjectHome extends HouseEntityHome<Project> {
     private NumberBuilder numberBuilder;
 
     private SetLinkList<Build> projectBuilds;
+
+    @In
+    private FacesMessages facesMessages;
 
     @DataModel
     public SetLinkList<Build> getProjectBuilds() {
@@ -46,6 +51,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     public void beginCreateBuild() {
         editingBuild = new Build();
+        editingBuild.setProject(getInstance());
         actionExecuteState.clearState();
     }
 
@@ -58,19 +64,19 @@ public class ProjectHome extends HouseEntityHome<Project> {
     }
 
     private void addBuildMBBConflictMessages(){
-        //TODO messages
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ConflictMBB");
         actionExecuteState.setLastState("MBBConfict");
     }
 
     private void addBuildPBConflictMessages(){
-        //TODO messages
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ConfilicPB");
         actionExecuteState.setLastState("MBBConfict");
     }
 
     public void saveBuild() {
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
                 "where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and " +
-                "build.buildNo = :buildNumber and build.id <> :buildId",Integer.class)
+                "build.buildNo = :buildNumber and build.id <> :buildId",Long.class)
                 .setParameter("mapNumber",editingBuild.getMapNumber())
                 .setParameter("blockNumber",editingBuild.getBlockNo())
                 .setParameter("buildNumber",editingBuild.getBuildNo())
@@ -94,7 +100,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
         if (isManaged()){
             if (getEntityManager().createQuery("select count(build.id) from Build build " +
                     "where build.project.id = :projectId and " +
-                    "build.buildNo = :buildNumber and build.id <> :buildId",Integer.class)
+                    "build.buildNo = :buildNumber and build.id <> :buildId",Long.class)
                     .setParameter("projectId",getInstance().getId())
                     .setParameter("buildNumber",editingBuild.getBuildNo())
                     .setParameter("buildId",editingBuild.getId()).getSingleResult() > 0){
