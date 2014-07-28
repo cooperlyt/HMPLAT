@@ -97,10 +97,9 @@
         </pluginRepository>
     </pluginRepositories>
 
-
     <properties>
         <seam.version>2.3.1.Final</seam.version>
-        <version.richfaces>5.0.0.Alpha3</version.richfaces>
+        <richfaces.version>4.3.7.Final</richfaces.version>
         <version.org.hibernate.search>4.2.0.Final</version.org.hibernate.search>
 
         <!-- Excluded TestNG groups (ex: slow annotated tests won't run during
@@ -154,19 +153,10 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
-                <version>${version.richfaces}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.richfaces</groupId>
-                <artifactId>richfaces-build</artifactId>
-                <version>${version.richfaces}</version>
+                <version>${richfaces.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -193,6 +183,16 @@
                 <version>3.2</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.richfaces.ui</groupId>
+                <artifactId>richfaces-components-ui</artifactId>
+                <version>${richfaces.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.richfaces.core</groupId>
+                <artifactId>richfaces-core-impl</artifactId>
+                <version>${richfaces.version}</version>
+            </dependency>
 
             <!-- guava is required by richfaces -->
 
@@ -407,33 +407,18 @@
         </dependency>
 
         <dependency>
-            <groupId>org.richfaces</groupId>
-            <artifactId>richfaces</artifactId>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-components-ui</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.richfaces</groupId>
-            <artifactId>richfaces-push-depchain</artifactId>
-            <type>pom</type>
+            <groupId>org.richfaces.core</groupId>
+            <artifactId>richfaces-core-impl</artifactId>
         </dependency>
 
-        <!-- The rewrite library allows us to do url rewriting - used here for rewriting mobile devices to mobile specific views -->
         <dependency>
-            <groupId>org.ocpsoft.rewrite</groupId>
-            <artifactId>rewrite-servlet</artifactId>
-        </dependency>
-
-        <!-- JBoss AS7 management -->
-        <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-controller-client</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Jsoup used for validation of safe html input -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
+            <groupId>org.atmosphere</groupId>
+            <artifactId>atmosphere-runtime</artifactId>
         </dependency>
 
         <dependency>
@@ -474,6 +459,18 @@
 
         </dependency>
 
+
+
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>local.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.13.CN</version>
+        </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -582,6 +579,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>biz.source_code</groupId>
+            <artifactId>base64coder</artifactId>
+            <version>2010-09-21</version>
+        </dependency>
 
     </dependencies>
 
@@ -619,167 +621,124 @@
                 </configuration>
             </plugin>
 
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.0</version>
-
+            <plugin>
+                <groupId>org.richfaces.cdk</groupId>
+                <artifactId>maven-richfaces-resources-plugin</artifactId>
+                <version>4.3.1.Final</version>
                 <configuration>
-                    <createSourcesJar>true</createSourcesJar>
-                    <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
-                    <artifactSet>
-                        <includes>
-                            <include>org.eclipse.birt.runtime:org.eclipse.birt.runtime</include>
-                        </includes>
-                    </artifactSet>
-                    <filters>
-                        <filter>
-                            <artifact>org.eclipse.birt.runtime:org.eclipse.birt.runtime</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                                <exclude>org/apache/**</exclude>
-                                <exclude>org/dom4j/**</exclude>
-                                <exclude>org/eclipse/birt/report/engine/emitter/excel/**</exclude>
-                                <exclude>org/openxmlformats/**</exclude>
-                                <exclude>org/w3c/**</exclude>
-                                <exclude>schemaorg_apache_xmlbeans/**</exclude>
-                                <exclude>schemasMicrosoftCom*/**</exclude>
-                                <exclude>uk/co/spudsoft/**</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
+
+
+
+                    <skins>
+                        <!-- the name of your skin -->
+                        <skin>customBlueSky</skin>
+                        <skin>customClassic</skin>
+                        <skin>customDeepMarine</skin>
+                        <skin>customEmeraldTown</skin>
+                        <skin>customJapanCherry</skin>
+                        <skin>customRuby</skin>
+                        <skin>customWine</skin>
+                    </skins>
+
+                    <excludedFiles>
+
+                        <exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>
+                        <exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>
+                    </excludedFiles>
+                    <includedContentTypes>
+                        <include>text/css</include>
+                        <include>image/.+</include>
+                    </includedContentTypes>
+                    <fileNameMappings>
+                        <property>
+                            <name>^.*showcase.*/([^/]+\.css)$</name>
+                            <value>org.richfaces.showcase.css/$1</value>
+                        </property>
+                        <property>
+                            <name>^.+/([^/]+\.(png|gif|jpg))$</name>
+                            <value>org.richfaces.images/$1</value>
+                        </property>
+                        <property>
+                            <name>^.+/([^/]+\.css)$</name>
+                            <value>org.richfaces.css/$1</value>
+                        </property>
+                    </fileNameMappings>
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>process-resources</id>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>process</goal>
                         </goals>
+                        <configuration>
+                            <!-- the actual name of this file is not important but it should be inside the META-INF folder -->
+                            <staticResourceMappingFile>
+                                ${project.build.outputDirectory}/META-INF/richfaces/custom-packedcompressed-resource-mappings.properties
+                            </staticResourceMappingFile>
+
+                            <!-- the URL part goes after /META-INF/resources/ -->
+                            <resourcesOutputDir>
+                                ${project.build.outputDirectory}/META-INF/resources/org.richfaces.staticResource/${richfaces.version}/PackedCompressed/
+                            </resourcesOutputDir>
+
+                            <!-- replace completely with the URL part -->
+                            <staticResourcePrefix>org.richfaces.staticResource/${richfaces.version}/PackedCompressed
+                            </staticResourcePrefix>
+
+                            <pack>true</pack>
+                            <compress>true</compress>
+
+                            <excludedFiles>
+                                <exclude>^javax.faces</exclude>
+                                <exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>
+                                <exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>
+                                <exclude>^jquery\.js$</exclude>
+                            </excludedFiles>
+
+
+                        </configuration>
+                    </execution>
+
+                    <!-- If you are in Development stage the compression is ignored, include this execution to generate uncompressed files -->
+
+                    <execution>
+                        <id>process-resources-packed</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <staticResourceMappingFile>
+                                ${project.build.outputDirectory}/META-INF/richfaces/photoalbum-packed-resource-mappings.properties
+                            </staticResourceMappingFile>
+
+                            <!-- the directory is named “Packed”, not “PackedCompressed” as in the previous execution -->
+                            <resourcesOutputDir>
+                                ${project.build.outputDirectory}/META-INF/resources/org.richfaces.staticResource/${richfaces.version}/Packed/
+                            </resourcesOutputDir>
+                            <staticResourcePrefix>org.richfaces.staticResource/${richfaces.version}/Packed
+                            </staticResourcePrefix>
+
+                            <pack>true</pack>
+                            <compress>false</compress>
+                            <!-- do not compress -->
+
+                            <excludedFiles>
+                                <exclude>^javax.faces</exclude>
+                                <exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>
+                                <exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>
+                                <exclude>^jquery\.js$</exclude>
+                            </excludedFiles>
+                        </configuration>
                     </execution>
                 </executions>
-            </plugin-->
-
-
-            <!--<plugin>-->
-                <!--<groupId>org.richfaces.cdk</groupId>-->
-                <!--<artifactId>maven-richfaces-resources-plugin</artifactId>-->
-                <!--<version>4.3.1.Final</version>-->
-                <!--<configuration>-->
-
-
-
-                    <!--<skins>-->
-                        <!--&lt;!&ndash; the name of your skin &ndash;&gt;-->
-                        <!--<skin>customBlueSky</skin>-->
-                        <!--<skin>customClassic</skin>-->
-                        <!--<skin>customDeepMarine</skin>-->
-                        <!--<skin>customEmeraldTown</skin>-->
-                        <!--<skin>customJapanCherry</skin>-->
-                        <!--<skin>customRuby</skin>-->
-                        <!--<skin>customWine</skin>-->
-                    <!--</skins>-->
-
-                    <!--<excludedFiles>-->
-
-                        <!--<exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>-->
-                        <!--<exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>-->
-                    <!--</excludedFiles>-->
-                    <!--<includedContentTypes>-->
-                        <!--<include>text/css</include>-->
-                        <!--<include>image/.+</include>-->
-                    <!--</includedContentTypes>-->
-                    <!--<fileNameMappings>-->
-                        <!--<property>-->
-                            <!--<name>^.*showcase.*/([^/]+\.css)$</name>-->
-                            <!--<value>org.richfaces.showcase.css/$1</value>-->
-                        <!--</property>-->
-                        <!--<property>-->
-                            <!--<name>^.+/([^/]+\.(png|gif|jpg))$</name>-->
-                            <!--<value>org.richfaces.images/$1</value>-->
-                        <!--</property>-->
-                        <!--<property>-->
-                            <!--<name>^.+/([^/]+\.css)$</name>-->
-                            <!--<value>org.richfaces.css/$1</value>-->
-                        <!--</property>-->
-                    <!--</fileNameMappings>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>process-resources</id>-->
-                        <!--<goals>-->
-                            <!--<goal>process</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--&lt;!&ndash; the actual name of this file is not important but it should be inside the META-INF folder &ndash;&gt;-->
-                            <!--<staticResourceMappingFile>-->
-                                <!--${project.build.outputDirectory}/META-INF/richfaces/custom-packedcompressed-resource-mappings.properties-->
-                            <!--</staticResourceMappingFile>-->
-
-                            <!--&lt;!&ndash; the URL part goes after /META-INF/resources/ &ndash;&gt;-->
-                            <!--<resourcesOutputDir>-->
-                                <!--${project.build.outputDirectory}/META-INF/resources/org.richfaces.staticResource/${version.richfaces}/PackedCompressed/-->
-                            <!--</resourcesOutputDir>-->
-
-                            <!--&lt;!&ndash; replace completely with the URL part &ndash;&gt;-->
-                            <!--<staticResourcePrefix>org.richfaces.staticResource/${version.richfaces}/PackedCompressed-->
-                            <!--</staticResourcePrefix>-->
-
-                            <!--<pack>true</pack>-->
-                            <!--<compress>true</compress>-->
-
-                            <!--<excludedFiles>-->
-                                <!--<exclude>^javax.faces</exclude>-->
-                                <!--<exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>-->
-                                <!--<exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>-->
-                                <!--<exclude>^jquery\.js$</exclude>-->
-                            <!--</excludedFiles>-->
-
-
-                        <!--</configuration>-->
-                    <!--</execution>-->
-
-                    <!--&lt;!&ndash; If you are in Development stage the compression is ignored, include this execution to generate uncompressed files &ndash;&gt;-->
-
-                    <!--<execution>-->
-                        <!--<id>process-resources-packed</id>-->
-                        <!--<goals>-->
-                            <!--<goal>process</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<staticResourceMappingFile>-->
-                                <!--${project.build.outputDirectory}/META-INF/richfaces/photoalbum-packed-resource-mappings.properties-->
-                            <!--</staticResourceMappingFile>-->
-
-                            <!--&lt;!&ndash; the directory is named “Packed”, not “PackedCompressed” as in the previous execution &ndash;&gt;-->
-                            <!--<resourcesOutputDir>-->
-                                <!--${project.build.outputDirectory}/META-INF/resources/org.richfaces.staticResource/${version.richfaces}/Packed/-->
-                            <!--</resourcesOutputDir>-->
-                            <!--<staticResourcePrefix>org.richfaces.staticResource/${version.richfaces/Packed-->
-                            <!--</staticResourcePrefix>-->
-
-                            <!--<pack>true</pack>-->
-                            <!--<compress>false</compress>-->
-                            <!--&lt;!&ndash; do not compress &ndash;&gt;-->
-
-                            <!--<excludedFiles>-->
-                                <!--<exclude>^javax.faces</exclude>-->
-                                <!--<exclude>^\Qorg.richfaces.renderkit.html.images.\E.*</exclude>-->
-                                <!--<exclude>^\Qorg.richfaces.renderkit.html.iconimages.\E.*</exclude>-->
-                                <!--<exclude>^jquery\.js$</exclude>-->
-                            <!--</excludedFiles>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>org.slf4j</groupId>-->
-                        <!--<artifactId>slf4j-log4j12</artifactId>-->
-                        <!--<version>${slf4j.version}</version>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
-            <!--</plugin>-->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                        <version>${slf4j.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
         </plugins>
 

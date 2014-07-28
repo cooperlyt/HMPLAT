@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
     <!--
@@ -13,59 +13,59 @@
     -->
     <!-- entityList.previousExists" -->
     <span class="rf-ds">
-            <r:commandLink immediate="true" execute="@this"
+            <a:commandLink immediate="true" execute="@this"
                            action="#{entityList.first}"
                            render="dataListResult,#{render}"
                            styleClass="rf-ds-btn rf-ds-btn-first #{entityList.previousExists ? '' : 'rf-ds-dis'}"
                            disabled="#{not entityList.previousExists}"
                            value="#{messages.left}#{messages.left}">
-                <r:attachQueue requestDelay="0"/>
-            </r:commandLink>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
 
-            <r:commandLink immediate="true" execute="@this"
+            <a:commandLink immediate="true" execute="@this"
                            render="dataListResult,#{render}"
                            action="#{entityList.previous}"
                            disabled="#{not entityList.previousExists}"
                            styleClass="rf-ds-btn rf-ds-btn-prev #{entityList.previousExists ? '' : 'rf-ds-dis'}"
                            value="#{messages.left}">
-                <r:attachQueue requestDelay="0"/>
-            </r:commandLink>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
 
 
-        <r:repeat value="#{entityList.getShowPageNumbers((empty maxPages) ? 10 : maxPages)}" var="_page">
+        <a:repeat value="#{entityList.getShowPageNumbers((empty maxPages) ? 10 : maxPages)}" var="_page">
 
-            <r:commandLink immediate="true" execute="@this"
+            <a:commandLink immediate="true" execute="@this"
                            render="dataListResult,#{render}"
                            disabled="#{_page eq entityList.page}"
                            styleClass="rf-ds-nmb-btn #{(_page eq entityList.page) ? 'rf-ds-act' : ''}"
                            value="#{_page}">
-                <r:attachQueue requestDelay="0"/>
-                <r:param value="#{(_page - 1) * entityList.maxResults}" assignTo="#{entityList.firstResult}" />
-            </r:commandLink>
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{(_page - 1) * entityList.maxResults}" assignTo="#{entityList.firstResult}" />
+            </a:commandLink>
 
-        </r:repeat>
-
-
+        </a:repeat>
 
 
 
-            <r:commandLink immediate="true" execute="@this"
+
+
+            <a:commandLink immediate="true" execute="@this"
                            render="dataListResult,#{render}"
                            styleClass="rf-ds-btn rf-ds-btn-next #{entityList.nextExists ? '' : 'rf-ds-dis'}"
                            action="#{entityList.next}"
                            disabled="#{not entityList.nextExists}"
                            value="#{messages.right}">
-                <r:attachQueue requestDelay="0"/>
-            </r:commandLink>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
 
-            <r:commandLink immediate="true" execute="@this"
+            <a:commandLink immediate="true" execute="@this"
                            render="dataListResult,#{render}"
                            styleClass="rf-ds-btn rf-ds-btn-last #{entityList.nextExists ? '' : 'rf-ds-dis'}"
                            disabled="#{not entityList.nextExists}"
                            action="#{entityList.last}"
                            value="#{messages.right}#{messages.right}">
-                <r:attachQueue requestDelay="0"/>
-            </r:commandLink>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
 
     </span>
 </ui:composition>

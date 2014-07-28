@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
@@ -17,7 +17,7 @@
         <h:panelGrid columns="2" columnClasses="small_label,small_value">
 
 
-            <r:outputPanel>
+            <a:outputPanel>
                 <h:outputText value="#{lable}"/> <s:span styleClass="required"
                                                          rendered="#{required}">*</s:span>
                 <r:tooltip followMouse="false"
@@ -26,7 +26,7 @@
 				<span style="white-space: nowrap"> <h:outputText
                         value="#{var.simpleVarSubscribe.simpleVarDefine.description}"></h:outputText> </span>
                 </r:tooltip>
-            </r:outputPanel>
+            </a:outputPanel>
 
                 <h:selectBooleanCheckbox label="#{lable}" value="#{var.booleanValue}" required="#{required}"
                                          rendered="#{var.booleanType}" readonly="#{readonly}"/>

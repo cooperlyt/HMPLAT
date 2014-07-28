@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/full-template.xhtml">
 
     <ui:define name="body">
@@ -52,11 +52,11 @@
         </r:panel>
 
 
-        <r:outputPanel rendered="#{empty from}">
+        <a:outputPanel rendered="#{empty from}">
             <s:button value="save" action="#{businessDefineHome.persist}" rendered="#{not businessDefineHome.managed}"/>
             <s:button value="update" action="#{businessDefineHome.update}" rendered="#{businessDefineHome.managed}"/>
             <s:button value="cancel" action="cancel"/>
-        </r:outputPanel>
+        </a:outputPanel>
 
         <s:button rendered="#{not empty from}" value="ok" view="#{from}"/>
 

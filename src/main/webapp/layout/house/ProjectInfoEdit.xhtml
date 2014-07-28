@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org">
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
@@ -15,7 +15,7 @@
                      label="#{messages.Project_id}" maxlength="32" size="30"
                      valueChangeListener="#{projectHome.verifyIdAvailable}"
                      disabled="#{projectHome.managed}">
-            <r:ajax event="blur" render="idMessages" execute="@this"/>
+            <a:ajax event="blur" render="idMessages" execute="@this"/>
         </h:inputText>
 
         <ui:define name="tail">
@@ -30,7 +30,7 @@
         <h:inputText id="nameInput" value="#{projectHome.instance.name}" required="true"
                      label="#{messages.Project_name}" unique="name" maxlength="50" size="30"
                      valueChangeListener="#{projectHome.verifyUniqueAvailable}">
-            <r:ajax event="blur" execute="@this" render="nameMessages"/>
+            <a:ajax event="blur" execute="@this" render="nameMessages"/>
 
         </h:inputText>
 
@@ -51,7 +51,7 @@
                                label="#{_developer.name}" itemValue="#{_developer.id}"
                                noSelectionLabel="#{messages.noSelectLabel}"/>
             </r:select>
-            <r:commandButton value="..." onclick="#{r:component('developerSearchSelectPanel')}.show(); return false;"/>
+            <a:commandButton value="..." onclick="#{r:component('developerSearchSelectPanel')}.show(); return false;"/>
         </h:panelGrid>
     </s:decorate>
 

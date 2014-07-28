@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:f="http://java.sun.com/jsf/core">
 
@@ -35,8 +35,8 @@
                 clear: left;
             }
         </h:outputStylesheet>
-        <r:outputPanel styleClass="sourceView" layout="block">
-            <r:outputPanel layout="block" id="show">
+        <a:outputPanel styleClass="sourceView" layout="block">
+            <a:outputPanel layout="block" id="show">
 
 
 
@@ -53,9 +53,9 @@
 
 
 
-            </r:outputPanel>
+            </a:outputPanel>
 
-            <r:outputPanel id="hide" layout="block" style="display:none">
+            <a:outputPanel id="hide" layout="block" style="display:none">
                 <h:outputLink styleClass="hide-details" value="#"
                               onclick="jQuery(#{r:element('hide')}).slideUp(); jQuery(#{r:element('show')}).show(500); return false;">
                     <h:graphicImage value="#{resource['org.richfaces/iteration:up_icon.gif']}"/>
@@ -79,8 +79,8 @@
                     <h:graphicImage value="#{resource['org.richfaces/iteration:up_icon.gif']}"/>  #{' '}
                     <h:outputText value="#{empty hideLabel? labelValue : hideLabel }"/>
                 </h:outputLink>
-            </r:outputPanel>
-        </r:outputPanel>
+            </a:outputPanel>
+        </a:outputPanel>
 
 
 </ui:composition>

@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
 <ui:define name="body">
@@ -21,13 +21,13 @@
     <ui:param name="panelTitle"
               value="#{messages['edit']} #{messages.person}"/>
     <ui:define name="controls">
-        <r:commandButton immediate="true"
+        <a:commandButton immediate="true"
                          execute="@this" image="/img/close.png"
                          oncomplete="#{r:component(panelId)}.hide(); return false;">
             <s:conversationPropagation type="end"/>
             <s:conversationId/>
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
     </ui:define>
 
     <h:panelGrid columns="2">
@@ -40,7 +40,7 @@
             <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>
             <s:convertEnum/>
-            <r:ajax event="selectitem" render="credentialsTypeField"/>
+            <a:ajax event="selectitem" render="credentialsTypeField"/>
 
         </r:select>
 
@@ -55,7 +55,7 @@
                      size="25"
                      maxlength="100"
                      value="#{personHome.instance.credentialsNumber}" disabled="#{personHome.managed}">
-            <r:ajax event="blur" render="credentialsNumberField"/>
+            <a:ajax event="blur" render="credentialsNumberField"/>
         </h:inputText>
     </s:decorate>
 
@@ -63,18 +63,18 @@
     <ui:include src="/layout/system/PersonEdit.xhtml"/>
 
     <ui:define name="actionButtons">
-        <r:commandButton render="dataListResult" execute="@form" value="#{messages.update}"
+        <a:commandButton render="dataListResult" execute="@form" value="#{messages.update}"
                          action="#{personHome.updateEnd}"
                          data="#{personHome.lastState}"
                          oncomplete="if (event.data == 'updated')#{r:component('personEditPanel')}.hide();">
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
 
-        <r:commandButton id="hideEditPanelButton2" immediate="true" execute="@this" value="#{messages.cancel}"
+        <a:commandButton id="hideEditPanelButton2" immediate="true" execute="@this" value="#{messages.cancel}"
                          oncomplete="#{r:component('personEditPanel')}.hide();">
             <s:conversationPropagation type="end"/>
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
     </ui:define>
 </s:decorate>
 
@@ -104,12 +104,12 @@
     </r:collapsiblePanel>
 
     <div class="actionButtons">
-        <r:outputPanel id="searchButton">
-            <r:commandButton value="#{messages.search}"
+        <a:outputPanel id="searchButton">
+            <a:commandButton value="#{messages.search}"
                              execute="@form" render="dataListResult" action="#{personList.first}">
-                <r:attachQueue requestDelay="0"/>
-            </r:commandButton>
-        </r:outputPanel>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
+        </a:outputPanel>
         <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
     </div>
 </h:form>
@@ -130,11 +130,11 @@
                         value="#{messages.person} (#{empty personList.resultList ? 0 : (personList.paginated ? personList.resultCount : personList.resultList.size)})"/>
             </f:facet>
             <f:facet name="footer">
-                <r:outputPanel rendered="#{not empty personList.resultList}">
+                <a:outputPanel rendered="#{not empty personList.resultList}">
                     <ui:include src="/layout/pageA4jNavigation.xhtml">
                         <ui:param name="entityList" value="#{personList}"/>
                     </ui:include>
-                </r:outputPanel>
+                </a:outputPanel>
             </f:facet>
             <r:column>
                 <f:facet name="header">
@@ -171,13 +171,13 @@
 
             <r:column styleClass="action"  width="40px">
                 <f:facet name="header">#{messages.action}</f:facet>
-                <r:commandButton image="/img/edit.png" title="#{messages.edit}" id="showEditPanelButton" immediate="true" execute="@this" styleClass="no-decor"
+                <a:commandButton image="/img/edit.png" title="#{messages.edit}" id="showEditPanelButton" immediate="true" execute="@this" styleClass="no-decor"
                                render="personEditPanel_form,personEditPanel_controls"
                                oncomplete="#{r:component('personEditPanel')}.show()">
-                    <r:param name="id" value="#{_person.id}" assignTo="#{personHome.id}"/>
+                    <a:param name="id" value="#{_person.id}" assignTo="#{personHome.id}"/>
                     <s:conversationPropagation type="begin"/>
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
             </r:column>
 
             <r:column>

@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org">
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
     <s:decorate template="/layout/display.xhtml">
         <ui:define name="label">
@@ -24,9 +24,9 @@
     <div style="clear:both"/>
     <s:decorate template="/layout/view-details.xhtml">
         <ui:param name="openLabel" value="#{messages.Section}"/>
-        <ui:param name="labelValue" value="#{sectionHome.instance.name}"/>
+        <ui:param name="labelValue" value="#{project.section.name}"/>
         <ui:include src="/layout/house/SectionInfoView.xhtml">
-            <ui:param name="section" value="#{sectionHome.instance}"/>
+            <ui:param name="section" value="#{project.section}"/>
         </ui:include>
     </s:decorate>
     <div style="clear:both"/>

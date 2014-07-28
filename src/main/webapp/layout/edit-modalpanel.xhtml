@@ -2,7 +2,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <!--required param:  panelId -->
@@ -20,25 +20,25 @@
         </f:facet>
         <f:facet name="controls">
             <h:panelGrid columns="3">
-                <r:status>
+                <a:status>
                     <f:facet name="start">
                         <h:graphicImage value="/img/connect_title_active.gif"/>
                     </f:facet>
                     <f:facet name="stop">
                         <h:graphicImage value="/img/connect_title.gif"/>
                     </f:facet>
-                </r:status>
+                </a:status>
 
                 <br/>
 
                 <h:panelGroup id="#{panelId}_controls">
                     <ui:insert name="controls">
-                        <r:commandButton immediate="true"
+                        <a:commandButton immediate="true"
                                          execute="@this" image="/img/close.png"
                                          oncomplete="#{r:component(panelId)}.hide(); return false;">
                             <s:conversationPropagation type="end"/>
-                            <r:attachQueue requestDelay="0"/>
-                        </r:commandButton>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
                     </ui:insert>
                 </h:panelGroup>
             </h:panelGrid>
@@ -61,11 +61,11 @@
 
 
                     <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                        <r:outputPanel id="#{panelId}_buttons">
+                        <a:outputPanel id="#{panelId}_buttons">
                             <div class="actionButtons">
                                 <ui:insert name="actionButtons"/>
                             </div>
-                        </r:outputPanel>
+                        </a:outputPanel>
                     </h:panelGrid>
                 </ui:insert>
             </h:form>

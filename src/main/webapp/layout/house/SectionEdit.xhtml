@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org">
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
@@ -27,7 +27,7 @@
                      label="#{messages.Section_name}" size="40" maxlength="50"
                      unique="name"
                      valueChangeListener="#{sectionHome.verifyUniqueAvailable}">
-            <r:ajax event="blur" execute="@this" render="nameMessages"/>
+            <a:ajax event="blur" execute="@this" render="nameMessages"/>
         </h:inputText>
 
         <ui:define name="tail">

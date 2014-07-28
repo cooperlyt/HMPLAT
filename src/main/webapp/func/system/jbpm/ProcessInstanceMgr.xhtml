@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
     <ui:define name="toolbar">
@@ -19,34 +19,34 @@
         <r:toolbar height="34" itemSeparator="line">
             <r:toolbarGroup>
                 <h:form>
-                    <r:outputPanel id="suspendAction">
+                    <a:outputPanel id="suspendAction">
 
                         <h:graphicImage
                                 value="#{processInstanceHome.instance.suspended ? '/img/resume.png' : '/img/suspend.png'}"
                                 rendered="#{not empty processInstanceHome.instance}"/>
                           #{' '}
 
-                        <r:commandLink value="#{messages.jbpm_process_suspend}"
+                        <a:commandLink value="#{messages.jbpm_process_suspend}"
                                        action="#{processInstanceHome.suspend}"
                                        execute="@form" render="suspendAction,processInstanceDetails"
                                        rendered="#{(not empty processInstanceHome.instance) and (not processInstanceHome.instance.suspended)}">
-                            <r:attachQueue requestDelay="0"/>
+                            <a:attachQueue requestDelay="0"/>
                             <f:param name="processDefineName" value="#{processInstanceHome.processDefineName}"/>
                             <f:param name="processKey" value="#{processInstanceHome.processKey}"/>
 
-                        </r:commandLink>
+                        </a:commandLink>
 
 
-                        <r:commandLink value="#{messages.jbpm_process_resume}"
+                        <a:commandLink value="#{messages.jbpm_process_resume}"
                                        action="#{processInstanceHome.resume}"
                                        execute="@form" render="suspendAction,processInstanceDetails"
                                        rendered="#{(not empty processInstanceHome.instance) and processInstanceHome.instance.suspended}">
-                            <r:attachQueue requestDelay="0"/>
+                            <a:attachQueue requestDelay="0"/>
                             <f:param name="processDefineName" value="#{processInstanceHome.processDefineName}"/>
                             <f:param name="processKey" value="#{processInstanceHome.processKey}"/>
-                        </r:commandLink>
+                        </a:commandLink>
 
-                    </r:outputPanel>
+                    </a:outputPanel>
                 </h:form>
             </r:toolbarGroup>
 
@@ -70,10 +70,10 @@
                         </h:inputText>
                         <r:message for="jbpmProcessKey" styleClass="message-icon"
                                       showDetail="true" showSummary="true" tooltip="true"/>
-                        <r:commandButton value="#{messages.ok}" execute="@form"
+                        <a:commandButton value="#{messages.ok}" execute="@form"
                                          render="processInstanceDetails,suspendAction">
-                            <r:attachQueue requestDelay="0"/>
-                        </r:commandButton>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
                     </h:panelGrid>
                 </h:form>
             </r:toolbarGroup>
@@ -82,8 +82,8 @@
 
     <ui:define name="body">
 
-        <r:outputPanel id="processInstanceDetails">
-            <r:outputPanel rendered="#{not empty processInstanceHome.instance}">
+        <a:outputPanel id="processInstanceDetails">
+            <a:outputPanel rendered="#{not empty processInstanceHome.instance}">
                 <s:decorate template="/layout/seam-display.xhtml">
                     <ui:define name="label">#{messages.jbpm_process_id}</ui:define>
                     #{processInstanceHome.instance.id}
@@ -162,7 +162,7 @@
 
 
                 </r:dataTable>
-            </r:outputPanel>
-        </r:outputPanel>
+            </a:outputPanel>
+        </a:outputPanel>
     </ui:define>
 </ui:composition>

@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+
+
+    <r:dataTable style="width:100%" value="#{builds}" var="_build">
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_MapNO}
+            </f:facet>
+
+            #{_build.mapNumber}
+        </r:column>
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_BlockNO}
+            </f:facet>
+            #{_build.blockNo}
+        </r:column>
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_BuildNO}
+            </f:facet>
+            #{_build.buildNo}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Name}
+            </f:facet>
+            #{_build.name}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_DoorNO}
+            </f:facet>
+            #{_build.doorNo}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Type}
+            </f:facet>
+            #{_build.buildType}
+        </r:column>
+
+        <ui:insert/>
+    </r:dataTable>
+
+</ui:composition>

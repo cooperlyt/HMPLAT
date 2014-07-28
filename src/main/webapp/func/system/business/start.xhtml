@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
     <ui:define name="body">
@@ -34,12 +34,12 @@
                                  action="#{businessCreate.create}"/>
 
 
-                <r:commandButton id="cancelButton" value="#{messages.cancel}" immediate="true" execute="@this"
+                <a:commandButton id="cancelButton" value="#{messages.cancel}" immediate="true" execute="@this"
 
                                  oncomplete="#{rich:component('defaultBusinessDataPanel')}.hide()">
                     <s:conversationPropagation type="end"/>
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
             </ui:define>
         </s:decorate>
 

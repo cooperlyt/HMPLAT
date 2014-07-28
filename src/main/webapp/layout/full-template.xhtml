@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
                      taskChangePush
     <ui:define name="taskChangePush"/>
@@ -18,17 +18,17 @@
     <ui:define name="pageContent">
 
         <h:panelGrid columns="2" width="100%" columnClasses=",column-right-align">
-            <r:outputPanel>
+            <a:outputPanel>
                 <h1> #{functionTitle}</h1>
-            </r:outputPanel>
-            <r:status>
+            </a:outputPanel>
+            <a:status>
                 <f:facet name="start">
                     <h:graphicImage value="/img/connect.gif"/>
                 </f:facet>
                 <f:facet name="stop">
                     <h:graphicImage value="/img/connect_idle.gif"/>
                 </f:facet>
-            </r:status>
+            </a:status>
 
         </h:panelGrid>
 

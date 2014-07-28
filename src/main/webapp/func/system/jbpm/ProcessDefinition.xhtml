@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
     <ui:define name="body">
@@ -49,22 +49,22 @@
                         <h:outputText value="#{_processDefinition.version}"/>
                     </r:column>
                     <r:column>
-                        <r:commandLink value="#{messages.viewProcessImg}" execute="@this"
+                        <a:commandLink value="#{messages.viewProcessImg}" execute="@this"
                                        immediate="true"
                                        oncomplete="#{r:component('imagePanel')}.show();"
                                        render="processDefImg">
-                            <r:attachQueue requestDelay="0"/>
-                            <r:param name="processDefinitionId" value="#{_processDefinition.id}"
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param name="processDefinitionId" value="#{_processDefinition.id}"
                                      assignTo="#{processDefinitionHome.id}"/>
-                        </r:commandLink>
+                        </a:commandLink>
                         #{' '}
-                        <r:commandLink value="#{messages.remove}"
+                        <a:commandLink value="#{messages.remove}"
                                        execute="@this" immediate="true"
                                        render="deleteButton" oncomplete="#{r:component('deleteConfirm')}.show()">
-                            <r:attachQueue requestDelay="0"/>
-                            <r:param name="processDefinitionId" value="#{_processDefinition.id}"
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param name="processDefinitionId" value="#{_processDefinition.id}"
                                      assignTo="#{processDefinitionHome.id}"/>
-                        </r:commandLink>
+                        </a:commandLink>
                     </r:column>
                 </r:collapsibleSubTable>
             </r:dataTable>
@@ -88,20 +88,20 @@
                                  ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
                                  acceptedTypes="par">
 
-                    <r:ajax event="uploadcomplete" execute="@none" render="allProcessDef"/>
+                    <a:ajax event="uploadcomplete" execute="@none" render="allProcessDef"/>
                 </r:fileUpload>
             </h:form>
         </h:panelGrid>
 
         <s:decorate template="/layout/delete_confirm_dialog.xhtml">
             <ui:param name="panelId" value="deleteConfirm"/>
-            <r:commandButton render="allProcessDef" id="deleteButton" execute="@this" value="#{messages.remove}"
+            <a:commandButton render="allProcessDef" id="deleteButton" execute="@this" value="#{messages.remove}"
                              action="#{processDefinitionHome.removeDeploy}"
                              oncomplete="#{r:component('deleteConfirm')}.hide()">
-                <r:attachQueue requestDelay="0"/>
-                <r:param name="processDefinitionId" value="#{processDefinitionHome.id}"
+                <a:attachQueue requestDelay="0"/>
+                <a:param name="processDefinitionId" value="#{processDefinitionHome.id}"
                          assignTo="#{processDefinitionHome.id}"/>
-            </r:commandButton>
+            </a:commandButton>
         </s:decorate>
 
 
@@ -116,18 +116,18 @@
             <f:facet name="controls">
                 <h:panelGroup>
                     <ui:insert name="controls"/>
-                    <r:commandButton immediate="true" execute="@this" image="/img/close.png"
+                    <a:commandButton immediate="true" execute="@this" image="/img/close.png"
                                      onclick="#{r:component('imagePanel')}.hide();return false;">
-                    </r:commandButton>
+                    </a:commandButton>
                 </h:panelGroup>
             </f:facet>
-            <r:outputPanel ajaxRendered="false" id="processDefImg">
+            <a:outputPanel ajaxRendered="false" id="processDefImg">
                 <r:mediaOutput id="img" element="img" cacheable="false" session="true"
                                createContent="#{processDefinitionHome.processDefinitionImg}"
                                value="#{processDefinitionHome.id}"
                                rendered="#{processDefinitionHome.define}"
                                mimeType="image/png"/>
-            </r:outputPanel>
+            </a:outputPanel>
 
         </r:popupPanel>
     </ui:define>

@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
 
@@ -23,7 +23,7 @@
         <h:panelGrid columns="2" columnClasses="leftColumn,rightColumn" style="width: 100%">
 
             <h:form>
-                <r:outputPanel id="roleList">
+                <a:outputPanel id="roleList">
                     <r:dataTable style="width: 100%" noDataLabel="#{messages.emptyResult}"
                                     value="#{roleList.resultList}" var="_role">
 
@@ -31,19 +31,19 @@
                             <f:facet name="header">
                                 #{messages.role_field_name}
                             </f:facet>
-                            <r:commandLink immediate="true" execute="@this" value="#{_role.name}"
+                            <a:commandLink immediate="true" execute="@this" value="#{_role.name}"
                                            title="#{_role.description}" render="roleDetails,actions">
-                                <r:param value="#{_role.id}" assignTo="#{roleHome.id}"/>
-                                <r:attachQueue requestDelay="0"/>
+                                <a:param value="#{_role.id}" assignTo="#{roleHome.id}"/>
+                                <a:attachQueue requestDelay="0"/>
                                 <s:conversationPropagation type="end"/>
-                            </r:commandLink>
+                            </a:commandLink>
 
 
                         </r:column>
 
 
                     </r:dataTable>
-                </r:outputPanel>
+                </a:outputPanel>
             </h:form>
 
             <h:form id="roleDetails">
@@ -52,45 +52,45 @@
 
                     <r:toolbarGroup rendered="#{not roleHome.editing}">
                         <h:graphicImage value="/img/add.png"/>
-                        <r:commandLink value="#{messages.add}" immediate="true"
+                        <a:commandLink value="#{messages.add}" immediate="true"
                                        execute="@this"
                                        action="#{roleHome.edit}" render="roleDetails,actions">
-                            <r:attachQueue requestDelay="0"/>
-                            <r:param value="" assignTo="#{roleHome.id}"/>
-                        </r:commandLink>
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param value="" assignTo="#{roleHome.id}"/>
+                        </a:commandLink>
                     </r:toolbarGroup>
                     <r:toolbarGroup rendered="#{not roleHome.editing}">
                         <h:graphicImage value="/img/edit.png"/>
-                        <r:commandLink value="#{messages.edit}" immediate="true"
+                        <a:commandLink value="#{messages.edit}" immediate="true"
                                        execute="@this"
                                        action="#{roleHome.edit}" render="roleDetails,actions"
                                        onclick="if (#{not roleHome.idDefined}) {alert('#{messages.plase_select_role_first}'); return false;}">
-                            <r:attachQueue requestDelay="0"/>
-                            <r:param value="#{roleHome.instance.id}" assignTo="#{roleHome.id}"/>
-                        </r:commandLink>
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param value="#{roleHome.instance.id}" assignTo="#{roleHome.id}"/>
+                        </a:commandLink>
                     </r:toolbarGroup>
                     <r:toolbarGroup rendered="#{not roleHome.editing}">
                         <h:graphicImage value="/img/delete.png"/>
-                        <r:commandLink value="#{messages.delete}" immediate="true"
+                        <a:commandLink value="#{messages.delete}" immediate="true"
                                        execute="@this"
                                        action="#{roleHome.removeAndClear}" render="roleDetails,roleList"
                                        onclick="if (#{not roleHome.idDefined}) {alert('#{messages.plase_select_role_first}'); return false;}">
-                            <r:attachQueue requestDelay="0"/>
-                            <r:param value="#{roleHome.instance.id}" assignTo="#{roleHome.id}"/>
-                        </r:commandLink>
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param value="#{roleHome.instance.id}" assignTo="#{roleHome.id}"/>
+                        </a:commandLink>
                     </r:toolbarGroup>
 
 
                     <r:toolbarGroup rendered="#{roleHome.editing}" location="right">
-                        <r:commandButton value="#{messages.cancel}" render="roleDetails,actions"
+                        <a:commandButton value="#{messages.cancel}" render="roleDetails,actions"
                                          action="#{roleHome.cancel}" immediate="true" execute="@this">
-                            <r:attachQueue requestDelay="0"/>
-                        </r:commandButton>
-                        <r:commandButton value="#{messages.save}"
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+                        <a:commandButton value="#{messages.save}"
                                          action="#{roleHome.save}"
                                          execute="@form" render="roleDetails,roleList,actions">
-                            <r:attachQueue requestDelay="0"/>
-                        </r:commandButton>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
                     </r:toolbarGroup>
                 </r:toolbar>
                 <r:panel>
@@ -105,7 +105,7 @@
                                          valueChangeListener="#{roleHome.verifyIdAvailable}"
                                          label="#{messages.role_field_id}"
                                          value="#{roleHome.instance.id}">
-                                <r:ajax event="blur" render="idField"/>
+                                <a:ajax event="blur" render="idField"/>
                             </h:inputText>
                         </s:decorate>
 
@@ -117,7 +117,7 @@
                                          maxlength="20"
                                          label="#{messages.role_field_name}"
                                          value="#{roleHome.instance.name}">
-                                <r:ajax disabled="#{not roleHome.editing}" execute="@this" event="blur"
+                                <a:ajax disabled="#{not roleHome.editing}" execute="@this" event="blur"
                                         render="nameField"/>
                             </h:inputText>
                         </s:decorate>

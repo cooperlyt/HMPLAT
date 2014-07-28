@@ -1,7 +1,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -68,18 +68,18 @@
 
                 <r:column style="text-align: center; width: 25px">
                     <f:facet name="header">
-                        <r:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
+                        <a:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
                                          execute="@this" immediate="true" render="editPanel_form"
                                          oncomplete="#{r:component('editPanel')}.show();">
-                            <r:attachQueue rendered="0"/>
-                        </r:commandButton>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
                     </f:facet>
-                    <r:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
+                    <a:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
                                      action="#{projectHome.beginEditBuild}"
                                      execute="@this" immediate="true" render="editPanel_form"
                                      oncomplete="#{r:component('editPanel')}.show();">
-                        <r:attachQueue rendered="0"/>
-                    </r:commandButton>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
 
                 </r:column>
             </r:dataTable>
@@ -89,10 +89,10 @@
             <ui:param name="panelId" value="editPanel"/>
             <ui:param name="panelTitle" value="#{messages.Build}"/>
             <ui:define name="controls">
-                <r:commandButton immediate="true"
+                <a:commandButton immediate="true"
                                  execute="@this" image="/img/close.png"
                                  onclick="#{r:component(panelId)}.hide(); return false;">
-                </r:commandButton>
+                </a:commandButton>
             </ui:define>
 
             <h:panelGrid>
@@ -153,9 +153,9 @@
             </h:panelGrid>
 
             <ui:define name="actionButtons">
-                <r:commandButton value="#{messages.cancel}" immediate="true"
+                <a:commandButton value="#{messages.cancel}" immediate="true"
                                  onclick="#{r:component(panelId)}.hide(); return false;"/>
-                <r:commandButton value="#{messages.save}" execute="@form" action="#{projectHome.saveBuild}"
+                <a:commandButton value="#{messages.save}" execute="@form" action="#{projectHome.saveBuild}"
                                  data="#{actionExecuteState.lastState}" render="buildTable"
                                  oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
             </ui:define>

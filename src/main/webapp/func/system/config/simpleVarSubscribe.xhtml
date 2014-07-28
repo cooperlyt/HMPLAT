@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/full-template.xhtml">
 
 <ui:define name="body">
@@ -29,23 +29,23 @@
                      valueChangeListener="#{businessSimpleVarConfig.selectedVersionChange}">
         <s:selectItems value="#{businessSimpleVarConfig.versionList}" var="_ver" label="#{_ver}"
                        noSelectionLabel="#{messages.noSelectLabel}"/>
-        <r:ajax execute="@form" event="selectitem" render="varTabPanel,simpleVarTabPanel"/>
+        <a:ajax execute="@form" event="selectitem" render="varTabPanel,simpleVarTabPanel"/>
     </r:select>
-    <r:commandButton value="#{messages.copySubscribeToLasterVersion}" execute="@form"
+    <a:commandButton value="#{messages.copySubscribeToLasterVersion}" execute="@form"
                      oncomplete="alert('#{messages.businessSimpleVarCopyDone}')"
                      action="#{businessSimpleVarConfig.copySimpleVarToLaster}">
-        <r:attachQueue requestDelay="0"/>
-    </r:commandButton>
+        <a:attachQueue requestDelay="0"/>
+    </a:commandButton>
 </h:form>
 <h:panelGrid columns="2">
     <h:form>
-        <r:outputPanel id="varTabPanel">
+        <a:outputPanel id="varTabPanel">
 
-            <r:outputPanel rendered="#{not empty businessSimpleVarConfig.selectedVersion}">
+            <a:outputPanel rendered="#{not empty businessSimpleVarConfig.selectedVersion}">
                 <r:tabPanel activeItem="#{businessSimpleVarConfig.selectedTask}" switchType="ajax"
                                itemChangeListener="#{businessSimpleVarConfig.taskSimpleVarChange}">
-                    <r:attachQueue requestDelay="0"/>
-                    <r:repeat value="#{businessSimpleVarConfig.defineTaskList}" var="_defineTask">
+                    <a:attachQueue requestDelay="0"/>
+                    <a:repeat value="#{businessSimpleVarConfig.defineTaskList}" var="_defineTask">
                         <r:tab
                                 header="#{_defineTask}"
                                 name="#{_defineTask}" immediate="true">
@@ -58,7 +58,7 @@
                                 </r:column>
                                 <r:column>
                                     <f:facet name="header">#{messages.simpleVar_field_title}</f:facet>
-                                    <r:outputPanel>
+                                    <a:outputPanel>
                                         <h:outputText value="#{_subscribeVar.simpleVarDefine.title}"/>
 
                                         <r:tooltip followMouse="false" showDelay="1500"
@@ -67,7 +67,7 @@
                                                       rendered="#{not empty _subscribeVar.simpleVarDefine.description}">
                                             <span style="white-space: nowrap">#{_subscribeVar.simpleVarDefine.description}</span>
                                         </r:tooltip>
-                                    </r:outputPanel>
+                                    </a:outputPanel>
                                 </r:column>
                                 <r:column>
                                     <f:facet name="header"> #{messages.simpleVar_field_length}</f:facet>
@@ -81,59 +81,59 @@
                                     <f:facet name="header">#{messages.subscribe_field_size}</f:facet>
                                     <r:inputNumberSpinner value="#{_subscribeVar.size}" required="true" minValue="1"
                                                              maxValue="999" step="1">
-                                        <r:ajax event="blur" execute="@this"/>
+                                        <a:ajax event="blur" execute="@this"/>
                                     </r:inputNumberSpinner>
                                 </r:column>
                                 <r:column>
                                     <f:facet name="header">#{messages.subscribe_field_qequest}</f:facet>
                                     <h:selectBooleanCheckbox value="#{_subscribeVar.request}">
-                                        <r:ajax event="click" execute="@this"/>
+                                        <a:ajax event="click" execute="@this"/>
                                     </h:selectBooleanCheckbox>
                                 </r:column>
                                 <r:column>
                                     <f:facet name="header">#{messages.subscribe_field_readonly}</f:facet>
                                     <h:selectBooleanCheckbox value="#{_subscribeVar.readonly}">
-                                        <r:ajax event="click" execute="@this"/>
+                                        <a:ajax event="click" execute="@this"/>
                                     </h:selectBooleanCheckbox>
                                 </r:column>
                                 <r:column>
                                     <f:facet name="header"/>
-                                    <r:commandButton image="/img/up.png" action="#{businessSimpleVarConfig.upSimpleVar}"
+                                    <a:commandButton image="/img/up.png" action="#{businessSimpleVarConfig.upSimpleVar}"
                                                      immediate="true" execute="this" render="taskSimpleVarList">
-                                        <r:attachQueue requestDelay="0"/>
-                                    </r:commandButton>
-                                    <r:commandButton image="/img/down.png"
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+                                    <a:commandButton image="/img/down.png"
                                                      action="#{businessSimpleVarConfig.downSimpleVar}"
                                                      immediate="true" execute="this" render="taskSimpleVarList">
-                                        <r:attachQueue requestDelay="0"/>
-                                    </r:commandButton>
-                                    <r:commandButton image="/img/delete.png"
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+                                    <a:commandButton image="/img/delete.png"
                                                      action="#{businessSimpleVarConfig.deleteSelectSimpleVar}"
                                                      immediate="true" execute="this" render="taskSimpleVarList">
-                                        <r:attachQueue requestDelay="0"/>
-                                    </r:commandButton>
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
                                 </r:column>
 
                             </r:dataTable>
                         </r:tab>
-                    </r:repeat>
+                    </a:repeat>
 
                 </r:tabPanel>
-            </r:outputPanel>
-        </r:outputPanel>
+            </a:outputPanel>
+        </a:outputPanel>
     </h:form>
-    <r:outputPanel id="simpleVarTabPanel">
+    <a:outputPanel id="simpleVarTabPanel">
         <r:tabPanel switchType="client" rendered="#{not empty businessSimpleVarConfig.selectedVersion}">
             <r:tab header="add">
                 <r:toolbar>
                     <r:toolbarGroup>
-                        <r:commandButton image="/img/create.gif" title="#{messages.create}" immediate="true"
+                        <a:commandButton image="/img/create.gif" title="#{messages.create}" immediate="true"
                                          execute="@this"
                                          oncomplete="#{r:component('newSubscribeVarPanel')}.show()"
                                          action="#{businessSimpleVarConfig.createSimpleVarInstance}"
                                          render="newSubscribeVarPanel_inputs">
-                            <r:attachQueue requestDelay="0"/>
-                        </r:commandButton>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
                     </r:toolbarGroup>
                     <r:toolbarGroup location="right">
                         <h:form>
@@ -143,10 +143,10 @@
                             <h:inputText id="search_title" size="15" value="#{simpleVarList.simpleVarDefine.title}">
                                 <r:placeholder value="#{messages.simpleVar_field_title}"/>
                             </h:inputText>
-                            <r:commandButton styleClass="barsearchbutton" value="#{messages.search}" execute="@form"
+                            <a:commandButton styleClass="barsearchbutton" value="#{messages.search}" execute="@form"
                                              render="simpleVars">
-                                <r:attachQueue requestDelay="0"/>
-                            </r:commandButton>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
                         </h:form>
 
                     </r:toolbarGroup>
@@ -154,12 +154,12 @@
                 </r:toolbar>
                 <r:dataTable id="simpleVars" value="#{simpleVarList.dataModel}" var="_simpleVar">
                     <f:facet name="footer">
-                        <r:outputPanel rendered="#{not empty simpleVarList.resultList}">
+                        <a:outputPanel rendered="#{not empty simpleVarList.resultList}">
                             <ui:include src="/layout/pageA4jNavigation.xhtml">
                                 <ui:param name="entityList" value="#{simpleVarList}"/>
                                 <ui:param name="render" value="simpleVars"/>
                             </ui:include>
-                        </r:outputPanel>
+                        </a:outputPanel>
                     </f:facet>
                     <r:column>
                         <f:facet name="header">
@@ -171,14 +171,14 @@
                         <f:facet name="header">
                             #{messages.simpleVar_field_title}
                         </f:facet>
-                        <r:outputPanel>
+                        <a:outputPanel>
                             <h:outputText value="#{_simpleVar.title}"/>
 
                             <r:tooltip followMouse="false" showDelay="1500" styleClass="tooltip-custom-body"
                                           layout="block" rendered="#{not empty _simpleVar.description}">
                                 <span style="white-space: nowrap">#{_simpleVar.description}</span>
                             </r:tooltip>
-                        </r:outputPanel>
+                        </a:outputPanel>
                     </r:column>
                     <r:column>
                         <f:facet name="header">
@@ -195,12 +195,12 @@
                     </r:column>
                     <r:column>
                         <f:facet name="header"></f:facet>
-                        <r:commandButton image="/img/add.png" title="#{messages.add}"
+                        <a:commandButton image="/img/add.png" title="#{messages.add}"
                                          action="#{businessSimpleVarConfig.addSimpleVar}" execute="@this"
                                          immediate="true" oncomplete="#{r:component('newSubscribeVarPanel')}.show()"
                                          render="newSubscribeVarPanel_inputs">
-                            <r:attachQueue requestDelay="0"/>
-                        </r:commandButton>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
                     </r:column>
 
                 </r:dataTable>
@@ -209,7 +209,7 @@
 
             </r:tab>
         </r:tabPanel>
-    </r:outputPanel>
+    </a:outputPanel>
 </h:panelGrid>
 
 <s:button value="previous" action="previous"/>
@@ -234,7 +234,7 @@
                     <f:validateLength maximum="32"/>
                     <f:validateRequired/>
                     <r:validator/>
-                    <r:ajax event="blur" execute="@this" immediate="true" render="simpleVarDetails"/>
+                    <a:ajax event="blur" execute="@this" immediate="true" render="simpleVarDetails"/>
                 </h:inputText>
                 <r:message for="id" styleClass="message-icon"
                               showDetail="true" showSummary="true" tooltip="true"/>
@@ -302,14 +302,14 @@
                         <s:selectItems var="_varType" value="#{varTypes}" label="#{messages[_varType.name()]}"
                                        noSelectionLabel="#{messages.noSelectLabel}"/>
                         <s:convertEnum/>
-                        <r:ajax execute="@this" immediate="true" render="typeField" event="selectitem"/>
+                        <a:ajax execute="@this" immediate="true" render="typeField" event="selectitem"/>
 
                     </r:select>
 
                     <!--r:message for="type" styleClass="message-icon"
                                   showDetail="true" showSummary="true" tooltip="true"/-->
-                    <r:outputPanel id="wordType">
-                        <r:outputPanel rendered="#{businessSimpleVarConfig.wordTypeVar}">
+                    <a:outputPanel id="wordType">
+                        <a:outputPanel rendered="#{businessSimpleVarConfig.wordTypeVar}">
                             <h:selectOneMenu id="wordTypeSelect"
                                              value="#{businessSimpleVarConfig.newSimpleVarSubscribe.simpleVarDefine.wordCategory}"
                                              label="#{messages.wordCategory}" required="true"
@@ -322,8 +322,8 @@
                             </h:selectOneMenu>
                             <r:message for="wordTypeSelect" styleClass="message-icon"
                                           showDetail="true" showSummary="true" tooltip="true"/>
-                        </r:outputPanel>
-                    </r:outputPanel>
+                        </a:outputPanel>
+                    </a:outputPanel>
                 </s:decorate>
 
 
@@ -358,12 +358,12 @@
     </r:panel>
 
     <ui:define name="actionButtons">
-        <r:commandButton value="write" action="#{businessSimpleVarConfig.addSimpleVarSubscribe}" execute="@form"
+        <a:commandButton value="write" action="#{businessSimpleVarConfig.addSimpleVarSubscribe}" execute="@form"
                          oncomplete="if (event.data == 'added') {#{r:component('newSubscribeVarPanel')}.hide();}"
                          data="#{businessSimpleVarConfig.simpleVarState}" render="varTabPanel">
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
-        <r:commandButton value="cancel" execute="@this" immediate="true"
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+        <a:commandButton value="cancel" execute="@this" immediate="true"
                          onclick="#{r:component('newSubscribeVarPanel')}.hide();return false;"/>
     </ui:define>
 </s:decorate>

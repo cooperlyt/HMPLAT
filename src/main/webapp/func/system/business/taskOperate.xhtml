@@ -4,7 +4,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/full-template.xhtml">
 
     <ui:param name="functionTitle" value="Business Mgr"/>
@@ -15,7 +15,7 @@
             <r:toolbar height="34" itemSeparator="line">
                 <r:toolbarGroup>
                     <h:graphicImage id="save" value="/img/msg_save.png"/>
-                    <r:commandLink action="#{defaultTaskOperate.save}" execute="@form"
+                    <a:commandLink action="#{defaultTaskOperate.save}" execute="@form"
                                    value="#{messages.save}" styleClass="ltool"/>
                 </r:toolbarGroup>
                 <r:toolbarGroup>
@@ -24,12 +24,12 @@
                 </r:toolbarGroup>
                 <r:toolbarGroup>
                     <h:graphicImage id="fallback" value="/img/msg_back.png"/>
-                    <r:commandLink value="#{messages.fallback}" immediate="true" execute="@this"
+                    <a:commandLink value="#{messages.fallback}" immediate="true" execute="@this"
                                    rendered="#{defaultTaskOperate.canFallback}"
                                    styleClass="ltool">
                         <r:componentControl for="backModalPanel" operation="show"
                                                event="onclick"/>
-                    </r:commandLink>
+                    </a:commandLink>
 
                     <h:outputText value="#{messages.fallback}" rendered="#{!defaultTaskOperate.canFallback}"/>
 
@@ -56,7 +56,7 @@
                 <r:messages ajaxRendered="true" globalOnly="false"/>
 
                 <div class="edit">
-                    <r:repeat var="_simpleVar" value="#{defaultTaskOperate.writeSimpleVarList}">
+                    <a:repeat var="_simpleVar" value="#{defaultTaskOperate.writeSimpleVarList}">
 
                         <ui:include src="/layout/system/SimpleVar.xhtml">
                             <ui:param name="var" value="#{_simpleVar}"/>
@@ -64,7 +64,7 @@
                             <ui:param name="required" value="#{_simpleVar.simpleVarSubscribe.request}"/>
                             <ui:param name="readonly" value="#{_simpleVar.simpleVarSubscribe.readonly}"/>
                         </ui:include>
-                    </r:repeat>
+                    </a:repeat>
 
                     <div style="clear:both"/>
                     <div style="text-align:right">

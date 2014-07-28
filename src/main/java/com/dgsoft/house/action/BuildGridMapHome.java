@@ -11,9 +11,9 @@ import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.richfaces.ui.drag.dropTarget.DropEvent;
-import org.richfaces.ui.drag.dropTarget.DropListener;
-import org.richfaces.ui.input.fileUpload.FileUploadEvent;
+import org.richfaces.event.DropEvent;
+import org.richfaces.event.DropListener;
+import org.richfaces.event.FileUploadEvent;
 
 
 import java.math.BigDecimal;
@@ -31,6 +31,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     public void templeteFileUploadListener(FileUploadEvent event) throws Exception {
 
+        log.debug("----begin update");
         if (isManaged()) {
             getEntityManager().remove(getInstance());
         }

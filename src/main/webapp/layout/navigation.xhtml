@@ -2,11 +2,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
 
-    <r:outputPanel rendered="#{identity.loggedIn}">
+    <a:outputPanel rendered="#{identity.loggedIn}">
 
         <h:form styleClass="menuContainerTop">
             <h:selectOneMenu value="#{authInfo.currRoleCategoryId}" style="width: 100%">
@@ -14,14 +14,14 @@
                                noSelectionLabel="#{messages.roleFilter}"
                                label="#{_roleCategory.name}" itemValue="#{_roleCategory.id}"/>
 
-                <r:ajax execute="@form" listener="#{authInfo.generateFuncCategorys}"
+                <a:ajax execute="@form" listener="#{authInfo.generateFuncCategorys}"
                         event="valueChange" render="navigationMenuForm"/>
 
             </h:selectOneMenu>
         </h:form>
 
-    </r:outputPanel>
-    <r:outputPanel rendered="#{not identity.loggedIn}">
+    </a:outputPanel>
+    <a:outputPanel rendered="#{not identity.loggedIn}">
         <h2>#{messages.PleaseLoginHere}</h2>
         <r:panel>
 
@@ -47,7 +47,7 @@
                 </div>
             </h:form>
         </r:panel>
-    </r:outputPanel>
+    </a:outputPanel>
 
 
     <f:subview id="navigation">
@@ -57,19 +57,19 @@
                             topGroupExpandedRightIcon="chevronUp" topGroupCollapsedRightIcon="chevronDown"
                             itemLeftIcon="disc">
 
-                <r:repeat value="#{authInfo.authenticationFuncCategorys}" var="_category">
+                <a:repeat value="#{authInfo.authenticationFuncCategorys}" var="_category">
                     <r:panelMenuGroup label="#{_category.name}"
                                          expanded="#{currentFunction.funcCategory.id eq _category.id}">
-                        <r:repeat value="#{_category.functionList}" var="_function">
+                        <a:repeat value="#{_category.functionList}" var="_function">
                             <r:panelMenuItem execute="@this" label="#{_function.name}"
                                                 action="#{navigation.navigationTo}"
                                                 mode="server" name="#{_function.id}">
                                 <f:param name="functionId" value="#{_function.id}"/>
-                                <r:attachQueue requestDelay="0"/>
+                                <a:attachQueue requestDelay="0"/>
                             </r:panelMenuItem>
-                        </r:repeat>
+                        </a:repeat>
                     </r:panelMenuGroup>
-                </r:repeat>
+                </a:repeat>
             </r:panelMenu>
         </h:form>
     </f:subview>

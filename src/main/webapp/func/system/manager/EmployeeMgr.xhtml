@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
 <ui:define name="toolbar">
@@ -19,33 +19,33 @@
 <h:form>
     <r:toolbar height="26" itemSeparator="grid">
         <r:toolbarGroup>
-            <r:outputPanel id="orgEditActionForm">
-                <r:commandButton image="/img/create.gif" title="#{messages.createOrg}" execute="@this" immediate="true"
+            <a:outputPanel id="orgEditActionForm">
+                <a:commandButton image="/img/create.gif" title="#{messages.createOrg}" execute="@this" immediate="true"
                                  value="#{messages.createOrg}" styleClass="toolBarPic"
                                  render="orgEditPanel_form,orgEditPanel_title,orgEditPanel_controls"
                                  oncomplete="#{r:component('orgEditPanel')}.show();">
-                    <r:param name="orgId" value="" assignTo="#{organizationHome.id}"/>
-                    <r:param name="parentOrgId" value="#{organizationHome.instance.id}"
+                    <a:param name="orgId" value="" assignTo="#{organizationHome.id}"/>
+                    <a:param name="parentOrgId" value="#{organizationHome.instance.id}"
                              assignTo="#{organizationHome.parentOrgId}"/>
                     <s:conversationPropagation type="begin"/>
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
 
 
                 #{' '}
-                <r:commandButton id="editOrgBtn" image="/img/edit.png" title="#{messages.edit}" execute="@this"
+                <a:commandButton id="editOrgBtn" image="/img/edit.png" title="#{messages.edit}" execute="@this"
                                  immediate="true" styleClass="toolBarPic"
                                  onclick="if (#{not organizationHome.idDefined}){alert('#{messages.plase_select_org_first}'); return false;}"
                                  render="orgEditPanel_form,orgEditPanel_title,orgEditPanel_controls"
                                  oncomplete="#{r:component('orgEditPanel')}.show();">
 
-                    <r:param id="editOrgId" name="editOrgId" value="#{organizationHome.instance.id}"
+                    <a:param id="editOrgId" name="editOrgId" value="#{organizationHome.instance.id}"
                              assignTo="#{organizationHome.id}"/>
-                    <r:attachQueue requestDelay="0"/>
+                    <a:attachQueue requestDelay="0"/>
                     <s:conversationPropagation type="begin"/>
-                </r:commandButton>
+                </a:commandButton>
 
-            </r:outputPanel>
+            </a:outputPanel>
         </r:toolbarGroup>
         <r:toolbarGroup>
             <h:panelGroup id="selectOrgLable">
@@ -58,17 +58,17 @@
 
         <r:toolbarGroup location="right">
 
-            <r:commandButton id="empEditActionForm" value="#{messages.create}#{messages.employee}" execute="@this"
+            <a:commandButton id="empEditActionForm" value="#{messages.create}#{messages.employee}" execute="@this"
                              immediate="true"
                              oncomplete="#{r:component('empEditPanel')}.show();" styleClass="toolBarBtn"
                              onclick="if (#{not organizationHome.idDefined}){alert('#{messages.plase_select_org_first}'); return false;}"
                              render="credentialsForm,viewCredntials,empEditPanel_title,employeeEditPanelHideBtn">
-                <r:param name="empid" value="" assignTo="#{employeeHome.id}"/>
-                <r:param name="persionid" value="" assignTo="#{personHome.id}"/>
-                <r:param name="orgid" value="#{organizationHome.instance.id}" assignTo="#{organizationHome.id}"/>
+                <a:param name="empid" value="" assignTo="#{employeeHome.id}"/>
+                <a:param name="persionid" value="" assignTo="#{personHome.id}"/>
+                <a:param name="orgid" value="#{organizationHome.instance.id}" assignTo="#{organizationHome.id}"/>
                 <s:conversationPropagation type="begin"/>
-                <r:attachQueue requestDelay="0"/>
-            </r:commandButton>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
 
         </r:toolbarGroup>
     </r:toolbar>
@@ -82,32 +82,32 @@
 </f:facet>
 <f:facet name="controls">
     <h:panelGrid columns="3">
-        <r:status>
+        <a:status>
             <f:facet name="start">
                 <h:graphicImage value="/img/connect_title_active.gif"/>
             </f:facet>
             <f:facet name="stop">
                 <h:graphicImage value="/img/connect_title.gif"/>
             </f:facet>
-        </r:status>
+        </a:status>
 
         <br/>
         <h:form id="employeeEditPanelHideBtn">
-            <r:commandButton immediate="true"
+            <a:commandButton immediate="true"
                              execute="@this" image="/img/close.png"
                              oncomplete="#{r:component('empEditPanel')}.hide(); return false;">
                 <s:conversationPropagation type="end"/>
 
-                <r:attachQueue requestDelay="0"/>
-            </r:commandButton>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
         </h:form>
     </h:panelGrid>
 
 </f:facet>
 <r:messages ajaxRendered="true" globalOnly="true"/>
 
-<r:outputPanel id="empEditPanelContent" ajaxRendered="false">
-<r:outputPanel id="viewCredntials">
+<a:outputPanel id="empEditPanelContent" ajaxRendered="false">
+<a:outputPanel id="viewCredntials">
     <h:panelGrid columns="2" rendered="#{employeeHome.managed}">
         <s:decorate template="/layout/display.xhtml">
             <ui:define name="label">
@@ -129,7 +129,7 @@
         </s:decorate>
     </h:panelGrid>
 
-</r:outputPanel>
+</a:outputPanel>
 
 <h:form id="credentialsForm">
 
@@ -143,7 +143,7 @@
                              value="#{personInput.cerdentialsType}" required="true">
                     <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                     <s:convertEnum/>
-                    <r:ajax event="selectitem" listener="#{personInput.credentialsChangeListener}"
+                    <a:ajax event="selectitem" listener="#{personInput.credentialsChangeListener}"
                             render="credentialsTypeField,personEditFields" execute="@region" status="waitSearchPerson"/>
                 </r:select>
             </s:decorate>
@@ -156,25 +156,25 @@
                              size="25"
                              maxlength="100"
                              value="#{personInput.credentialsNumber}">
-                    <r:ajax event="blur" render="credentialsNumberField,personEditFields" status="waitSearchPerson"
+                    <a:ajax event="blur" render="credentialsNumberField,personEditFields" status="waitSearchPerson"
                             listener="#{personInput.credentialsChangeListener}" execute="@region"/>
                 </h:inputText>
 
             </s:decorate>
 
-            <r:commandButton image="/img/id_card_read_btn.png" title=""
+            <a:commandButton image="/img/id_card_read_btn.png" title=""
                              execute="@region"
                              status="waitSearchPerson"
                              render="credentialsNumberField,credentialsTypeField,viewCredntials,personEditFields"/>
 
             #{' '}
-            <r:status id="waitSearchPerson" name="waitSearchPerson">
+            <a:status id="waitSearchPerson" name="waitSearchPerson">
                 <f:facet name="start">
                     <h:graphicImage value="/img/connect_active.gif"/>
                 </f:facet>
                 <f:facet name="stop">
                 </f:facet>
-            </r:status>
+            </a:status>
         </h:panelGrid>
     </r:region>
 
@@ -196,7 +196,7 @@
                              readonly="#{empty personHome.instance.credentialsNumber}"
                              label="#{messages.employee_field_id}"
                              value="#{employeeHome.instance.id}">
-                    <r:ajax event="blur" render="empIdField"
+                    <a:ajax event="blur" render="empIdField"
                             disabled="#{empty personHome.instance.credentialsNumber}"/>
                 </h:inputText>
             </s:decorate>
@@ -247,7 +247,7 @@
                                  value="#{employeeHome.instance.organization}" required="true">
                     <s:selectItems value="#{allOrganizationList.resultList}" var="_org" label="#{_org.name}"/>
                     <f:converter converterId="systemEntityConverter"/>
-                    <r:ajax event="valueChange" render="empOrgField" disabled="#{not employeeHome.managed}"/>
+                    <a:ajax event="valueChange" render="empOrgField" disabled="#{not employeeHome.managed}"/>
                 </h:selectOneMenu>
             </s:decorate>
 
@@ -259,7 +259,7 @@
                              readonly="#{empty personHome.instance.credentialsNumber}"
                              label="#{messages.employee_field_email}"
                              value="#{employeeHome.instance.EMail}">
-                    <r:ajax event="blur" render="EMailField"
+                    <a:ajax event="blur" render="EMailField"
                             disabled="#{empty personHome.instance.credentialsNumber}"/>
                 </h:inputText>
             </s:decorate>
@@ -275,7 +275,7 @@
                                  readonly="#{empty personHome.instance.credentialsNumber}"
                                  label="#{messages.employee_field_password}"
                                  value="#{employeeHome.instance.password}">
-                    <r:ajax event="blur" render="empPasswordField"
+                    <a:ajax event="blur" render="empPasswordField"
                             disabled="#{empty personHome.instance.credentialsNumber}"/>
                 </h:inputTextarea>
             </s:decorate>
@@ -285,7 +285,7 @@
                 <h:inputTextarea cols="69" rows="3" value="#{employeeHome.instance.memo}"
                                  readonly="#{empty personHome.instance.credentialsNumber}"
                                  label="#{messages.field_memo}">
-                    <r:ajax event="blur" render="empMemoField"
+                    <a:ajax event="blur" render="empMemoField"
                             disabled="#{empty personHome.instance.credentialsNumber}"/>
                 </h:inputTextarea>
 
@@ -301,35 +301,35 @@
 
     </r:panel>
     <h:panelGrid columns="1" style="width: 100%; text-align: right">
-        <r:outputPanel id="#{panelId}_buttons">
+        <a:outputPanel id="#{panelId}_buttons">
             <div class="actionButtons">
-                <r:commandButton execute="@form"
+                <a:commandButton execute="@form"
                                  render="employeeListPanel,personEditFields"
                                  value="#{messages.save}" action="#{employeeHome.persistEnd}"
                                  rendered="#{!employeeHome.managed}"
                                  data="#{employeeHome.lastState}"
                                  oncomplete="if (event.data == 'persisted'){#{r:component('empEditPanel')}.hide();}">
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
-                <r:commandButton execute="@form" render="employeeListPanel,personEditFields"
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
+                <a:commandButton execute="@form" render="employeeListPanel,personEditFields"
                                  value="#{messages.update}" action="#{employeeHome.updateEnd}"
                                  rendered="#{employeeHome.managed}" data="#{employeeHome.lastState}"
                                  oncomplete="if (event.data == 'updated')#{r:component('empEditPanel')}.hide();">
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
-                <r:commandButton immediate="true" execute="@this"
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
+                <a:commandButton immediate="true" execute="@this"
                                  value="#{messages.cancel}"
                                  oncomplete="#{r:component('empEditPanel')}.hide();">
                     <s:conversationPropagation type="end"/>
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
             </div>
-        </r:outputPanel>
+        </a:outputPanel>
     </h:panelGrid>
 </h:form>
 
 
-</r:outputPanel>
+</a:outputPanel>
 
 </r:popupPanel>
 
@@ -338,13 +338,13 @@
     <ui:param name="panelTitle" value="#{messages.employee_power_title}"/>
 
     <ui:define name="controls">
-        <r:commandButton immediate="true"
+        <a:commandButton immediate="true"
                          execute="@this" image="/img/close.png"
                          oncomplete="#{r:component('powerEditPanel')}.hide(); return false;">
             <s:conversationPropagation type="end"/>
             <s:conversationId/>
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
     </ui:define>
 
     <r:panel>
@@ -363,18 +363,18 @@
         </r:pickList>
     </r:panel>
     <ui:define name="actionButtons">
-        <r:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
+        <a:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
                          execute="@form" data="#{employeeHome.lastState}" render="powerEditPanel_inputs"
                          oncomplete="if (event.data == 'updated'){#{r:component('powerEditPanel')}.hide();}">
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
 
-        <r:commandButton immediate="true" execute="@this"
+        <a:commandButton immediate="true" execute="@this"
                          value="#{messages.cancel}"
                          oncomplete="#{r:component('powerEditPanel')}.hide();">
             <s:conversationPropagation type="end"/>
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
     </ui:define>
 </s:decorate>
 
@@ -387,13 +387,13 @@
     </ui:define>
 
     <ui:define name="controls">
-        <r:commandButton immediate="true"
+        <a:commandButton immediate="true"
                          execute="@this" image="/img/close.png"
                          oncomplete="#{r:component('orgEditPanel')}.hide(); return false;">
             <s:conversationPropagation type="end"/>
             <s:conversationId/>
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
     </ui:define>
     <s:decorate template="/layout/seam-edit.xhtml">
         <ui:define name="label">#{messages.organization_field_root}</ui:define>
@@ -405,7 +405,7 @@
         <ui:define name="label">#{messages.organization_field_name}</ui:define>
         <h:inputText value="#{organizationHome.instance.name}" required="true"
                      label="#{messages.organization_field_name}" size="20" maxlength="50">
-            <r:ajax event="blur" render="orgNameField"/>
+            <a:ajax event="blur" render="orgNameField"/>
         </h:inputText>
     </s:decorate>
 
@@ -414,7 +414,7 @@
         <h:inputText label="#{messages.organization_field_phone}"
                      value="#{organizationHome.instance.phoneNumber}"
                      size="20" maxlength="20">
-            <r:ajax event="blur" render="orgPhoneField"/>
+            <a:ajax event="blur" render="orgPhoneField"/>
         </h:inputText>
 
     </s:decorate>
@@ -425,26 +425,26 @@
     </s:decorate>
 
     <ui:define name="actionButtons">
-        <r:commandButton execute="@form"
+        <a:commandButton execute="@form"
                          render="orgEditPanel_inputs,tree"
                          value="#{messages.save}" action="#{organizationHome.persistEnd}"
                          rendered="#{!organizationHome.managed}"
                          data="#{organizationHome.lastState}"
                          oncomplete="if (event.data == 'persisted'){#{r:component('orgEditPanel')}.hide();}">
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
-        <r:commandButton execute="@form" render="orgEditPanel_inputs,tree"
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+        <a:commandButton execute="@form" render="orgEditPanel_inputs,tree"
                          value="#{messages.update}" action="#{organizationHome.updateEnd}"
                          rendered="#{organizationHome.managed}" data="#{organizationHome.lastState}"
                          oncomplete="if (event.data == 'updated')#{r:component('orgEditPanel')}.hide();">
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
-        <r:commandButton immediate="true" execute="@this"
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+        <a:commandButton immediate="true" execute="@this"
                          value="#{messages.cancel}"
                          oncomplete="#{r:component('orgEditPanel')}.hide();">
             <s:conversationPropagation type="end"/>
-            <r:attachQueue requestDelay="0"/>
-        </r:commandButton>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
     </ui:define>
 </s:decorate>
 
@@ -512,26 +512,26 @@
                         #{messages.action}
                     </f:facet>
 
-                    <r:commandButton immediate="true" image="/img/edit.png" title="#{messages.edit}" execute="@this"
+                    <a:commandButton immediate="true" image="/img/edit.png" title="#{messages.edit}" execute="@this"
                                      render="credentialsForm,viewCredntials,empEditPanel_title,employeeEditPanelHideBtn"
                                      oncomplete="#{r:component('empEditPanel')}.show();">
-                        <r:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
-                        <r:param name="empId" value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
-                        <r:param name="personId" value="#{_emp.person.id}" assignTo="#{personHome.id}"/>
+                        <a:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
+                        <a:param name="empId" value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
+                        <a:param name="personId" value="#{_emp.person.id}" assignTo="#{personHome.id}"/>
                         <s:conversationPropagation type="begin"/>
-                        <r:attachQueue requestDelay="0"/>
-                    </r:commandButton>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
                     #{' '}
-                    <r:commandButton immediate="true" image="/img/power.png" title="#{messages.employee_power_title}"
+                    <a:commandButton immediate="true" image="/img/power.png" title="#{messages.employee_power_title}"
                                      execute="@this"
                                      render="powerEditPanel_form,powerEditPanel_controls"
                                      action="#{employeeHome.readPower}"
                                      oncomplete="#{r:component('powerEditPanel')}.show();">
-                        <r:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
-                        <r:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
+                        <a:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
+                        <a:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
                         <s:conversationPropagation type="begin"/>
-                        <r:attachQueue requestDelay="0"/>
-                    </r:commandButton>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
 
                 </r:column>
             </r:dataTable>

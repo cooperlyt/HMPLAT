@@ -4,7 +4,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/template.xhtml">
     <ui:define name="body">
@@ -12,21 +12,21 @@
             <ui:include src="/layout/house/condition/SectionSearchCondition.xhtml"/>
             <ui:include src="/layout/house/condition/ProjectSearchCondition.xhtml"/>
             <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                <r:outputPanel id="search_buttons">
+                <a:outputPanel id="search_buttons">
                     <div class="actionButtons">
 
                         <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
 
 
-                        <r:outputPanel id="searchButton">
-                            <r:commandButton value="#{messages.search}"
+                        <a:outputPanel id="searchButton">
+                            <a:commandButton value="#{messages.search}"
                                              execute="@form" render="dataListResult"
                                              action="#{projectList.first}">
-                                <r:attachQueue requestDelay="0"/>
-                            </r:commandButton>
-                        </r:outputPanel>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+                        </a:outputPanel>
                     </div>
-                </r:outputPanel>
+                </a:outputPanel>
             </h:panelGrid>
         </r:collapsiblePanel>
         <br/>
@@ -38,11 +38,11 @@
         <r:dataTable value="#{projectList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
                      id="dataListResult" style="width: 100%">
             <f:facet name="footer">
-                <r:outputPanel rendered="#{not empty projectList.resultList}">
+                <a:outputPanel rendered="#{not empty projectList.resultList}">
                     <ui:include src="/layout/pageA4jNavigation.xhtml">
                         <ui:param name="entityList" value="#{projectList}"/>
                     </ui:include>
-                </r:outputPanel>
+                </a:outputPanel>
             </f:facet>
 
             <r:column>

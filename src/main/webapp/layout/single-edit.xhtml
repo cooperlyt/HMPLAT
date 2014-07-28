@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <div>
@@ -23,13 +23,13 @@
         <s:div styleClass="tipError">
 
 
-            <r:outputPanel rendered="#{invalid}">
+            <a:outputPanel rendered="#{invalid}">
                 <h:graphicImage value="/img/error.gif" rendered="#{invalid}" styleClass="errors">
                 </h:graphicImage>
                 <r:tooltip layout="block" followMouse="false" mode="client">
                     <s:message styleClass="errors"/>
                 </r:tooltip>
-            </r:outputPanel>
+            </a:outputPanel>
 
         </s:div>
 

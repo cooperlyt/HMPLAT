@@ -268,7 +268,7 @@
 
     <context-param>
         <param-name>org.richfaces.skin</param-name>
-        <param-value>blueSky</param-value>
+        <param-value>#{skinBean.skin}</param-value>
     </context-param>
 
 
@@ -325,13 +325,21 @@
 
     <!-- Configures Push -->
 
-
+    <!-- RF 5
     <servlet>
         <servlet-name>Push Servlet</servlet-name>
         <servlet-class>org.richfaces.servlet.PushServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
     </servlet>
+   -->
+    <servlet>
+        <servlet-name>Push Servlet</servlet-name>
+        <servlet-class>org.richfaces.webapp.PushServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+
 
     <context-param>
         <param-name>org.atmosphere.useBlocking</param-name>

@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org">
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
     <h:outputStylesheet>
         .searchBtn {
@@ -27,7 +27,7 @@
 
 
                 <h:panelGroup>
-                    <r:commandButton image="/img/close.png"
+                    <a:commandButton image="/img/close.png"
                                      onclick="#{r:component('developerSearchSelectPanel')}.hide(); return false;"/>
                 </h:panelGroup>
             </h:panelGrid>
@@ -38,10 +38,10 @@
                 <h:panelGrid columns="2" columnClasses=",searchBtn" width="100%">
                     <h:inputText style="width: 100%" value="#{developerList.name}"/>
 
-                    <r:commandButton style="padding-left: 2px; padding-right: 2px" execute="@region"
+                    <a:commandButton style="padding-left: 2px; padding-right: 2px" execute="@region"
                                      image="/img/icons/search.png" action="#{developerList.first}" render="dataListResult">
-                        <r:attachQueue requestDelay="0"/>
-                    </r:commandButton>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
                 </h:panelGrid>
 
             </r:region>
@@ -51,22 +51,22 @@
                 <f:facet name="footer">
 
 
-                    <r:outputPanel rendered="#{not empty sectionList.resultList}">
+                    <a:outputPanel rendered="#{not empty sectionList.resultList}">
                         <ui:include src="/layout/pageA4jNavigation.xhtml">
                             <ui:param name="entityList" value="#{sectionList}"/>
                         </ui:include>
-                    </r:outputPanel>
+                    </a:outputPanel>
                 </f:facet>
 
                 <r:column>
                     <f:facet name="header">
                         #{messages.Developer_name}
                     </f:facet>
-                    <r:commandLink value="#{_item.name}" execute="@this" render="#{render}"
+                    <a:commandLink value="#{_item.name}" execute="@this" render="#{render}"
                                    oncomplete="#{r:component('developerSearchSelectPanel')}.hide()">
-                        <r:attachQueue requestDelay="0"/>
-                        <r:param value="#{_item.id}" assignTo="#{developerHome.id}"/>
-                    </r:commandLink>
+                        <a:attachQueue requestDelay="0"/>
+                        <a:param value="#{_item.id}" assignTo="#{developerHome.id}"/>
+                    </a:commandLink>
 
                 </r:column>
 

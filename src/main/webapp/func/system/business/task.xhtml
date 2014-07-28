@@ -6,13 +6,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/template.xhtml">
 
 <ui:define name="taskChangePush">
-    <r:push id="pushTask" address="pushTaskChange">
-        <r:ajax event="dataavailable" render="ownerTasks,pooledTasks,taskOperLink,netOwnerTaskComeNotify,netPooledTaskComeNotify"/>
-    </r:push>
+    <a:push id="pushTask" address="pushTaskChange">
+        <a:ajax event="dataavailable" render="ownerTasks,pooledTasks,taskOperLink,netOwnerTaskComeNotify,netPooledTaskComeNotify"/>
+    </a:push>
 </ui:define>
 
 <ui:define name="body">
@@ -23,11 +23,11 @@
     </r:toolbarGroup>
     <r:toolbarGroup location="right" itemSeparator="none">
 
-        <r:commandButton image="/img/reset_btn.png" title="#{messages.reset}"
+        <a:commandButton image="/img/reset_btn.png" title="#{messages.reset}"
                          execute="@this" immediate="true"
                          action="#{pooledTaskSortFilter.reset}"
                          render="pooledTasks"/>
-        <r:commandButton image="/img/refresh_btn.png" title="#{messages.refresh}" execute="@this"
+        <a:commandButton image="/img/refresh_btn.png" title="#{messages.refresh}" execute="@this"
                          immediate="true"
                          action="#{pooledTaskInstanceCacheList.refresh}"
                          render="pooledTasks"/>
@@ -45,13 +45,13 @@
 
         <r:column width="30px">
             <f:facet name="header"></f:facet>
-            <r:commandButton title="#{messages.acceptBusiness}" image="/img/receive.png"
+            <a:commandButton title="#{messages.acceptBusiness}" image="/img/receive.png"
                              immediate="true"
                              value="#{messages.acceptBusiness}" execute="@this"
                              action="#{pooledTask.assignToCurrentActor}">
                 <f:param name="taskId" value="#{_task.id}"/>
-                <r:attachQueue requestDelay="0"/>
-            </r:commandButton>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
         </r:column>
 
 
@@ -61,7 +61,7 @@
             <f:facet name="header">
                 <h:outputText value="#{messages.businessKey}"/>
             </f:facet>
-            <r:outputPanel>
+            <a:outputPanel>
 
                 #{_task.processInstance.key}
                 <r:tooltip mode="ajax" followMouse="false" showDelay="1500" styleClass="tooltip"
@@ -78,7 +78,7 @@
                     </span>
 
                 </r:tooltip>
-            </r:outputPanel>
+            </a:outputPanel>
         </r:column>
         <r:column width="120px" sortBy="#{_task.variables.businessName}"
                      filterValue="#{pooledTaskSortFilter.nameFilter}"
@@ -93,13 +93,13 @@
                      filterExpression="#{empty _filterValue or fn:startsWith(_task.name, _filterValue)}">
             <f:facet name="header">#{messages.taskName}</f:facet>
 
-            <r:outputPanel>
+            <a:outputPanel>
                 <h:outputText value="#{_task.name}"/>
                 <r:tooltip followMouse="false" showDelay="1000" styleClass="tooltip"
                               layout="block" rendered="#{not empty _task.description}">
                     <span style="white-space: nowrap">#{_task.description}</span>
                 </r:tooltip>
-            </r:outputPanel>
+            </a:outputPanel>
         </r:column>
         <r:column width="90px" sortBy="#{_task.variables.businessDescription}"
                      filterValue="#{pooledTaskSortFilter.descripitionFilter}"
@@ -145,11 +145,11 @@
         <h:outputText value="#{messages.myBussiness}"/>
     </r:toolbarGroup>
     <r:toolbarGroup location="right" itemSeparator="none">
-        <r:commandButton image="/img/reset_btn.png" title="#{messages.reset}"
+        <a:commandButton image="/img/reset_btn.png" title="#{messages.reset}"
                          execute="@this" immediate="true"
                          action="#{taskSortFilter.reset}"
                          render="ownerTasks"/>
-        <r:commandButton image="/img/refresh_btn.png" title="#{messages.refresh}" execute="@this"
+        <a:commandButton image="/img/refresh_btn.png" title="#{messages.refresh}" execute="@this"
                          immediate="true" action="#{ownerTaskInstanceCacheList.refresh}"
                          render="ownerTasks"/>
     </r:toolbarGroup>
@@ -165,13 +165,13 @@
         <r:column width="50px">
             <f:facet name="header"></f:facet>
 
-            <r:commandButton title="#{messages.unAcceptBusiness}" image="/img/forward.png"
+            <a:commandButton title="#{messages.unAcceptBusiness}" image="/img/forward.png"
                              action="#{pooledTask.unassign}" immediate="true"
                              execute="@this"
                              onclick="if (#{empty _task.pooledActors}) {alert('#{messages.cantUnassignTask}');return false;}">
                 <f:param name="taskId" value="#{_task.id}"/>
-                <r:attachQueue requestDelay="0"/>
-            </r:commandButton>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
             #{' '}
             <s:link image="img/handle.png" action="#{taskPrepare.beginTask}" taskInstance="#{_task}">
                 <s:graphicImage value="/img/handle.png" title="#{messages.operateBusiness}"/>
@@ -186,7 +186,7 @@
             <f:facet name="header">
                 #{messages.businessKey}
             </f:facet>
-            <r:outputPanel>
+            <a:outputPanel>
 
                 <h:outputText value="#{_task.processInstance.key}"/>
 
@@ -204,7 +204,7 @@
                     </span>
 
                 </r:tooltip>
-            </r:outputPanel>
+            </a:outputPanel>
         </r:column>
         <r:column width="120px" sortBy="#{_task.variables.businessName}"
                      filterValue="#{taskSortFilter.nameFilter}"
@@ -218,13 +218,13 @@
                      filterExpression="#{empty _filterValue or fn:startsWith(_task.name, _filterValue)}">
             <f:facet name="header">#{messages.taskName}</f:facet>
 
-            <r:outputPanel>
+            <a:outputPanel>
                 <h:outputText value="#{_task.name}"/>
                 <r:tooltip followMouse="false" showDelay="1000" styleClass="tooltip"
                               layout="block">
                     <span style="white-space: nowrap">#{_task.description}</span>
                 </r:tooltip>
-            </r:outputPanel>
+            </a:outputPanel>
         </r:column>
         <r:column width="90px" sortBy="#{_task.variables.businessDescription}"
                      filterValue="#{taskSortFilter.descripitionFilter}"

@@ -1,13 +1,13 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <!-- param: value ,size , readOnly-->
 
-    <r:outputPanel rendered="#{not empty value}">
+    <a:outputPanel rendered="#{not empty value}">
 
         <h:outputText value="#{fn:substring(value, 0, size)}"/>
         <h:outputText value="..." rendered="#{fn:length(value) gt size}"/>
@@ -17,6 +17,6 @@
             <span style="white-space: nowrap"> #{value}</span>
 
         </r:tooltip>
-    </r:outputPanel>
+    </a:outputPanel>
 
 </ui:composition>

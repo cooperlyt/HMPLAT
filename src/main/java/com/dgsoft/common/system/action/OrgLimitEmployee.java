@@ -7,8 +7,9 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Out;
-import org.richfaces.ui.iteration.tree.TreeSelectionChangeEvent;
-import org.richfaces.ui.iteration.tree.UITree;
+import org.richfaces.component.UITree;
+import org.richfaces.event.TreeSelectionChangeEvent;
+
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -4,7 +4,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/template.xhtml">
 
@@ -16,28 +16,28 @@
             <r:column style="width: 50px;text-align:center;">
                 <f:facet name="header">
 
-                    <r:commandButton immediate="true" execute="@this" image="/img/icons/create.gif"
+                    <a:commandButton immediate="true" execute="@this" image="/img/icons/create.gif"
                                      title="#{messages.add}"
                                      oncomplete="#{r:component('editPanel')}.show()" render="editPanel_form">
-                        <r:attachQueue requestDelay="0"/>
-                        <r:param value="" assignTo="#{sectionHome.id}"/>
+                        <a:attachQueue requestDelay="0"/>
+                        <a:param value="" assignTo="#{sectionHome.id}"/>
                         <s:conversationPropagation type="begin"/>
-                    </r:commandButton>
+                    </a:commandButton>
                 </f:facet>
-                <r:commandButton image="/img/icons/delete.png" action="#{sectionHome.remove}" immediate="true"
+                <a:commandButton image="/img/icons/delete.png" action="#{sectionHome.remove}" immediate="true"
                                  onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
                                  execute="@this" title="#{messages.delete}" render="dataListResult">
-                    <r:attachQueue requestDelay="0"/>
-                    <r:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
-                </r:commandButton>
+                    <a:attachQueue requestDelay="0"/>
+                    <a:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
+                </a:commandButton>
 
-                <r:commandButton image="/img/icons/edit.png" render="editPanel_form" immediate="true"
+                <a:commandButton image="/img/icons/edit.png" render="editPanel_form" immediate="true"
                                  execute="@this"
                                  title="#{messages.edit}" oncomplete="#{r:component('editPanel')}.show()">
-                    <r:attachQueue requestDelay="0"/>
-                    <r:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <a:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
                     <s:conversationPropagation type="begin"/>
-                </r:commandButton>
+                </a:commandButton>
             </r:column>
         </s:decorate>
 
@@ -46,37 +46,37 @@
             <ui:param name="panelId" value="editPanel"/>
             <ui:param name="panelTitle"
                       value="#{messages.Section} #{' '} #{sectionHome.idDefined ? messages.add : messages.edit}"/>
-            <r:outputPanel>
+            <a:outputPanel>
                 <ui:include src="/layout/house/SectionEdit.xhtml">
                     <ui:param name="section" value="#{sectionHome.instance}"/>
                     <ui:param name="tip" value="true"/>
                 </ui:include>
-            </r:outputPanel>
+            </a:outputPanel>
 
             <ui:define name="actionButtons">
-                <r:commandButton id="cancelButton" immediate="true" execute="@this" value="#{messages.cancel}"
+                <a:commandButton id="cancelButton" immediate="true" execute="@this" value="#{messages.cancel}"
                                  oncomplete="#{r:component(panelId)}.hide();return false;">
                     <s:conversationPropagation type="end"/>
-                    <r:attachQueue requestDelay="0"/>
-                </r:commandButton>
-                <r:outputPanel id="operButtons">
-                    <r:commandButton render="dataListResult" execute="@form" value="#{messages.save}"
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
+                <a:outputPanel id="operButtons">
+                    <a:commandButton render="dataListResult" execute="@form" value="#{messages.save}"
                                      action="#{sectionHome.persistEnd}"
                                      rendered="#{!sectionHome.managed}"
                                      data="#{sectionHome.lastState}"
                                      oncomplete="if (event.data == 'persisted'){#{r:component(panelId)}.hide(); return true;} else return false;">
-                        <r:attachQueue requestDelay="0"/>
-                    </r:commandButton>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
 
 
-                    <r:commandButton render="dataListResult" value="#{messages.update}" execute="@form"
+                    <a:commandButton render="dataListResult" value="#{messages.update}" execute="@form"
                                      action="#{sectionHome.updateEnd}"
                                      rendered="#{sectionHome.managed}"
                                      data="#{sectionHome.lastState}"
                                      oncomplete="if(event.data == 'updated'){#{r:component(panelId)}.hide(); return true;} else return false;">
-                        <r:attachQueue requestDelay="0"/>
-                    </r:commandButton>
-                </r:outputPanel>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
+                </a:outputPanel>
 
 
             </ui:define>

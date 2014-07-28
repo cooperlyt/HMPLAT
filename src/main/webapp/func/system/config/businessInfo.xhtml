@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:r="http://richfaces.org"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 template="/layout/full-template.xhtml">
 
     <ui:param name="functionTitle" value="Business Mgr"/>
@@ -16,7 +16,7 @@
 
             <s:decorate id="idField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_id}</ui:define>
-                <r:outputPanel id="idInputPanel">
+                <a:outputPanel id="idInputPanel">
                     <h:inputText id="id"
                                  label="#{messages.businessDefine_field_id}"
                                  name="#{messages.businessDefine_field_id}"
@@ -28,25 +28,25 @@
                                  value="#{businessDefineHome.instance.id}">
 
                         <s:validate/>
-                        <r:ajax event="blur" bypassUpdates="true" execute="@this" render="idInputPanel"/>
+                        <a:ajax event="blur" bypassUpdates="true" execute="@this" render="idInputPanel"/>
                     </h:inputText>
 
-                </r:outputPanel>
+                </a:outputPanel>
                 <ui:define name="tail">
                     <r:message for="id"
-                                  showDetail="true" showSummary="true" tooltip="true"/>
+                               showDetail="true" showSummary="true" tooltip="true"/>
                 </ui:define>
             </s:decorate>
 
             <s:decorate id="wfnameField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_field_wfname}</ui:define>
                 <r:select id="wfName" value="#{businessDefineHome.instance.wfName}"
-                                 label="#{messages.businessDefine_field_wfname}" required="true"
-                                 style="width:150px;" disabled="#{businessDefineHome.managed}">
+                          label="#{messages.businessDefine_field_wfname}" required="true"
+                          style="width:150px;" disabled="#{businessDefineHome.managed}">
                     <s:selectItems value="#{jpdlNameList}" var="_jpdlName" label="#{_jpdlName}"
                                    noSelectionLabel="#{messages.noSelectLabel}"/>
                     <r:validator event="change"/>
-                    <r:ajax event="change" render="wfnameField" />
+                    <a:ajax event="change" render="wfnameField"/>
                 </r:select>
 
             </s:decorate>
@@ -55,11 +55,11 @@
             <s:decorate id="categoryField" template="/layout/seam-edit.xhtml">
                 <ui:define name="label">#{messages.businessDefine_category}</ui:define>
                 <r:select style="width:150px;" id="category"
-                                 value="#{businessDefineHome.instance.businessCategory}"
-                                 label="#{messages.businessDefine_category}" required="true">
+                          value="#{businessDefineHome.instance.businessCategory}"
+                          label="#{messages.businessDefine_category}" required="true">
                     <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
                                    noSelectionLabel="#{messages.noSelectLabel}" label="#{_category.name}"/>
-                    <r:ajax event="change" render="categoryField" />
+                    <a:ajax event="change" render="categoryField"/>
                     <f:converter converterId="systemEntityConverter"/>
                 </r:select>
             </s:decorate>
@@ -76,7 +76,7 @@
                 </h:inputText>
                 <ui:define name="tail">
                     <r:message for="name"
-                                  showDetail="true" showSummary="false" tooltip="true"/>
+                               showDetail="true" showSummary="false" tooltip="true"/>
                 </ui:define>
             </s:decorate>
 
@@ -92,7 +92,7 @@
                 </h:inputText>
                 <ui:define name="tail">
                     <r:message for="operPage"
-                                  showDetail="true" showSummary="false" tooltip="true"/>
+                               showDetail="true" showSummary="false" tooltip="true"/>
                 </ui:define>
             </s:decorate>
 
@@ -104,7 +104,7 @@
                 </h:inputTextarea>
                 <ui:define name="tail">
                     <r:message for="memo"
-                                  showDetail="true" showSummary="false" tooltip="true"/>
+                               showDetail="true" showSummary="false" tooltip="true"/>
                 </ui:define>
             </s:decorate>
 

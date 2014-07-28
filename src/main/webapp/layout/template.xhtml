@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:r="http://richfaces.org"
+      xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
       xmlns:s="http://jboss.org/schema/seam/taglib">
 <f:view
         contentType="text/html">
@@ -25,13 +25,13 @@
     <ui:insert name="head"/>
 </h:head>
 <h:body>
-    <r:queue requestDelay="1000" ignoreDupResponses="true"/>
+    <a:queue requestDelay="1000" ignoreDupResponses="true"/>
     <h:form>
         <ui:insert name="taskChangePush">
 
-            <r:push id="pushTask" address="pushTaskChange">
-                <r:ajax event="dataavailable" render="taskOperLink,netOwnerTaskComeNotify,netPooledTaskComeNotify"/>
-            </r:push>
+            <a:push id="pushTask" address="pushTaskChange">
+                <a:ajax event="dataavailable" render="taskOperLink,netOwnerTaskComeNotify,netPooledTaskComeNotify"/>
+            </a:push>
 
         </ui:insert>
 
@@ -40,7 +40,7 @@
             <r:notifyStack id="ownerTaskStack" position="bottomRight" direction="horizontal" method="last"/>
 
 
-            <r:outputPanel id="netOwnerTaskComeNotify">
+            <a:outputPanel id="netOwnerTaskComeNotify">
 
                 <r:notify stack="ownerTaskStack" stayTime="1500" sticky="false" nonblocking="false"
                              nonblockingOpacity="0.5" showShadow="true"
@@ -50,9 +50,9 @@
                         #{messages.ownerTaskComeToast}
                     </f:facet>
                 </r:notify>
-            </r:outputPanel>
+            </a:outputPanel>
 
-            <r:outputPanel id="netPooledTaskComeNotify">
+            <a:outputPanel id="netPooledTaskComeNotify">
 
                 <r:notify stack="pooledTaskStack" stayTime="1500" sticky="false" nonblocking="false"
                              nonblockingOpacity="0.5" showShadow="true"
@@ -62,13 +62,13 @@
                         #{messages.pooledTaskComeToast}
                     </f:facet>
                 </r:notify>
-            </r:outputPanel>
+            </a:outputPanel>
         </ui:insert>
 
     </h:form>
 
 
-    <r:status id="processWaiting" name="processWaiting"
+    <a:status id="processWaiting" name="processWaiting"
               onstart="#{r:component('wait')}.show()"
               onstop="#{r:component('wait')}.hide()"/>
     <r:popupPanel id="wait" modal="true" autosized="true"
@@ -165,14 +165,14 @@
                         <h:panelGrid columns="2" width="100%" columnClasses=",column-right-align">
                             <h1>#{currentFunction.name}</h1>
 
-                            <r:status>
+                            <a:status>
                                 <f:facet name="start">
                                     <h:graphicImage value="/img/connect.gif"/>
                                 </f:facet>
                                 <f:facet name="stop">
                                     <h:graphicImage value="/img/connect_idle.gif"/>
                                 </f:facet>
-                            </r:status>
+                            </a:status>
 
                         </h:panelGrid>
                     </ui:insert>
@@ -206,8 +206,8 @@
             -->
             <p>&#xA9; 2013 Cooper's soft Studio.</p>
             <s:fragment rendered="#{init.debug}">
-                <r:outputPanel ajaxRendered="true">
-                    <r:log hotkey="D" mode="popup"/>
+                <a:outputPanel ajaxRendered="true">
+                    <a:log hotkey="D" mode="popup"/>
 
                     <p style="margin-top: -0.5em;">
                         Conversation: id = #{conversation.id}, #{conversation.longRunning ? 'long running' : 'temporary'}#{conversation.nested ? ', nested, parent id = '.concat(conversation.parentId) : ''}
@@ -221,7 +221,7 @@
                                 action="#{org.jboss.seam.web.session.invalidate()}"
                                 propagation="none" value="Terminate session"/>
                     </p>
-                </r:outputPanel>
+                </a:outputPanel>
             </s:fragment>
         </h:panelGroup>
 
