@@ -32,12 +32,17 @@ public class GridBlock implements java.io.Serializable {
     private String structure;
     private String houseType;
     private House house;
+    private String houseOrder;
 
 
     public GridBlock() {
     }
 
-    public GridBlock(String id, GridRow gridRow, int order, int colspan, int rowspan, int unitIndex, String unitName, BigDecimal area, BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea, BigDecimal loftArea, BigDecimal commParam, String useType, String structure, String houseType) {
+    public GridBlock(String id, GridRow gridRow, int order, int colspan,
+                     int rowspan, int unitIndex, String unitName, BigDecimal area,
+                     BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
+                     BigDecimal loftArea, BigDecimal commParam, String useType,
+                     String structure, String houseType, String houseOrder) {
         this.gridRow = gridRow;
         this.order = order;
         this.colspan = colspan;
@@ -54,6 +59,7 @@ public class GridBlock implements java.io.Serializable {
         this.structure = structure;
         this.houseType = houseType;
         this.id = id;
+        this.houseOrder = houseOrder;
     }
 
     @Id
@@ -221,4 +227,16 @@ public class GridBlock implements java.io.Serializable {
     public void setHouse(House house) {
         this.house = house;
     }
+
+    @Column(name="HOUSE_ORDER",nullable = true)
+    @Size(max=20)
+    public String getHouseOrder() {
+        return houseOrder;
+    }
+
+    public void setHouseOrder(String houseOrder) {
+        this.houseOrder = houseOrder;
+    }
+
+
 }

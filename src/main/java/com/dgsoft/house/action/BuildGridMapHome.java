@@ -28,10 +28,11 @@ import java.util.*;
 @Name("buildGridMapHome")
 public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements DropListener {
 
+    @In
+    private BuildHome buildHome;
 
     public void templeteFileUploadListener(FileUploadEvent event) throws Exception {
 
-        log.debug("----begin update");
         if (isManaged()) {
             getEntityManager().remove(getInstance());
         }
@@ -40,7 +41,13 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         Element root = doc.getRootElement();
         clearInstance();
         setInstance(analyzeTemplete(root));
-        log.debug("-----" + this.getInstance().getHouseGridTitleList().size());
+
+        if (buildHome.isHaveHouse()){
+            fillHouse();
+        }else{
+            generateHouse();
+        }
+
     }
 
     private BuildGridMap analyzeTemplete(Element rootElement) {
@@ -78,7 +85,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                         new BigDecimal(houseElement.attributeValue("CommParam", "0")),
                         houseElement.attributeValue("UseType", ""),
                         houseElement.attributeValue("Structure", ""),
-                        houseElement.attributeValue("HouseType", "")
+                        houseElement.attributeValue("HouseType", ""),
+                        houseElement.attributeValue("Order","")
                 ));
 
                 j++;
@@ -112,21 +120,20 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         this.idleHouses = idleHouses;
     }
 
+    public void fillHouse(){
+
+    }
+
     public void generateHouse() {
         //TODO other info
         log.debug("generate House");
 
         for (GridRow row : getInstance().getGridRowList()) {
-            int i = 1;
-            int unitIndex = -1;
+
             for (GridBlock block : row.getGridBlockList()) {
-                log.debug("new House");
-                if (block.getUnitIndex() != unitIndex){
-                    i = 1;
-                    unitIndex = block.getUnitIndex();
-                }
+
                 block.setHouse(new House());
-                i++;
+
             }
 
         }
