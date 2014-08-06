@@ -58,10 +58,6 @@ public class House implements java.io.Serializable {
 	private boolean inbiz;
 	private String inBusinessCode;
 	private String dataSource;
-	private String southNext;
-	private String westNext;
-	private String northNext;
-	private String eastNext;
 	private String eastWall;
 	private String westWall;
 	private String southWall;
@@ -410,46 +406,6 @@ public class House implements java.io.Serializable {
 
 	public void setDataSource(String dataSource) {
 		this.dataSource = dataSource;
-	}
-
-	@Column(name = "SOUTH_NEXT", length = 50)
-	@Size(max = 50)
-	public String getSouthNext() {
-		return this.southNext;
-	}
-
-	public void setSouthNext(String southNext) {
-		this.southNext = southNext;
-	}
-
-	@Column(name = "WEST_NEXT", length = 50)
-	@Size(max = 50)
-	public String getWestNext() {
-		return this.westNext;
-	}
-
-	public void setWestNext(String westNext) {
-		this.westNext = westNext;
-	}
-
-	@Column(name = "NORTH_NEXT", length = 50)
-	@Size(max = 50)
-	public String getNorthNext() {
-		return this.northNext;
-	}
-
-	public void setNorthNext(String northNext) {
-		this.northNext = northNext;
-	}
-
-	@Column(name = "EAST_NEXT", length = 50)
-	@Size(max = 50)
-	public String getEastNext() {
-		return this.eastNext;
-	}
-
-	public void setEastNext(String eastNext) {
-		this.eastNext = eastNext;
 	}
 
 	@Column(name = "EAST_WALL", length = 32)
