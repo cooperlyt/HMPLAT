@@ -41,10 +41,13 @@ public class Project implements java.io.Serializable, TreeNode {
     private String memo;
     private Date mapTime;
     private Date createTime;
+    private String completeDate;
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
     private Set<PoolBuild> poolBuilds = new HashSet<PoolBuild>(0);
+    private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
+
 
     public Project() {
     }
@@ -233,6 +236,25 @@ public class Project implements java.io.Serializable, TreeNode {
 
     public void setPoolBuilds(Set<PoolBuild> poolBuilds) {
         this.poolBuilds = poolBuilds;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "project")
+    public Set<ProjectSellCard> getProjectSellCards() {
+        return projectSellCards;
+    }
+
+    public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
+        this.projectSellCards = projectSellCards;
+    }
+
+    @Column(name = "COMPLETE_DATE",length = 6)
+    @Size(max = 6)
+    public String getCompleteDate() {
+        return completeDate;
+    }
+
+    public void setCompleteDate(String completeDate) {
+        this.completeDate = completeDate;
     }
 
     @Transient

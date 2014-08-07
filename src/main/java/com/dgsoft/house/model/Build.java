@@ -17,8 +17,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUILD", catalog = "HOUSE_INFO",uniqueConstraints = {@UniqueConstraint(columnNames = {
-        "PROJECT_ID", "BUILD_NO"}),@UniqueConstraint(columnNames = {
-        "MAP_NUMBER","BLOCK_NO", "BUILD_NO"})})
+        "PROJECT_ID", "BUILD_NO"}),@UniqueConstraint(columnNames = {"BLOCK_NO", "BUILD_NO"})})
 public class Build implements java.io.Serializable,TreeNode {
 
 	private String id;
@@ -53,6 +52,10 @@ public class Build implements java.io.Serializable,TreeNode {
 	private BigDecimal shopArea;
 	private Set<House> houses = new HashSet<House>(0);
 	private Set<BuildGridMap> buildGridMaps = new HashSet<BuildGridMap>(0);
+    private String completeDate;
+    private String landBlockCode;
+    private String streetCode;
+    private int nextHouseOrder;
 
 	public Build() {
 	}
@@ -97,6 +100,16 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.version = version;
 	}
 
+    @Column(name = "COMPLETE_DATE",length = 6)
+    @Size(max = 6)
+    public String getCompleteDate() {
+        return completeDate;
+    }
+
+    public void setCompleteDate(String completeDate) {
+        this.completeDate = completeDate;
+    }
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CARD_ID")
 	public ProjectSellCard getProjectSellCard() {
@@ -128,9 +141,8 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.landInfo = landInfo;
 	}
 
-	@Column(name = "MAP_NUMBER", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
+	@Column(name = "MAP_NUMBER", length = 4)
+	@Size(max = 4)
 	public String getMapNumber() {
 		return this.mapNumber;
 	}
@@ -139,9 +151,8 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.mapNumber = mapNumber;
 	}
 
-	@Column(name = "BLOCK_NO", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
+	@Column(name = "BLOCK_NO", nullable = false, length = 10)
+	@Size(max = 10)
 	public String getBlockNo() {
 		return this.blockNo;
 	}
@@ -150,9 +161,9 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.blockNo = blockNo;
 	}
 
-	@Column(name = "BUILD_NO", nullable = false, length = 50)
+	@Column(name = "BUILD_NO", nullable = false, length = 4)
 	@NotNull
-	@Size(max = 50)
+	@Size(max = 4)
 	public String getBuildNo() {
 		return this.buildNo;
 	}
@@ -385,6 +396,35 @@ public class Build implements java.io.Serializable,TreeNode {
 
     public void setBuildCost(BigDecimal buildCost) {
         this.buildCost = buildCost;
+    }
+
+    @Column(name = "LAND_BLOCK_CODE",length = 4)
+    @Size(max = 4)
+    public String getLandBlockCode() {
+        return landBlockCode;
+    }
+
+    public void setLandBlockCode(String landBlockCode) {
+        this.landBlockCode = landBlockCode;
+    }
+
+    @Column(name = "STREET_CODE",length = 4)
+    @Size(max = 4)
+    public String getStreetCode() {
+        return streetCode;
+    }
+
+    public void setStreetCode(String streetCode) {
+        this.streetCode = streetCode;
+    }
+
+    @Column(name = "NEXT_HOUSE_ORDER",nullable = false)
+    public int getNextHouseOrder() {
+        return nextHouseOrder;
+    }
+
+    public void setNextHouseOrder(int nextHouseOrder) {
+        this.nextHouseOrder = nextHouseOrder;
     }
 
     @Override

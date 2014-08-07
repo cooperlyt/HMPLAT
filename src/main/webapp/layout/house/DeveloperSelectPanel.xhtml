@@ -33,7 +33,7 @@
             </h:panelGrid>
         </f:facet>
         <h:form>
-            <r:region>
+            <a:region>
 
                 <h:panelGrid columns="2" columnClasses=",searchBtn" width="100%">
                     <h:inputText style="width: 100%" value="#{developerList.name}"/>
@@ -44,7 +44,7 @@
                     </a:commandButton>
                 </h:panelGrid>
 
-            </r:region>
+            </a:region>
 
             <r:dataTable value="#{developerList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
                          id="dataListResult" style="width: 100%">

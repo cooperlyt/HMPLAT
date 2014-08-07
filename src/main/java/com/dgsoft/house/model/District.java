@@ -31,9 +31,9 @@ public class District implements java.io.Serializable,TreeNode,NamedEntity {
 	}
 
 	@Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
+	@Column(name = "ID", unique = true, nullable = false, length = 9)
 	@NotNull
-	@Size(max = 32)
+	@Size(max = 9)
 	public String getId() {
 		return this.id;
 	}
