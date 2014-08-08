@@ -78,6 +78,11 @@ public class GBT {
         return result + getGB17710(result);
     }
 
+    public static String getJDJT246(String buildCode, int houseOrder){
+        String result = formatCode(buildCode,21) + formatCode(String.valueOf(houseOrder),4);
+        return result + getGB17710(result);
+    }
+
 
 
 }
