@@ -132,7 +132,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
             for (GridBlock block : row.getGridBlockList()) {
 
-                block.setHouse(new House());
+                block.setHouse(new House(block));
 
             }
 
