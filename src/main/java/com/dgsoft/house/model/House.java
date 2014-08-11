@@ -81,6 +81,21 @@ public class House implements java.io.Serializable {
         this.houseOrder = houseOrder;
     }
 
+    public House(GridBlock block){
+        this.houseArea = block.getArea();
+        this.useArea = block.getUseArea();
+        this.commArea = block.getCommArea();
+        this.commParam = block.getCommParam();
+        this.shineArea = block.getShineArea();
+        this.loftArea = block.getLoftArea();
+        this.useType = block.getUseType();
+        this.structure = block.getStructure();
+        this.houseType = block.getHouseType();
+        this.houseUnitName = block.getUnitName();
+        this.inFloorName = block.getGridRow().getTitle();
+        this.houseOrder = block.getHouseOrder();
+    }
+
 	public House(String id, Build build, HouseOwner houseOwnerByRecordId,
 			HouseOwner houseOwnerByOwnerId, String houseOrder,
 			BigDecimal houseArea, int houseState, Date mapTime,
