@@ -27,6 +27,9 @@ public class ProjectSellCard implements java.io.Serializable {
 	private String orderNumber;
 	private Set<Build> builds = new HashSet<Build>(0);
     private Date printTime;
+    private String memo;
+    private Project project;
+
 
 	public ProjectSellCard() {
 	}
@@ -138,5 +141,25 @@ public class ProjectSellCard implements java.io.Serializable {
 
     public void setPrintTime(Date printTime) {
         this.printTime = printTime;
+    }
+
+    @Column(name = "MEMO", length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "PROJECT",nullable = false)
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

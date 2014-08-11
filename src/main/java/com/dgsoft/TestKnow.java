@@ -1,6 +1,7 @@
 package com.dgsoft;
 
 import com.dgsoft.common.DataFormat;
+import com.dgsoft.common.GBT;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.contexts.Contexts;
@@ -45,9 +46,13 @@ public class TestKnow {
 
 
     public static void main(String[] args){
-       System.out.println(new BigDecimal("98").divide(new BigDecimal(10),0,BigDecimal.ROUND_DOWN) );
+       //System.out.println(GBT.getGB17710("1101010102006050001090001") );
+       // System.out.println(GBT.getGB17710("11010800000001") );
+//        System.out.println(GBT.formatCode("123456789", 4) );
+//        System.out.println(GBT.formatCode("3", 4) );
+//        System.out.println(GBT.formatCode("1234", 4) );
 
-
+        System.out.println("1234567890".substring(0,5));
 
     }
 
