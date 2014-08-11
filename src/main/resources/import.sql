@@ -53,6 +53,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.projectMgr', '项目管理', 'house.datas', '', '/func/house/datas/ProjectMgr.seam', '', '3', '');
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.Developer', '开发商管理', 'house.data.attachCorp', '', '/func/house/datas/DeveloperMgr.seam', '', '1', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.MappingCorporation', '测绘机构管理', 'house.data.attachCorp', '', '/func/house/datas/MappingCorporationMgr.seam', '', '2', '');
 
 
 -- 角色
@@ -84,6 +85,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.projectMgr');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.Developer');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.MappingCorporation');
 
 -- ADMIN INSERY
 -- INSERT INTO PERSON (ID,NAME,CREDENTIALS_TYPE,_FOREIGN,CREDENTIALS_NUMBER,DATE_OF_BIRTH) VALUES ('admin','admin','OTHER',1,'1','2013-07-15 10:27:08');

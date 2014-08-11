@@ -23,8 +23,7 @@ public class MappingCorporationHome extends HouseSimpleEntityHome<MappingCorpora
 
     @Override
     protected boolean verifyRemoveAvailable(){
-       if(getEntityManager().createQuery("select coalesce(Count(attachCorporation.id),0) from AttachCorporation attachCorporation where attachCorporation.id = :MappId",Long.class)
-        .setParameter("MappId",getInstance().getAttachCorporation().getId()).getSingleResult()>0){
+       if(getInstance().getAttachCorporation()!=null){
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"MappingCorporation_cant_remove");
             return false;
         }
