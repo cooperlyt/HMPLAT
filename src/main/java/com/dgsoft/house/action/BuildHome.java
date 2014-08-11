@@ -19,12 +19,6 @@ import java.text.DecimalFormat;
 @Name("buildHome")
 public class BuildHome extends HouseEntityHome<Build> {
 
-    @In
-    private RunParam runParam;
-
-    @In
-    private NumberBuilder numberBuilder;
-
     public boolean isHaveHouse() {
         return !getInstance().getHouses().isEmpty();
     }
@@ -37,57 +31,11 @@ public class BuildHome extends HouseEntityHome<Build> {
         }
     }
 
-    @Override
-    protected boolean wire() {
-        if (!isManaged()) {
-            getInstance().setId(GBT.getJDJT246(genBuildCode(), 0));
-        }
-        return true;
-    }
-
-    private String genBuildCode() {
-        String result = GBT.formatCode(getInstance().getProject().getSection().getDistrict().getId(), 9);
-
-        switch (GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype"))) {
-
-            case JDJT246_4:
-                DecimalFormat df = new DecimalFormat("#0");
-                df.setGroupingUsed(false);
-                df.setRoundingMode(RoundingMode.DOWN);
-                return result + GBT.formatCode(df.format(getInstance().getLat()), 6) + GBT.formatCode(df.format(getInstance().getLng()), 6);
-
-
-            case JDJT246_3:
-                String yearStr = getInstance().getCompleteDate().trim();
-                int j = 6 - yearStr.length();
-                for (int i = 0; i < j; i++) {
-                    yearStr = yearStr + "*";
-                }
-                result = result + yearStr;
-                result = result + GBT.formatCode(String.valueOf(numberBuilder.getNumber("BUILDCODE_" + result)), 6);
-                break;
-
-            case JDJT246_5:
-                result += GBT.formatCode(getInstance().getStreetCode(), 4);
-                if (GBT.HouseIdBuildCodePath.valueOf(runParam.getStringParamValue("house.id.useBlock")).equals(GBT.HouseIdBuildCodePath.MAP_BLOCK)) {
-                    result += GBT.formatCode(getInstance().getBlockNo(), 4);
-                } else {
-                    result += GBT.formatCode(getInstance().getLandBlockCode(), 4);
-                }
-
-                result = result + GBT.formatCode(String.valueOf(numberBuilder.getNumber("BUILDCODE_" + result)), 4);
-                break;
-            case JDJT246_6:
-                result += GBT.formatCode(getInstance().getMapNumber() + getInstance().getBlockNo(), 8);
-                result = result + GBT.formatCode(String.valueOf(numberBuilder.getNumber("BUILDCODE_" + result)), 4);
-                break;
-        }
-        return result;
-    }
-
 
     public String genHouseOrder(int order) {
-        return GBT.getJDJT246(getBuildCode(), order);
+        String result = GBT.getJDJT246(getBuildCode(), order);
+        getInstance().setNextHouseOrder(order + 1);
+        return result;
     }
 
 

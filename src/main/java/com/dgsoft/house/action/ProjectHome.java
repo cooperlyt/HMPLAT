@@ -130,16 +130,24 @@ public class ProjectHome extends HouseEntityHome<Project> {
     @In(create = true)
     private SectionHome sectionHome;
 
+    @In
+    private HouseCodeHelper houseCodeHelper;
+
     @Override
     protected void initInstance() {
         super.initInstance();
         developerHome.setId(getInstance().getId());
     }
 
-    @Override
-    protected boolean wire() {
+    public boolean wireProject() {
         getInstance().setDeveloper(developerHome.getInstance());
         getInstance().setSection(sectionHome.getInstance());
+        for(Build build: projectBuilds){
+          if (!getEntityManager().contains(build)){
+                houseCodeHelper.genBuildCode(build);
+          }
+        }
+
         return true;
     }
 

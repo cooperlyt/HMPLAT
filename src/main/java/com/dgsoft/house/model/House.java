@@ -55,8 +55,6 @@ public class House implements java.io.Serializable {
 	private String knotSize;
 	private String houseFrom;
 	private String address;
-	private boolean inbiz;
-	private String inBusinessCode;
 	private String dataSource;
 	private String eastWall;
 	private String westWall;
@@ -85,7 +83,7 @@ public class House implements java.io.Serializable {
 
 	public House(String id, Build build, HouseOwner houseOwnerByRecordId,
 			HouseOwner houseOwnerByOwnerId, String houseOrder,
-			BigDecimal houseArea, int houseState, boolean inbiz, Date mapTime,
+			BigDecimal houseArea, int houseState, Date mapTime,
 			boolean initRegister, boolean firmlyPower, boolean outPlan) {
 		this.id = id;
 		this.build = build;
@@ -94,7 +92,6 @@ public class House implements java.io.Serializable {
 		this.houseOrder = houseOrder;
 		this.houseArea = houseArea;
 		this.houseState = houseState;
-		this.inbiz = inbiz;
 		this.mapTime = mapTime;
 		this.initRegister = initRegister;
 		this.firmlyPower = firmlyPower;
@@ -379,24 +376,6 @@ public class House implements java.io.Serializable {
 		this.address = houseStation;
 	}
 
-	@Column(name = "INBIZ", nullable = false)
-	public boolean isInbiz() {
-		return this.inbiz;
-	}
-
-	public void setInbiz(boolean inbiz) {
-		this.inbiz = inbiz;
-	}
-
-	@Column(name = "IN_BUSINESS_CODE", length = 32)
-	@Size(max = 32)
-	public String getInBusinessCode() {
-		return this.inBusinessCode;
-	}
-
-	public void setInBusinessCode(String inBusinessCode) {
-		this.inBusinessCode = inBusinessCode;
-	}
 
 	@Column(name = "DATA_SOURCE", length = 32)
 	@Size(max = 32)

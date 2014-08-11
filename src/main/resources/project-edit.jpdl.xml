@@ -48,9 +48,11 @@
 
     <page view-id="/func/house/datas/ProjectConfirm.xhtml" name="view" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
+
         <transition to="done" name="persisted"/>
         <transition to="done" name="updated"/>
         <transition to="done" name="cancel"/>
+        <action expression="#{projectHome.wireProject}"/>
     </page>
 
     <page view-id="/func/house/datas/ProjectMgr.xhtml" name="done">

@@ -95,27 +95,49 @@
                 </a:commandButton>
             </ui:define>
 
-            <h:panelGrid>
+            <h:panelGrid rendered="#{not empty projectHome.editingBuild}">
                 <s:decorate template="/layout/edit.xhtml">
                     <ui:define name="label">
                         #{messages.Build_MapNO}
                     </ui:define>
-                    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}"
-                                 value="#{projectHome.editingBuild.mapNumber}" required="true">
+                    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}" maxlength="4" size="4"
+                                 value="#{projectHome.editingBuild.mapNumber}" required="#{houseCodeHelper.requestMapCode}">
                         <r:validator event="blur"/>
+                        <f:validateRegex pattern="^\d*$"/>
                     </h:inputText>
                     <ui:define name="tail">
                         <r:message for="mapNumberInput" styleClass="message-icon"
                                    showDetail="true" showSummary="true" tooltip="true"/>
                     </ui:define>
                 </s:decorate>
+
+                <s:decorate template="/layout/edit.xhtml">
+                    <ui:define name="label">
+                        <ui:include src="/layout/long-text-display.xhtml">
+                            <ui:param name="value" value="#{messages.Build_StreetCode}"/>
+                            <ui:param name="size" value="3"/>
+                        </ui:include>
+
+                    </ui:define>
+                    <h:inputText id="streetCodeInput" label="#{messages.Build_StreetCode}" maxlength="4" size="4"
+                                 value="#{projectHome.editingBuild.streetCode}" required="#{houseCodeHelper.requestStreetCode}">
+                        <r:validator event="blur"/>
+                        <f:validateRegex pattern="^\d*$"/>
+                    </h:inputText>
+                    <ui:define name="tail">
+                        <r:message for="streetCodeInput" styleClass="message-icon"
+                                   showDetail="true" showSummary="true" tooltip="true"/>
+                    </ui:define>
+                </s:decorate>
+
                 <s:decorate template="/layout/edit.xhtml">
                     <ui:define name="label">
                         #{messages.Build_BlockNO}
                     </ui:define>
-                    <h:inputText id="blockNoInput" label="#{messages.Build_BlockNO}"
+                    <h:inputText id="blockNoInput" label="#{messages.Build_BlockNO}" maxlength="10" size="10"
                                  value="#{projectHome.editingBuild.blockNo}" required="true">
                         <r:validator event="blur"/>
+                        <f:validateRegex pattern="^(\d|-)*$"/>
                     </h:inputText>
 
                     <ui:define name="tail">
@@ -123,13 +145,72 @@
                                    showDetail="true" showSummary="true" tooltip="true"/>
                     </ui:define>
                 </s:decorate>
+
+                <s:decorate template="/layout/edit.xhtml">
+                    <ui:define name="label">
+                        #{messages.Build_LandBlockCode}
+                    </ui:define>
+                    <h:inputText id="landBlockInput" label="#{messages.Build_LandBlockCode}" maxlength="4" size="4"
+                                 value="#{projectHome.editingBuild.landBlockCode}" required="#{houseCodeHelper.requestLandBlock}">
+                        <r:validator event="blur"/>
+                        <f:validateRegex pattern="^\d*$"/>
+                    </h:inputText>
+
+                    <ui:define name="tail">
+                        <r:message for="landBlockInput" styleClass="message-icon"
+                                   showDetail="true" showSummary="true" tooltip="true"/>
+                    </ui:define>
+                </s:decorate>
+
+                <s:decorate template="/layout/edit.xhtml">
+                    <ui:define name="label">
+                        #{messages.Build_CompleteYear}
+                    </ui:define>
+                    <h:inputText id="completeYearInput" label="#{messages.Build_CompleteYear}" maxlength="4" size="4"
+                                 value="#{projectHome.editingBuild.completeDate}">
+                        <r:validator event="blur"/>
+                        <f:validateRegex pattern="^\d*$"/>
+                    </h:inputText>
+
+                    <ui:define name="tail">
+                        <r:message for="completeYearInput" styleClass="message-icon"
+                                   showDetail="true" showSummary="true" tooltip="true"/>
+                    </ui:define>
+                </s:decorate>
+
+
+                <s:decorate template="/layout/edit.xhtml">
+                    <ui:define name="label">
+                        #{messages.Build_Lng_Lat}
+                    </ui:define>
+                    <h:inputText id="latInput" label="#{messages.Build_Lng_Lat}" size="20"
+                                 value="#{projectHome.editingBuild.lat}" required="#{houseCodeHelper.requestCossCode}">
+                        <r:validator event="blur"/>
+                        <f:validateRegex pattern="^(\d|\.)*$"/>
+                    </h:inputText>
+
+                    <h:inputText id="lngInput" label="#{messages.Build_Lng_Lat}" size="20"
+                                 value="#{projectHome.editingBuild.lng}" required="#{houseCodeHelper.requestCossCode}">
+                        <r:validator event="blur"/>
+                        <f:validateRegex pattern="^(\d|\.)*$"/>
+                    </h:inputText>
+
+                    <ui:define name="tail">
+                        <r:message for="latInput" styleClass="message-icon"
+                                   showDetail="true" showSummary="true" tooltip="true"/>
+                        <r:message for="lngInput" styleClass="message-icon"
+                                   showDetail="true" showSummary="true" tooltip="true"/>
+                    </ui:define>
+                </s:decorate>
+
                 <s:decorate template="/layout/edit.xhtml">
                     <ui:define name="label">
                         #{messages.Build_BuildNO}
                     </ui:define>
                     <h:inputText id="buildNoInput" value="#{projectHome.editingBuild.buildNo}"
-                                 label="#{messages.Build_BuildNO}" required="true">
+                                 label="#{messages.Build_BuildNO}" maxlength="4" size="4" required="true">
                         <r:validator event="blur"/>
+                        <f:validateRegex pattern="^\d*$"/>
                     </h:inputText>
                     <ui:define name="tail">
                         <r:message for="buildNoInput" styleClass="message-icon"

@@ -33,6 +33,12 @@
         <r:dataTable id="buildTable" style="width:100%" value="#{projectBuilds}" var="_item">
             <r:column>
                 <f:facet name="header">
+                    #{messages.Build_Id}
+                </f:facet>
+                #{_item.id}
+            </r:column>
+            <r:column>
+                <f:facet name="header">
                     #{messages.Build_MapNO}
                 </f:facet>
 

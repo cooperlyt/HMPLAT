@@ -41,8 +41,6 @@ public class Build implements java.io.Serializable,TreeNode {
 	private String buildType;
 	private String structure;
 	private String memo;
-	private boolean inbiz;
-	private String businessKey;
 	private Integer homeCount;
 	private BigDecimal homeArea;
 	private Integer unhomeCount;
@@ -65,14 +63,13 @@ public class Build implements java.io.Serializable,TreeNode {
     }
 
 	public Build(String id, Project project, String mapNumber, String blockNo,
-			String buildNo, String Name, boolean inbiz) {
+			String buildNo, String Name) {
 		this.id = id;
 		this.project = project;
 		this.mapNumber = mapNumber;
 		this.blockNo = blockNo;
 		this.buildNo = buildNo;
 		this.Name = Name;
-		this.inbiz = inbiz;
 	}
 
 
@@ -296,24 +293,6 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.memo = memo;
 	}
 
-	@Column(name = "INBIZ", nullable = false)
-	public boolean isInbiz() {
-		return this.inbiz;
-	}
-
-	public void setInbiz(boolean inbiz) {
-		this.inbiz = inbiz;
-	}
-
-	@Column(name = "BUSINESS_KEY", length = 32)
-	@Size(max = 32)
-	public String getBusinessKey() {
-		return this.businessKey;
-	}
-
-	public void setBusinessKey(String businessKey) {
-		this.businessKey = businessKey;
-	}
 
 	@Column(name = "HOME_COUNT")
 	public Integer getHomeCount() {

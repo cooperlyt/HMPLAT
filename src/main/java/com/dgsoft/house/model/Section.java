@@ -67,7 +67,7 @@ public class Section implements java.io.Serializable,TreeNode {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "DISTRICTID",nullable = false)
+	@JoinColumn(name = "DISTRICT",nullable = false)
     @NotNull
 	public District getDistrict() {
 		return this.district;
