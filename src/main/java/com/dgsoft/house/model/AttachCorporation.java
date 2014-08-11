@@ -42,7 +42,10 @@ public class AttachCorporation implements java.io.Serializable {
 			0);
     private Developer developer;
 
-	public AttachCorporation() {
+    private MappingCorporation  mappingCorporation;
+
+
+    public AttachCorporation() {
 	}
 
     public AttachCorporation(boolean enable){
@@ -261,6 +264,15 @@ public class AttachCorporation implements java.io.Serializable {
 
     public void setDeveloper(Developer developer) {
         this.developer = developer;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation")
+    public MappingCorporation getMappingCorporation() {
+        return mappingCorporation;
+    }
+
+    public void setMappingCorporation(MappingCorporation mappingCorporation) {
+        this.mappingCorporation = mappingCorporation;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "attachCorporation")
