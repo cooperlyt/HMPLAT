@@ -9,23 +9,23 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/simpleDataCURD.xhtml">
 
-    <ui:param name="dataHome" value="#{mappingCorporationHome}"/>
+    <ui:param name="dataHome" value="#{financialCorporationHome}"/>
 
     <ui:define name="navigation">
-        <r:extendedDataTable value="#{mappingCorporationList.resultList}" var="_dataItem" filterVar="_filterValue"
+        <r:extendedDataTable value="#{financialCorporationList.resultList}" var="_dataItem" filterVar="_filterValue"
                              noDataLabel="#{messages.emptyResult}" style="width: 200px;height: 400px;">
             <ui:insert name="listColumns">
 
                 <r:column width="180px"
                           filterExpression="#{empty _filterValue or fn:startsWith(_dataItem.name,_filterValue)}">
                     <f:facet name="header">
-                        <h:outputText value="#{messages.MappingCorporation}"/>
+                        <h:outputText value="#{messages.FinancialCorporation}"/>
                     </f:facet>
                     <a:commandLink value="#{_dataItem.name}" immediate="true"
                                    execute="@this" image="/img/edit.png"
                                    style="#{_dataItem.destroyed ? 'color: red;text-decoration:line-through;' : ''}"
                                    render="details">
-                        <a:param value="#{_dataItem.id}" assignTo="#{mappingCorporationHome.id}"/>
+                        <a:param value="#{_dataItem.id}" assignTo="#{financialCorporationHome.id}"/>
                         <s:conversationPropagation type="end"/>
                     </a:commandLink>
                 </r:column>
@@ -38,21 +38,21 @@
 
         <s:decorate id="nameField" template="/layout/edit.xhtml">
             <ui:define name="label">
-                #{messages.MappingCorporation_name}
+                #{messages.FinancialCorporation_name}
             </ui:define>
-            <h:inputText id="nameInput" value="#{mappingCorporationHome.instance.name}"
-                         label="#{messages.MappingCorporation_name}"
-                         readonly="#{not mappingCorporationHome.editing}"
+            <h:inputText id="nameInput" value="#{financialCorporationHome.instance.name}"
+                         label="#{messages.FinancialCorporation_name}"
+                         readonly="#{not financialCorporationHome.editing}"
                          required="true" maxlength="100" size="30"
-                         valueChangeListener="#{mappingCorporationHome.verifyUniqueAvailable}"
+                         valueChangeListener="#{financialCorporationHome.verifyUniqueAvailable}"
                          unique="name">
-                <a:ajax event="blur" execute="@this" disabled="#{not mappingCorporationHome.editing}" render="nameMessages"/>
+                <a:ajax event="blur" execute="@this" disabled="#{not financialCorporationHome.editing}" render="nameMessages"/>
             </h:inputText>
 
             <ui:define name="tail">
 
                 <h:panelGrid columns="2">
-                    <h:selectBooleanCheckbox value="#{mappingCorporationHome.instance.destroyed}"/>
+                    <h:selectBooleanCheckbox value="#{financialCorporationHome.instance.destroyed}"/>
                     <r:message ajaxRendered="false" for="nameInput" id="nameMessages"/> </h:panelGrid>
             </ui:define>
 

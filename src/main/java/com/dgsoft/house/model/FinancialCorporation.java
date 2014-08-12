@@ -1,14 +1,12 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import com.dgsoft.common.NamedEntity;
+import com.dgsoft.common.utils.persistence.UniqueVerify;
+import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.international.StatusMessage;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,7 +15,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "FINANCIAL_CORPORATION", catalog = "HOUSE_INFO")
-public class FinancialCorporation implements java.io.Serializable {
+@UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
+public class FinancialCorporation implements java.io.Serializable,NamedEntity {
 
 	private String id;
 	private int version;
@@ -38,6 +37,8 @@ public class FinancialCorporation implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -56,9 +57,8 @@ public class FinancialCorporation implements java.io.Serializable {
 		this.version = version;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ATTACH_ID", nullable = false)
-	@NotNull
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true, optional = true)
+    @JoinColumn(name = "ATTACH_ID", nullable = true)
 	public AttachCorporation getAttachCorporation() {
 		return this.attachCorporation;
 	}
@@ -67,9 +67,9 @@ public class FinancialCorporation implements java.io.Serializable {
 		this.attachCorporation = attachCorporation;
 	}
 
-	@Column(name = "NAME", nullable = false, length = 50)
+	@Column(name = "NAME", nullable = false, length = 120)
 	@NotNull
-	@Size(max = 50)
+	@Size(max = 120)
 	public String getName() {
 		return this.name;
 	}

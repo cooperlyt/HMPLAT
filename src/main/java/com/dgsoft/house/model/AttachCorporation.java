@@ -44,6 +44,11 @@ public class AttachCorporation implements java.io.Serializable {
 
     private MappingCorporation  mappingCorporation;
 
+    private EvaluateCorporation evaluateCorporation;
+
+
+
+    private FinancialCorporation financialCorporation;
 
     public AttachCorporation() {
 	}
@@ -271,8 +276,27 @@ public class AttachCorporation implements java.io.Serializable {
         return mappingCorporation;
     }
 
+
     public void setMappingCorporation(MappingCorporation mappingCorporation) {
         this.mappingCorporation = mappingCorporation;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation")
+    public EvaluateCorporation getEvaluateCorporation() {
+        return evaluateCorporation;
+    }
+
+    public void setEvaluateCorporation(EvaluateCorporation evaluateCorporation) {
+        this.evaluateCorporation = evaluateCorporation;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation")
+    public FinancialCorporation getFinancialCorporation() {
+        return financialCorporation;
+    }
+
+    public void setFinancialCorporation(FinancialCorporation financialCorporation) {
+        this.financialCorporation = financialCorporation;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "attachCorporation")
