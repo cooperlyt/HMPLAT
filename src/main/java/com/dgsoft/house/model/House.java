@@ -32,7 +32,6 @@ public class House implements java.io.Serializable {
 	private Build build;
 	private HouseOwner houseOwnerByRecordId;
 	private HouseOwner houseOwnerByOwnerId;
-	private String houseNumber;
 	private String houseOrder;
 	private String houseUnitName;
 	private String inFloorName;
@@ -44,8 +43,6 @@ public class House implements java.io.Serializable {
 	private BigDecimal shineArea;
 	private BigDecimal loftArea;
 	private BigDecimal commParam;
-	private BigDecimal privateArea;
-    private BigDecimal buildCost;
 	private int houseState;
 	private String doorNo;
 	private String houseType;
@@ -63,16 +60,14 @@ public class House implements java.io.Serializable {
 	private Date mapTime;
 	private String direction;
 	private boolean initRegister;
-	private String initRegisterBusinessCode;
 	private boolean firmlyPower;
-	private String firmlyPowerBusinessCode;
-	private boolean outPlan;
 	private BigDecimal sumPrice;
 	private String payType;
 	private String memo;
 	private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
 	private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
+    private String poolMemo;
 
 	public House() {
 	}
@@ -99,7 +94,7 @@ public class House implements java.io.Serializable {
 	public House(String id, Build build, HouseOwner houseOwnerByRecordId,
 			HouseOwner houseOwnerByOwnerId, String houseOrder,
 			BigDecimal houseArea, int houseState, Date mapTime,
-			boolean initRegister, boolean firmlyPower, boolean outPlan) {
+			boolean initRegister, boolean firmlyPower) {
 		this.id = id;
 		this.build = build;
 		this.houseOwnerByRecordId = houseOwnerByRecordId;
@@ -110,7 +105,6 @@ public class House implements java.io.Serializable {
 		this.mapTime = mapTime;
 		this.initRegister = initRegister;
 		this.firmlyPower = firmlyPower;
-		this.outPlan = outPlan;
 	}
 
 
@@ -179,15 +173,6 @@ public class House implements java.io.Serializable {
 		this.houseOwnerByOwnerId = houseOwnerByOwnerId;
 	}
 
-	@Column(name = "HOUSE_NUMBER", length = 50)
-	@Size(max = 50)
-	public String getHouseNumber() {
-		return this.houseNumber;
-	}
-
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
-	}
 
 	@Column(name = "HOUSE_ORDER", nullable = false, length = 20)
 	@NotNull
@@ -291,15 +276,6 @@ public class House implements java.io.Serializable {
 
 	public void setCommParam(BigDecimal commParam) {
 		this.commParam = commParam;
-	}
-
-	@Column(name = "PRIVATE_AREA", precision = 18, scale = 3)
-	public BigDecimal getPrivateArea() {
-		return this.privateArea;
-	}
-
-	public void setPrivateArea(BigDecimal privateArea) {
-		this.privateArea = privateArea;
 	}
 
 	@Column(name = "HOUSE_STATE", nullable = false)
@@ -472,16 +448,6 @@ public class House implements java.io.Serializable {
 		this.initRegister = initRegister;
 	}
 
-	@Column(name = "INIT_REGISTER_BUSINESS_CODE", length = 32)
-	@Size(max = 32)
-	public String getInitRegisterBusinessCode() {
-		return this.initRegisterBusinessCode;
-	}
-
-	public void setInitRegisterBusinessCode(String initRegisterBusinessCode) {
-		this.initRegisterBusinessCode = initRegisterBusinessCode;
-	}
-
 	@Column(name = "FIRMLY_POWER", nullable = false)
 	public boolean isFirmlyPower() {
 		return this.firmlyPower;
@@ -489,25 +455,6 @@ public class House implements java.io.Serializable {
 
 	public void setFirmlyPower(boolean firmlyPower) {
 		this.firmlyPower = firmlyPower;
-	}
-
-	@Column(name = "FIRMLY_POWER_BUSINESS_CODE", length = 32)
-	@Size(max = 32)
-	public String getFirmlyPowerBusinessCode() {
-		return this.firmlyPowerBusinessCode;
-	}
-
-	public void setFirmlyPowerBusinessCode(String firmlyPowerBusinessCode) {
-		this.firmlyPowerBusinessCode = firmlyPowerBusinessCode;
-	}
-
-	@Column(name = "OUT_PLAN", nullable = false)
-	public boolean isOutPlan() {
-		return this.outPlan;
-	}
-
-	public void setOutPlan(boolean outPlan) {
-		this.outPlan = outPlan;
 	}
 
 	@Column(name = "SUM_PRICE", precision = 18, scale = 3)
@@ -566,13 +513,13 @@ public class House implements java.io.Serializable {
 		this.poolOwners = poolOwners;
 	}
 
-
-    @Column(name = "BUILD_COST", precision = 18, scale = 3)
-    public BigDecimal getBuildCost() {
-        return buildCost;
+    @Column(name = "POOL_MEMO", nullable = true,length = 32)
+    @Size(max = 32)
+    public String getPoolMemo() {
+        return poolMemo;
     }
 
-    public void setBuildCost(BigDecimal buildCost) {
-        this.buildCost = buildCost;
+    public void setPoolMemo(String poolMemo) {
+        this.poolMemo = poolMemo;
     }
 }
