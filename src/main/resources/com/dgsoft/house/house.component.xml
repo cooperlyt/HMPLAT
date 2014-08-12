@@ -23,6 +23,18 @@
         <property name="ejbql">select developer from Developer developer left join fetch developer.attachCorporation</property>
     </component>
 
+    <component name="mappingCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select mappingCorporation from MappingCorporation mappingCorporation</property>
+    </component>
+
+    <component name="evaluateCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select evaluateCorporation from EvaluateCorporation evaluateCorporation</property>
+    </component>
+
+    <component name="financialCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select financialCorporation from FinancialCorporation financialCorporation</property>
+    </component>
+
     <component name="validDeveloper" scope="event" class="com.dgsoft.house.HouseEntityQuery">
         <property name="ejbql">select developer from Developer developer left join fetch developer.attachCorporation where destroyed = false</property>
     </component>
