@@ -114,6 +114,7 @@ INSERT INTO WORD_CATEGORY(ID, NAME, MEMO, SYSTEM) VALUES ('system.empJob','职�
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('system.empJob.manager','manager','科长','system.empJob','','3',b'1');
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('system.empJob.boss','boss','科员','system.empJob','','5',b'1');
 
+
 INSERT INTO WORD_CATEGORY(ID, NAME, MEMO, SYSTEM) VALUES ('erp.bank','银行','',b'1');
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('erp.bank.ccb','CCB','建设银行','erp.bank','',2,b'1');
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('erp.bank.boc','BOC','中国银行','erp.bank','',1,b'1');
@@ -130,7 +131,32 @@ INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALU
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('erp.bank.spdb','SPDB','上海浦东发展银行','erp.bank','',10,b'1');
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('erp.bank.sdb','SDB','深圳发展银行','erp.bank','',11,b'1');
 
-
+insert word_category (id,name,SYSTEM, memo) values(1,'套型',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(3,'收据类型',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(4,'文件类型',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(70,'所属行业',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(71,'单位性质',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(25,'设计用途',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(26,'产别',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(27,'结构',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(28,'产权来源',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(32,'土地性质',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(33,'四墙类型',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(42,'权利种类',b'1','');
+insert word_category (id,name,SYSTEM, memo) values(52,'评估方法',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(60,'申请配租类别',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(62,'楼幢类型',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(64,'房屋类型',b'0','');;
+insert word_category (id,name,SYSTEM, memo) values(66,'供役地房屋利用方式',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(67,'与产权人关系',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(68,'共有情况',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(54,'付款方式',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(55,'土地取得方式',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(75,'学历',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(79,'国籍',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(80,'户籍所在地',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(1357,'变更原因',b'0','');
+insert word_category (id,name,SYSTEM, memo) values(76,'证书级别',b'0','');
 
 INSERT INTO PROVINCE(PID,NAME,SORT)VALUES(11,'北京市',0);
 INSERT INTO PROVINCE(PID,NAME,SORT)VALUES(12,'天津市',0);
