@@ -104,6 +104,7 @@
     .rf-ind-drag {
         font-size: 11px;
         cursor: pointer;
+
         width: 100%;
         height: 100%;
         border: 0px solid gray;
@@ -216,7 +217,7 @@
 
                     <a:repeat value="#{_floor.gridBlockList}" var="_house">
                         <td colspan="#{_house.colspan}"
-                            rowspan="#{_house.rowspan}" style="height: #{_house.rowspan * 60}px;">
+                            rowspan="#{_house.rowspan}" style="height: #{_house.rowspan * 60}px;text-align: center;vertical-align: middle;">
                             <r:panel
                                     style="width:100%; height: 100%;padding:0px;border: 0px;">
                                 <r:dropTarget id="grid_target" acceptedTypes="house block newHouse"
@@ -230,10 +231,11 @@
                                                rendered="#{not empty _house.house}">
                                     <r:dragSource id="grid_source" type="block" dragIndicator="indicator"
                                                      dragValue="#{_house}"/>
-                                    <r:inplaceInput editEvent="dblclick" value="#{_house.house.houseOrder}" defaultLabel="new" >
-                                        <a:ajax execute="@this" event="blur"/>
-                                    </r:inplaceInput>
-                                    <r:contextMenu mode="client" showEvent="contextmenu">
+
+                                    <h:outputText value="#{_house.house.houseOrder}"/>
+
+
+                                    <r:contextMenu mode="client" showEvent="contextmenu" style="text-align: left;">
                                         <r:menuItem action="#{buildGridMapHome.idleHouse}" label="idle"
                                                        status="processWaiting"
                                                        mode="ajax" execute="@this" render="grid_map,idle">

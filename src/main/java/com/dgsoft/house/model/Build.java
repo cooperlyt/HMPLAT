@@ -55,6 +55,10 @@ public class Build implements java.io.Serializable,TreeNode {
     private String streetCode;
     private int nextHouseOrder;
 
+    private int upFloorCount;
+    private int downFloorCount;
+    private boolean haveDownRoom;
+
 	public Build() {
 	}
 
@@ -404,6 +408,34 @@ public class Build implements java.io.Serializable,TreeNode {
 
     public void setNextHouseOrder(int nextHouseOrder) {
         this.nextHouseOrder = nextHouseOrder;
+    }
+
+
+    @Column(name = "UP_FLOOR_COUNT", nullable = false)
+    public int getUpFloorCount() {
+        return upFloorCount;
+    }
+
+    public void setUpFloorCount(int upFloorCount) {
+        this.upFloorCount = upFloorCount;
+    }
+
+    @Column(name = "DOWN_FLOOR_COUNT", nullable = false)
+    public int getDownFloorCount() {
+        return downFloorCount;
+    }
+
+    public void setDownFloorCount(int downFloorCount) {
+        this.downFloorCount = downFloorCount;
+    }
+
+    @Column(name="HAVE_DOWN_ROOM",nullable = false)
+    public boolean isHaveDownRoom() {
+        return haveDownRoom;
+    }
+
+    public void setHaveDownRoom(boolean haveDownRoom) {
+        this.haveDownRoom = haveDownRoom;
     }
 
     @Override
