@@ -137,7 +137,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     private String selectBlockId;
 
-   // private GridBlock
+    private GridBlock operBlock;
 
     public String getSelectBlockId() {
         return selectBlockId;
@@ -148,14 +148,19 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     }
 
     public GridBlock getOperBlock() {
-        for (GridRow row : getInstance().getGridRowList()) {
-            for (GridBlock block : row.getGridBlocks()) {
-                if (block.getId().equals(selectBlockId)) {
-                    return block;
+        if ((operBlock == null) || (!operBlock.getId().equals(selectBlockId))){
+            operBlock = null;
+            for (GridRow row : getInstance().getGridRowList()) {
+                for (GridBlock block : row.getGridBlocks()) {
+                    if (block.getId().equals(selectBlockId)) {
+                        operBlock = block;
+                        return operBlock;
+
+                    }
                 }
             }
         }
-        return null;
+        return operBlock;
     }
 
     public void idleHouse() {
