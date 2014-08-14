@@ -1,0 +1,204 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_MapNO}
+    </ui:define>
+    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}" maxlength="4" size="4"
+                 value="#{build.mapNumber}" required="#{houseCodeHelper.requestMapCode}">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^\d*$"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="mapNumberInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        <ui:include src="/layout/long-text-display.xhtml">
+            <ui:param name="value" value="#{messages.Build_StreetCode}"/>
+            <ui:param name="size" value="3"/>
+        </ui:include>
+
+    </ui:define>
+    <h:inputText id="streetCodeInput" label="#{messages.Build_StreetCode}" maxlength="4" size="4"
+                 value="#{build.streetCode}" required="#{houseCodeHelper.requestStreetCode}">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^\d*$"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="streetCodeInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_BlockNO}
+    </ui:define>
+    <h:inputText id="blockNoInput" label="#{messages.Build_BlockNO}" maxlength="10" size="10"
+                 value="#{build.blockNo}" required="true">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^(\d|-)*$"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="blockNoInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_LandBlockCode}
+    </ui:define>
+    <h:inputText id="landBlockInput" label="#{messages.Build_LandBlockCode}" maxlength="4" size="4"
+                 value="#{build.landBlockCode}" required="#{houseCodeHelper.requestLandBlock}">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^\d*$"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="landBlockInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_CompleteYear}
+    </ui:define>
+    <h:inputText id="completeYearInput" label="#{messages.Build_CompleteYear}" maxlength="4" size="4"
+                 value="#{build.completeDate}">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^\d*$"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="completeYearInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Lng_Lat}
+    </ui:define>
+    <h:inputText id="latInput" label="#{messages.Build_Lng_Lat}" size="20"
+                 value="#{build.lat}" required="#{houseCodeHelper.requestCossCode}">
+        <r:validator event="blur"/>
+    </h:inputText>
+
+    <h:inputText id="lngInput" label="#{messages.Build_Lng_Lat}" size="20"
+                 value="#{build.lng}" required="#{houseCodeHelper.requestCossCode}">
+        <r:validator event="blur"/>
+
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="latInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+        <r:message for="lngInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_BuildNO}
+    </ui:define>
+    <h:inputText id="buildNoInput" value="#{build.buildNo}"
+                 label="#{messages.Build_BuildNO}" maxlength="4" size="4" required="true">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^\d*$"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="buildNoInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_DoorNO}
+    </ui:define>
+    <h:inputText value="#{build.doorNo}"/>
+</s:decorate>
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Name}
+    </ui:define>
+    <h:inputText value="#{build.name}"/>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_FloorCount}
+    </ui:define>
+    <h:inputText required="true" id="floorCountInput" label="#{messages.Build_FloorCount}" value="#{build.floorCount}" size="4">
+        <r:validator event="blur"/>
+        <f:validateLongRange minimum="1"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="floorCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Structure}
+    </ui:define>
+    <h:selectOneMenu id="structureInput" required="true" value="#{build.structure}" label="#{messages.Build_Structure}">
+        <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
+                       itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+    </h:selectOneMenu>
+    <ui:define name="tail">
+        <r:message for="structureInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_UpFloorCount}
+    </ui:define>
+    <h:inputText required="true" id="upfloorCountInput" label="#{messages.Build_UpFloorCount}" value="#{build.upFloorCount}" size="4">
+        <r:validator event="blur"/>
+        <f:validateLongRange minimum="0"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="upfloorCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_DownFloorCount}
+    </ui:define>
+    <h:inputText required="true" id="downFloorCountInput" label="#{messages.Build_DownFloorCount}" value="#{build.downFloorCount}" size="4">
+        <r:validator event="blur"/>
+        <f:validateLongRange minimum="0"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="downFloorCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_HaveDownRoom}
+    </ui:define>
+    <h:selectBooleanCheckbox required="true" value="#{build.haveDownRoom}"/>
+</s:decorate>
+</ui:composition>
