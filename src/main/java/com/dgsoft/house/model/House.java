@@ -441,4 +441,14 @@ public class House implements java.io.Serializable {
 		this.poolOwners = poolOwners;
 	}
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

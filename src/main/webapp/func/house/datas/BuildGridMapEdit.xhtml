@@ -248,7 +248,8 @@
                                                      assignTo="#{buildGridMapHome.selectBlockId}"/>
                                         </r:menuItem>
                                         <r:menuItem label="edit" mode="client" execute="@this" render="">
-
+                                            <a:param name="blockId" value="#{_house.id}"
+                                                     assignTo="#{buildGridMapHome.selectBlockId}"/>
                                         </r:menuItem>
 
 
@@ -292,6 +293,35 @@
             </h:dataTable>
         </r:panel>
     </r:popupPanel>
+</h:form>
+
+<h:form>
+    <s:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="editPanel"/>
+        <ui:param name="panelTitle" value="#{messages.House}"/>
+        <ui:define name="controls">
+            <a:commandButton immediate="true"
+                             execute="@this" image="/img/close.png"
+                             onclick="#{r:component(panelId)}.hide(); return false;">
+            </a:commandButton>
+        </ui:define>
+
+        <h:panelGrid rendered="#{not empty buildGridMapHome.}">
+            <ui:include src="/layout/house/BuildEdit.xhtml">
+                <ui:param name="build" value="#{projectHome.editingBuild}"/>
+            </ui:include>
+
+        </h:panelGrid>
+
+        <ui:define name="actionButtons">
+            <a:commandButton value="#{messages.cancel}" immediate="true"
+                             onclick="#{r:component(panelId)}.hide(); return false;"/>
+            <a:commandButton value="#{messages.save}" execute="@form" action="#{projectHome.saveBuild}"
+                             data="#{actionExecuteState.lastState}" render="buildTable"
+                             oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
+        </ui:define>
+    </s:decorate>
+
 </h:form>
 
 
