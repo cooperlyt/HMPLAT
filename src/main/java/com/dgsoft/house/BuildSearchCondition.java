@@ -17,6 +17,24 @@ public class BuildSearchCondition {
     private String blockNo;
     private String buildNo;
     private String buildName;
+    private String landBlockCode;
+    private String streetCode;
+
+    public String getStreetCode() {
+        return streetCode;
+    }
+
+    public void setStreetCode(String streetCode) {
+        this.streetCode = streetCode;
+    }
+
+    public String getLandBlockCode() {
+        return landBlockCode;
+    }
+
+    public void setLandBlockCode(String landBlockCode) {
+        this.landBlockCode = landBlockCode;
+    }
 
     public String getBuildName() {
         return buildName;

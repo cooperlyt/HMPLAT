@@ -18,7 +18,21 @@
         <ui:define name="label">
             #{messages.Build_Name}
         </ui:define>
-        <h:inputText value="#{buildSearchCondition.buildName}" size="50"/>
+        <h:inputText value="#{buildSearchCondition.buildName}" size="32"/>
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Build_StreetCode}
+        </ui:define>
+        <h:inputText value="#{buildSearchCondition.streetCode}" size="32"/>
+    </s:decorate>
+
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Build_LandBlockCode}
+        </ui:define>
+        <h:inputText value="#{buildSearchCondition.landBlockCode}" size="50"/>
     </s:decorate>
 
     <s:decorate template="/layout/display.xhtml">
