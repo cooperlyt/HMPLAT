@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
     <s:decorate template="/layout/edit.xhtml">
@@ -13,95 +13,188 @@
             #{messages.House_Order}
         </ui:define>
 
+        <h:inputText value="#{houseHome.instance.houseOrder}" size="20" maxlength="20"
+                     id="houseOrderInput" required="true" label="#{messages.House_Order}">
+            <r:validator event="blur"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="houseOrderInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_Unit}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.houseUnitName}" size="20" maxlength="20"
+                     id="houseUnitNameInput" label="#{messages.House_Unit}">
+            <r:validator event="blur"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="houseUnitNameInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_InFloor}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.inFloorName}" size="20" maxlength="50"
+                     id="inFloorNameInput" required="true" label="#{messages.House_InFloor}">
+            <r:validator event="blur"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="inFloorNameInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_Area}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.houseArea}" size="20"
+                     id="houseAreaInput" required="true" label="#{messages.House_Area}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="houseAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_PrepareArea}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.prepareArea}" size="20"
+                     id="prepareAreaInput" label="#{messages.House_PrepareArea}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="prepareAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_TempArea}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.tempArea}" size="20"
+                     id="tempAreaInput" label="#{messages.House_TempArea}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="tempAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_UseArea}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.useArea}" size="20"
+                     id="useAreaInput" label="#{messages.House_UseArea}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="useAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_CommArea}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.commArea}" size="20"
+                     id="commAreaInput" label="#{messages.House_CommArea}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="commAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_ShineArea}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.shineArea}" size="20"
+                     id="shineAreaInput" label="#{messages.House_ShineArea}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="shineAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_LoftArea}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.loftArea}" size="20"
+                     id="loftAreaInput" label="#{messages.House_LoftArea}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="loftAreaInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_CommParam}
         </ui:define>
-
-    </s:decorate>
-
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_State}
+        <h:inputText value="#{houseHome.instance.commParam}" size="20"
+                     id="commParamInput" label="#{messages.House_CommParam}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="commParamInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
         </ui:define>
-
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_DoorNumber}
         </ui:define>
-
+        <h:inputText value="#{houseHome.instance.doorNo}" size="20" maxlength="20"
+                     id="doorNoInput" label="#{messages.House_DoorNumber}">
+            <r:validator event="blur"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="doorNoInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_HouseType}
+        </ui:define>
+        <h:selectOneMenu value="#{houseHome.instance.houseType}" label="#{messages.House_HouseType}">
+            <s:selectItems value="#{}"
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="doorNoInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
         </ui:define>
 
     </s:decorate>
@@ -140,127 +233,55 @@
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_Structure}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_KnotSize}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_Address}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_DataSource}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_EastWall}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_SouthWall}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_North_Wall}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_MapTime}
         </ui:define>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
+            #{messages.House_Direction}
         </ui:define>
 
     </s:decorate>

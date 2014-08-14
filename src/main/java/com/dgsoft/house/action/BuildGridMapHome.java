@@ -1,16 +1,12 @@
 package com.dgsoft.house.action;
 
-import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
 import org.richfaces.event.DropEvent;
 import org.richfaces.event.DropListener;
 import org.richfaces.event.FileUploadEvent;
@@ -141,6 +137,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     private String selectBlockId;
 
+    private GridBlock operBlock;
+
     public String getSelectBlockId() {
         return selectBlockId;
     }
@@ -149,15 +147,20 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         this.selectBlockId = selectBlockId;
     }
 
-    private GridBlock getOperBlock() {
-        for (GridRow row : getInstance().getGridRowList()) {
-            for (GridBlock block : row.getGridBlocks()) {
-                if (block.getId().equals(selectBlockId)) {
-                    return block;
+    public GridBlock getOperBlock() {
+        if ((operBlock == null) || (!operBlock.getId().equals(selectBlockId))){
+            operBlock = null;
+            for (GridRow row : getInstance().getGridRowList()) {
+                for (GridBlock block : row.getGridBlocks()) {
+                    if (block.getId().equals(selectBlockId)) {
+                        operBlock = block;
+                        return operBlock;
+
+                    }
                 }
             }
         }
-        return null;
+        return operBlock;
     }
 
     public void idleHouse() {
