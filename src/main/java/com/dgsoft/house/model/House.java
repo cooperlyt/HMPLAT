@@ -28,9 +28,7 @@ public class House implements java.io.Serializable {
 
 	private String id;
 	private Integer version;
-	private LandInfo landInfo;
 	private Build build;
-	private HouseOwner houseOwnerByRecordId;
 	private HouseOwner houseOwnerByOwnerId;
 	private String houseOrder;
 	private String houseUnitName;
@@ -47,10 +45,8 @@ public class House implements java.io.Serializable {
 	private String doorNo;
 	private String houseType;
 	private String useType;
-	private String housePorperty;
 	private String structure;
 	private String knotSize;
-	private String houseFrom;
 	private String address;
 	private String dataSource;
 	private String eastWall;
@@ -61,13 +57,11 @@ public class House implements java.io.Serializable {
 	private String direction;
 	private boolean initRegister;
 	private boolean firmlyPower;
-	private BigDecimal sumPrice;
-	private String payType;
 	private String memo;
 	private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
 	private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
-    private String poolMemo;
+    private Date createTime;
 
 	public House() {
 	}
@@ -89,23 +83,9 @@ public class House implements java.io.Serializable {
         this.houseUnitName = block.getUnitName();
         this.inFloorName = block.getGridRow().getTitle();
         this.houseOrder = block.getHouseOrder();
+        initRegister = false;
+        firmlyPower = false;
     }
-
-	public House(String id, Build build, HouseOwner houseOwnerByRecordId,
-			HouseOwner houseOwnerByOwnerId, String houseOrder,
-			BigDecimal houseArea, int houseState, Date mapTime,
-			boolean initRegister, boolean firmlyPower) {
-		this.id = id;
-		this.build = build;
-		this.houseOwnerByRecordId = houseOwnerByRecordId;
-		this.houseOwnerByOwnerId = houseOwnerByOwnerId;
-		this.houseOrder = houseOrder;
-		this.houseArea = houseArea;
-		this.houseState = houseState;
-		this.mapTime = mapTime;
-		this.initRegister = initRegister;
-		this.firmlyPower = firmlyPower;
-	}
 
 
 	@Id
@@ -130,15 +110,6 @@ public class House implements java.io.Serializable {
 		this.version = version;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "LAND_INFO")
-	public LandInfo getLandInfo() {
-		return this.landInfo;
-	}
-
-	public void setLandInfo(LandInfo landInfo) {
-		this.landInfo = landInfo;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUILDID", nullable = false)
@@ -151,16 +122,6 @@ public class House implements java.io.Serializable {
 		this.build = build;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RECORD_ID", nullable = false)
-	@NotNull
-	public HouseOwner getHouseOwnerByRecordId() {
-		return this.houseOwnerByRecordId;
-	}
-
-	public void setHouseOwnerByRecordId(HouseOwner houseOwnerByRecordId) {
-		this.houseOwnerByRecordId = houseOwnerByRecordId;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
@@ -195,8 +156,9 @@ public class House implements java.io.Serializable {
 		this.houseUnitName = houseUnitName;
 	}
 
-	@Column(name = "IN_FLOOR_NAME", length = 50)
+	@Column(name = "IN_FLOOR_NAME", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getInFloorName() {
 		return this.inFloorName;
 	}
@@ -307,8 +269,9 @@ public class House implements java.io.Serializable {
 		this.houseType = houseType;
 	}
 
-	@Column(name = "USE_TYPE", length = 32)
+	@Column(name = "USE_TYPE", length = 32, nullable = false)
 	@Size(max = 32)
+    @NotNull
 	public String getUseType() {
 		return this.useType;
 	}
@@ -317,18 +280,10 @@ public class House implements java.io.Serializable {
 		this.useType = useType;
 	}
 
-	@Column(name = "HOUSE_PORPERTY", length = 32)
-	@Size(max = 32)
-	public String getHousePorperty() {
-		return this.housePorperty;
-	}
 
-	public void setHousePorperty(String housePorperty) {
-		this.housePorperty = housePorperty;
-	}
-
-	@Column(name = "STRUCTURE", length = 32)
+	@Column(name = "STRUCTURE", length = 32,nullable = false)
 	@Size(max = 32)
+    @NotNull
 	public String getStructure() {
 		return this.structure;
 	}
@@ -347,18 +302,10 @@ public class House implements java.io.Serializable {
 		this.knotSize = knotSize;
 	}
 
-	@Column(name = "HOUSE_FROM", length = 32)
-	@Size(max = 32)
-	public String getHouseFrom() {
-		return this.houseFrom;
-	}
 
-	public void setHouseFrom(String houseFrom) {
-		this.houseFrom = houseFrom;
-	}
-
-	@Column(name = "ADDRESS", length = 200)
+	@Column(name = "ADDRESS", length = 200,nullable = false)
 	@Size(max = 200)
+    @NotNull
 	public String getAddress() {
 		return this.address;
 	}
@@ -368,8 +315,9 @@ public class House implements java.io.Serializable {
 	}
 
 
-	@Column(name = "DATA_SOURCE", length = 32)
+	@Column(name = "DATA_SOURCE", length = 32, nullable = false)
 	@Size(max = 32)
+    @NotNull
 	public String getDataSource() {
 		return this.dataSource;
 	}
@@ -419,8 +367,7 @@ public class House implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MAP_TIME", nullable = false, length = 19)
-	@NotNull
+	@Column(name = "MAP_TIME", nullable = true, length = 19)
 	public Date getMapTime() {
 		return this.mapTime;
 	}
@@ -455,25 +402,6 @@ public class House implements java.io.Serializable {
 
 	public void setFirmlyPower(boolean firmlyPower) {
 		this.firmlyPower = firmlyPower;
-	}
-
-	@Column(name = "SUM_PRICE", precision = 18, scale = 3)
-	public BigDecimal getSumPrice() {
-		return this.sumPrice;
-	}
-
-	public void setSumPrice(BigDecimal sumPrice) {
-		this.sumPrice = sumPrice;
-	}
-
-	@Column(name = "PAY_TYPE", length = 32)
-	@Size(max = 32)
-	public String getPayType() {
-		return this.payType;
-	}
-
-	public void setPayType(String payType) {
-		this.payType = payType;
 	}
 
 	@Column(name = "MEMO", length = 200)
@@ -513,13 +441,4 @@ public class House implements java.io.Serializable {
 		this.poolOwners = poolOwners;
 	}
 
-    @Column(name = "POOL_MEMO", nullable = true,length = 32)
-    @Size(max = 32)
-    public String getPoolMemo() {
-        return poolMemo;
-    }
-
-    public void setPoolMemo(String poolMemo) {
-        this.poolMemo = poolMemo;
-    }
 }

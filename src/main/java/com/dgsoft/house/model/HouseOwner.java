@@ -25,7 +25,6 @@ public class HouseOwner implements java.io.Serializable {
 	private String name;
 	private String personId;
 	private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
-	private Set<House> housesForRecordId = new HashSet<House>(0);
 	private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
 	private Set<House> housesForOwnerId = new HashSet<House>(0);
 	private Set<ContractAttachOwner> contractAttachOwners = new HashSet<ContractAttachOwner>(
@@ -37,22 +36,7 @@ public class HouseOwner implements java.io.Serializable {
 	public HouseOwner(String id) {
 		this.id = id;
 	}
-	public HouseOwner(String id, String credentialsNumber,
-			Integer credentialsType, String name, String personId,
-			Set<HouseContract> houseContracts, Set<House> housesForRecordId,
-			Set<PoolOwner> poolOwners, Set<House> housesForOwnerId,
-			Set<ContractAttachOwner> contractAttachOwners) {
-		this.id = id;
-		this.credentialsNumber = credentialsNumber;
-		this.credentialsType = credentialsType;
-		this.name = name;
-		this.personId = personId;
-		this.houseContracts = houseContracts;
-		this.housesForRecordId = housesForRecordId;
-		this.poolOwners = poolOwners;
-		this.housesForOwnerId = housesForOwnerId;
-		this.contractAttachOwners = contractAttachOwners;
-	}
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -112,15 +96,6 @@ public class HouseOwner implements java.io.Serializable {
 
 	public void setHouseContracts(Set<HouseContract> houseContracts) {
 		this.houseContracts = houseContracts;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseOwnerByRecordId")
-	public Set<House> getHousesForRecordId() {
-		return this.housesForRecordId;
-	}
-
-	public void setHousesForRecordId(Set<House> housesForRecordId) {
-		this.housesForRecordId = housesForRecordId;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseOwner")

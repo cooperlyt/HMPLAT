@@ -22,16 +22,18 @@ public class Build implements java.io.Serializable,TreeNode {
 
 	private String id;
 	private Integer version;
-	private ProjectSellCard projectSellCard;
-	private Project project;
-	private LandInfo landInfo;
+
+
+    private String landBlockCode;
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
-	private String Name;
+    private String completeDate;
+    private String streetCode;
+	private String name;
 	private String doorNo;
 	private Integer unintCount;
-	private Integer floorCount;
+	private int floorCount;
 	private String address;
 	private Integer houseCount;
 	private BigDecimal area;
@@ -45,19 +47,21 @@ public class Build implements java.io.Serializable,TreeNode {
 	private BigDecimal homeArea;
 	private Integer unhomeCount;
 	private BigDecimal unhomeArea;
-    private BigDecimal buildCost;
 	private Integer shopCount;
 	private BigDecimal shopArea;
-	private Set<House> houses = new HashSet<House>(0);
-	private Set<BuildGridMap> buildGridMaps = new HashSet<BuildGridMap>(0);
-    private String completeDate;
-    private String landBlockCode;
-    private String streetCode;
+
+
     private int nextHouseOrder;
 
     private int upFloorCount;
     private int downFloorCount;
     private boolean haveDownRoom;
+
+    private Project project;
+    private ProjectSellCard projectSellCard;
+
+    private Set<House> houses = new HashSet<House>(0);
+    private Set<BuildGridMap> buildGridMaps = new HashSet<BuildGridMap>(0);
 
 	public Build() {
 	}
@@ -67,20 +71,18 @@ public class Build implements java.io.Serializable,TreeNode {
     }
 
 	public Build(String id, Project project, String mapNumber, String blockNo,
-			String buildNo, String Name) {
+			String buildNo, String name) {
 		this.id = id;
 		this.project = project;
 		this.mapNumber = mapNumber;
 		this.blockNo = blockNo;
 		this.buildNo = buildNo;
-		this.Name = Name;
+		this.name = name;
 	}
 
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	@NotNull
 	@Size(max = 32)
 	public String getId() {
@@ -132,16 +134,6 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.project = project;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "LAND_ID")
-	public LandInfo getLandInfo() {
-		return this.landInfo;
-	}
-
-	public void setLandInfo(LandInfo landInfo) {
-		this.landInfo = landInfo;
-	}
-
 	@Column(name = "MAP_NUMBER", length = 4)
 	@Size(max = 4)
 	public String getMapNumber() {
@@ -154,6 +146,7 @@ public class Build implements java.io.Serializable,TreeNode {
 
 	@Column(name = "BLOCK_NO", nullable = false, length = 10)
 	@Size(max = 10)
+    @NotNull
 	public String getBlockNo() {
 		return this.blockNo;
 	}
@@ -177,11 +170,11 @@ public class Build implements java.io.Serializable,TreeNode {
 	@NotNull
 	@Size(max = 100)
 	public String getName() {
-		return this.Name;
+		return this.name;
 	}
 
-	public void setName(String Name) {
-		this.Name = Name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Column(name = "DOOR_NO", length = 10)
@@ -203,12 +196,12 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.unintCount = unintCount;
 	}
 
-	@Column(name = "FLOOR_COUNT")
-	public Integer getFloorCount() {
+	@Column(name = "FLOOR_COUNT",nullable = false)
+	public int getFloorCount() {
 		return this.floorCount;
 	}
 
-	public void setFloorCount(Integer floorCount) {
+	public void setFloorCount(int floorCount) {
 		this.floorCount = floorCount;
 	}
 
@@ -277,8 +270,9 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.buildType = buildType;
 	}
 
-	@Column(name = "STRUCTURE", length = 32)
+	@Column(name = "STRUCTURE", length = 32, nullable = false)
 	@Size(max = 32)
+    @NotNull
 	public String getStructure() {
 		return this.structure;
 	}
@@ -369,16 +363,6 @@ public class Build implements java.io.Serializable,TreeNode {
 
     public void setBuildGridMaps(Set<BuildGridMap> buildGridMaps) {
         this.buildGridMaps = buildGridMaps;
-    }
-
-
-    @Column(name = "BUILD_COST", precision = 18, scale = 3)
-    public BigDecimal getBuildCost() {
-        return buildCost;
-    }
-
-    public void setBuildCost(BigDecimal buildCost) {
-        this.buildCost = buildCost;
     }
 
     @Column(name = "LAND_BLOCK_CODE",length = 4)
