@@ -190,8 +190,6 @@
             #{messages.House_HouseType}
         </ui:define>
 
-
-
         <h:selectOneMenu id="houseTypeInput" value="#{houseHome.instance.houseType}" label="#{messages.House_HouseType}">
             <s:selectItems value="#{dictionary.getWordList('house.houseType')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
@@ -207,6 +205,14 @@
         <ui:define name="label">
             #{messages.House_UseType}
         </ui:define>
+        <h:selectOneMenu id="useTypeInput" value="#{houseHome.instance.useType}" label="#{messages.House_UseType}">
+            <s:selectItems value="#{dictionary.getWordList('house.useType')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="useTypeInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
 
     </s:decorate>
 
@@ -216,10 +222,26 @@
             #{messages.House_Structure}
         </ui:define>
 
+        <h:selectOneMenu id="structureInput" value="#{houseHome.instance.structure}" label="#{messages.House_Structure}">
+            <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="structureInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_KnotSize}
+        </ui:define>
+        <h:selectOneMenu id="knotSizeInput" value="#{houseHome.instance.knotSize}" label="#{messages.House_KnotSize}">
+            <s:selectItems value="#{dictionary.getWordList('house.knotSize')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="knotSizeInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
         </ui:define>
 
     </s:decorate>
@@ -228,66 +250,80 @@
             #{messages.House_Address}
         </ui:define>
 
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_UseType}
+        <h:inputText value="#{houseHome.instance.address}" size="100" maxlength="200"
+                     id="addressInput" required="true" label="#{messages.House_Address}">
+            <r:validator event="blur"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="addressInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
         </ui:define>
-
     </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_Structure}
-        </ui:define>
 
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_KnotSize}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_Address}
-        </ui:define>
-
-    </s:decorate>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.House_DataSource}
-        </ui:define>
-
-    </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_EastWall}
         </ui:define>
-
+        <h:selectOneMenu id="eastWallInput" value="#{houseHome.instance.eastWall}" label="#{messages.House_EastWall}">
+            <s:selectItems value="#{dictionary.getWordList('house.wall')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="eastWallInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_SouthWall}
         </ui:define>
-
+        <h:selectOneMenu id="southWallInput" value="#{houseHome.instance.southWall}" label="#{messages.House_SouthWall}">
+            <s:selectItems value="#{dictionary.getWordList('house.wall')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="southWallInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_North_Wall}
         </ui:define>
-
+        <h:selectOneMenu id="northWallInput" value="#{houseHome.instance.northWall}" label="#{messages.House_North_Wall}">
+            <s:selectItems value="#{dictionary.getWordList('house.wall')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="northWallInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_MapTime}
         </ui:define>
+        <r:calendar enableManualInput="true"
+                    inputSize="20"
+                    defaultLabel="#{currentDate}"
+                    required="true"
+                    timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                    value="#{houseHome.instance.mapTime}"
+                    datePattern="#{messages.datePattern}"/>
 
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.House_Direction}
         </ui:define>
-
+        <h:selectOneMenu id="directionInput" value="#{houseHome.instance.direction}" label="#{messages.House_Direction}">
+            <s:selectItems value="#{dictionary.getWordList('house.direction')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="directionInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
     </s:decorate>
 
 </ui:composition>
