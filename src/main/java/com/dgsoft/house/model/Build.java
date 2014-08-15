@@ -346,7 +346,7 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.shopArea = shopArea;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "build")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "build", orphanRemoval = true,cascade = {CascadeType.ALL})
 	public Set<House> getHouses() {
 		return this.houses;
 	}
@@ -356,7 +356,7 @@ public class Build implements java.io.Serializable,TreeNode {
 	}
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "build")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "build",orphanRemoval = true, cascade = {CascadeType.ALL})
     public Set<BuildGridMap> getBuildGridMaps() {
         return buildGridMaps;
     }

@@ -1,5 +1,6 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.common.SetLinkList;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
@@ -27,6 +28,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     @In
     private BuildHome buildHome;
 
+
+
+
     public void templeteFileUploadListener(FileUploadEvent event) throws Exception {
 
         if (isManaged()) {
@@ -48,6 +52,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     private BuildGridMap analyzeTemplete(Element rootElement) {
         BuildGridMap result = new BuildGridMap();
+        buildHome.getInstance().getBuildGridMaps().add(result);
+        result.setBuild(buildHome.getInstance());
         Iterator<Element> iterator = rootElement.element("HEAD").elementIterator();
         int i = 0;
         while (iterator.hasNext()) {
@@ -127,9 +133,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
 
             for (GridBlock block : row.getGridBlockList()) {
-
-                block.setHouse(new House(block));
-
+                House newHouse = new House(buildHome.getInstance(),block);
+                block.setHouse(newHouse);
+                buildHome.getHouses().add(newHouse);
             }
 
         }
@@ -169,6 +175,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             if (block.getHouse() != null) {
                 idleHouses.add(block.getHouse());
                 block.setHouse(null);
+                block.getHouse().getGridBlock().clear();
             }
         }
     }
@@ -176,7 +183,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     private boolean deleteHouse(House house){
         if (getEntityManager().contains(house)) {
             //TODO if canDelete
-            getEntityManager().remove(house);
+            house.getGridBlock().clear();
+            buildHome.getHouses().remove(house);
             return true;
         }
         return true;
@@ -223,7 +231,10 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             targetBlock.setHouse(tempHouse);
             idleHouses.remove(tempHouse);
         }else {
-            targetBlock.setHouse(new House("new"));
+            House newHouse = new House(buildHome.getInstance(),targetBlock);
+            targetBlock.setHouse(newHouse);
+            buildHome.getHouses().add(newHouse);
         }
     }
+
 }

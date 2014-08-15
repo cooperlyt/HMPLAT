@@ -87,7 +87,7 @@ public class GridRow implements java.io.Serializable {
         this.floorIndex = floorIndex;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gridRow")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gridRow", orphanRemoval = true , cascade = {CascadeType.ALL})
 	public Set<GridBlock> getGridBlocks() {
 		return this.gridBlocks;
 	}

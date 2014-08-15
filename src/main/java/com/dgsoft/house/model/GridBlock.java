@@ -218,7 +218,7 @@ public class GridBlock implements java.io.Serializable {
     }
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "HOUSE_ID", nullable = true)
     public House getHouse() {
         return house;
@@ -228,8 +228,8 @@ public class GridBlock implements java.io.Serializable {
         this.house = house;
     }
 
-    @Column(name="HOUSE_ORDER",nullable = true)
-    @Size(max=20)
+    @Column(name = "HOUSE_ORDER", nullable = true)
+    @Size(max = 20)
     public String getHouseOrder() {
         return houseOrder;
     }
