@@ -218,7 +218,7 @@ public class GridBlock implements java.io.Serializable {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "HOUSE_ID", nullable = true)
     public House getHouse() {
         return house;

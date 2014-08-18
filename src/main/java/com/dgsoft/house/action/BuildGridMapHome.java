@@ -52,6 +52,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     private BuildGridMap analyzeTemplete(Element rootElement) {
         BuildGridMap result = new BuildGridMap();
+        result.setName(buildHome.getInstance().getName());
         buildHome.getInstance().getBuildGridMaps().add(result);
         result.setBuild(buildHome.getInstance());
         Iterator<Element> iterator = rootElement.element("HEAD").elementIterator();
@@ -174,8 +175,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         if (block != null) {
             if (block.getHouse() != null) {
                 idleHouses.add(block.getHouse());
-                block.setHouse(null);
                 block.getHouse().getGridBlock().clear();
+                block.setHouse(null);
+
             }
         }
     }

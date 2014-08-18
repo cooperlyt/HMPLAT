@@ -16,6 +16,10 @@ import javax.validation.constraints.Size;
 @Table(name = "HOUSE", catalog = "HOUSE_INFO")
 public class House implements java.io.Serializable {
 
+    public enum HouseDataSource{
+        MAPPING,IMPORT,RECORD_ADD;
+    }
+
     private String id;
     private Integer version;
     private Build build;
@@ -36,7 +40,7 @@ public class House implements java.io.Serializable {
     private String structure;
     private String knotSize;
     private String address;
-    private String dataSource;
+    private HouseDataSource dataSource;
     private String eastWall;
     private String westWall;
     private String southWall;
@@ -57,6 +61,7 @@ public class House implements java.io.Serializable {
 
 
     public House(Build build, GridBlock block) {
+        this.build = build;
         this.houseArea = block.getArea();
         this.useArea = block.getUseArea();
         this.commArea = block.getCommArea();
@@ -71,6 +76,7 @@ public class House implements java.io.Serializable {
         this.houseOrder = block.getHouseOrder();
         initRegister = false;
         firmlyPower = false;
+        dataSource = HouseDataSource.MAPPING;
     }
 
 
@@ -110,8 +116,7 @@ public class House implements java.io.Serializable {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OWNER_ID", nullable = false)
-    @NotNull
+    @JoinColumn(name = "OWNER_ID", nullable = true)
     public HouseOwner getHouseOwnerByOwnerId() {
         return this.houseOwnerByOwnerId;
     }
@@ -282,14 +287,14 @@ public class House implements java.io.Serializable {
     }
 
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "DATA_SOURCE", length = 32, nullable = false)
-    @Size(max = 32)
     @NotNull
-    public String getDataSource() {
+    public HouseDataSource getDataSource() {
         return this.dataSource;
     }
 
-    public void setDataSource(String dataSource) {
+    public void setDataSource(HouseDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
