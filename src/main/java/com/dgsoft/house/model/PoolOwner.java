@@ -21,9 +21,12 @@ public class PoolOwner implements java.io.Serializable {
 
 	private String id;
 	private House house;
-	private HouseOwner houseOwner;
+    private String name;
+    private String credentialsNumber;
+    private Integer credentialsType;
 	private String relation;
-	private BigDecimal owneScale;
+	private BigDecimal perc;
+    private BigDecimal area;
 
 	public PoolOwner() {
 	}
@@ -41,7 +44,7 @@ public class PoolOwner implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HOUSE_ID", nullable = false)
+	@JoinColumn(name = "HOUSE", nullable = false)
 	@NotNull
 	public House getHouse() {
 		return this.house;
@@ -49,17 +52,6 @@ public class PoolOwner implements java.io.Serializable {
 
 	public void setHouse(House house) {
 		this.house = house;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@NotNull
-	public HouseOwner getHouseOwner() {
-		return this.houseOwner;
-	}
-
-	public void setHouseOwner(HouseOwner houseOwner) {
-		this.houseOwner = houseOwner;
 	}
 
 	@Column(name = "RELATION", length = 32)
@@ -72,13 +64,43 @@ public class PoolOwner implements java.io.Serializable {
 		this.relation = relation;
 	}
 
-	@Column(name = "OWNE_SCALE", scale = 4)
-	public BigDecimal getOwneScale() {
-		return this.owneScale;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setOwneScale(BigDecimal owneScale) {
-		this.owneScale = owneScale;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getCredentialsNumber() {
+        return credentialsNumber;
+    }
+
+    public void setCredentialsNumber(String credentialsNumber) {
+        this.credentialsNumber = credentialsNumber;
+    }
+
+    public Integer getCredentialsType() {
+        return credentialsType;
+    }
+
+    public void setCredentialsType(Integer credentialsType) {
+        this.credentialsType = credentialsType;
+    }
+
+    public BigDecimal getPerc() {
+        return perc;
+    }
+
+    public void setPerc(BigDecimal perc) {
+        this.perc = perc;
+    }
+
+    public BigDecimal getArea() {
+        return area;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
 }
