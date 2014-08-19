@@ -237,7 +237,7 @@ public class BusinessProject implements java.io.Serializable {
 		this.projectCode = projectCode;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
 	public Set<BusinessBuild> getBusinessBuilds() {
 		return this.businessBuilds;
 	}
@@ -246,7 +246,7 @@ public class BusinessProject implements java.io.Serializable {
 		this.businessBuilds = businessBuilds;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
 	public Set<ProjectSellCard> getProjectSellCards() {
 		return this.projectSellCards;
 	}

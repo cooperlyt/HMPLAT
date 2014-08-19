@@ -143,7 +143,7 @@ public class BusinessLandInfo implements java.io.Serializable {
 		this.landGetMode = landGetMode;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "landInfo")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessLandInfo")
 	public Set<BusinessHouse> getBusinessHouses() {
 		return this.businessHouses;
 	}
@@ -152,7 +152,7 @@ public class BusinessLandInfo implements java.io.Serializable {
 		this.businessHouses = businessHouses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "landInfo")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessLandInfo")
 	public Set<ProjectSellCard> getProjectSellCards() {
 		return this.projectSellCards;
 	}

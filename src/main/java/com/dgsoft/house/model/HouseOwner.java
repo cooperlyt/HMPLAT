@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 public class HouseOwner implements java.io.Serializable{
 
     private String id;
-    private String idType;
     private PersonId.CredentialsType credentialsType;
     private String phone;
     private String rootAddress;
@@ -35,16 +34,6 @@ public class HouseOwner implements java.io.Serializable{
         this.id = id;
     }
 
-    @Column(name = "ID_TYPE", nullable = false, length = 32)
-    @NotNull
-    @Size(max = 32)
-    public String getIdType() {
-        return idType;
-    }
-
-    public void setIdType(String idType) {
-        this.idType = idType;
-    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_TYPE", nullable = false, length = 32)

@@ -1,14 +1,9 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import com.dgsoft.house.HouseInState;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,25 +15,17 @@ import javax.validation.constraints.Size;
 public class HouseState implements java.io.Serializable {
 
 	private String id;
-	private Integer version;
 	private House house;
-	private int state;
-	private String businessId;
+	private HouseInState state;
 
 	public HouseState() {
 	}
 
-	public HouseState(String id, House house, int state) {
-		this.id = id;
+	public HouseState(House house, HouseInState state) {
 		this.house = house;
 		this.state = state;
 	}
-	public HouseState(String id, House house, int state, String businessId) {
-		this.id = id;
-		this.house = house;
-		this.state = state;
-		this.businessId = businessId;
-	}
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -52,15 +39,6 @@ public class HouseState implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Version
-	@Column(name = "VERSION")
-	public Integer getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HOUSEID", nullable = false)
@@ -73,23 +51,15 @@ public class HouseState implements java.io.Serializable {
 		this.house = house;
 	}
 
+    @Enumerated(EnumType.STRING)
 	@Column(name = "STATE", nullable = false)
-	public int getState() {
+    @NotNull
+	public HouseInState getState() {
 		return this.state;
 	}
 
-	public void setState(int state) {
+	public void setState(HouseInState state) {
 		this.state = state;
-	}
-
-	@Column(name = "BUSINESS_ID", length = 32)
-	@Size(max = 32)
-	public String getBusinessId() {
-		return this.businessId;
-	}
-
-	public void setBusinessId(String businessId) {
-		this.businessId = businessId;
 	}
 
 }

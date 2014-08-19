@@ -4,15 +4,7 @@ package com.dgsoft.house.owner.model;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -408,7 +400,7 @@ public class BusinessBuild implements java.io.Serializable {
 		this.buildCode = buildCode;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "build")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessBuild")
 	public Set<BusinessHouse> getBusinessHouses() {
 		return this.businessHouses;
 	}
