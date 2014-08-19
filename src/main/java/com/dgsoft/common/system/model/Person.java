@@ -24,6 +24,10 @@ import javax.validation.constraints.Size;
 @Table(name = "PERSON", catalog = "DB_PLAT_SYSTEM")
 public class Person implements java.io.Serializable {
 
+    public enum Sex{
+       FEMALE, MALE;
+    }
+
 	private PersonId id;
 	private String name;
 	private String credentialsOrgan;
