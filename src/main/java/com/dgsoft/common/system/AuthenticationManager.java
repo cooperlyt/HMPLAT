@@ -53,7 +53,7 @@ public class AuthenticationManager {
 
             Employee loginEmployee;
             if (identity.getCredentials().getUsername().equals("root") && identity.getCredentials().getPassword().equals("dgsoft")) {
-                loginEmployee = new Employee("root", new Person("system_root_administrator", superAdminName));
+                loginEmployee = new Employee("root");
 
                 roles.addAll(systemEntityManager.createQuery("select r from Role r").getResultList());
 
