@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,9 +26,9 @@ import javax.validation.constraints.Size;
 public class BusinessHouse implements java.io.Serializable {
 
 	private String id;
-	private Business business;
-	private LandInfo landInfo;
-	private Build build;
+	private HouseBusiness houseBusiness;
+	private BusinessLandInfo businessLandInfo;
+	private BusinessBuild businessBuild;
 	private String houseOrder;
 	private String houseUnitName;
 	private String inFloorName;
@@ -54,28 +54,23 @@ public class BusinessHouse implements java.io.Serializable {
 	private boolean initRegister;
 	private boolean firmlyPower;
 	private String houseCode;
-	private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
 	private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
-	private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(
-			0);
-	private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
-	private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(
-			0);
+	private Set<BusinessOwner> businessOwners = new HashSet<BusinessOwner>(0);
+	private Set<BusinessHouseState> businessHouseStates = new HashSet<BusinessHouseState>(0);
 	private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(
 			0);
-	private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
 
 	public BusinessHouse() {
 	}
 
-	public BusinessHouse(String id, Business business, Build build,
+	public BusinessHouse(String id, HouseBusiness houseBusiness, BusinessBuild businessBuild,
 			String houseOrder, String inFloorName, BigDecimal houseArea,
 			int houseState, String useType, String structure, String address,
 			Date mapTime, boolean initRegister, boolean firmlyPower,
 			String houseCode) {
 		this.id = id;
-		this.business = business;
-		this.build = build;
+		this.houseBusiness = houseBusiness;
+		this.businessBuild = businessBuild;
 		this.houseOrder = houseOrder;
 		this.inFloorName = inFloorName;
 		this.houseArea = houseArea;
@@ -88,23 +83,21 @@ public class BusinessHouse implements java.io.Serializable {
 		this.firmlyPower = firmlyPower;
 		this.houseCode = houseCode;
 	}
-	public BusinessHouse(String id, Business business, LandInfo landInfo,
-			Build build, String houseOrder, String houseUnitName,
-			String inFloorName, BigDecimal houseArea, BigDecimal prepareArea,
-			BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
-			BigDecimal loftArea, BigDecimal commParam, int houseState,
-			String houseType, String useType, String structure,
+	public BusinessHouse(String id, HouseBusiness houseBusiness,
+			BusinessLandInfo businessLandInfo, BusinessBuild businessBuild, String houseOrder,
+			String houseUnitName, String inFloorName, BigDecimal houseArea,
+			BigDecimal prepareArea, BigDecimal useArea, BigDecimal commArea,
+			BigDecimal shineArea, BigDecimal loftArea, BigDecimal commParam,
+			int houseState, String houseType, String useType, String structure,
 			String knotSize, String address, String eastWall, String westWall,
 			String southWall, String northWall, Date mapTime, String direction,
 			boolean initRegister, boolean firmlyPower, String houseCode,
-			Set<Evaluate> evaluates, Set<BusinessPool> businessPools,
-			Set<MortgaegeRegiste> mortgaegeRegistes, Set<SaleInfo> saleInfos,
-			Set<HouseCloseCancel> houseCloseCancels,
-			Set<NewHouseContract> newHouseContracts, Set<CloseHouse> closeHouses) {
+			Set<BusinessPool> businessPools, Set<BusinessOwner> businessOwners,
+			Set<BusinessHouseState> businessHouseStates, Set<NewHouseContract> newHouseContracts) {
 		this.id = id;
-		this.business = business;
-		this.landInfo = landInfo;
-		this.build = build;
+		this.houseBusiness = houseBusiness;
+		this.businessLandInfo = businessLandInfo;
+		this.businessBuild = businessBuild;
 		this.houseOrder = houseOrder;
 		this.houseUnitName = houseUnitName;
 		this.inFloorName = inFloorName;
@@ -130,13 +123,10 @@ public class BusinessHouse implements java.io.Serializable {
 		this.initRegister = initRegister;
 		this.firmlyPower = firmlyPower;
 		this.houseCode = houseCode;
-		this.evaluates = evaluates;
 		this.businessPools = businessPools;
-		this.mortgaegeRegistes = mortgaegeRegistes;
-		this.saleInfos = saleInfos;
-		this.houseCloseCancels = houseCloseCancels;
+		this.businessOwners = businessOwners;
+		this.businessHouseStates = businessHouseStates;
 		this.newHouseContracts = newHouseContracts;
-		this.closeHouses = closeHouses;
 	}
 
 	@Id
@@ -154,33 +144,33 @@ public class BusinessHouse implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public Business getBusiness() {
-		return this.business;
+	public HouseBusiness getHouseBusiness() {
+		return this.houseBusiness;
 	}
 
-	public void setBusiness(Business business) {
-		this.business = business;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LAND_INFO")
-	public LandInfo getLandInfo() {
-		return this.landInfo;
+	public BusinessLandInfo getBusinessLandInfo() {
+		return this.businessLandInfo;
 	}
 
-	public void setLandInfo(LandInfo landInfo) {
-		this.landInfo = landInfo;
+	public void setBusinessLandInfo(BusinessLandInfo businessLandInfo) {
+		this.businessLandInfo = businessLandInfo;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUILD_ID", nullable = false)
 	@NotNull
-	public Build getBuild() {
-		return this.build;
+	public BusinessBuild getBusinessBuild() {
+		return this.businessBuild;
 	}
 
-	public void setBuild(Build build) {
-		this.build = build;
+	public void setBusinessBuild(BusinessBuild businessBuild) {
+		this.businessBuild = businessBuild;
 	}
 
 	@Column(name = "HOUSE_ORDER", nullable = false, length = 20)
@@ -432,15 +422,6 @@ public class BusinessHouse implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<Evaluate> getEvaluates() {
-		return this.evaluates;
-	}
-
-	public void setEvaluates(Set<Evaluate> evaluates) {
-		this.evaluates = evaluates;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
 	public Set<BusinessPool> getBusinessPools() {
 		return this.businessPools;
 	}
@@ -450,30 +431,21 @@ public class BusinessHouse implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<MortgaegeRegiste> getMortgaegeRegistes() {
-		return this.mortgaegeRegistes;
+	public Set<BusinessOwner> getBusinessOwners() {
+		return this.businessOwners;
 	}
 
-	public void setMortgaegeRegistes(Set<MortgaegeRegiste> mortgaegeRegistes) {
-		this.mortgaegeRegistes = mortgaegeRegistes;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<SaleInfo> getSaleInfos() {
-		return this.saleInfos;
-	}
-
-	public void setSaleInfos(Set<SaleInfo> saleInfos) {
-		this.saleInfos = saleInfos;
+	public void setBusinessOwners(Set<BusinessOwner> businessOwners) {
+		this.businessOwners = businessOwners;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<HouseCloseCancel> getHouseCloseCancels() {
-		return this.houseCloseCancels;
+	public Set<BusinessHouseState> getBusinessHouseStates() {
+		return this.businessHouseStates;
 	}
 
-	public void setHouseCloseCancels(Set<HouseCloseCancel> houseCloseCancels) {
-		this.houseCloseCancels = houseCloseCancels;
+	public void setBusinessHouseStates(Set<BusinessHouseState> businessHouseStates) {
+		this.businessHouseStates = businessHouseStates;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
@@ -483,15 +455,6 @@ public class BusinessHouse implements java.io.Serializable {
 
 	public void setNewHouseContracts(Set<NewHouseContract> newHouseContracts) {
 		this.newHouseContracts = newHouseContracts;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<CloseHouse> getCloseHouses() {
-		return this.closeHouses;
-	}
-
-	public void setCloseHouses(Set<CloseHouse> closeHouses) {
-		this.closeHouses = closeHouses;
 	}
 
 }

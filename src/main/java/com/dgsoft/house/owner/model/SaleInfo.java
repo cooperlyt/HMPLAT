@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -20,22 +20,22 @@ import javax.validation.constraints.Size;
 public class SaleInfo implements java.io.Serializable {
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private String payType;
 	private BigDecimal sumPrice;
 
 	public SaleInfo() {
 	}
 
-	public SaleInfo(String id, BusinessHouse businessHouse, BigDecimal sumPrice) {
+	public SaleInfo(String id, HouseBusiness houseBusiness, BigDecimal sumPrice) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.sumPrice = sumPrice;
 	}
-	public SaleInfo(String id, BusinessHouse businessHouse, String payType,
+	public SaleInfo(String id, HouseBusiness houseBusiness, String payType,
 			BigDecimal sumPrice) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.payType = payType;
 		this.sumPrice = sumPrice;
 	}
@@ -55,12 +55,12 @@ public class SaleInfo implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
+	public HouseBusiness getHouseBusiness() {
+		return this.houseBusiness;
 	}
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@Column(name = "PAY_TYPE", length = 32)

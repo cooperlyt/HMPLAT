@@ -74,7 +74,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
     }
 
     public void saveBuild() {
-        if (getEntityManager().createQuery("select count(build.id) from Build build " +
+        if (getEntityManager().createQuery("select count(build.id) from BusinessBuild build " +
                 "where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and " +
                 "build.buildNo = :buildNumber and build.id <> :buildId",Long.class)
                 .setParameter("mapNumber",editingBuild.getMapNumber())
@@ -98,8 +98,8 @@ public class ProjectHome extends HouseEntityHome<Project> {
         }
 
         if (isManaged()){
-            if (getEntityManager().createQuery("select count(build.id) from Build build " +
-                    "where build.project.id = :projectId and " +
+            if (getEntityManager().createQuery("select count(build.id) from BusinessBuild build " +
+                    "where build.getBusinessProject.id = :projectId and " +
                     "build.buildNo = :buildNumber and build.id <> :buildId",Long.class)
                     .setParameter("projectId",getInstance().getId())
                     .setParameter("buildNumber",editingBuild.getBuildNo())

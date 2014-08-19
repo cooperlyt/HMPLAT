@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,23 +19,34 @@ import javax.validation.constraints.Size;
 public class BusinessPersion implements java.io.Serializable {
 
 	private String id;
-	private Business business;
+	private OwnerBusiness ownerBusiness;
 	private String idNo;
 	private String idType;
 	private String name;
 	private String type;
+	private String phone;
 
 	public BusinessPersion() {
 	}
 
-	public BusinessPersion(String id, Business business, String idNo,
+	public BusinessPersion(String id, OwnerBusiness ownerBusiness, String idNo,
 			String idType, String name, String type) {
 		this.id = id;
-		this.business = business;
+		this.ownerBusiness = ownerBusiness;
 		this.idNo = idNo;
 		this.idType = idType;
 		this.name = name;
 		this.type = type;
+	}
+	public BusinessPersion(String id, OwnerBusiness ownerBusiness, String idNo,
+			String idType, String name, String type, String phone) {
+		this.id = id;
+		this.ownerBusiness = ownerBusiness;
+		this.idNo = idNo;
+		this.idType = idType;
+		this.name = name;
+		this.type = type;
+		this.phone = phone;
 	}
 
 	@Id
@@ -53,12 +64,12 @@ public class BusinessPersion implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public Business getBusiness() {
-		return this.business;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setBusiness(Business business) {
-		this.business = business;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "ID_NO", nullable = false, length = 100)
@@ -103,6 +114,16 @@ public class BusinessPersion implements java.io.Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Column(name = "PHONE", length = 15)
+	@Size(max = 15)
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

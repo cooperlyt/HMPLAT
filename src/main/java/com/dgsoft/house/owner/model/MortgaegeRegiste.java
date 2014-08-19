@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:30:43 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 public class MortgaegeRegiste implements java.io.Serializable {
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private BigDecimal highestMountMoney;
 	private String warrantScope;
 	private String interestType;
@@ -35,12 +35,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	public MortgaegeRegiste() {
 	}
 
-	public MortgaegeRegiste(String id, BusinessHouse businessHouse,
+	public MortgaegeRegiste(String id, HouseBusiness houseBusiness,
 			BigDecimal highestMountMoney, String warrantScope,
 			String interestType, Date mortgageDueTimeS, Date mortgageDueTimeE,
 			BigDecimal mortgageArea) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.highestMountMoney = highestMountMoney;
 		this.warrantScope = warrantScope;
 		this.interestType = interestType;
@@ -48,12 +48,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageDueTimeE = mortgageDueTimeE;
 		this.mortgageArea = mortgageArea;
 	}
-	public MortgaegeRegiste(String id, BusinessHouse businessHouse,
+	public MortgaegeRegiste(String id, HouseBusiness houseBusiness,
 			BigDecimal highestMountMoney, String warrantScope,
 			String interestType, Date mortgageDueTimeS, Date mortgageDueTimeE,
 			BigDecimal mortgageArea, String deptSureFact) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.highestMountMoney = highestMountMoney;
 		this.warrantScope = warrantScope;
 		this.interestType = interestType;
@@ -78,12 +78,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
+	public HouseBusiness getHouseBusiness() {
+		return this.houseBusiness;
 	}
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@Column(name = "HIGHEST_MOUNT_MONEY", nullable = false, scale = 4)

@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,16 +19,17 @@ import javax.validation.constraints.Size;
 public class MappingCorp implements java.io.Serializable {
 
 	private String id;
-	private Business business;
+	private OwnerBusiness ownerBusiness;
 	private String name;
 	private String code;
 
 	public MappingCorp() {
 	}
 
-	public MappingCorp(String id, Business business, String name, String code) {
+	public MappingCorp(String id, OwnerBusiness ownerBusiness, String name,
+			String code) {
 		this.id = id;
-		this.business = business;
+		this.ownerBusiness = ownerBusiness;
 		this.name = name;
 		this.code = code;
 	}
@@ -48,12 +49,12 @@ public class MappingCorp implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public Business getBusiness() {
-		return this.business;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setBusiness(Business business) {
-		this.business = business;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "NAME", nullable = false, length = 100)

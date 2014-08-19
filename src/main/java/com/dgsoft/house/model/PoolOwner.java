@@ -1,14 +1,11 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.model.PersonId;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,7 +20,7 @@ public class PoolOwner implements java.io.Serializable {
 	private House house;
     private String name;
     private String credentialsNumber;
-    private Integer credentialsType;
+    private PersonId.CredentialsType credentialsType;
 	private String relation;
 	private BigDecimal perc;
     private BigDecimal area;
@@ -33,6 +30,8 @@ public class PoolOwner implements java.io.Serializable {
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	@NotNull
 	@Size(max = 32)
 	public String getId() {
@@ -64,6 +63,9 @@ public class PoolOwner implements java.io.Serializable {
 		this.relation = relation;
 	}
 
+    @Column(name = "NAME",nullable = false,length = 50)
+    @NotNull
+    @Size(max = 50)
     public String getName() {
         return name;
     }
@@ -72,6 +74,9 @@ public class PoolOwner implements java.io.Serializable {
         this.name = name;
     }
 
+    @Column(name = "ID_NO",nullable = false,length = 100)
+    @NotNull
+    @Size(max = 100)
     public String getCredentialsNumber() {
         return credentialsNumber;
     }
@@ -80,14 +85,18 @@ public class PoolOwner implements java.io.Serializable {
         this.credentialsNumber = credentialsNumber;
     }
 
-    public Integer getCredentialsType() {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_TYPE", nullable = false, length = 32)
+    @NotNull
+    public PersonId.CredentialsType getCredentialsType() {
         return credentialsType;
     }
 
-    public void setCredentialsType(Integer credentialsType) {
+    public void setCredentialsType(PersonId.CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
     }
 
+    @Column(name = "PERC", nullable = true, scale = 4)
     public BigDecimal getPerc() {
         return perc;
     }
@@ -96,6 +105,7 @@ public class PoolOwner implements java.io.Serializable {
         this.perc = perc;
     }
 
+    @Column(name = "POOL_AREA", nullable = true, scale = 4)
     public BigDecimal getArea() {
         return area;
     }

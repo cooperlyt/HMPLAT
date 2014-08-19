@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "LAND_INFO", catalog = "HOUSE_OWNER_RECORD")
-public class LandInfo implements java.io.Serializable {
+public class BusinessLandInfo implements java.io.Serializable {
 
 	private String id;
 	private String landCardNo;
@@ -35,19 +35,19 @@ public class LandInfo implements java.io.Serializable {
 	private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(
 			0);
 
-	public LandInfo() {
+	public BusinessLandInfo() {
 	}
 
-	public LandInfo(String id, Date beginUseTime, Date endUseTime) {
+	public BusinessLandInfo(String id, Date beginUseTime, Date endUseTime) {
 		this.id = id;
 		this.beginUseTime = beginUseTime;
 		this.endUseTime = endUseTime;
 	}
-	public LandInfo(String id, String landCardNo, String number,
-			String landProperty, Date beginUseTime, Date endUseTime,
-			BigDecimal area, String landGetMode,
-			Set<BusinessHouse> businessHouses,
-			Set<ProjectSellCard> projectSellCards) {
+	public BusinessLandInfo(String id, String landCardNo, String number,
+                            String landProperty, Date beginUseTime, Date endUseTime,
+                            BigDecimal area, String landGetMode,
+                            Set<BusinessHouse> businessHouses,
+                            Set<ProjectSellCard> projectSellCards) {
 		this.id = id;
 		this.landCardNo = landCardNo;
 		this.number = number;

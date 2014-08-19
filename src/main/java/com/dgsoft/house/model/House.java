@@ -1,6 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.owner.model.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +25,6 @@ public class House implements java.io.Serializable {
     private String id;
     private Integer version;
     private Build build;
-    private HouseOwner houseOwnerByOwnerId;
     private String houseOrder;
     private String houseUnitName;
     private String inFloorName;
@@ -41,6 +42,7 @@ public class House implements java.io.Serializable {
     private String knotSize;
     private String address;
     private HouseDataSource dataSource;
+    private LandInfo landInfo;
     private String eastWall;
     private String westWall;
     private String southWall;
@@ -55,6 +57,7 @@ public class House implements java.io.Serializable {
     private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
     private Date createTime;
     private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
+    private Set<HouseOwner> houseOwners = new HashSet<HouseOwner>(0);
 
     public House() {
     }
@@ -113,18 +116,6 @@ public class House implements java.io.Serializable {
     public void setBuild(Build build) {
         this.build = build;
     }
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OWNER_ID", nullable = true)
-    public HouseOwner getHouseOwnerByOwnerId() {
-        return this.houseOwnerByOwnerId;
-    }
-
-    public void setHouseOwnerByOwnerId(HouseOwner houseOwnerByOwnerId) {
-        this.houseOwnerByOwnerId = houseOwnerByOwnerId;
-    }
-
 
     @Column(name = "HOUSE_ORDER", nullable = false, length = 20)
     @NotNull
@@ -430,5 +421,35 @@ public class House implements java.io.Serializable {
 
     public void setGridBlock(Set<GridBlock> gridBlock) {
         this.gridBlock = gridBlock;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "house", orphanRemoval = true,cascade = {CascadeType.ALL})
+    public Set<HouseOwner> getHouseOwners() {
+        return houseOwners;
+    }
+
+    public void setHouseOwners(Set<HouseOwner> houseOwners) {
+        this.houseOwners = houseOwners;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
+    @JoinColumn(name = "LAND_INFO",nullable = true)
+    public LandInfo getLandInfo() {
+        return landInfo;
+    }
+
+    public void setLandInfo(LandInfo landInfo) {
+        this.landInfo = landInfo;
+    }
+
+    @Transient
+    public HouseOwner getHouseOwner(){
+        if (getHouseOwners().isEmpty()){
+            return null;
+        }else if(getHouseOwners().size() > 1){
+            throw new IllegalArgumentException("house have mulit owner");
+        }else{
+            return getHouseOwners().iterator().next();
+        }
     }
 }

@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,9 +23,9 @@ import javax.validation.constraints.Size;
 public class ProjectSellCard implements java.io.Serializable {
 
 	private String id;
-	private Business business;
-	private LandInfo landInfo;
-	private Project project;
+	private OwnerBusiness ownerBusiness;
+	private BusinessLandInfo businessLandInfo;
+	private BusinessProject businessProject;
 	private Integer houseCount;
 	private Integer buildCount;
 	private BigDecimal area;
@@ -40,23 +40,23 @@ public class ProjectSellCard implements java.io.Serializable {
 	public ProjectSellCard() {
 	}
 
-	public ProjectSellCard(String id, Business business, LandInfo landInfo,
-			Project project, Date printTime) {
+	public ProjectSellCard(String id, OwnerBusiness ownerBusiness,
+			BusinessLandInfo businessLandInfo, BusinessProject businessProject, Date printTime) {
 		this.id = id;
-		this.business = business;
-		this.landInfo = landInfo;
-		this.project = project;
+		this.ownerBusiness = ownerBusiness;
+		this.businessLandInfo = businessLandInfo;
+		this.businessProject = businessProject;
 		this.printTime = printTime;
 	}
-	public ProjectSellCard(String id, Business business, LandInfo landInfo,
-			Project project, Integer houseCount, Integer buildCount,
-			BigDecimal area, Boolean prepareSell, String useType,
-			String sellObject, String yearNumber, String orderNumber,
-			Date printTime, String memo) {
+	public ProjectSellCard(String id, OwnerBusiness ownerBusiness,
+			BusinessLandInfo businessLandInfo, BusinessProject businessProject, Integer houseCount,
+			Integer buildCount, BigDecimal area, Boolean prepareSell,
+			String useType, String sellObject, String yearNumber,
+			String orderNumber, Date printTime, String memo) {
 		this.id = id;
-		this.business = business;
-		this.landInfo = landInfo;
-		this.project = project;
+		this.ownerBusiness = ownerBusiness;
+		this.businessLandInfo = businessLandInfo;
+		this.businessProject = businessProject;
 		this.houseCount = houseCount;
 		this.buildCount = buildCount;
 		this.area = area;
@@ -84,34 +84,34 @@ public class ProjectSellCard implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSSINESS_ID", nullable = false)
 	@NotNull
-	public Business getBusiness() {
-		return this.business;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setBusiness(Business business) {
-		this.business = business;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LAND_INFO", nullable = false)
 	@NotNull
-	public LandInfo getLandInfo() {
-		return this.landInfo;
+	public BusinessLandInfo getBusinessLandInfo() {
+		return this.businessLandInfo;
 	}
 
-	public void setLandInfo(LandInfo landInfo) {
-		this.landInfo = landInfo;
+	public void setBusinessLandInfo(BusinessLandInfo businessLandInfo) {
+		this.businessLandInfo = businessLandInfo;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROJECT", nullable = false)
 	@NotNull
-	public Project getProject() {
-		return this.project;
+	public BusinessProject getBusinessProject() {
+		return this.businessProject;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setBusinessProject(BusinessProject businessProject) {
+		this.businessProject = businessProject;
 	}
 
 	@Column(name = "HOUSE_COUNT")

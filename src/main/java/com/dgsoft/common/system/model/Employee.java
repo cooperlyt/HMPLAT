@@ -24,16 +24,18 @@ public class Employee implements java.io.Serializable {
     private boolean enable;
     private String memo;
     private Set<Role> roles = new HashSet<Role>(0);
-    private Person person;
+    private String phone;
+    private String credentialsType;
+    private String credentialsNumber;
+    private String name;
 
     public Employee() {
         enable = true;
     }
 
-    public Employee(String id, Person person) {
+    public Employee(String id) {
         enable = true;
         this.id = id;
-        this.person = person;
     }
 
 
@@ -136,14 +138,59 @@ public class Employee implements java.io.Serializable {
         this.roles = roles;
     }
 
-    @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "PERSON_ID", unique = true, nullable = false, updatable = false)
-    public Person getPerson() {
-        return person;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name = "CREDENTIALS_TYPE", referencedColumnName = "CREDENTIALS_TYPE", nullable = false),
+//            @JoinColumn(name = "CREDENTIALS_NUMBER", referencedColumnName = "CREDENTIALS_NUMBER", nullable = false)})
+//    @NotNull
+//    public Person getPerson() {
+//        return this.person;
+//    }
+//
+//    public void setPerson(Person person) {
+//        this.person = person;
+//    }
+
+
+    @Column(name = "PHONE", length = 20)
+    @Size(max = 20)
+    public String getPhone() {
+        return this.phone;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column(name = "CREDENTIALS_TYPE", length = 32)
+    @Size(max = 32)
+    public String getCredentialsType() {
+        return this.credentialsType;
+    }
+
+    public void setCredentialsType(String credentialsType) {
+        this.credentialsType = credentialsType;
+    }
+
+    @Column(name = "CREDENTIALS_NUMBER", length = 100)
+    @Size(max = 100)
+    public String getCredentialsNumber() {
+        return this.credentialsNumber;
+    }
+
+    public void setCredentialsNumber(String credentialsNumber) {
+        this.credentialsNumber = credentialsNumber;
+    }
+
+    @Column(name = "NAME", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

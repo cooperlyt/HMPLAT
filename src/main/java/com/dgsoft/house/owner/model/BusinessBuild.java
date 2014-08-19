@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -22,10 +22,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "BUILD", catalog = "HOUSE_OWNER_RECORD", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"MAP_NUMBER", "BLOCK_NO", "BUILD_NO"}))
-public class Build implements java.io.Serializable {
+public class BusinessBuild implements java.io.Serializable {
 
 	private String id;
-	private Project project;
+	private BusinessProject businessProject;
 	private String landBlockCode;
 	private String mapNumber;
 	private String blockNo;
@@ -56,12 +56,12 @@ public class Build implements java.io.Serializable {
 	private String buildCode;
 	private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
-	public Build() {
+	public BusinessBuild() {
 	}
 
-	public Build(String id, String blockNo, String buildNo, String name,
-			int floorCount, String structure, int upFloorCount,
-			int downFloorCount, boolean haveDownRoom, String buildCode) {
+	public BusinessBuild(String id, String blockNo, String buildNo, String name,
+                         int floorCount, String structure, int upFloorCount,
+                         int downFloorCount, boolean haveDownRoom, String buildCode) {
 		this.id = id;
 		this.blockNo = blockNo;
 		this.buildNo = buildNo;
@@ -73,18 +73,18 @@ public class Build implements java.io.Serializable {
 		this.haveDownRoom = haveDownRoom;
 		this.buildCode = buildCode;
 	}
-	public Build(String id, Project project, String landBlockCode,
-			String mapNumber, String blockNo, String buildNo,
-			String streetCode, String completeDate, String name, String doorNo,
-			Integer unintCount, int floorCount, String address,
-			Integer houseCount, BigDecimal area, BigDecimal lng,
-			BigDecimal lat, String buildType, String structure, String memo,
-			Integer homeCount, BigDecimal homeArea, Integer unhomeCount,
-			BigDecimal unhomeArea, Integer shopCount, BigDecimal shopArea,
-			int upFloorCount, int downFloorCount, boolean haveDownRoom,
-			String buildCode, Set<BusinessHouse> businessHouses) {
+	public BusinessBuild(String id, BusinessProject businessProject, String landBlockCode,
+                         String mapNumber, String blockNo, String buildNo,
+                         String streetCode, String completeDate, String name, String doorNo,
+                         Integer unintCount, int floorCount, String address,
+                         Integer houseCount, BigDecimal area, BigDecimal lng,
+                         BigDecimal lat, String buildType, String structure, String memo,
+                         Integer homeCount, BigDecimal homeArea, Integer unhomeCount,
+                         BigDecimal unhomeArea, Integer shopCount, BigDecimal shopArea,
+                         int upFloorCount, int downFloorCount, boolean haveDownRoom,
+                         String buildCode, Set<BusinessHouse> businessHouses) {
 		this.id = id;
-		this.project = project;
+		this.businessProject = businessProject;
 		this.landBlockCode = landBlockCode;
 		this.mapNumber = mapNumber;
 		this.blockNo = blockNo;
@@ -130,12 +130,12 @@ public class Build implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROJECT")
-	public Project getProject() {
-		return this.project;
+	public BusinessProject getBusinessProject() {
+		return this.businessProject;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setBusinessProject(BusinessProject businessProject) {
+		this.businessProject = businessProject;
 	}
 
 	@Column(name = "LAND_BLOCK_CODE", length = 4)

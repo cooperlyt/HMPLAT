@@ -1,5 +1,5 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 public class CloseHouse implements java.io.Serializable {
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private String closeDownClour;
 	private String action;
 	private Date closeDate;
@@ -31,17 +31,17 @@ public class CloseHouse implements java.io.Serializable {
 	public CloseHouse() {
 	}
 
-	public CloseHouse(String id, BusinessHouse businessHouse,
+	public CloseHouse(String id, HouseBusiness houseBusiness,
 			String closeDownClour, Date closeDate) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.closeDownClour = closeDownClour;
 		this.closeDate = closeDate;
 	}
-	public CloseHouse(String id, BusinessHouse businessHouse,
+	public CloseHouse(String id, HouseBusiness houseBusiness,
 			String closeDownClour, String action, Date closeDate, Date toDate) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.closeDownClour = closeDownClour;
 		this.action = action;
 		this.closeDate = closeDate;
@@ -63,12 +63,12 @@ public class CloseHouse implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
+	public HouseBusiness getHouseBusiness() {
+		return this.houseBusiness;
 	}
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@Column(name = "CLOSE_DOWN_CLOUR", nullable = false, length = 32)

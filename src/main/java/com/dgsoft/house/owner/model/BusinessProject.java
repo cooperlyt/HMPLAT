@@ -1,19 +1,11 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 18, 2014 5:12:39 PM by Hibernate Tools 4.0.0
+// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,7 +14,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PROJECT", catalog = "HOUSE_OWNER_RECORD", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
-public class Project implements java.io.Serializable {
+public class BusinessProject implements java.io.Serializable {
 
 	private String id;
 	private String name;
@@ -40,15 +32,14 @@ public class Project implements java.io.Serializable {
 	private String districtCode;
 	private String districtName;
 	private String projectCode;
-	private Set<Build> builds = new HashSet<Build>(0);
-	private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(
-			0);
+	private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
+	private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
 
-	public Project() {
+	public BusinessProject() {
 	}
 
-	public Project(String id, String name, Date mapTime, String districtCode,
-			String districtName, String projectCode) {
+	public BusinessProject(String id, String name, Date mapTime, String districtCode,
+                           String districtName, String projectCode) {
 		this.id = id;
 		this.name = name;
 		this.mapTime = mapTime;
@@ -56,12 +47,12 @@ public class Project implements java.io.Serializable {
 		this.districtName = districtName;
 		this.projectCode = projectCode;
 	}
-	public Project(String id, String name, String address, String buildSize,
-			Integer buildCount, BigDecimal area, BigDecimal sumArea,
-			Date mapTime, String completeDate, String developerName,
-			String developerCode, String sectionName, String sectionCode,
-			String districtCode, String districtName, String projectCode,
-			Set<Build> builds, Set<ProjectSellCard> projectSellCards) {
+	public BusinessProject(String id, String name, String address, String buildSize,
+                           Integer buildCount, BigDecimal area, BigDecimal sumArea,
+                           Date mapTime, String completeDate, String developerName,
+                           String developerCode, String sectionName, String sectionCode,
+                           String districtCode, String districtName, String projectCode,
+                           Set<BusinessBuild> businessBuilds, Set<ProjectSellCard> projectSellCards) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
@@ -78,7 +69,7 @@ public class Project implements java.io.Serializable {
 		this.districtCode = districtCode;
 		this.districtName = districtName;
 		this.projectCode = projectCode;
-		this.builds = builds;
+		this.businessBuilds = businessBuilds;
 		this.projectSellCards = projectSellCards;
 	}
 
@@ -247,12 +238,12 @@ public class Project implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-	public Set<Build> getBuilds() {
-		return this.builds;
+	public Set<BusinessBuild> getBusinessBuilds() {
+		return this.businessBuilds;
 	}
 
-	public void setBuilds(Set<Build> builds) {
-		this.builds = builds;
+	public void setBusinessBuilds(Set<BusinessBuild> businessBuilds) {
+		this.businessBuilds = businessBuilds;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")

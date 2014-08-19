@@ -11,21 +11,13 @@
 
         <class>com.dgsoft.common.system.model.BusinessCategory</class>
         <class>com.dgsoft.common.system.model.BusinessDefine</class>
-        <class>com.dgsoft.common.system.model.ComplexVarSubscribe</class>
         <class>com.dgsoft.common.system.model.Employee</class>
         <class>com.dgsoft.common.system.model.FileSubscribe</class>
         <class>com.dgsoft.common.system.model.FuncCategory</class>
         <class>com.dgsoft.common.system.model.Function</class>
         <class>com.dgsoft.common.system.model.Organization</class>
         <class>com.dgsoft.common.system.model.Person</class>
-        <class>com.dgsoft.common.system.model.Rate</class>
-        <class>com.dgsoft.common.system.model.RateSubscribe</class>
-        <class>com.dgsoft.common.system.model.Report</class>
-        <class>com.dgsoft.common.system.model.ReportSubscribe</class>
         <class>com.dgsoft.common.system.model.Role</class>
-
-        <class>com.dgsoft.common.system.model.SimpleVarDefine</class>
-        <class>com.dgsoft.common.system.model.SimpleVarSubscribe</class>
         <class>com.dgsoft.common.system.model.SystemParam</class>
         <class>com.dgsoft.common.system.model.Word</class>
         <class>com.dgsoft.common.system.model.WordCategory</class>
@@ -67,6 +59,7 @@
         <class>com.dgsoft.house.model.HouseContract</class>
         <class>com.dgsoft.house.model.HouseGridTitle</class>
         <class>com.dgsoft.house.model.HouseOwner</class>
+        <class>com.dgsoft.house.model.LandInfo</class>
         <class>com.dgsoft.house.model.HouseSellCompany</class>
         <class>com.dgsoft.house.model.HouseState</class>
         <class>com.dgsoft.house.model.MappingCorporation</class>
@@ -98,27 +91,31 @@
     <persistence-unit name="ownerEntityManagerFactory" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/HOUSEOWNERXADS</jta-data-source>
-        <class>com.dgsoft.house.owner.model.Build</class>
-        <class>com.dgsoft.house.owner.model.Business</class>
+        <class>com.dgsoft.house.owner.model.BusinessBuild</class>
         <class>com.dgsoft.house.owner.model.BusinessEmp</class>
         <class>com.dgsoft.house.owner.model.BusinessHouse</class>
         <class>com.dgsoft.house.owner.model.BusinessMoney</class>
+        <class>com.dgsoft.house.owner.model.BusinessOwner</class>
         <class>com.dgsoft.house.owner.model.BusinessPersion</class>
         <class>com.dgsoft.house.owner.model.BusinessPool</class>
         <class>com.dgsoft.house.owner.model.Card</class>
         <class>com.dgsoft.house.owner.model.CloseHouse</class>
         <class>com.dgsoft.house.owner.model.Evaluate</class>
+        <class>com.dgsoft.house.owner.model.Financial</class>
+        <class>com.dgsoft.house.owner.model.HouseBusiness</class>
         <class>com.dgsoft.house.owner.model.HouseCloseCancel</class>
-        <class>com.dgsoft.house.owner.model.LandInfo</class>
+        <class>com.dgsoft.house.owner.model.BusinessHouseState</class>
+        <class>com.dgsoft.house.owner.model.BusinessLandInfo</class>
         <class>com.dgsoft.house.owner.model.MappingCorp</class>
         <class>com.dgsoft.house.owner.model.MortgaegeRegiste</class>
         <class>com.dgsoft.house.owner.model.NewHouseContract</class>
         <class>com.dgsoft.house.owner.model.OtherRegiste</class>
-        <class>com.dgsoft.house.owner.model.Project</class>
+        <class>com.dgsoft.house.owner.model.OwnerBusiness</class>
+        <class>com.dgsoft.house.owner.model.BusinessProject</class>
         <class>com.dgsoft.house.owner.model.ProjectSellCard</class>
         <class>com.dgsoft.house.owner.model.Reason</class>
         <class>com.dgsoft.house.owner.model.SaleInfo</class>
-
+        <class>com.dgsoft.house.owner.model.UploadFiles</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
