@@ -16,7 +16,7 @@
     <ui:define name="actionButtons">
         <ui:insert/>
         <a:commandButton value="#{messages.cancel}" immediate="true" execute="@this"
-                         onclick="#{rich:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
+                         onclick="#{r:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
     </ui:define>
 
 </ui:composition>
