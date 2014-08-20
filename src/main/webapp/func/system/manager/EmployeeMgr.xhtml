@@ -20,7 +20,7 @@
     <r:toolbar height="26" itemSeparator="grid">
         <r:toolbarGroup>
             <a:outputPanel id="orgEditActionForm">
-                <a:commandButton image="/img/create.gif" title="#{messages.createOrg}" execute="@this" immediate="true"
+                <a:commandButton image="/img/icons/create.gif" title="#{messages.createOrg}" execute="@this" immediate="true"
                                  value="#{messages.createOrg}" styleClass="toolBarPic"
                                  render="orgEditPanel_form,orgEditPanel_title,orgEditPanel_controls"
                                  oncomplete="#{r:component('orgEditPanel')}.show();">
@@ -33,7 +33,7 @@
 
 
                 #{' '}
-                <a:commandButton id="editOrgBtn" image="/img/edit.png" title="#{messages.edit}" execute="@this"
+                <a:commandButton id="editOrgBtn" image="/img/icons/edit.png" title="#{messages.edit}" execute="@this"
                                  immediate="true" styleClass="toolBarPic"
                                  onclick="if (#{not organizationHome.idDefined}){alert('#{messages.plase_select_org_first}'); return false;}"
                                  render="orgEditPanel_form,orgEditPanel_title,orgEditPanel_controls"
@@ -133,7 +133,7 @@
 
 <h:form id="credentialsForm">
 
-    <r:region>
+    <a:region>
         <h:panelGrid columns="5" rendered="#{not employeeHome.managed}">
             <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
@@ -176,13 +176,10 @@
                 </f:facet>
             </a:status>
         </h:panelGrid>
-    </r:region>
+    </a:region>
 
     <r:panel id="personEditFields">
-        <ui:include src="/layout/system/PersonEdit.xhtml">
-            <ui:param name="readonly"
-                      value="#{(empty personHome.instance.credentialsNumber) or personHome.managed}"/>
-        </ui:include>
+
 
         <h:panelGrid columns="2">
             <s:decorate id="empIdField" template="/layout/edit.xhtml">
@@ -193,11 +190,11 @@
                              required="true"
                              size="20"
                              maxlength="32"
-                             readonly="#{empty personHome.instance.credentialsNumber}"
+                             
                              label="#{messages.employee_field_id}"
                              value="#{employeeHome.instance.id}">
                     <a:ajax event="blur" render="empIdField"
-                            disabled="#{empty personHome.instance.credentialsNumber}"/>
+                            />
                 </h:inputText>
             </s:decorate>
 
@@ -205,7 +202,7 @@
             <s:decorate id="empEnableField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.employee_field_enable}</ui:define>
                 <h:selectBooleanCheckbox
-                        disabled="#{empty personHome.instance.credentialsNumber}"
+                        
                         label="#{messages.employee_field_enable}"
                         required="true"
                         value="#{employeeHome.instance.enable}"/>
@@ -215,11 +212,11 @@
                 <ui:define name="label">#{messages.employee_field_joinDate}</ui:define>
                 <r:calendar enableManualInput="true"
                                inputSize="20"
-                               readonly="#{empty personHome.instance.credentialsNumber}"
+                               
                                defaultLabel="#{currentDate}"
                                required="true"
                                timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                               showApplyButton="#{calendarBean.showApply}" popup="#{calendarBean.popup}"
+
                                value="#{employeeHome.instance.joinDate}"
                                datePattern="#{messages.datePattern}"/>
             </s:decorate>
@@ -227,7 +224,7 @@
             <s:decorate id="empJobField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.employee_field_job}</ui:define>
                 <r:select style="width:150px"
-                             disabled="#{empty personHome.instance.credentialsNumber}"
+                             
                              label="#{messages.employee_field_job}"
                              value="#{employeeHome.instance.job}">
                     <s:selectItems var="_word" label="#{_word.value}"
@@ -256,11 +253,11 @@
                 <h:inputText id="EMail"
                              size="20"
                              maxlength="20"
-                             readonly="#{empty personHome.instance.credentialsNumber}"
+                             
                              label="#{messages.employee_field_email}"
                              value="#{employeeHome.instance.EMail}">
                     <a:ajax event="blur" render="EMailField"
-                            disabled="#{empty personHome.instance.credentialsNumber}"/>
+                            />
                 </h:inputText>
             </s:decorate>
 
@@ -272,21 +269,21 @@
             <s:decorate id="empPasswordField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.employee_field_password}</ui:define>
                 <h:inputTextarea cols="69" rows="3"
-                                 readonly="#{empty personHome.instance.credentialsNumber}"
+                                 
                                  label="#{messages.employee_field_password}"
                                  value="#{employeeHome.instance.password}">
                     <a:ajax event="blur" render="empPasswordField"
-                            disabled="#{empty personHome.instance.credentialsNumber}"/>
+                            />
                 </h:inputTextarea>
             </s:decorate>
 
             <s:decorate id="empMemoField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.field_memo}</ui:define>
                 <h:inputTextarea cols="69" rows="3" value="#{employeeHome.instance.memo}"
-                                 readonly="#{empty personHome.instance.credentialsNumber}"
+                                 
                                  label="#{messages.field_memo}">
                     <a:ajax event="blur" render="empMemoField"
-                            disabled="#{empty personHome.instance.credentialsNumber}"/>
+                            />
                 </h:inputTextarea>
 
             </s:decorate>
@@ -339,7 +336,7 @@
 
     <ui:define name="controls">
         <a:commandButton immediate="true"
-                         execute="@this" image="/img/close.png"
+                         execute="@this" image="/img/icons/close.png"
                          oncomplete="#{r:component('powerEditPanel')}.hide(); return false;">
             <s:conversationPropagation type="end"/>
             <s:conversationId/>
@@ -388,7 +385,7 @@
 
     <ui:define name="controls">
         <a:commandButton immediate="true"
-                         execute="@this" image="/img/close.png"
+                         execute="@this" image="/img/icons/close.png"
                          oncomplete="#{r:component('orgEditPanel')}.hide(); return false;">
             <s:conversationPropagation type="end"/>
             <s:conversationId/>
@@ -512,7 +509,7 @@
                         #{messages.action}
                     </f:facet>
 
-                    <a:commandButton immediate="true" image="/img/edit.png" title="#{messages.edit}" execute="@this"
+                    <a:commandButton immediate="true" image="/img/icons/edit.png" title="#{messages.edit}" execute="@this"
                                      render="credentialsForm,viewCredntials,empEditPanel_title,employeeEditPanelHideBtn"
                                      oncomplete="#{r:component('empEditPanel')}.show();">
                         <a:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
@@ -522,7 +519,7 @@
                         <a:attachQueue requestDelay="0"/>
                     </a:commandButton>
                     #{' '}
-                    <a:commandButton immediate="true" image="/img/power.png" title="#{messages.employee_power_title}"
+                    <a:commandButton immediate="true" image="/img/icons/power.png" title="#{messages.employee_power_title}"
                                      execute="@this"
                                      render="powerEditPanel_form,powerEditPanel_controls"
                                      action="#{employeeHome.readPower}"

@@ -1,6 +1,8 @@
 package com.dgsoft.common.system.model;
 // Generated Aug 19, 2014 10:57:39 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonBean;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
@@ -14,17 +16,14 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class PersonId implements java.io.Serializable {
 
-    public enum CredentialsType{
-        MASTER_ID,OTHER;
-    }
 
-	private CredentialsType credentialsType;
+	private PersonBean.CredentialsType credentialsType;
 	private String credentialsNumber;
 
 	public PersonId() {
 	}
 
-	public PersonId(CredentialsType credentialsType, String credentialsNumber) {
+	public PersonId(PersonBean.CredentialsType credentialsType, String credentialsNumber) {
 		this.credentialsType = credentialsType;
 		this.credentialsNumber = credentialsNumber;
 	}
@@ -32,11 +31,11 @@ public class PersonId implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
 	@Column(name = "CREDENTIALS_TYPE", nullable = false, length = 32)
 	@NotNull
-	public CredentialsType getCredentialsType() {
+	public PersonBean.CredentialsType getCredentialsType() {
 		return this.credentialsType;
 	}
 
-	public void setCredentialsType(CredentialsType credentialsType) {
+	public void setCredentialsType(PersonBean.CredentialsType credentialsType) {
 		this.credentialsType = credentialsType;
 	}
 

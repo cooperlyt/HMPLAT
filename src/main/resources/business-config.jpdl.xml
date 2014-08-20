@@ -14,6 +14,7 @@
         <redirect/>
         <transition to="simpleVarSubscribe" name="next"/>
         <transition to="done" name="cancel"/>
+        <transition to="view" name="done"/>
     </page>
 
     <page view-id="/func/system/config/simpleVarSubscribe.xhtml" name="simpleVarSubscribe"
