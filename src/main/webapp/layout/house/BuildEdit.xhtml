@@ -6,6 +6,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+<h:panelGrid columns="2">
+
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
         #{messages.Build_MapNO}
@@ -71,7 +73,20 @@
                    showDetail="true" showSummary="true" tooltip="true"/>
     </ui:define>
 </s:decorate>
-
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_BuildNO}
+    </ui:define>
+    <h:inputText id="buildNoInput" value="#{build.buildNo}"
+                 label="#{messages.Build_BuildNO}" maxlength="4" size="4" required="true">
+        <r:validator event="blur"/>
+        <f:validateRegex pattern="^\d*$"/>
+    </h:inputText>
+    <ui:define name="tail">
+        <r:message for="buildNoInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
         #{messages.Build_CompleteYear}
@@ -91,12 +106,25 @@
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
-        #{messages.Build_Lng_Lat}
+        #{messages.Build_Lat}
     </ui:define>
     <h:inputText id="latInput" label="#{messages.Build_Lng_Lat}" size="20"
                  value="#{build.lat}" required="#{houseCodeHelper.requestCossCode}">
         <r:validator event="blur"/>
     </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="latInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Lng}
+    </ui:define>
+
 
     <h:inputText id="lngInput" label="#{messages.Build_Lng_Lat}" size="20"
                  value="#{build.lng}" required="#{houseCodeHelper.requestCossCode}">
@@ -105,8 +133,6 @@
     </h:inputText>
 
     <ui:define name="tail">
-        <r:message for="latInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
         <r:message for="lngInput" styleClass="message-icon"
                    showDetail="true" showSummary="true" tooltip="true"/>
     </ui:define>
@@ -114,36 +140,31 @@
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
-        #{messages.Build_BuildNO}
+        #{messages.Build_Name}
     </ui:define>
-    <h:inputText id="buildNoInput" value="#{build.buildNo}"
-                 label="#{messages.Build_BuildNO}" maxlength="4" size="4" required="true">
-        <r:validator event="blur"/>
-        <f:validateRegex pattern="^\d*$"/>
-    </h:inputText>
+    <h:inputText id="buildNameInput" label="#{messages.Build_Name}" required="true" value="#{build.name}" size="20" maxlength="100"/>
     <ui:define name="tail">
-        <r:message for="buildNoInput" styleClass="message-icon"
+        <r:message for="buildNameInput" styleClass="message-icon"
                    showDetail="true" showSummary="true" tooltip="true"/>
     </ui:define>
 </s:decorate>
+
+
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
         #{messages.Build_DoorNO}
     </ui:define>
-    <h:inputText value="#{build.doorNo}"/>
+    <h:inputText id="doorNoInput" value="#{build.doorNo}" size="10" maxlength="10"/>
 </s:decorate>
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_Name}
-    </ui:define>
-    <h:inputText value="#{build.name}"/>
-</s:decorate>
+
+
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
         #{messages.Build_FloorCount}
     </ui:define>
-    <h:inputText required="true" id="floorCountInput" label="#{messages.Build_FloorCount}" value="#{build.floorCount}" size="4">
+    <h:inputText required="true" id="floorCountInput" label="#{messages.Build_FloorCount}" value="#{build.floorCount}"
+                 size="4">
         <r:validator event="blur"/>
         <f:validateLongRange minimum="1"/>
     </h:inputText>
@@ -171,7 +192,8 @@
     <ui:define name="label">
         #{messages.Build_UpFloorCount}
     </ui:define>
-    <h:inputText required="true" id="upfloorCountInput" label="#{messages.Build_UpFloorCount}" value="#{build.upFloorCount}" size="4">
+    <h:inputText required="true" id="upfloorCountInput" label="#{messages.Build_UpFloorCount}"
+                 value="#{build.upFloorCount}" size="4">
         <r:validator event="blur"/>
         <f:validateLongRange minimum="0"/>
     </h:inputText>
@@ -185,7 +207,8 @@
     <ui:define name="label">
         #{messages.Build_DownFloorCount}
     </ui:define>
-    <h:inputText required="true" id="downFloorCountInput" label="#{messages.Build_DownFloorCount}" value="#{build.downFloorCount}" size="4">
+    <h:inputText required="true" id="downFloorCountInput" label="#{messages.Build_DownFloorCount}"
+                 value="#{build.downFloorCount}" size="4">
         <r:validator event="blur"/>
         <f:validateLongRange minimum="0"/>
     </h:inputText>
@@ -201,4 +224,6 @@
     </ui:define>
     <h:selectBooleanCheckbox required="true" value="#{build.haveDownRoom}"/>
 </s:decorate>
+
+</h:panelGrid>
 </ui:composition>
