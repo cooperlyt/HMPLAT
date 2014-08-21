@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+
+
+    <a:region>
+        <h:panelGrid columns="5" rendered="#{not employeeHome.managed}">
+            <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
+                <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
+
+                <r:select id="credentialsType" label="#{messages.person_field_credentialsType}"
+                          styleClass="credentialsTypeSelectWidth" listWidth="140px"
+                          value="#{personInput.cerdentialsType}" required="true">
+                    <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+                    <s:convertEnum/>
+                    <a:ajax event="selectitem" listener="#{personInput.credentialsChangeListener}"
+                            render="credentialsTypeField,personEditFields" execute="@region" status="waitSearchPerson"/>
+                </r:select>
+            </s:decorate>
+
+            <s:decorate id="credentialsNumberField" template="/layout/edit.xhtml">
+                <ui:define name="label">#{messages.person_field_credentialsNO}</ui:define>
+                <h:inputText id="credentialsNumber"
+                             label="#{messages.person_field_credentialsNO}"
+                             required="true"
+                             size="25"
+                             maxlength="100"
+                             value="#{personInput.credentialsNumber}">
+                    <a:ajax event="blur" render="credentialsNumberField,personEditFields" status="waitSearchPerson"
+                            listener="#{personInput.credentialsChangeListener}" execute="@region"/>
+                </h:inputText>
+
+            </s:decorate>
+
+            <a:commandButton image="/img/id_card_read_btn.png" title=""
+                             execute="@region"
+                             status="waitSearchPerson"
+                             render="credentialsNumberField,credentialsTypeField,viewCredntials,personEditFields"/>
+
+            #{' '}
+            <a:status id="waitSearchPerson" name="waitSearchPerson">
+                <f:facet name="start">
+                    <h:graphicImage value="/img/connect_active.gif"/>
+                </f:facet>
+                <f:facet name="stop">
+                </f:facet>
+            </a:status>
+        </h:panelGrid>
+    </a:region>
+
+</ui:composition>

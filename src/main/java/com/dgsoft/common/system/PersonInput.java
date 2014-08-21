@@ -23,7 +23,7 @@ public class PersonInput {
 
     private String credentialsNumber;
 
-    private PersonId.CredentialsType cerdentialsType;
+    private PersonEntity.CredentialsType cerdentialsType;
 
     @In(create = true)
     private PersonHome personHome;
@@ -42,11 +42,11 @@ public class PersonInput {
         this.credentialsNumber = credentialsNumber;
     }
 
-    public PersonId.CredentialsType getCerdentialsType() {
+    public PersonEntity.CredentialsType getCerdentialsType() {
         return cerdentialsType;
     }
 
-    public void setCerdentialsType(PersonId.CredentialsType cerdentialsType) {
+    public void setCerdentialsType(PersonEntity.CredentialsType cerdentialsType) {
         this.cerdentialsType = cerdentialsType;
     }
 
@@ -58,7 +58,7 @@ public class PersonInput {
 
 
 
-        if (cerdentialsType != PersonId.CredentialsType.OTHER) {
+        if (cerdentialsType != PersonEntity.CredentialsType.OTHER) {
 
             List<Person> persons = personHome.getEntityManager().createQuery("select person from Person person where person.credentialsNumber =?1 and person.credentialsType = ?2").setParameter(1, credentialsNumber).setParameter(2, cerdentialsType).getResultList();
             if (!persons.isEmpty()) {

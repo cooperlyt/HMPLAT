@@ -3,7 +3,7 @@ package com.dgsoft.common.system;
 /**
  * Created by cooper on 8/20/14.
  */
-public interface PersonBean {
+public interface PersonEntity {
 
     public enum CredentialsType{
         MASTER_ID,OTHER;
@@ -16,5 +16,9 @@ public interface PersonBean {
     public String getCredentialsNumber();
 
     public void setCredentialsNumber(String credentialsNumber);
+
+    public String getPersonName();
+
+    public void setPersonName(String personName);
 
 }

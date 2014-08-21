@@ -127,7 +127,7 @@ public class DictionaryWord {
         if (emp == null) {
             return "invalid";
         } else
-            return emp.getName();
+            return emp.getPersonName();
 
     }
 

@@ -1,7 +1,7 @@
 package com.dgsoft.common.system.model;
 // Generated Aug 19, 2014 10:57:39 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.system.PersonBean;
+import com.dgsoft.common.system.PersonEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -17,13 +17,13 @@ import javax.validation.constraints.Size;
 public class PersonId implements java.io.Serializable {
 
 
-	private PersonBean.CredentialsType credentialsType;
+	private PersonEntity.CredentialsType credentialsType;
 	private String credentialsNumber;
 
 	public PersonId() {
 	}
 
-	public PersonId(PersonBean.CredentialsType credentialsType, String credentialsNumber) {
+	public PersonId(PersonEntity.CredentialsType credentialsType, String credentialsNumber) {
 		this.credentialsType = credentialsType;
 		this.credentialsNumber = credentialsNumber;
 	}
@@ -31,11 +31,11 @@ public class PersonId implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
 	@Column(name = "CREDENTIALS_TYPE", nullable = false, length = 32)
 	@NotNull
-	public PersonBean.CredentialsType getCredentialsType() {
+	public PersonEntity.CredentialsType getCredentialsType() {
 		return this.credentialsType;
 	}
 
-	public void setCredentialsType(PersonBean.CredentialsType credentialsType) {
+	public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
 		this.credentialsType = credentialsType;
 	}
 

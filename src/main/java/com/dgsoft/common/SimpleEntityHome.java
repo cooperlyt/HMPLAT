@@ -13,34 +13,6 @@ import org.jboss.seam.annotations.FlushModeType;
  */
 public class SimpleEntityHome<E extends NamedEntity> extends EntityHomeAdapter<E> {
 
-    public void setPinyinSearchName(String searchStr) {
-        log.debug("setPinyinSearchName :" + searchStr );
-        String id = PinyinTools.splitPinyinId(searchStr);
-        log.debug("setPinyinSearchName id is:" + searchStr + "|" + id);
-        if (id == null) {
-            if ((searchStr == null) || searchStr.trim().equals("")) {
-                setId(null);
-            }
-            return;
-        }
-        try {
-            setId(id);
-        } catch (javax.persistence.EntityNotFoundException e) {
-            log.debug("id not found",e);
-            setId(null);
-        }
-    }
-
-    public String getPinyinSearchName() {
-        if (isIdDefined()) {
-            try {
-                return getInstance().getName();
-            }catch (javax.persistence.EntityNotFoundException e) {
-                setId(null);
-            }
-        }
-        return "";
-    }
 
     private boolean editing = false;
 

@@ -1,6 +1,6 @@
 package com.dgsoft.house.model;
 
-import com.dgsoft.common.system.model.PersonId;
+import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class HouseOwner implements java.io.Serializable{
 
     private String id;
-    private PersonId.CredentialsType credentialsType;
+    private PersonEntity.CredentialsType credentialsType;
     private String phone;
     private String rootAddress;
     private House house;
@@ -38,11 +38,11 @@ public class HouseOwner implements java.io.Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_TYPE", nullable = false, length = 32)
     @NotNull
-    public PersonId.CredentialsType getCredentialsType() {
+    public PersonEntity.CredentialsType getCredentialsType() {
         return credentialsType;
     }
 
-    public void setCredentialsType(PersonId.CredentialsType credentialsType) {
+    public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
     }
 

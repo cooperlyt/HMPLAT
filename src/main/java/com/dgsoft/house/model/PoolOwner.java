@@ -1,7 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.system.model.PersonId;
+import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ public class PoolOwner implements java.io.Serializable {
 	private House house;
     private String name;
     private String credentialsNumber;
-    private PersonId.CredentialsType credentialsType;
+    private PersonEntity.CredentialsType credentialsType;
 	private String relation;
 	private BigDecimal perc;
     private BigDecimal area;
@@ -88,11 +88,11 @@ public class PoolOwner implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_TYPE", nullable = false, length = 32)
     @NotNull
-    public PersonId.CredentialsType getCredentialsType() {
+    public PersonEntity.CredentialsType getCredentialsType() {
         return credentialsType;
     }
 
-    public void setCredentialsType(PersonId.CredentialsType credentialsType) {
+    public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
     }
 

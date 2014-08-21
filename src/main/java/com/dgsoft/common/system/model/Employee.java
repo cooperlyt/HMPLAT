@@ -1,6 +1,8 @@
 package com.dgsoft.common.system.model;
 // Generated Apr 28, 2013 11:02:59 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "EMPLOYEE")
-public class Employee implements java.io.Serializable {
+public class Employee implements java.io.Serializable,PersonEntity {
 
     private String id;
     private Organization organization;
@@ -25,7 +27,7 @@ public class Employee implements java.io.Serializable {
     private String memo;
     private Set<Role> roles = new HashSet<Role>(0);
     private String phone;
-    private String credentialsType;
+    private CredentialsType credentialsType;
     private String credentialsNumber;
     private String name;
 
@@ -162,34 +164,41 @@ public class Employee implements java.io.Serializable {
         this.phone = phone;
     }
 
+    @Override
+    @Enumerated(EnumType.STRING)
     @Column(name = "CREDENTIALS_TYPE", length = 32)
     @Size(max = 32)
-    public String getCredentialsType() {
+    public CredentialsType getCredentialsType() {
         return this.credentialsType;
     }
 
-    public void setCredentialsType(String credentialsType) {
+    @Override
+    public void setCredentialsType(CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
     }
 
+    @Override
     @Column(name = "CREDENTIALS_NUMBER", length = 100)
     @Size(max = 100)
     public String getCredentialsNumber() {
         return this.credentialsNumber;
     }
 
+    @Override
     public void setCredentialsNumber(String credentialsNumber) {
         this.credentialsNumber = credentialsNumber;
     }
 
+    @Override
     @Column(name = "NAME", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
-    public String getName() {
+    public String getPersonName() {
         return this.name;
     }
 
-    public void setName(String name) {
+    @Override
+    public void setPersonName(String name) {
         this.name = name;
     }
 
