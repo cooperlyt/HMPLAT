@@ -2,6 +2,7 @@ package com.dgsoft.common.system;
 
 import com.dgsoft.common.system.action.PersonHome;
 import com.dgsoft.common.system.model.Person;
+import com.dgsoft.common.system.model.PersonId;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
@@ -22,7 +23,7 @@ public class PersonInput {
 
     private String credentialsNumber;
 
-    private Person.CredentialsType cerdentialsType;
+    private PersonEntity.CredentialsType cerdentialsType;
 
     @In(create = true)
     private PersonHome personHome;
@@ -41,11 +42,11 @@ public class PersonInput {
         this.credentialsNumber = credentialsNumber;
     }
 
-    public Person.CredentialsType getCerdentialsType() {
+    public PersonEntity.CredentialsType getCerdentialsType() {
         return cerdentialsType;
     }
 
-    public void setCerdentialsType(Person.CredentialsType cerdentialsType) {
+    public void setCerdentialsType(PersonEntity.CredentialsType cerdentialsType) {
         this.cerdentialsType = cerdentialsType;
     }
 
@@ -56,12 +57,8 @@ public class PersonInput {
             return;
 
 
-        if ((credentialsNumber.equals(personHome.getInstance().getCredentialsNumber())) &&
-                (cerdentialsType.equals(personHome.getInstance().getCredentialsType()))) {
-            return;
-        }
 
-        if (cerdentialsType != Person.CredentialsType.OTHER) {
+        if (cerdentialsType != PersonEntity.CredentialsType.OTHER) {
 
             List<Person> persons = personHome.getEntityManager().createQuery("select person from Person person where person.credentialsNumber =?1 and person.credentialsType = ?2").setParameter(1, credentialsNumber).setParameter(2, cerdentialsType).getResultList();
             if (!persons.isEmpty()) {
@@ -74,9 +71,7 @@ public class PersonInput {
         //if (personHome.isManaged())
             //personHome.clearInstance();
         personHome.setId("");
-        personHome.getInstance().setCredentialsNumber(credentialsNumber);
-        personHome.getInstance().setCredentialsType(cerdentialsType);
-
+        personHome.getInstance().setId(new PersonId(cerdentialsType,credentialsNumber));
 
     }
 

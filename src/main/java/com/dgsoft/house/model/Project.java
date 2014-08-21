@@ -1,6 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.owner.model.*;
 import com.google.common.collect.Iterators;
 import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.international.StatusMessage;
@@ -42,6 +43,7 @@ public class Project implements java.io.Serializable, TreeNode {
     private Date mapTime;
     private Date createTime;
     private String completeDate;
+    private LandInfo landInfo;
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
@@ -302,5 +304,15 @@ public class Project implements java.io.Serializable, TreeNode {
     @Transient
     public Enumeration children() {
         return Iterators.asEnumeration(getBuilds().iterator());
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
+    @JoinColumn(name = "LAND_INFO",nullable = true)
+    public LandInfo getLandInfo() {
+        return landInfo;
+    }
+
+    public void setLandInfo(LandInfo landInfo) {
+        this.landInfo = landInfo;
     }
 }

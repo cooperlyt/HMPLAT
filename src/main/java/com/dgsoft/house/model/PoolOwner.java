@@ -1,14 +1,11 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,15 +18,20 @@ public class PoolOwner implements java.io.Serializable {
 
 	private String id;
 	private House house;
-	private HouseOwner houseOwner;
+    private String name;
+    private String credentialsNumber;
+    private PersonEntity.CredentialsType credentialsType;
 	private String relation;
-	private BigDecimal owneScale;
+	private BigDecimal perc;
+    private BigDecimal area;
 
 	public PoolOwner() {
 	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	@NotNull
 	@Size(max = 32)
 	public String getId() {
@@ -41,7 +43,7 @@ public class PoolOwner implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HOUSE_ID", nullable = false)
+	@JoinColumn(name = "HOUSE", nullable = false)
 	@NotNull
 	public House getHouse() {
 		return this.house;
@@ -49,17 +51,6 @@ public class PoolOwner implements java.io.Serializable {
 
 	public void setHouse(House house) {
 		this.house = house;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@NotNull
-	public HouseOwner getHouseOwner() {
-		return this.houseOwner;
-	}
-
-	public void setHouseOwner(HouseOwner houseOwner) {
-		this.houseOwner = houseOwner;
 	}
 
 	@Column(name = "RELATION", length = 32)
@@ -72,13 +63,54 @@ public class PoolOwner implements java.io.Serializable {
 		this.relation = relation;
 	}
 
-	@Column(name = "OWNE_SCALE", scale = 4)
-	public BigDecimal getOwneScale() {
-		return this.owneScale;
-	}
+    @Column(name = "NAME",nullable = false,length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getName() {
+        return name;
+    }
 
-	public void setOwneScale(BigDecimal owneScale) {
-		this.owneScale = owneScale;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    @Column(name = "ID_NO",nullable = false,length = 100)
+    @NotNull
+    @Size(max = 100)
+    public String getCredentialsNumber() {
+        return credentialsNumber;
+    }
+
+    public void setCredentialsNumber(String credentialsNumber) {
+        this.credentialsNumber = credentialsNumber;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_TYPE", nullable = false, length = 32)
+    @NotNull
+    public PersonEntity.CredentialsType getCredentialsType() {
+        return credentialsType;
+    }
+
+    public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
+        this.credentialsType = credentialsType;
+    }
+
+    @Column(name = "PERC", nullable = true, scale = 4)
+    public BigDecimal getPerc() {
+        return perc;
+    }
+
+    public void setPerc(BigDecimal perc) {
+        this.perc = perc;
+    }
+
+    @Column(name = "POOL_AREA", nullable = true, scale = 4)
+    public BigDecimal getArea() {
+        return area;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
 }

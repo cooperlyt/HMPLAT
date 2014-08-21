@@ -21,7 +21,7 @@ public class DeveloperHome extends HouseSimpleEntityHome<Developer> {
 
     @Override
     protected boolean verifyRemoveAvailable(){
-        if (getEntityManager().createQuery("select coalesce(Count(project.id),0) from Project project where project.developer.id = :developerId",Long.class)
+        if (getEntityManager().createQuery("select coalesce(Count(project.id),0) from BusinessProject project where project.developer.id = :developerId",Long.class)
                 .setParameter("developerId",getInstance().getId()).getSingleResult() > 0){
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"Developer_cant_remove");
             return false;

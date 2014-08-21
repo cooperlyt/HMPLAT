@@ -16,13 +16,14 @@
     <title>#{messages.mainTitle}</title>
     <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
 
+    <h:outputStylesheet name="application.css"/>
     <h:outputStylesheet name="theme.css"/>
     <ui:insert name="head"/>
 </h:head>
 <h:body>
 
 <a:queue requestDelay="0" ignoreDupResponses="true"/>
-
+<h:form>
 <r:toolbar height="30">
     <r:toolbarGroup>
         <a:commandLink value="updateFile" onclick="#{r:component('updateFilePopup')}.show(); return false;"/>
@@ -30,7 +31,9 @@
 
 
     <r:toolbarGroup>
-        <a:commandLink value="idle house" onclick="#{r:component('idleHousePopup')}.show(); return false;"/>
+        <a:commandLink value="update" action="#{buildHome.update}" render="grid_map,idle">
+            <a:attachQueue requestDelay="0"/>
+        </a:commandLink>
     </r:toolbarGroup>
 
     <r:toolbarGroup location="right">
@@ -45,7 +48,7 @@
         <h:outputText value="XXX build name"/>
     </r:toolbarGroup>
 </r:toolbar>
-
+</h:form>
 
 <r:popupPanel id="updateFilePopup" modal="true" autosized="true" resizeable="false">
     <f:facet name="header">
@@ -212,6 +215,8 @@ house.png
     </h:panelGrid>
 </r:popupPanel>
 
+<r:messages globalOnly="true" ajaxRendered="true"/>
+
 <h:form>
 
     <r:dragIndicator id="indicator" acceptClass="indicator-acpt" draggingClass="indicator-drag"
@@ -305,8 +310,7 @@ house.png
             <h:outputText value="idle house"/>
         </f:facet>
         <f:facet name="controls">
-            <a:commandButton immediate="true" execute="@this" image="/img/close.png"
-                             onclick="#{r:component('idleHousePopup')}.hide();return false;"/>
+
         </f:facet>
         <r:panel styleClass="new-house-panel">
             <a:outputPanel layout="block" styleClass="rf-ind-drag">

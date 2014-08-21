@@ -22,11 +22,7 @@ public class BusinessDefine implements java.io.Serializable {
     private String memo;
     private Integer version;
     private String startPropagation;
-    private Set<ComplexVarSubscribe> complexVarSubscribes = new HashSet<ComplexVarSubscribe>(0);
     private Set<FileSubscribe> fileSubscribes = new HashSet<FileSubscribe>(0);
-    private Set<SimpleVarSubscribe> simpleVarSubscribes = new HashSet<SimpleVarSubscribe>(0);
-    private Set<RateSubscribe> rateSubscribes = new HashSet<RateSubscribe>(0);
-    private Set<ReportSubscribe> reportSubscribes = new HashSet<ReportSubscribe>(0);
 
     public BusinessDefine() {
     }
@@ -105,50 +101,12 @@ public class BusinessDefine implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessDefine")
-    public Set<ComplexVarSubscribe> getComplexVarSubscribes() {
-        return this.complexVarSubscribes;
-    }
-
-    public void setComplexVarSubscribes(
-            Set<ComplexVarSubscribe> complexVarSubscribes) {
-        this.complexVarSubscribes = complexVarSubscribes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessDefine")
     public Set<FileSubscribe> getFileSubscribes() {
         return this.fileSubscribes;
     }
 
     public void setFileSubscribes(Set<FileSubscribe> fileSubscribes) {
         this.fileSubscribes = fileSubscribes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessDefine",orphanRemoval = true, cascade = {CascadeType.ALL})
-    public Set<SimpleVarSubscribe> getSimpleVarSubscribes() {
-        return this.simpleVarSubscribes;
-    }
-
-    public void setSimpleVarSubscribes(
-            Set<SimpleVarSubscribe> simpleVarSubscribes) {
-        this.simpleVarSubscribes = simpleVarSubscribes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessDefine")
-    public Set<RateSubscribe> getRateSubscribes() {
-        return this.rateSubscribes;
-    }
-
-    public void setRateSubscribes(Set<RateSubscribe> rateSubscribes) {
-        this.rateSubscribes = rateSubscribes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessDefine")
-    public Set<ReportSubscribe> getReportSubscribes() {
-        return this.reportSubscribes;
-    }
-
-    public void setReportSubscribes(Set<ReportSubscribe> reportSubscribes) {
-        this.reportSubscribes = reportSubscribes;
     }
 
     @Column(name = "START_PROPAGATION",nullable = true,length = 10)

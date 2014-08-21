@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.action;
 
+import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.model.Person;
 import org.jboss.seam.ScopeType;
@@ -22,19 +23,8 @@ public class PersonHome extends SystemEntityHome<Person> {
     }
 
     @Factory(value = "credentialsTypes",scope = ScopeType.SESSION )
-    public Person.CredentialsType[] getCredentialsTypes(){
-        return Person.CredentialsType.values();
-    }
-
-    @In("#{messages.person_nationality_default}")
-    private String defaultNationality;
-
-    @In("#{messages.person_ethnic_default}")
-    private String defaultEthnic;
-
-    @Override
-    protected Person createInstance(){
-        return new Person(defaultEthnic,defaultNationality);
+    public PersonEntity.CredentialsType[] getCredentialsTypes(){
+        return PersonEntity.CredentialsType.values();
     }
 
 }

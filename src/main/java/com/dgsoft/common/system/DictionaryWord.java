@@ -68,7 +68,7 @@ public class DictionaryWord {
     @Observer("org.jboss.seam.afterTransactionSuccess.Employee")
     public void loadEmp() {
         employeeMap = new HashMap<String, Employee>();
-        List<Employee> employees = systemEntityLoader.getPersistenceContext().createQuery("select emp from Employee emp join fetch emp.person").getResultList();
+        List<Employee> employees = systemEntityLoader.getPersistenceContext().createQuery("select emp from Employee emp").getResultList();
         for (Employee emp : employees) {
             employeeMap.put(emp.getId(), emp);
         }
@@ -127,7 +127,7 @@ public class DictionaryWord {
         if (emp == null) {
             return "invalid";
         } else
-            return emp.getPerson().getName();
+            return emp.getPersonName();
 
     }
 

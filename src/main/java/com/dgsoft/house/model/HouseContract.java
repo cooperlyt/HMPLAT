@@ -27,7 +27,6 @@ public class HouseContract implements java.io.Serializable {
 
 	private String id;
 	private House house;
-	private HouseOwner houseOwner;
 	private String password;
 	private Date recordTime;
 	private BigDecimal price;
@@ -35,34 +34,28 @@ public class HouseContract implements java.io.Serializable {
 	private int partCount;
 	private String payType;
 	private String memo;
-	private Set<OldHousecontract> oldHousecontracts = new HashSet<OldHousecontract>(
-			0);
-	private Set<ContractAttachOwner> contractAttachOwners = new HashSet<ContractAttachOwner>(
-			0);
-	private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(
-			0);
+	private Set<OldHousecontract> oldHousecontracts = new HashSet<OldHousecontract>(0);
+
+	private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
 
 	public HouseContract() {
 	}
 
-	public HouseContract(String id, House house, HouseOwner houseOwner,
+	public HouseContract(String id, House house,
 			Date recordTime, int state, int partCount) {
 		this.id = id;
 		this.house = house;
-		this.houseOwner = houseOwner;
 		this.recordTime = recordTime;
 		this.state = state;
 		this.partCount = partCount;
 	}
-	public HouseContract(String id, House house, HouseOwner houseOwner,
+	public HouseContract(String id, House house,
 			String password, Date recordTime, BigDecimal price, int state,
 			int partCount, String payType, String memo,
 			Set<OldHousecontract> oldHousecontracts,
-			Set<ContractAttachOwner> contractAttachOwners,
 			Set<NewHouseContract> newHouseContracts) {
 		this.id = id;
 		this.house = house;
-		this.houseOwner = houseOwner;
 		this.password = password;
 		this.recordTime = recordTime;
 		this.price = price;
@@ -71,7 +64,6 @@ public class HouseContract implements java.io.Serializable {
 		this.payType = payType;
 		this.memo = memo;
 		this.oldHousecontracts = oldHousecontracts;
-		this.contractAttachOwners = contractAttachOwners;
 		this.newHouseContracts = newHouseContracts;
 	}
 
@@ -96,17 +88,6 @@ public class HouseContract implements java.io.Serializable {
 
 	public void setHouse(House house) {
 		this.house = house;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@NotNull
-	public HouseOwner getHouseOwner() {
-		return this.houseOwner;
-	}
-
-	public void setHouseOwner(HouseOwner houseOwner) {
-		this.houseOwner = houseOwner;
 	}
 
 	@Column(name = "PASSWORD", length = 50)
@@ -184,16 +165,6 @@ public class HouseContract implements java.io.Serializable {
 
 	public void setOldHousecontracts(Set<OldHousecontract> oldHousecontracts) {
 		this.oldHousecontracts = oldHousecontracts;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseContract")
-	public Set<ContractAttachOwner> getContractAttachOwners() {
-		return this.contractAttachOwners;
-	}
-
-	public void setContractAttachOwners(
-			Set<ContractAttachOwner> contractAttachOwners) {
-		this.contractAttachOwners = contractAttachOwners;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseContract")

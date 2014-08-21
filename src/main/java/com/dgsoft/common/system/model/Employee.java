@@ -1,6 +1,8 @@
 package com.dgsoft.common.system.model;
 // Generated Apr 28, 2013 11:02:59 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "EMPLOYEE")
-public class Employee implements java.io.Serializable {
+public class Employee implements java.io.Serializable,PersonEntity {
 
     private String id;
     private Organization organization;
@@ -24,16 +26,18 @@ public class Employee implements java.io.Serializable {
     private boolean enable;
     private String memo;
     private Set<Role> roles = new HashSet<Role>(0);
-    private Person person;
+    private String phone;
+    private CredentialsType credentialsType;
+    private String credentialsNumber;
+    private String name;
 
     public Employee() {
         enable = true;
     }
 
-    public Employee(String id, Person person) {
+    public Employee(String id) {
         enable = true;
         this.id = id;
-        this.person = person;
     }
 
 
@@ -136,14 +140,67 @@ public class Employee implements java.io.Serializable {
         this.roles = roles;
     }
 
-    @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "PERSON_ID", unique = true, nullable = false, updatable = false)
-    public Person getPerson() {
-        return person;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name = "CREDENTIALS_TYPE", referencedColumnName = "CREDENTIALS_TYPE", nullable = false),
+//            @JoinColumn(name = "CREDENTIALS_NUMBER", referencedColumnName = "CREDENTIALS_NUMBER", nullable = false)})
+//    @NotNull
+//    public Person getPerson() {
+//        return this.person;
+//    }
+//
+//    public void setPerson(Person person) {
+//        this.person = person;
+//    }
+
+
+    @Column(name = "PHONE", length = 20)
+    @Size(max = 20)
+    public String getPhone() {
+        return this.phone;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "CREDENTIALS_TYPE", nullable = false,length = 32)
+    @NotNull
+    public CredentialsType getCredentialsType() {
+        return this.credentialsType;
+    }
+
+    @Override
+    public void setCredentialsType(CredentialsType credentialsType) {
+        this.credentialsType = credentialsType;
+    }
+
+    @Override
+    @Column(name = "CREDENTIALS_NUMBER",nullable = false,length = 100)
+    @Size(max = 100)
+    @NotNull
+    public String getCredentialsNumber() {
+        return this.credentialsNumber;
+    }
+
+    @Override
+    public void setCredentialsNumber(String credentialsNumber) {
+        this.credentialsNumber = credentialsNumber;
+    }
+
+    @Override
+    @Column(name = "NAME", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getPersonName() {
+        return this.name;
+    }
+
+    @Override
+    public void setPersonName(String name) {
+        this.name = name;
     }
 
     @Override

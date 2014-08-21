@@ -32,15 +32,11 @@
                     <r:column>
                         #{messages.businessDefine_field_wfname}
                     </r:column>
-                    <r:column>
-                        #{messages.businessDefine_field_taskService}
-                    </r:column>
+
                     <r:column>
                         #{messages.businessDefine_field_operpage}
                     </r:column>
-                    <r:column>
-                        #{messages.businessDefine_field_startDataValidator}
-                    </r:column>
+
                     <r:column>
                         <h:outputText value="#{messages.action}"/>
                     </r:column>
@@ -69,19 +65,15 @@
                 <r:column>
                     <h:outputText value="#{_bussinessDef.wfName}"/>
                 </r:column>
-                <r:column>
-                    #{_bussinessDef.taskService}
-                </r:column>
+
                 <r:column>
                     <h:outputText value="#{_bussinessDef.startPage}"/>
                 </r:column>
-                <r:column>
-                    <h:outputText value="#{_bussinessDef.startDataValidator}"/>
-                </r:column>
+
                 <r:column>
                     <a:commandLink styleClass="no-decor" immediate="true" execute="@this"
                                    render="deleteButton" oncomplete="#{r:component('deleteConfirm')}.show()">
-                        <h:graphicImage value="/img/delete.png" alt="#{messages.delete}"/>
+                        <h:graphicImage value="/img/icons/delete.png" alt="#{messages.delete}"/>
                         <a:param name="id" value="#{_bussinessDef.id}" assignTo="#{businessDefineHome.id}"/>
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
@@ -89,13 +81,13 @@
                     #{' '}
                     <s:link action="#{businessDefineConfig.editBusinessDefine}">
                         <f:param name="businessDefineId" value="#{_bussinessDef.id}"/>
-                        <s:graphicImage value="/img/edit.png" title="#{messages.viewDetails}"/>
+                        <s:graphicImage value="/img/icons/edit.png" title="#{messages.viewDetails}"/>
                     </s:link>
                     #{' '}
                     <s:link view="/func/system/config/ViewBusiness.xhtml">
                         <f:param name="ID" value="#{_bussinessDef.id}"/>
                         <f:param name="from" value="/func/system/config/BusinessMgr.xhtml"/>
-                        <s:graphicImage value="/img/view.png" title="#{messages.viewDetails}"/>
+                        <s:graphicImage value="/img/icons/view.png" title="#{messages.viewDetails}"/>
                     </s:link>
                 </r:column>
                 <f:facet name="footer">

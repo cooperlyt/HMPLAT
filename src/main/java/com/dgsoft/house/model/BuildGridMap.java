@@ -66,7 +66,7 @@ public class BuildGridMap implements java.io.Serializable {
         this.order = order;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "buildGridMap")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "buildGridMap", orphanRemoval = true, cascade = {CascadeType.ALL})
     public Set<GridRow> getGridRows() {
         return this.gridRows;
     }
@@ -75,7 +75,7 @@ public class BuildGridMap implements java.io.Serializable {
         this.gridRows = gridRows;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "buildGridMap")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "buildGridMap", orphanRemoval = true, cascade = {CascadeType.ALL})
     public Set<HouseGridTitle> getHouseGridTitles() {
         return this.houseGridTitles;
     }
@@ -86,6 +86,7 @@ public class BuildGridMap implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BUILD_ID", nullable = false)
+    @NotNull
     public Build getBuild() {
         return build;
     }

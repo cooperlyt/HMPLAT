@@ -36,7 +36,7 @@
 
                 <a:commandButton id="cancelButton" value="#{messages.cancel}" immediate="true" execute="@this"
 
-                                 oncomplete="#{rich:component('defaultBusinessDataPanel')}.hide()">
+                                 oncomplete="#{r:component('defaultBusinessDataPanel')}.hide()">
                     <s:conversationPropagation type="end"/>
                     <a:attachQueue requestDelay="0"/>
                 </a:commandButton>
@@ -44,72 +44,72 @@
         </s:decorate>
 
 
-        <rich:dataTable noDataLabel="#{messages.businessDefine_empty}" style="width:100%"
+        <r:dataTable noDataLabel="#{messages.businessDefine_empty}" style="width:100%"
                         value="#{authInfo.authenticationBussinessCategorys}" var="_category">
             <f:facet name="header">
-                <rich:columnGroup>
-                    <rich:column colspan="4">
+                <r:columnGroup>
+                    <r:column colspan="4">
                         <h:outputText value="#{messages.businessCategory}"/>
-                    </rich:column>
-                    <rich:column breakRowBefore="true">
+                    </r:column>
+                    <r:column breakRowBefore="true">
                         <h:outputText value="#{messages.businessDefine_field_id}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{messages.businessDefine_field_name}"/>
 
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{messages.version}"/>
-                    </rich:column>
-                    <rich:column>
+                    </r:column>
+                    <r:column>
                         <h:outputText value="#{messages.action}"/>
-                    </rich:column>
-                </rich:columnGroup>
+                    </r:column>
+                </r:columnGroup>
             </f:facet>
-            <rich:column colspan="4">
-                <rich:collapsibleSubTableToggler for="subTable"/>
+            <r:column colspan="4">
+                <r:collapsibleSubTableToggler for="subTable"/>
                 <h:outputText value="#{_category.name}"/>
-            </rich:column>
-            <rich:collapsibleSubTable value="#{_category.businessDefineList}" var="_bussinessDef" id="subTable"
+            </r:column>
+            <r:collapsibleSubTable value="#{_category.businessDefineList}" var="_bussinessDef" id="subTable"
                                       expandMode="client" expanded="#{false}">
-                <rich:column>
+                <r:column>
                     <h:outputText value="#{_bussinessDef.id}"/>
-                </rich:column>
-                <rich:column>
+                </r:column>
+                <r:column>
                     <a:outputPanel>
 
                         <h:outputText value="#{_bussinessDef.name}"/>
-                        <rich:tooltip followMouse="false" showDelay="1500" styleClass="tooltip-custom-body"
+                        <r:tooltip followMouse="false" showDelay="1500" styleClass="tooltip-custom-body"
                                       layout="block" rendered="#{not empty _bussinessDef.memo}">
                             <span style="white-space: nowrap">#{_bussinessDef.memo}</span>
-                        </rich:tooltip>
+                        </r:tooltip>
 
                     </a:outputPanel>
-                </rich:column>
-                <rich:column>
+                </r:column>
+                <r:column>
                     <h:outputText value=" "/>
-                </rich:column>
-                <rich:column>
+                </r:column>
+                <r:column>
                     <s:link action="#{startData.generateKey}" propagation="#{empty _bussinessDef.startPropagation ? 'begin' : _bussinessDef.startPropagation}" view="#{_bussinessDef.startPage}"
                             value="#{messages.createBusiness}" rendered="#{not empty _bussinessDef.startPage}"/>
 
                     <a:commandLink id="createSimpleBussinessButton" value="#{messages.createBusiness}" execute="@this"
                                    render="defaultBusinessDataPanel_buttons,defaultBusinessDataPanel_inputs,defaultBusinessCreatePanelTitle"
                                    rendered="#{empty _bussinessDef.startPage}" action="#{startData.generateKey}"
-                                   oncomplete="#{rich:component('defaultBusinessDataPanel')}.show()">
+                                   oncomplete="#{r:component('defaultBusinessDataPanel')}.show()">
                         <s:conversationPropagation type="begin"/>
                         <a:param id="bussinessDefineId" name="bussinessDefineId" value="#{_bussinessDef.id}"
                                  assignTo="#{businessDefineHome.id}"/>
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
-                </rich:column>
+                </r:column>
                 <f:facet name="footer">
                     <h:outputText value="#{_category.name}: #{_category.businessDefines.size}"/>
                 </f:facet>
-            </rich:collapsibleSubTable>
+            </r:collapsibleSubTable>
 
 
-        </rich:dataTable>
+        </r:dataTable>
 
     </ui:define>
 </ui:composition>

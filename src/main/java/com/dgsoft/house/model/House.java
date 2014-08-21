@@ -1,21 +1,13 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.owner.model.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,51 +18,53 @@ import javax.validation.constraints.Size;
 @Table(name = "HOUSE", catalog = "HOUSE_INFO")
 public class House implements java.io.Serializable {
 
-	private String id;
-	private Integer version;
-	private Build build;
-	private HouseOwner houseOwnerByOwnerId;
-	private String houseOrder;
-	private String houseUnitName;
-	private String inFloorName;
-	private BigDecimal houseArea;
-	private BigDecimal prepareArea;
-	private BigDecimal tempArea;
-	private BigDecimal useArea;
-	private BigDecimal commArea;
-	private BigDecimal shineArea;
-	private BigDecimal loftArea;
-	private BigDecimal commParam;
-	private int houseState;
-	private String doorNo;
-	private String houseType;
-	private String useType;
-	private String structure;
-	private String knotSize;
-	private String address;
-	private String dataSource;
-	private String eastWall;
-	private String westWall;
-	private String southWall;
-	private String northWall;
-	private Date mapTime;
-	private String direction;
-	private boolean initRegister;
-	private boolean firmlyPower;
-	private String memo;
-	private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
-	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
-	private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
-    private Date createTime;
-
-	public House() {
-	}
-
-    public House(String houseOrder){
-        this.houseOrder = houseOrder;
+    public enum HouseDataSource{
+        MAPPING,IMPORT,RECORD_ADD;
     }
 
-    public House(GridBlock block){
+    private String id;
+    private Integer version;
+    private Build build;
+    private String houseOrder;
+    private String houseUnitName;
+    private String inFloorName;
+    private BigDecimal houseArea;
+    private BigDecimal prepareArea;
+    private BigDecimal useArea;
+    private BigDecimal commArea;
+    private BigDecimal shineArea;
+    private BigDecimal loftArea;
+    private BigDecimal commParam;
+    private int houseState;
+    private String houseType;
+    private String useType;
+    private String structure;
+    private String knotSize;
+    private String address;
+    private HouseDataSource dataSource;
+    private LandInfo landInfo;
+    private String eastWall;
+    private String westWall;
+    private String southWall;
+    private String northWall;
+    private Date mapTime;
+    private String direction;
+    private boolean initRegister;
+    private boolean firmlyPower;
+    private String memo;
+    private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
+    private Set<HouseState> houseStates = new HashSet<HouseState>(0);
+    private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
+    private Date createTime;
+    private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
+    private Set<HouseOwner> houseOwners = new HashSet<HouseOwner>(0);
+
+    public House() {
+    }
+
+
+    public House(Build build, GridBlock block) {
+        this.build = build;
         this.houseArea = block.getArea();
         this.useArea = block.getUseArea();
         this.commArea = block.getCommArea();
@@ -85,360 +79,377 @@ public class House implements java.io.Serializable {
         this.houseOrder = block.getHouseOrder();
         initRegister = false;
         firmlyPower = false;
+        dataSource = HouseDataSource.MAPPING;
     }
 
 
-	@Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@Version
-	@Column(name = "VERSION")
-	public Integer getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUILDID", nullable = false)
-	@NotNull
-	public Build getBuild() {
-		return this.build;
-	}
-
-	public void setBuild(Build build) {
-		this.build = build;
-	}
-
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@NotNull
-	public HouseOwner getHouseOwnerByOwnerId() {
-		return this.houseOwnerByOwnerId;
-	}
-
-	public void setHouseOwnerByOwnerId(HouseOwner houseOwnerByOwnerId) {
-		this.houseOwnerByOwnerId = houseOwnerByOwnerId;
-	}
-
-
-	@Column(name = "HOUSE_ORDER", nullable = false, length = 20)
-	@NotNull
-	@Size(max = 20)
-	public String getHouseOrder() {
-		return this.houseOrder;
-	}
-
-	public void setHouseOrder(String houseOrder) {
-		this.houseOrder = houseOrder;
-	}
-
-	@Column(name = "HOUSE_UNIT_NAME", length = 20)
-	@Size(max = 20)
-	public String getHouseUnitName() {
-		return this.houseUnitName;
-	}
-
-	public void setHouseUnitName(String houseUnitName) {
-		this.houseUnitName = houseUnitName;
-	}
-
-	@Column(name = "IN_FLOOR_NAME", length = 50,nullable = false)
-	@Size(max = 50)
+    @Id
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
-	public String getInFloorName() {
-		return this.inFloorName;
-	}
+    @Size(max = 32)
+    public String getId() {
+        return this.id;
+    }
 
-	public void setInFloorName(String inFloorName) {
-		this.inFloorName = inFloorName;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@Column(name = "HOUSE_AREA", nullable = false, precision = 18, scale = 3)
-	@NotNull
-	public BigDecimal getHouseArea() {
-		return this.houseArea;
-	}
+    @Version
+    @Column(name = "VERSION")
+    public Integer getVersion() {
+        return this.version;
+    }
 
-	public void setHouseArea(BigDecimal houseArea) {
-		this.houseArea = houseArea;
-	}
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
-	@Column(name = "PREPARE_AREA", precision = 18, scale = 3)
-	public BigDecimal getPrepareArea() {
-		return this.prepareArea;
-	}
 
-	public void setPrepareArea(BigDecimal prepareArea) {
-		this.prepareArea = prepareArea;
-	}
-
-	@Column(name = "TEMP_AREA", precision = 18, scale = 3)
-	public BigDecimal getTempArea() {
-		return this.tempArea;
-	}
-
-	public void setTempArea(BigDecimal tempArea) {
-		this.tempArea = tempArea;
-	}
-
-	@Column(name = "USE_AREA", precision = 18, scale = 3)
-	public BigDecimal getUseArea() {
-		return this.useArea;
-	}
-
-	public void setUseArea(BigDecimal useArea) {
-		this.useArea = useArea;
-	}
-
-	@Column(name = "COMM_AREA", precision = 18, scale = 3)
-	public BigDecimal getCommArea() {
-		return this.commArea;
-	}
-
-	public void setCommArea(BigDecimal commArea) {
-		this.commArea = commArea;
-	}
-
-	@Column(name = "SHINE_AREA", precision = 18, scale = 10)
-	public BigDecimal getShineArea() {
-		return this.shineArea;
-	}
-
-	public void setShineArea(BigDecimal shineArea) {
-		this.shineArea = shineArea;
-	}
-
-	@Column(name = "LOFT_AREA", precision = 18, scale = 3)
-	public BigDecimal getLoftArea() {
-		return this.loftArea;
-	}
-
-	public void setLoftArea(BigDecimal loftArea) {
-		this.loftArea = loftArea;
-	}
-
-	@Column(name = "COMM_PARAM", precision = 18, scale = 3)
-	public BigDecimal getCommParam() {
-		return this.commParam;
-	}
-
-	public void setCommParam(BigDecimal commParam) {
-		this.commParam = commParam;
-	}
-
-	@Column(name = "HOUSE_STATE", nullable = false)
-	public int getHouseState() {
-		return this.houseState;
-	}
-
-	public void setHouseState(int houseState) {
-		this.houseState = houseState;
-	}
-
-	@Column(name = "DOOR_NO", length = 20)
-	@Size(max = 20)
-	public String getDoorNo() {
-		return this.doorNo;
-	}
-
-	public void setDoorNo(String doorNo) {
-		this.doorNo = doorNo;
-	}
-
-	@Column(name = "HOUSE_TYPE", length = 32)
-	@Size(max = 32)
-	public String getHouseType() {
-		return this.houseType;
-	}
-
-	public void setHouseType(String houseType) {
-		this.houseType = houseType;
-	}
-
-	@Column(name = "USE_TYPE", length = 32, nullable = false)
-	@Size(max = 32)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "BUILDID", nullable = false)
     @NotNull
-	public String getUseType() {
-		return this.useType;
-	}
+    public Build getBuild() {
+        return this.build;
+    }
 
-	public void setUseType(String useType) {
-		this.useType = useType;
-	}
+    public void setBuild(Build build) {
+        this.build = build;
+    }
 
-
-	@Column(name = "STRUCTURE", length = 32,nullable = false)
-	@Size(max = 32)
+    @Column(name = "HOUSE_ORDER", nullable = false, length = 20)
     @NotNull
-	public String getStructure() {
-		return this.structure;
-	}
+    @Size(max = 20)
+    public String getHouseOrder() {
+        return this.houseOrder;
+    }
 
-	public void setStructure(String structure) {
-		this.structure = structure;
-	}
+    public void setHouseOrder(String houseOrder) {
+        this.houseOrder = houseOrder;
+    }
 
-	@Column(name = "KNOT_SIZE", length = 32)
-	@Size(max = 32)
-	public String getKnotSize() {
-		return this.knotSize;
-	}
+    @Column(name = "HOUSE_UNIT_NAME", length = 20)
+    @Size(max = 20)
+    public String getHouseUnitName() {
+        return this.houseUnitName;
+    }
 
-	public void setKnotSize(String knotSize) {
-		this.knotSize = knotSize;
-	}
+    public void setHouseUnitName(String houseUnitName) {
+        this.houseUnitName = houseUnitName;
+    }
 
-
-	@Column(name = "ADDRESS", length = 200,nullable = false)
-	@Size(max = 200)
+    @Column(name = "IN_FLOOR_NAME", length = 50, nullable = false)
+    @Size(max = 50)
     @NotNull
-	public String getAddress() {
-		return this.address;
-	}
+    public String getInFloorName() {
+        return this.inFloorName;
+    }
 
-	public void setAddress(String houseStation) {
-		this.address = houseStation;
-	}
+    public void setInFloorName(String inFloorName) {
+        this.inFloorName = inFloorName;
+    }
 
-
-	@Column(name = "DATA_SOURCE", length = 32, nullable = false)
-	@Size(max = 32)
+    @Column(name = "HOUSE_AREA", nullable = false, precision = 18, scale = 3)
     @NotNull
-	public String getDataSource() {
-		return this.dataSource;
-	}
+    public BigDecimal getHouseArea() {
+        return this.houseArea;
+    }
 
-	public void setDataSource(String dataSource) {
-		this.dataSource = dataSource;
-	}
+    public void setHouseArea(BigDecimal houseArea) {
+        this.houseArea = houseArea;
+    }
 
-	@Column(name = "EAST_WALL", length = 32)
-	@Size(max = 32)
-	public String getEastWall() {
-		return this.eastWall;
-	}
+    @Column(name = "PREPARE_AREA", precision = 18, scale = 3)
+    public BigDecimal getPrepareArea() {
+        return this.prepareArea;
+    }
 
-	public void setEastWall(String eastWall) {
-		this.eastWall = eastWall;
-	}
+    public void setPrepareArea(BigDecimal prepareArea) {
+        this.prepareArea = prepareArea;
+    }
 
-	@Column(name = "WEST_WALL", length = 32)
-	@Size(max = 32)
-	public String getWestWall() {
-		return this.westWall;
-	}
+    @Column(name = "USE_AREA", precision = 18, scale = 3)
+    public BigDecimal getUseArea() {
+        return this.useArea;
+    }
 
-	public void setWestWall(String westWall) {
-		this.westWall = westWall;
-	}
+    public void setUseArea(BigDecimal useArea) {
+        this.useArea = useArea;
+    }
 
-	@Column(name = "SOUTH_WALL", length = 32)
-	@Size(max = 32)
-	public String getSouthWall() {
-		return this.southWall;
-	}
+    @Column(name = "COMM_AREA", precision = 18, scale = 3)
+    public BigDecimal getCommArea() {
+        return this.commArea;
+    }
 
-	public void setSouthWall(String southWall) {
-		this.southWall = southWall;
-	}
+    public void setCommArea(BigDecimal commArea) {
+        this.commArea = commArea;
+    }
 
-	@Column(name = "NORTH_WALL", length = 32)
-	@Size(max = 32)
-	public String getNorthWall() {
-		return this.northWall;
-	}
+    @Column(name = "SHINE_AREA", precision = 18, scale = 10)
+    public BigDecimal getShineArea() {
+        return this.shineArea;
+    }
 
-	public void setNorthWall(String northWall) {
-		this.northWall = northWall;
-	}
+    public void setShineArea(BigDecimal shineArea) {
+        this.shineArea = shineArea;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MAP_TIME", nullable = true, length = 19)
-	public Date getMapTime() {
-		return this.mapTime;
-	}
+    @Column(name = "LOFT_AREA", precision = 18, scale = 3)
+    public BigDecimal getLoftArea() {
+        return this.loftArea;
+    }
 
-	public void setMapTime(Date mapTime) {
-		this.mapTime = mapTime;
-	}
+    public void setLoftArea(BigDecimal loftArea) {
+        this.loftArea = loftArea;
+    }
 
-	@Column(name = "DIRECTION", length = 32)
-	@Size(max = 32)
-	public String getDirection() {
-		return this.direction;
-	}
+    @Column(name = "COMM_PARAM", precision = 18, scale = 3)
+    public BigDecimal getCommParam() {
+        return this.commParam;
+    }
 
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
+    public void setCommParam(BigDecimal commParam) {
+        this.commParam = commParam;
+    }
 
-	@Column(name = "INIT_REGISTER", nullable = false)
-	public boolean isInitRegister() {
-		return this.initRegister;
-	}
+    @Column(name = "HOUSE_STATE", nullable = false)
+    public int getHouseState() {
+        return this.houseState;
+    }
 
-	public void setInitRegister(boolean initRegister) {
-		this.initRegister = initRegister;
-	}
+    public void setHouseState(int houseState) {
+        this.houseState = houseState;
+    }
 
-	@Column(name = "FIRMLY_POWER", nullable = false)
-	public boolean isFirmlyPower() {
-		return this.firmlyPower;
-	}
+    @Column(name = "HOUSE_TYPE", length = 32)
+    @Size(max = 32)
+    public String getHouseType() {
+        return this.houseType;
+    }
 
-	public void setFirmlyPower(boolean firmlyPower) {
-		this.firmlyPower = firmlyPower;
-	}
+    public void setHouseType(String houseType) {
+        this.houseType = houseType;
+    }
 
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
+    @Column(name = "USE_TYPE", length = 32, nullable = false)
+    @Size(max = 32)
+    @NotNull
+    public String getUseType() {
+        return this.useType;
+    }
 
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
+    public void setUseType(String useType) {
+        this.useType = useType;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-	public Set<HouseContract> getHouseContracts() {
-		return this.houseContracts;
-	}
 
-	public void setHouseContracts(Set<HouseContract> houseContracts) {
-		this.houseContracts = houseContracts;
-	}
+    @Column(name = "STRUCTURE", length = 32, nullable = false)
+    @Size(max = 32)
+    @NotNull
+    public String getStructure() {
+        return this.structure;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-	public Set<HouseState> getHouseStates() {
-		return this.houseStates;
-	}
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
 
-	public void setHouseStates(Set<HouseState> houseStates) {
-		this.houseStates = houseStates;
-	}
+    @Column(name = "KNOT_SIZE", length = 32)
+    @Size(max = 32)
+    public String getKnotSize() {
+        return this.knotSize;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-	public Set<PoolOwner> getPoolOwners() {
-		return this.poolOwners;
-	}
+    public void setKnotSize(String knotSize) {
+        this.knotSize = knotSize;
+    }
 
-	public void setPoolOwners(Set<PoolOwner> poolOwners) {
-		this.poolOwners = poolOwners;
-	}
 
+    @Column(name = "ADDRESS", length = 200, nullable = false)
+    @Size(max = 200)
+    @NotNull
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String houseStation) {
+        this.address = houseStation;
+    }
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DATA_SOURCE", length = 32, nullable = false)
+    @NotNull
+    public HouseDataSource getDataSource() {
+        return this.dataSource;
+    }
+
+    public void setDataSource(HouseDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Column(name = "EAST_WALL", length = 32)
+    @Size(max = 32)
+    public String getEastWall() {
+        return this.eastWall;
+    }
+
+    public void setEastWall(String eastWall) {
+        this.eastWall = eastWall;
+    }
+
+    @Column(name = "WEST_WALL", length = 32)
+    @Size(max = 32)
+    public String getWestWall() {
+        return this.westWall;
+    }
+
+    public void setWestWall(String westWall) {
+        this.westWall = westWall;
+    }
+
+    @Column(name = "SOUTH_WALL", length = 32)
+    @Size(max = 32)
+    public String getSouthWall() {
+        return this.southWall;
+    }
+
+    public void setSouthWall(String southWall) {
+        this.southWall = southWall;
+    }
+
+    @Column(name = "NORTH_WALL", length = 32)
+    @Size(max = 32)
+    public String getNorthWall() {
+        return this.northWall;
+    }
+
+    public void setNorthWall(String northWall) {
+        this.northWall = northWall;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "MAP_TIME", nullable = true, length = 19)
+    public Date getMapTime() {
+        return this.mapTime;
+    }
+
+    public void setMapTime(Date mapTime) {
+        this.mapTime = mapTime;
+    }
+
+    @Column(name = "DIRECTION", length = 32)
+    @Size(max = 32)
+    public String getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    @Column(name = "INIT_REGISTER", nullable = false)
+    public boolean isInitRegister() {
+        return this.initRegister;
+    }
+
+    public void setInitRegister(boolean initRegister) {
+        this.initRegister = initRegister;
+    }
+
+    @Column(name = "FIRMLY_POWER", nullable = false)
+    public boolean isFirmlyPower() {
+        return this.firmlyPower;
+    }
+
+    public void setFirmlyPower(boolean firmlyPower) {
+        this.firmlyPower = firmlyPower;
+    }
+
+    @Column(name = "MEMO", length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return this.memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
+    public Set<HouseContract> getHouseContracts() {
+        return this.houseContracts;
+    }
+
+    public void setHouseContracts(Set<HouseContract> houseContracts) {
+        this.houseContracts = houseContracts;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
+    public Set<HouseState> getHouseStates() {
+        return this.houseStates;
+    }
+
+    public void setHouseStates(Set<HouseState> houseStates) {
+        this.houseStates = houseStates;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
+    public Set<PoolOwner> getPoolOwners() {
+        return this.poolOwners;
+    }
+
+    public void setPoolOwners(Set<PoolOwner> poolOwners) {
+        this.poolOwners = poolOwners;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME", nullable = true, length = 19)
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", cascade = {CascadeType.DETACH,CascadeType.REMOVE})
+    public Set<GridBlock> getGridBlock() {
+        return gridBlock;
+    }
+
+    public void setGridBlock(Set<GridBlock> gridBlock) {
+        this.gridBlock = gridBlock;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "house", orphanRemoval = true,cascade = {CascadeType.ALL})
+    public Set<HouseOwner> getHouseOwners() {
+        return houseOwners;
+    }
+
+    public void setHouseOwners(Set<HouseOwner> houseOwners) {
+        this.houseOwners = houseOwners;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
+    @JoinColumn(name = "LAND_INFO",nullable = true)
+    public LandInfo getLandInfo() {
+        return landInfo;
+    }
+
+    public void setLandInfo(LandInfo landInfo) {
+        this.landInfo = landInfo;
+    }
+
+    @Transient
+    public HouseOwner getHouseOwner(){
+        if (getHouseOwners().isEmpty()){
+            return null;
+        }else if(getHouseOwners().size() > 1){
+            throw new IllegalArgumentException("house have mulit owner");
+        }else{
+            return getHouseOwners().iterator().next();
+        }
+    }
 }

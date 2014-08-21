@@ -51,11 +51,6 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
         return new Employee(organizationHome.getInstance());
     }
 
-    @Override
-    public String persist() {
-        getInstance().setPerson(personHome.getInstance());
-        return super.persist();
-    }
 
     public void verifyIdAvailable(ValueChangeEvent e) {
         String id = (String) e.getNewValue();
@@ -71,16 +66,9 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
         if (!isIdAvailable(id)) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "fieldConflict", id);
             return false;
-        } else if (!isPersonAvailable()) {
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "employee_person_exists");
-            return false;
-        } else
+       } else
             return true;
 
-    }
-
-    public boolean isPersonAvailable() {
-        return getEntityManager().createQuery("select emp from Employee emp where emp.person.id =?1").setParameter(1, personHome.getInstance().getId()).getResultList().isEmpty();
     }
 
     public boolean isIdAvailable(String id) {
