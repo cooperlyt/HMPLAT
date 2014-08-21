@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+    <param name="firstResult" value="#{houseList.firstResult}"/>
+    <param name="sort" value="#{houseList.orderColumn}"/>
+    <param name="dir" value="#{houseList.orderDirection}"/>
+
+    <param name="projectName" value="#{projectSearchCondition.projectName}"/>
+    <param name="projectId" value="#{projectSearchCondition.projectId}"/>
+    <param name="developerName" value="#{projectSearchCondition.developerName}"/>
+
+    <param name="buildid" value="#{buildSearchCondition.developerName}"/>
+    <param name="buildName" value="#{buildSearchCondition.buildName}"/>
+    <param name="landBlockCode" value="#{buildSearchCondition.landBlockCode}"/>
+    <param name="streetCode" value="#{buildSearchCondition.streetCode}"/>
+    <param name="buildName" value="#{buildSearchCondition.buildName}"/>
+    <param name="mapNumber" value="#{buildSearchCondition.mapNumber}"/>
+    <param name="blockNo" value="#{buildSearchCondition.blockNo}"/>
+    <param name="buildNo" value="#{buildSearchCondition.buildNo}"/>
+
+    <param name="houseId" value="#{buildSearchCondition.houseId}"/>
+    <param name="houseOrder" value="#{buildSearchCondition.houseOrder}"/>
+    <param name="houseAddres" value="#{buildSearchCondition.houseAddres}"/>
+    <param name="doorNo" value="#{buildSearchCondition.doorNo}"/>
+
+</page>

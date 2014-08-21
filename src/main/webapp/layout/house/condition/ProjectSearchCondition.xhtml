@@ -21,4 +21,10 @@
         <h:inputText value="#{projectSearchCondition.projectId}" size="32"/>
     </s:decorate>
 
+    <s:decorate template="/layout/display.xhtml">
+        <ui:define name="label">
+            #{messages.Developer_name}
+        </ui:define>
+        <h:inputText value="#{projectSearchCondition.developerName}" size="32"/>
+    </s:decorate>
 </ui:composition>
