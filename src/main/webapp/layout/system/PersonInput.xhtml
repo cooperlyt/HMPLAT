@@ -9,6 +9,12 @@
 
     <!-- param: personEntityHelper  , render-->
 
+    <h:outputStylesheet>
+        .credentialsTypeSelectWidth input[type="text"] {
+            width: 100px;
+        }
+    </h:outputStylesheet>
+
     <a:region>
         <h:panelGrid columns="5" rendered="#{not employeeHome.managed}">
             <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
