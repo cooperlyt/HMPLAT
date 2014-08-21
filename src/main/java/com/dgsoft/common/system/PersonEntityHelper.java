@@ -62,26 +62,29 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
         isManager = true;
     }
 
-    public void vaildCerdentials() {
+    public void typeChange() {
         isManager = false;
-        if (getCredentialsType() == null) {
-            return;
-        }
-        if (getCredentialsType().equals(PersonEntity.CredentialsType.OTHER)) {
+        if ((getCredentialsType() != null) &&  getCredentialsType().equals(PersonEntity.CredentialsType.OTHER)) {
             setCredentialsNumber(numberBuilder.getSampleNumber("OTHER_PERSON_CARD_NO"));
+        } else {
+            setCredentialsNumber(null);
+        }
 
-        } else if ((getCredentialsNumber() != null) && !getCredentialsNumber().equals("")) {
-            //personHome.setId(new PersonId(getCredentialsType(), getCredentialsNumber()));
+    }
+
+    public void numberChange() {
+        isManager = false;
+        if ((getCredentialsNumber() != null) &&
+                !getCredentialsType().equals(PersonEntity.CredentialsType.OTHER) &&
+                !getCredentialsNumber().equals("")){
             Person person = personHome.getEntityManager().find(Person.class, new PersonId(getCredentialsType(), getCredentialsNumber()));
-
             if (person != null) {
                 getEntityHome().getInstance().setPersonName(person.getName());
                 isManager = true;
             }
         }
-
-
     }
+
 
     public void clear() {
 

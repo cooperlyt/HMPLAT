@@ -214,12 +214,18 @@
                 <h:inputText id="EMail"
                              size="20"
                              maxlength="20"
-                             
                              label="#{messages.employee_field_email}"
                              value="#{employeeHome.instance.EMail}">
-                    <a:ajax event="blur" render="EMailField"
-                            />
+                    <f:validateRegex
+                            pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$"></f:validateRegex>
+                    <r:validator />
+
                 </h:inputText>
+
+                <ui:define name="tail">
+                    <r:message for="EMail" styleClass="message-icon"
+                               showDetail="true" showSummary="true" tooltip="true"/>
+                </ui:define>
             </s:decorate>
 
 
@@ -233,8 +239,7 @@
                                  
                                  label="#{messages.employee_field_password}"
                                  value="#{employeeHome.instance.password}">
-                    <a:ajax event="blur" render="empPasswordField"
-                            />
+                    <a:ajax event="blur" render="empPasswordField"/>
                 </h:inputTextarea>
             </s:decorate>
 
