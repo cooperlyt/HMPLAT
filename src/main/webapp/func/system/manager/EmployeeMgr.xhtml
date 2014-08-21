@@ -133,53 +133,14 @@
 
 <h:form id="credentialsForm">
 
-    <a:region>
-        <h:panelGrid columns="5" rendered="#{not employeeHome.managed}">
-            <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
 
-                <r:select id="credentialsType" label="#{messages.person_field_credentialsType}"
-                             styleClass="credentialsTypeSelectWidth" listWidth="140px"
-                             value="#{personInput.cerdentialsType}" required="true">
-                    <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                    <s:convertEnum/>
-                    <a:ajax event="selectitem" listener="#{personInput.credentialsChangeListener}"
-                            render="credentialsTypeField,personEditFields" execute="@region" status="waitSearchPerson"/>
-                </r:select>
-            </s:decorate>
 
-            <s:decorate id="credentialsNumberField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.person_field_credentialsNO}</ui:define>
-                <h:inputText id="credentialsNumber"
-                             label="#{messages.person_field_credentialsNO}"
-                             required="true"
-                             size="25"
-                             maxlength="100"
-                             value="#{personInput.credentialsNumber}">
-                    <a:ajax event="blur" render="credentialsNumberField,personEditFields" status="waitSearchPerson"
-                            listener="#{personInput.credentialsChangeListener}" execute="@region"/>
-                </h:inputText>
+    <r:panel>
+        <ui:include src="/layout/system/PersonInput.xhtml">
+            <ui:param name="personEntityHelper" value="#{employeeEntityHelper}"/>
+        </ui:include>
 
-            </s:decorate>
-
-            <a:commandButton image="/img/id_card_read_btn.png" title=""
-                             execute="@region"
-                             status="waitSearchPerson"
-                             render="credentialsNumberField,credentialsTypeField,viewCredntials,personEditFields"/>
-
-            #{' '}
-            <a:status id="waitSearchPerson" name="waitSearchPerson">
-                <f:facet name="start">
-                    <h:graphicImage value="/img/connect_active.gif"/>
-                </f:facet>
-                <f:facet name="stop">
-                </f:facet>
-            </a:status>
-        </h:panelGrid>
-    </a:region>
-
-    <r:panel id="personEditFields">
-
+        <div style="clear: both"/>
 
         <h:panelGrid columns="2">
             <s:decorate id="empIdField" template="/layout/edit.xhtml">
@@ -301,14 +262,14 @@
         <a:outputPanel id="#{panelId}_buttons">
             <div class="actionButtons">
                 <a:commandButton execute="@form"
-                                 render="employeeListPanel,personEditFields"
+                                 render="employeeListPanel"
                                  value="#{messages.save}" action="#{employeeHome.persistEnd}"
                                  rendered="#{!employeeHome.managed}"
                                  data="#{employeeHome.lastState}"
                                  oncomplete="if (event.data == 'persisted'){#{r:component('empEditPanel')}.hide();}">
                     <a:attachQueue requestDelay="0"/>
                 </a:commandButton>
-                <a:commandButton execute="@form" render="employeeListPanel,personEditFields"
+                <a:commandButton execute="@form" render="employeeListPanel"
                                  value="#{messages.update}" action="#{employeeHome.updateEnd}"
                                  rendered="#{employeeHome.managed}" data="#{employeeHome.lastState}"
                                  oncomplete="if (event.data == 'updated')#{r:component('empEditPanel')}.hide();">

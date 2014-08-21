@@ -1,5 +1,7 @@
 package com.dgsoft.common;
 
+import org.jboss.seam.framework.EntityNotFoundException;
+
 /**
  * Created by cooper on 8/21/14.
  */
@@ -26,7 +28,7 @@ public abstract class NamedEntityHelper<E extends NamedEntity> {
         if (getEntityHome().isIdDefined()) {
             try {
                 return getEntityHome().getInstance().getName();
-            }catch (javax.persistence.EntityNotFoundException e) {
+            }catch (EntityNotFoundException e) {
                 getEntityHome().setId(null);
             }
         }

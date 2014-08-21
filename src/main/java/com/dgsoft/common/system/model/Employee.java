@@ -166,8 +166,8 @@ public class Employee implements java.io.Serializable,PersonEntity {
 
     @Override
     @Enumerated(EnumType.STRING)
-    @Column(name = "CREDENTIALS_TYPE", length = 32)
-    @Size(max = 32)
+    @Column(name = "CREDENTIALS_TYPE", nullable = false,length = 32)
+    @NotNull
     public CredentialsType getCredentialsType() {
         return this.credentialsType;
     }
@@ -178,8 +178,9 @@ public class Employee implements java.io.Serializable,PersonEntity {
     }
 
     @Override
-    @Column(name = "CREDENTIALS_NUMBER", length = 100)
+    @Column(name = "CREDENTIALS_NUMBER",nullable = false,length = 100)
     @Size(max = 100)
+    @NotNull
     public String getCredentialsNumber() {
         return this.credentialsNumber;
     }

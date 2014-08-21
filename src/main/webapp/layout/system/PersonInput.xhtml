@@ -5,8 +5,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
+    <!-- param: personEntityHelper  , render-->
 
     <a:region>
         <h:panelGrid columns="5" rendered="#{not employeeHome.managed}">
@@ -15,32 +16,34 @@
 
                 <r:select id="credentialsType" label="#{messages.person_field_credentialsType}"
                           styleClass="credentialsTypeSelectWidth" listWidth="140px"
-                          value="#{personInput.cerdentialsType}" required="true">
+                          value="#{personEntityHelper.credentialsType}" required="true">
                     <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                     <s:convertEnum/>
-                    <a:ajax event="selectitem" listener="#{personInput.credentialsChangeListener}"
-                            render="credentialsTypeField,personEditFields" execute="@region" status="waitSearchPerson"/>
+                    <a:ajax event="selectitem" listener="#{personEntityHelper.vaildCerdentials}"
+                            render="credentialsTypeField,credentialsNumberField,personEditFields,#{render}" execute="@region" status="waitSearchPerson"/>
                 </r:select>
             </s:decorate>
 
             <s:decorate id="credentialsNumberField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.person_field_credentialsNO}</ui:define>
-                <h:inputText id="credentialsNumber"
+                <h:inputText id="credentialsNumber" disabled="#{personEntityHelper.credentialsType.name() eq 'OTHER'}"
                              label="#{messages.person_field_credentialsNO}"
                              required="true"
                              size="25"
                              maxlength="100"
-                             value="#{personInput.credentialsNumber}">
-                    <a:ajax event="blur" render="credentialsNumberField,personEditFields" status="waitSearchPerson"
-                            listener="#{personInput.credentialsChangeListener}" execute="@region"/>
+                             value="#{personEntityHelper.credentialsNumber}">
+                    <a:ajax event="blur" render="credentialsNumberField,personEditFields,#{render}" status="waitSearchPerson"
+                            listener="#{personEntityHelper.vaildCerdentials}" execute="@region"/>
                 </h:inputText>
 
             </s:decorate>
 
+
             <a:commandButton image="/img/id_card_read_btn.png" title=""
                              execute="@region"
                              status="waitSearchPerson"
-                             render="credentialsNumberField,credentialsTypeField,viewCredntials,personEditFields"/>
+                             render="credentialsNumberField,credentialsTypeField,viewCredntials,personEditFields,#{render}"/>
+
 
             #{' '}
             <a:status id="waitSearchPerson" name="waitSearchPerson">
@@ -50,7 +53,27 @@
                 <f:facet name="stop">
                 </f:facet>
             </a:status>
+
         </h:panelGrid>
     </a:region>
+    <a:outputPanel id="personEditFields">
+        <s:decorate template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.person_field_name}
+            </ui:define>
+            <h:inputText label="#{messages.person_field_name}" size="20" disabled="#{personEntityHelper.manager}"
+                         value="#{personEntityHelper.personName}" required="true" id="persionNameInput">
+                <r:validator event="blur"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message for="persionNameInput" styleClass="message-icon"
+                           showDetail="true" showSummary="true" tooltip="true"/>
+            </ui:define>
+        </s:decorate>
+
+        <ui:insert/>
+    </a:outputPanel>
+
 
 </ui:composition>
