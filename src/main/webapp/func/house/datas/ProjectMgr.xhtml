@@ -56,7 +56,6 @@
                 <s:link value="#{_item.id}" target="_blank" view="/func/house/datas/ProjectView.xhtml">
                     <f:param name="projectId" value="#{_item.id}"/>
                 </s:link>
-
             </r:column>
 
             <r:column>
@@ -114,8 +113,8 @@
                     </ui:include>
                 </f:facet>
                 <h:outputText value="#{_item.area}">
-                    <f:convertNumber pattern="#0.###"/>
-                </h:outputText>
+                <f:convertNumber pattern="#0.###"/>
+            </h:outputText>
             </r:column>
 
         </r:dataTable>

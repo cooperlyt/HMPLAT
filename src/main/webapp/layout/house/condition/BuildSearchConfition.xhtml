@@ -23,16 +23,21 @@
 
     <s:decorate template="/layout/display.xhtml">
         <ui:define name="label">
-            #{messages.Build_StreetCode}
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.Build_StreetCode}"/>
+                <ui:param name="size" value="3"/>
+            </ui:include>
         </ui:define>
         <h:inputText value="#{buildSearchCondition.streetCode}" size="32"/>
     </s:decorate>
+
+
 
     <s:decorate template="/layout/display.xhtml">
         <ui:define name="label">
             #{messages.Build_LandBlockCode}
         </ui:define>
-        <h:inputText value="#{buildSearchCondition.landBlockCode}" size="50"/>
+        <h:inputText value="#{buildSearchCondition.landBlockCode}" size="32"/>
     </s:decorate>
 
     <s:decorate template="/layout/display.xhtml">
@@ -41,6 +46,8 @@
         </ui:define>
         <h:inputText value="#{buildSearchCondition.mapNumber}" size="32"/>
     </s:decorate>
+
+
 
     <s:decorate template="/layout/display.xhtml">
         <ui:define name="label">

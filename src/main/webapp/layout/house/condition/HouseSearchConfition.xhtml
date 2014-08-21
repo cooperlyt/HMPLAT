@@ -14,18 +14,12 @@
         <h:inputText value="#{houseSearchCondition.houseOrder}" size="32"/>
     </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.House_Id}
-        </ui:define>
-        <h:inputText value="#{houseSearchCondition.House_Id}" size="32"/>
-    </s:decorate>
 
     <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.House_DoorNumber}
-        </ui:define>
-        <h:inputText value="#{houseSearchCondition.doorNo}" size="32"/>
+    <ui:define name="label">
+        #{messages.House_Id}
+    </ui:define>
+    <h:inputText value="#{houseSearchCondition.houseId}" size="32"/>
     </s:decorate>
 
     <s:decorate template="/layout/display.xhtml">
