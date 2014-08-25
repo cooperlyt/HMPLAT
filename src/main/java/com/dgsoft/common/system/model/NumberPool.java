@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
  * Time: 10:13 AM
  */
 @Entity
-@Table(name = "NUMBER_POOL")
+@Table(name = "NUMBER_POOL",catalog = "DB_PLAT_SYSTEM")
 public class NumberPool {
 
     private String id;

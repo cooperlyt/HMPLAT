@@ -24,6 +24,7 @@
         <class>com.dgsoft.common.system.model.Province</class>
         <class>com.dgsoft.common.system.model.City</class>
         <class>com.dgsoft.common.system.model.NumberPool</class>
+        <class>com.dgsoft.common.system.model.TaskSubscribe</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
