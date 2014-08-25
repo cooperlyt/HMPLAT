@@ -90,7 +90,7 @@
                     <h:outputText value=" "/>
                 </r:column>
                 <r:column>
-                    <s:link action="#{startData.generateKey}" propagation="#{empty _bussinessDef.startPropagation ? 'begin' : _bussinessDef.startPropagation}" view="#{_bussinessDef.startPage}"
+                    <s:link propagation="#{empty _bussinessDef.startPropagation ? 'begin' : _bussinessDef.startPropagation}" view="#{_bussinessDef.startPage}"
                             value="#{messages.createBusiness}" rendered="#{not empty _bussinessDef.startPage}"/>
 
                     <a:commandLink id="createSimpleBussinessButton" value="#{messages.createBusiness}" execute="@this"
@@ -102,7 +102,10 @@
                                  assignTo="#{businessDefineHome.id}"/>
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
+
                 </r:column>
+
+
                 <f:facet name="footer">
                     <h:outputText value="#{_category.name}: #{_category.businessDefines.size}"/>
                 </f:facet>

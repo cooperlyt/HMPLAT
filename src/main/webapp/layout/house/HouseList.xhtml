@@ -26,9 +26,6 @@
         </h:panelGrid>
     </r:collapsiblePanel>
     <br/>
-    <h:panelGrid columns="2">
-        <h:graphicImage value="/img/icons/create.gif"/>
-    </h:panelGrid>
 
     <r:extendedDataTable value="#{houseList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"  frozenColumns="4"
                          id="dataListResult" style="width: 100%">
@@ -39,6 +36,8 @@
                 </ui:include>
             </a:outputPanel>
         </f:facet>
+
+        <ui:insert/>
 
         <r:column>
             <f:facet name="header">

@@ -6,22 +6,21 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/template.xhtml">
+                template="/layout/full-template.xhtml">
 
+    <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_HouseSelect}"/>
 
     <ui:define name="body">
 
+        <s:decorate template="/layout/house/HouseList.xhtml">
+            <r:column>
+                <s:link action="#{ownerBusinessHome.singleHouseSelectet}" value="#{messages.Next}">
+                    <f:param name="selectHouseId" value="#{_item.id}"/>
+                </s:link>
 
 
-        <h:panelGrid columns="2">
-            <h:graphicImage value="/img/icons/create.gif"/>
-        </h:panelGrid>
-
-        <ui:include src="/layout/house/HouseList.xhtml">
-
-        </ui:include>
-
-
+            </r:column>
+        </s:decorate>
 
     </ui:define>
 </ui:composition>
