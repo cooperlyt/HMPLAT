@@ -25,10 +25,6 @@ public class BusinessDefineConfig {
     @In(create = true)
     private BusinessDefineHome businessDefineHome;
 
-    @Begin(pageflow = "business-config" ,flushMode = FlushModeType.MANUAL)
-    public void editBusinessDefine(){
-        businessDefineHome.setId(businessDefineId);
-    }
 
     @Begin(pageflow = "business-config",flushMode = FlushModeType.MANUAL)
     public void addBusinessDefine(){
@@ -44,5 +40,7 @@ public class BusinessDefineConfig {
         }
         return result;
     }
+
+
 
 }

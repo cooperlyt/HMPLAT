@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
-@Table(name = "BUSINESS_CATEGORY", catalog = "DB_PLAT_SYSTEM")
+@Table(name = "TASK_SUBSCRiBE", catalog = "DB_PLAT_SYSTEM")
 public class TaskSubscribe implements java.io.Serializable {
 
     public enum SubscribeType {
@@ -25,12 +25,18 @@ public class TaskSubscribe implements java.io.Serializable {
     private SubscribeType type;
     private BusinessDefine businessDefine;
 
+    public TaskSubscribe() {
+    }
+
+    public TaskSubscribe(String id, BusinessDefine businessDefine) {
+        this.id = id;
+        this.businessDefine = businessDefine;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GeneratedValue(generator = "paymentableGenerator")
-    @GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
     public String getId() {
         return id;
     }
