@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
-@Table(name = "TASK_SUBSCRiBE", catalog = "DB_PLAT_SYSTEM")
+@Table(name = "TASK_SUBSCRIBE", catalog = "DB_PLAT_SYSTEM")
 public class TaskSubscribe implements java.io.Serializable {
 
     public enum SubscribeType {

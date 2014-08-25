@@ -1,10 +1,24 @@
 package com.dgsoft.common.system.business;
 
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
+import org.jboss.seam.log.Logging;
 import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import java.util.Set;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -17,15 +31,56 @@ import java.util.regex.Pattern;
 public class TaskSubscribeReg {
 
 
+    private Map<String,TaskSubscribeDefine> subscribeDefines;
+
     @Create
     public void load() {
-        Reflections reflections = new Reflections("com.dgsoft");
-        Set<String> properties =  reflections.getResources(Pattern.compile(".*\\.tasksubscribe\\.xml"));
+        subscribeDefines = new HashMap<String, TaskSubscribeDefine>();
+        Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(ClasspathHelper.forPackage("com.dgsoft")).addScanners(new ResourcesScanner()));
+        Set<String> confings = reflections.getResources(Pattern.compile(".*\\.tasksubscribe\\.xml"));
+        Logging.getLog(getClass()).debug("find subscribe config  :" + confings.size());
+        for (String conf : confings) {
+
+            Logging.getLog(getClass()).debug("loading :" + getClass().getClassLoader().getResource(conf));
+            try {
+                DocumentBuilder domBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                Document doc = domBuilder.parse(getClass().getClassLoader().getResourceAsStream(conf));
+                Element root = doc.getDocumentElement();
+                NodeList regNodes = root.getChildNodes();
+                for (int i = 0, size = regNodes.getLength(); i < size; i++){
+
+                    Node regNode = regNodes.item(i);
+                    if (regNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Logging.getLog(getClass()).debug(regNode.getNodeName());
+                        String name = regNode.getAttributes().getNamedItem("name").getNodeValue();
+                        subscribeDefines.put(name, new TaskSubscribeDefine(name,
+                                regNode.getFirstChild().getNodeValue(),
+                                regNode.getAttributes().getNamedItem("page").getNodeValue(),
+                                regNode.getAttributes().getNamedItem("component").getNodeValue()));
+                        Logging.getLog(getClass()).debug("add subscribeDefine :" + name);
+                    }
+
+                }
+            } catch (FileNotFoundException e) {
+                Logging.getLog(getClass()).error(e.getMessage(),e);
+                throw new IllegalArgumentException(e);
+            } catch (ParserConfigurationException e) {
+                Logging.getLog(getClass()).error(e.getMessage(),e);
+                throw new IllegalArgumentException(e);
+            } catch (SAXException e) {
+                Logging.getLog(getClass()).error(e.getMessage(),e);
+                throw new IllegalArgumentException(e);
+            } catch (IOException e) {
+                Logging.getLog(getClass()).error(e.getMessage(),e);
+                throw new IllegalArgumentException(e);
+            }
+        }
+
+
     }
 
 
-
-    public static class TaskSubscribeDefine{
+    public static class TaskSubscribeDefine {
 
         private String name;
 
@@ -47,32 +102,31 @@ public class TaskSubscribeReg {
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
         public String getDescription() {
             return description;
         }
 
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
         public String getPage() {
-            return page;
+            if (isHavePage()) {
+                return page;
+            }else{
+                return null;
+            }
         }
 
-        public void setPage(String page) {
-            this.page = page;
+        public boolean isHavePage(){
+            return (page != null) && (!page.trim().equals(""));
         }
 
-        public String getComponent() {
-            return component;
+        public boolean isHaveComponent(){
+            return (component != null) && (!component.trim().equals(""));
         }
 
-        public void setComponent(String component) {
-            this.component = component;
+        public BusinessTaskSubscribe getComponents(){
+            if (isHaveComponent()) {
+                return (BusinessTaskSubscribe) Component.getInstance(component, true, true);
+            }else
+                return null;
         }
     }
 
