@@ -11,6 +11,53 @@
 
     <ui:define name="body">
 
+
+        <s:decorate template="/layout/edit-modalpanel.xhtml">
+            <ui:param name="panelId" value="editPanel"/>
+            <ui:param name="panelTitle" value="#{messages.TaskSubscribe}"/>
+            <ui:define name="controls">
+                <a:commandButton immediate="true"
+                                 execute="@this" image="/img/close.png"
+                                 onclick="#{r:component(panelId)}.hide(); return false;">
+                </a:commandButton>
+            </ui:define>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.TaskSubscribe_type}
+                </ui:define>
+                <h:selectOneMenu id="taskSubscribeTypeInput" label="#{messages.TaskSubscribe_type}" value="#{businessDefineHome.editTaskSubscribe.type}" required="true">
+                    <s:selectItems value="#{taskSubscribeTypes}" var="_type"
+                                   label="#{messages[_type.name()]}" itemValue="#{_type}"/>
+                    <s:convertEnum/>
+                    <a:ajax render="taskSubscribeTaskNameField" event="valueChange"/>
+                </h:selectOneMenu>
+                <ui:define name="tail">
+                    <r:message for="taskSubscribeTypeInput" styleClass="message-icon"
+                               showDetail="true" showSummary="true" tooltip="true"/>
+                </ui:define>
+            </s:decorate>
+
+            <a:outputPanel id="taskSubscribeTaskNameField">
+            <s:decorate rendered="#{businessDefineHome.editTaskSubscribe.type eq 'TASK_OPER'}" template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.TaskSubscribe_taskName}
+                </ui:define>
+                <h:selectOneMenu id="taskSubscribeTaskNameInput" label="#{messages.TaskSubscribe_taskName}"
+                                 value="#{businessDefineHome.editTaskSubscribe.taskName}" required="true">
+                    <s:selectItems var="_task" value="#{businessDefineHome.wfTaskNames}"
+                                   itemValue="#{_task}" label="#{_task}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                    <s:convertEnum/>
+                </h:selectOneMenu>
+                <ui:define name="tail">
+                    <r:message for="taskSubscribeTaskNameInput" styleClass="message-icon"
+                               showDetail="true" showSummary="true" tooltip="true"/>
+                </ui:define>
+            </s:decorate>
+            </a:outputPanel>
+
+
+        </s:decorate>
     </ui:define>
 
 </ui:composition>

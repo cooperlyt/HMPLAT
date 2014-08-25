@@ -8,6 +8,9 @@ import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.common.system.model.TaskSubscribe;
+import com.sun.javafx.tk.Toolkit;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
@@ -38,7 +41,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     @In
     private ActionExecuteState actionExecuteState;
 
-
+    @Factory(value = "taskSubscribeTypes",scope = ScopeType.SESSION)
+    public TaskSubscribe.SubscribeType[] getTaskSubscribeTypes(){
+        return TaskSubscribe.SubscribeType.values();
+    }
 
     private List<TotalDataGroup<String,TaskSubscribe>> taskSubscribeGroups;
 
@@ -105,6 +111,9 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
         getInstance().getTaskSubscribes().add(editTaskSubscribe);
         taskSubscribeGroups = null;
+        if (editTaskSubscribe.getType().equals(TaskSubscribe.SubscribeType.START_TASK)){
+            editTaskSubscribe.setTaskName("start");
+        }
         actionExecuteState.actionExecute();
 
     }
