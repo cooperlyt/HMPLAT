@@ -33,6 +33,14 @@ public class TaskSubscribeReg {
 
     private Map<String,TaskSubscribeDefine> subscribeDefines;
 
+    public List<TaskSubscribeDefine> getTaskSubscribeDefine(){
+        return new ArrayList<TaskSubscribeDefine>(subscribeDefines.values());
+    }
+
+    public TaskSubscribeDefine getDefineByName(String name){
+        return subscribeDefines.get(name);
+    }
+
     @Create
     public void load() {
         subscribeDefines = new HashMap<String, TaskSubscribeDefine>();
@@ -56,7 +64,9 @@ public class TaskSubscribeReg {
                         subscribeDefines.put(name, new TaskSubscribeDefine(name,
                                 regNode.getFirstChild().getNodeValue(),
                                 regNode.getAttributes().getNamedItem("page").getNodeValue(),
-                                regNode.getAttributes().getNamedItem("component").getNodeValue()));
+                                regNode.getAttributes().getNamedItem("component").getNodeValue(),
+                                TaskSubscribeDefineType.valueOf(regNode.getAttributes().getNamedItem("type").getNodeValue()),
+                                regNode.getAttributes().getNamedItem("cagegory").getNodeValue()));
                         Logging.getLog(getClass()).debug("add subscribeDefine :" + name);
                     }
 
@@ -79,6 +89,10 @@ public class TaskSubscribeReg {
 
     }
 
+    public enum TaskSubscribeDefineType{
+        EDIT,VIEW,ALONE_EDIT;
+    }
+
 
     public static class TaskSubscribeDefine {
 
@@ -90,12 +104,26 @@ public class TaskSubscribeReg {
 
         private String component;
 
+        private TaskSubscribeDefineType type;
 
-        public TaskSubscribeDefine(String name, String description, String page, String component) {
+        public String category;
+
+        public TaskSubscribeDefine(String name, String description, String page,
+                                   String component, TaskSubscribeDefineType type, String category) {
             this.name = name;
             this.description = description;
             this.page = page;
             this.component = component;
+            this.type = type;
+            this.category = category;
+        }
+
+        public TaskSubscribeDefineType getType() {
+            return type;
+        }
+
+        public String getCategory() {
+            return category;
         }
 
         public String getName() {
@@ -114,6 +142,10 @@ public class TaskSubscribeReg {
             }
         }
 
+        public String getTitle(){
+            return description + "[" + name + "]";
+        }
+
         public boolean isHavePage(){
             return (page != null) && (!page.trim().equals(""));
         }
@@ -122,9 +154,9 @@ public class TaskSubscribeReg {
             return (component != null) && (!component.trim().equals(""));
         }
 
-        public BusinessTaskSubscribe getComponents(){
+        public TaskSubscribeComponent getComponents(){
             if (isHaveComponent()) {
-                return (BusinessTaskSubscribe) Component.getInstance(component, true, true);
+                return (TaskSubscribeComponent) Component.getInstance(component, true, true);
             }else
                 return null;
         }

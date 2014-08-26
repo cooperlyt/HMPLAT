@@ -62,6 +62,10 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
         isManager = true;
     }
 
+    protected void fillPerson(Person person){
+        getEntityHome().getInstance().setPersonName(person.getName());
+    }
+
     public void typeChange() {
         isManager = false;
         if ((getCredentialsType() != null) &&  getCredentialsType().equals(PersonEntity.CredentialsType.OTHER)) {
@@ -79,7 +83,7 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
                 !getCredentialsNumber().equals("")){
             Person person = personHome.getEntityManager().find(Person.class, new PersonId(getCredentialsType(), getCredentialsNumber()));
             if (person != null) {
-                getEntityHome().getInstance().setPersonName(person.getName());
+                fillPerson(person);
                 isManager = true;
             }
         }

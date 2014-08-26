@@ -16,10 +16,7 @@ import org.jboss.seam.international.StatusMessage;
 import org.jbpm.graph.def.ProcessDefinition;
 
 import javax.faces.event.ValueChangeEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,6 +30,17 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     @In
     private FacesMessages facesMessages;
+
+    public List<TaskSubscribe> getTaskSubscribeList(){
+        List<TaskSubscribe> result = new ArrayList<TaskSubscribe>(getInstance().getTaskSubscribes());
+        Collections.sort(result,new Comparator<TaskSubscribe>() {
+            @Override
+            public int compare(TaskSubscribe o1, TaskSubscribe o2) {
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
+            }
+        });
+        return result;
+    }
 
     @In
     private ActionExecuteState actionExecuteState;
@@ -98,17 +106,34 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return editTaskSubscribe.getId();
     }
 
+    private boolean createing = false;
+
+    public boolean isCreateing() {
+        return createing;
+    }
+
+    public void setCreateing(boolean createing) {
+        this.createing = createing;
+    }
+
     public void createTaskSubscribe(){
+        createing = true;
         actionExecuteState.clearState();
         editTaskSubscribe = new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),getInstance());
     }
 
-    public void addTaskSubscribe(){
+    public void editTaskSubscribe(){
+        createing = false;
+        actionExecuteState.clearState();
+    }
 
-        getInstance().getTaskSubscribes().add(editTaskSubscribe);
-        taskSubscribeGroups = null;
-        if (editTaskSubscribe.getType().equals(TaskSubscribe.SubscribeType.START_TASK)){
-            editTaskSubscribe.setTaskName("start");
+    public void saveTaskSubscribe(){
+        if (createing) {
+            getInstance().getTaskSubscribes().add(editTaskSubscribe);
+            taskSubscribeGroups = null;
+            if (editTaskSubscribe.getType().equals(TaskSubscribe.SubscribeType.START_TASK)) {
+                editTaskSubscribe.setTaskName("start");
+            }
         }
         actionExecuteState.actionExecute();
 

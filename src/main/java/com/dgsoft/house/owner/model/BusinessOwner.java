@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,13 +18,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_OWNER", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessOwner implements java.io.Serializable {
+public class BusinessOwner implements java.io.Serializable,PersonEntity {
 
 	private String id;
 	private BusinessHouse businessHouse;
-	private String name;
-	private String idType;
-	private String idNo;
+	private String personName;
+	private CredentialsType credentialsType;
+	private String credentialsNumber;
 	private String phone;
 	private String rootAddress;
 	private String type;
@@ -30,28 +32,6 @@ public class BusinessOwner implements java.io.Serializable {
 	public BusinessOwner() {
 	}
 
-	public BusinessOwner(String id, BusinessHouse businessHouse, String name,
-			String idType, String idNo, String phone, String type) {
-		this.id = id;
-		this.businessHouse = businessHouse;
-		this.name = name;
-		this.idType = idType;
-		this.idNo = idNo;
-		this.phone = phone;
-		this.type = type;
-	}
-	public BusinessOwner(String id, BusinessHouse businessHouse, String name,
-			String idType, String idNo, String phone, String rootAddress,
-			String type) {
-		this.id = id;
-		this.businessHouse = businessHouse;
-		this.name = name;
-		this.idType = idType;
-		this.idNo = idNo;
-		this.phone = phone;
-		this.rootAddress = rootAddress;
-		this.type = type;
-	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -76,37 +56,40 @@ public class BusinessOwner implements java.io.Serializable {
 		this.businessHouse = businessHouse;
 	}
 
+    @Override
 	@Column(name = "NAME", nullable = false, length = 50)
 	@NotNull
 	@Size(max = 50)
-	public String getName() {
-		return this.name;
+	public String getPersonName() {
+		return this.personName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPersonName(String name) {
+		this.personName = name;
 	}
 
+    @Override
 	@Column(name = "ID_TYPE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-	public String getIdType() {
-		return this.idType;
+	public CredentialsType getCredentialsType() {
+		return this.credentialsType;
 	}
 
-	public void setIdType(String idType) {
-		this.idType = idType;
+	public void setCredentialsType(CredentialsType idType) {
+		this.credentialsType = idType;
 	}
 
+    @Override
 	@Column(name = "ID_NO", nullable = false, length = 100)
 	@NotNull
 	@Size(max = 100)
-	public String getIdNo() {
-		return this.idNo;
+	public String getCredentialsNumber() {
+		return this.credentialsNumber;
 	}
 
-	public void setIdNo(String idNo) {
-		this.idNo = idNo;
+	public void setCredentialsNumber(String idNo) {
+		this.credentialsNumber = idNo;
 	}
 
 	@Column(name = "PHONE", nullable = false, length = 15)

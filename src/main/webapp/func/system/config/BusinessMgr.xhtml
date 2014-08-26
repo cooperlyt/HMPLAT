@@ -79,7 +79,7 @@
                     </a:commandLink>
 
                     #{' '}
-                    <s:link view="/func/system/config/TaskSubscribeConfig.xhtml">
+                    <s:link view="/func/system/config/TaskSubscribeConfig.xhtml" propagation="begin">
                         <f:param name="businessDefineId" value="#{_bussinessDef.id}"/>
                         <s:graphicImage value="/img/icons/edit.png" title="#{messages.viewDetails}"/>
                     </s:link>

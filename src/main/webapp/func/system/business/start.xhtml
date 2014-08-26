@@ -26,7 +26,7 @@
                     <r:validator event="blur"/>
                 </h:inputText>
                 <r:message for="value" styleClass="message-icon" ajaxRendered="true"
-                              showDetail="true" showSummary="true" tooltip="true"/>
+                           showDetail="true" showSummary="true" tooltip="true"/>
             </s:decorate>
             <ui:define name="actionButtons">
 
@@ -45,7 +45,7 @@
 
 
         <r:dataTable noDataLabel="#{messages.businessDefine_empty}" style="width:100%"
-                        value="#{authInfo.authenticationBussinessCategorys}" var="_category">
+                     value="#{authInfo.authenticationBussinessCategorys}" var="_category">
             <f:facet name="header">
                 <r:columnGroup>
                     <r:column colspan="4">
@@ -71,7 +71,7 @@
                 <h:outputText value="#{_category.name}"/>
             </r:column>
             <r:collapsibleSubTable value="#{_category.businessDefineList}" var="_bussinessDef" id="subTable"
-                                      expandMode="client" expanded="#{false}">
+                                   expandMode="client" expanded="#{false}">
                 <r:column>
                     <h:outputText value="#{_bussinessDef.id}"/>
                 </r:column>
@@ -80,7 +80,7 @@
 
                         <h:outputText value="#{_bussinessDef.name}"/>
                         <r:tooltip followMouse="false" showDelay="1500" styleClass="tooltip-custom-body"
-                                      layout="block" rendered="#{not empty _bussinessDef.memo}">
+                                   layout="block" rendered="#{not empty _bussinessDef.memo}">
                             <span style="white-space: nowrap">#{_bussinessDef.memo}</span>
                         </r:tooltip>
 
@@ -90,8 +90,11 @@
                     <h:outputText value=" "/>
                 </r:column>
                 <r:column>
-                    <s:link propagation="#{empty _bussinessDef.startPropagation ? 'begin' : _bussinessDef.startPropagation}" view="#{_bussinessDef.startPage}"
-                            value="#{messages.createBusiness}" rendered="#{not empty _bussinessDef.startPage}"/>
+                    <s:link propagation="#{empty _bussinessDef.startPropagation ? 'begin' : _bussinessDef.startPropagation}"
+                            view="#{_bussinessDef.startPage}"
+                            value="#{messages.createBusiness}" rendered="#{not empty _bussinessDef.startPage}">
+                        <f:param name="bussinessDefineId" value="#{_bussinessDef.id}"/>
+                    </s:link>
 
                     <a:commandLink id="createSimpleBussinessButton" value="#{messages.createBusiness}" execute="@this"
                                    render="defaultBusinessDataPanel_buttons,defaultBusinessDataPanel_inputs,defaultBusinessCreatePanelTitle"

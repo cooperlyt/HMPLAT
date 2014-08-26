@@ -20,10 +20,11 @@ public class TaskSubscribe implements java.io.Serializable {
 
     private String id;
     private String taskName;
-    private String operPage;
-    private String componentName;
+
+    private String regName;
     private SubscribeType type;
     private BusinessDefine businessDefine;
+    private int priority;
 
     public TaskSubscribe() {
     }
@@ -55,24 +56,15 @@ public class TaskSubscribe implements java.io.Serializable {
         this.taskName = taskName;
     }
 
-    @Column(name = "OPER_PAGE", nullable = true, length = 200)
+    @Column(name = "REG_NAME", nullable = false , length = 200)
     @Size(max = 200)
-    public String getOperPage() {
-        return operPage;
+    @NotNull
+    public String getRegName() {
+        return regName;
     }
 
-    public void setOperPage(String operPage) {
-        this.operPage = operPage;
-    }
-
-    @Column(name = "COMPONENT_NAME", nullable = true, length = 200)
-    @Size(max = 200)
-    public String getComponentName() {
-        return componentName;
-    }
-
-    public void setComponentName(String componentName) {
-        this.componentName = componentName;
+    public void setRegName(String regName) {
+        this.regName = regName;
     }
 
     @Enumerated(EnumType.STRING)
@@ -94,5 +86,14 @@ public class TaskSubscribe implements java.io.Serializable {
 
     public void setBusinessDefine(BusinessDefine businessDefine) {
         this.businessDefine = businessDefine;
+    }
+
+    @Column(name = "PRIORITY",nullable = false)
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

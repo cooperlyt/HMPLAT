@@ -6,4 +6,11 @@
 
     <param name="businessDefineId" value="#{businessDefineHome.id}"/>
 
+    <navigation from-action="#{businessDefineHome.update}">
+        <rule if-outcome="updated">
+            <end-conversation/>
+            <redirect view-id="/func/system/config/BusinessMgr.xhtml"/>
+        </rule>
+    </navigation>
+
 </page>

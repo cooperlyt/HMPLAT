@@ -7,9 +7,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:include src="/layout/house/owner/OwnerInput.xhtml">
-        <ui:param name="owner" value="#{businessOwnerHome.instance}"/>
-        <ui:param name="personEntityHelper" value="#{houseOwnerEntityHelper}"/>
-    </ui:include>
+    <r:tabPanel switchType="client">
+        <ui:repeat value="#{subscribeGroup}" var="_group">
+            <r:tab header="#{_group.key}">
+                <ui:repeat value="#{_group.values}" var="_item">
+                    <ui:include src="#{_item.page}"/>
+                </ui:repeat>
+            </r:tab>
+        </ui:repeat>
+    </r:tabPanel>
+
 
 </ui:composition>

@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                template="/layout/system/PersonInput.xhtml">
+
+    <ui:define name="otherInfo">
+        <s:decorate template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.BusinessOwner_Phone}
+            </ui:define>
+            <h:inputText label="#{messages.BusinessOwner_Phone}" size="20" disabled="#{personEntityHelper.manager}"
+                         value="#{owner.phone}" required="true" id="persionPhoneInput">
+                <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                <r:validator event="blur"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message for="persionPhoneInput" styleClass="message-icon"
+                           showDetail="true" showSummary="true" tooltip="true"/>
+            </ui:define>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.BusinessOwner_RootAddress}
+            </ui:define>
+            <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="40" maxlength="50" disabled="#{personEntityHelper.manager}"
+                         value="#{owner.rootAddress}" id="persionRootAddressInput">
+                <r:validator event="blur"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message for="persionRootAddressInput" styleClass="message-icon"
+                           showDetail="true" showSummary="true" tooltip="true"/>
+            </ui:define>
+        </s:decorate>
+
+    </ui:define>
+</ui:composition>

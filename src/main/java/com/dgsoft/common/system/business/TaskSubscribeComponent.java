@@ -3,7 +3,7 @@ package com.dgsoft.common.system.business;
 /**
  * Created by cooper on 8/25/14.
  */
-public interface BusinessTaskSubscribe {
+public interface TaskSubscribeComponent {
 
     public abstract void init();
 

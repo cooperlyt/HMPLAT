@@ -5,11 +5,18 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:include src="/layout/house/owner/OwnerInput.xhtml">
-        <ui:param name="owner" value="#{businessOwnerHome.instance}"/>
-        <ui:param name="personEntityHelper" value="#{houseOwnerEntityHelper}"/>
-    </ui:include>
+    <c:forEach items="#{subscribeGroup}" var="_group">
+        <r:panel>
+            <f:facet name="header">
+                #{_group.key}
+            </f:facet>
+            <c:forEach items="#{_group.values}" var="_item">
+                <ui:include src="#{_item.page}"/>
+            </c:forEach>
 
+        </r:panel>
+    </c:forEach>
 </ui:composition>

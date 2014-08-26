@@ -16,7 +16,7 @@
     </h:outputStylesheet>
 
     <a:region>
-        <h:panelGrid columns="5" rendered="#{not employeeHome.managed}">
+        <h:panelGrid columns="5">
             <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
 
@@ -79,8 +79,8 @@
                            showDetail="true" showSummary="true" tooltip="true"/>
             </ui:define>
         </s:decorate>
-
-        <ui:insert/>
+        <ui:insert name="otherInfo">
+        </ui:insert>
     </a:outputPanel>
 
 
