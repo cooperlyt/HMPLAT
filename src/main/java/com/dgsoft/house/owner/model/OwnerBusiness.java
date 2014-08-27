@@ -17,13 +17,21 @@ import javax.validation.constraints.Size;
 @DiscriminatorColumn(name="BUSINESS_TYPE", discriminatorType=DiscriminatorType.STRING)
 public class OwnerBusiness implements java.io.Serializable {
 
+    public enum BusinessSource{
+        BIZ_CAREATE,BIZ_AFTER_SAVE,BIZ_IMPORT
+    }
+
+    public enum BusinessStatus{
+        RUNNING,COMPLETE,ABORT,SUSPEND,CANCEL,MODIFY,MODIFYING;
+    }
+
 	private String id;
 	private Integer version;
-	private String source;
+	private BusinessSource source;
 	private Date recordTime;
 	private String processMessage;
 	private String memo;
-	private String status;
+	private BusinessStatus status;
 	private Date applyTime;
 	private Date createTime;
 	private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
@@ -38,17 +46,15 @@ public class OwnerBusiness implements java.io.Serializable {
 	public OwnerBusiness() {
 	}
 
-	public OwnerBusiness(String id, String source, Date recordTime,
-			String status, Date applyTime, Date createTime) {
-		this.id = id;
-		this.source = source;
-		this.recordTime = recordTime;
-		this.status = status;
-		this.applyTime = applyTime;
-		this.createTime = createTime;
-	}
+    public OwnerBusiness(BusinessSource source, Date recordTime, BusinessStatus status, Date applyTime, Date createTime) {
+        this.source = source;
+        this.recordTime = recordTime;
+        this.status = status;
+        this.applyTime = applyTime;
+        this.createTime = createTime;
+    }
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -70,14 +76,14 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.version = version;
 	}
 
-	@Column(name = "SOURCE", nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+	@Column(name = "SOURCE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
-	public String getSource() {
+	public BusinessSource getSource() {
 		return this.source;
 	}
 
-	public void setSource(String source) {
+	public void setSource(BusinessSource source) {
 		this.source = source;
 	}
 
@@ -113,14 +119,14 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.memo = memo;
 	}
 
-	@Column(name = "STATUS", nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+	@Column(name = "STATUS", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
-	public String getStatus() {
+	public BusinessStatus getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(BusinessStatus status) {
 		this.status = status;
 	}
 

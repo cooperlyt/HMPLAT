@@ -6,4 +6,13 @@
 
     <action execute="#{taskPublish.publish}"/>
 
+    <navigation from-action="#{taskPublish.wire}">
+        <rule if-outcome="success" if="#{businessDefineHome.haveNeedFile}">
+            <redirect view-id="/business/houseOwner/BizStartFileUpload.xhtml"/>
+        </rule>
+
+        <rule if-outcome="success" if="#{not businessDefineHome.haveNeedFile}">
+            <redirect view-id="/business/houseOwner/BizStartConfirm.xhtml"/>
+        </rule>
+    </navigation>
 </page>

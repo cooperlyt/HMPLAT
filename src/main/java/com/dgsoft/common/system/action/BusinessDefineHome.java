@@ -79,6 +79,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private TaskSubscribe editTaskSubscribe;
 
+    public boolean isHaveNeedFile(){
+        //TODO need file
+        return false;
+    };
 
     public TaskSubscribe getEditTaskSubscribe() {
         return editTaskSubscribe;

@@ -1,6 +1,10 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.model.House;
+import com.dgsoft.house.model.HouseState;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -52,73 +56,44 @@ public class BusinessHouse implements java.io.Serializable {
 	public BusinessHouse() {
 	}
 
-	public BusinessHouse(String id, HouseBusiness houseBusiness, BusinessBuild businessBuild,
-			String houseOrder, String inFloorName, BigDecimal houseArea,
-			int houseState, String useType, String structure, String address,
-			Date mapTime, boolean initRegister, boolean firmlyPower,
-			String houseCode) {
-		this.id = id;
-		this.houseBusiness = houseBusiness;
-		this.businessBuild = businessBuild;
-		this.houseOrder = houseOrder;
-		this.inFloorName = inFloorName;
-		this.houseArea = houseArea;
-		this.houseState = houseState;
-		this.useType = useType;
-		this.structure = structure;
-		this.address = address;
-		this.mapTime = mapTime;
-		this.initRegister = initRegister;
-		this.firmlyPower = firmlyPower;
-		this.houseCode = houseCode;
-	}
-	public BusinessHouse(String id, HouseBusiness houseBusiness,
-			BusinessLandInfo businessLandInfo, BusinessBuild businessBuild, String houseOrder,
-			String houseUnitName, String inFloorName, BigDecimal houseArea,
-			BigDecimal prepareArea, BigDecimal useArea, BigDecimal commArea,
-			BigDecimal shineArea, BigDecimal loftArea, BigDecimal commParam,
-			int houseState, String houseType, String useType, String structure,
-			String knotSize, String address, String eastWall, String westWall,
-			String southWall, String northWall, Date mapTime, String direction,
-			boolean initRegister, boolean firmlyPower, String houseCode,
-			Set<BusinessHouseState> businessHouseStates, Set<NewHouseContract> newHouseContracts) {
-		this.id = id;
-		this.houseBusiness = houseBusiness;
-		this.businessLandInfo = businessLandInfo;
-		this.businessBuild = businessBuild;
-		this.houseOrder = houseOrder;
-		this.houseUnitName = houseUnitName;
-		this.inFloorName = inFloorName;
-		this.houseArea = houseArea;
-		this.prepareArea = prepareArea;
-		this.useArea = useArea;
-		this.commArea = commArea;
-		this.shineArea = shineArea;
-		this.loftArea = loftArea;
-		this.commParam = commParam;
-		this.houseState = houseState;
-		this.houseType = houseType;
-		this.useType = useType;
-		this.structure = structure;
-		this.knotSize = knotSize;
-		this.address = address;
-		this.eastWall = eastWall;
-		this.westWall = westWall;
-		this.southWall = southWall;
-		this.northWall = northWall;
-		this.mapTime = mapTime;
-		this.direction = direction;
-		this.initRegister = initRegister;
-		this.firmlyPower = firmlyPower;
-		this.houseCode = houseCode;
-		this.businessHouseStates = businessHouseStates;
-		this.newHouseContracts = newHouseContracts;
-	}
+	public BusinessHouse(House house){
+        this.houseOrder = house.getHouseOrder();
+        this.houseUnitName = house.getHouseUnitName();
+        this.inFloorName = house.getInFloorName();
+        this.houseArea = house.getHouseArea();
+        this.prepareArea = house.getPrepareArea();
+        this.useArea = house.getUseArea();
+        this.commArea = house.getCommArea();
+        this.shineArea = house.getShineArea();
+        this.loftArea = house.getLoftArea();
+        this.commParam = house.getCommParam();
+        this.houseState = house.getHouseState();
+        this.houseType = house.getHouseType();
+        this.useType = house.getUseType();
+        this.structure = house.getStructure();
+        this.knotSize = house.getKnotSize();
+        this.address = house.getAddress();
+        this.eastWall = house.getEastWall();
+        this.westWall = house.getWestWall();
+        this.southWall = house.getSouthWall();
+        this.northWall = house.getNorthWall();
+        this.mapTime = house.getMapTime();
+        this.direction = house.getDirection();
+        this.initRegister = house.isInitRegister();
+        this.firmlyPower = house.isFirmlyPower();
+        this.houseCode = house.getId();
+        for(HouseState state: house.getHouseStates()){
+            businessHouseStates.add(new BusinessHouseState(this,state.getState()));
+        }
+
+    }
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}

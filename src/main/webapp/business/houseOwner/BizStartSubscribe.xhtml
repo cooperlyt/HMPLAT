@@ -12,9 +12,29 @@
 
     <ui:define name="body">
         <h:form>
+            <r:toolbar>
+                <r:toolbarGroup location="right">
+                    <h:commandButton value="#{messages.ok}" action="#{taskPublish.wire}"/>
+                    <s:button value="#{messages.cancel}" propagation="end" view="/func/system/business/start.xhtml"/>
+                </r:toolbarGroup>
+
+            </r:toolbar>
+
+            <br/>
+            <r:messages ajaxRendered="true" globalOnly="true"/>
+            <br/>
+
             <ui:include src="/layout/system/SubscribePanelView.xhtml">
                 <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
             </ui:include>
+
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.field_memo}
+                </ui:define>
+                <h:inputText maxlength="200" size="200" value="#{houseBusinessHome.instance.memo}"/>
+            </s:decorate>
         </h:form>
     </ui:define>
 

@@ -48,24 +48,24 @@ public class TaskPublish {
         publish();
     }
 
-    public boolean wire() {
-        boolean result = true;
+    public String wire() {
+        String result = "success";
         for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
             if (define.isHaveComponent()) {
-                if (!define.getComponents().wire()) {
-                    result = false;
+                if (!"success".equals(define.getComponents().wireSubscribe())) {
+                    result = "";
                 }
             }
         }
         return result;
     }
 
-    public boolean valid() {
-        boolean result = true;
+    public String valid() {
+        String result = "success";
         for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
             if (define.isHaveComponent()) {
-                if (!define.getComponents().valid()) {
-                    result = false;
+                if (!"success".equals(define.getComponents().validSubscribe())) {
+                    result = "";
                 }
             }
         }
@@ -114,7 +114,7 @@ public class TaskPublish {
                 TaskSubscribeReg.TaskSubscribeDefine define = taskSubscribeReg.getDefineByName(sub.getRegName());
                 defines.add(define);
                 if (define.isHaveComponent()) {
-                    define.getComponents().init();
+                    define.getComponents().initSubscribe();
                 }
             }
         }

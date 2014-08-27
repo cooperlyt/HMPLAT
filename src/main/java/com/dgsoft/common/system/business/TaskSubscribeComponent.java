@@ -5,10 +5,17 @@ package com.dgsoft.common.system.business;
  */
 public interface TaskSubscribeComponent {
 
-    public abstract void init();
+    public abstract void initSubscribe();
 
-    public abstract boolean valid();
+    // success return "success"
+    public abstract String validSubscribe();
 
-    public abstract boolean wire();
+    // success return "success"
+    public abstract String wireSubscribe();
+
+    // success return "saved"
+    public abstract String saveSubscribe();
+
+
 
 }
