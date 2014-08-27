@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 public class BusinessPool implements java.io.Serializable {
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private String type;
 	private String name;
 	private String idType;
@@ -31,30 +31,6 @@ public class BusinessPool implements java.io.Serializable {
 	private String memo;
 
 	public BusinessPool() {
-	}
-
-	public BusinessPool(String id, BusinessHouse businessHouse, String type,
-			String name, String idType, String idNo) {
-		this.id = id;
-		this.businessHouse = businessHouse;
-		this.type = type;
-		this.name = name;
-		this.idType = idType;
-		this.idNo = idNo;
-	}
-	public BusinessPool(String id, BusinessHouse businessHouse, String type,
-			String name, String idType, String idNo, String relation,
-			BigDecimal poolArea, String perc, String memo) {
-		this.id = id;
-		this.businessHouse = businessHouse;
-		this.type = type;
-		this.name = name;
-		this.idType = idType;
-		this.idNo = idNo;
-		this.relation = relation;
-		this.poolArea = poolArea;
-		this.perc = perc;
-		this.memo = memo;
 	}
 
 	@Id
@@ -72,15 +48,15 @@ public class BusinessPool implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
-	}
+    public HouseBusiness getHouseBusiness() {
+        return houseBusiness;
+    }
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
-	}
+    public void setHouseBusiness(HouseBusiness houseBusiness) {
+        this.houseBusiness = houseBusiness;
+    }
 
-	@Column(name = "TYPE", nullable = false, length = 10)
+    @Column(name = "TYPE", nullable = false, length = 10)
 	@NotNull
 	@Size(max = 10)
 	public String getType() {

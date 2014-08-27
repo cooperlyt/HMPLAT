@@ -45,8 +45,6 @@ public class BusinessHouse implements java.io.Serializable {
 	private boolean initRegister;
 	private boolean firmlyPower;
 	private String houseCode;
-	private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
-	private Set<BusinessOwner> businessOwners = new HashSet<BusinessOwner>(0);
 	private Set<BusinessHouseState> businessHouseStates = new HashSet<BusinessHouseState>(0);
 	private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(
 			0);
@@ -83,7 +81,6 @@ public class BusinessHouse implements java.io.Serializable {
 			String knotSize, String address, String eastWall, String westWall,
 			String southWall, String northWall, Date mapTime, String direction,
 			boolean initRegister, boolean firmlyPower, String houseCode,
-			Set<BusinessPool> businessPools, Set<BusinessOwner> businessOwners,
 			Set<BusinessHouseState> businessHouseStates, Set<NewHouseContract> newHouseContracts) {
 		this.id = id;
 		this.houseBusiness = houseBusiness;
@@ -114,8 +111,6 @@ public class BusinessHouse implements java.io.Serializable {
 		this.initRegister = initRegister;
 		this.firmlyPower = firmlyPower;
 		this.houseCode = houseCode;
-		this.businessPools = businessPools;
-		this.businessOwners = businessOwners;
 		this.businessHouseStates = businessHouseStates;
 		this.newHouseContracts = newHouseContracts;
 	}
@@ -410,24 +405,6 @@ public class BusinessHouse implements java.io.Serializable {
 
 	public void setHouseCode(String houseCode) {
 		this.houseCode = houseCode;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<BusinessPool> getBusinessPools() {
-		return this.businessPools;
-	}
-
-	public void setBusinessPools(Set<BusinessPool> businessPools) {
-		this.businessPools = businessPools;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
-	public Set<BusinessOwner> getBusinessOwners() {
-		return this.businessOwners;
-	}
-
-	public void setBusinessOwners(Set<BusinessOwner> businessOwners) {
-		this.businessOwners = businessOwners;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")

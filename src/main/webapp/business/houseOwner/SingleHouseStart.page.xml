@@ -4,7 +4,7 @@
       no-conversation-view-id="/func/system/business/start.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="selectHouseId" value="#{ownerBusinessHome.selectHouseId}"/>
+    <param name="selectHouseId" value="#{houseBusinessHome.selectHouseId}"/>
     <param name="bussinessDefineId" value="#{businessDefineHome.id}"/>
 
 </page>

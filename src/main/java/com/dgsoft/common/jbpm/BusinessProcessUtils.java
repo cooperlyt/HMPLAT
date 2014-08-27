@@ -29,7 +29,7 @@ import static org.jboss.seam.annotations.Install.APPLICATION;
 @Name("org.jboss.seam.bpm.businessProcess")
 @BypassInterceptors
 @Install(dependencies = "org.jboss.seam.bpm.jbpm", precedence = APPLICATION)
-public class BussinessProcessUtils extends BusinessProcess {
+public class BusinessProcessUtils extends BusinessProcess {
 
     @Override
     public void createProcess(String processDefinitionName, String businessKey) {

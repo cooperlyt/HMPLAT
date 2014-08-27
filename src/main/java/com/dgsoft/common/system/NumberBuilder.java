@@ -5,7 +5,9 @@ import com.dgsoft.common.system.model.NumberPool;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
+import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.log.Logging;
+import org.jbpm.JbpmContext;
 
 import javax.persistence.EntityManager;
 import java.text.SimpleDateFormat;
@@ -142,6 +144,16 @@ public class NumberBuilder {
         SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
         String datePart = numberDateformat.format(new Date());
         return datePart + "-" + result;
+    }
+
+
+    public static NumberBuilder instance()
+    {
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (NumberBuilder) Component.getInstance(NumberBuilder.class, ScopeType.APPLICATION);
     }
 
 }

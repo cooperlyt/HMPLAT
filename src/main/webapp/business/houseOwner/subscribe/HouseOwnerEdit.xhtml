@@ -8,8 +8,8 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:include src="/layout/house/owner/OwnerInput.xhtml">
-        <ui:param name="owner" value="#{businessOwnerHome.instance}"/>
-        <ui:param name="personEntityHelper" value="#{houseOwnerEntityHelper}"/>
+        <ui:param name="owner" value="#{businessHouseOwnerSubscribe.instance}"/>
+        <ui:param name="personEntityHelper" value="#{businessHouseOwnerSubscribe.houseOwnerEntityHelper}"/>
     </ui:include>
 
 </ui:composition>

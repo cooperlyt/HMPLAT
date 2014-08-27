@@ -3,13 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.PersonEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,22 +12,29 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_OWNER", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessOwner implements java.io.Serializable,PersonEntity {
+public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
+
+    public enum HouseOwnerType{
+        OWNER_PERSON,POWER_PERSON;
+    }
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private String personName;
 	private CredentialsType credentialsType;
 	private String credentialsNumber;
 	private String phone;
 	private String rootAddress;
-	private String type;
+	private HouseOwnerType type;
 
-	public BusinessOwner() {
+	public BusinessHouseOwner() {
 	}
 
+    public BusinessHouseOwner(HouseOwnerType type) {
+        this.type = type;
+    }
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -45,16 +46,17 @@ public class BusinessOwner implements java.io.Serializable,PersonEntity {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_ID", nullable = false)
-	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUSINESS_ID", nullable = false)
+    @NotNull
+    public HouseBusiness getHouseBusiness() {
+        return houseBusiness;
+    }
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
-	}
+    public void setHouseBusiness(HouseBusiness houseBusiness) {
+        this.houseBusiness = houseBusiness;
+    }
+
 
     @Override
 	@Column(name = "NAME", nullable = false, length = 50)
@@ -69,9 +71,9 @@ public class BusinessOwner implements java.io.Serializable,PersonEntity {
 	}
 
     @Override
+    @Enumerated(EnumType.STRING)
 	@Column(name = "ID_TYPE", nullable = false, length = 32)
 	@NotNull
-	@Size(max = 32)
 	public CredentialsType getCredentialsType() {
 		return this.credentialsType;
 	}
@@ -113,14 +115,14 @@ public class BusinessOwner implements java.io.Serializable,PersonEntity {
 		this.rootAddress = rootAddress;
 	}
 
-	@Column(name = "TYPE", nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
-	public String getType() {
+	public HouseOwnerType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(HouseOwnerType type) {
 		this.type = type;
 	}
 

@@ -33,7 +33,7 @@ public class BusinessProject implements java.io.Serializable {
 	private String districtName;
 	private String projectCode;
 	private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
-	private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
+	private Set<ProjectBusiness> projectBusinesses = new HashSet<ProjectBusiness>(0);
 
 	public BusinessProject() {
 	}
@@ -52,7 +52,7 @@ public class BusinessProject implements java.io.Serializable {
                            Date mapTime, String completeDate, String developerName,
                            String developerCode, String sectionName, String sectionCode,
                            String districtCode, String districtName, String projectCode,
-                           Set<BusinessBuild> businessBuilds, Set<ProjectSellCard> projectSellCards) {
+                           Set<BusinessBuild> businessBuilds, Set<ProjectBusiness> projectBusinesses) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
@@ -70,7 +70,7 @@ public class BusinessProject implements java.io.Serializable {
 		this.districtName = districtName;
 		this.projectCode = projectCode;
 		this.businessBuilds = businessBuilds;
-		this.projectSellCards = projectSellCards;
+		this.projectBusinesses = projectBusinesses;
 	}
 
 	@Id
@@ -247,12 +247,12 @@ public class BusinessProject implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
-	public Set<ProjectSellCard> getProjectSellCards() {
-		return this.projectSellCards;
+	public Set<ProjectBusiness> getProjectBusinesses() {
+		return this.projectBusinesses;
 	}
 
-	public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-		this.projectSellCards = projectSellCards;
+	public void setProjectBusinesses(Set<ProjectBusiness> projectBusinesses) {
+		this.projectBusinesses = projectBusinesses;
 	}
 
 }

@@ -3,15 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,10 +12,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PROJECT_SELL_CARD", catalog = "HOUSE_OWNER_RECORD")
-public class ProjectSellCard implements java.io.Serializable {
+@DiscriminatorValue("PROJECT")
+public class ProjectBusiness extends OwnerBusiness implements java.io.Serializable {
 
-	private String id;
-	private OwnerBusiness ownerBusiness;
 	private BusinessLandInfo businessLandInfo;
 	private BusinessProject businessProject;
 	private Integer houseCount;
@@ -37,59 +28,7 @@ public class ProjectSellCard implements java.io.Serializable {
 	private Date printTime;
 	private String memo;
 
-	public ProjectSellCard() {
-	}
-
-	public ProjectSellCard(String id, OwnerBusiness ownerBusiness,
-			BusinessLandInfo businessLandInfo, BusinessProject businessProject, Date printTime) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.businessLandInfo = businessLandInfo;
-		this.businessProject = businessProject;
-		this.printTime = printTime;
-	}
-	public ProjectSellCard(String id, OwnerBusiness ownerBusiness,
-			BusinessLandInfo businessLandInfo, BusinessProject businessProject, Integer houseCount,
-			Integer buildCount, BigDecimal area, Boolean prepareSell,
-			String useType, String sellObject, String yearNumber,
-			String orderNumber, Date printTime, String memo) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.businessLandInfo = businessLandInfo;
-		this.businessProject = businessProject;
-		this.houseCount = houseCount;
-		this.buildCount = buildCount;
-		this.area = area;
-		this.prepareSell = prepareSell;
-		this.useType = useType;
-		this.sellObject = sellObject;
-		this.yearNumber = yearNumber;
-		this.orderNumber = orderNumber;
-		this.printTime = printTime;
-		this.memo = memo;
-	}
-
-	@Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSSINESS_ID", nullable = false)
-	@NotNull
-	public OwnerBusiness getOwnerBusiness() {
-		return this.ownerBusiness;
-	}
-
-	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-		this.ownerBusiness = ownerBusiness;
+	public ProjectBusiness() {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

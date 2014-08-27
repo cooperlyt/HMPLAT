@@ -32,7 +32,7 @@ public class BusinessLandInfo implements java.io.Serializable {
 	private BigDecimal area;
 	private String landGetMode;
 	private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
-	private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(
+	private Set<ProjectBusiness> projectBusinesses = new HashSet<ProjectBusiness>(
 			0);
 
 	public BusinessLandInfo() {
@@ -47,7 +47,7 @@ public class BusinessLandInfo implements java.io.Serializable {
                             String landProperty, Date beginUseTime, Date endUseTime,
                             BigDecimal area, String landGetMode,
                             Set<BusinessHouse> businessHouses,
-                            Set<ProjectSellCard> projectSellCards) {
+                            Set<ProjectBusiness> projectBusinesses) {
 		this.id = id;
 		this.landCardNo = landCardNo;
 		this.number = number;
@@ -57,7 +57,7 @@ public class BusinessLandInfo implements java.io.Serializable {
 		this.area = area;
 		this.landGetMode = landGetMode;
 		this.businessHouses = businessHouses;
-		this.projectSellCards = projectSellCards;
+		this.projectBusinesses = projectBusinesses;
 	}
 
 	@Id
@@ -153,12 +153,12 @@ public class BusinessLandInfo implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessLandInfo")
-	public Set<ProjectSellCard> getProjectSellCards() {
-		return this.projectSellCards;
+	public Set<ProjectBusiness> getProjectBusinesses() {
+		return this.projectBusinesses;
 	}
 
-	public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-		this.projectSellCards = projectSellCards;
+	public void setProjectBusinesses(Set<ProjectBusiness> projectBusinesses) {
+		this.projectBusinesses = projectBusinesses;
 	}
 
 }

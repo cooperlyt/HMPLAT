@@ -20,15 +20,17 @@
             <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
                 <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
 
-                <r:select id="credentialsType" label="#{messages.person_field_credentialsType}"
+                <h:selectOneMenu id="credentialsType" label="#{messages.person_field_credentialsType}"
                           styleClass="credentialsTypeSelectWidth" listWidth="140px"
                           value="#{personEntityHelper.credentialsType}" required="true">
                     <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                     <s:convertEnum/>
-                    <a:ajax event="selectitem" listener="#{personEntityHelper.typeChange}"
+                    <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
                             render="credentialsNumberField,personEditFields,#{render}"
-                            execute="@this" status="waitSearchPerson"/>
-                </r:select>
+                            execute="@this" status="waitSearchPerson">
+                        <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
+                </h:selectOneMenu>
             </s:decorate>
 
             <s:decorate id="credentialsNumberField" template="/layout/edit.xhtml">
@@ -42,7 +44,9 @@
                              value="#{personEntityHelper.credentialsNumber}">
                     <a:ajax event="blur" render="credentialsNumberField,personEditFields,#{render}"
                             status="waitSearchPerson"
-                            listener="#{personEntityHelper.numberChange}" execute="@region"/>
+                            listener="#{personEntityHelper.numberChange}" execute="@region">
+                        <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
                 </h:inputText>
 
             </s:decorate>

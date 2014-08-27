@@ -11,7 +11,9 @@
         <ui:repeat value="#{subscribeGroup}" var="_group">
             <r:tab header="#{_group.key}">
                 <ui:repeat value="#{_group.values}" var="_item">
-                    <ui:include src="#{_item.page}"/>
+                    <f:subview>
+                        <ui:include src="#{_item.page}"/>
+                    </f:subview>
                 </ui:repeat>
             </r:tab>
         </ui:repeat>

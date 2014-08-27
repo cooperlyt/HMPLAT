@@ -11,9 +11,11 @@
     <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Subscribe}"/>
 
     <ui:define name="body">
-        <ui:include src="/layout/system/SubscribePanelView.xhtml">
-            <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
-        </ui:include>
-
+        <h:form>
+            <ui:include src="/layout/system/SubscribePanelView.xhtml">
+                <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
+            </ui:include>
+        </h:form>
     </ui:define>
+
 </ui:composition>

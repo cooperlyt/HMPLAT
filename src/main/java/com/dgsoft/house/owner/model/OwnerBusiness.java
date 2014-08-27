@@ -4,17 +4,7 @@ package com.dgsoft.house.owner.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,16 +13,15 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "OWNER_BUSINESS", catalog = "HOUSE_OWNER_RECORD")
+@Inheritance(strategy= InheritanceType.JOINED)
+@DiscriminatorColumn(name="BUSINESS_TYPE", discriminatorType=DiscriminatorType.STRING)
 public class OwnerBusiness implements java.io.Serializable {
 
 	private String id;
 	private Integer version;
-	private OwnerBusiness ownerBusiness;
 	private String source;
 	private Date recordTime;
 	private String processMessage;
-	private String mappingCorpCode;
-	private String mappingCorp;
 	private String memo;
 	private String status;
 	private Date applyTime;
@@ -41,15 +30,10 @@ public class OwnerBusiness implements java.io.Serializable {
 	private Set<Reason> reasons = new HashSet<Reason>(0);
 	private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
 	private Set<OtherRegiste> otherRegistes = new HashSet<OtherRegiste>(0);
-	private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
 	private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
 	private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
 	private Set<Card> cards = new HashSet<Card>(0);
-	private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(
-			0);
-	private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(
-			0);
-	private Set<OwnerBusiness> ownerBusinesses = new HashSet<OwnerBusiness>(0);
+	private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
 
 	public OwnerBusiness() {
 	}
@@ -62,40 +46,6 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.status = status;
 		this.applyTime = applyTime;
 		this.createTime = createTime;
-	}
-	public OwnerBusiness(String id, OwnerBusiness ownerBusiness, String source,
-			Date recordTime, String processMessage, String mappingCorpCode,
-			String mappingCorp, String memo, String status, Date applyTime,
-			Date createTime, Set<UploadFiles> uploadFileses,
-			Set<Reason> reasons, Set<BusinessMoney> businessMoneys,
-			Set<OtherRegiste> otherRegistes,
-			Set<HouseBusiness> houseBusinesses, Set<MappingCorp> mappingCorps,
-			Set<BusinessEmp> businessEmps, Set<Card> cards,
-			Set<BusinessPersion> businessPersions,
-			Set<ProjectSellCard> projectSellCards,
-			Set<OwnerBusiness> ownerBusinesses) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.source = source;
-		this.recordTime = recordTime;
-		this.processMessage = processMessage;
-		this.mappingCorpCode = mappingCorpCode;
-		this.mappingCorp = mappingCorp;
-		this.memo = memo;
-		this.status = status;
-		this.applyTime = applyTime;
-		this.createTime = createTime;
-		this.uploadFileses = uploadFileses;
-		this.reasons = reasons;
-		this.businessMoneys = businessMoneys;
-		this.otherRegistes = otherRegistes;
-		this.houseBusinesses = houseBusinesses;
-		this.mappingCorps = mappingCorps;
-		this.businessEmps = businessEmps;
-		this.cards = cards;
-		this.businessPersions = businessPersions;
-		this.projectSellCards = projectSellCards;
-		this.ownerBusinesses = ownerBusinesses;
 	}
 
 	@Id
@@ -118,16 +68,6 @@ public class OwnerBusiness implements java.io.Serializable {
 
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BEFORE_BUSINESS_ID")
-	public OwnerBusiness getOwnerBusiness() {
-		return this.ownerBusiness;
-	}
-
-	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "SOURCE", nullable = false, length = 10)
@@ -162,25 +102,6 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.processMessage = processMessage;
 	}
 
-	@Column(name = "MAPPING_CORP_CODE", length = 32)
-	@Size(max = 32)
-	public String getMappingCorpCode() {
-		return this.mappingCorpCode;
-	}
-
-	public void setMappingCorpCode(String mappingCorpCode) {
-		this.mappingCorpCode = mappingCorpCode;
-	}
-
-	@Column(name = "MAPPING_CORP", length = 100)
-	@Size(max = 100)
-	public String getMappingCorp() {
-		return this.mappingCorp;
-	}
-
-	public void setMappingCorp(String mappingCorp) {
-		this.mappingCorp = mappingCorp;
-	}
 
 	@Column(name = "MEMO", length = 200)
 	@Size(max = 200)
@@ -262,15 +183,6 @@ public class OwnerBusiness implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
-	public Set<HouseBusiness> getHouseBusinesses() {
-		return this.houseBusinesses;
-	}
-
-	public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
-		this.houseBusinesses = houseBusinesses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
 	public Set<MappingCorp> getMappingCorps() {
 		return this.mappingCorps;
 	}
@@ -304,24 +216,6 @@ public class OwnerBusiness implements java.io.Serializable {
 
 	public void setBusinessPersions(Set<BusinessPersion> businessPersions) {
 		this.businessPersions = businessPersions;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
-	public Set<ProjectSellCard> getProjectSellCards() {
-		return this.projectSellCards;
-	}
-
-	public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-		this.projectSellCards = projectSellCards;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
-	public Set<OwnerBusiness> getOwnerBusinesses() {
-		return this.ownerBusinesses;
-	}
-
-	public void setOwnerBusinesses(Set<OwnerBusiness> ownerBusinesses) {
-		this.ownerBusinesses = ownerBusinesses;
 	}
 
 }

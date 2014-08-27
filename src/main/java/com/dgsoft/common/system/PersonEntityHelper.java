@@ -4,10 +4,12 @@ import com.dgsoft.common.EntityHomeAdapter;
 import com.dgsoft.common.system.action.PersonHome;
 import com.dgsoft.common.system.model.Person;
 import com.dgsoft.common.system.model.PersonId;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.framework.EntityNotFoundException;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by cooper on 8/21/14.
@@ -17,11 +19,11 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
 
     protected abstract EntityHomeAdapter<E> getEntityHome();
 
-    @In
-    private PersonHome personHome;
+    private PersonHome getPersonHome(){
+       return (PersonHome) Component.getInstance("personHome",true,true);
+    }
 
-    @In
-    private NumberBuilder numberBuilder;
+
 
     public PersonEntity.CredentialsType getCredentialsType() {
         return getEntityHome().getInstance().getCredentialsType();
@@ -69,7 +71,7 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
     public void typeChange() {
         isManager = false;
         if ((getCredentialsType() != null) &&  getCredentialsType().equals(PersonEntity.CredentialsType.OTHER)) {
-            setCredentialsNumber(numberBuilder.getSampleNumber("OTHER_PERSON_CARD_NO"));
+            setCredentialsNumber(NumberBuilder.instance().getSampleNumber("OTHER_PERSON_CARD_NO"));
         } else {
             setCredentialsNumber(null);
         }
@@ -81,7 +83,7 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
         if ((getCredentialsNumber() != null) &&
                 !getCredentialsType().equals(PersonEntity.CredentialsType.OTHER) &&
                 !getCredentialsNumber().equals("")){
-            Person person = personHome.getEntityManager().find(Person.class, new PersonId(getCredentialsType(), getCredentialsNumber()));
+            Person person = getPersonHome().getEntityManager().find(Person.class, new PersonId(getCredentialsType(), getCredentialsNumber()));
             if (person != null) {
                 fillPerson(person);
                 isManager = true;
@@ -92,7 +94,7 @@ public abstract class PersonEntityHelper<E extends PersonEntity> {
 
     public void clear() {
 
-        personHome.clearInstance();
+        getPersonHome().clearInstance();
         isManager = false;
     }
 
