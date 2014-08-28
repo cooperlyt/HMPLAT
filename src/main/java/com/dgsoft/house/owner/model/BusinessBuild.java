@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.model.Build;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -37,7 +38,6 @@ public class BusinessBuild implements java.io.Serializable {
 	private BigDecimal lat;
 	private String buildType;
 	private String structure;
-	private String memo;
 	private Integer homeCount;
 	private BigDecimal homeArea;
 	private Integer unhomeCount;
@@ -53,62 +53,37 @@ public class BusinessBuild implements java.io.Serializable {
 	public BusinessBuild() {
 	}
 
-	public BusinessBuild(String id, String blockNo, String buildNo, String name,
-                         int floorCount, String structure, int upFloorCount,
-                         int downFloorCount, boolean haveDownRoom, String buildCode) {
-		this.id = id;
-		this.blockNo = blockNo;
-		this.buildNo = buildNo;
-		this.name = name;
-		this.floorCount = floorCount;
-		this.structure = structure;
-		this.upFloorCount = upFloorCount;
-		this.downFloorCount = downFloorCount;
-		this.haveDownRoom = haveDownRoom;
-		this.buildCode = buildCode;
-	}
-	public BusinessBuild(String id, BusinessProject businessProject, String landBlockCode,
-                         String mapNumber, String blockNo, String buildNo,
-                         String streetCode, String completeDate, String name, String doorNo,
-                         Integer unintCount, int floorCount, String address,
-                         Integer houseCount, BigDecimal area, BigDecimal lng,
-                         BigDecimal lat, String buildType, String structure, String memo,
-                         Integer homeCount, BigDecimal homeArea, Integer unhomeCount,
-                         BigDecimal unhomeArea, Integer shopCount, BigDecimal shopArea,
-                         int upFloorCount, int downFloorCount, boolean haveDownRoom,
-                         String buildCode, Set<BusinessHouse> businessHouses) {
-		this.id = id;
-		this.businessProject = businessProject;
-		this.landBlockCode = landBlockCode;
-		this.mapNumber = mapNumber;
-		this.blockNo = blockNo;
-		this.buildNo = buildNo;
-		this.streetCode = streetCode;
-		this.completeDate = completeDate;
-		this.name = name;
-		this.doorNo = doorNo;
-		this.unintCount = unintCount;
-		this.floorCount = floorCount;
-		this.address = address;
-		this.houseCount = houseCount;
-		this.area = area;
-		this.lng = lng;
-		this.lat = lat;
-		this.buildType = buildType;
-		this.structure = structure;
-		this.memo = memo;
-		this.homeCount = homeCount;
-		this.homeArea = homeArea;
-		this.unhomeCount = unhomeCount;
-		this.unhomeArea = unhomeArea;
-		this.shopCount = shopCount;
-		this.shopArea = shopArea;
-		this.upFloorCount = upFloorCount;
-		this.downFloorCount = downFloorCount;
-		this.haveDownRoom = haveDownRoom;
-		this.buildCode = buildCode;
-		this.businessHouses = businessHouses;
-	}
+	public BusinessBuild(Build build){
+        this.landBlockCode = build.getLandBlockCode();
+        this.mapNumber = build.getMapNumber();
+        this.blockNo = build.getBlockNo();
+        this.buildNo = build.getBuildNo();
+        this.streetCode = build.getStreetCode();
+        this.completeDate = build.getCompleteDate();
+        this.name = build.getName();
+        this.doorNo = build.getDoorNo();
+        this.unintCount = build.getUnintCount();
+        this.floorCount = build.getFloorCount();
+        this.address = build.getAddress();
+        this.houseCount = build.getHouseCount();
+        this.area = build.getArea();
+        this.lng = build.getLng();
+        this.lat = build.getLat();
+        this.buildType = build.getBuildType();
+        this.structure = build.getStructure();
+        this.homeCount = build.getHomeCount();
+        this.homeArea = build.getHomeArea();
+        this.unhomeArea = build.getUnhomeArea();
+        this.unhomeCount = build.getUnhomeCount();
+        this.shopCount = build.getShopCount();
+        this.shopArea = build.getShopArea();
+        this.upFloorCount = build.getUpFloorCount();
+        this.downFloorCount = build.getDownFloorCount();
+        this.haveDownRoom = build.isHaveDownRoom();
+        this.buildCode = build.getId();
+        this.businessProject = new BusinessProject(build.getProject());
+
+    }
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -301,16 +276,6 @@ public class BusinessBuild implements java.io.Serializable {
 
 	public void setStructure(String structure) {
 		this.structure = structure;
-	}
-
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
 	}
 
 	@Column(name = "HOME_COUNT")
