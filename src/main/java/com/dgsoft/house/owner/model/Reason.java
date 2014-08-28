@@ -14,23 +14,20 @@ import javax.validation.constraints.Size;
 @Table(name = "REASON", catalog = "HOUSE_OWNER_RECORD")
 public class Reason implements java.io.Serializable {
 
+    public enum ReasonType{MODIFY_BEFOR_RENSON,MODIFY_AFTER_RENSON,CHANG_BEFOR_RESON,CHANG_AFTER_RESON};
 	private String id;
 	private OwnerBusiness ownerBusiness;
-	private String type;
+	private ReasonType type;
 	private String reason;
 
 	public Reason() {
 	}
 
-	public Reason(String id, OwnerBusiness ownerBusiness, String type,
-			String reason) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.type = type;
-		this.reason = reason;
-	}
+    public Reason(ReasonType type) {
+        this.type = type;
+    }
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -55,19 +52,18 @@ public class Reason implements java.io.Serializable {
 		this.ownerBusiness = ownerBusiness;
 	}
 
-	@Column(name = "TYPE", nullable = false, length = 10)
+	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
-	public String getType() {
+    @Enumerated(EnumType.STRING)
+	public ReasonType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(ReasonType type) {
 		this.type = type;
 	}
 
-	@Column(name = "REASON", nullable = false, length = 200)
-	@NotNull
+	@Column(name = "REASON", nullable = true, length = 200)
 	@Size(max = 200)
 	public String getReason() {
 		return this.reason;
