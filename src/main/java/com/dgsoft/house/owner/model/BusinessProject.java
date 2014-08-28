@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.model.Project;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -40,40 +41,24 @@ public class BusinessProject implements java.io.Serializable {
 	public BusinessProject() {
 	}
 
-	public BusinessProject(String id, String name, Date mapTime, String districtCode,
-                           String districtName, String projectCode) {
-		this.id = id;
-		this.name = name;
-		this.mapTime = mapTime;
-		this.districtCode = districtCode;
-		this.districtName = districtName;
-		this.projectCode = projectCode;
-	}
-	public BusinessProject(String id, String name, String address, String buildSize,
-                           Integer buildCount, BigDecimal area, BigDecimal sumArea,
-                           Date mapTime, String completeDate, String developerName,
-                           String developerCode, String sectionName, String sectionCode,
-                           String districtCode, String districtName, String projectCode,
-                           Set<BusinessBuild> businessBuilds, Set<ProjectBusiness> projectBusinesses) {
-		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.buildSize = buildSize;
-		this.buildCount = buildCount;
-		this.area = area;
-		this.sumArea = sumArea;
-		this.mapTime = mapTime;
-		this.completeDate = completeDate;
-		this.developerName = developerName;
-		this.developerCode = developerCode;
-		this.sectionName = sectionName;
-		this.sectionCode = sectionCode;
-		this.districtCode = districtCode;
-		this.districtName = districtName;
-		this.projectCode = projectCode;
-		this.businessBuilds = businessBuilds;
-		this.projectBusinesses = projectBusinesses;
-	}
+    public BusinessProject(Project project){
+        this.name = project.getName();
+        this.address = project.getAddress();
+        this.buildSize = project.getBuildSize();
+        this.buildCount = project.getBuildCount();
+        this.area = project.getArea();
+        this.sumArea = project.getSumArea();
+        this.mapTime = project.getMapTime();
+        this.completeDate = project.getCompleteDate();
+        this.developerCode = project.getDeveloper().getId();
+        this.developerName = project.getDeveloper().getName();
+        this.sectionCode = project.getSection().getId();
+        this.sectionName = project.getSection().getName();
+        this.districtCode = project.getSection().getDistrict().getId();
+        this.districtName = project.getSection().getDistrict().getName();
+        this.projectCode = project.getId();
+
+    }
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)

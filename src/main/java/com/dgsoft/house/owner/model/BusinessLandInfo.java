@@ -37,7 +37,11 @@ public class BusinessLandInfo implements java.io.Serializable {
     public BusinessLandInfo(LandInfo landInfo){
         this.landCardNo = landInfo.getLandCardNo();
         this.number = landInfo.getNumber();
-        //this.landProperty =
+        this.landProperty = landInfo.getLandProperty();
+        this.beginUseTime = landInfo.getBeginUseTime();
+        this.endUseTime = landInfo.getEndUseTime();
+        this.area = landInfo.getArea();
+        this.landGetMode = landInfo.getLandGetMode();
     }
 
 	@Id

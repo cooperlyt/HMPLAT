@@ -87,8 +87,10 @@ public class BusinessHouse implements java.io.Serializable {
         }
 
         if (house.getLandInfo() != null){
-            this.setBusinessLandInfo(new BusinessLandInfo());
+            this.setBusinessLandInfo(new BusinessLandInfo(house.getLandInfo()));
         }
+
+        this.setBusinessBuild(new BusinessBuild(house.getBuild()));
 
     }
 
