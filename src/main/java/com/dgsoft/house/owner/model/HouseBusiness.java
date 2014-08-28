@@ -29,6 +29,7 @@ public class HouseBusiness extends OwnerBusiness implements java.io.Serializable
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
 
     public HouseBusiness() {
+        this.setOwnerBusinessType(OwnerBusinessType.HOUSE);
     }
 
     public HouseBusiness(BusinessSource source,
@@ -36,6 +37,7 @@ public class HouseBusiness extends OwnerBusiness implements java.io.Serializable
                          BusinessStatus status,
                          Date applyTime, Date createTime) {
         super(source, recordTime, status, applyTime, createTime);
+        this.setOwnerBusinessType(OwnerBusinessType.HOUSE);
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)

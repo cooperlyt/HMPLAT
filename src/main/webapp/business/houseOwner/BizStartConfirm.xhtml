@@ -11,7 +11,13 @@
     <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Confirm}"/>
 
     <ui:define name="body">
+        <r:toolbar>
+            <r:toolbarGroup location="right">
+                <s:button value="create" action="#{houseBusinessHome.persist}"/>
+            </r:toolbarGroup>
+        </r:toolbar>
 
+        #{houseBusinessHome.singleHoues.houseCode}
     </ui:define>
 
 </ui:composition>

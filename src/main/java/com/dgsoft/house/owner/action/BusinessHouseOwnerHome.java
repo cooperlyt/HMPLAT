@@ -19,6 +19,7 @@ public class BusinessHouseOwnerHome extends OwnerEntityHome<BusinessHouseOwner>{
         houseOwnerEntityHelper = new HouseOwnerEntityHelper(this);
     }
 
+
     public HouseOwnerEntityHelper getHouseOwnerEntityHelper() {
         return houseOwnerEntityHelper;
     }
