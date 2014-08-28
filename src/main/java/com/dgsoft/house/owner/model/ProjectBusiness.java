@@ -29,6 +29,7 @@ public class ProjectBusiness extends OwnerBusiness implements java.io.Serializab
 	private String memo;
 
 	public ProjectBusiness() {
+        this.setOwnerBusinessType(OwnerBusinessType.PROJECT);
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)

@@ -31,6 +31,7 @@ public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome{
             }
         }
         getInstance().setHouseBusiness(houseBusinessHome.getInstance());
+        houseBusinessHome.getInstance().getBusinessHouseOwners().add(getInstance());
     }
 
     @Override

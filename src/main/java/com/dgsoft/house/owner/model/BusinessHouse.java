@@ -56,7 +56,8 @@ public class BusinessHouse implements java.io.Serializable {
     public BusinessHouse() {
     }
 
-    public BusinessHouse(House house) {
+    public BusinessHouse(HouseBusiness houseBusiness,House house) {
+        this.houseBusiness = houseBusiness;
         this.houseOrder = house.getHouseOrder();
         this.houseUnitName = house.getHouseUnitName();
         this.inFloorName = house.getInFloorName();

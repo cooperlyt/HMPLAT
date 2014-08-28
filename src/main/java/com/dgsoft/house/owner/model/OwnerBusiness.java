@@ -13,38 +13,43 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "OWNER_BUSINESS", catalog = "HOUSE_OWNER_RECORD")
-@Inheritance(strategy= InheritanceType.JOINED)
-@DiscriminatorColumn(name="BUSINESS_TYPE", discriminatorType=DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "BUSINESS_TYPE", discriminatorType = DiscriminatorType.STRING)
 public class OwnerBusiness implements java.io.Serializable {
 
-    public enum BusinessSource{
-        BIZ_CAREATE,BIZ_AFTER_SAVE,BIZ_IMPORT
+    public enum BusinessSource {
+        BIZ_CAREATE, BIZ_AFTER_SAVE, BIZ_IMPORT
     }
 
-    public enum BusinessStatus{
-        RUNNING,COMPLETE,ABORT,SUSPEND,CANCEL,MODIFY,MODIFYING;
+    public enum BusinessStatus {
+        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING;
     }
 
-	private String id;
-	private Integer version;
-	private BusinessSource source;
-	private Date recordTime;
-	private String processMessage;
-	private String memo;
-	private BusinessStatus status;
-	private Date applyTime;
-	private Date createTime;
-	private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
-	private Set<Reason> reasons = new HashSet<Reason>(0);
-	private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
-	private Set<OtherRegiste> otherRegistes = new HashSet<OtherRegiste>(0);
-	private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
-	private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
-	private Set<Card> cards = new HashSet<Card>(0);
-	private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
+    public enum OwnerBusinessType {
+        HOUSE, PROJECT;
+    }
 
-	public OwnerBusiness() {
-	}
+    private String id;
+    private Integer version;
+    private BusinessSource source;
+    private Date recordTime;
+    private String processMessage;
+    private String memo;
+    private BusinessStatus status;
+    private Date applyTime;
+    private Date createTime;
+    private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
+    private Set<Reason> reasons = new HashSet<Reason>(0);
+    private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
+    private Set<OtherRegiste> otherRegistes = new HashSet<OtherRegiste>(0);
+    private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
+    private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
+    private Set<Card> cards = new HashSet<Card>(0);
+    private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
+    private OwnerBusinessType ownerBusinessType;
+
+    public OwnerBusiness() {
+    }
 
     public OwnerBusiness(BusinessSource source, Date recordTime, BusinessStatus status, Date applyTime, Date createTime) {
         this.source = source;
@@ -55,173 +60,183 @@ public class OwnerBusiness implements java.io.Serializable {
     }
 
     @Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getId() {
-		return this.id;
-	}
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    public String getId() {
+        return this.id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@Version
-	@Column(name = "VERSION")
-	public Integer getVersion() {
-		return this.version;
-	}
+    @Version
+    @Column(name = "VERSION")
+    public Integer getVersion() {
+        return this.version;
+    }
 
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-    @Enumerated(EnumType.STRING)
-	@Column(name = "SOURCE", nullable = false, length = 20)
-	@NotNull
-	public BusinessSource getSource() {
-		return this.source;
-	}
-
-	public void setSource(BusinessSource source) {
-		this.source = source;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "RECORD_TIME", nullable = false, length = 19)
-	@NotNull
-	public Date getRecordTime() {
-		return this.recordTime;
-	}
-
-	public void setRecordTime(Date recordTime) {
-		this.recordTime = recordTime;
-	}
-
-	@Column(name = "PROCESS_MESSAGE", length = 400)
-	@Size(max = 400)
-	public String getProcessMessage() {
-		return this.processMessage;
-	}
-
-	public void setProcessMessage(String processMessage) {
-		this.processMessage = processMessage;
-	}
-
-
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
     @Enumerated(EnumType.STRING)
-	@Column(name = "STATUS", nullable = false, length = 20)
-	@NotNull
-	public BusinessStatus getStatus() {
-		return this.status;
-	}
+    @Column(name = "SOURCE", nullable = false, length = 20)
+    @NotNull
+    public BusinessSource getSource() {
+        return this.source;
+    }
 
-	public void setStatus(BusinessStatus status) {
-		this.status = status;
-	}
+    public void setSource(BusinessSource source) {
+        this.source = source;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "APPLY_TIME", nullable = false, length = 19)
-	@NotNull
-	public Date getApplyTime() {
-		return this.applyTime;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "RECORD_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getRecordTime() {
+        return this.recordTime;
+    }
 
-	public void setApplyTime(Date applyTime) {
-		this.applyTime = applyTime;
-	}
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME", nullable = false, length = 19)
-	@NotNull
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    @Column(name = "PROCESS_MESSAGE", length = 400)
+    @Size(max = 400)
+    public String getProcessMessage() {
+        return this.processMessage;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setProcessMessage(String processMessage) {
+        this.processMessage = processMessage;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness" , cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<UploadFiles> getUploadFileses() {
-		return this.uploadFileses;
-	}
 
-	public void setUploadFileses(Set<UploadFiles> uploadFileses) {
-		this.uploadFileses = uploadFileses;
-	}
+    @Column(name = "MEMO", length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return this.memo;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<Reason> getReasons() {
-		return this.reasons;
-	}
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 
-	public void setReasons(Set<Reason> reasons) {
-		this.reasons = reasons;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS", nullable = false, length = 20)
+    @NotNull
+    public BusinessStatus getStatus() {
+        return this.status;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<BusinessMoney> getBusinessMoneys() {
-		return this.businessMoneys;
-	}
+    public void setStatus(BusinessStatus status) {
+        this.status = status;
+    }
 
-	public void setBusinessMoneys(Set<BusinessMoney> businessMoneys) {
-		this.businessMoneys = businessMoneys;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "APPLY_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getApplyTime() {
+        return this.applyTime;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<OtherRegiste> getOtherRegistes() {
-		return this.otherRegistes;
-	}
+    public void setApplyTime(Date applyTime) {
+        this.applyTime = applyTime;
+    }
 
-	public void setOtherRegistes(Set<OtherRegiste> otherRegistes) {
-		this.otherRegistes = otherRegistes;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getCreateTime() {
+        return this.createTime;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<MappingCorp> getMappingCorps() {
-		return this.mappingCorps;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public void setMappingCorps(Set<MappingCorp> mappingCorps) {
-		this.mappingCorps = mappingCorps;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<UploadFiles> getUploadFileses() {
+        return this.uploadFileses;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<BusinessEmp> getBusinessEmps() {
-		return this.businessEmps;
-	}
+    public void setUploadFileses(Set<UploadFiles> uploadFileses) {
+        this.uploadFileses = uploadFileses;
+    }
 
-	public void setBusinessEmps(Set<BusinessEmp> businessEmps) {
-		this.businessEmps = businessEmps;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<Reason> getReasons() {
+        return this.reasons;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness" , cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<Card> getCards() {
-		return this.cards;
-	}
+    public void setReasons(Set<Reason> reasons) {
+        this.reasons = reasons;
+    }
 
-	public void setCards(Set<Card> cards) {
-		this.cards = cards;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessMoney> getBusinessMoneys() {
+        return this.businessMoneys;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-	public Set<BusinessPersion> getBusinessPersions() {
-		return this.businessPersions;
-	}
+    public void setBusinessMoneys(Set<BusinessMoney> businessMoneys) {
+        this.businessMoneys = businessMoneys;
+    }
 
-	public void setBusinessPersions(Set<BusinessPersion> businessPersions) {
-		this.businessPersions = businessPersions;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<OtherRegiste> getOtherRegistes() {
+        return this.otherRegistes;
+    }
 
+    public void setOtherRegistes(Set<OtherRegiste> otherRegistes) {
+        this.otherRegistes = otherRegistes;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<MappingCorp> getMappingCorps() {
+        return this.mappingCorps;
+    }
+
+    public void setMappingCorps(Set<MappingCorp> mappingCorps) {
+        this.mappingCorps = mappingCorps;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessEmp> getBusinessEmps() {
+        return this.businessEmps;
+    }
+
+    public void setBusinessEmps(Set<BusinessEmp> businessEmps) {
+        this.businessEmps = businessEmps;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<Card> getCards() {
+        return this.cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessPersion> getBusinessPersions() {
+        return this.businessPersions;
+    }
+
+    public void setBusinessPersions(Set<BusinessPersion> businessPersions) {
+        this.businessPersions = businessPersions;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "BUSINESS_TYPE", length = 20)
+    @NotNull
+    public OwnerBusinessType getOwnerBusinessType() {
+        return ownerBusinessType;
+    }
+
+    public void setOwnerBusinessType(OwnerBusinessType ownerBusinessType) {
+        this.ownerBusinessType = ownerBusinessType;
+    }
 }

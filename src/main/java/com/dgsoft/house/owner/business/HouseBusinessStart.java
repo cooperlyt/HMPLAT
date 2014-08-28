@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
@@ -43,8 +44,8 @@ public class HouseBusinessStart {
         Logging.getLog(getClass()).debug("singleHouseSelectet:" + selectHouseId);
 
         houseBusinessHome.getInstance().getBusinessHouses().clear();
-        houseBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
-
+        houseBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(houseBusinessHome.getInstance(),houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
+        houseBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
         return BUSINESS_START_PAGE;
     }
 
