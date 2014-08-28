@@ -4,6 +4,8 @@
     <subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
          产权人编辑
     </subscribe>
-
+    <subscribe name="modifyBeforReasonEdit" page="/layout/house/owner/ReasonInput.xhtml" component="" cagegory="" type="EDIT">
+        变更前事项
+    </subscribe>
 
 </subscribes>
