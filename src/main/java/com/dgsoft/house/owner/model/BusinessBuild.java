@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -112,6 +114,8 @@ public class BusinessBuild implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -120,8 +124,9 @@ public class BusinessBuild implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PROJECT")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL},optional = false)
+	@JoinColumn(name = "PROJECT",nullable = false)
+    @NotNull
 	public BusinessProject getBusinessProject() {
 		return this.businessProject;
 	}

@@ -1,18 +1,14 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.model.LandInfo;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,32 +34,18 @@ public class BusinessLandInfo implements java.io.Serializable {
 	public BusinessLandInfo() {
 	}
 
-	public BusinessLandInfo(String id, Date beginUseTime, Date endUseTime) {
-		this.id = id;
-		this.beginUseTime = beginUseTime;
-		this.endUseTime = endUseTime;
-	}
-	public BusinessLandInfo(String id, String landCardNo, String number,
-                            String landProperty, Date beginUseTime, Date endUseTime,
-                            BigDecimal area, String landGetMode,
-                            Set<BusinessHouse> businessHouses,
-                            Set<ProjectBusiness> projectBusinesses) {
-		this.id = id;
-		this.landCardNo = landCardNo;
-		this.number = number;
-		this.landProperty = landProperty;
-		this.beginUseTime = beginUseTime;
-		this.endUseTime = endUseTime;
-		this.area = area;
-		this.landGetMode = landGetMode;
-		this.businessHouses = businessHouses;
-		this.projectBusinesses = projectBusinesses;
-	}
+    public BusinessLandInfo(LandInfo landInfo){
+        this.landCardNo = landInfo.getLandCardNo();
+        this.number = landInfo.getNumber();
+        //this.landProperty =
+    }
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}

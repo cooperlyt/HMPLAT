@@ -31,7 +31,7 @@ public class ProjectBusiness extends OwnerBusiness implements java.io.Serializab
 	public ProjectBusiness() {
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
 	@JoinColumn(name = "LAND_INFO", nullable = false)
 	@NotNull
 	public BusinessLandInfo getBusinessLandInfo() {
@@ -42,7 +42,7 @@ public class ProjectBusiness extends OwnerBusiness implements java.io.Serializab
 		this.businessLandInfo = businessLandInfo;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
 	@JoinColumn(name = "PROJECT", nullable = false)
 	@NotNull
 	public BusinessProject getBusinessProject() {

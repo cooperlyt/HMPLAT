@@ -1,52 +1,25 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Created by cooper on 8/25/14.
  */
 @Name("houseBusinessHome")
 public class HouseBusinessHome extends OwnerEntityHome<HouseBusiness> {
-
-    private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
-
-    private String selectHouseId;
-
-    public String getSelectHouseId() {
-        return selectHouseId;
-    }
-
-    public void setSelectHouseId(String selectHouseId) {
-        this.selectHouseId = selectHouseId;
-    }
-
-    public String singleHouseSelectet() {
-        getInstance().getBusinessHouses().clear();
-        getInstance().getBusinessHouses().add(new BusinessHouse());
-
-        return BUSINESS_START_PAGE;
-    }
-
-
-    public String mulitHouseSelect() {
-
-
-        return BUSINESS_START_PAGE;
-    }
-
-    //TODO valid House
-
-    @In
-    private BusinessDefineHome businessDefineHome;
 
     @Override
     public HouseBusiness createInstance(){

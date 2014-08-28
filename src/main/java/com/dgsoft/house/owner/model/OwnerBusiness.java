@@ -152,7 +152,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness" , cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<UploadFiles> getUploadFileses() {
 		return this.uploadFileses;
 	}
@@ -161,7 +161,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.uploadFileses = uploadFileses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<Reason> getReasons() {
 		return this.reasons;
 	}
@@ -170,7 +170,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.reasons = reasons;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<BusinessMoney> getBusinessMoneys() {
 		return this.businessMoneys;
 	}
@@ -179,7 +179,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.businessMoneys = businessMoneys;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<OtherRegiste> getOtherRegistes() {
 		return this.otherRegistes;
 	}
@@ -188,7 +188,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.otherRegistes = otherRegistes;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<MappingCorp> getMappingCorps() {
 		return this.mappingCorps;
 	}
@@ -197,7 +197,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.mappingCorps = mappingCorps;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<BusinessEmp> getBusinessEmps() {
 		return this.businessEmps;
 	}
@@ -206,7 +206,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.businessEmps = businessEmps;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness" , cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<Card> getCards() {
 		return this.cards;
 	}
@@ -215,7 +215,7 @@ public class OwnerBusiness implements java.io.Serializable {
 		this.cards = cards;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	public Set<BusinessPersion> getBusinessPersions() {
 		return this.businessPersions;
 	}
