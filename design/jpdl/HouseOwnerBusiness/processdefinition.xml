@@ -4,22 +4,22 @@
 
 
 	<start-state name="业务受理">
-		<transition to="审核部门判断"></transition>
+		<transition to="收费判断"></transition>
 	</start-state>
 
 
 	<task-node name="受理">
-		<transition to="审核部门判断"></transition>
+		<transition to="收费判断"></transition>
 	</task-node>
 
-	<task-node name="产权科审核">
+	<task-node name="审核">
 		<transition to="登薄"></transition>
-		<transition to="回退" name="to 回退"></transition>
+		<transition to="受理" name="to 回退"></transition>
 	</task-node>
 
 	<task-node name="登薄">
 		<transition to="繕证判断"></transition>
-		<transition to="回退" name="to 收费"></transition>
+		<transition to="受理" name="to 受理"></transition>
 	</task-node>
 
 	<task-node name="归档">
@@ -28,7 +28,6 @@
 
 	<task-node name="收费">
 		<transition to="收费确认"></transition>
-		<transition to="审核部门判断" name="to 审核"></transition>
 	</task-node>
 
 	<task-node name="繕证">
@@ -41,22 +40,13 @@
 	</decision>
 
 	<task-node name="收费确认">
-		<transition to="审核部门判断"></transition>
+		<transition to="审核"></transition>
 	</task-node>
 
-	<decision name="审核部门判断">
-		<transition to="产权科审核"></transition>
-		<transition to="交易科审核" name="to 交易科审核"></transition>
+	<decision name="收费判断">
+		<transition to="收费"></transition>
+		<transition to="审核" name="to 产权科审核"></transition>
 	</decision>
-
-	<decision name="回退">
-		<transition to="受理"></transition>
-		<transition to="收费" name="to 收费"></transition>
-	</decision>
-
-	<task-node name="交易科审核">
-		<transition to="登薄"></transition>
-	</task-node>
 
 
 	<end-state name="结束"></end-state>
