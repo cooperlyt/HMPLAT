@@ -18,5 +18,21 @@
         </h:selectOneMenu>
     </s:decorate>
 
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.SaleInfo_SUM_PRICE}
+        </ui:define>
+        <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}" size="20"
+                     id="sumPriceInput" label="#{messages.SaleInfo_SUM_PRICE}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+            <f:convertNumber pattern="#0.00"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="sumPriceInput" styleClass="message-icon"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+        </ui:define>
+    </s:decorate>
+
 
 </ui:composition>
