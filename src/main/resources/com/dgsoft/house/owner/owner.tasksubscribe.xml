@@ -5,7 +5,15 @@
          产权人编辑
     </subscribe>
     <subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml" component="" cagegory="" type="EDIT">
-        变更前事项
+        变更前
     </subscribe>
-
+    <subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml" component="" cagegory="" type="EDIT">
+        变更后
+    </subscribe>
+    <subscribe name="changBeforReasonEdit" page="/business/houseOwner/subscribe/ChangBeforRensonEdit.xhtml" component="" cagegory="" type="EDIT">
+        更正前
+    </subscribe>
+    <subscribe name="changAfterRensonEditEdit" page="/business/houseOwner/subscribe/ChangAfterRensonEdit.xhtml" component="" cagegory="" type="EDIT">
+        更后前
+    </subscribe>
 </subscribes>
