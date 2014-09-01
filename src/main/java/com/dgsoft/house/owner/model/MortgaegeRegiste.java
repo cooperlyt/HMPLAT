@@ -22,16 +22,15 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	private String warrantScope;
 	private String interestType;
 	private Date mortgageDueTimeS;
-	private Date mortgageDueTimeE;
+	private String mortgageTime;
 	private BigDecimal mortgageArea;
-	private String deptSureFact;
 
 	public MortgaegeRegiste() {
 	}
 
 	public MortgaegeRegiste(String id, HouseBusiness houseBusiness,
 			BigDecimal highestMountMoney, String warrantScope,
-			String interestType, Date mortgageDueTimeS, Date mortgageDueTimeE,
+			String interestType, Date mortgageDueTimeS, String mortgageTime,
 			BigDecimal mortgageArea) {
 		this.id = id;
 		this.houseBusiness = houseBusiness;
@@ -39,12 +38,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.warrantScope = warrantScope;
 		this.interestType = interestType;
 		this.mortgageDueTimeS = mortgageDueTimeS;
-		this.mortgageDueTimeE = mortgageDueTimeE;
+		this.mortgageTime = mortgageTime;
 		this.mortgageArea = mortgageArea;
 	}
 	public MortgaegeRegiste(String id, HouseBusiness houseBusiness,
 			BigDecimal highestMountMoney, String warrantScope,
-			String interestType, Date mortgageDueTimeS, Date mortgageDueTimeE,
+			String interestType, Date mortgageDueTimeS, String mortgageTime,
 			BigDecimal mortgageArea, String deptSureFact) {
 		this.id = id;
 		this.houseBusiness = houseBusiness;
@@ -52,9 +51,8 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.warrantScope = warrantScope;
 		this.interestType = interestType;
 		this.mortgageDueTimeS = mortgageDueTimeS;
-		this.mortgageDueTimeE = mortgageDueTimeE;
+		this.mortgageTime = mortgageTime;
 		this.mortgageArea = mortgageArea;
-		this.deptSureFact = deptSureFact;
 	}
 
 	@Id
@@ -117,6 +115,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MORTGAGE_DUE_TIME_S", nullable = false, length = 19)
 	@NotNull
+
 	public Date getMortgageDueTimeS() {
 		return this.mortgageDueTimeS;
 	}
@@ -125,15 +124,16 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageDueTimeS = mortgageDueTimeS;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MORTGAGE_DUE_TIME_E", nullable = false, length = 19)
+
+	@Column(name = "MORTGAGE_TIME", nullable = false, length = 50)
 	@NotNull
-	public Date getMortgageDueTimeE() {
-		return this.mortgageDueTimeE;
+    @Size(max = 50)
+	public String getMortgageTime() {
+		return this.mortgageTime;
 	}
 
-	public void setMortgageDueTimeE(Date mortgageDueTimeE) {
-		this.mortgageDueTimeE = mortgageDueTimeE;
+	public void setMortgageTime(String mortgageTime) {
+		this.mortgageTime = mortgageTime;
 	}
 
 	@Column(name = "MORTGAGE_AREA", nullable = false, scale = 4)
@@ -144,16 +144,6 @@ public class MortgaegeRegiste implements java.io.Serializable {
 
 	public void setMortgageArea(BigDecimal mortgageArea) {
 		this.mortgageArea = mortgageArea;
-	}
-
-	@Column(name = "DEPT_SURE_FACT", length = 200)
-	@Size(max = 200)
-	public String getDeptSureFact() {
-		return this.deptSureFact;
-	}
-
-	public void setDeptSureFact(String deptSureFact) {
-		this.deptSureFact = deptSureFact;
 	}
 
 }
