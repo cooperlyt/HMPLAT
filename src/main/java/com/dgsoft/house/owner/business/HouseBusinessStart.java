@@ -10,6 +10,8 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.log.Logging;
 
 /**
@@ -57,7 +59,16 @@ public class HouseBusinessStart {
     }
 
     //TODO valid House
-
+    @Transactional
+    public String createProcess(){
+        String result = houseBusinessHome.persist();
+        if ((result != null) && result.equals("persisted")) {
+            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), businessDefineHome.getInstance().getId());
+            return result;
+        }else{
+            return null;
+        }
+    }
 
 
 }

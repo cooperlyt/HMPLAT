@@ -22,6 +22,7 @@ public class BusinessDefine implements java.io.Serializable {
     private String memo;
     private Integer version;
     private String startPropagation;
+    private String rolePrefix;
     private Set<FileSubscribe> fileSubscribes = new HashSet<FileSubscribe>(0);
     private Set<TaskSubscribe> taskSubscribes = new HashSet<TaskSubscribe>(0);
 
@@ -136,6 +137,16 @@ public class BusinessDefine implements java.io.Serializable {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @Column(name="ROLE_PREFIX",nullable = true,length = 20)
+    @Size(max = 20)
+    public String getRolePrefix() {
+        return rolePrefix;
+    }
+
+    public void setRolePrefix(String rolePrefix) {
+        this.rolePrefix = rolePrefix;
     }
 
     @Override

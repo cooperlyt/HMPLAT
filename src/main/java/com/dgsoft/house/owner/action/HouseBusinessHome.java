@@ -9,6 +9,9 @@ import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.bpm.CreateProcess;
+import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.log.Logging;
 
 import java.util.Date;
@@ -40,5 +43,6 @@ public class HouseBusinessHome extends OwnerEntityHome<HouseBusiness> {
             return null;
 
     }
+
 
 }

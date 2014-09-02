@@ -9,17 +9,24 @@
 
 
 	<task-node name="受理">
+		<task name="重新受理"></task>
 		<transition to="收费判断"></transition>
 	</task-node>
 
 	<task-node name="审核">
+		<task name="审核">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;,isCheck:true}
+			</description>
+			<assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
+		</task>
 		<transition to="登薄"></transition>
-		<transition to="受理" name="to 回退"></transition>
+		<transition to="受理"></transition>
 	</task-node>
 
 	<task-node name="登薄">
 		<transition to="繕证判断"></transition>
-		<transition to="受理" name="to 受理"></transition>
+		<transition to="受理"></transition>
 	</task-node>
 
 	<task-node name="归档">
@@ -35,8 +42,8 @@
 	</task-node>
 
 	<decision name="繕证判断">
-		<transition to="繕证" name="to 繕证"></transition>
-		<transition to="归档" name="to 归档"></transition>
+		<transition to="繕证"></transition>
+		<transition to="归档"></transition>
 	</decision>
 
 	<task-node name="收费确认">
@@ -44,8 +51,12 @@
 	</task-node>
 
 	<decision name="收费判断">
-		<transition to="收费"></transition>
-		<transition to="审核" name="to 产权科审核"></transition>
+		<transition to="收费">
+			<condition expression="#{businessDefineHome.id in ('WP30')}"></condition>
+		</transition>
+		<transition to="审核">
+			<condition expression="#{not businessDefineHome.id in ('WP30')}"></condition>
+		</transition>
 	</decision>
 
 
