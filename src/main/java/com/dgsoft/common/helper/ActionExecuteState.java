@@ -17,7 +17,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 @AutoCreate
 public class ActionExecuteState {
 
-    private String lastState = "";
+    private String lastState = null;
 
     @BypassInterceptors
     public String getLastState() {
@@ -29,7 +29,7 @@ public class ActionExecuteState {
     }
 
     public void clearState(){
-        lastState = "";
+        lastState = null;
     }
 
     public void setState(String state){
