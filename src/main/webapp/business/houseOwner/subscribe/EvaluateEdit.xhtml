@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Evaluate_assessmentPrice}
+        </ui:define>
+        <h:inputText value="#{evaluateSubscribe.instance.assessmentPrice}" size="20" required="true"
+                     id="assessmentPriceInput" label="#{messages.Evaluate_assessmentPrice}">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+            <f:convertNumber pattern="#0.00"/>
+        </h:inputText>
+        <ui:define name="tail">
+            <r:message for="assessmentPriceInput"/>
+        </ui:define>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.Evaluate_evaluateCorpName}
+        </ui:define>
+        <h:selectOneMenu id="evaluateCorpNameInput" value="#{evaluateSubscribe.instance.evaluateCorpN0}"
+                         label="#{messages.Evaluate_evaluateCorpName}" valueChangeListener="#{evaluateSubscribe.valueChangeListener}">
+            <s:selectItems value="#{wordEvaluateCorporationList.resultList}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
+
+
+</ui:composition>

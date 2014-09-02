@@ -45,6 +45,7 @@
                          readonly="#{not developerHome.editing}"
                          required="true" maxlength="100" size="30"
                          valueChangeListener="#{developerHome.verifyUniqueAvailable}"
+
                          unique="name">
                 <a:ajax event="blur" execute="@this" disabled="#{not developerHome.editing}" render="nameMessages"/>
             </h:inputText>

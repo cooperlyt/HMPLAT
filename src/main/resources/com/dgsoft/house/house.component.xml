@@ -27,8 +27,16 @@
         <property name="ejbql">select mappingCorporation from MappingCorporation mappingCorporation</property>
     </component>
 
+    <component name="wordMappingCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select mappingCorporation from MappingCorporation mappingCorporation where destroyed=false</property>
+    </component>
+
     <component name="evaluateCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
         <property name="ejbql">select evaluateCorporation from EvaluateCorporation evaluateCorporation</property>
+    </component>
+
+    <component name="wordEvaluateCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+        <property name="ejbql">select evaluateCorporation from EvaluateCorporation evaluateCorporation where destroyed=false</property>
     </component>
 
     <component name="financialCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">

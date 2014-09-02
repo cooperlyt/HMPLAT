@@ -22,15 +22,14 @@
         <ui:define name="label">
             #{messages.SaleInfo_SUM_PRICE}
         </ui:define>
-        <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}" size="20"
+        <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}" size="20" required="true"
                      id="sumPriceInput" label="#{messages.SaleInfo_SUM_PRICE}">
             <r:validator event="blur"/>
             <f:validateDoubleRange minimum="0"/>
             <f:convertNumber pattern="#0.00"/>
         </h:inputText>
         <ui:define name="tail">
-            <r:message for="sumPriceInput" styleClass="message-icon"
-                       showDetail="true" showSummary="true" tooltip="true"/>
+            <r:message for="sumPriceInput"/>
         </ui:define>
     </s:decorate>
 

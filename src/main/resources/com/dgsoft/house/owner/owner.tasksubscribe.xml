@@ -21,7 +21,15 @@
     </subscribe>
 
     <subscribe name="mortgaegeRegisteEdit" page="/business/houseOwner/subscribe/MortgaegeRegisteEdit.xhtml" component="" cagegory="" type="EDIT">
-       一般抵押权
+    一般抵押权
+    </subscribe>
+
+    <subscribe name="evaluateEditEdit" page="/business/houseOwner/subscribe/EvaluateEdit.xhtml" component="" cagegory="" type="EDIT">
+       评估机构,评估价格
+    </subscribe>
+
+    <subscribe name="mappingCorpEdit" page="/business/houseOwner/subscribe/MappingCorpEdit.xhtml" component="" cagegory="" type="EDIT">
+        测绘机构
     </subscribe>
 
 </subscribes>
