@@ -29,6 +29,7 @@
         </ui:define>
         <h:selectOneMenu required="true" id="interestTypenput"
                          value="#{mortgaegeRegisteSubsrcribe.instance.interestType}"
+                         style="width: 140px"
                          label="#{messages.MortgaegeRegiste_InterestType}">
             <s:selectItems value="#{dictionary.getWordList('42')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>

@@ -12,7 +12,8 @@
         <ui:define name="label">
             #{messages.SaleInfo_PayType}
         </ui:define>
-        <h:selectOneMenu required="true" id="payTypeInput" value="#{saleInfoSubscribe.instance.payType}" label="#{messages.SaleInfo_PayType}">
+        <h:selectOneMenu required="true" id="payTypeInput" value="#{saleInfoSubscribe.instance.payType}"
+                         label="#{messages.SaleInfo_PayType}" style="width: 140px">
             <s:selectItems value="#{dictionary.getWordList('54')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>

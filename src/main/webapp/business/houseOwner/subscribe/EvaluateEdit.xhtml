@@ -28,7 +28,8 @@
             #{messages.Evaluate_evaluateCorpName}
         </ui:define>
         <h:selectOneMenu id="evaluateCorpNameInput" value="#{evaluateSubscribe.instance.evaluateCorpN0}"
-                         label="#{messages.Evaluate_evaluateCorpName}" valueChangeListener="#{evaluateSubscribe.valueChangeListener}">
+                         label="#{messages.Evaluate_evaluateCorpName}"  style="width: 140px"
+                         valueChangeListener="#{evaluateSubscribe.valueChangeListener}">
             <s:selectItems value="#{wordEvaluateCorporationList.resultList}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>
