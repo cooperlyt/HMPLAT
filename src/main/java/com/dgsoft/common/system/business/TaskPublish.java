@@ -9,6 +9,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -108,6 +109,8 @@ public class TaskPublish {
     public void publish() {
         defines = new ArrayList<TaskSubscribeReg.TaskSubscribeDefine>();
         for (TaskSubscribe sub : businessDefineHome.getTaskSubscribeList()) {
+            Logging.getLog(getClass()).debug("type:" + sub.getType() + "|" + sub.getTaskName() + "=" + taskName + "|");
+
             if ((sub.getType().equals(TaskSubscribe.SubscribeType.START_TASK) &&
                     (taskName == null)) ||
                     (sub.getType().equals(TaskSubscribe.SubscribeType.TASK_OPER) && taskName.equals(sub.getTaskName()))) {

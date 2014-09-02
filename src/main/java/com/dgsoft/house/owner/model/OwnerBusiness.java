@@ -38,6 +38,8 @@ public class OwnerBusiness implements java.io.Serializable {
     private BusinessStatus status;
     private Date applyTime;
     private Date createTime;
+    private String defineName;
+    private String defineId;
     private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
     private Set<Reason> reasons = new HashSet<Reason>(0);
     private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
@@ -113,6 +115,25 @@ public class OwnerBusiness implements java.io.Serializable {
         this.processMessage = processMessage;
     }
 
+    @Column(name="DEFINE_NAME",nullable = true,length = 50)
+    @Size(max = 50)
+    public String getDefineName() {
+        return defineName;
+    }
+
+    public void setDefineName(String defineName) {
+        this.defineName = defineName;
+    }
+
+    @Column(name="DEFINE_ID",nullable = true,length = 32)
+    @Size(max = 32)
+    public String getDefineId() {
+        return defineId;
+    }
+
+    public void setDefineId(String defineId) {
+        this.defineId = defineId;
+    }
 
     @Column(name = "MEMO", length = 200)
     @Size(max = 200)

@@ -47,8 +47,15 @@ public class HouseBusinessStart {
 
         houseBusinessHome.getInstance().getBusinessHouses().clear();
         houseBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(houseBusinessHome.getInstance(),houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
-        houseBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
+
         return BUSINESS_START_PAGE;
+    }
+
+    private void initBusinessData(){
+        houseBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
+        houseBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
+        houseBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
+
     }
 
 
