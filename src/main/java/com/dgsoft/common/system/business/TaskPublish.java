@@ -113,7 +113,7 @@ public class TaskPublish {
 
             if ((sub.getType().equals(TaskSubscribe.SubscribeType.START_TASK) &&
                     (taskName == null)) ||
-                    (sub.getType().equals(TaskSubscribe.SubscribeType.TASK_OPER) && taskName.equals(sub.getTaskName()))) {
+                    (sub.getType().equals(TaskSubscribe.SubscribeType.TASK_OPER) && (taskName != null) && taskName.equals(sub.getTaskName()))) {
                 TaskSubscribeReg.TaskSubscribeDefine define = taskSubscribeReg.getDefineByName(sub.getRegName());
                 defines.add(define);
                 if (define.isHaveComponent()) {

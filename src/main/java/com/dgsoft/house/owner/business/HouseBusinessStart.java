@@ -48,6 +48,7 @@ public class HouseBusinessStart {
         houseBusinessHome.getInstance().getBusinessHouses().clear();
         houseBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(houseBusinessHome.getInstance(),houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
 
+        initBusinessData();
         return BUSINESS_START_PAGE;
     }
 
@@ -61,7 +62,7 @@ public class HouseBusinessStart {
 
     public String mulitHouseSelect() {
 
-
+        initBusinessData();
         return BUSINESS_START_PAGE;
     }
 
@@ -70,7 +71,7 @@ public class HouseBusinessStart {
     public String createProcess(){
         String result = houseBusinessHome.persist();
         if ((result != null) && result.equals("persisted")) {
-            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), businessDefineHome.getInstance().getId());
+            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), houseBusinessHome.getInstance().getId());
             return result;
         }else{
             return null;

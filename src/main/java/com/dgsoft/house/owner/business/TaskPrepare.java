@@ -5,7 +5,10 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.TaskDescription;
 import com.dgsoft.common.system.business.TaskPublish;
 import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.ProjectBusinessHome;
 import com.dgsoft.house.owner.model.OwnerBusiness;
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -40,7 +43,14 @@ public class TaskPrepare {
 
     @BeginTask(flushMode = FlushModeType.MANUAL)
     public String beginTask() {
-        businessDefineHome.setId(ownerEntityLoader.getEntityManager().find(OwnerBusiness.class,taskInstance.getProcessInstance().getKey()).getDefineId());
+        OwnerBusiness ob = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, taskInstance.getProcessInstance().getKey());
+        businessDefineHome.setId(ob.getDefineId());
+        if (ob.getOwnerBusinessType().equals(OwnerBusiness.OwnerBusinessType.HOUSE)){
+            ((HouseBusinessHome)Component.getInstance("houseBusinessHome",true,true)).setId(ob.getId());
+        }else if (ob.getOwnerBusinessType().equals(OwnerBusiness.OwnerBusinessType.PROJECT)){
+            ((ProjectBusinessHome)Component.getInstance("projectBusinessHome",true,true)).setId(ob.getId());
+        }
+
         taskPublish.setTaskNameAndPublish(taskInstance.getName());
         return getTaskDescription(taskInstance.getId()).getTaskOperationPage();
     }
