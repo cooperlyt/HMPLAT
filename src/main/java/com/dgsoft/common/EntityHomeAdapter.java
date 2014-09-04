@@ -43,12 +43,9 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
 
     private Expressions.ValueExpression conflictMessage;
 
-    @In(create = true)
-    protected ActionExecuteState actionExecuteState;
-
 
     public String getLastState() {
-        return actionExecuteState.getLastState();
+        return ActionExecuteState.instance().getLastState();
     }
 
 
@@ -294,28 +291,28 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     @Override
     public void create() {
         super.create();
-        actionExecuteState.clearState();
+        ActionExecuteState.instance().clearState();
     }
 
     @Override
     public String update() {
-        actionExecuteState.clearState();
+        ActionExecuteState.instance().clearState();
         if (wire() && verifyUpdate()) {
-            actionExecuteState.setLastState(super.update());
+            ActionExecuteState.instance().setLastState(super.update());
         } else
             return null;
-        return actionExecuteState.getLastState();
+        return ActionExecuteState.instance().getLastState();
     }
 
     @Override
     public String persist() {
-        actionExecuteState.clearState();
+        ActionExecuteState.instance().clearState();
         if (wire() && verifyPersist())
-            actionExecuteState.setLastState(super.persist());
+            ActionExecuteState.instance().setLastState(super.persist());
         else
             return null;
 
-        return actionExecuteState.getLastState();
+        return ActionExecuteState.instance().getLastState();
     }
 
     public String removeAndClear() {
@@ -328,30 +325,18 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
 
     @Override
     public String remove() {
-        actionExecuteState.clearState();
+        ActionExecuteState.instance().clearState();
         if (verifyRemoveAvailable())
-            actionExecuteState.setLastState(super.remove());
+            ActionExecuteState.instance().setLastState(super.remove());
         else
             return null;
-        return actionExecuteState.getLastState();
+        return ActionExecuteState.instance().getLastState();
     }
 
     @Override
-    public E find() {
-        actionExecuteState.clearState();
-        return super.find();
-    }
-
-    @Override
-    protected E loadInstance() {
-        actionExecuteState.clearState();
-        return super.loadInstance();
-    }
-
-    @Override
-    protected E createInstance() {
-        actionExecuteState.clearState();
-        return super.createInstance();
+    protected void initInstance(){
+        super.initInstance();
+        ActionExecuteState.instance().clearState();
     }
 
     public void refresh() {

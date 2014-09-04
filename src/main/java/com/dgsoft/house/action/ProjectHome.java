@@ -1,6 +1,7 @@
 package com.dgsoft.house.action;
 
 import com.dgsoft.common.SetLinkList;
+import com.dgsoft.common.helper.ActionExecuteState;
 import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Build;
@@ -46,13 +47,13 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     public void beginEditBuild() {
         editingBuild = build;
-        actionExecuteState.clearState();
+        ActionExecuteState.instance().clearState();
     }
 
     public void beginCreateBuild() {
         editingBuild = new Build();
         editingBuild.setProject(getInstance());
-        actionExecuteState.clearState();
+        ActionExecuteState.instance().clearState();
     }
 
     public Build getEditingBuild() {
@@ -65,12 +66,12 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     private void addBuildMBBConflictMessages(){
         facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ConflictMBB");
-        actionExecuteState.setLastState("MBBConfict");
+        ActionExecuteState.instance().setLastState("MBBConfict");
     }
 
     private void addBuildPBConflictMessages(){
         facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ConfilicPB");
-        actionExecuteState.setLastState("MBBConfict");
+        ActionExecuteState.instance().setLastState("MBBConfict");
     }
 
     public void saveBuild() {
@@ -115,7 +116,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
         if (!projectBuilds.contains(editingBuild)) {
             projectBuilds.add(editingBuild);
         }
-        actionExecuteState.actionExecute();
+        ActionExecuteState.instance().actionExecute();
     }
 
     @Override

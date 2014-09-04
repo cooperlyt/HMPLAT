@@ -1,6 +1,14 @@
-package com.dgsoft.common.system.business;
+package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.exception.ProcessDefineException;
+import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.TaskDescription;
+import com.dgsoft.common.system.business.TaskPublish;
+import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.ProjectBusinessHome;
+import com.dgsoft.house.owner.model.OwnerBusiness;
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -21,13 +29,30 @@ import org.json.JSONObject;
 @Name("taskPrepare")
 public class TaskPrepare {
 
-    @In("#{param.taskId}")
-    private String taskId;
+    @In(create = true)
+    private BusinessDefineHome businessDefineHome;
 
+    @In(create = true)
+    private OwnerEntityLoader ownerEntityLoader;
+
+    @In(create = true)
+    private TaskPublish taskPublish;
+
+    @In
+    private TaskInstance taskInstance;
 
     @BeginTask(flushMode = FlushModeType.MANUAL)
     public String beginTask() {
-        return getTaskDescription(Long.parseLong(taskId)).getTaskOperationPage();
+        OwnerBusiness ob = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, taskInstance.getProcessInstance().getKey());
+        businessDefineHome.setId(ob.getDefineId());
+        if (ob.getOwnerBusinessType().equals(OwnerBusiness.OwnerBusinessType.HOUSE)){
+            ((HouseBusinessHome)Component.getInstance("houseBusinessHome",true,true)).setId(ob.getId());
+        }else if (ob.getOwnerBusinessType().equals(OwnerBusiness.OwnerBusinessType.PROJECT)){
+            ((ProjectBusinessHome)Component.getInstance("projectBusinessHome",true,true)).setId(ob.getId());
+        }
+
+        taskPublish.setTaskNameAndPublish(taskInstance.getName());
+        return getTaskDescription(taskInstance.getId()).getTaskOperationPage();
     }
 
     @BypassInterceptors

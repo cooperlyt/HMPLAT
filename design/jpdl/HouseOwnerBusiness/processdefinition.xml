@@ -52,10 +52,10 @@
 
 	<decision name="收费判断">
 		<transition to="收费">
-			<condition expression="#{businessDefineHome.id in ('WP30')}"></condition>
+			<condition expression="#{businessDefineHome.id eq 'WP30'}"></condition>
 		</transition>
 		<transition to="审核">
-			<condition expression="#{not businessDefineHome.id in ('WP30')}"></condition>
+			<condition expression="#{not (businessDefineHome.id eq 'WP30')}"></condition>
 		</transition>
 	</decision>
 
