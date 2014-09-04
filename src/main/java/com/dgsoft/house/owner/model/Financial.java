@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class Financial implements java.io.Serializable {
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private String type;
 	private String name;
 	private String code;
@@ -23,10 +23,10 @@ public class Financial implements java.io.Serializable {
 	public Financial() {
 	}
 
-	public Financial(String id, HouseBusiness houseBusiness, String type,
+	public Financial(String id, OwnerBusiness ownerBusiness, String type,
 			String name, String code) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.type = type;
 		this.name = name;
 		this.code = code;
@@ -49,12 +49,12 @@ public class Financial implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "TYPE", nullable = false, length = 10)

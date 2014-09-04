@@ -5,6 +5,7 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.bpm.EndTask;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
@@ -18,7 +19,7 @@ import java.io.Serializable;
  * Time: 9:56 AM
  */
 @Scope(ScopeType.CONVERSATION)
-public abstract class TaskHandle implements Serializable{
+public abstract class TaskHandle implements Serializable {
 
     @In
     protected TaskInstance taskInstance;
@@ -26,27 +27,23 @@ public abstract class TaskHandle implements Serializable{
     @In
     protected FacesMessages facesMessages;
 
+    @In
+    protected TaskPublish taskPublish;
+
     protected abstract String completeTask();
 
 
-    protected abstract void initTask();
-
-
-    public String getTaskName(){
+    public String getTaskName() {
         return taskInstance.getName();
     }
 
     @Transactional
-    public String complete(){
-
-        return completeTask();
-    }
-
-    @Create
-    @Transactional
-    public void init(){
-        Logging.getLog(getClass()).debug("task is init");
-        initTask();
+    @EndTask
+    public String complete() {
+        if ("saved".equals(taskPublish.save())) {
+            return completeTask();
+        }
+        return null;
     }
 
 }

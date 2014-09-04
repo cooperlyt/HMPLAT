@@ -11,8 +11,21 @@
     <ui:param name="functionTitle" value="#{taskInstance.name}"/>
 
     <ui:define name="func-body">
-        <ui:include src="/layout/system/SubscribePanelView.xhtml">
-            <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
-        </ui:include>
+
+        <h:form>
+            <r:toolbar>
+                <r:toolbarGroup>
+
+                </r:toolbarGroup>
+
+                <r:toolbarGroup location="right">
+                    <s:button value="cancel" view="/func/system/business/task.xhtml" propagation="end"/>
+                </r:toolbarGroup>
+
+            </r:toolbar>
+            <ui:include src="/layout/system/SubscribePanelView.xhtml">
+                <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
+            </ui:include>
+        </h:form>
     </ui:define>
 </ui:composition>

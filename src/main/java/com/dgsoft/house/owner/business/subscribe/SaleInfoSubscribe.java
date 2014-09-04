@@ -29,7 +29,7 @@ public class SaleInfoSubscribe extends OwnerEntityHome<SaleInfo> {
             setId(houseBusinessHome.getInstance().getSaleInfos().iterator().next().getId());
 
         }else {
-            getInstance().setHouseBusiness(houseBusinessHome.getInstance());
+            getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
             houseBusinessHome.getInstance().getSaleInfos().add(getInstance());
         }
     }

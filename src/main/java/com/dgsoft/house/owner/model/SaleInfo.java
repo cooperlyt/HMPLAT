@@ -16,22 +16,22 @@ import javax.validation.constraints.Size;
 public class SaleInfo implements java.io.Serializable {
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private String payType;
 	private BigDecimal sumPrice;
 
 	public SaleInfo() {
 	}
 
-	public SaleInfo(String id, HouseBusiness houseBusiness, BigDecimal sumPrice) {
+	public SaleInfo(String id, OwnerBusiness ownerBusiness, BigDecimal sumPrice) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.sumPrice = sumPrice;
 	}
-	public SaleInfo(String id, HouseBusiness houseBusiness, String payType,
+	public SaleInfo(String id, OwnerBusiness ownerBusiness, String payType,
 			BigDecimal sumPrice) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.payType = payType;
 		this.sumPrice = sumPrice;
 	}
@@ -53,12 +53,12 @@ public class SaleInfo implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "PAY_TYPE", length = 32)

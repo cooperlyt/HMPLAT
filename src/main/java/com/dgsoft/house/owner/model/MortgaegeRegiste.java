@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class MortgaegeRegiste implements java.io.Serializable {
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private BigDecimal highestMountMoney;
 	private String warrantScope;
 	private String interestType;
@@ -28,12 +28,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	public MortgaegeRegiste() {
 	}
 
-	public MortgaegeRegiste(String id, HouseBusiness houseBusiness,
+	public MortgaegeRegiste(String id, OwnerBusiness ownerBusiness,
 			BigDecimal highestMountMoney, String warrantScope,
 			String interestType, Date mortgageDueTimeS, String mortgageTime,
 			BigDecimal mortgageArea) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.highestMountMoney = highestMountMoney;
 		this.warrantScope = warrantScope;
 		this.interestType = interestType;
@@ -41,12 +41,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageTime = mortgageTime;
 		this.mortgageArea = mortgageArea;
 	}
-	public MortgaegeRegiste(String id, HouseBusiness houseBusiness,
+	public MortgaegeRegiste(String id, OwnerBusiness ownerBusiness,
 			BigDecimal highestMountMoney, String warrantScope,
 			String interestType, Date mortgageDueTimeS, String mortgageTime,
 			BigDecimal mortgageArea, String deptSureFact) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.highestMountMoney = highestMountMoney;
 		this.warrantScope = warrantScope;
 		this.interestType = interestType;
@@ -72,12 +72,12 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "HIGHEST_MOUNT_MONEY", nullable = false, scale = 4)

@@ -20,7 +20,7 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
     }
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private String personName;
 	private CredentialsType credentialsType;
 	private String credentialsNumber;
@@ -52,12 +52,12 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BUSINESS_ID", nullable = false)
     @NotNull
-    public HouseBusiness getHouseBusiness() {
-        return houseBusiness;
+    public OwnerBusiness getOwnerBusiness() {
+        return ownerBusiness;
     }
 
-    public void setHouseBusiness(HouseBusiness houseBusiness) {
-        this.houseBusiness = houseBusiness;
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
     }
 
 
