@@ -11,8 +11,8 @@ import java.util.Set;
 /**
  * Created by cooper on 8/25/14.
  */
-@Name("houseBusinessHome")
-public class HouseBusinessHome extends OwnerEntityHome<OwnerBusiness> {
+@Name("ownerBusinessHome")
+public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     @Override
     public OwnerBusiness createInstance(){

@@ -3,7 +3,7 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.EvaluateCorporation;
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Evaluate;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -21,7 +21,7 @@ import javax.faces.event.ValueChangeEvent;
 public class EvaluateSubscribe extends OwnerEntityHome<Evaluate> {
 
    @In
-   private HouseBusinessHome houseBusinessHome;
+   private OwnerBusinessHome ownerBusinessHome;
 
    @In(create = true)
    private HouseEntityLoader houseEntityLoader;
@@ -29,11 +29,11 @@ public class EvaluateSubscribe extends OwnerEntityHome<Evaluate> {
    @Override
    public void create(){
        super.create();
-       if(!houseBusinessHome.getInstance().getEvaluates().isEmpty()){
-           setId(houseBusinessHome.getInstance().getEvaluates().iterator().next().getId());
+       if(!ownerBusinessHome.getInstance().getEvaluates().isEmpty()){
+           setId(ownerBusinessHome.getInstance().getEvaluates().iterator().next().getId());
        }else {
-           getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
-           houseBusinessHome.getInstance().getEvaluates().add(getInstance());
+           getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+           ownerBusinessHome.getInstance().getEvaluates().add(getInstance());
        }
 
    }

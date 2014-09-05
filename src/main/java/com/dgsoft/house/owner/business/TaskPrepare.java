@@ -5,8 +5,7 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.TaskDescription;
 import com.dgsoft.common.system.business.TaskPublish;
 import com.dgsoft.house.owner.OwnerEntityLoader;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
-import com.dgsoft.house.owner.action.ProjectBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.FlushModeType;
@@ -38,6 +37,9 @@ public class TaskPrepare {
     @In(create = true)
     private TaskPublish taskPublish;
 
+    @In(create = true)
+    private OwnerBusinessHome ownerBusinessHome;
+
     @In
     private TaskInstance taskInstance;
 
@@ -45,11 +47,8 @@ public class TaskPrepare {
     public String beginTask() {
         OwnerBusiness ob = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, taskInstance.getProcessInstance().getKey());
         businessDefineHome.setId(ob.getDefineId());
-        if (ob.getOwnerBusinessType().equals(OwnerBusiness.OwnerBusinessType.HOUSE)){
-            ((HouseBusinessHome)Component.getInstance("houseBusinessHome",true,true)).setId(ob.getId());
-        }else if (ob.getOwnerBusinessType().equals(OwnerBusiness.OwnerBusinessType.PROJECT)){
-            ((ProjectBusinessHome)Component.getInstance("projectBusinessHome",true,true)).setId(ob.getId());
-        }
+        ownerBusinessHome.setId(ob.getId());
+
 
         taskPublish.setTaskNameAndPublish(taskInstance.getName());
         return getTaskDescription(taskInstance.getId()).getTaskOperationPage();

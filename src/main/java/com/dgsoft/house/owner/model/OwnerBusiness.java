@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "OWNER_BUSINESS", catalog = "HOUSE_OWNER_RECORD")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "BUSINESS_TYPE", discriminatorType = DiscriminatorType.STRING)
 public class OwnerBusiness implements java.io.Serializable {
 
     public enum BusinessSource {
@@ -63,6 +62,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
 
     private OwnerBusiness selectBusiness;
+    private ProjectBusiness projectBusiness;
 
     public OwnerBusiness() {
     }
@@ -357,7 +357,14 @@ public class OwnerBusiness implements java.io.Serializable {
         this.selectBusiness = selectBusiness;
     }
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",optional = false,orphanRemoval = true,cascade = CascadeType.ALL)
+    public ProjectBusiness getProjectBusiness() {
+        return projectBusiness;
+    }
 
+    public void setProjectBusiness(ProjectBusiness projectBusiness) {
+        this.projectBusiness = projectBusiness;
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "BUSINESS_TYPE", length = 20)

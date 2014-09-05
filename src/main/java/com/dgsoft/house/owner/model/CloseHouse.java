@@ -59,11 +59,11 @@ public class CloseHouse implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public OwnerBusiness getHouseBusiness() {
+	public OwnerBusiness getOwnerBusiness() {
 		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(OwnerBusiness houseBusiness) {
+	public void setOwnerBusiness(OwnerBusiness houseBusiness) {
 		this.ownerBusiness = houseBusiness;
 	}
 

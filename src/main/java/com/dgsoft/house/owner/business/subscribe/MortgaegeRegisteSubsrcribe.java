@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -17,16 +17,16 @@ import org.jboss.seam.annotations.Name;
 public class MortgaegeRegisteSubsrcribe extends OwnerEntityHome<MortgaegeRegiste> {
 
     @In
-    private HouseBusinessHome houseBusinessHome;
+    private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public void create(){
         super.create();
-        if(!houseBusinessHome.getInstance().getMortgaegeRegistes().isEmpty()){
-           setId(houseBusinessHome.getInstance().getMortgaegeRegistes().iterator().next().getId());
+        if(!ownerBusinessHome.getInstance().getMortgaegeRegistes().isEmpty()){
+           setId(ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next().getId());
         }else {
-           getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
-           houseBusinessHome.getInstance().getMortgaegeRegistes().add(getInstance());
+           getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+           ownerBusinessHome.getInstance().getMortgaegeRegistes().add(getInstance());
         }
 
     }

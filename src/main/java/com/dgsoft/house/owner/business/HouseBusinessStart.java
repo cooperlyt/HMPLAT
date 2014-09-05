@@ -4,7 +4,7 @@ import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -25,7 +25,7 @@ public class HouseBusinessStart {
     private BusinessDefineHome businessDefineHome;
 
     @In(create = true)
-    private HouseBusinessHome houseBusinessHome;
+    private OwnerBusinessHome ownerBusinessHome;
 
     private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
 
@@ -45,17 +45,17 @@ public class HouseBusinessStart {
     public String singleHouseSelectet() {
         Logging.getLog(getClass()).debug("singleHouseSelectet:" + selectHouseId);
 
-        houseBusinessHome.getInstance().getBusinessHouses().clear();
-        houseBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(houseBusinessHome.getInstance(),houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
+        ownerBusinessHome.getInstance().getBusinessHouses().clear();
+        ownerBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(ownerBusinessHome.getInstance(),houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
 
         initBusinessData();
         return BUSINESS_START_PAGE;
     }
 
     private void initBusinessData(){
-        houseBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
-        houseBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
-        houseBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
+        ownerBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
+        ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
+        ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
 
     }
 
@@ -69,9 +69,9 @@ public class HouseBusinessStart {
     //TODO valid House
     @Transactional
     public String createProcess(){
-        String result = houseBusinessHome.persist();
+        String result = ownerBusinessHome.persist();
         if ((result != null) && result.equals("persisted")) {
-            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), houseBusinessHome.getInstance().getId());
+            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), ownerBusinessHome.getInstance().getId());
             return result;
         }else{
             return null;

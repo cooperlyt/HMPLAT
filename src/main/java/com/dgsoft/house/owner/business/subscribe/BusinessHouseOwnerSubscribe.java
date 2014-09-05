@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.action.BusinessHouseOwnerHome;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -13,7 +13,7 @@ import org.jboss.seam.annotations.Name;
 public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome{
 
     @In
-    private HouseBusinessHome houseBusinessHome;
+    private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public Class<BusinessHouseOwner> getEntityClass(){
@@ -24,14 +24,14 @@ public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome{
     public void create()
     {
         super.create();
-        for (BusinessHouseOwner owner : houseBusinessHome.getInstance().getBusinessHouseOwners()) {
+        for (BusinessHouseOwner owner : ownerBusinessHome.getInstance().getBusinessHouseOwners()) {
             if (owner.getType().equals(BusinessHouseOwner.HouseOwnerType.OWNER_PERSON)) {
                 setId(owner.getId());
                 return;
             }
         }
-        getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
-        houseBusinessHome.getInstance().getBusinessHouseOwners().add(getInstance());
+        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getBusinessHouseOwners().add(getInstance());
     }
 
     @Override
