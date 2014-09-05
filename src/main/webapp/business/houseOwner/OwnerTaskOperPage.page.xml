@@ -6,4 +6,12 @@
 
 
     <param name="defineId" value="#{businessDefineHome.id}"/>
+
+
+
+    <navigation from-action="#{ownerTaskHandle.complete}">
+        <rule if-outcome="taskCompleted">
+            <redirect view-id="/func/system/business/task.xhtml"/>
+        </rule>
+    </navigation>
 </page>

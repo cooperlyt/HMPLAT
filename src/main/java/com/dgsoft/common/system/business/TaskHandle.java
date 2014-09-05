@@ -40,7 +40,7 @@ public abstract class TaskHandle implements Serializable {
     @Transactional
     @EndTask
     public String complete() {
-        if ("saved".equals(taskPublish.save())) {
+        if ("success".equals(taskPublish.save())) {
             return completeTask();
         }
         return null;

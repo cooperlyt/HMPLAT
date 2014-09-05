@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.business.TaskHandle;
-import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -11,12 +11,14 @@ import org.jboss.seam.annotations.Name;
 @Name("ownerTaskHandle")
 public class OwnerTaskHandle extends TaskHandle{
 
-    @In(create = true)
-    private OwnerEntityLoader ownerEntityLoader;
+    @In
+    private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     protected String completeTask() {
-
+        if ("persisted".equals(ownerBusinessHome.update())){
+            return "taskCompleted";
+        }
         return null;
     }
 
