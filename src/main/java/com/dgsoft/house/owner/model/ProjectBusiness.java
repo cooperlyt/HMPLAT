@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import javax.validation.constraints.Size;
 @Table(name = "PROJECT_SELL_CARD", catalog = "HOUSE_OWNER_RECORD")
 public class ProjectBusiness implements java.io.Serializable {
 
+    private String id;
 	private BusinessLandInfo businessLandInfo;
 	private BusinessProject businessProject;
 	private Integer houseCount;
@@ -31,7 +34,22 @@ public class ProjectBusiness implements java.io.Serializable {
 	public ProjectBusiness() {
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
+
+    @Id
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
 	@JoinColumn(name = "LAND_INFO", nullable = false)
 	@NotNull
 	public BusinessLandInfo getBusinessLandInfo() {
