@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Card;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -17,7 +17,7 @@ import org.jboss.seam.annotations.Name;
 public class CardNoticeSubscribe extends OwnerEntityHome<Card> {
 
     @In
-    private HouseBusinessHome houseBusinessHome;
+    private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public Card createInstance(){
@@ -27,15 +27,15 @@ public class CardNoticeSubscribe extends OwnerEntityHome<Card> {
     @Override
     public void create(){
         super.create();
-        for(Card card:houseBusinessHome.getInstance().getCards()){
+        for(Card card:ownerBusinessHome.getInstance().getCards()){
             if (card.getType().equals(Card.CardType.NOTICE)){
                 setId(card.getId());
                 return;
             }
 
         }
-        getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
-        houseBusinessHome.getInstance().getCards().add(getInstance());
+        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getCards().add(getInstance());
 
     }
 
