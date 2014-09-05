@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class CloseHouse implements java.io.Serializable {
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private String closeDownClour;
 	private String action;
 	private Date closeDate;
@@ -25,17 +25,17 @@ public class CloseHouse implements java.io.Serializable {
 	public CloseHouse() {
 	}
 
-	public CloseHouse(String id, HouseBusiness houseBusiness,
+	public CloseHouse(String id, OwnerBusiness ownerBusiness,
 			String closeDownClour, Date closeDate) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.closeDownClour = closeDownClour;
 		this.closeDate = closeDate;
 	}
-	public CloseHouse(String id, HouseBusiness houseBusiness,
+	public CloseHouse(String id, OwnerBusiness ownerBusiness,
 			String closeDownClour, String action, Date closeDate, Date toDate) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.closeDownClour = closeDownClour;
 		this.action = action;
 		this.closeDate = closeDate;
@@ -59,12 +59,12 @@ public class CloseHouse implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
+	public OwnerBusiness getHouseBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setHouseBusiness(OwnerBusiness houseBusiness) {
+		this.ownerBusiness = houseBusiness;
 	}
 
 	@Column(name = "CLOSE_DOWN_CLOUR", nullable = false, length = 32)

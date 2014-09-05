@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 public class BusinessHouse implements java.io.Serializable {
 
     private String id;
-    private HouseBusiness houseBusiness;
+    private OwnerBusiness ownerBusiness;
     private BusinessLandInfo businessLandInfo;
     private BusinessBuild businessBuild;
     private String houseOrder;
@@ -56,8 +56,8 @@ public class BusinessHouse implements java.io.Serializable {
     public BusinessHouse() {
     }
 
-    public BusinessHouse(HouseBusiness houseBusiness,House house) {
-        this.houseBusiness = houseBusiness;
+    public BusinessHouse(OwnerBusiness ownerBusiness,House house) {
+        this.ownerBusiness = ownerBusiness;
         this.houseOrder = house.getHouseOrder();
         this.houseUnitName = house.getHouseUnitName();
         this.inFloorName = house.getInFloorName();
@@ -112,12 +112,12 @@ public class BusinessHouse implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BUSINESS_ID", nullable = false)
     @NotNull
-    public HouseBusiness getHouseBusiness() {
-        return this.houseBusiness;
+    public OwnerBusiness getOwnerBusiness() {
+        return this.ownerBusiness;
     }
 
-    public void setHouseBusiness(HouseBusiness houseBusiness) {
-        this.houseBusiness = houseBusiness;
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

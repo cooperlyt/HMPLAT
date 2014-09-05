@@ -50,14 +50,15 @@ public class TaskPublish {
     }
 
     public String wire() {
-        String result = "success";
-        for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
-            if (define.isHaveComponent()) {
-                if (!"success".equals(define.getComponents().wireSubscribe())) {
-                    result = "";
+        String result = valid();
+        if ("success".equals(result))
+            for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
+                if (define.isHaveComponent()) {
+                    if (!"success".equals(define.getComponents().wireSubscribe())) {
+                        result = "";
+                    }
                 }
             }
-        }
         return result;
     }
 
@@ -70,6 +71,20 @@ public class TaskPublish {
                 }
             }
         }
+        return result;
+    }
+
+
+    public String save() {
+        String result = wire();
+        if ("success".equals(result))
+            for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
+                if (define.isHaveComponent()) {
+                    if (!"saved".equals(define.getComponents().saveSubscribe())) {
+                        result = "";
+                    }
+                }
+            }
         return result;
     }
 

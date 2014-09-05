@@ -16,16 +16,16 @@ import javax.validation.constraints.Size;
 public class HouseCloseCancel implements java.io.Serializable {
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private Date cancelDate;
 
 	public HouseCloseCancel() {
 	}
 
-	public HouseCloseCancel(String id, HouseBusiness houseBusiness,
+	public HouseCloseCancel(String id, OwnerBusiness ownerBusiness,
 			Date cancelDate) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.cancelDate = cancelDate;
 	}
 
@@ -46,12 +46,12 @@ public class HouseCloseCancel implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

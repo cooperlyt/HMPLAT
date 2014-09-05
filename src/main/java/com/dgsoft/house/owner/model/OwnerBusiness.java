@@ -50,6 +50,20 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
     private OwnerBusinessType ownerBusinessType;
 
+    private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
+    private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(
+            0);
+    private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
+    private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(
+            0);
+    private Set<Financial> financials = new HashSet<Financial>(0);
+    private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+    private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
+    private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
+    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
+
+    private OwnerBusiness selectBusiness;
+
     public OwnerBusiness() {
     }
 
@@ -249,6 +263,101 @@ public class OwnerBusiness implements java.io.Serializable {
     public void setBusinessPersions(Set<BusinessPersion> businessPersions) {
         this.businessPersions = businessPersions;
     }
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<Evaluate> getEvaluates() {
+        return this.evaluates;
+    }
+
+    public void setEvaluates(Set<Evaluate> evaluates) {
+        this.evaluates = evaluates;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<MortgaegeRegiste> getMortgaegeRegistes() {
+        return this.mortgaegeRegistes;
+    }
+
+    public void setMortgaegeRegistes(Set<MortgaegeRegiste> mortgaegeRegistes) {
+        this.mortgaegeRegistes = mortgaegeRegistes;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<SaleInfo> getSaleInfos() {
+        return this.saleInfos;
+    }
+
+    public void setSaleInfos(Set<SaleInfo> saleInfos) {
+        this.saleInfos = saleInfos;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<HouseCloseCancel> getHouseCloseCancels() {
+        return this.houseCloseCancels;
+    }
+
+    public void setHouseCloseCancels(Set<HouseCloseCancel> houseCloseCancels) {
+        this.houseCloseCancels = houseCloseCancels;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<Financial> getFinancials() {
+        return this.financials;
+    }
+
+    public void setFinancials(Set<Financial> financials) {
+        this.financials = financials;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessHouse> getBusinessHouses() {
+        return this.businessHouses;
+    }
+
+    public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
+        this.businessHouses = businessHouses;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<CloseHouse> getCloseHouses() {
+        return this.closeHouses;
+    }
+
+    public void setCloseHouses(Set<CloseHouse> closeHouses) {
+        this.closeHouses = closeHouses;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessHouseOwner> getBusinessHouseOwners() {
+        return businessHouseOwners;
+    }
+
+    public void setBusinessHouseOwners(Set<BusinessHouseOwner> businessHouseOwners) {
+        this.businessHouseOwners = businessHouseOwners;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessPool> getBusinessPools() {
+        return businessPools;
+    }
+
+    public void setBusinessPools(Set<BusinessPool> businessPools) {
+        this.businessPools = businessPools;
+    }
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "SELECT_BUSINESS", nullable = true)
+    public OwnerBusiness getSelectBusiness() {
+        return selectBusiness;
+    }
+
+    public void setSelectBusiness(OwnerBusiness selectBusiness) {
+        this.selectBusiness = selectBusiness;
+    }
+
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "BUSINESS_TYPE", length = 20)

@@ -32,7 +32,7 @@ public class EvaluateSubscribe extends OwnerEntityHome<Evaluate> {
        if(!houseBusinessHome.getInstance().getEvaluates().isEmpty()){
            setId(houseBusinessHome.getInstance().getEvaluates().iterator().next().getId());
        }else {
-           getInstance().setHouseBusiness(houseBusinessHome.getInstance());
+           getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
            houseBusinessHome.getInstance().getEvaluates().add(getInstance());
        }
 

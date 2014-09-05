@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class Evaluate implements java.io.Serializable {
 
 	private String id;
-	private HouseBusiness houseBusiness;
+	private OwnerBusiness ownerBusiness;
 	private String evaluateCorpName;
 	private String evaluateCorpN0;
 	private BigDecimal assessmentPrice;
@@ -24,17 +24,17 @@ public class Evaluate implements java.io.Serializable {
 	public Evaluate() {
 	}
 
-	public Evaluate(String id, HouseBusiness houseBusiness,
+	public Evaluate(String id, OwnerBusiness ownerBusiness,
 			BigDecimal assessmentPrice) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.assessmentPrice = assessmentPrice;
 	}
-	public Evaluate(String id, HouseBusiness houseBusiness,
+	public Evaluate(String id, OwnerBusiness ownerBusiness,
 			String evaluateCorpName, String evaluateCorpN0,
 			BigDecimal assessmentPrice) {
 		this.id = id;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.evaluateCorpName = evaluateCorpName;
 		this.evaluateCorpN0 = evaluateCorpN0;
 		this.assessmentPrice = assessmentPrice;
@@ -57,12 +57,12 @@ public class Evaluate implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
+	public OwnerBusiness getOwnerBusiness() {
+		return this.ownerBusiness;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name = "EVALUATE_CORP_NAME", length = 60)

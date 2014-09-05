@@ -25,7 +25,7 @@ public class MortgaegeRegisteSubsrcribe extends OwnerEntityHome<MortgaegeRegiste
         if(!houseBusinessHome.getInstance().getMortgaegeRegistes().isEmpty()){
            setId(houseBusinessHome.getInstance().getMortgaegeRegistes().iterator().next().getId());
         }else {
-           getInstance().setHouseBusiness(houseBusinessHome.getInstance());
+           getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
            houseBusinessHome.getInstance().getMortgaegeRegistes().add(getInstance());
         }
 
