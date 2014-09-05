@@ -24,9 +24,6 @@ public class OwnerBusiness implements java.io.Serializable {
         RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING;
     }
 
-    public enum OwnerBusinessType {
-        HOUSE, PROJECT;
-    }
 
     private String id;
     private Integer version;
@@ -47,7 +44,6 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
     private Set<Card> cards = new HashSet<Card>(0);
     private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
-    private OwnerBusinessType ownerBusinessType;
 
     private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
     private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(
@@ -366,14 +362,5 @@ public class OwnerBusiness implements java.io.Serializable {
         this.projectBusiness = projectBusiness;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "BUSINESS_TYPE", length = 20)
-    @NotNull
-    public OwnerBusinessType getOwnerBusinessType() {
-        return ownerBusinessType;
-    }
 
-    public void setOwnerBusinessType(OwnerBusinessType ownerBusinessType) {
-        this.ownerBusinessType = ownerBusinessType;
-    }
 }
