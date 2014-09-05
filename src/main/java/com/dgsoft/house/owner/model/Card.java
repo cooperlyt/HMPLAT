@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Table(name = "CARD", catalog = "HOUSE_OWNER_RECORD")
 public class Card implements java.io.Serializable {
 
-    private enum CardType{NOTICE,OWNE_RSHIP,MORTGAGE,PROJECT_MORTGAGE,SALE_LICENSE,MERCHANDISE_CONTRAC};
+    public enum CardType{NOTICE,OWNE_RSHIP,MORTGAGE,PROJECT_MORTGAGE,SALE_LICENSE,MERCHANDISE_CONTRAC};
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
@@ -22,6 +22,10 @@ public class Card implements java.io.Serializable {
 
 	public Card() {
 	}
+
+    public Card(CardType type) {
+        this.type = type;
+    }
 
 	public Card(String id, OwnerBusiness ownerBusiness, CardType type,
 			String number) {
