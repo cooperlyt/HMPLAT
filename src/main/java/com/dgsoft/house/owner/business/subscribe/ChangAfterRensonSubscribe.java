@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Reason;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -16,7 +16,7 @@ import org.jboss.seam.annotations.Name;
 @Name("changAfterRensonSubscribe")
 public class ChangAfterRensonSubscribe extends OwnerEntityHome<Reason>{
     @In
-    private HouseBusinessHome houseBusinessHome;
+    private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public Reason createInstance(){
@@ -26,15 +26,15 @@ public class ChangAfterRensonSubscribe extends OwnerEntityHome<Reason>{
     @Override
     public void create(){
         super.create();
-        for(Reason reason:houseBusinessHome.getInstance().getReasons()){
+        for(Reason reason: ownerBusinessHome.getInstance().getReasons()){
             if (reason.getType().equals(Reason.ReasonType.CHANG_AFTER_RESON)){
                 setId(reason.getId());
                 return;
             }
 
         }
-        getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
-        houseBusinessHome.getInstance().getReasons().add(getInstance());
+        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getReasons().add(getInstance());
 
     }
 

@@ -12,8 +12,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PROJECT_SELL_CARD", catalog = "HOUSE_OWNER_RECORD")
-@DiscriminatorValue("PROJECT")
-public class ProjectBusiness extends OwnerBusiness implements java.io.Serializable {
+public class ProjectBusiness implements java.io.Serializable {
 
 	private BusinessLandInfo businessLandInfo;
 	private BusinessProject businessProject;
@@ -27,9 +26,9 @@ public class ProjectBusiness extends OwnerBusiness implements java.io.Serializab
 	private String orderNumber;
 	private Date printTime;
 	private String memo;
+    private OwnerBusiness ownerBusiness;
 
 	public ProjectBusiness() {
-        this.setOwnerBusinessType(OwnerBusinessType.PROJECT);
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
@@ -151,4 +150,13 @@ public class ProjectBusiness extends OwnerBusiness implements java.io.Serializab
 		this.memo = memo;
 	}
 
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUSINESS_ID",nullable = false)
+    public OwnerBusiness getOwnerBusiness() {
+        return ownerBusiness;
+    }
+
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
+    }
 }

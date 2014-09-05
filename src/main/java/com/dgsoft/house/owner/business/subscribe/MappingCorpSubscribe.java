@@ -5,7 +5,7 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.EvaluateCorporation;
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.action.HouseBusinessHome;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.MappingCorp;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -22,7 +22,7 @@ import javax.faces.event.ValueChangeEvent;
 @Name("mappingCorpSubscribe")
 public class MappingCorpSubscribe extends OwnerEntityHome<MappingCorp> {
     @In
-    private HouseBusinessHome houseBusinessHome;
+    private OwnerBusinessHome ownerBusinessHome;
 
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
@@ -30,11 +30,11 @@ public class MappingCorpSubscribe extends OwnerEntityHome<MappingCorp> {
     @Override
     public void create(){
         super.create();
-        if(!houseBusinessHome.getInstance().getMappingCorps().isEmpty()){
-            setId(houseBusinessHome.getInstance().getMappingCorps().iterator().next().getId());
+        if(!ownerBusinessHome.getInstance().getMappingCorps().isEmpty()){
+            setId(ownerBusinessHome.getInstance().getMappingCorps().iterator().next().getId());
         }else {
-            getInstance().setOwnerBusiness(houseBusinessHome.getInstance());
-            houseBusinessHome.getInstance().getMappingCorps().add(getInstance());
+            getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+            ownerBusinessHome.getInstance().getMappingCorps().add(getInstance());
         }
 
     }
