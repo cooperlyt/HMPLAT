@@ -27,7 +27,7 @@
         <property name="ejbql">select mappingCorporation from MappingCorporation mappingCorporation</property>
     </component>
 
-    <component name="wordMappingCorporationList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
+    <component name="wordMappingCorporationList" scope="conversation" class="com.dgsoft.house.HouseEntityQuery">
         <property name="ejbql">select mappingCorporation from MappingCorporation mappingCorporation where destroyed=false</property>
     </component>
 

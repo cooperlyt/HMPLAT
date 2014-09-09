@@ -4,6 +4,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.EvaluateCorporation;
+import com.dgsoft.house.model.MappingCorporation;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.MappingCorp;
@@ -40,7 +41,7 @@ public class MappingCorpSubscribe extends OwnerEntityHome<MappingCorp> {
     }
 
     public void valueChangeListener(ValueChangeEvent e){
-        getInstance().setName(houseEntityLoader.getEntityManager().find(EvaluateCorporation.class,e.getNewValue()).getName());
+        getInstance().setName(houseEntityLoader.getEntityManager().find(MappingCorporation.class, e.getNewValue()).getName());
 
 
     }

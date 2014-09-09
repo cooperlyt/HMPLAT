@@ -36,5 +36,23 @@
         预告登记证明号
     </subscribe>
 
+    <subscribe name="CardMortgageEdit" page="/business/houseOwner/subscribe/CardMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
+        他项权证号
+    </subscribe>
+
+    <subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml" component="" cagegory="" type="EDIT">
+        所有权证号
+    </subscribe>
+
+    <subscribe name="CardProjectMortgageEdit" page="/business/houseOwner/subscribe/CardProjectMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
+        在建工程抵押证明号
+    </subscribe>
+    <subscribe name="CardMerchandiseContraoEdit" page="/business/houseOwner/subscribe/CardMerchandiseContraoEdit.xhtml" component="" cagegory="" type="EDIT">
+        商品房合同备案号
+    </subscribe>
+    <subscribe name="CardSaleLicenseEdit" page="/business/houseOwner/subscribe/CardSaleLicenseEdit.xhtml" component="" cagegory="" type="EDIT">
+        预售许可证号
+    </subscribe>
+
 
 </subscribes>
