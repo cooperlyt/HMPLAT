@@ -9,40 +9,69 @@
 
 
 	<task-node name="受理">
-		<task name="重新受理"></task>
+		<task name="重新受理">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+			</description>
+			<assignment pooled-actors="Accept"></assignment>
+		</task>
 		<transition to="收费判断"></transition>
 	</task-node>
 
 	<task-node name="审核">
 		<task name="审核">
 			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;,isCheck:true}
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/CheckTaskOperPage.xhtml&quot;,isCheck:true}
 			</description>
 			<assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
 		</task>
-		<transition to="登薄"></transition>
-		<transition to="受理"></transition>
+		<transition to="登薄" name="NEXT"></transition>
+		<transition to="受理" name="BACK"></transition>
 	</task-node>
 
 	<task-node name="登薄">
-		<transition to="繕证判断"></transition>
-		<transition to="受理"></transition>
+		<task name="登薄">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/BackTaskOperPage.xhtml&quot;}
+			</description>
+			<assignment pooled-actors="RecordFile"></assignment>
+		</task>
+		<transition to="繕证判断" name="NEXT"></transition>
+		<transition to="受理" name="BACK"></transition>
 	</task-node>
 
 	<task-node name="归档">
+		<task name="归档">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+			</description>
+			<assignment pooled-actors="RecordSave"></assignment>
+		</task>
 		<transition to="结束"></transition>
 	</task-node>
 
 	<task-node name="收费">
+		<task name="收费">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+			</description>
+			<assignment pooled-actors="Money"></assignment>
+		</task>
 		<transition to="收费确认"></transition>
 	</task-node>
 
-	<task-node name="繕证">
+	<task-node name="缮证">
+		<task name="缮证">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+			</description>
+			<assignment pooled-actors="PrintCard"></assignment>
+		</task>
 		<transition to="归档"></transition>
 	</task-node>
 
 	<decision name="繕证判断">
-		<transition to="繕证"></transition>
+		<transition to="缮证"></transition>
 		<transition to="归档"></transition>
 	</decision>
 
