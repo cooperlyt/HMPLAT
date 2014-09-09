@@ -1,0 +1,31 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="OwnerTaskOperPage.xhtml">
+
+    <ui:param name="functionTitle" value="#{taskInstance.name}"/>
+
+    <ui:define name="func-body">
+
+        <h:form>
+            <r:toolbar>
+                <r:toolbarGroup>
+                    <h:commandButton value="complete" action="#{ownerTaskHandle.complete}"/>
+                </r:toolbarGroup>
+
+                <r:toolbarGroup location="right">
+                    <s:button value="cancel" view="/func/system/business/task.xhtml" propagation="end"/>
+                </r:toolbarGroup>
+
+            </r:toolbar>
+            <ui:include src="/layout/system/SubscribePanelView.xhtml">
+                <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
+            </ui:include>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -54,6 +54,7 @@ public class HouseBusinessStart {
 
     private void initBusinessData(){
         ownerBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
+        Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
 

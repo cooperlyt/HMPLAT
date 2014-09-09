@@ -10,23 +10,29 @@ import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.EndTask;
 
 /**
- * Created by cooper on 9/4/14.
+ * Created by cooper on 9/9/14.
  */
-@Name("ownerTaskHandle")
+@Name("backTaskHandle")
 @Scope(ScopeType.CONVERSATION)
-public class OwnerTaskHandle{
+public class BackTaskHandle {
 
     @In
     private TaskPublish taskPublish;
 
 
     @Transactional
-    @EndTask
+    @EndTask(transition = "NEXT")
     public String complete() {
         if ("success".equals(taskPublish.save())) {
             return completeTask();
         }
         return null;
+    }
+
+    @Transactional
+    @EndTask(transition = "BACK")
+    public String back(){
+        return "taskCompleted";
     }
 
     @In
@@ -38,6 +44,5 @@ public class OwnerTaskHandle{
         }
         return null;
     }
-
 
 }
