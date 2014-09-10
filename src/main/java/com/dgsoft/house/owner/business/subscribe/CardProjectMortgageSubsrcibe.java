@@ -30,7 +30,6 @@ public class CardProjectMortgageSubsrcibe extends OwnerEntityHome<Card> {
         for(Card card:ownerBusinessHome.getInstance().getCards()){
             if (card.getType().equals(Card.CardType.PROJECT_MORTGAGE)){
                 setId(card.getId());
-
                 return;
             }
 
