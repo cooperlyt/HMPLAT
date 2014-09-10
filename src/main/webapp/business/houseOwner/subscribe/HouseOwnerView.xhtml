@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:panelGrid columns="4"  style="width: 900px" columnClasses="detailsTitleCol,detailsValueCol,detailsTitleCol">
+        <h:outputText value="#{messages.HouseOwner}"/>
+        <h:outputText value="#{businessHouseOwnerSubscribe.instance.personName}"/>
+
+        <h:outputText value="#{messages.BusinessOwner_Phone}"/>
+        <h:outputText value="#{businessHouseOwnerSubscribe.instance.phone}"/>
+
+
+        <h:outputText value="#{messages.person_field_credentialsType}"/>
+        <h:outputText value="#{messages[businessHouseOwnerSubscribe.instance.credentialsType.name()]}"/>
+
+
+        <h:outputText value="#{messages.person_field_credentialsNO}"/>
+        <h:outputText value="#{businessHouseOwnerSubscribe.instance.credentialsNumber}"/>
+
+    </h:panelGrid>
+
+    <h:panelGrid columns="2"  style="width: 900px" columnClasses="detailsTitleCol">
+        <h:outputText value="#{messages.BusinessOwner_RootAddress}"/>
+        <h:outputText value="#{businessHouseOwnerSubscribe.instance.rootAddress}"/>
+
+    </h:panelGrid>
+
+</ui:composition>
