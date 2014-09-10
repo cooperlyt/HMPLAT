@@ -1,12 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="OwnerTaskOperPage.xhtml">
 
-</body>
-</html>
+    <ui:param name="functionTitle" value="#{taskInstance.name}"/>
+
+    <ui:define name="func-body">
+
+        <h:form>
+            <r:toolbar>
+                <r:toolbarGroup>
+                    <h:commandButton value="complete" action="#{ownerTaskHandle.complete}"/>
+                </r:toolbarGroup>
+
+                <r:toolbarGroup location="right">
+                    <s:button value="cancel" view="/func/system/business/task.xhtml" propagation="end"/>
+                </r:toolbarGroup>
+
+            </r:toolbar>
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.}
+                </ui:define>
+            </s:decorate>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
