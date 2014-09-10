@@ -46,11 +46,9 @@
         <ui:define name="label">#{messages.MortgaegeRegiste_MortgageDueTimeS}</ui:define>
         <r:calendar enableManualInput="true"
                     inputSize="20"
-
                     defaultLabel="#{currentDate}"
                     required="true"
                     timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-
                     value="#{mortgaegeRegisteSubsrcribe.instance.mortgageDueTimeS}"
                     datePattern="#{messages.datePattern}"/>
     </s:decorate>
