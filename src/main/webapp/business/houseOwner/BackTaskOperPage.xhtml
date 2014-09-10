@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="OwnerTaskOperPage.xhtml">
+                template="/layout/full-template.xhtml">
 
     <ui:param name="functionTitle" value="#{taskInstance.name}"/>
 
@@ -15,7 +15,11 @@
         <h:form>
             <r:toolbar>
                 <r:toolbarGroup>
-                    <h:commandButton value="complete" action="#{ownerTaskHandle.complete}"/>
+                    <h:commandButton value="complete" action="#{backTaskHandle.complete}"/>
+                </r:toolbarGroup>
+
+                <r:toolbarGroup>
+                    <h:commandButton value="#{messages.Back}" action="#{backTaskHandle.back}"/>
                 </r:toolbarGroup>
 
                 <r:toolbarGroup location="right">
