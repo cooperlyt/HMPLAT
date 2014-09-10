@@ -15,7 +15,8 @@
         <h:form>
             <r:toolbar>
                 <r:toolbarGroup>
-                    <h:commandButton value="complete" action="#{ownerTaskHandle.complete}"/>
+                    <h:commandButton value="#{messages.Agree}" action="#{checkTaskHandle.accept}"/>
+                    <h:commandButton value="#{messages.Reject}" action="#{checkTaskHandle.unAccept}"/>
                 </r:toolbarGroup>
 
                 <r:toolbarGroup location="right">
@@ -25,8 +26,9 @@
             </r:toolbar>
             <s:decorate template="/layout/edit.xhtml">
                 <ui:define name="label">
-                    #{messages.}
+                    #{messages.CheckComments}
                 </ui:define>
+                <h:inputTextarea value="#{checkTaskHandle.lastCheckComments}"/>
             </s:decorate>
 
         </h:form>
