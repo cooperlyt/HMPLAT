@@ -56,5 +56,7 @@
     <subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="" cagegory="" type="EDIT">
         查封登记
     </subscribe>
-
+    <subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml" component="" cagegory="" type="EDIT">
+        解封登记
+    </subscribe>
 </subscribes>
