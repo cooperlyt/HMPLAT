@@ -18,6 +18,11 @@
         </r:toolbar>
 
         #{ownerBusinessHome.singleHoues.houseCode}
+
+        <ui:include src="/layout/system/SubscribePanelView.xhtml">
+            <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
+        </ui:include>
+
     </ui:define>
 
 </ui:composition>
