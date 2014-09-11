@@ -71,8 +71,12 @@
 	</task-node>
 
 	<decision name="繕证判断">
-		<transition to="缮证"></transition>
-		<transition to="归档"></transition>
+		<transition to="缮证">
+			<condition expression="#{not(businessDefineHome.id eq 'WP38') or not(businessDefineHome.id eq 'WP42') or not(businessDefineHome.id eq 'WP43') or not(businessDefineHome.id eq 'WP46') or not(businessDefineHome.id eq 'WP4') or not(businessDefineHome.id eq 'WP8') or not(businessDefineHome.id eq 'WP12') or not(businessDefineHome.id eq 'WP17') or not(businessDefineHome.id eq 'WP21') or not(businessDefineHome.id eq 'WP73') or not(businessDefineHome.id eq 'WP74') or not(businessDefineHome.id eq 'WP84')}"></condition>
+		</transition>
+		<transition to="归档">
+			<condition expression="#{(businessDefineHome.id eq 'WP38') or (businessDefineHome.id eq 'WP42') or (businessDefineHome.id eq 'WP43') or (businessDefineHome.id eq 'WP46') or (businessDefineHome.id eq 'WP4') or (businessDefineHome.id eq 'WP8') or (businessDefineHome.id eq 'WP12') or (businessDefineHome.id eq 'WP17') or (businessDefineHome.id eq 'WP21') or (businessDefineHome.id eq 'WP73') or (businessDefineHome.id eq 'WP74') or (businessDefineHome.id eq 'WP84')}"></condition>
+		</transition>
 	</decision>
 
 	<task-node name="收费确认">
@@ -81,10 +85,10 @@
 
 	<decision name="收费判断">
 		<transition to="收费">
-			<condition expression="#{businessDefineHome.id eq 'WP30'}"></condition>
+			<condition expression="#{not(businessDefineHome.id eq 'WP38') or not(businessDefineHome.id eq 'WP43') or not(businessDefineHome.id eq 'WP46') or not(businessDefineHome.id eq 'WP4') or not(businessDefineHome.id eq 'WP8') or not(businessDefineHome.id eq 'WP12') or not(businessDefineHome.id eq 'WP17') or not(businessDefineHome.id eq 'WP21') or not(businessDefineHome.id eq 'WP73') or not(businessDefineHome.id eq 'WP74')}"></condition>
 		</transition>
 		<transition to="审核">
-			<condition expression="#{not (businessDefineHome.id eq 'WP30')}"></condition>
+			<condition expression="#{(businessDefineHome.id eq 'WP38') or (businessDefineHome.id eq 'WP43') or (businessDefineHome.id eq 'WP46') or (businessDefineHome.id eq 'WP4') or (businessDefineHome.id eq 'WP8') or (businessDefineHome.id eq 'WP12') or (businessDefineHome.id eq 'WP17') or (businessDefineHome.id eq 'WP21') or (businessDefineHome.id eq 'WP73') or (businessDefineHome.id eq 'WP74')}"></condition>
 		</transition>
 	</decision>
 
