@@ -7,15 +7,26 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <r:panel>
-        <f:facet name="header">
-            Woenr
-        </f:facet>
+    <div style="clear: both;"/>
+
+    <h:outputText value="#{messages.House_Owner}" style="
+    vertical-align: top;
+	font-weight: bold;
+	width: 115px;
+	float: left;
+	padding: 5px;
+	margin-top: 3px;
+	clear: left;"/>
+
+    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+
         <ui:include src="/layout/house/owner/OwnerInput.xhtml">
             <ui:param name="owner" value="#{businessHouseOwnerSubscribe.instance}"/>
             <ui:param name="personEntityHelper" value="#{businessHouseOwnerSubscribe.houseOwnerEntityHelper}"/>
         </ui:include>
 
         <div style="clear: both"/>
-    </r:panel>
+
+    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+
 </ui:composition>

@@ -10,17 +10,73 @@
 
     <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Subscribe}"/>
 
-    <ui:define name="body">
+    <ui:define name="func-body">
         <h:form>
-            <r:toolbar>
-                <r:toolbarGroup location="right">
-                    <h:commandButton value="#{messages.ok}" action="#{taskPublish.wire}"/>
-                    <s:button value="#{messages.cancel}" propagation="end" view="/func/system/business/start.xhtml"/>
-                </r:toolbarGroup>
 
-            </r:toolbar>
+            <h:outputStylesheet>
+                .flow-steps{overflow:hidden;margin:20px 0;}
+                .num4{
+                    margin: 0 0 0 0;
+                    padding: 0 0 0 0;
+                }
+                .flow-steps .num3 li{width:200px;}
+                .flow-steps .num4 li{width:233px;}
+                .flow-steps .num5 li{width:175px;}
+                .flow-steps .num6 li{width:143px;}
+                .flow-steps li{
+                    float:left;
+                    background:#e4e4e4 url('#{facesContext.externalContext.requestContextPath}/img/flow_steps_bg.png') no-repeat 100% 0;
+                    font-size:14px;
+                    font-weight:bold;
+                    height:23px;
+                    line-height:23px;
+                    text-align:center;
+                    color:#404040;
+                    padding:0 15px 0 0;
+                    overflow:hidden;}
 
-            <br/>
+                .flow-steps li span,.flow-steps li strong{display:block;}
+                .flow-steps li .first{background:#e4e4e4 url('#{facesContext.externalContext.requestContextPath}/img/flow_steps_bg.png') no-repeat -12px -69px;}
+                .flow-steps li.last{background-position:100% -138px;}
+                .flow-steps li.current{background-color:#f60;color:#fff;}
+                .flow-steps li.current .first{background-color:#f60;background-position:-12px -92px;}
+                .flow-steps li.current-prev{background-position:100% -23px!important;}
+                .flow-steps li.done{background-color:#ffe6ba;background-position:100% -46px;color:#f60;}
+                .flow-steps li.done .first{background-color:#ffe6ba;background-position:-12px -115px;}
+                .flow-steps li.last-current{background-color:#f60;color:#fff;background-position:100% -161px;}
+
+            .submitbox {
+                padding-left: 390px;
+                margin: 10px 0;
+                clear:both;
+            }
+
+                .subbtn{
+                    width: 80px;
+                    height: 25px;
+                    line-height: 25px;
+                }
+
+            </h:outputStylesheet>
+    <div style="clear: both"/>
+
+            <div class="flow-steps">
+                <ol class="num4">
+                    <li class="done">
+                        <span class="first">1.</span>
+                    </li>
+                    <li class="done">
+                        <span>2.</span>
+                    </li>
+                    <li class="done current-prev">
+                        <span>3.</span>
+                    </li>
+                    <li class="last-current">
+                        <strong>4.</strong>
+                    </li>
+                </ol>
+            </div>
+
             <r:messages ajaxRendered="true" globalOnly="true"/>
             <br/>
 
@@ -33,9 +89,29 @@
                 <ui:define name="label">
                     #{messages.field_memo}
                 </ui:define>
-                <h:inputText maxlength="200" size="200" value="#{ownerBusinessHome.instance.memo}"/>
+                <h:inputTextarea id="businessMemoInput" value="#{ownerBusinessHome.instance.memo}" cols="50" rows="3"/>
+                <ui:define name="tail">
+                    <r:message for="businessMemoInput" />
+                </ui:define>
             </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                #{messages.requiredFields}
+            </div>
+    <br/>
+            <div class="submitbox">
+                <h:panelGrid columns="3">
+                <h:commandButton styleClass="subbtn"  value="#{messages.ok}" action="#{taskPublish.wire}"/>
+                <s:button styleClass="subbtn"  value="#{messages.cancel}" propagation="end" view="/func/system/business/start.xhtml"/>
+                </h:panelGrid>
+            </div>
         </h:form>
+
+
+
+
+
     </ui:define>
 
 </ui:composition>
