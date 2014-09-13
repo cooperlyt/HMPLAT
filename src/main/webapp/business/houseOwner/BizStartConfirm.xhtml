@@ -35,15 +35,25 @@
         <r:messages ajaxRendered="true" globalOnly="true"/>
         <br/>
 
-        #{ownerBusinessHome.singleHoues.houseCode}
 
+
+        <h:panelGrid columns="4"  styleClass="detailsTable"
+                     columnClasses="detailsTopFirstTitleCol,detailsTopValueCol,detailsTopTitleCol,detailsTopLastValueCol">
+            <h:outputText value="#{messages.BusinessKey}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.id}"/>
+
+            <h:outputText value="#{messages.businessDefine_field_name}"/>
+            <h:outputText value="#{businessDefineHome.instance.name}"/>
+
+
+        </h:panelGrid>
 
         <ui:include src="/layout/system/SubscribePanelView.xhtml">
             <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
         </ui:include>
         <br/>
 
-        <div class="submitbox">
+        <div style="float: right;padding: 6px">
 
             <s:button styleClass="subbtn" value="#{messages.createBusiness}" action="#{houseBusinessStart.createProcess}"/>
 
