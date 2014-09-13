@@ -10,19 +10,44 @@
 
     <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Confirm}"/>
 
-    <ui:define name="body">
-        <r:toolbar>
-            <r:toolbarGroup location="right">
-                <s:button value="create" action="#{houseBusinessStart.createProcess}"/>
-            </r:toolbarGroup>
-        </r:toolbar>
+    <ui:define name="func-body">
+
+
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="done">
+                    <span class="first">#{messages.HouseBusinessStep1}</span>
+                </li>
+                <li class="done">
+                    <span>#{messages.HouseBusinessStep2}</span>
+                </li>
+                <li class="done current-prev">
+                    <span>#{messages.HouseBusinessStep3}</span>
+                </li>
+                <li class="last-current">
+                    <strong>#{messages.HouseBusinessStep4}</strong>
+                </li>
+            </ol>
+        </div>
+
+        <r:messages ajaxRendered="true" globalOnly="true"/>
+        <br/>
 
         #{ownerBusinessHome.singleHoues.houseCode}
+
 
         <ui:include src="/layout/system/SubscribePanelView.xhtml">
             <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
         </ui:include>
+        <br/>
 
+        <div class="submitbox">
+
+            <s:button styleClass="subbtn" value="#{messages.createBusiness}" action="#{houseBusinessStart.createProcess}"/>
+
+        </div>
     </ui:define>
 
 </ui:composition>

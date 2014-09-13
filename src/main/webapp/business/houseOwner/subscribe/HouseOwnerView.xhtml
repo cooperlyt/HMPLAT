@@ -7,7 +7,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <h:panelGrid columns="4"  style="width: 900px" columnClasses="detailsTitleCol,detailsValueCol,detailsTitleCol">
+
+    <h:outputStylesheet>
+
+    </h:outputStylesheet>
+
+    <h:panelGrid columns="4"  styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
         <h:outputText value="#{messages.HouseOwner}"/>
         <h:outputText value="#{businessHouseOwnerSubscribe.instance.personName}"/>
 
@@ -24,7 +30,8 @@
 
     </h:panelGrid>
 
-    <h:panelGrid columns="2"  style="width: 900px" columnClasses="detailsTitleCol">
+    <h:panelGrid columns="2"  styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsLastValueCol">
         <h:outputText value="#{messages.BusinessOwner_RootAddress}"/>
         <h:outputText value="#{businessHouseOwnerSubscribe.instance.rootAddress}"/>
 

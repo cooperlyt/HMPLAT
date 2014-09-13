@@ -10,7 +10,30 @@
 
     <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_HouseSelect}"/>
 
-    <ui:define name="body">
+    <ui:define name="func-body">
+
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="current">
+                    <strong class="first">#{messages.HouseBusinessStep1}</strong>
+                </li>
+                <li >
+                    <span>#{messages.HouseBusinessStep2}</span>
+                </li>
+                <li>
+                    <span>#{messages.HouseBusinessStep3}</span>
+                </li>
+                <li class="last">
+                    <span>#{messages.HouseBusinessStep4}</span>
+                </li>
+            </ol>
+        </div>
+
+
+        <r:messages ajaxRendered="true" globalOnly="true"/>
+        <br/>
 
         <s:decorate template="/layout/house/HouseList.xhtml">
             <r:column>
