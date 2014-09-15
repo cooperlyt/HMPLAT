@@ -3,97 +3,93 @@
 <process-definition  xmlns=""  name="HouseOwnerBusiness">
 
 
-	<start-state name="业务受理">
-		<transition to="收费判断"></transition>
-	</start-state>
+    <start-state name="业务受理">
+        <transition to="收费判断"></transition>
+    </start-state>
 
 
-	<task-node name="受理">
-		<task name="重新受理">
-			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
-			</description>
-			<assignment pooled-actors="Accept"></assignment>
-		</task>
-		<transition to="收费判断"></transition>
-	</task-node>
+    <task-node name="受理">
+        <task name="重新受理">
+            <description>
+                {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+            </description>
+            <assignment pooled-actors="Accept"></assignment>
+        </task>
+        <transition to="收费判断"></transition>
+    </task-node>
 
-	<task-node name="审核">
-		<task name="审核">
-			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/CheckTaskOperPage.xhtml&quot;,isCheck:true}
-			</description>
-			<assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
-		</task>
-		<transition to="登薄" name="NEXT"></transition>
-		<transition to="受理" name="BACK"></transition>
-	</task-node>
+    <task-node name="审核">
+        <task name="审核">
+            <description>
+                {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/CheckTaskOperPage.xhtml&quot;,isCheck:true}
+            </description>
+            <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
+        </task>
+        <transition to="登薄" name="NEXT"></transition>
+        <transition to="受理" name="BACK"></transition>
+    </task-node>
 
-	<task-node name="登薄">
-		<task name="登薄">
-			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/BackTaskOperPage.xhtml&quot;}
-			</description>
-			<assignment pooled-actors="RecordFile"></assignment>
-		</task>
-		<transition to="繕证判断" name="NEXT"></transition>
-		<transition to="受理" name="BACK"></transition>
-	</task-node>
+    <task-node name="登薄">
+        <task name="登薄">
+            <description>
+                {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/BackTaskOperPage.xhtml&quot;}
+            </description>
+            <assignment pooled-actors="RecordFile"></assignment>
+        </task>
+        <transition to="繕证判断" name="NEXT"></transition>
+        <transition to="受理" name="BACK"></transition>
+    </task-node>
 
-	<task-node name="归档">
-		<task name="归档">
-			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
-			</description>
-			<assignment pooled-actors="RecordSave"></assignment>
-		</task>
-		<transition to="结束"></transition>
-	</task-node>
+    <task-node name="归档">
+        <task name="归档">
+            <description>
+                {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+            </description>
+            <assignment pooled-actors="RecordSave"></assignment>
+        </task>
+        <transition to="结束"></transition>
+    </task-node>
 
-	<task-node name="收费">
-		<task name="收费">
-			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
-			</description>
-			<assignment pooled-actors="Money"></assignment>
-		</task>
-		<transition to="收费确认"></transition>
-	</task-node>
+    <task-node name="收费">
+        <task name="收费">
+            <description>
+                {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+            </description>
+            <assignment pooled-actors="Money"></assignment>
+        </task>
+        <transition to="收费确认"></transition>
+    </task-node>
 
-	<task-node name="缮证">
-		<task name="缮证">
-			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
-			</description>
-			<assignment pooled-actors="PrintCard"></assignment>
-		</task>
-		<transition to="归档"></transition>
-	</task-node>
+    <task-node name="缮证">
+        <task name="缮证">
+            <description>
+                {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
+            </description>
+            <assignment pooled-actors="PrintCard"></assignment>
+        </task>
+        <transition to="归档"></transition>
+    </task-node>
 
-	<decision name="繕证判断">
-		<transition to="缮证">
-			<condition expression="#{not(businessDefineHome.id eq 'WP38') or not(businessDefineHome.id eq 'WP42') or not(businessDefineHome.id eq 'WP43') or not(businessDefineHome.id eq 'WP46') or not(businessDefineHome.id eq 'WP4') or not(businessDefineHome.id eq 'WP8') or not(businessDefineHome.id eq 'WP12') or not(businessDefineHome.id eq 'WP17') or not(businessDefineHome.id eq 'WP21') or not(businessDefineHome.id eq 'WP73') or not(businessDefineHome.id eq 'WP74') or not(businessDefineHome.id eq 'WP84')}"></condition>
-		</transition>
-		<transition to="归档">
-			<condition expression="#{(businessDefineHome.id eq 'WP38') or (businessDefineHome.id eq 'WP42') or (businessDefineHome.id eq 'WP43') or (businessDefineHome.id eq 'WP46') or (businessDefineHome.id eq 'WP4') or (businessDefineHome.id eq 'WP8') or (businessDefineHome.id eq 'WP12') or (businessDefineHome.id eq 'WP17') or (businessDefineHome.id eq 'WP21') or (businessDefineHome.id eq 'WP73') or (businessDefineHome.id eq 'WP74') or (businessDefineHome.id eq 'WP84')}"></condition>
-		</transition>
-	</decision>
+    <decision name="繕证判断">
+        <transition to="缮证"></transition>
+        <transition to="归档"></transition>
+    </decision>
 
-	<task-node name="收费确认">
-		<transition to="审核"></transition>
-	</task-node>
+    <task-node name="收费确认">
+        <transition to="审核"></transition>
+    </task-node>
 
-	<decision name="收费判断">
-		<transition to="收费">
-			<condition expression="#{not(businessDefineHome.id eq 'WP38') or not(businessDefineHome.id eq 'WP43') or not(businessDefineHome.id eq 'WP46') or not(businessDefineHome.id eq 'WP4') or not(businessDefineHome.id eq 'WP8') or not(businessDefineHome.id eq 'WP12') or not(businessDefineHome.id eq 'WP17') or not(businessDefineHome.id eq 'WP21') or not(businessDefineHome.id eq 'WP73') or not(businessDefineHome.id eq 'WP74')}"></condition>
-		</transition>
-		<transition to="审核">
-			<condition expression="#{(businessDefineHome.id eq 'WP38') or (businessDefineHome.id eq 'WP43') or (businessDefineHome.id eq 'WP46') or (businessDefineHome.id eq 'WP4') or (businessDefineHome.id eq 'WP8') or (businessDefineHome.id eq 'WP12') or (businessDefineHome.id eq 'WP17') or (businessDefineHome.id eq 'WP21') or (businessDefineHome.id eq 'WP73') or (businessDefineHome.id eq 'WP74')}"></condition>
-		</transition>
-	</decision>
+    <decision name="收费判断">
+        <transition to="收费">
+            <condition expression="#{businessDefineHome.id eq 'WP30'}"></condition>
+        </transition>
+        <transition to="审核">
+            <condition expression="#{not (businessDefineHome.id eq 'WP30')}"></condition>
+        </transition>
+    </decision>
 
 
-	<end-state name="结束"></end-state>
+    <end-state name="结束"></end-state>
 
 
 </process-definition>
