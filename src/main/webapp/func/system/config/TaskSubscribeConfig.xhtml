@@ -9,7 +9,7 @@
                 template="/layout/full-template.xhtml">
     <ui:param name="" value=""/>
 
-    <ui:define name="body">
+    <ui:define name="func-body">
 
 
         <h:form>
@@ -17,35 +17,41 @@
                 <r:toolbarGroup>
 
                     <a:commandLink value="#{messages.create}" action="#{businessDefineHome.createTaskSubscribe}"
-                                   immediate="true" render="editPanel_form" oncomplete="#{r:component('editPanel')}.show();">
+                                   immediate="true" render="editPanel_form"
+                                   oncomplete="#{r:component('editPanel')}.show();">
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
                 </r:toolbarGroup>
 
                 <r:toolbarGroup location="right">
-                    <h:commandButton value="save" action="#{businessDefineHome.update}" />
+                    <h:commandButton value="save" action="#{businessDefineHome.update}"/>
 
                     <s:button propagation="end" value="cancel" view="/func/system/config/BusinessMgr.xhtml"/>
                 </r:toolbarGroup>
             </r:toolbar>
 
+            <br/>
+            <r:messages globalOnly="true" ajaxRendered="true"/>
+            <br/>
 
-            <r:dataTable id="allSubscribes" style="width: 100%" value="#{businessDefineHome.taskSubscribeGroups}" var="_group">
-                <r:columnGroup>
-                    <r:column>
-                        #{messages.TaskSubscribe_type}
-                    </r:column>
-                    <r:column>
-                        #{messages.TaskSubscribe_taskName}
-                    </r:column>
-                    <r:column>
-                        #{messages.TaskSubscribe_reg}
-                    </r:column>
-                    <r:column>
+            <r:dataTable id="allSubscribes" style="width: 100%" value="#{businessDefineHome.taskSubscribeGroups}"
+                         var="_group">
+                <f:facet name="header">
+                    <r:columnGroup>
+                        <r:column>
+                            #{messages.TaskSubscribe_type}
+                        </r:column>
+                        <r:column>
+                            #{messages.TaskSubscribe_taskName}
+                        </r:column>
+                        <r:column>
+                            #{messages.TaskSubscribe_reg}
+                        </r:column>
+                        <r:column>
 
-                    </r:column>
-                </r:columnGroup>
-
+                        </r:column>
+                    </r:columnGroup>
+                </f:facet>
                 <r:column colspan="4">
                     #{_group.key}
                     <r:collapsibleSubTableToggler for="sbtb1"/>
@@ -58,11 +64,28 @@
                         #{_item.taskName}
                     </r:column>
                     <r:column>
-                        #{_item.regName}
+                        #{_item.regName} #{_item.priority}
                     </r:column>
 
-                    <r:column>
+                    <r:column style="text-align: center; width: 74px">
+                        <a:commandButton image="/img/icons/delete.png" execute="@this"
+                                         action="#{businessDefineHome.deleteSelectSubscribe}" render="allSubscribes">
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param value="#{_item.id}" assignTo="#{businessDefineHome.selectTaskSubscribeId}"/>
+                        </a:commandButton>
 
+                        #{' '}
+                        <a:commandButton image="/img/icons/up.png" execute="@this"
+                                         action="#{businessDefineHome.upSelectTaskSubscribe}" render="allSubscribes">
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param value="#{_item.id}" assignTo="#{businessDefineHome.selectTaskSubscribeId}"/>
+                        </a:commandButton>
+                        #{' '}
+                        <a:commandButton image="/img/icons/down.png" execute="@this"
+                                         action="#{businessDefineHome.downSelectTaskSubscribe}" render="allSubscribes">
+                            <a:attachQueue requestDelay="0"/>
+                            <a:param value="#{_item.id}" assignTo="#{businessDefineHome.selectTaskSubscribeId}"/>
+                        </a:commandButton>
                     </r:column>
                 </r:collapsibleSubTable>
             </r:dataTable>
