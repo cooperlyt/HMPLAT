@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.business.TaskPublish;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import org.jboss.seam.ScopeType;
@@ -8,6 +9,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.bpm.EndTask;
+import org.jbpm.taskmgmt.exe.TaskInstance;
 
 /**
  * Created by cooper on 9/9/14.

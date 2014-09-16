@@ -26,8 +26,41 @@ public class TaskOper implements java.io.Serializable {
     private String taskName;
     private String comments;
     private OperType operType;
+    private boolean accept;
 
     public TaskOper() {
+    }
+
+
+    public TaskOper(OwnerBusiness ownerBusiness, String empCode, String empName) {
+        this.ownerBusiness = ownerBusiness;
+        this.operTime = new Date();
+        this.empCode = empCode;
+        this.empName = empName;
+        this.taskName = "create";
+        this.operType = OperType.CREATE_OPER;
+        this.accept = true;
+    }
+
+    public TaskOper(OwnerBusiness ownerBusiness, String empCode, String empName, String taskName) {
+        this.ownerBusiness = ownerBusiness;
+        this.operTime = new Date();
+        this.empCode = empCode;
+        this.empName = empName;
+        this.taskName = taskName;
+        this.operType = OperType.TASK_OPER;
+        this.accept = true;
+    }
+
+    public TaskOper(OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments,boolean accept) {
+        this.ownerBusiness = ownerBusiness;
+        this.operTime = new Date();
+        this.empCode = empCode;
+        this.empName = empName;
+        this.taskName = taskName;
+        this.comments = comments;
+        this.operType = OperType.CHECK_OPER;
+        this.accept = accept;
     }
 
     @Id
@@ -118,5 +151,14 @@ public class TaskOper implements java.io.Serializable {
 
     public void setOperType(OperType operType) {
         this.operType = operType;
+    }
+
+    @Column(name = "ACCEPT",nullable = false)
+    public boolean isAccept() {
+        return accept;
+    }
+
+    public void setAccept(boolean accept) {
+        this.accept = accept;
     }
 }
