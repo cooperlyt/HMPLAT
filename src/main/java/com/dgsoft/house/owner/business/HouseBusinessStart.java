@@ -5,6 +5,7 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -54,8 +55,8 @@ public class HouseBusinessStart {
 
     private void initBusinessData(){
 
-        ownerBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
-        Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
+        //ownerBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
+       // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
 
@@ -71,6 +72,7 @@ public class HouseBusinessStart {
     //TODO valid House
     @Transactional
     public String createProcess(){
+        ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         String result = ownerBusinessHome.persist();
         if ((result != null) && result.equals("persisted")) {
             BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), ownerBusinessHome.getInstance().getId());

@@ -115,6 +115,8 @@
         <class>com.dgsoft.house.owner.model.Reason</class>
         <class>com.dgsoft.house.owner.model.SaleInfo</class>
         <class>com.dgsoft.house.owner.model.UploadFiles</class>
+        <class>com.dgsoft.house.owner.model.TaskOper</class>
+        <class>com.dgsoft.house.owner.model.OwnerNumberPool</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

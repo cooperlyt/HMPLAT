@@ -56,6 +56,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
     private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
+    private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
 
     private OwnerBusiness selectBusiness;
     private ProjectBusiness projectBusiness;
@@ -125,7 +126,7 @@ public class OwnerBusiness implements java.io.Serializable {
         this.processMessage = processMessage;
     }
 
-    @Column(name="DEFINE_NAME",nullable = true,length = 50)
+    @Column(name = "DEFINE_NAME", nullable = true, length = 50)
     @Size(max = 50)
     public String getDefineName() {
         return defineName;
@@ -135,7 +136,7 @@ public class OwnerBusiness implements java.io.Serializable {
         this.defineName = defineName;
     }
 
-    @Column(name="DEFINE_ID",nullable = true,length = 32)
+    @Column(name = "DEFINE_ID", nullable = true, length = 32)
     @Size(max = 32)
     public String getDefineId() {
         return defineId;
@@ -342,6 +343,14 @@ public class OwnerBusiness implements java.io.Serializable {
         this.businessPools = businessPools;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", orphanRemoval = true, cascade = {CascadeType.ALL})
+    public Set<TaskOper> getTaskOpers() {
+        return taskOpers;
+    }
+
+    public void setTaskOpers(Set<TaskOper> taskOpers) {
+        this.taskOpers = taskOpers;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "SELECT_BUSINESS", nullable = true)
@@ -353,7 +362,7 @@ public class OwnerBusiness implements java.io.Serializable {
         this.selectBusiness = selectBusiness;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",optional = false,orphanRemoval = true,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
     public ProjectBusiness getProjectBusiness() {
         return projectBusiness;
     }

@@ -13,23 +13,51 @@
     <ui:define name="func-body">
 
         <h:form>
-            <r:toolbar>
+            <r:toolbar height="30" itemSeparator="grid">
                 <r:toolbarGroup>
-                    <h:commandButton value="#{messages.Agree}" action="#{checkTaskHandle.accept}"/>
-                    <h:commandButton value="#{messages.Reject}" action="#{checkTaskHandle.unAccept}"/>
+                    <h:graphicImage value="/img/icons/passed.gif"/>
+                    <h:commandLink value="#{messages.Agree}" action="#{checkTaskHandle.accept}"/>
+
+                </r:toolbarGroup>
+
+                <r:toolbarGroup>
+                    <h:graphicImage value="/img/error.gif"/>
+                    <h:commandLink value="#{messages.Reject}" action="#{checkTaskHandle.unAccept}"/>
                 </r:toolbarGroup>
 
                 <r:toolbarGroup location="right">
-                    <s:button value="cancel" view="/func/system/business/task.xhtml" propagation="end"/>
+                    <s:button value="#{messages.Return}" view="/func/system/business/task.xhtml" propagation="end"/>
                 </r:toolbarGroup>
 
             </r:toolbar>
+
+            <br/>
+            <r:messages globalOnly="true" ajaxRendered="true"/>
+            <br/>
+
             <s:decorate template="/layout/edit.xhtml">
                 <ui:define name="label">
                     #{messages.CheckComments}
                 </ui:define>
-                <h:inputTextarea value="#{checkTaskHandle.lastCheckComments}"/>
+                <h:inputTextarea id="checkCommentsInput" value="#{checkTaskHandle.lastCheckComments}" cols="50" rows="4"/>
+                <ui:define name="tail">
+                    <r:message for="checkCommentsInput" />
+                </ui:define>
+
             </s:decorate>
+
+
+            <div style="clear: both"/>
+            <br/>
+            <r:tabPanel switchType="client">
+                <ui:include src="/layout/system/SubscribeTabPageView.xhtml">
+                    <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
+                </ui:include>
+
+                <r:tab header="#{messages.BusinessViewUploadFiles}">
+
+                </r:tab>
+            </r:tabPanel>
 
         </h:form>
     </ui:define>
