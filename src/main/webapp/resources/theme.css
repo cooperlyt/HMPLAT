@@ -584,6 +584,22 @@ table.radio input[type=radio] {
     text-align: center;
 }
 
+.detailsHead{
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: gray;
+
+    display: table-cell;
+    vertical-align: inherit;
+
+    border-bottom: 1px solid #C1DAD7;
+    background: #fff;
+    padding: 0px 0px 0px 0px;
+    color: #4f6b72;
+
+    text-align: left;
+}
+
 .detailsTable{
     width: 100%; padding: 0; margin: 0;border-spacing: 0px;display: table;border-collapse: separate;
 }
