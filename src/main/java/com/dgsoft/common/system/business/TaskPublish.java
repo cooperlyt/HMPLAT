@@ -13,6 +13,7 @@ import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -66,7 +67,7 @@ public class TaskPublish {
         for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
             if (define.isHaveComponent()) {
                 if (!"success".equals(define.getComponents().validSubscribe())) {
-                   return "";
+                    return "";
                 }
             }
         }
@@ -89,9 +90,15 @@ public class TaskPublish {
 
 
     private List<TotalDataGroup<String, TaskSubscribeReg.TaskSubscribeDefine>> getPageGroupByType(TaskSubscribeReg.TaskSubscribeDefineType type) {
+
+        return getPageGroupByTypes(EnumSet.of(type));
+    }
+
+
+    private List<TotalDataGroup<String, TaskSubscribeReg.TaskSubscribeDefine>> getPageGroupByTypes(EnumSet<TaskSubscribeReg.TaskSubscribeDefineType> types) {
         List<TaskSubscribeReg.TaskSubscribeDefine> result = new ArrayList<TaskSubscribeReg.TaskSubscribeDefine>();
         for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
-            if (define.isHavePage() && define.getType().equals(type)) {
+            if (define.isHavePage() && types.contains(define.getType())) {
                 result.add(define);
             }
         }
@@ -107,7 +114,7 @@ public class TaskPublish {
     }
 
     public List<TotalDataGroup<String, TaskSubscribeReg.TaskSubscribeDefine>> getViewPageGroup() {
-        return getPageGroupByType(TaskSubscribeReg.TaskSubscribeDefineType.VIEW);
+        return getPageGroupByTypes(EnumSet.of(TaskSubscribeReg.TaskSubscribeDefineType.VIEW, TaskSubscribeReg.TaskSubscribeDefineType.ALONE_VIEW));
     }
 
     public List<String> getPages() {

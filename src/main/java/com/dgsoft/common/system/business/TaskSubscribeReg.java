@@ -90,7 +90,7 @@ public class TaskSubscribeReg {
     }
 
     public enum TaskSubscribeDefineType{
-        EDIT,VIEW,ALONE_EDIT;
+        EDIT,VIEW,ALONE_EDIT,ALONE_VIEW;
     }
 
 
