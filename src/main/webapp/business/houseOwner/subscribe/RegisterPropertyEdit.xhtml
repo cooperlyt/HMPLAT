@@ -9,16 +9,35 @@
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.Evaluate_evaluateCorpName}
+            #{messages.RegisterProperty_PoolMemo}
         </ui:define>
-        <h:selectOneMenu id="evaluateCorpNameInput" value="#{evaluateSubscribe.instance.evaluateCorpN0}"
-                         label="#{messages.Evaluate_evaluateCorpName}"  style="width: 140px"
-                         valueChangeListener="#{evaluateSubscribe.valueChangeListener}">
-            <s:selectItems value="#{wordEvaluateCorporationList.resultList}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        <h:selectOneMenu required="true" id="poolMemoInput" value="#{registerPropertySubsrcibe.instance.poolMemo}"
+                         label="#{messages.RegisterProperty_PoolMemo}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('68')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>
     </s:decorate>
 
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseProperty}
+        </ui:define>
+        <h:selectOneMenu required="true" id="housePropertyInput" value="#{registerPropertySubsrcibe.instance.houseProperty}"
+                         label="#{messages.RegisterProperty_HouseProperty}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
 
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseFrom}
+        </ui:define>
+        <h:selectOneMenu required="true" id="houseFromInput" value="#{registerPropertySubsrcibe.instance.houseFrom}"
+                         label="#{messages.RegisterProperty_HouseFrom}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
 
 </ui:composition>
