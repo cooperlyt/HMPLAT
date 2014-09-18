@@ -17,8 +17,8 @@ public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome {
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-    @In
-    private HouseEntityLoader houseEntityLoader;
+//    @In
+//    private HouseEntityLoader houseEntityLoader;
 
     @Override
     public Class<BusinessHouseOwner> getEntityClass() {
