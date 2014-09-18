@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_PoolMemo}
+        </ui:define>
+        <h:selectOneMenu id="poolMemoInput" value="#{registerPropertySubsrcibe.instance.poolMemo}"
+                         label="#{messages.RegisterProperty_PoolMemo}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('68')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseProperty}
+        </ui:define>
+        <h:selectOneMenu id="housePropertyInput" value="#{registerPropertySubsrcibe.instance.houseProperty}"
+                         label="#{messages.RegisterProperty_HouseProperty}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseFrom}
+        </ui:define>
+        <h:selectOneMenu id="houseFromInput" value="#{registerPropertySubsrcibe.instance.houseFrom}"
+                         label="#{messages.RegisterProperty_HouseFrom}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+    </s:decorate>
+
+</ui:composition>
