@@ -79,7 +79,9 @@ public class HouseBusinessStart {
     //TODO valid House
     @Transactional
     public String createProcess(){
+
         ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
+        Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName()));
         String result = ownerBusinessHome.persist();
         if ((result != null) && result.equals("persisted")) {

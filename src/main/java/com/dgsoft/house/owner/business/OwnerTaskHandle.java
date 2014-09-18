@@ -42,6 +42,12 @@ public class OwnerTaskHandle{
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
+    public void saveTask(){
+        if ("success".equals(taskPublish.save())) {
+            ownerBusinessHome.update();
+        }
+    }
+
     protected String completeTask() {
         if ("updated".equals(ownerBusinessHome.update())){
             return "taskCompleted";

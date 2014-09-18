@@ -52,14 +52,14 @@ public class TaskOper implements java.io.Serializable {
         this.accept = true;
     }
 
-    public TaskOper(OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments,boolean accept) {
+    public TaskOper(OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, boolean accept) {
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
         this.empName = empName;
         this.taskName = taskName;
         this.comments = comments;
-        this.operType = OperType.CHECK_OPER;
+        this.operType = operType;
         this.accept = accept;
     }
 
@@ -99,7 +99,7 @@ public class TaskOper implements java.io.Serializable {
         this.operTime = operTime;
     }
 
-    @Column(name = "EMP_CODE",nullable = false,length = 32)
+    @Column(name = "EMP_CODE", nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
     public String getEmpCode() {
@@ -110,7 +110,7 @@ public class TaskOper implements java.io.Serializable {
         this.empCode = empCode;
     }
 
-    @Column(name = "EMP_NAME",nullable = false,length = 50)
+    @Column(name = "EMP_NAME", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
     public String getEmpName() {
@@ -121,7 +121,7 @@ public class TaskOper implements java.io.Serializable {
         this.empName = empName;
     }
 
-    @Column(name = "TASK_NAME",nullable = false,length = 100)
+    @Column(name = "TASK_NAME", nullable = false, length = 100)
     @NotNull
     @Size(max = 100)
     public String getTaskName() {
@@ -132,7 +132,7 @@ public class TaskOper implements java.io.Serializable {
         this.taskName = taskName;
     }
 
-    @Column(name = "COMMENTS",nullable = true,length = 500)
+    @Column(name = "COMMENTS", nullable = true, length = 500)
     @Size(max = 500)
     public String getComments() {
         return comments;
@@ -143,7 +143,7 @@ public class TaskOper implements java.io.Serializable {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "OPER_TYPE",nullable = false,length = 20)
+    @Column(name = "OPER_TYPE", nullable = false, length = 20)
     @NotNull
     public OperType getOperType() {
         return operType;
@@ -153,7 +153,7 @@ public class TaskOper implements java.io.Serializable {
         this.operType = operType;
     }
 
-    @Column(name = "ACCEPT",nullable = false)
+    @Column(name = "ACCEPT", nullable = false)
     public boolean isAccept() {
         return accept;
     }

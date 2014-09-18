@@ -37,20 +37,19 @@
 
 
 
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsTopFirstTitleCol,detailsTopValueCol,detailsTopTitleCol,detailsTopLastValueCol">
-            <h:outputText value="#{messages.BusinessKey}"/>
-            <h:outputText value="#{ownerBusinessHome.instance.id}"/>
-
-            <h:outputText value="#{messages.businessDefine_field_name}"/>
-            <h:outputText value="#{businessDefineHome.instance.name}"/>
 
 
-        </h:panelGrid>
+        <r:tabPanel switchType="client">
 
-        <ui:include src="/layout/system/SubscribePanelView.xhtml">
-            <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
-        </ui:include>
+
+            <ui:include src="/layout/system/SubscribeTabPageView.xhtml">
+                <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
+            </ui:include>
+
+            <r:tab header="#{messages.BusinessViewUploadFiles}">
+
+            </r:tab>
+        </r:tabPanel>
         <br/>
 
         <div style="float: right;padding: 6px">

@@ -47,6 +47,7 @@ public class OwnerNumberBuilder {
             result = 1;
         }else{
             if (DataFormat.halfTime(new Date(op.getUseTime().getTime())).getTime() != DataFormat.halfTime(new Date()).getTime()){
+                op.setUseTime(new Date());
                 op.setNumber(1);
                 result = 1;
             }else {

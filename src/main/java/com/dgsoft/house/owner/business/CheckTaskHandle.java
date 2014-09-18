@@ -21,8 +21,8 @@ public class CheckTaskHandle {
     @In
     private TaskPublish taskPublish;
 
-    @In(scope = ScopeType.BUSINESS_PROCESS)
-    @Out(scope = ScopeType.BUSINESS_PROCESS)
+    @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
     private String lastCheckComments;
 
     public String getLastCheckComments() {
@@ -49,7 +49,8 @@ public class CheckTaskHandle {
     @EndTask(transition = "NEXT")
     public String accept() {
         if ("success".equals(taskPublish.save())) {
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),taskInstance.getName(),lastCheckComments,true));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.CHECK_OPER,ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),taskInstance.getName(),lastCheckComments,true));
+            lastCheckComments = null;
             return completeTask();
         }
         return null;
@@ -58,7 +59,7 @@ public class CheckTaskHandle {
     @Transactional
     @EndTask(transition = "BACK")
     public String unAccept(){
-        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),taskInstance.getName(),lastCheckComments,false));
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.CHECK_OPER,ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),taskInstance.getName(),lastCheckComments,false));
         return "taskCompleted";
     }
 

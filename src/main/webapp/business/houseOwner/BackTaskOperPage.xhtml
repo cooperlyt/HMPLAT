@@ -12,24 +12,91 @@
 
     <ui:define name="func-body">
 
+        <r:popupPanel id="popup" modal="true" autosized="true" resizeable="false">
+            <f:facet name="header">
+                <h:outputText value="#{messages.BusinessBackReason}" />
+            </f:facet>
+            <f:facet name="controls">
+                <a:commandButton immediate="true"
+                                 execute="@this" image="/img/close.png"
+                                 onclick="#{r:component('popup')}.hide(); return false;">
+                </a:commandButton>
+            </f:facet>
+
+            <h:form>
+
+                <h:inputTextarea value="#{backTaskHandle.lastBackComments}" cols="50" rows="4"/>
+                <h:panelGrid columns="1" style="width: 100%; text-align: right">
+                    <a:outputPanel id="#{panelId}_buttons">
+                        <div class="actionButtons">
+                            <h:commandButton value="#{messages.Back}" action="#{backTaskHandle.back}"/>
+                        </div>
+                    </a:outputPanel>
+                </h:panelGrid>
+
+            </h:form>
+        </r:popupPanel>
+
         <h:form>
-            <r:toolbar>
+            <r:toolbar height="30" itemSeparator="grid">
+
                 <r:toolbarGroup>
-                    <h:commandButton value="complete" action="#{backTaskHandle.complete}"/>
+                    <h:graphicImage value="/img/icons/passed.gif"/>
+                    <h:commandLink value="#{messages.complete}" action="#{backTaskHandle.complete}"/>
                 </r:toolbarGroup>
 
                 <r:toolbarGroup>
-                    <h:commandButton value="#{messages.Back}" action="#{backTaskHandle.back}"/>
+                    <h:graphicImage value="/img/icons/save.gif"/>
+                    <a:commandLink value="#{messages.save}" action="#{backTaskHandle.saveTask}" execute="@form">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandLink>
+                </r:toolbarGroup>
+
+                <r:toolbarGroup>
+                    <h:graphicImage value="/img/error.gif"/>
+
+                    <h:outputLink value="#">
+                        <r:componentControl event="click" operation="show" target="popup">
+
+                        </r:componentControl>
+                        #{messages.Back}
+                    </h:outputLink>
                 </r:toolbarGroup>
 
                 <r:toolbarGroup location="right">
-                    <s:button value="cancel" view="/func/system/business/task.xhtml" propagation="end"/>
+
+                    <s:button value="#{messages.Return}" view="/func/system/business/task.xhtml" propagation="end"/>
                 </r:toolbarGroup>
 
             </r:toolbar>
+
+            <br/>
+            <r:messages globalOnly="true" ajaxRendered="true"/>
+            <br/>
+
             <ui:include src="/layout/system/SubscribePanelView.xhtml">
                 <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
             </ui:include>
+
         </h:form>
+
+        <ui:include src="/layout/system/SubscribePanelView.xhtml"></ui:include>
+        <ui:param name="subscribeGroup" value="#{taskPublish.aloneEditPageGroup}"/>
+
+        <div style="clear: both"/>
+        <br/>
+        <r:tabPanel switchType="client">
+
+
+            <ui:include src="/layout/system/SubscribeTabPageView.xhtml">
+                <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
+            </ui:include>
+
+            <r:tab header="#{messages.BusinessViewUploadFiles}">
+
+            </r:tab>
+        </r:tabPanel>
+
+
     </ui:define>
 </ui:composition>
