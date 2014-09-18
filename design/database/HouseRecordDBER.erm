@@ -42,7 +42,7 @@
 		<export_setting>
 			<category_name_to_export>All</category_name_to_export>
 			<html_output></html_output>
-			<ddl_output>/home/cooper/workspace_HMPLAT/HMPLAT/design/database/HouseRecord.sql</ddl_output>
+			<ddl_output>design\database\HouseRecord.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -111,7 +111,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2014-06-09 15:05:35</creation_date>
-			<updated_date>2014-09-18 14:14:41</updated_date>
+			<updated_date>2014-09-18 15:23:19</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -1059,7 +1059,7 @@
 			<binary>false</binary>
 			<args></args>
 			<description></description>
-			<logical_name>房屋来源</logical_name>
+			<logical_name>产权来源</logical_name>
 			<physical_name>HOUSE_FROM</physical_name>
 			<type>varchar(n)</type>
 		</word>
