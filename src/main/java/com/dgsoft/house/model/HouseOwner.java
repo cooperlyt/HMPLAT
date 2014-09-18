@@ -12,13 +12,15 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE_OWNER", catalog = "HOUSE_INFO")
-public class HouseOwner implements java.io.Serializable{
+public class HouseOwner implements java.io.Serializable {
 
     private String id;
     private PersonEntity.CredentialsType credentialsType;
+    private String cerdentialsNumber;
     private String phone;
     private String rootAddress;
     private House house;
+    private String name;
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -76,5 +78,27 @@ public class HouseOwner implements java.io.Serializable{
 
     public void setHouse(House house) {
         this.house = house;
+    }
+
+    @Column(name = "NAME", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "ID_NO", nullable = false, length = 100)
+    @NotNull
+    @Size(max = 100)
+    public String getCerdentialsNumber() {
+        return cerdentialsNumber;
+    }
+
+    public void setCerdentialsNumber(String cerdentialsNumber) {
+        this.cerdentialsNumber = cerdentialsNumber;
     }
 }
