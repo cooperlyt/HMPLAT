@@ -5,9 +5,12 @@ import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
+import com.dgsoft.house.model.PoolOwner;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.BusinessHouseOwner;
+import com.dgsoft.house.owner.model.BusinessPool;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -51,18 +54,37 @@ public class HouseBusinessStart {
         Logging.getLog(getClass()).debug("singleHouseSelectet:" + selectHouseId);
 
         ownerBusinessHome.getInstance().getBusinessHouses().clear();
-        ownerBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(ownerBusinessHome.getInstance(),houseEntityLoader.getEntityManager().find(House.class,selectHouseId)));
+        ownerBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(ownerBusinessHome.getInstance(), houseEntityLoader.getEntityManager().find(House.class, selectHouseId)));
 
         initBusinessData();
         return BUSINESS_START_PAGE;
     }
 
-    private void initBusinessData(){
+    private void initBusinessData() {
 
         //ownerBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
-       // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
+        // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
+        for (BusinessHouse businessHouse : ownerBusinessHome.getInstance().getBusinessHouses()) {
+            House house = houseEntityLoader.getEntityManager().find(House.class, businessHouse.getHouseCode());
+            if (house != null) {
+                if (house.getHouseOwner() != null){
+                    businessHouse.getBusinessHouseOwners().add(new BusinessHouseOwner(businessHouse,
+                            house.getHouseOwner().getName(),house.getHouseOwner().getCredentialsType(),
+                            house.getHouseOwner().getCerdentialsNumber(),house.getHouseOwner().getPhone(),
+                            house.getHouseOwner().getRootAddress(), BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER,house.getMemo()));
+                }
+
+                for(PoolOwner poolOwner: house.getPoolOwners()){
+                    businessHouse.getBusinessPools().add(new BusinessPool(businessHouse,
+                            BusinessPool.BusinessPoolType.NOW_POOL,poolOwner.getName(),
+                            poolOwner.getCredentialsType(),poolOwner.getCredentialsNumber(),
+                            poolOwner.getRelation(),poolOwner.getArea(),poolOwner.getPerc(),poolOwner.getMemo()));
+                }
+
+            }
+        }
 
     }
 
@@ -78,16 +100,16 @@ public class HouseBusinessStart {
 
     //TODO valid House
     @Transactional
-    public String createProcess(){
+    public String createProcess() {
 
         ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
-        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName()));
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
         String result = ownerBusinessHome.persist();
         if ((result != null) && result.equals("persisted")) {
             BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), ownerBusinessHome.getInstance().getId());
             return result;
-        }else{
+        } else {
             return null;
         }
     }

@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -15,12 +16,16 @@ import javax.validation.constraints.Size;
 @Table(name = "BUSINESS_POOL", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessPool implements java.io.Serializable {
 
+    public enum BusinessPoolType{
+        NOW_POOL,NEW_POOL;
+    }
+
 	private String id;
     private BusinessHouse businessHouse;
-	private String type;
+	private BusinessPoolType type;
 	private String name;
-	private String idType;
-	private String idNo;
+    private PersonEntity.CredentialsType credentialsType;
+    private String cerdentialsNumber;
 	private String relation;
 	private BigDecimal poolArea;
 	private String perc;
@@ -29,7 +34,21 @@ public class BusinessPool implements java.io.Serializable {
 	public BusinessPool() {
 	}
 
-	@Id
+    public BusinessPool(BusinessHouse businessHouse, BusinessPoolType type, String name,
+                        PersonEntity.CredentialsType credentialsType, String cerdentialsNumber,
+                        String relation, BigDecimal poolArea, String perc, String memo) {
+        this.businessHouse = businessHouse;
+        this.type = type;
+        this.name = name;
+        this.credentialsType = credentialsType;
+        this.cerdentialsNumber = cerdentialsNumber;
+        this.relation = relation;
+        this.poolArea = poolArea;
+        this.perc = perc;
+        this.memo = memo;
+    }
+
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -54,14 +73,14 @@ public class BusinessPool implements java.io.Serializable {
         this.businessHouse = businessHouse;
     }
 
-    @Column(name = "TYPE", nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
-	public String getType() {
+	public BusinessPoolType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(BusinessPoolType type) {
 		this.type = type;
 	}
 
@@ -76,27 +95,28 @@ public class BusinessPool implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "ID_TYPE", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getIdType() {
-		return this.idType;
-	}
 
-	public void setIdType(String idType) {
-		this.idType = idType;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_TYPE", nullable = false, length = 32)
+    @NotNull
+    public PersonEntity.CredentialsType getCredentialsType() {
+        return credentialsType;
+    }
 
-	@Column(name = "ID_NO", nullable = false, length = 100)
-	@NotNull
-	@Size(max = 100)
-	public String getIdNo() {
-		return this.idNo;
-	}
+    public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
+        this.credentialsType = credentialsType;
+    }
 
-	public void setIdNo(String idNo) {
-		this.idNo = idNo;
-	}
+    @Column(name = "ID_NO", nullable = false, length = 100)
+    @NotNull
+    @Size(max = 100)
+    public String getCerdentialsNumber() {
+        return cerdentialsNumber;
+    }
+
+    public void setCerdentialsNumber(String cerdentialsNumber) {
+        this.cerdentialsNumber = cerdentialsNumber;
+    }
 
 	@Column(name = "RELATION", length = 32)
 	@Size(max = 32)
@@ -127,8 +147,8 @@ public class BusinessPool implements java.io.Serializable {
 		this.perc = perc;
 	}
 
-	@Column(name = "MEMO", length = 100)
-	@Size(max = 100)
+	@Column(name = "MEMO", length = 200)
+	@Size(max = 200)
 	public String getMemo() {
 		return this.memo;
 	}
@@ -136,5 +156,6 @@ public class BusinessPool implements java.io.Serializable {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+
 
 }

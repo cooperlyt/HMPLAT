@@ -21,6 +21,7 @@ public class HouseOwner implements java.io.Serializable {
     private String rootAddress;
     private House house;
     private String name;
+    private String memo;
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -100,5 +101,15 @@ public class HouseOwner implements java.io.Serializable {
 
     public void setCerdentialsNumber(String cerdentialsNumber) {
         this.cerdentialsNumber = cerdentialsNumber;
+    }
+
+    @Column(name = "MEMO",nullable = true, length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

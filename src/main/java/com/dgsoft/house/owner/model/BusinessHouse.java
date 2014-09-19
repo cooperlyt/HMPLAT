@@ -6,9 +6,7 @@ import com.dgsoft.house.model.HouseState;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -57,7 +55,7 @@ public class BusinessHouse implements java.io.Serializable {
     public BusinessHouse() {
     }
 
-    public BusinessHouse(OwnerBusiness ownerBusiness,House house) {
+    public BusinessHouse(OwnerBusiness ownerBusiness, House house) {
         this.ownerBusiness = ownerBusiness;
         this.houseOrder = house.getHouseOrder();
         this.houseUnitName = house.getHouseUnitName();
@@ -88,7 +86,7 @@ public class BusinessHouse implements java.io.Serializable {
             businessHouseStates.add(new BusinessHouseState(this, state.getState()));
         }
 
-        if (house.getLandInfo() != null){
+        if (house.getLandInfo() != null) {
             this.setBusinessLandInfo(new BusinessLandInfo(house.getLandInfo()));
         }
 
@@ -426,5 +424,43 @@ public class BusinessHouse implements java.io.Serializable {
         this.businessPools = businessPools;
     }
 
+
+    @Transient
+    private List<BusinessPool> getPoolsByType(BusinessPool.BusinessPoolType type) {
+        List<BusinessPool> result = new ArrayList<BusinessPool>();
+        for (BusinessPool pool : getBusinessPools()) {
+            if (type.equals(pool.getType())) {
+                result.add(pool);
+            }
+        }
+
+        Collections.sort(result, new Comparator<BusinessPool>() {
+            @Override
+            public int compare(BusinessPool o1, BusinessPool o2) {
+                if ((o1.getPoolArea() == null) && (o2.getPoolArea() == null)) {
+                    return 0;
+                } else if (o1.getPoolArea() == null) {
+                    return 1;
+                } else if (o2.getPoolArea() == null) {
+                    return -1;
+                } else
+                    return o1.getPoolArea().compareTo(o2.getPoolArea());
+
+            }
+        });
+
+        return result;
+    }
+
+
+    @Transient
+    public List<BusinessPool> getNowPools() {
+        return getPoolsByType(BusinessPool.BusinessPoolType.NOW_POOL);
+    }
+
+    @Transient
+    public List<BusinessPool> getNewPools() {
+        return getPoolsByType(BusinessPool.BusinessPoolType.NEW_POOL);
+    }
 
 }

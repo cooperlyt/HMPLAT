@@ -22,8 +22,9 @@ public class PoolOwner implements java.io.Serializable {
     private String credentialsNumber;
     private PersonEntity.CredentialsType credentialsType;
 	private String relation;
-	private BigDecimal perc;
+	private String perc;
     private BigDecimal area;
+    private String memo;
 
 	public PoolOwner() {
 	}
@@ -96,12 +97,13 @@ public class PoolOwner implements java.io.Serializable {
         this.credentialsType = credentialsType;
     }
 
-    @Column(name = "PERC", nullable = true, scale = 4)
-    public BigDecimal getPerc() {
+    @Column(name = "PERC", nullable = true, length = 10)
+    @Size(max = 10)
+    public String getPerc() {
         return perc;
     }
 
-    public void setPerc(BigDecimal perc) {
+    public void setPerc(String perc) {
         this.perc = perc;
     }
 
@@ -112,5 +114,15 @@ public class PoolOwner implements java.io.Serializable {
 
     public void setArea(BigDecimal area) {
         this.area = area;
+    }
+
+    @Column(name = "MEMO",nullable = true, length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

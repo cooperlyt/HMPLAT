@@ -29,12 +29,25 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 	private String phone;
 	private String rootAddress;
 	private HouseOwnerType type;
+    private String memo;
 
 	public BusinessHouseOwner() {
 	}
 
     public BusinessHouseOwner(HouseOwnerType type) {
         this.type = type;
+    }
+
+    public BusinessHouseOwner(BusinessHouse businessHouse, String personName, CredentialsType credentialsType,
+                              String credentialsNumber, String phone, String rootAddress, HouseOwnerType type,String memo) {
+        this.businessHouse = businessHouse;
+        this.personName = personName;
+        this.credentialsType = credentialsType;
+        this.credentialsNumber = credentialsNumber;
+        this.phone = phone;
+        this.rootAddress = rootAddress;
+        this.type = type;
+        this.memo = memo;
     }
 
     @Id
@@ -130,4 +143,13 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 		this.type = type;
 	}
 
+    @Column(name="MEMO",nullable = true,length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 }
