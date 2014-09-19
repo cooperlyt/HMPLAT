@@ -25,6 +25,7 @@ public class PoolOwner implements java.io.Serializable {
 	private String perc;
     private BigDecimal area;
     private String memo;
+    private String phone;
 
 	public PoolOwner() {
 	}
@@ -124,5 +125,15 @@ public class PoolOwner implements java.io.Serializable {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    @Column(name = "PHONE", nullable = true, length = 15)
+    @Size(max = 15)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

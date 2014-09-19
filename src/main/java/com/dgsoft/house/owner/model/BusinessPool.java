@@ -30,13 +30,14 @@ public class BusinessPool implements java.io.Serializable {
 	private BigDecimal poolArea;
 	private String perc;
 	private String memo;
+    private String phone;
 
 	public BusinessPool() {
 	}
 
     public BusinessPool(BusinessHouse businessHouse, BusinessPoolType type, String name,
                         PersonEntity.CredentialsType credentialsType, String cerdentialsNumber,
-                        String relation, BigDecimal poolArea, String perc, String memo) {
+                        String relation, BigDecimal poolArea, String perc, String memo,String phone) {
         this.businessHouse = businessHouse;
         this.type = type;
         this.name = name;
@@ -157,5 +158,14 @@ public class BusinessPool implements java.io.Serializable {
 		this.memo = memo;
 	}
 
+    @Column(name = "PHONE", nullable = true, length = 15)
+    @Size(max = 15)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
 }

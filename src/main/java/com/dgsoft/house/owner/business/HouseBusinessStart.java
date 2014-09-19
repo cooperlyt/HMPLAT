@@ -80,7 +80,7 @@ public class HouseBusinessStart {
                     businessHouse.getBusinessPools().add(new BusinessPool(businessHouse,
                             BusinessPool.BusinessPoolType.NOW_POOL,poolOwner.getName(),
                             poolOwner.getCredentialsType(),poolOwner.getCredentialsNumber(),
-                            poolOwner.getRelation(),poolOwner.getArea(),poolOwner.getPerc(),poolOwner.getMemo()));
+                            poolOwner.getRelation(),poolOwner.getArea(),poolOwner.getPerc(),poolOwner.getMemo(),poolOwner.getPhone()));
                 }
 
             }

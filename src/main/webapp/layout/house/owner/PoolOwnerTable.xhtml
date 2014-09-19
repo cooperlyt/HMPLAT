@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <r:dataTable style="width: 100%"
+                 value="#{ownerBusinessHome.singleHoues.nowPools}" var="_pool">
+        <f:facet name="header">
+            #{title}
+        </f:facet>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_name}
+            </f:facet>
+
+            #{_pool.name}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.person_field_credentialsType}
+            </f:facet>
+            #{messages[_pool.credentialsType.name()]}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.person_field_credentialsNO}
+            </f:facet>
+            #{_pool.cerdentialsNumber}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_relation}
+            </f:facet>
+            #{dictionary.getWordValue(_pool.relation)}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_area}
+            </f:facet>
+            <h:outputText value="#{_pool.poolArea}" rendered="#{not empty _pool.poolArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_perc}
+            </f:facet>
+            #{_pool.perc}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_phone}
+            </f:facet>
+            #{_pool.phone}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_memo}
+            </f:facet>
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="size" value="5"/>
+                <ui:param name="value" value="#{_pool.memo}"/>
+            </ui:include>
+        </r:column>
+
+        <ui:insert/>
+
+    </r:dataTable>
+</ui:composition>
