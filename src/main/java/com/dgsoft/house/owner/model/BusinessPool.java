@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class BusinessPool implements java.io.Serializable {
 
 	private String id;
-	private OwnerBusiness ownerBusiness;
+    private BusinessHouse businessHouse;
 	private String type;
 	private String name;
 	private String idType;
@@ -43,15 +43,15 @@ public class BusinessPool implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_ID", nullable = false)
-	@NotNull
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "HOUSE_ID", nullable = false)
+    @NotNull
+    public BusinessHouse getBusinessHouse() {
+        return businessHouse;
     }
 
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
+    public void setBusinessHouse(BusinessHouse businessHouse) {
+        this.businessHouse = businessHouse;
     }
 
     @Column(name = "TYPE", nullable = false, length = 10)

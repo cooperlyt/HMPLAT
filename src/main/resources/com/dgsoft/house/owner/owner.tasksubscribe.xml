@@ -1,17 +1,38 @@
 <subscribes>
 
 
+    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+        原产权人查看
+    </subscribe>
+
+    <subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
+        现产权人编辑
+    </subscribe>
+
+    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+        现产权人查看
+    </subscribe>
+
+
     <subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
          产权人编辑
-    </subscribe>
-    <subscribe name="nowOwnerEdit" page="/business/houseOwner/subscribe/NowHouseOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
-        现产权人编辑
     </subscribe>
 
     <subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
         产权人查看
     </subscribe>
 
+    <subscribe name="mortgagerView" page="/business/houseOwner/subscribe/MortgagerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+        抵押人查看
+    </subscribe>
+
+    <subscribe name="recordOwnerView" page="/business/houseOwner/subscribe/RecordOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+        备案人查看
+    </subscribe>
+
+    <subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+        预告人查看
+    </subscribe>
 
 
     <subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml" component="" cagegory="" type="EDIT">

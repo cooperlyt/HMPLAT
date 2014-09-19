@@ -5,6 +5,7 @@ import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,11 +17,12 @@ import javax.validation.constraints.Size;
 public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 
     public enum HouseOwnerType{
-        OWNER_PERSON,POWER_PERSON;
+        NOW_HOUSE_OWNER
+        ,NEW_HOUSE_OWNER;
     }
 
 	private String id;
-	private OwnerBusiness ownerBusiness;
+	private BusinessHouse businessHouse;
 	private String personName;
 	private CredentialsType credentialsType;
 	private String credentialsNumber;
@@ -50,16 +52,15 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 	}
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS_ID", nullable = false)
+    @JoinColumn(name = "HOUSE_ID", nullable = false)
     @NotNull
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
+    public BusinessHouse getBusinessHouse() {
+        return businessHouse;
     }
 
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
+    public void setBusinessHouse(BusinessHouse businessHouse) {
+        this.businessHouse = businessHouse;
     }
-
 
     @Override
 	@Column(name = "NAME", nullable = false, length = 50)

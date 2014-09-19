@@ -54,8 +54,6 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<Financial> financials = new HashSet<Financial>(0);
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
-    private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
-    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
 
 
@@ -330,23 +328,6 @@ public class OwnerBusiness implements java.io.Serializable {
         this.closeHouses = closeHouses;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<BusinessHouseOwner> getBusinessHouseOwners() {
-        return businessHouseOwners;
-    }
-
-    public void setBusinessHouseOwners(Set<BusinessHouseOwner> businessHouseOwners) {
-        this.businessHouseOwners = businessHouseOwners;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<BusinessPool> getBusinessPools() {
-        return businessPools;
-    }
-
-    public void setBusinessPools(Set<BusinessPool> businessPools) {
-        this.businessPools = businessPools;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", orphanRemoval = true, cascade = {CascadeType.ALL})
     public Set<TaskOper> getTaskOpers() {

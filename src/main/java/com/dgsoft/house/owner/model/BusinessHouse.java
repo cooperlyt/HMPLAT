@@ -50,8 +50,9 @@ public class BusinessHouse implements java.io.Serializable {
     private boolean firmlyPower;
     private String houseCode;
     private Set<BusinessHouseState> businessHouseStates = new HashSet<BusinessHouseState>(0);
-    private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(
-            0);
+    private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
+    private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
+    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
 
     public BusinessHouse() {
     }
@@ -406,5 +407,24 @@ public class BusinessHouse implements java.io.Serializable {
     public void setNewHouseContracts(Set<NewHouseContract> newHouseContracts) {
         this.newHouseContracts = newHouseContracts;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessHouseOwner> getBusinessHouseOwners() {
+        return businessHouseOwners;
+    }
+
+    public void setBusinessHouseOwners(Set<BusinessHouseOwner> businessHouseOwners) {
+        this.businessHouseOwners = businessHouseOwners;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessPool> getBusinessPools() {
+        return businessPools;
+    }
+
+    public void setBusinessPools(Set<BusinessPool> businessPools) {
+        this.businessPools = businessPools;
+    }
+
 
 }

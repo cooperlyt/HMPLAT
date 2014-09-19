@@ -1,21 +1,19 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.BusinessHouseOwnerHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Name;
 
 /**
- * Created by cooper on 8/26/14.
+ * Created by cooper on 9/19/14.
  */
-@Name("businessHouseOwnerSubscribe")
-public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome {
+public abstract class BaseHouseOwnerSubscribe extends BusinessHouseOwnerHome {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    protected abstract BusinessHouseOwner.HouseOwnerType getType();
 
 //    @In
 //    private HouseEntityLoader houseEntityLoader;
@@ -28,8 +26,8 @@ public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome {
     @Override
     public void create() {
         super.create();
-        for (BusinessHouseOwner owner : ownerBusinessHome.getInstance().getBusinessHouseOwners()) {
-            if (owner.getType().equals(BusinessHouseOwner.HouseOwnerType.OWNER_PERSON)) {
+        for (BusinessHouseOwner owner : ownerBusinessHome.getSingleHoues().getBusinessHouseOwners()) {
+            if (owner.getType().equals(getType())) {
                 setId(owner.getId());
                 return;
             }
@@ -44,14 +42,14 @@ public class BusinessHouseOwnerSubscribe extends BusinessHouseOwnerHome {
 //                getInstance().setRootAddress(house.getHouseOwner().getRootAddress());
 //            }
 //        }
-        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().getBusinessHouseOwners().add(getInstance());
+
+        getInstance().setBusinessHouse(ownerBusinessHome.getSingleHoues());
+        ownerBusinessHome.getSingleHoues().getBusinessHouseOwners().add(getInstance());
     }
 
     @Override
     protected BusinessHouseOwner createInstance() {
-        return new BusinessHouseOwner(BusinessHouseOwner.HouseOwnerType.OWNER_PERSON);
+        return new BusinessHouseOwner(getType());
     }
-
 
 }
