@@ -12,15 +12,15 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE_OWNER", catalog = "HOUSE_INFO")
-public class HouseOwner implements java.io.Serializable {
+public class HouseOwner implements PersonEntity,java.io.Serializable {
 
     private String id;
     private PersonEntity.CredentialsType credentialsType;
-    private String cerdentialsNumber;
+    private String credentialsNumber;
     private String phone;
     private String rootAddress;
     private House house;
-    private String name;
+    private String personName;
     private String memo;
 
     @Id
@@ -38,6 +38,7 @@ public class HouseOwner implements java.io.Serializable {
     }
 
 
+    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_TYPE", nullable = false, length = 32)
     @NotNull
@@ -45,6 +46,7 @@ public class HouseOwner implements java.io.Serializable {
         return credentialsType;
     }
 
+    @Override
     public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
     }
@@ -81,26 +83,30 @@ public class HouseOwner implements java.io.Serializable {
         this.house = house;
     }
 
+    @Override
     @Column(name = "NAME", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
-    public String getName() {
-        return name;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public void setPersonName(String name) {
+        this.personName = name;
     }
 
+    @Override
     @Column(name = "ID_NO", nullable = false, length = 100)
     @NotNull
     @Size(max = 100)
-    public String getCerdentialsNumber() {
-        return cerdentialsNumber;
+    public String getCredentialsNumber() {
+        return credentialsNumber;
     }
 
-    public void setCerdentialsNumber(String cerdentialsNumber) {
-        this.cerdentialsNumber = cerdentialsNumber;
+    @Override
+    public void setCredentialsNumber(String cerdentialsNumber) {
+        this.credentialsNumber = cerdentialsNumber;
     }
 
     @Column(name = "MEMO",nullable = true, length = 200)

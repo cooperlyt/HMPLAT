@@ -1,7 +1,6 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.AuthenticationInfo;
-import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
@@ -19,8 +18,6 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.log.Logging;
-
-import java.util.Date;
 
 /**
  * Created by cooper on 8/28/14.
@@ -71,14 +68,14 @@ public class HouseBusinessStart {
             if (house != null) {
                 if (house.getHouseOwner() != null){
                     businessHouse.getBusinessHouseOwners().add(new BusinessHouseOwner(businessHouse,
-                            house.getHouseOwner().getName(),house.getHouseOwner().getCredentialsType(),
-                            house.getHouseOwner().getCerdentialsNumber(),house.getHouseOwner().getPhone(),
+                            house.getHouseOwner().getPersonName(),house.getHouseOwner().getCredentialsType(),
+                            house.getHouseOwner().getCredentialsNumber(),house.getHouseOwner().getPhone(),
                             house.getHouseOwner().getRootAddress(), BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER,house.getMemo()));
                 }
 
                 for(PoolOwner poolOwner: house.getPoolOwners()){
                     businessHouse.getBusinessPools().add(new BusinessPool(businessHouse,
-                            BusinessPool.BusinessPoolType.NOW_POOL,poolOwner.getName(),
+                            BusinessPool.BusinessPoolType.NOW_POOL,poolOwner.getPersonName(),
                             poolOwner.getCredentialsType(),poolOwner.getCredentialsNumber(),
                             poolOwner.getRelation(),poolOwner.getArea(),poolOwner.getPerc(),poolOwner.getMemo(),poolOwner.getPhone()));
                 }

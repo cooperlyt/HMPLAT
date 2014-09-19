@@ -8,13 +8,89 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
 
-    <s:decorate template="/layout/house/owner/PoolOwnerTable.xhtml">
-        <ui:param name="poolOwners" value="#{ownerBusinessHome.singleHoues.nowPools}"/>
-        <ui:param name="title" value="#{messages.BusinessPool}"/>
+    <r:dataTable id="poolTable" style="width: 100%"
+                 value="#{ownerBusinessHome.singleHoues.nowPools}" var="_pool">
+        <f:facet name="header">
+            #{messages.BusinessPool}
+        </f:facet>
 
         <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_name}
+            </f:facet>
+
+            #{_pool.personName}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.person_field_credentialsType}
+            </f:facet>
+            #{messages[_pool.credentialsType.name()]}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.person_field_credentialsNO}
+            </f:facet>
+            #{_pool.cerdentialsNumber}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_relation}
+            </f:facet>
+            #{dictionary.getWordValue(_pool.relation)}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_area}
+            </f:facet>
+            <h:outputText value="#{_pool.poolArea}" rendered="#{not empty _pool.poolArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_perc}
+            </f:facet>
+            #{_pool.perc}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_phone}
+            </f:facet>
+            #{_pool.phone}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_memo}
+            </f:facet>
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="size" value="5"/>
+                <ui:param name="value" value="#{_pool.memo}"/>
+            </ui:include>
+        </r:column>
+
+        <r:column style="width: 30px">
+            <f:facet name="header">
+                <a:commandButton image="/img/icons/id_card_read_btn.png" title="#{messages.AddPoolOwnerFromCard}"/>
+                #{' '}
+                <a:commandButton execute="@this" immediate="true" title="#{messages.AddPoolOwner}"
+                                 action="#{}"
+                                 image="/img/icons/add_card.png" render="poolTable"/>
+            </f:facet>
+
 
         </r:column>
-    </s:decorate>
+
+    </r:dataTable>
+
+
 
 </ui:composition>

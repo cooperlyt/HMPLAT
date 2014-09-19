@@ -21,15 +21,15 @@
                 <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
 
                 <h:selectOneMenu id="credentialsType" label="#{messages.person_field_credentialsType}"
-                          styleClass="credentialsTypeSelectWidth" listWidth="140px"
-                          value="#{personEntityHelper.credentialsType}" required="true">
+                                 styleClass="credentialsTypeSelectWidth" listWidth="140px"
+                                 value="#{personEntityHelper.credentialsType}" required="true">
                     <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                     <s:convertEnum/>
                     <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
                             render="credentialsNumberField,personEditFields,#{render}"
                             execute="@this" status="waitSearchPerson">
                         <a:attachQueue requestDelay="0"/>
-                            </a:ajax>
+                    </a:ajax>
                 </h:selectOneMenu>
             </s:decorate>
 
@@ -46,7 +46,7 @@
                             status="waitSearchPerson"
                             listener="#{personEntityHelper.numberChange}" execute="@region">
                         <a:attachQueue requestDelay="0"/>
-                            </a:ajax>
+                    </a:ajax>
                 </h:inputText>
 
             </s:decorate>

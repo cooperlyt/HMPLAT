@@ -426,7 +426,7 @@ public class BusinessHouse implements java.io.Serializable {
 
 
     @Transient
-    private List<BusinessPool> getPoolsByType(BusinessPool.BusinessPoolType type) {
+    public List<BusinessPool> getPoolsByType(BusinessPool.BusinessPoolType type) {
         List<BusinessPool> result = new ArrayList<BusinessPool>();
         for (BusinessPool pool : getBusinessPools()) {
             if (type.equals(pool.getType())) {

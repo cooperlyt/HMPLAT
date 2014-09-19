@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_POOL", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessPool implements java.io.Serializable {
+public class BusinessPool implements PersonEntity,java.io.Serializable {
 
     public enum BusinessPoolType{
         NOW_POOL,NEW_POOL;
@@ -23,9 +23,9 @@ public class BusinessPool implements java.io.Serializable {
 	private String id;
     private BusinessHouse businessHouse;
 	private BusinessPoolType type;
-	private String name;
+	private String personName;
     private PersonEntity.CredentialsType credentialsType;
-    private String cerdentialsNumber;
+    private String credentialsNumber;
 	private String relation;
 	private BigDecimal poolArea;
 	private String perc;
@@ -35,18 +35,27 @@ public class BusinessPool implements java.io.Serializable {
 	public BusinessPool() {
 	}
 
-    public BusinessPool(BusinessHouse businessHouse, BusinessPoolType type, String name,
-                        PersonEntity.CredentialsType credentialsType, String cerdentialsNumber,
+    public BusinessPool(BusinessPoolType type, BusinessHouse businessHouse) {
+        this.type = type;
+        this.businessHouse = businessHouse;
+    }
+
+    public BusinessPool(BusinessHouse businessHouse, BusinessPoolType type, String personName,
+                        PersonEntity.CredentialsType credentialsType, String credentialsNumber,
                         String relation, BigDecimal poolArea, String perc, String memo,String phone) {
         this.businessHouse = businessHouse;
         this.type = type;
-        this.name = name;
+        this.personName = personName;
         this.credentialsType = credentialsType;
-        this.cerdentialsNumber = cerdentialsNumber;
+        this.credentialsNumber = credentialsNumber;
         this.relation = relation;
         this.poolArea = poolArea;
         this.perc = perc;
         this.memo = memo;
+    }
+
+    public BusinessPool(BusinessPoolType type) {
+        this.type = type;
     }
 
     @Id
@@ -88,15 +97,18 @@ public class BusinessPool implements java.io.Serializable {
 	@Column(name = "NAME", nullable = false, length = 50)
 	@NotNull
 	@Size(max = 50)
-	public String getName() {
-		return this.name;
+    @Override
+	public String getPersonName() {
+		return this.personName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+    @Override
+	public void setPersonName(String name) {
+		this.personName = name;
 	}
 
 
+    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_TYPE", nullable = false, length = 32)
     @NotNull
@@ -104,19 +116,22 @@ public class BusinessPool implements java.io.Serializable {
         return credentialsType;
     }
 
+    @Override
     public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
     }
 
+    @Override
     @Column(name = "ID_NO", nullable = false, length = 100)
     @NotNull
     @Size(max = 100)
-    public String getCerdentialsNumber() {
-        return cerdentialsNumber;
+    public String getCredentialsNumber() {
+        return credentialsNumber;
     }
 
-    public void setCerdentialsNumber(String cerdentialsNumber) {
-        this.cerdentialsNumber = cerdentialsNumber;
+    @Override
+    public void setCredentialsNumber(String cerdentialsNumber) {
+        this.credentialsNumber = cerdentialsNumber;
     }
 
 	@Column(name = "RELATION", length = 32)

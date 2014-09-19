@@ -8,13 +8,12 @@ import org.jboss.seam.annotations.Name;
  * Created by cooper on 8/27/14.
  */
 @Name("businessHouseOwnerHome")
-public class BusinessHouseOwnerHome extends OwnerEntityHome<BusinessHouseOwner>{
+public class BusinessHouseOwnerHome extends OwnerEntityHome<BusinessHouseOwner> {
 
     private HouseOwnerEntityHelper houseOwnerEntityHelper;
 
-       @Override
-    public void create()
-    {
+    @Override
+    public void create() {
         super.create();
         houseOwnerEntityHelper = new HouseOwnerEntityHelper(this);
     }

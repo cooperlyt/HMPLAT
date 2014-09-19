@@ -11,31 +11,36 @@
     <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Subscribe}"/>
 
     <ui:define name="func-body">
+
+
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="done current-prev">
+                    <span class="first">#{messages.HouseBusinessStep1}</span>
+                </li>
+                <li class="current">
+                    <strong>#{messages.HouseBusinessStep2}</strong>
+                </li>
+                <li>
+                    <span>#{messages.HouseBusinessStep3}</span>
+                </li>
+                <li class="last">
+                    <span>#{messages.HouseBusinessStep4}</span>
+                </li>
+            </ol>
+        </div>
+
+        <r:messages ajaxRendered="true" globalOnly="false"/>
+        <br/>
+
+        <ui:include src="/layout/system/SubscribePanelView.xhtml">
+            <ui:param name="subscribeGroup" value="#{taskPublish.aloneEditPageGroup}"/>
+        </ui:include>
+
+        <br/>
         <h:form>
-
-
-    <div style="clear: both"/>
-
-            <div class="flow-steps">
-                <ol class="num4">
-                    <li class="done current-prev">
-                        <span class="first">#{messages.HouseBusinessStep1}</span>
-                    </li>
-                    <li class="current">
-                        <strong>#{messages.HouseBusinessStep2}</strong>
-                    </li>
-                    <li>
-                        <span>#{messages.HouseBusinessStep3}</span>
-                    </li>
-                    <li class="last">
-                        <span>#{messages.HouseBusinessStep4}</span>
-                    </li>
-                </ol>
-            </div>
-
-            <r:messages ajaxRendered="true" globalOnly="false"/>
-            <br/>
-
             <ui:include src="/layout/system/SubscribePanelView.xhtml">
                 <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
             </ui:include>
@@ -47,7 +52,7 @@
                 </ui:define>
                 <h:inputTextarea id="businessMemoInput" value="#{ownerBusinessHome.instance.memo}" cols="50" rows="3"/>
                 <ui:define name="tail">
-                    <r:message for="businessMemoInput" />
+                    <r:message for="businessMemoInput"/>
                 </ui:define>
             </s:decorate>
 
@@ -55,17 +60,16 @@
                 <span class="required">*</span>
                 #{messages.requiredFields}
             </div>
-    <br/>
+            <br/>
+
             <div class="submitbox">
                 <h:panelGrid columns="3">
-                <h:commandButton styleClass="subbtn"  value="#{messages.ok}" action="#{taskPublish.wire}"/>
-                <s:button styleClass="subbtn"  value="#{messages.cancel}" propagation="end" view="/func/system/business/start.xhtml"/>
+                    <h:commandButton styleClass="subbtn" value="#{messages.ok}" action="#{taskPublish.wire}"/>
+                    <s:button styleClass="subbtn" value="#{messages.cancel}" propagation="end"
+                              view="/func/system/business/start.xhtml"/>
                 </h:panelGrid>
             </div>
         </h:form>
-
-
-
 
 
     </ui:define>

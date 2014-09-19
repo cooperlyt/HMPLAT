@@ -14,11 +14,11 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "POOL_OWNER", catalog = "HOUSE_INFO")
-public class PoolOwner implements java.io.Serializable {
+public class PoolOwner implements java.io.Serializable,PersonEntity {
 
 	private String id;
 	private House house;
-    private String name;
+    private String personName;
     private String credentialsNumber;
     private PersonEntity.CredentialsType credentialsType;
 	private String relation;
@@ -65,15 +65,17 @@ public class PoolOwner implements java.io.Serializable {
 		this.relation = relation;
 	}
 
+    @Override
     @Column(name = "NAME",nullable = false,length = 50)
     @NotNull
     @Size(max = 50)
-    public String getName() {
-        return name;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public void setPersonName(String name) {
+        this.personName = name;
     }
 
     @Column(name = "ID_NO",nullable = false,length = 100)

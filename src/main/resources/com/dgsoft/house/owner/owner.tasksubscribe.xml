@@ -35,6 +35,23 @@
     </subscribe>
 
 
+    <subscribe name="poolOwnerEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml" component="" cagegory="业务信息" type="ALONE_EDIT">
+        共有权人编辑
+    </subscribe>
+
+    <subscribe name="newPoolOwnerEdit" page="/business/houseOwner/subscribe/NewPoolOwnerEdit.xhtml" component="" cagegory="业务信息" type="ALONE_EDIT">
+        现共有权人编辑
+    </subscribe>
+
+    <subscribe name="poolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml" component="" cagegory="业务信息" type="ALONE_VIEW">
+        共有权人查看
+    </subscribe>
+
+    <subscribe name="newPoolOwnerView" page="/business/houseOwner/subscribe/NewPoolOwnerView.xhtml" component="" cagegory="业务信息" type="ALONE_VIEW">
+        现共有权人查看
+    </subscribe>
+
+
     <subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml" component="" cagegory="" type="EDIT">
         变更前
     </subscribe>
