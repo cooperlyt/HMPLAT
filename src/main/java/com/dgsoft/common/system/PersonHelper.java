@@ -3,14 +3,25 @@ package com.dgsoft.common.system;
 import com.dgsoft.common.system.model.Person;
 import com.dgsoft.common.system.model.PersonId;
 import org.jboss.seam.Component;
+import org.jboss.seam.log.Logging;
 
 import javax.persistence.EntityManager;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 /**
  * Created by cooper on 9/19/14.
  */
 public class PersonHelper<E extends PersonEntity>  {
+    public PersonHelper() {
+        isManager = false;
+    }
 
+    public PersonHelper(E entity) {
+        this.entity = entity;
+        isManager = false;
+    }
 
     private E entity;
 
@@ -20,31 +31,32 @@ public class PersonHelper<E extends PersonEntity>  {
 
     public void setEntity(E entity) {
         this.entity = entity;
+        isManager = false;
     }
 
 
     public PersonEntity.CredentialsType getCredentialsType() {
-        return entity.getCredentialsType();
+        return getEntity().getCredentialsType();
     }
 
     public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
-        entity.setCredentialsType(credentialsType);
+        getEntity().setCredentialsType(credentialsType);
     }
 
     public String getCredentialsNumber() {
-        return entity.getCredentialsNumber();
+        return getEntity().getCredentialsNumber();
     }
 
     public void setCredentialsNumber(String credentialsNumber) {
-        entity.setCredentialsNumber(credentialsNumber);
+        getEntity().setCredentialsNumber(credentialsNumber);
     }
 
     public String getPersonName() {
-        return entity.getPersonName();
+        return getEntity().getPersonName();
     }
 
     public void setPersonName(String name) {
-        entity.setPersonName(name);
+        getEntity().setPersonName(name);
     }
 
 
@@ -54,7 +66,7 @@ public class PersonHelper<E extends PersonEntity>  {
         return isManager;
     }
 
-    public void setManager(boolean isManager) {
+    protected void setManager(boolean isManager) {
         this.isManager = isManager;
     }
 
@@ -92,12 +104,6 @@ public class PersonHelper<E extends PersonEntity>  {
                 isManager = true;
             }
         }
-    }
-
-
-    public void clear() {
-       // entity = new
-        isManager = false;
     }
 
 

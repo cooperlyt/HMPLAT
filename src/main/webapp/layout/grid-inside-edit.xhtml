@@ -27,6 +27,8 @@
             </s:validateAll>
         </s:span>
 
+        <ui:insert name="tail"/>
+
         <a:outputPanel rendered="#{invalid}">
             <h:graphicImage value="/img/error.gif" rendered="#{invalid}" styleClass="errors">
             </h:graphicImage>

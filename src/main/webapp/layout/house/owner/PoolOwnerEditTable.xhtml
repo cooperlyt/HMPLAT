@@ -1,0 +1,109 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/system/BatchPersonInput.xhtml">
+    <ui:define name="columnAfter">
+
+        <r:column style="width: 80px;">
+            <f:facet name="header">
+                #{messages.BusinessPool_relation}
+            </f:facet>
+            <s:decorate template="/layout/grid-inside-edit.xhtml">
+                <r:inplaceSelect value="#{_person.personEntity.relation}" style="width: 90%;"
+                                 label="#{messages.BusinessPool_relation}">
+                    <s:selectItems var="_word" label="#{_word.value}"
+                                   itemValue="#{_word.id}"
+                                   value="#{dictionary.getWordList('67')}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                    <a:ajax event="blur" execute="@this"/>
+                </r:inplaceSelect>
+            </s:decorate>
+        </r:column>
+
+        <r:column style="width: 100px">
+            <f:facet name="header">
+                #{messages.BusinessPool_area}
+            </f:facet>
+            <s:decorate template="/layout/grid-inside-edit.xhtml">
+                <r:inplaceInput value="#{_person.personEntity.poolArea}" style="width: 90%;"
+                                label="#{messages.BusinessPool_area}">
+                    <f:convertNumber pattern="#0.000"/>
+                    <a:ajax event="blur"
+                            execute="@this" render="@none"/>
+                </r:inplaceInput>
+            </s:decorate>
+        </r:column>
+
+        <r:column style="width: 100px">
+            <f:facet name="header">
+                #{messages.BusinessPool_perc}
+            </f:facet>
+            <s:decorate template="/layout/grid-inside-edit.xhtml">
+                <r:inplaceInput value="#{_person.personEntity.perc}" style="width: 90%;"
+                                label="#{messages.BusinessPool_perc}">
+                    <a:ajax event="blur"
+                            execute="@this" render="@none"/>
+                </r:inplaceInput>
+            </s:decorate>
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_phone}
+            </f:facet>
+            <s:decorate template="/layout/grid-inside-edit.xhtml">
+                <r:inplaceInput value="#{_person.personEntity.phone}" style="width: 90%;"
+                                label="#{messages.BusinessPool_phone}">
+                    <a:ajax event="blur"
+                            execute="@this" render="@none"/>
+                </r:inplaceInput>
+            </s:decorate>
+        </r:column>
+
+
+        <r:column style="width: 100px;">
+            <f:facet name="header">
+                #{messages.BusinessPool_memo}
+            </f:facet>
+
+            <s:decorate template="/layout/long-text-edit.xhtml">
+                <ui:param name="size" value="5"/>
+                <ui:param name="value" value="#{_person.personEntity.memo}"/>
+
+                <h:inputTextarea value="#{_person.personEntity.memo}" cols="20" rows="5">
+                    <a:ajax event="blur"
+                            execute="@this" render="poolTable"/>
+                </h:inputTextarea>
+
+            </s:decorate>
+
+        </r:column>
+
+        <r:column style="width: 60px; text-align: center;">
+            <f:facet name="header">
+                <a:commandButton image="/img/icons/id_card_read_btn.png" title="#{messages.AddPoolOwnerFromCard}"/>
+                #{' '}
+                <a:commandButton execute="@this" immediate="true" title="#{messages.AddPoolOwner}"
+                                 action="#{subscribeComponent.addNewOwner}"
+                                 image="/img/icons/add_card.png" render="poolTable">
+                    <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
+            </f:facet>
+
+
+            #{' '}
+            <a:commandButton execute="@this" immediate="true" title="#{messages.AddPoolOwner}"
+                             action="#{subscribeComponent.deleteSelectOwner}"
+                             image="/img/icons/delete.png" render="poolTable">
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
+
+        </r:column>
+
+    </ui:define>
+</ui:composition>

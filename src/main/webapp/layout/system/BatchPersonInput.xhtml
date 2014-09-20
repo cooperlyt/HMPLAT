@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <r:dataTable id="poolTable" style="width: 100%"
+                 value="#{persons}" var="_person">
+        <f:facet name="header">
+            #{title}
+        </f:facet>
+
+        <r:column style="width: 100px">
+            <f:facet name="header">
+                #{messages.person_field_credentialsType}
+            </f:facet>
+            <s:decorate template="/layout/grid-inside-edit.xhtml">
+                <ui:define name="tail">
+                    <a:commandButton image="/img/icons/id_card_read_btn.png" title="#{messages.AddPoolOwnerFromCard}"/>
+                </ui:define>
+                <r:inplaceSelect style="width: 90%" required="true" value="#{_person.credentialsType}"
+                                 label="#{messages.person_field_credentialsType}">
+                    <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+                    <s:convertEnum/>
+                    <a:ajax event="selectitem"
+                            render="poolTable"
+                            execute="@this">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </r:inplaceSelect>
+
+            </s:decorate>
+
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.person_field_credentialsNO}
+            </f:facet>
+            <s:decorate template="/layout/grid-inside-edit.xhtml"
+                        rendered="#{not (_person.credentialsType.name() eq 'OTHER')}">
+                <r:inplaceInput value="#{_person.credentialsNumber}" style="width: 90%" required="true"
+                                label="#{messages.person_field_credentialsNO}">
+                    <a:ajax event="blur"
+                            render="poolTable"
+                            execute="@this">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </r:inplaceInput>
+            </s:decorate>
+            <h:outputText rendered="#{_person.credentialsType.name() eq 'OTHER'}"
+                          value="#{_person.credentialsNumber}"/>
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BusinessPool_name}
+            </f:facet>
+
+            <s:decorate template="/layout/grid-inside-edit.xhtml" rendered="#{not _person.manager}">
+                <r:inplaceInput value="#{_person.personName}" style="width: 90%" required="true"
+                                label="#{messages.BusinessPool_name}">
+                    <a:ajax event="blur" execute="@this" render="@none"/>
+                </r:inplaceInput>
+            </s:decorate>
+            <h:outputText rendered="#{_person.manager}"
+                          value="#{_person.personName}"/>
+        </r:column>
+
+        <ui:insert name="columnAfter"/>
+
+    </r:dataTable>
+</ui:composition>

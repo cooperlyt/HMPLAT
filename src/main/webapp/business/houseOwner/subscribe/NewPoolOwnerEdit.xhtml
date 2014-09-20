@@ -7,6 +7,10 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:include src="PoolOwnerEditBase.xhtml"/>
-
+    <ui:include src="/layout/house/owner/PoolOwnerEditTable.xhtml">
+        <ui:param name="persons" value="#{newEditPoolOwners}"/>
+        <ui:param name="title" value="#{messages.NewBusinessPool}"/>
+        <ui:param name="subscribeComponent" value="#{newPoolOwnerSubscribe}"/>
+    </ui:include>
+    <br/>
 </ui:composition>

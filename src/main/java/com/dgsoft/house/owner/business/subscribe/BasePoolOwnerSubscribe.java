@@ -1,13 +1,13 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.common.helper.ActionExecuteState;
-import com.dgsoft.house.owner.OwnerEntityHome;
+import com.dgsoft.common.system.PersonEntityAdapter;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessPool;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Scope;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,50 +18,28 @@ public abstract class BasePoolOwnerSubscribe {
 
     protected abstract BusinessPool.BusinessPoolType getType();
 
-    private List<BusinessPool> poolOwners;
+    private List<PersonEntityAdapter<BusinessPool>> poolOwners;
 
-    protected abstract BusinessPool getSelectPoolOwner();
-
-   // private PoolOwnerEntityHelper poolOwnerEntityHelper;
-
-    private BusinessPool editOwner;
-//
-//    @Override
-//    public void create() {
-//        super.create();
-//        poolOwnerEntityHelper = new PoolOwnerEntityHelper(this);
-//    }
-//
-//    @Override
-//    protected BusinessPool createInstance() {
-//        return new BusinessPool(getType());
-//    }
-//
-//
-//    public PoolOwnerEntityHelper getPoolOwnerEntityHelper() {
-//        return poolOwnerEntityHelper;
-//    }
-//
-//    @Override
-//    public Class<BusinessPool> getEntityClass() {
-//        return BusinessPool.class;
-//    }
+    protected abstract PersonEntityAdapter<BusinessPool> getSelectPoolOwner();
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
     protected void initPoolOwners(){
         if (poolOwners == null){
-            poolOwners = ownerBusinessHome.getSingleHoues().getPoolsByType(getType());
+            poolOwners = new ArrayList<PersonEntityAdapter<BusinessPool>>();
+            for (BusinessPool pool: ownerBusinessHome.getSingleHoues().getPoolsByType(getType())){
+                poolOwners.add(new PersonEntityAdapter<BusinessPool>(pool));
+            }
         }
     }
 
-    public List<BusinessPool> getPoolOwners(){
+    public List<PersonEntityAdapter<BusinessPool>> getPoolOwners(){
         initPoolOwners();
         return poolOwners;
     }
 
-    public void setPoolOwners(List<BusinessPool> poolOwners) {
+    public void setPoolOwners(List<PersonEntityAdapter<BusinessPool>> poolOwners) {
         this.poolOwners = poolOwners;
     }
 
@@ -70,18 +48,14 @@ public abstract class BasePoolOwnerSubscribe {
     }
 
     public void deleteSelectOwner(){
-        ownerBusinessHome.getSingleHoues().getBusinessPools().remove(getSelectPoolOwner());
-        refreshPoolOwners();
+        if (getSelectPoolOwner() != null) {
+            ownerBusinessHome.getSingleHoues().getBusinessPools().remove(getSelectPoolOwner().getPersonEntity());
+            refreshPoolOwners();
+        }
     }
 
-    public void createOwner(){
-        editOwner = new BusinessPool(getType(),ownerBusinessHome.getSingleHoues());
-        ActionExecuteState.instance().clearState();
-    }
-
-    public void addOwner(){
-        ownerBusinessHome.getSingleHoues().getBusinessPools().add(editOwner);
-        ActionExecuteState.instance().actionExecute();
+    public void addNewOwner(){
+        ownerBusinessHome.getSingleHoues().getBusinessPools().add(new BusinessPool(getType(),ownerBusinessHome.getSingleHoues()));
         refreshPoolOwners();
     }
 

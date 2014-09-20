@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:s="http://jboss.org/schema/seam/taglib">
+
+    <!-- param: value ,size , readOnly-->
+
+    <f:subview>
+
+        <h:outputStylesheet>
+            .noWidthColumns {
+                width: 1px;
+                padding: 0px;
+            }
+
+            .valueColumns {
+                padding: 0px;
+            }
+        </h:outputStylesheet>
+
+        <h:panelGrid columns="3" columnClasses="noWidthColumns,valueColumns,noWidthColumns" style="width: 100%">
+            <h:panelGroup>
+
+                <s:span styleClass="required" rendered="#{required}">*</s:span>
+                <ui:insert name="label"/>
+            </h:panelGroup>
+
+            <a:outputPanel>
+                <h:outputLink value="#" id="ll">
+                    <r:componentControl event="click" operation="show" target="lp">
+                        <a:param name="event" value="event" noEscape="true"/>
+                        <r:hashParam>
+                            <a:param noEscape="true" name="top"
+                                     value="jQuery(#{r:element('ll')}.parentNode).offset().top + jQuery(#{r:element('ll')}.parentNode).height()"/>
+                            <a:param noEscape="true" name="left"
+                                     value="jQuery(#{r:element('ll')}.parentNode).offset().left"/>
+                        </r:hashParam>
+                    </r:componentControl>
+
+                    <h:outputText style="width: 90%; min-height: 15px" styleClass="rf-ii rf-ii-none"
+                                  value="#{fn:substring(value, 0, size)}#{(fn:length(value) gt size) ? '...' : ''}"/>
+                </h:outputLink>
+
+                <r:tooltip styleClass="tooltip-custom-body"
+                           layout="block" mode="client"
+                           rendered="#{fn:length(value) gt size}">
+                    <h:outputText value="#{value}"/>
+                        <span style="white-space: pre-wrap"> #{value}</span>
+                </r:tooltip>
+            </a:outputPanel>
+
+            <a:outputPanel rendered="#{invalid}">
+                <h:graphicImage value="/img/error.gif" rendered="#{invalid}" styleClass="errors">
+                </h:graphicImage>
+                <r:tooltip layout="block" followMouse="false" mode="client">
+                    <s:message styleClass="errors"/>
+                </r:tooltip>
+            </a:outputPanel>
+
+        </h:panelGrid>
+
+        <r:popupPanel id="lp" autosized="true" modal="true" moveable="false"
+                      resizeable="false" followByScroll="false" onmaskclick="#{r:component('lp')}.hide();">
+            <s:validateAll>
+                <ui:insert/>
+            </s:validateAll>
+        </r:popupPanel>
+
+
+    </f:subview>
+</ui:composition>
