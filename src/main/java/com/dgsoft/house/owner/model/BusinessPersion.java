@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,35 +13,38 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_PERSION", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessPersion implements java.io.Serializable {
+public class BusinessPersion implements java.io.Serializable,PersonEntity{
 
-	private String id;
+
+    public enum PersionType{
+        NOW_HOUSE_OWNER
+
+    }
+
+
+    private String id;
 	private OwnerBusiness ownerBusiness;
-	private String idNo;
-	private String idType;
-	private String name;
-	private String type;
+	private String credentialsNumber;
+	private CredentialsType credentialsType;
+	private String personName;
+	private PersionType type;
 	private String phone;
 
 	public BusinessPersion() {
 	}
 
-	public BusinessPersion(String id, OwnerBusiness ownerBusiness, String idNo,
-			String idType, String name, String type) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.idNo = idNo;
-		this.idType = idType;
-		this.name = name;
-		this.type = type;
+	public BusinessPersion(PersionType type) {
+
+        this.type = type;
+
 	}
-	public BusinessPersion(String id, OwnerBusiness ownerBusiness, String idNo,
-			String idType, String name, String type, String phone) {
+	public BusinessPersion(String id, OwnerBusiness ownerBusiness, String credentialsNumber,
+                           CredentialsType credentialsType, String personName, PersionType type, String phone) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
-		this.idNo = idNo;
-		this.idType = idType;
-		this.name = name;
+		this.credentialsNumber = credentialsNumber;
+		this.credentialsType = credentialsType;
+		this.personName = personName;
 		this.type = type;
 		this.phone = phone;
 	}
@@ -70,47 +74,52 @@ public class BusinessPersion implements java.io.Serializable {
 		this.ownerBusiness = ownerBusiness;
 	}
 
+    @Override
 	@Column(name = "ID_NO", nullable = false, length = 100)
 	@NotNull
 	@Size(max = 100)
-	public String getIdNo() {
-		return this.idNo;
-	}
+    public String getCredentialsNumber() {
+        return this.credentialsNumber;
+    }
 
-	public void setIdNo(String idNo) {
-		this.idNo = idNo;
-	}
+    public void setCredentialsNumber(String idNo) {
+        this.credentialsNumber = idNo;
+    }
 
+    @Override
+    @Enumerated(EnumType.STRING)
 	@Column(name = "ID_TYPE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-	public String getIdType() {
-		return this.idType;
-	}
+    public CredentialsType getCredentialsType() {
+        return this.credentialsType;
+    }
 
-	public void setIdType(String idType) {
-		this.idType = idType;
-	}
+    public void setCredentialsType(CredentialsType idType) {
+        this.credentialsType = idType;
+    }
 
+    @Override
 	@Column(name = "NAME", nullable = false, length = 50)
 	@NotNull
 	@Size(max = 50)
-	public String getName() {
-		return this.name;
+	public String getPersonName() {
+		return this.personName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPersonName(String Name) {
+		this.personName = Name;
 	}
 
+    @Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
 	@Size(max = 10)
-	public String getType() {
+	public PersionType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(PersionType type) {
 		this.type = type;
 	}
 
