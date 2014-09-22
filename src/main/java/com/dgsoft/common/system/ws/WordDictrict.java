@@ -3,17 +3,12 @@ package com.dgsoft.common.system.ws;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.common.system.model.WordCategory;
-import com.mongodb.util.JSON;
 import org.jboss.seam.Component;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by cooper on 9/22/14.
  */
