@@ -7,44 +7,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <div style="clear: both;"/>
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.PersionOwnerEntrust}
-        </ui:define>
-    <h:selectBooleanCheckbox value="#{persionOwnerEntrustSubscribe.have}">
-
-        <a:ajax event="click" render="persionOwnerEntrustPanel" execute="@this"><a:attachQueue requestDelay="0"/> </a:ajax>
-    </h:selectBooleanCheckbox>
-    </s:decorate>
-    <a:outputPanel id="persionOwnerEntrustPanel">
-    <a:outputPanel  rendered="#{persionOwnerEntrustSubscribe.have}">
-
-        <div style="clear: both;"/>
-    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-
-    <ui:include src="/layout/system/PersonInput.xhtml">
-        <ui:param name="owner" value="#{persionOwnerEntrustSubscribe.instance}"/>
-        <ui:param name="personEntityHelper" value="#{persionOwnerEntrustSubscribe.persionPersonEntityHomeHelper}"/>
+    <ui:include src="BussinePersionInput.xhtml">
+        <ui:param name="label" value="#{messages.PersionOwnerEntrust}"/>
+        <ui:param name="persion" value="#{persionOwnerEntrustSubscribe}" />
     </ui:include>
-
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.Tel}
-        </ui:define>
-        <h:inputText label="#{messages.Tel}" size="20"
-                     value="#{persionOwnerEntrustSubscribe.instance.phone}" id="persionPhoneInput">
-              <r:validator event="blur"/>
-        </h:inputText>
-
-        <ui:define name="tail">
-            <r:message for="persionPhoneInput" />
-        </ui:define>
-    </s:decorate>
-
-    <div style="clear: both"/>
-
-    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-    </a:outputPanel>
-    </a:outputPanel>
 </ui:composition>
