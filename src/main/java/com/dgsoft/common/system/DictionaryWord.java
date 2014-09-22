@@ -131,6 +131,10 @@ public class DictionaryWord {
 
     }
 
+    public Map<String, WordCategory> getAllWordCategory() {
+        return wordCategory;
+    }
+
     public City getCity(Integer code) {
         return cityMap.get(code);
     }

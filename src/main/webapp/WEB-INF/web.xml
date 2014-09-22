@@ -456,4 +456,16 @@
     </security-constraint>
 
 
+    <servlet>
+        <servlet-name>DictrictWS</servlet-name>
+        <servlet-class>com.dgsoft.common.system.ws.WordDictrict</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DictrictWS</servlet-name>
+        <url-pattern>/DictrictWS</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
