@@ -8,9 +8,19 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <div style="clear: both;"/>
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.PersionOwnerEntrust}
+        </ui:define>
+    <h:selectBooleanCheckbox value="#{persionOwnerEntrustSubscribe.have}">
 
-    <h:outputText value="#{messages.PersionOwnerEntrust}" styleClass="name"/><br/>
+        <a:ajax event="click" render="persionOwnerEntrustPanel" execute="@this"><a:attachQueue requestDelay="0"/> </a:ajax>
+    </h:selectBooleanCheckbox>
+    </s:decorate>
+    <a:outputPanel id="persionOwnerEntrustPanel">
+    <a:outputPanel  rendered="#{persionOwnerEntrustSubscribe.have}">
 
+        <div style="clear: both;"/>
     <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
 
     <ui:include src="/layout/system/PersonInput.xhtml">
@@ -35,5 +45,6 @@
     <div style="clear: both"/>
 
     <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-
+    </a:outputPanel>
+    </a:outputPanel>
 </ui:composition>

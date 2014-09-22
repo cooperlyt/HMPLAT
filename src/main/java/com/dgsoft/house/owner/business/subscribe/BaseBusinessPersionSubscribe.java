@@ -20,6 +20,16 @@ public abstract class BaseBusinessPersionSubscribe extends OwnerEntityHome<Busin
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
+    public boolean isHave() {
+        return have;
+    }
+
+    public void setHave(boolean have) {
+        this.have = have;
+    }
+
+    private boolean have;
+
     protected abstract BusinessPersion.PersionType getType();
 
     private PersonEntityHomeHelper<BusinessPersion> persionPersonEntityHomeHelper;
@@ -37,17 +47,50 @@ public abstract class BaseBusinessPersionSubscribe extends OwnerEntityHome<Busin
     @Override
     public void create(){
         super.create();
+
         persionPersonEntityHomeHelper = new PersonEntityHomeHelper<BusinessPersion>(this);
-        for(BusinessPersion businessPersion:ownerBusinessHome.getInstance().getBusinessPersions()){
-            if(businessPersion.getType().equals(getType())){
-                setId(businessPersion.getId());
-                return;
-            }
+        String findId = searchByDB();
+        if (findId != null){
+            have = true;
+            setId(findId);
+        }else {
+           have = false;
         }
-        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
+
+
+
     }
 
+    private  String searchByDB() {
+        for(BusinessPersion businessPersion:ownerBusinessHome.getInstance().getBusinessPersions()){
+            if(businessPersion.getType().equals(getType())){
+                return businessPersion.getId();
+            }
+        }
+        return null;
+    }
+
+    public void  checkHave(){
+
+        if (have){
+         String findId = searchByDB();
+         if (findId != null) {
+           setId(findId);
+
+         }
+         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+         ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
+
+        }else {
+            for(BusinessPersion businessPersion:ownerBusinessHome.getInstance().getBusinessPersions()){
+                if(businessPersion.getType().equals(getType())){
+                    ownerBusinessHome.getInstance().getBusinessPersions().remove(businessPersion);
+                    break;
+                }
+            }
+            clearInstance();
+        }
+    }
     @Override
     protected BusinessPersion createInstance() {
         return new BusinessPersion(getType());
