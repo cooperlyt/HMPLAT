@@ -9,26 +9,26 @@ import org.jboss.seam.annotations.Name;
 /**
  * Created with IntelliJ IDEA.
  * User: Administrator
- * Date: 14-8-29
- * Time: 上午10:22
+ * Date: 14-9-23
+ * Time: 上午9:52
  * To change this template use File | Settings | File Templates.
  */
-@Name("changBeforRensonSubscribe")
-public class ChangBeforRensonSubscribe extends OwnerEntityHome<Reason> {
+@Name("resonFillChangeSubscribe")
+public class ResonFillChangeSubscribe extends OwnerEntityHome<Reason> {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public Reason createInstance(){
-        return new Reason(Reason.ReasonType.CHANG_BEFOR_RESON);
+        return new Reason(Reason.ReasonType.FILL_CHANGE);
     }
 
     @Override
     public void create(){
         super.create();
         for(Reason reason: ownerBusinessHome.getInstance().getReasons()){
-            if (reason.getType().equals(Reason.ReasonType.CHANG_BEFOR_RESON)){
+            if (reason.getType().equals(Reason.ReasonType.FILL_CHANGE)){
                 setId(reason.getId());
                 return;
             }

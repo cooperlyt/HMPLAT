@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Table(name = "REASON", catalog = "HOUSE_OWNER_RECORD")
 public class Reason implements java.io.Serializable {
 
-    public enum ReasonType{MODIFY_BEFOR_RENSON,MODIFY_AFTER_RENSON,CHANG_BEFOR_RESON,CHANG_AFTER_RESON};
+    public enum ReasonType{MODIFY_BEFOR_RENSON,MODIFY_AFTER_RENSON,CHANG_BEFOR_RESON,CHANG_AFTER_RESON,FILL_CHANGE};
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private ReasonType type;

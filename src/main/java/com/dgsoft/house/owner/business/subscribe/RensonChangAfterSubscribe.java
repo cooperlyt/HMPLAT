@@ -14,7 +14,7 @@ import org.jboss.seam.annotations.Name;
  * To change this template use File | Settings | File Templates.
  */
 @Name("changAfterRensonSubscribe")
-public class ChangAfterRensonSubscribe extends OwnerEntityHome<Reason>{
+public class RensonChangAfterSubscribe extends OwnerEntityHome<Reason>{
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
