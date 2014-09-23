@@ -38,7 +38,7 @@ public class WordDictrict {
                     jsonArray.put(jsonObject);
                 }
 
-                categoryOjb.put(category.getId(), jsonArray);
+                categoryOjb.put(category.getId().replace(".","_"), jsonArray);
 
             }
 
