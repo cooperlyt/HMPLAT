@@ -9,27 +9,27 @@ import org.jboss.seam.annotations.Name;
 /**
  * Created with IntelliJ IDEA.
  * User: Administrator
- * Date: 14-8-28
- * Time: 下午3:58
+ * Date: 14-9-23
+ * Time: 下午2:44
  * To change this template use File | Settings | File Templates.
  */
-@Name("modifyBeforReasonSubscribe")
-public class ModifyBeforReasonSubscribe extends OwnerEntityHome<Reason> {
+@Name("reasonLogout")
+public class ReasonLogout extends OwnerEntityHome<Reason> {
+
+
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public Reason createInstance(){
-        return new Reason(Reason.ReasonType.MODIFY_BEFOR_RENSON);
+      return new Reason (Reason.ReasonType.LOGOUT);
     }
 
-
     @Override
-    public void create()
-    {
+    public void create(){
         super.create();
         for(Reason reason: ownerBusinessHome.getInstance().getReasons()){
-            if (reason.getType().equals(Reason.ReasonType.MODIFY_BEFOR_RENSON)){
+            if (reason.getType().equals(Reason.ReasonType.LOGOUT)){
                 setId(reason.getId());
                 return;
             }
@@ -37,7 +37,5 @@ public class ModifyBeforReasonSubscribe extends OwnerEntityHome<Reason> {
         }
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getReasons().add(getInstance());
-
     }
-
 }
