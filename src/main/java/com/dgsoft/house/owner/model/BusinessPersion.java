@@ -17,7 +17,7 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 
 
     public enum PersionType{
-        NOW_HOUSE_OWNER
+        OWNER_ENTRUST
 
     }
 
@@ -90,7 +90,6 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
     @Enumerated(EnumType.STRING)
 	@Column(name = "ID_TYPE", nullable = false, length = 32)
 	@NotNull
-	@Size(max = 32)
     public CredentialsType getCredentialsType() {
         return this.credentialsType;
     }
@@ -114,7 +113,6 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
     @Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
 	public PersionType getType() {
 		return this.type;
 	}

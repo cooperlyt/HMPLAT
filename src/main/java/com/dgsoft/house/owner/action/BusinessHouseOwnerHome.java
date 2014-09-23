@@ -10,6 +10,8 @@ import org.jboss.seam.annotations.Name;
 @Name("businessHouseOwnerHome")
 public class BusinessHouseOwnerHome extends OwnerEntityHome<BusinessHouseOwner> {
 
+
+
     private HouseOwnerEntityHelper houseOwnerEntityHelper;
 
     @Override

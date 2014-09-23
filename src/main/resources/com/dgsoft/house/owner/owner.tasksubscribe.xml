@@ -110,4 +110,8 @@
     <subscribe name="RegisterPropertyEdit" page="/business/houseOwner/subscribe/RegisterPropertyEdit.xhtml" component="" cagegory="" type="EDIT">
         登记信息，共有情况，产权来源，产别
     </subscribe>
+
+    <subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
+        产权代理人
+    </subscribe>
 </subscribes>
