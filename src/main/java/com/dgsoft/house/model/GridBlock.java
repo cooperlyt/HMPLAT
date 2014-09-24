@@ -34,6 +34,13 @@ public class GridBlock implements java.io.Serializable {
     private House house;
     private String houseOrder;
 
+    private String direction;
+    private String eastWall;
+    private String westWall;
+    private String southWall;
+    private String northWall;
+    private String knotSize;
+
 
     public GridBlock() {
     }
@@ -42,7 +49,9 @@ public class GridBlock implements java.io.Serializable {
                      int rowspan, int unitIndex, String unitName, BigDecimal area,
                      BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
                      BigDecimal loftArea, BigDecimal commParam, String useType,
-                     String structure, String houseType, String houseOrder) {
+                     String structure, String houseType, String houseOrder,
+                     String direction, String eastWall, String westWall,
+                     String southWall, String northWall, String knotSize) {
         this.gridRow = gridRow;
         this.order = order;
         this.colspan = colspan;
@@ -60,6 +69,12 @@ public class GridBlock implements java.io.Serializable {
         this.houseType = houseType;
         this.id = id;
         this.houseOrder = houseOrder;
+        this.direction = direction;
+        this.eastWall = eastWall;
+        this.westWall = westWall;
+        this.southWall = southWall;
+        this.northWall = northWall;
+        this.knotSize = knotSize;
     }
 
     @Id
@@ -238,5 +253,63 @@ public class GridBlock implements java.io.Serializable {
         this.houseOrder = houseOrder;
     }
 
+    @Column(name = "DIRECTION",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getDirection() {
+        return direction;
+    }
 
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    @Column(name = "EAST_WALL",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getEastWall() {
+        return eastWall;
+    }
+
+    public void setEastWall(String eastWall) {
+        this.eastWall = eastWall;
+    }
+
+    @Column(name = "WEST_WALL",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getWestWall() {
+        return westWall;
+    }
+
+    public void setWestWall(String westWall) {
+        this.westWall = westWall;
+    }
+
+    @Column(name = "SOUTH_WALL",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getSouthWall() {
+        return southWall;
+    }
+
+    public void setSouthWall(String southWall) {
+        this.southWall = southWall;
+    }
+
+    @Column(name = "NORTH_WALL",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getNorthWall() {
+        return northWall;
+    }
+
+    public void setNorthWall(String northWall) {
+        this.northWall = northWall;
+    }
+
+    @Column(name = "KNOT_SIZE",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getKnotSize() {
+        return knotSize;
+    }
+
+    public void setKnotSize(String knotSize) {
+        this.knotSize = knotSize;
+    }
 }

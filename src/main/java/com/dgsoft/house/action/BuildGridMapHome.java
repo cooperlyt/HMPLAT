@@ -8,6 +8,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 import org.richfaces.event.DropEvent;
 import org.richfaces.event.DropListener;
 import org.richfaces.event.FileUploadEvent;
@@ -75,6 +76,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             int j = 0;
             while (houseIterator.hasNext()) {
                 Element houseElement = houseIterator.next();
+
                 floor.getGridBlocks().add(new GridBlock(UUID.randomUUID().toString().replace("-", "").toUpperCase(), floor, j,
                         Integer.parseInt(houseElement.attributeValue("colSpan", "1")),
                         Integer.parseInt(houseElement.attributeValue("RowSpan", "1")),
@@ -89,7 +91,13 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                         houseElement.attributeValue("UseType", ""),
                         houseElement.attributeValue("Structure", ""),
                         houseElement.attributeValue("HouseType", ""),
-                        houseElement.attributeValue("Order","")
+                        houseElement.attributeValue("Order",""),
+                        houseElement.attributeValue("Direction",""),
+                        houseElement.attributeValue("EastWall",""),
+                        houseElement.attributeValue("WestWall",""),
+                        houseElement.attributeValue("SouthWall",""),
+                        houseElement.attributeValue("NorthWall",""),
+                        houseElement.attributeValue("KnotSize","")
                 ));
 
                 j++;

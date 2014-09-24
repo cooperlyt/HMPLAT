@@ -77,9 +77,21 @@ public class House implements java.io.Serializable {
         this.houseUnitName = block.getUnitName();
         this.inFloorName = block.getGridRow().getTitle();
         this.houseOrder = block.getHouseOrder();
+        this.knotSize = block.getKnotSize();
+        this.direction = block.getDirection();
+        this.westWall = block.getWestWall();
+        this.southWall = block.getSouthWall();
+        this.northWall = block.getNorthWall();
+        this.eastWall = block.getEastWall();
         initRegister = false;
         firmlyPower = false;
         dataSource = HouseDataSource.MAPPING;
+
+        if ((build.getAddress() != null) && !"".equals(build.getAddress())){
+            this.address = build.getAddress() + " " + block.getHouseOrder();
+        }else {
+            this.address = build.getName() + " " + block.getHouseOrder();
+        }
     }
 
 
