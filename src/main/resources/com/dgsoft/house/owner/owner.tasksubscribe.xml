@@ -120,7 +120,11 @@
     </subscribe>
 
     <subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="" cagegory="" type="EDIT">
-        注销原因
+    注销原因
+</subscribe>
+
+    <subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml" component="" cagegory="" type="EDIT">
+      土地信息
     </subscribe>
 
 </subscribes>

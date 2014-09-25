@@ -119,8 +119,8 @@ public class BusinessHouse implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "LAND_INFO")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL},optional = true,orphanRemoval = true)
+    @JoinColumn(name = "LAND_INFO",nullable = true)
     public BusinessLandInfo getBusinessLandInfo() {
         return this.businessLandInfo;
     }
