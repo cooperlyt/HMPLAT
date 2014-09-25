@@ -26,7 +26,7 @@
                 <ui:define name="label">
                     #{messages.Land_Number}
                 </ui:define>
-                <h:inputText required="true" label="#{messages.Land_Number}" size="50" value="#{land.landCardNo}"
+                <h:inputText required="true" label="#{messages.Land_Number}" size="50" value="#{land.instance.number}"
                              id="landNubmer">
                 </h:inputText>
                 <ui:define name="tail">
@@ -39,7 +39,7 @@
                     #{messages.Land_LandGetMode}
                 </ui:define>
                 <h:selectOneMenu required="true" id="landGetMode" label="#{messages.Land_LandGetMode}"
-                                 value="#{land.landGetMode}" style="width:140px">
+                                 value="#{land.instance.landGetMode}" style="width:140px">
                     <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
                                    itemValue="#{_word.id}" label="#{_word.value}"
                                    noSelectionLabel="#{messages.noSelectLabel}"/>
@@ -59,7 +59,7 @@
                             defaultLabel="#{currentDate}"
                             required="true"
                             timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                            value="#{land.beginUseTime}"
+                            value="#{land.instance.beginUseTime}"
                             datePattern="#{messages.datePattern}"/>
                 <ui:define name="tail">
                     <r:message for="landBeginUseTime"/>
@@ -76,7 +76,7 @@
                             defaultLabel="#{currentDate}"
                             required="true"
                             timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                            value="#{land.endUseTime}"
+                            value="#{land.instance.endUseTime}"
                             datePattern="#{messages.datePattern}"/>
                 <ui:define name="tail">
                     <r:message for="landEndUseTime"/>
@@ -86,7 +86,7 @@
                 <ui:define name="label">
                     #{messages.Land_LandCardNo}
                 </ui:define>
-                <h:inputText label="#{messages.Land_LandCardNo}" id="landCardNo" value="#{land.landCardNo}"
+                <h:inputText label="#{messages.Land_LandCardNo}" id="landCardNo" value="#{land.instance.landCardNo}"
                              maxlength="50"/>
             </s:decorate>
 
@@ -94,7 +94,7 @@
                 <ui:define name="label">
                     #{messages.Land_Area}
                 </ui:define>
-                <h:inputText label="#{messages.Land_Area}" id="landArea" value="#{land.area}" size="20">
+                <h:inputText label="#{messages.Land_Area}" id="landArea" value="#{land.instance.area}" size="20">
                     <r:validator event="blur"/>
                     <f:validateDoubleRange minimum="0"/>
                     <f:convertNumber pattern="#0.000"/>
@@ -106,9 +106,9 @@
 
             <s:decorate template="/layout/edit.xhtml">
                 <ui:define name="label">
-                    #{message.Land_LandProperty}
+                    #{messages.Land_LandProperty}
                 </ui:define>
-                <h:selectOneMenu id="landProperty" label="#{message.Land_LandProperty}" value="#{land.landProperty}"
+                <h:selectOneMenu id="landProperty" label="#{message.Land_LandProperty}" value="#{land.instance.landProperty}"
                                  style="width:140px">
                     <s:selectItems value="#{dictionary.getWordList('32')}" var="_word"
                                    itemValue="#{_word.id}" label="#{_word.value}"
