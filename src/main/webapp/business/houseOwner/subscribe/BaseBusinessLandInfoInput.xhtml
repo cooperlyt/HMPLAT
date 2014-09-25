@@ -1,0 +1,126 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <div style="clear:both; "/>
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{label}
+        </ui:define>
+        <h:selectBooleanCheckbox value="#{land.have}">
+            <a:ajax event="click" render="landPanel" execute="@this" listener="#{land.checkHave}">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:selectBooleanCheckbox>
+    </s:decorate>
+
+    <a:outputPanel id="landPanel">
+        <a:outputPanel rendered="#{land.have}">
+            <div style="clear: both;"/>
+            <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Land_Number}
+                </ui:define>
+                <h:inputText required="true" label="#{messages.Land_Number}" size="50" value="#{land.landCardNo}"
+                             id="landNubmer">
+                </h:inputText>
+                <ui:define name="tail">
+                    <r:message for="landNubmer"/>
+                </ui:define>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Land_LandGetMode}
+                </ui:define>
+                <h:selectOneMenu required="true" id="landGetMode" label="#{messages.Land_LandGetMode}"
+                                 value="#{land.landGetMode}" style="width:140px">
+                    <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+                <ui:define name="tail">
+                    <r:message for="landGetMode"/>
+                </ui:define>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Land_BeginUseTime}
+                </ui:define>
+                <r:calendar enableManualInput="true"
+                            id="landBeginUseTime"
+                            inputSize="20"
+                            defaultLabel="#{currentDate}"
+                            required="true"
+                            timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                            value="#{land.beginUseTime}"
+                            datePattern="#{messages.datePattern}"/>
+                <ui:define name="tail">
+                    <r:message for="landBeginUseTime"/>
+                </ui:define>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Land_EndUseTime}
+                </ui:define>
+                <r:calendar enableManualInput="true"
+                            id="landEndUseTime"
+                            inputSize="20"
+                            defaultLabel="#{currentDate}"
+                            required="true"
+                            timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
+                            value="#{land.endUseTime}"
+                            datePattern="#{messages.datePattern}"/>
+                <ui:define name="tail">
+                    <r:message for="landEndUseTime"/>
+                </ui:define>
+            </s:decorate>
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Land_LandCardNo}
+                </ui:define>
+                <h:inputText label="#{messages.Land_LandCardNo}" id="landCardNo" value="#{land.landCardNo}"
+                             maxlength="50"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.Land_Area}
+                </ui:define>
+                <h:inputText label="#{messages.Land_Area}" id="landArea" value="#{land.area}" size="20">
+                    <r:validator event="blur"/>
+                    <f:validateDoubleRange minimum="0"/>
+                    <f:convertNumber pattern="#0.000"/>
+                </h:inputText>
+                <ui:define name="tail">
+                    <r:message for="landArea"/>
+                </ui:define>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{message.Land_LandProperty}
+                </ui:define>
+                <h:selectOneMenu id="landProperty" label="#{message.Land_LandProperty}" value="#{land.landProperty}"
+                                 style="width:140px">
+                    <s:selectItems value="#{dictionary.getWordList('32')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+
+            <div style="clear: both"/>
+            <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+        </a:outputPanel>
+    </a:outputPanel>
+
+
+</ui:composition>

@@ -13,7 +13,6 @@
             #{label}
         </ui:define>
         <h:selectBooleanCheckbox value="#{persion.have}">
-
             <a:ajax event="click" render="persionOwnerEntrustPanel" execute="@this"  listener="#{persion.checkHave}">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>

@@ -27,7 +27,7 @@ public class BusinessLandInfo implements java.io.Serializable {
 	private Date endUseTime;
 	private BigDecimal area;
 	private String landGetMode;
-	private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+	private BusinessHouse businessHouse;
 	private Set<ProjectBusiness> projectBusinesses = new HashSet<ProjectBusiness>(
 			0);
 
@@ -68,8 +68,9 @@ public class BusinessLandInfo implements java.io.Serializable {
 		this.landCardNo = landCardNo;
 	}
 
-	@Column(name = "NUMBER", length = 50)
+	@Column(name = "NUMBER", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getNumber() {
 		return this.number;
 	}
@@ -119,8 +120,9 @@ public class BusinessLandInfo implements java.io.Serializable {
 		this.area = area;
 	}
 
-	@Column(name = "LAND_GET_MODE", length = 32)
+	@Column(name = "LAND_GET_MODE", length = 32,nullable = false)
 	@Size(max = 32)
+    @NotNull
 	public String getLandGetMode() {
 		return this.landGetMode;
 	}
@@ -128,15 +130,17 @@ public class BusinessLandInfo implements java.io.Serializable {
 	public void setLandGetMode(String landGetMode) {
 		this.landGetMode = landGetMode;
 	}
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "businessLandInfo",optional = true,orphanRemoval = false)
+    public BusinessHouse getBusinessHouse() {
+        return businessHouse;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessLandInfo")
-	public Set<BusinessHouse> getBusinessHouses() {
-		return this.businessHouses;
-	}
+    public void setBusinessHouse(BusinessHouse businessHouse) {
+        this.businessHouse = businessHouse;
+    }
 
-	public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
-		this.businessHouses = businessHouses;
-	}
+
+
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessLandInfo")
 	public Set<ProjectBusiness> getProjectBusinesses() {
