@@ -6,7 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
-<h:panelGrid columns="2">
+<h:panelGrid columns="2" style="padding: 0px; border: 0px" columnClasses="layoutColumn,layoutColumn">
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
@@ -222,8 +222,192 @@
     <ui:define name="label">
         #{messages.Build_HaveDownRoom}
     </ui:define>
-    <h:selectBooleanCheckbox required="true" value="#{build.haveDownRoom}"/>
+    <h:selectBooleanCheckbox value="#{build.haveDownRoom}"/>
 </s:decorate>
 
+<br/>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Type}
+    </ui:define>
+    <h:selectOneMenu id="buildTypeInput" value="#{buildHome.instance.buildType}" label="#{messages.Build_Type}">
+        <s:selectItems value="#{dictionary.getWordList('house.build.buildType')}" var="_word"
+                       itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+    </h:selectOneMenu>
+    <ui:define name="tail">
+        <r:message for="buildTypeInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.BUild_UnitCount}
+    </ui:define>
+
+    <h:inputText id="unitCountInput" value="#{buildHome.instance.unintCount}" label="#{messages.BUild_UnitCount}"/>
+
+    <ui:define name="tail">
+        <r:message for="unitCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_HouseCount}
+    </ui:define>
+
+    <h:inputText id="houseCountInput" value="#{buildHome.instance.houseCount}" label="#{messages.Build_HouseCount}"/>
+
+    <ui:define name="tail">
+        <r:message for="houseCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Area}
+    </ui:define>
+
+    <h:inputText id="areaInput" value="#{buildHome.instance.area}" label="#{messages.Build_Area}">
+        <f:convertNumber pattern="#0.000"/>
+        <r:validator event="blur"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="areaInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_HomeCount}
+    </ui:define>
+
+    <h:inputText id="homeCountInput" value="#{buildHome.instance.homeCount}" label="#{messages.Build_HomeCount}"/>
+
+    <ui:define name="tail">
+        <r:message for="homeCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_HomeArea}
+    </ui:define>
+
+    <h:inputText id="homeAreaInput" value="#{buildHome.instance.homeArea}" label="#{messages.Build_HomeArea}">
+        <f:convertNumber pattern="#0.000"/>
+        <r:validator event="blur"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="homeAreaInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_UnHomeCount}
+    </ui:define>
+
+    <h:inputText id="unHomeCountInput" value="#{buildHome.instance.unhomeCount}" label="#{messages.Build_UnHomeCount}"/>
+
+    <ui:define name="tail">
+        <r:message for="unHomeCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_UnHomeArea}
+    </ui:define>
+
+    <h:inputText id="unHomeAreaInput" value="#{buildHome.instance.unhomeArea}" label="#{messages.Build_UnHomeArea}">
+        <f:convertNumber pattern="#0.000"/>
+        <r:validator event="blur"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="unHomeAreaInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_ShopCount}
+    </ui:define>
+
+    <h:inputText id="shopCountCountInput" value="#{buildHome.instance.shopCount}" label="#{messages.Build_ShopCount}"/>
+
+    <ui:define name="tail">
+        <r:message for="shopCountCountInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_ShopArea}
+    </ui:define>
+
+    <h:inputText id="shopAreaInput" value="#{buildHome.instance.shopArea}" label="#{messages.Build_ShopArea}">
+        <f:convertNumber pattern="#0.000"/>
+        <r:validator event="blur"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="shopAreaInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
 </h:panelGrid>
+
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_address}
+    </ui:define>
+
+    <h:inputText id="buildAddressInput" value="#{buildHome.instance.address}" maxlength="100" size="60" label="#{messages.Build_address}"/>
+
+    <ui:define name="tail">
+        <r:message for="buildAddressInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.MapMemo}
+    </ui:define>
+    <h:inputTextarea id="mapMemoInput" value="#{buildHome.instance.memo}" label="#{messages.MapMemo}" cols="59" rows="3"/>
+
+    <ui:define name="tail">
+        <r:message for="mapMemoInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
+
+
+
 </ui:composition>

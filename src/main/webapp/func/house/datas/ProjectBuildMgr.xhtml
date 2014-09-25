@@ -10,108 +10,105 @@
 
     <ui:param name="functionTitle" value="#{projectHome.instance.name} - #{messages.Build}"/>
 
-    <ui:define name="toolbar">
-        <r:toolbar>
-            <r:toolbarGroup location="right">
-                <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
+    <ui:define name="func-body">
 
-                <s:button action="next" styleClass="toolBarBtn" value="#{messages.Next}"/>
 
-                <s:button action="complete" styleClass="toolBarBtn" value="#{messages.complete}"/>
-            </r:toolbarGroup>
-        </r:toolbar>
-    </ui:define>
+        <h:outputScript>
+            function scrollBodyTopTo(pos) {
+                $("html,body").animate({scrollTop: pos});
+            }
+        </h:outputScript>
 
-    <ui:define name="body">
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="done">
+                    <span class="first">#{messages.ProjectCreateStep1}</span>
+                </li>
+                <li class="done current-prev">
+                    <span>#{messages.ProjectCreateStep2}</span>
+                </li>
+                <li class="current">
+                    <strong>#{messages.ProjectCreateStep3}</strong>
+                </li>
+
+                <li class="last">
+                    <span>#{messages.ProjectCreateStep5}</span>
+                </li>
+            </ol>
+        </div>
+
+
+
         <h:form>
-            <r:dataTable id="buildTable" style="width:100%" value="#{projectBuilds}" var="_item">
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Build_MapNO}
-                    </f:facet>
 
-                    #{_item.mapNumber}
-                </r:column>
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Build_BlockNO}
-                    </f:facet>
-                    #{_item.blockNo}
-                </r:column>
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Build_BuildNO}
-                    </f:facet>
-                    #{_item.buildNo}
-                </r:column>
-
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Build_Name}
-                    </f:facet>
-                    #{_item.name}
-                </r:column>
-
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Build_DoorNO}
-                    </f:facet>
-                    #{_item.doorNo}
-                </r:column>
-
-                <r:column>
-                    <f:facet name="header">
-                        #{messages.Build_Type}
-                    </f:facet>
-                    #{_item.buildType}
-                </r:column>
-
-                <r:column style="text-align: center; width: 25px">
-                    <f:facet name="header">
-                        <a:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
-                                         execute="@this" immediate="true" render="editPanel_form"
-                                         oncomplete="#{r:component('editPanel')}.show();">
+            <a:outputPanel id="buildTable">
+                <a:outputPanel id="navButtons">
+                    <br/>
+                    <r:messages globalOnly="true" ajaxRendered="true"/>
+                    <br/>
+                    <a:outputPanel rendered="#{empty projectHome.editingBuild}">
+                        <div style="clear: both;float: right">
+                            <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
+                            <s:button action="next" styleClass="toolBarBtn" value="#{messages.complete}"/>
+                        </div>
+                    </a:outputPanel>
+                </a:outputPanel>
+                <s:decorate template="/layout/house/BuildsList.xhtml">
+                    <ui:param name="builds" value="#{projectBuilds}"/>
+                    <r:column style="text-align: center; width: 25px">
+                        <f:facet name="header">
+                            <a:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
+                                             execute="@this" immediate="true" render="editForm,navButtons"
+                                             oncomplete="scrollBodyTopTo(jQuery(#{r:element('editPanel')}).offset().top)">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+                        </f:facet>
+                        <a:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
+                                         action="#{projectHome.beginEditBuild}"
+                                         oncomplete="scrollBodyTopTo(jQuery(#{r:element('editPanel')}).offset().top)"
+                                         execute="@this" immediate="true" render="editForm,navButtons">
                             <a:attachQueue requestDelay="0"/>
                         </a:commandButton>
-                    </f:facet>
-                    <a:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
-                                     action="#{projectHome.beginEditBuild}"
-                                     execute="@this" immediate="true" render="editPanel_form"
-                                     oncomplete="#{r:component('editPanel')}.show();">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
 
-                </r:column>
-            </r:dataTable>
+                    </r:column>
+                </s:decorate>
+
+
+            </a:outputPanel>
+
         </h:form>
 
-        <s:decorate template="/layout/edit-modalpanel.xhtml">
-            <ui:param name="panelId" value="editPanel"/>
-            <ui:param name="panelTitle" value="#{messages.Build}"/>
-            <ui:define name="controls">
-                <a:commandButton immediate="true"
-                                 execute="@this" image="/img/close.png"
-                                 onclick="#{r:component(panelId)}.hide(); return false;">
-                </a:commandButton>
-            </ui:define>
 
-            <h:panelGrid rendered="#{not empty projectHome.editingBuild}">
-                <ui:include src="/layout/house/BuildEdit.xhtml">
-                    <ui:param name="build" value="#{projectHome.editingBuild}"/>
-                </ui:include>
+        <br/>
 
+        <h:form id="editForm">
+            <a:outputPanel id="editPanel">
+                <a:outputPanel rendered="#{not empty projectHome.editingBuild}">
 
+                    <r:messages globalOnly="false" ajaxRendered="true"/>
 
-            </h:panelGrid>
+                    <r:panel>
+                        <ui:include src="/layout/house/BuildEdit.xhtml">
+                            <ui:param name="build" value="#{projectHome.editingBuild}"/>
+                        </ui:include>
+                        <div style="clear:both">
+                            <span class="required">*</span>
+                            #{messages.requiredFields}
+                        </div>
 
-            <ui:define name="actionButtons">
-                <a:commandButton value="#{messages.cancel}" immediate="true"
-                                 onclick="#{r:component(panelId)}.hide(); return false;"/>
-                <a:commandButton value="#{messages.save}" execute="@form" action="#{projectHome.saveBuild}"
-                                 data="#{actionExecuteState.lastState}" render="buildTable"
-                                 oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
-            </ui:define>
-        </s:decorate>
+                        <a:commandButton value="#{messages.cancel}" immediate="true" execute="@this"
+                                         action="#{projectHome.cancelBuildEdit}"
+                                         render="buildTable,editForm"/>
+                        <a:commandButton value="#{messages.save}" execute="@form" action="#{projectHome.saveBuild}"
+                                         data="#{actionExecuteState.lastState}" render="buildTable,editForm"/>
+
+                    </r:panel>
+                </a:outputPanel>
+            </a:outputPanel>
+        </h:form>
+
     </ui:define>
 
 </ui:composition>

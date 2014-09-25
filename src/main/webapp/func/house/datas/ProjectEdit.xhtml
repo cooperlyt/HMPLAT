@@ -13,40 +13,52 @@
 
     <ui:define name="func-body">
 
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="done current-prev">
+                    <span class="first">#{messages.ProjectCreateStep1}</span>
+                </li>
+                <li class="current">
+                    <strong>#{messages.ProjectCreateStep2}</strong>
+                </li>
+                <li>
+                    <span>#{messages.ProjectCreateStep3}</span>
+                </li>
+
+                <li class="last">
+                    <span>#{messages.ProjectCreateStep5}</span>
+                </li>
+            </ol>
+        </div>
+
+        <br/>
+        <r:messages ajaxRendered="true" globalOnly="true"/>
+        <br/>
+
         <ui:include src="/layout/house/DeveloperSelectPanel.xhtml">
             <ui:param name="render" value="developerSelect"/>
         </ui:include>
 
         <h:form id="projectDetails">
 
-            <r:toolbar>
-                <r:toolbarGroup location="right">
-                    <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
-                </r:toolbarGroup>
 
-                <r:toolbarGroup location="right">
-                    <h:commandButton action="next" styleClass="toolBarBtn" value="#{messages.Next}"/>
-                </r:toolbarGroup>
+            <ui:include src="/layout/house/ProjectInfoEdit.xhtml"/>
 
-                <r:toolbarGroup location="right">
-                    <h:commandButton action="complete" styleClass="toolBarBtn" value="#{messages.complete}"/>
-                </r:toolbarGroup>
-            </r:toolbar>
-
-            <br/>
-
-            <r:panel>
+            <div style="clear:both">
+                <span class="required">*</span>
+                #{messages.requiredFields}
+            </div>
 
 
-                <ui:include src="/layout/house/ProjectInfoEdit.xhtml"/>
+            <div class="submitbox">
+                <h:panelGrid columns="3">
+                    <s:button styleClass="subbtn" action="cancel" value="#{messages.cancel}"/>
+                    <h:commandButton action="next" styleClass="subbtn" value="#{messages.complete}"/>
+                </h:panelGrid>
+            </div>
 
-                <div style="clear:both">
-                    <span class="required">*</span>
-                    #{messages.requiredFields}
-                </div>
-
-
-            </r:panel>
 
         </h:form>
 

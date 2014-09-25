@@ -205,8 +205,8 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.floorCount = floorCount;
 	}
 
-	@Column(name = "ADDRESS", length = 50)
-	@Size(max = 50)
+	@Column(name = "ADDRESS", length = 100)
+	@Size(max = 100)
 	public String getAddress() {
 		return this.address;
 	}

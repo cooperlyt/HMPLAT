@@ -384,13 +384,26 @@ table.radio input[type=radio] {
 
 
 .flow-steps{overflow:hidden;margin:20px 0;}
+.num3{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
 .num4{
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
+.num5{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+.num6{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+
 .flow-steps .num3 li{width:200px;}
 .flow-steps .num4 li{width:233px;}
-.flow-steps .num5 li{width:175px;}
+.flow-steps .num5 li{width:184px;}
 .flow-steps .num6 li{width:143px;}
 .flow-steps li{
     float:left;
@@ -602,4 +615,8 @@ table.radio input[type=radio] {
 
 .detailsTable{
     width: 100%; padding: 0; margin: 0;border-spacing: 0px;display: table;border-collapse: separate;
+}
+
+.layoutColumn{
+    padding: 0px; border: 0px;
 }

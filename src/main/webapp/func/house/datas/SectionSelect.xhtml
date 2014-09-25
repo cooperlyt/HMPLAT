@@ -11,14 +11,33 @@
     <ui:param name="functionTitle" value="#{messages.SectionSelect}"/>
 
     <ui:define name="toolbar">
-        <r:toolbar>
-            <r:toolbarGroup location="right">
-                <s:button styleClass="toolBarBtn" value="#{messages.cancel}" action="cancel"/>
-                <s:button styleClass="toolBarBtn" value="#{messages.CreateNewSection}" action="createSection">
-                    <f:param name="sectionId" value=""/>
-                </s:button>
-            </r:toolbarGroup>
-        </r:toolbar>
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="current">
+                    <strong class="first">#{messages.ProjectCreateStep1}</strong>
+                </li>
+                <li>
+                    <span>#{messages.ProjectCreateStep2}</span>
+                </li>
+                <li>
+                    <span>#{messages.ProjectCreateStep3}</span>
+                </li>
+
+                <li class="last">
+                    <span>#{messages.ProjectCreateStep5}</span>
+                </li>
+            </ol>
+        </div>
+
+
+        <div style="float: right">
+            <s:button styleClass="toolBarBtn" value="#{messages.cancel}" action="cancel"/>
+            <s:button styleClass="toolBarBtn" value="#{messages.CreateNewSection}" action="createSection">
+                <f:param name="sectionId" value=""/>
+            </s:button>
+        </div>
     </ui:define>
     <ui:define name="body">
 

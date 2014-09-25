@@ -1,0 +1,99 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/full-template.xhtml">
+
+    <ui:param name="functionTitle" value="#{projectHome.instance.name} - #{messages.Build}"/>
+
+    <ui:define name="func-body">
+
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="done">
+                    <span class="first">#{messages.ProjectCreateStep1}</span>
+                </li>
+                <li class="done current-prev">
+                    <span>#{messages.ProjectCreateStep2}</span>
+                </li>
+                <li class="current">
+                    <strong>#{messages.ProjectCreateStep3}</strong>
+                </li>
+
+                <li class="last">
+                    <span>#{messages.ProjectCreateStep5}</span>
+                </li>
+            </ol>
+        </div>
+        <br/>
+        <r:messages globalOnly="true" ajaxRendered="true"/>
+        <br/>
+
+        <div style="clear: both;float: right">
+            <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
+            <s:button action="complete" styleClass="toolBarBtn" value="#{messages.complete}"/>
+        </div>
+        <h:form>
+
+            <a:outputPanel id="buildTable">
+                <s:decorate template="/layout/house/BuildsList">
+                    <ui:param name="builds" value="#{projectBuilds}" />
+                    <r:column style="text-align: center; width: 25px">
+                        <f:facet name="header">
+                            <a:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
+                                             execute="@this" immediate="true" render="editPanel_form"
+                                             oncomplete="#{r:component('editPanel')}.show();">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+                        </f:facet>
+                        <a:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
+                                         action="#{projectHome.beginEditBuild}"
+                                         execute="@this" immediate="true" render="editPanel_form"
+                                         oncomplete="#{r:component('editPanel')}.show();">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+                    </r:column>
+                </s:decorate>
+
+
+            </a:outputPanel>
+
+        </h:form>
+
+        <s:decorate template="/layout/edit-modalpanel.xhtml">
+            <ui:param name="panelId" value="editPanel"/>
+            <ui:param name="panelTitle" value="#{messages.Build}"/>
+            <ui:define name="controls">
+                <a:commandButton immediate="true"
+                                 execute="@this" image="/img/close.png"
+                                 onclick="#{r:component(panelId)}.hide(); return false;">
+                </a:commandButton>
+            </ui:define>
+
+            <h:panelGrid rendered="#{not empty projectHome.editingBuild}">
+                <ui:include src="/layout/house/BuildEdit.xhtml">
+                    <ui:param name="build" value="#{projectHome.editingBuild}"/>
+                </ui:include>
+
+
+
+            </h:panelGrid>
+
+            <ui:define name="actionButtons">
+                <a:commandButton value="#{messages.cancel}" immediate="true"
+                                 onclick="#{r:component(panelId)}.hide(); return false;"/>
+                <a:commandButton value="#{messages.save}" execute="@form" action="#{projectHome.saveBuild}"
+                                 data="#{actionExecuteState.lastState}" render="buildTable"
+                                 oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
+            </ui:define>
+        </s:decorate>
+    </ui:define>
+
+</ui:composition>

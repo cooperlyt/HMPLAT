@@ -29,6 +29,7 @@ public class Section implements java.io.Serializable,TreeNode {
 	private Set<Project> projects = new HashSet<Project>(0);
 	private Set<Smsubcompany> smsubcompanies = new HashSet<Smsubcompany>(0);
 	private Set<OwnerGroup> ownerGroups = new HashSet<OwnerGroup>(0);
+    private Set<PoolBuild> poolBuilds = new HashSet<PoolBuild>(0);
 
 
 	public Section() {
@@ -135,6 +136,15 @@ public class Section implements java.io.Serializable,TreeNode {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "section")
+    public Set<PoolBuild> getPoolBuilds() {
+        return poolBuilds;
+    }
+
+    public void setPoolBuilds(Set<PoolBuild> poolBuilds) {
+        this.poolBuilds = poolBuilds;
     }
 
     @Transient

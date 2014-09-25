@@ -116,8 +116,14 @@ public class ProjectHome extends HouseEntityHome<Project> {
         if (!projectBuilds.contains(editingBuild)) {
             projectBuilds.add(editingBuild);
         }
+        editingBuild = null;
         ActionExecuteState.instance().actionExecute();
     }
+
+    public void cancelBuildEdit(){
+        editingBuild = null;
+    }
+
 
     @Override
     protected Project createInstance() {

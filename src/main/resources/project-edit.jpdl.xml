@@ -28,20 +28,13 @@
     <page view-id="/func/house/datas/ProjectBuildMgr.xhtml" name="projectBuildMgr" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
         <transition to="done" name="cancel"/>
-        <transition to="view" name="complete"/>
-        <transition to="poolBuildMgr" name="next"/>
+        <transition to="view" name="next"/>
     </page>
 
     <page view-id="/func/house/datas/ProjectEdit.xhtml" name="projectEdit" redirect="true"
           no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
         <transition to="done" name="cancel"/>
         <transition to="projectBuildMgr" name="next"/>
-        <transition to="view" name="complete"/>
-    </page>
-
-    <page view-id="/func/house/datas/PoolBuildMgr.xhtml" name="poolBuildMgr" redirect="true"
-          no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
-        <transition to="done" name="cancel"/>
         <transition to="view" name="complete"/>
     </page>
 

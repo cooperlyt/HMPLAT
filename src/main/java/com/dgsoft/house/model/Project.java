@@ -47,7 +47,6 @@ public class Project implements java.io.Serializable, TreeNode {
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
-    private Set<PoolBuild> poolBuilds = new HashSet<PoolBuild>(0);
     private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
 
 
@@ -229,15 +228,6 @@ public class Project implements java.io.Serializable, TreeNode {
     public void setProjectBuildProcesses(
             Set<ProjectBuildProcess> projectBuildProcesses) {
         this.projectBuildProcesses = projectBuildProcesses;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    public Set<PoolBuild> getPoolBuilds() {
-        return poolBuilds;
-    }
-
-    public void setPoolBuilds(Set<PoolBuild> poolBuilds) {
-        this.poolBuilds = poolBuilds;
     }
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "project")

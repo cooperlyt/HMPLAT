@@ -27,8 +27,8 @@ public class PoolBuild implements java.io.Serializable {
 	private BigDecimal area;
 	private String memo;
     private Date regTime;
-    private Integer floorCount;
-    private Project project;
+    private int floorCount;
+    private Section section;
 
 	public PoolBuild() {
 	}
@@ -47,21 +47,20 @@ public class PoolBuild implements java.io.Serializable {
 		this.id = id;
 	}
 
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PROJECT", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "SECTION_ID", nullable = false)
     @NotNull
-    public Project getProject() {
-        return project;
+    public Section getSection() {
+        return section;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setSection(Section section) {
+        this.section = section;
     }
 
-    @Column(name = "MAP_NUMBER", length = 50)
+    @Column(name = "MAP_NUMBER", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getMapNumber() {
 		return this.mapNumber;
 	}
@@ -70,8 +69,9 @@ public class PoolBuild implements java.io.Serializable {
 		this.mapNumber = mapNumber;
 	}
 
-	@Column(name = "BLOCK_NO", length = 50)
+	@Column(name = "BLOCK_NO", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getBlockNo() {
 		return this.blockNo;
 	}
@@ -80,8 +80,9 @@ public class PoolBuild implements java.io.Serializable {
 		this.blockNo = blockNo;
 	}
 
-	@Column(name = "BUILD_NO", length = 50)
+	@Column(name = "BUILD_NO", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getBuildNo() {
 		return this.buildNo;
 	}
@@ -90,8 +91,9 @@ public class PoolBuild implements java.io.Serializable {
 		this.buildNo = buildNo;
 	}
 
-	@Column(name = "HOUSE_NUMBER", length = 50)
+	@Column(name = "HOUSE_NUMBER", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getHouseNumber() {
 		return this.houseNumber;
 	}
@@ -100,8 +102,9 @@ public class PoolBuild implements java.io.Serializable {
 		this.houseNumber = houseNumber;
 	}
 
-	@Column(name = "BUILD_NAME", length = 50)
+	@Column(name = "BUILD_NAME", length = 50,nullable = false)
 	@Size(max = 50)
+    @NotNull
 	public String getBuildName() {
 		return this.buildName;
 	}
@@ -110,8 +113,9 @@ public class PoolBuild implements java.io.Serializable {
 		this.buildName = buildName;
 	}
 
-	@Column(name = "STRUCTURE", length = 32)
+	@Column(name = "STRUCTURE", length = 32, nullable = false)
 	@Size(max = 32)
+    @NotNull
 	public String getStructure() {
 		return this.structure;
 	}
@@ -130,7 +134,8 @@ public class PoolBuild implements java.io.Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "AREA", precision = 18, scale = 3)
+	@Column(name = "AREA", precision = 18, scale = 3,nullable = false)
+    @NotNull
 	public BigDecimal getArea() {
 		return this.area;
 	}
@@ -159,12 +164,12 @@ public class PoolBuild implements java.io.Serializable {
         this.regTime = regTime;
     }
 
-    @Column(name = "FLOOR_COUNT")
-    public Integer getFloorCount() {
+    @Column(name = "FLOOR_COUNT",nullable = false)
+    public int getFloorCount() {
         return floorCount;
     }
 
-    public void setFloorCount(Integer floorCount) {
+    public void setFloorCount(int floorCount) {
         this.floorCount = floorCount;
     }
 

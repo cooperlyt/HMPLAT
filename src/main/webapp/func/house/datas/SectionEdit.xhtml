@@ -11,26 +11,44 @@
     <ui:param name="functionTitle" value="#{messages.Section}"/>
 
     <ui:define name="func-body">
+
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="current">
+                    <strong class="first">#{messages.ProjectCreateStep1}</strong>
+                </li>
+                <li>
+                    <span>#{messages.ProjectCreateStep2}</span>
+                </li>
+                <li>
+                    <span>#{messages.ProjectCreateStep3}</span>
+                </li>
+
+                <li class="last">
+                    <span>#{messages.ProjectCreateStep5}</span>
+                </li>
+            </ol>
+        </div>
+
+
+        <br/>
+        <r:messages ajaxRendered="true" globalOnly="false"/>
+        <br/>
         <h:form>
-            <r:toolbar>
-                <r:toolbarGroup location="right">
-                    <s:button styleClass="toolBarBtn" action="cancel" value="#{messages.cancel}"/>
-                </r:toolbarGroup>
-
-                <r:toolbarGroup location="right">
-                    <h:commandButton styleClass="toolBarBtn" value="#{messages.Next}" action="next"/>
-                </r:toolbarGroup>
-
-
-            </r:toolbar>
-
-            <br/>
-            <r:messages ajaxRendered="true" globalOnly="false"/>
-            <br/>
-
             <ui:include src="/layout/house/SectionEdit.xhtml">
                 <ui:param name="section" value="#{sectionHome.instance}"/>
             </ui:include>
+
+
+            <div class="submitbox">
+                <h:panelGrid columns="3">
+                    <s:button styleClass="subbtn"  action="cancel" value="#{messages.cancel}"/>
+                    <h:commandButton styleClass="subbtn"  value="#{messages.complete}" action="next"/>
+                </h:panelGrid>
+            </div>
+
 
         </h:form>
     </ui:define>

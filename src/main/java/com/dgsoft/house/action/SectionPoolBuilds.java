@@ -11,11 +11,11 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 /**
  * Created by cooper on 7/14/14.
  */
-@Name("projectPoolBuilds")
-public class ProjectPoolBuilds {
+@Name("sectionPoolBuilds")
+public class SectionPoolBuilds {
 
     @In
-    private ProjectHome projectHome;
+    private SectionHome sectionHome;
 
     @In
     private ActionExecuteState actionExecuteState;
@@ -25,7 +25,7 @@ public class ProjectPoolBuilds {
     @DataModel
     public SetLinkList<PoolBuild> getPoolBuilds() {
         if (poolBuilds == null){
-            poolBuilds = new SetLinkList<PoolBuild>(projectHome.getInstance().getPoolBuilds());
+            poolBuilds = new SetLinkList<PoolBuild>(sectionHome.getInstance().getPoolBuilds());
         }
         return poolBuilds;
     }
@@ -50,7 +50,7 @@ public class ProjectPoolBuilds {
 
     public void beginCreate(){
         editingPoolBuild = new PoolBuild();
-        editingPoolBuild.setProject(projectHome.getInstance());
+        editingPoolBuild.setSection(sectionHome.getInstance());
         actionExecuteState.clearState();
     }
 
