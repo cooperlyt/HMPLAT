@@ -30,11 +30,7 @@
             </h:panelGrid>
         </r:collapsiblePanel>
         <br/>
-        <h:panelGrid columns="2">
-        <h:graphicImage value="/img/icons/create.gif"/>
-            <s:link action="create" value="#{messages.CreateNewProject}" pageflow="projectEdit" propagation="begin">
-            </s:link>
-        </h:panelGrid>
+
         <r:dataTable value="#{projectList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
                      id="dataListResult" style="width: 100%">
             <f:facet name="footer">
@@ -77,18 +73,19 @@
                         <ui:param name="propertyPath" value="project.developer.name"/>
                     </ui:include>
                 </f:facet>
+                #{_item.developer.name}
             </r:column>
 
             <r:column>
                 <f:facet name="header">
                     <ui:include src="/layout/a4jSort.xhtml">
                         <ui:param name="entityList" value="#{projectList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.Project_buildSize}"/>
-                        <ui:param name="propertyPath" value="project.buildSize"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_finishDate}"/>
+                        <ui:param name="propertyPath" value="project.completeDate"/>
                     </ui:include>
                 </f:facet>
 
-                #{dictionary.getWordValue(_item.buildSize)}
+                #{_item.completeDate}
             </r:column>
 
             <r:column>
@@ -106,15 +103,45 @@
 
             <r:column>
                 <f:facet name="header">
+                    #{messages.Project_address}
+                </f:facet>
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{_item.address}"/>
+                    <ui:param name="size" value="8"/>
+                </ui:include>
+
+            </r:column>
+
+            <r:column>
+                <f:facet name="header">
                     <ui:include src="/layout/a4jSort.xhtml">
                         <ui:param name="entityList" value="#{projectList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
-                        <ui:param name="propertyPath" value="project.area"/>
+                        <ui:param name="propertyLabel" value="#{messages.Project_state}"/>
+                        <ui:param name="propertyPath" value="project.state"/>
                     </ui:include>
                 </f:facet>
-                <h:outputText value="#{_item.area}">
-                <f:convertNumber pattern="#0.###"/>
-            </h:outputText>
+                #{messages[_item.state.name()]}
+            </r:column>
+
+            <r:column style="text-align: center; width: 60px;">
+                <f:facet name="header">
+                    <s:link action="create"  pageflow="projectEdit" propagation="begin">
+                        <s:graphicImage value="/img/icons/create.gif" title="#{messages.CreateNewProject}"/>
+                    </s:link>
+                </f:facet>
+
+                <a:commandButton image="/img/icons/delete.png" title="#{messages.delete}"/>
+
+                #{' '}
+                <s:link>
+                    <s:graphicImage value="/img/icons/edit.png" title="#{messages.edit}"/>
+                </s:link>
+
+                #{' '}
+
+                <s:link>
+                    <s:graphicImage value="/img/icons/buildEdit.png" title="#{messages.Build}"/>
+                </s:link>
             </r:column>
 
         </r:dataTable>

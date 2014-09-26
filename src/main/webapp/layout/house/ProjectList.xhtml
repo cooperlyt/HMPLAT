@@ -7,7 +7,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
-    <r:dataTable style="width: 100%" value="#{section.projectList}" var="_project" noDataLabel="#{messages.emptyResult}" >
+    <r:dataTable style="width: 100%" value="#{projects}" var="_item" noDataLabel="#{messages.emptyResult}" >
+
+
+
         <r:column>
             <f:facet name="header">
                 #{messages.Project_name}
