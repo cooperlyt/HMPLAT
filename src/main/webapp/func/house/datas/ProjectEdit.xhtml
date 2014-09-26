@@ -33,8 +33,11 @@
             </ol>
         </div>
 
-        <br/>
-        <r:messages ajaxRendered="true" globalOnly="true"/>
+        <div style="float: right">
+            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
+        </div>
+        <r:messages globalOnly="true" ajaxRendered="true"/>
+        <div style="clear: both"/>
         <br/>
 
         <ui:include src="/layout/house/DeveloperSelectPanel.xhtml">
@@ -53,10 +56,7 @@
 
 
             <div class="submitbox">
-                <h:panelGrid columns="3">
-                    <s:button styleClass="subbtn" action="cancel" value="#{messages.cancel}"/>
                     <h:commandButton action="next" styleClass="subbtn" value="#{messages.complete}"/>
-                </h:panelGrid>
             </div>
 
 

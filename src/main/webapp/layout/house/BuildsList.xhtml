@@ -8,20 +8,50 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
 
-    <r:dataTable style="width:100%" value="#{builds}" var="_build">
+    <r:dataTable style="width:100%" value="#{builds}" var="_build" noDataLabel="#{noDataLabel}">
+
         <r:column>
+            <f:facet name="header">
+                #{messages.Build_Name}
+            </f:facet>
+            <ui:insert name="buildNameColumn">
+                #{_build.name}
+            </ui:insert>
+
+        </r:column>
+
+        <r:column rendered="#{houseCodeHelper.requestMapCode}">
             <f:facet name="header">
                 #{messages.Build_MapNO}
             </f:facet>
 
             #{_build.mapNumber}
         </r:column>
+
+        <r:column rendered="#{houseCodeHelper.requestLandBlock}">
+            <f:facet name="header">
+                #{messages.Build_LandBlockCode}
+            </f:facet>
+            #{_build.landBlockCode}
+        </r:column>
+
         <r:column>
             <f:facet name="header">
                 #{messages.Build_BlockNO}
             </f:facet>
             #{_build.blockNo}
         </r:column>
+
+        <r:column rendered="#{houseCodeHelper.requestStreetCode}">
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_StreetCode}"/>
+                    <ui:param name="size" value="3"/>
+                </ui:include>
+            </f:facet>
+            #{_build.streetCode}
+        </r:column>
+
         <r:column>
             <f:facet name="header">
                 #{messages.Build_BuildNO}
@@ -29,12 +59,6 @@
             #{_build.buildNo}
         </r:column>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.Build_Name}
-            </f:facet>
-            #{_build.name}
-        </r:column>
 
         <r:column>
             <f:facet name="header">
@@ -43,11 +67,48 @@
             #{_build.doorNo}
         </r:column>
 
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Structure}
+            </f:facet>
+
+            <h:outputText value="#{dictionary.getWordValue(_build.structure)}" rendered="#{not empty _build.structure}"/>
+        </r:column>
+
+        <r:column style="width: 50px">
+            <f:facet name="header">
+                #{messages.Build_FloorCount}
+            </f:facet>
+            #{_build.floorCount}
+        </r:column>
+
+        <r:column style="width: 50px">
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_UpFloorCount}"/>
+                    <ui:param name="size" value="2"/>
+                </ui:include>
+            </f:facet>
+            #{_build.upFloorCount}
+        </r:column>
+
+        <r:column style="width: 50px">
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_DownFloorCount}"/>
+                    <ui:param name="size" value="2"/>
+                </ui:include>
+            </f:facet>
+            #{_build.downFloorCount}
+        </r:column>
+
+
         <r:column>
             <f:facet name="header">
                 #{messages.Build_Type}
             </f:facet>
-            #{_build.buildType}
+            <h:outputText value="#{dictionary.getWordValue(_build.buildType)}" rendered="#{not empty _build.buildType}"/>
         </r:column>
 
         <ui:insert/>

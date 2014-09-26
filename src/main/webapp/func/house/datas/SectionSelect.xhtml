@@ -10,7 +10,7 @@
 
     <ui:param name="functionTitle" value="#{messages.SectionSelect}"/>
 
-    <ui:define name="toolbar">
+    <ui:define name="func-body">
         <div style="clear: both"/>
 
         <div class="flow-steps">
@@ -31,23 +31,30 @@
             </ol>
         </div>
 
-
         <div style="float: right">
-            <s:button styleClass="toolBarBtn" value="#{messages.cancel}" action="cancel"/>
-            <s:button styleClass="toolBarBtn" value="#{messages.CreateNewSection}" action="createSection">
-                <f:param name="sectionId" value=""/>
-            </s:button>
+            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
         </div>
-    </ui:define>
-    <ui:define name="body">
+        <r:messages globalOnly="true" ajaxRendered="true"/>
+        <div style="clear: both"/>
+        <br/>
 
         <s:decorate template="/layout/house/SectionMgrBase.xhtml">
             <ui:define name="sectionName">
-                <s:link value="#{_item.name}" action="next">
-                    <f:param name="sectionId" value="#{_item.id}"/>
-                </s:link>
+                #{_item.name}
             </ui:define>
 
+            <r:column style="width: 40px; text-align: center">
+                <f:facet name="header">
+                    <s:link styleClass="toolBarBtn" action="createSection">
+                        <f:param name="sectionId" value=""/>
+                        <s:graphicImage value="/img/icons/create.gif" title="#{messages.CreateNewSection}"/>
+                    </s:link>
+                </f:facet>
+                <s:link value="#{messages.select}" action="next">
+
+                    <f:param name="sectionId" value="#{_item.id}"/>
+                </s:link>
+            </r:column>
         </s:decorate>
 
     </ui:define>

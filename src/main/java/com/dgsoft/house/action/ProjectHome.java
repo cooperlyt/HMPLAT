@@ -6,6 +6,7 @@ import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.Project;
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
@@ -45,14 +46,26 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     private Build editingBuild;
 
+    public void removeBuild(){
+
+        if (getEntityManager().contains(build)){
+            if (getEntityManager().createQuery("select count(house.id) from House house where house.build.id = :buildId",Long.class).
+                    setParameter("buildId",build.getId()).getSingleResult() > 0){
+                facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"BuildHaveHouseCantDel");
+                return;
+            }
+        }
+        projectBuilds.remove(build);
+
+    }
+
     public void beginEditBuild() {
         editingBuild = build;
         ActionExecuteState.instance().clearState();
     }
 
     public void beginCreateBuild() {
-        editingBuild = new Build();
-        editingBuild.setProject(getInstance());
+        editingBuild = new Build(getInstance());
         ActionExecuteState.instance().clearState();
     }
 
@@ -92,7 +105,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
                 addBuildMBBConflictMessages();
                 return;
             }
-            if (build.getBuildNo().equals(editingBuild.getBuildNo())){
+            if ( (build != editingBuild) && build.getBuildNo().equals(editingBuild.getBuildNo())){
                 addBuildPBConflictMessages();
                 return;
             }
@@ -127,15 +140,12 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     @Override
     protected Project createInstance() {
-        return new Project(numberBuilder.getSampleNumber("PROJECT_NUMBER") ,Project.ProjectState.BUILDING,new Date());
+        return new Project(((SectionHome)Component.getInstance("sectionHome")).getInstance(), numberBuilder.getSampleNumber("PROJECT_NUMBER") ,Project.ProjectState.BUILDING,new Date());
     }
 
 
     @In(create = true)
     private DeveloperHome developerHome;
-
-    @In(create = true)
-    private SectionHome sectionHome;
 
     @In
     private HouseCodeHelper houseCodeHelper;
@@ -148,7 +158,6 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     public boolean wireProject() {
         getInstance().setDeveloper(developerHome.getInstance());
-        getInstance().setSection(sectionHome.getInstance());
         for(Build build: projectBuilds){
           if (!getEntityManager().contains(build)){
                 houseCodeHelper.genBuildCode(build);

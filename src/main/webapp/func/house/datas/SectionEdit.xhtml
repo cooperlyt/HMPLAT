@@ -31,10 +31,12 @@
                 </li>
             </ol>
         </div>
+        <div style="float: right">
+            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
+        </div>
+        <r:messages globalOnly="true" ajaxRendered="true"/>
 
-
-        <br/>
-        <r:messages ajaxRendered="true" globalOnly="false"/>
+        <div style="clear: both"/>
         <br/>
         <h:form>
             <ui:include src="/layout/house/SectionEdit.xhtml">
@@ -44,7 +46,6 @@
 
             <div class="submitbox">
                 <h:panelGrid columns="3">
-                    <s:button styleClass="subbtn"  action="cancel" value="#{messages.cancel}"/>
                     <h:commandButton styleClass="subbtn"  value="#{messages.complete}" action="next"/>
                 </h:panelGrid>
             </div>

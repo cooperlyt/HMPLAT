@@ -620,3 +620,10 @@ table.radio input[type=radio] {
 .layoutColumn{
     padding: 0px; border: 0px;
 }
+
+.cancelLink{
+    background-image: url('#{facesContext.externalContext.requestContextPath}/img/icons/cancel.png');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    padding-left: 20px;
+}

@@ -58,10 +58,12 @@ public class Project implements java.io.Serializable, TreeNode {
         this.developer = developer;
     }
 
-    public Project(String id, ProjectState state, Date createTime) {
+    public Project(Section section,String id, ProjectState state, Date createTime) {
         this.state = state;
+        this.section = section;
         this.createTime = createTime;
         this.id = id;
+        this.address = section.getAddress();
     }
 
     @Id
@@ -211,7 +213,7 @@ public class Project implements java.io.Serializable, TreeNode {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project",cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", orphanRemoval = true,cascade = {CascadeType.ALL})
     public Set<Build> getBuilds() {
         return this.builds;
     }

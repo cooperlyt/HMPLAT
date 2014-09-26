@@ -231,7 +231,7 @@
     <ui:define name="label">
         #{messages.Build_Type}
     </ui:define>
-    <h:selectOneMenu id="buildTypeInput" value="#{buildHome.instance.buildType}" label="#{messages.Build_Type}">
+    <h:selectOneMenu id="buildTypeInput" value="#{build.buildType}" label="#{messages.Build_Type}">
         <s:selectItems value="#{dictionary.getWordList('house.build.buildType')}" var="_word"
                        itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
     </h:selectOneMenu>
@@ -247,7 +247,8 @@
         #{messages.BUild_UnitCount}
     </ui:define>
 
-    <h:inputText id="unitCountInput" value="#{buildHome.instance.unintCount}" label="#{messages.BUild_UnitCount}"/>
+    <h:inputText id="unitCountInput" size="10"
+                 value="#{build.unintCount}" label="#{messages.BUild_UnitCount}"/>
 
     <ui:define name="tail">
         <r:message for="unitCountInput" styleClass="message-icon"
@@ -260,7 +261,7 @@
         #{messages.Build_HouseCount}
     </ui:define>
 
-    <h:inputText id="houseCountInput" value="#{buildHome.instance.houseCount}" label="#{messages.Build_HouseCount}"/>
+    <h:inputText id="houseCountInput" size="10" value="#{build.houseCount}" label="#{messages.Build_HouseCount}"/>
 
     <ui:define name="tail">
         <r:message for="houseCountInput" styleClass="message-icon"
@@ -274,7 +275,7 @@
         #{messages.Build_Area}
     </ui:define>
 
-    <h:inputText id="areaInput" value="#{buildHome.instance.area}" label="#{messages.Build_Area}">
+    <h:inputText id="areaInput" value="#{build.area}" label="#{messages.Build_Area}">
         <f:convertNumber pattern="#0.000"/>
         <r:validator event="blur"/>
     </h:inputText>
@@ -291,7 +292,7 @@
         #{messages.Build_HomeCount}
     </ui:define>
 
-    <h:inputText id="homeCountInput" value="#{buildHome.instance.homeCount}" label="#{messages.Build_HomeCount}"/>
+    <h:inputText id="homeCountInput" size="10" value="#{build.homeCount}" label="#{messages.Build_HomeCount}"/>
 
     <ui:define name="tail">
         <r:message for="homeCountInput" styleClass="message-icon"
@@ -306,7 +307,7 @@
         #{messages.Build_HomeArea}
     </ui:define>
 
-    <h:inputText id="homeAreaInput" value="#{buildHome.instance.homeArea}" label="#{messages.Build_HomeArea}">
+    <h:inputText id="homeAreaInput" value="#{build.homeArea}" label="#{messages.Build_HomeArea}">
         <f:convertNumber pattern="#0.000"/>
         <r:validator event="blur"/>
     </h:inputText>
@@ -322,7 +323,7 @@
         #{messages.Build_UnHomeCount}
     </ui:define>
 
-    <h:inputText id="unHomeCountInput" value="#{buildHome.instance.unhomeCount}" label="#{messages.Build_UnHomeCount}"/>
+    <h:inputText id="unHomeCountInput" size="10" value="#{build.unhomeCount}" label="#{messages.Build_UnHomeCount}"/>
 
     <ui:define name="tail">
         <r:message for="unHomeCountInput" styleClass="message-icon"
@@ -336,7 +337,7 @@
         #{messages.Build_UnHomeArea}
     </ui:define>
 
-    <h:inputText id="unHomeAreaInput" value="#{buildHome.instance.unhomeArea}" label="#{messages.Build_UnHomeArea}">
+    <h:inputText id="unHomeAreaInput" value="#{build.unhomeArea}" label="#{messages.Build_UnHomeArea}">
         <f:convertNumber pattern="#0.000"/>
         <r:validator event="blur"/>
     </h:inputText>
@@ -353,7 +354,7 @@
         #{messages.Build_ShopCount}
     </ui:define>
 
-    <h:inputText id="shopCountCountInput" value="#{buildHome.instance.shopCount}" label="#{messages.Build_ShopCount}"/>
+    <h:inputText id="shopCountCountInput" size="10" value="#{build.shopCount}" label="#{messages.Build_ShopCount}"/>
 
     <ui:define name="tail">
         <r:message for="shopCountCountInput" styleClass="message-icon"
@@ -368,7 +369,7 @@
         #{messages.Build_ShopArea}
     </ui:define>
 
-    <h:inputText id="shopAreaInput" value="#{buildHome.instance.shopArea}" label="#{messages.Build_ShopArea}">
+    <h:inputText id="shopAreaInput" value="#{build.shopArea}" label="#{messages.Build_ShopArea}">
         <f:convertNumber pattern="#0.000"/>
         <r:validator event="blur"/>
     </h:inputText>
@@ -388,7 +389,7 @@
         #{messages.Build_address}
     </ui:define>
 
-    <h:inputText id="buildAddressInput" value="#{buildHome.instance.address}" maxlength="100" size="60" label="#{messages.Build_address}"/>
+    <h:inputText id="buildAddressInput" value="#{build.address}" maxlength="100" size="60" label="#{messages.Build_address}"/>
 
     <ui:define name="tail">
         <r:message for="buildAddressInput" styleClass="message-icon"
@@ -400,7 +401,7 @@
     <ui:define name="label">
         #{messages.MapMemo}
     </ui:define>
-    <h:inputTextarea id="mapMemoInput" value="#{buildHome.instance.memo}" label="#{messages.MapMemo}" cols="59" rows="3"/>
+    <h:inputTextarea id="mapMemoInput" value="#{build.memo}" label="#{messages.MapMemo}" cols="59" rows="3"/>
 
     <ui:define name="tail">
         <r:message for="mapMemoInput" styleClass="message-icon"

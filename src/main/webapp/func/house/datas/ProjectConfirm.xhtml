@@ -13,73 +13,55 @@
     <ui:define name="toolbar">
         <r:toolbar>
             <r:toolbarGroup location="right">
-                <s:button value="#{messages.save}" styleClass="toolBarBtn" action="#{projectHome.persist}"/>
+
                 <s:button value="#{messages.cancel}" styleClass="toolBarBtn" action="cancel"/>
             </r:toolbarGroup>
         </r:toolbar>
     </ui:define>
 
-    <ui:define name="body">
-        <r:panel>
+    <ui:define name="func-body">
 
-            <ui:include src="/layout/house/ProjectInfoView.xhtml">
-                <ui:param name="project" value="#{projectHome.instance}"/>
-            </ui:include>
 
-        </r:panel>
+        <div style="clear: both"/>
+
+        <div class="flow-steps">
+            <ol class="num4">
+                <li class="done">
+                    <span class="first">#{messages.ProjectCreateStep1}</span>
+                </li>
+                <li class="done">
+                    <span>#{messages.ProjectCreateStep2}</span>
+                </li>
+                <li class="done current-prev">
+                    <span>#{messages.ProjectCreateStep3}</span>
+                </li>
+
+                <li class="last-current">
+                    <strong>#{messages.ProjectCreateStep5}</strong>
+                </li>
+            </ol>
+        </div>
+
+        <div style="float: right">
+            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
+        </div>
+        <div style="clear: both"/>
+
+
+        <ui:include src="/layout/house/ProjectInfoView.xhtml">
+            <ui:param name="project" value="#{projectHome.instance}"/>
+        </ui:include>
+
 
         <br/>
 
-        <r:dataTable id="buildTable" style="width:100%" value="#{projectBuilds}" var="_item">
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_Id}
-                </f:facet>
-                #{_item.id}
-            </r:column>
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_MapNO}
-                </f:facet>
+        <ui:include src="/layout/house/BuildsViewList.xhtml">
+            <ui:param name="builds" value="#{projectHome.projectBuilds}"/>
+        </ui:include>
 
-                #{_item.mapNumber}
-            </r:column>
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_BlockNO}
-                </f:facet>
-                #{_item.blockNo}
-            </r:column>
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_BuildNO}
-                </f:facet>
-                #{_item.buildNo}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_Name}
-                </f:facet>
-                #{_item.name}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_DoorNO}
-                </f:facet>
-                #{_item.doorNo}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.Build_Type}
-                </f:facet>
-                #{_item.buildType}
-            </r:column>
-
-        </r:dataTable>
-
+        <div class="submitbox">
+        <s:button value="#{messages.complete}" styleClass="subbtn" action="#{projectHome.persist}"/>
+        </div>
     </ui:define>
 
 </ui:composition>

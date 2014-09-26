@@ -5,98 +5,66 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_id}
-        </ui:define>
-        #{project.id}
-    </s:decorate>
+    <table class="detailsTable" >
+        <tr>
+            <td class="detailsHead"></td>
+        </tr>
+    </table>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_name}
-        </ui:define>
-        #{project.name}
-    </s:decorate>
+    <h:panelGrid columns="4" styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+        <h:outputText value="#{messages.Project_id}"/>
+        <h:outputText value="#{project.id}"/>
 
-    <div style="clear:both"/>
-    <s:decorate template="/layout/view-details.xhtml">
-        <ui:param name="openLabel" value="#{messages.Section}"/>
-        <ui:param name="labelValue" value="#{project.section.name}"/>
-        <ui:include src="/layout/house/SectionInfoView.xhtml">
-            <ui:param name="section" value="#{project.section}"/>
-        </ui:include>
-    </s:decorate>
-    <div style="clear:both"/>
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Developer}
-        </ui:define>
-        #{project.developer.name}
-    </s:decorate>
+        <h:outputText value="#{messages.Project_name}"/>
+        <h:outputText value="#{project.name}"/>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_buildSize}
-        </ui:define>
-        #{dictionary.getWordValue(project.buildSize)}
+    </h:panelGrid>
 
-    </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_buildCount}
-        </ui:define>
-       #{project.buildCount}
-    </s:decorate>
+    <ui:include src="/layout/house/SectionInfoView.xhtml">
+        <ui:param name="section" value="#{project.section}"/>
+    </ui:include>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_area}
-        </ui:define>
+
+    <h:panelGrid columns="4" styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+        <h:outputText value="#{messages.Developer}"/>
+        <h:outputText value="#{project.developer.name}"/>
+
+        <h:outputText value="#{messages.Project_buildSize}"/>
+        <h:outputText value="#{dictionary.getWordValue(project.buildSize)}"/>
+
+        <h:outputText value="#{messages.Project_buildCount}"/>
+        <h:outputText value="#{project.buildCount}"/>
+
+        <h:outputText value="#{messages.Project_area}"/>
         <h:outputText value="#{project.area}">
             <f:convertNumber pattern="#0.000"/>
         </h:outputText>
-    </s:decorate>
 
-
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_sumArea}
-        </ui:define>
+        <h:outputText value="#{messages.Project_sumArea}"/>
         <h:outputText value="#{project.sumArea}">
             <f:convertNumber pattern="#0.000"/>
         </h:outputText>
 
-    </s:decorate>
-
-
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_mapTime}
-        </ui:define>
+        <h:outputText value="#{messages.Project_mapTime}"/>
         <h:outputText value="#{project.mapTime}">
             <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
         </h:outputText>
 
-    </s:decorate>
+    </h:panelGrid>
 
+    <h:panelGrid columns="2"  styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsLastValueCol">
+        <h:outputText value="#{messages.Project_address}"/>
+        <h:outputText value="#{project.address}"/>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Project_address}
-        </ui:define>
-        #{project.address}
-    </s:decorate>
+        <h:outputText value="#{messages.MapMemo}"/>
+        <h:outputText value="#{project.memo}"/>
+    </h:panelGrid>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.field_memo}
-        </ui:define>
-        #{project.memo}
-    </s:decorate>
-    <div style="clear:both"/>
 </ui:composition>

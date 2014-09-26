@@ -1,0 +1,248 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <r:extendedDataTable frozenColumns="5" style="width:100%"
+                         value="#{builds}" var="_build" noDataLabel="#{noDataLabel}">
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Id}
+            </f:facet>
+            #{_build.id}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Name}
+            </f:facet>
+            #{_build.name}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_BuildNO}
+            </f:facet>
+            #{_build.buildNo}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_DoorNO}
+            </f:facet>
+            #{_build.doorNo}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Structure}
+            </f:facet>
+
+            <h:outputText value="#{dictionary.getWordValue(_build.structure)}"
+                          rendered="#{not empty _build.structure}"/>
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_CompleteYear}
+            </f:facet>
+
+            #{_build.completeDate}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_FloorCount}
+            </f:facet>
+            #{_build.floorCount}
+        </r:column>
+
+        <r:column style="width: 50px">
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_UpFloorCount}"/>
+                    <ui:param name="size" value="2"/>
+                </ui:include>
+            </f:facet>
+            #{_build.upFloorCount}
+        </r:column>
+
+        <r:column style="width: 50px">
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_DownFloorCount}"/>
+                    <ui:param name="size" value="2"/>
+                </ui:include>
+            </f:facet>
+            #{_build.downFloorCount}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Type}
+            </f:facet>
+            <h:outputText value="#{dictionary.getWordValue(_build.buildType)}"
+                          rendered="#{not empty _build.buildType}"/>
+        </r:column>
+
+
+
+
+        <r:column >
+            <f:facet name="header">
+                #{messages.Build_MapNO}
+            </f:facet>
+
+            #{_build.mapNumber}
+        </r:column>
+
+        <r:column rendered="#{houseCodeHelper.requestLandBlock}">
+            <f:facet name="header">
+                #{messages.Build_LandBlockCode}
+            </f:facet>
+            #{_build.landBlockCode}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_BlockNO}
+            </f:facet>
+            #{_build.blockNo}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_StreetCode}"/>
+                    <ui:param name="size" value="3"/>
+                </ui:include>
+            </f:facet>
+            #{_build.streetCode}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Lat}
+            </f:facet>
+            #{_build.lat}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Lng}
+            </f:facet>
+            #{_build.lng}
+        </r:column>
+
+        <r:column style="text-align: center">
+            <f:facet name="header">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Build_HaveDownRoom}"/>
+                    <ui:param name="size" value="4"/>
+                </ui:include>
+            </f:facet>
+            <h:graphicImage value="/img/icons/passed.gif" rendered="#{_build.haveDownRoom}"/>
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.BUild_UnitCount}
+            </f:facet>
+            #{_build.unintCount}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_HouseCount}
+            </f:facet>
+            #{_build.houseCount}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_Area}
+            </f:facet>
+            <h:outputText value="#{_build.area}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_HomeCount}
+            </f:facet>
+            #{_build.homeCount}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_HomeArea}
+            </f:facet>
+            <h:outputText value="#{_build.homeArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_UnHomeCount}
+            </f:facet>
+            #{_build.unhomeCount}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_UnHomeArea}
+            </f:facet>
+            <h:outputText value="#{_build.unhomeArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_ShopCount}
+            </f:facet>
+            #{_build.shopCount}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_ShopArea}
+            </f:facet>
+            <h:outputText value="#{_build.shopArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.Build_address}
+            </f:facet>
+            #{_build.address}
+        </r:column>
+
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.MapMemo}
+            </f:facet>
+            #{_build.memo}
+        </r:column>
+
+    </r:extendedDataTable>
+
+</ui:composition>

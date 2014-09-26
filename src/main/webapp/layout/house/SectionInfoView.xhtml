@@ -7,86 +7,24 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
-    <s:decorate template="/layout/seam-display.xhtml">
-        <ui:define name="label">
-            #{messages.District}
-        </ui:define>
-        #{section.district.name}
-    </s:decorate>
-
-    <s:decorate template="/layout/seam-display.xhtml">
-        <ui:define name="label">
-            #{messages.Section_name}
-        </ui:define>
-        #{section.name}
-    </s:decorate>
 
 
-    <s:decorate template="/layout/seam-display.xhtml">
-        <ui:define name="label">
-            #{messages.Section_address}
-        </ui:define>
-        #{section.address}
-    </s:decorate>
+    <h:panelGrid columns="4" styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
 
-    <div style="clear: both;"/>
+        <h:outputText value="#{messages.District}"/>
+        <h:outputText value="#{section.district.name}"/>
 
-    <r:dataTable style="width: 100%" value="#{section.projectList}" var="_project" noDataLabel="#{messages.emptyResult}" >
-        <r:column>
-            <f:facet name="header">
-                #{messages.Project_name}
-            </f:facet>
-            #{_project.name}
-        </r:column>
+        <h:outputText value="#{messages.Section_name}"/>
+        <h:outputText value="#{section.name}"/>
 
+    </h:panelGrid>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.Developer}
-            </f:facet>
-            #{_project.developer.name}
-        </r:column>
+    <h:panelGrid columns="2"  styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsLastValueCol">
+        <h:outputText value="#{messages.Section_address}"/>
+        <h:outputText value="#{section.address}"/>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.Project_buildSize}
-            </f:facet>
-            #{dictionary.getWordValue(_project.buildSize)}
-        </r:column>
-
-        <r:column>
-            <f:facet name="header">
-                #{messages.Project_buildCount}
-            </f:facet>
-            #{_project.buildCount}
-        </r:column>
-
-        <r:column>
-            <f:facet name="header">
-                #{messages.Project_area}
-            </f:facet>
-            <h:outputText value="#{_project.area}">
-                <f:convertNumber pattern="#0.###"/>
-            </h:outputText>
-
-        </r:column>
-
-        <r:column>
-            <f:facet name="header">
-                #{messages.Project_sumArea}
-            </f:facet>
-            <h:outputText value="#{_project.sumArea}">
-                <f:convertNumber pattern="#0.###"/>
-            </h:outputText>
-        </r:column>
-
-
-        <r:column>
-            <f:facet name="header">
-                #{messages.Project_state}
-            </f:facet>
-            <h:outputText value="#{messages[_project.state.name()]}"/>
-        </r:column>
-    </r:dataTable>
+    </h:panelGrid>
 
 </ui:composition>
