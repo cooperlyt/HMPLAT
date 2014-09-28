@@ -123,9 +123,6 @@ public class ProjectHome extends HouseEntityHome<Project> {
             }
         }
 
-
-
-
         if (!projectBuilds.contains(editingBuild)) {
             projectBuilds.add(editingBuild);
         }
@@ -154,6 +151,17 @@ public class ProjectHome extends HouseEntityHome<Project> {
     protected void initInstance() {
         super.initInstance();
         developerHome.setId(getInstance().getId());
+        projectBuilds = null;
+    }
+
+    @Override
+    protected boolean verifyRemoveAvailable() {
+        if (getEntityManager().createQuery("select count(build.id) from Build build where build.project.id = :projectId",Long.class).
+                setParameter("projectId",getInstance().getId()).getSingleResult() > 0){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ProjectCantDelete");
+            return false;
+        }else
+            return true;
     }
 
     public boolean wireProject() {

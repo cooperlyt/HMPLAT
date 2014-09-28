@@ -448,8 +448,8 @@ table.radio input[type=radio] {
     display: table-cell;
     vertical-align: inherit;
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
 
     background: #fff;
     padding: 6px 6px 6px 12px;
@@ -457,7 +457,7 @@ table.radio input[type=radio] {
 
     width: 300px;
     text-align: left;
-    border-top: 1px solid #C1DAD7;
+    border-top: 1px solid #{a4jSkin.panelBorderColor};
 
 }
 
@@ -471,15 +471,15 @@ table.radio input[type=radio] {
     vertical-align: inherit;
 
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
-    border-left: 1px solid #C1DAD7;;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
+    border-left: 1px solid #{a4jSkin.panelBorderColor};
     padding: 6px 6px 6px 12px;
-    background: #F5FAFA;
+    background: #{a4jSkin.tableSubHeaderBackgroundColor};
     color: #797268;
     width: 150px;
     text-align: center;
-    border-top: 1px solid #C1DAD7;
+    border-top: 1px solid #{a4jSkin.panelBorderColor};
 }
 
 .detailsTopTitleCol{
@@ -492,14 +492,14 @@ table.radio input[type=radio] {
     vertical-align: inherit;
 
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
     padding: 6px 6px 6px 12px;
-    background: #F5FAFA;
+    background: #{a4jSkin.tableSubHeaderBackgroundColor};
     color: #797268;
     width: 150px;
     text-align: center;
-    border-top: 1px solid #C1DAD7;
+    border-top: 1px solid #{a4jSkin.panelBorderColor};
 }
 
 .detailsValueCol{
@@ -510,8 +510,8 @@ table.radio input[type=radio] {
     display: table-cell;
     vertical-align: inherit;
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
 
     background: #fff;
     padding: 6px 6px 6px 12px;
@@ -529,8 +529,8 @@ table.radio input[type=radio] {
     display: table-cell;
     vertical-align: inherit;
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
 
     background: #fff;
     padding: 6px 6px 6px 12px;
@@ -547,9 +547,9 @@ table.radio input[type=radio] {
     display: table-cell;
     vertical-align: inherit;
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
-    border-top: 1px solid #C1DAD7;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
+    border-top: 1px solid #{a4jSkin.panelBorderColor};
     background: #fff;
     padding: 6px 6px 6px 12px;
     color: #4f6b72;
@@ -568,10 +568,10 @@ table.radio input[type=radio] {
     vertical-align: inherit;
 
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
     padding: 6px 6px 6px 12px;
-    background: #F5FAFA;
+    background: #{a4jSkin.tableSubHeaderBackgroundColor};
     color: #797268;
     width: 150px;
     text-align: center;
@@ -587,11 +587,11 @@ table.radio input[type=radio] {
     vertical-align: inherit;
 
 
-    border-right: 1px solid #C1DAD7;
-    border-bottom: 1px solid #C1DAD7;
-    border-left: 1px solid #C1DAD7;;
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
+    border-left: 1px solid #{a4jSkin.panelBorderColor};;
     padding: 6px 6px 6px 12px;
-    background: #F5FAFA;
+    background: #{a4jSkin.tableSubHeaderBackgroundColor};
     color: #797268;
     width: 150px;
     text-align: center;
@@ -605,7 +605,7 @@ table.radio input[type=radio] {
     display: table-cell;
     vertical-align: inherit;
 
-    border-bottom: 1px solid #C1DAD7;
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
     background: #fff;
     padding: 0px 0px 0px 0px;
     color: #4f6b72;

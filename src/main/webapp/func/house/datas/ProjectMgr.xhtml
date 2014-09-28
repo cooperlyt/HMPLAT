@@ -130,7 +130,12 @@
                     </s:link>
                 </f:facet>
 
-                <a:commandButton image="/img/icons/delete.png" title="#{messages.delete}"/>
+                <a:commandButton image="/img/icons/delete.png" title="#{messages.delete}" action="#{projectHome.remove}"
+                        execute="@this" immediate="true" render="dataListResult"
+                        onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                    <a:attachQueue requestDelay="0"/>
+                    <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+                </a:commandButton>
 
                 #{' '}
                 <s:link>
@@ -139,7 +144,8 @@
 
                 #{' '}
 
-                <s:link>
+                <s:link target="_blank" view="/func/house/datas/ProjectBuildEdit.xhtml">
+                    <f:param name="projectId" value="#{_item.id}"/>
                     <s:graphicImage value="/img/icons/buildEdit.png" title="#{messages.Build}"/>
                 </s:link>
             </r:column>
