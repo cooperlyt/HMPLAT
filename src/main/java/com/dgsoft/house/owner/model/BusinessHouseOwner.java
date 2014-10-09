@@ -18,8 +18,8 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 
     public enum HouseOwnerType{
         NOW_HOUSE_OWNER
-        ,NEW_HOUSE_OWNER,
-        PRO_BUY_OWNER;
+        ,NEW_HOUSE_OWNER;
+
     }
 
 	private String id;

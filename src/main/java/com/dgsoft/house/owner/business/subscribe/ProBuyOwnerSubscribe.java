@@ -14,6 +14,6 @@ import org.jboss.seam.annotations.Name;
 public class ProBuyOwnerSubscribe extends BaseHouseOwnerSubscribe {
     @Override
     protected BusinessHouseOwner.HouseOwnerType getType() {
-        return BusinessHouseOwner.HouseOwnerType.PRO_BUY_OWNER;  //To change body of implemented methods use File | Settings | File Templates.
+        return BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
