@@ -53,78 +53,84 @@
 
 
     <subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml" component="" cagegory="" type="EDIT">
-        变更前
+        变更前编辑
     </subscribe>
     <subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml" component="" cagegory="" type="EDIT">
-        变更后
+        变更后编辑
     </subscribe>
     <subscribe name="changBeforReasonEdit" page="/business/houseOwner/subscribe/ChangBeforRensonEdit.xhtml" component="" cagegory="" type="EDIT">
-        更正前
+        更正前编辑
     </subscribe>
     <subscribe name="changAfterRensonEdit" page="/business/houseOwner/subscribe/ChangAfterRensonEdit.xhtml" component="" cagegory="" type="EDIT">
-        更正后
+        更正后编辑
     </subscribe>
     <subscribe name="saleInfoEdit" page="/business/houseOwner/subscribe/SaleInfoEdit.xhtml" component="" cagegory="" type="EDIT">
-        房屋交易信息,付款方式,购房款
+        房屋交易信息,付款方式,购房款编辑
     </subscribe>
 
     <subscribe name="mortgaegeRegisteEdit" page="/business/houseOwner/subscribe/MortgaegeRegisteEdit.xhtml" component="" cagegory="" type="EDIT">
-    一般抵押权
+    一般抵押权编辑
     </subscribe>
 
     <subscribe name="evaluateEditEdit" page="/business/houseOwner/subscribe/EvaluateEdit.xhtml" component="" cagegory="" type="EDIT">
-       评估机构,评估价格
+       评估机构,评估价格编辑
     </subscribe>
 
     <subscribe name="mappingCorpEdit" page="/business/houseOwner/subscribe/MappingCorpEdit.xhtml" component="" cagegory="" type="EDIT">
-        测绘机构
+        测绘机构编辑
     </subscribe>
 
     <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component="" cagegory="" type="EDIT">
-        预告登记证明号
+        预告登记证明号编辑
     </subscribe>
 
     <subscribe name="CardMortgageEdit" page="/business/houseOwner/subscribe/CardMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
-        他项权证号
+        他项权证号编辑
     </subscribe>
 
     <subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml" component="" cagegory="" type="EDIT">
-        所有权证号
+        所有权证号编辑
     </subscribe>
 
     <subscribe name="CardProjectMortgageEdit" page="/business/houseOwner/subscribe/CardProjectMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
-        在建工程抵押证明号
+        在建工程抵押证明号编辑
     </subscribe>
     <subscribe name="CardMerchandiseContraoEdit" page="/business/houseOwner/subscribe/CardMerchandiseContraoEdit.xhtml" component="" cagegory="" type="EDIT">
-        商品房合同备案号
+        商品房合同备案号编辑
     </subscribe>
     <subscribe name="CardSaleLicenseEdit" page="/business/houseOwner/subscribe/CardSaleLicenseEdit.xhtml" component="" cagegory="" type="EDIT">
-        预售许可证号
+        预售许可证号编辑
     </subscribe>
     <subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="" cagegory="" type="EDIT">
-        查封登记
+        查封登记编辑
     </subscribe>
     <subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml" component="" cagegory="" type="EDIT">
-        解封登记
+        解封登记编辑
     </subscribe>
     <subscribe name="RegisterPropertyEdit" page="/business/houseOwner/subscribe/RegisterPropertyEdit.xhtml" component="" cagegory="" type="EDIT">
-        登记信息，共有情况，产权来源，产别
+        登记信息，共有情况，产权来源，产别编辑
     </subscribe>
 
     <subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
-        产权代理人
+        产权代理人编辑
     </subscribe>
 
     <subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/ResonFillChangeEdit.xhtml" component="" cagegory="" type="EDIT">
-        补（换）证事由
+        补（换）证事由编辑
     </subscribe>
 
     <subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="" cagegory="" type="EDIT">
-    注销原因
-</subscribe>
+     注销原因编辑
+    </subscribe>
 
     <subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml" component="" cagegory="" type="EDIT">
-      土地信息
+      土地信息编辑
     </subscribe>
+
+    <subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
+        买方代理人编辑
+    </subscribe>
+
+
 
 </subscribes>
