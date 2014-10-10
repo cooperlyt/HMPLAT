@@ -11,6 +11,8 @@ import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.House;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -21,6 +23,8 @@ import java.text.DecimalFormat;
 @Name("buildHome")
 public class BuildHome extends HouseEntityHome<Build> {
 
+    @In
+    private FacesMessages facesMessages;
 
     private SetLinkList<House> houses;
 
@@ -62,6 +66,18 @@ public class BuildHome extends HouseEntityHome<Build> {
             if ((house.getId() == null) || (house.getId().trim().equals(""))){
                 house.setId(genHouseOrder());
             }
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean verifyRemoveAvailable() {
+        if (isManaged()){
+           if(getEntityManager().createQuery("select count(house.id) from House house where house.build.id = :buildId", Long.class).
+                    setParameter("buildId",getInstance().getId()).getSingleResult() > 0){
+               facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"BuildCantDelete");
+               return false;
+           }
         }
         return true;
     }

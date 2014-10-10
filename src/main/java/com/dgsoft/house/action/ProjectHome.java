@@ -46,12 +46,17 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     private Build editingBuild;
 
-    public void removeBuild(){
+    public void removeProjectBuild() {
+        removeBuild();
+        update();
+    }
 
-        if (getEntityManager().contains(build)){
-            if (getEntityManager().createQuery("select count(house.id) from House house where house.build.id = :buildId",Long.class).
-                    setParameter("buildId",build.getId()).getSingleResult() > 0){
-                facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"BuildHaveHouseCantDel");
+    public void removeBuild() {
+
+        if (getEntityManager().contains(build)) {
+            if (getEntityManager().createQuery("select count(house.id) from House house where house.build.id = :buildId", Long.class).
+                    setParameter("buildId", build.getId()).getSingleResult() > 0) {
+                facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "BuildHaveHouseCantDel");
                 return;
             }
         }
@@ -69,6 +74,25 @@ public class ProjectHome extends HouseEntityHome<Project> {
         ActionExecuteState.instance().clearState();
     }
 
+    public void setBuildId(String buildId) {
+        if ((buildId != null) && !buildId.trim().equals("")) {
+            for (Build build : getProjectBuilds()) {
+                if (buildId.equals(build.getId())) {
+                    this.build = build;
+                    return;
+                }
+            }
+        }
+        this.build = null;
+    }
+
+    public String getBuildId() {
+        if (build == null) {
+            return null;
+        }
+        return build.getId();
+    }
+
     public Build getEditingBuild() {
         return editingBuild;
     }
@@ -77,47 +101,56 @@ public class ProjectHome extends HouseEntityHome<Project> {
         this.editingBuild = editingBuild;
     }
 
-    private void addBuildMBBConflictMessages(){
-        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ConflictMBB");
+    private void addBuildMBBConflictMessages() {
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ConflictMBB");
         ActionExecuteState.instance().setLastState("MBBConfict");
     }
 
-    private void addBuildPBConflictMessages(){
-        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ConfilicPB");
+    private void addBuildPBConflictMessages() {
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ConfilicPB");
         ActionExecuteState.instance().setLastState("MBBConfict");
+    }
+
+    public void saveBuildAndUpdateProject() {
+
+        if (!getEntityManager().contains(editingBuild)) {
+            houseCodeHelper.genBuildCode(editingBuild);
+        }
+        saveBuild();
+        update();
     }
 
     public void saveBuild() {
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
                 "where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and " +
-                "build.buildNo = :buildNumber and build.id <> :buildId",Long.class)
-                .setParameter("mapNumber",editingBuild.getMapNumber())
-                .setParameter("blockNumber",editingBuild.getBlockNo())
-                .setParameter("buildNumber",editingBuild.getBuildNo())
-                .setParameter("buildId",editingBuild.getId()).getSingleResult() > 0){
+                "build.buildNo = :buildNumber and build.id <> :buildId", Long.class)
+                .setParameter("mapNumber", editingBuild.getMapNumber())
+                .setParameter("blockNumber", editingBuild.getBlockNo())
+                .setParameter("buildNumber", editingBuild.getBuildNo())
+                .setParameter("buildId", editingBuild.getId()).getSingleResult() > 0) {
             addBuildMBBConflictMessages();
             return;
         }
-        for (Build build: projectBuilds){
+        for (Build build : projectBuilds) {
             if ((build != editingBuild) && (build.getMapNumber().equals(editingBuild.getMapNumber()))
                     && (build.getBlockNo().equals(editingBuild.getBlockNo()))
-                    && (build.getBuildNo().equals(editingBuild.getBuildNo()))){
+                    && (build.getBuildNo().equals(editingBuild.getBuildNo()))) {
                 addBuildMBBConflictMessages();
                 return;
             }
-            if ( (build != editingBuild) && build.getBuildNo().equals(editingBuild.getBuildNo())){
+            if ((build != editingBuild) && build.getBuildNo().equals(editingBuild.getBuildNo())) {
                 addBuildPBConflictMessages();
                 return;
             }
         }
 
-        if (isManaged()){
+        if (isManaged()) {
             if (getEntityManager().createQuery("select count(build.id) from Build build " +
                     "where build.project.id = :projectId and " +
-                    "build.buildNo = :buildNumber and build.id <> :buildId",Long.class)
-                    .setParameter("projectId",getInstance().getId())
-                    .setParameter("buildNumber",editingBuild.getBuildNo())
-                    .setParameter("buildId",editingBuild.getId()).getSingleResult() > 0){
+                    "build.buildNo = :buildNumber and build.id <> :buildId", Long.class)
+                    .setParameter("projectId", getInstance().getId())
+                    .setParameter("buildNumber", editingBuild.getBuildNo())
+                    .setParameter("buildId", editingBuild.getId()).getSingleResult() > 0) {
                 addBuildPBConflictMessages();
                 return;
             }
@@ -130,14 +163,14 @@ public class ProjectHome extends HouseEntityHome<Project> {
         ActionExecuteState.instance().actionExecute();
     }
 
-    public void cancelBuildEdit(){
+    public void cancelBuildEdit() {
         editingBuild = null;
     }
 
 
     @Override
     protected Project createInstance() {
-        return new Project(((SectionHome)Component.getInstance("sectionHome")).getInstance(), numberBuilder.getSampleNumber("PROJECT_NUMBER") ,Project.ProjectState.BUILDING,new Date());
+        return new Project(((SectionHome) Component.getInstance("sectionHome")).getInstance(), numberBuilder.getSampleNumber("PROJECT_NUMBER"), Project.ProjectState.BUILDING, new Date());
     }
 
 
@@ -156,20 +189,20 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     @Override
     protected boolean verifyRemoveAvailable() {
-        if (getEntityManager().createQuery("select count(build.id) from Build build where build.project.id = :projectId",Long.class).
-                setParameter("projectId",getInstance().getId()).getSingleResult() > 0){
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"ProjectCantDelete");
+        if (getEntityManager().createQuery("select count(build.id) from Build build where build.project.id = :projectId", Long.class).
+                setParameter("projectId", getInstance().getId()).getSingleResult() > 0) {
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ProjectCantDelete");
             return false;
-        }else
+        } else
             return true;
     }
 
     public boolean wireProject() {
         getInstance().setDeveloper(developerHome.getInstance());
-        for(Build build: projectBuilds){
-          if (!getEntityManager().contains(build)){
+        for (Build build : projectBuilds) {
+            if (!getEntityManager().contains(build)) {
                 houseCodeHelper.genBuildCode(build);
-          }
+            }
         }
 
         return true;
