@@ -17,7 +17,9 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 
 
     public enum PersionType{
-        OWNER_ENTRUST
+        OWNER_ENTRUST,BUY_ENTRUST,SELL_ENTRUST,PRE_SALE_ENTRUST,
+        PRE_BUY_ENTRUST;
+
 
     }
 
