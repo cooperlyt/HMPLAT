@@ -63,8 +63,8 @@ public class RegisterProperty implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @Column(name = "POOL_MEMO", length = 10)
-    @Size(max = 10)
+    @Column(name = "POOL_MEMO", length = 32)
+    @Size(max = 32)
     public String getPoolMemo() {
         return poolMemo;
     }
@@ -72,8 +72,8 @@ public class RegisterProperty implements java.io.Serializable {
     public void setPoolMemo(String poolMemo) {
         this.poolMemo = poolMemo;
     }
-    @Column(name = "HOUSE_PROPERTY", length = 20)
-    @Size(max = 20)
+    @Column(name = "HOUSE_PROPERTY", length = 32)
+    @Size(max = 32)
     public String getHouseProperty() {
         return houseProperty;
     }
@@ -82,8 +82,8 @@ public class RegisterProperty implements java.io.Serializable {
         this.houseProperty = houseProperty;
     }
 
-    @Column(name = "HOUSE_FROM", length = 20)
-    @Size(max = 20)
+    @Column(name = "HOUSE_FROM", length = 32)
+    @Size(max = 32)
     public String getHouseFrom() {
         return houseFrom;
     }
