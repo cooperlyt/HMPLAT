@@ -21,10 +21,12 @@ public interface BaseBuildInfo extends BaseProjectInfo {
 
     public String getDoorNo();
 
+    public int getFloorCount();
+
+    public int getUpFloorCount();
+
+    public int getDownFloorCount();
 
     public String getBuildType();
-
-
-
 
 }
