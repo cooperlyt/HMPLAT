@@ -42,12 +42,10 @@ public class Project implements java.io.Serializable, TreeNode {
     private String memo;
     private Date mapTime;
     private Date createTime;
-    private String completeDate;
-    private LandInfo landInfo;
+    private Date completeDate;
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
-    private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
 
 
     public Project() {
@@ -232,22 +230,13 @@ public class Project implements java.io.Serializable, TreeNode {
         this.projectBuildProcesses = projectBuildProcesses;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "project")
-    public Set<ProjectSellCard> getProjectSellCards() {
-        return projectSellCards;
-    }
-
-    public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-        this.projectSellCards = projectSellCards;
-    }
-
-    @Column(name = "COMPLETE_DATE",length = 6)
-    @Size(max = 6)
-    public String getCompleteDate() {
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "COMPLETE_DATE",nullable = true)
+    public Date getCompleteDate() {
         return completeDate;
     }
 
-    public void setCompleteDate(String completeDate) {
+    public void setCompleteDate(Date completeDate) {
         this.completeDate = completeDate;
     }
 
@@ -298,13 +287,4 @@ public class Project implements java.io.Serializable, TreeNode {
         return Iterators.asEnumeration(getBuilds().iterator());
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
-    @JoinColumn(name = "LAND_INFO",nullable = true)
-    public LandInfo getLandInfo() {
-        return landInfo;
-    }
-
-    public void setLandInfo(LandInfo landInfo) {
-        this.landInfo = landInfo;
-    }
 }

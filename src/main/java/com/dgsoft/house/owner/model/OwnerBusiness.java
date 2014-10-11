@@ -55,13 +55,9 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
-
-
-
     private Set<RegisterProperty>registerPropertys = new HashSet<RegisterProperty>(0);
-
     private OwnerBusiness selectBusiness;
-    private ProjectBusiness projectBusiness;
+    private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
 
     public OwnerBusiness() {
     }
@@ -348,13 +344,31 @@ public class OwnerBusiness implements java.io.Serializable {
         this.selectBusiness = selectBusiness;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
-    public ProjectBusiness getProjectBusiness() {
-        return projectBusiness;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",orphanRemoval = true, cascade = CascadeType.ALL)
+    public Set<BusinessProject> getBusinessProjects() {
+        return businessProjects;
     }
 
-    public void setProjectBusiness(ProjectBusiness projectBusiness) {
-        this.projectBusiness = projectBusiness;
+    public void setBusinessProjects(Set<BusinessProject> businessProjects) {
+        this.businessProjects = businessProjects;
+    }
+
+
+    @Transient
+    public BusinessProject getBusinessProject(){
+        if (getBusinessProjects().isEmpty()){
+            return null;
+        }else{
+            return getBusinessProjects().iterator().next();
+        }
+    }
+
+    @Transient
+    public void setBusinessProject(BusinessProject businessProject){
+        getBusinessProjects().clear();
+        if (businessProject != null){
+            getBusinessProjects().add(businessProject);
+        }
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)

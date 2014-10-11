@@ -55,10 +55,8 @@ public class Build implements java.io.Serializable,TreeNode {
 
     private int upFloorCount;
     private int downFloorCount;
-    private boolean haveDownRoom;
 
     private Project project;
-    private ProjectSellCard projectSellCard;
 
     private Set<House> houses = new HashSet<House>(0);
     private Set<BuildGridMap> buildGridMaps = new HashSet<BuildGridMap>(0);
@@ -112,16 +110,6 @@ public class Build implements java.io.Serializable,TreeNode {
     public void setCompleteDate(String completeDate) {
         this.completeDate = completeDate;
     }
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD_ID")
-	public ProjectSellCard getProjectSellCard() {
-		return this.projectSellCard;
-	}
-
-	public void setProjectSellCard(ProjectSellCard projectSellCard) {
-		this.projectSellCard = projectSellCard;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROJECT_ID", nullable = false)
@@ -411,15 +399,6 @@ public class Build implements java.io.Serializable,TreeNode {
 
     public void setDownFloorCount(int downFloorCount) {
         this.downFloorCount = downFloorCount;
-    }
-
-    @Column(name="HAVE_DOWN_ROOM",nullable = false)
-    public boolean isHaveDownRoom() {
-        return haveDownRoom;
-    }
-
-    public void setHaveDownRoom(boolean haveDownRoom) {
-        this.haveDownRoom = haveDownRoom;
     }
 
     @Override

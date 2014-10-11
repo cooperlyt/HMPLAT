@@ -14,26 +14,27 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_POOL", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessPool implements PersonEntity,java.io.Serializable {
+public class BusinessPool implements PersonEntity, java.io.Serializable {
 
-    public enum BusinessPoolType{
-        NOW_POOL,NEW_POOL;
+    public enum BusinessPoolType {
+        NOW_POOL, NEW_POOL;
     }
 
-	private String id;
+    private String id;
     private BusinessHouse businessHouse;
-	private BusinessPoolType type;
-	private String personName;
+    private BusinessPoolType type;
+    private String personName;
     private PersonEntity.CredentialsType credentialsType;
     private String credentialsNumber;
-	private String relation;
-	private BigDecimal poolArea;
-	private String perc;
-	private String memo;
+    private String relation;
+    private BigDecimal poolArea;
+    private String perc;
+    private String memo;
     private String phone;
+    private MakeCard makeCard;
 
-	public BusinessPool() {
-	}
+    public BusinessPool() {
+    }
 
     public BusinessPool(BusinessPoolType type, BusinessHouse businessHouse) {
         this.type = type;
@@ -42,7 +43,7 @@ public class BusinessPool implements PersonEntity,java.io.Serializable {
 
     public BusinessPool(BusinessHouse businessHouse, BusinessPoolType type, String personName,
                         PersonEntity.CredentialsType credentialsType, String credentialsNumber,
-                        String relation, BigDecimal poolArea, String perc, String memo,String phone) {
+                        String relation, BigDecimal poolArea, String perc, String memo, String phone) {
         this.businessHouse = businessHouse;
         this.type = type;
         this.personName = personName;
@@ -59,18 +60,18 @@ public class BusinessPool implements PersonEntity,java.io.Serializable {
     }
 
     @Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
-	public String getId() {
-		return this.id;
-	}
+    public String getId() {
+        return this.id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID", nullable = false)
@@ -85,27 +86,27 @@ public class BusinessPool implements PersonEntity,java.io.Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false, length = 20)
-	@NotNull
-	public BusinessPoolType getType() {
-		return this.type;
-	}
+    @NotNull
+    public BusinessPoolType getType() {
+        return this.type;
+    }
 
-	public void setType(BusinessPoolType type) {
-		this.type = type;
-	}
+    public void setType(BusinessPoolType type) {
+        this.type = type;
+    }
 
-	@Column(name = "NAME", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
+    @Column(name = "NAME", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
     @Override
-	public String getPersonName() {
-		return this.personName;
-	}
+    public String getPersonName() {
+        return this.personName;
+    }
 
     @Override
-	public void setPersonName(String name) {
-		this.personName = name;
-	}
+    public void setPersonName(String name) {
+        this.personName = name;
+    }
 
 
     @Override
@@ -134,44 +135,44 @@ public class BusinessPool implements PersonEntity,java.io.Serializable {
         this.credentialsNumber = cerdentialsNumber;
     }
 
-	@Column(name = "RELATION", length = 32)
-	@Size(max = 32)
-	public String getRelation() {
-		return this.relation;
-	}
+    @Column(name = "RELATION", length = 32)
+    @Size(max = 32)
+    public String getRelation() {
+        return this.relation;
+    }
 
-	public void setRelation(String relation) {
-		this.relation = relation;
-	}
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
-	@Column(name = "POOL_AREA", scale = 4)
-	public BigDecimal getPoolArea() {
-		return this.poolArea;
-	}
+    @Column(name = "POOL_AREA", scale = 4)
+    public BigDecimal getPoolArea() {
+        return this.poolArea;
+    }
 
-	public void setPoolArea(BigDecimal poolArea) {
-		this.poolArea = poolArea;
-	}
+    public void setPoolArea(BigDecimal poolArea) {
+        this.poolArea = poolArea;
+    }
 
-	@Column(name = "PERC", length = 10)
-	@Size(max = 10)
-	public String getPerc() {
-		return this.perc;
-	}
+    @Column(name = "PERC", length = 10)
+    @Size(max = 10)
+    public String getPerc() {
+        return this.perc;
+    }
 
-	public void setPerc(String perc) {
-		this.perc = perc;
-	}
+    public void setPerc(String perc) {
+        this.perc = perc;
+    }
 
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
+    @Column(name = "MEMO", length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return this.memo;
+    }
 
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 
     @Column(name = "PHONE", nullable = true, length = 15)
     @Size(max = 15)
@@ -181,6 +182,16 @@ public class BusinessPool implements PersonEntity,java.io.Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "CARD", nullable = true)
+    public MakeCard getMakeCard() {
+        return this.makeCard;
+    }
+
+    public void setMakeCard(MakeCard makeCard) {
+        this.makeCard = makeCard;
     }
 
 }

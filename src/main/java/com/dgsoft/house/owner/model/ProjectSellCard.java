@@ -1,11 +1,20 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
-
-import org.hibernate.annotations.GenericGenerator;
+// Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -14,10 +23,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PROJECT_SELL_CARD", catalog = "HOUSE_OWNER_RECORD")
-public class ProjectBusiness implements java.io.Serializable {
+public class ProjectSellCard implements java.io.Serializable {
 
-    private String id;
-	private BusinessLandInfo businessLandInfo;
+	private String id;
 	private BusinessProject businessProject;
 	private Integer houseCount;
 	private Integer buildCount;
@@ -29,38 +37,53 @@ public class ProjectBusiness implements java.io.Serializable {
 	private String orderNumber;
 	private Date printTime;
 	private String memo;
-    private OwnerBusiness ownerBusiness;
+	private String type;
+	private Set<ProjectRecord> projectRecords = new HashSet<ProjectRecord>(0);
 
-	public ProjectBusiness() {
+	public ProjectSellCard() {
 	}
 
+	public ProjectSellCard(String id, BusinessProject businessProject, Date printTime,
+			String type) {
+		this.id = id;
+		this.businessProject = businessProject;
+		this.printTime = printTime;
+		this.type = type;
+	}
+	public ProjectSellCard(String id, BusinessProject businessProject, Integer houseCount,
+			Integer buildCount, BigDecimal area, Boolean prepareSell,
+			String useType, String sellObject, String yearNumber,
+			String orderNumber, Date printTime, String memo, String type,
+			Set<ProjectRecord> projectRecords) {
+		this.id = id;
+		this.businessProject = businessProject;
+		this.houseCount = houseCount;
+		this.buildCount = buildCount;
+		this.area = area;
+		this.prepareSell = prepareSell;
+		this.useType = useType;
+		this.sellObject = sellObject;
+		this.yearNumber = yearNumber;
+		this.orderNumber = orderNumber;
+		this.printTime = printTime;
+		this.memo = memo;
+		this.type = type;
+		this.projectRecords = projectRecords;
+	}
 
-    @Id
-    @Column(name = "ID", unique = true, nullable = false, length = 32)
-    @NotNull
-    @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
-	@JoinColumn(name = "LAND_INFO", nullable = false)
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
-	public BusinessLandInfo getBusinessLandInfo() {
-		return this.businessLandInfo;
+	@Size(max = 32)
+	public String getId() {
+		return this.id;
 	}
 
-	public void setBusinessLandInfo(BusinessLandInfo businessLandInfo) {
-		this.businessLandInfo = businessLandInfo;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL} ,optional = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROJECT", nullable = false)
 	@NotNull
 	public BusinessProject getBusinessProject() {
@@ -168,13 +191,24 @@ public class ProjectBusiness implements java.io.Serializable {
 		this.memo = memo;
 	}
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS_ID",nullable = false)
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
-    }
+	@Column(name = "TYPE", nullable = false, length = 20)
+	@NotNull
+	@Size(max = 20)
+	public String getType() {
+		return this.type;
+	}
 
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectSellCard")
+	public Set<ProjectRecord> getProjectRecords() {
+		return this.projectRecords;
+	}
+
+	public void setProjectRecords(Set<ProjectRecord> projectRecords) {
+		this.projectRecords = projectRecords;
+	}
+
 }

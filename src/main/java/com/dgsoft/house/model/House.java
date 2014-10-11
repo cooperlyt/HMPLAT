@@ -42,7 +42,6 @@ public class House implements java.io.Serializable {
     private String knotSize;
     private String address;
     private HouseDataSource dataSource;
-    private LandInfo landInfo;
     private String eastWall;
     private String westWall;
     private String southWall;
@@ -51,6 +50,7 @@ public class House implements java.io.Serializable {
     private String direction;
     private boolean initRegister;
     private boolean firmlyPower;
+    private boolean haveDownRoom;
     private String memo;
     private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
     private Set<HouseState> houseStates = new HashSet<HouseState>(0);
@@ -170,6 +170,16 @@ public class House implements java.io.Serializable {
     public void setHouseArea(BigDecimal houseArea) {
         this.houseArea = houseArea;
     }
+
+    @Column(name="HAVE_DOWN_ROOM",nullable = false)
+    public boolean isHaveDownRoom() {
+        return haveDownRoom;
+    }
+
+    public void setHaveDownRoom(boolean haveDownRoom) {
+        this.haveDownRoom = haveDownRoom;
+    }
+
 
     @Column(name = "PREPARE_AREA", precision = 18, scale = 3)
     public BigDecimal getPrepareArea() {
@@ -442,16 +452,6 @@ public class House implements java.io.Serializable {
 
     public void setHouseOwners(Set<HouseOwner> houseOwners) {
         this.houseOwners = houseOwners;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
-    @JoinColumn(name = "LAND_INFO",nullable = true)
-    public LandInfo getLandInfo() {
-        return landInfo;
-    }
-
-    public void setLandInfo(LandInfo landInfo) {
-        this.landInfo = landInfo;
     }
 
     @Transient

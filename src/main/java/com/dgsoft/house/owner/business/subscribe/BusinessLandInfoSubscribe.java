@@ -2,7 +2,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessLandInfo;
+import com.dgsoft.house.owner.model.LandInfo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -14,7 +14,7 @@ import org.jboss.seam.annotations.Name;
  * To change this template use File | Settings | File Templates.
  */
 @Name("businessLandInfoSubscribe")
-public class BusinessLandInfoSubscribe extends OwnerEntityHome<BusinessLandInfo> {
+public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
@@ -30,9 +30,9 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<BusinessLandInfo>
 
 
     private String seachByDB(){
-        if (ownerBusinessHome.getSingleHoues().getBusinessLandInfo()!=null){
-            return ownerBusinessHome.getSingleHoues().getBusinessLandInfo().getId();
-        }
+//        if (ownerBusinessHome.getSingleHoues().getLandInfos() !=null){
+//            return ownerBusinessHome.getSingleHoues().getBusinessLandInfo().getId();
+//        }
         return null;
 
     }
@@ -50,17 +50,17 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<BusinessLandInfo>
     }
 
     public void checkHave(){
-        if (have){
-            String findId = seachByDB();
-            if (findId != null) {
-                setId(findId);
-            }
-            getInstance().setBusinessHouse(ownerBusinessHome.getSingleHoues());
-            ownerBusinessHome.getSingleHoues().setBusinessLandInfo(getInstance());
-        } else {
-            ownerBusinessHome.getSingleHoues().setBusinessLandInfo(null);
-            clearInstance();
-        }
+//        if (have){
+//            String findId = seachByDB();
+//            if (findId != null) {
+//                setId(findId);
+//            }
+//            getInstance().setBusinessHouse(ownerBusinessHome.getSingleHoues());
+//            ownerBusinessHome.getSingleHoues().setBusinessLandInfo(getInstance());
+//        } else {
+//            ownerBusinessHome.getSingleHoues().setBusinessLandInfo(null);
+//            clearInstance();
+//        }
     }
 
 }
