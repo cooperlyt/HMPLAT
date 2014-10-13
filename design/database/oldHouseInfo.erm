@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.75</zoom>
-	<x>-268</x>
-	<y>1457</y>
+	<x>353</x>
+	<y>799</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -110,7 +110,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-26 15:09:45</creation_date>
-			<updated_date>2014-10-13 10:56:32</updated_date>
+			<updated_date>2014-10-13 15:08:51</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -3008,8 +3008,8 @@
 			<width>296</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>752</x>
-			<y>2568</y>
+			<x>717</x>
+			<y>2245</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -3462,8 +3462,8 @@
 			<width>343</width>
 				<font_name>Cantarell</font_name>
 				<font_size>9</font_size>
-			<x>468</x>
-			<y>2304</y>
+			<x>480</x>
+			<y>1980</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -3675,8 +3675,8 @@
 			<width>343</width>
 				<font_name>Cantarell</font_name>
 				<font_size>9</font_size>
-			<x>858</x>
-			<y>2304</y>
+			<x>855</x>
+			<y>1980</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -4310,12 +4310,12 @@
 		</table>
 		<table>
 			<id>6</id>
-			<height>8</height>
-			<width>140</width>
+			<height>320</height>
+			<width>343</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>707</x>
-			<y>1005</y>
+			<x>679</x>
+			<y>1008</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -5796,12 +5796,12 @@
 		</table>
 		<table>
 			<id>10</id>
-			<height>164</height>
-			<width>333</width>
+			<height>168</height>
+			<width>398</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>685</x>
-			<y>801</y>
+			<x>652</x>
+			<y>804</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -6312,8 +6312,8 @@
 			<width>280</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>-340</x>
-			<y>1440</y>
+			<x>-329</x>
+			<y>1212</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -6535,8 +6535,8 @@
 			<width>294</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>-353</x>
-			<y>1032</y>
+			<x>-336</x>
+			<y>756</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -6758,8 +6758,8 @@
 			<width>282</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>-341</x>
-			<y>1270</y>
+			<x>-330</x>
+			<y>996</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -6897,7 +6897,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>171</word_id>
+					<word_id>170</word_id>
 					<id>97</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6933,6 +6933,18 @@
 			<indexes>
 			</indexes>
 			<complex_unique_key_list>
+				<complex_unique_key>
+					<id>0</id>
+					<name>BUILD_GRID_PAGE</name>
+					<columns>
+						<column>
+							<id>95</id>
+						</column>
+						<column>
+							<id>97</id>
+						</column>
+					</columns>
+				</complex_unique_key>
 			</complex_unique_key_list>
 			<table_properties>
 				<schema></schema>
@@ -8925,8 +8937,8 @@
 			<width>279</width>
 				<font_name>Cantarell</font_name>
 				<font_size>9</font_size>
-			<x>433</x>
-			<y>984</y>
+			<x>403</x>
+			<y>396</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -9636,7 +9648,7 @@
 				<font_name>WenQuanYi Zen Hei</font_name>
 				<font_size>9</font_size>
 			<x>-319</x>
-			<y>2664</y>
+			<y>2508</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -9953,12 +9965,12 @@
 		</table>
 		<table>
 			<id>25</id>
-			<height>216</height>
+			<height>256</height>
 			<width>297</width>
 				<font_name>宋体</font_name>
 				<font_size>9</font_size>
-			<x>-349</x>
-			<y>2364</y>
+			<x>-338</x>
+			<y>2208</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -10345,8 +10357,8 @@
 			<width>313</width>
 				<font_name>WenQuanYi Micro Hei</font_name>
 				<font_size>9</font_size>
-			<x>-357</x>
-			<y>1620</y>
+			<x>-338</x>
+			<y>1404</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -10473,7 +10485,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>170</word_id>
+					<word_id>171</word_id>
 					<id>185</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -11218,8 +11230,8 @@
 			<width>306</width>
 				<font_name>Cantarell</font_name>
 				<font_size>9</font_size>
-			<x>-353</x>
-			<y>2196</y>
+			<x>-342</x>
+			<y>2028</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -13018,7 +13030,7 @@
 			</indexes>
 			<complex_unique_key_list>
 				<complex_unique_key>
-					<id>0</id>
+					<id>1</id>
 					<name>PROJECT_AND_BUILD_UNIQUE</name>
 					<columns>
 						<column>
@@ -13030,7 +13042,7 @@
 					</columns>
 				</complex_unique_key>
 				<complex_unique_key>
-					<id>1</id>
+					<id>2</id>
 					<name>MAP_BLOCK_BUILD_UNIQUE</name>
 					<columns>
 						<column>

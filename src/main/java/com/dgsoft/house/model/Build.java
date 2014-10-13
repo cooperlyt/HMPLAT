@@ -4,10 +4,7 @@ package com.dgsoft.house.model;
 import com.dgsoft.house.BuildInfo;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.swing.tree.TreeNode;
 import javax.validation.constraints.NotNull;

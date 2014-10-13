@@ -8,6 +8,7 @@ import com.dgsoft.common.system.model.NumberPool;
 import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Build;
+import com.dgsoft.house.model.BuildGridMap;
 import com.dgsoft.house.model.House;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -16,6 +17,7 @@ import org.jboss.seam.international.StatusMessage;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.*;
 
 /**
  * Created by cooper on 7/29/14.
@@ -80,6 +82,18 @@ public class BuildHome extends HouseEntityHome<Build> {
            }
         }
         return true;
+    }
+
+
+    public List<BuildGridMap> getBuildGridPages(){
+        List<BuildGridMap> result = new ArrayList<BuildGridMap>(getInstance().getBuildGridMaps());
+        Collections.sort(result,new Comparator<BuildGridMap>() {
+            @Override
+            public int compare(BuildGridMap o1, BuildGridMap o2) {
+                return (new Integer(o1.getOrder())).compareTo(o2.getOrder());
+            }
+        });
+        return result;
     }
 
     @Override
