@@ -1,10 +1,12 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.model.House;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessHouse implements java.io.Serializable {
+public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
 	private String id;
 	private String houseOrder;
@@ -27,7 +29,7 @@ public class BusinessHouse implements java.io.Serializable {
 	private BigDecimal shineArea;
 	private BigDecimal loftArea;
 	private BigDecimal commParam;
-	private int houseState;
+    private HouseStatus masterStatus;
 	private String houseType;
 	private String useType;
 	private String structure;
@@ -45,14 +47,14 @@ public class BusinessHouse implements java.io.Serializable {
 	private String poolMemo;
 	private String houseFrom;
 	private String housePorperty;
-	private Date haveDownRoom;
+	private boolean haveDownRoom;
 	private String buildCode;
 	private String landBlockCode;
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
 	private String streetCode;
-	private String name;
+	private String buildName;
 	private String doorNo;
 	private int upFloorCount;
 	private int floorCount;
@@ -68,18 +70,79 @@ public class BusinessHouse implements java.io.Serializable {
 	private String sectionName;
 	private String districtCode;
 	private String districtName;
-	private Set<HouseBusiness> housesForStartBusiness = new HashSet<HouseBusiness>(0);
+	private Set<HouseBusiness> housesForAfterBusiness;
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
-	private Set<HouseBusiness> housesForAfterBusiness = new HashSet<HouseBusiness>(0);
-	private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
+	//private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
 	public BusinessHouse() {
 	}
+
+    public BusinessHouse(HouseInfo houseInfo) {
+        this.houseOrder = houseInfo.getHouseOrder();
+        this.houseUnitName = houseInfo.getHouseUnitName();
+        this.inFloorName = houseInfo.getInFloorName();
+        this.houseArea = houseInfo.getHouseArea();
+        this.prepareArea = houseInfo.getPrepareArea();
+        this.useArea = houseInfo.getUseArea();
+        this.commArea = houseInfo.getCommArea();
+        this.shineArea = houseInfo.getShineArea();
+        this.loftArea = houseInfo.getLoftArea();
+        this.commParam = houseInfo.getCommParam();
+        this.masterStatus = houseInfo.getMasterStatus();
+        this.houseType = houseInfo.getHouseType();
+        this.useType = houseInfo.getUseType();
+        this.structure = houseInfo.getStructure();
+        this.knotSize = houseInfo.getKnotSize();
+        this.address = houseInfo.getAddress();
+        this.eastWall = houseInfo.getEastWall();
+        this.westWall = houseInfo.getWestWall();
+        this.southWall = houseInfo.getSouthWall();
+        this.northWall = houseInfo.getNorthWall();
+        this.mapTime = houseInfo.getMapTime();
+        this.direction = houseInfo.getDirection();
+        this.initRegister = houseInfo.isInitRegister();
+        this.firmlyPower = houseInfo.isFirmlyPower();
+        this.houseCode = houseInfo.getHouseCode();
+        this.haveDownRoom = houseInfo.isHaveDownRoom();
+        this.buildCode = houseInfo.getBuildCode();
+        this.landBlockCode = houseInfo.getLandBlockCode();
+        this.mapNumber = houseInfo.getMapNumber();
+        this.blockNo = houseInfo.getBlockNo();
+        this.buildNo = houseInfo.getBuildNo();
+        this.streetCode = houseInfo.getStreetCode();
+        this.buildName = houseInfo.getBuildName();
+        this.doorNo = houseInfo.getDoorNo();
+        this.upFloorCount = houseInfo.getUpFloorCount();
+        this.floorCount = houseInfo.getFloorCount();
+        this.downFloorCount = houseInfo.getDownFloorCount();
+        this.buildType = houseInfo.getBuildType();
+        this.projectCode = houseInfo.getProjectCode();
+        this.projectName = houseInfo.getProjectName();
+        this.buildSize = houseInfo.getBuildSize();
+        this.completeDate = houseInfo.getCompleteDate();
+        this.developerCode = houseInfo.getDeveloperCode();
+        this.developerName = houseInfo.getDeveloperName();
+        this.sectionCode = houseInfo.getSectionCode();
+        this.sectionName = houseInfo.getSectionName();
+        this.districtCode = houseInfo.getDistrictCode();
+        this.districtName = houseInfo.getDistrictName();
+    }
+
+    public BusinessHouse(BusinessHouse businessHouse){
+        this((HouseInfo)businessHouse);
+        this.poolMemo = businessHouse.getPoolMemo();
+        this.houseFrom = businessHouse.getHouseFrom();
+        this.housePorperty = businessHouse.getHousePorperty();
+
+    }
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -184,16 +247,30 @@ public class BusinessHouse implements java.io.Serializable {
 		this.commParam = commParam;
 	}
 
-	@Column(name = "HOUSE_STATE", nullable = false)
-	public int getHouseState() {
-		return this.houseState;
-	}
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "HOUSE_STATUS", nullable = false,length = 32)
+    @NotNull
+    public HouseStatus getMasterStatus() {
+        return masterStatus;
+    }
 
-	public void setHouseState(int houseState) {
-		this.houseState = houseState;
-	}
+    public void setMasterStatus(HouseStatus masterStatus) {
+        this.masterStatus = masterStatus;
+    }
 
-	@Column(name = "HOUSE_TYPE", length = 32)
+    @Override
+    @Transient
+    public List<HouseStatus> getAllStatusList() {
+        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
+        for (HouseState state: getHouseStates()){
+            result.add(state.getState());
+        }
+        Collections.sort(result,new StatusComparator());
+        return result;
+    }
+
+    @Column(name = "HOUSE_TYPE", length = 32)
 	@Size(max = 32)
 	public String getHouseType() {
 		return this.houseType;
@@ -214,6 +291,7 @@ public class BusinessHouse implements java.io.Serializable {
 		this.useType = useType;
 	}
 
+    @Override
 	@Column(name = "STRUCTURE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -321,7 +399,7 @@ public class BusinessHouse implements java.io.Serializable {
 		return this.firmlyPower;
 	}
 
-	public void setFirmlyPower(boolean firmlyPower) {
+    public void setFirmlyPower(boolean firmlyPower) {
 		this.firmlyPower = firmlyPower;
 	}
 
@@ -366,18 +444,17 @@ public class BusinessHouse implements java.io.Serializable {
 		this.housePorperty = housePorperty;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "HAVE_DOWN_ROOM", nullable = false, length = 19)
-	@NotNull
-	public Date getHaveDownRoom() {
-		return this.haveDownRoom;
-	}
+    @Override
+    @Column(name = "HAVE_DOWN_ROOM", nullable = false)
+    public boolean isHaveDownRoom() {
+        return haveDownRoom;
+    }
 
-	public void setHaveDownRoom(Date haveDownRoom) {
-		this.haveDownRoom = haveDownRoom;
-	}
+    public void setHaveDownRoom(boolean haveDownRoom) {
+        this.haveDownRoom = haveDownRoom;
+    }
 
-	@Column(name = "BUILD_CODE", nullable = false, length = 32)
+    @Column(name = "BUILD_CODE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
 	public String getBuildCode() {
@@ -440,15 +517,16 @@ public class BusinessHouse implements java.io.Serializable {
 		this.streetCode = streetCode;
 	}
 
-	@Column(name = "NAME", nullable = false, length = 100)
+    @Override
+	@Column(name = "BUILD_NAME", nullable = false, length = 100)
 	@NotNull
 	@Size(max = 100)
-	public String getName() {
-		return this.name;
+	public String getBuildName() {
+		return this.buildName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBuildName(String buildName) {
+		this.buildName = buildName;
 	}
 
 	@Column(name = "DOOR_NO", length = 10)
@@ -604,17 +682,24 @@ public class BusinessHouse implements java.io.Serializable {
 		this.districtName = districtName;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "startHouse")
-	public Set<HouseBusiness> getHousesForStartBusiness() {
-		return this.housesForStartBusiness;
-	}
+    @Transient
+    public HouseBusiness getLasterHouseBusiness() {
+        if (getHousesForAfterBusiness().isEmpty()){
+            return null;
+        }else{
+            return getHousesForAfterBusiness().iterator().next();
+        }
+    }
 
-	public void setHousesForStartBusiness(
-            Set<HouseBusiness> housesForStartBusiness) {
-		this.housesForStartBusiness = housesForStartBusiness;
-	}
+    @Transient
+    public void setLasterHouseBusiness(HouseBusiness lasterHouseBusiness) {
+        getHousesForAfterBusiness().clear();
+        if (lasterHouseBusiness != null){
+            getHousesForAfterBusiness().add(lasterHouseBusiness);
+        }
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
 	public Set<HouseState> getHouseStates() {
 		return this.houseStates;
 	}
@@ -623,7 +708,7 @@ public class BusinessHouse implements java.io.Serializable {
 		this.houseStates = houseStates;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "afterHouse")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
 	public Set<HouseBusiness> getHousesForAfterBusiness() {
 		return this.housesForAfterBusiness;
 	}
@@ -631,15 +716,6 @@ public class BusinessHouse implements java.io.Serializable {
 	public void setHousesForAfterBusiness(
             Set<HouseBusiness> housesForAfterBusiness) {
 		this.housesForAfterBusiness = housesForAfterBusiness;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-	public Set<HouseRecord> getHouseRecords() {
-		return this.houseRecords;
-	}
-
-	public void setHouseRecords(Set<HouseRecord> houseRecords) {
-		this.houseRecords = houseRecords;
 	}
 
 }

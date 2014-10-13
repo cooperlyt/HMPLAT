@@ -39,7 +39,6 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
     private Set<Reason> reasons = new HashSet<Reason>(0);
     private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
-    private Set<OtherRegiste> otherRegistes = new HashSet<OtherRegiste>(0);
     private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
     private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
     private Set<Card> cards = new HashSet<Card>(0);
@@ -212,15 +211,6 @@ public class OwnerBusiness implements java.io.Serializable {
 
     public void setBusinessMoneys(Set<BusinessMoney> businessMoneys) {
         this.businessMoneys = businessMoneys;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<OtherRegiste> getOtherRegistes() {
-        return this.otherRegistes;
-    }
-
-    public void setOtherRegistes(Set<OtherRegiste> otherRegistes) {
-        this.otherRegistes = otherRegistes;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)

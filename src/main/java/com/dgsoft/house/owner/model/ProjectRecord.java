@@ -26,6 +26,7 @@ public class ProjectRecord implements java.io.Serializable {
 	private ProjectSellCard projectSellCard;
 	private String projectCode;
 	private Set<ProjectRecordStore> projectRecordStores = new HashSet<ProjectRecordStore>(0);
+    private OwnerBusiness lastBusiness;
 
 	public ProjectRecord() {
 	}
@@ -86,4 +87,14 @@ public class ProjectRecord implements java.io.Serializable {
 		this.projectRecordStores = projectRecordStores;
 	}
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "LAST_BUSINESS",nullable = false)
+    @NotNull
+    public OwnerBusiness getLastBusiness() {
+        return lastBusiness;
+    }
+
+    public void setLastBusiness(OwnerBusiness lastBusiness) {
+        this.lastBusiness = lastBusiness;
+    }
 }

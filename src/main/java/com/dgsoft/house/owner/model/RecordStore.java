@@ -1,13 +1,9 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,91 +14,84 @@ import javax.validation.constraints.Size;
 @Table(name = "RECORD_STORE", catalog = "HOUSE_OWNER_RECORD")
 public class RecordStore implements java.io.Serializable {
 
-	private String id;
-	private HouseBusiness houseBusiness;
-	private HouseRecord houseRecord;
-	private String frame;
-	private String cabinet;
-	private String box;
+    private String id;
+    private HouseBusiness houseBusiness;
+    private HouseRecord houseRecord;
+    private String frame;
+    private String cabinet;
+    private String box;
 
-	public RecordStore() {
-	}
+    public RecordStore() {
+    }
 
-	public RecordStore(String id, HouseBusiness houseBusiness,
-			HouseRecord houseRecord, String frame, String cabinet, String box) {
-		this.id = id;
-		this.houseBusiness = houseBusiness;
-		this.houseRecord = houseRecord;
-		this.frame = frame;
-		this.cabinet = cabinet;
-		this.box = box;
-	}
 
-	@Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getId() {
-		return this.id;
-	}
+    @Id
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    public String getId() {
+        return this.id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_HOUSE", nullable = false)
-	@NotNull
-	public HouseBusiness getHouseBusiness() {
-		return this.houseBusiness;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUSINESS_HOUSE", nullable = false)
+    @NotNull
+    public HouseBusiness getHouseBusiness() {
+        return this.houseBusiness;
+    }
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
-	}
+    public void setHouseBusiness(HouseBusiness houseBusiness) {
+        this.houseBusiness = houseBusiness;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HOUSE_RECORD", nullable = false)
-	@NotNull
-	public HouseRecord getHouseRecord() {
-		return this.houseRecord;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "HOUSE_RECORD", nullable = false)
+    @NotNull
+    public HouseRecord getHouseRecord() {
+        return this.houseRecord;
+    }
 
-	public void setHouseRecord(HouseRecord houseRecord) {
-		this.houseRecord = houseRecord;
-	}
+    public void setHouseRecord(HouseRecord houseRecord) {
+        this.houseRecord = houseRecord;
+    }
 
-	@Column(name = "FRAME", nullable = false, length = 10)
-	@NotNull
-	@Size(max = 10)
-	public String getFrame() {
-		return this.frame;
-	}
+    @Column(name = "FRAME", nullable = false, length = 10)
+    @NotNull
+    @Size(max = 10)
+    public String getFrame() {
+        return this.frame;
+    }
 
-	public void setFrame(String frame) {
-		this.frame = frame;
-	}
+    public void setFrame(String frame) {
+        this.frame = frame;
+    }
 
-	@Column(name = "CABINET", nullable = false, length = 20)
-	@NotNull
-	@Size(max = 20)
-	public String getCabinet() {
-		return this.cabinet;
-	}
+    @Column(name = "CABINET", nullable = false, length = 20)
+    @NotNull
+    @Size(max = 20)
+    public String getCabinet() {
+        return this.cabinet;
+    }
 
-	public void setCabinet(String cabinet) {
-		this.cabinet = cabinet;
-	}
+    public void setCabinet(String cabinet) {
+        this.cabinet = cabinet;
+    }
 
-	@Column(name = "BOX", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
-	public String getBox() {
-		return this.box;
-	}
+    @Column(name = "BOX", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getBox() {
+        return this.box;
+    }
 
-	public void setBox(String box) {
-		this.box = box;
-	}
+    public void setBox(String box) {
+        this.box = box;
+    }
 
 }

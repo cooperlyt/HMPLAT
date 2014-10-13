@@ -2,6 +2,8 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,10 +32,10 @@ public class LandInfo implements java.io.Serializable {
     private String landProperty;
     private Date beginUseTime;
     private Date endUseTime;
-    private BigDecimal area;
+    private BigDecimal landArea;
     private String landGetMode;
     private LandInfoType type;
-    private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
+    //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
     public LandInfo() {
     }
@@ -43,6 +45,8 @@ public class LandInfo implements java.io.Serializable {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return this.id;
     }
@@ -52,7 +56,7 @@ public class LandInfo implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HOUSE")
+    @JoinColumn(name = "BUSINESS")
     public HouseBusiness getHouseBusiness() {
         return this.houseBusiness;
     }
@@ -117,13 +121,13 @@ public class LandInfo implements java.io.Serializable {
     }
 
 
-    @Column(name = "AREA", precision = 18, scale = 3)
-    public BigDecimal getArea() {
-        return this.area;
+    @Column(name = "LAND_AREA", precision = 18, scale = 3)
+    public BigDecimal getLandArea() {
+        return this.landArea;
     }
 
-    public void setArea(BigDecimal area) {
-        this.area = area;
+    public void setLandArea(BigDecimal landArea) {
+        this.landArea = landArea;
     }
 
 
@@ -148,15 +152,6 @@ public class LandInfo implements java.io.Serializable {
 
     public void setType(LandInfoType type) {
         this.type = type;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "landInfo")
-    public Set<HouseRecord> getHouseRecords() {
-        return this.houseRecords;
-    }
-
-    public void setHouseRecords(Set<HouseRecord> houseRecords) {
-        this.houseRecords = houseRecords;
     }
 
 

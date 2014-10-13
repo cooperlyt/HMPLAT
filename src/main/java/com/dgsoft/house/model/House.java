@@ -4,9 +4,7 @@ package com.dgsoft.house.model;
 import com.dgsoft.house.HouseInfo;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -95,7 +93,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private int houseState;
+    private HouseStatus masterStatus;
     private String houseType;
     private String useType;
     private String structure;
@@ -301,13 +299,27 @@ public class House implements java.io.Serializable, HouseInfo {
         this.commParam = commParam;
     }
 
-    @Column(name = "HOUSE_STATE", nullable = false)
-    public int getHouseState() {
-        return this.houseState;
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "HOUSE_STATUS", nullable = false, length = 32)
+    @NotNull
+    public HouseStatus getMasterStatus() {
+        return masterStatus;
     }
 
-    public void setHouseState(int houseState) {
-        this.houseState = houseState;
+    public void setMasterStatus(HouseStatus masterStatus) {
+        this.masterStatus = masterStatus;
+    }
+
+    @Override
+    @Transient
+    public List<HouseStatus> getAllStatusList() {
+        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
+        for (HouseState state: getHouseStates()){
+            result.add(state.getState());
+        }
+        Collections.sort(result,new StatusComparator());
+        return result;
     }
 
     @Column(name = "HOUSE_TYPE", length = 32)

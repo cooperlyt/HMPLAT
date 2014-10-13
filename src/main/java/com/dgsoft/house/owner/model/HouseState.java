@@ -1,13 +1,10 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.dgsoft.house.HouseInfo;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,13 +17,12 @@ public class HouseState implements java.io.Serializable {
 
 	private String id;
 	private BusinessHouse businessHouse;
-	private String state;
+	private HouseInfo.HouseStatus state;
 
 	public HouseState() {
 	}
 
-	public HouseState(String id, BusinessHouse businessHouse, String state) {
-		this.id = id;
+	public HouseState(BusinessHouse businessHouse, HouseInfo.HouseStatus state) {
 		this.businessHouse = businessHouse;
 		this.state = state;
 	}
@@ -35,6 +31,8 @@ public class HouseState implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -54,14 +52,15 @@ public class HouseState implements java.io.Serializable {
 		this.businessHouse = businessHouse;
 	}
 
-	@Column(name = "STATE", nullable = false, length = 20)
+
+    @Enumerated(EnumType.STRING)
+	@Column(name = "HOUSE_STATUS", nullable = false, length = 32)
 	@NotNull
-	@Size(max = 20)
-	public String getState() {
+	public HouseInfo.HouseStatus getState() {
 		return this.state;
 	}
 
-	public void setState(String state) {
+	public void setState(HouseInfo.HouseStatus state) {
 		this.state = state;
 	}
 

@@ -1,20 +1,13 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,41 +33,25 @@ public class ProjectSellCard implements java.io.Serializable {
 	private String type;
 	private Set<ProjectRecord> projectRecords = new HashSet<ProjectRecord>(0);
 
-	public ProjectSellCard() {
-	}
+    private String landCardNo;
+    private String number;
+    private String landProperty;
+    private Date beginUseTime;
+    private Date endUseTime;
+    private BigDecimal landArea;
+    private String landGetMode;
+    //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
-	public ProjectSellCard(String id, BusinessProject businessProject, Date printTime,
-			String type) {
-		this.id = id;
-		this.businessProject = businessProject;
-		this.printTime = printTime;
-		this.type = type;
-	}
-	public ProjectSellCard(String id, BusinessProject businessProject, Integer houseCount,
-			Integer buildCount, BigDecimal area, Boolean prepareSell,
-			String useType, String sellObject, String yearNumber,
-			String orderNumber, Date printTime, String memo, String type,
-			Set<ProjectRecord> projectRecords) {
-		this.id = id;
-		this.businessProject = businessProject;
-		this.houseCount = houseCount;
-		this.buildCount = buildCount;
-		this.area = area;
-		this.prepareSell = prepareSell;
-		this.useType = useType;
-		this.sellObject = sellObject;
-		this.yearNumber = yearNumber;
-		this.orderNumber = orderNumber;
-		this.printTime = printTime;
-		this.memo = memo;
-		this.type = type;
-		this.projectRecords = projectRecords;
+
+	public ProjectSellCard() {
 	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -210,5 +187,84 @@ public class ProjectSellCard implements java.io.Serializable {
 	public void setProjectRecords(Set<ProjectRecord> projectRecords) {
 		this.projectRecords = projectRecords;
 	}
+
+
+    @Column(name = "LAND_CARD_NO", length = 50)
+    @Size(max = 50)
+    public String getLandCardNo() {
+        return this.landCardNo;
+    }
+
+    public void setLandCardNo(String landCardNo) {
+        this.landCardNo = landCardNo;
+    }
+
+
+    @Column(name = "NUMBER", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getNumber() {
+        return this.number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+
+    @Column(name = "LAND_PROPERTY", length = 32)
+    @Size(max = 32)
+    public String getLandProperty() {
+        return this.landProperty;
+    }
+
+    public void setLandProperty(String landProperty) {
+        this.landProperty = landProperty;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "BEGIN_USE_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getBeginUseTime() {
+        return this.beginUseTime;
+    }
+
+    public void setBeginUseTime(Date beginUseTime) {
+        this.beginUseTime = beginUseTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "END_USE_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getEndUseTime() {
+        return this.endUseTime;
+    }
+
+    public void setEndUseTime(Date endUseTime) {
+        this.endUseTime = endUseTime;
+    }
+
+
+    @Column(name = "LAND_AREA", precision = 18, scale = 3)
+    public BigDecimal getLandArea() {
+        return this.landArea;
+    }
+
+    public void setLandArea(BigDecimal landArea) {
+        this.landArea = landArea;
+    }
+
+
+    @Column(name = "LAND_GET_MODE", nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    public String getLandGetMode() {
+        return this.landGetMode;
+    }
+
+    public void setLandGetMode(String landGetMode) {
+        this.landGetMode = landGetMode;
+    }
+
 
 }

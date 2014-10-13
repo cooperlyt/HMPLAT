@@ -1,7 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.HouseInState;
+import com.dgsoft.house.HouseInfo;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,12 +17,12 @@ public class HouseState implements java.io.Serializable {
 
 	private String id;
 	private House house;
-	private HouseInState state;
+	private HouseInfo.HouseStatus state;
 
 	public HouseState() {
 	}
 
-	public HouseState(House house, HouseInState state) {
+	public HouseState(House house, HouseInfo.HouseStatus state) {
 		this.house = house;
 		this.state = state;
 	}
@@ -31,6 +32,8 @@ public class HouseState implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -52,13 +55,13 @@ public class HouseState implements java.io.Serializable {
 	}
 
     @Enumerated(EnumType.STRING)
-	@Column(name = "STATE", nullable = false)
+	@Column(name = "HOUSE_STATUS", nullable = false, length = 32)
     @NotNull
-	public HouseInState getState() {
+	public HouseInfo.HouseStatus getState() {
 		return this.state;
 	}
 
-	public void setState(HouseInState state) {
+	public void setState(HouseInfo.HouseStatus state) {
 		this.state = state;
 	}
 
