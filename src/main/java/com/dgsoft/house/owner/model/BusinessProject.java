@@ -2,20 +2,13 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
 
+import com.dgsoft.house.ProjectInfo;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,7 +17,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PROJECT", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessProject implements java.io.Serializable {
+public class BusinessProject implements java.io.Serializable, ProjectInfo {
 
 
     private String id;
@@ -189,6 +182,12 @@ public class BusinessProject implements java.io.Serializable {
     @Size(max = 32)
     public String getDeveloperCode() {
         return this.developerCode;
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getName();
     }
 
     public void setDeveloperCode(String developerCode) {

@@ -24,7 +24,7 @@ public class LandInfo implements java.io.Serializable {
     }
 
     private String id;
-    private BusinessHouse businessHouse;
+    private HouseBusiness houseBusiness;
     private String landCardNo;
     private String number;
     private String landProperty;
@@ -53,12 +53,12 @@ public class LandInfo implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE")
-    public BusinessHouse getBusinessHouse() {
-        return this.businessHouse;
+    public HouseBusiness getHouseBusiness() {
+        return this.houseBusiness;
     }
 
-    public void setBusinessHouse(BusinessHouse businessHouse) {
-        this.businessHouse = businessHouse;
+    public void setHouseBusiness(HouseBusiness houseBusiness) {
+        this.houseBusiness = houseBusiness;
     }
 
     @Column(name = "LAND_CARD_NO", length = 50)

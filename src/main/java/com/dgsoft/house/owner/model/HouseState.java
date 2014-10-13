@@ -19,15 +19,15 @@ import javax.validation.constraints.Size;
 public class HouseState implements java.io.Serializable {
 
 	private String id;
-	private HouseInfo houseInfo;
+	private BusinessHouse businessHouse;
 	private String state;
 
 	public HouseState() {
 	}
 
-	public HouseState(String id, HouseInfo houseInfo, String state) {
+	public HouseState(String id, BusinessHouse businessHouse, String state) {
 		this.id = id;
-		this.houseInfo = houseInfo;
+		this.businessHouse = businessHouse;
 		this.state = state;
 	}
 
@@ -46,12 +46,12 @@ public class HouseState implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HOUSE", nullable = false)
 	@NotNull
-	public HouseInfo getHouseInfo() {
-		return this.houseInfo;
+	public BusinessHouse getBusinessHouse() {
+		return this.businessHouse;
 	}
 
-	public void setHouseInfo(HouseInfo houseInfo) {
-		this.houseInfo = houseInfo;
+	public void setBusinessHouse(BusinessHouse businessHouse) {
+		this.businessHouse = businessHouse;
 	}
 
 	@Column(name = "STATE", nullable = false, length = 20)

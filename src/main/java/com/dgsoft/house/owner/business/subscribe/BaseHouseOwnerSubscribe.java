@@ -43,7 +43,7 @@ public abstract class BaseHouseOwnerSubscribe extends BusinessHouseOwnerHome {
 //            }
 //        }
 
-        getInstance().setBusinessHouse(ownerBusinessHome.getSingleHoues());
+        getInstance().setHouseBusiness(ownerBusinessHome.getSingleHoues());
         ownerBusinessHome.getSingleHoues().getBusinessHouseOwners().add(getInstance());
     }
 

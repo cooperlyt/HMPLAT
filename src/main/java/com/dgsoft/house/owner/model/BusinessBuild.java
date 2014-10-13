@@ -1,17 +1,13 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.BuildInfo;
+
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,7 +16,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUILD", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessBuild implements java.io.Serializable {
+public class BusinessBuild implements java.io.Serializable, BuildInfo {
 
 	private String id;
 	private BusinessProject businessProject;
@@ -49,8 +45,8 @@ public class BusinessBuild implements java.io.Serializable {
 	private BigDecimal unhomeArea;
 	private Integer shopCount;
 	private BigDecimal shopArea;
-	private String completeDate;
-	private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+	private String completeYear;
+	private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
 
 	public BusinessBuild() {
 	}
@@ -121,7 +117,13 @@ public class BusinessBuild implements java.io.Serializable {
 		this.buildNo = buildNo;
 	}
 
-	@Column(name = "BUILD_CODE", nullable = false, length = 32)
+    @Override
+    @Transient
+    public String getBuildName() {
+        return getName();
+    }
+
+    @Column(name = "BUILD_CODE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
 	public String getBuildCode() {
@@ -320,23 +322,82 @@ public class BusinessBuild implements java.io.Serializable {
 		this.shopArea = shopArea;
 	}
 
-	@Column(name = "COMPLETE_DATE", length = 6)
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getBusinessProject().getDeveloperName();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getBusinessProject().getDeveloperCode();
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getBusinessProject().getProjectName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getBusinessProject().getProjectCode();
+    }
+
+    @Override
+    @Transient
+    public Date getCompleteDate() {
+        return getBusinessProject().getCompleteDate();
+    }
+
+    @Column(name = "COMPLETE_DATE", length = 6)
 	@Size(max = 6)
-	public String getCompleteDate() {
-		return this.completeDate;
+	public String getCompleteYear() {
+		return this.completeYear;
 	}
 
-	public void setCompleteDate(String completeDate) {
-		this.completeDate = completeDate;
+    @Override
+    @Transient
+    public String getBuildSize() {
+        return getBusinessProject().getBuildSize();
+    }
+
+    public void setCompleteYear(String completeDate) {
+		this.completeYear = completeDate;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "build")
-	public Set<BusinessHouse> getBusinessHouses() {
-		return this.businessHouses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessBuild")
+	public Set<HouseBusiness> getHouseBusinesses() {
+		return this.houseBusinesses;
 	}
 
-	public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
-		this.businessHouses = businessHouses;
+	public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
+		this.houseBusinesses = houseBusinesses;
 	}
 
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getBusinessProject().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getBusinessProject().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getBusinessProject().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getBusinessProject().getSectionCode();
+    }
 }

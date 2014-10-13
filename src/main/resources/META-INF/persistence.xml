@@ -91,7 +91,7 @@
         <jta-data-source>java:jboss/datasources/HOUSEOWNERXADS</jta-data-source>
         <class>com.dgsoft.house.owner.model.BusinessBuild</class>
         <class>com.dgsoft.house.owner.model.BusinessEmp</class>
-        <class>com.dgsoft.house.owner.model.BusinessHouse</class>
+        <class>com.dgsoft.house.owner.model.HouseBusiness</class>
         <class>com.dgsoft.house.owner.model.BusinessMoney</class>
         <class>com.dgsoft.house.owner.model.BusinessHouseOwner</class>
         <class>com.dgsoft.house.owner.model.BusinessPersion</class>
@@ -116,7 +116,7 @@
         <class>com.dgsoft.house.owner.model.TaskOper</class>
         <class>com.dgsoft.house.owner.model.OwnerNumberPool</class>
         <class>com.dgsoft.house.owner.model.RegisterProperty</class>
-        <class>com.dgsoft.house.owner.model.HouseInfo</class>
+        <class>com.dgsoft.house.owner.model.BusinessHouse</class>
         <class>com.dgsoft.house.owner.model.ProjectRecord</class>
         <class>com.dgsoft.house.owner.model.ProjectRecordStore</class>
         <class>com.dgsoft.house.owner.model.HouseRecord</class>

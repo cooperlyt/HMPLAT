@@ -52,7 +52,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(
             0);
     private Set<Financial> financials = new HashSet<Financial>(0);
-    private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+    private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
     private Set<RegisterProperty>registerPropertys = new HashSet<RegisterProperty>(0);
@@ -307,12 +307,12 @@ public class OwnerBusiness implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<BusinessHouse> getBusinessHouses() {
-        return this.businessHouses;
+    public Set<HouseBusiness> getHouseBusinesses() {
+        return this.houseBusinesses;
     }
 
-    public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
-        this.businessHouses = businessHouses;
+    public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
+        this.houseBusinesses = houseBusinesses;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)

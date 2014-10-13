@@ -5,7 +5,6 @@ import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,7 +22,7 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
     }
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private String personName;
 	private CredentialsType credentialsType;
 	private String credentialsNumber;
@@ -39,9 +38,9 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
         this.type = type;
     }
 
-    public BusinessHouseOwner(BusinessHouse businessHouse, String personName, CredentialsType credentialsType,
+    public BusinessHouseOwner(HouseBusiness houseBusiness, String personName, CredentialsType credentialsType,
                               String credentialsNumber, String phone, String rootAddress, HouseOwnerType type,String memo) {
-        this.businessHouse = businessHouse;
+        this.houseBusiness = houseBusiness;
         this.personName = personName;
         this.credentialsType = credentialsType;
         this.credentialsNumber = credentialsNumber;
@@ -68,12 +67,12 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID", nullable = false)
     @NotNull
-    public BusinessHouse getBusinessHouse() {
-        return businessHouse;
+    public HouseBusiness getHouseBusiness() {
+        return houseBusiness;
     }
 
-    public void setBusinessHouse(BusinessHouse businessHouse) {
-        this.businessHouse = businessHouse;
+    public void setHouseBusiness(HouseBusiness houseBusiness) {
+        this.houseBusiness = houseBusiness;
     }
 
     @Override

@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class HouseRecord implements java.io.Serializable {
 
 	private String id;
-	private HouseInfo houseInfo;
+	private BusinessHouse businessHouse;
 	private LandInfo landInfo;
 	private BusinessHouseOwner businessHouseOwner;
 	private String houseCode;
@@ -44,12 +44,12 @@ public class HouseRecord implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HOUSE", unique = true, nullable = false)
 	@NotNull
-	public HouseInfo getHouseInfo() {
-		return this.houseInfo;
+	public BusinessHouse getBusinessHouse() {
+		return this.businessHouse;
 	}
 
-	public void setHouseInfo(HouseInfo houseInfo) {
-		this.houseInfo = houseInfo;
+	public void setBusinessHouse(BusinessHouse businessHouse) {
+		this.businessHouse = businessHouse;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

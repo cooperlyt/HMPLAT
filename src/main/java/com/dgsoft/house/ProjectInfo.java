@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by cooper on 10/11/14.
  */
-public interface BaseProjectInfo extends BaseSectionInfo{
+public interface ProjectInfo extends SectionInfo {
 
     public String getDeveloperName();
 

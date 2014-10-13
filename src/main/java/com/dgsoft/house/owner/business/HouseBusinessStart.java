@@ -7,7 +7,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.model.PoolOwner;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
-import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.BusinessPool;
 import com.dgsoft.house.owner.model.TaskOper;
@@ -50,8 +50,8 @@ public class HouseBusinessStart {
     public String singleHouseSelectet() {
         Logging.getLog(getClass()).debug("singleHouseSelectet:" + selectHouseId);
 
-        ownerBusinessHome.getInstance().getBusinessHouses().clear();
-        ownerBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(ownerBusinessHome.getInstance(), houseEntityLoader.getEntityManager().find(House.class, selectHouseId)));
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), houseEntityLoader.getEntityManager().find(House.class, selectHouseId)));
 
         initBusinessData();
         return BUSINESS_START_PAGE;
@@ -63,18 +63,18 @@ public class HouseBusinessStart {
         // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-        for (BusinessHouse businessHouse : ownerBusinessHome.getInstance().getBusinessHouses()) {
-            House house = houseEntityLoader.getEntityManager().find(House.class, businessHouse.getHouseCode());
+        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            House house = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
             if (house != null) {
                 if (house.getHouseOwner() != null){
-                    businessHouse.getBusinessHouseOwners().add(new BusinessHouseOwner(businessHouse,
+                    houseBusiness.getBusinessHouseOwners().add(new BusinessHouseOwner(houseBusiness,
                             house.getHouseOwner().getPersonName(),house.getHouseOwner().getCredentialsType(),
                             house.getHouseOwner().getCredentialsNumber(),house.getHouseOwner().getPhone(),
                             house.getHouseOwner().getRootAddress(), BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER,house.getMemo()));
                 }
 
                 for(PoolOwner poolOwner: house.getPoolOwners()){
-                    businessHouse.getBusinessPools().add(new BusinessPool(businessHouse,
+                    houseBusiness.getBusinessPools().add(new BusinessPool(houseBusiness,
                             BusinessPool.BusinessPoolType.NOW_POOL,poolOwner.getPersonName(),
                             poolOwner.getCredentialsType(),poolOwner.getCredentialsNumber(),
                             poolOwner.getRelation(),poolOwner.getArea(),poolOwner.getPerc(),poolOwner.getMemo(),poolOwner.getPhone()));

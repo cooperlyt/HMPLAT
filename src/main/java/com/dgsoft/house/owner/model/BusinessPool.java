@@ -21,7 +21,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     }
 
     private String id;
-    private BusinessHouse businessHouse;
+    private HouseBusiness houseBusiness;
     private BusinessPoolType type;
     private String personName;
     private PersonEntity.CredentialsType credentialsType;
@@ -36,15 +36,15 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     public BusinessPool() {
     }
 
-    public BusinessPool(BusinessPoolType type, BusinessHouse businessHouse) {
+    public BusinessPool(BusinessPoolType type, HouseBusiness houseBusiness) {
         this.type = type;
-        this.businessHouse = businessHouse;
+        this.houseBusiness = houseBusiness;
     }
 
-    public BusinessPool(BusinessHouse businessHouse, BusinessPoolType type, String personName,
+    public BusinessPool(HouseBusiness houseBusiness, BusinessPoolType type, String personName,
                         PersonEntity.CredentialsType credentialsType, String credentialsNumber,
                         String relation, BigDecimal poolArea, String perc, String memo, String phone) {
-        this.businessHouse = businessHouse;
+        this.houseBusiness = houseBusiness;
         this.type = type;
         this.personName = personName;
         this.credentialsType = credentialsType;
@@ -76,12 +76,12 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID", nullable = false)
     @NotNull
-    public BusinessHouse getBusinessHouse() {
-        return businessHouse;
+    public HouseBusiness getHouseBusiness() {
+        return houseBusiness;
     }
 
-    public void setBusinessHouse(BusinessHouse businessHouse) {
-        this.businessHouse = businessHouse;
+    public void setHouseBusiness(HouseBusiness houseBusiness) {
+        this.houseBusiness = houseBusiness;
     }
 
     @Enumerated(EnumType.STRING)

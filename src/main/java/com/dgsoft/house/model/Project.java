@@ -1,9 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.owner.model.*;
+import com.dgsoft.house.ProjectInfo;
 import com.google.common.collect.Iterators;
-import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.international.StatusMessage;
 
 import javax.persistence.*;
@@ -22,7 +21,31 @@ import java.util.*;
 @Entity
 @Table(name = "PROJECT", catalog = "HOUSE_INFO")
 @UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
-public class Project implements java.io.Serializable, TreeNode {
+public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
+
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getSection().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getSection().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getSection().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getSection().getSectionCode();
+    }
 
     public enum ProjectState {
         BUILDING, SALE, LOCKED;
@@ -128,7 +151,7 @@ public class Project implements java.io.Serializable, TreeNode {
         this.address = address;
     }
 
-
+    @Override
     @Column(name = "BUILD_SIZE", length = 32)
     @Size(max = 32)
     public String getBuildSize() {
@@ -228,6 +251,30 @@ public class Project implements java.io.Serializable, TreeNode {
     public void setProjectBuildProcesses(
             Set<ProjectBuildProcess> projectBuildProcesses) {
         this.projectBuildProcesses = projectBuildProcesses;
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getDeveloper().getName();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getDeveloper().getId();
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getId();
     }
 
     @Temporal(TemporalType.TIMESTAMP)

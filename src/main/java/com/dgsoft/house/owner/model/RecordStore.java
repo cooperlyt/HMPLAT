@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 public class RecordStore implements java.io.Serializable {
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private HouseRecord houseRecord;
 	private String frame;
 	private String cabinet;
@@ -28,10 +28,10 @@ public class RecordStore implements java.io.Serializable {
 	public RecordStore() {
 	}
 
-	public RecordStore(String id, BusinessHouse businessHouse,
+	public RecordStore(String id, HouseBusiness houseBusiness,
 			HouseRecord houseRecord, String frame, String cabinet, String box) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.houseRecord = houseRecord;
 		this.frame = frame;
 		this.cabinet = cabinet;
@@ -53,12 +53,12 @@ public class RecordStore implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_HOUSE", nullable = false)
 	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
+	public HouseBusiness getHouseBusiness() {
+		return this.houseBusiness;
 	}
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

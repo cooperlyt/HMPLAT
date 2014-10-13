@@ -1,7 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.owner.model.*;
+import com.dgsoft.house.HouseInfo;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,7 +16,67 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE", catalog = "HOUSE_INFO")
-public class House implements java.io.Serializable {
+public class House implements java.io.Serializable, HouseInfo {
+
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getBuild().getDeveloperName();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getBuild().getDeveloperCode();
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getBuild().getProjectName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getBuild().getProjectCode();
+    }
+
+    @Override
+    @Transient
+    public Date getCompleteDate() {
+        return getBuild().getCompleteDate();
+    }
+
+    @Override
+    @Transient
+    public String getBuildSize() {
+        return getBuild().getBuildSize();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getBuild().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getBuild().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getBuild().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getBuild().getSectionCode();
+    }
 
     public enum HouseDataSource{
         MAPPING,IMPORT,RECORD_ADD;
@@ -127,6 +187,12 @@ public class House implements java.io.Serializable {
 
     public void setBuild(Build build) {
         this.build = build;
+    }
+
+    @Override
+    @Transient
+    public String getHouseCode() {
+        return getId();
     }
 
     @Column(name = "HOUSE_ORDER", nullable = false, length = 20)
@@ -265,6 +331,78 @@ public class House implements java.io.Serializable {
         this.useType = useType;
     }
 
+
+    @Override
+    @Transient
+    public String getBuildName() {
+        return getBuild().getBuildName();
+    }
+
+    @Override
+    @Transient
+    public String getBuildCode() {
+        return getBuild().getBuildCode();
+    }
+
+    @Override
+    @Transient
+    public String getLandBlockCode() {
+        return getBuild().getLandBlockCode();
+    }
+
+    @Override
+    @Transient
+    public String getStreetCode() {
+        return getBuild().getStreetCode();
+    }
+
+    @Override
+    @Transient
+    public String getMapNumber() {
+        return getBuild().getMapNumber();
+    }
+
+    @Override
+    @Transient
+    public String getBlockNo() {
+        return getBuild().getBlockNo();
+    }
+
+    @Override
+    @Transient
+    public String getBuildNo() {
+        return getBuild().getBuildNo();
+    }
+
+    @Override
+    @Transient
+    public String getDoorNo() {
+        return getBuild().getDoorNo() + " " + getHouseOrder();
+    }
+
+    @Override
+    @Transient
+    public int getFloorCount() {
+        return getBuild().getFloorCount();
+    }
+
+    @Override
+    @Transient
+    public int getUpFloorCount() {
+        return getBuild().getUpFloorCount();
+    }
+
+    @Override
+    @Transient
+    public int getDownFloorCount() {
+        return getBuild().getDownFloorCount();
+    }
+
+    @Override
+    @Transient
+    public String getBuildType() {
+        return getBuild().getBuildType();
+    }
 
     @Column(name = "STRUCTURE", length = 32, nullable = false)
     @Size(max = 32)
