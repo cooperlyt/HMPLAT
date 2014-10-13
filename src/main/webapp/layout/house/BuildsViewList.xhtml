@@ -144,17 +144,6 @@
             #{_build.lng}
         </r:column>
 
-        <r:column style="text-align: center">
-            <f:facet name="header">
-                <ui:include src="/layout/long-text-display.xhtml">
-                    <ui:param name="value" value="#{messages.Build_HaveDownRoom}"/>
-                    <ui:param name="size" value="4"/>
-                </ui:include>
-            </f:facet>
-            <h:graphicImage value="/img/icons/passed.gif" rendered="#{_build.haveDownRoom}"/>
-        </r:column>
-
-
         <r:column>
             <f:facet name="header">
                 #{messages.BUild_UnitCount}

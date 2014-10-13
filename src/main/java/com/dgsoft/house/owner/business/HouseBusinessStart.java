@@ -51,7 +51,8 @@ public class HouseBusinessStart {
         } else {
             try {
                 HouseRecord houseRecord =
-                        ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class).getSingleResult();
+                        ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class).
+                                setParameter("houseCode",houseCode).getSingleResult();
                 selectHouse = new BusinessHouse(houseRecord.getBusinessHouse());
             } catch (NoResultException e) {
                 selectHouse = new BusinessHouse(houseEntityLoader.getEntityManager().getReference(House.class,houseCode));

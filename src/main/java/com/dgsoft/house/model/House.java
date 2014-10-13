@@ -141,6 +141,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.southWall = block.getSouthWall();
         this.northWall = block.getNorthWall();
         this.eastWall = block.getEastWall();
+        this.masterStatus = HouseStatus.CANTSALE;
         initRegister = false;
         firmlyPower = false;
         dataSource = HouseDataSource.MAPPING;
