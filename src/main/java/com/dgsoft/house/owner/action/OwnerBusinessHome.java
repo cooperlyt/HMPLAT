@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.Name;
 
@@ -22,13 +22,13 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
 
-    public BusinessHouse getSingleHoues() {
+    public HouseBusiness getSingleHoues() {
 
-        Set<BusinessHouse> businessHouses = getInstance().getBusinessHouses();
-        if (businessHouses.size() > 1) {
+        Set<HouseBusiness> houseBusinesses = getInstance().getHouseBusinesses();
+        if (houseBusinesses.size() > 1) {
             throw new IllegalArgumentException("HouseBusiness count > 1");
-        } else if (businessHouses.size() == 1) {
-            return businessHouses.iterator().next();
+        } else if (houseBusinesses.size() == 1) {
+            return houseBusinesses.iterator().next();
         } else
             return null;
 

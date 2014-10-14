@@ -1,12 +1,10 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.owner.model.*;
+import com.dgsoft.house.HouseInfo;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,7 +14,67 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE", catalog = "HOUSE_INFO")
-public class House implements java.io.Serializable {
+public class House implements java.io.Serializable, HouseInfo {
+
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getBuild().getDeveloperName();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getBuild().getDeveloperCode();
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getBuild().getProjectName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getBuild().getProjectCode();
+    }
+
+    @Override
+    @Transient
+    public Date getCompleteDate() {
+        return getBuild().getCompleteDate();
+    }
+
+    @Override
+    @Transient
+    public String getBuildSize() {
+        return getBuild().getBuildSize();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getBuild().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getBuild().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getBuild().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getBuild().getSectionCode();
+    }
 
     public enum HouseDataSource{
         MAPPING,IMPORT,RECORD_ADD;
@@ -35,14 +93,13 @@ public class House implements java.io.Serializable {
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private int houseState;
+    private HouseStatus masterStatus;
     private String houseType;
     private String useType;
     private String structure;
     private String knotSize;
     private String address;
     private HouseDataSource dataSource;
-    private LandInfo landInfo;
     private String eastWall;
     private String westWall;
     private String southWall;
@@ -51,6 +108,7 @@ public class House implements java.io.Serializable {
     private String direction;
     private boolean initRegister;
     private boolean firmlyPower;
+    private boolean haveDownRoom;
     private String memo;
     private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
     private Set<HouseState> houseStates = new HashSet<HouseState>(0);
@@ -83,6 +141,7 @@ public class House implements java.io.Serializable {
         this.southWall = block.getSouthWall();
         this.northWall = block.getNorthWall();
         this.eastWall = block.getEastWall();
+        this.masterStatus = HouseStatus.CANTSALE;
         initRegister = false;
         firmlyPower = false;
         dataSource = HouseDataSource.MAPPING;
@@ -129,6 +188,12 @@ public class House implements java.io.Serializable {
         this.build = build;
     }
 
+    @Override
+    @Transient
+    public String getHouseCode() {
+        return getId();
+    }
+
     @Column(name = "HOUSE_ORDER", nullable = false, length = 20)
     @NotNull
     @Size(max = 20)
@@ -170,6 +235,16 @@ public class House implements java.io.Serializable {
     public void setHouseArea(BigDecimal houseArea) {
         this.houseArea = houseArea;
     }
+
+    @Column(name="HAVE_DOWN_ROOM",nullable = false)
+    public boolean isHaveDownRoom() {
+        return haveDownRoom;
+    }
+
+    public void setHaveDownRoom(boolean haveDownRoom) {
+        this.haveDownRoom = haveDownRoom;
+    }
+
 
     @Column(name = "PREPARE_AREA", precision = 18, scale = 3)
     public BigDecimal getPrepareArea() {
@@ -225,13 +300,27 @@ public class House implements java.io.Serializable {
         this.commParam = commParam;
     }
 
-    @Column(name = "HOUSE_STATE", nullable = false)
-    public int getHouseState() {
-        return this.houseState;
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "HOUSE_STATUS", nullable = false, length = 32)
+    @NotNull
+    public HouseStatus getMasterStatus() {
+        return masterStatus;
     }
 
-    public void setHouseState(int houseState) {
-        this.houseState = houseState;
+    public void setMasterStatus(HouseStatus masterStatus) {
+        this.masterStatus = masterStatus;
+    }
+
+    @Override
+    @Transient
+    public List<HouseStatus> getAllStatusList() {
+        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
+        for (HouseState state: getHouseStates()){
+            result.add(state.getState());
+        }
+        Collections.sort(result,new StatusComparator());
+        return result;
     }
 
     @Column(name = "HOUSE_TYPE", length = 32)
@@ -255,6 +344,78 @@ public class House implements java.io.Serializable {
         this.useType = useType;
     }
 
+
+    @Override
+    @Transient
+    public String getBuildName() {
+        return getBuild().getBuildName();
+    }
+
+    @Override
+    @Transient
+    public String getBuildCode() {
+        return getBuild().getBuildCode();
+    }
+
+    @Override
+    @Transient
+    public String getLandBlockCode() {
+        return getBuild().getLandBlockCode();
+    }
+
+    @Override
+    @Transient
+    public String getStreetCode() {
+        return getBuild().getStreetCode();
+    }
+
+    @Override
+    @Transient
+    public String getMapNumber() {
+        return getBuild().getMapNumber();
+    }
+
+    @Override
+    @Transient
+    public String getBlockNo() {
+        return getBuild().getBlockNo();
+    }
+
+    @Override
+    @Transient
+    public String getBuildNo() {
+        return getBuild().getBuildNo();
+    }
+
+    @Override
+    @Transient
+    public String getDoorNo() {
+        return getBuild().getDoorNo() + " " + getHouseOrder();
+    }
+
+    @Override
+    @Transient
+    public int getFloorCount() {
+        return getBuild().getFloorCount();
+    }
+
+    @Override
+    @Transient
+    public int getUpFloorCount() {
+        return getBuild().getUpFloorCount();
+    }
+
+    @Override
+    @Transient
+    public int getDownFloorCount() {
+        return getBuild().getDownFloorCount();
+    }
+
+    @Override
+    @Transient
+    public String getBuildType() {
+        return getBuild().getBuildType();
+    }
 
     @Column(name = "STRUCTURE", length = 32, nullable = false)
     @Size(max = 32)
@@ -442,16 +603,6 @@ public class House implements java.io.Serializable {
 
     public void setHouseOwners(Set<HouseOwner> houseOwners) {
         this.houseOwners = houseOwners;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
-    @JoinColumn(name = "LAND_INFO",nullable = true)
-    public LandInfo getLandInfo() {
-        return landInfo;
-    }
-
-    public void setLandInfo(LandInfo landInfo) {
-        this.landInfo = landInfo;
     }
 
     @Transient

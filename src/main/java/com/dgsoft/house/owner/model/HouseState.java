@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.model;
-// Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
+// Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.HouseInState;
+import com.dgsoft.house.HouseInfo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,16 +13,16 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE_STATE", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessHouseState implements java.io.Serializable {
+public class HouseState implements java.io.Serializable {
 
 	private String id;
 	private BusinessHouse businessHouse;
-	private HouseInState state;
+	private HouseInfo.HouseStatus state;
 
-	public BusinessHouseState() {
+	public HouseState() {
 	}
 
-	public BusinessHouseState(BusinessHouse businessHouse, HouseInState state) {
+	public HouseState(BusinessHouse businessHouse, HouseInfo.HouseStatus state) {
 		this.businessHouse = businessHouse;
 		this.state = state;
 	}
@@ -42,7 +42,7 @@ public class BusinessHouseState implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_ID", nullable = false)
+	@JoinColumn(name = "HOUSE", nullable = false)
 	@NotNull
 	public BusinessHouse getBusinessHouse() {
 		return this.businessHouse;
@@ -52,14 +52,15 @@ public class BusinessHouseState implements java.io.Serializable {
 		this.businessHouse = businessHouse;
 	}
 
+
     @Enumerated(EnumType.STRING)
-	@Column(name = "STATE", nullable = false, length = 20)
+	@Column(name = "HOUSE_STATUS", nullable = false, length = 32)
 	@NotNull
-	public HouseInState getState() {
+	public HouseInfo.HouseStatus getState() {
 		return this.state;
 	}
 
-	public void setState(HouseInState state) {
+	public void setState(HouseInfo.HouseStatus state) {
 		this.state = state;
 	}
 

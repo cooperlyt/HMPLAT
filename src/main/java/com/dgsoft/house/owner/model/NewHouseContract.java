@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class NewHouseContract implements java.io.Serializable {
 
 	private String id;
-	private BusinessHouse businessHouse;
+	private HouseBusiness houseBusiness;
 	private String poolMemo;
 	private String housePorperty;
 	private String houseFrom;
@@ -27,11 +27,11 @@ public class NewHouseContract implements java.io.Serializable {
 	public NewHouseContract() {
 	}
 
-	public NewHouseContract(String id, BusinessHouse businessHouse,
+	public NewHouseContract(String id, HouseBusiness houseBusiness,
 			String poolMemo, String housePorperty, String houseFrom,
 			String compactNo, Date signDate, Date recordDate) {
 		this.id = id;
-		this.businessHouse = businessHouse;
+		this.houseBusiness = houseBusiness;
 		this.poolMemo = poolMemo;
 		this.housePorperty = housePorperty;
 		this.houseFrom = houseFrom;
@@ -57,12 +57,12 @@ public class NewHouseContract implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
-	public BusinessHouse getBusinessHouse() {
-		return this.businessHouse;
+	public HouseBusiness getHouseBusiness() {
+		return this.houseBusiness;
 	}
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@Column(name = "POOL_MEMO", nullable = false, length = 32)

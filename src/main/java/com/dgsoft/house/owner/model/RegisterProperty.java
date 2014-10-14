@@ -72,7 +72,7 @@ public class RegisterProperty implements java.io.Serializable {
     public void setPoolMemo(String poolMemo) {
         this.poolMemo = poolMemo;
     }
-    @Column(name = "HOUSE_PROPERTY", length = 32)
+    @Column(name = "HOUSE_PORPERTY", length = 32)
     @Size(max = 32)
     public String getHouseProperty() {
         return houseProperty;

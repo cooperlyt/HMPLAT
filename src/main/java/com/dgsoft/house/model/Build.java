@@ -1,12 +1,10 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import org.hibernate.annotations.GenericGenerator;
+import com.dgsoft.house.BuildInfo;
 
 import java.math.BigDecimal;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.swing.tree.TreeNode;
 import javax.validation.constraints.NotNull;
@@ -18,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "BUILD", catalog = "HOUSE_INFO",uniqueConstraints = {@UniqueConstraint(columnNames = {
         "PROJECT_ID", "BUILD_NO"}),@UniqueConstraint(columnNames = {"BLOCK_NO", "BUILD_NO"})})
-public class Build implements java.io.Serializable,TreeNode {
+public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 
 	private String id;
 	private Integer version;
@@ -28,7 +26,7 @@ public class Build implements java.io.Serializable,TreeNode {
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
-    private String completeDate;
+    private String completeYear;
     private String streetCode;
 	private String name;
 	private String doorNo;
@@ -55,10 +53,8 @@ public class Build implements java.io.Serializable,TreeNode {
 
     private int upFloorCount;
     private int downFloorCount;
-    private boolean haveDownRoom;
 
     private Project project;
-    private ProjectSellCard projectSellCard;
 
     private Set<House> houses = new HashSet<House>(0);
     private Set<BuildGridMap> buildGridMaps = new HashSet<BuildGridMap>(0);
@@ -103,25 +99,51 @@ public class Build implements java.io.Serializable,TreeNode {
 		this.version = version;
 	}
 
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getProject().getDeveloperName();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getProject().getDeveloperCode();
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getProject().getProjectName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getProject().getProjectCode();
+    }
+
+    @Override
+    @Transient
+    public Date getCompleteDate() {
+        return getProject().getCompleteDate();
+    }
+
     @Column(name = "COMPLETE_DATE",length = 6)
     @Size(max = 6)
-    public String getCompleteDate() {
-        return completeDate;
+    public String getCompleteYear() {
+        return completeYear;
     }
 
-    public void setCompleteDate(String completeDate) {
-        this.completeDate = completeDate;
+    @Override
+    @Transient
+    public String getBuildSize() {
+        return getProject().getBuildSize();
     }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD_ID")
-	public ProjectSellCard getProjectSellCard() {
-		return this.projectSellCard;
-	}
-
-	public void setProjectSellCard(ProjectSellCard projectSellCard) {
-		this.projectSellCard = projectSellCard;
-	}
+    public void setCompleteYear(String completeDate) {
+        this.completeYear = completeDate;
+    }
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROJECT_ID", nullable = false)
@@ -365,6 +387,18 @@ public class Build implements java.io.Serializable,TreeNode {
         this.buildGridMaps = buildGridMaps;
     }
 
+    @Override
+    @Transient
+    public String getBuildName() {
+        return getName();
+    }
+
+    @Override
+    @Transient
+    public String getBuildCode() {
+        return getId();
+    }
+
     @Column(name = "LAND_BLOCK_CODE",length = 4)
     @Size(max = 4)
     public String getLandBlockCode() {
@@ -411,15 +445,6 @@ public class Build implements java.io.Serializable,TreeNode {
 
     public void setDownFloorCount(int downFloorCount) {
         this.downFloorCount = downFloorCount;
-    }
-
-    @Column(name="HAVE_DOWN_ROOM",nullable = false)
-    public boolean isHaveDownRoom() {
-        return haveDownRoom;
-    }
-
-    public void setHaveDownRoom(boolean haveDownRoom) {
-        this.haveDownRoom = haveDownRoom;
     }
 
     @Override
@@ -474,4 +499,27 @@ public class Build implements java.io.Serializable,TreeNode {
         };
     }
 
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getProject().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getProject().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getProject().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getProject().getSectionCode();
+    }
 }

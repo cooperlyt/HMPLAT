@@ -54,7 +54,7 @@ public class HouseCodeHelper {
 
                 break;
             case JDJT246_3:
-                String yearStr = build.getCompleteDate().trim();
+                String yearStr = build.getCompleteYear().trim();
                 int j = 6 - yearStr.length();
                 for (int i = 0; i < j; i++) {
                     yearStr = yearStr + "*";

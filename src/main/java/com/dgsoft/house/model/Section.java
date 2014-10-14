@@ -2,6 +2,7 @@ package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.utils.persistence.UniqueVerify;
+import com.dgsoft.house.SectionInfo;
 import com.google.common.collect.Iterators;
 import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.international.StatusMessage;
@@ -18,7 +19,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "SECTION", catalog = "HOUSE_INFO")
 @UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
-public class Section implements java.io.Serializable,TreeNode {
+public class Section implements java.io.Serializable,TreeNode,SectionInfo {
 
 	private String id;
 	private Integer version;
@@ -192,5 +193,29 @@ public class Section implements java.io.Serializable,TreeNode {
     @Transient
     public Enumeration children() {
         return Iterators.asEnumeration(getProjects().iterator());
+    }
+
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getDistrict().getName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getDistrict().getId();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getId();
     }
 }

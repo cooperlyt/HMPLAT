@@ -15,7 +15,7 @@
 
         <h:outputScript>
             function scrollBodyTopTo(pos) {
-            $("html,body").animate({scrollTop: pos});
+                $("html,body").animate({scrollTop: pos});
             }
         </h:outputScript>
 
@@ -30,8 +30,8 @@
             <a:outputPanel id="buildTable">
                 <s:decorate template="/layout/house/BuildsList.xhtml">
                     <ui:param name="noDataLabel" value="#{messages.BuildListEmpty}"/>
-                    <ui:param name="builds" value="#{projectBuilds}"/>
-                    <r:column style="text-align: center; width: 40px" rendered="#{empty projectHome.editingBuild}">
+                    <ui:param name="builds" value="#{projectHome.instance.buildList}"/>
+                    <r:column style="text-align: center; width: 60px" rendered="#{empty projectHome.editingBuild}">
                         <f:facet name="header">
                             <a:commandButton image="/img/icons/create.gif" action="#{projectHome.beginCreateBuild}"
                                              execute="@this" immediate="true"
@@ -45,18 +45,24 @@
                         <a:commandButton image="/img/icons/delete.png" title="#{messages.delete}"
                                          render="buildTable"
                                          onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
-                                         action="#{projectHome.removeBuild}" immediate="true" execute="@this">
+                                         action="#{projectHome.removeProjectBuild}" immediate="true" execute="@this">
+                            <a:param value="#{_build.id}" assignTo="#{projectHome.buildId}"/>
                             <a:attachQueue requestDelay="0"/>
                         </a:commandButton>
-
                         #{' '}
                         <a:commandButton image="/img/icons/edit.png" title="#{messages.edit}"
                                          action="#{projectHome.beginEditBuild}"
                                          render="editPanel,navButtons,buildTable"
                                          oncomplete="scrollBodyTopTo(jQuery(#{r:element('editPanel')}).offset().top)"
                                          execute="@this">
+                            <a:param value="#{_build.id}" assignTo="#{projectHome.buildId}"/>
                             <a:attachQueue requestDelay="0"/>
                         </a:commandButton>
+                        #{' '}
+                        <s:link view="/func/house/datas/BuildGridMapEdit.xhtml" propagation="begin">
+                            <s:graphicImage value="/img/icons/import_table.png"/>
+                            <f:param name="buildId" value="#{_build.id}"/>
+                        </s:link>
 
                     </r:column>
                 </s:decorate>
@@ -88,11 +94,17 @@
                             <h:panelGrid columns="2">
                                 <a:commandButton value="#{messages.cancel}" immediate="true" execute="@this"
                                                  action="#{projectHome.cancelBuildEdit}" styleClass="subbtn"
-                                                 render="buildTable,editPanel,navButtons"/>
+                                                 render="buildTable,editPanel,navButtons">
+                                    <s:conversationPropagation type="end"/>
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandButton>
                                 <a:commandButton value="#{messages.save}" execute="@form"
-                                                 action="#{projectHome.saveBuild}"
+                                                 action="#{projectHome.saveBuildAndUpdateProject}"
                                                  data="#{actionExecuteState.lastState}" styleClass="subbtn"
-                                                 render="buildTable,editPanel,navButtons"/>
+                                                 render="buildTable,editPanel,navButtons">
+                                    <s:conversationPropagation type="end"/>
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandButton>
                             </h:panelGrid>
                         </div>
                     </r:panel>

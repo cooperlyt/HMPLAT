@@ -7,10 +7,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.model.PoolOwner;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
-import com.dgsoft.house.owner.model.BusinessHouse;
-import com.dgsoft.house.owner.model.BusinessHouseOwner;
-import com.dgsoft.house.owner.model.BusinessPool;
-import com.dgsoft.house.owner.model.TaskOper;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -18,6 +15,8 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.log.Logging;
+
+import javax.persistence.NoResultException;
 
 /**
  * Created by cooper on 8/28/14.
@@ -32,26 +31,44 @@ public class HouseBusinessStart {
     @In(create = true)
     private OwnerBusinessHome ownerBusinessHome;
 
-    private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
-
-    private String selectHouseId;
-
-    public String getSelectHouseId() {
-        return selectHouseId;
-    }
-
-    public void setSelectHouseId(String selectHouseId) {
-        this.selectHouseId = selectHouseId;
-    }
-
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
 
-    public String singleHouseSelectet() {
-        Logging.getLog(getClass()).debug("singleHouseSelectet:" + selectHouseId);
+    private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
 
-        ownerBusinessHome.getInstance().getBusinessHouses().clear();
-        ownerBusinessHome.getInstance().getBusinessHouses().add(new BusinessHouse(ownerBusinessHome.getInstance(), houseEntityLoader.getEntityManager().find(House.class, selectHouseId)));
+    //private String selectHouseId;
+
+    public String getSelectHouseCode() {
+        if (selectHouse == null) {
+            return null;
+        }
+        return selectHouse.getHouseCode();
+    }
+
+    public void setSelectHouseCode(String houseCode) {
+        if ((houseCode == null) || houseCode.trim().equals("")) {
+            selectHouse = null;
+        } else {
+            try {
+                HouseRecord houseRecord =
+                        ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class).
+                                setParameter("houseCode",houseCode).getSingleResult();
+                selectHouse = new BusinessHouse(houseRecord.getBusinessHouse());
+            } catch (NoResultException e) {
+                selectHouse = new BusinessHouse(houseEntityLoader.getEntityManager().getReference(House.class,houseCode));
+            }
+        }
+    }
+
+    private BusinessHouse selectHouse;
+
+
+
+
+    public String singleHouseSelectet() {
+
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), selectHouse));
 
         initBusinessData();
         return BUSINESS_START_PAGE;
@@ -63,21 +80,21 @@ public class HouseBusinessStart {
         // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-        for (BusinessHouse businessHouse : ownerBusinessHome.getInstance().getBusinessHouses()) {
-            House house = houseEntityLoader.getEntityManager().find(House.class, businessHouse.getHouseCode());
+        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            House house = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
             if (house != null) {
-                if (house.getHouseOwner() != null){
-                    businessHouse.getBusinessHouseOwners().add(new BusinessHouseOwner(businessHouse,
-                            house.getHouseOwner().getPersonName(),house.getHouseOwner().getCredentialsType(),
-                            house.getHouseOwner().getCredentialsNumber(),house.getHouseOwner().getPhone(),
-                            house.getHouseOwner().getRootAddress(), BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER,house.getMemo()));
+                if (house.getHouseOwner() != null) {
+                    houseBusiness.getBusinessHouseOwners().add(new BusinessHouseOwner(houseBusiness,
+                            house.getHouseOwner().getPersonName(), house.getHouseOwner().getCredentialsType(),
+                            house.getHouseOwner().getCredentialsNumber(), house.getHouseOwner().getPhone(),
+                            house.getHouseOwner().getRootAddress(), BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER, house.getMemo()));
                 }
 
-                for(PoolOwner poolOwner: house.getPoolOwners()){
-                    businessHouse.getBusinessPools().add(new BusinessPool(businessHouse,
-                            BusinessPool.BusinessPoolType.NOW_POOL,poolOwner.getPersonName(),
-                            poolOwner.getCredentialsType(),poolOwner.getCredentialsNumber(),
-                            poolOwner.getRelation(),poolOwner.getArea(),poolOwner.getPerc(),poolOwner.getMemo(),poolOwner.getPhone()));
+                for (PoolOwner poolOwner : house.getPoolOwners()) {
+                    houseBusiness.getBusinessPools().add(new BusinessPool(houseBusiness,
+                            BusinessPool.BusinessPoolType.NOW_POOL, poolOwner.getPersonName(),
+                            poolOwner.getCredentialsType(), poolOwner.getCredentialsNumber(),
+                            poolOwner.getRelation(), poolOwner.getArea(), poolOwner.getPerc(), poolOwner.getMemo(), poolOwner.getPhone()));
                 }
 
             }

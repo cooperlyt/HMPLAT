@@ -24,30 +24,67 @@
 
 <a:queue requestDelay="0" ignoreDupResponses="true"/>
 <h:form>
-<r:toolbar height="30">
-    <r:toolbarGroup>
-        <a:commandLink value="updateFile" onclick="#{r:component('updateFilePopup')}.show(); return false;"/>
-    </r:toolbarGroup>
+    <r:toolbar id="toolbar" itemSeparator="line" height="30">
 
+        <r:toolbarGroup rendered="#{buildHome.buildGridPages.size gt 1}">
 
-    <r:toolbarGroup>
-        <a:commandLink value="update" action="#{buildHome.update}" render="grid_map,idle">
-            <a:attachQueue requestDelay="0"/>
-        </a:commandLink>
-    </r:toolbarGroup>
+            sss
+        </r:toolbarGroup>
 
-    <r:toolbarGroup location="right">
-        <a:status>
-            <f:facet name="start">
-                <h:graphicImage value="/img/connect.gif"/>
-            </f:facet>
-            <f:facet name="stop">
-                <h:graphicImage value="/img/connect_idle.gif"/>
-            </f:facet>
-        </a:status>
-        <h:outputText value="XXX build name"/>
-    </r:toolbarGroup>
-</r:toolbar>
+        <r:toolbarGroup>
+            <h:graphicImage value="/img/icons/create.gif"/>
+            <a:commandLink value="#{(empty buildHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}"
+                           oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{false}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
+            </a:commandLink>
+        </r:toolbarGroup>
+
+        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+            <h:graphicImage value="/img/icons/out_edit.png"/>
+            <a:commandLink value="#{messages.UpdateGridXML}"
+                           onclick="#{r:component('updateFilePopup')}.show(); return false;">
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{true}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
+            </a:commandLink>
+        </r:toolbarGroup>
+
+        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+            <h:graphicImage value="/img/icons/delete.png"/>
+            <a:commandLink value="#{messages.DeletePage}"
+                           onclick="#{r:component('updateFilePopup')}.show(); return false;"/>
+        </r:toolbarGroup>
+
+        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+            <h:graphicImage value="/img/icons/import_table.png"/>
+            <a:commandLink value="#{messages.GridFillNew}"/>
+        </r:toolbarGroup>
+
+        <r:toolbarGroup rendered="#{(not empty buildHome.buildGridPages) and (not empty buildGridMapHome.idleHouses)}">
+            <h:graphicImage value="/img/icons/import_table.png"/>
+            <a:commandLink value="#{messages.GridFillIdle}"/>
+        </r:toolbarGroup>
+
+        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+            <h:graphicImage value="/img/icons/save_all.gif"/>
+
+            <a:commandLink value="#{messages.save}" action="#{buildHome.update}" render="grid_map,idle">
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
+        </r:toolbarGroup>
+
+        <r:toolbarGroup location="right">
+            <a:status>
+                <f:facet name="start">
+                    <h:graphicImage value="/img/connect.gif"/>
+                </f:facet>
+                <f:facet name="stop">
+                    <h:graphicImage value="/img/connect_idle.gif"/>
+                </f:facet>
+            </a:status>
+            <h:outputText value="#{buildHome.instance.name}"/>
+        </r:toolbarGroup>
+    </r:toolbar>
 </h:form>
 
 <r:popupPanel id="updateFilePopup" modal="true" autosized="true" resizeable="false">
@@ -61,6 +98,8 @@
 
 
     <h:form enctype="multipart/form-data">
+
+
         <r:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
                       serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
                       deleteLabel="#{messages.fileUpload_deleteLabel}"
@@ -81,7 +120,7 @@
             <a:ajax event="uploadcomplete"
                     oncomplete="#{r:component('updateFilePopup')}.hide();#{r:component('idleHousePopup')}.show();"
                     execute="@none"
-                    render="grid_map,idle"/>
+                    render="grid_map,idle,toolbar"/>
         </r:fileUpload>
     </h:form>
 </r:popupPanel>
@@ -284,7 +323,8 @@ house.png
                                         </r:menuItem>
                                         <r:menuItem label="edit" mode="ajax" execute="@this"
                                                     action="#{actionExecuteState.clearState}"
-                                                    oncomplete="#{r:component('editPanel')}.show();" render="editPanel_form">
+                                                    oncomplete="#{r:component('editPanel')}.show();"
+                                                    render="editPanel_form">
                                             <a:param name="blockId" value="#{_house.id}"
                                                      assignTo="#{buildGridMapHome.selectBlockId}"/>
                                         </r:menuItem>

@@ -1,9 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.owner.model.*;
+import com.dgsoft.house.ProjectInfo;
 import com.google.common.collect.Iterators;
-import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.international.StatusMessage;
 
 import javax.persistence.*;
@@ -22,7 +21,31 @@ import java.util.*;
 @Entity
 @Table(name = "PROJECT", catalog = "HOUSE_INFO")
 @UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
-public class Project implements java.io.Serializable, TreeNode {
+public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
+
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getSection().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getSection().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getSection().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getSection().getSectionCode();
+    }
 
     public enum ProjectState {
         BUILDING, SALE, LOCKED;
@@ -42,12 +65,10 @@ public class Project implements java.io.Serializable, TreeNode {
     private String memo;
     private Date mapTime;
     private Date createTime;
-    private String completeDate;
-    private LandInfo landInfo;
+    private Date completeDate;
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
-    private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
 
 
     public Project() {
@@ -130,7 +151,7 @@ public class Project implements java.io.Serializable, TreeNode {
         this.address = address;
     }
 
-
+    @Override
     @Column(name = "BUILD_SIZE", length = 32)
     @Size(max = 32)
     public String getBuildSize() {
@@ -232,22 +253,37 @@ public class Project implements java.io.Serializable, TreeNode {
         this.projectBuildProcesses = projectBuildProcesses;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "project")
-    public Set<ProjectSellCard> getProjectSellCards() {
-        return projectSellCards;
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getDeveloper().getName();
     }
 
-    public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-        this.projectSellCards = projectSellCards;
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getDeveloper().getId();
     }
 
-    @Column(name = "COMPLETE_DATE",length = 6)
-    @Size(max = 6)
-    public String getCompleteDate() {
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getId();
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "COMPLETE_DATE",nullable = true)
+    public Date getCompleteDate() {
         return completeDate;
     }
 
-    public void setCompleteDate(String completeDate) {
+    public void setCompleteDate(Date completeDate) {
         this.completeDate = completeDate;
     }
 
@@ -298,13 +334,4 @@ public class Project implements java.io.Serializable, TreeNode {
         return Iterators.asEnumeration(getBuilds().iterator());
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = {CascadeType.ALL})
-    @JoinColumn(name = "LAND_INFO",nullable = true)
-    public LandInfo getLandInfo() {
-        return landInfo;
-    }
-
-    public void setLandInfo(LandInfo landInfo) {
-        this.landInfo = landInfo;
-    }
 }

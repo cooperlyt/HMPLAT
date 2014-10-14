@@ -1,6 +1,5 @@
 package com.dgsoft.house.action;
 
-import com.dgsoft.common.SetLinkList;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
@@ -30,6 +29,32 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     private BuildHome buildHome;
 
 
+    private boolean replaceGridMap;
+
+
+
+    public boolean isReplaceGridMap() {
+        return replaceGridMap;
+    }
+
+    public void setReplaceGridMap(boolean replaceGridMap) {
+        this.replaceGridMap = replaceGridMap;
+    }
+
+    @Override
+    public void create(){
+        super.create();
+        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
+        if (!isIdDefined() && buildHome.isIdDefined() && !gridMaps.isEmpty()){
+            setId(gridMaps.get(0).getId());
+            //TODO getIdleHouse
+        }
+    }
+
+    public void deleteToIdle(){
+        buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+
+    }
 
 
     public void templeteFileUploadListener(FileUploadEvent event) throws Exception {
@@ -40,8 +65,17 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         SAXReader reader = new SAXReader();
         Document doc = reader.read(event.getUploadedFile().getInputStream());
         Element root = doc.getRootElement();
+        if (replaceGridMap){
+
+
+            buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+        }
         clearInstance();
         setInstance(analyzeTemplete(root));
+
+        Logging.getLog(getClass()).debug("replaceGridMap:" + replaceGridMap);
+
+
 
         if (buildHome.isHaveHouse()){
             fillHouse();
