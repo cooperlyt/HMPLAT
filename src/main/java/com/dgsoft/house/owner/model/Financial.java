@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Table(name = "FINANCIAL", catalog = "HOUSE_OWNER_RECORD")
 public class Financial implements java.io.Serializable {
 
+
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private String type;
