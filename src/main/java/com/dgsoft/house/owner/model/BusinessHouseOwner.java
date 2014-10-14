@@ -15,39 +15,24 @@ import javax.validation.constraints.Size;
 @Table(name = "BUSINESS_OWNER", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 
-    public enum HouseOwnerType{
-        NOW_HOUSE_OWNER
-        ,NEW_HOUSE_OWNER;
-
-    }
 
 	private String id;
-	private HouseBusiness houseBusiness;
 	private String personName;
 	private CredentialsType credentialsType;
 	private String credentialsNumber;
 	private String phone;
 	private String rootAddress;
-	private HouseOwnerType type;
-    private String memo;
 
 	public BusinessHouseOwner() {
 	}
 
-    public BusinessHouseOwner(HouseOwnerType type) {
-        this.type = type;
-    }
-
-    public BusinessHouseOwner(HouseBusiness houseBusiness, String personName, CredentialsType credentialsType,
-                              String credentialsNumber, String phone, String rootAddress, HouseOwnerType type,String memo) {
-        this.houseBusiness = houseBusiness;
+    public BusinessHouseOwner(String personName, CredentialsType credentialsType,
+                              String credentialsNumber, String phone, String rootAddress) {
         this.personName = personName;
         this.credentialsType = credentialsType;
         this.credentialsNumber = credentialsNumber;
         this.phone = phone;
         this.rootAddress = rootAddress;
-        this.type = type;
-        this.memo = memo;
     }
 
     @Id
@@ -63,17 +48,6 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HOUSE_ID", nullable = false)
-    @NotNull
-    public HouseBusiness getHouseBusiness() {
-        return houseBusiness;
-    }
-
-    public void setHouseBusiness(HouseBusiness houseBusiness) {
-        this.houseBusiness = houseBusiness;
-    }
 
     @Override
 	@Column(name = "NAME", nullable = false, length = 50)
@@ -132,24 +106,4 @@ public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
 		this.rootAddress = rootAddress;
 	}
 
-    @Enumerated(EnumType.STRING)
-	@Column(name = "TYPE", nullable = false, length = 20)
-	@NotNull
-	public HouseOwnerType getType() {
-		return this.type;
-	}
-
-	public void setType(HouseOwnerType type) {
-		this.type = type;
-	}
-
-    @Column(name="MEMO",nullable = true,length = 200)
-    @Size(max = 200)
-    public String getMemo() {
-        return memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
-    }
 }

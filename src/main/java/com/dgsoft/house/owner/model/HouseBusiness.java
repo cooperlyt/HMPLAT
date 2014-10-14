@@ -23,7 +23,7 @@ public class HouseBusiness implements java.io.Serializable {
     private String houseCode;
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
-    private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
+    private BusinessHouseOwner businessHouseOwner;
     private LandInfo landInfo;
     private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
 
@@ -122,13 +122,14 @@ public class HouseBusiness implements java.io.Serializable {
         this.recordStores = recordStores;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness",orphanRemoval = true, cascade = CascadeType.ALL)
-    public Set<BusinessHouseOwner> getBusinessHouseOwners() {
-        return businessHouseOwners;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "HOUSE_OWNER",nullable = true)
+    public BusinessHouseOwner getBusinessHouseOwner() {
+        return businessHouseOwner;
     }
 
-    public void setBusinessHouseOwners(Set<BusinessHouseOwner> businessHouseOwners) {
-        this.businessHouseOwners = businessHouseOwners;
+    public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
+        this.businessHouseOwner = businessHouseOwner;
     }
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
