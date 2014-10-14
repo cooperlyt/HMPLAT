@@ -94,7 +94,7 @@
                 <ui:define name="label">
                     #{messages.Land_Area}
                 </ui:define>
-                <h:inputText label="#{messages.Land_Area}" id="landArea" value="#{land.instance.area}" size="20">
+                <h:inputText label="#{messages.Land_Area}" id="landArea" value="#{land.instance.landArea}" size="20">
                     <r:validator event="blur"/>
                     <f:validateDoubleRange minimum="0"/>
                     <f:convertNumber pattern="#0.000"/>

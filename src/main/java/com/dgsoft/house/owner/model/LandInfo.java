@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
         , catalog = "HOUSE_OWNER_RECORD"
 )
 public class LandInfo implements java.io.Serializable {
-
+    //原土地信息 now 现土地信息new
     public enum LandInfoType{
         NOW_LAND_INFO,NEW_LAND_INFO;
     }
@@ -37,9 +37,14 @@ public class LandInfo implements java.io.Serializable {
     private LandInfoType type;
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
-    public LandInfo() {
+    public LandInfo(LandInfoType type) {
+        this.type = type;
     }
 
+
+    public LandInfo(){
+
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
