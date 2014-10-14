@@ -131,7 +131,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.businessHouseOwners = businessHouseOwners;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "LAND_INFO", nullable = true)
     public LandInfo getLandInfo() {
         return landInfo;
