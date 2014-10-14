@@ -18,7 +18,6 @@ public class HouseRecord implements java.io.Serializable {
 
 	private String id;
 	private BusinessHouse businessHouse;
-	private LandInfo landInfo;
 	private BusinessHouseOwner businessHouseOwner;
 	private String houseCode;
 	private Set<MakeCard> recordAndCards = new HashSet<MakeCard>(0);
@@ -51,16 +50,6 @@ public class HouseRecord implements java.io.Serializable {
 
 	public void setBusinessHouse(BusinessHouse businessHouse) {
 		this.businessHouse = businessHouse;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "LAND_INFO")
-	public LandInfo getLandInfo() {
-		return this.landInfo;
-	}
-
-	public void setLandInfo(LandInfo landInfo) {
-		this.landInfo = landInfo;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

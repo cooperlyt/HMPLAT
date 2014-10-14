@@ -236,7 +236,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                         houseElement.attributeValue("WestWall", ""),
                         houseElement.attributeValue("SouthWall", ""),
                         houseElement.attributeValue("NorthWall", ""),
-                        houseElement.attributeValue("KnotSize", "")
+                        houseElement.attributeValue("KnotSize", ""),
+                        Boolean.parseBoolean(houseElement.attributeValue("HalfDownRoom","false"))
                 ));
 
                 j++;

@@ -41,6 +41,7 @@ public class GridBlock implements java.io.Serializable {
     private String northWall;
     private String knotSize;
 
+    private boolean haveDownRoom;
 
     public GridBlock() {
     }
@@ -51,7 +52,7 @@ public class GridBlock implements java.io.Serializable {
                      BigDecimal loftArea, BigDecimal commParam, String useType,
                      String structure, String houseType, String houseOrder,
                      String direction, String eastWall, String westWall,
-                     String southWall, String northWall, String knotSize) {
+                     String southWall, String northWall, String knotSize,boolean haveDownRoom) {
         this.gridRow = gridRow;
         this.order = order;
         this.colspan = colspan;
@@ -75,6 +76,7 @@ public class GridBlock implements java.io.Serializable {
         this.southWall = southWall;
         this.northWall = northWall;
         this.knotSize = knotSize;
+        this.haveDownRoom = haveDownRoom;
     }
 
     @Id
@@ -311,5 +313,14 @@ public class GridBlock implements java.io.Serializable {
 
     public void setKnotSize(String knotSize) {
         this.knotSize = knotSize;
+    }
+
+    @Column(name = "HAVE_DOWN_ROOM",nullable = false)
+    public boolean isHaveDownRoom() {
+        return haveDownRoom;
+    }
+
+    public void setHaveDownRoom(boolean haveDownRoom) {
+        this.haveDownRoom = haveDownRoom;
     }
 }

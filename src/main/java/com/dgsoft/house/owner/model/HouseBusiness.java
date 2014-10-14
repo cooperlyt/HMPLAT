@@ -24,7 +24,7 @@ public class HouseBusiness implements java.io.Serializable {
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
-    private Set<LandInfo> landInfos = new HashSet<LandInfo>(0);
+    private LandInfo landInfo;
     private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
 
 
@@ -131,13 +131,14 @@ public class HouseBusiness implements java.io.Serializable {
         this.businessHouseOwners = businessHouseOwners;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", orphanRemoval = true, cascade = CascadeType.ALL)
-    public Set<LandInfo> getLandInfos() {
-        return this.landInfos;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LAND_INFO", nullable = true)
+    public LandInfo getLandInfo() {
+        return landInfo;
     }
 
-    public void setLandInfos(Set<LandInfo> landInfos) {
-        this.landInfos = landInfos;
+    public void setLandInfo(LandInfo landInfo) {
+        this.landInfo = landInfo;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness",orphanRemoval = true, cascade = CascadeType.ALL)

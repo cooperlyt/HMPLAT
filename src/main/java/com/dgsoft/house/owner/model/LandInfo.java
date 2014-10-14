@@ -20,13 +20,9 @@ import javax.validation.constraints.Size;
         , catalog = "HOUSE_OWNER_RECORD"
 )
 public class LandInfo implements java.io.Serializable {
-    //原土地信息 now 现土地信息new
-    public enum LandInfoType{
-        NOW_LAND_INFO,NEW_LAND_INFO;
-    }
+
 
     private String id;
-    private HouseBusiness houseBusiness;
     private String landCardNo;
     private String number;
     private String landProperty;
@@ -34,13 +30,6 @@ public class LandInfo implements java.io.Serializable {
     private Date endUseTime;
     private BigDecimal landArea;
     private String landGetMode;
-    private LandInfoType type;
-    //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
-
-    public LandInfo(LandInfoType type) {
-        this.type = type;
-    }
-
 
     public LandInfo(){
 
@@ -58,16 +47,6 @@ public class LandInfo implements java.io.Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS")
-    public HouseBusiness getHouseBusiness() {
-        return this.houseBusiness;
-    }
-
-    public void setHouseBusiness(HouseBusiness houseBusiness) {
-        this.houseBusiness = houseBusiness;
     }
 
     @Column(name = "LAND_CARD_NO", length = 50)
@@ -147,17 +126,6 @@ public class LandInfo implements java.io.Serializable {
         this.landGetMode = landGetMode;
     }
 
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TYPE", nullable = false, length = 20)
-    @NotNull
-    public LandInfoType getType() {
-        return this.type;
-    }
-
-    public void setType(LandInfoType type) {
-        this.type = type;
-    }
 
 
 }

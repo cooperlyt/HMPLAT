@@ -124,6 +124,7 @@ public class House implements java.io.Serializable, HouseInfo {
     public House(Build build, GridBlock block) {
         this.build = build;
         this.houseArea = block.getArea();
+        this.prepareArea = this.houseArea;
         this.useArea = block.getUseArea();
         this.commArea = block.getCommArea();
         this.commParam = block.getCommParam();
@@ -142,6 +143,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.northWall = block.getNorthWall();
         this.eastWall = block.getEastWall();
         this.masterStatus = HouseStatus.CANTSALE;
+        this.haveDownRoom = block.isHaveDownRoom();
         initRegister = false;
         firmlyPower = false;
         dataSource = HouseDataSource.MAPPING;

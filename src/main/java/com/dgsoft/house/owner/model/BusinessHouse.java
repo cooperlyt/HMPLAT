@@ -72,6 +72,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private String districtName;
 	private Set<HouseBusiness> housesForAfterBusiness;
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
+    private LandInfo landInfo;
 	//private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
 	public BusinessHouse() {
@@ -718,4 +719,14 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.housesForAfterBusiness = housesForAfterBusiness;
 	}
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LAND_INFO",nullable = true)
+    public LandInfo getLandInfo() {
+        return landInfo;
+    }
+
+    public void setLandInfo(LandInfo landInfo) {
+        this.landInfo = landInfo;
+    }
 }
