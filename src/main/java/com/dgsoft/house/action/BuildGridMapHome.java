@@ -32,7 +32,6 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     private boolean replaceGridMap;
 
 
-
     public boolean isReplaceGridMap() {
         return replaceGridMap;
     }
@@ -41,19 +40,108 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         this.replaceGridMap = replaceGridMap;
     }
 
-    @Override
-    public void create(){
-        super.create();
+    public void nextPage(){
         List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
-        if (!isIdDefined() && buildHome.isIdDefined() && !gridMaps.isEmpty()){
-            setId(gridMaps.get(0).getId());
-            //TODO getIdleHouse
+        int nowPage = gridMaps.indexOf(getInstance());
+        if (nowPage < gridMaps.size()){
+            clearInstance();
+            setInstance(gridMaps.get(nowPage + 1));
         }
     }
 
-    public void deleteToIdle(){
-        buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+    public void lastPage(){
+        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
+        clearInstance();
+        setInstance(gridMaps.get(gridMaps.size() - 1));
+    }
 
+    public void firstPage(){
+        clearInstance();
+        setInstance(buildHome.getBuildGridPages().get(0));
+    }
+
+    public void previousPage(){
+        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
+        int nowPage = gridMaps.indexOf(getInstance());
+        if (nowPage >= 1){
+            clearInstance();
+            setInstance(gridMaps.get(nowPage - 1));
+        }
+    }
+
+    private int gotoPage;
+
+
+    public int getGotoPage() {
+        return gotoPage;
+    }
+
+    public void setGotoPage(int gotoPage) {
+        this.gotoPage = gotoPage;
+    }
+
+    public void toPage(){
+
+        for(BuildGridMap buildGridMap: buildHome.getBuildGridPages()){
+            if(buildGridMap.getOrder() == gotoPage){
+                clearInstance();
+                setInstance(buildGridMap);
+                break;
+            }
+        }
+    }
+
+    private void initIdleHouse() {
+        List<House> result = new ArrayList<House>();
+        for (BuildGridMap gridMap : buildHome.getInstance().getBuildGridMaps()) {
+            for (GridRow gridRow : gridMap.getGridRows()) {
+                for (GridBlock gridBlock : gridRow.getGridBlocks()) {
+                    if (gridBlock.getHouse() != null)
+                        result.add(gridBlock.getHouse());
+                }
+            }
+        }
+        idleHouses.clear();
+        idleHouses.addAll(buildHome.getInstance().getHouses());
+        idleHouses.removeAll(result);
+    }
+
+
+    @Override
+    public void create() {
+        super.create();
+        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
+        if (!isIdDefined() && buildHome.isIdDefined() && !gridMaps.isEmpty()) {
+            setId(gridMaps.get(0).getId());
+            initIdleHouse();
+        }
+    }
+
+    public void deleteToIdle() {
+        for (GridRow gridRow : getInstance().getGridRows()) {
+            for (GridBlock gridBlock : gridRow.getGridBlocks()) {
+                if (gridBlock.getHouse() != null)
+                    idleHouses.add(gridBlock.getHouse());
+            }
+        }
+
+        buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+    }
+
+    public void matchIdle(){
+        for (GridRow gridRow : getInstance().getGridRows()) {
+            for (GridBlock gridBlock : gridRow.getGridBlocks()) {
+                if (gridBlock.getHouse() == null){
+                    for(House house: idleHouses){
+                        if (house.getHouseOrder().equals(gridBlock.getHouseOrder())){
+                            gridBlock.setHouse(house);
+                            idleHouses.remove(house);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -65,37 +153,54 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         SAXReader reader = new SAXReader();
         Document doc = reader.read(event.getUploadedFile().getInputStream());
         Element root = doc.getRootElement();
-        if (replaceGridMap){
-
-
-            buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+        Logging.getLog(getClass()).debug("replaceGridMap:" + replaceGridMap);
+        int order;
+        String gridMapName = buildHome.getInstance().getName();
+        if (replaceGridMap) {
+            order = getInstance().getOrder();
+            gridMapName = getInstance().getName();
+            deleteToIdle();
+        }else{
+            order = 0;
         }
         clearInstance();
-        setInstance(analyzeTemplete(root));
-
-        Logging.getLog(getClass()).debug("replaceGridMap:" + replaceGridMap);
 
 
+        buildHome.getInstance().getBuildGridMaps().add(getInstance());
+        getInstance().setBuild(buildHome.getInstance());
+        if (!replaceGridMap){
 
-        if (buildHome.isHaveHouse()){
-            fillHouse();
+            for(BuildGridMap gridMap: buildHome.getBuildGridPages()){
+                if (gridMap.getOrder() > order){
+                    order = gridMap.getOrder();
+                }
+            }
+            order = order + 1;
+            if (order != 1){
+                gridMapName = gridMapName + "-" + order;
+            }
+
+        }
+        getInstance().setOrder(order);
+        getInstance().setName(gridMapName);
+
+        analyzeTemplete(root);
+
+        if (!idleHouses.isEmpty()){
+            matchIdle();
         }else{
             generateHouse();
         }
-
     }
 
-    private BuildGridMap analyzeTemplete(Element rootElement) {
-        BuildGridMap result = new BuildGridMap();
-        result.setName(buildHome.getInstance().getName());
-        buildHome.getInstance().getBuildGridMaps().add(result);
-        result.setBuild(buildHome.getInstance());
+    private void analyzeTemplete(Element rootElement) {
+
         Iterator<Element> iterator = rootElement.element("HEAD").elementIterator();
         int i = 0;
         while (iterator.hasNext()) {
             Element unitElement = iterator.next();
-            result.getHouseGridTitles().add(
-                    new HouseGridTitle(result, i,
+            getInstance().getHouseGridTitles().add(
+                    new HouseGridTitle(getInstance(), i,
                             unitElement.attributeValue("title", ""),
                             Integer.parseInt(unitElement.attributeValue("colSpan", "1"))));
             i++;
@@ -104,7 +209,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         i = 0;
         while (iterator.hasNext()) {
             Element floorElement = iterator.next();
-            GridRow floor = new GridRow(result, floorElement.attributeValue("title", ""), i,
+            GridRow floor = new GridRow(getInstance(), floorElement.attributeValue("title", ""), i,
                     Integer.parseInt(floorElement.attributeValue("floor", "0")));
             Iterator<Element> houseIterator = floorElement.elementIterator();
             int j = 0;
@@ -125,22 +230,22 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                         houseElement.attributeValue("UseType", ""),
                         houseElement.attributeValue("Structure", ""),
                         houseElement.attributeValue("HouseType", ""),
-                        houseElement.attributeValue("Order",""),
-                        houseElement.attributeValue("Direction",""),
-                        houseElement.attributeValue("EastWall",""),
-                        houseElement.attributeValue("WestWall",""),
-                        houseElement.attributeValue("SouthWall",""),
-                        houseElement.attributeValue("NorthWall",""),
-                        houseElement.attributeValue("KnotSize","")
+                        houseElement.attributeValue("Order", ""),
+                        houseElement.attributeValue("Direction", ""),
+                        houseElement.attributeValue("EastWall", ""),
+                        houseElement.attributeValue("WestWall", ""),
+                        houseElement.attributeValue("SouthWall", ""),
+                        houseElement.attributeValue("NorthWall", ""),
+                        houseElement.attributeValue("KnotSize", "")
                 ));
 
                 j++;
             }
 
-            result.getGridRows().add(floor);
+            getInstance().getGridRows().add(floor);
             i++;
         }
-        return result;
+        //return result;
     }
 
 
@@ -165,22 +270,14 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         this.idleHouses = idleHouses;
     }
 
-    public void fillHouse(){
-
-    }
-
     public void generateHouse() {
-        //TODO other info
-        log.debug("generate House");
-
         for (GridRow row : getInstance().getGridRowList()) {
 
             for (GridBlock block : row.getGridBlockList()) {
-                House newHouse = new House(buildHome.getInstance(),block);
+                House newHouse = new House(buildHome.getInstance(), block);
                 block.setHouse(newHouse);
                 buildHome.getHouses().add(newHouse);
             }
-
         }
     }
 
@@ -197,7 +294,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     }
 
     public GridBlock getOperBlock() {
-        if ((operBlock == null) || (!operBlock.getId().equals(selectBlockId))){
+        if ((operBlock == null) || (!operBlock.getId().equals(selectBlockId))) {
             operBlock = null;
             for (GridRow row : getInstance().getGridRowList()) {
                 for (GridBlock block : row.getGridBlocks()) {
@@ -224,7 +321,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         }
     }
 
-    private boolean deleteHouse(House house){
+    private boolean deleteHouse(House house) {
         if (getEntityManager().contains(house)) {
             //TODO if canDelete
             house.getGridBlock().clear();
@@ -238,7 +335,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         GridBlock block = getOperBlock();
         if (block != null) {
             if (block.getHouse() != null) {
-                if (deleteHouse(block.getHouse())){
+                if (deleteHouse(block.getHouse())) {
                     block.setHouse(null);
                 }
             }
@@ -246,10 +343,10 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         }
     }
 
-    public void deleteIdleHouse(){
-        for (House house: idleHouses){
-            if (house.getId().equals(selectBlockId)){
-                if (deleteHouse(house)){
+    public void deleteIdleHouse() {
+        for (House house : idleHouses) {
+            if (house.getId().equals(selectBlockId)) {
+                if (deleteHouse(house)) {
                     idleHouses.remove(house);
                 }
                 return;
@@ -262,20 +359,20 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         log.debug("processDrop");
 
         GridBlock targetBlock = (GridBlock) dropEvent.getDropValue();
-        if(dropEvent.getDragValue() instanceof GridBlock){
+        if (dropEvent.getDragValue() instanceof GridBlock) {
 
             House tempHouse = targetBlock.getHouse();
             targetBlock.setHouse(((GridBlock) dropEvent.getDragValue()).getHouse());
             ((GridBlock) dropEvent.getDragValue()).setHouse(tempHouse);
-        }else if (dropEvent.getDragValue() instanceof House){
-            House tempHouse = (House)dropEvent.getDragValue();
-            if (targetBlock.getHouse() != null){
+        } else if (dropEvent.getDragValue() instanceof House) {
+            House tempHouse = (House) dropEvent.getDragValue();
+            if (targetBlock.getHouse() != null) {
                 idleHouses.add(targetBlock.getHouse());
             }
             targetBlock.setHouse(tempHouse);
             idleHouses.remove(tempHouse);
-        }else {
-            House newHouse = new House(buildHome.getInstance(),targetBlock);
+        } else {
+            House newHouse = new House(buildHome.getInstance(), targetBlock);
             targetBlock.setHouse(newHouse);
             buildHome.getHouses().add(newHouse);
         }
