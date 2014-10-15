@@ -14,17 +14,21 @@ import javax.validation.constraints.Size;
 @Table(name = "FINANCIAL", catalog = "HOUSE_OWNER_RECORD")
 public class Financial implements java.io.Serializable {
 
-
+    public enum FinancialType{OLD,NOW};
 	private String id;
 	private OwnerBusiness ownerBusiness;
-	private String type;
+	private FinancialType type;
 	private String name;
 	private String code;
 
 	public Financial() {
 	}
 
-	public Financial(String id, OwnerBusiness ownerBusiness, String type,
+    public Financial(FinancialType type){
+        this.type = type;
+    }
+
+	public Financial(String id, OwnerBusiness ownerBusiness, FinancialType type,
 			String name, String code) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
@@ -58,14 +62,14 @@ public class Financial implements java.io.Serializable {
 		this.ownerBusiness = ownerBusiness;
 	}
 
-	@Column(name = "TYPE", nullable = false, length = 10)
+	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 10)
-	public String getType() {
+    @Enumerated(EnumType.STRING)
+	public FinancialType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(FinancialType type) {
 		this.type = type;
 	}
 

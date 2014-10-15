@@ -30,6 +30,11 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo>  {
 
 
 
+
+
+
+
+
     @Override
     public void create(){
         super.create();
