@@ -1,9 +1,7 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.OwnerBusiness;
-import com.dgsoft.house.owner.model.Reason;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.Name;
 
 import java.util.Date;
@@ -28,6 +26,24 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
                }
            }
            return null;
+    }
+
+    public Card getCardByType(String typeName){
+        for (Card card:getInstance().getCards()){
+            if (card.getType().equals(Card.CardType.valueOf(Card.CardType.class,typeName))){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public BusinessPersion getBusinessPersionType(String typeName){
+        for (BusinessPersion businessPersion:getInstance().getBusinessPersions()){
+            if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class, typeName))){
+               return businessPersion;
+            }
+        }
+        return null;
     }
 
     public HouseBusiness getSingleHoues() {
