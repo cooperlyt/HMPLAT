@@ -12,8 +12,9 @@ import org.jboss.seam.annotations.Name;
  */
 @Name("financialNowSubscribe")
 public class FinancialNowSubscribe extends BaseFinancialSubscribe {
+
     @Override
-    protected Financial.FinancialType getType() {
-        return Financial.FinancialType.NOW;  //To change body of implemented methods use File | Settings | File Templates.
+    protected Financial.FinancialUseType getType() {
+        return Financial.FinancialUseType.NOW;
     }
 }

@@ -1,14 +1,18 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.model.EvaluateCorporation;
-import com.dgsoft.house.model.FinancialCorporation;
+import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.PersonEntityHomeHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.log.Logging;
 
 import javax.faces.event.ValueChangeEvent;
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,10 +26,65 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-    @In(create = true)
-    private HouseEntityLoader houseEntityLoader;
+    private PersonEntityHomeHelper<Financial> personEntityHelper = new PersonEntityHomeHelper<Financial>(this);
 
-    protected abstract Financial.FinancialType getType();
+    public PersonEntityHomeHelper<Financial> getPersonEntityHelper() {
+        return personEntityHelper;
+    }
+
+    public Financial.FinancialType[] getFinancialTypes(){
+        return Financial.FinancialType.values();
+    }
+
+    protected abstract Financial.FinancialUseType getType();
+
+    private boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public String getSelectName(){
+        return getInstance().getName();
+    }
+
+    public void setSelectName(String name){
+        selected = (name != null) && (!name.trim().equals(""));
+        getInstance().setName(name);
+
+        if (selected) {
+            try {
+                Date maxDate = getEntityManager().createQuery("select max(f.createTime) from Financial f where f.phone != null and f.name = :name and not (f.ownerBusiness.status in ('MODIFY', 'MODIFYING','ABORT', 'SUSPEND'))", Date.class).setParameter("name", name).getSingleResult();
+
+                getInstance().setPhone(getEntityManager().createQuery("select max(f.phone) from Financial f where f.createTime >= :maxDate and f.phone != null and f.name = :name and not (f.ownerBusiness.status in ('MODIFY', 'MODIFYING','ABORT', 'SUSPEND'))", String.class).setParameter("name",name).setParameter("maxDate", maxDate).getSingleResult());
+
+
+            } catch (NoResultException e1) {
+                getInstance().setPhone(null);
+            }
+        }else{
+            getInstance().setPhone(null);
+        }
+    }
+
+    public List<String> getFinancialCorpNames() {
+        if((getFilterBank() != null) && (!getFilterBank().trim().equals("")) ){
+            return new ArrayList<String>(getEntityManager().
+                    createQuery("select distinct f.name from Financial f where f.bank = :bank and not (f.ownerBusiness.status in ('MODIFY', 'MODIFYING','ABORT', 'SUSPEND'))",String.class).setParameter("bank",getFilterBank()).getResultList());
+        }
+        return new ArrayList<String>(0);
+    }
+
+    public void setFilterBank(String bankId){
+        getInstance().setBank(bankId);
+        getInstance().setName(null);
+        getInstance().setCode(null);
+        getInstance().setPhone(null);
+    }
+
+    public String getFilterBank(){
+        return getInstance().getBank();
+    }
 
     @Override
     protected Financial createInstance() {
@@ -40,7 +99,6 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
     @Override
     public void create(){
         super.create();
-        // ownerBusinessHome.getSingleHoues().getOwnerBusiness().getFinancials()
         for(Financial financial:ownerBusinessHome.getInstance().getFinancials()){
             if(financial.getType().equals(getType())){
                 setId(financial.getId());
@@ -51,8 +109,14 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
         ownerBusinessHome.getInstance().getFinancials().add(getInstance());
     }
 
-    public void valueChangeListener(ValueChangeEvent e){
-       getInstance().setName(houseEntityLoader.getEntityManager().find(FinancialCorporation.class,e.getNewValue()).getName());
-       getInstance().setPhone(houseEntityLoader.getEntityManager().find(FinancialCorporation.class,e.getNewValue()).getAttachCorporation().getPhone());
+    public void typeChangeListener(ValueChangeEvent e){
+        if (Financial.FinancialType.FINANCE_CORP.equals(e.getNewValue())){
+            Logging.getLog(getClass()).debug("type is finance corp");
+            getInstance().setCredentialsType(PersonEntity.CredentialsType.OTHER);
+        }else{
+            getInstance().setCredentialsType(PersonEntity.CredentialsType.MASTER_ID);
+        }
+
     }
+
 }

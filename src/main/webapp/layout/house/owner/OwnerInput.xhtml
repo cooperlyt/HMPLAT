@@ -13,7 +13,7 @@
             <ui:define name="label">
                 #{messages.BusinessOwner_Phone}
             </ui:define>
-            <h:inputText label="#{messages.BusinessOwner_Phone}" size="20" disabled="#{personEntityHelper.manager}"
+            <h:inputText label="#{messages.BusinessOwner_Phone}" size="20" maxlength="15"
                          value="#{owner.phone}" required="true" id="persionPhoneInput">
                 <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
                 <r:validator event="blur"/>
@@ -28,7 +28,7 @@
             <ui:define name="label">
                 #{messages.BusinessOwner_RootAddress}
             </ui:define>
-            <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="40" maxlength="50" disabled="#{personEntityHelper.manager}"
+            <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="40" maxlength="50"
                          value="#{owner.rootAddress}" id="persionRootAddressInput">
                 <r:validator event="blur"/>
             </h:inputText>
