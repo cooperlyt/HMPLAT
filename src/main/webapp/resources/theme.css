@@ -95,6 +95,18 @@ select {
 	background-image: url(../img/msgwarn.png);
 }
 
+.label_column{
+    vertical-align: top;
+    font-weight: bold;
+    width: 115px;
+    padding: 0px;
+}
+
+.value_column{
+    padding: 0px;
+
+}
+
 .name {
 	vertical-align: top;
 	font-weight: bold;
@@ -147,6 +159,11 @@ select {
 
 .small_value{
     padding: 5px;
+}
+
+.value_button{
+    float: left;
+    padding: 4px;
 }
 
 .value {

@@ -86,15 +86,18 @@
 
         <r:column style="width: 60px; text-align: center;">
             <f:facet name="header">
-                <a:commandButton image="/img/icons/id_card_read_btn.png" title="#{messages.AddPoolOwnerFromCard}"/>
+                <a:commandButton image="/img/icons/read_card.png" title="#{messages.AddPoolOwnerFromCard}"/>
                 #{' '}
                 <a:commandButton execute="@this" immediate="true" title="#{messages.AddPoolOwner}"
                                  action="#{subscribeComponent.addNewOwner}"
-                                 image="/img/icons/add_card.png" render="poolTable">
+                                 image="/img/icons/item_add.png" render="poolTable">
                     <a:attachQueue requestDelay="0"/>
                 </a:commandButton>
             </f:facet>
 
+            <a:commandButton image="/img/icons/card_info.png" title="#{messages.Card_Inof}"
+                             execute="@this" immediate="true"
+                             render="viewCredntials"/>
 
             #{' '}
             <a:commandButton execute="@this" immediate="true" title="#{messages.AddPoolOwner}"

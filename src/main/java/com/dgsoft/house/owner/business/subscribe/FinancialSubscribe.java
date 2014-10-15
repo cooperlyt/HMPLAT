@@ -6,6 +6,7 @@ import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 
 import javax.faces.event.ValueChangeEvent;
@@ -21,7 +22,8 @@ import java.util.List;
  * Time: 下午4:55
  * To change this template use File | Settings | File Templates.
  */
-public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> {
+@Name("financialSubscribe")
+public class FinancialSubscribe extends OwnerEntityHome<Financial> {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -35,8 +37,6 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
     public Financial.FinancialType[] getFinancialTypes(){
         return Financial.FinancialType.values();
     }
-
-    protected abstract Financial.FinancialUseType getType();
 
     private boolean selected;
 
@@ -88,7 +88,7 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
 
     @Override
     protected Financial createInstance() {
-        return new Financial(getType());
+        return new Financial(Financial.FinancialUseType.NOW);
     }
 
     @Override
@@ -100,7 +100,7 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
     public void create(){
         super.create();
         for(Financial financial:ownerBusinessHome.getInstance().getFinancials()){
-            if(financial.getType().equals(getType())){
+            if(financial.getType().equals(Financial.FinancialUseType.NOW)){
                 setId(financial.getId());
                 return;
             }

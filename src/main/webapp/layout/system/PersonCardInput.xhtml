@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+    <!-- param: personEntityHelper  , render-->
+
+    <h:outputStylesheet>
+        .credentialsTypeSelectWidth input[type="text"] {
+            width: 100px;
+        }
+    </h:outputStylesheet>
+
+    <a:region>
+        <span class="value">
+            <h:selectOneMenu id="credentialsType" label="#{messages.person_field_credentialsType}"
+                             styleClass="credentialsTypeSelectWidth" listWidth="140px"
+                             value="#{personEntityHelper.credentialsType}" required="true">
+                <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+                <s:convertEnum/>
+                <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
+                        render="credentialsNumber,#{render}"
+                        execute="@this" status="waitSearchPerson">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
+            </h:selectOneMenu>
+        </span>
+        <span class="value">
+            <h:inputText id="credentialsNumber" disabled="#{personEntityHelper.credentialsType.name() eq 'OTHER'}"
+                         label="#{messages.person_field_credentialsNO}"
+                         required="true"
+                         size="25"
+                         maxlength="100"
+                         value="#{personEntityHelper.credentialsNumber}">
+                <a:ajax event="blur" render="credentialsNumber,viewCardButton,#{render}"
+                        listener="#{personEntityHelper.numberChange}" execute="@region">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
+            </h:inputText>
+        </span>
+
+        <a:outputPanel id="viewCardButton">
+
+            <s:span styleClass="value_button" rendered="#{personEntityHelper.manager}">
+
+                <a:commandButton image="/img/icon24/card_info.png" title="#{messages.Card_Inof}"
+                                 execute="@this" immediate="true"
+                                 render="viewCredntials"/>
+            </s:span>
+
+        </a:outputPanel>
+
+        <span class="value_button">
+
+            <a:commandButton image="/img/icon24/read_card.png" title="#{messages.Read_Master_Card}"
+                             execute="@this" immediate="true"
+                             render="credentialsNumber,credentialsType,viewCardButton,#{render}"/>
+        </span>
+
+
+
+        <span class="value">
+
+
+                    <r:message for="credentialsNumber" styleClass="message-icon"
+                                           rendered="#{(not empty tipMsg) and tipMsg}"
+                                           showDetail="true" showSummary="true" tooltip="true"/>
+
+                    <r:message for="credentialsNumber" rendered="#{(empty tipMsg) or (not tipMsg)}"/>
+        </span>
+
+
+    </a:region>
+
+</ui:composition>

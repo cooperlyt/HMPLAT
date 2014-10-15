@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <s:decorate template="/layout/edit-multi.xhtml">
+        <ui:param name="req" value="true"/>
+        <ui:define name="label">
+            #{label}
+        </ui:define>
+        <ui:define name="values">
+            <h:panelGroup>
+
+                <span class="value">
+                    <h:selectOneMenu value="#{financialSubscribe.instance.financialType}"
+                                     id="typeSelectInput"
+                                     label="#{label}#{messages.FinancialType}" required="true"
+                                     valueChangeListener="#{financialSubscribe.typeChangeListener}">
+                        <s:selectItems value="#{financialSubscribe.financialTypes}"
+                                       var="_type" itemValue="#{_type}" label="#{messages[_type.name()]}"/>
+                        <a:ajax event="valueChange" execute="@this" render="financialCorpSelect,phoneOutPut">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+
+                    </h:selectOneMenu>
+                </span>
+                <a:outputPanel id="financialCorpSelect">
+
+                    <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                        <ui:include src="/layout/system/PersonCardInput.xhtml">
+                            <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
+                            <ui:param name="render" value="phoneOutPut"/>
+                        </ui:include>
+                    </a:outputPanel>
+
+                    <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
+                        <span class="value">
+                        <h:selectOneMenu style="width:150px" required="true"
+                                         label="#{label}" id="bankSelectInput"
+                                         value="#{financialSubscribe.filterBank}">
+                            <s:selectItems var="_word" label="#{_word.value}"
+                                           itemValue="#{_word.id}"
+                                           value="#{dictionary.getWordList('erp.bank')}"
+                                           noSelectionLabel="#{messages.noSelectLabel}"/>
+                            <a:ajax event="valueChange" execute="@this" render="bankForkSelect">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
+                        </h:selectOneMenu>
+                        </span>
+                        <a:outputPanel id="bankForkSelect">
+                            <a:outputPanel rendered="#{not empty financialSubscribe.filterBank}">
+                                <span class="value">
+                                <h:selectOneMenu label="#{messages.Financial}"
+                                                 value="#{financialSubscribe.selectName}">
+                                    <s:selectItems var="_fork" label="#{_fork}"
+                                                   itemValue="#{_fork}"
+                                                   value="#{financialSubscribe.financialCorpNames}"
+                                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+
+                                    <a:ajax event="valueChange" execute="@this" render="phoneOutPut"/>
+                                </h:selectOneMenu>
+                                </span>
+                            </a:outputPanel>
+
+                        </a:outputPanel>
+                        <span class="value">
+                        <r:message for="typeSelectInput" style="float: left;"/>
+                        </span>
+                        <span class="value">
+                        <r:message for="bankSelectInput" style="float: left;"/>
+                        </span>
+                    </a:outputPanel>
+                </a:outputPanel>
+
+
+
+
+            </h:panelGroup>
+
+
+            <a:outputPanel id="phoneOutPut">
+                <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
+                    <div style="clear: both;"/>
+                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+                    <s:decorate template="/layout/edit.xhtml">
+                        <ui:define name="label">
+                            #{messages.Financial_name}
+                        </ui:define>
+
+                        <h:inputTextarea id="financeNameInput" required="true"
+                                         value="#{financialSubscribe.instance.name}" cols="40" rows="3"
+                                         disabled="#{financialSubscribe.selected}"/>
+
+                        <ui:define name="tail">
+                            <r:message for="financeNameInput"/>
+                        </ui:define>
+                    </s:decorate>
+
+                    <s:decorate template="/layout/edit.xhtml">
+                        <ui:define name="label">
+                            #{messages.Tel}
+                        </ui:define>
+                        <h:inputText id="financePhoneIpnut" value="#{financialSubscribe.instance.phone}" size="15"
+                                     maxlength="15"/>
+                        <ui:define name="tail">
+                            <r:message for="financePhoneIpnut"/>
+                        </ui:define>
+                    </s:decorate>
+
+                    <div style="clear: both;"/>
+
+                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+
+                </a:outputPanel>
+
+                <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                    <div style="clear: both;"/>
+                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+                    
+                    <ui:include src="/layout/system/PersonNameInput.xhtml">
+                        <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
+                    </ui:include>
+
+                    <s:decorate template="/layout/edit.xhtml">
+                        <ui:define name="label">
+                            #{messages.Tel}
+                        </ui:define>
+                        <h:inputText label="#{messages.Tel}" size="15" maxlength="15"
+                                     value="#{financialSubscribe.instance.phone}"/>
+                    </s:decorate>
+
+                    <div style="clear: both;"/>
+                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+                </a:outputPanel>
+            </a:outputPanel>
+        </ui:define>
+
+
+    </s:decorate>
+
+
+</ui:composition>
