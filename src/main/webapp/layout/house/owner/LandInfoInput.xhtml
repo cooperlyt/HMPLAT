@@ -108,7 +108,7 @@
                 <ui:define name="label">
                     #{messages.Land_LandProperty}
                 </ui:define>
-                <h:selectOneMenu id="landProperty" label="#{message.Land_LandProperty}" value="#{land.instance.landProperty}"
+                <h:selectOneMenu  id="landProperty" label="#{message.landArea}" value="#{land.instance.landProperty}"
                                  style="width:140px">
                     <s:selectItems value="#{dictionary.getWordList('32')}" var="_word"
                                    itemValue="#{_word.id}" label="#{_word.value}"
