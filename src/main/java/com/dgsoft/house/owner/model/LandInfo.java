@@ -32,7 +32,16 @@ public class LandInfo implements java.io.Serializable {
     private String landGetMode;
 
     public LandInfo(){
+    }
 
+    public LandInfo(LandInfo landInfo){
+        this.landCardNo = landInfo.getLandCardNo();
+        this.number = landInfo.getNumber();
+        this.landProperty = landInfo.getLandProperty();
+        this.beginUseTime = landInfo.getBeginUseTime();
+        this.endUseTime = landInfo.getEndUseTime();
+        this.landArea = landInfo.getLandArea();
+        this.landGetMode = landInfo.getLandGetMode();
     }
 
     @Id

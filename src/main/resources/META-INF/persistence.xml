@@ -121,6 +121,7 @@
         <class>com.dgsoft.house.owner.model.HouseRecord</class>
         <class>com.dgsoft.house.owner.model.RecordStore</class>
         <class>com.dgsoft.house.owner.model.MakeCard</class>
+        <class>com.dgsoft.house.owner.model.OtherPowerCard</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

@@ -104,13 +104,26 @@ public class HouseBusiness implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness",orphanRemoval = true, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class,cascade = CascadeType.ALL)
+    @JoinTable(name = "BUSINESS_AND_POOL", joinColumns = @JoinColumn(name = "BUSINESS"), inverseJoinColumns = @JoinColumn(name = "POOL_OWNER"))
     public Set<BusinessPool> getBusinessPools() {
         return this.businessPools;
     }
 
     public void setBusinessPools(Set<BusinessPool> businessPools) {
         this.businessPools = businessPools;
+    }
+
+    @Transient
+    public List<BusinessPool> getBusinessPoolList(){
+        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
+        Collections.sort(result, new Comparator<BusinessPool>() {
+            @Override
+            public int compare(BusinessPool o1, BusinessPool o2) {
+                return o1.getCreateTime().compareTo(o2.getCreateTime());
+            }
+        });
+        return result;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness",cascade = CascadeType.ALL)
@@ -149,44 +162,6 @@ public class HouseBusiness implements java.io.Serializable {
 
     public void setNewHouseContracts(Set<NewHouseContract> newHouseContracts) {
         this.newHouseContracts = newHouseContracts;
-    }
-
-    @Transient
-    public List<BusinessPool> getPoolsByType(BusinessPool.BusinessPoolType type) {
-        List<BusinessPool> result = new ArrayList<BusinessPool>();
-        for (BusinessPool pool : getBusinessPools()) {
-            if (type.equals(pool.getType())) {
-                result.add(pool);
-            }
-        }
-
-        Collections.sort(result, new Comparator<BusinessPool>() {
-            @Override
-            public int compare(BusinessPool o1, BusinessPool o2) {
-                if ((o1.getPoolArea() == null) && (o2.getPoolArea() == null)) {
-                    return 0;
-                } else if (o1.getPoolArea() == null) {
-                    return 1;
-                } else if (o2.getPoolArea() == null) {
-                    return -1;
-                } else
-                    return o1.getPoolArea().compareTo(o2.getPoolArea());
-
-            }
-        });
-
-        return result;
-    }
-
-
-    @Transient
-    public List<BusinessPool> getNowPools() {
-        return getPoolsByType(BusinessPool.BusinessPoolType.NOW_POOL);
-    }
-
-    @Transient
-    public List<BusinessPool> getNewPools() {
-        return getPoolsByType(BusinessPool.BusinessPoolType.NEW_POOL);
     }
 
 }

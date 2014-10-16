@@ -7,19 +7,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <div style="clear: both;"/>
-
-    <h:outputText value="#{messages.NewHouseOwner}" styleClass="name"/><br/>
-
-    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-
-    <ui:include src="/layout/house/owner/OwnerInput.xhtml">
-        <ui:param name="owner" value="#{newHouseOwnerSubscribe.instance}"/>
-        <ui:param name="personEntityHelper" value="#{newHouseOwnerSubscribe.houseOwnerEntityHelper}"/>
+    <ui:include src="BusinessHouseOwnerEdit.xhtml">
+        <ui:param name="label" value="#{messages.NewHouseOwner}"/>
     </ui:include>
-
-    <div style="clear: both"/>
-
-    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
 
 </ui:composition>

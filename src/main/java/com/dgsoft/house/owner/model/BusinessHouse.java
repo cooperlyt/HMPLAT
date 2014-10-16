@@ -73,6 +73,10 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private Set<HouseBusiness> housesForAfterBusiness;
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
     private LandInfo landInfo;
+    private BusinessHouseOwner businessHouseOwner;
+    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
+    private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
+
 	//private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
 	public BusinessHouse() {
@@ -127,6 +131,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.sectionName = houseInfo.getSectionName();
         this.districtCode = houseInfo.getDistrictCode();
         this.districtName = houseInfo.getDistrictName();
+        for(HouseStatus status: houseInfo.getAllStatusList()){
+            getHouseStates().add(new HouseState(this,status));
+        }
     }
 
     public BusinessHouse(BusinessHouse businessHouse){
@@ -720,7 +727,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	}
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "LAND_INFO",nullable = true)
     public LandInfo getLandInfo() {
         return landInfo;
@@ -728,5 +735,60 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setLandInfo(LandInfo landInfo) {
         this.landInfo = landInfo;
+    }
+
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "HOUSE_OWNER",nullable = true)
+    public BusinessHouseOwner getBusinessHouseOwner() {
+        return businessHouseOwner;
+    }
+
+    public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
+        this.businessHouseOwner = businessHouseOwner;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class,cascade = CascadeType.ALL)
+    @JoinTable(name = "HOUSE_AND_POOL", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL_OWNER"))
+    public Set<BusinessPool> getBusinessPools() {
+        return businessPools;
+    }
+
+    public void setBusinessPools(Set<BusinessPool> businessPools) {
+        this.businessPools = businessPools;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class,cascade = CascadeType.ALL)
+    @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
+    public Set<OtherPowerCard> getOtherPowerCards() {
+        return otherPowerCards;
+    }
+
+    public void setOtherPowerCards(Set<OtherPowerCard> otherPowerCards) {
+        this.otherPowerCards = otherPowerCards;
+    }
+
+    @Transient
+    public List<OtherPowerCard> getOtherPowerCardList(){
+        List<OtherPowerCard> result = new ArrayList<OtherPowerCard>(getOtherPowerCards());
+        Collections.sort(result,new Comparator<OtherPowerCard>() {
+            @Override
+            public int compare(OtherPowerCard o1, OtherPowerCard o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+        return result;
+    }
+
+    @Transient
+    public List<BusinessPool> getBusinessPoolList(){
+        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
+        Collections.sort(result,new Comparator<BusinessPool>() {
+            @Override
+            public int compare(BusinessPool o1, BusinessPool o2) {
+                return o1.getCreateTime().compareTo(o2.getCreateTime());
+            }
+        });
+        return result;
     }
 }

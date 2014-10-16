@@ -30,6 +30,10 @@
         备案人查看
     </subscribe>
 
+    <subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml" component="" cagegory="业务信息" type="VIEW">
+        备案人编辑
+    </subscribe>
+
     <subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
         预告人查看
     </subscribe>

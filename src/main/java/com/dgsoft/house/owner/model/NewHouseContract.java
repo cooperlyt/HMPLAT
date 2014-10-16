@@ -17,9 +17,7 @@ public class NewHouseContract implements java.io.Serializable {
 
 	private String id;
 	private HouseBusiness houseBusiness;
-	private String poolMemo;
-	private String housePorperty;
-	private String houseFrom;
+
 	private String compactNo;
 	private Date signDate;
 	private Date recordDate;
@@ -27,18 +25,6 @@ public class NewHouseContract implements java.io.Serializable {
 	public NewHouseContract() {
 	}
 
-	public NewHouseContract(String id, HouseBusiness houseBusiness,
-			String poolMemo, String housePorperty, String houseFrom,
-			String compactNo, Date signDate, Date recordDate) {
-		this.id = id;
-		this.houseBusiness = houseBusiness;
-		this.poolMemo = poolMemo;
-		this.housePorperty = housePorperty;
-		this.houseFrom = houseFrom;
-		this.compactNo = compactNo;
-		this.signDate = signDate;
-		this.recordDate = recordDate;
-	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -65,38 +51,6 @@ public class NewHouseContract implements java.io.Serializable {
 		this.houseBusiness = houseBusiness;
 	}
 
-	@Column(name = "POOL_MEMO", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getPoolMemo() {
-		return this.poolMemo;
-	}
-
-	public void setPoolMemo(String poolMemo) {
-		this.poolMemo = poolMemo;
-	}
-
-	@Column(name = "HOUSE_PORPERTY", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getHousePorperty() {
-		return this.housePorperty;
-	}
-
-	public void setHousePorperty(String housePorperty) {
-		this.housePorperty = housePorperty;
-	}
-
-	@Column(name = "HOUSE_FROM", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getHouseFrom() {
-		return this.houseFrom;
-	}
-
-	public void setHouseFrom(String houseFrom) {
-		this.houseFrom = houseFrom;
-	}
 
 	@Column(name = "COMPACT_NO", nullable = false, length = 30)
 	@NotNull

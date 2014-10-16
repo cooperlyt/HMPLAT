@@ -6,11 +6,13 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}">
 
-    <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
-        <ui:param name="nameLabel" value="#{messages.NowHouseOwner}"/>
-        <ui:param name="businessHouse" value="#{nowHouseOwnerSubscribe.instance}"/>
-    </ui:include>
-
+        <ui:include src="/layout/house/owner/BusinessHouseOwnerView.xhtml">
+            <ui:param name="nameLabel" value="#{messages.NowHouseOwner}"/>
+            <ui:param name="businessHouse"
+                      value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}"/>
+        </ui:include>
+    </a:outputPanel>
 
 </ui:composition>

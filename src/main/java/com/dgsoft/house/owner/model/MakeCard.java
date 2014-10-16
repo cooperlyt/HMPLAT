@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -22,7 +23,8 @@ public class MakeCard implements java.io.Serializable {
 	private String memo;
 	private String makeEmpCode;
 	private String makeEmpName;
-	private BusinessPool businessPool;
+    private Date printTime;
+    private boolean disable;
 
 	public MakeCard() {
 	}
@@ -115,13 +117,24 @@ public class MakeCard implements java.io.Serializable {
 		this.makeEmpName = makeEmpName;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "makeCard",optional = true)
-	public BusinessPool getBusinessPool() {
-		return this.businessPool;
-	}
 
-	public void setBusinessPool(BusinessPool businessPool) {
-		this.businessPool = businessPool;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "PRINT_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getPrintTime() {
+        return printTime;
+    }
 
+    public void setPrintTime(Date printTime) {
+        this.printTime = printTime;
+    }
+
+    @Column(name = "DISABLE",nullable = false)
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
+    }
 }

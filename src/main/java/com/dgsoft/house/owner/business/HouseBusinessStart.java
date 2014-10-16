@@ -5,6 +5,7 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.model.PoolOwner;
+import com.dgsoft.house.owner.HouseLinkHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.*;
@@ -32,43 +33,52 @@ public class HouseBusinessStart {
     private OwnerBusinessHome ownerBusinessHome;
 
     @In(create = true)
-    private HouseEntityLoader houseEntityLoader;
+    private HouseLinkHome houseLinkHome;
 
     private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
 
-    //private String selectHouseId;
 
-    public String getSelectHouseCode() {
-        if (selectHouse == null) {
-            return null;
+    private BusinessHouse createStartHouse(){
+        if (houseLinkHome.getInstance() == null){
+            throw new IllegalArgumentException("house not found");
         }
-        return selectHouse.getHouseCode();
-    }
 
-    public void setSelectHouseCode(String houseCode) {
-        if ((houseCode == null) || houseCode.trim().equals("")) {
-            selectHouse = null;
-        } else {
-            try {
-                HouseRecord houseRecord =
-                        ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class).
-                                setParameter("houseCode",houseCode).getSingleResult();
-                selectHouse = new BusinessHouse(houseRecord.getBusinessHouse());
-            } catch (NoResultException e) {
-                selectHouse = new BusinessHouse(houseEntityLoader.getEntityManager().getReference(House.class,houseCode));
+        BusinessHouse result;
+        if (houseLinkHome.isRecord()){
+            BusinessHouse businessHouse = (BusinessHouse) houseLinkHome.getInstance();
+            result = new BusinessHouse(businessHouse);
+            if (businessHouse.getLandInfo() != null){
+                result.setLandInfo(new LandInfo(businessHouse.getLandInfo()));
             }
+            if (businessHouse.getBusinessHouseOwner() != null){
+                result.setBusinessHouseOwner(new BusinessHouseOwner(businessHouse.getBusinessHouseOwner()));
+            }
+            for(BusinessPool pool: businessHouse.getBusinessPools()){
+                result.getBusinessPools().add(new BusinessPool(pool));
+            }
+            for(OtherPowerCard card: businessHouse.getOtherPowerCards()){
+                result.getOtherPowerCards().add(card);
+            }
+
+
+        }else{
+            House house = (House)houseLinkHome.getInstance();
+            result = new BusinessHouse(house);
+            if(house.getHouseOwner() != null){
+                result.setBusinessHouseOwner(new BusinessHouseOwner(house.getHouseOwner()));
+            }
+            for(PoolOwner poolOwner: house.getPoolOwners()){
+                result.getBusinessPools().add(new BusinessPool(poolOwner));
+            }
+
         }
+        return result;
     }
 
-    private BusinessHouse selectHouse;
-
-
-
-
-    public String singleHouseSelectet() {
+    public String singleHouseSelected() {
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), selectHouse));
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), createStartHouse()));
 
         initBusinessData();
         return BUSINESS_START_PAGE;
@@ -80,25 +90,7 @@ public class HouseBusinessStart {
         // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            House house = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
-            if (house != null) {
-                if (house.getHouseOwner() != null) {
-                    houseBusiness.getBusinessHouseOwners().add(new BusinessHouseOwner(houseBusiness,
-                            house.getHouseOwner().getPersonName(), house.getHouseOwner().getCredentialsType(),
-                            house.getHouseOwner().getCredentialsNumber(), house.getHouseOwner().getPhone(),
-                            house.getHouseOwner().getRootAddress(), BusinessHouseOwner.HouseOwnerType.NOW_HOUSE_OWNER, house.getMemo()));
-                }
 
-                for (PoolOwner poolOwner : house.getPoolOwners()) {
-                    houseBusiness.getBusinessPools().add(new BusinessPool(houseBusiness,
-                            BusinessPool.BusinessPoolType.NOW_POOL, poolOwner.getPersonName(),
-                            poolOwner.getCredentialsType(), poolOwner.getCredentialsNumber(),
-                            poolOwner.getRelation(), poolOwner.getArea(), poolOwner.getPerc(), poolOwner.getMemo(), poolOwner.getPhone()));
-                }
-
-            }
-        }
 
     }
 

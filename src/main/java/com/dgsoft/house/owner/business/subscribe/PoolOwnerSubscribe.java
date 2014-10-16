@@ -1,36 +1,71 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonEntityAdapter;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessPool;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by cooper on 9/19/14.
  */
 @Name("poolOwnerSubscribe")
-public class PoolOwnerSubscribe extends BasePoolOwnerSubscribe{
+@Scope(ScopeType.CONVERSATION)
+public class PoolOwnerSubscribe{
 
-    @Override
-    protected BusinessPool.BusinessPoolType getType() {
-        return BusinessPool.BusinessPoolType.NOW_POOL;
-    }
-
-    @Override
-    protected PersonEntityAdapter<BusinessPool> getSelectPoolOwner() {
-        return selectPoolOwner;
-    }
-
-    @Override
-    @DataModel(value = "nowEditPoolOwners")
-    public List<PersonEntityAdapter<BusinessPool>> getPoolOwners(){
-        return super.getPoolOwners();
-    }
+    private List<PersonEntityAdapter<BusinessPool>> poolOwners;
 
     @DataModelSelection
     private PersonEntityAdapter<BusinessPool> selectPoolOwner;
 
+    @In
+    private OwnerBusinessHome ownerBusinessHome;
+
+    protected void initPoolOwners(){
+        if (poolOwners == null){
+            poolOwners = new ArrayList<PersonEntityAdapter<BusinessPool>>();
+            for (BusinessPool pool: ownerBusinessHome.getSingleHoues().getBusinessPools()){
+                poolOwners.add(new PersonEntityAdapter<BusinessPool>(pool));
+            }
+            Collections.sort(poolOwners, new Comparator<PersonEntityAdapter<BusinessPool>>() {
+                @Override
+                public int compare(PersonEntityAdapter<BusinessPool> o1, PersonEntityAdapter<BusinessPool> o2) {
+                    return o1.getPersonEntity().getCreateTime().compareTo(o2.getPersonEntity().getCreateTime());
+                }
+            });
+        }
+
+    }
+
+    @DataModel(value = "newEditPoolOwners")
+    public List<PersonEntityAdapter<BusinessPool>> getPoolOwners(){
+        initPoolOwners();
+        return poolOwners;
+    }
+
+    public void setPoolOwners(List<PersonEntityAdapter<BusinessPool>> poolOwners) {
+        this.poolOwners = poolOwners;
+    }
+
+    public void refreshPoolOwners(){
+        poolOwners = null;
+    }
+
+    public void deleteSelectOwner(){
+        if (selectPoolOwner != null) {
+            ownerBusinessHome.getSingleHoues().getBusinessPools().remove(selectPoolOwner.getPersonEntity());
+            refreshPoolOwners();
+        }
+    }
+
+    public void addNewOwner(){
+        ownerBusinessHome.getSingleHoues().getBusinessPools().add(new BusinessPool(new Date()));
+        refreshPoolOwners();
+    }
 }

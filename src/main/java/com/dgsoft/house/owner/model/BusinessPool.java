@@ -2,9 +2,11 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.house.model.PoolOwner;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,48 +18,50 @@ import javax.validation.constraints.Size;
 @Table(name = "BUSINESS_POOL", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessPool implements PersonEntity, java.io.Serializable {
 
-    public enum BusinessPoolType {
-        NOW_POOL, NEW_POOL;
-    }
-
     private String id;
-    private HouseBusiness houseBusiness;
-    private BusinessPoolType type;
     private String personName;
     private PersonEntity.CredentialsType credentialsType;
     private String credentialsNumber;
     private String relation;
     private BigDecimal poolArea;
     private String perc;
-    private String memo;
     private String phone;
     private MakeCard makeCard;
+    private Date createTime;
+    private String memo;
 
     public BusinessPool() {
     }
 
-    public BusinessPool(BusinessPoolType type, HouseBusiness houseBusiness) {
-        this.type = type;
-        this.houseBusiness = houseBusiness;
+    public BusinessPool(Date createTime){
+        this.createTime = createTime;
     }
 
-    public BusinessPool(HouseBusiness houseBusiness, BusinessPoolType type, String personName,
-                        PersonEntity.CredentialsType credentialsType, String credentialsNumber,
-                        String relation, BigDecimal poolArea, String perc, String memo, String phone) {
-        this.houseBusiness = houseBusiness;
-        this.type = type;
-        this.personName = personName;
-        this.credentialsType = credentialsType;
-        this.credentialsNumber = credentialsNumber;
-        this.relation = relation;
-        this.poolArea = poolArea;
-        this.perc = perc;
-        this.memo = memo;
+    public BusinessPool(PoolOwner pool){
+        this.personName = pool.getPersonName();
+        this.credentialsNumber = pool.getCredentialsNumber();
+        this.credentialsType = pool.getCredentialsType();
+        this.relation = pool.getRelation();
+        this.poolArea = pool.getArea();
+        this.perc = pool.getPerc();
+        this.phone = pool.getPhone();
+        this.memo = pool.getMemo();
+        this.createTime = new Date();
     }
 
-    public BusinessPool(BusinessPoolType type) {
-        this.type = type;
+    public BusinessPool(BusinessPool pool){
+        this.personName = pool.getPersonName();
+        this.credentialsNumber = pool.getCredentialsNumber();
+        this.credentialsType = pool.getCredentialsType();
+        this.relation = pool.getRelation();
+        this.poolArea = pool.getPoolArea();
+        this.perc = pool.getPerc();
+        this.phone = pool.getPhone();
+        this.makeCard = pool.getMakeCard();
+        this.memo = pool.getMemo();
+        this.createTime = new Date();
     }
+
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -71,28 +75,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HOUSE_ID", nullable = false)
-    @NotNull
-    public HouseBusiness getHouseBusiness() {
-        return houseBusiness;
-    }
-
-    public void setHouseBusiness(HouseBusiness houseBusiness) {
-        this.houseBusiness = houseBusiness;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TYPE", nullable = false, length = 20)
-    @NotNull
-    public BusinessPoolType getType() {
-        return this.type;
-    }
-
-    public void setType(BusinessPoolType type) {
-        this.type = type;
     }
 
     @Column(name = "NAME", nullable = false, length = 50)
@@ -164,16 +146,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.perc = perc;
     }
 
-    @Column(name = "MEMO", length = 200)
-    @Size(max = 200)
-    public String getMemo() {
-        return this.memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
-    }
-
     @Column(name = "PHONE", nullable = true, length = 15)
     @Size(max = 15)
     public String getPhone() {
@@ -194,4 +166,24 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.makeCard = makeCard;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME", nullable = false, length = 19)
+    @NotNull
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Column(name="MEMO", nullable = true, length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 }

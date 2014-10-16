@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.house.model.HouseOwner;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,97 +14,115 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_OWNER", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessHouseOwner implements java.io.Serializable,PersonEntity {
+public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
 
 
-	private String id;
-	private String personName;
-	private CredentialsType credentialsType;
-	private String credentialsNumber;
-	private String phone;
-	private String rootAddress;
+    private String id;
+    private String personName;
+    private CredentialsType credentialsType;
+    private String credentialsNumber;
+    private String phone;
+    private String rootAddress;
+    private MakeCard makeCard;
 
-	public BusinessHouseOwner() {
-	}
+    public BusinessHouseOwner() {
+    }
 
-    public BusinessHouseOwner(String personName, CredentialsType credentialsType,
-                              String credentialsNumber, String phone, String rootAddress) {
-        this.personName = personName;
-        this.credentialsType = credentialsType;
-        this.credentialsNumber = credentialsNumber;
-        this.phone = phone;
-        this.rootAddress = rootAddress;
+    public BusinessHouseOwner(HouseOwner houseOwner) {
+        this.personName = houseOwner.getPersonName();
+        this.credentialsType = houseOwner.getCredentialsType();
+        this.credentialsNumber = houseOwner.getCredentialsNumber();
+        this.phone = houseOwner.getPhone();
+        this.rootAddress = houseOwner.getRootAddress();
+    }
+
+    public BusinessHouseOwner(BusinessHouseOwner houseOwner) {
+        this.personName = houseOwner.getPersonName();
+        this.credentialsNumber = houseOwner.getCredentialsNumber();
+        this.credentialsType = houseOwner.getCredentialsType();
+        this.phone = houseOwner.getPhone();
+        this.rootAddress = houseOwner.getRootAddress();
+        this.makeCard = houseOwner.getMakeCard();
     }
 
     @Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
-	public String getId() {
-		return this.id;
-	}
+    public String getId() {
+        return this.id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override
-	@Column(name = "NAME", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
-	public String getPersonName() {
-		return this.personName;
-	}
+    @Column(name = "NAME", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getPersonName() {
+        return this.personName;
+    }
 
-	public void setPersonName(String name) {
-		this.personName = name;
-	}
+    public void setPersonName(String name) {
+        this.personName = name;
+    }
 
     @Override
     @Enumerated(EnumType.STRING)
-	@Column(name = "ID_TYPE", nullable = false, length = 32)
-	@NotNull
-	public CredentialsType getCredentialsType() {
-		return this.credentialsType;
-	}
+    @Column(name = "ID_TYPE", nullable = false, length = 32)
+    @NotNull
+    public CredentialsType getCredentialsType() {
+        return this.credentialsType;
+    }
 
-	public void setCredentialsType(CredentialsType idType) {
-		this.credentialsType = idType;
-	}
+    public void setCredentialsType(CredentialsType idType) {
+        this.credentialsType = idType;
+    }
 
     @Override
-	@Column(name = "ID_NO", nullable = false, length = 100)
-	@NotNull
-	@Size(max = 100)
-	public String getCredentialsNumber() {
-		return this.credentialsNumber;
-	}
+    @Column(name = "ID_NO", nullable = false, length = 100)
+    @NotNull
+    @Size(max = 100)
+    public String getCredentialsNumber() {
+        return this.credentialsNumber;
+    }
 
-	public void setCredentialsNumber(String idNo) {
-		this.credentialsNumber = idNo;
-	}
+    public void setCredentialsNumber(String idNo) {
+        this.credentialsNumber = idNo;
+    }
 
-	@Column(name = "PHONE", nullable = false, length = 15)
-	@NotNull
-	@Size(max = 15)
-	public String getPhone() {
-		return this.phone;
-	}
+    @Column(name = "PHONE", nullable = false, length = 15)
+    @NotNull
+    @Size(max = 15)
+    public String getPhone() {
+        return this.phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	@Column(name = "ROOT_ADDRESS", length = 50)
-	@Size(max = 50)
-	public String getRootAddress() {
-		return this.rootAddress;
-	}
+    @Column(name = "ROOT_ADDRESS", length = 50)
+    @Size(max = 50)
+    public String getRootAddress() {
+        return this.rootAddress;
+    }
 
-	public void setRootAddress(String rootAddress) {
-		this.rootAddress = rootAddress;
-	}
+    public void setRootAddress(String rootAddress) {
+        this.rootAddress = rootAddress;
+    }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CARD", nullable = true)
+    public MakeCard getMakeCard() {
+        return makeCard;
+    }
+
+    public void setMakeCard(MakeCard makeCard) {
+        this.makeCard = makeCard;
+    }
 }

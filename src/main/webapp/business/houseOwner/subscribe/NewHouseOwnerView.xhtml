@@ -7,10 +7,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
-        <ui:param name="nameLabel" value="#{messages.NewHouseOwner}"/>
-        <ui:param name="businessHouse" value="#{newHouseOwnerSubscribe.instance}"/>
-    </ui:include>
-
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.businessHouseOwner}">
+        <ui:include src="/layout/house/owner/BusinessHouseOwnerView.xhtml">
+            <ui:param name="nameLabel" value="#{messages.NewHouseOwner}"/>
+            <ui:param name="businessHouse" value="#{ownerBusinessHome.singleHoues.businessHouseOwner}"/>
+        </ui:include>
+    </a:outputPanel>
 
 </ui:composition>

@@ -19,10 +19,7 @@ public class HouseRecord implements java.io.Serializable {
 	private String id;
 	private BusinessHouse businessHouse;
 	private String houseCode;
-	private Set<MakeCard> recordAndCards = new HashSet<MakeCard>(0);
 	private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
-	private Set<BusinessPool> recordAndPoolowners = new HashSet<BusinessPool>(0);
-    private OwnerBusiness lastBusiness;
 
 	public HouseRecord() {
 	}
@@ -73,33 +70,4 @@ public class HouseRecord implements java.io.Serializable {
 	}
 
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = MakeCard.class)
-    @JoinTable(name = "RECORD_AND_CARD", joinColumns = @JoinColumn(name = "RECORD"), inverseJoinColumns = @JoinColumn(name = "CARD"))
-    public Set<MakeCard> getRecordAndCards() {
-        return recordAndCards;
-    }
-    public void setRecordAndCards(Set<MakeCard> recordAndCards) {
-        this.recordAndCards = recordAndCards;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class)
-    @JoinTable(name = "RECORD_AND_POOLOWNER", joinColumns = @JoinColumn(name = "RECORD_ID"), inverseJoinColumns = @JoinColumn(name = "POOL_OWNER"))
-    public Set<BusinessPool> getRecordAndPoolowners() {
-        return recordAndPoolowners;
-    }
-
-    public void setRecordAndPoolowners(Set<BusinessPool> recordAndPoolowners) {
-        this.recordAndPoolowners = recordAndPoolowners;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "LAST_BUSINESS",nullable = false)
-    @NotNull
-    public OwnerBusiness getLastBusiness() {
-        return lastBusiness;
-    }
-
-    public void setLastBusiness(OwnerBusiness lastBusiness) {
-        this.lastBusiness = lastBusiness;
-    }
 }

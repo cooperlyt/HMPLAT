@@ -37,7 +37,7 @@
 
         <s:decorate template="/layout/house/HouseList.xhtml">
             <r:column>
-                <s:link action="#{houseBusinessStart.singleHouseSelectet}" value="#{messages.Next}">
+                <s:link action="#{houseBusinessStart.singleHouseSelected}" value="#{messages.Next}">
                     <f:param name="selectHouseId" value="#{_item.id}"/>
                     <f:param name="taskName" value=""/>
                 </s:link>

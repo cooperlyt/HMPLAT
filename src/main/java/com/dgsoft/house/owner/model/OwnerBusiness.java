@@ -34,6 +34,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private BusinessStatus status;
     private Date applyTime;
     private Date createTime;
+    private Date regTime;
     private String defineName;
     private String defineId;
     private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
@@ -184,6 +185,16 @@ public class OwnerBusiness implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "REG_TIME", nullable = true, length = 19)
+    public Date getRegTime() {
+        return regTime;
+    }
+
+    public void setRegTime(Date regTime) {
+        this.regTime = regTime;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
