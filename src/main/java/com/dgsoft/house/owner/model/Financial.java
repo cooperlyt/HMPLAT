@@ -20,9 +20,12 @@ public class Financial implements java.io.Serializable {
 	private FinancialType type;
 	private String name;
 	private String code;
+    private String phone;
 
 	public Financial() {
 	}
+
+
 
     public Financial(FinancialType type){
         this.type = type;
@@ -95,4 +98,13 @@ public class Financial implements java.io.Serializable {
 		this.code = code;
 	}
 
+    @Column(name = "PHONE", nullable = true, length = 15)
+    @Size(max = 15)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

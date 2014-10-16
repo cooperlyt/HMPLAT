@@ -1,9 +1,14 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.EvaluateCorporation;
+import com.dgsoft.house.model.FinancialCorporation;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
 import org.jboss.seam.annotations.In;
+
+import javax.faces.event.ValueChangeEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,6 +21,9 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
 
     protected abstract Financial.FinancialType getType();
 
@@ -41,5 +49,10 @@ public abstract class BaseFinancialSubscribe extends OwnerEntityHome<Financial> 
         }
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getFinancials().add(getInstance());
+    }
+
+    public void valueChangeListener(ValueChangeEvent e){
+       getInstance().setName(houseEntityLoader.getEntityManager().find(FinancialCorporation.class,e.getNewValue()).getName());
+       getInstance().setPhone(houseEntityLoader.getEntityManager().find(FinancialCorporation.class,e.getNewValue()).getAttachCorporation().getPhone());
     }
 }
