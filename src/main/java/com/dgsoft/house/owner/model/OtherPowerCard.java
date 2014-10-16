@@ -1,13 +1,9 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 15, 2014 10:41:24 AM by Hibernate Tools 4.0.0
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.dgsoft.common.system.PersonEntity;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,7 +12,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "OTHER_POWER_CARD", catalog = "HOUSE_OWNER_RECORD")
-public class OtherPowerCard implements java.io.Serializable {
+public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 
 	private String id;
 	private MakeCard makeCardByCard;
@@ -24,6 +20,8 @@ public class OtherPowerCard implements java.io.Serializable {
     private String financialName;
     private String financialCode;
     private String financialPhone;
+    private Financial.FinancialType financialType;
+    private CredentialsType credentialsType;
 
 	public OtherPowerCard() {
 	}
@@ -73,9 +71,8 @@ public class OtherPowerCard implements java.io.Serializable {
         this.financialName = financialName;
     }
 
-    @Column(name = "FINANCIAL_CODE",nullable = false,length = 100)
+    @Column(name = "FINANCIAL_CODE",nullable = true,length = 100)
     @Size(max = 100)
-    @NotNull
     public String getFinancialCode() {
         return financialCode;
     }
@@ -92,5 +89,53 @@ public class OtherPowerCard implements java.io.Serializable {
 
     public void setFinancialPhone(String financialPhone) {
         this.financialPhone = financialPhone;
+    }
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_TYPE",nullable = true,length = 32)
+    public CredentialsType getCredentialsType() {
+        return credentialsType;
+    }
+
+    @Override
+    public void setCredentialsType(CredentialsType credentialsType) {
+        this.credentialsType = credentialsType;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="FINANCIAL_TYPE",nullable = false,length = 20)
+    @NotNull
+    public Financial.FinancialType getFinancialType() {
+        return financialType;
+    }
+
+    public void setFinancialType(Financial.FinancialType financialType) {
+        this.financialType = financialType;
+    }
+
+
+    @Override
+    @Transient
+    public String getCredentialsNumber() {
+        return getFinancialCode();
+    }
+
+    @Override
+    @Transient
+    public void setCredentialsNumber(String credentialsNumber) {
+        setFinancialCode(credentialsNumber);
+    }
+
+    @Override
+    @Transient
+    public String getPersonName() {
+        return getFinancialName();
+    }
+
+    @Override
+    @Transient
+    public void setPersonName(String personName) {
+        setFinancialName(personName);
     }
 }

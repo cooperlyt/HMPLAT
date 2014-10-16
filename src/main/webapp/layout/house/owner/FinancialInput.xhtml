@@ -7,18 +7,93 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <s:decorate template="/layout/edit.xhtml">
+    <s:decorate template="/layout/seam-edit.xhtml">
+
         <ui:define name="label">
             #{label}
         </ui:define>
-        <h:selectOneMenu id="financialNameInput" value="#{financial.instance.code}"
-                         label="#{label}" style="width: 140px"
-                         valueChangeListener="#{financial.valueChangeListener}">
-            <s:selectItems value="#{financialCorporationList.resultList}" var="_word"
-                    itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
 
+        <h:panelGroup>
+
+            <h:selectOneMenu value="#{financialNowSubscribe.instance.financialType}"
+                             label="#{label}#{messages.FinancialType}" required="true"
+                             valueChangeListener="#{financialNowSubscribe.typeChangeListener}">
+                <s:selectItems value="#{financialNowSubscribe.financialTypes}"
+                               var="_type" itemValue="#{_type}" label="#{messages[_type.name()]}"/>
+                <a:ajax event="valueChange" execute="@this" render="financialCorpSelect,financialPersonInput">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
+
+            </h:selectOneMenu>
+
+            <a:outputPanel id="financialCorpSelect">
+
+                <a:outputPanel rendered="#{financialNowSubscribe.instance.financialType eq 'FINANCE_CORP'}">
+                    <h:selectOneMenu style="width:150px" required="true"
+                                     label="#{label}"
+                                     value="#{financialNowSubscribe.filterBank}">
+                        <s:selectItems var="_word" label="#{_word.value}"
+                                       itemValue="#{_word.id}"
+                                       value="#{dictionary.getWordList('erp.bank')}"
+                                       noSelectionLabel="#{messages.noSelectLabel}"/>
+                        <a:ajax event="valueChange" execute="@this" render="bankForkSelect">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                    </h:selectOneMenu>
+
+                    <a:outputPanel id="bankForkSelect">
+                        <a:outputPanel rendered="#{not empty financialNowSubscribe.filterBank}">
+                            <h:selectOneMenu label="#{messages.Financial}"
+                                             value="#{financialNowSubscribe.selectName}">
+                                <s:selectItems var="_fork" label="#{_fork}"
+                                               itemValue="#{_fork}"
+                                               value="#{financialNowSubscribe.financialCorpNames}"
+                                               noSelectionLabel="#{messages.noSelectLabel}"/>
+
+                                <a:ajax event="valueChange" execute="@this" render="phoneOutPut"/>
+                            </h:selectOneMenu>
+
+
+                            <a:outputPanel id="phoneOutPut">
+                                <a:outputPanel>
+                                    <div style="clear: both;"/>
+                                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+                                    <h:inputText value="#{financialNowSubscribe.instance.name}" disabled="#{financialNowSubscribe.selected}"/>
+
+                                    <h:inputText value="#{financialNowSubscribe.instance.phone}"/>
+
+                                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+
+                                </a:outputPanel>
+                            </a:outputPanel>
+                        </a:outputPanel>
+
+                    </a:outputPanel>
+
+                </a:outputPanel>
+            </a:outputPanel>
+
+        </h:panelGroup>
     </s:decorate>
+    <a:outputPanel id="financialPersonInput">
+        <a:outputPanel rendered="#{financialNowSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+            <div style="clear: both;"/>
+            <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+            <s:decorate template="/layout/system/PersonInput.xhtml">
+                <ui:param name="personEntityHelper" value="#{financialNowSubscribe.personEntityHelper}"/>
+                <ui:param name="owner" value="#{financialNowSubscribe.instance}"/>
+                <ui:define name="otherInfo">
+                    <s:decorate template="/layout/edit.xhtml">
+                        <ui:define name="label">
+                            #{messages.Tel}
+                        </ui:define>
+                        <h:inputText label="#{messages.Tel}" size="15" maxlength="15"
+                                     value="#{financialNowSubscribe.instance.phone}"/>
+                    </s:decorate></ui:define>
+            </s:decorate>
+            <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+        </a:outputPanel>
+    </a:outputPanel>
 
 
 </ui:composition>

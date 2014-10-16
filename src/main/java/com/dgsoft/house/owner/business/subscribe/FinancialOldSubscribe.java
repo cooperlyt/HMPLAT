@@ -14,7 +14,7 @@ import org.jboss.seam.annotations.Name;
 @Name("financialOldSubscribe")
 public class FinancialOldSubscribe extends BaseFinancialSubscribe {
     @Override
-    protected Financial.FinancialType getType() {
-        return Financial.FinancialType.OLD;  //To change body of implemented methods use File | Settings | File Templates.
+    protected Financial.FinancialUseType getType() {
+        return Financial.FinancialUseType.OLD;
     }
 }
