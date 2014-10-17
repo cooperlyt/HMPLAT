@@ -146,13 +146,28 @@
         预购代理人编辑
     </subscribe>
 
-
-    <subscribe name="ProBuyOwnerEdit" page="/business/houseOwner/subscribe/ProBuyOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
-        预购人编辑
-    </subscribe>
-
     <subscribe name="FinancialNowEdit" page="/business/houseOwner/subscribe/FinancialNowEdit.xhtml" component="" cagegory="" type="EDIT">
        （现）抵押权人编辑
     </subscribe>
+
+    <subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml" component="" cagegory="" type="VIEW">
+        变更前查看
+    </subscribe>
+
+    <subscribe name="ModifyAfterReasonView" page="/business/houseOwner/subscribe/ModifyAfterReasonView.xhtml" component="" cagegory="" type="VIEW">
+        变更后查看
+    </subscribe>
+
+    <subscribe name="ChangBeforRensonView" page="/business/houseOwner/subscribe/ChangBeforRensonView.xhtml" component="" cagegory="" type="EDIT">
+        更正前编辑
+    </subscribe>
+
+    <subscribe name="ChangAfterRensonView" page="/business/houseOwner/subscribe/ChangAfterRensonView.xhtml" component="" cagegory="" type="EDIT">
+        更正后查看
+    </subscribe>
+
+
+
+
 
 </subscribes>
