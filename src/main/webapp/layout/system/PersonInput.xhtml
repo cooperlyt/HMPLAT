@@ -22,23 +22,8 @@
         </ui:define>
 
         <a:outputPanel id="personEditFields">
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.person_field_name}
-                </ui:define>
-                <h:inputText label="#{messages.person_field_name}" size="20" disabled="#{personEntityHelper.manager}"
-                             value="#{personEntityHelper.personName}" required="true" id="persionNameInput">
-                    <r:validator event="blur"/>
-                </h:inputText>
+            <ui:include src="PersonNameInput.xhtml"/>
 
-                <ui:define name="tail">
-                    <r:message for="persionNameInput" styleClass="message-icon"
-                               rendered="#{(not empty tipMsg) and tipMsg}"
-                               showDetail="true" showSummary="true" tooltip="true"/>
-
-                    <r:message for="persionNameInput" rendered="#{(empty tipMsg) or (not tipMsg)}"/>
-                </ui:define>
-            </s:decorate>
             <ui:insert/>
         </a:outputPanel>
 

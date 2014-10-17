@@ -16,7 +16,12 @@
         </h:inputText>
 
         <ui:define name="tail">
-            <r:message for="persionNameInput"/>
+            <r:message for="persionNameInput" styleClass="message-icon"
+                       rendered="#{(not empty tipMsg) and tipMsg}"
+                       showDetail="true" showSummary="true" tooltip="true"/>
+
+            <r:message for="persionNameInput" rendered="#{(empty tipMsg) or (not tipMsg)}"/>
+
         </ui:define>
     </s:decorate>
 
