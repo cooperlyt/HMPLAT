@@ -1,0 +1,23 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.person_field_name}
+        </ui:define>
+        <h:inputText label="#{messages.person_field_name}" size="20" disabled="#{personEntityHelper.manager}"
+                     value="#{personEntityHelper.personName}" required="true" id="persionNameInput">
+            <r:validator event="blur"/>
+        </h:inputText>
+
+        <ui:define name="tail">
+            <r:message for="persionNameInput"/>
+        </ui:define>
+    </s:decorate>
+
+</ui:composition>

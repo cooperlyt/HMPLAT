@@ -7,19 +7,41 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <div style="clear: both;"/>
 
-    <h:outputText value="#{label}" styleClass="name"/><br/>
-
-    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-
-    <ui:include src="/layout/house/owner/OwnerInput.xhtml">
-        <ui:param name="owner" value="#{businessHouseOwnerSubscribe.instance}"/>
+    <s:decorate template="/layout/system/PersonInput.xhtml">
         <ui:param name="personEntityHelper" value="#{businessHouseOwnerSubscribe.houseOwnerEntityHelper}"/>
-    </ui:include>
+        <ui:param name="req" value="true"/>
 
-    <div style="clear: both"/>
+        <s:decorate template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.BusinessOwner_Phone}
+            </ui:define>
+            <h:inputText label="#{messages.BusinessOwner_Phone}" size="20" maxlength="15"
+                         value="#{businessHouseOwnerSubscribe.instance.phone}" required="true" id="persionPhoneInput">
+                <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                <r:validator event="blur"/>
+            </h:inputText>
 
-    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+            <ui:define name="tail">
+                <r:message for="persionPhoneInput" />
+            </ui:define>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.BusinessOwner_RootAddress}
+            </ui:define>
+            <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="40" maxlength="50"
+                         value="#{businessHouseOwnerSubscribe.instance.rootAddress}" id="persionRootAddressInput">
+                <r:validator event="blur"/>
+            </h:inputText>
+
+            <ui:define name="tail">
+                <r:message for="persionRootAddressInput" />
+            </ui:define>
+        </s:decorate>
+
+    </s:decorate>
+
 
 </ui:composition>

@@ -9,83 +9,40 @@
 
     <!-- param: personEntityHelper  , render-->
 
-    <h:outputStylesheet>
-        .credentialsTypeSelectWidth input[type="text"] {
-            width: 100px;
-        }
-    </h:outputStylesheet>
 
-    <a:region>
-        <h:panelGrid columns="5">
-            <s:decorate id="credentialsTypeField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.person_field_credentialsType}</ui:define>
+    <s:decorate template="/layout/edit-multi.xhtml">
+        <ui:define name="label">
+            #{label}
+        </ui:define>
 
-                <h:selectOneMenu id="credentialsType" label="#{messages.person_field_credentialsType}"
-                                 styleClass="credentialsTypeSelectWidth" listWidth="140px"
-                                 value="#{personEntityHelper.credentialsType}" required="true">
-                    <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                    <s:convertEnum/>
-                    <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
-                            render="credentialsNumberField,personEditFields,#{render}"
-                            execute="@this" status="waitSearchPerson">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:ajax>
-                </h:selectOneMenu>
-            </s:decorate>
+        <ui:define name="topValue">
+            <ui:include src="/layout/system/PersonCardInput.xhtml">
+                <ui:param name="render" value="personEditFields"/>
+            </ui:include>
+        </ui:define>
 
-            <s:decorate id="credentialsNumberField" template="/layout/edit.xhtml">
-                <ui:define
-                        name="label">#{messages.person_field_credentialsNO}</ui:define>
-                <h:inputText id="credentialsNumber" disabled="#{personEntityHelper.credentialsType.name() eq 'OTHER'}"
-                             label="#{messages.person_field_credentialsNO}"
-                             required="true"
-                             size="25"
-                             maxlength="100"
-                             value="#{personEntityHelper.credentialsNumber}">
-                    <a:ajax event="blur" render="credentialsNumberField,personEditFields,#{render}"
-                            status="waitSearchPerson"
-                            listener="#{personEntityHelper.numberChange}" execute="@region">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:ajax>
+        <a:outputPanel id="personEditFields">
+            <s:decorate template="/layout/edit.xhtml">
+                <ui:define name="label">
+                    #{messages.person_field_name}
+                </ui:define>
+                <h:inputText label="#{messages.person_field_name}" size="20" disabled="#{personEntityHelper.manager}"
+                             value="#{personEntityHelper.personName}" required="true" id="persionNameInput">
+                    <r:validator event="blur"/>
                 </h:inputText>
 
+                <ui:define name="tail">
+                    <r:message for="persionNameInput" styleClass="message-icon"
+                               rendered="#{(not empty tipMsg) and tipMsg}"
+                               showDetail="true" showSummary="true" tooltip="true"/>
+
+                    <r:message for="persionNameInput" rendered="#{(empty tipMsg) or (not tipMsg)}"/>
+                </ui:define>
             </s:decorate>
+            <ui:insert/>
+        </a:outputPanel>
 
-            <a:commandButton image="/img/id_card_read_btn.png" title=""
-                             execute="@region"
-                             status="waitSearchPerson"
-                             render="credentialsNumberField,credentialsTypeField,viewCredntials,personEditFields,#{render}"/>
-
-
-            #{' '}
-            <a:status id="waitSearchPerson" name="waitSearchPerson">
-                <f:facet name="start">
-                    <h:graphicImage value="/img/connect_active.gif"/>
-                </f:facet>
-                <f:facet name="stop">
-                </f:facet>
-            </a:status>
-
-        </h:panelGrid>
-    </a:region>
-    <a:outputPanel id="personEditFields">
-        <s:decorate template="/layout/edit.xhtml">
-            <ui:define name="label">
-                #{messages.person_field_name}
-            </ui:define>
-            <h:inputText label="#{messages.person_field_name}" size="20" disabled="#{personEntityHelper.manager}"
-                         value="#{personEntityHelper.personName}" required="true" id="persionNameInput">
-                <r:validator event="blur"/>
-            </h:inputText>
-
-            <ui:define name="tail">
-                <r:message for="persionNameInput" styleClass="message-icon"
-                           showDetail="true" showSummary="true" tooltip="true"/>
-            </ui:define>
-        </s:decorate>
-        <ui:insert name="otherInfo">
-        </ui:insert>
-    </a:outputPanel>
+    </s:decorate>
 
 
 </ui:composition>
