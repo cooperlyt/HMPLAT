@@ -158,16 +158,21 @@
         变更后查看
     </subscribe>
 
-    <subscribe name="ChangBeforRensonView" page="/business/houseOwner/subscribe/ChangBeforRensonView.xhtml" component="" cagegory="" type="EDIT">
-        更正前编辑
+    <subscribe name="ChangBeforRensonView" page="/business/houseOwner/subscribe/ChangBeforRensonView.xhtml" component="" cagegory="" type="VIEW">
+        更正前查看
     </subscribe>
 
-    <subscribe name="ChangAfterRensonView" page="/business/houseOwner/subscribe/ChangAfterRensonView.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="ChangAfterRensonView" page="/business/houseOwner/subscribe/ChangAfterRensonView.xhtml" component="" cagegory="" type="VIEW">
         更正后查看
     </subscribe>
 
+    <subscribe name="ResonFillChangeView" page="/business/houseOwner/subscribe/ResonFillChangeView.xhtml" component="" cagegory="" type="VIEW">
+        换(补)证事由查看
+    </subscribe>
 
-
+    <subscribe name="ReasonLogoutView" page="/business/houseOwner/subscribe/ReasonLogoutView.xhtml" component="" cagegory="" type="VIEW">
+        注销原因查看
+    </subscribe>
 
 
 </subscribes>
