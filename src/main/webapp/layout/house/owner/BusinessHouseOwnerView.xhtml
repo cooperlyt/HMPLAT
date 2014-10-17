@@ -22,7 +22,10 @@
 
 
         <h:outputText value="#{messages.person_field_credentialsNO}"/>
-        <h:outputText value="#{businessHouse.credentialsNumber}"/>
+        <ui:include src="/layout/system/PersonViewLink.xhtml">
+            <ui:param name="number" value="#{businessHouse.credentialsNumber}"/>
+            <ui:param name="type" value="#{businessHouse.credentialsType}"/>
+        </ui:include>
 
     </h:panelGrid>
 

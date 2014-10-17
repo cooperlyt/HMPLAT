@@ -40,7 +40,7 @@
 
                     <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
                         <span class="value">
-                        <h:selectOneMenu style="width:150px" required="true"
+                        <h:selectOneMenu style="width:130px" required="true"
                                          label="#{label}" id="bankSelectInput"
                                          value="#{financialSubscribe.filterBank}">
                             <s:selectItems var="_word" label="#{_word.value}"
@@ -55,7 +55,7 @@
                         <a:outputPanel id="bankForkSelect">
                             <a:outputPanel rendered="#{not empty financialSubscribe.filterBank}">
                                 <span class="value">
-                                <h:selectOneMenu label="#{messages.Financial}"
+                                <h:selectOneMenu label="#{messages.Financial}" style="width:150px"
                                                  value="#{financialSubscribe.selectName}">
                                     <s:selectItems var="_fork" label="#{_fork}"
                                                    itemValue="#{_fork}"

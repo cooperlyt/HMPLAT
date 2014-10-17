@@ -80,6 +80,7 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
         getInstance().setName(null);
         getInstance().setCode(null);
         getInstance().setPhone(null);
+        selected = false;
     }
 
     public String getFilterBank(){
