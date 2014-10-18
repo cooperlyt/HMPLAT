@@ -4,8 +4,10 @@ import com.dgsoft.common.system.model.City;
 import com.dgsoft.common.system.model.Employee;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.common.system.model.WordCategory;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
+import org.jboss.seam.contexts.Contexts;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,6 +148,16 @@ public class DictionaryWord {
         } else {
             return city.getProvince().getName() + city.getName();
         }
+    }
+
+
+    public static DictionaryWord instance()
+    {
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (DictionaryWord) Component.getInstance(DictionaryWord.class, ScopeType.APPLICATION);
     }
 
 }

@@ -457,28 +457,7 @@ table.radio input[type=radio] {
 }
 
 
-.detailsTopValueCol{
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-    border-right: 1px solid #{a4jSkin.panelBorderColor};
-    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
-
-    background: #fff;
-    padding: 6px 6px 6px 12px;
-    color: #4f6b72;
-
-    width: 300px;
-    text-align: left;
-    border-top: 1px solid #{a4jSkin.panelBorderColor};
-
-}
-
-.detailsTopFirstTitleCol{
+.detailsFirstCol{
     display: table;
     border-collapse: separate;
     border-spacing: 2px;
@@ -490,16 +469,16 @@ table.radio input[type=radio] {
 
     border-right: 1px solid #{a4jSkin.panelBorderColor};
     border-bottom: 1px solid #{a4jSkin.panelBorderColor};
-    border-left: 1px solid #{a4jSkin.panelBorderColor};
-    padding: 6px 6px 6px 12px;
+    border-left: 1px solid #{a4jSkin.panelBorderColor};;
+    padding: 5px 5px 5px 5px;
     background: #{a4jSkin.tableSubHeaderBackgroundColor};
     color: #797268;
-    width: 150px;
+    width: 115px;
     text-align: center;
-    border-top: 1px solid #{a4jSkin.panelBorderColor};
 }
 
-.detailsTopTitleCol{
+.detailsTitleCol{
+
     display: table;
     border-collapse: separate;
     border-spacing: 2px;
@@ -511,13 +490,14 @@ table.radio input[type=radio] {
 
     border-right: 1px solid #{a4jSkin.panelBorderColor};
     border-bottom: 1px solid #{a4jSkin.panelBorderColor};
-    padding: 6px 6px 6px 12px;
+    padding: 5px 5px 5px 5px;
     background: #{a4jSkin.tableSubHeaderBackgroundColor};
     color: #797268;
-    width: 150px;
+    width: 115px;
     text-align: center;
-    border-top: 1px solid #{a4jSkin.panelBorderColor};
 }
+
+
 
 .detailsValueCol{
     border-collapse: separate;
@@ -531,10 +511,10 @@ table.radio input[type=radio] {
     border-bottom: 1px solid #{a4jSkin.panelBorderColor};
 
     background: #fff;
-    padding: 6px 6px 6px 12px;
+    padding: 5px 5px 5px 5px;
     color: #4f6b72;
 
-    width: 300px;
+    width: 337px;
     text-align: left;
 }
 
@@ -550,69 +530,12 @@ table.radio input[type=radio] {
     border-bottom: 1px solid #{a4jSkin.panelBorderColor};
 
     background: #fff;
-    padding: 6px 6px 6px 12px;
+    padding: 5px 5px 5px 5px;
     color: #4f6b72;
 
     text-align: left;
 }
 
-.detailsTopLastValueCol{
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-    border-right: 1px solid #{a4jSkin.panelBorderColor};
-    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
-    border-top: 1px solid #{a4jSkin.panelBorderColor};
-    background: #fff;
-    padding: 6px 6px 6px 12px;
-    color: #4f6b72;
-
-    text-align: left;
-}
-
-
-.detailsTitleCol{
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-
-    border-right: 1px solid #{a4jSkin.panelBorderColor};
-    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
-    padding: 6px 6px 6px 12px;
-    background: #{a4jSkin.tableSubHeaderBackgroundColor};
-    color: #797268;
-    width: 150px;
-    text-align: center;
-}
-
-.detailsFirstCol{
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-
-    border-right: 1px solid #{a4jSkin.panelBorderColor};
-    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
-    border-left: 1px solid #{a4jSkin.panelBorderColor};;
-    padding: 6px 6px 6px 12px;
-    background: #{a4jSkin.tableSubHeaderBackgroundColor};
-    color: #797268;
-    width: 150px;
-    text-align: center;
-}
 
 .detailsHead{
     border-collapse: separate;
@@ -630,6 +553,26 @@ table.radio input[type=radio] {
     text-align: left;
 }
 
+.details4ValueCol{
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: gray;
+
+    display: table-cell;
+    vertical-align: inherit;
+
+    border-right: 1px solid #{a4jSkin.panelBorderColor};
+    border-bottom: 1px solid #{a4jSkin.panelBorderColor};
+
+    background: #fff;
+    padding: 5px 5px 5px 5px;
+    color: #4f6b72;
+
+    width: 100px;
+    text-align: left;
+}
+
+
 .detailsTable{
     width: 100%; padding: 0; margin: 0;border-spacing: 0px;display: table;border-collapse: separate;
 }
@@ -644,3 +587,4 @@ table.radio input[type=radio] {
     background-position: 0 0;
     padding-left: 20px;
 }
+

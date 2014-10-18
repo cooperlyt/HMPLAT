@@ -286,17 +286,10 @@
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_MapTime}
+            #{messages.Build_HaveDownRoom}
         </ui:define>
-        <r:calendar enableManualInput="true"
-                    inputSize="12" id="mapTimeInput"
-                    timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                    value="#{house.mapTime}"
-                    datePattern="#{messages.datePattern}"/>
-        <ui:define name="tail">
-            <r:message for="mapTimeInput" styleClass="message-icon"
-                       showDetail="true" showSummary="true" tooltip="true"/>
-        </ui:define>
+        <h:selectBooleanCheckbox value="#{house.haveDownRoom}" label="#{messages.Build_HaveDownRoom}"/>
+
     </s:decorate>
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">

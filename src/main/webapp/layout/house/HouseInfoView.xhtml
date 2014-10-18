@@ -1,12 +1,217 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
-</body>
-</html>
+
+<h:panelGrid columns="4" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+    <h:outputText value="#{messages.District_name}"/>
+    <h:outputText value="#{houseInfo.districtName}"/>
+
+    <h:outputText value="#{messages.District_id}"/>
+    <h:outputText value="#{houseInfo.districtCode}"/>
+
+
+    <h:outputText value="#{messages.Section_name}"/>
+    <h:outputText value="#{houseInfo.sectionName}"/>
+
+    <h:outputText value="#{messages.Section_id}"/>
+    <h:outputText value="#{houseInfo.sectionCode}"/>
+
+
+    <h:outputText value="#{messages.Project_name}"/>
+    <h:outputText value="#{houseInfo.projectName}"/>
+
+    <h:outputText value="#{messages.Project_id}"/>
+    <h:outputText value="#{houseInfo.projectCode}"/>
+
+
+    <h:outputText value="#{messages.Developer_name}"/>
+    <h:outputText value="#{houseInfo.developerName}"/>
+
+    <h:outputText value="#{messages.Developer_id}"/>
+    <h:outputText value="#{houseInfo.developerCode}"/>
+
+
+    <h:outputText value="#{messages.Build_Name}"/>
+    <h:outputText value="#{houseInfo.buildName}"/>
+
+    <h:outputText value="#{messages.Build_Id}"/>
+    <h:outputText value="#{houseInfo.buildCode}"/>
+
+
+    <h:outputText value="#{messages.Build_DoorNO}"/>
+    <h:outputText value="#{houseInfo.doorNo}"/>
+
+    <h:outputText value="#{messages.House_Id}"/>
+    <h:outputText value="#{houseInfo.houseCode}"/>
+
+</h:panelGrid>
+
+<h:panelGrid columns="8" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+
+    <h:outputText value="#{messages.Build_MapNO}"/>
+    <h:outputText value="#{houseInfo.mapNumber}"/>
+
+    <h:outputText value="#{messages.Build_BlockNO}"/>
+    <h:outputText value="#{houseInfo.blockNo}"/>
+
+    <h:outputText value="#{messages.Build_BuildNO}"/>
+    <h:outputText value="#{houseInfo.blockNo}"/>
+
+    <h:outputText value="#{messages.Build_LandBlockCode}"/>
+    <h:outputText value="#{houseInfo.landBlockCode}"/>
+
+
+    <h:outputText value="#{messages.House_Order}"/>
+    <h:outputText value="#{houseInfo.houseOrder}"/>
+
+    <h:outputText value="#{messages.House_InitReg}"/>
+    <h:outputText value="#{houseInfo.initRegister ? messages.Yes : messages.No}"/>
+    <h:outputText value="#{messages.House_FirmlyPower}"/>
+    <h:outputText value="#{houseInfo.firmlyPower ? messages.Yes : messages.No}"/>
+
+    <h:panelGroup>
+        <ui:include src="/layout/long-text-display.xhtml">
+            <ui:param name="value" value="#{messages.Build_StreetCode}"/>
+            <ui:param name="size" value="3"/>
+        </ui:include>
+    </h:panelGroup>
+    <h:outputText value="#{houseInfo.streetCode}"/>
+
+    <h:outputText value="#{messages.Project_finishDate}"/>
+    <h:outputText value="#{houseInfo.completeDate}">
+        <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.Project_buildSize}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.buildSize)}"/>
+
+    <h:outputText value="#{messages.Build_Type}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.buildType)}"/>
+
+
+    <h:outputText value="#{messages.House_MapTime}"/>
+    <h:outputText value="#{houseInfo.mapTime}">
+        <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.Build_FloorCount}"/>
+    <h:outputText value="#{houseInfo.floorCount}"/>
+
+    <h:outputText value="#{messages.Build_UpFloorCount}"/>
+    <h:outputText value="#{houseInfo.upFloorCount}"/>
+
+    <h:outputText value="#{messages.Build_DownFloorCount}"/>
+    <h:outputText value="#{houseInfo.downFloorCount}"/>
+
+    <h:outputText value="#{messages.Build_HaveDownRoom}"/>
+    <h:outputText value="#{(houseInfo.haveDownRoom) ? messages.Have : messages.None}"/>
+
+    <h:outputText value="#{messages.House_HouseType}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.houseType)}"/>
+
+    <h:outputText value="#{messages.House_UseType}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.useType)}"/>
+
+    <h:outputText value="#{messages.Build_Structure}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.structure)}"/>
+
+    <h:outputText value="#{messages.House_KnotSize}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.knotSize)}"/>
+
+
+    <h:outputText value="#{messages.House_EastWall}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.eastWall)}"/>
+
+    <h:outputText value="#{messages.House_WestWall}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.westWall)}"/>
+
+    <h:outputText value="#{messages.House_SouthWall}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.southWall)}"/>
+
+    <h:outputText value="#{messages.House_North_Wall}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.northWall)}"/>
+
+    <h:outputText value="#{messages.House_InFloor}"/>
+    <h:outputText value="#{houseInfo.inFloorName}"/>
+
+    <h:outputText value="#{messages.House_Unit}"/>
+    <h:outputText value="#{houseInfo.houseUnitName}"/>
+
+    <h:outputText value="#{messages.House_Direction}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.direction)}"/>
+
+    <h:outputText value="#{messages.House_PrepareArea}"/>
+    <h:outputText value="#{houseInfo.prepareArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+
+
+
+</h:panelGrid>
+
+
+<h:panelGrid columns="6" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+
+    <h:outputText value="#{messages.House_Area}"/>
+    <h:outputText value="#{houseInfo.houseArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_ShineArea}"/>
+    <h:outputText value="#{houseInfo.shineArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_CommArea}"/>
+    <h:outputText value="#{houseInfo.commArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_UseArea}"/>
+    <h:outputText value="#{houseInfo.useArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_LoftArea}"/>
+    <h:outputText value="#{houseInfo.loftArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_CommParam}"/>
+    <h:outputText value="#{houseInfo.commParam}">
+        <f:convertNumber pattern="#0.#"/>
+    </h:outputText>
+
+</h:panelGrid>
+
+<h:panelGrid columns="4" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+    <h:outputText value="#{messages.House_MasterStatus}"/>
+    <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
+
+    <h:outputText value="#{messages.House_AllStatus}"/>
+    <h:panelGroup>
+        <ui:repeat value="#{houseInfo.allStatusList}" var="_status">
+            #{messages[_status.name()]}
+        </ui:repeat>
+    </h:panelGroup>
+</h:panelGrid>
+
+<h:panelGrid columns="2" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,detailsLastValueCol">
+    <h:outputText value="#{messages.House_Address}"/>
+    <h:outputText value="#{houseInfo.address}"/>
+
+</h:panelGrid>
+
+</ui:composition>
