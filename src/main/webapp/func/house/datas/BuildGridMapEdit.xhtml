@@ -184,26 +184,18 @@
 
 
 <h:outputStylesheet>
-    #buildGridMap td, #buildGridMap th {
-        font-size: 1em;
+    #buildGridMap td {
+        padding:0px 0px  0px 0px ;
+
         border: 1px solid #{richSkin.panelBorderColor};
-padding:
+    }
 
-0
-px
-
-0
-px
-
-0
-px
-
-0
-px
-
-;
-
-}
+    #buildGridMap th {
+        font-size: 1em;
+        font-weight: bold;
+        padding:0px 0px  0px 0px ;
+        border: 1px solid #{richSkin.panelBorderColor};
+    }
 
 .panelc {
     width: 25%;
@@ -215,7 +207,7 @@ px
 }
 
 .rf-ind-drag {
-    font-size: 11px;
+    font-size: 13px;
     cursor: pointer;
 
     width: 100%;
@@ -227,14 +219,9 @@ px
 .rf-idle-drag {
     font-size: 11px;
     cursor: pointer;
-    width: 52px;
-    height: 25px;
-    border: 1px solid #{richSkin.panelBorderColor};
-padding:
-
-0
-px
-
+    width: 100%;
+    height: 100%;
+    padding:0px;
 }
 
 .indicator-drag {
@@ -242,23 +229,26 @@ px
     background-color: gray;
     opacity: 0.3;
     margin: 2px;
-    height: 60px;
-    width: 60px;
+    height: 64px;
+    width: 64px;
     text-align: center;
+    background: url('#{facesContext.externalContext.requestContextPath}/img/house/dragHouse.png') center center no-repeat;
 }
 
 .indicator-acpt {
-    height: 40px;
-    width: 40px;
-    border: 1px dotted red;
+    height: 48px;
+    width: 48px;
+    border: 1px dotted green;
     background-color: green;
+    background: url('#{facesContext.externalContext.requestContextPath}/img/house/dragInHouse.png') center center no-repeat;
 }
 
 .indicator-rejt {
-    height: 40px;
-    width: 40px;
-    border: 1px dotted green;
+    height: 48px;
+    width: 48px;
+    border: 1px dotted red;
     background-color: red;
+    background: url('#{facesContext.externalContext.requestContextPath}/img/house/dragStopHouse.png') center center no-repeat;
 }
 
 .rf-p-b {
@@ -267,24 +257,6 @@ px
     padding: 0px;
 }
 
-.new-house-panel {
-    width: 60px;
-    height: 60px;
-    background: url('#{facesContext.externalContext.requestContextPath}/
-img
-
-/
-house
-
-/
-house.png
-
-') center center no-repeat;
-}
-
-.idle-house-panel {
-    min-height: 60px;
-}
 
 </h:outputStylesheet>
 
@@ -356,9 +328,11 @@ house.png
                         <td colspan="#{_house.colspan}"
                             rowspan="#{_house.rowspan}"
                             style="height: #{_house.rowspan * 60}px;text-align: center;vertical-align: middle;">
+
+
                             <r:panel
-                                    style="width:100%; height: 100%;padding:0px;border: 0px;">
-                                <r:dropTarget id="grid_target" acceptedTypes="house block newHouse"
+                                    style="width:100%; height: 100%;padding:0px;border: 0px;position:relative;">
+                                <r:dropTarget id="grid_target" acceptedTypes="house block #{empty _house.house ? 'newHouse' : ''}"
                                               dropValue="#{_house}"
                                               execute="@this"
                                               status="processWaiting"
@@ -370,18 +344,25 @@ house.png
                                     <r:dragSource id="grid_source" type="block" dragIndicator="indicator"
                                                   dragValue="#{_house}"/>
 
-                                    <h:outputText value="#{_house.house.houseOrder}"/>
-
+                                    <h:outputText value="#{_house.house.houseOrder}" style="font-size: 1em;font-weight: bold;"/>
+                                    <br/>
+                                    <h:outputText value="#{_house.house.houseArea}" style="font-size: 0.9em;color: #797268;">
+                                        <f:convertNumber pattern="#0.000"/>
+                                    </h:outputText>
+                                    <br/>
+                                    <h:outputText value="#{_house.house.useArea}" style="font-size: 0.9em;color: #797268;">
+                                        <f:convertNumber pattern="#0.000"/>
+                                    </h:outputText>
 
                                     <r:contextMenu mode="client" showEvent="contextmenu" style="text-align: left;">
                                         <r:menuItem action="#{buildGridMapHome.idleHouse}"
                                                     label="#{messages.BuildMapAction_idle}"
-                                                    status="processWaiting"
+                                                    status="processWaiting" icon="/img/house/deleteLink.png"
                                                     mode="ajax" execute="@this" render="grid_map,idle,toolbar">
                                             <a:param name="blockId" value="#{_house.id}"
                                                      assignTo="#{buildGridMapHome.selectBlockId}"/>
                                         </r:menuItem>
-                                        <r:menuItem action="#{buildGridMapHome.deleteHouse}"
+                                        <r:menuItem action="#{buildGridMapHome.deleteHouse}" icon="/img/house/delete.png"
                                                     label="#{messages.BuildMapAction_delete}"
                                                     status="processWaiting" mode="ajax" execute="@this"
                                                     onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
@@ -402,8 +383,32 @@ house.png
 
                                 </a:outputPanel>
 
+                                <s:div style="height: 16px;padding:0px;border: 0px;position:absolute; bottom:0;right:0">
+                                    <a:commandButton image="/img/house/delete.png" action="#{buildGridMapHome.deleteHouse}"
+                                                     onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
+                                                     render="grid_map" status="processWaiting"
+                                                     title="#{messages.BuildMapAction_delete}" execute="@this" immediate="true">
+                                        <a:param name="blockId" value="#{_house.id}"
+                                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
 
+                                    </a:commandButton>
+
+
+                                    <a:commandButton image="/img/house/deleteLink.png" action="#{buildGridMapHome.idleHouse}"
+                                                     title="#{messages.BuildMapAction_idle}"
+                                                     status="processWaiting"  immediate="true"
+                                                     execute="@this" render="grid_map,idle,toolbar">
+                                        <a:param name="blockId" value="#{_house.id}"
+                                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+
+                                    <h:graphicImage rendered="#{(not empty _house.house) and (_house.house.lock)}"
+                                                    value="/img/house/lock.png" title="#{messages.Lock}"/>
+                                </s:div>
                             </r:panel>
+
+
                         </td>
                     </a:repeat>
                 </tr>
@@ -413,29 +418,49 @@ house.png
     </a:outputPanel>
 
 
-    <r:popupPanel id="idleHousePopup" resizeable="false" autosized="true" modal="false">
+    <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="100" minHeight="264" width="140" height="200" autosized="false" modal="false">
         <f:facet name="header">
             <h:outputText value="#{messages.IdleHouse}"/>
         </f:facet>
         <f:facet name="controls">
 
         </f:facet>
-        <r:panel styleClass="new-house-panel">
-            <a:outputPanel layout="block" styleClass="rf-ind-drag">
-                <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
-            </a:outputPanel>
-        </r:panel>
-        <r:panel styleClass="idle-house-panel">
-            <h:dataTable id="idle" value="#{buildGridMapHome.idleHouses}" var="_idleHouse">
-                <h:column>
-                    <a:outputPanel layout="block" styleClass="rf-idle-drag">
-                        <r:dragSource id="idle_source" type="house" dragValue="#{_idleHouse}"
-                                      dragIndicator="indicator"/>
-                        <h:outputText value="#{_idleHouse.houseOrder}"/>
+        <a:outputPanel id="idle">
+
+
+                <r:panel style="margin: 2px;float: left; width: 50px;height: 50px;background: url('#{facesContext.externalContext.requestContextPath}/img/house/createHouse.gif') center center no-repeat;">
+                    <a:outputPanel layout="block" styleClass="rf-ind-drag">
+                        <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
                     </a:outputPanel>
-                </h:column>
-            </h:dataTable>
-        </r:panel>
+                </r:panel>
+                <a:repeat value="#{buildGridMapHome.idleHouses}" var="_idleHouse">
+                    <r:panel style="float: left;  width: 50px; height: 50px;margin: 2px; text-align: center;">
+                        <a:outputPanel layout="block" styleClass="rf-idle-drag">
+
+                            <r:dragSource id="idle_source" type="house" dragValue="#{_idleHouse}"
+                                          dragIndicator="indicator"/>
+                            <h:outputText value="#{_idleHouse.houseOrder}" style="font-size: 1em;font-weight: bold;"/>
+                            <br/>
+                            <h:outputText value="#{_idleHouse.houseArea}" style="font-size: 0.9em;color: #797268;">
+                                <f:convertNumber pattern="#0.000"/>
+                            </h:outputText>
+                            <br/>
+                            <h:outputText value="#{_idleHouse.useArea}" style="font-size: 0.9em;color: #797268;">
+                                <f:convertNumber pattern="#0.000"/>
+                            </h:outputText>
+                            <s:div style="height: 16px;padding:0px;border: 0px;position:absolute; bottom:0;right:0">
+                                <h:graphicImage rendered="#{_idleHouse.lock}"
+                                                value="/img/house/lock.png" title="#{messages.Lock}"/>
+                            </s:div>
+                        </a:outputPanel>
+
+
+
+                    </r:panel>
+                </a:repeat>
+
+
+        </a:outputPanel>
     </r:popupPanel>
 </h:form>
 
