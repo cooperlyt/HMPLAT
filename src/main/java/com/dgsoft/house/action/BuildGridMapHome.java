@@ -10,6 +10,8 @@ import org.dom4j.io.SAXReader;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.datamodel.DataModel;
+import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
@@ -268,15 +270,16 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         return result;
     }
 
-
+    @DataModel("idleHouses")
     private List<House> idleHouses = new ArrayList<House>();
 
-    public List<House> getIdleHouses() {
-        return idleHouses;
-    }
+    @DataModelSelection
+    private House selectIdleHouse;
 
-    public void setIdleHouses(List<House> idleHouses) {
-        this.idleHouses = idleHouses;
+    private House selectHouse;
+
+    public void selectedIdleHouse(){
+        selectHouse = selectIdleHouse;
     }
 
     public void generateHouse() {
@@ -290,45 +293,53 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         }
     }
 
-    private String selectBlockId;
 
-    private GridBlock operBlock;
 
     public String getSelectBlockId() {
-        return selectBlockId;
+        if (selectBlock != null){
+            return selectBlock.getId();
+        }else{
+            return null;
+        }
     }
 
     public void setSelectBlockId(String selectBlockId) {
-        this.selectBlockId = selectBlockId;
+        if ((selectBlockId == null) || (selectBlockId.trim().equals(""))){
+            selectBlock = null;
+        }else{
+            selectHouse = null;
+            for (GridRow row : getInstance().getGridRowList()) {
+                for (GridBlock block : row.getGridBlocks()) {
+                    if (block.getId().equals(selectBlockId)) {
+                        selectBlock = block;
+                        selectHouse = block.getHouse();
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private GridBlock selectBlock;
+
+    public GridBlock getSelectBlock() {
+        return selectBlock;
+    }
+
+    public House getSelectHouse() {
+        return selectHouse;
     }
 
     private HouseEditStrategy getHouseEditStrategy() {
         return (HouseEditStrategy) Component.getInstance(RunParam.instance().getStringParamValue(HouseEditStrategy.RUN_PARAM_NAME), true, true);
     }
 
-    public boolean isBlockHouseCanEdit() {
-        GridBlock block = getOperBlock();
-        return (block != null) && (block.getHouse() != null) && getHouseEditStrategy().isCanEdit(block.getHouse());
+    public boolean isHouseCanEdit() {
+        return (selectHouse != null) && getHouseEditStrategy().isCanEdit(selectHouse);
     }
 
-    public GridBlock getOperBlock() {
-        if ((operBlock == null) || (!operBlock.getId().equals(selectBlockId))) {
-            operBlock = null;
-            for (GridRow row : getInstance().getGridRowList()) {
-                for (GridBlock block : row.getGridBlocks()) {
-                    if (block.getId().equals(selectBlockId)) {
-                        operBlock = block;
-                        return operBlock;
-
-                    }
-                }
-            }
-        }
-        return operBlock;
-    }
-
-    public void idleHouse() {
-        GridBlock block = getOperBlock();
+    public void idleBlockHouse() {
+        GridBlock block = getSelectBlock();
         if (block != null) {
             if (block.getHouse() != null) {
                 idleHouses.add(block.getHouse());
@@ -340,7 +351,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     }
 
     private boolean deleteHouse(House house) {
-        if (isBlockHouseCanEdit()) {
+        if (isHouseCanEdit()) {
             house.getGridBlock().clear();
             buildHome.getHouses().remove(house);
             return true;
@@ -349,25 +360,21 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         return false;
     }
 
-    public void deleteHouse() {
-        GridBlock block = getOperBlock();
+    public void deleteBlockHouse() {
+        GridBlock block = getSelectBlock();
         if (block != null) {
             if (block.getHouse() != null) {
                 if (deleteHouse(block.getHouse())) {
                     block.setHouse(null);
                 }
             }
-
         }
     }
 
     public void deleteIdleHouse() {
-        for (House house : idleHouses) {
-            if (house.getId().equals(selectBlockId)) {
-                if (deleteHouse(house)) {
-                    idleHouses.remove(house);
-                }
-                return;
+        if (isHouseCanEdit()){
+            if (deleteHouse(selectIdleHouse)) {
+                idleHouses.remove(selectIdleHouse);
             }
         }
     }
