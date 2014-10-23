@@ -1,6 +1,8 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
+import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.HouseEditStrategy;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.*;
@@ -38,8 +40,24 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     @In
     private FacesMessages facesMessages;
 
-
     private boolean replaceGridMap;
+
+    public String saveGridMap() {
+        String result = "persisted";
+        for (House house : buildHome.getInstance().getHouses()) {
+            if (!house.isValidator()) {
+                result = null;
+                for (String msg : house.getValidMessages()) {
+                    facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, msg, house.getHouseOrder());
+                }
+            }
+        }
+        if (result != null) {
+            return buildHome.persist();
+        } else {
+            return result;
+        }
+    }
 
 
     public boolean isReplaceGridMap() {
@@ -278,35 +296,35 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     private House selectHouse;
 
-    public void selectedIdleHouse(){
+    public void selectedIdleHouse() {
         selectHouse = selectIdleHouse;
     }
 
     public void generateHouse() {
         for (GridRow row : getInstance().getGridRowList()) {
-
             for (GridBlock block : row.getGridBlockList()) {
-                House newHouse = new House(buildHome.getInstance(), block);
-                block.setHouse(newHouse);
-                buildHome.getHouses().add(newHouse);
+                if (block.getHouse() == null) {
+                    House newHouse = new House(buildHome.getInstance(), block);
+                    block.setHouse(newHouse);
+                    buildHome.getHouses().add(newHouse);
+                }
             }
         }
     }
 
 
-
     public String getSelectBlockId() {
-        if (selectBlock != null){
+        if (selectBlock != null) {
             return selectBlock.getId();
-        }else{
+        } else {
             return null;
         }
     }
 
     public void setSelectBlockId(String selectBlockId) {
-        if ((selectBlockId == null) || (selectBlockId.trim().equals(""))){
+        if ((selectBlockId == null) || (selectBlockId.trim().equals(""))) {
             selectBlock = null;
-        }else{
+        } else {
             selectHouse = null;
             for (GridRow row : getInstance().getGridRowList()) {
                 for (GridBlock block : row.getGridBlocks()) {
@@ -356,7 +374,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             buildHome.getHouses().remove(house);
             return true;
         }
-        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"HouseCantEdit");
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "HouseCantEdit");
         return false;
     }
 
@@ -372,7 +390,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     }
 
     public void deleteIdleHouse() {
-        if (isHouseCanEdit()){
+        if (isHouseCanEdit()) {
             if (deleteHouse(selectIdleHouse)) {
                 idleHouses.remove(selectIdleHouse);
             }
@@ -401,6 +419,107 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             targetBlock.setHouse(newHouse);
             buildHome.getHouses().add(newHouse);
         }
+    }
+
+
+    public BigDecimal getTotalHouseArea() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (GridRow row : getInstance().getGridRows()) {
+            for (GridBlock block : row.getGridBlocks())
+                if (block.getHouse() != null)
+                    result = result.add(block.getHouse().getHouseArea());
+        }
+        return result;
+    }
+
+    public BigDecimal getTotalHouseUseArea() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (GridRow row : getInstance().getGridRows()) {
+            for (GridBlock block : row.getGridBlocks())
+                if (block.getHouse() != null)
+                    result = result.add(block.getHouse().getUseArea());
+        }
+        return result;
+    }
+
+    public Map<Word, BuildHome.CountAreaEntry> getUseTypeTotalMap() {
+        Map<Word, BuildHome.CountAreaEntry> result = new HashMap<Word, BuildHome.CountAreaEntry>();
+        for (GridRow row : getInstance().getGridRows()) {
+            for (GridBlock block : row.getGridBlocks())
+                if (block.getHouse() != null) {
+                    BuildHome.CountAreaEntry entry = result.get(DictionaryWord.instance().getWord(block.getHouse().getUseType()));
+                    if (entry != null) {
+                        entry.addArea(block.getHouse().getHouseArea(), block.getHouse().getUseArea());
+                    } else {
+                        result.put(DictionaryWord.instance().getWord(block.getHouse().getUseType()),
+                                new BuildHome.CountAreaEntry(block.getHouse().getHouseArea(), block.getHouse().getUseArea()));
+                    }
+                }
+        }
+        return result;
+    }
+
+    public List<Map.Entry<Word, BuildHome.CountAreaEntry>> getUseTypeTotalList() {
+        List<Map.Entry<Word, BuildHome.CountAreaEntry>> result = new ArrayList<Map.Entry<Word, BuildHome.CountAreaEntry>>(getUseTypeTotalMap().entrySet());
+        Collections.sort(result, new Comparator<Map.Entry<Word, BuildHome.CountAreaEntry>>() {
+            @Override
+            public int compare(Map.Entry<Word, BuildHome.CountAreaEntry> o1, Map.Entry<Word, BuildHome.CountAreaEntry> o2) {
+                return new Integer(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
+            }
+        });
+        return result;
+    }
+
+    private void removeThisPage(){
+        int oldOrder = getInstance().getOrder();
+        buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+        List<BuildGridMap> gms = buildHome.getBuildGridPages();
+
+        if (gms.isEmpty()){
+            clearInstance();
+        }else {
+            for (BuildGridMap gm : gms) {
+                gm.setOrder(gms.indexOf(gm) + 1);
+            }
+            if (gms.size() >= oldOrder){
+                setInstance(gms.get(gms.size() - 1));
+            }else{
+                setInstance(gms.get(oldOrder - 1));
+            }
+        }
+
+
+    }
+
+    public void deleteGridMapAndHouse() {
+        for (GridRow row : getInstance().getGridRowList()) {
+            for (GridBlock block : row.getGridBlockList()) {
+                if ((block.getHouse() != null)) {
+                    block.getHouse().getGridBlock().clear();
+                    if (getHouseEditStrategy().isCanEdit(block.getHouse())) {
+                        buildHome.getHouses().remove(block.getHouse());
+                    }else{
+                        idleHouses.add(block.getHouse());
+                        facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN,"HouseCantDeleteMoveToIdle",block.getHouse().getHouseOrder());
+                    }
+                    block.setHouse(null);
+                }
+            }
+        }
+        removeThisPage();
+    }
+
+    public void deleteGridMapIdleHouse() {
+        for (GridRow row : getInstance().getGridRowList()) {
+            for (GridBlock block : row.getGridBlockList()) {
+                if (block.getHouse() != null) {
+                    block.getHouse().getGridBlock().clear();
+                    idleHouses.add(block.getHouse());
+                    block.setHouse(null);
+                }
+            }
+        }
+        removeThisPage();
     }
 
 }

@@ -140,6 +140,13 @@ public class BuildHome extends HouseEntityHome<Build> {
         Collections.sort(result , new Comparator<Map.Entry<Word, CountAreaEntry>>() {
             @Override
             public int compare(Map.Entry<Word, CountAreaEntry> o1, Map.Entry<Word, CountAreaEntry> o2) {
+
+                if (o1 == null){
+                    return -1;
+                }
+                if (o2 == null){
+                    return 1;
+                }
                 return new Integer(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
             }
         });
