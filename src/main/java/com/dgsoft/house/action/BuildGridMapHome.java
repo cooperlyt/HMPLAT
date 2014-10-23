@@ -304,7 +304,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() == null) {
-                    House newHouse = new House(buildHome.genHouseOrder(),buildHome.getInstance(), block);
+                    House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), block);
                     block.setHouse(newHouse);
                     buildHome.getHouses().add(newHouse);
                 }
@@ -415,7 +415,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             targetBlock.setHouse(tempHouse);
             idleHouses.remove(tempHouse);
         } else {
-            House newHouse = new House(buildHome.genHouseOrder(),buildHome.getInstance(), targetBlock);
+            House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock);
             targetBlock.setHouse(newHouse);
             buildHome.getHouses().add(newHouse);
         }
@@ -470,22 +470,24 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         return result;
     }
 
-    private void removeThisPage(){
+    private void removeThisPage() {
         int oldOrder = getInstance().getOrder();
         buildHome.getInstance().getBuildGridMaps().remove(getInstance());
         List<BuildGridMap> gms = buildHome.getBuildGridPages();
 
-        if (gms.isEmpty()){
+        if (gms.isEmpty()) {
             clearInstance();
-        }else {
+        } else {
             for (BuildGridMap gm : gms) {
                 gm.setOrder(gms.indexOf(gm) + 1);
             }
-            if (gms.size() >= oldOrder){
-                setInstance(gms.get(gms.size() - 1));
-            }else{
-                setInstance(gms.get(oldOrder - 1));
+            while (gms.size() < oldOrder) {
+                oldOrder--;
             }
+
+
+            setInstance(gms.get(oldOrder - 1));
+
         }
 
 
@@ -498,9 +500,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                     block.getHouse().getGridBlock().clear();
                     if (getHouseEditStrategy().isCanEdit(block.getHouse())) {
                         buildHome.getHouses().remove(block.getHouse());
-                    }else{
+                    } else {
                         idleHouses.add(block.getHouse());
-                        facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN,"HouseCantDeleteMoveToIdle",block.getHouse().getHouseOrder());
+                        facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "HouseCantDeleteMoveToIdle", block.getHouse().getHouseOrder());
                     }
                     block.setHouse(null);
                 }
