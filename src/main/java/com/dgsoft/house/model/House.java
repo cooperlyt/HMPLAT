@@ -115,6 +115,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private boolean initRegister;
     private boolean firmlyPower;
     private boolean haveDownRoom;
+    private boolean payWXZJ;
     private String memo;
     private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
     private Set<HouseState> houseStates = new HashSet<HouseState>(0);
@@ -128,7 +129,8 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
 
-    public House(Build build, GridBlock block) {
+    public House(String id, Build build, GridBlock block) {
+        this.id = id;
         this.build = build;
         this.houseArea = block.getArea();
         this.prepareArea = this.houseArea;
@@ -547,6 +549,15 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setInitRegister(boolean initRegister) {
         this.initRegister = initRegister;
+    }
+
+    @Column(name = "PAY_WXZJ",nullable = false)
+    public boolean isPayWXZJ() {
+        return payWXZJ;
+    }
+
+    public void setPayWXZJ(boolean payWXZJ) {
+        this.payWXZJ = payWXZJ;
     }
 
     @Column(name = "FIRMLY_POWER", nullable = false)

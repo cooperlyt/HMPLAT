@@ -41,12 +41,7 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 	private String buildType;
 	private String structure;
 	private String memo;
-	private Integer homeCount;
-	private BigDecimal homeArea;
-	private Integer unhomeCount;
-	private BigDecimal unhomeArea;
-	private Integer shopCount;
-	private BigDecimal shopArea;
+
 
 
     private int nextHouseOrder;
@@ -311,61 +306,6 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
-	}
-
-
-	@Column(name = "HOME_COUNT")
-	public Integer getHomeCount() {
-		return this.homeCount;
-	}
-
-	public void setHomeCount(Integer homeCount) {
-		this.homeCount = homeCount;
-	}
-
-	@Column(name = "HOME_AREA", precision = 18, scale = 3)
-	public BigDecimal getHomeArea() {
-		return this.homeArea;
-	}
-
-	public void setHomeArea(BigDecimal homeArea) {
-		this.homeArea = homeArea;
-	}
-
-	@Column(name = "UNHOME_COUNT")
-	public Integer getUnhomeCount() {
-		return this.unhomeCount;
-	}
-
-	public void setUnhomeCount(Integer unhomeCount) {
-		this.unhomeCount = unhomeCount;
-	}
-
-	@Column(name = "UNHOME_AREA", precision = 18, scale = 3)
-	public BigDecimal getUnhomeArea() {
-		return this.unhomeArea;
-	}
-
-	public void setUnhomeArea(BigDecimal unhomeArea) {
-		this.unhomeArea = unhomeArea;
-	}
-
-	@Column(name = "SHOP_COUNT")
-	public Integer getShopCount() {
-		return this.shopCount;
-	}
-
-	public void setShopCount(Integer shopCount) {
-		this.shopCount = shopCount;
-	}
-
-	@Column(name = "SHOP_AREA", precision = 18, scale = 3)
-	public BigDecimal getShopArea() {
-		return this.shopArea;
-	}
-
-	public void setShopArea(BigDecimal shopArea) {
-		this.shopArea = shopArea;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "build", orphanRemoval = true,cascade = {CascadeType.ALL})

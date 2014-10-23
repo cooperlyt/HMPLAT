@@ -218,7 +218,22 @@
     </ui:define>
 </s:decorate>
 
-<br/>
+
+<s:decorate template="/layout/edit.xhtml">
+    <ui:define name="label">
+        #{messages.Build_Area}
+    </ui:define>
+
+    <h:inputText id="areaInput" value="#{build.area}" label="#{messages.Build_Area}">
+        <f:convertNumber pattern="#0.000"/>
+        <r:validator event="blur"/>
+    </h:inputText>
+
+    <ui:define name="tail">
+        <r:message for="areaInput" styleClass="message-icon"
+                   showDetail="true" showSummary="true" tooltip="true"/>
+    </ui:define>
+</s:decorate>
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
@@ -263,115 +278,6 @@
 </s:decorate>
 
 
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_Area}
-    </ui:define>
-
-    <h:inputText id="areaInput" value="#{build.area}" label="#{messages.Build_Area}">
-        <f:convertNumber pattern="#0.000"/>
-        <r:validator event="blur"/>
-    </h:inputText>
-
-    <ui:define name="tail">
-        <r:message for="areaInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
-
-
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_HomeCount}
-    </ui:define>
-
-    <h:inputText id="homeCountInput" size="10" value="#{build.homeCount}" label="#{messages.Build_HomeCount}"/>
-
-    <ui:define name="tail">
-        <r:message for="homeCountInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
-
-
-
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_HomeArea}
-    </ui:define>
-
-    <h:inputText id="homeAreaInput" value="#{build.homeArea}" label="#{messages.Build_HomeArea}">
-        <f:convertNumber pattern="#0.000"/>
-        <r:validator event="blur"/>
-    </h:inputText>
-
-    <ui:define name="tail">
-        <r:message for="homeAreaInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
-
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_UnHomeCount}
-    </ui:define>
-
-    <h:inputText id="unHomeCountInput" size="10" value="#{build.unhomeCount}" label="#{messages.Build_UnHomeCount}"/>
-
-    <ui:define name="tail">
-        <r:message for="unHomeCountInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
-
-
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_UnHomeArea}
-    </ui:define>
-
-    <h:inputText id="unHomeAreaInput" value="#{build.unhomeArea}" label="#{messages.Build_UnHomeArea}">
-        <f:convertNumber pattern="#0.000"/>
-        <r:validator event="blur"/>
-    </h:inputText>
-
-    <ui:define name="tail">
-        <r:message for="unHomeAreaInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
-
-
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_ShopCount}
-    </ui:define>
-
-    <h:inputText id="shopCountCountInput" size="10" value="#{build.shopCount}" label="#{messages.Build_ShopCount}"/>
-
-    <ui:define name="tail">
-        <r:message for="shopCountCountInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
-
-
-
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_ShopArea}
-    </ui:define>
-
-    <h:inputText id="shopAreaInput" value="#{build.shopArea}" label="#{messages.Build_ShopArea}">
-        <f:convertNumber pattern="#0.000"/>
-        <r:validator event="blur"/>
-    </h:inputText>
-
-    <ui:define name="tail">
-        <r:message for="shopAreaInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
 
 
 </h:panelGrid>

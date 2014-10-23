@@ -59,21 +59,12 @@ public class BuildHome extends HouseEntityHome<Build> {
     }
 
 
-    private String genHouseOrder() {
+    public String genHouseOrder() {
         String result = GBT.getJDJT246(getBuildCode(), getInstance().getNextHouseOrder());
         getInstance().setNextHouseOrder(getInstance().getNextHouseOrder() + 1);
         return result;
     }
 
-    @Override
-    protected boolean wire() {
-        for (House house : getHouses()) {
-            if ((house.getId() == null) || (house.getId().trim().equals(""))) {
-                house.setId(genHouseOrder());
-            }
-        }
-        return true;
-    }
 
     @Override
     protected boolean verifyRemoveAvailable() {

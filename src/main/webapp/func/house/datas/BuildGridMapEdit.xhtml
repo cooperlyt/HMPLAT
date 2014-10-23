@@ -108,7 +108,8 @@
 
         <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
             <h:graphicImage value="/img/icons/delete.png"/>
-            <a:commandLink value="#{messages.DeletePage}" onclick="#{r:component('deletePageConfirm')}.show(); return false;">
+            <a:commandLink value="#{messages.DeletePage}"
+                           onclick="#{r:component('deletePageConfirm')}.show(); return false;">
             </a:commandLink>
         </r:toolbarGroup>
 
@@ -116,7 +117,8 @@
         <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
             <h:graphicImage value="/img/icons/save_all.gif"/>
 
-            <a:commandLink value="#{messages.save}" action="#{buildGridMapHome.saveGridMap}" render="grid_map,idle">
+            <a:commandLink value="#{messages.save}" status="processWaiting" action="#{buildGridMapHome.saveGridMap}"
+                           render="grid_map,idle">
                 <a:attachQueue requestDelay="0"/>
             </a:commandLink>
         </r:toolbarGroup>
@@ -130,10 +132,13 @@
                     <h:graphicImage value="/img/connect_idle.gif"/>
                 </f:facet>
             </a:status>
-            <h:outputText value="#{buildHome.instance.name}"/>
+            <s:button onclick="JavaScript:if(confirm('#{messages.ExitGridMapEditConfirm}')){}else{return false;}"
+                      propagation="end"
+                      view="/func/house/datas/ProjectBuildEdit.xhtml" value="#{messages.return} #{buildHome.instance.buildNo}">
+                <f:param name="projectId" value="#{buildHome.instance.project.id}"/>
+            </s:button>
         </r:toolbarGroup>
     </r:toolbar>
-
 
 
     <r:popupPanel id="deletePageConfirm" width="300" height="140" modal="true" resizeable="false">
@@ -188,8 +193,6 @@
     </r:popupPanel>
 
 </h:form>
-
-
 
 
 <r:popupPanel id="updateFilePopup" modal="true" autosized="true" resizeable="false">
@@ -610,13 +613,15 @@ dragStopHouse.png
     </f:facet>
     <f:facet name="controls">
         <a:commandButton style="padding: 2px" image="/img/icon24/fill.png" title="#{messages.GridFillNew}"
-                         status="processWaiting" action="#{buildGridMapHome.generateHouse}" execute="@this" immediate="true" render="grid_map">
+                         status="processWaiting" action="#{buildGridMapHome.generateHouse}" execute="@this"
+                         immediate="true" render="grid_map">
             <a:attachQueue requestDelay="0"/>
         </a:commandButton>
 
 
         <a:commandButton style="padding: 2px" image="/img/icon24/autoformat.png" action="#{buildGridMapHome.matchIdle}"
-                         status="processWaiting" title="#{messages.GridFillIdle}" execute="@this" immediate="true" render="grid_map,idle">
+                         status="processWaiting" title="#{messages.GridFillIdle}" execute="@this" immediate="true"
+                         render="grid_map,idle">
             <a:attachQueue requestDelay="0"/>
         </a:commandButton>
     </f:facet>

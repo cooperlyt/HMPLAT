@@ -43,7 +43,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     private boolean replaceGridMap;
 
     public String saveGridMap() {
-        String result = "persisted";
+        String result = "updated";
         for (House house : buildHome.getInstance().getHouses()) {
             if (!house.isValidator()) {
                 result = null;
@@ -53,7 +53,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             }
         }
         if (result != null) {
-            return buildHome.persist();
+            return buildHome.update();
         } else {
             return result;
         }
@@ -304,7 +304,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() == null) {
-                    House newHouse = new House(buildHome.getInstance(), block);
+                    House newHouse = new House(buildHome.genHouseOrder(),buildHome.getInstance(), block);
                     block.setHouse(newHouse);
                     buildHome.getHouses().add(newHouse);
                 }
@@ -415,7 +415,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             targetBlock.setHouse(tempHouse);
             idleHouses.remove(tempHouse);
         } else {
-            House newHouse = new House(buildHome.getInstance(), targetBlock);
+            House newHouse = new House(buildHome.genHouseOrder(),buildHome.getInstance(), targetBlock);
             targetBlock.setHouse(newHouse);
             buildHome.getHouses().add(newHouse);
         }
