@@ -47,20 +47,21 @@ public class ProjectHome extends HouseEntityHome<Project> {
     private Build editingBuild;
 
     public void removeProjectBuild() {
-        removeBuild();
-        update();
+        if (removeBuild())
+            update();
     }
 
-    public void removeBuild() {
+    public boolean removeBuild() {
 
         if (getEntityManager().contains(build)) {
             if (getEntityManager().createQuery("select count(house.id) from House house where house.build.id = :buildId", Long.class).
                     setParameter("buildId", build.getId()).getSingleResult() > 0) {
                 facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "BuildHaveHouseCantDel");
-                return;
+                return false;
             }
         }
         projectBuilds.remove(build);
+        return true;
 
     }
 

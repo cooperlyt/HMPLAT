@@ -15,7 +15,10 @@
             <f:facet name="header">
                 #{messages.Build_Id}
             </f:facet>
-            #{_build.id}
+            <ui:define name="buildIdColumn">
+                #{_build.id}
+            </ui:define>
+
         </r:column>
 
 

@@ -18,9 +18,15 @@
         </ui:include>
 
         <br/>
-        <ui:include src="/layout/house/BuildsViewList.xhtml">
+        <s:decorate template="/layout/house/BuildsViewList.xhtml">
             <ui:param name="builds" value="#{projectHome.instance.buildList}"/>
-        </ui:include>
+            <ui:insert name="buildIdColumn">
+                <s:link value="#{_build.id}" view="/func/house/datas/BuildView.xhtml">
+                    <f:param name="from" value="/func/house/datas/ProjectView.xhtml"/>
+                    <f:param name="buildId" value="#{_build.id}"/>
+                </s:link>
+            </ui:insert>
+        </s:decorate>
 
     </ui:define>
 

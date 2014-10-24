@@ -43,20 +43,20 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     private boolean replaceGridMap;
 
     public String saveGridMap() {
-        String result = "updated";
         for (House house : buildHome.getInstance().getHouses()) {
             if (!house.isValidator()) {
-                result = null;
-                for (String msg : house.getValidMessages()) {
-                    facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, msg, house.getHouseOrder());
+                if (!house.getOrderValid()) {
+                    facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "HouseOrderConflictTemplate", house.getHouseOrder());
                 }
+                if (!house.getDetailsValid()) {
+                    facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "HouseDetailsErrorTemplate", house.getHouseOrder());
+                }
+                return null;
             }
         }
-        if (result != null) {
-            return buildHome.update();
-        } else {
-            return result;
-        }
+
+        return buildHome.update();
+
     }
 
 
@@ -277,16 +277,6 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         //return result;
     }
 
-
-    public List<Integer> getColList() {
-        List<Integer> result = new ArrayList<Integer>();
-        for (HouseGridTitle title : getInstance().getHouseGridTitles()) {
-            for (int i = 0; i < title.getColspan(); i++) {
-                result.add(i);
-            }
-        }
-        return result;
-    }
 
     @DataModel("idleHouses")
     private List<House> idleHouses = new ArrayList<House>();

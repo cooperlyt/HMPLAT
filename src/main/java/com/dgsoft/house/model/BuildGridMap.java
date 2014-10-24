@@ -120,4 +120,15 @@ public class BuildGridMap implements java.io.Serializable {
         return result;
     }
 
+    @Transient
+    public List<Integer> getColList() {
+        List<Integer> result = new ArrayList<Integer>();
+        for (HouseGridTitle title : getHouseGridTitles()) {
+            for (int i = 0; i < title.getColspan(); i++) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
 }

@@ -646,15 +646,28 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
     @Transient
-    private List<String> validMessages;
+    private Boolean orderValid;
 
     @Transient
-    public List<String> getValidMessages() {
-        if (validMessages == null) {
+    private Boolean detailsValid;
+
+    @Transient
+    public Boolean getOrderValid() {
+        if (orderValid == null){
             isValidator();
         }
-        return validMessages;
+        return orderValid;
     }
+
+    @Transient
+    public Boolean getDetailsValid() {
+        if (detailsValid == null){
+            isValidator();
+        }
+        return detailsValid;
+    }
+
+
 
     @Transient
     public boolean isValidator() {
@@ -662,25 +675,26 @@ public class House implements java.io.Serializable, HouseInfo {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<House>> constraintViolations = validator.validate(this);
 
-        validMessages = new ArrayList<String>(constraintViolations.size());
-        Iterator<ConstraintViolation<House>> it = constraintViolations.iterator();
 
-        while (it.hasNext()) {
-            validMessages.add(it.next().getMessage());
-        }
+        detailsValid = constraintViolations.size() <= 0;
+
+        orderValid = true;
 
         if (this.getHouseOrder() != null) {
             int count = 0;
             for (House house : getBuild().getHouses()) {
                 if (this.getHouseOrder().equals(house.getHouseOrder())) {
                     count++;
-                    if (count >= 2)
-                        validMessages.add("HouseOrderConflict");
+                    if (count >= 2){
+                        orderValid = false;
+                        break;
+                    }
+
                 }
             }
         }
 
 
-        return (validMessages.size() <= 0);
+        return orderValid && detailsValid;
     }
 }
