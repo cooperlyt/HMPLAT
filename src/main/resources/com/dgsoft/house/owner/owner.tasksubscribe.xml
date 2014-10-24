@@ -178,5 +178,20 @@
         注销原因查看
     </subscribe>
 
+    <subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml" component="" cagegory="" type="VIEW">
+        预告登记证明号查看
+    </subscribe>
+
+    <subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml" component="" cagegory="" type="VIEW">
+        所有权证号查看
+    </subscribe>
+
+    <subscribe name="CardMortgageView" page="/business/houseOwner/subscribe/CardMortgageView.xhtml" component="" cagegory="" type="VIEW">
+        他项权证号查看
+    </subscribe>
+
+    <subscribe name="CardSaleLicenseView" page="/business/houseOwner/subscribe/CardSaleLicenseView.xhtml" component="" cagegory="" type="VIEW">
+        预售许可证号查看
+    </subscribe>
 
 </subscribes>
