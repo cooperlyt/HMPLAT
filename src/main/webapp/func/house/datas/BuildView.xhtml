@@ -1,13 +1,78 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:a="http://richfaces.org/a4j" template="/layout/template.xhtml">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+      xmlns:s="http://jboss.org/schema/seam/taglib">
+<f:view
+        contentType="text/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <!-- meta http-equiv="X-UA-Compatible" content="IE=8"/-->
+        <title>#{messages.mainTitle}</title>
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+
+        <h:outputStylesheet name="application.css"/>
+        <h:outputStylesheet name="theme.css"/>
+        <ui:insert name="head"/>
+    </h:head>
+    <h:body>
 
 
+        <r:dataTable value="#{houseStatus}" var="_status">
+            <r:column>
+                <h:graphicImage value="/img/icon24/#{_status}.png"/>
+                <h:outputText value="#{messages[_status.name()]}"/>
+            </r:column>
 
-</ui:composition>
+        </r:dataTable>
+
+        <ui:repeat value="#{buildHome.buildGridPages}" var="_buildGridMap">
+
+            <br/>
+            <s:div style="width: 100%;text-align: center;">
+                <h:outputText value="#{_buildGridMap.name}" style="font-size: 1.5em; font-weight: bold"/>
+            </s:div>
+
+            <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
+
+                <ui:param name="gridMap" value="#{_buildGridMap}"/>
+
+                <s:div  rendered="#{not empty _house.house}"
+                        style="width: 100%; height: 100%; padding: 0px; border: 0px; position: relative;">
+
+                    <h:outputText value="#{_house.house.houseOrder}"
+                                  style="font-size: 1em; font-weight: bold; color: #000000;"/>
+
+                    <br/>
+
+                    <h:outputText value="#{_house.house.houseOwner.personName}"
+                                  style="font-size: 0.9em;color: #797268;" rendered="#{not empty _house.house.houseOwner}"/>
+
+                    <s:div style="height: 24px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
+                        <h:graphicImage value="/img/icon24/#{_house.house.masterStatus}.png"
+                                        title="#{messages[_house.house.masterStatus.name()]}"/>
+
+                    </s:div>
+
+
+                    <h:graphicImage
+                            style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;"
+                            rendered="#{(not empty _house.house) and (_house.house.lock)}"
+                            value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+                </s:div>
+
+            </s:decorate>
+
+
+        </ui:repeat>
+
+    </h:body>
+
+</f:view>
+
+</html>

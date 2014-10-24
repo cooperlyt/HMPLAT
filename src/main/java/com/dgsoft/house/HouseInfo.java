@@ -10,8 +10,13 @@ import java.util.List;
  */
 public interface HouseInfo extends BuildInfo {
 
+    //不可售，可售，已办产权,签约，备案，商品房预告登记，
+    // 房屋转移预告登记，商品房预告抵押，屋屋转移预告抵押,
+    // 抵押,在建工程抵押,异议,声明作废，查封,灭籍
     public enum HouseStatus{
-        CANTSALE,SALEING,OWNERED;
+        CANTSALE,SALEING,OWNERED,CONTRACTS,CONTRACTS_RECORD,SALE_REGISTER,
+        DIVERT_REGISTER,SALE_MORTGAGE_REGISTER,DIVERT_MORTGAGE_REGISTER,
+        PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTORY;
     }
 
     public class StatusComparator implements Comparator<HouseStatus>{

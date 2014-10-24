@@ -236,18 +236,7 @@
 
 
 <h:outputStylesheet>
-    #buildGridMap td {
-        padding: 0px 0px 0px 0px;
 
-        border: 1px solid #{richSkin.panelBorderColor};
-}
-
-#buildGridMap th {
-    font-size: 1em;
-    font-weight: bold;
-    padding: 0px 0px 0px 0px;
-    border: 1px solid #{richSkin.panelBorderColor};
-}
 
 .panelc {
     width: 25%;
@@ -459,7 +448,7 @@
                         <h:graphicImage
                                 style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;"
                                 rendered="#{(not empty _house.house) and (_house.house.lock)}"
-                                value="/img/house/lock.png" title="#{messages.Lock}"/>
+                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
 
                         <s:div styleClass="house-act">
                             <a:commandButton rendered="#{not empty _house.house}"
@@ -615,7 +604,7 @@
                 </a:outputPanel>
                 <h:graphicImage rendered="#{_idleHouse.lock}"
                                 style="height: 16px;padding:0px;border: 0px;position:absolute; bottom:0;left:0"
-                                value="/img/house/lock.png" title="#{messages.Lock}"/>
+                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
                 <s:div styleClass="house-act">
                     <a:commandButton rendered="#{not _idleHouse.lock}"
                                      image="/img/icons/delete-red.png"
@@ -662,7 +651,7 @@
             <h:outputText value="#{buildGridMapHome.selectHouse.houseOrder}"
                           style="font-size: 1.2em; font-weight: bold;"/>
             <h:graphicImage rendered="#{not buildGridMapHome.houseCanEdit}"
-                            value="/img/house/lock.png" title="#{messages.Lock}"/>
+                            value="/img/house/lock.png" title="#{messages.LockDecription}"/>
             <br/>
             <h:outputText value="#{messages.DeleteMapHouseInfo}"/>
             <br/>
