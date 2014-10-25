@@ -1,78 +1,217 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/full-width-template.xhtml">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-      xmlns:s="http://jboss.org/schema/seam/taglib">
-<f:view
-        contentType="text/html">
-
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <!-- meta http-equiv="X-UA-Compatible" content="IE=8"/-->
-        <title>#{messages.mainTitle}</title>
-        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
-
-        <h:outputStylesheet name="application.css"/>
-        <h:outputStylesheet name="theme.css"/>
-        <ui:insert name="head"/>
-    </h:head>
-    <h:body>
+    <ui:param name="functionTitle" value="#{buildHome.instance.buildName}"/>
 
 
-        <r:dataTable value="#{houseStatus}" var="_status">
-            <r:column>
-                <h:graphicImage value="/img/icon24/#{_status}.png"/>
-                <h:outputText value="#{messages[_status.name()]}"/>
+
+
+    <ui:define name="body">
+
+        <r:dataTable value="#{buildHome.statusTotalList}" var="_status">
+            <r:column style="border-right: 0;padding-right: 0;">
+                <h:graphicImage value="/img/icons/#{_status.key}.png"/>
+
+            </r:column>
+            <r:column style="border-left: 0;padding-left: 0">
+                <h:outputText value="#{messages[_status.key.name()]}"/>
+            </r:column>
+            <r:column >
+                <h:outputText value="#{_status.value.count}"/>
+                <h:outputText style="float: right;padding-left: 5px;" value="#{messages.HouseCountUnit}"/>
+
+            </r:column>
+            <r:column >
+
+                <h:outputText value="#{_status.value.area}">
+                    <f:convertNumber pattern="#0.000"/>
+                </h:outputText>
+                <h:outputText style="float: right;padding-left: 5px;" value="#{messages.AreaUnit}"/>
             </r:column>
 
         </r:dataTable>
 
-        <ui:repeat value="#{buildHome.buildGridPages}" var="_buildGridMap">
+        <div style="clear: both"/>
+        <h:form>
+            <a:repeat value="#{buildHome.buildGridPages}" var="_buildGridMap">
 
-            <br/>
-            <s:div style="width: 100%;text-align: center;">
-                <h:outputText value="#{_buildGridMap.name}" style="font-size: 1.5em; font-weight: bold"/>
-            </s:div>
-
-            <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
-
-                <ui:param name="gridMap" value="#{_buildGridMap}"/>
-
-                <s:div  rendered="#{not empty _house.house}"
-                        style="width: 100%; height: 100%; padding: 0px; border: 0px; position: relative;">
-
-                    <h:outputText value="#{_house.house.houseOrder}"
-                                  style="font-size: 1em; font-weight: bold; color: #000000;"/>
-
-                    <br/>
-
-                    <h:outputText value="#{_house.house.houseOwner.personName}"
-                                  style="font-size: 0.9em;color: #797268;" rendered="#{not empty _house.house.houseOwner}"/>
-
-                    <s:div style="height: 24px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
-                        <h:graphicImage value="/img/icon24/#{_house.house.masterStatus}.png"
-                                        title="#{messages[_house.house.masterStatus.name()]}"/>
-
+                <br/>
+                <h:panelGrid columns="1">
+                    <s:div style="text-align: center;">
+                        <h:outputText value="#{_buildGridMap.name}" style="font-size: 1.5em; font-weight: bold"/>
                     </s:div>
 
+                    <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
 
-                    <h:graphicImage
-                            style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;"
-                            rendered="#{(not empty _house.house) and (_house.house.lock)}"
-                            value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+                        <ui:param name="gridMap" value="#{_buildGridMap}"/>
+
+                        <s:div rendered="#{not empty _house.house}"
+                               style="width: 100%; height: 100%; padding: 0px; border: 0px;">
+
+                            <h:outputText value="#{_house.house.houseOrder}"
+                                          style="font-size: 1em; font-weight: bold; color: #000000;"/>
+
+                            <br/>
+                            <a:outputPanel rendered="#{not empty _house.house.houseOwner}">
+                                <ui:include src="/layout/long-text-display.xhtml">
+                                    <ui:param name="value" value="#{_house.house.houseOwner.personName}"/>
+                                    <ui:param name="size" value="6"/>
+                                    <ui:param name="textStyle" value="font-size: 0.9em;color: #797268;"/>
+                                </ui:include>
+                            </a:outputPanel>
+
+                            <br/>
+                            <s:div style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
+                                <h:graphicImage value="/img/icons/#{_house.house.masterStatus}.png"
+                                                title="#{messages[_house.house.masterStatus.name()]}"/>
+
+                                <h:graphicImage
+                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG_CONFIRM'}"
+                                        value="/img/icons/power.png" title="#{messages.INIT_REG_CONFIRM}"/>
+
+                                <h:graphicImage
+                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG'}"
+                                        value="/img/icons/initReg.png" title="#{messages.INIT_REG}"/>
+
+                                <h:graphicImage
+                                        rendered="#{_house.house.lock}"
+                                        value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+
+
+                            </s:div>
+
+
+                        </s:div>
+                        <ui:define name="house-action">
+
+                            <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                             image="/img/icons/info-blue.png"
+                                             rendered="#{not empty _house.house}"
+                                             title="#{messages.BuildMapAction_edit}"
+                                             oncomplete="#{r:component('houseInfoPanel')}.show();"
+                                             immediate="true" execute="@this" render="houseDetails">
+                                <a:param value="#{_house.house.id}" assignTo="#{houseHome.id}"/>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+
+                        </ui:define>
+
+                    </s:decorate>
+                </h:panelGrid>
+
+            </a:repeat>
+        </h:form>
+
+
+        <r:popupPanel id="houseInfoPanel" autosized="true" modal="true" resizeable="false">
+
+            <f:facet name="header">
+                <h:outputText value="#{messages.House}"/>
+            </f:facet>
+
+            <f:facet name="controls">
+                <a:commandButton immediate="true"
+                                 execute="@this" image="/img/close.png"
+                                 onclick="#{r:component('houseInfoPanel')}.hide(); return false;">
+                </a:commandButton>
+            </f:facet>
+
+            <a:outputPanel id="houseDetails">
+                <s:div rendered="#{houseHome.idDefined}" style="width: 980px">
+                    <table class="detailsTable">
+                        <tr>
+                            <td class="detailsHead"></td>
+                        </tr>
+                    </table>
+                    <ui:include src="/layout/house/HouseInfoView.xhtml">
+                        <ui:param name="houseInfo" value="#{houseHome.instance}"/>
+                    </ui:include>
+                    <a:outputPanel rendered="#{not empty houseHome.instance.houseOwner}">
+
+                        <ui:include src="/layout/house/HouseOwnerView.xhtml">
+                            <ui:param name="nameLabel" value="#{messages.House_Owner}"/>
+                        </ui:include>
+
+                    </a:outputPanel>
+
+                    <a:outputPanel rendered="#{empty houseHome.instance.houseOwner}">
+                            <ui:include src="/layout/emptyViewGrid.xhtml">
+                                <ui:param name="title" value="#{messages.House_Owner}"/>
+                                <ui:param name="noDataLabel" value=""/>
+                            </ui:include>
+
+                    </a:outputPanel>
+
                 </s:div>
+            </a:outputPanel>
 
-            </s:decorate>
+        </r:popupPanel>
 
 
-        </ui:repeat>
+        <br/>
+        <r:dataTable style="float: right;" value="#{buildHome.useTypeTotalList}" var="_entry" headerClass="totalHeader">
+            <r:column headerClass="totalHeader">
+                <f:facet name="header">
+                    #{messages.House_UseType}
+                </f:facet>
+                #{_entry.key.value}
 
-    </h:body>
+                <f:facet name="footer">
+                    #{messages.recordTotal}
+                </f:facet>
+            </r:column>
 
-</f:view>
+            <r:column headerClass="totalHeader">
+                <f:facet name="header">
+                    #{messages.count}
+                </f:facet>
+                #{_entry.value.count}
 
-</html>
+                <f:facet name="footer">
+                    #{buildHome.instance.houses.size}
+                </f:facet>
+
+            </r:column>
+
+            <r:column headerClass="totalHeader">
+                <f:facet name="header">
+                    #{messages.House_Area}
+                </f:facet>
+                <h:outputText value="#{_entry.value.area}">
+                    <f:convertNumber pattern="#0.000"/>
+                </h:outputText>
+
+                <f:facet name="footer">
+                    <h:outputText value="#{buildHome.totalHouseArea}">
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:outputText>
+
+                </f:facet>
+            </r:column>
+
+            <r:column headerClass="totalHeader">
+                <f:facet name="header">
+                    #{messages.House_UseArea}
+                </f:facet>
+                <h:outputText value="#{_entry.value.useArea}">
+                    <f:convertNumber pattern="#0.000"/>
+                </h:outputText>
+
+                <f:facet name="footer">
+                    <h:outputText value="#{buildHome.totalHouseUseArea}">
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:outputText>
+
+                </f:facet>
+            </r:column>
+
+        </r:dataTable>
+    </ui:define>
+</ui:composition>

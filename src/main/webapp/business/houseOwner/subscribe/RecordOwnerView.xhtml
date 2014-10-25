@@ -8,7 +8,7 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}">
-        <ui:include src="/layout/house/owner/BusinessHouseOwnerView.xhtml">
+        <ui:include src="/layout/house/HouseOwnerView.xhtml">
             <ui:param name="nameLabel" value="#{messages.RecordOwner}"/>
             <ui:param name="businessHouse"
                       value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}"/>
@@ -16,7 +16,7 @@
     </a:outputPanel>
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.businessHouseOwner}">
-        <ui:include src="/layout/house/owner/BusinessHouseOwnerView.xhtml">
+        <ui:include src="/layout/house/HouseOwnerView.xhtml">
             <ui:param name="nameLabel" value="#{messages.RecordOwner}"/>
             <ui:param name="businessHouse"
                       value="#{ownerBusinessHome.singleHoues.businessHouseOwner}"/>

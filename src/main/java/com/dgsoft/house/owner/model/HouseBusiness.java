@@ -26,7 +26,9 @@ public class HouseBusiness implements java.io.Serializable {
     private BusinessHouseOwner businessHouseOwner;
     private LandInfo landInfo;
     private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
-
+    private BusinessHouse.PoolType poolType;
+    private String houseFrom;
+    private String houseProperty;
 
     public HouseBusiness() {
     }
@@ -163,5 +165,36 @@ public class HouseBusiness implements java.io.Serializable {
     public void setNewHouseContracts(Set<NewHouseContract> newHouseContracts) {
         this.newHouseContracts = newHouseContracts;
     }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "POOL_MEMO", length = 32)
+    public BusinessHouse.PoolType getPoolType() {
+        return this.poolType;
+    }
+
+    public void setPoolType(BusinessHouse.PoolType poolType) {
+        this.poolType = poolType;
+    }
+
+    @Column(name = "HOUSE_FROM", length = 32)
+    @Size(max = 32)
+    public String getHouseFrom() {
+        return this.houseFrom;
+    }
+
+    public void setHouseFrom(String houseFrom) {
+        this.houseFrom = houseFrom;
+    }
+
+    @Column(name = "HOUSE_PORPERTY", length = 32)
+    @Size(max = 32)
+    public String getHouseProperty() {
+        return this.houseProperty;
+    }
+
+    public void setHouseProperty(String houseProperty) {
+        this.houseProperty = houseProperty;
+    }
+
 
 }

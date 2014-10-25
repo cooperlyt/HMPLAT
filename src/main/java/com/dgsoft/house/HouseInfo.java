@@ -19,7 +19,20 @@ public interface HouseInfo extends BuildInfo {
         PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTORY;
     }
 
+    public enum InitRegStatus{
+        NOT_INIT_REG,INIT_REG_CONFIRM,INIT_REG;
+    }
+
     public class StatusComparator implements Comparator<HouseStatus>{
+
+        private static StatusComparator instance;
+
+        public static StatusComparator getInstance(){
+            if (instance == null){
+                instance = new StatusComparator();
+            }
+            return instance;
+        }
 
         @Override
         public int compare(HouseStatus o1, HouseStatus o2) {
@@ -70,9 +83,7 @@ public interface HouseInfo extends BuildInfo {
 
     public String getDirection();
 
-    public boolean isInitRegister();
-
-    public boolean isFirmlyPower();
+    public InitRegStatus getInitRegStatus();
 
     public boolean isHaveDownRoom();
 

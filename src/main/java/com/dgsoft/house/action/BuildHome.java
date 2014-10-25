@@ -9,9 +9,11 @@ import com.dgsoft.common.system.model.NumberPool;
 import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.HouseEntityHome;
+import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.BuildGridMap;
 import com.dgsoft.house.model.House;
+import org.apache.poi.ss.formula.functions.Count;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
@@ -90,11 +92,7 @@ public class BuildHome extends HouseEntityHome<Build> {
         return result;
     }
 
-    @Override
-    protected boolean verifyUpdateAvailable() {
-        //TODO verify House Data
-        return true;
-    }
+    //public List
 
     public BigDecimal getTotalHouseArea() {
         BigDecimal result = BigDecimal.ZERO;
@@ -112,30 +110,54 @@ public class BuildHome extends HouseEntityHome<Build> {
         return result;
     }
 
-    public Map<Word, CountAreaEntry> getUseTypeTotalMap() {
-        Map<Word, CountAreaEntry> result = new HashMap<Word, CountAreaEntry>();
+    public Map<HouseInfo.HouseStatus, CountAreaEntry> getStatusTotalMap() {
+        Map<HouseInfo.HouseStatus, CountAreaEntry> result = new HashMap<HouseInfo.HouseStatus, CountAreaEntry>();
         for (House house : getInstance().getHouses()) {
-            CountAreaEntry entry = result.get(DictionaryWord.instance().getWord(house.getUseType()));
-            if (entry != null) {
-                entry.addArea(house.getHouseArea(),house.getUseArea());
+            CountAreaEntry entry = result.get(house.getMasterStatus());
+            if (entry == null) {
+                result.put(house.getMasterStatus(), new CountAreaEntry(house.getHouseArea(), house.getUseArea()));
             } else {
-                result.put(DictionaryWord.instance().getWord(house.getUseType()),
-                        new CountAreaEntry(house.getHouseArea(),house.getUseArea()));
+                entry.addArea(house.getHouseArea(), house.getUseArea());
             }
         }
         return result;
     }
 
-    public List<Map.Entry<Word,CountAreaEntry>> getUseTypeTotalList(){
-        List<Map.Entry<Word,CountAreaEntry>> result = new ArrayList<Map.Entry<Word, CountAreaEntry>>(getUseTypeTotalMap().entrySet());
-        Collections.sort(result , new Comparator<Map.Entry<Word, CountAreaEntry>>() {
+    public List<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>> getStatusTotalList() {
+        List<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>> result = new ArrayList<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>>(getStatusTotalMap().entrySet());
+        Collections.sort(result, new Comparator<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>>() {
+            @Override
+            public int compare(Map.Entry<HouseInfo.HouseStatus, CountAreaEntry> o1, Map.Entry<HouseInfo.HouseStatus, CountAreaEntry> o2) {
+                return HouseInfo.StatusComparator.getInstance().compare(o1.getKey(), o2.getKey());
+            }
+        });
+        return result;
+    }
+
+    public Map<Word, CountAreaEntry> getUseTypeTotalMap() {
+        Map<Word, CountAreaEntry> result = new HashMap<Word, CountAreaEntry>();
+        for (House house : getInstance().getHouses()) {
+            CountAreaEntry entry = result.get(DictionaryWord.instance().getWord(house.getUseType()));
+            if (entry != null) {
+                entry.addArea(house.getHouseArea(), house.getUseArea());
+            } else {
+                result.put(DictionaryWord.instance().getWord(house.getUseType()),
+                        new CountAreaEntry(house.getHouseArea(), house.getUseArea()));
+            }
+        }
+        return result;
+    }
+
+    public List<Map.Entry<Word, CountAreaEntry>> getUseTypeTotalList() {
+        List<Map.Entry<Word, CountAreaEntry>> result = new ArrayList<Map.Entry<Word, CountAreaEntry>>(getUseTypeTotalMap().entrySet());
+        Collections.sort(result, new Comparator<Map.Entry<Word, CountAreaEntry>>() {
             @Override
             public int compare(Map.Entry<Word, CountAreaEntry> o1, Map.Entry<Word, CountAreaEntry> o2) {
 
-                if (o1 == null){
+                if (o1 == null) {
                     return -1;
                 }
-                if (o2 == null){
+                if (o2 == null) {
                     return 1;
                 }
                 return new Integer(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
@@ -146,7 +168,7 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     public static class CountAreaEntry {
 
-        public CountAreaEntry(BigDecimal area,BigDecimal useArea) {
+        public CountAreaEntry(BigDecimal area, BigDecimal useArea) {
             this.count = 1;
             this.area = area;
             this.useArea = useArea;

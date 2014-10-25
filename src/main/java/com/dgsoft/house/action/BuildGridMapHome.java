@@ -432,6 +432,17 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         return result;
     }
 
+    public int getHouseCount(){
+        int result = 0;
+        for (GridRow row : getInstance().getGridRows()) {
+            for (GridBlock block : row.getGridBlocks())
+                if (block.getHouse() != null) {
+                    result ++;
+                }
+        }
+        return result;
+    }
+
     public Map<Word, BuildHome.CountAreaEntry> getUseTypeTotalMap() {
         Map<Word, BuildHome.CountAreaEntry> result = new HashMap<Word, BuildHome.CountAreaEntry>();
         for (GridRow row : getInstance().getGridRows()) {

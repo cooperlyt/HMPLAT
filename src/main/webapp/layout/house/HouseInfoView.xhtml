@@ -72,10 +72,11 @@
     <h:outputText value="#{messages.House_Order}"/>
     <h:outputText value="#{houseInfo.houseOrder}"/>
 
-    <h:outputText value="#{messages.House_InitReg}"/>
-    <h:outputText value="#{houseInfo.initRegister ? messages.Yes : messages.No}"/>
-    <h:outputText value="#{messages.House_FirmlyPower}"/>
-    <h:outputText value="#{houseInfo.firmlyPower ? messages.Yes : messages.No}"/>
+    <h:outputText value="#{messages.House_InFloor}"/>
+    <h:outputText value="#{houseInfo.inFloorName}"/>
+
+    <h:outputText value="#{messages.House_Unit}"/>
+    <h:outputText value="#{houseInfo.houseUnitName}"/>
 
     <h:panelGroup>
         <ui:include src="/layout/long-text-display.xhtml">
@@ -139,38 +140,32 @@
     <h:outputText value="#{messages.House_North_Wall}"/>
     <h:outputText value="#{dictionary.getWordValue(houseInfo.northWall)}"/>
 
-    <h:outputText value="#{messages.House_InFloor}"/>
-    <h:outputText value="#{houseInfo.inFloorName}"/>
+    <h:outputText value="#{messages.House_ShineArea}"/>
+    <h:outputText value="#{houseInfo.shineArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
 
-    <h:outputText value="#{messages.House_Unit}"/>
-    <h:outputText value="#{houseInfo.houseUnitName}"/>
+    <h:outputText value="#{messages.House_LoftArea}"/>
+    <h:outputText value="#{houseInfo.loftArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
 
-    <h:outputText value="#{messages.House_Direction}"/>
-    <h:outputText value="#{dictionary.getWordValue(houseInfo.direction)}"/>
 
     <h:outputText value="#{messages.House_PrepareArea}"/>
     <h:outputText value="#{houseInfo.prepareArea}">
         <f:convertNumber pattern="#0.000"/>
     </h:outputText>
 
+    <h:outputText value="#{messages.House_Direction}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.direction)}"/>
 
-
-
-</h:panelGrid>
-
-
-<h:panelGrid columns="6" styleClass="detailsTable"
-             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
 
     <h:outputText value="#{messages.House_Area}"/>
     <h:outputText value="#{houseInfo.houseArea}">
         <f:convertNumber pattern="#0.000"/>
     </h:outputText>
 
-    <h:outputText value="#{messages.House_ShineArea}"/>
-    <h:outputText value="#{houseInfo.shineArea}">
-        <f:convertNumber pattern="#0.000"/>
-    </h:outputText>
+
 
     <h:outputText value="#{messages.House_CommArea}"/>
     <h:outputText value="#{houseInfo.commArea}">
@@ -182,11 +177,6 @@
         <f:convertNumber pattern="#0.000"/>
     </h:outputText>
 
-    <h:outputText value="#{messages.House_LoftArea}"/>
-    <h:outputText value="#{houseInfo.loftArea}">
-        <f:convertNumber pattern="#0.000"/>
-    </h:outputText>
-
     <h:outputText value="#{messages.House_CommParam}"/>
     <h:outputText value="#{houseInfo.commParam}">
         <f:convertNumber pattern="#0.#"/>
@@ -194,10 +184,14 @@
 
 </h:panelGrid>
 
-<h:panelGrid columns="4" styleClass="detailsTable"
-             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+
+<h:panelGrid columns="6" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
     <h:outputText value="#{messages.House_MasterStatus}"/>
     <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
+
+    <h:outputText value="#{messages.House_InitReg}"/>
+    <h:outputText value="#{messages[houseInfo.initRegStatus.name()]}"/>
 
     <h:outputText value="#{messages.House_AllStatus}"/>
     <h:panelGroup>

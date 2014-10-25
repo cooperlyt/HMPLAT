@@ -55,7 +55,6 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
-    private Set<RegisterProperty>registerPropertys = new HashSet<RegisterProperty>(0);
     private OwnerBusiness selectBusiness;
     private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
 
@@ -372,12 +371,4 @@ public class OwnerBusiness implements java.io.Serializable {
         }
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<RegisterProperty> getRegisterPropertys() {
-        return registerPropertys;
-    }
-
-    public void setRegisterPropertys(Set<RegisterProperty> registerPropertys) {
-        this.registerPropertys = registerPropertys;
-    }
 }

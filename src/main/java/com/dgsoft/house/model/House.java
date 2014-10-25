@@ -112,8 +112,8 @@ public class House implements java.io.Serializable, HouseInfo {
     private String northWall;
     private Date mapTime;
     private String direction;
-    private boolean initRegister;
-    private boolean firmlyPower;
+    private InitRegStatus initRegStatus;
+
     private boolean haveDownRoom;
     private boolean payWXZJ;
     private String memo;
@@ -153,8 +153,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.eastWall = block.getEastWall();
         this.masterStatus = HouseStatus.CANTSALE;
         this.haveDownRoom = block.isHaveDownRoom();
-        initRegister = false;
-        firmlyPower = false;
+        this.initRegStatus = InitRegStatus.NOT_INIT_REG;
         lock = false;
         dataSource = HouseDataSource.MAPPING;
 
@@ -236,6 +235,19 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setInFloorName(String inFloorName) {
         this.inFloorName = inFloorName;
+    }
+
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "INIT_REG_STATUS",nullable = false,length = 20)
+    @NotNull
+    public InitRegStatus getInitRegStatus() {
+        return initRegStatus;
+    }
+
+    public void setInitRegStatus(InitRegStatus initRegStatus) {
+        this.initRegStatus = initRegStatus;
     }
 
     @Column(name = "HOUSE_AREA", nullable = false, precision = 18, scale = 3)
@@ -542,15 +554,6 @@ public class House implements java.io.Serializable, HouseInfo {
         this.direction = direction;
     }
 
-    @Column(name = "INIT_REGISTER", nullable = false)
-    public boolean isInitRegister() {
-        return this.initRegister;
-    }
-
-    public void setInitRegister(boolean initRegister) {
-        this.initRegister = initRegister;
-    }
-
     @Column(name = "PAY_WXZJ",nullable = false)
     public boolean isPayWXZJ() {
         return payWXZJ;
@@ -558,15 +561,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setPayWXZJ(boolean payWXZJ) {
         this.payWXZJ = payWXZJ;
-    }
-
-    @Column(name = "FIRMLY_POWER", nullable = false)
-    public boolean isFirmlyPower() {
-        return this.firmlyPower;
-    }
-
-    public void setFirmlyPower(boolean firmlyPower) {
-        this.firmlyPower = firmlyPower;
     }
 
     @Column(name = "MEMO", length = 200)

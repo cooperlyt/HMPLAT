@@ -52,7 +52,7 @@ public class District implements java.io.Serializable,TreeNode,NamedEntity {
 		this.version = version;
 	}
 
-	@Column(name = "NAME", length = 100,nullable = false)
+	@Column(name = "NAME",unique = true, length = 100,nullable = false)
 	@Size(max = 100)
     @NotNull
 	public String getName() {
