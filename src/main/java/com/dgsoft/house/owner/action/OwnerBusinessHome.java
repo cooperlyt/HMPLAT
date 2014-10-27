@@ -34,6 +34,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         }
         return null;
     }
+
     public Card getCardByType(String typeName){
         for (Card card:getInstance().getCards()){
             if (card.getType().equals(Card.CardType.valueOf(Card.CardType.class,typeName))){

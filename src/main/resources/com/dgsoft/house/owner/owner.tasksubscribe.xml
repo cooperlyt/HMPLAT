@@ -128,7 +128,7 @@
     </subscribe>
 
     <subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml" component="" cagegory="" type="EDIT">
-     土地信息编辑
+     土地信息编辑（有土地信息就不显示，没有编辑）
     </subscribe>
 
     <subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
@@ -200,6 +200,14 @@
 
     <subscribe name="CardMerchandiseContraoView" page="/business/houseOwner/subscribe/CardMerchandiseContraoView.xhtml" component="" cagegory="" type="VIEW">
         商品房合同备案号查看
+    </subscribe>
+
+    <subscribe name="EvaluateView" page="/business/houseOwner/subscribe/EvaluateView.xhtml" component="" cagegory="" type="VIEW">
+        评估机构,评估价格编辑查看
+    </subscribe>
+
+    <subscribe name="BusinessNowLandInfoEdit" page="/business/houseOwner/subscribe/BusinessNowLandInfoEdit.xhtml" component="" cagegory="" type="EDIT">
+        土地信息编辑（有没有历史土地信息都编辑，更正，变更）
     </subscribe>
 
 
