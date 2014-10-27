@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.landInfo}">
+        <h:panelGrid columns="4" styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+            <h:outputText value="#{messages.Land_Number}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.landInfo.number}"/>
+            <h:outputText value="#{messages.Land_LandGetMode}"/>
+            <h:outputText value="#{dictionary.getWordList(ownerBusinessHome.singleHoues.landInfo.landGetMode)}"/>
+            <h:outputText value="#{messages.Land_BeginUseTime}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.landInfo.beginUseTime}"/>
+            <h:outputText value="#{messages.Land_EndUseTime}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.landInfo.endUseTime}"/>
+            <h:outputText value="#{messages.Land_LandCardNo}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.landInfo.landCardNo}"/>
+            <h:outputText value="#{messages.Land_Area}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.landInfo.landArea}"/>
+            <h:outputText value="#{messages.Land_LandProperty}"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.landInfo.landProperty)}"/>
+        </h:panelGrid>
+    </a:outputPanel>
+</ui:composition>
