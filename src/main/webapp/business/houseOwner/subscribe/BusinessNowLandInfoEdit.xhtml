@@ -6,12 +6,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
-<a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.startBusinessHouse.landInfo}">
-    <ui:include src="/layout/house/owner/LandInfoInput.xhtml">
-        <ui:param name="label" value="#{messages.Land_Info}"/>
-        <ui:param name="land" value="#{businessLandInfoSubscribe}"/>
-    </ui:include>
-</a:outputPanel>
-    <a:outputPanel rendered="#{ ownerBusinessHome.singleHoues.landInfo}">
-   </a:outputPanel>
+        <ui:include src="/layout/house/owner/LandInfoInput.xhtml">
+            <ui:param name="label" value="#{messages.Land_Info}"/>
+            <ui:param name="land" value="#{businessLandInfoSubscribe}"/>
+        </ui:include>
 </ui:composition>
