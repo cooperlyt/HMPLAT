@@ -49,7 +49,7 @@
            id="buildGridMap">
 
         <a:repeat value="#{gridMap.colList}" var="_col">
-            <col style="width:60px;height: 60px;"></col>
+            <col style="width:#{tdSize}px;height: #{tdSize}px;"></col>
         </a:repeat>
 
         <tbody>
@@ -61,16 +61,16 @@
             </a:repeat>
         </tr>
         <a:repeat value="#{gridMap.gridRowList}" var="_floor">
-            <tr style="height: 60px">
+            <tr style="height: #{tdSize}px">
 
-                <th style="height: 60px">
+                <th style="height: #{tdSize}px">
                     #{_floor.title}
                 </th>
 
                 <a:repeat value="#{_floor.gridBlockList}" var="_house">
                     <td colspan="#{_house.colspan}"
                         rowspan="#{_house.rowspan}"
-                        style="height: #{_house.rowspan * 60}px;text-align: center;vertical-align: middle;">
+                        style="height: #{_house.rowspan * tdSize}px;text-align: center;vertical-align: middle;">
                         <a:outputPanel styleClass="house-con" layout="block"
                                        onmouseover="jQuery(this).find('.house-act').stop().fadeIn(5);"
                                        onmouseout="jQuery(this).find('.house-act').stop().fadeOut(5);">

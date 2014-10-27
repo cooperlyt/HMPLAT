@@ -18,6 +18,42 @@ import java.util.Locale;
  */
 public class DataFormat {
 
+    public static Integer strToInt(String s){
+        if ((s == null) || "".equals(s.trim())){
+            return null;
+        }
+        String result = s.trim().replace("一","1");
+        result = result.replace("二","2");
+        result = result.replace("三","3");
+        result = result.replace("四","4");
+        result = result.replace("五","5");
+        result = result.replace("六","6");
+        result = result.replace("七","7");
+        result = result.replace("八","8");
+        result = result.replace("九","9");
+//            result = result.replace("壹","1");
+//            result = result.replace("贰","2");
+//            result = result.replace("叁","3");
+//            result = result.replace("肆","4");
+//            result = result.replace("伍","5");
+//            result = result.replace("陆","6");
+//            result = result.replace("柒","7");
+//            result = result.replace("捌","8");
+//            result = result.replace("玖","9");
+
+
+        boolean isNegative = result.startsWith("-");
+
+        result = result.replaceAll("\\D","");
+        if (result.equals("")){
+            return null;
+        }
+        if (isNegative){
+            result = "-" + result;
+        }
+        return Integer.parseInt(result);
+
+    }
 
 
     public static BigDecimal halfUpCurrency(BigDecimal number, Locale locale) {

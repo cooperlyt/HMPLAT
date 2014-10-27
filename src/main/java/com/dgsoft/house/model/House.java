@@ -121,8 +121,8 @@ public class House implements java.io.Serializable, HouseInfo {
     private Set<HouseState> houseStates = new HashSet<HouseState>(0);
     private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
     private Date createTime;
-    private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
-    private Set<HouseOwner> houseOwners = new HashSet<HouseOwner>(0);
+    //private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
+    private HouseOwner houseOwner;
     private boolean lock;
 
     public House() {
@@ -610,33 +610,23 @@ public class House implements java.io.Serializable, HouseInfo {
         this.createTime = createTime;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
-    public Set<GridBlock> getGridBlock() {
-        return gridBlock;
-    }
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
+//    public Set<GridBlock> getGridBlock() {
+//        return gridBlock;
+//    }
+//
+//    public void setGridBlock(Set<GridBlock> gridBlock) {
+//        this.gridBlock = gridBlock;
+//    }
 
-    public void setGridBlock(Set<GridBlock> gridBlock) {
-        this.gridBlock = gridBlock;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", orphanRemoval = true, cascade = {CascadeType.ALL})
-    public Set<HouseOwner> getHouseOwners() {
-        return houseOwners;
-    }
-
-    public void setHouseOwners(Set<HouseOwner> houseOwners) {
-        this.houseOwners = houseOwners;
-    }
-
-    @Transient
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,optional = true)
+    @JoinColumn(name = "MASTER_OWNER",nullable = true)
     public HouseOwner getHouseOwner() {
-        if (getHouseOwners().isEmpty()) {
-            return null;
-        } else if (getHouseOwners().size() > 1) {
-            throw new IllegalArgumentException("house have mulit owner");
-        } else {
-            return getHouseOwners().iterator().next();
-        }
+        return houseOwner;
+    }
+
+    public void setHouseOwner(HouseOwner houseOwner) {
+        this.houseOwner = houseOwner;
     }
 
     @Transient

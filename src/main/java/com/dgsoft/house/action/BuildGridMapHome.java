@@ -132,6 +132,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         idleHouses.clear();
         idleHouses.addAll(buildHome.getInstance().getHouses());
         idleHouses.removeAll(result);
+//        idleHouses.clear();
+//        idleHouses.addAll(buildHome.getAllIdleHouse());
     }
 
 
@@ -351,7 +353,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         if (block != null) {
             if (block.getHouse() != null) {
                 idleHouses.add(block.getHouse());
-                block.getHouse().getGridBlock().clear();
+                //block.getHouse().getGridBlock().clear();
                 block.setHouse(null);
 
             }
@@ -360,7 +362,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     private boolean deleteHouse(House house) {
         if (isHouseCanEdit()) {
-            house.getGridBlock().clear();
+            //house.getGridBlock().clear();
             buildHome.getHouses().remove(house);
             return true;
         }
@@ -498,7 +500,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if ((block.getHouse() != null)) {
-                    block.getHouse().getGridBlock().clear();
+                    //block.getHouse().getGridBlock().clear();
                     if (getHouseEditStrategy().isCanEdit(block.getHouse())) {
                         buildHome.getHouses().remove(block.getHouse());
                     } else {
@@ -516,7 +518,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() != null) {
-                    block.getHouse().getGridBlock().clear();
+                    //block.getHouse().getGridBlock().clear();
                     idleHouses.add(block.getHouse());
                     block.setHouse(null);
                 }

@@ -49,7 +49,7 @@
                     </s:div>
 
                     <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
-
+                        <ui:param name="tdSize" value="70"/>
                         <ui:param name="gridMap" value="#{_buildGridMap}"/>
 
                         <s:div rendered="#{not empty _house.house}"
@@ -107,6 +107,72 @@
                 </h:panelGrid>
 
             </a:repeat>
+
+
+                <br/>
+                <h:panelGrid columns="1">
+                    <s:div style="text-align: center;">
+                        <h:outputText value="#{messages.OtherHouseGridMap}" style="font-size: 1.5em; font-weight: bold"/>
+                    </s:div>
+
+                    <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
+                        <ui:param name="tdSize" value="70"/>
+                        <ui:param name="gridMap" value="#{buildHome.idleHouseGridMap}"/>
+
+                        <s:div rendered="#{not empty _house.house}"
+                               style="width: 100%; height: 100%; padding: 0px; border: 0px;">
+
+                            <h:outputText value="#{_house.house.houseOrder}"
+                                          style="font-size: 1em; font-weight: bold; color: #000000;"/>
+
+                            <br/>
+                            <a:outputPanel rendered="#{not empty _house.house.houseOwner}">
+                                <ui:include src="/layout/long-text-display.xhtml">
+                                    <ui:param name="value" value="#{_house.house.houseOwner.personName}"/>
+                                    <ui:param name="size" value="6"/>
+                                    <ui:param name="textStyle" value="font-size: 0.9em;color: #797268;"/>
+                                </ui:include>
+                            </a:outputPanel>
+
+                            <br/>
+                            <s:div style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
+                                <h:graphicImage value="/img/icons/#{_house.house.masterStatus}.png"
+                                                title="#{messages[_house.house.masterStatus.name()]}"/>
+
+                                <h:graphicImage
+                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG_CONFIRM'}"
+                                        value="/img/icons/power.png" title="#{messages.INIT_REG_CONFIRM}"/>
+
+                                <h:graphicImage
+                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG'}"
+                                        value="/img/icons/initReg.png" title="#{messages.INIT_REG}"/>
+
+                                <h:graphicImage
+                                        rendered="#{_house.house.lock}"
+                                        value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+
+
+                            </s:div>
+
+
+                        </s:div>
+                        <ui:define name="house-action">
+
+                            <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                             image="/img/icons/info-blue.png"
+                                             rendered="#{not empty _house.house}"
+                                             title="#{messages.BuildMapAction_edit}"
+                                             oncomplete="#{r:component('houseInfoPanel')}.show();"
+                                             immediate="true" execute="@this" render="houseDetails">
+                                <a:param value="#{_house.house.id}" assignTo="#{houseHome.id}"/>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+
+                        </ui:define>
+
+                    </s:decorate>
+                </h:panelGrid>
+
         </h:form>
 
 
