@@ -21,7 +21,7 @@
     <ui:insert name="head"/>
 </h:head>
 <h:body onload="#{r:component('idleHousePopup')}.show();">
-
+<s:div style="padding: 10px;">
 <a:queue requestDelay="0" ignoreDupResponses="true"/>
 <h:form>
     <r:toolbar id="toolbar" itemSeparator="line" height="30">
@@ -298,13 +298,6 @@
     padding: 0px;
 }
 
-.house-con {
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    border: 0px;
-    position: relative;
-}
 
 .idle-house-con {
     float: left;
@@ -315,15 +308,7 @@
     position: relative;
 }
 
-.house-act {
-    height: 16px;
-    padding: 0px;
-    border: 0px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: none;
-}
+
 
 .totalHeader {
     background: #{a4jSkin.tableSubHeaderBackgroundColor};
@@ -358,9 +343,6 @@
     <r:inplaceInput value="#{buildGridMapHome.instance.name}" style="min-width: 200px;"/>
 </s:div>
 
-<r:jQuery selector=".house-con" event="mouseover" query="jQuery(this).find('.house-act').stop().fadeIn(5);"/>
-<r:jQuery selector=".house-con" event="mouseout" query="jQuery(this).find('.house-act').stop().fadeOut(5);"/>
-
 
 <br/>
 
@@ -368,7 +350,6 @@
 
     <ui:param name="gridMap" value="#{buildGridMapHome.instance}"/>
     
-                    <r:panel styleClass="house-con">
                         <r:dropTarget id="grid_target"
                                       acceptedTypes="house block #{empty _house.house ? 'newHouse' : ''}"
                                       dropValue="#{_house}"
@@ -450,31 +431,30 @@
                                 rendered="#{(not empty _house.house) and (_house.house.lock)}"
                                 value="/img/house/lock.png" title="#{messages.LockDecription}"/>
 
-                        <s:div styleClass="house-act">
-                            <a:commandButton rendered="#{not empty _house.house}"
-                                             image="/img/icons/delete-blue.png"
-                                             render="deleteActionForm"
-                                             oncomplete="#{r:component('deleteHouseConfirm')}.show();"
-                                             title="#{messages.BuildMapAction_delete}"
-                                             execute="@this" immediate="true">
-                                <a:param name="blockId" value="#{_house.id}"
-                                         assignTo="#{buildGridMapHome.selectBlockId}"/>
-                                <a:attachQueue requestDelay="0"/>
-                            </a:commandButton>
+                <ui:define name="house-action">
+                    <a:commandButton rendered="#{not empty _house.house}"
+                                     image="/img/icons/delete-blue.png"
+                                     render="deleteActionForm"
+                                     oncomplete="#{r:component('deleteHouseConfirm')}.show();"
+                                     title="#{messages.BuildMapAction_delete}"
+                                     execute="@this" immediate="true">
+                        <a:param name="blockId" value="#{_house.id}"
+                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
 
-                            <a:commandButton style="padding-left: 1px; padding-right: 1px;"
-                                             image="/img/icons/info-blue.png"
-                                             action="#{actionExecuteState.clearState}"
-                                             rendered="#{not empty _house.house}"
-                                             title="#{messages.BuildMapAction_edit}"
-                                             oncomplete="#{r:component('editPanel')}.show();"
-                                             immediate="true" execute="@this" render="editPanel_form">
-                                <a:param name="blockId" value="#{_house.id}"
-                                         assignTo="#{buildGridMapHome.selectBlockId}"/>
-                                <a:attachQueue requestDelay="0"/>
-                            </a:commandButton>
-                        </s:div>
-                    </r:panel>
+                    <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                     image="/img/icons/info-blue.png"
+                                     action="#{actionExecuteState.clearState}"
+                                     rendered="#{not empty _house.house}"
+                                     title="#{messages.BuildMapAction_edit}"
+                                     oncomplete="#{r:component('editPanel')}.show();"
+                                     immediate="true" execute="@this" render="editPanel_form">
+                        <a:param name="blockId" value="#{_house.id}"
+                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
+                </ui:define>
 
 
 </s:decorate>
@@ -498,7 +478,7 @@
         #{_entry.value.count}
 
         <f:facet name="footer">
-            #{buildHome.instance.houses.size}
+            #{buildGridMapHome.houseCount}
         </f:facet>
 
     </r:column>
@@ -512,7 +492,7 @@
         </h:outputText>
 
         <f:facet name="footer">
-            <h:outputText value="#{buildHome.totalHouseArea}">
+            <h:outputText value="#{buildGridMapHome.totalHouseArea}">
                 <f:convertNumber pattern="#0.000"/>
             </h:outputText>
 
@@ -528,7 +508,7 @@
         </h:outputText>
 
         <f:facet name="footer">
-            <h:outputText value="#{buildHome.totalHouseUseArea}">
+            <h:outputText value="#{buildGridMapHome.totalHouseUseArea}">
                 <f:convertNumber pattern="#0.000"/>
             </h:outputText>
 
@@ -734,7 +714,7 @@
             </a:outputPanel>
 
 
-            <s:div rendered="#{not buildGridMapHome.houseCanEdit}" style="width: 1020px">
+            <s:div rendered="#{not buildGridMapHome.houseCanEdit}" style="width: 980px">
                 <table class="detailsTable">
                     <tr>
                         <td class="detailsHead"></td>
@@ -750,7 +730,7 @@
     </ui:define>
 </s:decorate>
 
-
+</s:div>
 </h:body>
 
 </f:view>

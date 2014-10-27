@@ -1,7 +1,9 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.utils.persistence.UniqueVerify;
 import com.dgsoft.house.BuildInfo;
+import org.jboss.seam.international.StatusMessage;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -16,6 +18,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "BUILD", catalog = "HOUSE_INFO",uniqueConstraints = {@UniqueConstraint(columnNames = {
         "PROJECT_ID", "BUILD_NO"}),@UniqueConstraint(columnNames = {"BLOCK_NO", "BUILD_NO"})})
+@UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
 public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 
 	private String id;
@@ -183,7 +186,7 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 		this.buildNo = buildNo;
 	}
 
-	@Column(name = "NAME", nullable = false, length = 100)
+	@Column(name = "NAME", unique = true ,nullable = false, length = 100)
 	@NotNull
 	@Size(max = 100)
 	public String getName() {

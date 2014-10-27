@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.house.HouseInfo;
-import com.dgsoft.house.model.House;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -17,6 +16,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "HOUSE", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessHouse implements java.io.Serializable, HouseInfo {
+
+    public enum PoolType{
+        SINGLE_OWNER,TOGETHER_OWNER,SHARE_OWNER;
+    }
 
 	private String id;
 	private String houseOrder;
@@ -41,12 +44,11 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private String northWall;
 	private Date mapTime;
 	private String direction;
-	private boolean initRegister;
-	private boolean firmlyPower;
+	private InitRegStatus initRegStatus;
 	private String houseCode;
-	private String poolMemo;
+	private PoolType poolType;
 	private String houseFrom;
-	private String housePorperty;
+	private String houseProperty;
 	private boolean haveDownRoom;
 	private String buildCode;
 	private String landBlockCode;
@@ -105,8 +107,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.northWall = houseInfo.getNorthWall();
         this.mapTime = houseInfo.getMapTime();
         this.direction = houseInfo.getDirection();
-        this.initRegister = houseInfo.isInitRegister();
-        this.firmlyPower = houseInfo.isFirmlyPower();
+        this.initRegStatus = houseInfo.getInitRegStatus();
         this.houseCode = houseInfo.getHouseCode();
         this.haveDownRoom = houseInfo.isHaveDownRoom();
         this.buildCode = houseInfo.getBuildCode();
@@ -138,10 +139,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public BusinessHouse(BusinessHouse businessHouse){
         this((HouseInfo)businessHouse);
-        this.poolMemo = businessHouse.getPoolMemo();
+        this.poolType = businessHouse.getPoolType();
         this.houseFrom = businessHouse.getHouseFrom();
-        this.housePorperty = businessHouse.getHousePorperty();
-
+        this.houseProperty = businessHouse.getHouseProperty();
     }
 
 
@@ -393,25 +393,19 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.direction = direction;
 	}
 
-	@Column(name = "INIT_REGISTER", nullable = false)
-	public boolean isInitRegister() {
-		return this.initRegister;
-	}
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "INIT_REG_STATUS",nullable = false,length = 20)
+    @NotNull
+    public InitRegStatus getInitRegStatus() {
+        return initRegStatus;
+    }
 
-	public void setInitRegister(boolean initRegister) {
-		this.initRegister = initRegister;
-	}
+    public void setInitRegStatus(InitRegStatus initRegStatus) {
+        this.initRegStatus = initRegStatus;
+    }
 
-	@Column(name = "FIRMLY_POWER", nullable = false)
-	public boolean isFirmlyPower() {
-		return this.firmlyPower;
-	}
-
-    public void setFirmlyPower(boolean firmlyPower) {
-		this.firmlyPower = firmlyPower;
-	}
-
-	@Column(name = "HOUSE_CODE", nullable = false, length = 32)
+    @Column(name = "HOUSE_CODE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
 	public String getHouseCode() {
@@ -422,14 +416,14 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.houseCode = houseCode;
 	}
 
+    @Enumerated(EnumType.STRING)
 	@Column(name = "POOL_MEMO", length = 32)
-	@Size(max = 32)
-	public String getPoolMemo() {
-		return this.poolMemo;
+	public PoolType getPoolType() {
+		return this.poolType;
 	}
 
-	public void setPoolMemo(String poolMemo) {
-		this.poolMemo = poolMemo;
+	public void setPoolType(PoolType poolType) {
+		this.poolType = poolType;
 	}
 
 	@Column(name = "HOUSE_FROM", length = 32)
@@ -444,12 +438,12 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
 	@Column(name = "HOUSE_PORPERTY", length = 32)
 	@Size(max = 32)
-	public String getHousePorperty() {
-		return this.housePorperty;
+	public String getHouseProperty() {
+		return this.houseProperty;
 	}
 
-	public void setHousePorperty(String housePorperty) {
-		this.housePorperty = housePorperty;
+	public void setHouseProperty(String houseProperty) {
+		this.houseProperty = houseProperty;
 	}
 
     @Override
@@ -758,7 +752,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessPools = businessPools;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = OtherPowerCard.class,cascade = CascadeType.ALL)
     @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
     public Set<OtherPowerCard> getOtherPowerCards() {
         return otherPowerCards;

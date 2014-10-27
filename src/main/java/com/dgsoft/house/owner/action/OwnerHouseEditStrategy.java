@@ -21,7 +21,7 @@ public class OwnerHouseEditStrategy implements HouseEditStrategy {
     public boolean isCanEdit(House house) {
         return (HouseInfo.HouseStatus.SALEING.equals(house.getMasterStatus()) ||
                 HouseInfo.HouseStatus.CANTSALE.equals(house.getMasterStatus())) &&
-                !house.isFirmlyPower() && !house.isInitRegister() && !house.isLock();
+                !house.getInitRegStatus().equals(HouseInfo.InitRegStatus.INIT_REG) && !house.isLock();
     }
 
 }

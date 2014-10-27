@@ -142,7 +142,11 @@
     <ui:define name="label">
         #{messages.Build_Name}
     </ui:define>
-    <h:inputText id="buildNameInput" label="#{messages.Build_Name}" required="true" value="#{build.name}" size="20" maxlength="100"/>
+    <h:inputText id="buildNameInput" valueChangeListener="#{districtHome.verifyUniqueAvailable}"
+                 unique="name" label="#{messages.Build_Name}" required="true"
+                 value="#{build.name}" size="20" maxlength="100">
+        <a:ajax event="blur" execute="@this" />
+    </h:inputText>
     <ui:define name="tail">
         <r:message for="buildNameInput" styleClass="message-icon"
                    showDetail="true" showSummary="true" tooltip="true"/>
@@ -156,7 +160,6 @@
     </ui:define>
     <h:inputText id="doorNoInput" value="#{build.doorNo}" size="10" maxlength="10"/>
 </s:decorate>
-
 
 
 <s:decorate template="/layout/edit.xhtml">
@@ -278,8 +281,6 @@
 </s:decorate>
 
 
-
-
 </h:panelGrid>
 
 
@@ -288,7 +289,8 @@
         #{messages.Build_address}
     </ui:define>
 
-    <h:inputText id="buildAddressInput" value="#{build.address}" maxlength="100" size="60" label="#{messages.Build_address}"/>
+    <h:inputText id="buildAddressInput" value="#{build.address}" maxlength="100" size="60"
+                 label="#{messages.Build_address}"/>
 
     <ui:define name="tail">
         <r:message for="buildAddressInput" styleClass="message-icon"
@@ -307,7 +309,6 @@
                    showDetail="true" showSummary="true" tooltip="true"/>
     </ui:define>
 </s:decorate>
-
 
 
 </ui:composition>

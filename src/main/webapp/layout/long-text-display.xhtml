@@ -9,7 +9,7 @@
 
     <a:outputPanel rendered="#{not empty value}">
 
-        <h:outputText value="#{fn:substring(value, 0, size)}"/>
+        <h:outputText style="#{textStyle}" value="#{fn:substring(value, 0, size)}"/>
         <h:outputText value="..." rendered="#{fn:length(value) gt size}"/>
         <r:tooltip styleClass="tooltip-custom-body"
                       layout="block" mode="client"
