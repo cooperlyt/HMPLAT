@@ -93,7 +93,7 @@ public interface HouseInfo extends BuildInfo {
                 return -1;
             }
 
-            return Integer.compare(i1,i2);
+            return new Integer(i1).compareTo(i2);
         }
     }
 
