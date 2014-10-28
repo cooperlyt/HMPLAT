@@ -21,6 +21,13 @@ public class CloseHouse implements java.io.Serializable {
 	private String action;
 	private Date closeDate;
 	private Date toDate;
+    private String legalDocuments;
+    private String executionNotice;
+    private String sendPeople;
+    private String phone;
+    private String executCardNo;
+    private String workCardNo;
+
 
 	public CloseHouse() {
 	}
@@ -33,13 +40,22 @@ public class CloseHouse implements java.io.Serializable {
 		this.closeDate = closeDate;
 	}
 	public CloseHouse(String id, OwnerBusiness ownerBusiness,
-			String closeDownClour, String action, Date closeDate, Date toDate) {
+			String closeDownClour, String action, Date closeDate, Date toDate,
+            String legalDocuments,String executionNotice,String sendPeople,String phone,
+            String executCardNo,String workCardNo) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
 		this.closeDownClour = closeDownClour;
 		this.action = action;
 		this.closeDate = closeDate;
 		this.toDate = toDate;
+        this.legalDocuments =legalDocuments;
+        this.executionNotice = executionNotice;
+        this.sendPeople = sendPeople;
+        this.phone = phone;
+        this.executCardNo = executCardNo;
+        this.workCardNo= workCardNo;
+
 	}
 
 	@Id
@@ -108,5 +124,65 @@ public class CloseHouse implements java.io.Serializable {
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
+    @Column(name = "LEGAL_DOCUMENTS", length = 50)
+    @Size(max = 50)
+    public String getLegalDocuments() {
+        return legalDocuments;
+    }
+
+    public void setLegalDocuments(String legalDocuments) {
+        this.legalDocuments = legalDocuments;
+    }
+
+    @Column(name = "EXECUTION_NOTICE", length = 50)
+    @Size(max = 50)
+    public String getExecutionNotice() {
+        return executionNotice;
+    }
+
+    public void setExecutionNotice(String executionNotice) {
+        this.executionNotice = executionNotice;
+    }
+
+    @Column(name = "SEND_PEOPLE", length = 10)
+    @Size(max = 10)
+    public String getSendPeople() {
+        return sendPeople;
+    }
+
+    public void setSendPeople(String sendPeople) {
+        this.sendPeople = sendPeople;
+    }
+
+    @Column(name = "PHONE", length = 15)
+    @Size(max = 15)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column(name = "EXECUTION_CARD_NO", length = 30)
+    @Size(max = 30)
+    public String getExecutCardNo() {
+        return executCardNo;
+    }
+
+    public void setExecutCardNo(String executCardNo) {
+        this.executCardNo = executCardNo;
+    }
+
+    @Column(name = "WORK_CARD_NO", length = 30)
+    @Size(max = 30)
+    public String getWorkCardNo() {
+        return workCardNo;
+    }
+
+    public void setWorkCardNo(String workCardNo) {
+        this.workCardNo = workCardNo;
+    }
+
 
 }
