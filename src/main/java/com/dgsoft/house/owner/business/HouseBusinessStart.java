@@ -61,6 +61,7 @@ public class HouseBusinessStart {
             }
 
 
+
         }else{
             House house = (House)houseLinkHome.getInstance();
             result = new BusinessHouse(house);

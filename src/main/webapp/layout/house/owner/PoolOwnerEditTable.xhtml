@@ -25,7 +25,7 @@
             </s:decorate>
         </r:column>
 
-        <r:column style="width: 100px">
+        <r:column style="width: 100px" rendered="#{showPerc}">
             <f:facet name="header">
                 #{messages.BusinessPool_area}
             </f:facet>
@@ -39,7 +39,7 @@
             </s:decorate>
         </r:column>
 
-        <r:column style="width: 100px">
+        <r:column style="width: 100px" rendered="#{showPerc}">
             <f:facet name="header">
                 #{messages.BusinessPool_perc}
             </f:facet>

@@ -7,11 +7,31 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:include src="/layout/house/owner/PoolOwnerEditTable.xhtml">
-        <ui:param name="persons" value="#{newEditPoolOwners}"/>
-        <ui:param name="title" value="#{messages.BusinessPool}"/>
-        <ui:param name="subscribeComponent" value="#{poolOwnerSubscribe}"/>
-    </ui:include>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_PoolMemo}
+        </ui:define>
+        <h:selectOneMenu value="#{ownerBusinessHome.singleHoues.poolType}"
+                         label="#{messages.BusinessPool}" required="true">
+            <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
+                           noSelectionLabel="#{messages.noSelectLabel}"/>
+            <s:convertEnum/>
+            <a:ajax event="valueChange" render="poolOwnerTable">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:selectOneMenu>
+    </s:decorate>
+    <a:outputPanel id="poolOwnerTable">
+        <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.poolType) and (not (ownerBusinessHome.singleHoues.poolType eq 'SINGLE_OWNER'))}">
+            <ui:include src="/layout/house/owner/PoolOwnerEditTable.xhtml">
+                <ui:param name="persons" value="#{newEditPoolOwners}"/>
+                <ui:param name="title" value="#{messages.BusinessPool}"/>
+                <ui:param name="subscribeComponent" value="#{poolOwnerSubscribe}"/>
+                <ui:param name="showPerc" value="#{ownerBusinessHome.singleHoues.poolType eq 'SHARE_OWNER'}"/>
+            </ui:include>
+        </a:outputPanel>
+    </a:outputPanel>
     <br/>
 
 </ui:composition>

@@ -38,6 +38,9 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
         this.houseCode = startBusinessHouse.getHouseCode();
         this.startBusinessHouse = startBusinessHouse;
+        this.poolType = startBusinessHouse.getPoolType();
+        this.houseFrom = startBusinessHouse.getHouseFrom();
+        this.houseProperty = startBusinessHouse.getHouseProperty();
     }
 
     @Id
@@ -106,7 +109,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class, cascade = CascadeType.ALL)
     @JoinTable(name = "BUSINESS_AND_POOL", joinColumns = @JoinColumn(name = "BUSINESS"), inverseJoinColumns = @JoinColumn(name = "POOL_OWNER"))
     public Set<BusinessPool> getBusinessPools() {
         return this.businessPools;
@@ -117,7 +120,7 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
     @Transient
-    public List<BusinessPool> getBusinessPoolList(){
+    public List<BusinessPool> getBusinessPoolList() {
         List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
         Collections.sort(result, new Comparator<BusinessPool>() {
             @Override
@@ -128,7 +131,7 @@ public class HouseBusiness implements java.io.Serializable {
         return result;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = CascadeType.ALL)
     public Set<RecordStore> getRecordStores() {
         return this.recordStores;
     }
@@ -138,7 +141,7 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOUSE_OWNER",nullable = true)
+    @JoinColumn(name = "HOUSE_OWNER", nullable = true)
     public BusinessHouseOwner getBusinessHouseOwner() {
         return businessHouseOwner;
     }
@@ -147,7 +150,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.businessHouseOwner = businessHouseOwner;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "LAND_INFO", nullable = true)
     public LandInfo getLandInfo() {
         return landInfo;
@@ -157,7 +160,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.landInfo = landInfo;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness",orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", orphanRemoval = true, cascade = CascadeType.ALL)
     public Set<NewHouseContract> getNewHouseContracts() {
         return this.newHouseContracts;
     }
@@ -167,7 +170,7 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "POOL_MEMO", nullable = false,length = 32)
+    @Column(name = "POOL_MEMO", nullable = false, length = 32)
     @NotNull
     public BusinessHouse.PoolType getPoolType() {
         return this.poolType;
@@ -177,7 +180,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.poolType = poolType;
     }
 
-    @Column(name = "HOUSE_FROM",  nullable = false, length = 32)
+    @Column(name = "HOUSE_FROM", nullable = false, length = 32)
     @Size(max = 32)
     @NotNull
     public String getHouseFrom() {
