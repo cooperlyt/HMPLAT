@@ -141,8 +141,10 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     public void create() {
         super.create();
         List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
-        if (!isIdDefined() && buildHome.isIdDefined() && !gridMaps.isEmpty()) {
-            setId(gridMaps.get(0).getId());
+        if (!isIdDefined() && buildHome.isIdDefined()) {
+            if (!gridMaps.isEmpty()) {
+                setId(gridMaps.get(0).getId());
+            }
             initIdleHouse();
         }
     }
@@ -434,12 +436,12 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         return result;
     }
 
-    public int getHouseCount(){
+    public int getHouseCount() {
         int result = 0;
         for (GridRow row : getInstance().getGridRows()) {
             for (GridBlock block : row.getGridBlocks())
                 if (block.getHouse() != null) {
-                    result ++;
+                    result++;
                 }
         }
         return result;
