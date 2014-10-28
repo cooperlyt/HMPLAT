@@ -12,5 +12,6 @@
 
     <param name="projectName" value="#{projectSearchCondition.projectName}"/>
     <param name="projectId" value="#{projectSearchCondition.projectId}"/>
-    <param name="developerName" value="#{projectSearchCondition.developerName}"/>
+    <param name="developerName" value="#{developerSearchCondition.developerName}"/>
+    <param name="developerId" value="#{developerSearchCondition.developerId}"/>
 </page>

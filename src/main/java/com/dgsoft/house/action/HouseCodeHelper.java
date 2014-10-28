@@ -24,20 +24,20 @@ public class HouseCodeHelper {
     @In
     private NumberBuilder numberBuilder;
 
-    public boolean isRequestLandBlock(){
+    public boolean isRequestLandBlock() {
         return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_5) &&
                 GBT.HouseIdBuildCodePath.valueOf(runParam.getStringParamValue("house.id.useBlock")).equals(GBT.HouseIdBuildCodePath.LAND_BLOCK);
     }
 
-    public boolean isRequestMapCode(){
+    public boolean isRequestMapCode() {
         return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_6);
     }
 
-    public boolean isRequestStreetCode(){
+    public boolean isRequestStreetCode() {
         return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_5);
     }
 
-    public boolean isRequestCossCode(){
+    public boolean isRequestCossCode() {
         return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_4);
     }
 
@@ -65,11 +65,7 @@ public class HouseCodeHelper {
 
             case JDJT246_5:
                 result += GBT.formatCode(build.getStreetCode(), 4);
-                if (GBT.HouseIdBuildCodePath.valueOf(runParam.getStringParamValue("house.id.useBlock")).equals(GBT.HouseIdBuildCodePath.MAP_BLOCK)) {
-                    result += GBT.formatCode(build.getBlockNo(), 4);
-                } else {
-                    result += GBT.formatCode(build.getLandBlockCode(), 4);
-                }
+                result += GBT.formatCode(build.getBlockNo(), 4);
 
                 result = result + GBT.formatCode(String.valueOf(numberBuilder.getNumber("BUILDCODE_" + result)), 4);
                 break;
@@ -80,7 +76,6 @@ public class HouseCodeHelper {
         }
         build.setId(GBT.getJDJT246(result, 0));
     }
-
 
 
 }

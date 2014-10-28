@@ -20,7 +20,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 
 	private String id;
 	private BusinessProject businessProject;
-	private String landBlockCode;
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
@@ -73,16 +72,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 
 	public void setBusinessProject(BusinessProject businessProject) {
 		this.businessProject = businessProject;
-	}
-
-	@Column(name = "LAND_BLOCK_CODE", length = 4)
-	@Size(max = 4)
-	public String getLandBlockCode() {
-		return this.landBlockCode;
-	}
-
-	public void setLandBlockCode(String landBlockCode) {
-		this.landBlockCode = landBlockCode;
 	}
 
 	@Column(name = "MAP_NUMBER", length = 4)

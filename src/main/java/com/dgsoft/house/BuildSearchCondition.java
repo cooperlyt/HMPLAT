@@ -17,8 +17,8 @@ public class BuildSearchCondition {
     private String blockNo;
     private String buildNo;
     private String buildName;
-    private String landBlockCode;
     private String streetCode;
+    private String doorNo;
 
     public String getStreetCode() {
         return streetCode;
@@ -26,14 +26,6 @@ public class BuildSearchCondition {
 
     public void setStreetCode(String streetCode) {
         this.streetCode = streetCode;
-    }
-
-    public String getLandBlockCode() {
-        return landBlockCode;
-    }
-
-    public void setLandBlockCode(String landBlockCode) {
-        this.landBlockCode = landBlockCode;
     }
 
     public String getBuildName() {
@@ -76,6 +68,13 @@ public class BuildSearchCondition {
         this.buildNo = buildNo;
     }
 
+    public String getDoorNo() {
+        return doorNo;
+    }
+
+    public void setDoorNo(String doorNo) {
+        this.doorNo = doorNo;
+    }
 
 
 

@@ -109,26 +109,16 @@
             #{_build.mapNumber}
         </r:column>
 
-        <r:column rendered="#{houseCodeHelper.requestLandBlock}">
-            <f:facet name="header">
-                #{messages.Build_LandBlockCode}
-            </f:facet>
-            #{_build.landBlockCode}
-        </r:column>
-
         <r:column>
             <f:facet name="header">
-                #{messages.Build_BlockNO}
+                #{runParam.getStringParamValue('HouseBlockCodeLabel')}
             </f:facet>
             #{_build.blockNo}
         </r:column>
 
         <r:column>
             <f:facet name="header">
-                <ui:include src="/layout/long-text-display.xhtml">
-                    <ui:param name="value" value="#{messages.Build_StreetCode}"/>
-                    <ui:param name="size" value="3"/>
-                </ui:include>
+                #{runParam.getStringParamValue('HouseStreetCodeLabel')}
             </f:facet>
             #{_build.streetCode}
         </r:column>

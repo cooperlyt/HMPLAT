@@ -25,7 +25,6 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 	private Integer version;
 
 
-    private String landBlockCode;
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
@@ -340,16 +339,6 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
     @Transient
     public String getBuildCode() {
         return getId();
-    }
-
-    @Column(name = "LAND_BLOCK_CODE",length = 4)
-    @Size(max = 4)
-    public String getLandBlockCode() {
-        return landBlockCode;
-    }
-
-    public void setLandBlockCode(String landBlockCode) {
-        this.landBlockCode = landBlockCode;
     }
 
     @Column(name = "STREET_CODE",length = 4)

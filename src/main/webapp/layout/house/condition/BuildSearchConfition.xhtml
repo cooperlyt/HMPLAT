@@ -5,62 +5,66 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+    <h:panelGrid columns="2">
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Build_id}
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.buildid}" size="32"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_Name}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.buildName}" size="25"/>
+        </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Build_Name}
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.buildName}" size="32"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_Id}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.buildid}" size="25"/>
+        </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.Build_StreetCode}"/>
-                <ui:param name="size" value="3"/>
-            </ui:include>
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.streetCode}" size="32"/>
-    </s:decorate>
+    </h:panelGrid>
 
 
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Build_LandBlockCode}
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.landBlockCode}" size="32"/>
-    </s:decorate>
+    <h:panelGrid columns="3">
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_MapNO}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.mapNumber}" size="5"/>
+        </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Build_MapNO}
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.mapNumber}" size="32"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{runParam.getStringParamValue('HouseBlockCodeLabel')}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.blockNo}" size="10"/>
+        </s:decorate>
 
 
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Build_BlockNO}
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.blockNo}" size="32"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{runParam.getStringParamValue('HouseStreetCodeLabel')}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.streetCode}" size="5"/>
+        </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.Build_BuildNO}
-        </ui:define>
-        <h:inputText value="#{buildSearchCondition.buildNo}" size="32"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_BuildNO}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.buildNo}" size="5"/>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_DoorNumber}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.doorNo}" size="10"/>
+        </s:decorate>
+
+    </h:panelGrid>
 
 </ui:composition>

@@ -14,7 +14,9 @@ public class HouseSearchCondition {
     private String houseId;
     private String houseOrder;
     private String houseAddres;
-    private String doorNo;
+    private String houseType;
+    private String useType;
+
 
     public String getHouseId() {
         return houseId;
@@ -40,11 +42,19 @@ public class HouseSearchCondition {
         this.houseAddres = houseAddres;
     }
 
-    public String getDoorNo() {
-        return doorNo;
+    public String getHouseType() {
+        return houseType;
     }
 
-    public void setDoorNo(String doorNo) {
-        this.doorNo = doorNo;
+    public void setHouseType(String houseType) {
+        this.houseType = houseType;
+    }
+
+    public String getUseType() {
+        return useType;
+    }
+
+    public void setUseType(String useType) {
+        this.useType = useType;
     }
 }

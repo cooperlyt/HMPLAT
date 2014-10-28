@@ -51,7 +51,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private String houseProperty;
 	private boolean haveDownRoom;
 	private String buildCode;
-	private String landBlockCode;
 	private String mapNumber;
 	private String blockNo;
 	private String buildNo;
@@ -111,7 +110,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseCode = houseInfo.getHouseCode();
         this.haveDownRoom = houseInfo.isHaveDownRoom();
         this.buildCode = houseInfo.getBuildCode();
-        this.landBlockCode = houseInfo.getLandBlockCode();
         this.mapNumber = houseInfo.getMapNumber();
         this.blockNo = houseInfo.getBlockNo();
         this.buildNo = houseInfo.getBuildNo();
@@ -465,16 +463,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
 	public void setBuildCode(String buildCode) {
 		this.buildCode = buildCode;
-	}
-
-	@Column(name = "LAND_BLOCK_CODE", length = 4)
-	@Size(max = 4)
-	public String getLandBlockCode() {
-		return this.landBlockCode;
-	}
-
-	public void setLandBlockCode(String landBlockCode) {
-		this.landBlockCode = landBlockCode;
 	}
 
 	@Column(name = "MAP_NUMBER", length = 4)

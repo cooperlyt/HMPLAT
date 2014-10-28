@@ -12,9 +12,16 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.cashAccount','S
 
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('house.id.gentype','STRING','JDJT246_3','房屋编码生成方法： JDJT246_3 竣工时间法 JDJT246_4 坐标法 JDJT246_5 分宗法 JDJT246_6 分幅法');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('house.id.useBlock','STRING','MAP_BLOCK','房屋编码使 MAP_BLOCK 丘号 LAND_BLOCK 宗地号');
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseEditStrategy','STRING','ownerHouseEditStrategy','测绘房屋编辑策略器');
+
+
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseBlockCodeLabel','STRING','丘号','丘号 或 宗地号');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseStreetCodeLabel','STRING','街坊号','街坊号 或 房产分区码');
+
+
+
+
 
 
 

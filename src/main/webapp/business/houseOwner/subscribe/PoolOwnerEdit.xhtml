@@ -12,8 +12,8 @@
         <ui:define name="label">
             #{messages.RegisterProperty_PoolMemo}
         </ui:define>
-        <h:selectOneMenu value="#{ownerBusinessHome.singleHoues.poolType}"
-                         label="#{messages.BusinessPool}" required="true">
+        <h:selectOneMenu id="poolTypeInput" value="#{ownerBusinessHome.singleHoues.poolType}"
+                         label="#{messages.RegisterProperty_PoolMemo}" required="true">
             <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>
             <s:convertEnum/>
@@ -21,6 +21,9 @@
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
         </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for="poolTypeInput"/>
+        </ui:define>
     </s:decorate>
     <a:outputPanel id="poolOwnerTable">
         <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.poolType) and (not (ownerBusinessHome.singleHoues.poolType eq 'SINGLE_OWNER'))}">

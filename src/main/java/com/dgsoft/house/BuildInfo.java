@@ -9,8 +9,6 @@ public interface BuildInfo extends ProjectInfo {
 
     public String getBuildCode();
 
-    public String getLandBlockCode();
-
     public String getStreetCode();
 
     public String getMapNumber();

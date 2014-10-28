@@ -5,34 +5,117 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.House_Order}
-        </ui:define>
-        <h:inputText value="#{houseSearchCondition.houseOrder}" size="32"/>
-    </s:decorate>
+    <h:panelGrid columns="2">
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_Name}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.buildName}" size="25"/>
+        </s:decorate>
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_Id}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.buildid}" size="25"/>
+        </s:decorate>
 
 
-    <s:decorate template="/layout/display.xhtml">
-    <ui:define name="label">
-        #{messages.House_Id}
-    </ui:define>
-    <h:inputText value="#{houseSearchCondition.houseId}" size="32"/>
-    </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.House_DoorNumber}
-        </ui:define>
-        <h:inputText value="#{houseSearchCondition.doorNo}" size="32"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_Address}
+            </ui:define>
+            <h:inputText value="#{houseSearchCondition.houseAddres}" size="25"/>
+        </s:decorate>
 
-    <s:decorate template="/layout/display.xhtml">
-        <ui:define name="label">
-            #{messages.House_Address}
-        </ui:define>
-        <h:inputText value="#{houseSearchCondition.houseAddres}" size="50"/>
-    </s:decorate>
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_Id}
+            </ui:define>
+            <h:inputText value="#{houseSearchCondition.houseId}" size="25"/>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_DoorNumber}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.doorNo}" size="25"/>
+        </s:decorate>
+
+
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_UseType}
+            </ui:define>
+            <h:selectOneMenu value="#{houseSearchCondition.useType}">
+                <s:selectItems value="#{dictionary.getWordList('house.useType')}" var="_word"
+                               itemValue="#{_word.id}" label="#{_word.value}"
+                               noSelectionLabel="#{messages.noSelectLabel}"/>
+            </h:selectOneMenu>
+        </s:decorate>
+    </h:panelGrid>
+
+
+
+    <h:panelGrid columns="3">
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_MapNO}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.mapNumber}" size="5"/>
+        </s:decorate>
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{runParam.getStringParamValue('HouseBlockCodeLabel')}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.blockNo}" size="10"/>
+        </s:decorate>
+
+
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{runParam.getStringParamValue('HouseStreetCodeLabel')}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.streetCode}" size="5"/>
+        </s:decorate>
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Build_BuildNO}
+            </ui:define>
+            <h:inputText value="#{buildSearchCondition.buildNo}" size="5"/>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_Order}
+            </ui:define>
+            <h:inputText value="#{houseSearchCondition.houseOrder}" size="10"/>
+        </s:decorate>
+
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.House_HouseType}
+            </ui:define>
+            <h:selectOneMenu value="#{houseSearchCondition.houseType}">
+                <s:selectItems value="#{dictionary.getWordList('house.houseType')}" var="_word"
+                               itemValue="#{_word.id}" label="#{_word.value}"
+                               noSelectionLabel="#{messages.noSelectLabel}"/>
+            </h:selectOneMenu>
+
+        </s:decorate>
+
+    </h:panelGrid>
+
+
+
 </ui:composition>

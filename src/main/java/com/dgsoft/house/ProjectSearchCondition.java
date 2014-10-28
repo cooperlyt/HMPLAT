@@ -12,8 +12,6 @@ public class ProjectSearchCondition {
 
     private String projectName;
 
-    private String developerName;
-
     public String getProjectName() {
         return projectName;
     }
@@ -30,11 +28,4 @@ public class ProjectSearchCondition {
         this.projectId = projectId;
     }
 
-    public String getDeveloperName() {
-        return developerName;
-    }
-
-    public void setDeveloperName(String developerName) {
-        this.developerName = developerName;
-    }
 }

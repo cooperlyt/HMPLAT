@@ -25,11 +25,8 @@
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
-        <ui:include src="/layout/long-text-display.xhtml">
-            <ui:param name="value" value="#{messages.Build_StreetCode}"/>
-            <ui:param name="size" value="3"/>
-        </ui:include>
 
+        #{runParam.getStringParamValue('HouseStreetCodeLabel')}
     </ui:define>
     <h:inputText id="streetCodeInput" label="#{messages.Build_StreetCode}" maxlength="4" size="4"
                  value="#{build.streetCode}" required="#{houseCodeHelper.requestStreetCode}">
@@ -44,9 +41,9 @@
 
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
-        #{messages.Build_BlockNO}
+        #{runParam.getStringParamValue('HouseBlockCodeLabel')}
     </ui:define>
-    <h:inputText id="blockNoInput" label="#{messages.Build_BlockNO}" maxlength="10" size="10"
+    <h:inputText id="blockNoInput" label="#{runParam.getStringParamValue('HouseBlockCodeLabel')}" maxlength="10" size="10"
                  value="#{build.blockNo}" required="true">
         <r:validator event="blur"/>
         <f:validateRegex pattern="^(\d|-)*$"/>
@@ -58,21 +55,7 @@
     </ui:define>
 </s:decorate>
 
-<s:decorate template="/layout/edit.xhtml">
-    <ui:define name="label">
-        #{messages.Build_LandBlockCode}
-    </ui:define>
-    <h:inputText id="landBlockInput" label="#{messages.Build_LandBlockCode}" maxlength="4" size="4"
-                 value="#{build.landBlockCode}" required="#{houseCodeHelper.requestLandBlock}">
-        <r:validator event="blur"/>
-        <f:validateRegex pattern="^\d*$"/>
-    </h:inputText>
 
-    <ui:define name="tail">
-        <r:message for="landBlockInput" styleClass="message-icon"
-                   showDetail="true" showSummary="true" tooltip="true"/>
-    </ui:define>
-</s:decorate>
 <s:decorate template="/layout/edit.xhtml">
     <ui:define name="label">
         #{messages.Build_BuildNO}

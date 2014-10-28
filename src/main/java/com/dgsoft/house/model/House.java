@@ -391,12 +391,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     @Override
     @Transient
-    public String getLandBlockCode() {
-        return getBuild().getLandBlockCode();
-    }
-
-    @Override
-    @Transient
     public String getStreetCode() {
         return getBuild().getStreetCode();
     }

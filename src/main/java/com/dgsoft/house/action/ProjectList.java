@@ -20,8 +20,9 @@ public class ProjectList extends HouseEntityQuery<Project>{
             "lower(project.section.name) like lower(concat('%',#{sectionSearchCondition.sectionName},'%'))",
             "project.section.district.id = #{sectionSearchCondition.districtId}",
             "project.id = #{projectSearchCondition.projectId}",
-            "lower(project.developer.name) like lower(concat('%',#{projectSearchCondition.developerName},'%')",
-            "lower(project.name) like lower('%',#{projectSearchCondition.projectName},'%')"};
+            "lower(project.developer.name) like lower(concat('%',#{developerSearchCondition.developerName},'%'))",
+            "project.developer.id = #{developerSearchCondition.developerId}",
+            "lower(project.name) like lower(concat('%',#{projectSearchCondition.projectName},'%'))"};
 
 
     public ProjectList() {

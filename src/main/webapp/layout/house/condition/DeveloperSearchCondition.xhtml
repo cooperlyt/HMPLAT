@@ -8,22 +8,22 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <h:panelGrid columns="2">
+        <s:decorate template="/layout/display.xhtml">
+            <ui:define name="label">
+                #{messages.Developer_name}
+            </ui:define>
+            <h:inputText value="#{developerSearchCondition.developerName}" size="25"/>
+        </s:decorate>
+
 
         <s:decorate template="/layout/display.xhtml">
             <ui:define name="label">
-                #{messages.Project_name}
+                #{messages.Developer_id}
             </ui:define>
-            <h:inputText value="#{projectSearchCondition.projectName}" size="25"/>
+            <h:inputText value="#{developerSearchCondition.developerId}" size="25"/>
         </s:decorate>
-
-        <s:decorate template="/layout/display.xhtml">
-            <ui:define name="label">
-                #{messages.Project_id}
-            </ui:define>
-            <h:inputText value="#{projectSearchCondition.projectId}" size="25"/>
-        </s:decorate>
-
 
 
     </h:panelGrid>
+
 </ui:composition>

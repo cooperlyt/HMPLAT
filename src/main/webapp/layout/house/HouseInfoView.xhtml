@@ -59,14 +59,14 @@
     <h:outputText value="#{messages.Build_MapNO}"/>
     <h:outputText value="#{houseInfo.mapNumber}"/>
 
-    <h:outputText value="#{messages.Build_BlockNO}"/>
+    <h:outputText value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
     <h:outputText value="#{houseInfo.blockNo}"/>
 
     <h:outputText value="#{messages.Build_BuildNO}"/>
     <h:outputText value="#{houseInfo.blockNo}"/>
 
-    <h:outputText value="#{messages.Build_LandBlockCode}"/>
-    <h:outputText value="#{houseInfo.landBlockCode}"/>
+    <h:outputText value="#{messages.House_InitReg}"/>
+    <h:outputText value="#{messages[houseInfo.initRegStatus.name()]}"/>
 
 
     <h:outputText value="#{messages.House_Order}"/>
@@ -78,12 +78,8 @@
     <h:outputText value="#{messages.House_Unit}"/>
     <h:outputText value="#{houseInfo.houseUnitName}"/>
 
-    <h:panelGroup>
-        <ui:include src="/layout/long-text-display.xhtml">
-            <ui:param name="value" value="#{messages.Build_StreetCode}"/>
-            <ui:param name="size" value="3"/>
-        </ui:include>
-    </h:panelGroup>
+
+    <h:outputText value="#{runParam.getStringParamValue('HouseStreetCodeLabel')}"/>
     <h:outputText value="#{houseInfo.streetCode}"/>
 
     <h:outputText value="#{messages.Project_finishDate}"/>
@@ -185,13 +181,12 @@
 </h:panelGrid>
 
 
-<h:panelGrid columns="6" styleClass="detailsTable"
-             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+<h:panelGrid columns="4" styleClass="detailsTable"
+             columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
     <h:outputText value="#{messages.House_MasterStatus}"/>
     <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
 
-    <h:outputText value="#{messages.House_InitReg}"/>
-    <h:outputText value="#{messages[houseInfo.initRegStatus.name()]}"/>
+
 
     <h:outputText value="#{messages.House_AllStatus}"/>
     <h:panelGroup>
