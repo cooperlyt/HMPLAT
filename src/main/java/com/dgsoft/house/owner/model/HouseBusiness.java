@@ -167,7 +167,8 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "POOL_MEMO", length = 32)
+    @Column(name = "POOL_MEMO", nullable = false,length = 32)
+    @NotNull
     public BusinessHouse.PoolType getPoolType() {
         return this.poolType;
     }
@@ -176,8 +177,9 @@ public class HouseBusiness implements java.io.Serializable {
         this.poolType = poolType;
     }
 
-    @Column(name = "HOUSE_FROM", length = 32)
+    @Column(name = "HOUSE_FROM",  nullable = false, length = 32)
     @Size(max = 32)
+    @NotNull
     public String getHouseFrom() {
         return this.houseFrom;
     }
@@ -186,8 +188,9 @@ public class HouseBusiness implements java.io.Serializable {
         this.houseFrom = houseFrom;
     }
 
-    @Column(name = "HOUSE_PORPERTY", length = 32)
+    @Column(name = "HOUSE_PORPERTY", nullable = false, length = 32)
     @Size(max = 32)
+    @NotNull
     public String getHouseProperty() {
         return this.houseProperty;
     }

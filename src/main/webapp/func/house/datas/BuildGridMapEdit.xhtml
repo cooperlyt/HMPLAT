@@ -61,10 +61,6 @@
 
         </a:repeat>
 
-
-
-
-
             <a:commandLink immediate="true" execute="@this"
                            render="grid_map,toolbar"
                            styleClass="rf-ds-btn rf-ds-btn-next #{(buildGridMapHome.instance.order lt buildHome.instance.buildGridMaps.size) ? '' : 'rf-ds-dis'}"
@@ -114,7 +110,7 @@
         </r:toolbarGroup>
 
 
-        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+        <r:toolbarGroup>
             <h:graphicImage value="/img/icons/save_all.gif"/>
 
             <a:commandLink value="#{messages.save}" status="processWaiting" action="#{buildGridMapHome.saveGridMap}"
@@ -348,6 +344,7 @@
 
 <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
 
+    <ui:param name="tdSize" value="60"/>
     <ui:param name="gridMap" value="#{buildGridMapHome.instance}"/>
     
                         <r:dropTarget id="grid_target"

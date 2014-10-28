@@ -32,6 +32,9 @@ public class BuildGridMap implements java.io.Serializable {
         this.order = order;
     }
 
+    public BuildGridMap(Build build) {
+        this.build = build;
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)

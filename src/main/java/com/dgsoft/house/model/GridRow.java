@@ -25,7 +25,13 @@ public class GridRow implements java.io.Serializable {
 	public GridRow() {
 	}
 
-	public GridRow(BuildGridMap buildGridMap, String title, int order, int floorIndex) {
+    public GridRow(BuildGridMap buildGridMap, String title, int floorIndex) {
+        this.buildGridMap = buildGridMap;
+        this.title = title;
+        this.floorIndex = floorIndex;
+    }
+
+    public GridRow(BuildGridMap buildGridMap, String title, int order, int floorIndex) {
 		this.buildGridMap = buildGridMap;
 		this.title = title;
 		this.order = order;

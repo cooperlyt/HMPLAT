@@ -46,6 +46,17 @@ public class GridBlock implements java.io.Serializable {
     public GridBlock() {
     }
 
+    public GridBlock(House house, int colspan, int rowspan) {
+        this.house = house;
+        this.colspan = colspan;
+        this.rowspan = rowspan;
+    }
+
+    public GridBlock(int colspan, int rowspan) {
+        this.colspan = colspan;
+        this.rowspan = rowspan;
+    }
+
     public GridBlock(String id, GridRow gridRow, int order, int colspan,
                      int rowspan, int unitIndex, String unitName, BigDecimal area,
                      BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
@@ -235,7 +246,7 @@ public class GridBlock implements java.io.Serializable {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "HOUSE_ID", nullable = true)
     public House getHouse() {
         return house;

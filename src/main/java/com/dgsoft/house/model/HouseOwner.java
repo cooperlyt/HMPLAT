@@ -6,20 +6,23 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by cooper on 8/19/14.
  */
 @Entity
-@Table(name = "HOUSE_OWNER", catalog = "HOUSE_INFO")
-public class HouseOwner implements PersonEntity,java.io.Serializable {
+@Table(name = "HOUSE_OWNER", catalog = "HOUSE_INFO", uniqueConstraints = @UniqueConstraint(columnNames = {
+        "ID_TYPE", "ID_NO"}))
+public class HouseOwner implements PersonEntity, java.io.Serializable {
 
     private String id;
     private PersonEntity.CredentialsType credentialsType;
     private String credentialsNumber;
     private String phone;
     private String rootAddress;
-    private House house;
+    private Set<House> houses = new HashSet<House>();
     private String personName;
     private String memo;
 
@@ -72,15 +75,13 @@ public class HouseOwner implements PersonEntity,java.io.Serializable {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "HOUSE", nullable = true, unique = true)
-    @NotNull
-    public House getHouse() {
-        return house;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseOwner")
+    public Set<House> getHouses() {
+        return houses;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
+    public void setHouses(Set<House> houses) {
+        this.houses = houses;
     }
 
     @Override
@@ -109,7 +110,7 @@ public class HouseOwner implements PersonEntity,java.io.Serializable {
         this.credentialsNumber = cerdentialsNumber;
     }
 
-    @Column(name = "MEMO",nullable = true, length = 200)
+    @Column(name = "MEMO", nullable = true, length = 200)
     @Size(max = 200)
     public String getMemo() {
         return memo;
