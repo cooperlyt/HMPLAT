@@ -199,7 +199,7 @@ public class BuildHome extends HouseEntityHome<Build> {
         Collections.sort(rows, new Comparator<GridRow>() {
             @Override
             public int compare(GridRow o1, GridRow o2) {
-                return Integer.compare(o2.getFloorIndex(), o1.getFloorIndex());
+                return new Integer(o2.getFloorIndex()).compareTo(o1.getFloorIndex());
             }
         });
 

@@ -80,18 +80,16 @@
         测绘机构编辑
     </subscribe>
 
+    <!--
     <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component="" cagegory="" type="EDIT">
         预告登记证明号编辑
     </subscribe>
-
     <subscribe name="CardMortgageEdit" page="/business/houseOwner/subscribe/CardMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
         他项权证号编辑
     </subscribe>
-
     <subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml" component="" cagegory="" type="EDIT">
         所有权证号编辑
     </subscribe>
-
     <subscribe name="CardProjectMortgageEdit" page="/business/houseOwner/subscribe/CardProjectMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
         在建工程抵押证明号编辑
     </subscribe>
@@ -101,12 +99,36 @@
     <subscribe name="CardSaleLicenseEdit" page="/business/houseOwner/subscribe/CardSaleLicenseEdit.xhtml" component="" cagegory="" type="EDIT">
         预售许可证号编辑
     </subscribe>
+
+    <subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml" component="" cagegory="" type="VIEW">
+        预告登记证明号查看
+    </subscribe>
+    <subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml" component="" cagegory="" type="VIEW">
+        所有权证号查看
+    </subscribe>
+    <subscribe name="CardMortgageView" page="/business/houseOwner/subscribe/CardMortgageView.xhtml" component="" cagegory="" type="VIEW">
+        他项权证号查看
+    </subscribe>
+    <subscribe name="CardSaleLicenseView" page="/business/houseOwner/subscribe/CardSaleLicenseView.xhtml" component="" cagegory="" type="VIEW">
+        预售许可证号查看
+    </subscribe>
+    <subscribe name="CardProjectMortgageView" page="/business/houseOwner/subscribe/CardProjectMortgageView.xhtml" component="" cagegory="" type="VIEW">
+        在建工程抵押证明号查看
+    </subscribe>
+    <subscribe name="CardMerchandiseContraoView" page="/business/houseOwner/subscribe/CardMerchandiseContraoView.xhtml" component="" cagegory="" type="VIEW">
+        商品房合同备案号查看
+    </subscribe>
+    -->
+
     <subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="" cagegory="" type="EDIT">
         查封登记编辑
     </subscribe>
     <subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml" component="" cagegory="" type="EDIT">
         解封登记编辑
     </subscribe>
+
+
+
     <subscribe name="RegisterPropertyEdit" page="/business/houseOwner/subscribe/RegisterPropertyEdit.xhtml" component="" cagegory="" type="EDIT">
         登记信息，共有情况，产权来源，产别编辑
     </subscribe>
@@ -174,29 +196,6 @@
         注销原因查看
     </subscribe>
 
-    <subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml" component="" cagegory="" type="VIEW">
-        预告登记证明号查看
-    </subscribe>
-
-    <subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml" component="" cagegory="" type="VIEW">
-        所有权证号查看
-    </subscribe>
-
-    <subscribe name="CardMortgageView" page="/business/houseOwner/subscribe/CardMortgageView.xhtml" component="" cagegory="" type="VIEW">
-        他项权证号查看
-    </subscribe>
-
-    <subscribe name="CardSaleLicenseView" page="/business/houseOwner/subscribe/CardSaleLicenseView.xhtml" component="" cagegory="" type="VIEW">
-        预售许可证号查看
-    </subscribe>
-
-    <subscribe name="CardProjectMortgageView" page="/business/houseOwner/subscribe/CardProjectMortgageView.xhtml" component="" cagegory="" type="VIEW">
-        在建工程抵押证明号查看
-    </subscribe>
-
-    <subscribe name="CardMerchandiseContraoView" page="/business/houseOwner/subscribe/CardMerchandiseContraoView.xhtml" component="" cagegory="" type="VIEW">
-        商品房合同备案号查看
-    </subscribe>
 
     <subscribe name="EvaluateView" page="/business/houseOwner/subscribe/EvaluateView.xhtml" component="" cagegory="" type="VIEW">
         评估机构,评估价格编辑查看
@@ -208,6 +207,10 @@
 
     <subscribe name="BusinessLandInfoInBizView" page="/business/houseOwner/subscribe/BusinessLandInfoInBizView.xhtml" component="" cagegory="" type="VIEW">
        土地信息正在业务中查看
+    </subscribe>
+
+    <subscribe name="BusinessLandStartView" page="/business/houseOwner/subscribe/BusinessLandStartView.xhtml" component="" cagegory="" type="VIEW">
+        土地信息启动（导入原土地信息）查看
     </subscribe>
 
 </subscribes>
