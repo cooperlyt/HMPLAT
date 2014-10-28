@@ -206,6 +206,8 @@
         土地信息编辑（有没有历史土地信息都编辑，更正，变更）
     </subscribe>
 
-
+    <subscribe name="BusinessLandInfoInBizView" page="/business/houseOwner/subscribe/BusinessLandInfoInBizView.xhtml" component="" cagegory="" type="VIEW">
+       土地信息正在业务中查看
+    </subscribe>
 
 </subscribes>

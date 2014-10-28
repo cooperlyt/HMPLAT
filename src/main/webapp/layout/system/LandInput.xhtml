@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+        <h:panelGrid columns="4"  styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+            <h:outputText value="#{messages.Land_Number}"/>
+            <h:outputText value="#{landInfo.number}"/>
+
+            <h:outputText value="#{messages.Land_LandCardNo}"/>
+            <h:outputText value="#{landInfo.landCardNo}"/>
+
+            <h:outputText value="#{messages.Land_BeginUseTime}"/>
+            <h:outputText value="#{landInfo.beginUseTime}"/>
+
+            <h:outputText value="#{messages.Land_EndUseTime}"/>
+            <h:outputText value="#{landInfo.endUseTime}"/>
+        </h:panelGrid>
+        <h:panelGrid columns="6" styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+
+
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.Land_LandGetMode}"/>
+                    <ui:param name="size" value="5"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{dictionary.getWordValue(landInfo.landGetMode)}"/>
+
+            <h:outputText value="#{messages.Land_LandProperty}"/>
+            <h:outputText value="#{dictionary.getWordValue(landInfo.landProperty)}"/>
+
+            <h:outputText value="#{messages.Land_Area}"/>
+            <h:outputText value="#{landInfo.landArea}"/>
+        </h:panelGrid>
+
+
+</ui:composition>
