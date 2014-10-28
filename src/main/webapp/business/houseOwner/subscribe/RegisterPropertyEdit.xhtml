@@ -12,22 +12,30 @@
         <ui:define name="label">
             #{messages.RegisterProperty_HouseProperty}
         </ui:define>
-        <h:selectOneMenu id="housePropertyInput" value="#{ownerBusinessHome.singleHoues.houseProperty}"
+        <h:selectOneMenu required="true" id="housePropertyInput" value="#{ownerBusinessHome.singleHoues.houseProperty}"
                          label="#{messages.RegisterProperty_HouseProperty}" style="width: 140px">
+
             <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>
+        <ui:define name="tail"  >
+          <r:message for ="housePropertyInput"/>
+        </ui:define>
+
     </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.RegisterProperty_HouseFrom}
         </ui:define>
-        <h:selectOneMenu id="houseFromInput" value="#{ownerBusinessHome.singleHoues.houseFrom}"
+        <h:selectOneMenu required="true" id="houseFromInput" value="#{ownerBusinessHome.singleHoues.houseFrom}"
                          label="#{messages.RegisterProperty_HouseFrom}" style="width: 140px">
             <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for = "houseFromInput"/>
+        </ui:define>
     </s:decorate>
 
 </ui:composition>
