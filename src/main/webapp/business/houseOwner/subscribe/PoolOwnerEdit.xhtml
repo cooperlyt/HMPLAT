@@ -25,6 +25,7 @@
             <r:message for="poolTypeInput"/>
         </ui:define>
     </s:decorate>
+    <div style="clear: both;"/>
     <a:outputPanel id="poolOwnerTable">
         <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.poolType) and (not (ownerBusinessHome.singleHoues.poolType eq 'SINGLE_OWNER'))}">
             <ui:include src="/layout/house/owner/PoolOwnerEditTable.xhtml">

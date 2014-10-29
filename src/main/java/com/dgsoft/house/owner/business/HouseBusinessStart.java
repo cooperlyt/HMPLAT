@@ -38,37 +38,36 @@ public class HouseBusinessStart {
     private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
 
 
-    private BusinessHouse createStartHouse(){
-        if (houseLinkHome.getInstance() == null){
+    private BusinessHouse createStartHouse() {
+        if (houseLinkHome.getInstance() == null) {
             throw new IllegalArgumentException("house not found");
         }
 
         BusinessHouse result;
-        if (houseLinkHome.isRecord()){
+        if (houseLinkHome.isRecord()) {
             BusinessHouse businessHouse = (BusinessHouse) houseLinkHome.getInstance();
             result = new BusinessHouse(businessHouse);
-            if (businessHouse.getLandInfo() != null){
+            if (businessHouse.getLandInfo() != null) {
                 result.setLandInfo(new LandInfo(businessHouse.getLandInfo()));
             }
-            if (businessHouse.getBusinessHouseOwner() != null){
+            if (businessHouse.getBusinessHouseOwner() != null) {
                 result.setBusinessHouseOwner(new BusinessHouseOwner(businessHouse.getBusinessHouseOwner()));
             }
-            for(BusinessPool pool: businessHouse.getBusinessPools()){
+            for (BusinessPool pool : businessHouse.getBusinessPools()) {
                 result.getBusinessPools().add(new BusinessPool(pool));
             }
-            for(OtherPowerCard card: businessHouse.getOtherPowerCards()){
+            for (OtherPowerCard card : businessHouse.getOtherPowerCards()) {
                 result.getOtherPowerCards().add(card);
             }
 
 
-
-        }else{
-            House house = (House)houseLinkHome.getInstance();
+        } else {
+            House house = (House) houseLinkHome.getInstance();
             result = new BusinessHouse(house);
-            if(house.getHouseOwner() != null){
+            if (house.getHouseOwner() != null) {
                 result.setBusinessHouseOwner(new BusinessHouseOwner(house.getHouseOwner()));
             }
-            for(PoolOwner poolOwner: house.getPoolOwners()){
+            for (PoolOwner poolOwner : house.getPoolOwners()) {
                 result.getBusinessPools().add(new BusinessPool(poolOwner));
             }
 
@@ -81,25 +80,31 @@ public class HouseBusinessStart {
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), createStartHouse()));
 
-        initBusinessData();
-        return BUSINESS_START_PAGE;
+        return houseIsSelected();
     }
 
     private void initBusinessData() {
 
-        //ownerBusinessHome.getInstance().setId(NumberBuilder.instance().getDayNumber("businessId"));
-        // Logging.getLog(getClass()).debug("business id is:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
+        ownerBusinessHome.getInstance().setRecorded(false);
+        ownerBusinessHome.getInstance().setCreateEmpCode(authInfo.getLoginEmployee().getId());
+        ownerBusinessHome.getInstance().setCreateEmpName(authInfo.getLoginEmployee().getPersonName());
+        ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
+        Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
 
+    }
 
+    private String houseIsSelected(){
+        initBusinessData();
+        return BUSINESS_START_PAGE;
     }
 
 
     public String mulitHouseSelect() {
 
-        initBusinessData();
-        return BUSINESS_START_PAGE;
+        return houseIsSelected();
     }
 
     @In
@@ -109,11 +114,9 @@ public class HouseBusinessStart {
     @Transactional
     public String createProcess() {
 
-        ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
-        Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
-        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
         String result = ownerBusinessHome.persist();
-        if ((result != null) && result.equals("persisted")) {
+        if ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&
+                !businessDefineHome.getInstance().getWfName().trim().equals("")) {
             BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), ownerBusinessHome.getInstance().getId());
             return result;
         } else {

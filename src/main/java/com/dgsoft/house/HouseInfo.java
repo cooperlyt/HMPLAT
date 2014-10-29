@@ -146,4 +146,6 @@ public interface HouseInfo extends BuildInfo {
     public HouseStatus getMasterStatus();
 
     public List<HouseStatus> getAllStatusList();
+
+    public String getDisplayHouseCode();
 }

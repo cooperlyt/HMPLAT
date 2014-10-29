@@ -4,7 +4,7 @@
 
 
     <start-state name="业务受理">
-        <transition to="收费判断"></transition>
+        <transition to="受理"></transition>
     </start-state>
 
 
@@ -13,7 +13,7 @@
             <description>
                 {&quot;description&quot;:&quot;&quot;,&quot;operPage&quot;:&quot;/business/houseOwner/OwnerTaskOperPage.xhtml&quot;}
             </description>
-            <assignment pooled-actors="Accept"></assignment>
+            <assignment actor-id="#{ownerBusinessHome.instance.createEmpCode}"></assignment>
         </task>
         <transition to="收费判断"></transition>
     </task-node>

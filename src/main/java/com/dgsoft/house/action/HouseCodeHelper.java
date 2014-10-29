@@ -24,13 +24,10 @@ public class HouseCodeHelper {
     @In
     private NumberBuilder numberBuilder;
 
-    public boolean isRequestLandBlock() {
-        return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_5) &&
-                GBT.HouseIdBuildCodePath.valueOf(runParam.getStringParamValue("house.id.useBlock")).equals(GBT.HouseIdBuildCodePath.LAND_BLOCK);
-    }
 
     public boolean isRequestMapCode() {
-        return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_6);
+        return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_6) ||
+                (runParam.getIntParamValue("HouseCodeDisplayModel") == 2);
     }
 
     public boolean isRequestStreetCode() {
