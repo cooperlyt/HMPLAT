@@ -53,6 +53,13 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    public CloseHouse getCloseHouse(){
+        if(!getInstance().getCloseHouses().isEmpty()){
+            return getInstance().getCloseHouses().iterator().next();
+        }
+        return null;
+    }
+
     public HouseBusiness getSingleHoues() {
 
         Set<HouseBusiness> houseBusinesses = getInstance().getHouseBusinesses();
