@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.getCloseHouse()}">
+
+
+        <h:panelGrid columns="2"  styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,detailsLastValueCol">
+            <h:outputText value="#{messages.CloseHouse_CloseDownClour}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().closeDownClour}"/>
+
+            <h:outputText value="#{messages.CloseHouse_Action}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().action}"/>
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="4"  styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+
+            <h:outputText value="#{messages.CloseHouse_CloseDate}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().closeDate}"/>
+
+            <h:outputText value="#{messages.CloseHouse_ToDate}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().toDate}"/>
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="2"  styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,detailsLastValueCol">
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.CloseHouse_LegalDocuments}"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().legalDocuments}"/>
+
+            <h:outputText value="#{messages.CloseHouse_ExecutionNotice}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().executionNotice}"/>
+
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="4"  styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+
+            <h:outputText value="#{messages.CloseHouse_SendPeople}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().sendPeople}"/>
+
+            <h:outputText value="#{messages.CloseHouse_Phone}"/>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().phone}"/>
+
+
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.CloseHouse_ExecutCardNo}"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().executCardNo}"/>
+
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.CloseHouse_WorkCardNo}"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.getCloseHouse().workCardNo}"/>
+
+
+        </h:panelGrid>
+    </a:outputPanel>
+</ui:composition>
