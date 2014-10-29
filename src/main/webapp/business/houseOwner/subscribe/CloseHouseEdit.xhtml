@@ -62,4 +62,75 @@
             <r:message for="toDate" />
         </ui:define>
     </s:decorate>
+    <s:decorate id="legalDocumentsInput" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.CloseHouse_LegalDocuments}"/>
+                <ui:param name="size" value="5"/>
+            </ui:include>
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_LegalDocuments}" size="40" maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.legalDocuments}">
+        </h:inputText>
+    </s:decorate>
+
+    <s:decorate id="executionNoticeInput" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.CloseHouse_ExecutionNotice}"/>
+                <ui:param name="size" value="5"/>
+            </ui:include>
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_ExecutionNotice}" size="40" maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.executionNotice}">
+        </h:inputText>
+    </s:decorate>
+
+    <s:decorate id="sendPeopleInput" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.CloseHouse_SendPeople}"/>
+                <ui:param name="size" value="5"/>
+            </ui:include>
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_SendPeople}" size="40" maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.sendPeople}">
+        </h:inputText>
+    </s:decorate>
+
+    <s:decorate id="phoneInput" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.CloseHouse_Phone}"/>
+                <ui:param name="size" value="5"/>
+            </ui:include>
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_Phone}" size="40" maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.phone}">
+        </h:inputText>
+    </s:decorate>
+
+    <s:decorate id="executCardNoInput" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.CloseHouse_ExecutCardNo}"/>
+                <ui:param name="size" value="5"/>
+            </ui:include>
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_ExecutCardNo}" size="40" maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.executCardNo}">
+        </h:inputText>
+    </s:decorate>
+
+    <s:decorate id="workCardNoInput" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{messages.CloseHouse_WorkCardNo}"/>
+                <ui:param name="size" value="5"/>
+            </ui:include>
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_WorkCardNo}" size="40" maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.workCardNo}">
+        </h:inputText>
+    </s:decorate>
 </ui:composition>
