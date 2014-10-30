@@ -40,7 +40,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private boolean recorded;
     private String createEmpName;
     private String createEmpCode;
-    private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
+    private Set<BusinessFile> uploadFileses = new HashSet<BusinessFile>(0);
     private Set<Reason> reasons = new HashSet<Reason>(0);
     private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
     private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
@@ -198,11 +198,11 @@ public class OwnerBusiness implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<UploadFiles> getUploadFileses() {
+    public Set<BusinessFile> getUploadFileses() {
         return this.uploadFileses;
     }
 
-    public void setUploadFileses(Set<UploadFiles> uploadFileses) {
+    public void setUploadFileses(Set<BusinessFile> uploadFileses) {
         this.uploadFileses = uploadFileses;
     }
 

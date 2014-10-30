@@ -5,6 +5,8 @@ import com.dgsoft.common.TotalGroupStrategy;
 import com.dgsoft.common.helper.ActionExecuteState;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.model.BusinessDefine;
+import com.dgsoft.common.system.model.BusinessNeedFile;
+import com.dgsoft.common.system.model.FileSubscribe;
 import com.dgsoft.common.system.model.TaskSubscribe;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
@@ -94,12 +96,21 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private TaskSubscribe editTaskSubscribe;
 
-    public boolean isHaveNeedFile() {
-        //TODO need file
-        return false;
+    public List<BusinessNeedFile> getFileSubscribe(String taskName){
+        List<BusinessNeedFile> result = new ArrayList<BusinessNeedFile>(0);
+        for(BusinessNeedFile businessNeedFile: getInstance().getBusinessNeedFiles()){
+            if (((taskName == null) &&  ((businessNeedFile.getTaskName() == null) || (businessNeedFile.getTaskName().equals(""))) )
+                || ( (taskName != null) && taskName.equals(businessNeedFile.getTaskName()))){
+                result.add(businessNeedFile);
+            }
+        }
+        return result;
     }
 
-    ;
+    public boolean haveNeedFile(String taskName) {
+        return !getFileSubscribe(taskName).isEmpty();
+    }
+
 
     public TaskSubscribe getEditTaskSubscribe() {
         return editTaskSubscribe;

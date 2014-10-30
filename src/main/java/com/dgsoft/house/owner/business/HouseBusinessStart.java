@@ -1,7 +1,10 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.TaskPublish;
+import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.model.PoolOwner;
@@ -9,6 +12,7 @@ import com.dgsoft.house.owner.HouseLinkHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.*;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -18,6 +22,7 @@ import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
+import java.util.EnumSet;
 
 /**
  * Created by cooper on 8/28/14.
@@ -35,44 +40,30 @@ public class HouseBusinessStart {
     @In(create = true)
     private HouseLinkHome houseLinkHome;
 
-    private static final String BUSINESS_START_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
-
+    private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
+    private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
+    private static final String BUSINESS_PRINT_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
 
     private BusinessHouse createStartHouse() {
         if (houseLinkHome.getInstance() == null) {
             throw new IllegalArgumentException("house not found");
         }
 
-        BusinessHouse result;
         if (houseLinkHome.isRecord()) {
-            BusinessHouse businessHouse = (BusinessHouse) houseLinkHome.getInstance();
-            result = new BusinessHouse(businessHouse);
-            if (businessHouse.getLandInfo() != null) {
-                result.setLandInfo(new LandInfo(businessHouse.getLandInfo()));
-            }
-            if (businessHouse.getBusinessHouseOwner() != null) {
-                result.setBusinessHouseOwner(new BusinessHouseOwner(businessHouse.getBusinessHouseOwner()));
-            }
-            for (BusinessPool pool : businessHouse.getBusinessPools()) {
-                result.getBusinessPools().add(new BusinessPool(pool));
-            }
-            for (OtherPowerCard card : businessHouse.getOtherPowerCards()) {
-                result.getOtherPowerCards().add(card);
-            }
-
-
+            return (BusinessHouse) houseLinkHome.getInstance();
         } else {
             House house = (House) houseLinkHome.getInstance();
-            result = new BusinessHouse(house);
+            BusinessHouse result = new BusinessHouse(house);
+            //TODO LINK
             if (house.getHouseOwner() != null) {
                 result.setBusinessHouseOwner(new BusinessHouseOwner(house.getHouseOwner()));
             }
             for (PoolOwner poolOwner : house.getPoolOwners()) {
                 result.getBusinessPools().add(new BusinessPool(poolOwner));
             }
-
+            return result;
         }
-        return result;
+
     }
 
     public String singleHouseSelected() {
@@ -98,7 +89,20 @@ public class HouseBusinessStart {
 
     private String houseIsSelected(){
         initBusinessData();
-        return BUSINESS_START_PAGE;
+        TaskPublish taskPublish = (TaskPublish) Component.getInstance(TaskPublish.class,true);
+        taskPublish.setTaskNameAndPublish(null);
+        if (taskPublish.isHaveEditSubscribe()){
+            return BUSINESS_INFO_PAGE;
+        } else{
+            if (RunParam.instance().getBooleanParamValue("BusinessPrintFirst")){
+                return  BUSINESS_PRINT_PAGE;
+            }else if (businessDefineHome.haveNeedFile(null)) {
+                return BUSINESS_FILE_PAGE;
+            } else {
+                return BUSINESS_PRINT_PAGE;
+            }
+        }
+
     }
 
 

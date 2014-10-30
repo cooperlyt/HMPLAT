@@ -4,8 +4,6 @@
       no-conversation-view-id="/func/system/business/start.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <action execute="#{taskPublish.publish}"/>
-
     <navigation from-action="#{taskPublish.wire}">
         <rule if-outcome="success">
             <redirect view-id="/business/houseOwner/BizStartFileUpload.xhtml"/>

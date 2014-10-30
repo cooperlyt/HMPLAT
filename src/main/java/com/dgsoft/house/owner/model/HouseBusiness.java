@@ -21,14 +21,12 @@ public class HouseBusiness implements java.io.Serializable {
     private BusinessHouse afterBusinessHouse;
     private BusinessBuild businessBuild;
     private String houseCode;
-    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private BusinessHouseOwner businessHouseOwner;
     private LandInfo landInfo;
     private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
-    private BusinessHouse.PoolType poolType;
-    private String houseFrom;
-    private String houseProperty;
+    private HouseRegInfo houseRegInfo;
+
 
     public HouseBusiness() {
     }
@@ -38,9 +36,6 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
         this.houseCode = startBusinessHouse.getHouseCode();
         this.startBusinessHouse = startBusinessHouse;
-        this.poolType = startBusinessHouse.getPoolType();
-        this.houseFrom = startBusinessHouse.getHouseFrom();
-        this.houseProperty = startBusinessHouse.getHouseProperty();
     }
 
     @Id
@@ -109,27 +104,6 @@ public class HouseBusiness implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "BUSINESS_AND_POOL", joinColumns = @JoinColumn(name = "BUSINESS"), inverseJoinColumns = @JoinColumn(name = "POOL_OWNER"))
-    public Set<BusinessPool> getBusinessPools() {
-        return this.businessPools;
-    }
-
-    public void setBusinessPools(Set<BusinessPool> businessPools) {
-        this.businessPools = businessPools;
-    }
-
-    @Transient
-    public List<BusinessPool> getBusinessPoolList() {
-        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
-        Collections.sort(result, new Comparator<BusinessPool>() {
-            @Override
-            public int compare(BusinessPool o1, BusinessPool o2) {
-                return o1.getCreateTime().compareTo(o2.getCreateTime());
-            }
-        });
-        return result;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = CascadeType.ALL)
     public Set<RecordStore> getRecordStores() {
@@ -169,38 +143,13 @@ public class HouseBusiness implements java.io.Serializable {
         this.newHouseContracts = newHouseContracts;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "POOL_MEMO", nullable = false, length = 32)
-    @NotNull
-    public BusinessHouse.PoolType getPoolType() {
-        return this.poolType;
+    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
+    @JoinColumn(name = "REG_INFO",nullable = true)
+    public HouseRegInfo getHouseRegInfo() {
+        return houseRegInfo;
     }
 
-    public void setPoolType(BusinessHouse.PoolType poolType) {
-        this.poolType = poolType;
+    public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
+        this.houseRegInfo = houseRegInfo;
     }
-
-    @Column(name = "HOUSE_FROM", nullable = false, length = 32)
-    @Size(max = 32)
-    @NotNull
-    public String getHouseFrom() {
-        return this.houseFrom;
-    }
-
-    public void setHouseFrom(String houseFrom) {
-        this.houseFrom = houseFrom;
-    }
-
-    @Column(name = "HOUSE_PORPERTY", nullable = false, length = 32)
-    @Size(max = 32)
-    @NotNull
-    public String getHouseProperty() {
-        return this.houseProperty;
-    }
-
-    public void setHouseProperty(String houseProperty) {
-        this.houseProperty = houseProperty;
-    }
-
-
 }

@@ -81,7 +81,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public String validSubscribe() {
-        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getPoolType()) && poolOwners.isEmpty()) {
+        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType()) && poolOwners.isEmpty()) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
             return null;
         }
@@ -90,9 +90,9 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public String wireSubscribe() {
-        if (ownerBusinessHome.getSingleHoues().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
+        if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
             ownerBusinessHome.getSingleHoues().getBusinessPools().clear();
-        }else if (ownerBusinessHome.getSingleHoues().getPoolType().equals(BusinessHouse.PoolType.TOGETHER_OWNER)){
+        }else if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.TOGETHER_OWNER)){
             for(BusinessPool pool: ownerBusinessHome.getSingleHoues().getBusinessPools()){
                 pool.setPerc(null);
                 pool.setPoolArea(null);

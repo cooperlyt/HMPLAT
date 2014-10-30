@@ -25,6 +25,7 @@
         <class>com.dgsoft.common.system.model.City</class>
         <class>com.dgsoft.common.system.model.NumberPool</class>
         <class>com.dgsoft.common.system.model.TaskSubscribe</class>
+        <class>com.dgsoft.common.system.model.BusinessNeedFile</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
@@ -111,7 +112,8 @@
         <class>com.dgsoft.house.owner.model.ProjectSellCard</class>
         <class>com.dgsoft.house.owner.model.Reason</class>
         <class>com.dgsoft.house.owner.model.SaleInfo</class>
-        <class>com.dgsoft.house.owner.model.UploadFiles</class>
+        <class>com.dgsoft.house.owner.model.BusinessFile</class>
+        <class>com.dgsoft.house.owner.model.UploadFile</class>
         <class>com.dgsoft.house.owner.model.TaskOper</class>
         <class>com.dgsoft.house.owner.model.OwnerNumberPool</class>
         <class>com.dgsoft.house.owner.model.ProjectRecord</class>
@@ -120,6 +122,7 @@
         <class>com.dgsoft.house.owner.model.RecordStore</class>
         <class>com.dgsoft.house.owner.model.MakeCard</class>
         <class>com.dgsoft.house.owner.model.OtherPowerCard</class>
+        <class>com.dgsoft.house.owner.model.HouseRegInfo</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

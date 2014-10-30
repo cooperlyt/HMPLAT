@@ -23,8 +23,8 @@ public class BusinessDefine implements java.io.Serializable {
     private Integer version;
     private String startPropagation;
     private String rolePrefix;
-    private Set<FileSubscribe> fileSubscribes = new HashSet<FileSubscribe>(0);
     private Set<TaskSubscribe> taskSubscribes = new HashSet<TaskSubscribe>(0);
+    private Set<BusinessNeedFile> businessNeedFiles = new HashSet<BusinessNeedFile>(0);
 
     public BusinessDefine() {
     }
@@ -102,13 +102,13 @@ public class BusinessDefine implements java.io.Serializable {
         this.memo = memo;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessDefine")
-    public Set<FileSubscribe> getFileSubscribes() {
-        return this.fileSubscribes;
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = CascadeType.ALL,mappedBy = "businessDefine")
+    public Set<BusinessNeedFile> getBusinessNeedFiles() {
+        return businessNeedFiles;
     }
 
-    public void setFileSubscribes(Set<FileSubscribe> fileSubscribes) {
-        this.fileSubscribes = fileSubscribes;
+    public void setBusinessNeedFiles(Set<BusinessNeedFile> businessNeedFiles) {
+        this.businessNeedFiles = businessNeedFiles;
     }
 
     @Column(name = "START_PROPAGATION",nullable = true,length = 10)

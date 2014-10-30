@@ -12,7 +12,7 @@
         <ui:define name="label">
             #{messages.RegisterProperty_HouseProperty}
         </ui:define>
-        <h:selectOneMenu required="true" id="housePropertyInput" value="#{ownerBusinessHome.singleHoues.houseProperty}"
+        <h:selectOneMenu required="true" id="housePropertyInput" value="#{ownerBusinessHome.singleHoues.houseRegInfo.houseProperty}"
                          label="#{messages.RegisterProperty_HouseProperty}" style="width: 140px">
 
             <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
@@ -28,7 +28,7 @@
         <ui:define name="label">
             #{messages.RegisterProperty_HouseFrom}
         </ui:define>
-        <h:selectOneMenu required="true" id="houseFromInput" value="#{ownerBusinessHome.singleHoues.houseFrom}"
+        <h:selectOneMenu required="true" id="houseFromInput" value="#{ownerBusinessHome.singleHoues.houseRegInfo.houseFrom}"
                          label="#{messages.RegisterProperty_HouseFrom}" style="width: 140px">
             <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>

@@ -4,6 +4,8 @@ package com.dgsoft.house.owner.model;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.model.House;
+import org.apache.batik.gvt.flow.RegionInfo;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -48,9 +50,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private String direction;
 	private InitRegStatus initRegStatus;
 	private String houseCode;
-	private PoolType poolType;
-	private String houseFrom;
-	private String houseProperty;
+
 	private boolean haveDownRoom;
 	private String buildCode;
 	private String mapNumber;
@@ -79,6 +79,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private BusinessHouseOwner businessHouseOwner;
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
+    private HouseRegInfo houseRegInfo;
 
 	//private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
@@ -135,13 +136,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         for(HouseStatus status: houseInfo.getAllStatusList()){
             getHouseStates().add(new HouseState(this,status));
         }
-    }
-
-    public BusinessHouse(BusinessHouse businessHouse){
-        this((HouseInfo)businessHouse);
-        this.poolType = businessHouse.getPoolType();
-        this.houseFrom = businessHouse.getHouseFrom();
-        this.houseProperty = businessHouse.getHouseProperty();
     }
 
 
@@ -265,6 +259,16 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setMasterStatus(HouseStatus masterStatus) {
         this.masterStatus = masterStatus;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @JoinColumn(name = "REG_INFO",nullable = true)
+    public HouseRegInfo getHouseRegInfo() {
+        return houseRegInfo;
+    }
+
+    public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
+        this.houseRegInfo = houseRegInfo;
     }
 
     @Override
@@ -434,35 +438,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.houseCode = houseCode;
 	}
 
-    @Enumerated(EnumType.STRING)
-	@Column(name = "POOL_MEMO", length = 32)
-	public PoolType getPoolType() {
-		return this.poolType;
-	}
-
-	public void setPoolType(PoolType poolType) {
-		this.poolType = poolType;
-	}
-
-	@Column(name = "HOUSE_FROM", length = 32)
-	@Size(max = 32)
-	public String getHouseFrom() {
-		return this.houseFrom;
-	}
-
-	public void setHouseFrom(String houseFrom) {
-		this.houseFrom = houseFrom;
-	}
-
-	@Column(name = "HOUSE_PORPERTY", length = 32)
-	@Size(max = 32)
-	public String getHouseProperty() {
-		return this.houseProperty;
-	}
-
-	public void setHouseProperty(String houseProperty) {
-		this.houseProperty = houseProperty;
-	}
 
     @Override
     @Column(name = "HAVE_DOWN_ROOM", nullable = false)

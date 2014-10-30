@@ -144,6 +144,18 @@ public class TaskPublish {
         }
     }
 
+    public boolean isHaveEditSubscribe(){
+        Logging.getLog(getClass()).debug("isHaveEditSubscribe: definesCount:" + defines.size());
+        for (TaskSubscribeReg.TaskSubscribeDefine define :defines){
+            Logging.getLog(getClass()).debug("isHaveEditSubscribe: definesCount:" + define.getType());
+            if (define.getType().equals(TaskSubscribeReg.TaskSubscribeDefineType.ALONE_EDIT) ||
+                    define.getType().equals(TaskSubscribeReg.TaskSubscribeDefineType.EDIT)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static class SubscribeGroupStrategy implements TotalGroupStrategy<String, TaskSubscribeReg.TaskSubscribeDefine> {
 
         @Override
