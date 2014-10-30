@@ -44,6 +44,19 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    public Financial getFinancial(){
+        if(! getInstance().getFinancials().isEmpty()){
+            return getInstance().getFinancials().iterator().next();
+        }
+        return null;
+    }
+
+    public MappingCorp getMappingCorp(){
+        if(!getInstance().getMappingCorps().isEmpty()){
+            return getInstance().getMappingCorps().iterator().next();
+        }
+        return null;
+    }
     public BusinessPersion getBusinessPersionType(String typeName){
         for (BusinessPersion businessPersion:getInstance().getBusinessPersions()){
             if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class, typeName))){
