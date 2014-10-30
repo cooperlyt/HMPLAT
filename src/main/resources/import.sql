@@ -19,6 +19,8 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseEditStrategy','STRING'
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseBlockCodeLabel','STRING','丘号','丘号 或 宗地号');
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseStreetCodeLabel','STRING','街坊号','街坊号 或 房产分区码');
 
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseCodeDisplayModel','INTEGER','3','1:国标;2:图-丘-幢-房;3：行政区-丘-幢-房;:4:丘-幢-房;');
+
 
 
 

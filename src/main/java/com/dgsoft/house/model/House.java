@@ -1,6 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseInfo;
 import org.jboss.seam.log.Logging;
 
@@ -345,6 +346,21 @@ public class House implements java.io.Serializable, HouseInfo {
         }
         Collections.sort(result, new StatusComparator());
         return result;
+    }
+
+    @Override
+    @Transient
+    public String getDisplayHouseCode() {
+        switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
+            case 2:
+                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+
+            case 3:
+                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo()+ "-" + getHouseOrder();
+            case 4:
+                return getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+        }
+        return getHouseCode();
     }
 
     @Column(name = "HOUSE_TYPE", length = 32)

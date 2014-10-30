@@ -18,7 +18,6 @@ public class NewHouseContract implements java.io.Serializable {
 	private String id;
 	private HouseBusiness houseBusiness;
 
-	private String compactNo;
 	private Date signDate;
 	private Date recordDate;
 
@@ -51,17 +50,6 @@ public class NewHouseContract implements java.io.Serializable {
 		this.houseBusiness = houseBusiness;
 	}
 
-
-	@Column(name = "COMPACT_NO", nullable = false, length = 30)
-	@NotNull
-	@Size(max = 30)
-	public String getCompactNo() {
-		return this.compactNo;
-	}
-
-	public void setCompactNo(String compactNo) {
-		this.compactNo = compactNo;
-	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "SIGN_DATE", nullable = false, length = 19)

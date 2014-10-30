@@ -37,6 +37,9 @@ public class OwnerBusiness implements java.io.Serializable {
     private Date regTime;
     private String defineName;
     private String defineId;
+    private boolean recorded;
+    private String createEmpName;
+    private String createEmpCode;
     private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
     private Set<Reason> reasons = new HashSet<Reason>(0);
     private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
@@ -46,11 +49,9 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
 
     private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
-    private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(
-            0);
+    private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
     private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
-    private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(
-            0);
+    private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(0);
     private Set<Financial> financials = new HashSet<Financial>(0);
     private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
@@ -353,6 +354,36 @@ public class OwnerBusiness implements java.io.Serializable {
         this.businessProjects = businessProjects;
     }
 
+    @Column(name = "RECORDED" ,nullable = false)
+    public boolean isRecorded() {
+        return recorded;
+    }
+
+    public void setRecorded(boolean recorded) {
+        this.recorded = recorded;
+    }
+
+    @Column(name = "CREATE_EMP_NAME",nullable = false,length = 50)
+    @Size(max = 50)
+    @NotNull
+    public String getCreateEmpName() {
+        return createEmpName;
+    }
+
+    public void setCreateEmpName(String createEmpName) {
+        this.createEmpName = createEmpName;
+    }
+
+    @Column(name = "CREATE_EMP_CODE",nullable = false,length = 32)
+    @Size(max = 32)
+    @NotNull
+    public String getCreateEmpCode() {
+        return createEmpCode;
+    }
+
+    public void setCreateEmpCode(String createEmpCode) {
+        this.createEmpCode = createEmpCode;
+    }
 
     @Transient
     public BusinessProject getBusinessProject(){
