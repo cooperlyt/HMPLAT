@@ -7,12 +7,41 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseProperty}
+        </ui:define>
+        <h:selectOneMenu required="true" id="housePropertyInput" value="#{poolOwnerSubscribe.houseRegInfo.houseProperty}"
+                         label="#{messages.RegisterProperty_HouseProperty}" style="width: 140px">
+
+            <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail"  >
+            <r:message for ="housePropertyInput"/>
+        </ui:define>
+
+    </s:decorate>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseFrom}
+        </ui:define>
+        <h:selectOneMenu required="true" id="houseFromInput" value="#{poolOwnerSubscribe.houseRegInfo.houseFrom}"
+                         label="#{messages.RegisterProperty_HouseFrom}" style="width: 140px">
+            <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:define name="tail">
+            <r:message for = "houseFromInput"/>
+        </ui:define>
+    </s:decorate>
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
             #{messages.RegisterProperty_PoolMemo}
         </ui:define>
-        <h:selectOneMenu id="poolTypeInput" value="#{ownerBusinessHome.singleHoues.poolType}"
+        <h:selectOneMenu id="poolTypeInput" value="#{poolOwnerSubscribe.houseRegInfo.poolType}"
                          label="#{messages.RegisterProperty_PoolMemo}" required="true">
             <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>
@@ -27,12 +56,12 @@
     </s:decorate>
     <div style="clear: both;"/>
     <a:outputPanel id="poolOwnerTable">
-        <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.poolType) and (not (ownerBusinessHome.singleHoues.poolType eq 'SINGLE_OWNER'))}">
+        <a:outputPanel rendered="#{(not empty poolOwnerSubscribe.houseRegInfo.poolType) and (not (poolOwnerSubscribe.houseRegInfo.poolType eq 'SINGLE_OWNER'))}">
             <ui:include src="/layout/house/owner/PoolOwnerEditTable.xhtml">
                 <ui:param name="persons" value="#{newEditPoolOwners}"/>
                 <ui:param name="title" value="#{messages.BusinessPool}"/>
                 <ui:param name="subscribeComponent" value="#{poolOwnerSubscribe}"/>
-                <ui:param name="showPerc" value="#{ownerBusinessHome.singleHoues.poolType eq 'SHARE_OWNER'}"/>
+                <ui:param name="showPerc" value="#{poolOwnerSubscribe.houseRegInfo.poolType eq 'SHARE_OWNER'}"/>
             </ui:include>
         </a:outputPanel>
     </a:outputPanel>

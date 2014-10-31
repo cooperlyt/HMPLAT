@@ -77,7 +77,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private Set<HouseState> houseStates = new HashSet<HouseState>(0);
     private LandInfo landInfo;
     private BusinessHouseOwner businessHouseOwner;
-    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
     private HouseRegInfo houseRegInfo;
 
@@ -725,16 +724,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessHouseOwner = businessHouseOwner;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessPool.class,cascade = CascadeType.ALL)
-    @JoinTable(name = "HOUSE_AND_POOL", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL_OWNER"))
-    public Set<BusinessPool> getBusinessPools() {
-        return businessPools;
-    }
-
-    public void setBusinessPools(Set<BusinessPool> businessPools) {
-        this.businessPools = businessPools;
-    }
-
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = OtherPowerCard.class,cascade = CascadeType.ALL)
     @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
     public Set<OtherPowerCard> getOtherPowerCards() {
@@ -757,15 +746,4 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         return result;
     }
 
-    @Transient
-    public List<BusinessPool> getBusinessPoolList(){
-        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
-        Collections.sort(result,new Comparator<BusinessPool>() {
-            @Override
-            public int compare(BusinessPool o1, BusinessPool o2) {
-                return o1.getCreateTime().compareTo(o2.getCreateTime());
-            }
-        });
-        return result;
-    }
 }

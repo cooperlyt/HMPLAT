@@ -6,10 +6,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
+    <a:outputPanel
+            rendered="#{(not empty ownerBusinessHome.singleHoues.houseRegInfo) and not (ownerBusinessHome.singleHoues.houseRegInfo.poolType eq 'SINGLE_OWNER')}">
 
-    <a:outputPanel rendered="#{not (ownerBusinessHome.singleHoues.poolType eq 'SINGLE_OWNER')}">
         <ui:include src="/layout/house/owner/PoolOwnerTable.xhtml">
-            <ui:param name="poolOwners" value="#{ownerBusinessHome.singleHoues.businessPoolList}"/>
+            <ui:param name="poolOwners" value="#{ownerBusinessHome.singleHoues.houseRegInfo.businessPoolList}"/>
             <ui:param name="title" value="#{messages.NewBusinessPool}"/>
         </ui:include>
     </a:outputPanel>

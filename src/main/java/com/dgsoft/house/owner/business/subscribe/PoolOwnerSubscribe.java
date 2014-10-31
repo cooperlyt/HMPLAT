@@ -6,6 +6,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessPool;
 import com.dgsoft.house.owner.model.HouseBusiness;
+import com.dgsoft.house.owner.model.HouseRegInfo;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -33,12 +34,29 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
+    private HouseRegInfo houseRegInfo;
+
+    public HouseRegInfo getHouseRegInfo() {
+        return houseRegInfo;
+    }
+
+    public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
+        this.houseRegInfo = houseRegInfo;
+    }
+
     @In
     private FacesMessages facesMessages;
 
     protected void initPoolOwners() {
+
+        houseRegInfo = ownerBusinessHome.getSingleHoues().getHouseRegInfo();
+        if (houseRegInfo == null){
+            houseRegInfo = new HouseRegInfo();
+            ownerBusinessHome.getSingleHoues().setHouseRegInfo(houseRegInfo);
+        }
+
         poolOwners = new ArrayList<PersonEntityAdapter<BusinessPool>>();
-        for (BusinessPool pool : ownerBusinessHome.getSingleHoues().getBusinessPools()) {
+        for (BusinessPool pool : houseRegInfo.getBusinessPools()) {
             poolOwners.add(new PersonEntityAdapter<BusinessPool>(pool));
         }
         Collections.sort(poolOwners, new Comparator<PersonEntityAdapter<BusinessPool>>() {
@@ -64,13 +82,13 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     public void deleteSelectOwner() {
         if (selectPoolOwner != null) {
-            ownerBusinessHome.getSingleHoues().getBusinessPools().remove(selectPoolOwner.getPersonEntity());
+            houseRegInfo.getBusinessPools().remove(selectPoolOwner.getPersonEntity());
             refreshPoolOwners();
         }
     }
 
     public void addNewOwner() {
-        ownerBusinessHome.getSingleHoues().getBusinessPools().add(new BusinessPool(new Date()));
+        houseRegInfo.getBusinessPools().add(new BusinessPool(new Date()));
         refreshPoolOwners();
     }
 
@@ -91,9 +109,9 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     @Override
     public String wireSubscribe() {
         if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
-            ownerBusinessHome.getSingleHoues().getBusinessPools().clear();
+            houseRegInfo.getBusinessPools().clear();
         }else if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.TOGETHER_OWNER)){
-            for(BusinessPool pool: ownerBusinessHome.getSingleHoues().getBusinessPools()){
+            for(BusinessPool pool: houseRegInfo.getBusinessPools()){
                 pool.setPerc(null);
                 pool.setPoolArea(null);
             }
