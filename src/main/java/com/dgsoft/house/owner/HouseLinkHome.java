@@ -45,10 +45,9 @@ public class HouseLinkHome {
         if (houseInfo == null) {
             if (isIdDefine()) {
                 try {
-                    HouseRecord houseRecord =
+                    houseInfo =
                             ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class).
                                     setParameter("houseCode", houseCode).getSingleResult();
-                    houseInfo = houseRecord.getBusinessHouse();
                 } catch (NoResultException e) {
                     houseInfo = houseEntityLoader.getEntityManager().find(House.class, houseCode);
                 }
@@ -58,7 +57,7 @@ public class HouseLinkHome {
     }
 
     public boolean isRecord(){
-        return (getInstance() != null) && (getInstance() instanceof BusinessHouse);
+        return (getInstance() != null) && (getInstance() instanceof HouseRecord);
     }
 
 

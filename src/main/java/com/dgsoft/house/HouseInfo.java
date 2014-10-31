@@ -26,6 +26,14 @@ public interface HouseInfo extends BuildInfo {
         NOT_INIT_REG,INIT_REG_CONFIRM,INIT_REG;
     }
 
+    public enum LockStatus{
+        LOCK_OPEN,LOCK_IN_BIZ,LOCK_SUSPENDED;
+
+        public boolean isLock(){
+            return !LOCK_OPEN.equals(this);
+        }
+    }
+
     public class StatusComparator implements Comparator<HouseStatus>{
 
         private static StatusComparator instance;
@@ -148,4 +156,6 @@ public interface HouseInfo extends BuildInfo {
     public List<HouseStatus> getAllStatusList();
 
     public String getDisplayHouseCode();
+
+    public LockStatus getLockStatus();
 }

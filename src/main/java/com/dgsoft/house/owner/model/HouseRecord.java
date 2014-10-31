@@ -1,8 +1,11 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
-import java.util.HashSet;
-import java.util.Set;
+import com.dgsoft.common.system.RunParam;
+import com.dgsoft.house.HouseInfo;
+
+import java.math.BigDecimal;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,12 +17,13 @@ import javax.validation.constraints.Size;
 @Table(name = "HOUSE_RECORD", catalog = "HOUSE_OWNER_RECORD", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "HOUSE_CODE"),
 		@UniqueConstraint(columnNames = "HOUSE")})
-public class HouseRecord implements java.io.Serializable {
+public class HouseRecord implements java.io.Serializable,HouseInfo {
 
 	private String id;
 	private BusinessHouse businessHouse;
 	private String houseCode;
 	private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
+    private LockStatus lockStatus;
 
 	public HouseRecord() {
 	}
@@ -48,6 +52,7 @@ public class HouseRecord implements java.io.Serializable {
 		this.businessHouse = businessHouse;
 	}
 
+    @Override
 	@Column(name = "HOUSE_CODE", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -55,9 +60,188 @@ public class HouseRecord implements java.io.Serializable {
 		return this.houseCode;
 	}
 
-	public void setHouseCode(String houseCode) {
-		this.houseCode = houseCode;
-	}
+    public void setHouseCode(String houseCode) {
+        this.houseCode = houseCode;
+    }
+
+    @Override
+    @Transient
+    public String getHouseOrder() {
+        return getBusinessHouse().getHouseOrder();
+    }
+
+    @Override
+    @Transient
+    public String getHouseUnitName() {
+        return getBusinessHouse().getHouseUnitName();
+    }
+
+    @Override
+    @Transient
+    public String getInFloorName() {
+        return getBusinessHouse().getInFloorName();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getHouseArea() {
+        return getBusinessHouse().getHouseArea();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getPrepareArea() {
+        return getBusinessHouse().getPrepareArea();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getUseArea() {
+        return getBusinessHouse().getUseArea();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getCommArea() {
+        return getBusinessHouse().getCommArea();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getShineArea() {
+        return getBusinessHouse().getShineArea();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getLoftArea() {
+        return getBusinessHouse().getLoftArea();
+    }
+
+    @Override
+    @Transient
+    public BigDecimal getCommParam() {
+        return getBusinessHouse().getCommParam();
+    }
+
+    @Override
+    @Transient
+    public String getHouseType() {
+        return getBusinessHouse().getHouseType();
+    }
+
+    @Override
+    @Transient
+    public String getUseType() {
+        return getBusinessHouse().getUseType();
+    }
+
+    @Override
+    @Transient
+    public String getKnotSize() {
+        return getBusinessHouse().getKnotSize();
+    }
+
+    @Override
+    @Transient
+    public String getAddress() {
+        return getBusinessHouse().getAddress();
+    }
+
+    @Override
+    @Transient
+    public String getEastWall() {
+        return getBusinessHouse().getEastWall();
+    }
+
+    @Override
+    @Transient
+    public String getWestWall() {
+        return getBusinessHouse().getWestWall();
+    }
+
+    @Override
+    @Transient
+    public String getSouthWall() {
+        return getBusinessHouse().getSouthWall();
+    }
+
+    @Override
+    @Transient
+    public String getNorthWall() {
+        return getBusinessHouse().getNorthWall();
+    }
+
+    @Override
+    @Transient
+    public Date getMapTime() {
+        return getBusinessHouse().getMapTime();
+    }
+
+    @Override
+    @Transient
+    public String getDirection() {
+        return getBusinessHouse().getDirection();
+    }
+
+    @Override
+    @Transient
+    public InitRegStatus getInitRegStatus() {
+        return getBusinessHouse().getInitRegStatus();
+    }
+
+    @Override
+    @Transient
+    public boolean isHaveDownRoom() {
+        return getBusinessHouse().isHaveDownRoom();
+    }
+
+    @Override
+    @Transient
+    public HouseStatus getMasterStatus() {
+        return getBusinessHouse().getMasterStatus();
+    }
+
+    @Override
+    @Transient
+    public List<HouseInfo.HouseStatus> getAllStatusList() {
+        List<HouseInfo.HouseStatus> result = new ArrayList<HouseStatus>(getBusinessHouse().getHouseStates().size());
+        for (HouseState state: getBusinessHouse().getHouseStates()){
+            result.add(state.getState());
+        }
+        Collections.sort(result,new HouseInfo.StatusComparator());
+        return result;
+    }
+
+    @Override
+    @Transient
+    public String getDisplayHouseCode() {
+        switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
+            case 2:
+                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+
+            case 3:
+                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+
+            case 4:
+
+                return getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+
+        }
+        return getHouseCode();
+    }
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name="LOCK_STATUS",nullable = false,length = 20)
+    @NotNull
+    public LockStatus getLockStatus() {
+        return this.lockStatus;
+    }
+
+    public void setLockStatus(LockStatus lockStatus){
+        this.lockStatus = lockStatus;
+    }
 
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseRecord")
@@ -70,4 +254,135 @@ public class HouseRecord implements java.io.Serializable {
 	}
 
 
+    @Override
+    @Transient
+    public String getBuildName() {
+        return getBusinessHouse().getBuildName();
+    }
+
+    @Override
+    @Transient
+    public String getBuildCode() {
+        return getBusinessHouse().getBuildCode();
+    }
+
+    @Override
+    @Transient
+    public String getStreetCode() {
+        return getBusinessHouse().getStreetCode();
+    }
+
+    @Override
+    @Transient
+    public String getMapNumber() {
+        return getBusinessHouse().getMapNumber();
+    }
+
+    @Override
+    @Transient
+    public String getBlockNo() {
+        return getBusinessHouse().getBlockNo();
+    }
+
+    @Override
+    @Transient
+    public String getBuildNo() {
+        return getBusinessHouse().getBuildNo();
+    }
+
+    @Override
+    @Transient
+    public String getDoorNo() {
+        return getBusinessHouse().getDoorNo();
+    }
+
+    @Override
+    @Transient
+    public int getFloorCount() {
+        return getBusinessHouse().getFloorCount();
+    }
+
+    @Override
+    @Transient
+    public int getUpFloorCount() {
+        return getBusinessHouse().getUpFloorCount();
+    }
+
+    @Override
+    @Transient
+    public int getDownFloorCount() {
+        return getBusinessHouse().getDownFloorCount();
+    }
+
+    @Override
+    @Transient
+    public String getBuildType() {
+        return getBusinessHouse().getBuildType();
+    }
+
+    @Override
+    @Transient
+    public String getStructure() {
+        return getBusinessHouse().getStructure();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperName() {
+        return getBusinessHouse().getDeveloperName();
+    }
+
+    @Override
+    @Transient
+    public String getDeveloperCode() {
+        return getBusinessHouse().getDeveloperCode();
+    }
+
+    @Override
+    @Transient
+    public String getProjectName() {
+        return getBusinessHouse().getProjectName();
+    }
+
+    @Override
+    @Transient
+    public String getProjectCode() {
+        return getBusinessHouse().getProjectCode();
+    }
+
+    @Override
+    @Transient
+    public Date getCompleteDate() {
+        return getBusinessHouse().getCompleteDate();
+    }
+
+    @Override
+    @Transient
+    public String getBuildSize() {
+        return getBusinessHouse().getBuildSize();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictName() {
+        return getBusinessHouse().getDistrictName();
+    }
+
+    @Override
+    @Transient
+    public String getDistrictCode() {
+        return getBusinessHouse().getDistrictCode();
+    }
+
+    @Override
+    @Transient
+    public String getSectionName() {
+        return getBusinessHouse().getSectionName();
+    }
+
+    @Override
+    @Transient
+    public String getSectionCode() {
+        return getBusinessHouse().getSectionCode();
+    }
 }

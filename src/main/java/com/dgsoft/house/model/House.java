@@ -124,7 +124,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private Date createTime;
     //private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
     private HouseOwner houseOwner;
-    private boolean lock;
+    private LockStatus lockStatus;
 
     public House() {
     }
@@ -155,7 +155,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.masterStatus = HouseStatus.CANTSALE;
         this.haveDownRoom = block.isHaveDownRoom();
         this.initRegStatus = InitRegStatus.NOT_INIT_REG;
-        lock = false;
+        this.lockStatus = LockStatus.LOCK_OPEN;
         dataSource = HouseDataSource.MAPPING;
 
         if ((build.getAddress() != null) && !"".equals(build.getAddress())) {
@@ -384,13 +384,16 @@ public class House implements java.io.Serializable, HouseInfo {
         this.useType = useType;
     }
 
-    @Column(name = "_LOCK", nullable = false)
-    public boolean isLock() {
-        return lock;
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name="LOCK_STATUS",nullable = false,length = 20)
+    @NotNull
+    public LockStatus getLockStatus() {
+        return lockStatus;
     }
 
-    public void setLock(boolean lock) {
-        this.lock = lock;
+    public void setLockStatus(LockStatus lockStatus) {
+        this.lockStatus = lockStatus;
     }
 
     @Override

@@ -50,17 +50,10 @@ public class HouseBusinessStart {
         }
 
         if (houseLinkHome.isRecord()) {
-            return (BusinessHouse) houseLinkHome.getInstance();
+            return ((HouseRecord) houseLinkHome.getInstance()).getBusinessHouse();
         } else {
             House house = (House) houseLinkHome.getInstance();
             BusinessHouse result = new BusinessHouse(house);
-            //TODO LINK
-            if (house.getHouseOwner() != null) {
-                result.setBusinessHouseOwner(new BusinessHouseOwner(house.getHouseOwner()));
-            }
-            for (PoolOwner poolOwner : house.getPoolOwners()) {
-                result.getBusinessPools().add(new BusinessPool(poolOwner));
-            }
             return result;
         }
 

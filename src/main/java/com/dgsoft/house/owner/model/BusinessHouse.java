@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "HOUSE", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessHouse implements java.io.Serializable, HouseInfo {
+public class BusinessHouse implements java.io.Serializable {
 
     public enum PoolType{
         SINGLE_OWNER,TOGETHER_OWNER,SHARE_OWNER;
@@ -36,7 +36,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private BigDecimal shineArea;
 	private BigDecimal loftArea;
 	private BigDecimal commParam;
-    private HouseStatus masterStatus;
+    private HouseInfo.HouseStatus masterStatus;
 	private String houseType;
 	private String useType;
 	private String structure;
@@ -48,7 +48,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 	private String northWall;
 	private Date mapTime;
 	private String direction;
-	private InitRegStatus initRegStatus;
+	private HouseInfo.InitRegStatus initRegStatus;
 	private String houseCode;
 
 	private boolean haveDownRoom;
@@ -132,7 +132,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.sectionName = houseInfo.getSectionName();
         this.districtCode = houseInfo.getDistrictCode();
         this.districtName = houseInfo.getDistrictName();
-        for(HouseStatus status: houseInfo.getAllStatusList()){
+        for(HouseInfo.HouseStatus status: houseInfo.getAllStatusList()){
             getHouseStates().add(new HouseState(this,status));
         }
     }
@@ -248,15 +248,14 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.commParam = commParam;
 	}
 
-    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "HOUSE_STATUS", nullable = false,length = 32)
     @NotNull
-    public HouseStatus getMasterStatus() {
+    public HouseInfo.HouseStatus getMasterStatus() {
         return masterStatus;
     }
 
-    public void setMasterStatus(HouseStatus masterStatus) {
+    public void setMasterStatus(HouseInfo.HouseStatus masterStatus) {
         this.masterStatus = masterStatus;
     }
 
@@ -270,34 +269,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseRegInfo = houseRegInfo;
     }
 
-    @Override
-    @Transient
-    public List<HouseStatus> getAllStatusList() {
-        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
-        for (HouseState state: getHouseStates()){
-            result.add(state.getState());
-        }
-        Collections.sort(result,new StatusComparator());
-        return result;
-    }
-
-    @Override
-    @Transient
-    public String getDisplayHouseCode() {
-        switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
-            case 2:
-                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
-
-            case 3:
-                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
-
-            case 4:
-
-                return getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
-
-        }
-        return getHouseCode();
-    }
 
     @Column(name = "HOUSE_TYPE", length = 32)
 	@Size(max = 32)
@@ -320,7 +291,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.useType = useType;
 	}
 
-    @Override
 	@Column(name = "STRUCTURE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -414,15 +384,14 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.direction = direction;
 	}
 
-    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "INIT_REG_STATUS",nullable = false,length = 20)
     @NotNull
-    public InitRegStatus getInitRegStatus() {
+    public HouseInfo.InitRegStatus getInitRegStatus() {
         return initRegStatus;
     }
 
-    public void setInitRegStatus(InitRegStatus initRegStatus) {
+    public void setInitRegStatus(HouseInfo.InitRegStatus initRegStatus) {
         this.initRegStatus = initRegStatus;
     }
 
@@ -437,8 +406,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.houseCode = houseCode;
 	}
 
-
-    @Override
     @Column(name = "HAVE_DOWN_ROOM", nullable = false)
     public boolean isHaveDownRoom() {
         return haveDownRoom;
@@ -501,7 +468,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 		this.streetCode = streetCode;
 	}
 
-    @Override
 	@Column(name = "BUILD_NAME", nullable = false, length = 100)
 	@NotNull
 	@Size(max = 100)
