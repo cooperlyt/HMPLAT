@@ -11,7 +11,7 @@
         <ui:define name="label">
             #{messages.District}
         </ui:define>
-        <h:selectOneMenu value="#{section.district}"
+        <h:selectOneMenu value="#{sectionHome.instance.district}"
                          label="#{messages.District}" required="true">
             <s:selectItems value="#{allDistrict.resultList}" var="_district"
                            itemValue="#{_district}" label="#{_district.name}"/>
@@ -23,14 +23,18 @@
         <ui:define name="label">
             #{messages.Section_name}
         </ui:define>
-        <h:inputText id="nameInput" value="#{section.name}" required="true"
-                     label="#{messages.Section_name}" size="40" maxlength="50"
+        <h:inputText id="nameInput" value="#{sectionHome.instance.name}" required="true"
+                     label="#{messages.Section_name}" size="35" maxlength="50"
                      unique="name"
                      valueChangeListener="#{sectionHome.verifyUniqueAvailable}">
-            <a:ajax event="blur" execute="@this" render="nameMessages"/>
+            <a:ajax event="blur" listener="#{sectionHome.nameInputedListener}" execute="@this" render="pyCodeInput"/>
         </h:inputText>
 
+
+
         <ui:define name="tail">
+
+            <h:inputText id="pyCodeInput" value="#{sectionHome.pyCode}" size="10" maxlength="50"/>
             <r:message for="nameInput" rendered="#{not tip}"/>
 
             <r:message for="nameInput" styleClass="message-icon"
@@ -43,8 +47,8 @@
         <ui:define name="label">
             #{messages.Section_address}
         </ui:define>
-        <h:inputText value="#{section.address}"
-                     label="#{messages.Section_address}" size="50" maxlength="200"/>
+        <h:inputText value="#{sectionHome.instance.address}"
+                     label="#{messages.Section_address}" size="48" maxlength="200"/>
     </s:decorate>
 
 

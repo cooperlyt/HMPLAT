@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/full-width-template.xhtml">
+
+    <ui:param name="functionTitle" value="#{buildHome.instance.buildName}"/>
+
+
+    <ui:define name="body">
+
+        <h:form>
+            <h:selectOneMenu value="#{buildGridMapShow.district}">
+                <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                               itemValue="#{_district}" label="#{_district.name}"
+                               noSelectionLabel="#{messages.noSelectLabel}"/>
+                <f:converter converterId="houseEntityConverter"/>
+                <a:ajax event="valueChange" render="sectionSelectInputs">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
+            </h:selectOneMenu>
+
+
+            <a:outputPanel id="sectionSelectInputs" >
+                <a:outputPanel rendered="#{not empty buildGridMapShow.district}">
+                    <s:decorate template="/layout/edit.xhtml">
+
+                        <a:jsFunction name="blurFunction" execute="sectionNameInput" render="projectSelectInputs"/>
+
+                        <r:autocomplete id="sectionNameInput" mode="cachedAjax" minChars="1" value="#{buildGridMapShow.sectionName}"
+                                        autocompleteMethod="#{pinyiList.sectionAutoComplete}"
+                                        autofill="true" selectFirst="true" onblur="blurFunction()" oncomplete="blurFunction()"/>
+                    </s:decorate>
+
+
+                    <a:outputPanel id="projectSelectInputs">
+                        <a:outputPanel rendered="#{not empty buildGridMapShow.sectionName}">
+
+                            <s:decorate template="/layout/edit.xhtml">
+                                <h:selectOneMenu value="#{buildGridMapShow.project}">
+                                    <s:selectItems value="#{buildGridMapShow.projectList}"
+                                                   var="_project" itemValue="#{_project}"
+                                                   label="#{_project.name}"
+                                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                                    <f:converter converterId="houseEntityConverter"/>
+                                    <a:ajax event="valueChange" render="buildSelectInput">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:ajax>
+                                </h:selectOneMenu>
+                            </s:decorate>
+
+
+                            <a:outputPanel id="buildSelectInput">
+                                <s:decorate rendered="#{not empty buildGridMapShow.project}"
+                                            template="/layout/edit.xhtml">
+
+                                    <h:selectOneMenu value="#{buildHome.id}">
+                                        <s:selectItems value="#{buildGridMapShow.project.buildList}"
+                                                       var="_build" itemValue="#{_build.id}"
+                                                       label="#{_build.name}"
+                                                       noSelectionLabel="#{messages.noSelectLabel}"/>
+                                        <a:ajax event="valueChange" render="gridMap">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:selectOneMenu>
+                                </s:decorate>
+                            </a:outputPanel>
+
+                        </a:outputPanel>
+
+
+                    </a:outputPanel>
+
+                </a:outputPanel>
+
+            </a:outputPanel>
+
+
+            <a:outputPanel id="gridMap">
+                <a:outputPanel rendered="#{buildHome.idDefined}">
+
+                </a:outputPanel>
+            </a:outputPanel>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

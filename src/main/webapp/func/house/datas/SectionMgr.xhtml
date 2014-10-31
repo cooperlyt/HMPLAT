@@ -48,7 +48,6 @@
                       value="#{messages.Section} #{' '} #{sectionHome.idDefined ? messages.add : messages.edit}"/>
             <a:outputPanel>
                 <ui:include src="/layout/house/SectionEdit.xhtml">
-                    <ui:param name="section" value="#{sectionHome.instance}"/>
                     <ui:param name="tip" value="true"/>
                 </ui:include>
             </a:outputPanel>

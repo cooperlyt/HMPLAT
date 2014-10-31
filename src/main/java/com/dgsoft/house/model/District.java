@@ -131,4 +131,32 @@ public class District implements java.io.Serializable,TreeNode,NamedEntity {
         return Iterators.asEnumeration(getSections().iterator());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this == obj){
+            return true;
+        }
+        if (!(obj instanceof District)) {
+            return false;
+        }
+        if (this.getId() == null){
+            return this == obj;
+        }
+        return getId().equals(((District) obj).getId());
+
+
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.getId() == null){
+            return super.hashCode();
+        }else{
+            return getId().hashCode();
+        }
+    }
+
 }

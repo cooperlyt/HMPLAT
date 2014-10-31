@@ -23,6 +23,7 @@ public class Section implements java.io.Serializable,TreeNode,SectionInfo {
 
 	private String id;
 	private Integer version;
+    private String pyCode;
 	private District district;
 	private String name;
 	private String address;
@@ -146,6 +147,16 @@ public class Section implements java.io.Serializable,TreeNode,SectionInfo {
 
     public void setPoolBuilds(Set<PoolBuild> poolBuilds) {
         this.poolBuilds = poolBuilds;
+    }
+
+    @Column(name = "PYCODE",nullable = true,length = 50)
+    @Size(max = 50)
+    public String getPyCode() {
+        return pyCode;
+    }
+
+    public void setPyCode(String pyCode) {
+        this.pyCode = pyCode;
     }
 
     @Transient

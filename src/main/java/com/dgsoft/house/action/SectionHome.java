@@ -1,5 +1,6 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.common.PinyinTools;
 import com.dgsoft.common.SetLinkList;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Project;
@@ -12,6 +13,7 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
+import javax.persistence.NoResultException;
 import java.util.Date;
 
 /**
@@ -21,13 +23,30 @@ import java.util.Date;
  * Time: 下午3:24
  */
 @Name("sectionHome")
-public class SectionHome extends HouseEntityHome<Section>{
+public class SectionHome extends HouseEntityHome<Section> {
 
     @In(required = false)
     private ProjectHome projectHome;
 
     @In
     private FacesMessages facesMessages;
+
+//    public void setUniqueName(String name) {
+//        try {
+//            setId(getEntityManager().createQuery("select section.id from Section section where section.name = :sectionName", String.class).
+//                    setParameter("sectionName", name).getSingleResult());
+//        } catch (NoResultException e) {
+//            clearInstance();
+//        }
+//    }
+//
+//    public String getUniqueName() {
+//        if (isIdDefined()) {
+//            return getInstance().getName();
+//        } else {
+//            return null;
+//        }
+//    }
 
     @DataModel(value = "projects")
     private SetLinkList<Project> projects;
@@ -36,18 +55,33 @@ public class SectionHome extends HouseEntityHome<Section>{
     private Project project;
 
     @Override
-    protected Section createInstance(){
-       return new Section(new Date());
+    protected Section createInstance() {
+        return new Section(new Date());
     }
 
     @Override
-    protected void initInstance(){
+    protected void initInstance() {
         super.initInstance();
         projects = new SetLinkList<Project>(getInstance().getProjects());
     }
 
+    public void nameInputedListener() {
+        setPyCode(PinyinTools.getPinyinCode(getInstance().getName()));
+    }
 
-    public void addNewProject(){
+    public void setPyCode(String pyCode) {
+        if (pyCode == null) {
+            getInstance().setPyCode(null);
+        } else {
+            getInstance().setPyCode(pyCode.toUpperCase());
+        }
+    }
+
+    public String getPyCode() {
+        return getInstance().getPyCode();
+    }
+
+    public void addNewProject() {
         Project project = projectHome.getReadyInstance();
         project.setSection(getInstance());
         projects.add(project);
@@ -55,16 +89,16 @@ public class SectionHome extends HouseEntityHome<Section>{
         Logging.getLog(getClass()).debug("project added");
     }
 
-    public void removeNewProject(){
+    public void removeNewProject() {
         projects.remove(project);
     }
 
     @Override
     protected boolean verifyRemoveAvailable() {
-        if (getInstance().getSmsubcompanies().isEmpty() && getInstance().getOwnerGroups().isEmpty() && getInstance().getProjects().isEmpty()){
+        if (getInstance().getSmsubcompanies().isEmpty() && getInstance().getOwnerGroups().isEmpty() && getInstance().getProjects().isEmpty()) {
             return true;
         }
-        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"SectionCantRemove");
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "SectionCantRemove");
         return false;
 
     }
