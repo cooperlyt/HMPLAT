@@ -220,5 +220,21 @@
     <subscribe name="PersionPreBuyEntrustView" page="/business/houseOwner/subscribe/PersionPreBuyEntrustView.xhtml" component="" cagegory="" type="VIEW">
         预购代理人查看
     </subscribe>
+    <subscribe name="PersionBuyEntrustView" page="/business/houseOwner/subscribe/PersionBuyEntrustView.xhtml" component="" cagegory="" type="VIEW">
+        买方代理人查看
+    </subscribe>
+
+    <subscribe name="PersionOwnerEntrustView" page="/business/houseOwner/subscribe/PersionOwnerEntrustView.xhtml" component="" cagegory="" type="VIEW">
+        产权代理人查看
+    </subscribe>
+
+    <subscribe name="PersionPreSaleEntrustView" page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml" component="" cagegory="" type="VIEW">
+        预售代理人查看
+    </subscribe>
+    <subscribe name="PersionSellEntrustView" page="/business/houseOwner/subscribe/PersionSellEntrustView.xhtml" component="" cagegory="" type="VIEW">
+        卖方代理人查看
+    </subscribe>
+
+
 
 </subscribes>
