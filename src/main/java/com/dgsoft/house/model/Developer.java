@@ -1,7 +1,6 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.NamedEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.international.StatusMessage;
 
@@ -20,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "DEVELOPER", catalog = "HOUSE_INFO")
 @UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
-public class Developer implements java.io.Serializable, NamedEntity {
+public class Developer implements java.io.Serializable {
 
     private String id;
     private int version;

@@ -8,10 +8,30 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/simpleDataCURD.xhtml">
 
-    <ui:param name="dataList" value="#{allDistrict.resultList}"/>
     <ui:param name="dataHome" value="#{districtHome}"/>
-    <ui:param name="dataListHeaderTitle" value="#{messages.District}"/>
     <ui:param name="detailsRender" value="idField"/>
+
+    <ui:define name="navigation">
+        <r:dataTable value="#{allDistrict.resultList}" var="_dataItem"
+                     noDataLabel="#{messages.emptyResult}" style="width: 200px">
+            <ui:insert name="listColumns">
+
+                <r:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{messages.District}"/>
+                    </f:facet>
+                    <a:commandLink value="#{_dataItem.name}" immediate="true"
+                                   execute="@this" image="/img/edit.png"
+                                   render="idField,details">
+                        <a:param value="#{_dataItem.id}" assignTo="#{districtHome.id}"/>
+                        <s:conversationPropagation type="end"/>
+                    </a:commandLink>
+
+                </r:column>
+            </ui:insert>
+        </r:dataTable>
+
+    </ui:define>
 
     <ui:define name="editFields">
 
