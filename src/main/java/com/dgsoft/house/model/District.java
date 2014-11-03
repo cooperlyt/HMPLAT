@@ -1,10 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.NamedEntity;
 import com.dgsoft.common.utils.persistence.UniqueVerify;
 import com.google.common.collect.Iterators;
-import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.international.StatusMessage;
 
 import java.util.*;
@@ -19,7 +17,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "DISTRICT", catalog = "HOUSE_INFO")
 @UniqueVerify(name = "name", severity = StatusMessage.Severity.ERROR, field = {"name"})
-public class District implements java.io.Serializable,TreeNode,NamedEntity {
+public class District implements java.io.Serializable,TreeNode {
 
 	private String id;
 	private Integer version;
