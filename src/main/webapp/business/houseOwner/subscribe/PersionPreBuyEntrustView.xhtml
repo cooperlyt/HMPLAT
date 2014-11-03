@@ -13,4 +13,11 @@
        </ui:include>
     </a:outputPanel>
 
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getBusinessPersionByType('PRE_BUY_ENTRUST')}">
+        <ui:include src="/layout/emptyViewGrid.xhtml">
+            <ui:param name="title" value="#{messages.PersionPreBuyEntrust}" />
+            <ui:param name="noDataLabel" value="#{messages.PersionPreBuyEntrust_not}"/>
+        </ui:include>
+    </a:outputPanel>
+
 </ui:composition>
