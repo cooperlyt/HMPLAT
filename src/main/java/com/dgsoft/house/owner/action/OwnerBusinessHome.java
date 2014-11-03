@@ -57,15 +57,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         }
         return null;
     }
-    public BusinessPersion getBusinessPersionType(String typeName){
+    public BusinessPersion getBusinessPersionByType(String typeName){
         for (BusinessPersion businessPersion:getInstance().getBusinessPersions()){
-            if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class, typeName))){
-               return businessPersion;
+            if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class,typeName))){
+                return businessPersion;
             }
         }
         return null;
     }
-
     public CloseHouse getCloseHouse(){
         if(!getInstance().getCloseHouses().isEmpty()){
             return getInstance().getCloseHouses().iterator().next();

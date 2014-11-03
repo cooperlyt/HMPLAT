@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <h:panelGrid columns="4"  styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+        <h:outputText value="#{nameLabel}"/>
+        <h:outputText value="#{businessPersion.personName}"/>
+
+        <h:outputText value="#{messages.Tel}"/>
+        <h:outputText value="#{businessPersion.phone}"/>
+
+        <h:outputText value="#{messages.person_field_credentialsType}"/>
+        <h:outputText value="#{messages[businessPersion.credentialsType.name()]}"/>
+
+        <h:outputText value="#{messages.person_field_credentialsNO}"/>
+        <h:outputText value="#{businessPersion.credentialsNumber}"/>
+    </h:panelGrid>
+
+
+
+</ui:composition>
