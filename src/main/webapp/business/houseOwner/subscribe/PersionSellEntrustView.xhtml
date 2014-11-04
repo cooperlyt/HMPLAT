@@ -6,17 +6,17 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getBusinessPersionByType('PRE_BUY_ENTRUST')}">
-       <ui:include src="BussinePersionView.xhtml">
-          <ui:param name="nameLabel" value="#{messages.PersionPreBuyEntrust}"/>
-          <ui:param name="businessPersion" value="#{ownerBusinessHome.getBusinessPersionByType('PRE_BUY_ENTRUST')}"/>
-       </ui:include>
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.getBusinessPersionByType('SELL_ENTRUST')}">
+        <ui:include src="BussinePersionView.xhtml">
+            <ui:param name="nameLabel" value="#{messages.PersionSellEntrust}"/>
+            <ui:param name="businessPersion" value="#{ownerBusinessHome.getBusinessPersionByType('SELL_ENTRUST')}"/>
+        </ui:include>
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.getBusinessPersionByType('PRE_BUY_ENTRUST')}">
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getBusinessPersionByType('SELL_ENTRUST')}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
-            <ui:param name="title" value="#{messages.PersionPreBuyEntrust}" />
-            <ui:param name="noDataLabel" value="#{messages.PersionPreBuyEntrust_not}"/>
+            <ui:param name="title" value="#{messages.PersionSellEntrust}" />
+            <ui:param name="noDataLabel" value="#{messages.PersionSellEntrust_not}"/>
         </ui:include>
     </a:outputPanel>
 
