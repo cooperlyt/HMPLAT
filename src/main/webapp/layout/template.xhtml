@@ -88,7 +88,6 @@
         <h:panelGroup layout="block" styleClass="headerLogo">
             <h:graphicImage value="/img/logo.png" alt="#{messages.mainTitle}"/>
         </h:panelGroup>
-        <h:panelGrid columns="1" styleClass="headerRight" columnClasses="layoutCol">
             <ui:insert name="topBar">
                 <h:panelGroup layout="block" styleClass="top_bar">
                     <div class="func">
@@ -131,10 +130,7 @@
                 </h:panelGroup>
             </ui:insert>
 
-            <s:div id="header">
-                <ui:include src="/layout/skin-chooser.xhtml"/>
-            </s:div>
-        </h:panelGrid>
+
     </h:panelGroup>
 
 </h:panelGroup>

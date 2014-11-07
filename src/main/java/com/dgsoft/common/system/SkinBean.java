@@ -29,7 +29,7 @@ public class SkinBean {
 
     public String getSkin() {
         if (skin == null){
-            skin = "customBlueSky";
+            skin = "blueSky";
         }
         return skin;
     }
@@ -40,7 +40,7 @@ public class SkinBean {
     @Create
     public void initialize(){
         skins = new ArrayList<String>();
-        skins.add("customBlueSky");
+        skins.add("blueSky");
         skins.add("customClassic");
         skins.add("customDeepMarine");
         skins.add("customEmeraldTown");
