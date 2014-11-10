@@ -31,6 +31,7 @@ public class BuildGridMapShow {
 
     private List<Project> projects;
 
+
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
 

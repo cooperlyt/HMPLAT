@@ -157,5 +157,5 @@ public interface HouseInfo extends BuildInfo {
 
     public String getDisplayHouseCode();
 
-    public LockStatus getLockStatus();
+    //public LockStatus getLockStatus();
 }

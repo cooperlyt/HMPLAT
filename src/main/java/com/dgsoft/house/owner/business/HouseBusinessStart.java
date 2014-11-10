@@ -22,7 +22,9 @@ import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by cooper on 8/28/14.
@@ -50,7 +52,7 @@ public class HouseBusinessStart {
         }
 
         if (houseLinkHome.isRecord()) {
-            return ((HouseRecord) houseLinkHome.getInstance()).getBusinessHouse();
+            return (BusinessHouse) houseLinkHome.getInstance();
         } else {
             House house = (House) houseLinkHome.getInstance();
             BusinessHouse result = new BusinessHouse(house);

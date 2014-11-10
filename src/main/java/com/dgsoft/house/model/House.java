@@ -384,7 +384,6 @@ public class House implements java.io.Serializable, HouseInfo {
         this.useType = useType;
     }
 
-    @Override
     @Enumerated(EnumType.STRING)
     @Column(name="LOCK_STATUS",nullable = false,length = 20)
     @NotNull
