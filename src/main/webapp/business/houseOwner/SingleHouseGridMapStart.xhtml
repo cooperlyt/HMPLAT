@@ -1,93 +1,389 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-width-template.xhtml">
 
-    <ui:param name="functionTitle" value="#{buildHome.instance.buildName}"/>
-
-
-    <ui:define name="body">
-
-        <h:form>
-
-            <h:selectOneMenu value="#{buildGridMapShow.district}">
-                <s:selectItems value="#{allDistrict.resultList}" var="_district"
-                               itemValue="#{_district}" label="#{_district.name}"
-                               noSelectionLabel="#{messages.noSelectLabel}"/>
-                <f:converter converterId="houseEntityConverter"/>
-                <a:ajax event="valueChange" render="sectionSelectInputs">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
-            </h:selectOneMenu>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+      xmlns:s="http://jboss.org/schema/seam/taglib">
+<f:view
+        contentType="text/html">
 
 
-            <a:outputPanel id="sectionSelectInputs" >
-                <a:outputPanel rendered="#{not empty buildGridMapShow.district}">
-                    <s:decorate template="/layout/edit.xhtml">
-
-                        <a:jsFunction name="blurFunction" execute="sectionNameInput" render="projectSelectInputs"/>
-
-                        <r:autocomplete id="sectionNameInput" mode="cachedAjax" minChars="1" value="#{buildGridMapShow.sectionName}"
-                                        autocompleteMethod="#{pinyiList.sectionAutoComplete}"
-                                        autofill="true" selectFirst="true" onblur="blurFunction()" oncomplete="blurFunction()"/>
-                    </s:decorate>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+        <title>#{messages.mainTitle}</title>
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
 
 
-                    <a:outputPanel id="projectSelectInputs">
-                        <a:outputPanel rendered="#{not empty buildGridMapShow.sectionName}">
+        <script type="text/javascript">
+            var flag = false ;
+            var objSplitter = false;
 
-                            <s:decorate template="/layout/edit.xhtml">
-                                <h:selectOneMenu value="#{buildGridMapShow.project}">
-                                    <s:selectItems value="#{buildGridMapShow.projectList}"
-                                                   var="_project" itemValue="#{_project}"
-                                                   label="#{_project.name}"
-                                                   noSelectionLabel="#{messages.noSelectLabel}"/>
-                                    <f:converter converterId="houseEntityConverter"/>
-                                    <a:ajax event="valueChange" render="buildSelectInput">
-                                        <a:attachQueue requestDelay="0"/>
-                                    </a:ajax>
-                                </h:selectOneMenu>
-                            </s:decorate>
+            function down(event, obj){
+                if(!flag){
+                    if(obj.setCapture)
+                        obj.setCapture();
+                    else {
+                        document.addEventListener('mouseup', up, true);
+                        document.addEventListener('mousemove', move, true);
+                        event.preventDefault();
+                    }
 
+                    flag = true ;
+                    objobjSplitter = obj;
+                }
+            }
 
-                            <a:outputPanel id="buildSelectInput">
-                                <s:decorate rendered="#{not empty buildGridMapShow.project}"
-                                            template="/layout/edit.xhtml">
+            function up(event){
+                if(flag){
+                    if(objSplitter.releaseCapture)
+                        objSplitter.releaseCapture();
+                    else {
+                        document.removeEventListener('mouseup', up, true);
+                        document.removeEventListener('mousemove', move, true);
+                        event.preventDefault();
+                    }
 
-                                    <h:selectOneMenu value="#{buildHome.id}">
-                                        <s:selectItems value="#{buildGridMapShow.project.buildList}"
-                                                       var="_build" itemValue="#{_build.id}"
-                                                       label="#{_build.name}"
-                                                       noSelectionLabel="#{messages.noSelectLabel}"/>
-                                        <a:ajax event="valueChange" render="gridMap">
-                                            <a:attachQueue requestDelay="0"/>
-                                        </a:ajax>
-                                    </h:selectOneMenu>
-                                </s:decorate>
-                            </a:outputPanel>
-
-                        </a:outputPanel>
+                    flag = false ;
+                }
+            }
 
 
-                    </a:outputPanel>
 
-                </a:outputPanel>
+            function move(event){
+                if(flag){
+                    var obj2 = document.getElementById("selectPanel") ;
+                    var obj1 = document.getElementById("contextPanel") ;
+                    obj2.style.width = (document.documentElement.clientWidth - event.clientX) + "px" ;
+                    obj1.style.right = obj2.style.width;
+                    if(!objSplitter.releaseCapture) {
+                        event.preventDefault();
+                    }
+                }
+            }
+        </script>
 
-            </a:outputPanel>
+
+        <h:outputStylesheet name="application.css"/>
+        <h:outputStylesheet name="theme.css"/>
+        <h:outputStylesheet>
+            .fullBody{
+                height: 100%;
+                max-height: 100%;
+                overflow: hidden;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 14px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-width: 0;
+                border-style: solid;
+                border-radius: 6px;
+                background: #d9d9d9;
+            }
+
+            ::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece {
+                background: -webkit-gradient(linear, left top, right top, from(#f6f6f6), color-stop(50%, #fff), color-stop(75%, #fff), to(#fdfdfd));
+                width: 11px;
+                height: 11px;
+            }
+
+            ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece {
+                background: -webkit-gradient(linear, left top, right top, from(#f6f6f6), color-stop(50%, #fff), color-stop(75%, #fff), to(#fdfdfd));
+                width: 11px;
+                height: 11px;
+            }
 
 
-            <a:outputPanel id="gridMap">
-                <a:outputPanel rendered="#{buildHome.idDefined}">
+            .default-main {
+                position: absolute;
+                top: 114px;
+                bottom: 0px;
+                width: 100%;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
 
-                </a:outputPanel>
-            </a:outputPanel>
-        </h:form>
-    </ui:define>
+            .main-wrapper{
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+
+            .column1 {
+                background: url("#{facesContext.externalContext.requestContextPath}/img/fullRightBlackround.png") repeat-y 0 0;
+                width: 171px;
+                border-right: 1px solid #c1c1c1;
+                left: 0;
+            }
+
+        .column3 {
+            min-width: 100px;
+            max-width: 500px;
+            right: 0px;
+            background: url("#{facesContext.externalContext.requestContextPath}/img/rightSplit.png") repeat-y;
+            width: 250px;
+            border-left: 1px solid #c1c1c1;
+        }
+
+            .mb-layout-bd {
+                position: absolute;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+
+        .leftbar-outer {
+            overflow-y: auto;
+            overflow-x: visible;
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            top: 0px;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .leftbar-control {
+            width: 171px;
+            font-size: 12px;
+            color: #333333;
+            padding: 0;
+            bottom: 0px;
+            position: absolute;
+            border-top: 1px solid #eaeaeb;
+            margin: 0;
+            display: block;
+        }
+
+        .leftbar {
+            margin-top: 10px;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .album-wrapper {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            background: #fff;
+            margin-left: 3px;
+            text-align: center;
+
+        }
+
+        .album-wrapper .album {
+            text-align: center;
+            margin: 20px 0 11px;
+            color: #333;
+            padding-right: 6px;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .column3 .split {
+            margin-bottom: 15px;
+        }
+
+        .ui-resizable {
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            cursor: w-resize;
+            z-index: 10;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        .column2 {
+            left: 172px;
+            right: 250px;
+        }
+
+        </h:outputStylesheet>
 
 
-</ui:composition>
+    </h:head>
+    <h:body styleClass="fullBody">
+        <a:status id="processWaiting" name="processWaiting"
+                  onstart="#{r:component('wait')}.show()"
+                  onstop="#{r:component('wait')}.hide()"/>
+        <r:popupPanel id="wait" modal="true" autosized="true"
+                      moveable="false" resizeable="false">
+            <h:panelGrid columns="3">
+                <h:graphicImage value="/img/smalBlueWait.gif"/>
+                &#160;
+                <h:outputText value="#{messages.wait_please}..."/>
+            </h:panelGrid>
+        </r:popupPanel>
+
+
+        <h:panelGroup styleClass="header" layout="block">
+
+
+            <h:panelGroup layout="block" styleClass="fullHeaderCenter">
+                <h:panelGroup layout="block" styleClass="headerLogo">
+                    <h:graphicImage value="/img/logo.png" alt="#{messages.mainTitle}"/>
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+        <div class="default-main">
+            <div class="main-wrapper">
+                <div class="mb-layout-bd column1">
+                    <div class="leftbat-bottom-bg">
+                        <div class="leftbar-outer">
+                            <div class="leftbar">
+
+
+                                <h:form>
+                                    <s:decorate template="/layout/edit.xhtml">
+                                        <h:selectOneMenu value="#{houseStepSelect.district}">
+                                            <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                                           itemValue="#{_district}" label="#{_district.name}"
+                                                           noSelectionLabel="#{messages.noSelectLabel}"/>
+                                            <f:converter converterId="houseEntityConverter"/>
+                                            <a:ajax event="valueChange" render="sectionSelectInputs">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:selectOneMenu>
+                                    </s:decorate>
+
+                                    <a:outputPanel id="sectionSelectInputs">
+                                        <a:outputPanel rendered="#{not empty houseStepSelect.district}">
+
+                                            <s:decorate template="/layout/edit.xhtml">
+
+                                                <r:select mode="cachedAjax" minChars="1" value="#{houseStepSelect.section}"
+                                                          autocompleteMethod="#{houseStepSelect.sectionAutoComplete}" selectFirst="true"
+                                                          var="_section" itemValue="${_section}" itemLabel="#{_section.name}">
+                                                    <f:converter converterId="houseEntityConverter"/>
+                                                    <a:ajax event="selectitem" execute="@this" render="@this,projectSelectInputs"/>
+                                                </r:select>
+                                            </s:decorate>
+
+
+                                            <a:outputPanel id="projectSelectInputs">
+
+                                                <a:outputPanel rendered="#{not empty houseStepSelect.section}">
+
+
+                                                    <s:decorate template="/layout/edit.xhtml">
+                                                        <h:selectOneMenu value="#{houseStepSelect.project}">
+                                                            <s:selectItems value="#{houseStepSelect.section.projectList}"
+                                                                           var="_project" itemValue="#{_project}"
+                                                                           label="#{_project.name}"
+                                                                           noSelectionLabel="#{messages.noSelectLabel}"/>
+                                                            <f:converter converterId="houseEntityConverter"/>
+                                                            <a:ajax event="valueChange" render="buildSelectInput">
+                                                                <a:attachQueue requestDelay="0"/>
+                                                            </a:ajax>
+                                                        </h:selectOneMenu>
+                                                    </s:decorate>
+
+
+                                                    <a:outputPanel id="buildSelectInput">
+                                                        <s:decorate rendered="#{not empty houseStepSelect.project}"
+                                                                    template="/layout/edit.xhtml">
+
+                                                            <h:selectOneMenu value="#{buildHome.id}">
+                                                                <s:selectItems value="#{houseStepSelect.project.buildList}"
+                                                                               var="_build" itemValue="#{_build.id}"
+                                                                               label="#{_build.name}"
+                                                                               noSelectionLabel="#{messages.noSelectLabel}"/>
+                                                                <a:ajax event="valueChange" render="gridMap">
+                                                                    <a:attachQueue requestDelay="0"/>
+                                                                </a:ajax>
+                                                            </h:selectOneMenu>
+                                                        </s:decorate>
+                                                    </a:outputPanel>
+
+                                                </a:outputPanel>
+
+
+                                            </a:outputPanel>
+
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
+
+                                    <a:outputPanel id="gridMap">
+                                        <a:outputPanel rendered="#{buildHome.idDefined}">
+
+                                        </a:outputPanel>
+                                    </a:outputPanel>
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                        <div class="leftbar-control">
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mb-layout-bd column3" id="selectPanel">
+                    <div class="album-wrapper">
+                        <div class="album">
+
+                        </div>
+                        <div class="split">
+
+                        </div>
+                    </div>
+
+                    <div class="ui-resizable" id="lrcResize" onmousedown="down(event,this)"
+                            onmouseup="up(event)" onmousemove="move(event);">
+
+                    </div>
+
+                </div>
+
+                <div class="mb-layout-bd column2" id="contextPanel" onselectstart="return false;">
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+    </h:body>
+
+
+</f:view>
+
+
+</html>
+
+

@@ -2,10 +2,14 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.house.HouseSimpleEntityHome;
 import com.dgsoft.house.model.District;
+import com.dgsoft.house.model.Section;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
