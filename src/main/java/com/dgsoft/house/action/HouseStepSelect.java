@@ -29,6 +29,16 @@ public class HouseStepSelect {
 
     private Project project;
 
+    private String houseDisplayCode;
+
+    private String mapCode;
+
+    private String blockCode;
+
+    private String buildCode;
+
+    private String houseOrder;
+
 
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
@@ -78,5 +88,45 @@ public class HouseStepSelect {
         }
 
         this.section = section;
+    }
+
+    public String getHouseDisplayCode() {
+        return houseDisplayCode;
+    }
+
+    public void setHouseDisplayCode(String houseDisplayCode) {
+        this.houseDisplayCode = houseDisplayCode;
+    }
+
+    public String getMapCode() {
+        return mapCode;
+    }
+
+    public void setMapCode(String mapCode) {
+        this.mapCode = mapCode;
+    }
+
+    public String getBlockCode() {
+        return blockCode;
+    }
+
+    public void setBlockCode(String blockCode) {
+        this.blockCode = blockCode;
+    }
+
+    public String getBuildCode() {
+        return buildCode;
+    }
+
+    public void setBuildCode(String buildCode) {
+        this.buildCode = buildCode;
+    }
+
+    public String getHouseOrder() {
+        return houseOrder;
+    }
+
+    public void setHouseOrder(String houseOrder) {
+        this.houseOrder = houseOrder;
     }
 }

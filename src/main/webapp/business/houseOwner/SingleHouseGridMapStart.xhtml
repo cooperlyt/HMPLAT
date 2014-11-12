@@ -176,10 +176,10 @@
         }
 
         .leftbar {
-            margin-top: 10px;
-            margin: 0;
+            margin-top:0px;
             padding: 0;
             display: block;
+            overflow-x: visible;
         }
 
         .album-wrapper {
@@ -206,6 +206,11 @@
             margin-bottom: 15px;
         }
 
+        .control-top{
+            background-image: url("#{facesContext.externalContext.requestContextPath}/img/titleBar.png");
+            background-repeat: repeat-x;
+        }
+
         .ui-resizable {
             height: 100%;
             position: absolute;
@@ -218,9 +223,230 @@
             padding: 0;
             display: block;
         }
+
+
+        .resizable-icon {
+            height: 38px;
+            width: 9px;
+            background: url("#{facesContext.externalContext.requestContextPath}/img/tools.png") -195px -461px no-repeat;
+            top: 50%;
+            margin: -19px 0 0 0;
+            left: -1px;
+            position: absolute;
+            z-index: 10;
+            padding: 0;
+        }
+
         .column2 {
             left: 172px;
             right: 250px;
+        }
+
+        .rf-select-width-column1{
+            margin: 4px 0 4px 0;
+        }
+
+       .rf-select-width-column1 input[type="text"]{
+           width: 107px;
+       }
+
+            .colum1-sub-input{
+                margin: 4px 0 4px 0;
+                width: 100%;
+            }
+
+        .list-all {
+            margin: 5px 0px;
+            padding-top: 10px;
+            padding-left: 7px;
+            height: auto;
+            border-top: 1px solid #f2f3f6;
+            line-height: 25px;
+            position: relative;
+        }
+
+        .list-title {
+            padding-left: 8px;
+            color: #999;
+            font-weight: bold;
+        }
+
+
+        .ui-watermark-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            _display: inline;
+            _zoom: 1;
+            width: 140px;
+        }
+
+
+        .colum1-banner{
+            overflow-y: visible;
+            background-image: url("#{facesContext.externalContext.requestContextPath}/img/titleBar.png");
+            background-repeat: repeat-x;
+            margin: 0;
+            padding: 0;
+            display: block;
+            height: 45px;
+            background-position: 0 0;
+
+            width: 100%;
+        }
+
+        .searchBar{
+            position: absolute;
+            top:10px;
+            margin: 0 10px 4px 10px;
+            z-index: 99;
+            width: 149px;
+            height: 25px;
+            line-height: 24px;
+            white-space: nowrap;
+            background: url("#{facesContext.externalContext.requestContextPath}/img/tools.png") no-repeat;
+            background-position: 0px -456px;
+
+            padding: 0;
+            display: block;
+        }
+
+
+
+            .singleSearchSubmit{
+                background: white;
+                opacity: 0;
+                filter: alpha(opacity=0);
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                display: block;
+                width: 25px;
+                height: 25px;
+                margin: 0;
+                padding: 0;
+                border: 0 none;
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: pointer;
+                align-items: flex-start;
+                text-align: center;
+                color: buttontext;
+                box-sizing: border-box;
+                -webkit-appearance: push-button;
+                -webkit-user-select: none;
+                white-space: pre;
+                -webkit-rtl-ordering: logical;
+                letter-spacing: normal;
+                word-spacing: normal;
+                text-transform: none;
+                text-indent: 0px;
+                text-shadow: none;
+                -webkit-writing-mode: horizontal-tb;
+
+            }
+
+
+            .ui-watermark-container input[type="text"] {
+                width: 105px;
+                margin:0 0 0 10px;
+                border: none;
+                color: #333;
+                padding: 3px 0;
+                height: 18px;
+                line-height: 18px;
+                box-sizing: content-box;
+                overflow: hidden;
+                outline: none;
+                background-color: transparent;
+                -webkit-appearance: textfield;
+                -webkit-rtl-ordering: logical;
+                -webkit-user-select: text;
+                cursor: auto;
+                letter-spacing: normal;
+                word-spacing: normal;
+                text-transform: none;
+                text-indent: 0px;
+                text-shadow: none;
+                display: inline-block;
+                text-align: start;
+                -webkit-writing-mode: horizontal-tb;
+                white-space: nowrap;
+            }
+
+        .list-houseUnitCodeCondition{
+            height: 25px;
+            line-height: 25px;
+            position: relative;
+            padding: 1px 0;
+            display: block;
+        }
+
+       .inputButton{
+           display: inline-block;
+           width: 114px;
+           background-color: #fff;
+           border: 1px solid #BED6F8;
+           vertical-align: top;
+       }
+
+        .inputButon-button{
+            line-height: 27px;
+            float: right;
+            vertical-align: top;
+            font-size: 16px;
+            padding: 0 2px;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            white-space: nowrap;
+            unicode-bidi: -webkit-isolate;
+            direction: ltr;
+            display: block;
+        }
+
+        .inputButon-button a{
+            cursor: pointer;
+            padding: 0 4px;
+            display: inline-block;
+            text-decoration: none;
+            line-height: 27px;
+            font-size: 16px;
+            padding: 0 2px;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            white-space: nowrap;
+            overflow: visible;
+        }
+
+        .inputButon-button a:hover{
+
+        }
+
+
+        .inputButton input[type="text"]{
+            width: 89px;
+            margin:0 0 0 0px;
+            border: none;
+            padding: 0 0px;
+
+            box-sizing: content-box;
+            overflow: hidden;
+            outline: none;
+            background-color: transparent;
+            -webkit-appearance: textfield;
+            -webkit-rtl-ordering: logical;
+            -webkit-user-select: text;
+            cursor: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            -webkit-writing-mode: horizontal-tb;
+            white-space: nowrap;
         }
 
         </h:outputStylesheet>
@@ -258,33 +484,45 @@
                     <div class="leftbat-bottom-bg">
                         <div class="leftbar-outer">
                             <div class="leftbar">
+                                <div class="colum1-banner">
 
-
+                                <div class="searchBar">
                                 <h:form>
-                                    <s:decorate template="/layout/edit.xhtml">
-                                        <h:selectOneMenu value="#{houseStepSelect.district}">
+
+                                    <span class="ui-watermark-container">
+                                        <h:inputText id="houseDisplayInput" value="#{houseStepSelect.houseDisplayCode}">
+                                            <r:placeholder value="#{messages.HouseDisplayCode}"/>
+                                        </h:inputText>
+                                        <a:commandButton styleClass="singleSearchSubmit" onclick="alert('ok')"/>
+                                    </span>
+
+                                </h:form>
+                                </div>
+                                </div>
+                                <div style="min-height: 105px;margin-top: 10px;">
+                                <h:form>
+                                        <h:selectOneMenu value="#{houseStepSelect.district}"
+                                            style="width: 151px; background: #e7e7e7;margin: 0 10px 4px 10px;height: 25px;line-height: 25px;padding: 1px 0;">
                                             <s:selectItems value="#{allDistrict.resultList}" var="_district"
                                                            itemValue="#{_district}" label="#{_district.name}"
-                                                           noSelectionLabel="#{messages.noSelectLabel}"/>
+                                                           noSelectionLabel="#{messages.DistrictSelect}"/>
                                             <f:converter converterId="houseEntityConverter"/>
-                                            <a:ajax event="valueChange" render="sectionSelectInputs">
+                                            <a:ajax event="valueChange" execute="@this" onbeforesubmit="alert(#{r:element('sectionSelect')}); " render="sectionSelectInputs">
                                                 <a:attachQueue requestDelay="0"/>
                                             </a:ajax>
                                         </h:selectOneMenu>
-                                    </s:decorate>
 
-                                    <a:outputPanel id="sectionSelectInputs">
-                                        <a:outputPanel rendered="#{not empty houseStepSelect.district}">
+                                    <a:outputPanel id="sectionSelectInputs" layout="block" style="margin: 0 10px;padding-left: 26px;">
+                                        <a:outputPanel rendered="#{not empty houseStepSelect.district}" >
 
-                                            <s:decorate template="/layout/edit.xhtml">
 
-                                                <r:select mode="cachedAjax" minChars="1" value="#{houseStepSelect.section}"
+                                                <r:select id="sectionSelect" mode="cachedAjax" minChars="1" value="#{houseStepSelect.section}"
+                                                          styleClass="rf-select-width-column1" defaultLabel="#{messages.SectionPySelect}"
                                                           autocompleteMethod="#{houseStepSelect.sectionAutoComplete}" selectFirst="true"
                                                           var="_section" itemValue="${_section}" itemLabel="#{_section.name}">
                                                     <f:converter converterId="houseEntityConverter"/>
-                                                    <a:ajax event="selectitem" execute="@this" render="@this,projectSelectInputs"/>
+                                                    <a:ajax event="selectitem" execute="@this" onbeforesubmit="" render="@this,projectSelectInputs"/>
                                                 </r:select>
-                                            </s:decorate>
 
 
                                             <a:outputPanel id="projectSelectInputs">
@@ -292,34 +530,29 @@
                                                 <a:outputPanel rendered="#{not empty houseStepSelect.section}">
 
 
-                                                    <s:decorate template="/layout/edit.xhtml">
-                                                        <h:selectOneMenu value="#{houseStepSelect.project}">
+                                                        <h:selectOneMenu value="#{houseStepSelect.project}" styleClass="colum1-sub-input">
                                                             <s:selectItems value="#{houseStepSelect.section.projectList}"
                                                                            var="_project" itemValue="#{_project}"
                                                                            label="#{_project.name}"
-                                                                           noSelectionLabel="#{messages.noSelectLabel}"/>
+                                                                           noSelectionLabel="#{messages.ProjectSelect}"/>
                                                             <f:converter converterId="houseEntityConverter"/>
                                                             <a:ajax event="valueChange" render="buildSelectInput">
                                                                 <a:attachQueue requestDelay="0"/>
                                                             </a:ajax>
                                                         </h:selectOneMenu>
-                                                    </s:decorate>
 
 
                                                     <a:outputPanel id="buildSelectInput">
-                                                        <s:decorate rendered="#{not empty houseStepSelect.project}"
-                                                                    template="/layout/edit.xhtml">
 
-                                                            <h:selectOneMenu value="#{buildHome.id}">
+                                                            <h:selectOneMenu rendered="#{not empty houseStepSelect.project}" styleClass="colum1-sub-input" value="#{buildHome.id}">
                                                                 <s:selectItems value="#{houseStepSelect.project.buildList}"
                                                                                var="_build" itemValue="#{_build.id}"
                                                                                label="#{_build.name}"
-                                                                               noSelectionLabel="#{messages.noSelectLabel}"/>
+                                                                               noSelectionLabel="#{messages.BuildSelect}"/>
                                                                 <a:ajax event="valueChange" render="gridMap">
                                                                     <a:attachQueue requestDelay="0"/>
                                                                 </a:ajax>
                                                             </h:selectOneMenu>
-                                                        </s:decorate>
                                                     </a:outputPanel>
 
                                                 </a:outputPanel>
@@ -332,19 +565,60 @@
                                     </a:outputPanel>
 
 
-                                    <a:outputPanel id="gridMap">
-                                        <a:outputPanel rendered="#{buildHome.idDefined}">
 
-                                        </a:outputPanel>
-                                    </a:outputPanel>
                                 </h:form>
+                                </div>
+                                <h:form>
+                                    <div class="list-all">
+                                        <div class="list-title">
+                                             #{messages.COBUORB}
+                                        </div>
 
+                                        <div class="list-houseUnitCodeCondition">
+                                            <h:panelGrid columns="2">
+                                                <h:graphicImage value="/img/icons/map.png" style="margin: 1px 6px 0 8px"/>
+
+                                                <h:inputText id="MapCodeInput" style="width: 114px;margin: 0" >
+                                                    <r:placeholder value="#{messages.Build_MapNO}"/>
+                                                </h:inputText>
+
+                                                <h:graphicImage value="/img/icons/block.png" style="margin: 0px 6px 0 8px"/>
+                                                <h:inputText id="BlockCodeInput" style="width: 114px" >
+                                                    <r:placeholder value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
+                                                </h:inputText>
+
+                                                <h:graphicImage value="/img/icons/build.png" style="margin: 0px 6px 0 8px"/>
+
+                                                <s:div styleClass="inputButton">
+                                                    <h:inputText id="BuildCodeInput">
+                                                        <r:placeholder value="#{messages.Build_BuildNO}"/>
+                                                    </h:inputText>
+
+                                                    <div class="inputButon-button">
+                                                        <a:commandButton image="/img/icons/search.png" style="width: 13px; height: 13px;padding: 1px"/>
+                                                    </div>
+                                                </s:div>
+
+                                            <h:graphicImage value="/img/icons/house.png" style="margin: 0px 6px 0 8px"/>
+                                                <s:div styleClass="inputButton">
+                                                    <h:inputText id="HouseOrderInput">
+                                                        <r:placeholder value="#{messages.House_Order}"/>
+                                                    </h:inputText>
+
+                                                    <div class="inputButon-button">
+                                                        <a:commandButton image="/img/icons/search.png" style="width: 13px; height: 13px;padding: 1px"/>
+                                                    </div>
+                                                </s:div>
+                                            </h:panelGrid>
+                                        </div>
+
+
+                                    </div>
+                                </h:form>
 
                             </div>
                         </div>
-                        <div class="leftbar-control">
 
-                        </div>
                     </div>
 
                 </div>
@@ -361,13 +635,17 @@
 
                     <div class="ui-resizable" id="lrcResize" onmousedown="down(event,this)"
                             onmouseup="up(event)" onmousemove="move(event);">
-
+                            <div class="resizable-icon"/>
                     </div>
 
                 </div>
 
                 <div class="mb-layout-bd column2" id="contextPanel" onselectstart="return false;">
+                    <a:outputPanel id="gridMap">
+                        <a:outputPanel rendered="#{buildHome.idDefined}">
 
+                        </a:outputPanel>
+                    </a:outputPanel>
 
                 </div>
 
