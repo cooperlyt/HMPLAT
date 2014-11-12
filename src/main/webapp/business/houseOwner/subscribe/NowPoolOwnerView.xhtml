@@ -7,11 +7,52 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
     <a:outputPanel
-            rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse) && not (ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType eq 'SINGLE_OWNER')}">
+            rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse) and (not empty ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType)  and not (ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType eq 'SINGLE_OWNER')}">
+        <h:panelGrid columns="8" styleClass="detailsTable"
+                     columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+        <h:outputText value="#{messages.RegisterProperty_HouseProperty}"/>
+        <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseProperty)}"/>
+
+        <h:outputText value="#{messages.RegisterProperty_HouseFrom}"/>
+        <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseFrom)}"/>
+
+        <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
+        <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseProperty)}"/>
+
+        <h:outputText/>
+        <h:outputText/>
+
+        </h:panelGrid>
         <ui:include src="/layout/house/owner/PoolOwnerTable.xhtml">
             <ui:param name="poolOwners"
                       value="#{ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.businessPoolList}"/>
             <ui:param name="title" value="#{messages.NowBusinessPool}"/>
         </ui:include>
     </a:outputPanel>
+
+
+    <a:outputPanel
+            rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse) and ((empty ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType)  or (ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType eq 'SINGLE_OWNER'))}">
+    <h:panelGrid columns="8" styleClass="detailsTable"
+                 columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+        <h:outputText value="#{messages.RegisterProperty_HouseProperty}"/>
+        <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseProperty)}"/>
+
+        <h:outputText value="#{messages.RegisterProperty_HouseFrom}"/>
+        <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseFrom)}"/>
+
+        <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
+        <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseProperty)}"/>
+
+        <h:outputText/>
+        <h:outputText/>
+
+    </h:panelGrid>
+    </a:outputPanel>
+
+
+
+
+
+
 </ui:composition>
