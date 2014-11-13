@@ -5,7 +5,7 @@
         房屋查看
     </subscribe>
 
-    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml" component="" cagegory="房屋信息" type="VIEW">
         原产权人查看
     </subscribe>
 
@@ -13,7 +13,7 @@
         现产权人编辑
     </subscribe>
 
-    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+    <subscribe name="newOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
         现产权人查看
     </subscribe>
 
@@ -47,7 +47,7 @@
         现共有权人编辑
     </subscribe>
 
-    <subscribe name="poolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml" component="" cagegory="业务信息" type="ALONE_VIEW">
+    <subscribe name="poolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml" component="" cagegory="房屋信息" type="ALONE_VIEW">
         原共有权人查看
     </subscribe>
 
