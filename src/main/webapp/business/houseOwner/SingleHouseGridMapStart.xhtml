@@ -135,12 +135,14 @@
             }
 
         .column3 {
+
             min-width: 100px;
             max-width: 500px;
             right: 0px;
             background: url("#{facesContext.externalContext.requestContextPath}/img/rightSplit.png") repeat-y;
             width: 250px;
             border-left: 1px solid #c1c1c1;
+
         }
 
             .mb-layout-bd {
@@ -152,7 +154,7 @@
             }
 
         .leftbar-outer {
-            overflow-y: auto;
+            overflow-y: overlay;
             overflow-x: visible;
             position: absolute;
             bottom: 0px;
@@ -242,13 +244,12 @@
             right: 250px;
         }
 
-        .rf-select-width-column1{
-            margin: 4px 0 4px 0;
+
+        .sectionName-input {
+            width:123px !important;
+
         }
 
-       .rf-select-width-column1 input[type="text"]{
-           width: 107px;
-       }
 
             .colum1-sub-input{
                 margin: 4px 0 4px 0;
@@ -500,38 +501,47 @@
                                 </div>
                                 </div>
                                 <div style="min-height: 105px;margin-top: 10px;">
+
                                 <h:form>
-                                        <h:selectOneMenu value="#{houseStepSelect.district}"
-                                            style="width: 151px; background: #e7e7e7;margin: 0 10px 4px 10px;height: 25px;line-height: 25px;padding: 1px 0;">
-                                            <s:selectItems value="#{allDistrict.resultList}" var="_district"
-                                                           itemValue="#{_district}" label="#{_district.name}"
-                                                           noSelectionLabel="#{messages.DistrictSelect}"/>
-                                            <f:converter converterId="houseEntityConverter"/>
-                                            <a:ajax event="valueChange" execute="@this" onbeforesubmit="alert(#{r:element('sectionSelect')}); " render="sectionSelectInputs">
-                                                <a:attachQueue requestDelay="0"/>
-                                            </a:ajax>
-                                        </h:selectOneMenu>
+
+                                    <h:selectOneMenu value="#{houseStepSelect.district}"
+                                                     style="width: 151px; background: #e7e7e7;margin: 0 10px 4px 10px;height: 25px;line-height: 25px;padding: 1px 0;">
+                                        <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                                       itemValue="#{_district}" label="#{_district.name}"
+                                                       noSelectionLabel="#{messages.DistrictSelect}"/>
+                                        <f:converter converterId="houseEntityConverter"/>
+                                        <a:ajax event="valueChange" execute="@this" render="sectionSelectInputs">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:selectOneMenu>
 
                                     <a:outputPanel id="sectionSelectInputs" layout="block" style="margin: 0 10px;padding-left: 26px;">
-                                        <a:outputPanel rendered="#{not empty houseStepSelect.district}" >
 
+                                        <a:jsFunction name="blurFunction" execute="sectionNameInput" render="projectSelectInputs"/>
 
-                                                <r:select id="sectionSelect" mode="cachedAjax" minChars="1" value="#{houseStepSelect.section}"
-                                                          styleClass="rf-select-width-column1" defaultLabel="#{messages.SectionPySelect}"
-                                                          autocompleteMethod="#{houseStepSelect.sectionAutoComplete}" selectFirst="true"
-                                                          var="_section" itemValue="${_section}" itemLabel="#{_section.name}">
-                                                    <f:converter converterId="houseEntityConverter"/>
-                                                    <a:ajax event="selectitem" execute="@this" onbeforesubmit="" render="@this,projectSelectInputs"/>
-                                                </r:select>
+                                            <span id="sectionNamePlaceHodle">
+                                                <script type="text/javascript">
+                                                    new RichFaces.ui.Placeholder("sectionNamePlaceHodle",{"targetId":"#{r:clientId('sectionNameInput')}Input","text":"#{messages.SectionPySelect}"});
+                                                </script>
+                                            </span>
+
+                                            <div class="colum1-sub-input">
+                                            <r:autocomplete id="sectionNameInput" mode="cachedAjax" minChars="2" value="#{houseStepSelect.sectionName}"
+                                                        inputClass="sectionName-input"
+                                                        autocompleteMethod="#{houseStepSelect.sectionNameAutoComplete}" onselectitem="blurFunction()"
+                                                        autofill="true" selectFirst="true" onblur="blurFunction()">
+                                            </r:autocomplete>
+                                            </div>
+
 
 
                                             <a:outputPanel id="projectSelectInputs">
 
-                                                <a:outputPanel rendered="#{not empty houseStepSelect.section}">
+                                                <a:outputPanel rendered="#{((not empty houseStepSelect.section) or (not empty houseStepSelect.sectionName)) and (not empty houseStepSelect.projects)}">
 
 
                                                         <h:selectOneMenu value="#{houseStepSelect.project}" styleClass="colum1-sub-input">
-                                                            <s:selectItems value="#{houseStepSelect.section.projectList}"
+                                                            <s:selectItems value="#{houseStepSelect.projects}"
                                                                            var="_project" itemValue="#{_project}"
                                                                            label="#{_project.name}"
                                                                            noSelectionLabel="#{messages.ProjectSelect}"/>
@@ -556,15 +566,10 @@
                                                     </a:outputPanel>
 
                                                 </a:outputPanel>
-
-
                                             </a:outputPanel>
 
-                                        </a:outputPanel>
 
                                     </a:outputPanel>
-
-
 
                                 </h:form>
                                 </div>
@@ -641,11 +646,152 @@
                 </div>
 
                 <div class="mb-layout-bd column2" id="contextPanel" onselectstart="return false;">
+                    <r:messages globalOnly="false" ajaxRendered="true"/>
+
+                    <div style="width: 100%; height: 100%; overflow-x: auto; overflow-y: auto; margin: 5px 5px 5px 5px;">
                     <a:outputPanel id="gridMap">
                         <a:outputPanel rendered="#{buildHome.idDefined}">
 
+
+
+
+                            <a:repeat value="#{buildHome.buildGridPages}" var="_buildGridMap">
+
+                                <br/>
+                                <h:panelGrid columns="1">
+                                    <s:div style="text-align: center;">
+                                        <h:outputText value="#{_buildGridMap.name}" style="font-size: 1.5em; font-weight: bold"/>
+                                    </s:div>
+
+                                    <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
+                                        <ui:param name="tdSize" value="50"/>
+                                        <ui:param name="gridMap" value="#{_buildGridMap}"/>
+
+                                        <s:div rendered="#{not empty _house.house}"
+                                               style="width: 100%; height: 100%; padding: 0px; border: 0px;">
+
+                                            <h:outputText value="#{_house.house.houseOrder}"
+                                                          style="font-size: 1em; font-weight: bold; color: #000000;"/>
+
+                                            <br/>
+                                            <a:outputPanel rendered="#{not empty _house.house.houseOwner}">
+                                                <ui:include src="/layout/long-text-display.xhtml">
+                                                    <ui:param name="value" value="#{_house.house.houseOwner.personName}"/>
+                                                    <ui:param name="size" value="6"/>
+                                                    <ui:param name="textStyle" value="font-size: 0.9em;color: #797268;"/>
+                                                </ui:include>
+                                            </a:outputPanel>
+
+                                            <br/>
+                                            <s:div style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
+                                                <h:graphicImage value="/img/icons/#{_house.house.masterStatus}.png"
+                                                                title="#{messages[_house.house.masterStatus.name()]}"/>
+
+                                                <h:graphicImage
+                                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG_CONFIRM'}"
+                                                        value="/img/icons/power.png" title="#{messages.INIT_REG_CONFIRM}"/>
+
+                                                <h:graphicImage
+                                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG'}"
+                                                        value="/img/icons/initReg.png" title="#{messages.INIT_REG}"/>
+
+                                                <h:graphicImage
+                                                        rendered="#{_house.house.lockStatus.lock}"
+                                                        value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+
+
+                                            </s:div>
+
+
+                                        </s:div>
+                                        <ui:define name="house-action">
+
+                                            <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                                             image="/img/icons/info-blue.png"
+                                                             rendered="#{not empty _house.house}"
+                                                             title="#{messages.BuildMapAction_edit}"
+                                                             oncomplete="#{r:component('houseInfoPanel')}.show();"
+                                                             immediate="true" execute="@this" render="houseDetails">
+                                                <a:param value="#{_house.house.id}" assignTo="#{houseHome.id}"/>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandButton>
+
+                                        </ui:define>
+
+                                    </s:decorate>
+                                </h:panelGrid>
+
+                            </a:repeat>
+
+
+
+                            <br/>
+                            <h:panelGrid columns="1">
+                                <s:div style="text-align: center;">
+                                    <h:outputText value="#{messages.OtherHouseGridMap}" style="font-size: 1.5em; font-weight: bold"/>
+                                </s:div>
+
+                                <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
+                                    <ui:param name="tdSize" value="50"/>
+                                    <ui:param name="gridMap" value="#{buildHome.idleHouseGridMap}"/>
+
+                                    <s:div rendered="#{not empty _house.house}"
+                                           style="width: 100%; height: 100%; padding: 0px; border: 0px;">
+
+                                        <h:outputText value="#{_house.house.houseOrder}"
+                                                      style="font-size: 1em; font-weight: bold; color: #000000;"/>
+
+                                        <br/>
+                                        <a:outputPanel rendered="#{not empty _house.house.houseOwner}">
+                                            <ui:include src="/layout/long-text-display.xhtml">
+                                                <ui:param name="value" value="#{_house.house.houseOwner.personName}"/>
+                                                <ui:param name="size" value="6"/>
+                                                <ui:param name="textStyle" value="font-size: 0.9em;color: #797268;"/>
+                                            </ui:include>
+                                        </a:outputPanel>
+
+                                        <br/>
+                                        <s:div style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
+                                            <h:graphicImage value="/img/icons/#{_house.house.masterStatus}.png"
+                                                            title="#{messages[_house.house.masterStatus.name()]}"/>
+
+                                            <h:graphicImage
+                                                    rendered="#{_house.house.initRegStatus eq 'INIT_REG_CONFIRM'}"
+                                                    value="/img/icons/power.png" title="#{messages.INIT_REG_CONFIRM}"/>
+
+                                            <h:graphicImage
+                                                    rendered="#{_house.house.initRegStatus eq 'INIT_REG'}"
+                                                    value="/img/icons/initReg.png" title="#{messages.INIT_REG}"/>
+
+                                            <h:graphicImage
+                                                    rendered="#{_house.house.lockStatus.lock}"
+                                                    value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+
+
+                                        </s:div>
+
+
+                                    </s:div>
+                                    <ui:define name="house-action">
+
+                                        <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                                         image="/img/icons/info-blue.png"
+                                                         rendered="#{not empty _house.house}"
+                                                         title="#{messages.BuildMapAction_edit}"
+                                                         oncomplete="#{r:component('houseInfoPanel')}.show();"
+                                                         immediate="true" execute="@this" render="houseDetails">
+                                            <a:param value="#{_house.house.id}" assignTo="#{houseHome.id}"/>
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:commandButton>
+
+                                    </ui:define>
+
+                                </s:decorate>
+                            </h:panelGrid>
+
                         </a:outputPanel>
                     </a:outputPanel>
+                    </div>
 
                 </div>
 

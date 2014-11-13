@@ -39,6 +39,14 @@ public class HouseStepSelect {
 
     private String houseOrder;
 
+    private String sectionName;
+
+    private List<Project> projects;
+
+    private static final String PROJECTS_DISTRICT_SQL = "select section.name from Section section where section.district.id = :districtId and  ((lower(section.pyCode) like lower(concat('%',:prefix,'%'))) or (lower(section.name) like lower(concat('%',:prefix,'%'))))";
+
+    private static final String PROJECTS_ALL_SQL = "select section.name from Section section where ((lower(section.pyCode) like lower(concat('%',:prefix,'%'))) or (lower(section.name) like lower(concat('%',:prefix,'%'))))";
+
 
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
@@ -50,11 +58,44 @@ public class HouseStepSelect {
 
     public void setDistrict(District district) {
         if ((district == null) || !district.equals(this.district)) {
-            section = null;
-            project = null;
-            buildHome.clearInstance();
+            setSection(null);
+            setSectionName(null);
         }
         this.district = district;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        if ((sectionName == null) || sectionName.equals("") || (!sectionName.equals(this.sectionName))){
+            projects = null;
+            setProject(null);
+        }
+        this.sectionName = sectionName;
+    }
+
+    public List<Project> getProjects() {
+        if(projects == null){
+            if (section == null) {
+                projects = houseEntityLoader.getEntityManager().createQuery("select project from Project project where ((lower(project.section.pyCode) like lower(concat('%',:prefix,'%'))) or (lower(project.section.name) like lower(concat('%',:prefix,'%'))))", Project.class).
+                        setParameter("prefix", sectionName).getResultList();
+            }else{
+                projects = section.getProjectList();
+            }
+        }
+        return projects;
+    }
+
+    public List<String> sectionNameAutoComplete(String prefix){
+        if (getDistrict() != null){
+           return houseEntityLoader.getEntityManager().createQuery(PROJECTS_DISTRICT_SQL,String.class).
+                setParameter("districtId", getDistrict().getId()).setParameter("prefix",prefix).getResultList();
+        }else{
+           return houseEntityLoader.getEntityManager().createQuery(PROJECTS_ALL_SQL,String.class).
+                setParameter("prefix", prefix).getResultList();
+        }
     }
 
     public Project getProject() {
@@ -83,8 +124,8 @@ public class HouseStepSelect {
 
     public void setSection(Section section) {
         if ((section == null) || !section.equals(this.section)) {
-            project = null;
-            buildHome.clearInstance();
+            projects = null;
+            setProject(null);
         }
 
         this.section = section;
