@@ -14,22 +14,8 @@
         <ui:include src="/layout/house/owner/PoolOwnerTable.xhtml">
             <ui:param name="poolOwners"
                       value="#{ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.businessPoolList}"/>
-            <ui:param name="title" value="#{messages.NowBusinessPool}"/>
+            <ui:param name="title" value="#{messages.PoolOwner_Start}"/>
         </ui:include>
     </a:outputPanel>
-
-
-    <a:outputPanel
-            rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse) and ((empty ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType)  or (ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType eq 'SINGLE_OWNER'))}">
-        <ui:include src="/layout/emptyViewGrid.xhtml">
-            <ui:param name="title" value="#{messages.NowBusinessPool}" />
-            <ui:param name="noDataLabel" value="#{messages.NowBusinessPool_not}"/>
-        </ui:include>
-    </a:outputPanel>
-
-
-
-
-
 
 </ui:composition>

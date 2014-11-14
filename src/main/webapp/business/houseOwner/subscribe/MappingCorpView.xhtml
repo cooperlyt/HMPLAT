@@ -14,4 +14,11 @@
             <h:outputText value="#{ownerBusinessHome.getMappingCorp().name}"/>
         </h:panelGrid>
     </a:outputPanel>
+
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getMappingCorp()}">
+        <ui:include src="/layout/emptyViewGrid.xhtml">
+            <ui:param name="title" value="#{messages.MappingCorp_name}" />
+            <ui:param name="noDataLabel" value="#{messages.MappingCorp_name_not}"/>
+        </ui:include>
+    </a:outputPanel>
 </ui:composition>

@@ -5,7 +5,7 @@
         房屋查看
     </subscribe>
 
-    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml" component="" cagegory="房屋信息" type="VIEW">
+    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
         原产权人查看
     </subscribe>
 
@@ -22,7 +22,7 @@
          产权人编辑
     </subscribe>
 
-    <subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
+    <subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml" component="" cagegory="房屋信息" type="VIEW">
         产权人查看
     </subscribe>
 
@@ -47,7 +47,14 @@
         现共有权人编辑
     </subscribe>
 
-    <subscribe name="poolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml" component="" cagegory="房屋信息" type="ALONE_VIEW">
+
+
+
+    <subscribe name="PoolOwnerView" page="/business/houseOwner/subscribe/PoolOwnerView.xhtml" component="" cagegory="房屋信息" type="ALONE_VIEW">
+        共有权人查看（启动显示）
+    </subscribe>
+
+    <subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml" component="" cagegory="业务信息" type="ALONE_VIEW">
         原共有权人查看
     </subscribe>
 
@@ -207,7 +214,7 @@
        土地信息正在业务中查看
     </subscribe>
 
-    <subscribe name="BusinessLandStartView" page="/business/houseOwner/subscribe/BusinessLandStartView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="BusinessLandStartView" page="/business/houseOwner/subscribe/BusinessLandStartView.xhtml" component="" cagegory="房屋信息" type="VIEW">
         土地信息启动（导入原土地信息）查看
     </subscribe>
 
@@ -217,7 +224,7 @@
     <subscribe name="FinancialNowView" page="/business/houseOwner/subscribe/FinancialNowView.xhtml" component="" cagegory="" type="VIEW">
         现抵押权人信息查看
     </subscribe>
-    <subscribe name="MappingCorpView" page="/business/houseOwner/subscribe/MappingCorpView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="MappingCorpView" page="/business/houseOwner/subscribe/MappingCorpView.xhtml" component="" cagegory="房屋信息" type="VIEW">
         测绘信息查看
     </subscribe>
 
@@ -243,6 +250,17 @@
     </subscribe>
 
 
+    <subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml" component="" cagegory="房屋信息" type="VIEW">
+       （启动） 共有情况，产权来源，产别
+    </subscribe>
+
+    <subscribe name="PoolOwnerStartView" page="/business/houseOwner/subscribe/PoolOwnerStartView.xhtml" component="" cagegory="房屋信息" type="VIEW">
+        （启动） 共有权人信息
+    </subscribe>
+
+    <subscribe name="HouseOwnerStartView" page="/business/houseOwner/subscribe/HouseOwnerStartView.xhtml" component="" cagegory="房屋信息" type="VIEW">
+        （启动） 产权人信息
+    </subscribe>
 
 
 
