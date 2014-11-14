@@ -50,7 +50,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     protected void initPoolOwners() {
 
         houseRegInfo = ownerBusinessHome.getSingleHoues().getHouseRegInfo();
-        if (houseRegInfo == null){
+        if (houseRegInfo == null) {
             houseRegInfo = new HouseRegInfo();
             ownerBusinessHome.getSingleHoues().setHouseRegInfo(houseRegInfo);
         }
@@ -76,20 +76,18 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         this.poolOwners = poolOwners;
     }
 
-    public void refreshPoolOwners() {
-        poolOwners = null;
-    }
 
     public void deleteSelectOwner() {
         if (selectPoolOwner != null) {
             houseRegInfo.getBusinessPools().remove(selectPoolOwner.getPersonEntity());
-            refreshPoolOwners();
+            poolOwners.remove(selectPoolOwner);
         }
     }
 
     public void addNewOwner() {
-        houseRegInfo.getBusinessPools().add(new BusinessPool(new Date()));
-        refreshPoolOwners();
+        BusinessPool newOwner = new BusinessPool(new Date());
+        houseRegInfo.getBusinessPools().add(newOwner);
+        poolOwners.add(new PersonEntityAdapter<BusinessPool>(newOwner));
     }
 
     @Override
@@ -110,8 +108,9 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     public String wireSubscribe() {
         if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
             houseRegInfo.getBusinessPools().clear();
-        }else if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.TOGETHER_OWNER)){
-            for(BusinessPool pool: houseRegInfo.getBusinessPools()){
+            poolOwners.clear();
+        } else if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.TOGETHER_OWNER)) {
+            for (BusinessPool pool : houseRegInfo.getBusinessPools()) {
                 pool.setPerc(null);
                 pool.setPoolArea(null);
             }
