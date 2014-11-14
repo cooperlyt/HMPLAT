@@ -41,7 +41,7 @@
         <ui:define name="label">
             #{messages.RegisterProperty_PoolMemo}
         </ui:define>
-        <h:selectOneMenu id="poolTypeInput" value="#{poolOwnerSubscribe.houseRegInfo.poolType}"
+        <h:selectOneMenu id="poolTypeInput" value="#{poolOwnerSubscribe.houseRegInfo.poolType}" style="width: 140px"
                          label="#{messages.RegisterProperty_PoolMemo}" required="true">
             <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>

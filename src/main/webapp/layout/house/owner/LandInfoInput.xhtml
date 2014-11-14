@@ -6,27 +6,35 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
-    <div style="clear:both; "/>
-    <s:decorate template="/layout/edit.xhtml">
+
+    <s:decorate template="/layout/edit-multi.xhtml">
+
         <ui:define name="label">
             #{label}
         </ui:define>
+        <ui:define name="topValue">
+        <span class="value">
         <h:selectBooleanCheckbox value="#{land.have}">
             <a:ajax event="click" render="landPanel" execute="@this" listener="#{land.checkHave}">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
         </h:selectBooleanCheckbox>
-    </s:decorate>
+       </span>
+       </ui:define>
 
+
+        <ui:define name="values">
     <a:outputPanel id="landPanel">
         <a:outputPanel rendered="#{land.have}">
             <div style="clear: both;"/>
             <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
+
+            
             <s:decorate template="/layout/edit.xhtml">
                 <ui:define name="label">
                     #{messages.Land_Number}
                 </ui:define>
-                <h:inputText required="true" label="#{messages.Land_Number}" size="50" value="#{land.instance.number}"
+                <h:inputText required="true" label="#{messages.Land_Number}" size="20" value="#{land.instance.number}"
                              id="landNubmer">
                 </h:inputText>
                 <ui:define name="tail">
@@ -36,7 +44,12 @@
 
             <s:decorate template="/layout/edit.xhtml">
                 <ui:define name="label">
-                    #{messages.Land_LandGetMode}
+                    <a:outputPanel style="text-align: center">
+                        <ui:include src="/layout/long-text-display.xhtml">
+                            <ui:param name="value" value="#{messages.Land_LandGetMode}"/>
+                            <ui:param name="size" value="5"/>
+                        </ui:include>
+                    </a:outputPanel>
                 </ui:define>
                 <h:selectOneMenu required="true" id="landGetMode" label="#{messages.Land_LandGetMode}"
                                  value="#{land.instance.landGetMode}" style="width:140px">
@@ -121,6 +134,8 @@
             <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
         </a:outputPanel>
     </a:outputPanel>
+        </ui:define>
+    </s:decorate>
 
 
 </ui:composition>
