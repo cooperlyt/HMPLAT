@@ -5,241 +5,238 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <r:popupPanel id="houseInfoPanel" autosized="true" modal="true" resizeable="false">
+<r:popupPanel id="houseInfoPanel" autosized="true" modal="true" resizeable="false">
 
-        <f:facet name="header">
-            <h:outputText value="#{messages.House}"/>
-        </f:facet>
+    <f:facet name="header">
+        <h:outputText value="#{messages.House}"/>
+    </f:facet>
 
-        <f:facet name="controls">
-            <a:commandButton immediate="true"
-                             execute="@this" image="/img/close.png"
-                             onclick="#{r:component('houseInfoPanel')}.hide(); return false;">
-            </a:commandButton>
-        </f:facet>
+    <f:facet name="controls">
+        <a:commandButton immediate="true"
+                         execute="@this" image="/img/close.png"
+                         onclick="#{r:component('houseInfoPanel')}.hide(); return false;">
+        </a:commandButton>
+    </f:facet>
 
-        <a:outputPanel id="houseDetails">
-            <s:div rendered="#{houseHome.idDefined}" style="width: 980px">
-                <table class="detailsTable">
-                    <tr>
-                        <td class="detailsHead"></td>
-                    </tr>
-                </table>
+    <a:outputPanel id="houseDetails">
+        <s:div rendered="#{houseHome.idDefined}" style="width: 980px">
+            <dh:entryGrid styleClass="detailsTable" autoLastWidth="true" keyWidth="115px" valueWidth="width: 100px;">
                 <ui:include src="/layout/house/HouseInfoView.xhtml">
                     <ui:param name="houseInfo" value="#{houseHome.instance}"/>
                 </ui:include>
-                <a:outputPanel rendered="#{not empty houseHome.instance.houseOwner}">
+            </dh:entryGrid>
+            <a:outputPanel rendered="#{not empty houseHome.instance.houseOwner}">
 
-                    <ui:include src="/layout/house/HouseOwnerView.xhtml">
-                        <ui:param name="nameLabel" value="#{messages.House_Owner}"/>
-                    </ui:include>
+                <ui:include src="/layout/house/HouseOwnerView.xhtml">
+                    <ui:param name="nameLabel" value="#{messages.House_Owner}"/>
+                </ui:include>
 
-                </a:outputPanel>
+            </a:outputPanel>
 
-                <a:outputPanel rendered="#{empty houseHome.instance.houseOwner}">
-                    <ui:include src="/layout/emptyViewGrid.xhtml">
-                        <ui:param name="title" value="#{messages.House_Owner}"/>
-                        <ui:param name="noDataLabel" value=""/>
-                    </ui:include>
+            <a:outputPanel rendered="#{empty houseHome.instance.houseOwner}">
+                <ui:include src="/layout/emptyViewGrid.xhtml">
+                    <ui:param name="title" value="#{messages.House_Owner}"/>
+                    <ui:param name="noDataLabel" value=""/>
+                </ui:include>
 
-                </a:outputPanel>
+            </a:outputPanel>
 
-            </s:div>
-        </a:outputPanel>
+        </s:div>
+    </a:outputPanel>
 
-    </r:popupPanel>
+</r:popupPanel>
 
-    <r:collapsiblePanel switchType="client" header="#{messages.search_conditions}">
-        <h:form>
-            <ui:include src="/layout/house/condition/ProjectSearchCondition.xhtml"/>
-            <ui:include src="/layout/house/condition/DeveloperSearchCondition.xhtml"/>
-            <ui:include src="/layout/house/condition/HouseSearchConfition.xhtml"/>
-
-            <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                <div class="actionButtons">
-                    <a:outputPanel id="searchButton">
-                        <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
-                        <a:commandButton value="#{messages.search}"
-                                         execute="@form" render="dataListResult"
-                                         action="#{houseList.first}">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:commandButton>
-                    </a:outputPanel>
-                </div>
-            </h:panelGrid>
-        </h:form>
-    </r:collapsiblePanel>
-    <br/>
-
+<r:collapsiblePanel switchType="client" header="#{messages.search_conditions}">
     <h:form>
-        <r:dataTable value="#{houseList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
-                             id="dataListResult" style="width: 100%">
-            <f:facet name="footer">
-                <a:outputPanel rendered="#{not empty houseList.resultList}">
-                    <ui:include src="/layout/pageA4jNavigation.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                    </ui:include>
+        <ui:include src="/layout/house/condition/ProjectSearchCondition.xhtml"/>
+        <ui:include src="/layout/house/condition/DeveloperSearchCondition.xhtml"/>
+        <ui:include src="/layout/house/condition/HouseSearchConfition.xhtml"/>
+
+        <h:panelGrid columns="1" style="width: 100%; text-align: right">
+            <div class="actionButtons">
+                <a:outputPanel id="searchButton">
+                    <s:button id="reset" value="#{messages.reset}" includePageParams="false"/>
+                    <a:commandButton value="#{messages.search}"
+                                     execute="@form" render="dataListResult"
+                                     action="#{houseList.first}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
                 </a:outputPanel>
-            </f:facet>
-
-            <ui:insert/>
-
-            <r:column>
-                <f:facet name="header">
-                    #{messages.House_Code}
-                </f:facet>
-                <a:commandLink value="#{_item.displayHouseCode}" title="#{messages.House_Id}:#{_item.id}"
-                               render="houseDetails" execute="@this" immediate="true"
-                               oncomplete="#{r:component('houseInfoPanel')}.show();">
-                    <a:param value="#{_item.id}" assignTo="#{houseHome.id}"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandLink>
-
-            </r:column>
-
-            <r:column style="width: 40px" rendered="#{not (runParam.getIntParamValue('HouseCodeDisplayModel') eq 2)}">
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.Build_MapNO}"/>
-                        <ui:param name="propertyPath" value="house.build.mapNumber"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.mapNumber}
-            </r:column>
-
-            <r:column style="width: 40px" rendered="#{(runParam.getIntParamValue('HouseCodeDisplayModel') eq 1)}">
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
-                        <ui:param name="propertyPath" value="house.build.blockNo"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.blockNo}
-            </r:column>
-
-            <r:column style="width: 40px" rendered="#{(runParam.getIntParamValue('HouseCodeDisplayModel') eq 1)}">
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.Build_BuildNO}"/>
-                        <ui:param name="propertyPath" value="house.build.buildNo"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.BuildNo}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.Build_Name}"/>
-                        <ui:param name="propertyPath" value="house.build.name"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.buildName}
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_Unit}"/>
-                        <ui:param name="propertyPath" value="house.houseUnitName"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.houseUnitName}
-            </r:column>
-
-            <r:column style="width: 40px">
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_Order}"/>
-                        <ui:param name="propertyPath" value="house.houseOrder"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.houseOrder}
-            </r:column>
-
-            <r:column style="width: 40px">
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_InFloor}"/>
-                        <ui:param name="propertyPath" value="house.inFloorName"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.inFloorName}
-            </r:column>
-
-            <r:column >
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_HouseType}"/>
-                        <ui:param name="propertyPath" value="house.houseType"/>
-                    </ui:include>
-                </f:facet>
-                #{dictionary.getWordValue(_item.houseType)}
-            </r:column>
-
-            <r:column >
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_UseType}"/>
-                        <ui:param name="propertyPath" value="house.useType"/>
-                    </ui:include>
-                </f:facet>
-                #{dictionary.getWordValue(_item.useType)}
-            </r:column>
-
-            <r:column >
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_UseType}"/>
-                        <ui:param name="propertyPath" value="house.houseArea"/>
-                    </ui:include>
-                </f:facet>
-                <h:outputText value="#{_item.houseArea}">
-                    <f:convertNumber pattern="#0.000"/>
-                </h:outputText>
-
-            </r:column>
-
-            <r:column >
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_UseType}"/>
-                        <ui:param name="propertyPath" value="house.useArea"/>
-                    </ui:include>
-                </f:facet>
-                <h:outputText value="#{_item.useArea}">
-                    <f:convertNumber pattern="#0.000"/>
-                </h:outputText>
-
-            </r:column>
-
-            <r:column>
-                <f:facet name="header">
-                    <ui:include src="/layout/a4jSort.xhtml">
-                        <ui:param name="entityList" value="#{houseList}"/>
-                        <ui:param name="propertyLabel" value="#{messages.House_DoorNumber}"/>
-                        <ui:param name="propertyPath" value="house.build.doorNo"/>
-                    </ui:include>
-                </f:facet>
-                #{_item.build.doorNo}
-            </r:column>
-
-
-
-        </r:dataTable>
+            </div>
+        </h:panelGrid>
     </h:form>
+</r:collapsiblePanel>
+<br/>
+
+<h:form>
+    <r:dataTable value="#{houseList.resultList}" noDataLabel="#{messages.emptyResult}" var="_item"
+                 id="dataListResult" style="width: 100%">
+        <f:facet name="footer">
+            <a:outputPanel rendered="#{not empty houseList.resultList}">
+                <ui:include src="/layout/pageA4jNavigation.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                </ui:include>
+            </a:outputPanel>
+        </f:facet>
+
+        <ui:insert/>
+
+        <r:column>
+            <f:facet name="header">
+                #{messages.House_Code}
+            </f:facet>
+            <a:commandLink value="#{_item.displayHouseCode}" title="#{messages.House_Id}:#{_item.id}"
+                           render="houseDetails" execute="@this" immediate="true"
+                           oncomplete="#{r:component('houseInfoPanel')}.show();">
+                <a:param value="#{_item.id}" assignTo="#{houseHome.id}"/>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
+
+        </r:column>
+
+        <r:column style="width: 40px" rendered="#{not (runParam.getIntParamValue('HouseCodeDisplayModel') eq 2)}">
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Build_MapNO}"/>
+                    <ui:param name="propertyPath" value="house.build.mapNumber"/>
+                </ui:include>
+            </f:facet>
+            #{_item.mapNumber}
+        </r:column>
+
+        <r:column style="width: 40px" rendered="#{(runParam.getIntParamValue('HouseCodeDisplayModel') eq 1)}">
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
+                    <ui:param name="propertyPath" value="house.build.blockNo"/>
+                </ui:include>
+            </f:facet>
+            #{_item.blockNo}
+        </r:column>
+
+        <r:column style="width: 40px" rendered="#{(runParam.getIntParamValue('HouseCodeDisplayModel') eq 1)}">
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Build_BuildNO}"/>
+                    <ui:param name="propertyPath" value="house.build.buildNo"/>
+                </ui:include>
+            </f:facet>
+            #{_item.BuildNo}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Build_Name}"/>
+                    <ui:param name="propertyPath" value="house.build.name"/>
+                </ui:include>
+            </f:facet>
+            #{_item.buildName}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_Unit}"/>
+                    <ui:param name="propertyPath" value="house.houseUnitName"/>
+                </ui:include>
+            </f:facet>
+            #{_item.houseUnitName}
+        </r:column>
+
+        <r:column style="width: 40px">
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_Order}"/>
+                    <ui:param name="propertyPath" value="house.houseOrder"/>
+                </ui:include>
+            </f:facet>
+            #{_item.houseOrder}
+        </r:column>
+
+        <r:column style="width: 40px">
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_InFloor}"/>
+                    <ui:param name="propertyPath" value="house.inFloorName"/>
+                </ui:include>
+            </f:facet>
+            #{_item.inFloorName}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_HouseType}"/>
+                    <ui:param name="propertyPath" value="house.houseType"/>
+                </ui:include>
+            </f:facet>
+            #{dictionary.getWordValue(_item.houseType)}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_UseType}"/>
+                    <ui:param name="propertyPath" value="house.useType"/>
+                </ui:include>
+            </f:facet>
+            #{dictionary.getWordValue(_item.useType)}
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_UseType}"/>
+                    <ui:param name="propertyPath" value="house.houseArea"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_item.houseArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_UseType}"/>
+                    <ui:param name="propertyPath" value="house.useArea"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_item.useArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+
+        </r:column>
+
+        <r:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{houseList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.House_DoorNumber}"/>
+                    <ui:param name="propertyPath" value="house.build.doorNo"/>
+                </ui:include>
+            </f:facet>
+            #{_item.build.doorNo}
+        </r:column>
+
+
+    </r:dataTable>
+</h:form>
 </ui:composition>

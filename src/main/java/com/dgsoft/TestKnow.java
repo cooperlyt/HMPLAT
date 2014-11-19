@@ -52,6 +52,8 @@ public class TestKnow {
 //        System.out.println(GBT.formatCode("3", 4) );
 //        System.out.println(GBT.formatCode("1234", 4) );
 
+//        javax.faces.component.html.HtmlPanelGrid
+//        javax.faces.component.html.
         System.out.println("1234567890".substring(0,5));
 
     }

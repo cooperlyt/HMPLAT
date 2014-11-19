@@ -256,15 +256,14 @@
     </servlet-mapping>
 
 
-    <!--
+
      <context-param>
          <param-name>facelets.LIBRARIES</param-name>
          <param-value>
-             /tags/custom.taglib.xml;
+             /WEB-INF/uicomponent.taglib.xml;
          </param-value>
      </context-param>
-             -->
-    <!-- RichFaces -->
+
 
     <context-param>
         <param-name>org.richfaces.skin</param-name>

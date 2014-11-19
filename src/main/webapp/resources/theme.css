@@ -461,7 +461,6 @@ table.radio input[type=radio] {
 
 
 .tooltip {
-    background-color: ;
     border-width:3px;
 }
 
@@ -470,125 +469,41 @@ table.radio input[type=radio] {
     background-color: #FFFFFF;
 }
 
-.detailsFirstCol{
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-
-    border-right: 1px solid #BED6F8;
-    border-bottom: 1px solid #BED6F8;
-    border-left: 1px solid #BED6F8;;
-    padding: 5px 5px 5px 5px;
-    background: #ECF4FE;
-    color: #797268;
-    width: 115px;
-    text-align: center;
-}
-
-.detailsTitleCol{
-
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-
-    border-right: 1px solid #BED6F8;
-    border-bottom: 1px solid #BED6F8;
-    padding: 5px 5px 5px 5px;
-    background: #ECF4FE;
-    color: #797268;
-    width: 115px;
-    text-align: center;
-}
-
-
-
-.detailsValueCol{
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-    border-right: 1px solid #BED6F8;
-    border-bottom: 1px solid #BED6F8;
-
-    background: #fff;
-    padding: 5px 5px 5px 5px;
-    color: #4f6b72;
-
-    width: 337px;
-    text-align: left;
-}
-
-.detailsLastValueCol{
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-    border-right: 1px solid #BED6F8;
-    border-bottom: 1px solid #BED6F8;
-
-    background: #fff;
-    padding: 5px 5px 5px 5px;
-    color: #4f6b72;
-
-    text-align: left;
-}
-
-
-.detailsHead{
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-    border-bottom: 1px solid #BED6F8;
-    background: #fff;
-    padding: 0px 0px 0px 0px;
-    color: #4f6b72;
-
-    text-align: left;
-}
-
-.details4ValueCol{
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: gray;
-
-    display: table-cell;
-    vertical-align: inherit;
-
-    border-right: 1px solid #BED6F8;
-    border-bottom: 1px solid #BED6F8;
-
-    background: #fff;
-    padding: 5px 5px 5px 5px;
-    color: #4f6b72;
-
-    width: 100px;
-    text-align: left;
-}
-
 
 .detailsTable{
-    width: 100%; padding: 0; margin: 0;border-spacing: 0px;display: table;border-collapse: separate;
+    width: 100%; padding: 5px; margin: 0;
+    display:table;
+    border-collapse: collapse;
+    border: 1px solid #BED6F8;
 }
+
+.detailsTable th{
+    display: table-cell;
+    border-collapse: collapse;
+    vertical-align: inherit;
+
+    border: 1px solid #BED6F8;
+    padding: 5px 5px 5px 5px;
+    background: #ECF4FE;
+    color: #797268;
+    text-align: center;
+}
+
+.detailsTable td{
+    border-collapse: collapse;
+
+    display: table-cell;
+    vertical-align: inherit;
+    border: 1px solid #BED6F8;
+
+    background: #fff;
+    padding: 5px 5px 5px 5px;
+    color: #4f6b72;
+
+    min-width: 100px;
+    text-align: left;
+}
+
 
 .layoutColumn{
     padding: 0px; border: 0px;

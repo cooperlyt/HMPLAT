@@ -4,6 +4,40 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
+    <component>
+        <component-type>com.dgsoft.faces.EntryColumn</component-type>
+        <component-class>com.dgsoft.faces.component.UIEntryColumn</component-class>
+    </component>
+    <component>
+        <component-type>com.dgsoft.faces.EntryGridBlock</component-type>
+        <component-class>com.dgsoft.faces.component.UIEntryGridBlock</component-class>
+    </component>
+    <component>
+        <component-type>com.dgsoft.faces.EntryPanelGrid</component-type>
+        <component-class>com.dgsoft.faces.component.UIEntryPanelGrid</component-class>
+    </component>
+
+    <render-kit>
+        <render-kit-id>HTML_BASIC</render-kit-id>
+        <renderer>
+            <component-family>com.dgsoft.faces.EntryGrid</component-family>
+            <renderer-type>com.dgsoft.faces.render.EntryColumn</renderer-type>
+            <renderer-class>com.dgsoft.faces.renderkit.html.EntryColumnRender</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.dgsoft.faces.EntryGrid</component-family>
+            <renderer-type>com.dgsoft.faces.render.EntryGridBlock</renderer-type>
+            <renderer-class>com.dgsoft.faces.renderkit.html.EntryGridBlockRender</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.dgsoft.faces.EntryGrid</component-family>
+            <renderer-type>com.dgsoft.faces.render.EntryPanelGrid</renderer-type>
+            <renderer-class>com.dgsoft.faces.renderkit.html.EntryPanelGridRender</renderer-class>
+        </renderer>
+    </render-kit>
+
+
+
    <application>
       <locale-config>
          <default-locale>zh</default-locale>
