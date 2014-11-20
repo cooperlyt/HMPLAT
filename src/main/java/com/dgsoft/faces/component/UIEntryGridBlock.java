@@ -8,48 +8,40 @@ import javax.faces.component.UIPanel;
  */
 public class UIEntryGridBlock extends UIPanel {
 
-
-    private String group;
-
-    private int columns;
-
-    private boolean rendered;
+    protected enum Properties {
+        group,
+        columns,
+        rendered
+    }
 
     public String getGroup() {
-        if (this.group == null || "".equals(group.trim())){
-            return group;
-        }
-        ValueExpression _ve = getValueExpression("group");
-        if (_ve != null){
-            return (String)_ve.getValue(getFacesContext().getELContext());
-        }else {
-            return null;
-        }
+        return (String) getStateHelper().eval(Properties.group, "");
     }
 
     public void setGroup(String group) {
-        this.group = group;
-
+        getStateHelper().put(Properties.group, group);
     }
 
     public int getColumns() {
-        return columns;
+        return (Integer) getStateHelper().eval(Properties.columns, 4);
     }
 
     public void setColumns(int columns) {
-        this.columns = columns;
+        getStateHelper().put(Properties.columns, columns);
     }
 
     public boolean isRendered() {
-        return rendered;
+        return (Boolean) getStateHelper().eval(Properties.rendered, true);
     }
 
     public void setRendered(boolean rendered) {
-        this.rendered = rendered;
+        getStateHelper().put(Properties.rendered, rendered);
     }
 
     @Override
-    public boolean getRendersChildren(){return true;}
+    public boolean getRendersChildren() {
+        return true;
+    }
 
     @Override
     public String getFamily() {

@@ -75,7 +75,7 @@ public class UIEntryPanelGrid extends UIPanel {
     }
 
     public boolean isAutoLastWidth() {
-        return (Boolean) getStateHelper().eval(Properties.autoLastWidth);
+        return (Boolean) getStateHelper().eval(Properties.autoLastWidth,true);
     }
 
     public void setAutoLastWidth(boolean autoLastWidth) {

@@ -29,21 +29,6 @@
                     <ui:param name="houseInfo" value="#{houseHome.instance}"/>
                 </ui:include>
             </dh:entryGrid>
-            <a:outputPanel rendered="#{not empty houseHome.instance.houseOwner}">
-
-                <ui:include src="/layout/house/HouseOwnerView.xhtml">
-                    <ui:param name="nameLabel" value="#{messages.House_Owner}"/>
-                </ui:include>
-
-            </a:outputPanel>
-
-            <a:outputPanel rendered="#{empty houseHome.instance.houseOwner}">
-                <ui:include src="/layout/emptyViewGrid.xhtml">
-                    <ui:param name="title" value="#{messages.House_Owner}"/>
-                    <ui:param name="noDataLabel" value=""/>
-                </ui:include>
-
-            </a:outputPanel>
 
         </s:div>
     </a:outputPanel>

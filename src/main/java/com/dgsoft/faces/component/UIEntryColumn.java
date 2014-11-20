@@ -7,17 +7,17 @@ import javax.faces.component.UIPanel;
  */
 public class UIEntryColumn extends UIPanel {
 
-    private int colspan;
 
     public int getColspan() {
-        if (colspan < 1){
+        Integer colspan = (Integer) getStateHelper().eval("colspan");
+        if ((colspan == null) || (colspan < 1)){
             return 1;
         }
         return colspan;
     }
 
     public void setColspan(int colspan) {
-        this.colspan = colspan;
+        getStateHelper().put("colspan",colspan);
     }
 
     @Override
