@@ -602,7 +602,7 @@
                             <filtering>true</filtering>
                             <excludes>
                                 <exclude>**/*.swf</exclude>
-
+                                <exclude>**/*.ico</exclude>
                             </excludes>
                         </resource>
 
@@ -612,6 +612,7 @@
 
                             <includes>
                                 <include>**/*.swf</include>
+                                <exclude>**/*.ico</exclude>
                             </includes>
                         </resource>
                     </webResources>
