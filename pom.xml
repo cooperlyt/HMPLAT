@@ -603,6 +603,9 @@
                             <excludes>
                                 <exclude>**/*.swf</exclude>
                                 <exclude>**/*.ico</exclude>
+                                <exclude>**/*.eto</exclude>
+                                <exclude>**/*.ttf</exclude>
+                                <exclude>**/*.woff</exclude>
                             </excludes>
                         </resource>
 
@@ -613,6 +616,9 @@
                             <includes>
                                 <include>**/*.swf</include>
                                 <exclude>**/*.ico</exclude>
+                                <exclude>**/*.eto</exclude>
+                                <exclude>**/*.ttf</exclude>
+                                <exclude>**/*.woff</exclude>
                             </includes>
                         </resource>
                     </webResources>
