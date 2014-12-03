@@ -18,31 +18,162 @@
         <title>#{messages.mainTitle}</title>
 
         <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
-        <h:outputStylesheet name="github1.css"/>
-        <h:outputStylesheet name="github2.css"/>
-        <h:outputStylesheet name="other.css"/>
+
+
+
         <ui:insert name="head"/>
     </h:head>
     <h:body styleClass="env-production page-dashboard">
+
+        <h:outputStylesheet library="bootstrap" name="bootstrap.min.css"/>
+        <h:outputScript library="bootstrap" name="bootstrap.min.js"/>
+        <h:outputStylesheet name="github1.css"/>
+        <h:outputStylesheet name="github2.css"/>
+        <h:outputStylesheet name="other.css"/>
+        <h:outputStylesheet name="adapter.css"/>
+
         <div class="wrapper">
             <div class="header" >
-                <div class="container clearfix">
+                <div class="container clearfix" style="white-space: nowrap;">
                     <ui:insert name="navigation">
-                        <h:outputLink value="#" id="logo-nav">
 
-                        <h:graphicImage styleClass="header-logo-invertocat" value="/img/home.png"
-                                        style="width: 28px; height: 28px;"/>
+                        <h:outputStylesheet>
+                            .dropdown-menu{
+                                z-index: 9999;
+                                background: #fff;
+                                border: 1px solid #ddd;
 
-                        </h:outputLink>
+                                -webkit-box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.15);
+                                box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.15);
+                                -moz-border-radius: 0 0 2px 2px;
+                                border-radius: 0 0 3px 3px;
+                                width: 600px;
+                                margin: 11px 0 0 0px;
+                                left: 0;
 
-                        <div id="main-nav" class="main-nav">
-                                          asdfasfasdfsafasdfasdfasdfsadfsadf
+                            }
+
+
+                            .sub-cats{
+                                float: left;
+                                padding: 30px 30px 10px 40px;
+                                overflow: hidden;
+                            }
+
+                            .sub-cats ul {
+                                text-align: left;
+                            }
+
+                            .col {
+                                width: 169px;
+                                float: left;
+                                padding-right: 40px;
+                            }
+
+                            .col li {
+                                padding: 15px 0 0;
+                                display: block;
+                            }
+
+                            .col a {
+                                color: #555;
+                            }
+
+                            .titles {
+                                display: table;
+                                border-collapse: separate;
+                                border-spacing: 40px 0;
+                                margin-left: -40px;
+                                table-layout: fixed;
+                            }
+
+                            .titles ul {
+                                display: table-row;
+                            }
+
+                            .titles ul li{
+                                vertical-align: top;
+                                display: table-cell;
+                                width: 129px;
+                                word-break: break-word;
+                            }
+
+                            .title {
+                                padding: 0 0 10px;
+                                color: #555;
+                                border-bottom: 1px solid #dadada;
+                                font-weight: bold;
+                                font-size: 12px;
+                            }
+
+
+                        </h:outputStylesheet>
+
+
+                        <div class="dropdown" style="display:inline-block;float: left;">
+                            <input id="dLabel" type="image" style="display:inline;" src="#{request.contextPath}/img/logo-icon.png"
+                                   data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+
+                            </input>
+
+
+
+                            <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+
+                               <div class="sub-cats">
+                                   <div class="titles">
+                                       <ul>
+                                           <li class="title">A</li>
+                                           <li class="title">B</li>
+                                           <li class="title">C</li>
+                                       </ul>
+                                   </div>
+
+                                   <ul class="col">
+                                        <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+
+                                   </ul>
+
+                                   <ul class="col">
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+
+
+
+                                   </ul>
+
+                                   <ul class="col">
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                       <li><s:link value="a"></s:link> </li>
+                                       <li><s:link value="b"></s:link></li>
+                                   </ul>
+                               </div>
+
+                            </div>
                         </div>
 
-
                     </ui:insert>
-                    <h:graphicImage styleClass="site-search" value="/img/logo.png"/>
 
+                    <h:graphicImage styleClass="site-search" value="/img/logo.png"/>
                     <ui:remove>
                         <ul class="header-nav left">
                             <li class="header-nav-item explore">
@@ -76,6 +207,10 @@
         <span class="css-truncate-target">cooper-lyt</span>
       </span>
                                 </a>
+                            </li>
+
+                            <li class="header-nav-item dropdown js-menu-container">
+
                             </li>
 
                             <li class="header-nav-item dropdown js-menu-container">
