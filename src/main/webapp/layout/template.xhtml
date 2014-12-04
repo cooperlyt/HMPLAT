@@ -97,7 +97,7 @@
                                 <s:link id="menuLoginId" view="/login.xhtml" value="#{messages.login}"
                                         rendered="#{not identity.loggedIn}" propagation="none"/>
                                 <s:link id="accountLink" view="/#" rendered="#{identity.loggedIn}"
-                                        value="#{messages.Welcome}#{' '}#{authInfo.loginEmployee.person.name}"/>
+                                        value="#{messages.Welcome}#{' '}"/>
 
                             </li>
 
@@ -143,9 +143,7 @@
             <ui:insert name="pageContent">
                 <h:panelGrid columns="2" columnClasses="menuCol,layoutCol" style="padding: 0;margin: 0;border: 0;width: 100%;">
                     <h:panelGroup styleClass="menu">
-                        <h:panelGroup layout="block" styleClass="menuContainer">
-                            <ui:include src="/layout/navigation.xhtml"/>
-                        </h:panelGroup>
+
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="primary">

@@ -1,6 +1,5 @@
 package com.dgsoft.common.system;
 
-import com.dgsoft.common.system.model.FuncCategory;
 import com.dgsoft.common.system.model.Function;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -30,15 +29,16 @@ public class Navigation {
 
     @End
     public String navigationTo(){
-        for (FuncCategory funcCategory: authInfo.getAuthenticationFuncCategorys()){
-            for (Function function: funcCategory.getFunctions()){
-                if (function.getId().equals(functionId)){
-                    currentFunction = function;
-                    return currentFunction.getLocation();
-                }
-            }
-        }
-        throw new AuthorizationException("function not found!");
+//        for (FuncCategory funcCategory: authInfo.getAuthenticationFuncCategorys()){
+//            for (Function function: funcCategory.getFunctions()){
+//                if (function.getId().equals(functionId)){
+//                    currentFunction = function;
+//                    return currentFunction.getLocation();
+//                }
+//            }
+//        }
+//        throw new AuthorizationException("function not found!");
+        return null;
     }
 
 }

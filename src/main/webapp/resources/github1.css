@@ -189,12 +189,12 @@ td, th {
 }
 
 input, select, textarea, button {
-    font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+    font: 13px/1.4 "microsoft yahei", Helvetica, Arial, "宋体", sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
 body {
     min-width: 1020px;
-    font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font: 13px/1.4 "microsoft yahei", Helvetica, Arial, "宋体", sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     color: #333;
     background-color: #fff
 }
@@ -5591,7 +5591,7 @@ body.menu-active .modal-backdrop {
     width: 0;
     height: 0;
     content: "";
-    vertical-align: -2px;
+    vertical-align: 2px;
     border: 4px solid;
     border-right-color: transparent;
     border-left-color: transparent;

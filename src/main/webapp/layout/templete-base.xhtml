@@ -5,318 +5,229 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://richfaces.org/a4j" 
+      xmlns:a="http://richfaces.org/a4j"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:s="http://jboss.org/schema/seam/taglib">
 <f:view
         contentType="text/html">
 
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=8"/>
-        <title>#{messages.mainTitle}</title>
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <title>#{messages.mainTitle}</title>
 
-        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
-
-
-
-        <ui:insert name="head"/>
-    </h:head>
-    <h:body styleClass="env-production page-dashboard">
-
-        <h:outputStylesheet library="bootstrap" name="bootstrap.min.css"/>
-        <h:outputScript library="bootstrap" name="bootstrap.min.js"/>
-        <h:outputStylesheet name="github1.css"/>
-        <h:outputStylesheet name="github2.css"/>
-        <h:outputStylesheet name="other.css"/>
-        <h:outputStylesheet name="adapter.css"/>
-
-        <div class="wrapper">
-            <div class="header" >
-                <div class="container clearfix" style="white-space: nowrap;">
-                    <ui:insert name="navigation">
-
-                        <h:outputStylesheet>
-                            .dropdown-menu{
-                                z-index: 9999;
-                                background: #fff;
-                                border: 1px solid #ddd;
-
-                                -webkit-box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.15);
-                                box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.15);
-                                -moz-border-radius: 0 0 2px 2px;
-                                border-radius: 0 0 3px 3px;
-                                width: 600px;
-                                margin: 11px 0 0 0px;
-                                left: 0;
-
-                            }
+    <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
 
 
-                            .sub-cats{
-                                float: left;
-                                padding: 30px 30px 10px 40px;
-                                overflow: hidden;
-                            }
+    <ui:insert name="head"/>
+</h:head>
+<h:body styleClass="env-production page-dashboard">
 
-                            .sub-cats ul {
-                                text-align: left;
-                            }
+<h:outputStylesheet library="bootstrap" name="bootstrap.min.css"/>
+<h:outputScript library="bootstrap" name="bootstrap.min.js"/>
+<h:outputStylesheet name="github1.css"/>
+<h:outputStylesheet name="github2.css"/>
+<h:outputStylesheet name="other.css"/>
+<h:outputStylesheet name="adapter.css"/>
 
-                            .col {
-                                width: 169px;
-                                float: left;
-                                padding-right: 40px;
-                            }
-
-                            .col li {
-                                padding: 15px 0 0;
-                                display: block;
-                            }
-
-                            .col a {
-                                color: #555;
-                            }
-
-                            .titles {
-                                display: table;
-                                border-collapse: separate;
-                                border-spacing: 40px 0;
-                                margin-left: -40px;
-                                table-layout: fixed;
-                            }
-
-                            .titles ul {
-                                display: table-row;
-                            }
-
-                            .titles ul li{
-                                vertical-align: top;
-                                display: table-cell;
-                                width: 129px;
-                                word-break: break-word;
-                            }
-
-                            .title {
-                                padding: 0 0 10px;
-                                color: #555;
-                                border-bottom: 1px solid #dadada;
-                                font-weight: bold;
-                                font-size: 12px;
-                            }
+<div class="wrapper">
+    <div class="header">
+        <div class="container clearfix" style="white-space: nowrap;">
+            <ui:insert name="navigation">
+                        <span id="main-navigation">
 
 
-                        </h:outputStylesheet>
 
-
-                        <div class="dropdown" style="display:inline-block;float: left;">
-                            <input id="dLabel" type="image" style="display:inline;" src="#{request.contextPath}/img/logo-icon.png"
+                        <div class="dropdown">
+                            <input id="dLabel" type="image" style="display:inline;"
+                                   src="#{request.contextPath}/img/logo-icon.png"
                                    data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
 
                             </input>
 
 
-
                             <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
-                               <div class="sub-cats">
-                                   <div class="titles">
-                                       <ul>
-                                           <li class="title">A</li>
-                                           <li class="title">B</li>
-                                           <li class="title">C</li>
-                                       </ul>
-                                   </div>
+                                <div class="sub-cats">
+                                    <div class="titles">
+                                        <ul>
+                                            <li class="title">#{messages.DATA_MGR}</li>
+                                            <li class="title">#{messages.TOTAL_REPORT}</li>
+                                            <li class="title">#{messages.DAY_WORK}</li>
+                                        </ul>
+                                    </div>
 
-                                   <ul class="col">
-                                        <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-
-                                   </ul>
-
-                                   <ul class="col">
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>      <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-
-
-
-                                   </ul>
-
-                                   <ul class="col">
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                       <li><s:link value="a"></s:link> </li>
-                                       <li><s:link value="b"></s:link></li>
-                                   </ul>
-                               </div>
-
-                            </div>
-                        </div>
-
-                    </ui:insert>
-
-                    <h:graphicImage styleClass="site-search" value="/img/logo.png"/>
-                    <ui:remove>
-                        <ul class="header-nav left">
-                            <li class="header-nav-item explore">
-                                <a class="header-nav-link" href="/explore"
-                                   data-ga-click="Header, go to explore, text:explore">Explore</a>
-                            </li>
-                            <li class="header-nav-item">
-                                <a class="header-nav-link" href="https://gist.github.com"
-                                   data-ga-click="Header, go to gist, text:gist">Gist</a>
-                            </li>
-                            <li class="header-nav-item">
-                                <a class="header-nav-link" href="/blog"
-                                   data-ga-click="Header, go to blog, text:blog">Blog</a>
-                            </li>
-                            <li class="header-nav-item">
-                                <a class="header-nav-link" href="https://help.github.com"
-                                   data-ga-click="Header, go to help, text:help">Help</a>
-                            </li>
-                        </ul>
-                    </ui:remove>
-                    <a:outputPanel rendered="#{identity.loggedIn}">
-
-                        <ul class="header-nav user-nav right" id="user-links">
-                            <li class="header-nav-item dropdown js-menu-container">
-                                <a class="header-nav-link name" href="/cooper-lyt"
-                                   data-ga-click="Header, go to profile, text:username">
-                                    <img alt="cooper-lyt" class="avatar" data-user="4219608" height="20"
-                                         src="https://avatars3.githubusercontent.com/u/4219608?v=3&amp;s=40"
-                                         width="20"/>
-      <span class="css-truncate">
-        <span class="css-truncate-target">cooper-lyt</span>
-      </span>
-                                </a>
-                            </li>
-
-                            <li class="header-nav-item dropdown js-menu-container">
-
-                            </li>
-
-                            <li class="header-nav-item dropdown js-menu-container">
-                                <a class="header-nav-link js-menu-target tooltipped tooltipped-s" href="#"
-                                   aria-label="Create new..." data-ga-click="Header, create new, icon:add">
-                                    <span class="octicon octicon-plus"></span>
-                                    <span class="dropdown-caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu-content js-menu-content">
-
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="/new"><span class="octicon octicon-repo"></span> New repository</a>
-                                        </li>
-                                        <li>
-                                            <a href="/organizations/new"><span
-                                                    class="octicon octicon-organization"></span> New organization</a>
-                                        </li>
-
+                                    <ul class="col">
+                                        <a:repeat value="#{authInfo.dataFunctions}" var="_func">
+                                            <li><s:link value="#{_func.name}" propagation="endRoot" view="#{_func.location}"/></li>
+                                        </a:repeat>
 
                                     </ul>
 
+                                    <ul class="col">
+
+                                        <a:repeat value="#{authInfo.totalFunctions}" var="_func">
+                                            <li><s:link value="#{_func.name}" propagation="endRoot" view="#{_func.location}"/></li>
+                                        </a:repeat>
+                                    </ul>
+
+                                    <ul class="col">
+
+                                        <a:repeat value="#{authInfo.workFunctions}" var="_func">
+                                            <li><s:link value="#{_func.name}" propagation="endRoot" view="#{_func.location}"/></li>
+                                        </a:repeat>
+                                    </ul>
                                 </div>
-                            </li>
 
-                            <li class="header-nav-item">
-                                <a href="/notifications" aria-label="You have no unread notifications"
-                                   class="header-nav-link notification-indicator tooltipped tooltipped-s"
-                                   data-ga-click="Header, go to notifications, icon:read" data-hotkey="g n">
-                                    <span class="mail-status all-read"></span>
-                                    <span class="octicon octicon-inbox"></span>
-                                </a>
-                            </li>
-
-                            <li class="header-nav-item">
-                                <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile"
-                                   id="account_settings" aria-label="Settings"
-                                   data-ga-click="Header, go to settings, icon:settings">
-                                    <span class="octicon octicon-gear"></span>
-                                </a>
-                            </li>
-
-                            <li class="header-nav-item">
-
-                                <s:link id="menuLogoutId"
-                                        styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
-                                        view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
-                                        aria-label="sssssssssssssssssss"
-                                        propagation="none">
-                                    <span class="octicon octicon-sign-out"></span>
-                                </s:link>
-
-                            </li>
-
-                        </ul>
-
-                    </a:outputPanel>
-
-                    <a:outputPanel rendered="#{not identity.loggedIn}">
-                        <div class="header-actions">
-                            <s:link styleClass="button" value="#{messages.login}" view="/login.xhtml"/>
+                            </div>
                         </div>
-                    </a:outputPanel>
+</span>
+            </ui:insert>
 
+            <h:graphicImage styleClass="site-search" value="/img/logo.png"/>
+            <ui:remove>
+                <ul class="header-nav left">
+                    <li class="header-nav-item explore">
+                        <a class="header-nav-link" href="/explore"
+                           data-ga-click="Header, go to explore, text:explore">Explore</a>
+                    </li>
+                    <li class="header-nav-item">
+                        <a class="header-nav-link" href="https://gist.github.com"
+                           data-ga-click="Header, go to gist, text:gist">Gist</a>
+                    </li>
+                    <li class="header-nav-item">
+                        <a class="header-nav-link" href="/blog"
+                           data-ga-click="Header, go to blog, text:blog">Blog</a>
+                    </li>
+                    <li class="header-nav-item">
+                        <a class="header-nav-link" href="https://help.github.com"
+                           data-ga-click="Header, go to help, text:help">Help</a>
+                    </li>
+                </ul>
+            </ui:remove>
+            <a:outputPanel rendered="#{identity.loggedIn}">
+
+                <ul class="header-nav user-nav right" id="user-links">
+                    <li class="header-nav-item dropdown js-menu-container">
+                        <div class="dropdown">
+                            <a id="userLabel" class="header-nav-link name" data-target="#"
+                               href="#{credentials.username}"
+                               data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+
+                                <span class="user-icon"/>
+
+
+      <span class="css-truncate">
+        <span class="css-truncate-target">#{authInfo.loginEmployee.personName}#{' '}#{(empty authInfo.currRole) ? messages.userNoRole : authInfo.currRole.name} </span>
+      </span>
+                                <span class="dropdown-caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" style="margin-top: 30px;" aria-labelledby="userLabel">
+                                <a:repeat value="#{authInfo.functionRoleList}" var="_roleCategory">
+                                    <li>
+                                        <s:link propagation="endRoot" view="/home.xhtml">
+                                            <f:param name="Role" value="#{_roleCategory.id}"/>
+                                            <span
+                                                    class="octicon octicon-organization"></span>#{_roleCategory.name}
+                                        </s:link>
+                                    </li>
+                                </a:repeat>
+
+                            </ul>
+
+                        </div>
+
+                    </li>
+
+                    <li class="header-nav-item">
+                        <a href="/notifications" aria-label="You have no unread notifications"
+                           class="header-nav-link notification-indicator tooltipped tooltipped-s">
+                            <span class="octicon octicon-plus"></span>
+                        </a>
+                    </li>
+
+                    <li class="header-nav-item">
+                        <a href="/notifications" aria-label="You have no unread notifications"
+                           class="header-nav-link notification-indicator tooltipped tooltipped-s"
+                           data-ga-click="Header, go to notifications, icon:read" data-hotkey="g n">
+                            <span class="mail-status all-read"></span>
+                            <span class="octicon octicon-inbox"></span>
+                        </a>
+                    </li>
+
+                    <li class="header-nav-item">
+                        <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile"
+                           id="account_settings" aria-label="Settings"
+                           data-ga-click="Header, go to settings, icon:settings">
+                            <span class="octicon octicon-gear"></span>
+                        </a>
+                    </li>
+
+                    <li class="header-nav-item">
+
+                        <s:link id="menuLogoutId"
+                                styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
+                                view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
+                                aria-label="sssssssssssssssssss"
+                                propagation="none">
+                            <span class="octicon octicon-sign-out"></span>
+                        </s:link>
+
+                    </li>
+
+                </ul>
+
+            </a:outputPanel>
+
+            <a:outputPanel rendered="#{not identity.loggedIn}">
+                <div class="header-actions">
+                    <s:link styleClass="button" value="#{messages.login}" view="/login.xhtml"/>
                 </div>
-            </div>
-
-            <div id="start-of-content" class="accessibility-aid"/>
-            <div class="site clearfix" role="main">
-                <div id="site-container" class="context-loader-container" style="min-height: 450px;">
-                    <ui:insert/>
-
-                </div>
-                <div class="modal-backdrop"></div>
-            </div>
-
+            </a:outputPanel>
 
         </div>
+    </div>
 
+    <div id="start-of-content" class="accessibility-aid"/>
+    <div class="site clearfix" role="main">
+        <div id="site-container" class="context-loader-container" style="min-height: 450px;">
+            <ui:insert/>
 
-        <div class="container">
-            <div class="site-footer" role="contentinfo">
-                <p>&#xA9; 2013 Cooper's soft Studio.</p>
-                <s:fragment rendered="#{init.debug}">
-                    <a:outputPanel ajaxRendered="true">
-                        <a:log hotkey="D" mode="popup"/>
-
-                        <p style="margin-top: -0.5em;">
-                            Conversation: id = #{conversation.id}, #{conversation.longRunning ? 'long running' : 'temporary'}#{conversation.nested ? ', nested, parent id = '.concat(conversation.parentId) : ''}
-                            #{' - '}
-                            Ajax4jsf Log (Ctrl+Shift+D)
-                            #{' - '}
-                            <s:link id="debugConsole" view="/debug.xhtml" value="Debug console"
-                                    target="debugConsole"/>
-                            #{' - '}
-                            <s:link id="resetSession" view="/home.xhtml"
-                                    action="#{org.jboss.seam.web.session.invalidate()}"
-                                    propagation="none" value="Terminate session"/>
-                        </p>
-                    </a:outputPanel>
-                </s:fragment>
-            </div>
         </div>
+        <div class="modal-backdrop"></div>
+    </div>
 
-    </h:body>
+
+</div>
+
+
+<div class="container">
+    <div class="site-footer" role="contentinfo">
+        <p>&#xA9; 2013 Cooper's soft Studio.</p>
+        <s:fragment rendered="#{init.debug}">
+            <a:outputPanel ajaxRendered="true">
+                <a:log hotkey="D" mode="popup"/>
+
+                <p style="margin-top: -0.5em;">
+                    Conversation: id = #{conversation.id}, #{conversation.longRunning ? 'long running' : 'temporary'}#{conversation.nested ? ', nested, parent id = '.concat(conversation.parentId) : ''}
+                    #{' - '}
+                    Ajax4jsf Log (Ctrl+Shift+D)
+                    #{' - '}
+                    <s:link id="debugConsole" view="/debug.xhtml" value="Debug console"
+                            target="debugConsole"/>
+                    #{' - '}
+                    <s:link id="resetSession" view="/home.xhtml"
+                            action="#{org.jboss.seam.web.session.invalidate()}"
+                            propagation="none" value="Terminate session"/>
+                </p>
+            </a:outputPanel>
+        </s:fragment>
+    </div>
+</div>
+
+</h:body>
 
 
 </f:view>
