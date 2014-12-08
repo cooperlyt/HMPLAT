@@ -6,6 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 template="/layout/full-template.xhtml">
 
     <ui:param name="functionTitle" value="#{taskInstance.name}"/>
@@ -53,14 +54,15 @@
         <br/>
         <r:tabPanel switchType="client">
 
-
+            <dh:entryGrid styleClass="detailsTable" >
             <ui:include src="/layout/system/SubscribeTabPageView.xhtml">
                 <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
             </ui:include>
-
+            </dh:entryGrid>
             <r:tab header="#{messages.BusinessViewUploadFiles}">
 
             </r:tab>
+
         </r:tabPanel>
 
 

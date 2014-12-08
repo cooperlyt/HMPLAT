@@ -5,11 +5,12 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:h="http://java.sun.com/jsf/html">
 
 
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+
+        <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.Land_Number}"/>
             <h:outputText value="#{landInfo.number}"/>
 
@@ -21,11 +22,9 @@
 
             <h:outputText value="#{messages.Land_EndUseTime}"/>
             <h:outputText value="#{landInfo.endUseTime}"/>
-        </h:panelGrid>
-        <h:panelGrid columns="6" styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,details4ValueCol,detailsTitleCol,details4ValueCol,detailsTitleCol,detailsLastValueCol">
+        </dh:entryGridBlock>
 
-
+        <dh:entryGridBlock columns="6" >
             <a:outputPanel style="text-align: center">
                 <ui:include src="/layout/long-text-display.xhtml">
                     <ui:param name="value" value="#{messages.Land_LandGetMode}"/>
@@ -38,8 +37,11 @@
             <h:outputText value="#{dictionary.getWordValue(landInfo.landProperty)}"/>
 
             <h:outputText value="#{messages.Land_Area}"/>
-            <h:outputText value="#{landInfo.landArea}"/>
-        </h:panelGrid>
+            <dh:entryGridColumn colspan="2">
+              <h:outputText value="#{landInfo.landArea}"/>
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
 
 
 </ui:composition>
