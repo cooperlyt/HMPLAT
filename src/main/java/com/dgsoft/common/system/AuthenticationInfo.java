@@ -59,6 +59,12 @@ public class AuthenticationInfo implements java.io.Serializable {
                 }
             }
         }
+        Collections.sort(result,new Comparator<Function>() {
+            @Override
+            public int compare(Function o1, Function o2) {
+                return Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
+            }
+        });
         return result;
     }
 

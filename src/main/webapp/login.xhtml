@@ -3,38 +3,51 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                template="layout/template.xhtml">
-
-    <ui:define name="pageContent">
-
-        <h:messages id="messages" globalOnly="true" styleClass="message"
-                    errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
-                    rendered="#{showGlobalMessages != 'false'}"/>
-
-        <h1>#{messages.Welcome} ! #{messages.PleaseLoginHere}</h1>
-        <r:panel>
-            <h:panelGrid columns="2">
-                <h:graphicImage style="padding-left: 20px; padding-right: 20px" width="190px" height="190px" value="/img/seamlogo.png" alt="Seam logo"/>
-                <h:form id="loginForm">
-                    <div class="dialog">
-                        <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
-                            <h:outputLabel for="username">#{messages.login_userName}</h:outputLabel>
-                            <h:inputText id="username"
-                                         value="#{credentials.username}"/>
-                            <h:outputLabel for="password">#{messages.login_password}</h:outputLabel>
-                            <h:inputSecret id="password"
-                                           value="#{credentials.password}"/>
-
-                        </h:panelGrid>
-                    </div>
-                    <div class="actionButtons">
-                        <h:commandButton id="submit" value="#{messages.login}" action="#{identity.login}"/>
-                    </div>
-                </h:form>
-            </h:panelGrid>
-        </r:panel>
+                template="layout/template-base.xhtml">
 
 
+    <ui:define name="body">
+
+
+        <div class="flash-messages container">
+            <r:messages/>
+        </div>
+
+        <div class="auth-form" id="login">
+            <h:form>
+                <r:focus/>
+
+                <div class="auth-form-header">
+                    <h1>#{messages.Welcome} ! #{messages.PleaseLoginHere}</h1>
+                </div>
+                <div class="auth-form-body">
+                    <label for="login_field">
+                        #{messages.login_userName}
+                    </label>
+
+
+                    <h:inputText id="login_field" styleClass="input-block" required="true"
+                                 label="#{messages.login_userName}"
+                                 value="#{credentials.username}"/>
+                    <label for="password">
+                        #{messages.login_password}
+                    </label>
+
+                    <h:inputSecret id="password" styleClass="input-block" required="true"
+                                   label="#{messages.login_password}"
+                                   value="#{credentials.password}"/>
+
+                    <h:commandButton id="loginButton" styleClass="button" data-loading-text="Signing in…"
+                                     value="#{messages.login}" action="#{identity.login}"
+                                     onclick="$(this).button('loading');"/>
+
+
+                </div>
+            </h:form>
+
+        </div>
     </ui:define>
+
 </ui:composition>

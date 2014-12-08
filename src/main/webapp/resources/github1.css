@@ -2269,11 +2269,11 @@ p.explain .minibutton {
 
 @font-face{
     font-family:'octicons';
-    src:url(#{facesContext.externalContext.requestContextPath}/resources/octicons.eot) format("embedded-opentype"),
-    url(#{facesContext.externalContext.requestContextPath}/resources/octicons.woff) format("woff"),
-    url(#{facesContext.externalContext.requestContextPath}/resources/octicons.ttf) format("truetype");
+    src:url(#{facesContext.externalContext.requestContextPath}/resources/fonts/octicons.eot) format("embedded-opentype"),
+    url(#{facesContext.externalContext.requestContextPath}/resources/fonts/octicons.woff) format("woff"),
+    url(#{facesContext.externalContext.requestContextPath}/resources/fonts/octicons.ttf) format("truetype");
     font-weight:normal;
-    font-style:normal
+    font-style:normal;
 }
 
 
@@ -5656,7 +5656,7 @@ body.menu-active .modal-backdrop {
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a.zeroclipboard-is-hover {
     color: #fff;
     text-decoration: none;
-    background-color: #4183c4
+    background: #4183c4
 }
 
 .dropdown-menu > li > a:hover > .octicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon {

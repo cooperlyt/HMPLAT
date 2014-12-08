@@ -27,6 +27,7 @@ public class Function implements OrderModel, java.io.Serializable {
 	private String banner;
 	private int priority;
 	private String memo;
+    private boolean needConversations;
 
 	public Function() {
 	}
@@ -140,6 +141,14 @@ public class Function implements OrderModel, java.io.Serializable {
 		this.memo = memo;
 	}
 
+    @Column(name = "NEED_CONVERSATION",nullable = false)
+    public boolean isNeedConversations() {
+        return needConversations;
+    }
+
+    public void setNeedConversations(boolean needConversations) {
+        this.needConversations = needConversations;
+    }
 
     @Override
     public int hashCode(){

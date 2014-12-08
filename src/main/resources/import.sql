@@ -60,10 +60,10 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.processInstanceMgr', '流程管理', 'DAY_WORK', '', '/func/system/jbpm/ProcessInstanceMgr.xhtml', '', '6', '');
 
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.districtMgr', '行政区管理', 'DATA_MGR', '', '/func/house/datas/DistrictMgr.xhtml', '', '1', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.sectionMgr', '小区管理', 'DATA_MGR', '', '/func/house/datas/SectionMgr.xhtml', '', '2', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.projectMgr', '项目管理', 'DATA_MGR', '', '/func/house/datas/ProjectMgr.xhtml', '', '3', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.houseMgr', '房屋管理', 'DATA_MGR', '', '/func/house/datas/HouseMgr.xhtml', '', '4', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.houseMgr', '房屋管理', 'DATA_MGR', '', '/func/house/datas/HouseMgr.xhtml', '', '2', '');
+
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.map.baseData', '测绘基础数据', 'DATA_MGR', '', '/func/house/datas/BaseDataMgr.xhtml', '', '1', '',b'0');
+
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.Developer', '开发商管理', 'DATA_MGR', '', '/func/house/datas/DeveloperMgr.xhtml', '', '1', '');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.MappingCorporation', '测绘机构管理', 'DATA_MGR', '', '/func/house/datas/MappingCorporationMgr.xhtml', '', '2', '');
@@ -94,9 +94,8 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.per
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.word');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.processInstanceMgr');
 
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.districtMgr');
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.sectionMgr');
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.projectMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.map.baseData');
+
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.houseMgr');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.Developer');

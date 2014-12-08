@@ -8,9 +8,14 @@
     -moz-border-radius: 0 0 2px 2px;
     border-radius: 0 0 3px 3px;
     width: 600px;
-    margin: 11px 0 0 0px;
+    margin: 11px 0 0 -28px;
     left: 0;
 
+}
+
+.logo-icon{
+    display:inline-block;
+    float: left;
 }
 
 #main-navigation .dropdown{
@@ -18,6 +23,21 @@
     float: left;
 }
 
+
+.header-nav-item .badge {
+    display: inline-block;
+    min-width: 8px;
+    padding: 2px 5px;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: text-top;
+    background-color: #777;
+    border-radius: 10px
+}
 
 .sub-cats{
     float: left;
@@ -86,6 +106,53 @@
     background-image: url(../img/default_user.jpg);
 }
 
+.funtion-nav{
+    top: 4px;
+    z-index: 50;
+    min-height: 22px;
+    margin-left: 0px;
+    padding: 5px 10px 0px 10px;
+    border-left: 1px solid transparent;
+    border-top: 1px solid transparent;
+    font-size: 25px;
+    color: #444;
+    cursor: pointer;
+    text-decoration: none;
+    outline: 0;
+}
+
+.funtion-nav:hover{
+
+    background-color: #FFF;
+    text-decoration: none;
+}
+.funtion-nav:focus{
+    background-color: #FFF;
+    text-decoration: none;
+    border-color: #598fd5 #ddd;
+    border-radius: 3px 3px 0 0;
+    border-style: solid;
+    border-width: 2px 1px 0;
+    box-shadow: 2px 0 0 #eee;
+}
+
+#func-navigation .dropdown{
+    display: inline-block;
+}
+
+#func-navigation .container{
+    padding-left: 0px;
+}
+
+.funcTitle{
+    font-size: 20px;
+    color: #444;
+    cursor: pointer;
+    text-decoration: none;
+    outline: 0;
+    width: 200px;
+    vertical-align: middle;
+}
 
 
 

@@ -6,9 +6,9 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:r="http://richfaces.org/rich"
                 xmlns:a="http://richfaces.org/a4j"
-                template="layout/templete-base.xhtml">
+                template="/layout/template.xhtml">
 
-    <div class="container">
+
         <a:outputPanel rendered="#{identity.loggedIn}">
             logined
         </a:outputPanel>
@@ -17,7 +17,6 @@
             not login
         </a:outputPanel>
 
-    </div>
 
 
 </ui:composition>
