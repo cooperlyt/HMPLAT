@@ -15,8 +15,12 @@ import javax.validation.constraints.Size;
 @Table(name = "FUNCTION",catalog = "DB_PLAT_SYSTEM")
 public class Function implements OrderModel, java.io.Serializable {
 
+    public enum FunctionCategory{
+        DATA_MGR,TOTAL_REPORT,DAY_WORK;
+    }
+
 	private String id;
-	private FuncCategory funcCategory;
+	private FunctionCategory funcCategory;
 	private String name;
 	private String icon;
 	private String location;
@@ -27,7 +31,7 @@ public class Function implements OrderModel, java.io.Serializable {
 	public Function() {
 	}
 
-	public Function(String id, FuncCategory funcCategory, String name,
+	public Function(String id, FunctionCategory funcCategory, String name,
 			String icon, String location, int priority) {
 		this.id = id;
 		this.funcCategory = funcCategory;
@@ -36,7 +40,7 @@ public class Function implements OrderModel, java.io.Serializable {
 		this.location = location;
 		this.priority = priority;
 	}
-	public Function(String id, FuncCategory funcCategory, String name,
+	public Function(String id, FunctionCategory funcCategory, String name,
 			String icon, String location, String banner, int priority,
 			String memo) {
 		this.id = id;
@@ -63,14 +67,14 @@ public class Function implements OrderModel, java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CATEGORY", nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "CATEGORY", nullable = false, length = 20)
 	@NotNull
-	public FuncCategory getFuncCategory() {
+	public FunctionCategory getFuncCategory() {
 		return this.funcCategory;
 	}
 
-	public void setFuncCategory(FuncCategory funcCategory) {
+	public void setFuncCategory(FunctionCategory funcCategory) {
 		this.funcCategory = funcCategory;
 	}
 

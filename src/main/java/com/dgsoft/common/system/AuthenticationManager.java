@@ -53,7 +53,7 @@ public class AuthenticationManager {
 
             Employee loginEmployee;
             if (identity.getCredentials().getUsername().equals("root") && identity.getCredentials().getPassword().equals("dgsoft")) {
-                loginEmployee = new Employee("root");
+                loginEmployee = new Employee("root","Root");
 
                 roles.addAll(systemEntityManager.createQuery("select r from Role r").getResultList());
 
@@ -84,7 +84,7 @@ public class AuthenticationManager {
 
             Collections.sort(funcRoles, OrderBeanComparator.getInstance());
             authInfo.setFunctionRoleList(funcRoles);
-            authInfo.generateFuncCategorys();
+            //authInfo.generateFuncCategorys();
             authInfo.setLoginEmployee(loginEmployee);
             generateBusinessCategorys(roles);
             return true;

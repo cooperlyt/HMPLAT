@@ -22,18 +22,15 @@ public class FunctionHome extends SystemEntityHome<Function> {
 
 	private static final long serialVersionUID = -240634452292133862L;
 
-    @In (required = false)
-    private FuncCategoryHome funcCategoryHome;
-
     @In (create = true)
     private SystemEntityQuery funcListCount;
 
     public void addFuncCategoryInfo(){
-       if (getInstance() !=null){
-           getInstance().setFuncCategory(funcCategoryHome.getInstance());
-           long count = (Long)funcListCount.getSingleResult();
-           getInstance().setPriority((int)count);
-       }
+//       if (getInstance() !=null){
+//           getInstance().setFuncCategory(funcCategoryHome.getInstance());
+//           long count = (Long)funcListCount.getSingleResult();
+//           getInstance().setPriority((int)count);
+//       }
     }
 
 

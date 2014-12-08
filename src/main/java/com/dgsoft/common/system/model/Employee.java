@@ -40,6 +40,11 @@ public class Employee implements java.io.Serializable,PersonEntity {
         this.id = id;
     }
 
+    public Employee(String name, String id) {
+        enable = true;
+        this.name = name;
+        this.id = id;
+    }
 
     public Employee(Organization organization) {
         enable = true;

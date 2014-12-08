@@ -50,25 +50,24 @@ INSERT INTO FUNC_CATEGORY (ID, NAME, ICON, PRIORITY, MEMO) VALUES ('house.data.a
 
 
 -- 功能
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.param', '系统参数管理', 'system.config', '', '/func/system/config/SystemParams.seam', '', '2', '系统运行方式设置');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.person', '人员维护', 'system.manager', '', '/func/system/manager/PersonMgr.seam', '', '3', '管理自然人');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.businessConfig','业务管理','system.config','','/func/system/config/BusinessMgr.seam','','3','业务处理配置');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.employee','员工管理','system.manager', '', '/func/system/manager/EmployeeMgr.seam','','4','员工和组织机构管理');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.role','角色管理','system.config','','/func/system/config/RoleMgr.seam','','4','角色管理和角色分配启动业务');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.word','字典管理','system.manager','','/func/system/manager/WordMgr.seam','','5','字典管理');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.jbpmProcessDeployment','流程部署','system.config','','/func/system/jbpm/ProcessDefinition.seam','',7,'部署JBPM PAR 流程');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.param', '系统参数管理', 'DATA_MGR', '', '/func/system/config/SystemParams.xhtml', '', '2', '系统运行方式设置');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.person', '人员维护', 'DATA_MGR', '', '/func/system/manager/PersonMgr.xhtml', '', '3', '管理自然人');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.businessConfig','业务管理','DATA_MGR','','/func/system/config/BusinessMgr.xhtml','','3','业务处理配置');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.employee','员工管理','DATA_MGR', '', '/func/system/manager/EmployeeMgr.xhtml','','4','员工和组织机构管理');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.role','角色管理','DATA_MGR','','/func/system/config/RoleMgr.xhtml','','4','角色管理和角色分配启动业务');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.word','字典管理','DATA_MGR','','/func/system/manager/WordMgr.xhtml','','5','字典管理');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.jbpmProcessDeployment','流程部署','DAY_WORK','','/func/system/jbpm/ProcessDefinition.xhtml','',7,'部署JBPM PAR 流程');
 
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.processInstanceMgr', '流程管理', 'system.manager', '', '/func/system/jbpm/ProcessInstanceMgr.seam', '', '6', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('system.processInstanceMgr', '流程管理', 'DAY_WORK', '', '/func/system/jbpm/ProcessInstanceMgr.xhtml', '', '6', '');
 
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.districtMgr', '行政区管理', 'house.datas', '', '/func/house/datas/DistrictMgr.seam', '', '1', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.sectionMgr', '小区管理', 'house.datas', '', '/func/house/datas/SectionMgr.seam', '', '2', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.projectMgr', '项目管理', 'house.datas', '', '/func/house/datas/ProjectMgr.seam', '', '3', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.houseMgr', '房屋管理', 'house.datas', '', '/func/house/datas/HouseMgr.seam', '', '4', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.districtMgr', '行政区管理', 'DATA_MGR', '', '/func/house/datas/DistrictMgr.xhtml', '', '1', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.sectionMgr', '小区管理', 'DATA_MGR', '', '/func/house/datas/SectionMgr.xhtml', '', '2', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.projectMgr', '项目管理', 'DATA_MGR', '', '/func/house/datas/ProjectMgr.xhtml', '', '3', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.houseMgr', '房屋管理', 'DATA_MGR', '', '/func/house/datas/HouseMgr.xhtml', '', '4', '');
 
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.Developer', '开发商管理', 'house.data.attachCorp', '', '/func/house/datas/DeveloperMgr.seam', '', '1', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.MappingCorporation', '测绘机构管理', 'house.data.attachCorp', '', '/func/house/datas/MappingCorporationMgr.seam', '', '2', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.EvaluateCorporation', '评估机构管理', 'house.data.attachCorp', '', '/func/house/datas/EvaluateCorporationMgr.seam', '', '3', '');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.FinancialCorporation', '金融机构管理', 'house.data.attachCorp', '', '/func/house/datas/FinancialCorporationMgr.seam', '', '4', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.Developer', '开发商管理', 'DATA_MGR', '', '/func/house/datas/DeveloperMgr.xhtml', '', '1', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.MappingCorporation', '测绘机构管理', 'DATA_MGR', '', '/func/house/datas/MappingCorporationMgr.xhtml', '', '2', '');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO) VALUES ('house.EvaluateCorporation', '评估机构管理', 'DATA_MGR', '', '/func/house/datas/EvaluateCorporationMgr.xhtml', '', '3', '');
 
 
 -- 角色
