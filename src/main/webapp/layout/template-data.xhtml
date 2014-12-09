@@ -12,6 +12,7 @@
     <ui:define name="func-body">
         <div id="func-navigation" class="pagehead codesearch-head">
             <div class="container">
+                <div style="float: left;width: 250px;">
                 <div class="dropdown">
                     <a id="dLabel" class="funtion-nav" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
@@ -21,20 +22,26 @@
 
                     </a>
 
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <ul class="dropdown-menu dropdown-menu-left " aria-labelledby="dLabel">
                         <a:repeat value="#{authInfo.dataFunctions}" var="_func">
                             <li>
                                 <s:link propagation="end" view="#{_func.location}">
                                             <span
                                                     class="glyphicon glyphicon-align-justify"></span>
-                                    <span class="sr-only">Error:</span>#{_func.name}
+                                    <span class="sr-only"></span>#{_func.name}
+                                    <f:param name="funcName" value="#{_func.name}"/>
                                 </s:link>
                             </li>
                         </a:repeat>
                     </ul>
                 </div>
-                <span class="funcTitle">Catgecory</span>
+                <span class="funcTitle">#{funcName}</span>
+                </div>
+                <ui:insert name="head-right"/>
             </div>
+        </div>
+        <div class="container">
+            <ui:insert/>
         </div>
     </ui:define>
 </ui:composition>

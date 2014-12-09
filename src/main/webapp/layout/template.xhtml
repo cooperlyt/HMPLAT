@@ -24,7 +24,7 @@
                             </input>
 
 
-                            <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <div class="dropdown-menu dropdown-menu-git" role="menu" aria-labelledby="dLabel">
 
                                 <div class="sub-cats">
                                     <div class="titles">
@@ -38,7 +38,9 @@
                                     <ul class="col">
                                         <a:repeat value="#{authInfo.dataFunctions}" var="_func">
                                             <li><s:link value="#{_func.name}" propagation="endRoot"
-                                                        view="#{_func.location}"/></li>
+                                                        view="#{_func.location}">
+                                                <f:param name="funcName" value="#{_func.name}"/>
+                                                        </s:link></li>
                                         </a:repeat>
 
                                     </ul>
@@ -47,7 +49,9 @@
 
                                         <a:repeat value="#{authInfo.totalFunctions}" var="_func">
                                             <li><s:link value="#{_func.name}" propagation="endRoot"
-                                                        view="#{_func.location}"/></li>
+                                                        view="#{_func.location}">
+                                                <f:param name="funcName" value="#{_func.name}"/>
+                                                        </s:link></li>
                                         </a:repeat>
                                     </ul>
 
@@ -55,7 +59,9 @@
 
                                         <a:repeat value="#{authInfo.workFunctions}" var="_func">
                                             <li><s:link value="#{_func.name}" propagation="endRoot"
-                                                        view="#{_func.location}"/></li>
+                                                        view="#{_func.location}">
+                                                <f:param name="funcName" value="#{_func.name}"/>
+                                                        </s:link></li>
                                         </a:repeat>
                                     </ul>
                                 </div>
@@ -85,7 +91,7 @@
                             <span class="dropdown-caret"></span>
                         </a>
 
-                        <ul class="dropdown-menu" style="margin-top: 30px;" aria-labelledby="userLabel">
+                        <ul class="dropdown-menu dropdown-menu-git" style="margin-top: 30px;" aria-labelledby="userLabel">
                             <a:repeat value="#{authInfo.functionRoleList}" var="_roleCategory">
                                 <li>
                                     <s:link propagation="end" view="/home.xhtml">
@@ -157,11 +163,13 @@
 
 
     <ui:define name="body">
-        <div class="container">
-            <ui:insert name="func-body">
+        <ui:insert name="func-body">
+            <div class="container">
+
                 <ui:insert/>
-            </ui:insert>
-        </div>
+
+            </div>
+        </ui:insert>
     </ui:define>
 
 </ui:composition>

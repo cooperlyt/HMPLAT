@@ -16,6 +16,8 @@
         <navigation from-action="#{identity.logout}">
             <redirect view-id="/home.xhtml"/>
         </navigation>
+
+        <param name="funcName"/>
     </page>
 
     <page view-id="/func/*" login-required="true">

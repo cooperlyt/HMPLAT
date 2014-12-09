@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+    <param name="districtOperator" value="#{districtList.restrictionLogicOperator}"/>
+    <param name="districtFirstResult" value="#{districtList.firstResult}"/>
+    <param name="districtSort" value="#{districtList.orderColumn}"/>
+    <param name="districtSir" value="#{districtList.orderDirection}"/>
+
+    <param name="sectionOperator" value="#{sectionList.restrictionLogicOperator}"/>
+    <param name="sectionFirstResult" value="#{sectionList.firstResult}"/>
+    <param name="sectionSort" value="#{sectionList.orderColumn}"/>
+    <param name="sectionSir" value="#{sectionList.orderDirection}"/>
+
+    <param name="projectOperator" value="#{projectList.restrictionLogicOperator}"/>
+    <param name="projectFirstResult" value="#{projectList.firstResult}"/>
+    <param name="projectSort" value="#{projectList.orderColumn}"/>
+    <param name="projectDir" value="#{projectList.orderDirection}"/>
+
+    <param name="devOperator" value="#{developerList.restrictionLogicOperator}"/>
+    <param name="devFirstResult" value="#{developerList.firstResult}"/>
+    <param name="devSort" value="#{developerList.orderColumn}"/>
+    <param name="devDir" value="#{developerList.orderDirection}"/>
+
+    <param name="dataType" value="#{baseMapDataMgr.dataTypeName}"/>
+    <param name="oneSearchType" value="#{baseMapDataMgr.oneSearchType}" converterId="org.jboss.seam.ui.EnumConverter"/>
+
+    <param name="oneCondition" value="#{baseMapDataMgr.oneCondition}"/>
+
+</page>

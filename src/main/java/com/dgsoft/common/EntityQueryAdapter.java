@@ -20,6 +20,12 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
 
     private static final String COUNT_PATTERN = "select\\s*count\\([^\\)+]\\)";
 
+    @Override
+    public void setRestrictionLogicOperator(String operator){
+        super.setRestrictionLogicOperator(operator);
+        refresh();
+    }
+
     public List<Long> getShowPageNumbers(Long maxPageCount) {
         long halfCount = (maxPageCount.longValue() - 1) / 2;
         long beginPage = getPage().longValue() - halfCount;

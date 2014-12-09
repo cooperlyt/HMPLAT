@@ -18,20 +18,13 @@ public class DeveloperList extends HouseEntityQuery<Developer>{
     private static final String EJBQL = "select developer from Developer developer";
 
     private static final String[] RESTRICTIONS = {
-            "lower(developer.name) like lower(concat('%',#{developerList.name},'%'))"};
+            "lower(developer.name) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
+            "lower(developer.id) like lower(concat('%',#{baseMapDataMgr.developerId},'%'))"};
 
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public DeveloperList() {
         setEjbql(EJBQL);
+        setRestrictionLogicOperator("or");
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setMaxResults(25);
     }

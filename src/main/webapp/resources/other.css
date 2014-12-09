@@ -1,3 +1,9 @@
+form {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 #main-navigation .dropdown-menu{
     z-index: 9999;
     background: #fff;
@@ -114,7 +120,7 @@
     padding: 5px 10px 0px 10px;
     border-left: 1px solid transparent;
     border-top: 1px solid transparent;
-    font-size: 25px;
+    font-size: 23px;
     color: #444;
     cursor: pointer;
     text-decoration: none;
@@ -129,7 +135,7 @@
 .funtion-nav:focus{
     background-color: #FFF;
     text-decoration: none;
-    border-color: #598fd5 #ddd;
+    border-color: #d26911 #ddd;
     border-radius: 3px 3px 0 0;
     border-style: solid;
     border-width: 2px 1px 0;
@@ -140,8 +146,8 @@
     display: inline-block;
 }
 
-#func-navigation .container{
-    padding-left: 0px;
+#func-navigation .dropdown-menu{
+
 }
 
 .funcTitle{
@@ -151,8 +157,79 @@
     text-decoration: none;
     outline: 0;
     width: 200px;
-    vertical-align: middle;
 }
+
+
+.dropdown-menu-git {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 100;
+    width: 160px;
+    margin-top: 2px;
+    margin-left: -80px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15)
+}
+
+.dropdown-menu-git:before {
+    position: absolute;
+    top: -16px;
+    left: 72px;
+    display: inline-block;
+    content: "";
+    border: 8px solid transparent;
+    border-bottom-color: #ccc;
+    border-bottom-color: rgba(0, 0, 0, 0.15)
+}
+
+.dropdown-menu-git:after {
+    position: absolute;
+    top: -14px;
+    left: 73px;
+    display: inline-block;
+    content: "";
+    border: 7px solid transparent;
+    border-bottom-color: #fff
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 4px 10px 4px 38px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.dropdown-menu > li > a > .octicon,  .dropdown-menu > li > a > .glyphicon{
+    float: left;
+    margin-top: 1px;
+    margin-left: -23px;
+    opacity: 0.5
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a.zeroclipboard-is-hover {
+    color: #fff;
+    text-decoration: none;
+    background: #4183c4
+}
+
+.dropdown-menu > li > a:hover > .octicon,.dropdown-menu > li > a:hover > .glyphicon , .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon ,.dropdown-menu > li > a.zeroclipboard-is-hover > .glyphicon{
+    color: inherit;
+    opacity: 1
+}
+
+.dropdown-noicon > li > a {
+    padding: 3px 20px;
+}
+
 
 
 

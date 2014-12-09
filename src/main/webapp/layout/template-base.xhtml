@@ -26,11 +26,21 @@
 
 <h:outputStylesheet library="bootstrap" name="bootstrap-theme.min.css"/>
 <h:outputStylesheet library="bootstrap" name="bootstrap.min.css"/>
+<h:outputStylesheet library="bootstrap" name="bootstrap-select.min.css"/>
 <h:outputScript library="bootstrap" name="bootstrap.min.js"/>
+<h:outputScript library="bootstrap" name="bootstrap-select.min.js"/>
 <h:outputStylesheet name="github1.css"/>
 <h:outputStylesheet name="github2.css"/>
 <h:outputStylesheet name="other.css"/>
 <h:outputStylesheet name="adapter.css"/>
+
+    <h:outputScript>
+        $(document).ready(
+            function(){
+                $('.selectpicker').selectpicker();
+            }
+        );
+    </h:outputScript>
 
 <div class="wrapper">
     <div class="header">

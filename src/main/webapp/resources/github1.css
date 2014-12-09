@@ -318,6 +318,8 @@ pre {
     width: 980px;
     margin-right: auto;
     margin-left: auto
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .container:before {
@@ -5598,71 +5600,6 @@ body.menu-active .modal-backdrop {
     border-bottom-color: transparent
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    z-index: 100;
-    width: 160px;
-    margin-top: 2px;
-    margin-left: -80px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15)
-}
-
-.dropdown-menu:before {
-    position: absolute;
-    top: -16px;
-    left: 72px;
-    display: inline-block;
-    content: "";
-    border: 8px solid transparent;
-    border-bottom-color: #ccc;
-    border-bottom-color: rgba(0, 0, 0, 0.15)
-}
-
-.dropdown-menu:after {
-    position: absolute;
-    top: -14px;
-    left: 73px;
-    display: inline-block;
-    content: "";
-    border: 7px solid transparent;
-    border-bottom-color: #fff
-}
-
-.dropdown-menu > li > a {
-    display: block;
-    padding: 4px 10px 4px 38px;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis
-}
-
-.dropdown-menu > li > a > .octicon {
-    float: left;
-    margin-top: 1px;
-    margin-left: -23px;
-    opacity: 0.5
-}
-
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a.zeroclipboard-is-hover {
-    color: #fff;
-    text-decoration: none;
-    background: #4183c4
-}
-
-.dropdown-menu > li > a:hover > .octicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon {
-    color: inherit;
-    opacity: 1
-}
 
 .dropdown-divider {
     height: 1px;
