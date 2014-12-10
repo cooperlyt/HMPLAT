@@ -57,49 +57,58 @@
 
 
 <div class="columns">
-    <div class="column one-fourth codesearch-aside">
-        <nav class="menu">
-            <s:link styleClass="menu-item #{((empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')) ? 'selected' : ''}"
-                    propagation="none">
-                #{messages.Project}
-                <h:outputText styleClass="counter" value="#{projectList.resultCount}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <f:param name="dataType" value="PROJECT_MGR"/>
-            </s:link>
-            <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'SECTION_MGR') ? 'selected' : ''}"
-                    propagation="none">
-                #{messages.Section}
-                <h:outputText styleClass="counter" value="#{sectionList.resultCount}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <f:param name="dataType" value="SECTION_MGR"/>
-            </s:link>
-            <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DISTRICT_MGR') ? 'selected' : ''}"
-                    propagation="none">
-                #{messages.District}
-                <h:outputText styleClass="counter" value="#{districtList.resultCount}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <f:param name="dataType" value="DISTRICT_MGR"/>
-            </s:link>
-            <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DEVELOPER_MGR') ? 'selected' : ''}"
-                    propagation="none">
-                #{messages.Developer}
-                <h:outputText styleClass="counter" value="#{developerList.resultCount}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <f:param name="dataType" value="DEVELOPER_MGR"/>
-            </s:link>
-        </nav>
-    </div>
-    <div class="column three-fourths codesearch-results">
+<div class="column one-fourth codesearch-aside">
+    <nav class="menu">
+        <s:link styleClass="menu-item #{((empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')) ? 'selected' : ''}"
+                propagation="none">
+            #{messages.Project}
+            <h:outputText styleClass="counter" value="#{projectList.resultCount}">
+                <f:convertNumber type="number" groupingUsed="true"/>
+            </h:outputText>
+            <f:param name="dataType" value="PROJECT_MGR"/>
+        </s:link>
+        <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'SECTION_MGR') ? 'selected' : ''}"
+                propagation="none">
+            #{messages.Section}
+            <h:outputText styleClass="counter" value="#{sectionList.resultCount}">
+                <f:convertNumber type="number" groupingUsed="true"/>
+            </h:outputText>
+            <f:param name="dataType" value="SECTION_MGR"/>
+        </s:link>
+        <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DISTRICT_MGR') ? 'selected' : ''}"
+                propagation="none">
+            #{messages.District}
+            <h:outputText styleClass="counter" value="#{districtList.resultCount}">
+                <f:convertNumber type="number" groupingUsed="true"/>
+            </h:outputText>
+            <f:param name="dataType" value="DISTRICT_MGR"/>
+        </s:link>
+        <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DEVELOPER_MGR') ? 'selected' : ''}"
+                propagation="none">
+            #{messages.Developer}
+            <h:outputText styleClass="counter" value="#{developerList.resultCount}">
+                <f:convertNumber type="number" groupingUsed="true"/>
+            </h:outputText>
+            <f:param name="dataType" value="DEVELOPER_MGR"/>
+        </s:link>
+    </nav>
+</div>
+<div class="column three-fourths codesearch-results">
+
+    <s:div styleClass="blankslate" rendered="#{baseMapDataMgr.emptyResult}">
+           <span class="mega-octicon octicon-search"></span>
+        <h3>#{messages.EmptyResult}</h3>
+        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.create}"/>#{' '} #{messages.Or}  #{messages.Try} #{' '}<s:link value="#{messages.AvancedSearch}"/> </p>
+    </s:div>
+
+    <a:outputPanel rendered="#{not baseMapDataMgr.emptyResult}">
         <div class="sort-bar">
             <div class="select-menu">
                 <div class="btn-group btn-group-sm">
                     <s:link styleClass="btn btn-primary">
                         <span class="octicon octicon-plus"/>
                     </s:link>
+
                     <div class="btn-group btn-group-sm">
 
 
@@ -113,7 +122,7 @@
                             <div class="select-menu-modal">
                                 <div class="select-menu-header">
                                     <span class="select-menu-title">Sort options</span>
-                                    <span class="octicon octicon-x js-menu-close" aria-label="Close"></span>
+                                    <span class="octicon octicon-x js-menu-close" aria-label="#{messages.close}"></span>
 
                                 </div>
                                 <div class="select-menu-list">
@@ -141,14 +150,6 @@
                 </div>
             </div>
 
-            <a href="#" class="js-menu-close">
-                sss
-            </a>
-            <h:outputScript>
-                $('.select-menu-header').click(function(event){event.stopPropagation();});
-
-                $('.js-menu-close').click(function(){$('.select-menu-modal-holder').dropdown();});
-            </h:outputScript>
             <h3>
                 #{messages.SerachResultCount}#{' '}
                 <h:outputText value="#{projectList.resultCount}"
@@ -268,7 +269,6 @@
                     </a:commandLink>
 
 
-
                     #{' '}
                     <s:link>
                         <span class="glyphicon glyphicon-pencil"/>
@@ -288,8 +288,8 @@
 
         </div>
         <p class="search-foot-note"></p>
-
-    </div>
+    </a:outputPanel>
+</div>
 </div>
 
 </ui:composition>

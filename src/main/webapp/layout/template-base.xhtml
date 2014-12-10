@@ -25,23 +25,17 @@
 <h:body styleClass="env-production page-dashboard">
 
 
-<h:outputStylesheet library="bootstrap" name="bootstrap.min.css"/>
-<h:outputStylesheet library="bootstrap" name="bootstrap-select.min.css"/>
-<h:outputStylesheet library="bootstrap" name="bootstrap-theme.min.css"/>
-<h:outputScript library="bootstrap" name="bootstrap.min.js"/>
-<h:outputScript library="bootstrap" name="bootstrap-select.min.js"/>
-<h:outputStylesheet name="github1.css"/>
-<h:outputStylesheet name="github2.css"/>
+<h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+<h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.min.css"/>
+<h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+
+<h:outputStylesheet library="githut" name="/css/github1.css"/>
+<h:outputStylesheet library="githut" name="/css/github2.css"/>
 <h:outputStylesheet name="other.css"/>
 <h:outputStylesheet name="adapter.css"/>
 
-    <h:outputScript>
-        $(document).ready(
-            function(){
-                $('.selectpicker').selectpicker();
-            }
-        );
-    </h:outputScript>
+
+
 
 <div class="wrapper">
     <div class="header">
@@ -117,6 +111,9 @@
     </div>
 </div>
 
+    <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+    <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.min.js"/>
+    <h:outputScript name="other.js"/>
 </h:body>
 
 
