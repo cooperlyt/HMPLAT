@@ -5205,9 +5205,14 @@ kbd {
 }
 
 .select-menu-modal-holder {
+    border: 0;
+    --webkit-box-shadow: 0 0 0;
+    box-shadow:0 0 0;
     position: absolute;
     display: none;
-    z-index: 21
+    z-index: 21;
+    padding: 0;
+    margin: 0;
 }
 
 .select-menu-modal {

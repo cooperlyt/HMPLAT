@@ -231,5 +231,25 @@ form {
 }
 
 
+.btn-group-sm .octicon{
+    font-size: 18px;
+}
+
+.select-menu-item:focus{
+    background-color: #4183c4;
+    color: #fff;
+}
+.select-menu-item:hover{
+    background-color: #4183c4;
+    color: #fff;
+}
+
+.select-menu-list .selected:focus .select-menu-item-icon{
+    color: #fff;
+}
+
+.select-menu-list .selected:hover .select-menu-item-icon{
+    color: #fff;
+}
 
 

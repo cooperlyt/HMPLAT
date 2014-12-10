@@ -8,240 +8,288 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/template-data.xhtml">
 
-    <ui:define name="head-right">
-        <h:form styleClass="search_repos">
-            <div class="flex-table search-form-fluid">
-                <div class="flex-table-item flex-table-item-primary">
-                    <div class="input-group input-block">
-                        <h:inputText styleClass="form-control" value="#{baseMapDataMgr.oneCondition}"/>
+<ui:define name="head-right">
+    <h:form styleClass="search_repos">
+        <div class="flex-table search-form-fluid">
+            <div class="flex-table-item flex-table-item-primary">
+                <div class="input-group input-block">
+                    <h:inputText styleClass="form-control" value="#{baseMapDataMgr.oneCondition}"/>
 
-                        <div class="input-group-btn">
+                    <div class="input-group-btn">
 
-                            <h:selectOneMenu styleClass="selectpicker" value="#{baseMapDataMgr.oneSearchType}">
-                                <optgroup label="1">
-                                    <s:selectItems value="#{baseMapDataMgr.commonTypes}" var="_item"
-                                                   itemValue="#{_item}"
-                                                   label="#{messages[_item.name()]}"/>
-                                </optgroup>
-                                <optgroup label="2">
-                                    <s:selectItems value="#{baseMapDataMgr.projectTypes}" var="_item"
-                                                   itemValue="#{_item}"
-                                                   label="#{messages[_item.name()]}"/>
-                                </optgroup>
-                                <optgroup label="3">
-                                    <s:selectItems value="#{baseMapDataMgr.sectionTypes}" var="_item"
-                                                   itemValue="#{_item}"
-                                                   label="#{messages[_item.name()]}"/>
-                                </optgroup>
-                                <optgroup label="4">
-                                    <s:selectItems value="#{baseMapDataMgr.districtTypes}" var="_item"
-                                                   itemValue="#{_item}"
-                                                   label="#{messages[_item.name()]}"/>
-                                </optgroup>
-                                <s:convertEnum/>
-                            </h:selectOneMenu>
+                        <h:selectOneMenu styleClass="selectpicker" value="#{baseMapDataMgr.oneSearchType}">
+                            <optgroup label="1">
+                                <s:selectItems value="#{baseMapDataMgr.commonTypes}" var="_item"
+                                               itemValue="#{_item}"
+                                               label="#{messages[_item.name()]}"/>
+                            </optgroup>
+                            <optgroup label="2">
+                                <s:selectItems value="#{baseMapDataMgr.projectTypes}" var="_item"
+                                               itemValue="#{_item}"
+                                               label="#{messages[_item.name()]}"/>
+                            </optgroup>
+                            <optgroup label="3">
+                                <s:selectItems value="#{baseMapDataMgr.sectionTypes}" var="_item"
+                                               itemValue="#{_item}"
+                                               label="#{messages[_item.name()]}"/>
+                            </optgroup>
+                            <optgroup label="4">
+                                <s:selectItems value="#{baseMapDataMgr.districtTypes}" var="_item"
+                                               itemValue="#{_item}"
+                                               label="#{messages[_item.name()]}"/>
+                            </optgroup>
+                            <s:convertEnum/>
+                        </h:selectOneMenu>
 
 
-                        </div>
-                        <!-- /btn-group -->
                     </div>
-                    <!-- /input-group -->
+                    <!-- /btn-group -->
                 </div>
-                <div class="flex-table-item">
-                    <h:commandButton styleClass="button" action="#{baseMapDataMgr.searchByOne}"
-                                     value="#{messages.Search}"/>
-                </div>
+                <!-- /input-group -->
             </div>
-        </h:form>
-    </ui:define>
-
-
-    <div class="columns">
-        <div class="column one-fourth codesearch-aside">
-            <nav class="menu">
-                <s:link styleClass="menu-item #{((empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')) ? 'selected' : ''}"
-                        propagation="none">
-                    #{messages.Project}
-                    <h:outputText styleClass="counter" value="#{projectList.resultCount}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <f:param name="dataType" value="PROJECT_MGR"/>
-                </s:link>
-                <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'SECTION_MGR') ? 'selected' : ''}"
-                        propagation="none">
-                    #{messages.Section}
-                    <h:outputText styleClass="counter" value="#{sectionList.resultCount}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <f:param name="dataType" value="SECTION_MGR"/>
-                </s:link>
-                <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DISTRICT_MGR') ? 'selected' : ''}"
-                        propagation="none">
-                    #{messages.District}
-                    <h:outputText styleClass="counter" value="#{districtList.resultCount}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <f:param name="dataType" value="DISTRICT_MGR"/>
-                </s:link>
-                <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DEVELOPER_MGR') ? 'selected' : ''}"
-                        propagation="none">
-                    #{messages.Developer}
-                    <h:outputText styleClass="counter" value="#{developerList.resultCount}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <f:param name="dataType" value="DEVELOPER_MGR"/>
-                </s:link>
-            </nav>
-        </div>
-        <div class="column three-fourths codesearch-results">
-            <div class="sort-bar">
-                <div class="select-menu">
-
-                </div>
-                <h3>
-                    #{messages.SerachResultCount}#{' '}
-                    <h:outputText value="#{projectList.resultCount}"
-                            rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <h:outputText value="#{sectionList.resultCount}"
-                                  rendered="#{baseMapDataMgr.dataType eq 'SECTION_MGR'}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <h:outputText value="#{districtList.resultCount}"
-                                  rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                    <h:outputText value="#{developerList.resultCount}"
-                                  rendered="#{baseMapDataMgr.dataType eq 'DEVELOPER_MGR'}">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
-                     #{''}#{messages.SerachResultCountPrefx}
-                </h3>
-                <div class="repo-list">
-                    <rich:dataTable value="#{projectList.resultList}" var="_item"
-                            rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
-
-          
-
-                        <rich:column>
-                            <f:facet name="header">
-                                <ui:include src="/layout/a4jSort.xhtml">
-                                    <ui:param name="entityList" value="#{projectList}"/>
-                                    <ui:param name="propertyLabel" value="#{messages.Project_id}"/>
-                                    <ui:param name="propertyPath" value="project.id"/>
-                                </ui:include>
-                            </f:facet>
-                            <s:link value="#{_item.id}" target="_blank" view="/func/house/datas/ProjectView.xhtml">
-                                <f:param name="projectId" value="#{_item.id}"/>
-                            </s:link>
-                        </rich:column>
-
-                        <rich:column>
-                            <f:facet name="header">
-                                <ui:include src="/layout/a4jSort.xhtml">
-                                    <ui:param name="entityList" value="#{projectList}"/>
-                                    <ui:param name="propertyLabel" value="#{messages.Project_name}"/>
-                                    <ui:param name="propertyPath" value="project.name"/>
-                                </ui:include>
-                            </f:facet>
-                            #{_item.name}
-                        </rich:column>
-
-                        <rich:column>
-                            <f:facet name="header">
-                                <ui:include src="/layout/a4jSort.xhtml">
-                                    <ui:param name="entityList" value="#{projectList}"/>
-                                    <ui:param name="propertyLabel" value="#{messages.Developer}"/>
-                                    <ui:param name="propertyPath" value="project.developer.name"/>
-                                </ui:include>
-                            </f:facet>
-                            #{_item.developer.name}
-                        </rich:column>
-
-                        <rich:column>
-                            <f:facet name="header">
-                                <ui:include src="/layout/a4jSort.xhtml">
-                                    <ui:param name="entityList" value="#{projectList}"/>
-                                    <ui:param name="propertyLabel" value="#{messages.Project_finishDate}"/>
-                                    <ui:param name="propertyPath" value="project.completeDate"/>
-                                </ui:include>
-                            </f:facet>
-
-                            #{_item.completeDate}
-                        </rich:column>
-
-                        <rich:column>
-                            <f:facet name="header">
-                                <ui:include src="/layout/a4jSort.xhtml">
-                                    <ui:param name="entityList" value="#{projectList}"/>
-                                    <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
-                                    <ui:param name="propertyPath" value="project.area"/>
-                                </ui:include>
-                            </f:facet>
-                            <h:outputText value="#{_item.area}">
-                                <f:convertNumber pattern="#0.###"/>
-                            </h:outputText>
-                        </rich:column>
-
-                        <rich:column>
-                            <f:facet name="header">
-                                #{messages.Project_address}
-                            </f:facet>
-                            <ui:include src="/layout/long-text-display.xhtml">
-                                <ui:param name="value" value="#{_item.address}"/>
-                                <ui:param name="size" value="8"/>
-                            </ui:include>
-
-                        </rich:column>
-
-                        <rich:column>
-                            <f:facet name="header">
-                                <ui:include src="/layout/a4jSort.xhtml">
-                                    <ui:param name="entityList" value="#{projectList}"/>
-                                    <ui:param name="propertyLabel" value="#{messages.Project_state}"/>
-                                    <ui:param name="propertyPath" value="project.state"/>
-                                </ui:include>
-                            </f:facet>
-                            #{messages[_item.state.name()]}
-                        </rich:column>
-
-                        <rich:column style="text-align: center; width: 60px;">
-                            <f:facet name="header">
-                                <s:link action="create"  pageflow="projectEdit" propagation="begin">
-                                    <s:graphicImage value="/img/icons/create.gif" title="#{messages.CreateNewProject}"/>
-                                </s:link>
-                            </f:facet>
-
-                            <a:commandButton image="/img/icons/delete.png" title="#{messages.delete}" action="#{projectHome.remove}"
-                                             execute="@this" immediate="true" render="dataListResult"
-                                             onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
-                                <a:attachQueue requestDelay="0"/>
-                                <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
-                            </a:commandButton>
-
-                            #{' '}
-                            <s:link>
-                                <s:graphicImage value="/img/icons/edit.png" title="#{messages.edit}"/>
-                            </s:link>
-
-                            #{' '}
-
-                            <s:link target="_blank" view="/func/house/datas/ProjectBuildEdit.xhtml">
-                                <f:param name="projectId" value="#{_item.id}"/>
-                                <s:graphicImage value="/img/icons/buildEdit.png" title="#{messages.Build}"/>
-                            </s:link>
-                        </rich:column>
-
-                    </rich:dataTable>
-                </div>
-                <div class="paginate-container">
-
-                </div>
-                <p class="search-foot-note"> </p>
-
+            <div class="flex-table-item">
+                <h:commandButton styleClass="button" action="#{baseMapDataMgr.searchByOne}"
+                                 value="#{messages.Search}"/>
             </div>
         </div>
+    </h:form>
+</ui:define>
+
+
+<div class="columns">
+    <div class="column one-fourth codesearch-aside">
+        <nav class="menu">
+            <s:link styleClass="menu-item #{((empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')) ? 'selected' : ''}"
+                    propagation="none">
+                #{messages.Project}
+                <h:outputText styleClass="counter" value="#{projectList.resultCount}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <f:param name="dataType" value="PROJECT_MGR"/>
+            </s:link>
+            <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'SECTION_MGR') ? 'selected' : ''}"
+                    propagation="none">
+                #{messages.Section}
+                <h:outputText styleClass="counter" value="#{sectionList.resultCount}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <f:param name="dataType" value="SECTION_MGR"/>
+            </s:link>
+            <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DISTRICT_MGR') ? 'selected' : ''}"
+                    propagation="none">
+                #{messages.District}
+                <h:outputText styleClass="counter" value="#{districtList.resultCount}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <f:param name="dataType" value="DISTRICT_MGR"/>
+            </s:link>
+            <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DEVELOPER_MGR') ? 'selected' : ''}"
+                    propagation="none">
+                #{messages.Developer}
+                <h:outputText styleClass="counter" value="#{developerList.resultCount}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <f:param name="dataType" value="DEVELOPER_MGR"/>
+            </s:link>
+        </nav>
     </div>
+    <div class="column three-fourths codesearch-results">
+        <div class="sort-bar">
+            <div class="select-menu">
+                <div class="btn-group btn-group-sm">
+                    <s:link styleClass="btn btn-primary">
+                        <span class="octicon octicon-plus"/>
+                    </s:link>
+                    <div class="btn-group btn-group-sm">
+
+
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Dropdown
+                            <span class="caret"></span>
+                        </button>
+
+
+                        <div class="dropdown-menu dropdown-menu-right select-menu-modal-holder" aria-hidden="false">
+                            <div class="select-menu-modal">
+                                <div class="select-menu-header">
+                                    <span class="select-menu-title">Sort options</span>
+                                    <span class="octicon octicon-x js-menu-close" aria-label="Close"></span>
+
+                                </div>
+                                <div class="select-menu-list">
+                                    <a class="select-menu-item selected">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">A</span>
+                                    </a>
+                                    <a class="select-menu-item">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">A</span>
+                                    </a>
+                                    <a class="select-menu-item">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">A</span>
+                                    </a>
+                                    <a class="select-menu-item">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">A</span>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="js-menu-close">
+                sss
+            </a>
+            <h:outputScript>
+                $('.select-menu-header').click(function(event){event.stopPropagation();});
+
+                $('.js-menu-close').click(function(){$('.select-menu-modal-holder').dropdown();});
+            </h:outputScript>
+            <h3>
+                #{messages.SerachResultCount}#{' '}
+                <h:outputText value="#{projectList.resultCount}"
+                              rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <h:outputText value="#{sectionList.resultCount}"
+                              rendered="#{baseMapDataMgr.dataType eq 'SECTION_MGR'}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <h:outputText value="#{districtList.resultCount}"
+                              rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                <h:outputText value="#{developerList.resultCount}"
+                              rendered="#{baseMapDataMgr.dataType eq 'DEVELOPER_MGR'}">
+                    <f:convertNumber type="number" groupingUsed="true"/>
+                </h:outputText>
+                #{''}#{messages.SerachResultCountPrefx}
+            </h3>
+        </div>
+        <div class="repo-list">
+            <h:dataTable value="#{projectList.resultList}" var="_item" styleClass="table table-striped table-hover"
+                         rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
+
+
+                <h:column>
+                    <f:facet name="header">
+                        <ui:include src="/layout/a4jSort.xhtml">
+                            <ui:param name="entityList" value="#{projectList}"/>
+                            <ui:param name="propertyLabel" value="#{messages.Project_id}"/>
+                            <ui:param name="propertyPath" value="project.id"/>
+                        </ui:include>
+                    </f:facet>
+                    <s:link value="#{_item.id}" target="_blank" view="/func/house/datas/ProjectView.xhtml">
+                        <f:param name="projectId" value="#{_item.id}"/>
+                    </s:link>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <ui:include src="/layout/a4jSort.xhtml">
+                            <ui:param name="entityList" value="#{projectList}"/>
+                            <ui:param name="propertyLabel" value="#{messages.Project_name}"/>
+                            <ui:param name="propertyPath" value="project.name"/>
+                        </ui:include>
+                    </f:facet>
+                    #{_item.name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <ui:include src="/layout/a4jSort.xhtml">
+                            <ui:param name="entityList" value="#{projectList}"/>
+                            <ui:param name="propertyLabel" value="#{messages.Developer}"/>
+                            <ui:param name="propertyPath" value="project.developer.name"/>
+                        </ui:include>
+                    </f:facet>
+                    #{_item.developer.name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <ui:include src="/layout/a4jSort.xhtml">
+                            <ui:param name="entityList" value="#{projectList}"/>
+                            <ui:param name="propertyLabel" value="#{messages.Project_finishDate}"/>
+                            <ui:param name="propertyPath" value="project.completeDate"/>
+                        </ui:include>
+                    </f:facet>
+
+                    #{_item.completeDate}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <ui:include src="/layout/a4jSort.xhtml">
+                            <ui:param name="entityList" value="#{projectList}"/>
+                            <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
+                            <ui:param name="propertyPath" value="project.area"/>
+                        </ui:include>
+                    </f:facet>
+                    <h:outputText value="#{_item.area}">
+                        <f:convertNumber pattern="#0.###"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Project_address}
+                    </f:facet>
+                    <ui:include src="/layout/long-text-display.xhtml">
+                        <ui:param name="value" value="#{_item.address}"/>
+                        <ui:param name="size" value="8"/>
+                    </ui:include>
+
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <ui:include src="/layout/a4jSort.xhtml">
+                            <ui:param name="entityList" value="#{projectList}"/>
+                            <ui:param name="propertyLabel" value="#{messages.Project_state}"/>
+                            <ui:param name="propertyPath" value="project.state"/>
+                        </ui:include>
+                    </f:facet>
+                    #{messages[_item.state.name()]}
+                </h:column>
+
+                <h:column style="text-align: center; width: 60px;">
+
+                    <a:commandLink action="#{projectHome.remove}" title="#{messages.delete}"
+                                   execute="@this" immediate="true" render="dataListResult"
+                                   onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                        <span class="glyphicon glyphicon-remove"/>
+                        <a:attachQueue requestDelay="0"/>
+                        <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+                    </a:commandLink>
+
+
+
+                    #{' '}
+                    <s:link>
+                        <span class="glyphicon glyphicon-pencil"/>
+                    </s:link>
+
+                    #{' '}
+
+                    <s:link target="_blank" view="/func/house/datas/ProjectBuildEdit.xhtml">
+                        <f:param name="projectId" value="#{_item.id}"/>
+                        <span class="glyphicon glyphicon-th"/>
+                    </s:link>
+                </h:column>
+
+            </h:dataTable>
+        </div>
+        <div class="paginate-container">
+
+        </div>
+        <p class="search-foot-note"></p>
+
+    </div>
+</div>
 
 </ui:composition>
