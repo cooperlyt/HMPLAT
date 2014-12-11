@@ -230,4 +230,22 @@ public class BaseMapDataMgr {
         sectionList.setRestrictionLogicOperator("or");
         projectList.setRestrictionLogicOperator("or");
     }
+
+    public String createNew(){
+        if (dataType == null) {
+            return "project-create";
+        }
+        switch (dataType) {
+            case SECTION_MGR:
+                return "section-create";
+            case DISTRICT_MGR:
+                return "district-create";
+            case DEVELOPER_MGR:
+                return "developer-create";
+            case PROJECT_MGR:
+                return "project-create";
+            default:
+                throw new IllegalArgumentException("not Define dataType");
+        }
+    }
 }

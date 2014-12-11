@@ -25,6 +25,7 @@ public class SectionList extends HouseEntityQuery<Section> {
             "lower(section.id) like lower(concat('%',#{baseMapDataMgr.sectionId},'%'))",
             "lower(section.name) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
             "lower(section.address) like lower(concat('%',#{baseMapDataMgr.sectionAddress},'%'))",
+            "lower(section.pyCode) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
 
             "lower(section.name) like lower(concat('%',#{sectionSearchCondition.sectionName},'%'))",
             "section.district.id = #{sectionSearchCondition.districtId}"};

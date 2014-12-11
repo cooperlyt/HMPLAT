@@ -27,6 +27,7 @@ public class ProjectList extends HouseEntityQuery<Project>{
             "lower(project.section.id) like lower(concat('%',#{baseMapDataMgr.sectionId},'%'))",
             "lower(project.section.name) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
             "lower(project.section.address) like lower(concat('%',#{baseMapDataMgr.sectionAddress},'%'))",
+            "lower(project.section.pyCode) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
 
             "lower(project.id) like lower(concat('%',#{baseMapDataMgr.projectId},'%'))",
             "lower(project.name) like lower(concat('%',#{baseMapDataMgr.projectName},'%'))",

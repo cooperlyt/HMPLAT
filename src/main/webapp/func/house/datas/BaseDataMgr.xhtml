@@ -95,200 +95,313 @@
 </div>
 <div class="column three-fourths codesearch-results">
 
-    <s:div styleClass="blankslate" rendered="#{baseMapDataMgr.emptyResult}">
-           <span class="mega-octicon octicon-search"></span>
-        <h3>#{messages.EmptyResult}</h3>
-        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.create}"/>#{' '} #{messages.Or}  #{messages.Try} #{' '}<s:link value="#{messages.AvancedSearch}"/> </p>
-    </s:div>
+<s:div styleClass="blankslate" rendered="#{baseMapDataMgr.emptyResult}">
+    <span class="mega-octicon octicon-search"></span>
 
-    <a:outputPanel rendered="#{not baseMapDataMgr.emptyResult}">
-        <div class="sort-bar">
-            <div class="select-menu">
-                <div class="btn-group btn-group-sm">
-                    <s:link styleClass="btn btn-primary">
-                        <span class="octicon octicon-plus"/>
-                    </s:link>
+    <h3>#{messages.EmptyResult}</h3>
 
-                    <div class="btn-group btn-group-sm">
+    <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.create}"/>#{' '} #{messages.Or}  #{messages.Try} #{' '}
+        <s:link value="#{messages.AvancedSearch}"/></p>
+</s:div>
 
+<a:outputPanel rendered="#{not baseMapDataMgr.emptyResult}">
+<div class="sort-bar">
+    <div class="select-menu">
+        <div class="btn-group btn-group-sm">
+            <s:link styleClass="btn btn-primary" action="#{baseMapDataMgr.createNew}"
+                    aria-label="#{messages.create}#{messages[baseMapDataMgr.dataType.name()]}">
+                <span class="octicon octicon-plus"/>
+            </s:link>
 
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Dropdown
-                            <span class="caret"></span>
-                        </button>
+            <div class="btn-group btn-group-sm">
 
 
-                        <div class="dropdown-menu dropdown-menu-right select-menu-modal-holder" aria-hidden="false">
-                            <div class="select-menu-modal">
-                                <div class="select-menu-header">
-                                    <span class="select-menu-title">Sort options</span>
-                                    <span class="octicon octicon-x js-menu-close" aria-label="#{messages.close}"></span>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
 
-                                </div>
-                                <div class="select-menu-list">
-                                    <a class="select-menu-item selected">
-                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                        <span class="select-menu-item-text">A</span>
-                                    </a>
-                                    <a class="select-menu-item">
-                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                        <span class="select-menu-item-text">A</span>
-                                    </a>
-                                    <a class="select-menu-item">
-                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                        <span class="select-menu-item-text">A</span>
-                                    </a>
-                                    <a class="select-menu-item">
-                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                        <span class="select-menu-item-text">A</span>
-                                    </a>
 
-                                </div>
-                            </div>
+                <div class="dropdown-menu dropdown-menu-right select-menu-modal-holder" aria-hidden="false">
+                    <div class="select-menu-modal">
+                        <div class="select-menu-header">
+                            <span class="select-menu-title">Sort options</span>
+                            <span class="octicon octicon-x js-menu-close" aria-label="#{messages.close}"></span>
+
+                        </div>
+                        <div class="select-menu-list">
+                            <a class="select-menu-item selected">
+                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                <span class="select-menu-item-text">A</span>
+                            </a>
+                            <a class="select-menu-item">
+                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                <span class="select-menu-item-text">A</span>
+                            </a>
+                            <a class="select-menu-item">
+                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                <span class="select-menu-item-text">A</span>
+                            </a>
+                            <a class="select-menu-item">
+                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                <span class="select-menu-item-text">A</span>
+                            </a>
+
                         </div>
                     </div>
                 </div>
             </div>
-
-            <h3>
-                #{messages.SerachResultCount}#{' '}
-                <h:outputText value="#{projectList.resultCount}"
-                              rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <h:outputText value="#{sectionList.resultCount}"
-                              rendered="#{baseMapDataMgr.dataType eq 'SECTION_MGR'}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <h:outputText value="#{districtList.resultCount}"
-                              rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                <h:outputText value="#{developerList.resultCount}"
-                              rendered="#{baseMapDataMgr.dataType eq 'DEVELOPER_MGR'}">
-                    <f:convertNumber type="number" groupingUsed="true"/>
-                </h:outputText>
-                #{''}#{messages.SerachResultCountPrefx}
-            </h3>
         </div>
-        <div class="repo-list">
-            <h:dataTable value="#{projectList.resultList}" var="_item" styleClass="table table-striped table-hover"
-                         rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
+    </div>
+
+    <h3>
+        #{messages.SerachResultCount}#{' '}
+        <h:outputText value="#{projectList.resultCount}"
+                      rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
+            <f:convertNumber type="number" groupingUsed="true"/>
+        </h:outputText>
+        <h:outputText value="#{sectionList.resultCount}"
+                      rendered="#{baseMapDataMgr.dataType eq 'SECTION_MGR'}">
+            <f:convertNumber type="number" groupingUsed="true"/>
+        </h:outputText>
+        <h:outputText value="#{districtList.resultCount}"
+                      rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
+            <f:convertNumber type="number" groupingUsed="true"/>
+        </h:outputText>
+        <h:outputText value="#{developerList.resultCount}"
+                      rendered="#{baseMapDataMgr.dataType eq 'DEVELOPER_MGR'}">
+            <f:convertNumber type="number" groupingUsed="true"/>
+        </h:outputText>
+        #{''}#{messages.SerachResultCountPrefx}
+    </h3>
+</div>
+<div class="repo-list">
+    <h:dataTable id="projectDataTable" value="#{projectList.resultList}" var="_item"
+                 styleClass="table table-striped table-hover"
+                 rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
 
 
-                <h:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{projectList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Project_id}"/>
-                            <ui:param name="propertyPath" value="project.id"/>
-                        </ui:include>
-                    </f:facet>
-                    <s:link value="#{_item.id}" target="_blank" view="/func/house/datas/ProjectView.xhtml">
-                        <f:param name="projectId" value="#{_item.id}"/>
-                    </s:link>
-                </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{projectList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Project_id}"/>
+                    <ui:param name="propertyPath" value="project.id"/>
+                </ui:include>
+            </f:facet>
+            <s:link value="#{_item.id}" target="_blank" view="/func/house/datas/ProjectView.xhtml">
+                <f:param name="projectId" value="#{_item.id}"/>
+            </s:link>
+        </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{projectList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Project_name}"/>
-                            <ui:param name="propertyPath" value="project.name"/>
-                        </ui:include>
-                    </f:facet>
-                    #{_item.name}
-                </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{projectList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Project_name}"/>
+                    <ui:param name="propertyPath" value="project.name"/>
+                </ui:include>
+            </f:facet>
+            #{_item.name}
+        </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{projectList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Developer}"/>
-                            <ui:param name="propertyPath" value="project.developer.name"/>
-                        </ui:include>
-                    </f:facet>
-                    #{_item.developer.name}
-                </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{projectList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Developer}"/>
+                    <ui:param name="propertyPath" value="project.developer.name"/>
+                </ui:include>
+            </f:facet>
+            #{_item.developer.name}
+        </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{projectList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Project_finishDate}"/>
-                            <ui:param name="propertyPath" value="project.completeDate"/>
-                        </ui:include>
-                    </f:facet>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{projectList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
+                    <ui:param name="propertyPath" value="project.area"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_item.area}">
+                <f:convertNumber pattern="#0.###"/>
+            </h:outputText>
+        </h:column>
 
-                    #{_item.completeDate}
-                </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.Project_address}
+            </f:facet>
+            <ui:include src="/layout/long-text-display.xhtml">
+                <ui:param name="value" value="#{_item.address}"/>
+                <ui:param name="size" value="8"/>
+            </ui:include>
 
-                <h:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{projectList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Project_area}"/>
-                            <ui:param name="propertyPath" value="project.area"/>
-                        </ui:include>
-                    </f:facet>
-                    <h:outputText value="#{_item.area}">
-                        <f:convertNumber pattern="#0.###"/>
-                    </h:outputText>
-                </h:column>
+        </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.Project_address}
-                    </f:facet>
-                    <ui:include src="/layout/long-text-display.xhtml">
-                        <ui:param name="value" value="#{_item.address}"/>
-                        <ui:param name="size" value="8"/>
-                    </ui:include>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/a4jSort.xhtml">
+                    <ui:param name="entityList" value="#{projectList}"/>
+                    <ui:param name="propertyLabel" value="#{messages.Project_state}"/>
+                    <ui:param name="propertyPath" value="project.state"/>
+                </ui:include>
+            </f:facet>
+            #{messages[_item.state.name()]}
+        </h:column>
 
-                </h:column>
+        <h:column style="text-align: center; width: 60px;">
 
-                <h:column>
-                    <f:facet name="header">
-                        <ui:include src="/layout/a4jSort.xhtml">
-                            <ui:param name="entityList" value="#{projectList}"/>
-                            <ui:param name="propertyLabel" value="#{messages.Project_state}"/>
-                            <ui:param name="propertyPath" value="project.state"/>
-                        </ui:include>
-                    </f:facet>
-                    #{messages[_item.state.name()]}
-                </h:column>
-
-                <h:column style="text-align: center; width: 60px;">
-
-                    <a:commandLink action="#{projectHome.remove}" title="#{messages.delete}"
-                                   execute="@this" immediate="true" render="dataListResult"
-                                   onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
-                        <span class="glyphicon glyphicon-remove"/>
-                        <a:attachQueue requestDelay="0"/>
-                        <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
-                    </a:commandLink>
+            <a:commandLink action="#{projectHome.remove}" title="#{messages.delete}"
+                           execute="@this" immediate="true" render="dataListResult"
+                           onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                <span class="glyphicon glyphicon-remove"/>
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+            </a:commandLink>
 
 
-                    #{' '}
-                    <s:link>
-                        <span class="glyphicon glyphicon-pencil"/>
-                    </s:link>
+            #{' '}
+            <s:link>
+                <span class="glyphicon glyphicon-pencil"/>
+            </s:link>
 
-                    #{' '}
+            #{' '}
 
-                    <s:link target="_blank" view="/func/house/datas/ProjectBuildEdit.xhtml">
-                        <f:param name="projectId" value="#{_item.id}"/>
-                        <span class="glyphicon glyphicon-th"/>
-                    </s:link>
-                </h:column>
+            <s:link target="_blank" view="/func/house/datas/ProjectBuildEdit.xhtml">
+                <f:param name="projectId" value="#{_item.id}"/>
+                <span class="glyphicon glyphicon-th"/>
+            </s:link>
+        </h:column>
 
-            </h:dataTable>
-        </div>
-        <div class="paginate-container">
+    </h:dataTable>
 
-        </div>
-        <p class="search-foot-note"></p>
-    </a:outputPanel>
+    <h:dataTable id="sectionDataTable" value="#{sectionList.resultList}" var="_item"
+                 styleClass="table table-striped table-hover"
+                 rendered="#{baseMapDataMgr.dataType eq 'SECTION_MGR'}">
+        <h:column>
+            <f:facet name="header">
+                #{messages.Id}
+            </f:facet>
+            #{_item.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.District}
+            </f:facet>
+            #{_item.district.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.Name}
+            </f:facet>
+            #{_item.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.Section_address}
+            </f:facet>
+            #{_item.address}
+        </h:column>
+        <h:column>
+            <a:commandLink action="#{projectHome.remove}" title="#{messages.delete}"
+                           execute="@this" immediate="true" render="dataListResult"
+                           onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                <span class="glyphicon glyphicon-remove"/>
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+            </a:commandLink>
+
+
+            #{' '}
+            <s:link>
+                <span class="glyphicon glyphicon-pencil"/>
+            </s:link>
+        </h:column>
+    </h:dataTable>
+
+
+    <h:dataTable id="developerDataTable" value="#{developerList.resultList}" var="_item"
+                 styleClass="table table-striped table-hover"
+                 rendered="#{baseMapDataMgr.dataType eq 'DEVELOPER_MGR'}">
+
+        <h:column>
+            <f:facet name="header">
+                #{messages.Id}
+            </f:facet>
+            <h:outputText styleClass="#{_item.destroyed ? 'delete-data' : ''}" value="#{_item.id}">
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.Name}
+            </f:facet>
+            <h:outputText styleClass="#{_item.destroyed ? 'delete-data' : ''}"
+                          value="#{_item.name}">
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <a:commandLink action="#{projectHome.remove}" title="#{messages.delete}"
+                           execute="@this" immediate="true" render="dataListResult"
+                           onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                <span class="glyphicon glyphicon-remove"/>
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+            </a:commandLink>
+
+
+            #{' '}
+            <s:link>
+                <span class="glyphicon glyphicon-pencil"/>
+            </s:link>
+        </h:column>
+    </h:dataTable>
+
+    <h:dataTable id="districtDataTable" value="#{districtList.resultList}" var="_item"
+                 styleClass="table table-striped table-hover"
+                 rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
+        <h:column>
+            <f:facet name="header">
+                #{messages.Id}
+            </f:facet>
+            #{_item.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.Name}
+            </f:facet>
+            #{_item.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                #{messages.District_shortName}
+            </f:facet>
+            #{_item.shortName}
+        </h:column>
+        <h:column>
+            <a:commandLink action="#{projectHome.remove}" title="#{messages.delete}"
+                           execute="@this" immediate="true" render="dataListResult"
+                           onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                <span class="glyphicon glyphicon-remove"/>
+                <a:attachQueue requestDelay="0"/>
+                <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+            </a:commandLink>
+
+
+            #{' '}
+            <s:link>
+                <span class="glyphicon glyphicon-pencil"/>
+            </s:link>
+        </h:column>
+    </h:dataTable>
+
+</div>
+<div class="paginate-container">
+
+</div>
+<p class="search-foot-note"></p>
+</a:outputPanel>
 </div>
 </div>
 
