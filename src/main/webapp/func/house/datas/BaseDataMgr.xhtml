@@ -17,27 +17,19 @@
 
                     <div class="input-group-btn">
 
-                        <h:selectOneMenu styleClass="selectpicker" value="#{baseMapDataMgr.oneSearchType}">
-                            <optgroup label="1">
+                        <h:selectOneMenu styleClass="selectpicker select-menu-btn" value="#{baseMapDataMgr.oneSearchType}">
                                 <s:selectItems value="#{baseMapDataMgr.commonTypes}" var="_item"
                                                itemValue="#{_item}"
                                                label="#{messages[_item.name()]}"/>
-                            </optgroup>
-                            <optgroup label="2">
                                 <s:selectItems value="#{baseMapDataMgr.projectTypes}" var="_item"
                                                itemValue="#{_item}"
                                                label="#{messages[_item.name()]}"/>
-                            </optgroup>
-                            <optgroup label="3">
                                 <s:selectItems value="#{baseMapDataMgr.sectionTypes}" var="_item"
                                                itemValue="#{_item}"
                                                label="#{messages[_item.name()]}"/>
-                            </optgroup>
-                            <optgroup label="4">
                                 <s:selectItems value="#{baseMapDataMgr.districtTypes}" var="_item"
                                                itemValue="#{_item}"
                                                label="#{messages[_item.name()]}"/>
-                            </optgroup>
                             <s:convertEnum/>
                         </h:selectOneMenu>
 

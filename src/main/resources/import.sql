@@ -92,7 +92,6 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.Developer');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.MappingCorporation');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.EvaluateCorporation');
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'house.FinancialCorporation');
 
 
 

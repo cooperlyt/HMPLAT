@@ -4,13 +4,13 @@ form {
     margin-bottom: 0;
 }
 
-#main-navigation .dropdown-menu{
+#main-navigation .dropdown-menu {
     z-index: 9999;
     background: #fff;
     border: 1px solid #ddd;
 
-    -webkit-box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.15);
-    box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.15);
+    -webkit-box-shadow: 1px 3px 4px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 1px 3px 4px 0 rgba(0, 0, 0, 0.15);
     -moz-border-radius: 0 0 2px 2px;
     border-radius: 0 0 3px 3px;
     width: 600px;
@@ -19,17 +19,17 @@ form {
 
 }
 
-.logo-icon{
-    display:inline-block;
+.logo-icon {
+    display: inline-block;
     float: left;
 }
 
-#main-navigation .dropdown{
-    display:inline-block;
+#main-navigation .dropdown {
+    display: inline-block;
     float: left;
 }
 
-.sub-cats{
+.sub-cats {
     float: left;
     padding: 30px 30px 10px 40px;
     overflow: hidden;
@@ -70,7 +70,7 @@ form {
     display: table-row;
 }
 
-.titles ul li{
+.titles ul li {
     vertical-align: top;
     display: table-cell;
     width: 129px;
@@ -85,7 +85,7 @@ form {
     font-size: 12px;
 }
 
-.user-icon{
+.user-icon {
     background-size: 20px 20px;
     border-radius: 50%;
     margin: -1px;
@@ -96,7 +96,7 @@ form {
     background-image: url(../img/default_user.jpg);
 }
 
-.funtion-nav{
+.funtion-nav {
     top: 4px;
     z-index: 50;
     min-height: 22px;
@@ -111,12 +111,13 @@ form {
     outline: 0;
 }
 
-.funtion-nav:hover{
+.funtion-nav:hover {
 
     background-color: #FFF;
     text-decoration: none;
 }
-.funtion-nav:focus{
+
+.funtion-nav:focus {
     background-color: #FFF;
     text-decoration: none;
     border-color: #d26911 #ddd;
@@ -126,15 +127,15 @@ form {
     box-shadow: 2px 0 0 #eee;
 }
 
-#func-navigation .dropdown{
+#func-navigation .dropdown {
     display: inline-block;
 }
 
-#func-navigation .dropdown-menu{
+#func-navigation .dropdown-menu {
 
 }
 
-.funcTitle{
+.funcTitle {
     font-size: 20px;
     color: #444;
     cursor: pointer;
@@ -142,7 +143,6 @@ form {
     outline: 0;
     width: 200px;
 }
-
 
 .dropdown-menu-git {
     position: absolute;
@@ -192,7 +192,7 @@ form {
     text-overflow: ellipsis
 }
 
-.dropdown-menu > li > a > .octicon,  .dropdown-menu > li > a > .glyphicon{
+.dropdown-menu > li > a > .octicon, .dropdown-menu > li > a > .glyphicon {
     float: left;
     margin-top: 1px;
     margin-left: -23px;
@@ -205,7 +205,7 @@ form {
     background: #4183c4
 }
 
-.dropdown-menu > li > a:hover > .octicon,.dropdown-menu > li > a:hover > .glyphicon , .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon ,.dropdown-menu > li > a.zeroclipboard-is-hover > .glyphicon{
+.dropdown-menu > li > a:hover > .octicon, .dropdown-menu > li > a:hover > .glyphicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .glyphicon {
     color: inherit;
     opacity: 1
 }
@@ -214,30 +214,47 @@ form {
     padding: 3px 20px;
 }
 
-
-.btn-group-sm .octicon{
+.btn-group-sm .octicon {
     font-size: 18px;
 }
 
-.select-menu-item:focus{
-    background-color: #4183c4;
-    color: #fff;
-}
-.select-menu-item:hover{
+.select-menu-item:focus {
     background-color: #4183c4;
     color: #fff;
 }
 
-.select-menu-list .selected:focus .select-menu-item-icon{
+.select-menu-item:hover {
+    background-color: #4183c4;
     color: #fff;
 }
 
-.select-menu-list .selected:hover .select-menu-item-icon{
+.select-menu-list .selected:focus .select-menu-item-icon {
     color: #fff;
 }
 
-.delete-data{
+.select-menu-list .selected:hover .select-menu-item-icon {
+    color: #fff;
+}
+
+.delete-data {
     color: #c7254e;
     text-decoration: line-through;
 }
 
+.select-menu-btn {
+
+}
+
+.select-menu-btn .selectpicker:focus {
+    outline: 0 !important;
+    outline: 0px auto -webkit-focus-ring-color !important;
+    /* outline-offset: -2px; */
+}
+
+.btn-img{
+    display:inline;
+}
+
+.btn-img:focus{
+    outline: 0;
+}
