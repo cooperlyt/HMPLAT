@@ -258,3 +258,53 @@ form {
 .btn-img:focus{
     outline: 0;
 }
+
+.data-dialog{
+
+}
+
+.data-dialog .modal-backdrop{
+    display: block;
+}
+
+.required {
+    color: #FF0000;
+    padding-left: 2px;
+}
+
+.edit-valid input[type="text"]{
+    background-image: url('#{facesContext.externalContext.requestContextPath}/img/octocat-spinner-32.gif');
+    background-size: 16px;
+    background-position-x: 99%;
+}
+
+.edit-success input[type="text"]{
+    background-image: url('#{facesContext.externalContext.requestContextPath}/img/success-edit.png');
+    background-position-x: 99%;
+}
+
+.edit-error input[type="text"]{
+    background-image: url('#{facesContext.externalContext.requestContextPath}/img/error-edit.png');
+    background-position-x: 99%;
+}
+
+.big-edit-msg{
+
+}
+
+.big-edit-msg .rf-msg-err{
+    display: inline-block;
+    padding: 5px;
+    font-size: 11px;
+    color: #494620;
+    background: #f7ea57;
+    border: 1px solid #c0b536;
+    border-top-color: #fff;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    font-weight: bold;
+    position: relative;
+    margin-left: 0;
+}
+
+

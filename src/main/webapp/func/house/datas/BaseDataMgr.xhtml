@@ -48,6 +48,43 @@
 </ui:define>
 
 
+
+    <div class="modal fade data-dialog" id="districtEditPanel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">#{messages.create}#{' '}#{messages.District}</h4>
+                </div>
+                <div class="modal-body">
+                    <h:form id="districtEditPanel_form" role="form">
+                    <s:decorate id="distractField" template="/layout/edit.xhtml">
+                        <ui:define name="label">
+                            #{messages.District_id}
+                        </ui:define>
+                        <ui:param name="for" value="districtIdInput"/>
+                        <h:inputText id="districtIdInput" required="true" styleClass="form-control" maxlength="32"
+                                     label="#{messages.District_id}"
+                                     value="#{districtHome.instance.id}" disabled="#{districtHome.managed}"
+                                        valueChangeListener="#{districtHome.verifyIdAvailable}">
+                            <f:validateRequired/>
+                            <a:ajax event="change" render="distractField" status="districtIdInput_status"/>
+                        </h:inputText>
+
+
+                    </s:decorate>
+                    </h:form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button default" data-dismiss="modal">#{messages.close}</button>
+                    <button type="button" class="button primary">#{messages.save}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 <div class="columns">
 <div class="column one-fourth codesearch-aside">
     <nav class="menu">
@@ -92,7 +129,14 @@
 
     <h3>#{messages.EmptyResult}</h3>
 
-    <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.create}"/>#{' '} #{messages.Or}  #{messages.Try} #{' '}
+    <p>  #{messages.YouCan}#{' '}
+        <a:commandLink value="#{messages.create}" oncomplete="$('#districtEditPanel').modal({backdrop: 'static'});$('#districtEditPanel').modal('show')"
+                       render="districtEditPanel_form"
+                       rendered="#{(baseMapDataMgr.dataType eq 'DISTRICT_MGR')}">
+            <a:attachQueue requestDelay="0"/>
+            <a:param value="" assignTo="#{districtHome.id}"/>
+        </a:commandLink>
+        <s:link value="#{messages.create}" action="#{baseMapDataMgr.createNew}" rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR') or (baseMapDataMgr.dataType eq 'SECTION_MGR')}"/>#{' '} #{messages.Or}  #{messages.Try} #{' '}
         <s:link value="#{messages.AvancedSearch}"/></p>
 </s:div>
 

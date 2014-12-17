@@ -1,55 +1,35 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/layout/template.xhtml">
 
-    <ui:param name="functionTitle" value="#{messages.Section}"/>
 
     <ui:define name="func-body">
 
-        <div style="clear: both"/>
-
-        <div class="flow-steps">
-            <ol class="num4">
-                <li class="current">
-                    <strong class="first">#{messages.ProjectCreateStep1}</strong>
-                </li>
-                <li>
-                    <span>#{messages.ProjectCreateStep2}</span>
-                </li>
-                <li>
-                    <span>#{messages.ProjectCreateStep3}</span>
-                </li>
-
-                <li class="last">
-                    <span>#{messages.ProjectCreateStep5}</span>
-                </li>
-            </ol>
+        <div class="new-repo-container">
+            <r:messages globalOnly="true" ajaxRendered="true"/>
+            <h:form>
+                <s:decorate template="/layout/edit.xhtml">
+                    <ui:define name="label">
+                        #{messages.District}
+                    </ui:define>
+                    <h:selectOneMenu value="#{sectionHome.instance.district}"
+                                     label="#{messages.District}" required="true">
+                        <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                       itemValue="#{_district}" label="#{_district.name}"/>
+                        <f:converter converterId="houseEntityConverter"/>
+                    </h:selectOneMenu>
+                </s:decorate>
+            </h:form>
         </div>
-        <div style="float: right">
-            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
-        </div>
-        <r:messages globalOnly="true" ajaxRendered="true"/>
-
-        <div style="clear: both"/>
-        <br/>
-        <h:form>
-            <ui:include src="/layout/house/SectionEdit.xhtml"/>
 
 
-            <div class="submitbox">
-                <h:panelGrid columns="3">
-                    <h:commandButton styleClass="subbtn"  value="#{messages.complete}" action="next"/>
-                </h:panelGrid>
-            </div>
-
-
-        </h:form>
     </ui:define>
 
 </ui:composition>

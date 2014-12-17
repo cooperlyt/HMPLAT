@@ -5,20 +5,52 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
-    <div class="prop">
+    <div class="form-group #{invalid?'has-error':'has-success'}">
 
-        <s:label styleClass="name">
+
+
+        <s:label for="#{for}" styleClass="control-label #{invalid?'errors':''}">
             <ui:insert name="label"/>
             <s:span styleClass="required" rendered="#{required}">*</s:span>
         </s:label>
 
-        <span class="value">
-                <ui:insert/>
-        </span>
+        <a:outputPanel id="#{for}_inputArea" styleClass="js-form-input #{invalid?'edit-error':'edit-success'}">
+
+
+
+
+            <ui:insert/>
+
+            <a:status id="#{for}_status" name="#{for}_status"
+
+                      onstart="startValid(this);"/>
+        </a:outputPanel>
+
+
+
 
         <span class="error">
-            <ui:insert name="tail"/>
+            <r:message for="#{for}" styleClass="big-edit-msg" />
         </span>
+
+
+
+        <h:outputScript>
+
+
+            function startValid(obj){
+
+               // $(obj).parent().addClass('edit-valid');
+
+                $(document.getElementById(obj.id).parentElement).removeClass('edit-valid');
+                $(document.getElementById(obj.id).parentElement).removeClass('edit-success');
+                $(document.getElementById(obj.id).parentElement).removeClass('edit-error');
+                $(document.getElementById(obj.id).parentElement).addClass('edit-valid');
+
+            }
+
+
+        </h:outputScript>
 
     </div>
 
