@@ -4,24 +4,25 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
-
     <div class="js-input-field #{invalid?'has-error':'has-success'}">
-
-        <s:label for="#{for}" styleClass="control-label #{invalid?'errors':''}">
-            <ui:insert name="label"/>
-            <s:span styleClass="required" rendered="#{required}">*</s:span>
-        </s:label>
-
+        <dl>
+        <dt class="input-label">
+            <s:label for="#{for}" styleClass="control-label #{invalid?'errors':''}">
+                <ui:insert name="label"/>
+                <s:span styleClass="required" rendered="#{required}">*</s:span>
+            </s:label>
+        </dt>
+       <dd>
         <a:outputPanel id="#{for}_inputArea" styleClass="js-form-input #{invalid?'edit-error':'edit-success'}">
             <ui:insert/>
-            <a:status id="#{for}_status" name="#{for}_status"
+            <a:status name="#{status}" rendered="#{not empty status}"
                       onstart="startEditValid(this);"/>
         </a:outputPanel>
-
-        <span class="error">
+        </dd>
+        <dd>
             <r:message for="#{for}" styleClass="edit-below-msg" />
-        </span>
+        </dd>
+        </dl>
 
     </div>
-
 </ui:composition>

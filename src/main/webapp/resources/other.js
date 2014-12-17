@@ -7,8 +7,8 @@ $(document).ready(
 
         $('.modal').on('show.bs.modal', function (e) {
 
-            $('.form-group',document.getElementById(e.target.id)).removeClass('has-success');
-            $('.form-group',document.getElementById(e.target.id)).removeClass('has-error');
+            $('.js-input-field',document.getElementById(e.target.id)).removeClass('has-success');
+            $('.js-input-field',document.getElementById(e.target.id)).removeClass('has-error');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-valid');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-success');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-error');
@@ -18,11 +18,17 @@ $(document).ready(
 );
 
 function initEditInput(){
-    $('.form-group').removeClass('has-success');
-    $('.form-group').removeClass('has-error');
+    $('.js-input-field').removeClass('has-success');
+    $('.js-input-field').removeClass('has-error');
     $('.js-form-input').removeClass('edit-valid');
     $('.js-form-input').removeClass('edit-success');
     $('.js-form-input').removeClass('edit-error');
 }
 
 
+function startEditValid(obj){
+    $(document.getElementById(obj.id).parentElement).removeClass('edit-valid');
+    $(document.getElementById(obj.id).parentElement).removeClass('edit-success');
+    $(document.getElementById(obj.id).parentElement).removeClass('edit-error');
+    $(document.getElementById(obj.id).parentElement).addClass('edit-valid');
+}

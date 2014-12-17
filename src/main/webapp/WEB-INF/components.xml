@@ -43,7 +43,7 @@
 
 
     <persistence:managed-persistence-context name="systemEntityManager" auto-create="true"
-                                             persistence-unit-jndi-name="java:/systemEntityManagerFactory"/>
+                                             persistence-unit-jndi-name="java:/PlatEntityManagerFactory"/>
 
     <!--    other
  <persistence:managed-persistence-context name="entityManager" auto-create="true"

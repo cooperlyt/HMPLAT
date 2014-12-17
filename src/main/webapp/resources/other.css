@@ -275,24 +275,24 @@ form {
 .edit-valid input[type="text"]{
     background-image: url('#{facesContext.externalContext.requestContextPath}/img/octocat-spinner-32.gif');
     background-size: 16px;
-    background-position-x: 99%;
+    background-position-x: 98%;
 }
 
 .edit-success input[type="text"]{
     background-image: url('#{facesContext.externalContext.requestContextPath}/img/success-edit.png');
-    background-position-x: 99%;
+    background-position-x: 98%;
 }
 
 .edit-error input[type="text"]{
     background-image: url('#{facesContext.externalContext.requestContextPath}/img/error-edit.png');
-    background-position-x: 99%;
+    background-position-x: 98%;
 }
 
-.big-edit-msg{
+.edit-below-msg{
 
 }
 
-.big-edit-msg .rf-msg-err{
+.edit-below-msg .rf-msg-err{
     display: inline-block;
     padding: 5px;
     font-size: 11px;
@@ -305,6 +305,35 @@ form {
     font-weight: bold;
     position: relative;
     margin-left: 0;
+}
+
+.edit-below-msg .rf-msg-err .rf-msg-det{
+    font-family: "microsoft yahei", Helvetica, Arial, "宋体", sans-serif;
+    font-weight: bold;
+}
+
+.edit-below-msg .rf-msg-err .rf-msg-det:before{
+     content: "";
+}
+
+.slash{
+    float: left;
+    font-size: 21px;
+    color: #666;
+    padding-top: 32px;
+    margin: 0 8px;
+}
+
+
+.js-input-field dl{
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.modal-header .facebox-header{
+    margin: -15px -15px 0px;
+    padding: 15px 15px 0px;
+    border-bottom: 0;
 }
 
 
