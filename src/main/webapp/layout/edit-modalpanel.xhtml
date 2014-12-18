@@ -2,75 +2,52 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <!--required param:  panelId -->
 
-    <r:popupPanel id="#{panelId}" modal="true" autosized="#{empty autosized? 'true': autosized}"
-                     moveable="true" resizeable="false" height="#{height}" width="#{width}">
 
-        <f:facet name="header">
-            <h:panelGroup id="#{panelId}_title">
+    <div class="modal fade data-dialog" id="#{panelId}" tabindex="-1" role="dialog" aria-labelledby="#{panelId}_ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a:outputPanel id="#{panelId}_controls">
+                    <button type="button" class="facebox-close js-facebox-close" aria-label="#{messages.close}" data-dismiss="modal">
+                        <span class="octicon octicon-remove-close" aria-hidden="true"></span>
+                        <span class="sr-only">#{messages.close}</span></button>
+                    </a:outputPanel>
+                    <a:outputPanel id="#{panelId}_title">
+                        <h2 class="facebox-header" id="#{panelId}_ModalLabel">#{panelTitle}</h2>
+                    </a:outputPanel>
+                </div>
+                <h:form id="#{panelId}_form" role="form">
+                    <s:div styleClass="modal-body">
 
-                <ui:insert name="panelTitle">
-                    <h:outputText value="#{panelTitle}"/>
-                </ui:insert>
-            </h:panelGroup>
-        </f:facet>
-        <f:facet name="controls">
-            <h:panelGrid columns="3">
-                <a:status>
-                    <f:facet name="start">
-                        <h:graphicImage value="/img/connect_title_active.gif"/>
-                    </f:facet>
-                    <f:facet name="stop">
-                        <h:graphicImage value="/img/connect_title.gif"/>
-                    </f:facet>
-                </a:status>
 
-                <br/>
+                        <a:outputPanel id="#{panelId}_inputs">
 
-                <h:panelGroup id="#{panelId}_controls">
-                    <ui:insert name="controls">
-                        <a:commandButton immediate="true"
-                                         execute="@this" image="/img/close.png"
-                                         oncomplete="#{r:component(panelId)}.hide(); return false;">
-                            <s:conversationPropagation type="end"/>
-                            <a:attachQueue requestDelay="0"/>
-                        </a:commandButton>
-                    </ui:insert>
-                </h:panelGroup>
-            </h:panelGrid>
-        </f:facet>
-        <r:messages ajaxRendered="true" globalOnly="true"/>
-        <ui:insert name="panelContent">
-            <h:form id="#{panelId}_form">
-                <ui:insert name="formContent">
-
-                    <r:panel id="#{panelId}_inputs">
-                        <div class="edit">
                             <ui:insert/>
 
                             <div style="clear:both">
                                 <span class="required">*</span>
                                 #{messages.requiredFields}
                             </div>
-                        </div>
-                    </r:panel>
 
 
-                    <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                        <a:outputPanel id="#{panelId}_buttons">
-                            <div class="actionButtons">
-                                <ui:insert name="actionButtons"/>
-                            </div>
+
                         </a:outputPanel>
-                    </h:panelGrid>
-                </ui:insert>
-            </h:form>
-        </ui:insert>
+                    </s:div>
+                    <a:outputPanel layout="block" styleClass="modal-footer" id="#{panelId}_buttons">
+                        <ui:insert name="actionButtons"/>
+                    </a:outputPanel>
+                </h:form>
+            </div>
+        </div>
+    </div>
 
-    </r:popupPanel>
+
+
 
 </ui:composition>

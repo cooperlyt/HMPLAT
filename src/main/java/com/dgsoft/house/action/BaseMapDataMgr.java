@@ -4,6 +4,7 @@ import com.dgsoft.house.BaseMapDataCondition;
 import com.dgsoft.house.model.Developer;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.framework.EntityQuery;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -188,6 +189,59 @@ public class BaseMapDataMgr {
         }
     }
 
+    private EntityQuery<?> getCurEntityQuery() {
+        if (dataType == null) {
+            return projectList;
+        }
+
+        switch (dataType) {
+            case PROJECT_MGR:
+                return projectList;
+            case SECTION_MGR:
+                return sectionList;
+            case DISTRICT_MGR:
+                return districtList;
+            case DEVELOPER_MGR:
+                return developerList;
+            default:
+                throw new IllegalArgumentException("not Define dataType");
+        }
+    }
+
+    public String getOperator() {
+        return getCurEntityQuery().getRestrictionLogicOperator();
+    }
+
+    public void setOperator(String value) {
+        getCurEntityQuery().setRestrictionLogicOperator(value);
+
+    }
+
+    public Integer getFirstResult() {
+        return getCurEntityQuery().getFirstResult();
+    }
+
+    public void setFirstResult(Integer value) {
+        getCurEntityQuery().setFirstResult(value);
+    }
+
+    public String getSort() {
+        return getCurEntityQuery().getOrderColumn();
+    }
+
+    public void setSort(String value) {
+        getCurEntityQuery().setOrderColumn(value);
+    }
+
+    public String getDir() {
+        return getCurEntityQuery().getOrderDirection();
+    }
+
+    public void setDir(String value) {
+        getCurEntityQuery().setOrderDirection(value);
+    }
+
+
     @In(required = false)
     public BaseMapDataCondition baseMapDataCondition;
 
@@ -229,9 +283,10 @@ public class BaseMapDataMgr {
         districtList.setRestrictionLogicOperator("or");
         sectionList.setRestrictionLogicOperator("or");
         projectList.setRestrictionLogicOperator("or");
+
     }
 
-    public String createNew(){
+    public String createNew() {
         if (dataType == null) {
             return "project-create";
         }
