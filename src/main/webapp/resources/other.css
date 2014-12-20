@@ -31,6 +31,9 @@ form {
 .thead-floating thead{
     background-color: #eee;
 }
+.thead-floating .table-tools-header{
+    background-color:#ffffff;
+}
 
 .select-menu-btn:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
     width: 140px;
@@ -291,6 +294,11 @@ form {
     /* outline-offset: -2px; */
 }
 
+.select-menu-item{
+    border-spacing: 0;
+    border-collapse: separate;
+}
+
 .btn-img{
     display:inline;
 }
@@ -379,5 +387,95 @@ form {
 .submit{
     margin: 0 0 0 5px;
 }
+
+.table-actions{
+    margin-left: 20px
+}
+
+.table-action {
+
+    position: relative;
+    font-size: 12px;
+    vertical-align: top;
+
+    float: left;
+    display: block;
+    color: #999;
+    padding: 3px 10px 0 10px;
+}
+
+.table-action .octicon {
+    margin-right: 2px
+}
+
+.table-action .octicon-pencil {
+    font-size: 14px
+}
+
+.table-action:hover {
+    color: #4183c4;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.table-action:active {
+    text-decoration: none;
+}
+.table-action:focus{
+    text-decoration: none;
+}
+
+.glyphicon-switch{
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.bootstrap-switch-container .glyphicon{
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 0 3px;
+}
+
+.table-tools-header{
+    border-bottom: 1px solid #f1f1f1 !important;;
+    padding-right: 0 !important;
+}
+
+.table-tools-header h3{
+    margin: 0;
+}
+
+.table-tools-header .select-menu{
+    float: right;
+}
+
+.table-header{
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+
+    padding: 8px;
+    line-height: 1.42857143;
+    border-top: 1px solid #ddd;
+}
+
+.result-data-table{
+    margin-top: 20px;
+}
+
+.btn-git{
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
 
 

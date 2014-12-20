@@ -23,12 +23,17 @@ public class District implements java.io.Serializable,TreeNode {
 	private Integer version;
 	private String name;
 	private String shortName;
+    private Date createTime;
 	private Set<Section> sections = new HashSet<Section>(0);
 
 	public District() {
 	}
 
-	@Id
+    public District(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 9)
 	@NotNull
 	@Size(max = 9)
@@ -81,6 +86,16 @@ public class District implements java.io.Serializable,TreeNode {
 		this.sections = sections;
 	}
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME",nullable = false)
+    @NotNull
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     @Transient
     public List<Section> getSectionList(){

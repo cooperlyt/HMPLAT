@@ -581,6 +581,11 @@
             });
             oldTop = pos.top;
             oldLeft = pos.left;
+            if (pos.top == 0){
+              $floatContainer.addClass('thead-floating');
+            }else{
+              $floatContainer.removeClass('thead-floating');
+            }
           }
           if(setWidth){
             setFloatWidth();
@@ -588,11 +593,7 @@
           if(setHeight){
             setHeaderHeight();
           }
-          if (pos.top == 0){
-            $floatContainer.addClass('thead-floating');
-          }else{
-            $floatContainer.removeClass('thead-floating');
-          }
+
           var scrollLeft = $scrollContainer.scrollLeft();
           if(!useAbsolutePositioning || oldScrollLeft != scrollLeft){
             $floatContainer.scrollLeft(scrollLeft);

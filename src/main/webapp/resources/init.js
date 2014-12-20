@@ -3,10 +3,22 @@
 $(document).ready(
     function(){
         $('.selectpicker').selectpicker();
+        $('.js-switch').bootstrapSwitch();
         $('.select-menu-header').click(function(event){ if(!$(event.target).hasClass("js-menu-close")) event.stopPropagation();});
         $('.table-floatThead').floatThead({
             useAbsolutePositioning: false
         });
+
+        $('.select-menu').on('show.bs.dropdown',function(){
+            $('.table-floatThead').floatThead('destroy');
+        });
+
+        $('.select-menu').on('hide.bs.dropdown',function(){
+            $('.table-floatThead').floatThead({
+                useAbsolutePositioning: false
+            });
+        });
+
 
         $('.modal').on('show.bs.modal', function (e) {
 

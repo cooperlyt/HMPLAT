@@ -25,6 +25,7 @@ public class Developer implements java.io.Serializable {
     private int version;
     private AttachCorporation attachCorporation;
     private String name;
+    private String pyCode;
     private Set<Demployee> demployees = new HashSet<Demployee>(0);
     private Set<Project> projects = new HashSet<Project>(0);
     private boolean destroyed;
@@ -80,6 +81,16 @@ public class Developer implements java.io.Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Column(name="PYCODE",nullable = true, length = 100)
+    @Size(max = 100)
+    public String getPyCode() {
+        return pyCode;
+    }
+
+    public void setPyCode(String pyCode) {
+        this.pyCode = pyCode;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "developer", orphanRemoval = true, cascade = {CascadeType.ALL})

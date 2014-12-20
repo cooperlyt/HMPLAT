@@ -6,8 +6,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 template="/layout/template-data.xhtml">
-
     <ui:define name="head-right">
         <h:form styleClass="search_repos">
             <div class="flex-table search-form-fluid">
@@ -20,17 +20,9 @@
                             <h:selectOneMenu styleClass="selectpicker select-menu-btn"
                                              value="#{baseMapDataMgr.oneSearchType}">
                                 <s:selectItems value="#{baseMapDataMgr.commonTypes}" var="_item"
-                                               itemValue="#{_item}"
+                                               itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
                                                label="#{messages[_item.name()]}"/>
-                                <s:selectItems value="#{baseMapDataMgr.projectTypes}" var="_item"
-                                               itemValue="#{_item}"
-                                               label="#{messages[_item.name()]}"/>
-                                <s:selectItems value="#{baseMapDataMgr.sectionTypes}" var="_item"
-                                               itemValue="#{_item}"
-                                               label="#{messages[_item.name()]}"/>
-                                <s:selectItems value="#{baseMapDataMgr.districtTypes}" var="_item"
-                                               itemValue="#{_item}"
-                                               label="#{messages[_item.name()]}"/>
+
                                 <s:convertEnum/>
                             </h:selectOneMenu>
 
@@ -42,9 +34,7 @@
                 </div>
                 <div class="flex-table-item">
                     <h:commandButton styleClass="button" action="#{baseMapDataMgr.searchByOne}"
-
                                      value="#{messages.Search}">
-
                     </h:commandButton>
                 </div>
             </div>
@@ -151,7 +141,7 @@
                     <h:outputText styleClass="counter" value="#{projectList.resultCount}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
-                    <f:param name="dataType" value="PROJECT_MGR"/>
+                    <f:param name="dataTypeName" value="PROJECT_MGR"/>
                 </s:link>
                 <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'SECTION_MGR') ? 'selected' : ''}"
                         propagation="none">
@@ -159,7 +149,7 @@
                     <h:outputText styleClass="counter" value="#{sectionList.resultCount}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
-                    <f:param name="dataType" value="SECTION_MGR"/>
+                    <f:param name="dataTypeName" value="SECTION_MGR"/>
                 </s:link>
                 <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DISTRICT_MGR') ? 'selected' : ''}"
                         propagation="none">
@@ -167,7 +157,7 @@
                     <h:outputText styleClass="counter" value="#{districtList.resultCount}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
-                    <f:param name="dataType" value="DISTRICT_MGR"/>
+                    <f:param name="dataTypeName" value="DISTRICT_MGR"/>
                 </s:link>
                 <s:link styleClass="menu-item #{(baseMapDataMgr.dataType eq 'DEVELOPER_MGR') ? 'selected' : ''}"
                         propagation="none">
@@ -175,7 +165,7 @@
                     <h:outputText styleClass="counter" value="#{developerList.resultCount}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
-                    <f:param name="dataType" value="DEVELOPER_MGR"/>
+                    <f:param name="dataTypeName" value="DEVELOPER_MGR"/>
                 </s:link>
             </nav>
         </div>
@@ -207,88 +197,7 @@
             </s:div>
 
             <a:outputPanel rendered="#{not baseMapDataMgr.emptyResult}">
-                <div class="sort-bar">
-                    <div class="select-menu">
-                        <div class="btn-group btn-group-sm">
-                            <s:link styleClass="btn btn-primary" action="#{baseMapDataMgr.createNew}"
-                                    rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR') or (baseMapDataMgr.dataType eq 'SECTION_MGR')}"
-                                    aria-label="#{messages.create}#{messages[baseMapDataMgr.dataType.name()]}">
-                                <span class="octicon octicon-plus"/>
-                            </s:link>
-                            <a:commandLink styleClass="btn btn-primary"
-                                           oncomplete="$('#districtEditPanel').modal({backdrop: 'static'})"
-                                           render="districtEditPanel_form"
-                                           rendered="#{(baseMapDataMgr.dataType eq 'DISTRICT_MGR')}"
-                                           aria-label="#{messages.create}#{messages.District}">
-                                <a:param value="" assignTo="#{districtHome.id}"/>
-                                <a:attachQueue requestDelay="0"/>
-                                <span class="octicon octicon-plus"/>
-                            </a:commandLink>
 
-                            <div class="btn-group btn-group-sm">
-
-
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Dropdown
-                                    <span class="caret"></span>
-                                </button>
-
-
-                                <div class="dropdown-menu dropdown-menu-right select-menu-modal-holder"
-                                     aria-hidden="false">
-                                    <div class="select-menu-modal">
-                                        <div class="select-menu-header">
-                                            <span class="select-menu-title">Sort options</span>
-                                            <span class="octicon octicon-x js-menu-close"
-                                                  aria-label="#{messages.close}"></span>
-
-                                        </div>
-                                        <div class="select-menu-list">
-                                            <a class="select-menu-item selected">
-                                                <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                <span class="select-menu-item-text">A</span>
-                                            </a>
-                                            <a class="select-menu-item">
-                                                <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                <span class="select-menu-item-text">A</span>
-                                            </a>
-                                            <a class="select-menu-item">
-                                                <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                <span class="select-menu-item-text">A</span>
-                                            </a>
-                                            <a class="select-menu-item">
-                                                <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                <span class="select-menu-item-text">A</span>
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3>
-                        #{messages.SerachResultCount}#{' '}
-                        <h:outputText value="#{projectList.resultCount}"
-                                      rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
-                            <f:convertNumber type="number" groupingUsed="true"/>
-                        </h:outputText>
-                        <h:outputText value="#{sectionList.resultCount}"
-                                      rendered="#{baseMapDataMgr.dataType eq 'SECTION_MGR'}">
-                            <f:convertNumber type="number" groupingUsed="true"/>
-                        </h:outputText>
-                        <h:outputText value="#{districtList.resultCount}"
-                                      rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
-                            <f:convertNumber type="number" groupingUsed="true"/>
-                        </h:outputText>
-                        <h:outputText value="#{developerList.resultCount}"
-                                      rendered="#{baseMapDataMgr.dataType eq 'DEVELOPER_MGR'}">
-                            <f:convertNumber type="number" groupingUsed="true"/>
-                        </h:outputText>
-                        #{''}#{messages.SerachResultCountPrefx}
-                    </h3>
-                </div>
                 <div class="repo-list">
                     <h:dataTable id="projectDataTable" value="#{projectList.resultList}" var="_item"
                                  styleClass="table table-striped table-hover table-floatThead"
@@ -472,54 +381,131 @@
                         </h:column>
                     </h:dataTable>
 
+                    <h:outputStylesheet>
+                        .district-id-column {
+                            width: 90px;
+                        }
+
+                        .district-short-name-column {
+                            width: 60px;
+                        }
+
+                        .disistrict-action-column {
+                            width: 160px;
+                        }
+                    </h:outputStylesheet>
+
                     <h:dataTable id="districtDataTable" value="#{districtList.resultList}" var="_item"
-                                 styleClass="table table-striped table-hover table-floatThead"
+                                 styleClass="table table-striped table-hover table-floatThead result-data-table"
+                                 columnClasses="district-id-column,,district-short-name-column,disistrict-action-column"
+                                 headerClass="table-tools-header"
                                  rendered="#{baseMapDataMgr.dataType eq 'DISTRICT_MGR'}">
-                        <h:column>
+
+                        <f:facet name="header">
+
+
+                            <div class="select-menu">
+                                <div class="btn-group btn-group-sm">
+
+                                    <a:commandLink styleClass="btn btn-success"
+                                                   oncomplete="$('#districtEditPanel').modal({backdrop: 'static'})"
+                                                   render="districtEditPanel_form"
+                                                   aria-label="#{messages.create}#{messages.District}">
+                                        <a:param value="" assignTo="#{districtHome.id}"/>
+                                        <a:attachQueue requestDelay="0"/>
+                                        <span class="octicon octicon-plus"/>
+                                    </a:commandLink>
+
+                                    <div class="btn-group btn-group-sm">
+                                        <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                            <ui:param name="caption" value="#{messages[districtList.orderColumn]}"/>
+                                            <ui:define name="caption">
+                                                <i>#{messages.SortBy}:</i>
+                                                <span style="">#{messages[districtList.orderColumn]}</span>
+                                            </ui:define>
+                                            <ui:param name="menuTitle" value="#{messages.SortOption}"/>
+
+                                            <a:repeat value="#{districtList.sortColumns}" var="_col">
+                                                <s:link styleClass="select-menu-item #{(districtList.orderColumn eq _col) ? 'selected': ''}">
+                                                    <f:param name="districtSort" value="#{_col}"/>
+                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                    <span class="select-menu-item-text">#{messages[_col]}</span>
+                                                </s:link>
+                                            </a:repeat>
+                                        </ui:decorate>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h3>
+                                #{messages.SerachResultCount}#{' '}
+                                <h:outputText value="#{districtList.resultCount}">
+                                    <f:convertNumber type="number" groupingUsed="true"/>
+                                </h:outputText>
+                                #{''}#{messages.SerachResultCountPrefx}
+                            </h3>
+                        </f:facet>
+
+                        <h:column headerClass="table-header">
                             <f:facet name="header">
                                 #{messages.Id}
                             </f:facet>
                             #{_item.id}
                         </h:column>
-                        <h:column>
+                        <h:column headerClass="table-header">
                             <f:facet name="header">
                                 #{messages.Name}
                             </f:facet>
                             #{_item.name}
                         </h:column>
-                        <h:column>
+                        <h:column headerClass="table-header">
                             <f:facet name="header">
                                 #{messages.District_shortName}
                             </f:facet>
                             #{_item.shortName}
                         </h:column>
-                        <h:column>
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
 
-                            <a:commandLink styleClass="labels-list-action">
-                                <span class="octicon octicon-pencil"/>
-                                #{messages.edit}
-                                <a:attachQueue requestDelay="0"/>
-                                <a:param value="#{_item.id}" assignTo="#{districtHome.id}"/>
-                            </a:commandLink>
+                                <div class="right">
 
-                            <a:commandLink styleClass="labels-list-action"
-                                           action="#{projectHome.remove}" title="#{messages.delete}"
-                                           execute="@this" immediate="true" render="dataListResult"
-                                           onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
-                                <span class="glyphicon glyphicon-remove"/>
-                                #{messages.delete}
-                                <a:attachQueue requestDelay="0"/>
-                                <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
-                            </a:commandLink>
+                                    <dh:switch value="#{districtList.orderAsc}"
+                                               data-on-text="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
+                                               data-off-text="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
+                                               data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
+                                               data-size="mini" styleClass="js-switch"/>
 
+                                </div>
+                            </f:facet>
 
+                            <div class="table-actions right">
+                                <a:commandLink styleClass="table-action">
+                                    <span class="octicon octicon-pencil"/>
+                                    #{messages.edit}
+                                    <a:attachQueue requestDelay="0"/>
+                                    <a:param value="#{_item.id}" assignTo="#{districtHome.id}"/>
+                                </a:commandLink>
+
+                                <a:commandLink styleClass="table-action"
+                                               action="#{projectHome.remove}" title="#{messages.delete}"
+                                               execute="@this" immediate="true" render="dataListResult"
+                                               onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}">
+                                    <span class="glyphicon glyphicon-remove"/>
+                                    #{messages.delete}
+                                    <a:attachQueue requestDelay="0"/>
+                                    <a:param value="#{_item.id}" assignTo="#{projectHome.id}"/>
+                                </a:commandLink>
+
+                            </div>
 
                         </h:column>
                     </h:dataTable>
 
                 </div>
                 <div class="paginate-container">
-                    <a:outputPanel rendered="#{(empty baseMapDataMgr.dataType) or baseMapDataMgr.dataType eq 'PROJECT_MGR'}">
+                    <a:outputPanel
+                            rendered="#{(empty baseMapDataMgr.dataType) or baseMapDataMgr.dataType eq 'PROJECT_MGR'}">
                         <ui:include src="/layout/pages.xhtml">
                             <ui:param name="entityList" value="#{projectList}"/>
                         </ui:include>

@@ -12,111 +12,115 @@
         contentType="text/html">
 
 
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
-    <title>#{messages.mainTitle}</title>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+        <title>#{messages.mainTitle}</title>
 
-    <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
-
-
-    <ui:insert name="head"/>
-</h:head>
-<h:body styleClass="env-production page-dashboard">
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
 
 
-<h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
-<h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.min.css"/>
-<h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
-
-<h:outputStylesheet library="githut" name="/css/github1.css"/>
-<h:outputStylesheet library="githut" name="/css/github2.css"/>
-<h:outputStylesheet library="githut" name="/css/octicons.css"/>
-
-<h:outputStylesheet name="other.css"/>
+        <ui:insert name="head"/>
+    </h:head>
+    <h:body styleClass="env-production page-dashboard">
 
 
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.min.css"/>
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.min.css"/>
+
+        <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
+        <h:outputStylesheet library="githut" name="/css/github1.css"/>
+        <h:outputStylesheet library="githut" name="/css/github2.css"/>
+        <h:outputStylesheet library="githut" name="/css/octicons.css"/>
+
+        <h:outputStylesheet name="other.css"/>
 
 
-<div class="wrapper">
-    <div class="header">
-        <div class="container clearfix" style="white-space: nowrap;">
-            <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
-                <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
-            </s:link>
+        <div class="wrapper">
+            <div class="header">
+                <div class="container clearfix" style="white-space: nowrap;">
+                    <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
+                        <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
+                    </s:link>
 
-            <ui:insert name="navigation">
-                <h:graphicImage styleClass="site-search" value="/img/logo.png"/>
-            </ui:insert>
+                    <ui:insert name="navigation">
+                        <h:graphicImage styleClass="site-search" value="/img/logo.png"/>
+                    </ui:insert>
 
 
-            <ui:remove>
-                <ul class="header-nav left">
-                    <li class="header-nav-item explore">
-                        <a class="header-nav-link" href="/explore"
-                           data-ga-click="Header, go to explore, text:explore">Explore</a>
-                    </li>
-                    <li class="header-nav-item">
-                        <a class="header-nav-link" href="https://gist.github.com"
-                           data-ga-click="Header, go to gist, text:gist">Gist</a>
-                    </li>
-                    <li class="header-nav-item">
-                        <a class="header-nav-link" href="/blog"
-                           data-ga-click="Header, go to blog, text:blog">Blog</a>
-                    </li>
-                    <li class="header-nav-item">
-                        <a class="header-nav-link" href="https://help.github.com"
-                           data-ga-click="Header, go to help, text:help">Help</a>
-                    </li>
-                </ul>
-            </ui:remove>
+                    <ui:remove>
+                        <ul class="header-nav left">
+                            <li class="header-nav-item explore">
+                                <a class="header-nav-link" href="/explore"
+                                   data-ga-click="Header, go to explore, text:explore">Explore</a>
+                            </li>
+                            <li class="header-nav-item">
+                                <a class="header-nav-link" href="https://gist.github.com"
+                                   data-ga-click="Header, go to gist, text:gist">Gist</a>
+                            </li>
+                            <li class="header-nav-item">
+                                <a class="header-nav-link" href="/blog"
+                                   data-ga-click="Header, go to blog, text:blog">Blog</a>
+                            </li>
+                            <li class="header-nav-item">
+                                <a class="header-nav-link" href="https://help.github.com"
+                                   data-ga-click="Header, go to help, text:help">Help</a>
+                            </li>
+                        </ul>
+                    </ui:remove>
+
+
+                </div>
+            </div>
+
+            <div id="start-of-content" class="accessibility-aid"/>
+            <div class="site clearfix" role="main">
+                <div id="site-container" class="context-loader-container" style="min-height: 450px;">
+                    <ui:insert name="body"/>
+
+                </div>
+                <div class="modal-backdrop"></div>
+            </div>
 
 
         </div>
-    </div>
 
-    <div id="start-of-content" class="accessibility-aid"/>
-    <div class="site clearfix" role="main">
-        <div id="site-container" class="context-loader-container" style="min-height: 450px;">
-            <ui:insert name="body"/>
 
+        <div class="container">
+            <div class="site-footer" role="contentinfo">
+                <p>&#xA9; 2013 Cooper's soft Studio.</p>
+                <s:fragment rendered="#{init.debug}">
+                    <a:outputPanel ajaxRendered="true">
+                        <a:log hotkey="D" mode="popup"/>
+
+                        <p style="margin-top: -0.5em;">
+                            Conversation: id = #{conversation.id}, #{conversation.longRunning ? 'long running' : 'temporary'}#{conversation.nested ? ', nested, parent id = '.concat(conversation.parentId) : ''}
+                            #{' - '}
+                            Ajax4jsf Log (Ctrl+Shift+D)
+                            #{' - '}
+                            <s:link id="debugConsole" view="/debug.xhtml" value="Debug console"
+                                    target="debugConsole"/>
+                            #{' - '}
+                            <s:link id="resetSession" view="/home.xhtml"
+                                    action="#{org.jboss.seam.web.session.invalidate()}"
+                                    propagation="none" value="Terminate session"/>
+                        </p>
+                    </a:outputPanel>
+                </s:fragment>
+            </div>
         </div>
-        <div class="modal-backdrop"></div>
-    </div>
 
 
-</div>
-
-
-<div class="container">
-    <div class="site-footer" role="contentinfo">
-        <p>&#xA9; 2013 Cooper's soft Studio.</p>
-        <s:fragment rendered="#{init.debug}">
-            <a:outputPanel ajaxRendered="true">
-                <a:log hotkey="D" mode="popup"/>
-
-                <p style="margin-top: -0.5em;">
-                    Conversation: id = #{conversation.id}, #{conversation.longRunning ? 'long running' : 'temporary'}#{conversation.nested ? ', nested, parent id = '.concat(conversation.parentId) : ''}
-                    #{' - '}
-                    Ajax4jsf Log (Ctrl+Shift+D)
-                    #{' - '}
-                    <s:link id="debugConsole" view="/debug.xhtml" value="Debug console"
-                            target="debugConsole"/>
-                    #{' - '}
-                    <s:link id="resetSession" view="/home.xhtml"
-                            action="#{org.jboss.seam.web.session.invalidate()}"
-                            propagation="none" value="Terminate session"/>
-                </p>
-            </a:outputPanel>
-        </s:fragment>
-    </div>
-</div>
-
-    <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
-    <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.min.js"/>
-    <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
-    <h:outputScript name="other.js"/>
-</h:body>
+        <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+        <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.min.js"/>
+        <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.min.js"/>
+        <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="init.js"/>
+        </a:outputPanel>
+    </h:body>
 
 
 </f:view>

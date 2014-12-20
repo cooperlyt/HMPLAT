@@ -19,7 +19,10 @@ public class DeveloperList extends HouseEntityQuery<Developer>{
 
     private static final String[] RESTRICTIONS = {
             "lower(developer.name) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
-            "lower(developer.id) like lower(concat('%',#{baseMapDataMgr.developerId},'%'))"};
+            "lower(developer.pyCode) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
+            "lower(developer.id) like lower(concat('%',#{baseMapDataMgr.developerId},'%'))"
+
+    };
 
 
     public DeveloperList() {

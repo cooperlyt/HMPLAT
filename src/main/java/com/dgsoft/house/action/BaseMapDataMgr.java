@@ -5,6 +5,7 @@ import com.dgsoft.house.model.Developer;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityQuery;
+import org.jboss.seam.log.Logging;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -20,11 +21,11 @@ public class BaseMapDataMgr {
         SEARCH_PROJECT_NAME, SEARCH_PROJECT_ID, SEARCH_PROJECT_ADDRESS,
         SEARCH_SECTION_NAME, SEARCH_SECTION_ID, SEARCH_SECTION_ADDRESS,
         SEARCH_DISTRICT_NAME, SEARCH_DISTRICT_ID,
-        SEARCH_DEVELOPER_NAME, SEARCH_DEVELOPER_ID;
+        SEARCH_DEVELOPER_NAME, SEARCH_DEVELOPER_ID
     }
 
     public enum DataType {
-        PROJECT_MGR, SECTION_MGR, DISTRICT_MGR, DEVELOPER_MGR;
+        PROJECT_MGR, SECTION_MGR, DISTRICT_MGR, DEVELOPER_MGR
     }
 
     public Set<OneSearchType> getCommonTypes() {
@@ -63,6 +64,21 @@ public class BaseMapDataMgr {
 
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
+    }
+
+    public String getOneSearchTypeName(){
+        if (oneSearchType == null){
+            return null;
+        }
+        return oneSearchType.name();
+    }
+
+    public void setOneSearchTypeName(String name){
+        if ((name == null) || (name.trim().equals(""))){
+            oneSearchType = null;
+        }else{
+            oneSearchType = OneSearchType.valueOf(name);
+        }
     }
 
     public String getDataTypeName() {
@@ -223,22 +239,6 @@ public class BaseMapDataMgr {
 
     public void setFirstResult(Integer value) {
         getCurEntityQuery().setFirstResult(value);
-    }
-
-    public String getSort() {
-        return getCurEntityQuery().getOrderColumn();
-    }
-
-    public void setSort(String value) {
-        getCurEntityQuery().setOrderColumn(value);
-    }
-
-    public String getDir() {
-        return getCurEntityQuery().getOrderDirection();
-    }
-
-    public void setDir(String value) {
-        getCurEntityQuery().setOrderDirection(value);
     }
 
 

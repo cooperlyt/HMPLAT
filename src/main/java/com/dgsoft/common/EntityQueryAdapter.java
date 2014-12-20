@@ -188,4 +188,19 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
     }
 
 
+    public boolean isOrderAsc(){
+        if ((getOrderDirection() == null) || (getOrderDirection().length() == 0) || getOrderDirection().equals("asc")){
+            return true;
+        }else
+            return false;
+    }
+
+    public void setOrderAsc(boolean value){
+       if(value){
+           setOrderDirection("asc");
+       }else{
+           setOrderDirection("desc");
+       }
+    }
+
 }

@@ -3,7 +3,10 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="dataType" value="#{baseMapDataMgr.dataTypeName}"/>
+
+
+    <param name="dataTypeName" value="#{baseMapDataMgr.dataTypeName}"/>
+    <param name="oneSearchTypeName" value="#{baseMapDataMgr.oneSearchTypeName}"/>
 
 
     <param name="oneCondition" value="#{baseMapDataMgr.oneCondition}"/>
@@ -11,8 +14,19 @@
 
     <param name="operator" value="#{baseMapDataMgr.operator}"/>
     <param name="firstResult" value="#{baseMapDataMgr.firstResult}"/>
-    <param name="sort" value="#{baseMapDataMgr.sort}"/>
-    <param name="dir" value="#{baseMapDataMgr.dir}"/>
+
+
+    <param name="developerSort" value="#{developerList.orderColumn}"/>
+    <param name="districtSort" value="#{districtList.orderColumn}"/>
+    <param name="sectionSort" value="#{sectionList.orderColumn}"/>
+    <param name="projectSort" value="#{projectList.orderColumn}"/>
+
+    <param name="developerDir" value="#{developerList.orderDirection}"/>
+    <param name="districtDir" value="#{districtList.orderDirection}"/>
+    <param name="sectionDir" value="#{sectionList.orderDirection}"/>
+    <param name="projectDir" value="#{projectList.orderDirection}"/>
+
+
 
     <navigation from-action="#{baseMapDataMgr.createNew}">
         <rule if-outcome="project-create">

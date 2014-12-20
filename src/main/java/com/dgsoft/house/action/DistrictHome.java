@@ -9,6 +9,7 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,11 @@ public class DistrictHome extends HouseSimpleEntityHome<District> {
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected District createInstance(){
+        return new District(new Date());
     }
 
 }

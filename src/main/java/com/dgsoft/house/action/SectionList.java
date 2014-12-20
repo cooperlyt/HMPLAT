@@ -21,6 +21,7 @@ public class SectionList extends HouseEntityQuery<Section> {
     private static final String[] RESTRICTIONS = {
             "lower(section.district.name) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
             "lower(section.district.id) like lower(concat('%',#{baseMapDataMgr.districtId},'%'))",
+            "lower(section.district.shortName) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
 
             "lower(section.id) like lower(concat('%',#{baseMapDataMgr.sectionId},'%'))",
             "lower(section.name) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
