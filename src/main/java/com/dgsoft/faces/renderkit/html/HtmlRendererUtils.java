@@ -285,53 +285,41 @@ public final class HtmlRendererUtils {
                 value);
     }
 
-    private static String convertComponentName(String componentProperty) {
-        String result = "";
-        boolean up = false;
-        for (char c : componentProperty.toCharArray()) {
-            if ( c == '_'){
-                up = true;
+//    private static String convertComponentName(String componentProperty) {
+//        String result = "";
+//        boolean up = false;
+//        for (char c : componentProperty.toCharArray()) {
+//            if ( c == '_'){
+//                up = true;
+//
+//            }else{
+//                if (up){
+//                    result = String.valueOf(c).toUpperCase();
+//                    up = false;
+//                }else{
+//                    result += c;
+//                }
+//
+//            }
+//        }
+//        return result;
+//
+//    }
 
-            }else{
-                if (up){
-                    result = String.valueOf(c).toUpperCase();
-                    up = false;
-                }else{
-                    result += c;
-                }
-
-            }
-        }
-        return result;
-
-    }
-
-
-    public static boolean render_html_attribute(ResponseWriter writer,
-                                                UIComponent component, String componentProperty, String htmlAttrName) throws IOException {
-
-        Object value = component.getAttributes().get(htmlAttrName);
-
-        return renderHTMLAttribute(writer, convertComponentName(componentProperty), htmlAttrName,
-                value);
-    }
-
-    private static String convertHtmlAttrName(String componentProperty) {
-        return componentProperty.replace("_", "-");
-    }
-
-    public static boolean render_html_attributes(ResponseWriter writer,
-                                                 UIComponent component, String[] componentProperty) throws IOException {
-
+    public static boolean renderDataAttributes(ResponseWriter writer,
+                                              UIComponent component) throws IOException {
         boolean somethingDone = false;
-        for (int i = 0, len = componentProperty.length; i < len; i++) {
-            String propertyName = componentProperty[i];
-            if (render_html_attribute(writer, component, propertyName, convertHtmlAttrName(propertyName))) {
-                somethingDone = true;
+        for(Map.Entry<String,Object> attribute: component.getAttributes().entrySet()){
+            if (attribute.getKey().startsWith("data-")){
+                if(renderHTMLAttribute(writer, attribute.getKey(), attribute.getKey(),
+                        attribute.getValue())){
+                    somethingDone = true;
+                }
             }
         }
         return somethingDone;
     }
+
 
     /**
      * @return true, if an attribute was written

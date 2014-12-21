@@ -18,22 +18,7 @@ public class UISwitch extends javax.faces.component.UISelectBoolean {
         style,
         styleClass,
         tabindex,
-        title,
-        data_size,
-        data_animate,
-        data_indeterminate,
-        data_inverse,
-        data_radio_all_off,
-        data_on_color,
-        data_off_color,
-        data_on_text,
-        data_off_text,
-        data_label_text,
-        data_handle_width,
-        data_label_width,
-        data_base_class,
-        data_wrapper_class,
-        data_in_link;
+        title;
 
         String toString;
 
@@ -235,125 +220,7 @@ public class UISwitch extends javax.faces.component.UISelectBoolean {
     }
     //switch property
 
-    public String getDataSize() {
-        return (String) getStateHelper().eval(PropertyKeys.data_size);
-    }
 
-    public void setDataSize(String dataSize) {
-        getStateHelper().put(PropertyKeys.data_size, dataSize);
-    }
-
-    public Boolean getDataAnimate() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.data_animate);
-    }
-
-    public void setDataAnimate(Boolean dataAnimate) {
-        getStateHelper().put(PropertyKeys.data_animate, dataAnimate);
-    }
-
-    public Boolean getDataIndeterminate() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.data_indeterminate);
-    }
-
-    public void setDataIndeterminate(Boolean dataIndeterminate) {
-        getStateHelper().put(PropertyKeys.data_indeterminate, dataIndeterminate);
-    }
-
-    public Boolean getDataInverse() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.data_inverse);
-    }
-
-    public void setDataInverse(Boolean dataInverse) {
-        getStateHelper().put(PropertyKeys.data_inverse, dataInverse);
-    }
-
-    public Boolean getDataRadioAllOff() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.data_radio_all_off);
-    }
-
-    public void setDataRadioAllOff(Boolean dataRadioAllOff) {
-        getStateHelper().put(PropertyKeys.data_radio_all_off, dataRadioAllOff);
-    }
-
-    public String getDataOnColor() {
-        return (String) getStateHelper().eval(PropertyKeys.data_on_color);
-    }
-
-    public void setDataOnColor(String dataOnColor) {
-        getStateHelper().put(PropertyKeys.data_on_color, dataOnColor);
-    }
-
-    public String getDataOffColor() {
-        return (String) getStateHelper().eval(PropertyKeys.data_off_color);
-    }
-
-    public void setDataOffColor(String dataOffColor) {
-        getStateHelper().put(PropertyKeys.data_off_color, dataOffColor);
-    }
-
-    public String getDataOnText() {
-        return (String) getStateHelper().eval(PropertyKeys.data_on_text);
-    }
-
-    public void setDataOnText(String dataOnText) {
-        getStateHelper().put(PropertyKeys.data_on_text, dataOnText);
-    }
-
-    public String getDataOffText() {
-        return (String) getStateHelper().eval(PropertyKeys.data_off_text);
-    }
-
-    public void setDataOffText(String dataOffText) {
-        getStateHelper().put(PropertyKeys.data_off_text, dataOffText);
-    }
-
-    public String getDataLabelText() {
-        return (String) getStateHelper().eval(PropertyKeys.data_label_text);
-    }
-
-    public void setDataLabelText(String dataLabelText) {
-        getStateHelper().put(PropertyKeys.data_label_text, dataLabelText);
-    }
-
-    public String getDataHandleWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.data_handle_width);
-    }
-
-    public void setDataHandleWidth(String dataHandleWidth) {
-        getStateHelper().put(PropertyKeys.data_handle_width, dataHandleWidth);
-    }
-
-    public String getDataLabelWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.data_label_width);
-    }
-
-    public void setDataLabelWidth(String dataLabelWidth) {
-        getStateHelper().put(PropertyKeys.data_label_width, dataLabelWidth);
-    }
-
-    public String getDataBaseClass() {
-        return (String) getStateHelper().eval(PropertyKeys.data_base_class);
-    }
-
-    public void setDataBaseClass(String dataBaseClass) {
-        getStateHelper().put(PropertyKeys.data_base_class, dataBaseClass);
-    }
-
-    public String getDataWrapperClass() {
-        return (String) getStateHelper().eval(PropertyKeys.data_wrapper_class);
-    }
-
-    public void setDataWrapperClass(String dataWrapperClass) {
-        getStateHelper().put(PropertyKeys.data_wrapper_class, dataWrapperClass);
-    }
-
-    public Boolean getDataInLink(){
-        return (Boolean) getStateHelper().eval(PropertyKeys.data_in_link);
-    }
-
-    public void setDataInLink(Boolean value){
-        getStateHelper().put(PropertyKeys.data_in_link,value);
-    }
 
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("blur", "change", "click", "valueChange", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select"));
 
