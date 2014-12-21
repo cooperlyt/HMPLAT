@@ -11,6 +11,23 @@ import java.io.IOException;
  */
 public class SwitchRender extends HtmlCheckboxRendererBase {
 
+    private final static String[] SWITCH_PROPERTY = {
+            "data_size",
+            "data_animate",
+            "data_indeterminate",
+            "data_inverse",
+            "data_radio_all_off",
+            "data_on_color",
+            "data_off_color",
+            "data_on_text",
+            "data_off_text",
+            "data_label_text",
+            "data_handle_width",
+            "data_label_width",
+            "data_base_class",
+            "data_wrapper_class",
+            "data_in_link"
+    };
 
     @Override
     protected void renderCheckBoxAttributes(ResponseWriter writer,
