@@ -4,6 +4,9 @@ $(document).ready(
     function(){
         $('.selectpicker').selectpicker();
         $('.js-switch').bootstrapSwitch();
+
+
+
         $('.select-menu-header').click(function(event){ if(!$(event.target).hasClass("js-menu-close")) event.stopPropagation();});
         $('.table-floatThead').floatThead({
             useAbsolutePositioning: false

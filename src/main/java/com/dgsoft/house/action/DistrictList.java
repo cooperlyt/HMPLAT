@@ -30,6 +30,7 @@ public class DistrictList extends HouseEntityQuery<District>{
         setRestrictionLogicOperator("or");
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setOrderColumn("district.createTime");
+        setOrderDirection("desc");
         setMaxResults(25);
     }
 

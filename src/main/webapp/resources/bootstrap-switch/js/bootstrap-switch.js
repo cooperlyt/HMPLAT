@@ -49,8 +49,10 @@
           handleWidth: this.$element.data("handle-width"),
           labelWidth: this.$element.data("label-width"),
           baseClass: this.$element.data("base-class"),
-          wrapperClass: this.$element.data("wrapper-class")
+          wrapperClass: this.$element.data("wrapper-class"),
+          inLink: this.$element.data("in-link")
         }, options);
+
         this.$wrapper = $("<div>", {
           "class": (function(_this) {
             return function() {
@@ -532,16 +534,21 @@
       BootstrapSwitch.prototype._handleHandlers = function() {
         this.$on.on("click.bootstrapSwitch", (function(_this) {
           return function(event) {
-            event.preventDefault();
-            event.stopPropagation();
+            if (!this.options.inLink) {
+              event.preventDefault();
+              event.stopPropagation();
+
+            }
             _this.state(false);
             return _this.$element.trigger("focus.bootstrapSwitch");
           };
         })(this));
         return this.$off.on("click.bootstrapSwitch", (function(_this) {
           return function(event) {
-            event.preventDefault();
-            event.stopPropagation();
+            if (!this.options.inLink) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
             _this.state(true);
             return _this.$element.trigger("focus.bootstrapSwitch");
           };
@@ -657,12 +664,14 @@
     $.fn.bootstrapSwitch = function() {
       var args, option, ret;
       option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+
       ret = this;
       this.each(function() {
         var $this, data;
         $this = $(this);
         data = $this.data("bootstrap-switch");
         if (!data) {
+
           $this.data("bootstrap-switch", data = new BootstrapSwitch(this, option));
         }
         if (typeof option === "string") {
@@ -690,6 +699,7 @@
       labelWidth: "auto",
       baseClass: "bootstrap-switch",
       wrapperClass: "wrapper",
+      inLink: false,
       onInit: function() {},
       onSwitchChange: function() {}
     };

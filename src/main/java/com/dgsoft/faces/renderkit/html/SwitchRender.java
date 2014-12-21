@@ -25,7 +25,8 @@ public class SwitchRender extends HtmlCheckboxRendererBase {
             "data_handle_width",
             "data_label_width",
             "data_base_class",
-            "data_wrapper_class"
+            "data_wrapper_class",
+            "data_in_link"
     };
 
     @Override

@@ -470,13 +470,24 @@
 
                                 <div class="right">
 
-                                    <dh:switch value="#{districtList.orderAsc}"
+                                    <s:link >
+                                    <dh:switch value="#{districtList.isOrderAsc}" data-on-color="primary" data-off-color="info"
+                                               disabled="#{empty districtList.isOrderAsc}"
+                                               data-in-link="true"
                                                data-on-text="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
                                                data-off-text="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
                                                data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
-                                               data-size="mini" styleClass="js-switch"/>
+                                               data-size="mini" styleClass="js-switch " />
+
+                                    <f:param name="districtDir" value="#{districtList.isOrderAsc ? 'desc' : 'asc'}"/>
+
+
+
+                                    </s:link>
+
 
                                 </div>
+
                             </f:facet>
 
                             <div class="table-actions right">

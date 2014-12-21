@@ -21,7 +21,7 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
     private static final String COUNT_PATTERN = "select\\s*count\\([^\\)+]\\)";
 
     @Override
-    public void setRestrictionLogicOperator(String operator){
+    public void setRestrictionLogicOperator(String operator) {
         super.setRestrictionLogicOperator(operator);
         refresh();
     }
@@ -65,8 +65,7 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
     }
 
     @Override
-    public void setOrder(String order)
-    {
+    public void setOrder(String order) {
         this.order = order;
         refresh();
     }
@@ -75,7 +74,7 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
     public String getOrder() {
         String column = getOrderColumn();
 
-        if (column == null){
+        if (column == null) {
             column = getOrderExpress();
         }
 
@@ -188,19 +187,46 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
     }
 
 
-    public boolean isOrderAsc(){
-        if ((getOrderDirection() == null) || (getOrderDirection().length() == 0) || getOrderDirection().equals("asc")){
+    public Boolean getIsOrderDesc(){
+        if ((getOrderDirection() == null) || (getOrderDirection().length() == 0)) {
+            return null;
+        }
+        if (getOrderDirection().equals("desc")) {
             return true;
-        }else
+        } else
             return false;
     }
 
-    public void setOrderAsc(boolean value){
-       if(value){
-           setOrderDirection("asc");
-       }else{
-           setOrderDirection("desc");
-       }
+    public void setIsOrderDesc(Boolean value){
+        if(value == null){
+            setOrderDirection(null);
+        }
+        if (value) {
+            setOrderDirection("desc");
+        } else {
+            setOrderDirection("asc");
+        }
+    }
+
+    public Boolean getIsOrderAsc() {
+        if ((getOrderDirection() == null) || (getOrderDirection().length() == 0)) {
+            return null;
+        }
+        if (getOrderDirection().equals("asc")) {
+            return true;
+        } else
+            return false;
+    }
+
+    public void setIsOrderAsc(Boolean value) {
+        if(value == null){
+            setOrderDirection(null);
+        }
+        if (value) {
+            setOrderDirection("asc");
+        } else {
+            setOrderDirection("desc");
+        }
     }
 
 }
