@@ -12,6 +12,7 @@ import org.jboss.seam.core.Expressions;
 import org.jboss.seam.framework.EntityHome;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.log.Logging;
 
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.GeneratedValue;
@@ -42,7 +43,6 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     //protected String lastState = "";
 
     private Expressions.ValueExpression conflictMessage;
-
 
     public String getLastState() {
         return ActionExecuteState.instance().getLastState();
@@ -258,18 +258,6 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     }
 
 
-    protected boolean wire() {
-        return true;
-    }
-
-    public E getReadyInstance() {
-        if (wire()) {
-            return getInstance();
-        } else {
-            return null;
-        }
-    }
-
     @Transactional
     @End
     public String updateEnd() {
@@ -284,21 +272,25 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
 
     @Transactional
     @End
-    public String removeEnd() {
-        return this.remove();
+    public String saveOrUpdateEnd(){
+        return saveOrUpdate();
     }
 
-    @Override
-    public void create() {
-        super.create();
-        ActionExecuteState.instance().clearState();
+    @Transactional
+    public String saveOrUpdate(){
+        if (isManaged()){
+            return update();
+        }else{
+            return persist();
+        }
     }
 
     @Override
     public String update() {
         ActionExecuteState.instance().clearState();
-        if (wire() && verifyUpdate()) {
+        if (verifyUpdate()) {
             ActionExecuteState.instance().setLastState(super.update());
+            Logging.getLog(getClass()).debug("update Entry: " + ActionExecuteState.instance().getLastState());
         } else
             return null;
         return ActionExecuteState.instance().getLastState();
@@ -307,8 +299,10 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     @Override
     public String persist() {
         ActionExecuteState.instance().clearState();
-        if (wire() && verifyPersist())
+        if (verifyPersist()) {
             ActionExecuteState.instance().setLastState(super.persist());
+            Logging.getLog(getClass()).debug("persist Entry: " + ActionExecuteState.instance().getLastState());
+        }
         else
             return null;
 

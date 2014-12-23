@@ -25,8 +25,6 @@ import java.util.Date;
 @Name("sectionHome")
 public class SectionHome extends HouseEntityHome<Section> {
 
-    @In(required = false)
-    private ProjectHome projectHome;
 
     @In
     private FacesMessages facesMessages;
@@ -48,22 +46,12 @@ public class SectionHome extends HouseEntityHome<Section> {
 //        }
 //    }
 
-    @DataModel(value = "projects")
-    private SetLinkList<Project> projects;
-
-    @DataModelSelection
-    private Project project;
 
     @Override
     protected Section createInstance() {
         return new Section(new Date());
     }
 
-    @Override
-    protected void initInstance() {
-        super.initInstance();
-        projects = new SetLinkList<Project>(getInstance().getProjects());
-    }
 
     public void nameInputedListener() {
         setPyCode(PinyinTools.getPinyinCode(getInstance().getName()));
@@ -81,17 +69,6 @@ public class SectionHome extends HouseEntityHome<Section> {
         return getInstance().getPyCode();
     }
 
-    public void addNewProject() {
-        Project project = projectHome.getReadyInstance();
-        project.setSection(getInstance());
-        projects.add(project);
-        projectHome.clearInstance();
-        Logging.getLog(getClass()).debug("project added");
-    }
-
-    public void removeNewProject() {
-        projects.remove(project);
-    }
 
     @Override
     protected boolean verifyRemoveAvailable() {

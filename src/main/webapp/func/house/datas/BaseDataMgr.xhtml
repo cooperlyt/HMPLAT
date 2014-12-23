@@ -120,7 +120,7 @@
             <button type="button" class="button default" data-dismiss="modal">
                 <span class="glyphicon glyphicon-floppy-remove"/>
                 #{messages.abort}</button>
-            <a:commandLink styleClass="button submit primary" render="districtEditPanel_inputs,dataContainer"
+            <a:commandLink styleClass="button submit primary" render="districtEditPanel_inputs,dataNav,dataResult"
                            data="#{districtHome.lastState}"
                            oncomplete="if (event.data == 'persisted'){$('#districtEditPanel').modal('hide')}"
                            action="#{districtHome.persist}">
@@ -132,8 +132,8 @@
     </ui:decorate>
 
 
-    <a:outputPanel layout="block" id="dataContainer" styleClass="columns">
-        <div class="column one-fourth codesearch-aside">
+    <a:outputPanel layout="block" styleClass="columns">
+        <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
             <nav class="menu">
                 <s:link styleClass="menu-item #{((empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')) ? 'selected' : ''}"
                         propagation="none">
@@ -168,8 +168,9 @@
                     <f:param name="dataTypeName" value="DEVELOPER_MGR"/>
                 </s:link>
             </nav>
-        </div>
-        <div class="column three-fourths codesearch-results">
+        </a:outputPanel>
+        <h:form>
+            <a:outputPanel id="dataResult" layout="block" styleClass="column three-fourths codesearch-results">
 
             <s:div styleClass="blankslate" rendered="#{baseMapDataMgr.emptyResult}">
                 <span class="mega-octicon octicon-search"></span>
@@ -539,7 +540,8 @@
                 </div>
                 <p class="search-foot-note"></p>
             </a:outputPanel>
-        </div>
+        </a:outputPanel>
+        </h:form>
     </a:outputPanel>
 
 </ui:composition>

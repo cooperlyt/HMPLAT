@@ -38,8 +38,8 @@
                                     <ul class="col">
                                         <a:repeat value="#{authInfo.dataFunctions}" var="_func">
                                             <li><s:link value="#{_func.name}" propagation="endRoot"
-                                                        view="#{_func.location}">
-                                                <f:param name="funcName" value="#{_func.name}"/>
+                                                        view="#{_func.location}" includePageParams="false">
+
                                                         </s:link></li>
                                         </a:repeat>
 
@@ -49,8 +49,8 @@
 
                                         <a:repeat value="#{authInfo.totalFunctions}" var="_func">
                                             <li><s:link value="#{_func.name}" propagation="endRoot"
-                                                        view="#{_func.location}">
-                                                <f:param name="funcName" value="#{_func.name}"/>
+                                                        view="#{_func.location}" includePageParams="false">
+
                                                         </s:link></li>
                                         </a:repeat>
                                     </ul>
@@ -59,8 +59,8 @@
 
                                         <a:repeat value="#{authInfo.workFunctions}" var="_func">
                                             <li><s:link value="#{_func.name}" propagation="endRoot"
-                                                        view="#{_func.location}">
-                                                <f:param name="funcName" value="#{_func.name}"/>
+                                                        view="#{_func.location}" includePageParams="false">
+
                                                         </s:link></li>
                                         </a:repeat>
                                     </ul>

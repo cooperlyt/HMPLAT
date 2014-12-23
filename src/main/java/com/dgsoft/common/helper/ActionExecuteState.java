@@ -7,6 +7,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.contexts.Contexts;
+import org.jboss.seam.faces.FacesContext;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,6 +22,7 @@ public class ActionExecuteState {
 
     private String lastState = null;
 
+
     @BypassInterceptors
     public String getLastState() {
         return lastState;
@@ -30,8 +32,9 @@ public class ActionExecuteState {
         this.lastState = lastState;
     }
 
-    public void clearState(){
+    public String clearState(){
         lastState = null;
+        return "cleared";
     }
 
     public void setState(String state){
