@@ -26,6 +26,8 @@
     <param name="sectionDir" value="#{sectionList.orderDirection}"/>
     <param name="projectDir" value="#{projectList.orderDirection}"/>
 
+    <param name="districtId" value="#{districtHome.id}"/>
+    <param name="developerId" value="#{developerHome.id}"/>
 
 
     <navigation from-action="#{baseMapDataMgr.createNew}">

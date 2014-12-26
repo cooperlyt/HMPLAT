@@ -4,19 +4,18 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
-                template="message_dialog.xhtml">
+                template="edit-modalpanel.xhtml">
+    <ui:param name="panelTitle" value="#{messages.deleteConfirm}"/>
+    <ui:param name="styleClass" value="modal-sm"/>
 
-    <ui:define name="title">
-        <ui:param name="type" value="warning"/>
-        #{messages.deleteConfirm}
+    <ui:define name="panelBody">
+        <p>#{messages.deleteWran1}#{' '}<strong>#{entityTitle}</strong>#{' '}#{messages.deleteWran2}</p>
+        <p>#{messages.deleteNote}</p>
     </ui:define>
-    <ui:define name="messages">
-        #{messages.deleteConfirm}
-    </ui:define>
+
+
     <ui:define name="actionButtons">
         <ui:insert/>
-        <a:commandButton value="#{messages.cancel}" immediate="true" execute="@this"
-                         onclick="#{r:component(empty panelId ?'messagePopPanel': panelId)}.hide();return false;"/>
     </ui:define>
 
 </ui:composition>

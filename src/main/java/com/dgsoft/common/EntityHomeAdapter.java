@@ -205,6 +205,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
 
     protected void conflictMessage() {
         debug("conflict entity #0 #1", getEntityClass().getName(), getId());
+
         getStatusMessages().addFromResourceBundleOrDefault(StatusMessage.Severity.ERROR,
                 getConflictMessageKey(), getConflictMessage().getExpressionString());
     }

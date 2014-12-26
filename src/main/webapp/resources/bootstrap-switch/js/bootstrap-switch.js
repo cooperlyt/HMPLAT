@@ -534,7 +534,7 @@
       BootstrapSwitch.prototype._handleHandlers = function() {
         this.$on.on("click.bootstrapSwitch", (function(_this) {
           return function(event) {
-            if (!this.options.inLink) {
+            if (!_this.options.inLink) {
               event.preventDefault();
               event.stopPropagation();
 
@@ -545,7 +545,7 @@
         })(this));
         return this.$off.on("click.bootstrapSwitch", (function(_this) {
           return function(event) {
-            if (!this.options.inLink) {
+            if (!_this.options.inLink) {
               event.preventDefault();
               event.stopPropagation();
             }

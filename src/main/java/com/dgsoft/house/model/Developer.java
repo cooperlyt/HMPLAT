@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import com.dgsoft.common.utils.persistence.UniqueVerify;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ public class Developer implements java.io.Serializable {
     private AttachCorporation attachCorporation;
     private String name;
     private String pyCode;
+    private Date createTime;
     private Set<Demployee> demployees = new HashSet<Demployee>(0);
     private Set<Project> projects = new HashSet<Project>(0);
     private boolean destroyed;
@@ -38,12 +40,15 @@ public class Developer implements java.io.Serializable {
         this.attachCorporation = attachCorporation;
     }
 
+    public Developer(Date createTime, boolean destroyed){
+        this.createTime = createTime;
+        this.destroyed = destroyed;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return this.id;
     }
@@ -118,5 +123,16 @@ public class Developer implements java.io.Serializable {
 
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME",nullable = false)
+    @NotNull
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

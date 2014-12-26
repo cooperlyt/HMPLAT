@@ -8,15 +8,17 @@
     <!--required param:  panelId -->
 
 
-    <div class="modal fade data-dialog" id="#{panelId}" tabindex="-1" role="dialog" aria-labelledby="#{panelId}_ModalLabel"
+    <div class="modal fade data-dialog " id="#{panelId}" tabindex="-1" role="dialog"
+         aria-labelledby="#{panelId}_ModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog #{styleClass}">
             <div class="modal-content">
                 <div class="modal-header">
                     <a:outputPanel id="#{panelId}_controls">
-                    <button type="button" class="facebox-close js-facebox-close" aria-label="#{messages.close}" data-dismiss="modal">
-                        <span class="octicon octicon-remove-close" aria-hidden="true"></span>
-                        <span class="sr-only">#{messages.close}</span></button>
+                        <button type="button" class="facebox-close js-facebox-close" aria-label="#{messages.close}"
+                                data-dismiss="modal">
+                            <span class="octicon octicon-remove-close" aria-hidden="true"></span>
+                            <span class="sr-only">#{messages.close}</span></button>
                     </a:outputPanel>
                     <a:outputPanel id="#{panelId}_title">
                         <h2 class="facebox-header" id="#{panelId}_ModalLabel">#{panelTitle}</h2>
@@ -27,15 +29,15 @@
 
 
                         <a:outputPanel id="#{panelId}_inputs">
+                            <ui:insert name="panelBody">
+                                <ui:insert/>
 
-                            <ui:insert/>
 
                             <div style="clear:both">
                                 <span class="required">*</span>
                                 #{messages.requiredFields}
                             </div>
-
-
+                            </ui:insert>
 
                         </a:outputPanel>
                     </s:div>
@@ -46,8 +48,6 @@
             </div>
         </div>
     </div>
-
-
 
 
 </ui:composition>

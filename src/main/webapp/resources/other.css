@@ -471,8 +471,22 @@ form {
     cursor: pointer;
 }
 
+.rf-ii-fld-cntr input[type = "text"]{
+    height: 25px;
+    min-height: 25px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
 
 
+.form-inline .form-big-switch{
+    display: inline-block;
+
+    padding: 22px 8px 0 8px;
+
+}
 
 
 

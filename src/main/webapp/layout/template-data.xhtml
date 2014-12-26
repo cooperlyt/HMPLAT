@@ -11,32 +11,63 @@
 
 
     <ui:define name="func-body">
+        <h:outputStylesheet library="bootstrap-sco" name="/css/scojs.css"/>
+        <h:outputStylesheet library="bootstrap-sco" name="/css/sco.message.css"/>
+
+
+        <a:outputPanel ajaxRendered="true">
+
+            <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
+                <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
+
+                    <h:outputScript>
+                        if (#{_msg.severity.ordinal == 2}){
+                        $.scojs_message.options.delay = 4000;
+                        $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_ERROR);
+
+
+                        }else{
+                        $.scojs_message.options.delay = 1000;
+                        $.scojs_message('#{_msg.summary}', $.scojs_message.TYPE_OK );
+
+                        }
+
+
+                    </h:outputScript>
+
+                </a:repeat>
+            </a:outputPanel>
+
+
+        </a:outputPanel>
+
         <div id="func-navigation" class="pagehead codesearch-head">
             <div class="container">
                 <div style="float: left;width: 250px;">
-                <div class="dropdown">
-                    <a id="dLabel" class="funtion-nav" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        <span class="glyphicon glyphicon-list"></span>
-                        <span class="sr-only">Error:</span>
-                        <span class="dropdown-caret"/>
+                    <div class="dropdown">
+                        <a id="dLabel" class="funtion-nav" data-target="#" href="#" data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            <span class="glyphicon glyphicon-list"></span>
+                            <span class="sr-only">Error:</span>
+                            <span class="dropdown-caret"/>
 
-                    </a>
+                        </a>
 
-                    <ul class="dropdown-menu dropdown-menu-left " aria-labelledby="dLabel">
-                        <a:repeat value="#{authInfo.dataFunctions}" var="_func">
-                            <li>
-                                <s:link propagation="end" view="#{_func.location}">
+                        <ul class="dropdown-menu dropdown-menu-left " aria-labelledby="dLabel">
+                            <a:repeat value="#{authInfo.dataFunctions}" var="_func">
+                                <li>
+                                    <s:link propagation="end" view="#{_func.location}">
                                             <span
                                                     class="glyphicon glyphicon-align-justify"></span>
-                                    <span class="sr-only"></span>#{_func.name}
-                                    <f:param name="funcName" value="#{_func.name}"/>
-                                </s:link>
-                            </li>
-                        </a:repeat>
-                    </ul>
-                </div>
-                <span class="funcTitle">#{funcName}</span>
+                                        <span class="sr-only"></span>#{_func.name}
+                                        <f:param name="funcName" value="#{_func.name}"/>
+                                    </s:link>
+                                </li>
+                            </a:repeat>
+                        </ul>
+                    </div>
+                    <span class="funcTitle">#{funcName}</span>
                 </div>
                 <ui:insert name="head-right"/>
             </div>
@@ -44,5 +75,7 @@
         <div class="container">
             <ui:insert/>
         </div>
+
+        <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>
     </ui:define>
 </ui:composition>

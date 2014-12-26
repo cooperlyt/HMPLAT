@@ -24,14 +24,13 @@ $(document).ready(
 
 
         $('.modal').on('show.bs.modal', function (e) {
-
             $('.js-input-field',document.getElementById(e.target.id)).removeClass('has-success');
             $('.js-input-field',document.getElementById(e.target.id)).removeClass('has-error');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-valid');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-success');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-error');
         })
-        initEditInput();
+
     }
 );
 

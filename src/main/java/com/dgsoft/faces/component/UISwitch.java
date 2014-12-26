@@ -18,7 +18,11 @@ public class UISwitch extends javax.faces.component.UISelectBoolean {
         style,
         styleClass,
         tabindex,
-        title;
+        title,
+        onText,
+        offText,
+        labelText;
+
 
         String toString;
 
@@ -233,6 +237,30 @@ public class UISwitch extends javax.faces.component.UISelectBoolean {
         return "valueChange";
     }
 
+
+    public String getOnText() {
+        return (String) getStateHelper().eval(PropertyKeys.onText);
+    }
+
+    public void setOnText(String onText) {
+        getStateHelper().put(PropertyKeys.onText,onText);
+    }
+
+    public String getOffText() {
+        return (String) getStateHelper().eval(PropertyKeys.offText);
+    }
+
+    public void setOffText(String offText) {
+        getStateHelper().put(PropertyKeys.offText,offText);
+    }
+
+    public String getLabelText() {
+        return (String) getStateHelper().eval(PropertyKeys.labelText);
+    }
+
+    public void setLabelText(String labelText) {
+        getStateHelper().put(PropertyKeys.labelText,labelText);
+    }
 
     @Override
     public String getFamily() {

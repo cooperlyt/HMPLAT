@@ -306,19 +306,6 @@ public final class HtmlRendererUtils {
 //
 //    }
 
-    public static boolean renderDataAttributes(ResponseWriter writer,
-                                              UIComponent component) throws IOException {
-        boolean somethingDone = false;
-        for(Map.Entry<String,Object> attribute: component.getAttributes().entrySet()){
-            if (attribute.getKey().startsWith("data-")){
-                if(renderHTMLAttribute(writer, attribute.getKey(), attribute.getKey(),
-                        attribute.getValue())){
-                    somethingDone = true;
-                }
-            }
-        }
-        return somethingDone;
-    }
 
 
     /**
