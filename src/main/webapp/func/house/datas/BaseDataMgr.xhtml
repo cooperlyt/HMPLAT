@@ -283,7 +283,11 @@
                             <a:param value="" assignTo="#{developerHome.id}"/>
                         </a:commandLink>
                         <s:link value="#{messages.create}" action="#{baseMapDataMgr.createNew}"
-                                rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR') or (baseMapDataMgr.dataType eq 'SECTION_MGR')}"/>#{' '} #{messages.Or}  #{messages.Try} #{' '}
+                                propagation="#{(baseMapDataMgr.dataType eq 'SECTION_MGR') ? '' : 'begin'}"
+                                rendered="#{(empty baseMapDataMgr.dataType)
+                                or (baseMapDataMgr.dataType eq 'PROJECT_MGR')
+                                or (baseMapDataMgr.dataType eq 'SECTION_MGR')}"/>
+                        #{' '} #{messages.Or}  #{messages.Try} #{' '}
                         <s:link value="#{messages.AvancedSearch}"/></p>
                 </s:div>
 

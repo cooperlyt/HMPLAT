@@ -470,46 +470,65 @@
     display: inline;
     position: relative;
     top: 1px;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 *.rf-msg-det, *.rf-msgs-det {
     display: inline;
     position: relative;
     top: 1px;
+
+}
+
+.rf-msg-err .rf-msg-det:before, .rf-msgs-err .rf-msgs-sum:before {
     font-family: 'Glyphicons Halflings';
     font-style: normal;
     font-weight: 400;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-.rf-msg-err .rf-msg-det:before, .rf-msgs-err .rf-msgs-sum:before {
     content: "\e101  "
 }
 
 
 .rf-msg-wrn .rf-msg-det:before, .rf-msgs-wrn .rf-msgs-sum:before{
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     content: "\e107  "
 }
 
 
 .rf-msg-inf .rf-msg-det:before ,.rf-msgs-inf .rf-msgs-sum:before{
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     content: "\e086  "
 }
 
 
 .rf-msg-ok .rf-msg-det:before, .rf-msgs-ok .rf-msgs-sum:before {
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     content: "\e084  "
 }
 
 .rf-msg-ftl .rf-msg-det:before, .rf-msgs-ftl .rf-msgs-sum:before {
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     content: "\e101  "
 }
 
