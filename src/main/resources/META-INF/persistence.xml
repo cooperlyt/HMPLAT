@@ -73,7 +73,7 @@
         <class>com.dgsoft.house.model.Section</class>
         <class>com.dgsoft.house.model.SellEmployee</class>
         <class>com.dgsoft.house.model.Smsubcompany</class>
-
+        <class>com.dgsoft.house.model.HouseNumberPool</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

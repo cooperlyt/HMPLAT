@@ -37,7 +37,8 @@ public class Section implements java.io.Serializable,TreeNode,SectionInfo {
 	public Section() {
 	}
 
-    public Section(Date createTime) {
+    public Section(String id, Date createTime) {
+        this.id = id;
         this.createTime = createTime;
     }
 

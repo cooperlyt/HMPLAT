@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
+import org.jboss.seam.core.Events;
 import org.jboss.seam.core.Expressions;
 import org.jboss.seam.framework.EntityHome;
 import org.jboss.seam.international.StatusMessage;
@@ -102,6 +103,8 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
                         if (!isManaged() || !getInstanceId(record, true).equals(getInstanceId(getInstance(), true))) {
                             getStatusMessages().addFromResourceBundleOrDefault(unique.severity(),
                                     getMessageKeyPrefix() + unique.name() + "_conflict", unique.name() + " conflict");
+                            Events.instance().raiseEvent(getEntityClass().getName() + "_UNIQUE_" + unique.name() +"_CONFLICT");
+
                             if (unique.severity().compareTo(StatusMessage.Severity.ERROR) >= 0) {
                                 result = false;
                             }
@@ -160,6 +163,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
                         getStatusMessages().addToControlFromResourceBundleOrDefault(e.getComponent().getId(),
                                 unique.severity(),
                                 getMessageKeyPrefix() + unique.name() + "_conflict", unique.name() + " conflict");
+                        Events.instance().raiseEvent(getEntityClass().getName() + "_UNIQUE_" + unique.name() +"_CONFLICT");
                         return;
                     }
                 }
@@ -174,6 +178,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
             getStatusMessages().addToControlFromResourceBundleOrDefault(e.getComponent().getId(),
                     StatusMessage.Severity.ERROR, getConflictMessageKey(),
                     getConflictMessage().getExpressionString());
+            Events.instance().raiseEvent(getEntityClass().getName() + "_ID_CONFLICT");
         }
     }
 

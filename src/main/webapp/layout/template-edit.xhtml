@@ -15,7 +15,8 @@
     <div class="new-repo-container">
         <ui:insert/>
     </div>
-        <h:outputScript>
+
+        <h:outputScript rendered="#{(facesContext.maximumSeverity==null) or (facesContext.maximumSeverity.ordinal lt 2)}">
             $(document).ready(
                     function(){
                         initEditInput();

@@ -29,14 +29,7 @@
     <param name="districtId" value="#{districtHome.id}"/>
     <param name="developerId" value="#{developerHome.id}"/>
 
+    <param name="sectionId" value="#{sectionHome.id}"/>
 
-    <navigation from-action="#{baseMapDataMgr.createNew}">
-        <rule if-outcome="project-create">
-            <redirect view-id="/func/house/datas/ProjectEdit.xhtml"/>
-        </rule>
-        <rule if-outcome="section-create">
-            <redirect view-id="/func/house/datas/SectionEdit.xhtml"/>
-        </rule>
-    </navigation>
 
 </page>

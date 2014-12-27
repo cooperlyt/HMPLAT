@@ -6,6 +6,7 @@ import com.dgsoft.house.model.Section;
 import org.jboss.seam.annotations.Name;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +32,14 @@ public class SectionList extends HouseEntityQuery<Section> {
             "lower(section.name) like lower(concat('%',#{sectionSearchCondition.sectionName},'%'))",
             "section.district.id = #{sectionSearchCondition.districtId}"};
 
+
+    private static final String[] SORT_COLUMNS = {
+            "section.createTime","section.name","section.district.id","section.id"
+    };
+
+    public List<String> getSortColumns(){
+        return Arrays.asList(SORT_COLUMNS);
+    }
 
     public SectionList() {
         setEjbql(EJBQL);

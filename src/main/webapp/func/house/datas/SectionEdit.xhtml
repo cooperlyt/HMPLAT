@@ -10,7 +10,7 @@
                 template="/layout/template-edit.xhtml">
 
 
-    <rich:messages globalOnly="true" ajaxRendered="true"/>
+    <rich:messages globalOnly="false" ajaxRendered="true"/>
     <h:form>
 
         <div class="form-inline">
@@ -26,6 +26,7 @@
                     <s:selectItems value="#{allDistrict.resultList}" var="_district"
                                    itemValue="#{_district}" label="#{_district.name}"/>
                     <f:converter converterId="houseEntityConverter"/>
+                    <a:ajax event="change" execute="@this,addressField" render="addressField" listener="#{sectionHome.districtSelectListener}"/>
                 </h:selectOneMenu>
             </s:decorate>
         </div>

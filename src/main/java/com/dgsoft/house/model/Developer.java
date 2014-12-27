@@ -40,7 +40,8 @@ public class Developer implements java.io.Serializable {
         this.attachCorporation = attachCorporation;
     }
 
-    public Developer(Date createTime, boolean destroyed){
+    public Developer(String id,Date createTime, boolean destroyed){
+        this.id = id;
         this.createTime = createTime;
         this.destroyed = destroyed;
     }

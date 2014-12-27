@@ -5,4 +5,20 @@
 
       <param name="sectionId" value="#{sectionHome.id}"/>
 
+      <navigation from-action="#{sectionHome.persist}">
+            <rule if-outcome="persisted">
+                  <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
+                        <param name="dataTypeName" value="SECTION_MGR"/>
+                  </redirect>
+
+            </rule>
+      </navigation>
+
+      <navigation from-action="#{sectionHome.update}">
+            <rule if-outcome="updated">
+                  <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
+                        <param name="dataTypeName" value="SECTION_MGR"/>
+                  </redirect>
+            </rule>
+      </navigation>
 </page>

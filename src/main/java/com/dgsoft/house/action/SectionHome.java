@@ -25,6 +25,8 @@ import java.util.Date;
 @Name("sectionHome")
 public class SectionHome extends HouseEntityHome<Section> {
 
+    private static final String NUMBER_KEY = "SECTION_ID";
+
 
     @In
     private FacesMessages facesMessages;
@@ -49,12 +51,18 @@ public class SectionHome extends HouseEntityHome<Section> {
 
     @Override
     protected Section createInstance() {
-        return new Section(new Date());
+        return new Section(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)),new Date());
     }
 
 
     public void nameInputedListener() {
         setPyCode(PinyinTools.getPinyinCode(getInstance().getName()));
+    }
+
+    public void districtSelectListener(){
+        if ( (getInstance().getDistrict() != null) && ((getInstance().getAddress() == null) || getInstance().getAddress().trim().equals(""))){
+            getInstance().setAddress(getInstance().getDistrict().getName());
+        }
     }
 
     public void setPyCode(String pyCode) {

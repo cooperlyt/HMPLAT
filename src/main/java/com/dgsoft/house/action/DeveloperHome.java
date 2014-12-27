@@ -20,6 +20,8 @@ import java.util.Date;
 @Name("developerHome")
 public class DeveloperHome extends HouseEntityHome<Developer> {
 
+    private static final String NUMBER_KEY = "DEVELOPER_ID";
+
     @In
     private FacesMessages facesMessages;
 
@@ -56,7 +58,7 @@ public class DeveloperHome extends HouseEntityHome<Developer> {
 
     @Override
     protected Developer createInstance(){
-        return  new Developer(new Date(),false);
+        return  new Developer(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)),new Date(),false);
     }
 
     public boolean isEnable() {

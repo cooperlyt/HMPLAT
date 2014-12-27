@@ -2,7 +2,6 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.common.SetLinkList;
 import com.dgsoft.common.helper.ActionExecuteState;
-import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.Project;
@@ -25,8 +24,7 @@ import java.util.Date;
 @Name("projectHome")
 public class ProjectHome extends HouseEntityHome<Project> {
 
-    @In(create = true)
-    private NumberBuilder numberBuilder;
+    private static final String NUMBER_KEY = "PROJECT_ID";
 
     private SetLinkList<Build> projectBuilds;
 
@@ -171,7 +169,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     @Override
     protected Project createInstance() {
-        return new Project(((SectionHome) Component.getInstance("sectionHome")).getInstance(), numberBuilder.getSampleNumber("PROJECT_NUMBER"), Project.ProjectState.BUILDING, new Date());
+        return new Project(((SectionHome) Component.getInstance("sectionHome")).getInstance(), String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), Project.ProjectState.BUILDING, new Date());
     }
 
 
