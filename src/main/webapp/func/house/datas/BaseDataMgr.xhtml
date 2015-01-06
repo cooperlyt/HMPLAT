@@ -145,6 +145,17 @@
         </a:commandButton>
     </ui:decorate>
 
+    <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+        <ui:param name="panelId" value="sectionDeleteConfirmPanel"/>
+        <ui:param name="entityTitle" value="#{sectionHome.instance.name}"/>
+        <a:commandButton styleClass="button button-block danger" action="#{sectionHome.removeAndClear}"
+                         value="#{messages.confirmDelete}" oncomplete="$('#sectionDeleteConfirmPanel').modal('hide')"
+                         render="dataNav,dataResult" immediate="true" execute="@this">
+            <f:param name="sectionId" value="#{sectionHome.instance.id}"/>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+    </ui:decorate>
+
     <ui:decorate template="/layout/edit-modalpanel.xhtml">
         <ui:param name="panelId" value="districtEditPanel"/>
         <ui:param name="panelTitle" value="#{messages.create}#{' '}#{messages.District}"/>
@@ -508,12 +519,12 @@
 
                                     <a:commandLink styleClass="table-action" title="#{messages.delete}"
                                                    execute="@this" immediate="true"
-                                                   render="developerDeleteConfirmPanel_form,developerDeleteConfirmPanel_title"
-                                                   oncomplete="$('#developerDeleteConfirmPanel').modal('show')">
+                                                   render="sectionDeleteConfirmPanel_form,sectionDeleteConfirmPanel_title"
+                                                   oncomplete="$('#sectionDeleteConfirmPanel').modal('show')">
                                         <span class="glyphicon glyphicon-remove"/>
                                         #{messages.delete}
                                         <a:attachQueue requestDelay="0"/>
-                                        <f:param name="developerId" value="#{_item.id}"/>
+                                        <f:param name="sectionId" value="#{_item.id}"/>
                                     </a:commandLink>
 
                                 </div>

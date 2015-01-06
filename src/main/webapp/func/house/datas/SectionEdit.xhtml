@@ -101,7 +101,7 @@
                          action="#{sectionHome.update}"
                          rendered="#{sectionHome.managed}"
                          styleClass="button primary first-in-line" >
-            <f:param name="sectionId" value=""/>
+            <f:param name="sectionId" value="#{sectionHome.id}"/>
         </h:commandButton>
     </h:form>
 

@@ -48,10 +48,17 @@ public class SectionHome extends HouseEntityHome<Section> {
 //        }
 //    }
 
+    private String genId(){
+        long number = HouseNumberBuilder.instance().useNumber(NUMBER_KEY);
+        while (getEntityManager().find(Section.class,String.valueOf(number)) != null){
+            number = HouseNumberBuilder.instance().useNumber(NUMBER_KEY);
+        }
+        return String.valueOf(number);
+    }
 
     @Override
     protected Section createInstance() {
-        return new Section(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)),new Date());
+        return new Section(genId(),new Date());
     }
 
 

@@ -55,10 +55,17 @@ public class DeveloperHome extends HouseEntityHome<Developer> {
         return getInstance().getPyCode();
     }
 
+    private String genId(){
+        long number = HouseNumberBuilder.instance().useNumber(NUMBER_KEY);
+        while (getEntityManager().find(Developer.class,String.valueOf(number)) != null){
+            number = HouseNumberBuilder.instance().useNumber(NUMBER_KEY);
+        }
+        return String.valueOf(number);
+    }
 
     @Override
     protected Developer createInstance(){
-        return  new Developer(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)),new Date(),false);
+        return  new Developer(genId(),new Date(),false);
     }
 
     public boolean isEnable() {

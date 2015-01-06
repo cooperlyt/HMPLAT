@@ -47,6 +47,7 @@ public class SectionList extends HouseEntityQuery<Section> {
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setMaxResults(25);
         setOrderColumn("section.createTime");
+        setOrderDirection("desc");
     }
 
 

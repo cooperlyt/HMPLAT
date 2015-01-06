@@ -15,31 +15,7 @@
         <h:outputStylesheet library="bootstrap-sco" name="/css/sco.message.css"/>
 
 
-        <a:outputPanel ajaxRendered="true">
 
-            <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
-                <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
-
-                    <h:outputScript>
-                        if (#{_msg.severity.ordinal == 2}){
-                        $.scojs_message.options.delay = 4000;
-                        $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_ERROR);
-
-
-                        }else{
-                        $.scojs_message.options.delay = 1000;
-                        $.scojs_message('#{_msg.summary}', $.scojs_message.TYPE_OK );
-
-                        }
-
-
-                    </h:outputScript>
-
-                </a:repeat>
-            </a:outputPanel>
-
-
-        </a:outputPanel>
 
         <div id="func-navigation" class="pagehead codesearch-head">
             <div class="container">
@@ -57,7 +33,7 @@
                         <ul class="dropdown-menu dropdown-menu-left " aria-labelledby="dLabel">
                             <a:repeat value="#{authInfo.dataFunctions}" var="_func">
                                 <li>
-                                    <s:link propagation="end" view="#{_func.location}">
+                                    <s:link propagation="#{_func.needConversations ? 'endRoot' : 'end'}" view="#{_func.location}">
                                             <span
                                                     class="glyphicon glyphicon-align-justify"></span>
                                         <span class="sr-only"></span>#{_func.name}
@@ -77,5 +53,31 @@
         </div>
 
         <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>
+
+        <a:outputPanel ajaxRendered="true">
+
+            <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
+                <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
+
+                    <h:outputScript>
+                        if (#{_msg.severity.ordinal == 2}){
+                        $.scojs_message.options.delay = 4000;
+                        $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_ERROR);
+
+
+                        }else if(#{_msg.severity.ordinal == 0}){
+                        $.scojs_message.options.delay = 1000;
+                        $.scojs_message('#{_msg.summary}', $.scojs_message.TYPE_OK );
+
+                        }
+
+
+                    </h:outputScript>
+
+                </a:repeat>
+            </a:outputPanel>
+
+
+        </a:outputPanel>
     </ui:define>
 </ui:composition>

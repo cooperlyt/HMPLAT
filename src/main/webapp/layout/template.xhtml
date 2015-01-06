@@ -37,7 +37,7 @@
 
                                     <ul class="col">
                                         <a:repeat value="#{authInfo.dataFunctions}" var="_func">
-                                            <li><s:link value="#{_func.name}" propagation="endRoot"
+                                            <li><s:link value="#{_func.name}" propagation="#{_func.needConversations ? 'endRoot' : 'end'}"
                                                         view="#{_func.location}" includePageParams="false">
 
                                                         </s:link></li>
@@ -48,7 +48,7 @@
                                     <ul class="col">
 
                                         <a:repeat value="#{authInfo.totalFunctions}" var="_func">
-                                            <li><s:link value="#{_func.name}" propagation="endRoot"
+                                            <li><s:link value="#{_func.name}" propagation="#{_func.needConversations ? 'endRoot' : 'end'}"
                                                         view="#{_func.location}" includePageParams="false">
 
                                                         </s:link></li>
@@ -58,7 +58,7 @@
                                     <ul class="col">
 
                                         <a:repeat value="#{authInfo.workFunctions}" var="_func">
-                                            <li><s:link value="#{_func.name}" propagation="endRoot"
+                                            <li><s:link value="#{_func.name}" propagation="#{_func.needConversations ? 'endRoot' : 'end'}"
                                                         view="#{_func.location}" includePageParams="false">
 
                                                         </s:link></li>
