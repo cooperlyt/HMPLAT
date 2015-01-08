@@ -65,12 +65,15 @@
                 <a:ajax event="change" listener="#{sectionHome.nameInputedListener}" status="nameStatus"
                         render="nameField,pyCodeField"/>
             </h:inputText>
+            <ui:define name="tail">
+                <p class="note">#{messages.PyCodeGen1}#{' '}<strong> <rich:inplaceInput id="pyCodeField"
+                                                                                        value="#{sectionHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
+                </p>
+            </ui:define>
 
         </s:decorate>
 
-        <p>#{messages.PyCodeGen1}#{' '}<strong> <rich:inplaceInput id="pyCodeField"
-                                                                   value="#{sectionHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
-        </p>
+
 
         <hr/>
         <s:decorate id="addressField" styleClass="form-group" template="/layout/edit-big.xhtml">

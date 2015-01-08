@@ -4,11 +4,12 @@
       no-conversation-view-id="/func/house/datas/BaseDataMgr.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="sectionId" value="#{sectionHome.id}"/>
 
-    <navigation from-action="#{projectEdit.sectionSelectComplete}">
-        <rule if-outcome="success">
-            <redirect view-id="/func/house/datas/ProjectEdit.xhtml"/>
+    <navigation from-action="#{projectEdit.persistProject}">
+        <rule if-outcome="persisted">
+            <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
+                <param name="dataTypeName" value="PROJECT_MGR"/>
+            </redirect>
         </rule>
     </navigation>
 

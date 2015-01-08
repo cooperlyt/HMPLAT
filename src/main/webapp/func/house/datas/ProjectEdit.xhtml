@@ -1,67 +1,275 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-template.xhtml">
+                template="/layout/template-edit.xhtml">
+    <div class="setup-header">
+        <h1>#{messages.ProjectCreateStep2}</h1>
+    </div>
 
-    <ui:param name="functionTitle" value="#{sectionHome.instance.name} - #{messages.Project}"/>
+
+    <div class="flow-steps">
+        <ol class="num3">
+            <li class="done current-prev">
+                <span class="first">#{messages.ProjectCreateStep1}</span>
+            </li>
+            <li class="current">
+                <strong>#{messages.ProjectCreateStep2}</strong>
+            </li>
+            <li class="last">
+                <span>#{messages.ProjectCreateStep3}</span>
+            </li>
 
 
-    <ui:define name="func-body">
+        </ol>
+    </div>
 
-        <div style="clear: both"/>
+    <rich:messages globalOnly="true" ajaxRendered="true"/>
 
-        <div class="flow-steps">
-            <ol class="num4">
-                <li class="done current-prev">
-                    <span class="first">#{messages.ProjectCreateStep1}</span>
-                </li>
-                <li class="current">
-                    <strong>#{messages.ProjectCreateStep2}</strong>
-                </li>
-                <li>
-                    <span>#{messages.ProjectCreateStep3}</span>
-                </li>
+    <br/>
 
-                <li class="last">
-                    <span>#{messages.ProjectCreateStep5}</span>
-                </li>
-            </ol>
+    <h:form>
+
+
+        <div class="form-inline">
+
+            <s:decorate id="IdField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Project_id}
+                </ui:define>
+                <ui:param name="for" value="idInput"/>
+                <ui:param name="status" value="idStatus"/>
+                <h:inputText id="idInput" value="#{projectHome.instance.id}" required="true"
+                             styleClass="form-control"
+                             label="#{messages.Project_id}" maxlength="32" size="30"
+                             valueChangeListener="#{projectHome.verifyIdAvailable}"
+                             disabled="#{projectHome.managed}">
+                    <f:validateRequired/>
+                    <a:ajax event="change" render="IdField" status="idStatus"/>
+                </h:inputText>
+
+            </s:decorate>
+
         </div>
 
-        <div style="float: right">
-            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
+        <s:decorate id="nameField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.Project_name}
+            </ui:define>
+            <ui:param name="for" value="nameInput"/>
+            <ui:param name="status" value="nameStatus"/>
+            <h:inputText id="nameInput" value="#{projectHome.instance.name}" required="true"
+                         styleClass="form-control"
+                         label="#{messages.Project_name}" unique="name" maxlength="50" size="30"
+                         valueChangeListener="#{projectHome.verifyUniqueAvailable}">
+
+                <f:validateRequired/>
+                <a:ajax event="change" render="nameField" status="nameStatus"/>
+            </h:inputText>
+
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.Project_address}
+            </ui:define>
+            <ui:param name="for" value="addressInput"/>
+            <h:inputTextarea id="addressInput" value="#{projectHome.instance.address}"
+                             label="#{messages.Project_address}"
+                             styleClass="form-control" rows="3">
+                <f:validateLength maximum="200"/>
+                <rich:validator event="blur"/>
+            </h:inputTextarea>
+
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.Developer}
+            </ui:define>
+
+            <div class="btn-group bootstrap-select edit-select">
+                <button onclick="showSectionSelectMenu();" type="button" class=" btn dropdown-toggle btn-default"
+                        data-toggle="dropdown" aria-expanded="false">
+
+                    <h:outputText id="developerSelectBtnCaption" styleClass="filter-option pull-left"
+                                  value="#{( empty developerHome.instance.name) ? messages.noSelectLabel : developerHome.instance.name}">
+                    </h:outputText>
+                    <span class="caret"></span>
+                </button>
+
+
+                <div class="dropdown-menu select-menu-modal-holder">
+                    <div class="select-menu-modal">
+                        <div class="select-menu-header">
+                            <span class="select-menu-title">#{messages.Developer}#{messages.Select}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                        </div>
+
+                        <a:outputPanel layout="block" id="developerSelectPanel">
+                            <div class="select-menu-filters">
+                                <div class="select-menu-text-filter">
+                                    <h:inputText value="#{developerHome.searchName}">
+                                        <a:ajax event="keyup" immediate="true" execute="@this"
+                                                render="selectItemList">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <a:outputPanel layout="block" styleClass="select-menu-list" id="selectItemList">
+
+
+                                <a:repeat value="#{developerHome.searchResult}" var="_item">
+                                    <a:commandLink execute="@this" immediate="true"
+                                                   render="developerSelectBtnCaption"
+                                                   styleClass="select-menu-item #{(developerHome.idDefined and (developerHome.id eq _item.id)) ? 'selected': ''}">
+                                        <a:param value="#{_item.id}" assignTo="#{developerHome.id}"/>
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">#{_item.name}</span>
+                                    </a:commandLink>
+                                </a:repeat>
+
+                                <a:commandLink action="#{developerHome.createBySearchName}"
+
+                                               render="developerSelectBtnCaption" execute="@this" immediate="true"
+                                               styleClass="select-menu-item last-visible navigation-focus"
+                                               rendered="#{(empty developerHome.searchResult) and (not empty developerHome.searchName)}">
+                                    <a:attachQueue requestDelay="0"/>
+                                    <span class="select-menu-item-icon oction oction-check">
+                                    </span>
+
+                                    <div class="select-menu-item-text">
+                                        <h4>
+                                            #{messages.CreateNewSection}:
+                                            <span>#{developerHome.searchName}</span>
+
+                                        </h4>
+                                        <span class="description">#{messages.DeveloperSearchCreateDescript}</span>
+                                    </div>
+
+                                </a:commandLink>
+                            </a:outputPanel>
+
+                        </a:outputPanel>
+
+                    </div>
+                </div>
+            </div>
+        </s:decorate>
+
+
+        <a:outputPanel ajaxRendered="true">
+            <a:outputPanel rendered="#{not developerHome.idDefined and (not empty developerHome.instance.name)}">
+                <div class="form-inline">
+                    <s:decorate id="developerIdField" styleClass="form-group " template="/layout/edit-big.xhtml">
+                        <ui:define name="label">
+                            #{messages.Developer_id}
+                        </ui:define>
+                        <ui:param name="for" value="developerIdInput"/>
+                        <ui:param name="status" value="developerIdStatus"/>
+                        <h:inputText id="developerIdInput" required="true" styleClass="form-control" maxlength="32"
+                                     label="#{messages.Developer_id}" size="32"
+                                     value="#{developerHome.instance.id}" disabled="#{developerHome.managed}"
+                                     valueChangeListener="#{developerHome.verifyIdAvailable}">
+                            <f:validateRequired/>
+                            <a:ajax event="change" render="developerIdField" status="developerIdStatus"/>
+                        </h:inputText>
+
+                        <ui:define name="note">
+                            <p class="note">#{messages.PyCodeGen1}#{' '} <strong> <rich:inplaceInput
+                                    id="developerPyCodeField"
+                                    value="#{developerHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
+                            </p>
+                        </ui:define>
+                    </s:decorate>
+                </div>
+
+
+            </a:outputPanel>
+
+
+        </a:outputPanel>
+
+
+        <hr/>
+
+
+        <div class="form-inline">
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Project_buildSize}
+                </ui:define>
+
+                <ui:param name="for" value="buildSizeInput"/>
+                <h:selectOneMenu id="buildSizeInput" value="#{projectHome.instance.buildSize}" styleClass="selectpicker form-control edit-select"
+                                 label="#{messages.Project_buildSize}">
+                    <s:selectItems value="#{dictionary.getWordList('house.project.buildSize')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Project_buildCount}
+                </ui:define>
+                <ui:param name="for" value="buildCountInput"/>
+                <h:inputText id="buildCountInput" styleClass="form-control" size="5" value="#{projectHome.instance.buildCount}">
+                    <f:converter converterId="javax.faces.Integer"/>
+                    <f:validateLongRange minimum="0"/>
+                    <rich:validator/>
+                </h:inputText>
+
+
+            </s:decorate>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Project_area}
+                </ui:define>
+                <ui:param name="for" value="areaInput"/>
+                <h:inputText id="areaInput" styleClass="form-control" value="#{projectHome.instance.area}"
+                             converter="javax.faces.BigDecimal"
+                             label="#{messages.Project_area}" size="20">
+
+                    <f:validateDoubleRange minimum="0"/>
+                    <rich:validator event="blur"/>
+                </h:inputText>
+
+
+            </s:decorate>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Project_sumArea}
+                </ui:define>
+                <ui:param name="for" value="sumAreaInput"/>
+                <h:inputText id="sumAreaInput" styleClass="form-control" value="#{projectHome.instance.sumArea}"
+                             converter="javax.faces.BigDecimal"
+                             label="#{messages.Project_sumArea}" size="20">
+
+                    <f:validateDoubleRange minimum="0"/>
+                    <rich:validator event="blur"/>
+                </h:inputText>
+
+
+            </s:decorate>
+
         </div>
-        <r:messages globalOnly="true" ajaxRendered="true"/>
-        <div style="clear: both"/>
-        <br/>
+        <hr/>
+        <h:commandButton value="#{messages.ok}"
+                         action="#{projectEdit.persistProject}"
+                         styleClass="button primary first-in-line" >
+        </h:commandButton>
 
-        <ui:include src="/layout/house/DeveloperSelectPanel.xhtml">
-            <ui:param name="render" value="developerSelect"/>
-        </ui:include>
-
-        <h:form id="projectDetails">
-
-
-            <ui:include src="/layout/house/ProjectInfoEdit.xhtml"/>
-
-            <div style="clear:both">
-                <span class="required">*</span>
-                #{messages.requiredFields}
-            </div>
-
-
-            <div class="submitbox">
-                    <h:commandButton action="next" styleClass="subbtn" value="#{messages.complete}"/>
-            </div>
-
-
-        </h:form>
-
-    </ui:define>
-
+    </h:form>
 </ui:composition>

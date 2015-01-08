@@ -1,62 +1,205 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-template.xhtml">
+                template="/layout/template-edit.xhtml">
 
-    <ui:param name="functionTitle" value="#{messages.SectionSelect}"/>
 
-    <ui:define name="func-body">
-        <div style="clear: both"/>
+    <div class="setup-header">
+        <h1>#{messages.ProjectCreateStep1}</h1>
+    </div>
 
-        <div class="flow-steps">
-            <ol class="num4">
-                <li class="current">
-                    <strong class="first">#{messages.ProjectCreateStep1}</strong>
-                </li>
-                <li>
-                    <span>#{messages.ProjectCreateStep2}</span>
-                </li>
-                <li>
-                    <span>#{messages.ProjectCreateStep3}</span>
-                </li>
+    <div class="flow-steps">
+        <ol class="num3">
+            <li class="current">
+                <strong class="first">#{messages.ProjectCreateStep1}</strong>
+            </li>
+            <li>
+                <span>#{messages.ProjectCreateStep2}</span>
+            </li>
+            <li class="last">
+                <span>#{messages.ProjectCreateStep3}</span>
+            </li>
 
-                <li class="last">
-                    <span>#{messages.ProjectCreateStep5}</span>
-                </li>
-            </ol>
+
+        </ol>
+    </div>
+
+
+    <r:messages globalOnly="true" ajaxRendered="true"/>
+
+    <br/>
+
+    <h:form>
+
+        <div class="form-inline">
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.District}
+                </ui:define>
+                <ui:param name="for" value="districtInput"/>
+                <h:selectOneMenu id="districtInput" data-size="10"
+                                 value="#{districtHome.id}" data-width="100px"
+                                 styleClass="selectpicker edit-select"
+                                 label="#{messages.District}" required="true">
+                    <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                   itemValue="#{_district.id}" label="#{_district.name}"/>
+                </h:selectOneMenu>
+            </s:decorate>
         </div>
 
-        <div style="float: right">
-            <s:link styleClass="cancelLink" value="#{messages.cancel}" action="cancel"/>
+        <a:jsFunction name="showSectionSelectMenu" execute="districtInput" render="sectionSelectPanel">
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
+
+        <div class="form-inline">
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Section}
+                </ui:define>
+
+
+                <div class="btn-group bootstrap-select edit-select">
+                    <button onclick="showSectionSelectMenu();" type="button" class=" btn dropdown-toggle btn-default"
+                            data-toggle="dropdown" aria-expanded="false">
+
+                        <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
+                                      value="#{( empty sectionHome.instance.name) ? messages.noSelectLabel : sectionHome.instance.name}">
+                        </h:outputText>
+                        <span class="caret"></span>
+                    </button>
+
+
+                    <div class="dropdown-menu select-menu-modal-holder">
+                        <div class="select-menu-modal">
+                            <div class="select-menu-header">
+                                <span class="select-menu-title">#{messages.SectionSelect}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                            </div>
+
+                            <a:outputPanel layout="block" id="sectionSelectPanel">
+                                <div class="select-menu-filters">
+                                    <div class="select-menu-text-filter">
+                                        <h:inputText value="#{sectionSearch.searchName}">
+                                            <a:ajax event="keyup" immediate="true" execute="@this"
+                                                    render="selectItemList">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <a:outputPanel layout="block" styleClass="select-menu-list" id="selectItemList">
+
+
+                                    <a:repeat value="#{sectionSearch.searchResult}" var="_item">
+                                        <a:commandLink execute="@this" immediate="true"
+                                                       render="sectionSelectBtnCaption"
+                                                       styleClass="select-menu-item #{(sectionHome.idDefined and (sectionHome.id eq _item.id)) ? 'selected': ''}">
+                                            <a:param value="#{_item.id}" assignTo="#{sectionHome.id}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{_item.name}</span>
+                                        </a:commandLink>
+                                    </a:repeat>
+
+                                    <a:commandLink action="#{sectionSearch.createBySearchName}"
+
+                                                   render="sectionSelectBtnCaption" execute="@this" immediate="true"
+                                                   styleClass="select-menu-item last-visible navigation-focus"
+                                                   rendered="#{(empty sectionSearch.searchResult) and (not empty sectionSearch.searchName)}">
+                                        <a:attachQueue requestDelay="0"/>
+                                    <span class="select-menu-item-icon oction oction-check">
+                                    </span>
+
+                                        <div class="select-menu-item-text">
+                                            <h4>
+                                                #{messages.CreateNewSection}:
+                                                <span>#{sectionSearch.searchName}</span>
+
+                                            </h4>
+                                            <span class="description">#{messages.SectionSearchCreateDescript}</span>
+                                        </div>
+
+                                    </a:commandLink>
+                                </a:outputPanel>
+
+                            </a:outputPanel>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </s:decorate>
         </div>
-        <r:messages globalOnly="true" ajaxRendered="true"/>
-        <div style="clear: both"/>
-        <br/>
 
-        <s:decorate template="/layout/house/SectionMgrBase.xhtml">
-            <ui:define name="sectionName">
-                #{_item.name}
-            </ui:define>
+        <a:outputPanel ajaxRendered="true">
+            <a:outputPanel rendered="#{not sectionHome.idDefined and (not empty sectionHome.instance.name)}">
 
-            <r:column style="width: 40px; text-align: center">
-                <f:facet name="header">
-                    <s:link styleClass="toolBarBtn" action="createSection">
-                        <f:param name="sectionId" value=""/>
-                        <s:graphicImage value="/img/icons/create.gif" title="#{messages.CreateNewSection}"/>
-                    </s:link>
-                </f:facet>
-                <s:link value="#{messages.select}" action="next">
+                <hr/>
 
-                    <f:param name="sectionId" value="#{_item.id}"/>
-                </s:link>
-            </r:column>
-        </s:decorate>
+                <div class="form-inline">
 
-    </ui:define>
+                    <s:decorate id="IdField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                        <ui:define name="label">
+                            #{messages.Section_id}
+                        </ui:define>
+                        <ui:param name="for" value="idInput"/>
+                        <ui:param name="status" value="idStatus"/>
+                        <h:inputText id="idInput" required="true" styleClass="form-control" maxlength="32"
+                                     label="#{messages.Section_id}" size="32"
+                                     value="#{sectionHome.instance.id}" disabled="#{sectionHome.managed}"
+                                     valueChangeListener="#{sectionHome.verifyIdAvailable}">
+                            <f:validateRequired/>
+                            <a:ajax event="change" render="IdField" status="idStatus"/>
+                        </h:inputText>
+                        <ui:define name="note">
+                            <p class="note">#{messages.PyCodeGen1}#{' '}<strong> <r:inplaceInput id="pyCodeField"
+                                                                                                 value="#{sectionHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
+                            </p>
+                        </ui:define>
+
+                    </s:decorate>
+
+                </div>
+
+
+
+
+                <s:decorate id="addressField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                    <ui:define name="label">
+                        #{messages.Section_address}
+                    </ui:define>
+                    <ui:param name="for" value="addressInput"/>
+                    <h:inputTextarea id="addressInput" styleClass="form-control" rows="3"
+                                     value="#{sectionHome.instance.address}"
+                                     label="#{messages.Section_address}">
+
+                    </h:inputTextarea>
+
+                </s:decorate>
+
+                <div style="clear:both">
+                    <span class="required">*</span>
+                    #{messages.requiredFields}
+                </div>
+            </a:outputPanel>
+        </a:outputPanel>
+        <hr/>
+
+        <a:outputPanel ajaxRendered="true">
+        <h:commandButton value="#{messages.ok}" disabled="#{not (sectionHome.idDefined or ((not empty sectionHome.instance.name) and (not empty sectionHome.instance.id)))}"
+                         action="#{projectEdit.sectionSelectComplete}"
+                         styleClass="button primary first-in-line #{(sectionHome.idDefined or ((not empty sectionHome.instance.name) and (not empty sectionHome.instance.id))) ? '' : 'disabled'}" >
+
+        </h:commandButton>
+        </a:outputPanel>
+    </h:form>
+
 
 </ui:composition>

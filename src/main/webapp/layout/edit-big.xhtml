@@ -21,8 +21,11 @@
         </a:outputPanel>
         </dd>
         <dd>
-            <r:message for="#{for}" styleClass="edit-below-msg" />
+            <r:message for="#{for}" styleClass="edit-below-msg" rendered="#{not empty for}"/>
         </dd>
+            <dd>
+                <ui:insert name="note"/>
+            </dd>
         </dl>
 
     </div>

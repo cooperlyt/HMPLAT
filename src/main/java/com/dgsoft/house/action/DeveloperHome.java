@@ -8,8 +8,11 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
+import javax.persistence.TypedQuery;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,6 +24,38 @@ import java.util.Date;
 public class DeveloperHome extends HouseEntityHome<Developer> {
 
     private static final String NUMBER_KEY = "DEVELOPER_ID";
+
+    private String searchName;
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
+
+    public List<Developer> getSearchResult() {
+        if ((searchName == null) || (searchName.trim().equals(""))) {
+            TypedQuery<Developer> query = getEntityManager().createQuery("select developer from Developer developer where developer.destroyed = false order by developer.createTime desc", Developer.class);
+            query.setMaxResults(5);
+            return query.getResultList();
+        } else {
+            List<Developer> result = getEntityManager().createQuery("select developer from Developer developer where developer.destroyed = false and  ((developer.id = :prefix ) or (lower(developer.pyCode) like lower(concat('%',:prefix,'%'))) or (lower(developer.name) like lower(concat('%',:prefix,'%')))) ", Developer.class).
+                    setParameter("prefix", searchName).getResultList();
+            return result;
+        }
+    }
+
+    public void createBySearchName() {
+        if (isIdDefined()) {
+            clearInstance();
+        }
+        Logging.getLog(getClass()).debug("create developer by searchName:" + searchName);
+        getInstance().setName(searchName);
+        nameInputedListener();
+    }
+
 
     @In
     private FacesMessages facesMessages;

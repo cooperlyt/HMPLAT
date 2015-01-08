@@ -15,6 +15,7 @@ import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,22 +32,6 @@ public class SectionHome extends HouseEntityHome<Section> {
     @In
     private FacesMessages facesMessages;
 
-//    public void setUniqueName(String name) {
-//        try {
-//            setId(getEntityManager().createQuery("select section.id from Section section where section.name = :sectionName", String.class).
-//                    setParameter("sectionName", name).getSingleResult());
-//        } catch (NoResultException e) {
-//            clearInstance();
-//        }
-//    }
-//
-//    public String getUniqueName() {
-//        if (isIdDefined()) {
-//            return getInstance().getName();
-//        } else {
-//            return null;
-//        }
-//    }
 
     private String genId(){
         long number = HouseNumberBuilder.instance().useNumber(NUMBER_KEY);

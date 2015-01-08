@@ -8,6 +8,9 @@ $(document).ready(
 
 
         $('.select-menu-header').click(function(event){ if(!$(event.target).hasClass("js-menu-close")) event.stopPropagation();});
+        $('.select-menu-filters').click(function(event){ event.stopPropagation();});
+
+
         $('.table-floatThead').floatThead({
             useAbsolutePositioning: false
         });
