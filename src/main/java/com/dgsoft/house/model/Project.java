@@ -87,6 +87,12 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         this.address = section.getAddress();
     }
 
+    public Project(String id, ProjectState state, Date createTime) {
+        this.state = state;
+        this.createTime = createTime;
+        this.id = id;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
@@ -120,7 +126,7 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         this.section = section;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "DEVELOPERID")
     public Developer getDeveloper() {
         return this.developer;

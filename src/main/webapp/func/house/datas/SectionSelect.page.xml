@@ -5,6 +5,7 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
     <param name="sectionId" value="#{sectionHome.id}"/>
+    <param name="projectId" value="#{projectHome.id}"/>
 
     <navigation from-action="#{projectEdit.sectionSelectComplete}">
         <rule if-outcome="success">

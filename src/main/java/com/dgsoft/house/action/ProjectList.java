@@ -5,6 +5,7 @@ import com.dgsoft.house.model.Project;
 import org.jboss.seam.annotations.Name;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by cooper on 6/25/14.
@@ -16,9 +17,6 @@ public class ProjectList extends HouseEntityQuery<Project>{
             "left join fetch project.section section left join fetch section.district " +
             "left join fetch project.developer";
 
-    private static final String[] OR_RESTRICTIONS = {
-        "lower(project.section.name) like "
-    };
 
     private static final String[] RESTRICTIONS = {
             "lower(project.section.district.name) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
@@ -45,11 +43,21 @@ public class ProjectList extends HouseEntityQuery<Project>{
             "project.developer.id = #{baseMapDataCondition.developerId}",
             "lower(project.name) like lower(concat('%',#{baseMapDataCondition.projectName},'%'))"};
 
+    private static final String[] SORT_COLUMNS = {
+            "project.createTime","project.name","project.developer.id","project.id","project.area"
+    };
+
+    public List<String> getSortColumns(){
+        return Arrays.asList(SORT_COLUMNS);
+    }
+
 
     public ProjectList() {
         setEjbql(EJBQL);
         setRestrictionLogicOperator("or");
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
+        setOrderColumn("project.createTime");
+        setOrderDirection("desc");
         setMaxResults(25);
     }
 

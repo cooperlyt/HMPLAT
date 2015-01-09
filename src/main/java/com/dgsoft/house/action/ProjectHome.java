@@ -5,7 +5,6 @@ import com.dgsoft.common.helper.ActionExecuteState;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.Project;
-import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
@@ -172,7 +171,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     @Override
     protected Project createInstance() {
-        return new Project(((SectionHome) Component.getInstance("sectionHome")).getInstance(), String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), Project.ProjectState.BUILDING, new Date());
+        return new Project(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), Project.ProjectState.BUILDING, new Date());
     }
 
 
@@ -185,7 +184,6 @@ public class ProjectHome extends HouseEntityHome<Project> {
     @Override
     protected void initInstance() {
         super.initInstance();
-        developerHome.setId(getInstance().getId());
         projectBuilds = null;
     }
 

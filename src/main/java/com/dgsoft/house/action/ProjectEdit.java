@@ -24,12 +24,24 @@ public class ProjectEdit {
 
     public String sectionSelectComplete() {
         projectHome.getInstance().setSection(sectionHome.getInstance());
+        if ((projectHome.getInstance().getAddress() == null) ||
+                "".equals(projectHome.getInstance().getAddress().trim()))
+        projectHome.getInstance().setAddress(sectionHome.getInstance().getAddress());
+        if (projectHome.getInstance().getName() == null || projectHome.getInstance().getName().trim().equals("")){
+            projectHome.getInstance().setName(sectionHome.getInstance().getName());
+        }
+        if(projectHome.isManaged() && (projectHome.getInstance().getDeveloper() != null)){
+            developerHome.setId(projectHome.getInstance().getDeveloper().getId());
+        }
         return "success";
     }
 
     @Transactional
-    public String persistProject(){
+    public String saveProject(){
         projectHome.getInstance().setDeveloper(developerHome.getInstance());
-        return projectHome.persist();
+        if(projectHome.isManaged()){
+            return projectHome.update();
+        }else
+            return projectHome.persist();
     }
 }

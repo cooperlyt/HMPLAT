@@ -5,8 +5,15 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
 
-    <navigation from-action="#{projectEdit.persistProject}">
+    <navigation from-action="#{projectEdit.saveProject}">
         <rule if-outcome="persisted">
+            <end-conversation />
+            <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
+                <param name="dataTypeName" value="PROJECT_MGR"/>
+            </redirect>
+        </rule>
+        <rule if-outcome="updated">
+            <end-conversation />
             <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
                 <param name="dataTypeName" value="PROJECT_MGR"/>
             </redirect>
