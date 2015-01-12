@@ -6,170 +6,118 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                template="/layout/full-template.xhtml">
-    <ui:param name="" value=""/>
-
-    <ui:define name="func-body">
+                template="/layout/template-tab.xhtml">
 
 
-        <h:form>
-            <r:toolbar>
-                <r:toolbarGroup>
-
-                    <a:commandLink value="#{messages.create}" action="#{businessDefineHome.createTaskSubscribe}"
-                                   immediate="true" render="editPanel_form"
-                                   oncomplete="#{r:component('editPanel')}.show();">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandLink>
-                </r:toolbarGroup>
-
-                <r:toolbarGroup location="right">
-                    <h:commandButton value="save" action="#{businessDefineHome.update}"/>
-
-                    <s:button propagation="end" value="cancel" view="/func/system/config/BusinessMgr.xhtml"/>
-                </r:toolbarGroup>
-            </r:toolbar>
-
-            <br/>
-            <r:messages globalOnly="true" ajaxRendered="true"/>
-            <br/>
-
-            <r:dataTable id="allSubscribes" style="width: 100%" value="#{businessDefineHome.taskSubscribeGroups}"
-                         var="_group">
-                <f:facet name="header">
-                    <r:columnGroup>
-                        <r:column>
-                            #{messages.TaskSubscribe_type}
-                        </r:column>
-                        <r:column>
-                            #{messages.TaskSubscribe_taskName}
-                        </r:column>
-                        <r:column>
-                            #{messages.TaskSubscribe_reg}
-                        </r:column>
-                        <r:column>
-
-                        </r:column>
-                    </r:columnGroup>
-                </f:facet>
-                <r:column colspan="4">
-                    #{_group.key}
-                    <r:collapsibleSubTableToggler for="sbtb1"/>
-                </r:column>
-                <r:collapsibleSubTable id="sbtb1" value="#{_group.values}" var="_item">
-                    <r:column>
-                        #{messages[_item.type.name()]}
-                    </r:column>
-                    <r:column>
-                        #{_item.taskName}
-                    </r:column>
-                    <r:column>
-                        #{_item.regName} #{_item.priority}
-                    </r:column>
-
-                    <r:column style="text-align: center; width: 74px">
-                        <a:commandButton image="/img/icons/delete.png" execute="@this"
-                                         action="#{businessDefineHome.deleteSelectSubscribe}" render="allSubscribes">
-                            <a:attachQueue requestDelay="0"/>
-                            <a:param value="#{_item.id}" assignTo="#{businessDefineHome.selectTaskSubscribeId}"/>
-                        </a:commandButton>
-
-                        #{' '}
-                        <a:commandButton image="/img/icons/up.png" execute="@this"
-                                         action="#{businessDefineHome.upSelectTaskSubscribe}" render="allSubscribes">
-                            <a:attachQueue requestDelay="0"/>
-                            <a:param value="#{_item.id}" assignTo="#{businessDefineHome.selectTaskSubscribeId}"/>
-                        </a:commandButton>
-                        #{' '}
-                        <a:commandButton image="/img/icons/down.png" execute="@this"
-                                         action="#{businessDefineHome.downSelectTaskSubscribe}" render="allSubscribes">
-                            <a:attachQueue requestDelay="0"/>
-                            <a:param value="#{_item.id}" assignTo="#{businessDefineHome.selectTaskSubscribeId}"/>
-                        </a:commandButton>
-                    </r:column>
-                </r:collapsibleSubTable>
-            </r:dataTable>
-        </h:form>
-
-        <s:decorate template="/layout/edit-modalpanel.xhtml">
-            <ui:param name="panelId" value="editPanel"/>
-            <ui:param name="panelTitle" value="#{messages.TaskSubscribe}"/>
-            <ui:define name="controls">
-                <a:commandButton immediate="true"
-                                 execute="@this" image="/img/close.png"
-                                 onclick="#{r:component(panelId)}.hide(); return false;">
-                </a:commandButton>
-            </ui:define>
-
-            <a:outputPanel rendered="#{not empty businessDefineHome.editTaskSubscribe}">
-                <s:decorate template="/layout/edit.xhtml">
-                    <ui:define name="label">
-                        #{messages.TaskSubscribe_type}
-                    </ui:define>
-                    <h:selectOneMenu id="taskSubscribeTypeInput" label="#{messages.TaskSubscribe_type}"
-                                     value="#{businessDefineHome.editTaskSubscribe.type}" required="true">
-                        <s:selectItems value="#{taskSubscribeTypes}" var="_type"
-                                       label="#{messages[_type.name()]}" itemValue="#{_type}"/>
-                        <s:convertEnum/>
-                        <a:ajax render="taskSubscribeTaskNameField" event="valueChange">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-                    </h:selectOneMenu>
-                    <ui:define name="tail">
-                        <r:message for="taskSubscribeTypeInput" styleClass="message-icon"
-                                   showDetail="true" showSummary="true" tooltip="true"/>
-                    </ui:define>
-                </s:decorate>
-
-                <a:outputPanel id="taskSubscribeTaskNameField">
-                    <s:decorate rendered="#{businessDefineHome.editTaskSubscribe.type eq 'TASK_OPER'}"
-                                template="/layout/edit.xhtml">
-                        <ui:define name="label">
-                            #{messages.TaskSubscribe_taskName}
-                        </ui:define>
-                        <h:selectOneMenu id="taskSubscribeTaskNameInput" label="#{messages.TaskSubscribe_taskName}"
-                                         value="#{businessDefineHome.editTaskSubscribe.taskName}" required="true">
-                            <s:selectItems var="_task" value="#{businessDefineHome.wfTaskNames}"
-                                           itemValue="#{_task}" label="#{_task}"
-                                           noSelectionLabel="#{messages.noSelectLabel}"/>
-
-                        </h:selectOneMenu>
-                        <ui:define name="tail">
-                            <r:message for="taskSubscribeTaskNameInput" styleClass="message-icon"
-                                       showDetail="true" showSummary="true" tooltip="true"/>
-                        </ui:define>
-                    </s:decorate>
-                </a:outputPanel>
+    <ui:param name="funcName" value="#{messages.TaskSubscribe}"/>
+    <ui:define name="head-tab">
 
 
-                <s:decorate template="/layout/edit.xhtml">
-                    <ui:define name="label">
-                        #{messages.TaskSubscribe_reg}
-                    </ui:define>
-                    <h:selectOneMenu id="subscribeInput" required="true" label="#{messages.TaskSubscribe_reg}"
-                                     value="#{businessDefineHome.editTaskSubscribe.regName}">
+        <s:link styleClass="selected pagehead-nav-item">
+            <span class="octicon octicon-rss"/>
+            #{messages.TaskSubscribeComponent}
+        </s:link>
+
+        <s:link styleClass="pagehead-nav-item">
+            <span class="octicon octicon-repo-force-push"></span>
+            #{messages.TaskSubscribeFile}
+        </s:link>
+
+        <s:link styleClass="pagehead-nav-item">
+            <span class="glyphicon glyphicon-print"></span>
+            #{messages.TaskSubscribeReport}
+        </s:link>
+
+    </ui:define>
+
+
+    <a:outputPanel layout="block" styleClass="columns">
+        <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
+            <nav class="menu">
+
+
+                <s:link styleClass="menu-item #{(empty businessDefineHome.taskName) ? 'selected' : ''}"
+                        propagation="none">
+                    #{messages.businessCreateTask}
+                    <h:outputText styleClass="counter" value="1">
+                        <f:convertNumber type="number" groupingUsed="true"/>
+                    </h:outputText>
+                    <f:param name="taskName" value="#{_task}"/>
+                </s:link>
+
+                <a:repeat value="#{businessDefineHome.wfTaskNames}" var="_task">
+                    <s:link styleClass="menu-item #{(businessDefineHome.taskName eq _task) ? 'selected' : ''}"
+                            propagation="none">
+                        #{_task}
+                        <h:outputText styleClass="counter" value="1">
+                            <f:convertNumber type="number" groupingUsed="true"/>
+                        </h:outputText>
+                        <f:param name="taskName" value="#{_task}"/>
+                    </s:link>
+                </a:repeat>
+
+
+            </nav>
+        </a:outputPanel>
+        <a:outputPanel id="dataResult" layout="block" styleClass="column three-fourths codesearch-results">
+            <div class="subnav">
+                <button onclick="if(jQuery(#{r:element('subscribeEditForm')}).is(':visible')){jQuery(#{r:element('subscribeEditForm')}).hide();}else{jQuery(#{r:element('subscribeEditForm')}).show();}; return false;"
+                        class="button primary right">
+                    #{messages.create}#{' '}#{messages.Subscribe}
+                </button>
+            </div>
+
+            <h:form id="subscribeEditForm" styleClass="new-label">
+                <a:outputPanel layout="block" styleClass="label-edit edit-color-label-form js-label-editor open">
+                    <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
+                                     label="#{messages.TaskSubscribe_reg}" id="subscribeInput"
+                                     value="#{businessDefineHome.createRegName}">
                         <s:selectItems value="#{taskSubscribeReg.taskSubscribeDefine}" var="_reg" label="#{_reg.title}"
                                        itemValue="#{_reg.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
                     </h:selectOneMenu>
+                    <r:message for="subscribeInput"/>
 
-                    <ui:define name="tail">
-                        <r:message for="subscribeInput" styleClass="message-icon"
-                                   showDetail="true" showSummary="true" tooltip="true"/>
-                    </ui:define>
-                </s:decorate>
+                    <div class="new-label-actions">
+
+                        <button onclick="jQuery(#{r:element('subscribeEditForm')}).hide(); return false;"
+                                class="button">
+                            #{messages.cancel}
+                        </button>
+                        <a:commandButton styleClass="button primary" render="subscribeInput,dataList"
+                                         execute="@form" action="#{businessDefineHome.createTaskSubscribe}"
+                                         value="#{messages.createNew}#{''}#{messages.Subscribe}">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+                    </div>
+                </a:outputPanel>
+
+
+            </h:form>
+
+            <a:outputPanel id="dataList">
+            <div class="table-list-header">
+                <div class="table-list-filters">
+                    <div class="table-list-header-toggle left">
+                    <span class="table-list-header-meta">
+                        6 #{messages.Subscribe}
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="table-list table-list-bordered">
+                <ui:repeat value="#{businessDefineHome.taskSubscribeList}" var="_subscribe">
+                <li class="table-list-item labels-list-item">
+                    #{_subscribe.regName}
+                </li>
+                </ui:repeat>
+            </ul>
+
             </a:outputPanel>
-            <ui:define name="actionButtons">
-
-                <a:commandButton value="#{messages.cancel}" immediate="true"
-                                 onclick="#{r:component(panelId)}.hide(); return false"/>
-
-                <a:commandButton value="#{messages.ok}" execute="@form" action="#{businessDefineHome.saveTaskSubscribe}"
-                                 data="#{actionExecuteState.lastState}" render="allSubscribes"
-                                 oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
-            </ui:define>
+        </a:outputPanel>
 
 
-        </s:decorate>
-    </ui:define>
+    </a:outputPanel>
+
 
 </ui:composition>

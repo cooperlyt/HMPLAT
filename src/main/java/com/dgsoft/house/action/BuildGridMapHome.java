@@ -223,6 +223,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         } else {
             generateHouse();
         }
+
+        Logging.getLog(getClass()).debug("upload comlete" );
     }
 
     private void analyzeTemplete(Element rootElement) {

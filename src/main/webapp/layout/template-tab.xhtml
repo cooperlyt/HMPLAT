@@ -10,23 +10,35 @@
                 template="/layout/template.xhtml">
 
 
-    <ui:define name="func-body">
+    <ui:define name="body">
+
+
         <h:outputStylesheet library="bootstrap-sco" name="/css/scojs.css"/>
         <h:outputStylesheet library="bootstrap-sco" name="/css/sco.message.css"/>
 
 
+        <div class="pagehead">
 
-
-        <div id="func-navigation" class="pagehead codesearch-head">
             <div class="container">
-                <div style="float: left;width: 250px;">
+
+                <nav class="pagehead-nav" role="navigation">
+
+                    <ui:insert name="head-tab"/>
+
+                </nav>
+                <div class="account-switcher">
+
                     <ui:include src="/layout/function-nav.xhtml">
                         <ui:param name="functions" value="#{authInfo.dataFunctions}"/>
                     </ui:include>
                     <span class="funcTitle">#{funcName}</span>
                 </div>
-                <ui:insert name="head-right"/>
+
             </div>
+
+
+
+
         </div>
         <div class="container">
             <ui:insert/>

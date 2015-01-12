@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <div class="dropdown" style="display: inline-block;">
+        <a id="dLabel" class="funtion-nav" data-target="#" href="#" data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            <span class="glyphicon glyphicon-list"></span>
+            <span class="sr-only">Error:</span>
+            <span class="dropdown-caret"/>
+
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-left " aria-labelledby="dLabel">
+            <a:repeat value="#{functions}" var="_func">
+                <li>
+                    <s:link propagation="#{_func.needConversations ? 'endRoot' : 'end'}" view="#{_func.location}">
+                                            <span
+                                                    class="glyphicon glyphicon-align-justify"></span>
+                        <span class="sr-only"></span>#{_func.name}
+                        <f:param name="funcName" value="#{_func.name}"/>
+                    </s:link>
+                </li>
+            </a:repeat>
+        </ul>
+    </div>
+</ui:composition>

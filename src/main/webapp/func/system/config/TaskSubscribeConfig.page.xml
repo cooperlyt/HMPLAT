@@ -5,6 +5,7 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
     <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+    <param name="taskName" value="#{businessDefineHome.taskName}"/>
 
     <navigation from-action="#{businessDefineHome.update}">
         <rule if-outcome="updated">

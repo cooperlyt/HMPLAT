@@ -6,13 +6,12 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                template="/layout/template.xhtml">
+                template="/layout/template-data.xhtml">
 
-    <ui:define name="toolbar">
+
         <s:button value="create" action="#{businessDefineConfig.addBusinessDefine}"/>
-    </ui:define>
 
-    <ui:define name="body">
+
 
         <r:dataTable id="businessDefineTable" noDataLabel="#{messages.businessDefine_empty}" style="width:100%"
                         value="#{businessCategoryList.resultList}" var="_category">
@@ -79,7 +78,7 @@
                     </a:commandLink>
 
                     #{' '}
-                    <s:link view="/func/system/config/TaskSubscribeConfig.xhtml" propagation="begin">
+                    <s:link view="/func/system/config/TaskSubscribeConfig.xhtml">
                         <f:param name="businessDefineId" value="#{_bussinessDef.id}"/>
                         <s:graphicImage value="/img/icons/edit.png" title="#{messages.viewDetails}"/>
                     </s:link>
@@ -110,5 +109,5 @@
             </a:commandButton>
         </s:decorate>
 
-    </ui:define>
+
 </ui:composition>

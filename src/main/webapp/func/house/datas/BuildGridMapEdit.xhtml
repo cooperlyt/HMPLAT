@@ -204,6 +204,7 @@
     <h:form enctype="multipart/form-data">
 
 
+
         <r:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
                       serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
                       deleteLabel="#{messages.fileUpload_deleteLabel}"
@@ -219,13 +220,10 @@
                       stopControlLabel="#{messages.fileUpload_stopControlLabel}"
                       fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
                       ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
+                      render="grid_map,idle,toolbar"
+                      onuploadcomplete="#{r:component('updateFilePopup')}.hide();"
                       acceptedTypes="xml">
 
-            <a:ajax event="uploadcomplete"
-                    oncomplete="#{r:component('updateFilePopup')}.hide();"
-                    execute="@none"
-                    status="processWaiting"
-                    render="grid_map,idle,toolbar"/>
         </r:fileUpload>
     </h:form>
 </r:popupPanel>

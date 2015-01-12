@@ -1,21 +1,15 @@
 package com.dgsoft.common.system.action;
 
-import com.dgsoft.common.TotalDataGroup;
-import com.dgsoft.common.TotalGroupStrategy;
-import com.dgsoft.common.helper.ActionExecuteState;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.common.system.model.BusinessNeedFile;
-import com.dgsoft.common.system.model.FileSubscribe;
 import com.dgsoft.common.system.model.TaskSubscribe;
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
-import org.jboss.seam.log.Logging;
 import org.jbpm.graph.def.ProcessDefinition;
 
 import javax.faces.event.ValueChangeEvent;
@@ -34,56 +28,74 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     @In
     private FacesMessages facesMessages;
 
+    private Map<String, List<TaskSubscribe>> taskSubscribeMap;
+
+    private String editSubscribeId;
+
+    private String editRegName;
+
+    private String taskName;
+
+    private String createRegName;
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    protected String getTask(){
+        return ((getTaskName() == null) || "".equals(getTaskName().trim())) ? "" : getTaskName();
+    }
+
+    public String getCreateRegName() {
+        return createRegName;
+    }
+
+    public void setCreateRegName(String createRegName) {
+        this.createRegName = createRegName;
+    }
+
+    public String getEditSubscribeId() {
+        return editSubscribeId;
+    }
+
+    public void setEditSubscribeId(String editSubscribeId) {
+        this.editSubscribeId = editSubscribeId;
+    }
+
+    public Map<String, List<TaskSubscribe>> getTaskSubscribeMap(){
+       if (taskSubscribeMap == null){
+           taskSubscribeMap = new HashMap<String, List<TaskSubscribe>>();
+           List<TaskSubscribe> all = new ArrayList<TaskSubscribe>(getInstance().getTaskSubscribes());
+           for (TaskSubscribe subscribe: all){
+
+
+               List<TaskSubscribe> result = taskSubscribeMap.get(subscribe.getTask());
+               if (result == null){
+                   result = new ArrayList<TaskSubscribe>();
+                   taskSubscribeMap.put(subscribe.getTask(),result);
+               }
+               result.add(subscribe);
+           }
+
+           for(List<TaskSubscribe> subscribes: taskSubscribeMap.values()){
+               Collections.sort(subscribes, new Comparator<TaskSubscribe>() {
+                   @Override
+                   public int compare(TaskSubscribe o1, TaskSubscribe o2) {
+                       return new Integer(o1.getPriority()).compareTo(o2.getPriority());
+                   }
+               });
+           }
+       }
+        return taskSubscribeMap;
+    }
+
     public List<TaskSubscribe> getTaskSubscribeList() {
-        List<TaskSubscribe> result = new ArrayList<TaskSubscribe>(getInstance().getTaskSubscribes());
-        Collections.sort(result, new Comparator<TaskSubscribe>() {
-            @Override
-            public int compare(TaskSubscribe o1, TaskSubscribe o2) {
-                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
-            }
-        });
-        return result;
-    }
-
-    @In
-    private ActionExecuteState actionExecuteState;
-
-    @Factory(value = "taskSubscribeTypes", scope = ScopeType.SESSION)
-    public TaskSubscribe.SubscribeType[] getTaskSubscribeTypes() {
-        return TaskSubscribe.SubscribeType.values();
-    }
-
-    private List<TotalDataGroup<String, TaskSubscribe>> taskSubscribeGroups;
-
-
-    public List<TotalDataGroup<String, TaskSubscribe>> getTaskSubscribeGroups() {
-        if (taskSubscribeGroups == null) {
-            taskSubscribeGroups = TotalDataGroup.groupBy(getInstance().getTaskSubscribes(), new TotalGroupStrategy<String, TaskSubscribe>() {
-                @Override
-                public String getKey(TaskSubscribe taskSubscribe) {
-                    return taskSubscribe.getTaskName();
-                }
-
-                @Override
-                public Object totalGroupData(Collection<TaskSubscribe> datas) {
-                    return null;
-                }
-            });
-            sortSubscribeGroups();
-        }
-        return taskSubscribeGroups;
-    }
-
-    private void sortSubscribeGroups() {
-        if (taskSubscribeGroups != null)
-            for (TotalDataGroup<String, TaskSubscribe> group : taskSubscribeGroups) {
-                TotalDataGroup.sort(group, new Comparator<TaskSubscribe>() {
-                    @Override
-                    public int compare(TaskSubscribe o1, TaskSubscribe o2) {
-                        return Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
-                    }
-                });
-            }
+        List<TaskSubscribe> result = getTaskSubscribeMap().get(getTask());
+        return (result == null) ? new ArrayList<TaskSubscribe>(0) : result;
     }
 
 
@@ -94,7 +106,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
-    private TaskSubscribe editTaskSubscribe;
+
 
     public List<BusinessNeedFile> getFileSubscribe(String taskName){
         List<BusinessNeedFile> result = new ArrayList<BusinessNeedFile>(0);
@@ -112,64 +124,35 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
-    public TaskSubscribe getEditTaskSubscribe() {
-        return editTaskSubscribe;
+
+    @Transactional
+    public void createTaskSubscribe() {
+
+        TaskSubscribe taskSubscribe =
+                new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
+                        getTask(), createRegName,((taskName == null) || taskName.trim().equals("")) ? TaskSubscribe.SubscribeType.START_TASK : TaskSubscribe.SubscribeType.TASK_OPER,
+                        getInstance(),getMaxPriority(getTask()) + 1);
+
+        getEntityManager().persist(taskSubscribe);
+        createRegName = null;
+        taskSubscribeMap = null;
+
     }
 
-    public void setEditTaskSubscribe(TaskSubscribe editTaskSubscribe) {
-        this.editTaskSubscribe = editTaskSubscribe;
-    }
 
-
-    public void setSelectTaskSubscribeId(String id) {
-        for (TaskSubscribe ts : getInstance().getTaskSubscribes()) {
-            if (ts.getId().equals(id)) {
-                editTaskSubscribe = ts;
-                return;
+    protected TaskSubscribe getEditTaskSubscribe(){
+        for(TaskSubscribe subscribe: getTaskSubscribeMap().get(getTask())){
+            if (subscribe.getId().equals(editSubscribeId)){
+                return subscribe;
             }
         }
-        editTaskSubscribe = null;
-    }
-
-    public String getSelectTaskSubscribeId() {
-        if (editTaskSubscribe == null) {
-            return null;
-        }
-        return editTaskSubscribe.getId();
-    }
-
-    private boolean createing = false;
-
-    public boolean isCreateing() {
-        return createing;
-    }
-
-    public void setCreateing(boolean createing) {
-        this.createing = createing;
-    }
-
-    public void createTaskSubscribe() {
-        createing = true;
-        actionExecuteState.clearState();
-        editTaskSubscribe = new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(), getInstance());
-    }
-
-    public void editTaskSubscribe() {
-        createing = false;
-        actionExecuteState.clearState();
+        return null;
     }
 
     public void saveTaskSubscribe() {
-        if (createing) {
-
-            getInstance().getTaskSubscribes().add(editTaskSubscribe);
-            taskSubscribeGroups = null;
-            if (editTaskSubscribe.getType().equals(TaskSubscribe.SubscribeType.START_TASK)) {
-                editTaskSubscribe.setTaskName("start");
-            }
-            editTaskSubscribe.setPriority(getMaxPriority(editTaskSubscribe.getTaskName()) + 1);
-        }
-        actionExecuteState.actionExecute();
+        TaskSubscribe subscribe = getEditTaskSubscribe();
+        subscribe.setRegName(editRegName);
+        update();
     }
 
     private int getMaxPriority(String taskName) {
@@ -183,6 +166,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public void upSelectTaskSubscribe() {
+        TaskSubscribe editTaskSubscribe = getEditTaskSubscribe();
         int selectPriority = editTaskSubscribe.getPriority();
 
         //Integer maxPriority = null;
@@ -201,12 +185,13 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             int maxPriority = maxSub.getPriority();
             maxSub.setPriority(editTaskSubscribe.getPriority());
             editTaskSubscribe.setPriority(maxPriority);
-            sortSubscribeGroups();
+            taskSubscribeMap = null;
         }
 
     }
 
     public void downSelectTaskSubscribe() {
+        TaskSubscribe editTaskSubscribe = getEditTaskSubscribe();
         int selectPriority = editTaskSubscribe.getPriority();
         TaskSubscribe minSub = null;
         for (TaskSubscribe subscribe : getInstance().getTaskSubscribes()) {
@@ -220,20 +205,20 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             int minPriority = minSub.getPriority();
             minSub.setPriority(editTaskSubscribe.getPriority());
             editTaskSubscribe.setPriority(minPriority);
-            sortSubscribeGroups();
+            taskSubscribeMap = null;
         }
     }
 
     public void deleteSelectSubscribe(){
-        getInstance().getTaskSubscribes().remove(editTaskSubscribe);
-        taskSubscribeGroups = null;
+        getInstance().getTaskSubscribes().remove(getEditTaskSubscribe());
+        taskSubscribeMap = null;
     }
 
 
     @Override
     public void refresh() {
         super.refresh();
-        taskSubscribeGroups = null;
+        taskSubscribeMap = null;
     }
 
 

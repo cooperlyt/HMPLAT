@@ -34,6 +34,15 @@ public class TaskSubscribe implements java.io.Serializable {
         this.businessDefine = businessDefine;
     }
 
+    public TaskSubscribe(String id, String taskName, String regName, SubscribeType type, BusinessDefine businessDefine, int priority) {
+        this.id = id;
+        this.taskName = taskName;
+        this.regName = regName;
+        this.type = type;
+        this.businessDefine = businessDefine;
+        this.priority = priority;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
@@ -54,6 +63,15 @@ public class TaskSubscribe implements java.io.Serializable {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    @Transient
+    public String getTask(){
+        if (SubscribeType.START_TASK.equals(getType())){
+            return "";
+        }else{
+            return getTaskName();
+        }
     }
 
     @Column(name = "REG_NAME", nullable = false , length = 200)
