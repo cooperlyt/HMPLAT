@@ -32,8 +32,6 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private String editSubscribeId;
 
-    private String editRegName;
-
     private String taskName;
 
     private String createRegName;
@@ -134,8 +132,9 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
                         getInstance(),getMaxPriority(getTask()) + 1);
 
         getEntityManager().persist(taskSubscribe);
+        getEntityManager().flush();
         createRegName = null;
-        taskSubscribeMap = null;
+        refresh();
 
     }
 
@@ -147,12 +146,6 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             }
         }
         return null;
-    }
-
-    public void saveTaskSubscribe() {
-        TaskSubscribe subscribe = getEditTaskSubscribe();
-        subscribe.setRegName(editRegName);
-        update();
     }
 
     private int getMaxPriority(String taskName) {
@@ -188,6 +181,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             taskSubscribeMap = null;
         }
 
+        update();
     }
 
     public void downSelectTaskSubscribe() {
@@ -207,10 +201,12 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             editTaskSubscribe.setPriority(minPriority);
             taskSubscribeMap = null;
         }
+        update();
     }
 
     public void deleteSelectSubscribe(){
         getInstance().getTaskSubscribes().remove(getEditTaskSubscribe());
+        update();
         taskSubscribeMap = null;
     }
 

@@ -32,14 +32,14 @@
 
 
     <a:outputPanel layout="block" styleClass="columns">
-        <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
+        <a:outputPanel ajaxRendered="true" id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
             <nav class="menu">
 
 
                 <s:link styleClass="menu-item #{(empty businessDefineHome.taskName) ? 'selected' : ''}"
                         propagation="none">
                     #{messages.businessCreateTask}
-                    <h:outputText styleClass="counter" value="1">
+                    <h:outputText styleClass="counter" value="#{(empty businessDefineHome.taskSubscribeMap.get('')) ? 0 : businessDefineHome.taskSubscribeMap.get('').size}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
                     <f:param name="taskName" value="#{_task}"/>
@@ -49,7 +49,7 @@
                     <s:link styleClass="menu-item #{(businessDefineHome.taskName eq _task) ? 'selected' : ''}"
                             propagation="none">
                         #{_task}
-                        <h:outputText styleClass="counter" value="1">
+                        <h:outputText styleClass="counter" value="#{(empty businessDefineHome.taskSubscribeMap.get(_task)) ? 0 :  businessDefineHome.taskSubscribeMap.get(_task).size}">
                             <f:convertNumber type="number" groupingUsed="true"/>
                         </h:outputText>
                         <f:param name="taskName" value="#{_task}"/>
@@ -68,7 +68,7 @@
             </div>
 
             <h:form id="subscribeEditForm" styleClass="new-label">
-                <a:outputPanel layout="block" styleClass="label-edit edit-color-label-form js-label-editor open">
+                <a:outputPanel id="createPanel" layout="block" styleClass="label-edit edit-color-label-form js-label-editor open">
                     <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
                                      label="#{messages.TaskSubscribe_reg}" id="subscribeInput"
                                      value="#{businessDefineHome.createRegName}">
@@ -83,7 +83,7 @@
                                 class="button">
                             #{messages.cancel}
                         </button>
-                        <a:commandButton styleClass="button primary" render="subscribeInput,dataList"
+                        <a:commandButton styleClass="button primary" render="createPanel,dataList"
                                          execute="@form" action="#{businessDefineHome.createTaskSubscribe}"
                                          value="#{messages.createNew}#{''}#{messages.Subscribe}">
                             <a:attachQueue requestDelay="0"/>
@@ -93,27 +93,171 @@
 
 
             </h:form>
+            <h:form>
+
 
             <a:outputPanel id="dataList">
-            <div class="table-list-header">
-                <div class="table-list-filters">
-                    <div class="table-list-header-toggle left">
+
+                <h:outputScript>
+                    $(document).ready(
+                            function () {
+                                $('.js-label-delete').click(function (event) {
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-delete').show();
+                                    $(event.target).parents('div[class^="labels-list-actions"]').hide();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-label').hide();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-description').hide();
+
+                                });
+
+                                $('.js-label-edit').click(function (event) {
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-edit').show();
+                                    $(event.target).parents('div[class^="labels-list-actions"]').hide();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-label').hide();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-description').hide();
+
+                                    return false;
+                                });
+
+                                $('.js-edit-cancel').click(function (event) {
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-edit').hide();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-delete').hide();
+
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.labels-list-actions').show();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-label').show();
+                                    $(event.target).parents('div[class^="table-list-cell"]').find('.label-description').show();
+
+                                    return false;
+                                });
+
+                            });
+
+                    function editComplete(target){
+
+                        $(target).parents('div[class^="table-list-cell"]').find('.label-edit').hide();
+
+                        $(target).parents('div[class^="table-list-cell"]').find('.labels-list-actions').show();
+                        $(target).parents('div[class^="table-list-cell"]').find('.label-label').show();
+                        $(target).parents('div[class^="table-list-cell"]').find('.label-description').show();
+
+                        return false;
+                    }
+
+
+                </h:outputScript>
+
+                <div class="table-list-header">
+                    <div class="table-list-filters">
+                        <div class="table-list-header-toggle left">
                     <span class="table-list-header-meta">
-                        6 #{messages.Subscribe}
+                       #{businessDefineHome.taskSubscribeList.size} #{messages.Subscribe}
                     </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <ul class="table-list table-list-bordered">
-                <ui:repeat value="#{businessDefineHome.taskSubscribeList}" var="_subscribe">
-                <li class="table-list-item labels-list-item">
-                    #{_subscribe.regName}
-                </li>
-                </ui:repeat>
-            </ul>
+                <ul class="table-list table-list-bordered">
+                    <ui:repeat value="#{businessDefineHome.taskSubscribeList}" var="_subscribe">
+                        <li class="table-list-item labels-list-item">
+                <a:region >
+                            <div id="pp" class="table-list-cell">
+                                <a:outputPanel styleClass="label-delete" layout="block">
+                                    <span class="label-delete-confirmation">
+                                        <strong class="text-danger">
+                                            #{messages.deleteConfirm}
+                                        </strong>
+                                        #{messages.subscribeDeleteDescript}
+                                    </span>
+                                    <div class="right">
+                                   <a:commandButton styleClass="button danger" immediate="true"
+                                                    execute="@this" render="dataList"
+                                                    action="#{businessDefineHome.deleteSelectSubscribe}"
+
+                                                    value="#{messages.delete}">
+                                       <a:param value="#{_subscribe.id}" assignTo="#{businessDefineHome.editSubscribeId}"/>
+                                       <a:attachQueue requestDelay="0"/>
+                                   </a:commandButton>
+
+                                        <button class="button js-edit-cancel">
+                                            #{messages.cancel}
+                                        </button>
+                                    </div>
+                                </a:outputPanel>
+
+                                <a:outputPanel styleClass="label-edit" layout="block">
+
+                                    <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
+                                                     label="#{messages.TaskSubscribe_reg}" value="#{_subscribe.regName}">
+                                        <s:selectItems value="#{taskSubscribeReg.taskSubscribeDefine}" var="_reg" label="#{_reg.title}"
+                                                       itemValue="#{_reg.name}"/>
+                                    </h:selectOneMenu>
+                                    <div class="right">
+                                        <button class="button js-edit-cancel">
+                                            #{messages.cancel}
+                                        </button>
+                                        <a:commandButton action="#{businessDefineHome.update}" value="#{messages.save}"
+                                                         oncomplete="editComplete(this)"
+                                                         execute="@region" render="@this" styleClass="button primary">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:commandButton>
+
+
+                                    </div>
+
+                                </a:outputPanel>
+
+                                <a:outputPanel layout="block" styleClass="labels-list-actions right">
+
+                                    <a:commandLink styleClass="labels-list-action" execute="@this" immediate="true"
+                                                   render="dataList" action="#{businessDefineHome.upSelectTaskSubscribe}">
+                                        <span class="octicon octicon-move-up"/>
+                                        <a:attachQueue requestDelay="0"/>
+                                        <a:param value="#{_subscribe.id}" assignTo="#{businessDefineHome.editSubscribeId}"/>
+                                    </a:commandLink>
+                                    <a:commandLink styleClass="labels-list-action" execute="@this" immediate="true"
+                                                   render="dataList" action="#{businessDefineHome.downSelectTaskSubscribe}">
+                                        <span class="octicon octicon-move-down"/>
+                                        <a:attachQueue requestDelay="0"/>
+                                        <a:param value="#{_subscribe.id}" assignTo="#{businessDefineHome.editSubscribeId}"/>
+                                    </a:commandLink>
+
+
+
+                                    <span class="labels-list-action js-label-edit">
+                                                                <span class="octicon octicon-pencil"/>
+                                        #{messages.edit}
+                                    </span>
+
+                                    <span class="labels-list-action js-label-delete" >
+                                                  <span class="glyphicon glyphicon-remove"/>
+                                        #{messages.delete}
+                                    </span>
+
+
+                                </a:outputPanel>
+
+                                <a:outputPanel styleClass="label-description right">
+
+                                    <a:outputPanel ajaxRendered="true">
+                                        #{taskSubscribeReg.getDefineByName(_subscribe.regName).description}
+                                    </a:outputPanel>
+                                </a:outputPanel>
+                                <a:outputPanel ajaxRendered="true" styleClass="label-label left">
+                                    #{_subscribe.priority}
+                                    <a:outputPanel ajaxRendered="true">
+                                        #{_subscribe.regName}
+                                    </a:outputPanel>
+
+                                </a:outputPanel>
+
+
+                            </div>
+                </a:region>
+                        </li>
+                    </ui:repeat>
+                </ul>
 
             </a:outputPanel>
+            </h:form>
         </a:outputPanel>
 
 
