@@ -1,13 +1,6 @@
-package com.dgsoft.house.owner.business;
+package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.exception.ProcessDefineException;
-import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.business.TaskDescription;
-import com.dgsoft.common.system.business.TaskPublish;
-import com.dgsoft.house.owner.OwnerEntityLoader;
-import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.OwnerBusiness;
-import org.jboss.seam.Component;
 import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -20,38 +13,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: cooperlee
- * Date: 10/28/13
- * Time: 5:21 PM
+ * Created by cooper on 1/14/15.
  */
+
 @Name("taskPrepare")
 public class TaskPrepare {
 
     @In(create = true)
-    private BusinessDefineHome businessDefineHome;
-
-    @In(create = true)
-    private OwnerEntityLoader ownerEntityLoader;
-
-    @In(create = true)
     private TaskPublish taskPublish;
-
-    @In(create = true)
-    private OwnerBusinessHome ownerBusinessHome;
 
     @In
     private TaskInstance taskInstance;
 
     @BeginTask(flushMode = FlushModeType.MANUAL)
     public String beginTask() {
-        OwnerBusiness ob = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, taskInstance.getProcessInstance().getKey());
-        businessDefineHome.setId(ob.getDefineId());
-        ownerBusinessHome.setId(ob.getId());
-
-
         taskPublish.setTaskNameAndPublish(taskInstance.getName());
-        return getTaskDescription(taskInstance.getId()).getTaskOperationPage();
+        return getTaskDescription(taskInstance.getId()).getTaskOperComponent().beginTask(taskInstance);
     }
 
     @BypassInterceptors
@@ -71,6 +48,4 @@ public class TaskPrepare {
             return null;
         }
     }
-
-
 }

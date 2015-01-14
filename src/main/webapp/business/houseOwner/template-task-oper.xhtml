@@ -64,56 +64,8 @@
         </div>
         <div class="container">
 
-            <h:form>
-                <r:toolbar height="30" itemSeparator="grid">
+            <ui:insert/>
 
-                    <r:toolbarGroup>
-                        <h:graphicImage value="/img/icons/passed.gif"/>
-                        <h:commandLink value="#{messages.complete}" action="#{ownerTaskHandle.complete}"/>
-                    </r:toolbarGroup>
-
-                    <r:toolbarGroup>
-                        <h:graphicImage value="/img/icons/save.gif"/>
-                        <a:commandLink value="#{messages.save}" action="#{ownerTaskHandle.saveTask}" execute="@form">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:commandLink>
-                    </r:toolbarGroup>
-
-
-                    <r:toolbarGroup location="right">
-
-                        <s:button value="#{messages.Return}" view="/func/system/business/task.xhtml" propagation="end"/>
-                    </r:toolbarGroup>
-
-                </r:toolbar>
-
-                <br/>
-                <r:messages globalOnly="true" ajaxRendered="true"/>
-                <br/>
-
-                <ui:include src="/layout/system/SubscribePanelView.xhtml">
-                    <ui:param name="subscribeGroup" value="#{taskPublish.editPageGroup}"/>
-                </ui:include>
-
-            </h:form>
-
-            <ui:include src="/layout/system/SubscribePanelView.xhtml"></ui:include>
-            <ui:param name="subscribeGroup" value="#{taskPublish.aloneEditPageGroup}"/>
-
-            <div style="clear: both"/>
-            <br/>
-            <r:tabPanel switchType="client">
-
-                <dh:entryGrid styleClass="detailsTable">
-                    <ui:include src="/layout/system/SubscribeTabPageView.xhtml">
-                        <ui:param name="subscribeGroup" value="#{taskPublish.viewPageGroup}"/>
-                    </ui:include>
-                </dh:entryGrid>
-                <r:tab header="#{messages.BusinessViewUploadFiles}">
-
-                </r:tab>
-
-            </r:tabPanel>
         </div>
 
         <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>

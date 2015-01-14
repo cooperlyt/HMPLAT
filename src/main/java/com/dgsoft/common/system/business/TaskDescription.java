@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.business;
 
+import org.jboss.seam.Component;
 import org.jboss.seam.log.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +27,35 @@ public class TaskDescription {
         this.jsonObject = jsonObject;
     }
 
-    public String getTaskOperationPage() {
-        if (jsonObject == null){
-            return  DEFAULT_TASK_OPERPAGE;
+    public String getTaskOperComponentName(){
+
+        String result = null;
+        try {
+            result = jsonObject.getString("operComponent");
+        } catch (JSONException e) {
+            Logging.getLog(this.getClass()).warn("TaskDescription get task OperationPage fail",e);
         }
+        return result;
+    }
+
+    public TaskOperComponent getTaskOperComponent(){
+        String componentName = getTaskOperComponentName();
+        if ((componentName == null) || "".equals(componentName.trim())){
+            return null;
+        }
+        return (TaskOperComponent) Component.getInstance(componentName,true,true);
+    }
+
+    public boolean isCheckTask(){
+        try {
+            return jsonObject.getBoolean("isCheck");
+        } catch (JSONException e) {
+            Logging.getLog(this.getClass()).warn("TaskDescription get task OperationPage fail",e);
+            return false;
+        }
+    }
+
+    public String getTaskOperationPage() {
         String result = null;
         try {
             result = jsonObject.getString("operPage");
@@ -43,9 +69,7 @@ public class TaskDescription {
     }
 
     public String getDescription(){
-        if (jsonObject == null){
-            return null;
-        }
+
         try {
             return jsonObject.getString("description");
         } catch (JSONException e) {
@@ -55,9 +79,7 @@ public class TaskDescription {
     }
 
     public String getValue(String key){
-        if (jsonObject == null){
-            return null;
-        }
+
         try {
             return jsonObject.getString(key);
         } catch (JSONException e) {
