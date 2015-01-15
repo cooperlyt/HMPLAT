@@ -471,10 +471,12 @@ table.radio input[type=radio] {
 
 
 .detailsTable{
-    width: 100%; padding: 5px; margin: 0;
-    display:table;
-    border-collapse: collapse;
-    border: 1px solid #BED6F8;
+    margin-bottom: 25px;
+    border: solid 1px #ccc;
+    border-collapse: separate;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.075);
+    overflow: hidden;
 }
 
 .detailsTable th{

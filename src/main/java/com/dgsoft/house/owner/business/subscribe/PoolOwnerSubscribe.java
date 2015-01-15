@@ -104,8 +104,9 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         return "success";
     }
 
+
     @Override
-    public String wireSubscribe() {
+    public String saveSubscribe() {
         if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
             houseRegInfo.getBusinessPools().clear();
             poolOwners.clear();
@@ -115,11 +116,6 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
                 pool.setPoolArea(null);
             }
         }
-        return "success";
-    }
-
-    @Override
-    public String saveSubscribe() {
         return "saved";
     }
 }

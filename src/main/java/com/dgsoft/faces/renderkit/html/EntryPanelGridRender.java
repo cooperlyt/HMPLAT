@@ -20,6 +20,7 @@ public class EntryPanelGridRender extends Renderer {
 
         writer.startElement("table",component);
 
+
         if ((gridComponent.getStyleClass() != null) && !"".equals(gridComponent.getStyleClass().trim())){
             writer.writeAttribute("class",gridComponent.getStyleClass(),null);
         }
@@ -27,6 +28,8 @@ public class EntryPanelGridRender extends Renderer {
         if ((gridComponent.getStyle() != null) && !"".equals(gridComponent.getStyle().trim())){
             writer.writeAttribute("style",gridComponent.getStyle(),null);
         }
+
+        writer.startElement("tbody",component);
     }
 
 
@@ -34,7 +37,9 @@ public class EntryPanelGridRender extends Renderer {
     public void encodeEnd(FacesContext facesContext, UIComponent component)
             throws IOException {
 
+        facesContext.getResponseWriter().endElement("tbody");
         facesContext.getResponseWriter().endElement("table");
+
 
     }
 }

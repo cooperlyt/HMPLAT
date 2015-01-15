@@ -552,11 +552,48 @@ input[type=button], input[type=reset], input[type=submit]{
 .flow-steps li.done .first{background-color:#ffe6ba;background-position:-12px -115px;}
 .flow-steps li.last-current{background-color:#f60;color:#fff;background-position:100% -161px;}
 
+
+.detailsTable{
+    width: 100%; padding: 5px; margin: 0 0 25px 0;
+    display:table;
+
+
+    border: solid 1px #ccc;
+    border-collapse: separate;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.075);
+    overflow: hidden;
+    border-spacing: 0;
+}
+
+.detailsTable th{
+    vertical-align: middle;
+    border-bottom: 1px solid #ccc;
+    padding: 9px;
+
+}
+
+.detailsTable td{
+
+
+    vertical-align: middle;
+    border-bottom: 1px solid #ccc;
+    padding: 9px;
+
+
+
+
+}
+
+
 .label-label{
     color:#333;
     font-weight: bold;
     padding: 8px 10px;
 }
+
+
+
 
 
 

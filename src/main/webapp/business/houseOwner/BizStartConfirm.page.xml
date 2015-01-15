@@ -4,8 +4,8 @@
       no-conversation-view-id="/func/system/business/start.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <navigation from-action="#{houseBusinessStart.createProcess}">
-        <rule if-outcome="persisted">
+    <navigation from-action="#{ownerBusinessCreate.createBusiness}">
+        <rule if-outcome="businessCreated">
             <end-conversation/>
             <redirect view-id="/func/system/business/start.xhtml"/>
 

@@ -42,10 +42,11 @@ public class OwnerTaskHandle{
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-    public void saveTask(){
+    public String saveTask(){
         if ("success".equals(taskPublish.save())) {
-            ownerBusinessHome.update();
+            return ownerBusinessHome.update();
         }
+        return null;
     }
 
     protected String completeTask() {

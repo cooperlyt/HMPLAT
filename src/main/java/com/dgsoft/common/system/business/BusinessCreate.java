@@ -24,8 +24,8 @@ import javax.faces.event.ValueChangeEvent;
 @Scope(ScopeType.CONVERSATION)
 public abstract class BusinessCreate {
 
-//    @Out(scope = ScopeType.BUSINESS_PROCESS)
-//    private String businessDefineId;
+    @Out(scope = ScopeType.BUSINESS_PROCESS)
+    private String businessDefineId;
 //
 //    @Out(scope = ScopeType.BUSINESS_PROCESS)
 //    private String businessDescription;
@@ -42,9 +42,18 @@ public abstract class BusinessCreate {
     @In
     private Events events;
 
+
+
     protected abstract String getBusinessKey();
 
     protected abstract BusinessDefine getBusinessDefine();
+
+    protected  String flush(){
+        //ManagedJbpmContext.instance().getSession().flush();
+        return "businessCreated";
+    }
+
+    protected boolean verifyCreate(){return true;}
 
 //    @In(create = true)
 //    private TaskPrepare taskPrepare;
@@ -67,11 +76,13 @@ public abstract class BusinessCreate {
     }
 
     @Transactional
-    public String create() {
-
+    public String createBusiness() {
+        if (!verifyCreate())
+            return null;
 
         log.debug("define Id:" + getBusinessDefine().getId());
 
+        businessDefineId = getBusinessDefine().getId();
         try {
             events.raiseEvent("com.dgsoft.BusinessCreatePrepare." + getBusinessDefine().getId());
         } catch (ProcessCreatePrepareException e) {
@@ -82,14 +93,15 @@ public abstract class BusinessCreate {
         BusinessProcess.instance().createProcess(getBusinessDefine().getWfName(),getBusinessKey());
 
 
+
+
         events.raiseEvent("com.dgsoft.BusinessCreating." + getBusinessDefine().getId());
 
         events.raiseTransactionSuccessEvent("com.dgsoft.BusinessCreated." + getBusinessDefine().getId());
 
         log.debug(getBusinessKey() + "verfy ok is start!");
 
-        ManagedJbpmContext.instance().getSession().flush();
-        return "businessCreated";
+        return flush();
         // return navigation(startData.getBusinessKey());
 
     }

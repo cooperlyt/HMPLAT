@@ -109,19 +109,7 @@ public class HouseBusinessStart {
     @In
     private AuthenticationInfo authInfo;
 
-    //TODO valid House
-    @Transactional
-    public String createProcess() {
 
-        String result = ownerBusinessHome.persist();
-        if ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&
-                !businessDefineHome.getInstance().getWfName().trim().equals("")) {
-            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(), ownerBusinessHome.getInstance().getId());
-            return result;
-        } else {
-            return null;
-        }
-    }
 
 
 }

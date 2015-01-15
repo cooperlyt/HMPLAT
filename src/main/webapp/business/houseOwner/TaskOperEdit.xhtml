@@ -1,12 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="template-task-oper.xhtml">
 
-</body>
-</html>
+
+    <ui:param name="selectTabIndex" value="3"/>
+
+
+    <div class="new-repo-container">
+
+
+
+    <h:form>
+
+        <r:messages globalOnly="true" ajaxRendered="true"/>
+        <br/>
+
+
+
+        <c:forEach items="#{taskPublish.editPageGroup}" var="_group">
+
+            <c:forEach items="#{_group.values}" var="_item">
+                <f:subview>
+                    <ui:include src="#{_item.page}"/>
+                </f:subview>
+            </c:forEach>
+
+
+        </c:forEach>
+
+        <hr/>
+
+        <s:link styleClass="button primary first-in-line" action="#{ownerTaskHandle.saveTask}">
+            #{messages.save}
+        </s:link>
+
+
+    </h:form>
+    </div>
+</ui:composition>

@@ -23,19 +23,19 @@
 
                 <nav class="pagehead-nav" role="navigation">
 
-                    <s:link styleClass="selected pagehead-nav-item">
+                    <s:link styleClass="#{(selectTabIndex eq 1) ? 'selected' : ''} pagehead-nav-item" view="/business/houseOwner/TaskOperInfo.xhtml">
                         <span class="octicon octicon-info"/>
                         #{messages.businessInfo}
                     </s:link>
 
 
-                    <s:link styleClass="pagehead-nav-item">
+                    <s:link styleClass="#{(selectTabIndex eq 2) ? 'selected' : ''} pagehead-nav-item" view="/business/houseOwner/TaskOperFile.xhtml">
                         <span class="octicon octicon-file-submodule"></span>
                         #{messages.businessFile}
                     </s:link>
 
 
-                    <s:link styleClass="pagehead-nav-item">
+                    <s:link styleClass="#{(selectTabIndex eq 3) ? 'selected' : ''} pagehead-nav-item" view="/business/houseOwner/TaskOperEdit.xhtml">
                         <span class="octicon octicon-git-pull-request"></span>
                         #{messages.businessTaskOper}
                     </s:link>

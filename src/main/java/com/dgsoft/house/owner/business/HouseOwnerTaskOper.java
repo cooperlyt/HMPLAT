@@ -15,8 +15,6 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 @Name("houseOwnerTaskOper")
 public class HouseOwnerTaskOper implements TaskOperComponent {
 
-    @In(create = true)
-    private BusinessDefineHome businessDefineHome;
 
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
@@ -28,7 +26,7 @@ public class HouseOwnerTaskOper implements TaskOperComponent {
     @Override
     public String beginTask(TaskInstance taskInstance) {
         OwnerBusiness ob = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, taskInstance.getProcessInstance().getKey());
-        businessDefineHome.setId(ob.getDefineId());
+
         ownerBusinessHome.setId(ob.getId());
 
         return "/business/houseOwner/TaskOperInfo.xhtml";

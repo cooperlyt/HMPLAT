@@ -11,22 +11,21 @@
                 template="template-task-oper.xhtml">
 
 
-    <ui:param name="selectTabIndex" value="1"/>
-    <dh:entryGrid styleClass="detailsTable">
+    <ui:param name="selectTabIndex" value="3"/>
 
+    <div class="new-repo-container">
+    <div class="new-user-avatar-cta">
+        <p>
+            <s:link styleClass="minibutton primary" view="/business/houseOwner/TaskOperEdit.xhtml">
+                <span class="octicon octicon-pencil"/>
+                #{messages.edit}
+            </s:link>
+        </p>
 
-        <c:forEach items="#{taskPublish.viewPageGroup}" var="_group">
-            #{_group.key}
-            <c:set var="first" value="true"/>
+        <p>
+        ffff
+        </p>
+    </div>
+</div>
 
-            <c:forEach items="#{_group.values}" var="_item">
-
-                <f:subview>
-                    <ui:include src="#{_item.page}"/>
-                </f:subview>
-            </c:forEach>
-
-        </c:forEach>
-
-    </dh:entryGrid>
-    </ui:composition>
+</ui:composition>

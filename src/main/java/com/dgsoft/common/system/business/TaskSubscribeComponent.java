@@ -10,8 +10,6 @@ public interface TaskSubscribeComponent {
     // success return "success"
     public abstract String validSubscribe();
 
-    // success return "success"
-    public abstract String wireSubscribe();
 
     // success return "saved"
     public abstract String saveSubscribe();

@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.exception.ProcessDefineException;
+import com.dgsoft.common.system.action.BusinessDefineHome;
 import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -25,8 +26,16 @@ public class TaskPrepare {
     @In
     private TaskInstance taskInstance;
 
+    @In(create = true)
+    private BusinessDefineHome businessDefineHome;
+
+
     @BeginTask(flushMode = FlushModeType.MANUAL)
     public String beginTask() {
+
+        Logging.getLog(getClass()).debug(taskInstance.getVariables().size());
+        businessDefineHome.setId(taskInstance.getVariable("businessDefineId"));
+        businessDefineHome.setTaskName(taskInstance.getName());
         taskPublish.setTaskNameAndPublish(taskInstance.getName());
         return getTaskDescription(taskInstance.getId()).getTaskOperComponent().beginTask(taskInstance);
     }

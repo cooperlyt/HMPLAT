@@ -50,18 +50,6 @@ public class TaskPublish {
         publish();
     }
 
-    public String wire() {
-        String result = valid();
-        if ("success".equals(result))
-            for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
-                if (define.isHaveComponent()) {
-                    if (!"success".equals(define.getComponents().wireSubscribe())) {
-                        return "";
-                    }
-                }
-            }
-        return result;
-    }
 
     public String valid() {
         for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
@@ -76,16 +64,15 @@ public class TaskPublish {
 
 
     public String save() {
-        String result = wire();
-        if ("success".equals(result))
-            for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
-                if (define.isHaveComponent()) {
-                    if (!"saved".equals(define.getComponents().saveSubscribe())) {
-                        return "";
-                    }
+
+        for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
+            if (define.isHaveComponent()) {
+                if (!"saved".equals(define.getComponents().saveSubscribe())) {
+                    return "";
                 }
             }
-        return result;
+        }
+        return "success";
     }
 
 
@@ -132,24 +119,21 @@ public class TaskPublish {
         for (TaskSubscribe sub : businessDefineHome.getTaskSubscribeList()) {
             Logging.getLog(getClass()).debug("type:" + sub.getType() + "|" + sub.getTaskName() + "=" + taskName + "|");
 
-            if ((sub.getType().equals(TaskSubscribe.SubscribeType.START_TASK) &&
-                    (taskName == null)) ||
-                    (sub.getType().equals(TaskSubscribe.SubscribeType.TASK_OPER) && (taskName != null) && taskName.equals(sub.getTaskName()))) {
-                TaskSubscribeReg.TaskSubscribeDefine define = taskSubscribeReg.getDefineByName(sub.getRegName());
-                defines.add(define);
-                if (define.isHaveComponent()) {
-                    define.getComponents().initSubscribe();
-                }
+            TaskSubscribeReg.TaskSubscribeDefine define = taskSubscribeReg.getDefineByName(sub.getRegName());
+            defines.add(define);
+            if (define.isHaveComponent()) {
+                define.getComponents().initSubscribe();
             }
+
         }
     }
 
-    public boolean isHaveEditSubscribe(){
+    public boolean isHaveEditSubscribe() {
         Logging.getLog(getClass()).debug("isHaveEditSubscribe: definesCount:" + defines.size());
-        for (TaskSubscribeReg.TaskSubscribeDefine define :defines){
+        for (TaskSubscribeReg.TaskSubscribeDefine define : defines) {
             Logging.getLog(getClass()).debug("isHaveEditSubscribe: definesCount:" + define.getType());
             if (define.getType().equals(TaskSubscribeReg.TaskSubscribeDefineType.ALONE_EDIT) ||
-                    define.getType().equals(TaskSubscribeReg.TaskSubscribeDefineType.EDIT)){
+                    define.getType().equals(TaskSubscribeReg.TaskSubscribeDefineType.EDIT)) {
                 return true;
             }
         }
