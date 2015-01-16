@@ -12,6 +12,21 @@
 
 
     <ui:param name="selectTabIndex" value="1"/>
+
+    <div class="new-user-avatar-cta">
+        <p>
+            <s:link styleClass="minibutton primary" >
+                <span class="octicon octicon-git-compare"/>
+                #{messages.BackTask}
+            </s:link>
+        </p>
+
+        <p>
+            <strong>#{taskInstance.processInstance.key}</strong>
+
+        </p>
+    </div>
+
     <dh:entryGrid styleClass="detailsTable">
 
 

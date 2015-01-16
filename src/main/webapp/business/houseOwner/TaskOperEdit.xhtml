@@ -15,34 +15,67 @@
 
 
     <div class="new-repo-container">
-
-
-
-    <h:form>
-
         <r:messages globalOnly="true" ajaxRendered="true"/>
         <br/>
 
+        <h:form rendered="#{taskDescription.checkTask}">
+
+            <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.taskCheckComments}
+                </ui:define>
+                <ui:param name="for" value="taskCheckCommentsInput"/>
+                <h:inputTextarea label="#{messages.taskCheckComments}" required="true" id="taskCheckCommentsInput" styleClass="form-control"
+                                 value="#{ownerTaskHandle.transitionComments}" rows="4">
+                    <r:validator event="change"/>
+                </h:inputTextarea>
+            </s:decorate>
+
+            <hr/>
+
+            <div class="subnav org-toolbar">
+                <h:commandLink styleClass="button primary right" action="#{ownerTaskHandle.complete}">
+                    #{messages.Agree}
+                </h:commandLink>
+                <h:commandLink styleClass="button danger right" action="#{ownerTaskHandle.back}">
+                    #{messages.Reject}
+                </h:commandLink>
+
+            </div>
 
 
-        <c:forEach items="#{taskPublish.editPageGroup}" var="_group">
+        </h:form>
 
-            <c:forEach items="#{_group.values}" var="_item">
-                <f:subview>
-                    <ui:include src="#{_item.page}"/>
-                </f:subview>
+
+        <h:form rendered="#{not taskDescription.checkTask}">
+
+
+            <c:forEach items="#{taskPublish.editPageGroup}" var="_group">
+
+                <c:forEach items="#{_group.values}" var="_item">
+                    <f:subview>
+                        <ui:include src="#{_item.page}"/>
+                    </f:subview>
+                </c:forEach>
+
+
             </c:forEach>
 
+            <hr/>
 
-        </c:forEach>
-
-        <hr/>
-
-        <s:link styleClass="button primary first-in-line" action="#{ownerTaskHandle.saveTask}">
-            #{messages.save}
-        </s:link>
+            <s:link styleClass="button primary first-in-line" action="#{ownerTaskHandle.saveTask}">
+                #{messages.save}
+            </s:link>
 
 
-    </h:form>
+        </h:form>
     </div>
+
+    <h:outputScript rendered="#{(facesContext.maximumSeverity==null) or (facesContext.maximumSeverity.ordinal lt 2)}">
+        $(document).ready(
+        function(){
+        initEditInput();
+        });
+
+    </h:outputScript>
 </ui:composition>

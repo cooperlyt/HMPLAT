@@ -25,8 +25,7 @@
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
         </task>
-        <transition to="登薄" name="NEXT"></transition>
-        <transition to="受理" name="BACK"></transition>
+		<transition to="审核结果"></transition>
     </task-node>
 
     <task-node name="登薄">
@@ -36,8 +35,7 @@
 			</description>
             <assignment pooled-actors="RecordFile"></assignment>
         </task>
-        <transition to="繕证判断" name="NEXT"></transition>
-        <transition to="受理" name="BACK"></transition>
+        <transition to="登簿结果"></transition>
     </task-node>
 
     <task-node name="归档">
@@ -76,7 +74,13 @@
     </decision>
 
     <task-node name="收费确认">
-        <transition to="审核"></transition>
+        <task name="收费确认">
+			<description>
+				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment actor-id="#{actor.id}"></assignment>
+		</task>
+		<transition to="审核"></transition>
     </task-node>
 
     <decision name="收费判断">
@@ -87,6 +91,24 @@
             <condition expression="#{not (businessDefineHome.id eq 'WP30')}"></condition>
         </transition>
     </decision>
+
+	<decision name="审核结果">
+		<transition to="登薄" name="审核通过">
+			<condition expression="#{transitionType eq 'NEXT'}"></condition>
+		</transition>
+		<transition to="受理" name="审核不通过">
+			<condition expression="#{transitionType eq 'BACK'}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="登簿结果">
+		<transition to="受理" name="回退">
+			<condition expression="#{transitionType eq 'BACK'}"></condition>
+		</transition>
+		<transition to="繕证判断" name="登薄完成">
+			<condition expression="#{transitionType eq 'NEXT'}"></condition>
+		</transition>
+	</decision>
 
 
     <end-state name="结束"></end-state>

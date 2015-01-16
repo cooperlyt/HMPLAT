@@ -16,14 +16,15 @@
     <div class="new-repo-container">
     <div class="new-user-avatar-cta">
         <p>
-            <s:link styleClass="minibutton primary" view="/business/houseOwner/TaskOperEdit.xhtml">
-                <span class="octicon octicon-pencil"/>
-                #{messages.edit}
+            <s:link styleClass="minibutton primary" action="#{ownerTaskHandle.complete}">
+                <span class="octicon octicon-split"/>
+                #{messages.completeTask}
             </s:link>
         </p>
 
         <p>
-        ffff
+        <strong>#{messages.TaskVariableSaved}</strong>
+            #{messages.completeDescription}
         </p>
     </div>
 </div>

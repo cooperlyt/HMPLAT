@@ -1,9 +1,20 @@
 package com.dgsoft.common.system.business;
 
+import com.dgsoft.common.exception.ProcessDefineException;
 import org.jboss.seam.Component;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Install;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Unwrap;
+import org.jboss.seam.annotations.intercept.BypassInterceptors;
+import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.log.Logging;
+import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static org.jboss.seam.annotations.Install.BUILT_IN;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +22,36 @@ import org.json.JSONObject;
  * Date: 10/28/13
  * Time: 5:24 PM
  */
+@Scope(ScopeType.STATELESS)
+@Name("taskDescription")
+@BypassInterceptors
+@Install(precedence=BUILT_IN, dependencies="org.jboss.seam.bpm.jbpm")
 public class TaskDescription {
+
+
+
+    public static TaskDescription getTaskDescription(long taskId){
+        TaskInstance targetTaskInstance = ManagedJbpmContext.instance().getTaskInstanceForUpdate(taskId);
+        if (targetTaskInstance != null){
+            String taskJSONDescription = targetTaskInstance.getDescription();
+            Logging.getLog(TaskDescription.class).debug("task Description json str:" + taskJSONDescription);
+            try {
+                return new TaskDescription(new JSONObject(taskJSONDescription));
+            } catch (JSONException e) {
+                Logging.getLog(TaskDescription.class).error("jbpm process Define error task Description JSON ERROR", e);
+                throw new ProcessDefineException("jbpm process Define error task Description JSON ERROR");
+            }
+        } else{
+            Logging.getLog(TaskDescription.class).warn("taskInstance not found.");
+            return null;
+        }
+    }
+
+
+    @Unwrap
+    public TaskDescription getTaskDescription(){
+        return getTaskDescription(org.jboss.seam.bpm.TaskInstance.instance().getId());
+    }
 
     //{"description":"","operPage":"/func/erp/biz/custom/OrderPay.xhtml"}
 

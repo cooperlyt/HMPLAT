@@ -12,4 +12,47 @@
         </rule>
 
     </navigation>
+
+
+    <navigation from-action="#{ownerTaskHandle.complete}">
+
+        <rule if-outcome="taskCompleted" if="#{empty from}">
+            <redirect include-page-params="true"
+                      view-id="/func/system/business/task.xhtml">
+                <message severity="INFO">
+                    #{messages.taskCompleted}
+                </message>
+            </redirect>
+        </rule>
+        <rule if-outcome="taskCompleted" if="#{not empty from}">
+            <redirect view-id="#{from}">
+                <message severity="INFO">
+                    #{messages.taskCompleted}
+                </message>
+            </redirect>
+        </rule>
+
+
+    </navigation>
+
+    <navigation from-action="#{ownerTaskHandle.back}">
+
+        <rule if-outcome="taskCompleted" if="#{empty from}">
+            <redirect include-page-params="true"
+                      view-id="/func/system/business/task.xhtml">
+                <message severity="INFO">
+                    #{messages.taskCompleted}
+                </message>
+            </redirect>
+        </rule>
+        <rule if-outcome="taskCompleted" if="#{not empty from}">
+            <redirect view-id="#{from}">
+                <message severity="INFO">
+                    #{messages.taskCompleted}
+                </message>
+            </redirect>
+        </rule>
+
+
+    </navigation>
 </page>

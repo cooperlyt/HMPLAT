@@ -1,14 +1,12 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.business.TaskDescription;
 import com.dgsoft.common.system.business.TaskPublish;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.*;
 import org.jboss.seam.annotations.bpm.EndTask;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
@@ -17,11 +15,23 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
  */
 @Name("ownerTaskHandle")
 @Scope(ScopeType.CONVERSATION)
-public class OwnerTaskHandle{
+public class OwnerTaskHandle {
+
+    public enum TransitionType{
+        NEXT,BACK,REJECT;
+    }
 
     @In
     private TaskPublish taskPublish;
 
+
+    @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    private String transitionType;
+
+    @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    private String transitionComments;
 
     @In
     private AuthenticationInfo authInfo;
@@ -29,20 +39,50 @@ public class OwnerTaskHandle{
     @In
     private TaskInstance taskInstance;
 
+    @In
+    private TaskDescription taskDescription;
+
+    public String getTransitionComments() {
+        return transitionComments;
+    }
+
+    public void setTransitionComments(String transitionComments) {
+        this.transitionComments = transitionComments;
+    }
+
+    @Transactional
+    @EndTask
+    public String back(){
+        transitionType = TaskOper.OperType.BACK.name();
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
+                taskDescription.isCheckTask() ? TaskOper.TaskType.CHECK :TaskOper.TaskType.TASK,
+                TaskOper.OperType.BACK,ownerBusinessHome.getInstance(),
+                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
+                taskInstance.getName(),transitionComments,false));
+        return "taskCompleted";
+    }
+
     @Transactional
     @EndTask
     public String complete() {
-        if ("success".equals(taskPublish.save())) {
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),taskInstance.getName()));
-            return completeTask();
+        transitionType = TaskOper.OperType.NEXT.name();
+
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
+                taskDescription.isCheckTask() ? TaskOper.TaskType.CHECK :TaskOper.TaskType.TASK,
+                TaskOper.OperType.NEXT,ownerBusinessHome.getInstance(),
+                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
+                taskInstance.getName(),transitionComments,false));
+        if ("updated".equals(ownerBusinessHome.update())) {
+            return "taskCompleted";
         }
         return null;
+
     }
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-    public String saveTask(){
+    public String saveTask() {
         if ("success".equals(taskPublish.save())) {
             return ownerBusinessHome.update();
         }
@@ -50,7 +90,7 @@ public class OwnerTaskHandle{
     }
 
     protected String completeTask() {
-        if ("updated".equals(ownerBusinessHome.update())){
+        if ("updated".equals(ownerBusinessHome.update())) {
             return "taskCompleted";
         }
         return null;

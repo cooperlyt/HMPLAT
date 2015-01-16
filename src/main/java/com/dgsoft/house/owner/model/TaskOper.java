@@ -14,11 +14,16 @@ import java.util.Date;
 @Table(name = "TASK_OPER", catalog = "HOUSE_OWNER_RECORD")
 public class TaskOper implements java.io.Serializable {
 
-    public enum OperType {
-        CREATE_OPER, TASK_OPER, CHECK_OPER;
+    public enum TaskType {
+        CREATE, TASK, CHECK
     }
 
-    private String id;
+    public enum OperType{
+        NEXT,BACK
+    }
+
+
+    private long id;
     private OwnerBusiness ownerBusiness;
     private Date operTime;
     private String empCode;
@@ -26,33 +31,28 @@ public class TaskOper implements java.io.Serializable {
     private String taskName;
     private String comments;
     private OperType operType;
+    private TaskType taskType;
     private boolean accept;
 
     public TaskOper() {
     }
 
 
-    public TaskOper(OwnerBusiness ownerBusiness, String empCode, String empName) {
+    public TaskOper(long id, OwnerBusiness ownerBusiness, String empCode, String empName) {
+        this.id = id;
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
         this.empName = empName;
         this.taskName = "create";
-        this.operType = OperType.CREATE_OPER;
+        this.operType = OperType.NEXT;
+        this.taskType = TaskType.CREATE;
         this.accept = true;
     }
 
-    public TaskOper(OwnerBusiness ownerBusiness, String empCode, String empName, String taskName) {
-        this.ownerBusiness = ownerBusiness;
-        this.operTime = new Date();
-        this.empCode = empCode;
-        this.empName = empName;
-        this.taskName = taskName;
-        this.operType = OperType.TASK_OPER;
-        this.accept = true;
-    }
 
-    public TaskOper(OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, boolean accept) {
+    public TaskOper(long id,TaskType taskType, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, boolean accept) {
+        this.id = id;
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
@@ -60,20 +60,18 @@ public class TaskOper implements java.io.Serializable {
         this.taskName = taskName;
         this.comments = comments;
         this.operType = operType;
+        this.taskType = taskType;
         this.accept = accept;
     }
 
     @Id
-    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @Column(name = "ID", unique = true, nullable = false)
     @NotNull
-    @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -151,6 +149,17 @@ public class TaskOper implements java.io.Serializable {
 
     public void setOperType(OperType operType) {
         this.operType = operType;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TASK_TYPE", nullable = false, length = 20)
+    @NotNull
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
     }
 
     @Column(name = "ACCEPT", nullable = false)
