@@ -2,10 +2,14 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
                 template="/layout/template-base.xhtml">
 
     <ui:define name="navigation">
@@ -111,8 +115,8 @@
                 <li class="header-nav-item">
 
                     <s:link view="/func/system/business/start.xhtml" propagation="end"
-                            aria-label="You have no unread notifications"
                             styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                        <f:passThroughAttribute name="aria-label" value="You have no unread notifications" />
                         <span class="octicon octicon-plus"></span>
                     </s:link>
 
@@ -120,7 +124,7 @@
 
                 <li class="header-nav-item">
                     <s:link view="/func/system/business/task.xhtml" propagation="end"
-                            aria-label="You have no unread notifications"
+                            p:aria-label="You have no unread notifications"
                             styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
                         <span class="mail-status unread"/>
                         <span class="octicon octicon-inbox"></span>
@@ -142,8 +146,9 @@
                     <s:link id="menuLogoutId"
                             styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
                             view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
-                            aria-label="#{messages.logout}"
+                            p:aria-label="#{messages.logout}"
                             propagation="none">
+
                         <span class="octicon octicon-sign-out"></span>
                     </s:link>
 

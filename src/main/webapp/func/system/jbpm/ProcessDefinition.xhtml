@@ -70,6 +70,28 @@
             </r:dataTable>
 
 
+            <ui:remove>
+
+                <!--
+                <rich:fileUpload> may not work for you with Mojarra 2.2.7+ and Internet Explorer. This is caused by an error in Mojarra code and an irregular behavior of Internet Explorer. The issue is not always present but breaks the component. The issue will be fixed in Mojarra 2.3.0-m02; if you're using the JBoss distribution of JSF the patch has been backported into 2.2.9-jboss-2. In the meantime, this JavaScript function can be used as a workaround - make sure to run it before you start uploading:
+addNames = (function () {
+    var added = false;
+
+    return function() {
+        if (!added) {
+            $.each(document.forms, function() {
+                $.each(this.elements, function() {
+                    this.name = this.name || "";
+                });
+            });
+        }
+        added = true;
+    }
+})();
+                -->
+
+            </ui:remove>
+
             <h:form enctype="multipart/form-data">
                 <r:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
                                  serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
