@@ -6,12 +6,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <div style="clear: both"/>
-    <h:panelGrid style="padding: 0px; border: 0px; border-width: 0px;" columns="2"
-                 columnClasses="label_column,value_column">
-        <s:label styleClass="name">
-            <ui:insert name="label"/>
-            <s:span styleClass="required" rendered="#{(empty req) ? false : req}">*</s:span>
-        </s:label>
+
 
         <h:panelGroup>
             <ui:insert name="topValue"/>
@@ -19,15 +14,17 @@
             <ui:insert name="values">
 
                 <div style="clear: both;"/>
-                <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
-
-                <ui:insert/>
-
+                <hr/>
+                <div style="display: block;">
+                    <div class="upgrade-upsell">
+                    <ui:insert/>
+                    </div>
+                </div>
                 <div style="clear: both;"/>
-                <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
+                <hr />
 
             </ui:insert>
         </h:panelGroup>
-    </h:panelGrid>
+
 
 </ui:composition>

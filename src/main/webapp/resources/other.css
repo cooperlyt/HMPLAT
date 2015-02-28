@@ -593,6 +593,11 @@ input[type=button], input[type=reset], input[type=submit]{
 }
 
 
+.input-group-first button{
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+
 
 
 

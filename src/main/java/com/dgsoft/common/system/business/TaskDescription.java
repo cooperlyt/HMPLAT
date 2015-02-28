@@ -90,7 +90,7 @@ public class TaskDescription {
         try {
             return jsonObject.getBoolean("isCheck");
         } catch (JSONException e) {
-            Logging.getLog(this.getClass()).warn("TaskDescription get task OperationPage fail",e);
+            //Logging.getLog(this.getClass()).warn("TaskDescription get task OperationPage fail",e);
             return false;
         }
     }

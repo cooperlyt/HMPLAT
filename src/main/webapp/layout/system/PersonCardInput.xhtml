@@ -9,69 +9,58 @@
 
     <!-- param: personEntityHelper  , render-->
 
-    <h:outputStylesheet>
-        .credentialsTypeSelectWidth input[type="text"] {
-            width: 100px;
-        }
-    </h:outputStylesheet>
 
     <a:region>
-        <span class="value">
-            <h:selectOneMenu id="credentialsType" label="#{messages.person_field_credentialsType}"
-                             styleClass="credentialsTypeSelectWidth" listWidth="140px"
-                             value="#{personEntityHelper.credentialsType}" required="true">
-                <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                <s:convertEnum/>
-                <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
-                        render="credentialsNumber,#{render}"
-                        execute="@this" status="waitSearchPerson">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
-            </h:selectOneMenu>
-        </span>
-        <span class="value">
-            <h:inputText id="credentialsNumber" disabled="#{personEntityHelper.credentialsType.name() eq 'OTHER'}"
-                         label="#{messages.person_field_credentialsNO}"
-                         required="true"
-                         size="25"
-                         maxlength="100"
-                         value="#{personEntityHelper.credentialsNumber}">
-                <a:ajax event="blur" render="credentialsNumber,viewCardButton,#{render}"
-                        listener="#{personEntityHelper.numberChange}" execute="@region">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
-            </h:inputText>
-        </span>
 
-        <a:outputPanel id="viewCardButton">
+        <s:decorate template="/layout/edit.xhtml">
 
-            <s:span styleClass="value_button" rendered="#{personEntityHelper.manager}">
+            <ui:param name="for" value="credentialsNumber"/>
 
-                <a:commandButton image="/img/icon24/card_info.png" title="#{messages.Card_Inof}"
-                                 execute="@this" immediate="true"
-                                 render="viewCredntials"/>
-            </s:span>
+            <ui:define name="label">
+                #{label}
+            </ui:define>
+            <div class="input-group">
 
-        </a:outputPanel>
+                <a:outputPanel id="credentialsType" styleClass="input-group-btn">
 
-        <span class="value_button">
+                    <h:selectOneMenu  label="#{messages.person_field_credentialsType}"
+                                     styleClass="selectpicker select-menu-btn input-group-first"
+                                     value="#{personEntityHelper.credentialsType}" required="true">
+                        <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+                        <s:convertEnum/>
+                        <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
+                                render="credentialsNumber,#{render}"
+                                execute="@this" status="waitSearchPerson">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                    </h:selectOneMenu>
+                </a:outputPanel>
 
-            <a:commandButton image="/img/icon24/read_card.png" title="#{messages.Read_Master_Card}"
-                             execute="@this" immediate="true"
-                             render="credentialsNumber,credentialsType,viewCardButton,#{render}"/>
-        </span>
+                <h:inputText id="credentialsNumber" disabled="#{personEntityHelper.credentialsType.name() eq 'OTHER'}"
+                             label="#{messages.person_field_credentialsNO}"
+                             styleClass="form-control"
+                             required="true"
+                             size="25"
+                             maxlength="100"
+                             value="#{personEntityHelper.credentialsNumber}">
+                    <a:ajax event="blur" render="credentialsNumber,#{render}"
+                            listener="#{personEntityHelper.numberChange}" execute="@region">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:inputText>
 
 
+                <div class="input-group-btn">
+                    <a:commandLink styleClass="btn btn-default"
+                                     execute="@this" immediate="true"
+                                     render="credentialsNumber,credentialsType,#{render}">
+                        <span class="octicon octicon-person" style="font-size: 20px; "/>
+                    </a:commandLink>
+                </div>
 
-        <span class="value">
+            </div>
+        </s:decorate>
 
-
-                    <r:message for="credentialsNumber" styleClass="message-icon"
-                                           rendered="#{(not empty tipMsg) and tipMsg}"
-                                           showDetail="true" showSummary="true" tooltip="true"/>
-
-                    <r:message for="credentialsNumber" rendered="#{(empty tipMsg) or (not tipMsg)}"/>
-        </span>
 
 
     </a:region>
