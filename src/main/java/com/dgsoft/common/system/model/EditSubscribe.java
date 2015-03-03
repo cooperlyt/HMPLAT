@@ -1,5 +1,7 @@
 package com.dgsoft.common.system.model;
 
+import com.dgsoft.common.OrderModel;
+import com.dgsoft.common.system.business.Subscribe;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,11 +14,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TASK_SUBSCRIBE", catalog = "DB_PLAT_SYSTEM")
-public class TaskSubscribe implements java.io.Serializable {
+public class EditSubscribe implements java.io.Serializable, Subscribe {
 
-    public enum SubscribeType {
-        START_TASK, TASK_OPER;
-    }
+
 
     private String id;
     private String taskName;
@@ -26,15 +26,15 @@ public class TaskSubscribe implements java.io.Serializable {
     private BusinessDefine businessDefine;
     private int priority;
 
-    public TaskSubscribe() {
+    public EditSubscribe() {
     }
 
-    public TaskSubscribe(String id, BusinessDefine businessDefine) {
+    public EditSubscribe(String id, BusinessDefine businessDefine) {
         this.id = id;
         this.businessDefine = businessDefine;
     }
 
-    public TaskSubscribe(String id, String taskName, String regName, SubscribeType type, BusinessDefine businessDefine, int priority) {
+    public EditSubscribe(String id, String taskName, String regName, SubscribeType type, BusinessDefine businessDefine, int priority) {
         this.id = id;
         this.taskName = taskName;
         this.regName = regName;

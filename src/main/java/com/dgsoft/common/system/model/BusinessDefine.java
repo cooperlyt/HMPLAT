@@ -23,8 +23,9 @@ public class BusinessDefine implements java.io.Serializable {
     private Integer version;
     private String startPropagation;
     private String rolePrefix;
-    private Set<TaskSubscribe> taskSubscribes = new HashSet<TaskSubscribe>(0);
+    private Set<EditSubscribe> editSubscribes = new HashSet<EditSubscribe>(0);
     private Set<BusinessNeedFile> businessNeedFiles = new HashSet<BusinessNeedFile>(0);
+    private Set<SubscribeGroup> subscribeGroups = new HashSet<SubscribeGroup>(0);
 
     public BusinessDefine() {
     }
@@ -122,12 +123,21 @@ public class BusinessDefine implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "businessDefine")
-    public Set<TaskSubscribe> getTaskSubscribes() {
-        return taskSubscribes;
+    public Set<EditSubscribe> getEditSubscribes() {
+        return editSubscribes;
     }
 
-    public void setTaskSubscribes(Set<TaskSubscribe> taskSubscribes) {
-        this.taskSubscribes = taskSubscribes;
+    public void setEditSubscribes(Set<EditSubscribe> editSubscribes) {
+        this.editSubscribes = editSubscribes;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "businessDefine")
+    public Set<SubscribeGroup> getSubscribeGroups() {
+        return subscribeGroups;
+    }
+
+    public void setSubscribeGroups(Set<SubscribeGroup> subscribeGroups) {
+        this.subscribeGroups = subscribeGroups;
     }
 
     @Version

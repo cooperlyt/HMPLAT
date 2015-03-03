@@ -12,9 +12,10 @@
 
     <a:region>
 
-        <s:decorate template="/layout/edit.xhtml">
+        <s:decorate styleClass="form-group" id="personCardInput" template="/layout/edit-big.xhtml">
 
             <ui:param name="for" value="credentialsNumber"/>
+            <ui:param name="status" value="personCredentiaslNumberStatus"/>
 
             <ui:define name="label">
                 #{label}
@@ -43,7 +44,8 @@
                              size="25"
                              maxlength="100"
                              value="#{personEntityHelper.credentialsNumber}">
-                    <a:ajax event="blur" render="credentialsNumber,#{render}"
+                    <a:ajax event="blur" render="personCardInput,#{render}"
+                            status="personCredentiaslNumberStatus"
                             listener="#{personEntityHelper.numberChange}" execute="@region">
                         <a:attachQueue requestDelay="0"/>
                     </a:ajax>

@@ -91,7 +91,7 @@
                 <a:ajax event="change" listener="#{developerHome.nameInputedListener}"
                         render="developerNameField,developerPyCodeField" status="developerNameStatus"/>
             </h:inputText>
-            <ui:define name="tail">
+            <ui:define name="note">
                 <p class="note">#{messages.PyCodeGen1}#{' '}<strong> <rich:inplaceInput id="developerPyCodeField"
                                                                                         value="#{developerHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
                 </p>

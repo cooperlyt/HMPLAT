@@ -1454,6 +1454,13 @@
     color: #777
 }
 
+.table-list-header-action {
+    float: right;
+    margin: 9px 10px 0 0;
+    position: relative;
+    z-index: 2;
+}
+
 .table-list-filters:first-child .table-list-header-toggle:first-child {
     padding-left: 10px
 }

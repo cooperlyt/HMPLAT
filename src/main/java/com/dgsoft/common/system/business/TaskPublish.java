@@ -3,7 +3,7 @@ package com.dgsoft.common.system.business;
 import com.dgsoft.common.TotalDataGroup;
 import com.dgsoft.common.TotalGroupStrategy;
 import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.model.TaskSubscribe;
+import com.dgsoft.common.system.model.EditSubscribe;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -116,7 +116,7 @@ public class TaskPublish {
 
     public void publish() {
         defines = new ArrayList<TaskSubscribeReg.TaskSubscribeDefine>();
-        for (TaskSubscribe sub : businessDefineHome.getTaskSubscribeList()) {
+        for (EditSubscribe sub : businessDefineHome.getEditTaskSubscribeList()) {
             Logging.getLog(getClass()).debug("type:" + sub.getType() + "|" + sub.getTaskName() + "=" + taskName + "|");
 
             TaskSubscribeReg.TaskSubscribeDefine define = taskSubscribeReg.getDefineByName(sub.getRegName());

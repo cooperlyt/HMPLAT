@@ -6,23 +6,19 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
-    <s:decorate template="/layout/edit.xhtml">
+    <div class="form-inline">
+    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group" id="personNameField">
+        <ui:param name="for" value="persionNameInput"/>
+        <ui:param name="status" value="persionNameInputStatus"/>
         <ui:define name="label">
             #{messages.person_field_name}
         </ui:define>
-        <h:inputText label="#{messages.person_field_name}" size="20" disabled="#{personEntityHelper.manager}"
+        <h:inputText styleClass="form-control" label="#{messages.person_field_name}" size="30" disabled="#{personEntityHelper.manager}"
                      value="#{personEntityHelper.personName}" required="true" id="persionNameInput">
-            <r:validator event="blur"/>
+            <a:ajax execute="@this" render="personNameField" status="persionNameInputStatus" event="blur"/>
         </h:inputText>
 
-        <ui:define name="tail">
-            <r:message for="persionNameInput" styleClass="message-icon"
-                       rendered="#{(not empty tipMsg) and tipMsg}"
-                       showDetail="true" showSummary="true" tooltip="true"/>
 
-            <r:message for="persionNameInput" rendered="#{(empty tipMsg) or (not tipMsg)}"/>
-
-        </ui:define>
     </s:decorate>
-
+    </div>
 </ui:composition>

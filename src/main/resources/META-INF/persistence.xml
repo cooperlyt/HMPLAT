@@ -23,8 +23,10 @@
         <class>com.dgsoft.common.system.model.Province</class>
         <class>com.dgsoft.common.system.model.City</class>
         <class>com.dgsoft.common.system.model.NumberPool</class>
-        <class>com.dgsoft.common.system.model.TaskSubscribe</class>
+        <class>com.dgsoft.common.system.model.EditSubscribe</class>
         <class>com.dgsoft.common.system.model.BusinessNeedFile</class>
+        <class>com.dgsoft.common.system.model.ViewSubscribe</class>
+        <class>com.dgsoft.common.system.model.SubscribeGroup</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

@@ -33,6 +33,34 @@ public class TaskSubscribeReg {
 
     private Map<String,TaskSubscribeDefine> subscribeDefines;
 
+    private List<TaskSubscribeDefine> editSubscribeDefines;
+
+    private List<TaskSubscribeDefine> viewSubScribeDefines;
+
+    public List<TaskSubscribeDefine> getEditSubscribeDefines() {
+        if (editSubscribeDefines == null){
+            editSubscribeDefines = new ArrayList<TaskSubscribeDefine>();
+            for(TaskSubscribeDefine define: subscribeDefines.values()){
+                if (TaskSubscribeDefineType.EDIT.equals(define.getType()) || TaskSubscribeDefineType.ALONE_EDIT.equals(define.getType())){
+                    editSubscribeDefines.add(define);
+                }
+            }
+        }
+        return editSubscribeDefines;
+    }
+
+    public List<TaskSubscribeDefine> getViewSubScribeDefines() {
+        if (viewSubScribeDefines == null){
+            viewSubScribeDefines = new ArrayList<TaskSubscribeDefine>();
+            for(TaskSubscribeDefine define: subscribeDefines.values()){
+                if (TaskSubscribeDefineType.VIEW.equals(define.getType()) || TaskSubscribeDefineType.ALONE_VIEW.equals(define.getType())){
+                    viewSubScribeDefines.add(define);
+                }
+            }
+        }
+        return viewSubScribeDefines;
+    }
+
     public List<TaskSubscribeDefine> getTaskSubscribeDefine(){
         return new ArrayList<TaskSubscribeDefine>(subscribeDefines.values());
     }
@@ -90,7 +118,7 @@ public class TaskSubscribeReg {
     }
 
     public enum TaskSubscribeDefineType{
-        EDIT,VIEW,ALONE_EDIT,ALONE_VIEW;
+        EDIT,VIEW,ALONE_EDIT,ALONE_VIEW
     }
 
 
