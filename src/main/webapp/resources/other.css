@@ -598,18 +598,14 @@ input[type=button], input[type=reset], input[type=submit]{
     border-bottom-left-radius: 4px !important;
 }
 
-.table-box{
-    margin-bottom: 0;
-    margin-right: 1px;
+
+.table-list-header-toggle .minibutton{
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
-.table-box h3{
-    padding-bottom: 13px;
-    padding-top: 13px;
-}
-
-.table-box .boxed-group-action{
-    margin-top: 9px;
+.table-list-header-toggle .table-list-header-editor{
+    margin: 7px 7px 6px 7px;
 }
 
 .table-new-label{
