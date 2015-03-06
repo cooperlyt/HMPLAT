@@ -217,6 +217,88 @@ public class BusinessSubscribeConfig {
 
 
 
+    private String selectGroupId;
+
+    public String getSelectGroupId() {
+        return selectGroupId;
+    }
+
+    public void setSelectGroupId(String selectGroupId) {
+        this.selectGroupId = selectGroupId;
+    }
+
+    public void removeGroup(){
+        for(SubscribeGroup group: businessDefineHome.getInstance().getSubscribeGroups()){
+            if (group.getId().equals(selectGroupId)){
+                businessDefineHome.getInstance().getSubscribeGroups().remove(group);
+                businessDefineHome.update();
+                return;
+            }
+        }
+
+    }
+
+    private SubscribeGroup getSelectGroup(){
+        for(SubscribeGroup group: businessDefineHome.getInstance().getSubscribeGroups()){
+            if (group.getId().equals(selectGroupId)){
+                return group;
+            }
+        }
+        return null;
+    }
+
+
+
+    public void upSelectGroup() {
+        SubscribeGroup selectGroup = getSelectGroup();
+        int selectPriority = selectGroup.getPriority();
+
+        //Integer maxPriority = null;
+
+        SubscribeGroup maxGroup = null;
+        for (SubscribeGroup group : businessDefineHome.getInstance().getSubscribeGroups()) {
+            if ( group.getTaskName().equals(businessDefineHome.getTaskName()) && (group.getPriority() < selectPriority)) {
+                if ((maxGroup == null) || (maxGroup.getPriority() < group.getPriority())){
+                    maxGroup = group;
+                }
+                //subscribe.setPriority(subscribe.getPriority() - 1);
+            }
+        }
+
+        if (maxGroup != null){
+            int maxPriority = maxGroup.getPriority();
+            maxGroup.setPriority(selectGroup.getPriority());
+            selectGroup.setPriority(maxPriority);
+        }
+
+        businessDefineHome.update();
+    }
+
+    public void downSelectGroup() {
+        SubscribeGroup selectGroup = getSelectGroup();
+        int selectPriority = selectGroup.getPriority();
+
+        //Integer maxPriority = null;
+
+        SubscribeGroup maxGroup = null;
+        for (SubscribeGroup group : businessDefineHome.getInstance().getSubscribeGroups()) {
+            if ( group.getTaskName().equals(businessDefineHome.getTaskName()) && (group.getPriority() > selectPriority)) {
+                if ((maxGroup == null) || (maxGroup.getPriority() > group.getPriority())){
+                    maxGroup = group;
+                }
+                //subscribe.setPriority(subscribe.getPriority() - 1);
+            }
+        }
+
+        if (maxGroup != null){
+            int maxPriority = maxGroup.getPriority();
+            maxGroup.setPriority(selectGroup.getPriority());
+            selectGroup.setPriority(maxPriority);
+        }
+
+        businessDefineHome.update();
+    }
+
     private String newGroupName;
 
     public String getNewGroupName() {

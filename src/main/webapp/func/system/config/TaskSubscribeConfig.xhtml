@@ -99,7 +99,7 @@
                                 class="button">
                             #{messages.cancel}
                         </button>
-                        <a:commandButton styleClass="button primary" render="createGroupPanel,dataList"
+                        <a:commandButton styleClass="button primary" render="createGroupPanel,viewGroupList"
                                          execute="@form" action="#{businessSubscribeConfig.createNewGroup}"
                                          value="#{messages.createNew}#{''}#{messages.ViewSubscribeGroup}">
                             <a:attachQueue requestDelay="0"/>
@@ -113,7 +113,7 @@
 
             <a:outputPanel>
                 <h:form>
-                    <a:outputPanel ajaxRendered="true">
+                    <a:outputPanel id="viewGroupList">
 
                         <a:repeat value="#{businessSubscribeConfig.selectTaskViewGroupList}" var="_group">
                             <div class="js-curd-table-box" style="margin-bottom: 20px">
@@ -122,24 +122,29 @@
                                 <div class="js-table-edit-cell table-list-header" style="margin-right: 1px;">
 
 
-                                    <a:outputPanel layout="block" ajaxRendered="true" styleClass="table-list-filters">
+                                    <a:outputPanel layout="block" styleClass="table-list-filters">
+                                    <a:region>
 
-
-                                        <div class="js-label-title table-list-header-toggle left">
-
+                                        <a:outputPanel layout="block" styleClass="js-label-title ">
+                                            <a:outputPanel ajaxRendered="true" styleClass="table-list-header-toggle left">
                                             <h3>
                                                 #{_group.name}
                                                 <span class="counter"> #{_group.viewSubscribes.size} </span>
 
 
                                             </h3>
-                                        </div>
+                                            </a:outputPanel>
+                                        </a:outputPanel>
 
-                                        <div class="label-edit table-list-header-toggle left">
+                                        <a:outputPanel layout="block" styleClass="label-edit table-list-header-toggle left">
+                                             <a:outputPanel ajaxRendered="true">
+                                                 <s:decorate template="/layout/edit-validate.xhtml">
+                                            <h:inputText label="#{messages.SubscribeGroup_field_name}" value="#{_group.name}" size="30" maxlength="30"
+                                                         styleClass="table-list-header-editor" required="true"/>
+                                                 </s:decorate>
+                                             </a:outputPanel>
 
-                                            <h:inputText value="" styleClass="table-list-header-editor" required="true"/>
-
-                                        </div>
+                                        </a:outputPanel>
 
                                         <div class="table-list-header-toggle right">
 
@@ -151,9 +156,10 @@
                                                     </button>
                                                     <a:commandButton action="#{businessDefineHome.update}"
                                                                      value="#{messages.save}"
-                                                                     oncomplete="editComplete(this)"
-                                                                     execute="@region" render="js"
+                                                                     oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){ editComplete(this);}"
+                                                                     execute="@region"
                                                                      styleClass="button primary">
+
                                                         <a:attachQueue requestDelay="0"/>
                                                     </a:commandButton>
                                                 </div>
@@ -171,18 +177,17 @@
                                                         </span>
 
                                                 <div class="right">
+                                                    <a:region>
                                                     <a:commandButton styleClass="button danger" immediate="true"
                                                                      execute="@this"
-                                                                     action="#{businessSubscribeConfig.removeViewSubscribe}"
-
+                                                                     action="#{businessSubscribeConfig.removeGroup}"
+                                                                        render="viewGroupList"
                                                                      value="#{messages.delete}">
-                                                        <a:param value="#{_group.id}"
-                                                                 assignTo="#{subscribeGroupHome.id}"/>
-                                                        <a:param value="#{_subscribe.id}"
-                                                                 assignTo="#{businessSubscribeConfig.selectViewSubscribeId}"/>
+                                                        <a:param value="#{_group.id}" assignTo="#{businessSubscribeConfig.selectGroupId}"/>
+
                                                         <a:attachQueue requestDelay="0"/>
                                                     </a:commandButton>
-
+                                                    </a:region>
                                                     <button class="button js-edit-cancel">
                                                         #{messages.cancel}
                                                     </button>
@@ -199,26 +204,22 @@
                                                     <a:commandLink styleClass="btn btn-default" execute="@this"
                                                                    style="min-width: 37px"
                                                                    immediate="true"
-                                                                   render="dataList"
-                                                                   action="#{businessSubscribeConfig.downSelectViewSubscribe}">
+                                                                    render="viewGroupList"
+                                                                   action="#{businessSubscribeConfig.downSelectGroup}">
                                                         <span class="octicon octicon-move-up"/>
                                                         <a:attachQueue requestDelay="0"/>
                                                         <a:param value="#{_group.id}"
-                                                                 assignTo="#{subscribeGroupHome.id}"/>
-                                                        <a:param value="#{_subscribe.id}"
-                                                                 assignTo="#{businessSubscribeConfig.selectViewSubscribeId}"/>
+                                                                 assignTo="#{businessSubscribeConfig.selectGroupId}"/>
                                                     </a:commandLink>
                                                     <a:commandLink styleClass="btn btn-default" execute="@this"
                                                                    style="min-width: 37px"
-                                                                   immediate="true"
-                                                                   render="dataList"
-                                                                   action="#{businessSubscribeConfig.upSelectViewSubscribe}">
+                                                                   immediate="true" render="viewGroupList"
+                                                                   action="#{businessSubscribeConfig.upSelectGroup}">
                                                         <span class="octicon octicon-move-down"/>
                                                         <a:attachQueue requestDelay="0"/>
                                                         <a:param value="#{_group.id}"
-                                                                 assignTo="#{subscribeGroupHome.id}"/>
-                                                        <a:param value="#{_subscribe.id}"
-                                                                 assignTo="#{businessSubscribeConfig.selectViewSubscribeId}"/>
+                                                                 assignTo="#{businessSubscribeConfig.selectGroupId}"/>
+
                                                     </a:commandLink>
 
                                                     <button type="button" class="btn btn-default js-label-edit"
@@ -245,6 +246,7 @@
                                             </div>
 
                                         </div>
+                                    </a:region>
                                     </a:outputPanel>
 
                                 </div>
@@ -252,10 +254,10 @@
 
                                 <div class="new-label table-new-label js-new-data-box">
 
-                                    <a:outputPanel layout="block"
+                                    <a:outputPanel layout="block" ajaxRendered="true"
                                                    styleClass="label-edit edit-color-label-form open">
                                         <a:region>
-                                            <s:validateAll>
+                                            <s:decorate template="/layout/edit-validate.xhtml" style="display: inline;">
                                                 <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
                                                                  label="#{messages.TaskSubscribe_reg}"
                                                                  value="#{businessSubscribeConfig.createRegName}">
@@ -266,8 +268,8 @@
                                                             itemValue="#{_reg.name}"
                                                             noSelectionLabel="#{messages.noSelectLabel}"/>
                                                 </h:selectOneMenu>
-                                            </s:validateAll>
-                                            <s:message/>
+                                            </s:decorate>
+
 
                                             <div class="new-label-actions">
 
@@ -290,7 +292,7 @@
                                 </div>
 
 
-                                <a:outputPanel>
+                                <a:outputPanel ajaxRendered="true">
 
                                     <ul class="table-list table-list-bordered">
                                         <ui:repeat value="#{_group.viewSubscribeList}" var="_subscribe">
@@ -651,12 +653,12 @@
 
             function editComplete(target) {
 
-                $(target).parents('div[class^="table-list-cell"]').find('.label-edit').hide();
+                $(target).parents('div[class^="js-table-edit-cell"]').find('.label-edit').hide();
 
-                $(target).parents('div[class^="table-list-cell"]').find('.labels-list-actions').show();
-                $(target).parents('div[class^="table-list-cell"]').find('.label-label').show();
-                $(target).parents('div[class^="table-list-cell"]').find('.label-description').show();
-                $(target).parents('div[class^="table-list-cell"]').find('.js-label-title').show();
+                $(target).parents('div[class^="js-table-edit-cell"]').find('.js-edit-actions').show();
+                $(target).parents('div[class^="js-table-edit-cell"]').find('.label-label').show();
+                $(target).parents('div[class^="js-table-edit-cell"]').find('.label-description').show();
+                $(target).parents('div[class^="js-table-edit-cell"]').find('.js-label-title').show();
                 return false;
             }
 
