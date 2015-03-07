@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.action;
 
 import com.dgsoft.common.system.SystemEntityHome;
+import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.common.system.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -27,7 +28,34 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     public static final String BUSINESS_VIEW_TASK_NAME = "_VIEW";
 
     @In
+    private TaskSubscribeReg taskSubscribeReg;
+
+    @In
     private FacesMessages facesMessages;
+
+    public String validSubscribe() {
+        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+            if (define.isHaveComponent()) {
+                if (!"success".equals(define.getComponents().validSubscribe())) {
+                    return "";
+                }
+            }
+        }
+        return "success";
+    }
+
+
+    public String saveSubscribe() {
+
+        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+            if (define.isHaveComponent()) {
+                if (!"saved".equals(define.getComponents().saveSubscribe())) {
+                    return "";
+                }
+            }
+        }
+        return "success";
+    }
 
     private String taskName = CREATE_TASK_NAME;
 
@@ -36,6 +64,9 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public void setTaskName(String taskName) {
+        if ((taskName == null) || (this.taskName == null) || !taskName.equals(this.getTaskName())){
+            refreshSubscribe();
+        }
         this.taskName = taskName;
     }
 
@@ -67,47 +98,79 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     @Override
     public void refresh() {
         super.refresh();
-        refreshEditTaskSubScribe();
+        refreshSubscribe();
     }
 
-    public void refreshEditTaskSubScribe(){
-        editTaskSubscribeMap = null;
+    public void refreshSubscribe(){
+        editSubscribes = null;
+        viewSubscribeGroups = null;
     }
 
-    private Map<String, List<EditSubscribe>> editTaskSubscribeMap;
+    private List<EditSubscribe> editSubscribes;
 
+    private List<SubscribeGroup> viewSubscribeGroups;
 
-
-    public Map<String, List<EditSubscribe>> getEditTaskSubscribeMap(){
-        if (editTaskSubscribeMap == null){
-            editTaskSubscribeMap = new HashMap<String, List<EditSubscribe>>();
-            List<EditSubscribe> all = new ArrayList<EditSubscribe>(getInstance().getEditSubscribes());
-            for (EditSubscribe subscribe: all){
-
-
-                List<EditSubscribe> result = editTaskSubscribeMap.get(subscribe.getTask());
-                if (result == null){
-                    result = new ArrayList<EditSubscribe>();
-                    editTaskSubscribeMap.put(subscribe.getTask(),result);
+    public List<EditSubscribe> getEditSubscribes() {
+        if (editSubscribes == null){
+            editSubscribes = new ArrayList<EditSubscribe>();
+            for(EditSubscribe subscribe: getInstance().getEditSubscribes()){
+                if (subscribe.getTaskName().equals(taskName)){
+                    editSubscribes.add(subscribe);
                 }
-                result.add(subscribe);
             }
-
-            for(List<EditSubscribe> subscribes: editTaskSubscribeMap.values()){
-                Collections.sort(subscribes, new Comparator<EditSubscribe>() {
-                    @Override
-                    public int compare(EditSubscribe o1, EditSubscribe o2) {
-                        return new Integer(o2.getPriority()).compareTo(o1.getPriority());
-                    }
-                });
-            }
+            Collections.sort(editSubscribes, new Comparator<EditSubscribe>() {
+                @Override
+                public int compare(EditSubscribe o1, EditSubscribe o2) {
+                    return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                }
+            });
         }
-        return editTaskSubscribeMap;
+
+        return editSubscribes;
     }
 
-    public List<EditSubscribe> getEditTaskSubscribeList() {
-        List<EditSubscribe> result = getEditTaskSubscribeMap().get(getTaskName());
-        return (result == null) ? new ArrayList<EditSubscribe>(0) : result;
+    public List<SubscribeGroup> getViewSubscribeGroups() {
+        if (viewSubscribeGroups == null){
+            viewSubscribeGroups = new ArrayList<SubscribeGroup>();
+            for(SubscribeGroup group: getInstance().getSubscribeGroups()){
+                if (group.getTaskName().equals(getTaskName())){
+                    viewSubscribeGroups.add(group);
+                }
+            }
+            Collections.sort(viewSubscribeGroups, new Comparator<SubscribeGroup>() {
+                @Override
+                public int compare(SubscribeGroup o1, SubscribeGroup o2) {
+                    return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                }
+            });
+        }
+
+        return viewSubscribeGroups;
+    }
+
+
+    public List<TaskSubscribeReg.EditSubscribeDefine> getEditSubscribeDefines(){
+        List<TaskSubscribeReg.EditSubscribeDefine> result = new ArrayList<TaskSubscribeReg.EditSubscribeDefine>();
+        for(EditSubscribe subscribe: getEditSubscribes()){
+           result.add(taskSubscribeReg.getEditDefineByName(subscribe.getRegName()));
+        }
+        return result;
+    }
+
+    public List<TaskSubscribeReg.SubscribeDefineGroup> getViewSubscribeDefineGroups(){
+        List<TaskSubscribeReg.SubscribeDefineGroup> result = new ArrayList<TaskSubscribeReg.SubscribeDefineGroup>();
+
+        for(SubscribeGroup group: getViewSubscribeGroups()){
+            TaskSubscribeReg.SubscribeDefineGroup defineGroup = new TaskSubscribeReg.SubscribeDefineGroup(group.getName());
+
+            for(ViewSubscribe subscribe : group.getViewSubscribeList()){
+                defineGroup.add(taskSubscribeReg.getViewDefineByName(subscribe.getRegName()));
+            }
+            if (! defineGroup.isEmpty())
+            result.add(defineGroup);
+
+        }
+        return result;
     }
 
 

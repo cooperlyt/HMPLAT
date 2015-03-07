@@ -38,9 +38,9 @@ public class BusinessSubscribeConfig {
     @In
     private TaskSubscribeReg taskSubscribeReg;
 
-    public List<TaskSubscribeReg.TaskSubscribeDefine> getCanAddViewSubscribeDefines(){
-        List<TaskSubscribeReg.TaskSubscribeDefine> result = new ArrayList<TaskSubscribeReg.TaskSubscribeDefine>();
-        for(TaskSubscribeReg.TaskSubscribeDefine define: taskSubscribeReg.getViewSubScribeDefines()){
+    public List<TaskSubscribeReg.SubscribeDefine> getCanAddViewSubscribeDefines(){
+        List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();
+        for(TaskSubscribeReg.SubscribeDefine define: taskSubscribeReg.getViewSubScribeDefines()){
             boolean existsInTask = false;
             for(SubscribeGroup group: businessDefineHome.getInstance().getSubscribeGroups()){
                 if (group.getTask().equals(businessDefineHome.getTaskName())){
@@ -63,9 +63,9 @@ public class BusinessSubscribeConfig {
         return result;
     }
 
-    public List<TaskSubscribeReg.TaskSubscribeDefine> getCanAddEditSubscribeDefines(){
-        List<TaskSubscribeReg.TaskSubscribeDefine> result = new ArrayList<TaskSubscribeReg.TaskSubscribeDefine>();
-        for(TaskSubscribeReg.TaskSubscribeDefine define: taskSubscribeReg.getEditSubscribeDefines()){
+    public List<TaskSubscribeReg.SubscribeDefine> getCanAddEditSubscribeDefines(){
+        List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();
+        for(TaskSubscribeReg.SubscribeDefine define: taskSubscribeReg.getEditSubscribeDefines()){
             boolean existsInTask = false;
             for(EditSubscribe subscribe: businessDefineHome.getInstance().getEditSubscribes()){
                 if (subscribe.getRegName().equals(define.getName()) && subscribe.getTask().equals(businessDefineHome.getTaskName())){
@@ -97,21 +97,7 @@ public class BusinessSubscribeConfig {
         this.editSubscribeId = editSubscribeId;
     }
 
-    public List<SubscribeGroup> getSelectTaskViewGroupList(){
-        List<SubscribeGroup> result = new ArrayList<SubscribeGroup>();
-        for(SubscribeGroup group: businessDefineHome.getInstance().getSubscribeGroups()){
-            if (group.getTaskName().equals(businessDefineHome.getTaskName())){
-                result.add(group);
-            }
-        }
-        Collections.sort(result, new Comparator<SubscribeGroup>() {
-            @Override
-            public int compare(SubscribeGroup o1, SubscribeGroup o2) {
-                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
-            }
-        });
-        return result;
-    }
+
 
 
 
@@ -126,7 +112,7 @@ public class BusinessSubscribeConfig {
     }
 
     private EditSubscribe getSelectEditTaskSubscribe(){
-        for(EditSubscribe subscribe: businessDefineHome.getEditTaskSubscribeMap().get(businessDefineHome.getTaskName())){
+        for(EditSubscribe subscribe: businessDefineHome.getEditSubscribes()){
             if (subscribe.getId().equals(editSubscribeId)){
                 return subscribe;
             }
@@ -171,7 +157,7 @@ public class BusinessSubscribeConfig {
             int maxPriority = maxSub.getPriority();
             maxSub.setPriority(editEditSubscribe.getPriority());
             editEditSubscribe.setPriority(maxPriority);
-            businessDefineHome.refreshEditTaskSubScribe();
+            businessDefineHome.refreshSubscribe();
         }
 
         businessDefineHome.update();
@@ -192,7 +178,7 @@ public class BusinessSubscribeConfig {
             int minPriority = minSub.getPriority();
             minSub.setPriority(editEditSubscribe.getPriority());
             editEditSubscribe.setPriority(minPriority);
-            businessDefineHome.refreshEditTaskSubScribe();
+            businessDefineHome.refreshSubscribe();
         }
         businessDefineHome.update();
     }
@@ -200,7 +186,7 @@ public class BusinessSubscribeConfig {
     public void deleteSelectSubscribe(){
         businessDefineHome.getInstance().getEditSubscribes().remove(getSelectEditTaskSubscribe());
         businessDefineHome.update();
-        businessDefineHome.refreshEditTaskSubScribe();
+        businessDefineHome.refreshSubscribe();
     }
 
 

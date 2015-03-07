@@ -1,267 +1,396 @@
 <subscribes>
 
 
-    <subscribe name="houseInfoView" page="/business/houseOwner/subscribe/HouseInfoView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-        房屋查看
-    </subscribe>
+    <view-subscribe name="houseInfoView" page="/business/houseOwner/subscribe/HouseInfoView.xhtml">
+        <description>
+            房屋查看
+        </description>
+    </view-subscribe>
 
-    <subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
-        原产权人查看
-    </subscribe>
-
-    <subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
-        现产权人编辑
-    </subscribe>
-
-    <subscribe name="newOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
-        现产权人查看
-    </subscribe>
+    <view-subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml">
+        <description>
+            原产权人查看
+        </description>
+    </view-subscribe>
 
 
-    <subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="" cagegory="" type="EDIT">
-         产权人编辑
-    </subscribe>
-
-    <subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-        产权人查看
-    </subscribe>
-
-    <subscribe name="mortgagerView" page="/business/houseOwner/subscribe/MortgagerView.xhtml" component="" cagegory="业务信息" type="VIEW">
-        抵押人查看
-    </subscribe>
-
-    <subscribe name="recordOwnerView" page="/business/houseOwner/subscribe/RecordOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
-        备案人查看
-    </subscribe>
-
-    <subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml" component="" cagegory="业务信息" type="VIEW">
-        备案人编辑
-    </subscribe>
-
-    <subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml" component="" cagegory="业务信息" type="VIEW">
-        预告人查看
-    </subscribe>
+    <view-subscribe name="newOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml">
+        <description>
+            现产权人查看
+        </description>
+    </view-subscribe>
 
 
-    <subscribe name="poolOwnerEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml" component="poolOwnerSubscribe" cagegory="业务信息" type="EDIT">
-        现共有权人编辑
-    </subscribe>
+    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml">
+        <description>
+            产权人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="mortgagerView" page="/business/houseOwner/subscribe/MortgagerView.xhtml">
+        <description>
+            抵押人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="recordOwnerView" page="/business/houseOwner/subscribe/RecordOwnerView.xhtml">
+        <description>
+            备案人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml">
+        <description>
+            备案人编辑
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml">
+        <description>
+            预告人查看
+        </description>
+    </view-subscribe>
 
 
+    <view-subscribe name="PoolOwnerView" page="/business/houseOwner/subscribe/PoolOwnerView.xhtml">
+        <description>
+            共有权人查看（启动显示）
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml">
+        <description>
+            原共有权人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="newPoolOwnerView" page="/business/houseOwner/subscribe/NewPoolOwnerView.xhtml">
+        <description>
+            现共有权人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml">
+        <description>
+            变更前查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ModifyAfterReasonView" page="/business/houseOwner/subscribe/ModifyAfterReasonView.xhtml">
+        <description>
+            变更后查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ChangBeforRensonView" page="/business/houseOwner/subscribe/ChangBeforRensonView.xhtml">
+        <description>
+            更正前查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ChangAfterRensonView" page="/business/houseOwner/subscribe/ChangAfterRensonView.xhtml">
+        <description>
+            更正后查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ResonFillChangeView" page="/business/houseOwner/subscribe/ResonFillChangeView.xhtml">
+        <description>
+            换(补)证事由查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ReasonLogoutView" page="/business/houseOwner/subscribe/ReasonLogoutView.xhtml">
+        <description>
+            注销原因查看
+        </description>
+    </view-subscribe>
 
 
-    <subscribe name="PoolOwnerView" page="/business/houseOwner/subscribe/PoolOwnerView.xhtml" component="" cagegory="房屋信息" type="ALONE_VIEW">
-        共有权人查看（启动显示）
-    </subscribe>
-
-    <subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml" component="" cagegory="业务信息" type="ALONE_VIEW">
-        原共有权人查看
-    </subscribe>
-
-    <subscribe name="newPoolOwnerView" page="/business/houseOwner/subscribe/NewPoolOwnerView.xhtml" component="" cagegory="业务信息" type="ALONE_VIEW">
-        现共有权人查看
-    </subscribe>
+    <view-subscribe name="EvaluateView" page="/business/houseOwner/subscribe/EvaluateView.xhtml">
+        <description>
+            评估机构,评估价格编辑查看
+        </description>
+    </view-subscribe>
 
 
-    <subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml" component="" cagegory="" type="EDIT">
-        变更前编辑
-    </subscribe>
-    <subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml" component="" cagegory="" type="EDIT">
-        变更后编辑
-    </subscribe>
-    <subscribe name="changBeforReasonEdit" page="/business/houseOwner/subscribe/ChangBeforRensonEdit.xhtml" component="" cagegory="" type="EDIT">
-        更正前编辑
-    </subscribe>
-    <subscribe name="changAfterRensonEdit" page="/business/houseOwner/subscribe/ChangAfterRensonEdit.xhtml" component="" cagegory="" type="EDIT">
-        更正后编辑
-    </subscribe>
-    <subscribe name="saleInfoEdit" page="/business/houseOwner/subscribe/SaleInfoEdit.xhtml" component="" cagegory="" type="EDIT">
-        房屋交易信息,付款方式,购房款编辑
-    </subscribe>
+    <view-subscribe name="BusinessLandInfoInBizView"
+                    page="/business/houseOwner/subscribe/BusinessLandInfoInBizView.xhtml">
+        <description>
+            土地信息正在业务中查看
+        </description>
+    </view-subscribe>
 
-    <subscribe name="mortgaegeRegisteEdit" page="/business/houseOwner/subscribe/MortgaegeRegisteEdit.xhtml" component="" cagegory="" type="EDIT">
-    一般抵押权编辑
-    </subscribe>
+    <view-subscribe name="BusinessLandStartView" page="/business/houseOwner/subscribe/BusinessLandStartView.xhtml">
+        <description>
+            土地信息启动（导入原土地信息）查看
+        </description>
+    </view-subscribe>
 
-    <subscribe name="evaluateEditEdit" page="/business/houseOwner/subscribe/EvaluateEdit.xhtml" component="" cagegory="" type="EDIT">
-       评估机构,评估价格编辑
-    </subscribe>
+    <view-subscribe name="CloseHouseView" page="/business/houseOwner/subscribe/CloseHouseView.xhtml">
+        <description>
+            查封信息查看
+        </description>
+    </view-subscribe>
+    <view-subscribe name="FinancialNowView" page="/business/houseOwner/subscribe/FinancialNowView.xhtml">
+        <description>
+            现抵押权人信息查看
+        </description>
+    </view-subscribe>
+    <view-subscribe name="MappingCorpView" page="/business/houseOwner/subscribe/MappingCorpView.xhtml">
+        <description>
+            测绘信息查看
+        </description>
+    </view-subscribe>
 
-    <subscribe name="mappingCorpEdit" page="/business/houseOwner/subscribe/MappingCorpEdit.xhtml" component="" cagegory="" type="EDIT">
-        测绘机构编辑
-    </subscribe>
+    <view-subscribe name="PersionPreBuyEntrustView"
+                    page="/business/houseOwner/subscribe/PersionPreBuyEntrustView.xhtml">
+        <description>
+            预购代理人查看
+        </description>
+    </view-subscribe>
+    <view-subscribe name="PersionBuyEntrustView" page="/business/houseOwner/subscribe/PersionBuyEntrustView.xhtml">
+        <description>
+            买方代理人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="PersionOwnerEntrustView" page="/business/houseOwner/subscribe/PersionOwnerEntrustView.xhtml">
+        <description>
+            产权代理人查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="PersionPreSaleEntrustView"
+                    page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml">
+        <description>
+            预售代理人查看
+        </description>
+    </view-subscribe>
+    <view-subscribe name="PersionSellEntrustView" page="/business/houseOwner/subscribe/PersionSellEntrustView.xhtml">
+        <description>
+            卖方代理人查看
+        </description>
+    </view-subscribe>
+    <view-subscribe name="SaleInfoView" page="/business/houseOwner/subscribe/SaleInfoView.xhtml">
+        <description>
+            房屋交易信息,付款方式,购房款查看
+        </description>
+    </view-subscribe>
+
+
+    <view-subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml">
+        <description>
+            （启动） 共有情况，产权来源，产别
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="PoolOwnerStartView" page="/business/houseOwner/subscribe/PoolOwnerStartView.xhtml">
+        <description>
+            （启动） 共有权人信息
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="HouseOwnerStartView" page="/business/houseOwner/subscribe/HouseOwnerStartView.xhtml">
+        <description>
+            （启动） 产权人信息
+        </description>
+    </view-subscribe>
+
 
     <!--
-    <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component=""  ><description>
         预告登记证明号编辑
     </subscribe>
-    <subscribe name="CardMortgageEdit" page="/business/houseOwner/subscribe/CardMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="CardMortgageEdit" page="/business/houseOwner/subscribe/CardMortgageEdit.xhtml" component=""  ><description>
         他项权证号编辑
     </subscribe>
-    <subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml" component=""  ><description>
         所有权证号编辑
     </subscribe>
-    <subscribe name="CardProjectMortgageEdit" page="/business/houseOwner/subscribe/CardProjectMortgageEdit.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="CardProjectMortgageEdit" page="/business/houseOwner/subscribe/CardProjectMortgageEdit.xhtml" component=""  ><description>
         在建工程抵押证明号编辑
     </subscribe>
-    <subscribe name="CardMerchandiseContraoEdit" page="/business/houseOwner/subscribe/CardMerchandiseContraoEdit.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="CardMerchandiseContraoEdit" page="/business/houseOwner/subscribe/CardMerchandiseContraoEdit.xhtml" component=""  ><description>
         商品房合同备案号编辑
     </subscribe>
-    <subscribe name="CardSaleLicenseEdit" page="/business/houseOwner/subscribe/CardSaleLicenseEdit.xhtml" component="" cagegory="" type="EDIT">
+    <subscribe name="CardSaleLicenseEdit" page="/business/houseOwner/subscribe/CardSaleLicenseEdit.xhtml" component=""  ><description>
         预售许可证号编辑
     </subscribe>
 
-    <subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml" component=""  > <description>
         预告登记证明号查看
     </subscribe>
-    <subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml" component=""  > <description>
         所有权证号查看
     </subscribe>
-    <subscribe name="CardMortgageView" page="/business/houseOwner/subscribe/CardMortgageView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="CardMortgageView" page="/business/houseOwner/subscribe/CardMortgageView.xhtml" component=""  > <description>
         他项权证号查看
     </subscribe>
-    <subscribe name="CardSaleLicenseView" page="/business/houseOwner/subscribe/CardSaleLicenseView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="CardSaleLicenseView" page="/business/houseOwner/subscribe/CardSaleLicenseView.xhtml" component=""  > <description>
         预售许可证号查看
     </subscribe>
-    <subscribe name="CardProjectMortgageView" page="/business/houseOwner/subscribe/CardProjectMortgageView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="CardProjectMortgageView" page="/business/houseOwner/subscribe/CardProjectMortgageView.xhtml" component=""  > <description>
         在建工程抵押证明号查看
     </subscribe>
-    <subscribe name="CardMerchandiseContraoView" page="/business/houseOwner/subscribe/CardMerchandiseContraoView.xhtml" component="" cagegory="" type="VIEW">
+    <subscribe name="CardMerchandiseContraoView" page="/business/houseOwner/subscribe/CardMerchandiseContraoView.xhtml" component=""  > <description>
         商品房合同备案号查看
     </subscribe>
     -->
+    <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
+            >
+        <description>
+            现产权人编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="">
+        <description>
+            查封登记编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml"
+                    component="">
+        <description>
+            解封登记编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="" cagegory="" type="EDIT">
-        查封登记编辑
-    </subscribe>
-    <subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml" component="" cagegory="" type="EDIT">
-        解封登记编辑
-    </subscribe>
+    <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
+                    component="">
+        <description>
+            产权代理人编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
-        产权代理人编辑
-    </subscribe>
+    <edit-subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/ResonFillChangeEdit.xhtml"
+                    component="">
+        <description>
+            补（换）证事由编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/ResonFillChangeEdit.xhtml" component="" cagegory="" type="EDIT">
-        补（换）证事由编辑
-    </subscribe>
+    <edit-subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="">
+        <description>
+            注销原因编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="" cagegory="" type="EDIT">
-     注销原因编辑
-    </subscribe>
+    <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
+                    component="">
+        <description>
+            土地信息编辑（有土地信息就不显示，没有编辑）
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml" component="" cagegory="" type="EDIT">
-     土地信息编辑（有土地信息就不显示，没有编辑）
-    </subscribe>
+    <edit-subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml"
+                    component="">
+        <description>
+            买方代理人编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
-        买方代理人编辑
-    </subscribe>
+    <edit-subscribe name="PersionSellEntrustEdit" page="/business/houseOwner/subscribe/PersionSellEntrustEdit.xhtml"
+                    component="">
+        <description>
+            卖方代理人编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="PersionSellEntrustEdit" page="/business/houseOwner/subscribe/PersionSellEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
-        卖方代理人编辑
-    </subscribe>
+    <edit-subscribe name="PersionPreSaleEntrustEdit"
+                    page="/business/houseOwner/subscribe/PersionPreSaleEntrustEdit.xhtml" component="">
+        <description>
+            预售代理人编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="PersionPreBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionPreBuyEntrustEdit.xhtml"
+                    component="">
+        <description>
+            预购代理人编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="PersionPreSaleEntrustEdit" page="/business/houseOwner/subscribe/PersionPreSaleEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
-        预售代理人编辑
-    </subscribe>
-    <subscribe name="PersionPreBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionPreBuyEntrustEdit.xhtml" component="" cagegory="" type="EDIT">
-        预购代理人编辑
-    </subscribe>
+    <edit-subscribe name="FinancialNowEdit" page="/business/houseOwner/subscribe/FinancialNowEdit.xhtml" component="">
+        <description>
+            （现）抵押权人编辑
+        </description>
+    </edit-subscribe>
 
-    <subscribe name="FinancialNowEdit" page="/business/houseOwner/subscribe/FinancialNowEdit.xhtml" component="" cagegory="" type="EDIT">
-       （现）抵押权人编辑
-    </subscribe>
-
-    <subscribe name="FinancialEdit" page="/business/houseOwner/subscribe/FinancialEdit.xhtml" component="" cagegory="" type="EDIT">
-        抵押权人编辑
-    </subscribe>
-
-    <subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml" component="" cagegory="" type="VIEW">
-        变更前查看
-    </subscribe>
-
-    <subscribe name="ModifyAfterReasonView" page="/business/houseOwner/subscribe/ModifyAfterReasonView.xhtml" component="" cagegory="" type="VIEW">
-        变更后查看
-    </subscribe>
-
-    <subscribe name="ChangBeforRensonView" page="/business/houseOwner/subscribe/ChangBeforRensonView.xhtml" component="" cagegory="" type="VIEW">
-        更正前查看
-    </subscribe>
-
-    <subscribe name="ChangAfterRensonView" page="/business/houseOwner/subscribe/ChangAfterRensonView.xhtml" component="" cagegory="" type="VIEW">
-        更正后查看
-    </subscribe>
-
-    <subscribe name="ResonFillChangeView" page="/business/houseOwner/subscribe/ResonFillChangeView.xhtml" component="" cagegory="" type="VIEW">
-        换(补)证事由查看
-    </subscribe>
-
-    <subscribe name="ReasonLogoutView" page="/business/houseOwner/subscribe/ReasonLogoutView.xhtml" component="" cagegory="" type="VIEW">
-        注销原因查看
-    </subscribe>
-
-
-    <subscribe name="EvaluateView" page="/business/houseOwner/subscribe/EvaluateView.xhtml" component="" cagegory="" type="VIEW">
-        评估机构,评估价格编辑查看
-    </subscribe>
-
-    <subscribe name="BusinessNowLandInfoEdit" page="/business/houseOwner/subscribe/BusinessNowLandInfoEdit.xhtml" component="" cagegory="" type="EDIT">
-        土地信息编辑（有没有历史土地信息都编辑，更正，变更）
-    </subscribe>
-
-    <subscribe name="BusinessLandInfoInBizView" page="/business/houseOwner/subscribe/BusinessLandInfoInBizView.xhtml" component="" cagegory="" type="VIEW">
-       土地信息正在业务中查看
-    </subscribe>
-
-    <subscribe name="BusinessLandStartView" page="/business/houseOwner/subscribe/BusinessLandStartView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-        土地信息启动（导入原土地信息）查看
-    </subscribe>
-
-    <subscribe name="CloseHouseView" page="/business/houseOwner/subscribe/CloseHouseView.xhtml" component="" cagegory="" type="VIEW">
-        查封信息查看
-    </subscribe>
-    <subscribe name="FinancialNowView" page="/business/houseOwner/subscribe/FinancialNowView.xhtml" component="" cagegory="" type="VIEW">
-        现抵押权人信息查看
-    </subscribe>
-    <subscribe name="MappingCorpView" page="/business/houseOwner/subscribe/MappingCorpView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-        测绘信息查看
-    </subscribe>
-
-    <subscribe name="PersionPreBuyEntrustView" page="/business/houseOwner/subscribe/PersionPreBuyEntrustView.xhtml" component="" cagegory="" type="VIEW">
-        预购代理人查看
-    </subscribe>
-    <subscribe name="PersionBuyEntrustView" page="/business/houseOwner/subscribe/PersionBuyEntrustView.xhtml" component="" cagegory="" type="VIEW">
-        买方代理人查看
-    </subscribe>
-
-    <subscribe name="PersionOwnerEntrustView" page="/business/houseOwner/subscribe/PersionOwnerEntrustView.xhtml" component="" cagegory="" type="VIEW">
-        产权代理人查看
-    </subscribe>
-
-    <subscribe name="PersionPreSaleEntrustView" page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml" component="" cagegory="" type="VIEW">
-        预售代理人查看
-    </subscribe>
-    <subscribe name="PersionSellEntrustView" page="/business/houseOwner/subscribe/PersionSellEntrustView.xhtml" component="" cagegory="" type="VIEW">
-        卖方代理人查看
-    </subscribe>
-    <subscribe name="SaleInfoView" page="/business/houseOwner/subscribe/SaleInfoView.xhtml" component="" cagegory="" type="VIEW">
-        房屋交易信息,付款方式,购房款查看
-    </subscribe>
+    <edit-subscribe name="FinancialEdit" page="/business/houseOwner/subscribe/FinancialEdit.xhtml" component="">
+        <description>
+            抵押权人编辑
+        </description>
+    </edit-subscribe>
 
 
-    <subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-       （启动） 共有情况，产权来源，产别
-    </subscribe>
-
-    <subscribe name="PoolOwnerStartView" page="/business/houseOwner/subscribe/PoolOwnerStartView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-        （启动） 共有权人信息
-    </subscribe>
-
-    <subscribe name="HouseOwnerStartView" page="/business/houseOwner/subscribe/HouseOwnerStartView.xhtml" component="" cagegory="房屋信息" type="VIEW">
-        （启动） 产权人信息
-    </subscribe>
+    <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
+        <description>
+            产权人编辑
+        </description>
+    </edit-subscribe>
 
 
+    <edit-subscribe name="poolOwnerEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml"
+                    component="poolOwnerSubscribe">
+        <description>
+            现共有权人编辑
+        </description>
+    </edit-subscribe>
+
+
+    <edit-subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml"
+                    component="">
+        <description>
+            变更前编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml"
+                    component="">
+        <description>
+            变更后编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="changBeforReasonEdit" page="/business/houseOwner/subscribe/ChangBeforRensonEdit.xhtml"
+                    component="">
+        <description>
+            更正前编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="changAfterRensonEdit" page="/business/houseOwner/subscribe/ChangAfterRensonEdit.xhtml"
+                    component="">
+        <description>
+            更正后编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="saleInfoEdit" page="/business/houseOwner/subscribe/SaleInfoEdit.xhtml" component="">
+        <description>
+            房屋交易信息,付款方式,购房款编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="mortgaegeRegisteEdit" page="/business/houseOwner/subscribe/MortgaegeRegisteEdit.xhtml"
+                    component="">
+        <description>
+            一般抵押权编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="evaluateEditEdit" page="/business/houseOwner/subscribe/EvaluateEdit.xhtml" component="">
+        <description>
+            评估机构,评估价格编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="mappingCorpEdit" page="/business/houseOwner/subscribe/MappingCorpEdit.xhtml" component="">
+        <description>
+            测绘机构编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="BusinessNowLandInfoEdit" page="/business/houseOwner/subscribe/BusinessNowLandInfoEdit.xhtml"
+                    component="">
+        <description>
+            土地信息编辑（有没有历史土地信息都编辑，更正，变更）
+        </description>
+    </edit-subscribe>
 
 </subscribes>

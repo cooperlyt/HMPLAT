@@ -115,7 +115,7 @@
                 <h:form>
                     <a:outputPanel id="viewGroupList">
 
-                        <a:repeat value="#{businessSubscribeConfig.selectTaskViewGroupList}" var="_group">
+                        <a:repeat value="#{businessDefineHome.viewSubscribeGroups}" var="_group">
                             <div class="js-curd-table-box" style="margin-bottom: 20px">
 
 
@@ -370,7 +370,7 @@
                                                         <a:outputPanel styleClass="label-description right">
 
                                                             <a:outputPanel ajaxRendered="true">
-                                                                #{taskSubscribeReg.getDefineByName(_subscribe.regName).description}
+                                                                #{taskSubscribeReg.getViewDefineByName(_subscribe.regName).description}
                                                             </a:outputPanel>
                                                         </a:outputPanel>
                                                         <a:outputPanel ajaxRendered="true"
@@ -407,7 +407,7 @@
                                 <h3>
                                     #{messages.EditSubscribe}
                                     <a:outputPanel ajaxRendered="true" styleClass="counter">
-                                        #{businessDefineHome.editTaskSubscribeList.size}
+                                        #{businessDefineHome.editSubscribes.size}
                                     </a:outputPanel>
 
                                 </h3>
@@ -459,7 +459,7 @@
                         <a:outputPanel ajaxRendered="true">
 
                             <ul class="table-list table-list-bordered">
-                                <ui:repeat value="#{businessDefineHome.editTaskSubscribeList}" var="_subscribe">
+                                <ui:repeat value="#{businessDefineHome.editSubscribes}" var="_subscribe">
                                     <li class="table-list-item labels-list-item">
                                         <a:region>
                                             <div class="js-table-edit-cell table-list-cell">
@@ -494,9 +494,9 @@
                                                                      styleClass="selectpicker edit-select"
                                                                      label="#{messages.TaskSubscribe_reg}"
                                                                      value="#{_subscribe.regName}">
-                                                        <s:selectItems value="#{taskSubscribeReg.taskSubscribeDefine}"
+                                                        <s:selectItems value="#{businessSubscribeConfig.canAddEditSubscribeDefines}"
                                                                        var="_reg" label="#{_reg.title}"
-                                                                       itemValue="#{_reg.name}"/>
+                                                                       itemValue="#{_reg.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
                                                     </h:selectOneMenu>
 
                                                     <div class="right">
@@ -555,7 +555,8 @@
                                                 <a:outputPanel styleClass="label-description right">
 
                                                     <a:outputPanel ajaxRendered="true">
-                                                        #{taskSubscribeReg.getDefineByName(_subscribe.regName).description}
+
+                                                        #{taskSubscribeReg.getEditDefineByName(_subscribe.regName).description}
                                                     </a:outputPanel>
                                                 </a:outputPanel>
                                                 <a:outputPanel ajaxRendered="true" styleClass="label-label left">

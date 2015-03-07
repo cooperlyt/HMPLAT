@@ -3,7 +3,6 @@ package com.dgsoft.house.owner.business;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.business.TaskPublish;
 import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
@@ -84,9 +83,9 @@ public class HouseBusinessStart {
 
     private String houseIsSelected(){
         initBusinessData();
-        TaskPublish taskPublish = (TaskPublish) Component.getInstance(TaskPublish.class,true);
-        taskPublish.setTaskNameAndPublish(null);
-        if (taskPublish.isHaveEditSubscribe()){
+
+
+        if (businessDefineHome.getEditSubscribeDefines().isEmpty()){
             return BUSINESS_INFO_PAGE;
         } else{
             if (RunParam.instance().getBooleanParamValue("BusinessPrintFirst")){

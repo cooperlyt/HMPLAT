@@ -1,8 +1,8 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.TaskDescription;
-import com.dgsoft.common.system.business.TaskPublish;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
@@ -18,12 +18,12 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 public class OwnerTaskHandle {
 
     public enum TransitionType{
-        NEXT,BACK,REJECT;
+        NEXT,BACK,REJECT
     }
 
-    @In
-    private TaskPublish taskPublish;
 
+    @In
+    private BusinessDefineHome businessDefineHome;
 
     @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
     @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
@@ -83,7 +83,7 @@ public class OwnerTaskHandle {
     private OwnerBusinessHome ownerBusinessHome;
 
     public String saveTask() {
-        if ("success".equals(taskPublish.save())) {
+        if ("success".equals(businessDefineHome.saveSubscribe())) {
             return ownerBusinessHome.update();
         }
         return null;

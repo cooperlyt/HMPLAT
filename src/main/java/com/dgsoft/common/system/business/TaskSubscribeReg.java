@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.business;
 
+import com.dgsoft.common.ProxyList;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -30,48 +31,51 @@ import java.util.regex.Pattern;
 @Name("taskSubscribeReg")
 public class TaskSubscribeReg {
 
+    private final static String VIEW_SUBSCRIBE_NODE_NAME = "view-subscribe";
+    private final static String EDIT_SUBSCRIBE_NODE_NAME = "edit-subscribe";
 
-    private Map<String,TaskSubscribeDefine> subscribeDefines;
 
-    private List<TaskSubscribeDefine> editSubscribeDefines;
+    //private Map<String,SubscribeDefine> subscribeDefines;
 
-    private List<TaskSubscribeDefine> viewSubScribeDefines;
+    private List<EditSubscribeDefine> editSubscribeDefines;
 
-    public List<TaskSubscribeDefine> getEditSubscribeDefines() {
-        if (editSubscribeDefines == null){
-            editSubscribeDefines = new ArrayList<TaskSubscribeDefine>();
-            for(TaskSubscribeDefine define: subscribeDefines.values()){
-                if (TaskSubscribeDefineType.EDIT.equals(define.getType()) || TaskSubscribeDefineType.ALONE_EDIT.equals(define.getType())){
-                    editSubscribeDefines.add(define);
-                }
-            }
-        }
+    private List<SubscribeDefine> viewSubScribeDefines;
+
+    public List<EditSubscribeDefine> getEditSubscribeDefines() {
+
         return editSubscribeDefines;
     }
 
-    public List<TaskSubscribeDefine> getViewSubScribeDefines() {
-        if (viewSubScribeDefines == null){
-            viewSubScribeDefines = new ArrayList<TaskSubscribeDefine>();
-            for(TaskSubscribeDefine define: subscribeDefines.values()){
-                if (TaskSubscribeDefineType.VIEW.equals(define.getType()) || TaskSubscribeDefineType.ALONE_VIEW.equals(define.getType())){
-                    viewSubScribeDefines.add(define);
-                }
-            }
-        }
+    public List<SubscribeDefine> getViewSubScribeDefines() {
+
         return viewSubScribeDefines;
     }
 
-    public List<TaskSubscribeDefine> getTaskSubscribeDefine(){
-        return new ArrayList<TaskSubscribeDefine>(subscribeDefines.values());
+
+    public EditSubscribeDefine getEditDefineByName(String name){
+        for(EditSubscribeDefine subscribeDefine: editSubscribeDefines){
+            if (subscribeDefine.getName().equals(name)){
+                return subscribeDefine;
+            }
+        }
+        return null;
     }
 
-    public TaskSubscribeDefine getDefineByName(String name){
-        return subscribeDefines.get(name);
+    public SubscribeDefine getViewDefineByName(String name){
+        for(SubscribeDefine subscribeDefine: viewSubScribeDefines){
+            if (subscribeDefine.getName().equals(name)){
+                return subscribeDefine;
+            }
+        }
+        return null;
     }
 
     @Create
     public void load() {
-        subscribeDefines = new HashMap<String, TaskSubscribeDefine>();
+
+        editSubscribeDefines = new ArrayList<EditSubscribeDefine>();
+        viewSubScribeDefines = new ArrayList<SubscribeDefine>();
+        //subscribeDefines = new HashMap<String, SubscribeDefine>();
         Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(ClasspathHelper.forPackage("com.dgsoft")).addScanners(new ResourcesScanner()));
         Set<String> confings = reflections.getResources(Pattern.compile(".*\\.tasksubscribe\\.xml"));
         Logging.getLog(getClass()).debug("find subscribe config  :" + confings.size());
@@ -88,13 +92,28 @@ public class TaskSubscribeReg {
                     Node regNode = regNodes.item(i);
                     if (regNode.getNodeType() == Node.ELEMENT_NODE) {
                         Logging.getLog(getClass()).debug(regNode.getNodeName());
+
                         String name = regNode.getAttributes().getNamedItem("name").getNodeValue();
-                        subscribeDefines.put(name, new TaskSubscribeDefine(name,
-                                regNode.getFirstChild().getNodeValue(),
-                                regNode.getAttributes().getNamedItem("page").getNodeValue(),
-                                regNode.getAttributes().getNamedItem("component").getNodeValue(),
-                                TaskSubscribeDefineType.valueOf(regNode.getAttributes().getNamedItem("type").getNodeValue()),
-                                regNode.getAttributes().getNamedItem("cagegory").getNodeValue()));
+                        String description = null;
+                        String page = regNode.getAttributes().getNamedItem("page").getNodeValue();
+                        for(int j = 0, subSize = regNode.getChildNodes().getLength(); j < subSize; j++){
+                            Node subNode = regNode.getChildNodes().item(j);
+                            if ((subNode.getNodeType() == Node.ELEMENT_NODE) && "description".equals(subNode.getNodeName())){
+                                description = subNode.getFirstChild().getNodeValue();
+                                break;
+                            }
+                        }
+
+                        if (VIEW_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
+
+                            viewSubScribeDefines.add(new SubscribeDefine(name,description,page));
+                        } else if (EDIT_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
+                            editSubscribeDefines.add(new EditSubscribeDefine(name,description,page,
+                                    regNode.getAttributes().getNamedItem("component").getNodeValue(),
+                                    (regNode.getAttributes().getNamedItem("out-page") == null) ? "" : regNode.getAttributes().getNamedItem("out-page").getNodeValue()));
+                        }
+
+
                         Logging.getLog(getClass()).debug("add subscribeDefine :" + name);
                     }
 
@@ -117,12 +136,65 @@ public class TaskSubscribeReg {
 
     }
 
-    public enum TaskSubscribeDefineType{
-        EDIT,VIEW,ALONE_EDIT,ALONE_VIEW
+
+
+    public static class SubscribeDefineGroup extends ProxyList<SubscribeDefine>{
+
+        private String name;
+
+        private List<SubscribeDefine> blocks = new ArrayList<SubscribeDefine>();
+
+        public SubscribeDefineGroup(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public List<SubscribeDefine> getList() {
+            return blocks;
+        }
     }
 
 
-    public static class TaskSubscribeDefine {
+    public static class EditSubscribeDefine extends SubscribeDefine{
+        private String component;
+        private String outPage;
+
+        public EditSubscribeDefine(String name, String description, String page, String component, String outPage) {
+            super(name, description, page);
+            this.component = component;
+            this.outPage = outPage;
+        }
+
+        public String getComponent() {
+            return component;
+        }
+
+        public String getOutPage() {
+            return outPage;
+        }
+
+        public boolean isHaveOutPage(){
+            return (outPage != null) && (!outPage.trim().equals(""));
+        }
+
+        public boolean isHaveComponent(){
+            return (component != null) && (!component.trim().equals(""));
+        }
+
+        public TaskSubscribeComponent getComponents(){
+            if (isHaveComponent()) {
+                return (TaskSubscribeComponent) Component.getInstance(component, true, true);
+            }else
+                return null;
+        }
+    }
+
+
+    public static class SubscribeDefine {
 
         private String name;
 
@@ -130,29 +202,16 @@ public class TaskSubscribeReg {
 
         private String page;
 
-        private String component;
 
-        private TaskSubscribeDefineType type;
 
-        public String category;
 
-        public TaskSubscribeDefine(String name, String description, String page,
-                                   String component, TaskSubscribeDefineType type, String category) {
+        public SubscribeDefine(String name, String description, String page) {
             this.name = name;
             this.description = description;
             this.page = page;
-            this.component = component;
-            this.type = type;
-            this.category = category;
+
         }
 
-        public TaskSubscribeDefineType getType() {
-            return type;
-        }
-
-        public String getCategory() {
-            return category;
-        }
 
         public String getName() {
             return name;
@@ -178,16 +237,8 @@ public class TaskSubscribeReg {
             return (page != null) && (!page.trim().equals(""));
         }
 
-        public boolean isHaveComponent(){
-            return (component != null) && (!component.trim().equals(""));
-        }
 
-        public TaskSubscribeComponent getComponents(){
-            if (isHaveComponent()) {
-                return (TaskSubscribeComponent) Component.getInstance(component, true, true);
-            }else
-                return null;
-        }
+
     }
 
 }
