@@ -27,21 +27,25 @@
         </p>
     </div>
 
-    <dh:entryGrid styleClass="detailsTable">
 
 
-        <c:forEach items="#{taskPublish.viewPageGroup}" var="_group">
-            #{_group.key}
-            <c:set var="first" value="true"/>
+        <r:tabPanel switchType="client">
+        <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
 
-            <c:forEach items="#{_group.values}" var="_item">
+            <r:tab header="#{_group.groupName}">
+            <c:forEach items="#{_group.defineList}" var="_item">
 
                 <f:subview>
                     <ui:include src="#{_item.page}"/>
                 </f:subview>
             </c:forEach>
-
+            </r:tab>
         </c:forEach>
 
-    </dh:entryGrid>
+            <r:tab header="aaa">
+
+            </r:tab>
+        </r:tabPanel>
+
+
     </ui:composition>

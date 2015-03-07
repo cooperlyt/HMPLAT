@@ -19,6 +19,7 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     private String id;
     private String taskName;
     private String name;
+    private String iconCss;
 
     private Subscribe.SubscribeType type;
     private BusinessDefine businessDefine;
@@ -70,6 +71,16 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    @Column(name="ICON_CSS",nullable = true,length = 100)
+    @Size(max = 100)
+    public String getIconCss() {
+        return iconCss;
+    }
+
+    public void setIconCss(String iconCss) {
+        this.iconCss = iconCss;
     }
 
     @Transient

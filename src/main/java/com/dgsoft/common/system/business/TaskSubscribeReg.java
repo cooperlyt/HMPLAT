@@ -1,6 +1,5 @@
 package com.dgsoft.common.system.business;
 
-import com.dgsoft.common.ProxyList;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -138,22 +137,31 @@ public class TaskSubscribeReg {
 
 
 
-    public static class SubscribeDefineGroup extends ProxyList<SubscribeDefine>{
+    public static class SubscribeDefineGroup {
 
-        private String name;
+        private String groupName;
+
+        private String iconCss;
 
         private List<SubscribeDefine> blocks = new ArrayList<SubscribeDefine>();
 
-        public SubscribeDefineGroup(String name) {
-            this.name = name;
+        public SubscribeDefineGroup(String name, String iconCss) {
+            this.groupName = name; this.iconCss = iconCss;
         }
 
-        public String getName() {
-            return name;
+        public String getGroupName() {
+            return groupName;
         }
 
-        @Override
-        public List<SubscribeDefine> getList() {
+        public String getIconCss() {
+            return iconCss;
+        }
+
+        public void add(SubscribeDefine subscribeDefine){
+            blocks.add(subscribeDefine);
+        }
+
+        public List<SubscribeDefine> getDefineList() {
             return blocks;
         }
     }
