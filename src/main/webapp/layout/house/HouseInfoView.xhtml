@@ -8,6 +8,102 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 <dh:entryGridBlock columns="8">
+    <h:outputText value="#{messages.Build_Name}"/>
+    <dh:entryGridColumn colspan="5">
+        <h:outputText value="#{houseInfo.buildName}"/>
+    </dh:entryGridColumn>
+
+    <h:outputText value="#{messages.House_Code}"/>
+        <h:outputText value="#{houseInfo.displayHouseCode}"/>
+
+    <h:outputText value="#{messages.House_Order}"/>
+    <h:outputText value="#{houseInfo.houseOrder}"/>
+
+    <h:outputText value="#{messages.House_InFloor}"/>
+    <h:outputText value="#{houseInfo.inFloorName}"/>
+
+    <h:outputText value="#{messages.House_Unit}"/>
+    <h:outputText value="#{houseInfo.houseUnitName}"/>
+
+
+    <h:outputText value="#{runParam.getStringParamValue('HouseStreetCodeLabel')}"/>
+    <h:outputText value="#{houseInfo.streetCode}"/>
+
+    <h:outputText value="#{messages.Build_MapNO}"/>
+    <h:outputText value="#{houseInfo.mapNumber}"/>
+
+    <h:outputText value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
+    <h:outputText value="#{houseInfo.blockNo}"/>
+
+    <h:outputText value="#{messages.Build_BuildNO}"/>
+    <h:outputText value="#{houseInfo.blockNo}"/>
+
+    <h:outputText value="#{messages.House_InitReg}"/>
+    <h:outputText value="#{messages[houseInfo.initRegStatus.name()]}"/>
+
+
+
+
+
+
+
+    <h:outputText value="#{messages.House_ShineArea}"/>
+    <h:outputText value="#{houseInfo.shineArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_LoftArea}"/>
+    <h:outputText value="#{houseInfo.loftArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+
+    <h:outputText value="#{messages.House_PrepareArea}"/>
+    <h:outputText value="#{houseInfo.prepareArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+
+
+    <h:outputText value="#{messages.House_UseType}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.useType)}"/>
+
+    <h:outputText value="#{messages.House_Area}"/>
+    <h:outputText value="#{houseInfo.houseArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+
+    <h:outputText value="#{messages.House_CommArea}"/>
+    <h:outputText value="#{houseInfo.commArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_UseArea}"/>
+    <h:outputText value="#{houseInfo.useArea}">
+        <f:convertNumber pattern="#0.000"/>
+    </h:outputText>
+
+    <h:outputText value="#{messages.House_CommParam}"/>
+    <h:outputText value="#{houseInfo.commParam}">
+        <f:convertNumber pattern="#0.#"/>
+    </h:outputText>
+
+
+
+    <h:outputText value="#{messages.House_AllStatus}"/>
+    <dh:entryGridColumn colspan="5">
+        <ui:repeat value="#{houseInfo.allStatusList}" var="_status">
+            #{messages[_status.name()]}
+        </ui:repeat>
+    </dh:entryGridColumn>
+    <h:outputText value="#{messages.House_MasterStatus}"/>
+    <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
+
+    <h:outputText value="#{messages.House_Address}"/>
+    <dh:entryGridColumn colspan="7">
+        <h:outputText value="#{houseInfo.address}"/>
+    </dh:entryGridColumn>
 
 <h:outputText value="#{messages.District_name}"/>
 <dh:entryGridColumn colspan="3">
@@ -46,52 +142,22 @@
     <h:outputText value="#{houseInfo.developerCode}"/>
 </dh:entryGridColumn>
 
-<h:outputText value="#{messages.Build_Name}"/>
-<dh:entryGridColumn colspan="3">
-    <h:outputText value="#{houseInfo.buildName}"/>
-</dh:entryGridColumn>
 
-<h:outputText value="#{messages.Build_Id}"/>
-<dh:entryGridColumn colspan="3">
-    <h:outputText value="#{houseInfo.buildCode}"/>
-</dh:entryGridColumn>
 
 <h:outputText value="#{messages.Build_DoorNO}"/>
 <dh:entryGridColumn colspan="3">
     <h:outputText value="#{houseInfo.doorNo}"/>
 </dh:entryGridColumn>
 
-<h:outputText value="#{messages.House_Code}"/>
-<dh:entryGridColumn colspan="3">
-    <h:outputText value="#{houseInfo.displayHouseCode}"/>
-</dh:entryGridColumn>
 
 
-<h:outputText value="#{messages.Build_MapNO}"/>
-<h:outputText value="#{houseInfo.mapNumber}"/>
 
-<h:outputText value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
-<h:outputText value="#{houseInfo.blockNo}"/>
-
-<h:outputText value="#{messages.Build_BuildNO}"/>
-<h:outputText value="#{houseInfo.blockNo}"/>
-
-<h:outputText value="#{messages.House_InitReg}"/>
-<h:outputText value="#{messages[houseInfo.initRegStatus.name()]}"/>
+    <h:outputText value="#{messages.Build_Id}"/>
+    <dh:entryGridColumn colspan="3">
+        <h:outputText value="#{houseInfo.buildCode}"/>
+    </dh:entryGridColumn>
 
 
-<h:outputText value="#{messages.House_Order}"/>
-<h:outputText value="#{houseInfo.houseOrder}"/>
-
-<h:outputText value="#{messages.House_InFloor}"/>
-<h:outputText value="#{houseInfo.inFloorName}"/>
-
-<h:outputText value="#{messages.House_Unit}"/>
-<h:outputText value="#{houseInfo.houseUnitName}"/>
-
-
-<h:outputText value="#{runParam.getStringParamValue('HouseStreetCodeLabel')}"/>
-<h:outputText value="#{houseInfo.streetCode}"/>
 
 <h:outputText value="#{messages.Project_finishDate}"/>
 <h:outputText value="#{houseInfo.completeDate}">
@@ -125,8 +191,7 @@
 <h:outputText value="#{messages.House_HouseType}"/>
 <h:outputText value="#{dictionary.getWordValue(houseInfo.houseType)}"/>
 
-<h:outputText value="#{messages.House_UseType}"/>
-<h:outputText value="#{dictionary.getWordValue(houseInfo.useType)}"/>
+
 
 <h:outputText value="#{messages.Build_Structure}"/>
 <h:outputText value="#{dictionary.getWordValue(houseInfo.structure)}"/>
@@ -134,6 +199,8 @@
 <h:outputText value="#{messages.House_KnotSize}"/>
 <h:outputText value="#{dictionary.getWordValue(houseInfo.knotSize)}"/>
 
+    <h:outputText value="#{messages.House_Direction}"/>
+    <h:outputText value="#{dictionary.getWordValue(houseInfo.direction)}"/>
 
 <h:outputText value="#{messages.House_EastWall}"/>
 <h:outputText value="#{dictionary.getWordValue(houseInfo.eastWall)}"/>
@@ -147,64 +214,10 @@
 <h:outputText value="#{messages.House_North_Wall}"/>
 <h:outputText value="#{dictionary.getWordValue(houseInfo.northWall)}"/>
 
-<h:outputText value="#{messages.House_ShineArea}"/>
-<h:outputText value="#{houseInfo.shineArea}">
-    <f:convertNumber pattern="#0.000"/>
-</h:outputText>
-
-<h:outputText value="#{messages.House_LoftArea}"/>
-<h:outputText value="#{houseInfo.loftArea}">
-    <f:convertNumber pattern="#0.000"/>
-</h:outputText>
 
 
-<h:outputText value="#{messages.House_PrepareArea}"/>
-<h:outputText value="#{houseInfo.prepareArea}">
-    <f:convertNumber pattern="#0.000"/>
-</h:outputText>
-
-<h:outputText value="#{messages.House_Direction}"/>
-<h:outputText value="#{dictionary.getWordValue(houseInfo.direction)}"/>
 
 
-<h:outputText value="#{messages.House_Area}"/>
-<h:outputText value="#{houseInfo.houseArea}">
-    <f:convertNumber pattern="#0.000"/>
-</h:outputText>
-
-
-<h:outputText value="#{messages.House_CommArea}"/>
-<h:outputText value="#{houseInfo.commArea}">
-    <f:convertNumber pattern="#0.000"/>
-</h:outputText>
-
-<h:outputText value="#{messages.House_UseArea}"/>
-<h:outputText value="#{houseInfo.useArea}">
-    <f:convertNumber pattern="#0.000"/>
-</h:outputText>
-
-<h:outputText value="#{messages.House_CommParam}"/>
-<h:outputText value="#{houseInfo.commParam}">
-    <f:convertNumber pattern="#0.#"/>
-</h:outputText>
-
-
-  <h:outputText value="#{messages.House_MasterStatus}"/>
-
-    <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
-
-    <h:outputText value="#{messages.House_AllStatus}"/>
-    <dh:entryGridColumn colspan="5">
-        <ui:repeat value="#{houseInfo.allStatusList}" var="_status">
-            #{messages[_status.name()]}
-        </ui:repeat>
-    </dh:entryGridColumn>
-
-
-<h:outputText value="#{messages.House_Address}"/>
-<dh:entryGridColumn colspan="7">
-    <h:outputText value="#{houseInfo.address}"/>
-</dh:entryGridColumn>
 
 </dh:entryGridBlock>
 </ui:composition>

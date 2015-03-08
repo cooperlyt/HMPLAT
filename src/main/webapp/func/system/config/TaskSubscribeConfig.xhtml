@@ -91,6 +91,7 @@
                                  value="#{businessSubscribeConfig.newGroupName}" id="groupNameInput">
                         <r:validator/>
                     </h:inputText>
+                    <h:inputText style="margin-left: 5px;" value="#{businessSubscribeConfig.newGroupCssName}" size="20" maxlength="100"/>
                     <r:message for="groupNameInput"/>
 
                     <div class="new-label-actions">
@@ -128,6 +129,7 @@
                                         <a:outputPanel layout="block" styleClass="js-label-title ">
                                             <a:outputPanel ajaxRendered="true" styleClass="table-list-header-toggle left">
                                             <h3>
+                                                <span class="#{_group.iconCss}"/>
                                                 #{_group.name}
                                                 <span class="counter"> #{_group.viewSubscribes.size} </span>
 
@@ -141,6 +143,7 @@
                                                  <s:decorate template="/layout/edit-validate.xhtml">
                                             <h:inputText label="#{messages.SubscribeGroup_field_name}" value="#{_group.name}" size="30" maxlength="30"
                                                          styleClass="table-list-header-editor" required="true"/>
+                                                     <h:inputText value="#{_group.iconCss}" size="20" maxlength="100"/>
                                                  </s:decorate>
                                              </a:outputPanel>
 

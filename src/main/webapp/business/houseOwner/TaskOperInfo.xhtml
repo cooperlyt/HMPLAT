@@ -32,18 +32,29 @@
         <r:tabPanel switchType="client">
         <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
 
-            <r:tab header="#{_group.groupName}">
+            <r:tab >
+
+                <f:facet name="header">
+                        <span class="#{_group.iconCss}"/>
+                    #{_group.groupName}
+                        </f:facet>
+
+                <dh:entryGrid styleClass="detailsTable table table-bordered ">
             <c:forEach items="#{_group.defineList}" var="_item">
 
                 <f:subview>
                     <ui:include src="#{_item.page}"/>
                 </f:subview>
             </c:forEach>
+                </dh:entryGrid>
             </r:tab>
         </c:forEach>
 
-            <r:tab header="aaa">
-
+            <r:tab>
+                <f:facet name="header">
+                    <span class="octicon octicon-milestone"/>
+                    #{messages.bussinessFlowRecord}
+                </f:facet>
             </r:tab>
         </r:tabPanel>
 

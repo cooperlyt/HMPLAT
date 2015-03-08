@@ -30,12 +30,13 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     public SubscribeGroup() {
     }
 
-    public SubscribeGroup(String taskName, String name, Subscribe.SubscribeType type, BusinessDefine businessDefine, int priority) {
+    public SubscribeGroup(String taskName, String name, Subscribe.SubscribeType type, BusinessDefine businessDefine, int priority, String iconCss) {
         this.taskName = taskName;
         this.name = name;
         this.type = type;
         this.businessDefine = businessDefine;
         this.priority = priority;
+        this.iconCss = iconCss;
     }
 
     @Id

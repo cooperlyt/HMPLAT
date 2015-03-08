@@ -287,6 +287,16 @@ public class BusinessSubscribeConfig {
 
     private String newGroupName;
 
+    private String newGroupCssName;
+
+    public String getNewGroupCssName() {
+        return newGroupCssName;
+    }
+
+    public void setNewGroupCssName(String newGroupCssName) {
+        this.newGroupCssName = newGroupCssName;
+    }
+
     public String getNewGroupName() {
         return newGroupName;
     }
@@ -299,7 +309,7 @@ public class BusinessSubscribeConfig {
     @Transactional
     public String createNewGroup(){
         businessDefineHome.getInstance().getSubscribeGroups().add(
-        new SubscribeGroup(businessDefineHome.getTaskName(),newGroupName,getSubscribeType(),businessDefineHome.getInstance(),getViewGroupMaxPriority() + 1)
+        new SubscribeGroup(businessDefineHome.getTaskName(),newGroupName,getSubscribeType(),businessDefineHome.getInstance(),getViewGroupMaxPriority() + 1, newGroupCssName)
         );
         newGroupName = "";
         return businessDefineHome.update();

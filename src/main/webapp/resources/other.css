@@ -554,34 +554,17 @@ input[type=button], input[type=reset], input[type=submit]{
 
 
 .detailsTable{
-    width: 100%; padding: 5px; margin: 0 0 25px 0;
-    display:table;
-
-
-    border: solid 1px #ccc;
-    border-collapse: separate;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.075);
-    overflow: hidden;
-    border-spacing: 0;
+    width: 100%;
 }
 
 .detailsTable th{
-    vertical-align: middle;
-    border-bottom: 1px solid #ccc;
-    padding: 9px;
-
+    white-space: nowrap;
+    text-align: center;
+    background-color: #f9f9f9;
 }
 
 .detailsTable td{
-
-
-    vertical-align: middle;
-    border-bottom: 1px solid #ccc;
-    padding: 9px;
-
-
-
+    white-space: nowrap;
 
 }
 
