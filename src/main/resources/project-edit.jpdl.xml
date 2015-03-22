@@ -5,50 +5,34 @@
                              "http://jboss.org/schema/seam/pageflow http://jboss.org/schema/seam/pageflow-2.3.xsd"
                      name="projectEdit">
 
-    <start-page view-id="/func/house/datas/ProjectMgr.xhtml" name="start" redirect="true">
-        <transition name="create" to="sectionSelect"/>
-        <transition name="edit" to="sectionSelect"/>
+
+
+
+    <start-page view-id="/func/house/datas/SectionSelect.xhtml" name="sectionSelect" redirect="true"
+          no-conversation-view-id="/func/house/datas/BaseDataMgr.xhtml" back="disabled">
+        <transition to="projectEdit" name="next"/>
+        <transition to="done" name="cancel"/>
+
     </start-page>
 
-    <page view-id="/func/house/datas/SectionSelect.xhtml" name="sectionSelect" redirect="true"
-          no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
-        <transition to="projectEdit" name="next"/>
-        <transition to="createSection" name="createSection"/>
-        <transition to="done" name="cancel"/>
-
-    </page>
-
-    <page view-id="/func/house/datas/SectionEdit.xhtml" name="createSection" redirect="true"
-          no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
-        <transition to="done" name="cancel"/>
-        <transition to="projectEdit" name="next"/>
-    </page>
-
-
-    <page view-id="/func/house/datas/ProjectBuildMgr.xhtml" name="projectBuildMgr" redirect="true"
-          no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
-        <transition to="done" name="cancel"/>
-        <transition to="view" name="next"/>
-    </page>
-
-    <page view-id="/func/house/datas/ProjectEdit.xhtml" name="projectEdit" redirect="true"
-          no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
-        <transition to="done" name="cancel"/>
-        <transition to="projectBuildMgr" name="next"/>
-        <transition to="view" name="complete"/>
-    </page>
-
-
-    <page view-id="/func/house/datas/ProjectConfirm.xhtml" name="view" redirect="true"
-          no-conversation-view-id="/func/house/datas/ProjectMgr.xhtml">
+    <page view-id="/func/house/datas/ProjectEdit.xhtml" name="projectEdit" redirect="true" back="enabled"
+          no-conversation-view-id="/func/house/datas/BaseDataMgr.xhtml">
 
         <transition to="done" name="persisted"/>
         <transition to="done" name="updated"/>
+        <transition to="poolBuildMgr" name="next"/>
         <transition to="done" name="cancel"/>
-        <action expression="#{projectHome.wireProject}"/>
     </page>
 
-    <page view-id="/func/house/datas/ProjectMgr.xhtml" name="done">
+    <page view-id="/func/house/datas/PoolBuildMgr.xhtml" name="poolBuildMgr" redirect="true"
+          no-conversation-view-id="/func/house/datas/BaseDataMgr.xhtml" back="enabled">
+        <transition to="done" name="persisted"/>
+        <transition to="done" name="updated"/>
+        <transition to="done" name="cancel"/>
+    </page>
+
+
+    <page view-id="/func/house/datas/BaseDataMgr.xhtml" name="done">
         <end-conversation before-redirect="true"/>
         <redirect/>
     </page>

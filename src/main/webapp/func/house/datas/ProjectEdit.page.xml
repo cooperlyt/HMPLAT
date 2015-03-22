@@ -5,6 +5,15 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
 
+    <param name="projectId" value="#{projectHome.id}"/>
+    <param name="sectionId" value="#{sectionHome.id}"/>
+    <param name="developerId" value="#{developerHome.id}"/>
+    <param name="districtId" value="#{districtHome.id}"/>
+    <param name="sectionSearchName" value="#{sectionSearch.searchName}"/>
+    <param name="newSectionName" value="#{sectionSearch.newSectionName}"/>
+    <param name="developerSearchName" value="#{developerHome.searchName}"/>
+    <param name="newDeveloperName" value="#{developerHome.newDeveloperName}"/>
+
     <navigation from-action="#{projectEdit.saveProject}">
         <rule if-outcome="persisted">
             <end-conversation />

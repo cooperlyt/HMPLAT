@@ -27,12 +27,22 @@ public class DeveloperHome extends HouseEntityHome<Developer> {
 
     private String searchName;
 
+    private String newDeveloperName;
+
     public String getSearchName() {
         return searchName;
     }
 
     public void setSearchName(String searchName) {
         this.searchName = searchName;
+    }
+
+    public String getNewDeveloperName() {
+        return newDeveloperName;
+    }
+
+    public void setNewDeveloperName(String newDeveloperName) {
+        this.newDeveloperName = newDeveloperName;
     }
 
     public List<Developer> getSearchResult() {
@@ -52,8 +62,13 @@ public class DeveloperHome extends HouseEntityHome<Developer> {
             clearInstance();
         }
         Logging.getLog(getClass()).debug("create developer by searchName:" + searchName);
+        newDeveloperName = searchName;
         getInstance().setName(searchName);
         nameInputedListener();
+    }
+
+    public void clearSearchName(){
+        searchName = null;
     }
 
 

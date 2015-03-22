@@ -334,10 +334,18 @@
 
 
 
-                                        <s:link styleClass="btn btn-success" propagation="begin"
-                                                view="/func/house/datas/SectionSelect.xhtml">
+                                        <s:link styleClass="btn btn-success" view="/func/house/datas/ProjectEdit.xhtml">
                                             <span class="octicon octicon-plus"/>
                                             <f:param name="projectId" value=""/>
+                                            <f:param name="sectionId" value=""/>
+                                            <f:param name="developerId" value=""/>
+                                            <f:param name="districtId"  value=""/>
+
+                                            <f:param name="sectionSearchName" value=""/>
+                                            <f:param name="newSectionName" value=""/>
+                                            <f:param name="developerSearchName" value=""/>
+                                            <f:param name="newDeveloperName"  value=""/>
+
                                         </s:link>
 
                                         <div class="btn-group btn-group-sm">
@@ -365,7 +373,7 @@
 
                                 <h3>
                                     #{messages.SerachResultCount}#{' '}
-                                    <h:outputText value="#{sectionList.resultCount}">
+                                    <h:outputText value="#{projectList.resultCount}">
                                         <f:convertNumber type="number" groupingUsed="true"/>
                                     </h:outputText>
                                     #{''}#{messages.SerachResultCountPrefx}
@@ -448,15 +456,22 @@
                                     </a:commandLink>
 
 
-                                    <s:link styleClass="table-action" propagation="begin"
-                                            view="/func/house/datas/SectionSelect.xhtml">
+                                    <s:link styleClass="table-action"
+                                            view="/func/house/datas/ProjectEdit.xhtml">
                                         <span class="glyphicon glyphicon-pencil"/>
                                         <f:param name="projectId" value="#{_item.id}"/>
                                         <f:param name="sectionId" value="#{_item.section.id}"/>
+                                        <f:param name="developerId" value="#{_item.developer.id}"/>
+                                        <f:param name="districtId"  value="#{_item.section.district.id}"/>
+
+                                        <f:param name="sectionSearchName" value=""/>
+                                        <f:param name="newSectionName" value=""/>
+                                        <f:param name="developerSearchName" value=""/>
+                                        <f:param name="newDeveloperName"  value=""/>
                                     </s:link>
 
 
-                                    <s:link styleClass="table-action" target="_blank"
+                                    <s:link styleClass="table-action"
                                             view="/func/house/datas/ProjectBuildEdit.xhtml">
                                         <f:param name="projectId" value="#{_item.id}"/>
                                         <span class="glyphicon glyphicon-th"/>

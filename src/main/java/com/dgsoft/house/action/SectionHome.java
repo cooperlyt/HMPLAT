@@ -5,8 +5,10 @@ import com.dgsoft.common.SetLinkList;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Project;
 import com.dgsoft.house.model.Section;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
@@ -24,6 +26,7 @@ import java.util.List;
  * Time: 下午3:24
  */
 @Name("sectionHome")
+@Scope(ScopeType.CONVERSATION)
 public class SectionHome extends HouseEntityHome<Section> {
 
     private static final String NUMBER_KEY = "SECTION_ID";
@@ -44,6 +47,12 @@ public class SectionHome extends HouseEntityHome<Section> {
     @Override
     protected Section createInstance() {
         return new Section(genId(),new Date());
+    }
+
+
+    public void setNameAndPy(String name){
+        getInstance().setName(name);
+        nameInputedListener();
     }
 
 
@@ -79,4 +88,7 @@ public class SectionHome extends HouseEntityHome<Section> {
         return false;
 
     }
+
+
+
 }

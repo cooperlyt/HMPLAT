@@ -6,9 +6,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-template.xhtml">
-
-    <ui:param name="functionTitle" value="#{projectHome.instance.name} - #{messages.Build}"/>
+                template="/layout/template.xhtml">
 
     <ui:define name="func-body">
 
@@ -19,16 +17,51 @@
             }
         </h:outputScript>
 
-        <br/>
-        <r:messages globalOnly="true" ajaxRendered="true"/>
+        <div id="func-navigation" class="pagehead codesearch-head">
+            <div class="container">
+                <div style="float: left;width: 100%">
 
-        <br/>
+
+
+                             <h1 class="entry-title public" style="width: 100%">
+                                 <ui:include src="/layout/function-nav.xhtml">
+                                     <ui:param name="functions" value="#{authInfo.dataFunctions}"/>
+                                 </ui:include>
+
+                                     #{projectHome.instance.districtName}
+
+                                 <span class="path-divider">/</span>
+
+                                     #{projectHome.instance.sectionName}
+
+                                 <span class="path-divider">/</span>
+                                 #{projectHome.instance.projectName}
+                                 <span class="path-divider">/</span>
+                                 <strong>
+                                 #{messages.ProjectBuildManager}
+                                </strong>
+                             </h1>
+
+
+
+                </div>
+                <ui:insert name="head-right"/>
+            </div>
+        </div>
+        <div class="container">
+
+
+
+
+
+        <r:messages globalOnly="true" ajaxRendered="false"/>
+
 
 
         <h:form>
 
             <a:outputPanel id="buildTable">
-                <s:decorate template="/layout/house/BuildsList.xhtml">
+                <ui:decorate template="/layout/house/BuildsList.xhtml">
                     <ui:param name="noDataLabel" value="#{messages.BuildListEmpty}"/>
                     <ui:param name="builds" value="#{projectHome.instance.buildList}"/>
                     <r:column style="text-align: center; width: 60px" rendered="#{empty projectHome.editingBuild}">
@@ -65,7 +98,7 @@
                         </s:link>
 
                     </r:column>
-                </s:decorate>
+                </ui:decorate>
 
 
             </a:outputPanel>
@@ -111,7 +144,7 @@
                 </a:outputPanel>
             </a:outputPanel>
         </h:form>
-
+        </div>
 
     </ui:define>
 

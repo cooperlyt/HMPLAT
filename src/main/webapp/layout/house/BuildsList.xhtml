@@ -8,7 +8,7 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
 
-    <r:dataTable style="width:100%" value="#{builds}" var="_build" noDataLabel="#{noDataLabel}">
+    <h:dataTable style="width:100%" styleClass="table table-striped table-hover" value="#{builds}" var="_build" >
 
         <r:column>
             <f:facet name="header">
@@ -103,6 +103,6 @@
         </r:column>
 
         <ui:insert/>
-    </r:dataTable>
+    </h:dataTable>
 
 </ui:composition>

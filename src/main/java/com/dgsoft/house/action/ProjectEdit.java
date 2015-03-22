@@ -5,6 +5,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 
 /**
  * Created by cooper on 1/8/15.
@@ -22,23 +24,35 @@ public class ProjectEdit {
     @In(create = true)
     private DeveloperHome developerHome;
 
-    public String sectionSelectComplete() {
-        projectHome.getInstance().setSection(sectionHome.getInstance());
-        if ((projectHome.getInstance().getAddress() == null) ||
-                "".equals(projectHome.getInstance().getAddress().trim()))
-        projectHome.getInstance().setAddress(sectionHome.getInstance().getAddress());
-        if (projectHome.getInstance().getName() == null || projectHome.getInstance().getName().trim().equals("")){
-            projectHome.getInstance().setName(sectionHome.getInstance().getName());
-        }
-        if(projectHome.isManaged() && (projectHome.getInstance().getDeveloper() != null)){
-            developerHome.setId(projectHome.getInstance().getDeveloper().getId());
-        }
-        return "success";
-    }
+    @In
+    private DistrictHome districtHome;
+
+    @In
+    private FacesMessages facesMessages;
 
     @Transactional
     public String saveProject(){
+
+        if (!sectionHome.isIdDefined() &&
+                ((sectionHome.getInstance().getName() == null) || sectionHome.getInstance().getName().trim().equals(""))){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"SectionRequired");
+            return null;
+        }
+
+        if (!developerHome.isIdDefined() &&
+                ((developerHome.getInstance().getName() == null) || developerHome.getInstance().getName().trim().equals(""))){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"DeveloperRequired");
+            return null;
+        }
+
+
+        if (!sectionHome.isIdDefined()){
+            sectionHome.getInstance().setDistrict(districtHome.getInstance());
+        }
+        projectHome.getInstance().setSection(sectionHome.getInstance());
+
         projectHome.getInstance().setDeveloper(developerHome.getInstance());
+
         if(projectHome.isManaged()){
             return projectHome.update();
         }else

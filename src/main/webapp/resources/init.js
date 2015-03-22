@@ -5,6 +5,17 @@ $(document).ready(
         $('.selectpicker').selectpicker();
         $('.js-switch').bootstrapSwitch();
 
+        $('.js-only-int').keyup(function(){
+            $(this).val($(this).val().replace(/\D|^0/g,''));
+        }).bind("paste",function(){
+            $(this).val($(this).val().replace(/\D|^0/g,''));
+        }).css("ime-mode", "disabled");
+
+        $(".js-only-number").keyup(function(){
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));
+        }).bind("paste",function(){
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));
+        }).css("ime-mode", "disabled");
 
 
         $('.select-menu-header').click(function(event){ if(!$(event.target).hasClass("js-menu-close")) event.stopPropagation();});

@@ -6,6 +6,8 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
 import javax.persistence.TypedQuery;
@@ -27,7 +29,12 @@ public class SectionSearch {
     @In(create = true)
     private SectionHome sectionHome;
 
+    @In
+    private FacesMessages facesMessages;
+
     private String searchName;
+
+    private String newSectionName;
 
     public String getSearchName() {
         return searchName;
@@ -37,10 +44,20 @@ public class SectionSearch {
         this.searchName = searchName;
     }
 
+    public String getNewSectionName() {
+        return newSectionName;
+    }
+
+    public void setNewSectionName(String newSectionName) {
+        this.newSectionName = newSectionName;
+    }
+
     public List<Section> getSearchResult() {
         if ((searchName == null) || (searchName.trim().equals(""))) {
+
+
             TypedQuery<Section> query = houseEntityLoader.getEntityManager().createQuery("select section from Section section where section.district.id = :districtId order by section.createTime desc", Section.class).setParameter("districtId", districtHome.getInstance().getId());
-            query.setMaxResults(5);
+            query.setMaxResults(10);
             return query.getResultList();
         } else {
             List<Section> result = houseEntityLoader.getEntityManager().createQuery("select section from Section section where section.district.id = :districtId and  ((section.id = :prefix ) or (lower(section.pyCode) like lower(concat('%',:prefix,'%'))) or (lower(section.name) like lower(concat('%',:prefix,'%')))) ", Section.class).
@@ -54,17 +71,19 @@ public class SectionSearch {
         }
     }
 
+    public void showSectionList() {
+        searchName = null;
+    }
+
     public void createBySearchName() {
         if (sectionHome.isIdDefined()) {
             sectionHome.clearInstance();
         }
+        newSectionName = searchName;
+        sectionHome.setNameAndPy(searchName);
         Logging.getLog(getClass()).debug("create section by searchName:" + searchName);
-        sectionHome.getInstance().setName(searchName);
-        sectionHome.nameInputedListener();
-        sectionHome.getInstance().setDistrict(districtHome.getInstance());
+
     }
-
-
 
 
 }
