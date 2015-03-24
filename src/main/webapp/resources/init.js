@@ -43,7 +43,15 @@ $(document).ready(
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-valid');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-success');
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-error');
-        })
+        });
+
+        $('.js-datepicker').datepicker({
+            language: "zh-CN",
+            autoclose: true,
+            clearBtn: true,
+            todayHighlight: true,
+            todayBtn: true
+        });
 
     }
 );

@@ -21,7 +21,9 @@
         </a:outputPanel>
         </dd>
         <dd>
+            <ui:insert name="message">
             <r:message for="#{for}" styleClass="edit-below-msg" rendered="#{not empty for}"/>
+            </ui:insert>
         </dd>
             <dd>
                 <ui:insert name="note"/>

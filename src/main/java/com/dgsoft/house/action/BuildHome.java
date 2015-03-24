@@ -12,6 +12,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -25,6 +26,15 @@ public class BuildHome extends HouseEntityHome<Build> {
     @In
     private FacesMessages facesMessages;
 
+    @In
+    private Map<String, String> messages;
+
+    @In
+    private HouseCodeHelper houseCodeHelper;
+
+    @In(required = false)
+    private ProjectHome projectHome;
+
     private SetLinkList<House> houses;
 
     public SetLinkList<House> getHouses() {
@@ -32,6 +42,83 @@ public class BuildHome extends HouseEntityHome<Build> {
             houses = new SetLinkList<House>(getInstance().getHouses());
         }
         return houses;
+    }
+
+    private void addBuildMBBConflictMessages() {
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ConflictMBB");
+    }
+
+    private void addBuildPBConflictMessages() {
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ConfilicPB");
+    }
+
+    @Override
+    protected boolean verifyUpdateAvailable() {
+
+
+        if (getEntityManager().createQuery("select count(build.id) from Build build " +
+                "where build.project.id = :projectId and build.devBuildNumber <> null and " +
+                "build.devBuildNumber = :devBuildNumber and build.id <> :buildId", Long.class)
+                .setParameter("projectId", getInstance().getId())
+                .setParameter("devBuildNumber", getInstance().getDevBuildNumber())
+                .setParameter("buildId", getInstance().getId()).getSingleResult() > 0) {
+            addBuildPBConflictMessages();
+            return false;
+        }
+
+
+        if (getEntityManager().createQuery("select count(build.id) from Build build " +
+                "where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and " +
+                "build.buildNo = :buildNumber and build.id <> :buildId", Long.class)
+                .setParameter("mapNumber", getInstance().getMapNumber())
+                .setParameter("blockNumber", getInstance().getBlockNo())
+                .setParameter("buildNumber", getInstance().getBuildNo())
+                .setParameter("buildId", getInstance().getId()).getSingleResult() > 0) {
+            addBuildMBBConflictMessages();
+            return false;
+        }
+
+        if (getInstance().getFloorCount() <= 0){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "FloorCountIsZeroError");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    protected boolean verifyPersistAvailable() {
+
+        if (getEntityManager().createQuery("select count(build.id) from Build build " +
+                "where build.project.id = :projectId and build.devBuildNumber <> null and " +
+                "build.devBuildNumber = :devBuildNumber", Long.class)
+                .setParameter("projectId", getInstance().getId())
+                .setParameter("devBuildNumber", getInstance().getDevBuildNumber())
+                .getSingleResult() > 0) {
+            addBuildPBConflictMessages();
+            return false;
+        }
+
+
+        if (getEntityManager().createQuery("select count(build.id) from Build build " +
+                "where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and " +
+                "build.buildNo = :buildNumber", Long.class)
+                .setParameter("mapNumber", getInstance().getMapNumber())
+                .setParameter("blockNumber", getInstance().getBlockNo())
+                .setParameter("buildNumber", getInstance().getBuildNo())
+                .getSingleResult() > 0) {
+            addBuildMBBConflictMessages();
+            return false;
+        }
+
+        if (getInstance().getFloorCount() <= 0){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "FloorCountIsZeroError");
+            return false;
+        }
+
+        getInstance().setProject(projectHome.getInstance());
+        houseCodeHelper.genBuildCode(getInstance());
+        return true;
     }
 
 
@@ -45,6 +132,24 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     public boolean isHaveHouse() {
         return !getInstance().getHouses().isEmpty();
+    }
+
+
+    public void genBuildName() {
+
+        Logging.getLog(getClass()).debug("genBuildName");
+        String result = projectHome.getInstance().getDistrictName() +
+                projectHome.getInstance().getProjectName();
+
+        if ((getInstance().getBuildNo() != null) && !getInstance().getBuildNo().trim().equals("")) {
+            result += getInstance().getBuildNo() + messages.get("MapIdentification_build");
+        }
+
+        if (getInstance().getDevBuildNumber() != null) {
+            result += getInstance().getDevBuildNumber() + messages.get("BuildBuildNameSuffix");
+        }
+
+        getInstance().setName(result);
     }
 
     private String getBuildCode() {
@@ -92,16 +197,16 @@ public class BuildHome extends HouseEntityHome<Build> {
     private BuildGridMap buildGridMap;
 
     private List<House> getAllIdleHouse() {
-        if (idleHouse == null )
+        if (idleHouse == null)
             idleHouse = getEntityManager().createQuery("select house from House house where house.build.id = :buildId and not (house.id in (select block.house.id from GridBlock block where (block.house <> null) and (block.gridRow.buildGridMap.build.id = :buildId)))", House.class).
-                setParameter("buildId", getId()).getResultList();
+                    setParameter("buildId", getId()).getResultList();
         return idleHouse;
 
     }
 
 
-    public BuildGridMap getIdleHouseGridMap(){
-        if (buildGridMap == null){
+    public BuildGridMap getIdleHouseGridMap() {
+        if (buildGridMap == null) {
             initIdleHouseGridMap();
         }
         return buildGridMap;

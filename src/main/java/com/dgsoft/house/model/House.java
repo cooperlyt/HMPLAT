@@ -158,8 +158,8 @@ public class House implements java.io.Serializable, HouseInfo {
         this.lockStatus = LockStatus.LOCK_OPEN;
         dataSource = HouseDataSource.MAPPING;
 
-        if ((build.getAddress() != null) && !"".equals(build.getAddress())) {
-            this.address = build.getAddress() + " " + block.getHouseOrder();
+        if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
+            this.address = build.getProject().getAddress() + " " + block.getHouseOrder();
         } else {
             this.address = build.getName() + " " + block.getHouseOrder();
         }

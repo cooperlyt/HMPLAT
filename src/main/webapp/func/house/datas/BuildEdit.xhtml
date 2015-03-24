@@ -1,0 +1,290 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/layout/template-edit.xhtml">
+    <div>
+
+        <h2>
+            #{projectHome.instance.districtName}
+
+            <span class="path-divider">/</span>
+
+            #{projectHome.instance.sectionName}
+
+            <span class="path-divider">/</span>
+            <strong>
+                #{projectHome.instance.projectName}
+            </strong>
+
+            <span class="path-divider">/</span>
+
+            #{buildHome.idDefined ? messages.edit : messages.create} #{messages.Build}
+
+        </h2>
+
+    </div>
+    <rich:messages globalOnly="false" ajaxRendered="true"/>
+
+    <h:form>
+
+        <div class="form-inline">
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.MapIdentification}
+                </ui:define>
+                <ui:param name="for" value="mapNumberInput"/>
+
+                <div class="input-group">
+                    <span class="input-group-addon">#{messages.MapIdentification_map}</span>
+                    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}" maxlength="4" size="10"
+                                 autocomplete="off"
+                                 styleClass="form-control" validatorMessage="#{messages.MapNumberValidatorMessage}"
+                                 value="#{buildHome.instance.mapNumber}" required="#{houseCodeHelper.requestMapCode}">
+
+                        <f:validateRegex pattern="^\d*$" />
+
+                    </h:inputText>
+                    <span class="input-group-addon">#{messages.MapIdentification_block}<s:span styleClass="required">*</s:span></span>
+                    <h:inputText id="blockNoInput" styleClass="form-control" validatorMessage="#{messages.BlockValidatorMessage}"
+                                 label="#{runParam.getStringParamValue('HouseBlockCodeLabel')}" maxlength="10" size="10"
+                                 value="#{buildHome.instance.blockNo}" required="true" autocomplete="off">
+
+                        <f:validateRegex pattern="^(\d|-)*$"/>
+                    </h:inputText>
+                    <span class="input-group-addon">#{messages.MapIdentification_build}<s:span styleClass="required">*</s:span></span>
+                    <h:inputText id="buildNoInput" value="#{buildHome.instance.buildNo}"
+                                 styleClass="form-control" validatorMessage="#{messages.BuildNumberValidatorMessage}"
+                                 label="#{messages.Build_BuildNO}" maxlength="4" size="10" required="true" autocomplete="off">
+                        <a:ajax execute="@this,devNoInput" listener="#{buildHome.genBuildName}"
+                                event="blur" render="buildNameInput">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                        <f:validateRegex pattern="^\d*$"/>
+                    </h:inputText>
+                    <span class="input-group-addon">#{messages.MapIdentification_dbuild}</span>
+                    <h:inputText id="devNoInput" value="#{buildHome.instance.devBuildNumber}"
+                                 styleClass="form-control"
+                                 converter="javax.faces.Integer"
+                                 label="#{messages.Build_devBuildNumber}" maxlength="4" size="10" autocomplete="off">
+                        <a:ajax execute="@this,buildNoInput" listener="#{buildHome.genBuildName}"
+                                event="blur" render="buildNameInput">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+
+                    </h:inputText>
+
+                </div>
+                <ui:define name="message">
+                    <rich:message for="mapNumberInput" styleClass="edit-below-msg"/>
+                    <rich:message for="blockNoInput" styleClass="edit-below-msg"/>
+                    <rich:message for="buildNoInput" styleClass="edit-below-msg"/>
+                    <rich:message for="devNoInput" styleClass="edit-below-msg"/>
+                </ui:define>
+                <ui:define name="note">
+                    <p class="note">#{messages.BuildNameAutoGen}#{' '} <strong> <rich:inplaceInput id="buildNameInput"
+                                                                                                   value="#{buildHome.instance.name}"/></strong>
+                    </p>
+                </ui:define>
+
+
+            </s:decorate>
+
+
+        </div>
+
+
+        <div class="form-inline">
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+
+                    #{runParam.getStringParamValue('HouseStreetCodeLabel')}
+                </ui:define>
+                <ui:param name="for" value="streetCodeInput"/>
+                <h:inputText id="streetCodeInput" label="#{runParam.getStringParamValue('HouseStreetCodeLabel')}"
+                             maxlength="4" size="6"
+                             styleClass="form-control" autocomplete="off"
+                             value="#{buildHome.instance.streetCode}" required="#{houseCodeHelper.requestStreetCode}">
+
+                    <f:validateRegex pattern="^\d*$"/>
+                </h:inputText>
+
+            </s:decorate>
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_CompleteYear}
+                </ui:define>
+                <ui:param name="for" value="completeYearInput"/>
+                <h:inputText id="completeYearInput" label="#{messages.Build_CompleteYear}" maxlength="4" size="6"
+                             styleClass="form-control" validatorMessage="#{messages.CompleteYearValidatorMessage}"
+                             value="#{buildHome.instance.completeYear}">
+                    <f:validateRegex pattern="^(\d|\*)*$"/>
+
+                </h:inputText>
+
+
+            </s:decorate>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_coordinates}
+                </ui:define>
+                <ui:param name="for" value="latInput"/>
+
+                <div class="input-group">
+                    <div class="input-group-addon">X</div>
+                    <h:inputText id="latInput" label="#{messages.Build_Lng_Lat}" size="20"
+                                 styleClass="form-control js-only-number"
+                                 converter="javax.faces.BigDecimal" autocomplete="off"
+                                 value="#{buildHome.instance.lat}" required="#{houseCodeHelper.requestCossCode}"/>
+
+                    <div class="input-group-addon">Y</div>
+
+                    <h:inputText id="lngInput" label="#{messages.Build_Lng_Lat}" size="20" autocomplete="off"
+                                 styleClass="form-control js-only-number" converter="javax.faces.BigDecimal"
+                                 value="#{buildHome.instance.lng}" required="#{houseCodeHelper.requestCossCode}"/>
+                </div>
+
+            </s:decorate>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_DoorNO}
+                </ui:define>
+                <h:inputText id="doorNoInput" styleClass="form-control" value="#{buildHome.instance.doorNo}" size="10"
+                             maxlength="10" autocomplete="off"/>
+            </s:decorate>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.FloorCount}
+                </ui:define>
+
+                <div class="input-group">
+                    <span class="input-group-addon">  #{messages.up}      </span>
+                    <h:inputText required="true" styleClass="form-control" id="upfloorCountInput"
+                                 label="#{messages.Build_UpFloorCount}"
+                                 value="#{buildHome.instance.upFloorCount}" size="4" autocomplete="off">
+
+                        <f:validateLongRange minimum="0"/>
+                    </h:inputText>
+
+
+                    <span class="input-group-addon"> #{messages.down}    </span>
+
+                    <h:inputText required="true" styleClass="form-control" id="downFloorCountInput"
+                                 label="#{messages.Build_DownFloorCount}" autocomplete="off"
+                                 value="#{buildHome.instance.downFloorCount}" size="4">
+
+                        <f:validateLongRange minimum="0"/>
+                    </h:inputText>
+
+                </div>
+
+            </s:decorate>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_Structure}
+                </ui:define>
+                <h:selectOneMenu id="structureInput" styleClass="form-control selectpicker edit-select" required="true"
+                                 value="#{buildHome.instance.structure}" label="#{messages.Build_Structure}">
+                    <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+            </div>
+
+        <hr/>
+        <div class="form-inline">
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_Area}
+                </ui:define>
+
+                <h:inputText id="areaInput" styleClass="form-control" value="#{buildHome.instance.area}"
+                             label="#{messages.Build_Area}" autocomplete="off">
+                    <f:convertNumber pattern="#0.000"/>
+
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.BUild_UnitCount}
+                </ui:define>
+
+                <h:inputText id="unitCountInput" size="10" styleClass="form-control" autocomplete="off"
+                             value="#{buildHome.instance.unintCount}" label="#{messages.BUild_UnitCount}"/>
+
+            </s:decorate>
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_HouseCount}
+                </ui:define>
+
+                <h:inputText id="houseCountInput" size="10" styleClass="form-control" autocomplete="off"
+                             value="#{buildHome.instance.houseCount}" label="#{messages.Build_HouseCount}"/>
+
+            </s:decorate>
+
+            <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+                <ui:define name="label">
+                    #{messages.Build_Type}
+                </ui:define>
+                <h:selectOneMenu id="buildTypeInput" styleClass="form-control selectpicker edit-select"
+                                 value="#{buildHome.instance.buildType}" label="#{messages.Build_Type}">
+                    <s:selectItems value="#{dictionary.getWordList('house.build.buildType')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+        </div>
+
+
+        <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
+            <ui:define name="label">
+                #{messages.MapMemo}
+            </ui:define>
+            <h:inputTextarea styleClass="form-control" id="mapMemoInput" value="#{buildHome.instance.memo}" label="#{messages.MapMemo}" cols="59"
+                             rows="3"/>
+
+
+        </s:decorate>
+        <hr/>
+        <h:commandButton value="#{messages.ok}"
+                         action="#{buildHome.persist}" rendered="#{not buildHome.idDefined}"
+                         styleClass="button primary first-in-line">
+            <f:param name="projectId" value="#{projectHome.id}"/>
+        </h:commandButton>
+        <h:commandButton value="#{messages.ok}"
+                         action="#{buildHome.update}" rendered="#{buildHome.idDefined}"
+                         styleClass="button primary first-in-line">
+            <f:param name="projectId" value="#{projectHome.id}"/>
+        </h:commandButton>
+    </h:form>
+
+
+</ui:composition>

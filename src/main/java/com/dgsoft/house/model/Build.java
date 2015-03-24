@@ -33,8 +33,8 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 	private String name;
 	private String doorNo;
 	private Integer unintCount;
-	private int floorCount;
-	private String address;
+    private Integer devBuildNumber;
+
 	private Integer houseCount;
 	private BigDecimal area;
 	private BigDecimal lng;
@@ -185,7 +185,16 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 		this.buildNo = buildNo;
 	}
 
-	@Column(name = "NAME", unique = true ,nullable = false, length = 100)
+    @Column(name="DEVELOPER_NUMBER", nullable = true)
+    public Integer getDevBuildNumber() {
+        return devBuildNumber;
+    }
+
+    public void setDevBuildNumber(Integer developerNumber) {
+        this.devBuildNumber = developerNumber;
+    }
+
+    @Column(name = "NAME", unique = true ,nullable = false, length = 100)
 	@NotNull
 	@Size(max = 100)
 	public String getName() {
@@ -215,24 +224,11 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 		this.unintCount = unintCount;
 	}
 
-	@Column(name = "FLOOR_COUNT",nullable = false)
+	@Transient
 	public int getFloorCount() {
-		return this.floorCount;
+		return getUpFloorCount() + getDownFloorCount();
 	}
 
-	public void setFloorCount(int floorCount) {
-		this.floorCount = floorCount;
-	}
-
-	@Column(name = "ADDRESS", length = 100)
-	@Size(max = 100)
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String buildAddress) {
-		this.address = buildAddress;
-	}
 
 	@Column(name = "HOUSE_COUNT")
 	public Integer getHouseCount() {

@@ -5,41 +5,41 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
+    <dh:entryGridBlock columns="6">
+        <h:outputText value="#{messages.Project_name}"/>
+        <dh:entryGridColumn colspan="3">
+            <h:outputText value="#{project.name}"/>
+        </dh:entryGridColumn>
 
-    <table class="detailsTable" >
-        <tr>
-            <td class="detailsHead"></td>
-        </tr>
-    </table>
 
-    <h:panelGrid columns="4" styleClass="detailsTable"
-                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
         <h:outputText value="#{messages.Project_id}"/>
         <h:outputText value="#{project.id}"/>
 
-        <h:outputText value="#{messages.Project_name}"/>
-        <h:outputText value="#{project.name}"/>
+        <h:outputText value="#{messages.Section_name}"/>
+        <dh:entryGridColumn colspan="3">
+        <h:outputText value="#{project.section.name}"/>
+        </dh:entryGridColumn>
 
-    </h:panelGrid>
-
-
-    <ui:include src="/layout/house/SectionInfoView.xhtml">
-        <ui:param name="section" value="#{project.section}"/>
-    </ui:include>
+        <h:outputText value="#{messages.District}"/>
+        <h:outputText value="#{project.section.district.name}"/>
 
 
-    <h:panelGrid columns="4" styleClass="detailsTable"
-                 columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+
         <h:outputText value="#{messages.Developer}"/>
+        <dh:entryGridColumn colspan="3">
         <h:outputText value="#{project.developer.name}"/>
+        </dh:entryGridColumn>
 
-        <h:outputText value="#{messages.Project_buildSize}"/>
-        <h:outputText value="#{dictionary.getWordValue(project.buildSize)}"/>
 
-        <h:outputText value="#{messages.Project_buildCount}"/>
-        <h:outputText value="#{project.buildCount}"/>
+        <h:outputText value="#{messages.Project_state}"/>
+        <h:outputText value="#{messages[project.state.name()]}"/>
+
+
+
+
 
         <h:outputText value="#{messages.Project_area}"/>
         <h:outputText value="#{project.area}">
@@ -50,21 +50,30 @@
         <h:outputText value="#{project.sumArea}">
             <f:convertNumber pattern="#0.000"/>
         </h:outputText>
+        <h:outputText value="#{messages.Project_buildSize}"/>
+        <h:outputText value="#{dictionary.getWordValue(project.buildSize)}"/>
+
+
+
+
+        <h:outputText value="#{messages.Project_address}"/>
+        <dh:entryGridColumn colspan="3">
+        <h:outputText value="#{project.address}"/>
+        </dh:entryGridColumn>
+
+        <h:outputText value="#{messages.Project_buildCount}"/>
+        <h:outputText value="#{project.buildCount}"/>
+
+
+        <h:outputText value="#{messages.MapMemo}"/>
+        <dh:entryGridColumn colspan="3">
+        <h:outputText value="#{project.memo}"/>
+        </dh:entryGridColumn>
 
         <h:outputText value="#{messages.Project_mapTime}"/>
         <h:outputText value="#{project.mapTime}">
             <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
         </h:outputText>
 
-    </h:panelGrid>
-
-    <h:panelGrid columns="2"  styleClass="detailsTable"
-                 columnClasses="detailsFirstCol,detailsLastValueCol">
-        <h:outputText value="#{messages.Project_address}"/>
-        <h:outputText value="#{project.address}"/>
-
-        <h:outputText value="#{messages.MapMemo}"/>
-        <h:outputText value="#{project.memo}"/>
-    </h:panelGrid>
-
+</dh:entryGridBlock>
 </ui:composition>

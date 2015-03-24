@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page xmlns="http://jboss.org/schema/seam/pages"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      no-conversation-view-id="/func/house/datas/BaseDataMgr.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
 
@@ -16,13 +15,13 @@
 
     <navigation from-action="#{projectEdit.saveProject}">
         <rule if-outcome="persisted">
-            <end-conversation />
+
             <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
                 <param name="dataTypeName" value="PROJECT_MGR"/>
             </redirect>
         </rule>
         <rule if-outcome="updated">
-            <end-conversation />
+
             <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
                 <param name="dataTypeName" value="PROJECT_MGR"/>
             </redirect>

@@ -6,34 +6,68 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-template.xhtml">
-    <ui:define name="toolbar">
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="/layout/template-data.xhtml">
 
+    <ui:define name="head-right">
+        <h1>
+            #{projectHome.instance.districtName}
+
+            <span class="path-divider">/</span>
+
+            #{projectHome.instance.sectionName}
+
+            <span class="path-divider">/</span>
+            <strong>
+                #{projectHome.instance.projectName}
+            </strong>
+
+        </h1>
     </ui:define>
 
-    <ui:define name="body">
-        
+    <dh:entryGrid styleClass="detailsTable table table-bordered ">
         <ui:include src="/layout/house/ProjectInfoView.xhtml">
             <ui:param name="project" value="#{projectHome.instance}"/>
         </ui:include>
-
-        <br/>
-        <s:decorate template="/layout/house/BuildsViewList.xhtml">
-            <ui:param name="builds" value="#{projectHome.instance.buildList}"/>
+    </dh:entryGrid>
 
 
-            <ui:define name="buildIdColumn">
+    <div class="sort-bar">
+        <a:outputPanel layout="block" class="right">
+            <s:link styleClass=" minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
+                <span class="octicon octicon-plus"/>
+                <f:param name="buildId" value=""/>
+                #{messages.create} #{messages.Build}
+            </s:link>
+        </a:outputPanel>
+        <h3>#{messages.ProjectBuildCount} #{' '} #{projectHome.instance.builds.size}</h3>
+    </div>
+
+    <ul class="repo-list">
+        <a:repeat value="#{projectHome.instance.buildList}" var="_build">
+            <li class="repo-list-item">
+
+            </li>
+        </a:repeat>
+    </ul>
 
 
-                <s:link value="#{_build.id}" view="/func/house/datas/BuildView.xhtml">
-                    <f:param name="from" value="/func/house/datas/ProjectView.xhtml"/>
-                    <f:param name="buildId" value="#{_build.id}"/>
-                </s:link>
+
+    <s:decorate template="/layout/house/BuildsViewList.xhtml">
+        <ui:param name="builds" value="#{projectHome.instance.buildList}"/>
 
 
-            </ui:define>
-        </s:decorate>
+        <ui:define name="buildIdColumn">
 
-    </ui:define>
+
+            <s:link value="#{_build.id}" view="/func/house/datas/BuildView.xhtml">
+                <f:param name="from" value="/func/house/datas/ProjectView.xhtml"/>
+                <f:param name="buildId" value="#{_build.id}"/>
+            </s:link>
+
+
+        </ui:define>
+    </s:decorate>
+
 
 </ui:composition>

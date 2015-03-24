@@ -561,11 +561,12 @@ input[type=button], input[type=reset], input[type=submit]{
     white-space: nowrap;
     text-align: center;
     background-color: #f9f9f9;
+    min-width: 100px;
 }
 
 .detailsTable td{
     white-space: nowrap;
-
+    min-width: 100px;
 }
 
 
