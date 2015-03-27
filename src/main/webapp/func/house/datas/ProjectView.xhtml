@@ -5,8 +5,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
+
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template-data.xhtml">
 
     <ui:define name="head-right">
@@ -31,43 +33,143 @@
         </ui:include>
     </dh:entryGrid>
 
+    <h:outputStylesheet>
+        .buildIdColumn {
+            width: 218px;
+        }
 
-    <div class="sort-bar">
-        <a:outputPanel layout="block" class="right">
-            <s:link styleClass=" minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
-                <span class="octicon octicon-plus"/>
-                <f:param name="buildId" value=""/>
-                #{messages.create} #{messages.Build}
-            </s:link>
+        .buildActionColumn {
+            width: 150px;
+        }
+    </h:outputStylesheet>
+    <h:form>
+        <a:outputPanel id="buildDatas">
+
+            <div class="sort-bar" style="margin-bottom: 0;">
+                <a:outputPanel layout="block" class="right">
+                    <s:link styleClass=" minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
+                        <span class="octicon octicon-plus"/>
+                        <f:param name="buildId" value=""/>
+                        #{messages.create} #{messages.Build}
+                    </s:link>
+                </a:outputPanel>
+
+                <h3>#{messages.ProjectBuildCount} #{' '} #{projectHome.instance.builds.size}</h3>
+            </div>
+
+
+            <h:dataTable value="#{projectHome.instance.buildList}" var="_build" style="margin-top: 0"
+                         columnClasses="buildIdColumn,,,,,,,buildActionColumn"
+                         styleClass="table table-striped table-hover table-floatThead result-data-table">
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_Id}
+                    </f:facet>
+                    <s:link value="#{_build.id}" styleClass="tooltipped tooltipped-s">
+                        <f:passThroughAttribute name="aria-label" value="#{_build.name}"/>
+                    </s:link>
+
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_MapNO}
+                    </f:facet>
+                    #{_build.mapNumber}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{runParam.getStringParamValue('HouseBlockCodeLabel')}
+                    </f:facet>
+                    #{_build.blockNo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_BuildNO}
+                    </f:facet>
+                    #{_build.buildNo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_devBuildNumber}
+                    </f:facet>
+                    #{_build.devBuildNumber}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_DoorNO}
+                    </f:facet>
+                    #{_build.doorNo}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{runParam.getStringParamValue('HouseStreetCodeLabel')}
+                    </f:facet>
+                    #{_build.streetCode}
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+
+                    </f:facet>
+
+                    <div class="table-actions right">
+
+                        <a:commandLink title="#{messages.delete}"
+                                       styleClass="table-action"
+                                       execute="@this" immediate="true"
+                                       render="buildDeleteConfirmPanel_form"
+                                       oncomplete="$('#buildDeleteConfirmPanel').modal('show')">
+                            <a:param value="#{_build.id}" assignTo="#{buildHome.id}"/>
+                            <span class="glyphicon glyphicon-remove"/>
+                            <a:attachQueue requestDelay="0"/>
+
+                        </a:commandLink>
+
+
+                        <s:link styleClass="table-action"
+                                view="/func/house/datas/BuildEdit.xhtml">
+                            <span class="glyphicon glyphicon-pencil"/>
+                            <f:param name="buildId" value="#{_build.id}"/>
+
+                        </s:link>
+
+
+                        <s:link styleClass="table-action"
+                                view="/func/house/datas/BuildGridMapEdit.xhtml">
+                            <f:param name="buildId" value="#{_build.id}"/>
+                            <span class="glyphicon glyphicon-th"/>
+                        </s:link>
+
+
+                    </div>
+                </h:column>
+
+
+            </h:dataTable>
+
         </a:outputPanel>
-        <h3>#{messages.ProjectBuildCount} #{' '} #{projectHome.instance.builds.size}</h3>
-    </div>
+    </h:form>
 
-    <ul class="repo-list">
-        <a:repeat value="#{projectHome.instance.buildList}" var="_build">
-            <li class="repo-list-item">
+        <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+            <ui:param name="panelId" value="buildDeleteConfirmPanel"/>
+            <ui:param name="entityTitle" value="#{buildHome.instance.name}"/>
+            <a:commandButton styleClass="button button-block danger" action="#{buildHome.removeAndClear}"
+                             value="#{messages.confirmDelete}" oncomplete="$('#buildDeleteConfirmPanel').modal('hide')"
+                             render="buildDatas" immediate="true" execute="@this">
+                <a:param value="#{buildHome.instance.id}" assignTo="#{buildHome.id}"/>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
 
-            </li>
-        </a:repeat>
-    </ul>
-
-
-
-    <s:decorate template="/layout/house/BuildsViewList.xhtml">
-        <ui:param name="builds" value="#{projectHome.instance.buildList}"/>
-
-
-        <ui:define name="buildIdColumn">
+            <ui:define name="deleteNote">
+                <p>#{messages.BuildDeleteNote}</p>
+            </ui:define>
+        </ui:decorate>
 
 
-            <s:link value="#{_build.id}" view="/func/house/datas/BuildView.xhtml">
-                <f:param name="from" value="/func/house/datas/ProjectView.xhtml"/>
-                <f:param name="buildId" value="#{_build.id}"/>
-            </s:link>
-
-
-        </ui:define>
-    </s:decorate>
 
 
 </ui:composition>

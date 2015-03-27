@@ -59,7 +59,7 @@ public class BuildHome extends HouseEntityHome<Build> {
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
                 "where build.project.id = :projectId and build.devBuildNumber <> null and " +
                 "build.devBuildNumber = :devBuildNumber and build.id <> :buildId", Long.class)
-                .setParameter("projectId", getInstance().getId())
+                .setParameter("projectId", getInstance().getProject().getId())
                 .setParameter("devBuildNumber", getInstance().getDevBuildNumber())
                 .setParameter("buildId", getInstance().getId()).getSingleResult() > 0) {
             addBuildPBConflictMessages();
@@ -92,7 +92,7 @@ public class BuildHome extends HouseEntityHome<Build> {
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
                 "where build.project.id = :projectId and build.devBuildNumber <> null and " +
                 "build.devBuildNumber = :devBuildNumber", Long.class)
-                .setParameter("projectId", getInstance().getId())
+                .setParameter("projectId", projectHome.getInstance().getId())
                 .setParameter("devBuildNumber", getInstance().getDevBuildNumber())
                 .getSingleResult() > 0) {
             addBuildPBConflictMessages();

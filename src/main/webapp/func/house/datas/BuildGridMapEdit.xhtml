@@ -10,24 +10,195 @@
 <f:view
         contentType="text/html">
 
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <!-- meta http-equiv="X-UA-Compatible" content="IE=8"/-->
-    <title>#{messages.mainTitle}</title>
-    <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <!-- meta http-equiv="X-UA-Compatible" content="IE=8"/-->
+        <title>#{messages.mainTitle}</title>
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
 
-    <h:outputStylesheet name="application.css"/>
-    <h:outputStylesheet name="theme.css"/>
-    <ui:insert name="head"/>
-</h:head>
-<h:body onload="#{r:component('idleHousePopup')}.show();">
-<s:div style="padding: 10px;">
-<a:queue requestDelay="0" ignoreDupResponses="true"/>
-<h:form>
-    <r:toolbar id="toolbar" itemSeparator="line" height="30">
+        <ui:insert name="head"/>
+    </h:head>
 
-        <r:toolbarGroup rendered="#{buildHome.buildGridPages.size gt 1}">
-            <a:outputPanel>
+
+    <h:body onload="#{r:component('idleHousePopup')}.show();">
+
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.min.css"/>
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.min.css"/>
+        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datepicker3.min.css"/>
+
+        <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
+        <h:outputStylesheet name="other.css"/>
+
+
+
+        <r:popupPanel id="updateFilePopup" modal="true" onmaskclick="#{r:component('updateFilePopup')}.hide();" autosized="true" resizeable="false" styleClass="context-modal-panel">
+
+
+
+            <h:form enctype="multipart/form-data">
+
+
+                <r:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
+                              serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
+                              deleteLabel="#{messages.fileUpload_deleteLabel}"
+                              doneLabel="#{messages.fileUpload_doneLabel}"
+                              cancelEntryControlLabel="#{messages.fileUpload_cancelEntryControlLabel}"
+                              addLabel="#{messages.fileUpload_addControlLabel}"
+                              progressLabel="#{messages.fileUpload_progressLabel}"
+                              sizeExceededLabel="#{messages.fileUpload_sizeErrorLabel}"
+                              uploadLabel="#{messages.fileUpload_uploadControlLabel}"
+                              transferErrorLabel="#{messages.fileUpload_transferErrorLabel}"
+                              clearAllLabel="#{messages.fileUpload_clearAllControlLabel}"
+                              clearLabel="#{messages.fileUpload_clearControlLabel}"
+                              stopControlLabel="#{messages.fileUpload_stopControlLabel}"
+                              fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
+                              ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
+                              render="grid_map,idle,toolbar"
+                              onuploadcomplete="#{r:component('updateFilePopup')}.hide();"
+                              acceptedTypes="xml">
+
+                </r:fileUpload>
+            </h:form>
+        </r:popupPanel>
+
+
+
+        <s:div>
+            <a:queue requestDelay="0" ignoreDupResponses="true"/>
+
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+
+                                <a:commandLink
+                                        immediate="true" execute="@this"
+                                        oncomplete="#{r:component('updateFilePopup')}.show();">
+                                    <span class="icon-folder-open icon-large"/>
+                                    #{(empty buildHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}
+                                    <a:attachQueue requestDelay="0"/>
+                                    <a:param value="#{false}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
+                                </a:commandLink>
+
+
+                            </li>
+                            <li>
+                                <a:commandLink immediate="true" execute="@this"
+                                               oncomplete="#{r:component('updateFilePopup')}.show();">
+                                    <span class="icon-folder-open-alt icon-large"/>
+                                    #{messages.UpdateGridXML}
+
+                                    <a:attachQueue requestDelay="0"/>
+                                    <a:param value="#{true}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
+                                </a:commandLink>
+
+                            </li>
+
+                            <li>
+                                <a:commandLink
+                                               onclick="#{r:component('deletePageConfirm')}.show(); return false;">
+                                    <span class="icon-remove icon-large"/>
+
+                                    #{messages.DeletePage}
+                                </a:commandLink>
+                            </li>
+
+                            <li>
+                                <a:commandLink status="processWaiting"
+                                               action="#{buildGridMapHome.saveGridMap}"
+                                               render="grid_map,idle">
+                                    <span class="icon-save icon-large"/>
+                                    #{messages.save}
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandLink>
+                            </li>
+
+
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <a:repeat value="#{buildHome.buildGridPages}" var="_page">
+                                        <li>
+                                            <a:commandLink immediate="true" execute="@this"
+                                                           render="grid_map,toolbar" action="#{buildGridMapHome.toPage}"
+                                                           disabled="#{_page.order eq buildGridMapHome.instance.order}"
+                                                           styleClass="rf-ds-nmb-btn #{(_page.order eq buildGridMapHome.instance.order) ? 'rf-ds-act' : ''}"
+                                                    >
+                                                #{_page.order}. #{_page.name}
+                                                <a:attachQueue requestDelay="0"/>
+                                                <a:param value="#{_page.order}"
+                                                         assignTo="#{buildGridMapHome.gotoPage}"/>
+                                            </a:commandLink>
+                                        </li>
+                                    </a:repeat>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Link</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">
+                                    Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+
+
+                                    <a:repeat value="#{buildHome.buildGridPages}" var="_page">
+                                        <li>
+                                            <a:commandLink immediate="true" execute="@this"
+                                                           render="grid_map,toolbar" action="#{buildGridMapHome.toPage}"
+                                                           disabled="#{_page.order eq buildGridMapHome.instance.order}"
+                                                           styleClass="rf-ds-nmb-btn #{(_page.order eq buildGridMapHome.instance.order) ? 'rf-ds-act' : ''}"
+                                                    >
+                                                #{_page.order} #{_page.name}
+                                                <a:attachQueue requestDelay="0"/>
+                                                <a:param value="#{_page.order}"
+                                                         assignTo="#{buildGridMapHome.gotoPage}"/>
+                                            </a:commandLink>
+                                        </li>
+                                    </a:repeat>
+
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+
+
+            <br/> <br/>
+
+            <div class="container-fluid">
+                <h:form>
+
+
+                    <r:toolbar id="toolbar" itemSeparator="line" height="30">
+
+                        <r:toolbarGroup rendered="#{buildHome.buildGridPages.size gt 1}">
+                            <a:outputPanel>
     <span class="rf-ds">
             <a:commandLink immediate="true" execute="@this"
                            action="#{buildGridMapHome.firstPage}"
@@ -80,653 +251,665 @@
             </a:commandLink>
 
     </span>
-            </a:outputPanel>
-        </r:toolbarGroup>
+                            </a:outputPanel>
+                        </r:toolbarGroup>
 
-        <r:toolbarGroup>
-            <h:graphicImage value="/img/icons/create.gif"/>
-            <a:commandLink value="#{(empty buildHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}"
-                           immediate="true" execute="@this"
-                           oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
-                <a:attachQueue requestDelay="0"/>
-                <a:param value="#{false}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
-            </a:commandLink>
-        </r:toolbarGroup>
+                        <r:toolbarGroup>
+                            <h:graphicImage value="/img/icons/create.gif"/>
+                            <a:commandLink
+                                    value="#{(empty buildHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}"
+                                    immediate="true" execute="@this"
+                                    oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
+                                <a:attachQueue requestDelay="0"/>
+                                <a:param value="#{false}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
+                            </a:commandLink>
+                        </r:toolbarGroup>
 
-        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
-            <h:graphicImage value="/img/icons/out_edit.png"/>
-            <a:commandLink value="#{messages.UpdateGridXML}" immediate="true" execute="@this"
-                           oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
-                <a:attachQueue requestDelay="0"/>
-                <a:param value="#{true}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
-            </a:commandLink>
-        </r:toolbarGroup>
+                        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+                            <h:graphicImage value="/img/icons/out_edit.png"/>
+                            <a:commandLink value="#{messages.UpdateGridXML}" immediate="true" execute="@this"
+                                           oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
+                                <a:attachQueue requestDelay="0"/>
+                                <a:param value="#{true}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
+                            </a:commandLink>
+                        </r:toolbarGroup>
 
-        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
-            <h:graphicImage value="/img/icons/delete.png"/>
-            <a:commandLink value="#{messages.DeletePage}"
-                           onclick="#{r:component('deletePageConfirm')}.show(); return false;">
-            </a:commandLink>
-        </r:toolbarGroup>
-
-
-        <r:toolbarGroup>
-            <h:graphicImage value="/img/icons/save_all.gif"/>
-
-            <a:commandLink value="#{messages.save}" status="processWaiting" action="#{buildGridMapHome.saveGridMap}"
-                           render="grid_map,idle">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
-        </r:toolbarGroup>
-
-        <r:toolbarGroup location="right">
-            <a:status>
-                <f:facet name="start">
-                    <h:graphicImage value="/img/connect.gif"/>
-                </f:facet>
-                <f:facet name="stop">
-                    <h:graphicImage value="/img/connect_idle.gif"/>
-                </f:facet>
-            </a:status>
-            <s:button onclick="JavaScript:if(confirm('#{messages.ExitGridMapEditConfirm}')){}else{return false;}"
-                      propagation="end"
-                      view="/func/house/datas/ProjectBuildEdit.xhtml" value="#{messages.return} #{buildHome.instance.buildNo}">
-                <f:param name="projectId" value="#{buildHome.instance.project.id}"/>
-            </s:button>
-        </r:toolbarGroup>
-    </r:toolbar>
+                        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
+                            <h:graphicImage value="/img/icons/delete.png"/>
+                            <a:commandLink value="#{messages.DeletePage}"
+                                           onclick="#{r:component('deletePageConfirm')}.show(); return false;">
+                            </a:commandLink>
+                        </r:toolbarGroup>
 
 
-    <r:popupPanel id="deletePageConfirm" width="300" height="140" modal="true" resizeable="false">
+                        <r:toolbarGroup>
+                            <h:graphicImage value="/img/icons/save_all.gif"/>
 
-        <f:facet name="header">
-            <h:outputText value="#{messages.deleteConfirm}"/>
-        </f:facet>
-
-        <f:facet name="controls">
-            <a:commandButton immediate="true"
-                             execute="@this" image="/img/close.png"
-                             onclick="#{r:component('deletePageConfirm')}.hide(); return false;">
-            </a:commandButton>
-        </f:facet>
-        <a:outputPanel>
-
-            <s:div style="height: 60px">
-                <h:outputText value="#{messages.HowOperDeleteGridHouse}"
-                              style="font-size: 1.2em; font-weight: bold;"/>
-                <br/>
-                <h:outputText value="#{messages.DeleteAllHouseDescript}"/>
-                <br/>
-                <h:outputText value="#{messages.IdleAllHouseDescript}"/>
-            </s:div>
-            <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                <a:outputPanel id="#{panelId}_buttons">
-
-
-                    <a:commandButton action="#{buildGridMapHome.deleteGridMapAndHouse}"
-                                     render="grid_map,idle,toolbar" status="processWaiting"
-                                     onclick="#{r:component('deletePageConfirm')}.hide();"
-                                     value="#{messages.BuildMapAction_delete}" execute="@this" immediate="true">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
+                            <a:commandLink value="#{messages.save}" status="processWaiting"
+                                           action="#{buildGridMapHome.saveGridMap}"
+                                           render="grid_map,idle">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+                        </r:toolbarGroup>
+                        <ui:remove>
+                            <r:toolbarGroup location="right">
+                                <a:status>
+                                    <f:facet name="start">
+                                        <h:graphicImage value="/img/connect.gif"/>
+                                    </f:facet>
+                                    <f:facet name="stop">
+                                        <h:graphicImage value="/img/connect_idle.gif"/>
+                                    </f:facet>
+                                </a:status>
+                                <s:button
+                                        onclick="JavaScript:if(confirm('#{messages.ExitGridMapEditConfirm}')){}else{return false;}"
+                                        propagation="end"
+                                        view="/func/house/datas/ProjectBuildEdit.xhtml"
+                                        value="#{messages.return} #{buildHome.instance.buildNo}">
+                                    <f:param name="projectId" value="#{buildHome.instance.project.id}"/>
+                                </s:button>
+                            </r:toolbarGroup>
+                        </ui:remove>
+                    </r:toolbar>
 
 
-                    <a:commandButton action="#{buildGridMapHome.deleteGridMapIdleHouse}"
-                                     value="#{messages.BuildMapAction_idle}"
-                                     onclick="#{r:component('deletePageConfirm')}.hide();"
-                                     status="processWaiting" immediate="true"
-                                     execute="@this" render="grid_map,idle,toolbar">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
+                    <r:popupPanel id="deletePageConfirm" width="300" height="140" modal="true" resizeable="false">
 
-                    <a:commandButton immediate="true"
-                                     execute="@this" value="#{messages.cancel}"
-                                     onclick="#{r:component('deletePageConfirm')}.hide(); return false;">
-                    </a:commandButton>
-                </a:outputPanel>
-            </h:panelGrid>
-        </a:outputPanel>
-    </r:popupPanel>
+                        <f:facet name="header">
+                            <h:outputText value="#{messages.deleteConfirm}"/>
+                        </f:facet>
 
-</h:form>
+                        <f:facet name="controls">
+                            <a:commandButton immediate="true"
+                                             execute="@this" image="/img/close.png"
+                                             onclick="#{r:component('deletePageConfirm')}.hide(); return false;">
+                            </a:commandButton>
+                        </f:facet>
+                        <a:outputPanel>
 
-
-<r:popupPanel id="updateFilePopup" modal="true" autosized="true" resizeable="false">
-    <f:facet name="header">
-        <h:outputText value="#{messages.UploadBuildGridXml}"/>
-    </f:facet>
-    <f:facet name="controls">
-        <a:commandButton immediate="true" execute="@this" image="/img/close.png"
-                         onclick="#{r:component('updateFilePopup')}.hide();return false;"/>
-    </f:facet>
+                            <s:div style="height: 60px">
+                                <h:outputText value="#{messages.HowOperDeleteGridHouse}"
+                                              style="font-size: 1.2em; font-weight: bold;"/>
+                                <br/>
+                                <h:outputText value="#{messages.DeleteAllHouseDescript}"/>
+                                <br/>
+                                <h:outputText value="#{messages.IdleAllHouseDescript}"/>
+                            </s:div>
+                            <h:panelGrid columns="1" style="width: 100%; text-align: right">
+                                <a:outputPanel id="#{panelId}_buttons">
 
 
-    <h:form enctype="multipart/form-data">
+                                    <a:commandButton action="#{buildGridMapHome.deleteGridMapAndHouse}"
+                                                     render="grid_map,idle,toolbar" status="processWaiting"
+                                                     onclick="#{r:component('deletePageConfirm')}.hide();"
+                                                     value="#{messages.BuildMapAction_delete}" execute="@this"
+                                                     immediate="true">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+
+
+                                    <a:commandButton action="#{buildGridMapHome.deleteGridMapIdleHouse}"
+                                                     value="#{messages.BuildMapAction_idle}"
+                                                     onclick="#{r:component('deletePageConfirm')}.hide();"
+                                                     status="processWaiting" immediate="true"
+                                                     execute="@this" render="grid_map,idle,toolbar">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+
+                                    <a:commandButton immediate="true"
+                                                     execute="@this" value="#{messages.cancel}"
+                                                     onclick="#{r:component('deletePageConfirm')}.hide(); return false;">
+                                    </a:commandButton>
+                                </a:outputPanel>
+                            </h:panelGrid>
+                        </a:outputPanel>
+                    </r:popupPanel>
+
+                </h:form>
 
 
 
-        <r:fileUpload maxFilesQuantity="5" title="#{messages.deployJpdlPar}"
-                      serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
-                      deleteLabel="#{messages.fileUpload_deleteLabel}"
-                      doneLabel="#{messages.fileUpload_doneLabel}"
-                      cancelEntryControlLabel="#{messages.fileUpload_cancelEntryControlLabel}"
-                      addLabel="#{messages.fileUpload_addControlLabel}"
-                      progressLabel="#{messages.fileUpload_progressLabel}"
-                      sizeExceededLabel="#{messages.fileUpload_sizeErrorLabel}"
-                      uploadLabel="#{messages.fileUpload_uploadControlLabel}"
-                      transferErrorLabel="#{messages.fileUpload_transferErrorLabel}"
-                      clearAllLabel="#{messages.fileUpload_clearAllControlLabel}"
-                      clearLabel="#{messages.fileUpload_clearControlLabel}"
-                      stopControlLabel="#{messages.fileUpload_stopControlLabel}"
-                      fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
-                      ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
-                      render="grid_map,idle,toolbar"
-                      onuploadcomplete="#{r:component('updateFilePopup')}.hide();"
-                      acceptedTypes="xml">
-
-        </r:fileUpload>
-    </h:form>
-</r:popupPanel>
 
 
-<h:outputStylesheet>
+                <h:outputStylesheet>
 
 
-.panelc {
-    width: 25%;
-}
+                    .panelc {
+                        width: 25%;
+                    }
 
-.footerClass {
-    text-align: center;
-    padding-top: 5px;
-}
+                    .footerClass {
+                        text-align: center;
+                        padding-top: 5px;
+                    }
 
-.rf-ind-drag {
-    font-size: 13px;
-    cursor: pointer;
+                    .rf-ind-drag {
+                        font-size: 13px;
+                        cursor: pointer;
 
-    width: 100%;
-    height: 100%;
-    border: 0px solid gray;
-    padding: 0px
-}
+                        width: 100%;
+                        height: 100%;
+                        border: 0px solid gray;
+                        padding: 0px
+                    }
 
-.rf-idle-drag {
-    font-size: 11px;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-}
+                    .rf-idle-drag {
+                        font-size: 11px;
+                        cursor: pointer;
+                        width: 100%;
+                        height: 100%;
+                        padding: 0px;
+                    }
 
-.indicator-drag {
-    border: 1px solid #000000;
-    background-color: gray;
-    opacity: 0.3;
-    margin: 2px;
-    height: 64px;
-    width: 64px;
-    text-align: center;
-    background: url('#{facesContext.externalContext.requestContextPath}/img/house/dragHouse.png') center center no-repeat;
-}
+                    .indicator-drag {
+                        border: 1px solid #000000;
+                        background-color: gray;
+                        opacity: 0.3;
+                        margin: 2px;
+                        height: 64px;
+                        width: 64px;
+                        text-align: center;
+                        background: url('#{facesContext.externalContext.requestContextPath}/img/
+                house
 
-.indicator-acpt {
-    height: 48px;
-    width: 48px;
-    border: 1px dotted green;
-    background-color: green;
-    background: url('#{facesContext.externalContext.requestContextPath}/img/house/dragInHouse.png') center center no-repeat;
-}
+                /
+                dragHouse.png
 
-.indicator-rejt {
-    height: 48px;
-    width: 48px;
-    border: 1px dotted red;
-    background-color: red;
-    background: url('#{facesContext.externalContext.requestContextPath}/img/house/dragStopHouse.png') center center no-repeat;
-}
+                ') center center no-repeat;
+                }
 
-.rf-p-b {
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-}
+                .indicator-acpt {
+                    height: 48px;
+                    width: 48px;
+                    border: 1px dotted green;
+                    background-color: green;
+                    background: url('#{facesContext.externalContext.requestContextPath}/img/
+                house
 
+                /
+                dragInHouse.png
 
-.idle-house-con {
-    float: left;
-    width: 50px;
-    height: 50px;
-    margin: 2px;
-    text-align: center;
-    position: relative;
-}
+                ') center center no-repeat;
+                }
 
+                .indicator-rejt {
+                    height: 48px;
+                    width: 48px;
+                    border: 1px dotted red;
+                    background-color: red;
+                    background: url('#{facesContext.externalContext.requestContextPath}/img/
+                house
 
+                /
+                dragStopHouse.png
 
-.totalHeader {
-    background: #{a4jSkin.tableSubHeaderBackgroundColor};
-}
+                ') center center no-repeat;
+                }
 
-</h:outputStylesheet>
+                .rf-p-b {
+                    width: 100%;
+                    height: 100%;
+                    padding: 0px;
+                }
 
-<a:status id="processWaiting" name="processWaiting"
-          onstart="#{r:component('wait')}.show()"
-          onstop="#{r:component('wait')}.hide()"/>
-<r:popupPanel id="wait" modal="true" autosized="true"
-              moveable="false" resizeable="false">
-    <h:panelGrid columns="3">
-        <h:graphicImage value="/img/smalBlueWait.gif"/>
-        &#160;
-        <h:outputText value="#{messages.wait_please}..."/>
-    </h:panelGrid>
-</r:popupPanel>
+                .idle-house-con {
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                    margin: 2px;
+                    text-align: center;
+                    position: relative;
+                }
 
-<r:messages globalOnly="true" ajaxRendered="true"/>
+                .totalHeader {
+                    background: #{a4jSkin.tableSubHeaderBackgroundColor};
+                }
 
-<h:form>
+                </h:outputStylesheet>
 
-<r:dragIndicator id="indicator" acceptClass="indicator-acpt" draggingClass="indicator-drag"
-                 rejectClass="indicator-rejt"/>
+                <a:status id="processWaiting" name="processWaiting"
+                          onstart="#{r:component('wait')}.show()"
+                          onstop="#{r:component('wait')}.hide()"/>
+                <r:popupPanel id="wait" modal="true" autosized="true"
+                              moveable="false" resizeable="false">
+                    <h:panelGrid columns="3">
+                        <h:graphicImage value="/img/smalBlueWait.gif"/>
+                        &#160;
+                        <h:outputText value="#{messages.wait_please}..."/>
+                    </h:panelGrid>
+                </r:popupPanel>
 
-<!-- oncontextmenu="window.event.returnValue = false" -->
-<a:outputPanel id="grid_map">
-<br/>
+                <r:messages globalOnly="true" ajaxRendered="true"/>
 
-<s:div style="width: 100%;text-align: center;">
-    <r:inplaceInput value="#{buildGridMapHome.instance.name}" style="min-width: 200px;"/>
-</s:div>
+                <h:form>
 
+                    <r:dragIndicator id="indicator" acceptClass="indicator-acpt" draggingClass="indicator-drag"
+                                     rejectClass="indicator-rejt"/>
 
-<br/>
+                    <!-- oncontextmenu="window.event.returnValue = false" -->
+                    <a:outputPanel id="grid_map">
+                        <br/>
 
-<s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
-
-    <ui:param name="tdSize" value="60"/>
-    <ui:param name="gridMap" value="#{buildGridMapHome.instance}"/>
-    
-                        <r:dropTarget id="grid_target"
-                                      acceptedTypes="house block #{empty _house.house ? 'newHouse' : ''}"
-                                      dropValue="#{_house}"
-                                      execute="@this"
-                                      status="processWaiting"
-                                      dropListener="#{buildGridMapHome.processDrop}"
-                                      render="grid_map,idle"/>
-
-                        <a:outputPanel layout="block" styleClass="rf-ind-drag"
-                                       rendered="#{not empty _house.house}">
-                            <r:dragSource id="grid_source" type="block" dragIndicator="indicator"
-                                          dragValue="#{_house}"/>
-                            <a:outputPanel>
-                                <h:outputText value="#{_house.house.houseOrder}"
-                                              style="font-size: 1em; font-weight: bold;#{_house.house.validator ? 'color: #000000;' : 'color: red;' }"/>
-                                <r:tooltip styleClass="tooltip-custom-body"
-                                           layout="block" mode="client"
-                                           rendered="#{(not _house.house.detailsValid) or (not _house.house.orderValid)}">
-                                    <s:span rendered="#{not _house.house.detailsValid}" style="white-space: normal">
-                                        <h:outputText styleClass="errors" value="#{messages.HouseDetailsError}"/>
-
-                                    </s:span>
-                                    <s:span rendered="#{not _house.house.orderValid}" style="white-space: normal">
-                                        <h:outputText styleClass="errors" value="#{messages.HouseOrderConflict}"/>
-
-                                    </s:span>
+                        <s:div style="width: 100%;text-align: center;">
+                            <r:inplaceInput value="#{buildGridMapHome.instance.name}" style="min-width: 200px;"/>
+                        </s:div>
 
 
-                                </r:tooltip>
+                        <br/>
+
+                        <s:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
+
+                            <ui:param name="tdSize" value="60"/>
+                            <ui:param name="gridMap" value="#{buildGridMapHome.instance}"/>
+
+                            <r:dropTarget id="grid_target"
+                                          acceptedTypes="house block #{empty _house.house ? 'newHouse' : ''}"
+                                          dropValue="#{_house}"
+                                          execute="@this"
+                                          status="processWaiting"
+                                          dropListener="#{buildGridMapHome.processDrop}"
+                                          render="grid_map,idle"/>
+
+                            <a:outputPanel layout="block" styleClass="rf-ind-drag"
+                                           rendered="#{not empty _house.house}">
+                                <r:dragSource id="grid_source" type="block" dragIndicator="indicator"
+                                              dragValue="#{_house}"/>
+                                <a:outputPanel>
+                                    <h:outputText value="#{_house.house.houseOrder}"
+                                                  style="font-size: 1em; font-weight: bold;#{_house.house.validator ? 'color: #000000;' : 'color: red;' }"/>
+                                    <r:tooltip styleClass="tooltip-custom-body"
+                                               layout="block" mode="client"
+                                               rendered="#{(not _house.house.detailsValid) or (not _house.house.orderValid)}">
+                                        <s:span rendered="#{not _house.house.detailsValid}" style="white-space: normal">
+                                            <h:outputText styleClass="errors" value="#{messages.HouseDetailsError}"/>
+
+                                        </s:span>
+                                        <s:span rendered="#{not _house.house.orderValid}" style="white-space: normal">
+                                            <h:outputText styleClass="errors" value="#{messages.HouseOrderConflict}"/>
+
+                                        </s:span>
+
+
+                                    </r:tooltip>
+
+                                </a:outputPanel>
+
+
+                                <br/>
+                                <h:outputText value="#{_house.house.houseArea}"
+                                              style="font-size: 0.9em;color: #797268;">
+                                    <f:convertNumber pattern="#0.000"/>
+                                </h:outputText>
+                                <br/>
+                                <h:outputText value="#{_house.house.useArea}"
+                                              style="font-size: 0.9em;color: #797268;">
+                                    <f:convertNumber pattern="#0.000"/>
+                                </h:outputText>
+
+                                <r:contextMenu mode="client" showEvent="contextmenu" style="text-align: left;"
+                                               popupWidth="100">
+                                    <r:menuItem action="#{buildGridMapHome.deleteBlockHouse}"
+                                                icon="/img/icons/delete-red.png"
+                                                label="#{messages.BuildMapAction_delete}"
+                                                status="processWaiting" mode="ajax" execute="@this"
+                                                onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
+                                                render="grid_map">
+                                        <a:param name="blockId" value="#{_house.id}"
+                                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
+                                    </r:menuItem>
+                                    <r:menuItem action="#{buildGridMapHome.idleBlockHouse}"
+                                                label="#{messages.BuildMapAction_idle}"
+                                                status="processWaiting" icon="/img/icons/delete-blue.png"
+                                                mode="ajax" execute="@this" render="grid_map,idle">
+                                        <a:param name="blockId" value="#{_house.id}"
+                                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
+                                    </r:menuItem>
+
+                                    <r:menuItem label="#{messages.BuildMapAction_edit}" mode="ajax" execute="@this"
+                                                action="#{actionExecuteState.clearState}"
+                                                icon="/img/icons/info-blue.png"
+                                                oncomplete="#{r:component('editPanel')}.show();"
+                                                render="editPanel_form">
+                                        <a:param name="blockId" value="#{_house.id}"
+                                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
+                                    </r:menuItem>
+                                </r:contextMenu>
 
                             </a:outputPanel>
 
 
-                            <br/>
-                            <h:outputText value="#{_house.house.houseArea}"
-                                          style="font-size: 0.9em;color: #797268;">
-                                <f:convertNumber pattern="#0.000"/>
-                            </h:outputText>
-                            <br/>
-                            <h:outputText value="#{_house.house.useArea}"
-                                          style="font-size: 0.9em;color: #797268;">
-                                <f:convertNumber pattern="#0.000"/>
-                            </h:outputText>
+                            <h:graphicImage
+                                    style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;"
+                                    rendered="#{(not empty _house.house) and (_house.house.lockStatus.lock)}"
+                                    value="/img/house/lock.png" title="#{messages.LockDecription}"/>
 
-                            <r:contextMenu mode="client" showEvent="contextmenu" style="text-align: left;"
-                                           popupWidth="100">
-                                <r:menuItem action="#{buildGridMapHome.deleteBlockHouse}"
-                                            icon="/img/icons/delete-red.png"
-                                            label="#{messages.BuildMapAction_delete}"
-                                            status="processWaiting" mode="ajax" execute="@this"
-                                            onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
-                                            render="grid_map">
+                            <ui:define name="house-action">
+                                <a:commandButton rendered="#{not empty _house.house}"
+                                                 image="/img/icons/delete-blue.png"
+                                                 render="deleteActionForm"
+                                                 oncomplete="#{r:component('deleteHouseConfirm')}.show();"
+                                                 title="#{messages.BuildMapAction_delete}"
+                                                 execute="@this" immediate="true">
                                     <a:param name="blockId" value="#{_house.id}"
                                              assignTo="#{buildGridMapHome.selectBlockId}"/>
-                                </r:menuItem>
-                                <r:menuItem action="#{buildGridMapHome.idleBlockHouse}"
-                                            label="#{messages.BuildMapAction_idle}"
-                                            status="processWaiting" icon="/img/icons/delete-blue.png"
-                                            mode="ajax" execute="@this" render="grid_map,idle">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandButton>
+
+                                <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                                 image="/img/icons/info-blue.png"
+                                                 action="#{actionExecuteState.clearState}"
+                                                 rendered="#{not empty _house.house}"
+                                                 title="#{messages.BuildMapAction_edit}"
+                                                 oncomplete="#{r:component('editPanel')}.show();"
+                                                 immediate="true" execute="@this" render="editPanel_form">
                                     <a:param name="blockId" value="#{_house.id}"
                                              assignTo="#{buildGridMapHome.selectBlockId}"/>
-                                </r:menuItem>
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandButton>
+                            </ui:define>
 
-                                <r:menuItem label="#{messages.BuildMapAction_edit}" mode="ajax" execute="@this"
-                                            action="#{actionExecuteState.clearState}"
-                                            icon="/img/icons/info-blue.png"
-                                            oncomplete="#{r:component('editPanel')}.show();"
-                                            render="editPanel_form">
-                                    <a:param name="blockId" value="#{_house.id}"
-                                             assignTo="#{buildGridMapHome.selectBlockId}"/>
-                                </r:menuItem>
-                            </r:contextMenu>
 
+                        </s:decorate>
+                        <br/>
+                        <r:dataTable style="float: right;" value="#{buildGridMapHome.useTypeTotalList}" var="_entry"
+                                     headerClass="totalHeader">
+                            <r:column headerClass="totalHeader">
+                                <f:facet name="header">
+                                    #{messages.House_UseType}
+                                </f:facet>
+                                #{_entry.key.value}
+
+                                <f:facet name="footer">
+                                    #{messages.recordTotal}
+                                </f:facet>
+                            </r:column>
+
+                            <r:column headerClass="totalHeader">
+                                <f:facet name="header">
+                                    #{messages.count}
+                                </f:facet>
+                                #{_entry.value.count}
+
+                                <f:facet name="footer">
+                                    #{buildGridMapHome.houseCount}
+                                </f:facet>
+
+                            </r:column>
+
+                            <r:column headerClass="totalHeader">
+                                <f:facet name="header">
+                                    #{messages.House_Area}
+                                </f:facet>
+                                <h:outputText value="#{_entry.value.area}">
+                                    <f:convertNumber pattern="#0.000"/>
+                                </h:outputText>
+
+                                <f:facet name="footer">
+                                    <h:outputText value="#{buildGridMapHome.totalHouseArea}">
+                                        <f:convertNumber pattern="#0.000"/>
+                                    </h:outputText>
+
+                                </f:facet>
+                            </r:column>
+
+                            <r:column headerClass="totalHeader">
+                                <f:facet name="header">
+                                    #{messages.House_UseArea}
+                                </f:facet>
+                                <h:outputText value="#{_entry.value.useArea}">
+                                    <f:convertNumber pattern="#0.000"/>
+                                </h:outputText>
+
+                                <f:facet name="footer">
+                                    <h:outputText value="#{buildGridMapHome.totalHouseUseArea}">
+                                        <f:convertNumber pattern="#0.000"/>
+                                    </h:outputText>
+
+                                </f:facet>
+                            </r:column>
+
+                        </r:dataTable>
+                    </a:outputPanel>
+
+
+                    <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="100" minHeight="264" width="160"
+                                  height="200"
+                                  autosized="false" modal="false">
+                        <f:facet name="header">
+                            <h:outputText value="#{messages.IdleHouse}"/>
+                        </f:facet>
+                        <f:facet name="controls">
+                            <a:commandButton style="padding: 2px" image="/img/icon24/fill.png"
+                                             title="#{messages.GridFillNew}"
+                                             status="processWaiting" action="#{buildGridMapHome.generateHouse}"
+                                             execute="@this"
+                                             immediate="true" render="grid_map">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+
+
+                            <a:commandButton style="padding: 2px" image="/img/icon24/autoformat.png"
+                                             action="#{buildGridMapHome.matchIdle}"
+                                             status="processWaiting" title="#{messages.GridFillIdle}" execute="@this"
+                                             immediate="true"
+                                             render="grid_map,idle">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandButton>
+                        </f:facet>
+                        <a:outputPanel id="idle">
+                            <r:jQuery selector=".idle-house-con" event="mouseover"
+                                      query="jQuery(this).find('.house-act').stop().fadeIn(10);"/>
+                            <r:jQuery selector=".idle-house-con" event="mouseout"
+                                      query="jQuery(this).find('.house-act').fadeOut(10);"/>
+
+                            <r:panel
+                                    style="margin: 2px;float: left; width: 50px;height: 50px;background: url('#{facesContext.externalContext.requestContextPath}/img/house/createHouse.gif') center center no-repeat;">
+                                <a:outputPanel layout="block" styleClass="rf-ind-drag">
+                                    <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
+                                </a:outputPanel>
+                            </r:panel>
+                            <a:repeat value="#{idleHouses}" var="_idleHouse">
+                                <r:panel styleClass="idle-house-con">
+                                    <a:outputPanel layout="block" styleClass="rf-idle-drag">
+
+                                        <r:dragSource id="idle_source" type="house" dragValue="#{_idleHouse}"
+                                                      dragIndicator="indicator"/>
+
+                                        <a:outputPanel>
+                                            <h:outputText value="#{_idleHouse.houseOrder}"
+                                                          style="font-size: 1em; font-weight: bold;#{_idleHouse.validator ? 'color: #000000;' : 'color: red;' }"/>
+                                            <r:tooltip styleClass="tooltip-custom-body"
+                                                       layout="block" mode="client"
+                                                       rendered="#{(not _idleHouse.detailsValid) or (not _idleHouse.orderValid)}">
+                                                <s:span rendered="#{not _idleHouse.detailsValid}"
+                                                        style="white-space: normal">
+                                                    <h:outputText styleClass="errors"
+                                                                  value="#{messages.HouseDetailsError}"/>
+
+                                                </s:span>
+                                                <s:span rendered="#{not _idleHouse.orderValid}"
+                                                        style="white-space: normal">
+                                                    <h:outputText styleClass="errors"
+                                                                  value="#{messages.HouseOrderConflict}"/>
+                                                </s:span>
+                                            </r:tooltip>
+
+                                        </a:outputPanel>
+
+                                        <br/>
+                                        <h:outputText value="#{_idleHouse.houseArea}"
+                                                      style="font-size: 0.9em;color: #797268;">
+                                            <f:convertNumber pattern="#0.000"/>
+                                        </h:outputText>
+                                        <br/>
+                                        <h:outputText value="#{_idleHouse.useArea}"
+                                                      style="font-size: 0.9em;color: #797268;">
+                                            <f:convertNumber pattern="#0.000"/>
+                                        </h:outputText>
+                                    </a:outputPanel>
+                                    <h:graphicImage rendered="#{_idleHouse.lockStatus.lock}"
+                                                    style="height: 16px;padding:0px;border: 0px;position:absolute; bottom:0;left:0"
+                                                    value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+                                    <s:div styleClass="house-act">
+                                        <a:commandButton rendered="#{not _idleHouse.lockStatus.lock}"
+                                                         image="/img/icons/delete-red.png"
+                                                         render="idle"
+                                                         onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
+                                                         action="#{buildGridMapHome.deleteIdleHouse}"
+                                                         title="#{messages.BuildMapAction_delete}"
+                                                         execute="@this" immediate="true">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:commandButton>
+
+                                        <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                                         image="/img/icons/info-blue.png"
+                                                         action="#{buildGridMapHome.selectedIdleHouse}"
+                                                         title="#{messages.BuildMapAction_edit}"
+                                                         oncomplete="#{r:component('editPanel')}.show();"
+                                                         immediate="true" execute="@this" render="editPanel_form">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:commandButton>
+
+
+                                    </s:div>
+                                </r:panel>
+                            </a:repeat>
+                        </a:outputPanel>
+                    </r:popupPanel>
+
+
+                    <r:popupPanel id="deleteHouseConfirm" width="300" height="140" modal="true" resizeable="false">
+
+                        <f:facet name="header">
+                            <h:outputText value="#{messages.deleteConfirm}"/>
+                        </f:facet>
+
+                        <f:facet name="controls">
+                            <a:commandButton immediate="true"
+                                             execute="@this" image="/img/close.png"
+                                             onclick="#{r:component('deleteHouseConfirm')}.hide(); return false;">
+                            </a:commandButton>
+                        </f:facet>
+                        <a:outputPanel id="deleteActionForm">
+
+                            <s:div style="height: 60px">
+                                <h:outputText value="#{buildGridMapHome.selectHouse.houseOrder}"
+                                              style="font-size: 1.2em; font-weight: bold;"/>
+                                <h:graphicImage rendered="#{not buildGridMapHome.houseCanEdit}"
+                                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+                                <br/>
+                                <h:outputText value="#{messages.DeleteMapHouseInfo}"/>
+                                <br/>
+                                <h:outputText value="#{messages.IdleMapHouseInfo}"/>
+                            </s:div>
+                            <h:panelGrid columns="1" style="width: 100%; text-align: right">
+                                <a:outputPanel id="#{panelId}_buttons">
+
+
+                                    <a:commandButton action="#{buildGridMapHome.deleteBlockHouse}"
+                                                     disabled="#{not buildGridMapHome.houseCanEdit}"
+                                                     render="grid_map" status="processWaiting"
+                                                     onclick="#{r:component('deleteHouseConfirm')}.hide();"
+                                                     value="#{messages.BuildMapAction_delete}" execute="@this"
+                                                     immediate="true">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+
+
+                                    <a:commandButton action="#{buildGridMapHome.idleBlockHouse}"
+                                                     value="#{messages.BuildMapAction_idle}"
+                                                     onclick="#{r:component('deleteHouseConfirm')}.hide();"
+                                                     status="processWaiting" immediate="true"
+                                                     execute="@this" render="grid_map,idle">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+
+                                    <a:commandButton immediate="true"
+                                                     execute="@this" value="#{messages.cancel}"
+                                                     onclick="#{r:component('deleteHouseConfirm')}.hide(); return false;">
+                                    </a:commandButton>
+                                </a:outputPanel>
+                            </h:panelGrid>
+                        </a:outputPanel>
+                    </r:popupPanel>
+
+                </h:form>
+
+
+                <s:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelId" value="editPanel"/>
+                    <ui:param name="panelTitle" value="#{messages.House}"/>
+                    <ui:define name="controls">
+                        <a:commandButton immediate="true"
+                                         execute="@this" image="/img/close.png"
+                                         onclick="#{r:component(panelId)}.hide(); return false;">
+                        </a:commandButton>
+                    </ui:define>
+
+
+                    <ui:define name="formContent">
+                        <a:outputPanel rendered="#{not empty buildGridMapHome.selectHouse}">
+
+                            <a:outputPanel rendered="#{buildGridMapHome.houseCanEdit}">
+
+                                <r:panel id="#{panelId}_inputs">
+                                    <div class="edit">
+
+                                        <ui:include src="/layout/house/HouseEdit.xhtml">
+                                            <ui:param name="house" value="#{buildGridMapHome.selectHouse}"/>
+                                        </ui:include>
+
+                                        <div style="clear:both">
+                                            <span class="required">*</span>
+                                            #{messages.requiredFields}
+                                        </div>
+                                    </div>
+                                </r:panel>
+
+
+                                <h:panelGrid columns="1" style="width: 100%; text-align: right">
+                                    <a:outputPanel id="#{panelId}_buttons">
+                                        <div class="actionButtons">
+                                            <a:commandButton value="#{messages.ok}" execute="@form"
+                                                             action="#{actionExecuteState.actionExecute}"
+                                                             data="#{actionExecuteState.lastState}"
+                                                             render="grid_map,idle"
+                                                             oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
+                                        </div>
+                                    </a:outputPanel>
+                                </h:panelGrid>
+                            </a:outputPanel>
+
+
+                            <s:div rendered="#{not buildGridMapHome.houseCanEdit}" style="width: 980px">
+                                <table class="detailsTable">
+                                    <tr>
+                                        <td class="detailsHead"></td>
+                                    </tr>
+                                </table>
+                                <ui:include src="/layout/house/HouseInfoView.xhtml">
+                                    <ui:param name="houseInfo" value="#{buildGridMapHome.selectHouse}"/>
+                                </ui:include>
+                            </s:div>
                         </a:outputPanel>
 
 
-                        <h:graphicImage
-                                style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;"
-                                rendered="#{(not empty _house.house) and (_house.house.lockStatus.lock)}"
-                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
-
-                <ui:define name="house-action">
-                    <a:commandButton rendered="#{not empty _house.house}"
-                                     image="/img/icons/delete-blue.png"
-                                     render="deleteActionForm"
-                                     oncomplete="#{r:component('deleteHouseConfirm')}.show();"
-                                     title="#{messages.BuildMapAction_delete}"
-                                     execute="@this" immediate="true">
-                        <a:param name="blockId" value="#{_house.id}"
-                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
-
-                    <a:commandButton style="padding-left: 1px; padding-right: 1px;"
-                                     image="/img/icons/info-blue.png"
-                                     action="#{actionExecuteState.clearState}"
-                                     rendered="#{not empty _house.house}"
-                                     title="#{messages.BuildMapAction_edit}"
-                                     oncomplete="#{r:component('editPanel')}.show();"
-                                     immediate="true" execute="@this" render="editPanel_form">
-                        <a:param name="blockId" value="#{_house.id}"
-                                 assignTo="#{buildGridMapHome.selectBlockId}"/>
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
-                </ui:define>
-
-
-</s:decorate>
-<br/>
-<r:dataTable style="float: right;" value="#{buildGridMapHome.useTypeTotalList}" var="_entry" headerClass="totalHeader">
-    <r:column headerClass="totalHeader">
-        <f:facet name="header">
-            #{messages.House_UseType}
-        </f:facet>
-        #{_entry.key.value}
-
-        <f:facet name="footer">
-            #{messages.recordTotal}
-        </f:facet>
-    </r:column>
-
-    <r:column headerClass="totalHeader">
-        <f:facet name="header">
-            #{messages.count}
-        </f:facet>
-        #{_entry.value.count}
-
-        <f:facet name="footer">
-            #{buildGridMapHome.houseCount}
-        </f:facet>
-
-    </r:column>
-
-    <r:column headerClass="totalHeader">
-        <f:facet name="header">
-            #{messages.House_Area}
-        </f:facet>
-        <h:outputText value="#{_entry.value.area}">
-            <f:convertNumber pattern="#0.000"/>
-        </h:outputText>
-
-        <f:facet name="footer">
-            <h:outputText value="#{buildGridMapHome.totalHouseArea}">
-                <f:convertNumber pattern="#0.000"/>
-            </h:outputText>
-
-        </f:facet>
-    </r:column>
-
-    <r:column headerClass="totalHeader">
-        <f:facet name="header">
-            #{messages.House_UseArea}
-        </f:facet>
-        <h:outputText value="#{_entry.value.useArea}">
-            <f:convertNumber pattern="#0.000"/>
-        </h:outputText>
-
-        <f:facet name="footer">
-            <h:outputText value="#{buildGridMapHome.totalHouseUseArea}">
-                <f:convertNumber pattern="#0.000"/>
-            </h:outputText>
-
-        </f:facet>
-    </r:column>
-
-</r:dataTable>
-</a:outputPanel>
-
-
-<r:popupPanel id="idleHousePopup" resizeable="true" minWidth="100" minHeight="264" width="160" height="200"
-              autosized="false" modal="false">
-    <f:facet name="header">
-        <h:outputText value="#{messages.IdleHouse}"/>
-    </f:facet>
-    <f:facet name="controls">
-        <a:commandButton style="padding: 2px" image="/img/icon24/fill.png" title="#{messages.GridFillNew}"
-                         status="processWaiting" action="#{buildGridMapHome.generateHouse}" execute="@this"
-                         immediate="true" render="grid_map">
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-
-
-        <a:commandButton style="padding: 2px" image="/img/icon24/autoformat.png" action="#{buildGridMapHome.matchIdle}"
-                         status="processWaiting" title="#{messages.GridFillIdle}" execute="@this" immediate="true"
-                         render="grid_map,idle">
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-    </f:facet>
-    <a:outputPanel id="idle">
-        <r:jQuery selector=".idle-house-con" event="mouseover"
-                  query="jQuery(this).find('.house-act').stop().fadeIn(10);"/>
-        <r:jQuery selector=".idle-house-con" event="mouseout" query="jQuery(this).find('.house-act').fadeOut(10);"/>
-
-        <r:panel
-                style="margin: 2px;float: left; width: 50px;height: 50px;background: url('#{facesContext.externalContext.requestContextPath}/img/house/createHouse.gif') center center no-repeat;">
-            <a:outputPanel layout="block" styleClass="rf-ind-drag">
-                <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
-            </a:outputPanel>
-        </r:panel>
-        <a:repeat value="#{idleHouses}" var="_idleHouse">
-            <r:panel styleClass="idle-house-con">
-                <a:outputPanel layout="block" styleClass="rf-idle-drag">
-
-                    <r:dragSource id="idle_source" type="house" dragValue="#{_idleHouse}"
-                                  dragIndicator="indicator"/>
-
-                    <a:outputPanel>
-                        <h:outputText value="#{_idleHouse.houseOrder}"
-                                      style="font-size: 1em; font-weight: bold;#{_idleHouse.validator ? 'color: #000000;' : 'color: red;' }"/>
-                        <r:tooltip styleClass="tooltip-custom-body"
-                                   layout="block" mode="client"
-                            rendered="#{(not _idleHouse.detailsValid) or (not _idleHouse.orderValid)}">
-                            <s:span rendered="#{not _idleHouse.detailsValid}" style="white-space: normal">
-                                <h:outputText styleClass="errors" value="#{messages.HouseDetailsError}"/>
-
-                            </s:span>
-                            <s:span rendered="#{not _idleHouse.orderValid}" style="white-space: normal">
-                                <h:outputText styleClass="errors" value="#{messages.HouseOrderConflict}"/>
-                            </s:span>
-                        </r:tooltip>
-
-                    </a:outputPanel>
-
-                    <br/>
-                    <h:outputText value="#{_idleHouse.houseArea}" style="font-size: 0.9em;color: #797268;">
-                        <f:convertNumber pattern="#0.000"/>
-                    </h:outputText>
-                    <br/>
-                    <h:outputText value="#{_idleHouse.useArea}" style="font-size: 0.9em;color: #797268;">
-                        <f:convertNumber pattern="#0.000"/>
-                    </h:outputText>
-                </a:outputPanel>
-                <h:graphicImage rendered="#{_idleHouse.lockStatus.lock}"
-                                style="height: 16px;padding:0px;border: 0px;position:absolute; bottom:0;left:0"
-                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
-                <s:div styleClass="house-act">
-                    <a:commandButton rendered="#{not _idleHouse.lockStatus.lock}"
-                                     image="/img/icons/delete-red.png"
-                                     render="idle"
-                                     onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
-                                     action="#{buildGridMapHome.deleteIdleHouse}"
-                                     title="#{messages.BuildMapAction_delete}"
-                                     execute="@this" immediate="true">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
-
-                    <a:commandButton style="padding-left: 1px; padding-right: 1px;"
-                                     image="/img/icons/info-blue.png"
-                                     action="#{buildGridMapHome.selectedIdleHouse}"
-                                     title="#{messages.BuildMapAction_edit}"
-                                     oncomplete="#{r:component('editPanel')}.show();"
-                                     immediate="true" execute="@this" render="editPanel_form">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
-
-
-                </s:div>
-            </r:panel>
-        </a:repeat>
-    </a:outputPanel>
-</r:popupPanel>
-
-
-<r:popupPanel id="deleteHouseConfirm" width="300" height="140" modal="true" resizeable="false">
-
-    <f:facet name="header">
-        <h:outputText value="#{messages.deleteConfirm}"/>
-    </f:facet>
-
-    <f:facet name="controls">
-        <a:commandButton immediate="true"
-                         execute="@this" image="/img/close.png"
-                         onclick="#{r:component('deleteHouseConfirm')}.hide(); return false;">
-        </a:commandButton>
-    </f:facet>
-    <a:outputPanel id="deleteActionForm">
-
-        <s:div style="height: 60px">
-            <h:outputText value="#{buildGridMapHome.selectHouse.houseOrder}"
-                          style="font-size: 1.2em; font-weight: bold;"/>
-            <h:graphicImage rendered="#{not buildGridMapHome.houseCanEdit}"
-                            value="/img/house/lock.png" title="#{messages.LockDecription}"/>
-            <br/>
-            <h:outputText value="#{messages.DeleteMapHouseInfo}"/>
-            <br/>
-            <h:outputText value="#{messages.IdleMapHouseInfo}"/>
+                    </ui:define>
+                </s:decorate>
+            </div>
         </s:div>
-        <h:panelGrid columns="1" style="width: 100%; text-align: right">
-            <a:outputPanel id="#{panelId}_buttons">
 
 
-                <a:commandButton action="#{buildGridMapHome.deleteBlockHouse}"
-                                 disabled="#{not buildGridMapHome.houseCanEdit}"
-                                 render="grid_map" status="processWaiting"
-                                 onclick="#{r:component('deleteHouseConfirm')}.hide();"
-                                 value="#{messages.BuildMapAction_delete}" execute="@this" immediate="true">
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-
-
-                <a:commandButton action="#{buildGridMapHome.idleBlockHouse}"
-                                 value="#{messages.BuildMapAction_idle}"
-                                 onclick="#{r:component('deleteHouseConfirm')}.hide();"
-                                 status="processWaiting" immediate="true"
-                                 execute="@this" render="grid_map,idle">
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-
-                <a:commandButton immediate="true"
-                                 execute="@this" value="#{messages.cancel}"
-                                 onclick="#{r:component('deleteHouseConfirm')}.hide(); return false;">
-                </a:commandButton>
-            </a:outputPanel>
-        </h:panelGrid>
-    </a:outputPanel>
-</r:popupPanel>
-
-</h:form>
-
-
-<s:decorate template="/layout/edit-modalpanel.xhtml">
-    <ui:param name="panelId" value="editPanel"/>
-    <ui:param name="panelTitle" value="#{messages.House}"/>
-    <ui:define name="controls">
-        <a:commandButton immediate="true"
-                         execute="@this" image="/img/close.png"
-                         onclick="#{r:component(panelId)}.hide(); return false;">
-        </a:commandButton>
-    </ui:define>
-
-
-    <ui:define name="formContent">
-        <a:outputPanel rendered="#{not empty buildGridMapHome.selectHouse}">
-
-            <a:outputPanel rendered="#{buildGridMapHome.houseCanEdit}">
-
-                <r:panel id="#{panelId}_inputs">
-                    <div class="edit">
-
-                        <ui:include src="/layout/house/HouseEdit.xhtml">
-                            <ui:param name="house" value="#{buildGridMapHome.selectHouse}"/>
-                        </ui:include>
-
-                        <div style="clear:both">
-                            <span class="required">*</span>
-                            #{messages.requiredFields}
-                        </div>
-                    </div>
-                </r:panel>
-
-
-                <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                    <a:outputPanel id="#{panelId}_buttons">
-                        <div class="actionButtons">
-                            <a:commandButton value="#{messages.ok}" execute="@form"
-                                             action="#{actionExecuteState.actionExecute}"
-                                             data="#{actionExecuteState.lastState}" render="grid_map,idle"
-                                             oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
-                        </div>
-                    </a:outputPanel>
-                </h:panelGrid>
-            </a:outputPanel>
-
-
-            <s:div rendered="#{not buildGridMapHome.houseCanEdit}" style="width: 980px">
-                <table class="detailsTable">
-                    <tr>
-                        <td class="detailsHead"></td>
-                    </tr>
-                </table>
-                <ui:include src="/layout/house/HouseInfoView.xhtml">
-                    <ui:param name="houseInfo" value="#{buildGridMapHome.selectHouse}"/>
-                </ui:include>
-            </s:div>
+        <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+        <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.min.js"/>
+        <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.js"/>
+        <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datepicker.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/locales/bootstrap-datepicker.zh-CN.min.js"/>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="init.js"/>
         </a:outputPanel>
-
-
-    </ui:define>
-</s:decorate>
-
-</s:div>
-</h:body>
+    </h:body>
 
 </f:view>
 </html>
