@@ -312,10 +312,23 @@
                             <f:param name="sectionId" value=""/>
                         </s:link>
 
-                        <s:link value="#{messages.create}"
-                                view="/func/house/datas/SectionSelect.xhtml"
+
+
+                        <s:link value="#{messages.create}" view="/func/house/datas/ProjectEdit.xhtml"
                                 rendered="#{(empty baseMapDataMgr.dataType)
-                                or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}" propagation="begin"/>
+                                or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
+                            <span class="octicon octicon-plus"/>
+                            <f:param name="projectId" value=""/>
+                            <f:param name="sectionId" value=""/>
+                            <f:param name="developerId" value=""/>
+                            <f:param name="districtId"  value=""/>
+
+                            <f:param name="sectionSearchName" value=""/>
+                            <f:param name="newSectionName" value=""/>
+                            <f:param name="developerSearchName" value=""/>
+                            <f:param name="newDeveloperName"  value=""/>
+
+                        </s:link>
                         #{' '} #{messages.Or}  #{messages.Try} #{' '}
                         <s:link value="#{messages.AvancedSearch}"/></p>
                 </s:div>
