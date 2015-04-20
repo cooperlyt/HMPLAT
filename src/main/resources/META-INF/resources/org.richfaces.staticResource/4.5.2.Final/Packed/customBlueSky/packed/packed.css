@@ -1189,11 +1189,15 @@ input.rf-insp-inp[type="text"] {
 
 *.rf-fu-btn-cnt-add, *.rf-fu-btn-cnt-add-dis, *.rf-fu-btn-cnt-upl, *.rf-fu-btn-cnt-clr, *.rf-fu-itm-lbl, *.rf-fu-itm-st, *.rf-fu-itm-lnk {
     font-family: "microsoft yahei", Helvetica, Arial, "宋体", sans-serif;
-    font-size: 13px;
+    font-size: 14px;
 }
 
-*.rf-fu-btn-cnt-add, *.rf-fu-btn-cnt-upl, *.rf-fu-btn-cnt-clr, *.rf-fu-itm-lbl, *.rf-fu-itm-st {
+*.rf-fu-btn-cnt-add, *.rf-fu-btn-cnt-upl, *.rf-fu-btn-cnt-clr {
     color: #fff;
+}
+
+*.rf-fu-itm-lbl{
+    color: #000;
 }
 
 *.rf-fu-btn-cnt-add, *.rf-fu-btn-cnt-add-dis, *.rf-fu-btn-cnt-upl, *.rf-fu-btn-cnt-clr {
@@ -1208,6 +1212,22 @@ input.rf-insp-inp[type="text"] {
     position: relative;
     overflow: hidden;
 }
+
+/*
+
+
+.rf-fu-btn-cnt-add:before {
+
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\2b"
+}
+
+*/
 
 *.rf-fu-btn-cnt-add-dis {
     background-image: url(../../org.richfaces.images/fu-add-dis.gif);
@@ -1245,7 +1265,7 @@ input.rf-insp-inp[type="text"] {
 }
 
 *.rf-fu-itm {
-    border-bottom-color: #BED6F8;
+    border-bottom-color: #eee;
     border-bottom-style: solid;
     border-bottom-width: 1px;
     padding: 12px;
@@ -1265,12 +1285,21 @@ input.rf-insp-inp[type="text"] {
 }
 
 *.rf-fu-itm-lnk {
-    color: #0078D0;
+    color: #999;
 }
+
+.rf-fu-itm-lnk:hover {
+    color: #4183c4;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
 
 *.rf-fu-itm-st {
     display: none;
     margin-top: 5px;
+    color: #999;
 }
 
 @-webkit-keyframes progress-bar-stripes {
