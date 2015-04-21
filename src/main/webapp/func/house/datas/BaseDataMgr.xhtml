@@ -732,7 +732,7 @@
                                     <a:commandLink styleClass="table-action" title="#{messages.delete}"
                                                    execute="@this" immediate="true"
                                                    render="developerDeleteConfirmPanel_form,developerDeleteConfirmPanel_title"
-                                                   oncomplete="$('#developerDeleteConfirmPanel').modal('show')">
+                                                   oncomplete="$('#developerDeleteConfirmPanel').modal({show: true ,backdrop: 'true'})">
                                         <span class="glyphicon glyphicon-remove"/>
                                         #{messages.delete}
                                         <a:attachQueue requestDelay="0"/>

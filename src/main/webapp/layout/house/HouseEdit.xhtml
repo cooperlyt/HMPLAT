@@ -6,32 +6,51 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
-#{house.id}
-    <h:panelGrid columns="2">
-    <s:decorate template="/layout/edit.xhtml">
+
+
+    <s:decorate styleClass="form-group" template="/layout/input-group.xhtml">
         <ui:define name="label">
             #{messages.House_Order}
         </ui:define>
 
-        <h:inputText value="#{house.houseOrder}" size="20" maxlength="20"
-                     id="houseOrderInput" required="true" label="#{messages.House_Order}">
-            <r:validator event="blur"/>
-        </h:inputText>
-        <ui:define name="tail">
-            <r:message for="houseOrderInput" styleClass="message-icon"
-                       showDetail="true" showSummary="true" tooltip="true"/>
-        </ui:define>
+
+        <s:decorate enclose="false"  template="/layout/input-group-item.xhtml">
+
+            <ui:param name="for" value="houseOrderInput"/>
+            <ui:param name="status" value="houseOrderInputStatus"/>
+            <ui:define name="label">
+                #{messages.House_Order}
+            </ui:define>
+            <h:inputText value="#{house.houseOrder}" style="width: 100%; height: 100%; padding: 0; margin: 0" size="20" maxlength="20"
+                         id="houseOrderInput" required="true" label="#{messages.House_Order}">
+                <r:validator event="blur"/>
+            </h:inputText>
+
+        </s:decorate>
+
+
+        <s:decorate enclose="false"  template="/layout/input-group-item.xhtml">
+
+            <ui:param name="for" value="houseUnitNameInput"/>
+            <ui:param name="status" value="houseUnitNameInputStatus"/>
+            <ui:define name="label">
+                #{messages.House_Unit}
+            </ui:define>
+            <h:inputText value="#{house.houseUnitName}" size="20" maxlength="20"
+                         id="houseUnitNameInput" label="#{messages.House_Unit}">
+                <r:validator event="blur"/>
+            </h:inputText>
+
+        </s:decorate>
+
     </s:decorate>
 
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.House_Unit}
+
         </ui:define>
-        <h:inputText value="#{house.houseUnitName}" size="20" maxlength="20"
-                     id="houseUnitNameInput" label="#{messages.House_Unit}">
-            <r:validator event="blur"/>
-        </h:inputText>
+
         <ui:define name="tail">
             <r:message for="houseUnitNameInput" styleClass="message-icon"
                        showDetail="true" showSummary="true" tooltip="true"/>
@@ -304,7 +323,7 @@
                        showDetail="true" showSummary="true" tooltip="true"/>
         </ui:define>
     </s:decorate>
-    </h:panelGrid>
+
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">
