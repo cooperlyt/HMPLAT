@@ -7,62 +7,73 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <s:decorate template="/layout/edit-multi.xhtml">
-        <ui:define name="label">
-            #{label}
-        </ui:define>
-        <ui:define name="topValue">
-            <span class="value">
-            <h:selectBooleanCheckbox value="#{persion.have}">
-                <a:ajax event="click" render="persionOwnerEntrustPanel,personCard" execute="@this"
-                        listener="#{persion.checkHave}">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
-            </h:selectBooleanCheckbox>
-            </span>
-            <a:outputPanel id="personCard">
-                <a:outputPanel rendered="#{persion.have}">
-                    <ui:include src="/layout/system/PersonCardInput.xhtml">
-                        <ui:param name="personEntityHelper"
-                                  value="#{persion.persionPersonEntityHomeHelper}"/>
-                    </ui:include>
-                </a:outputPanel>
-            </a:outputPanel>
+    <ui:decorate template="/layout/edit-multi.xhtml">
 
+
+        <ui:define name="topValue">
+            <div class="form-checkbox unchecked">
+                <label>
+                    #{label}
+                </label>
+                <h:selectBooleanCheckbox value="#{persion.have}">
+                    <a:ajax event="click" render="contextPanel" execute="@this"
+                            listener="#{persion.checkHave}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:selectBooleanCheckbox>
+
+            </div>
 
         </ui:define>
 
         <ui:define name="values">
 
-            <a:outputPanel id="persionOwnerEntrustPanel">
+            <a:outputPanel id="contextPanel">
                 <a:outputPanel rendered="#{persion.have}">
-                    <div style="clear: both;"/>
-                    <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
-                    <ui:include src="/layout/system/PersonNameInput.xhtml">
-                        <ui:param name="personEntityHelper"
-                                  value="#{persion.persionPersonEntityHomeHelper}"/>
-                    </ui:include>
+                    <hr/>
+                    <div style="display: block;">
+                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
 
-                    <s:decorate template="/layout/edit.xhtml">
-                        <ui:define name="label">
-                            #{messages.Tel}
-                        </ui:define>
-                        <h:inputText label="#{messages.Tel}" size="20"
-                                     value="#{persion.instance.phone}" id="persionPhoneInput">
-                            <r:validator event="blur"/>
-                        </h:inputText>
+                            <a:outputPanel id="personCard">
 
-                        <ui:define name="tail">
-                            <r:message for="persionPhoneInput"/>
-                        </ui:define>
-                    </s:decorate>
+                                <ui:include src="/layout/system/PersonCardInput.xhtml">
+                                    <ui:param name="personEntityHelper"
+                                              value="#{persion.persionPersonEntityHomeHelper}"/>
+                                </ui:include>
 
-                    <div style="clear: both;"/>
-                    <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
+                            </a:outputPanel>
+
+                            <a:outputPanel id="persionOwnerEntrustPanel">
+                                <ui:include src="/layout/system/PersonNameInput.xhtml">
+                                    <ui:param name="personEntityHelper"
+                                              value="#{persion.persionPersonEntityHomeHelper}"/>
+                                </ui:include>
+
+                                <div class="form-inline">
+                                    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+                                        <ui:define name="label">
+                                            #{messages.Tel}
+                                        </ui:define>
+                                        <ui:param name="for" value="persionPhoneInput"/>
+
+                                        <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                                                     styleClass="form-control"
+                                                     validatorMessage="#{messages.requiredPhoneValidator}"
+                                                     value="#{persion.instance.phone}" required="true"
+                                                     id="persionPhoneInput">
+                                            <f:validateRegex
+                                                    pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                                            <r:validator event="blur"/>
+                                        </h:inputText>
+                                    </s:decorate>
+                                </div>
+                            </a:outputPanel>
+                        </a:outputPanel>
+                    </div>
+                    <hr/>
                 </a:outputPanel>
             </a:outputPanel>
         </ui:define>
-
-    </s:decorate>
+    </ui:decorate>
 
 </ui:composition>
