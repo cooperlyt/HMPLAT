@@ -12,7 +12,7 @@
 
 
         <ui:define name="topValue">
-            <div class="form-checkbox unchecked">
+            <div class="form-checkbox">
                 <label>
                     #{label}
                 </label>
@@ -84,7 +84,6 @@
                             <ui:define name="label">
                                 #{messages.Land_BeginUseTime}
                             </ui:define>
-
                             <ui:param name="for" value="LandBeginUseTime"/>
 
 
@@ -146,15 +145,12 @@
                             <h:inputText label="#{messages.Land_Area}"
                                          id="landArea"
                                          value="#{land.instance.landArea}"
-                                         styleClass="form-control"
-                                         size="20">
+                                         styleClass="form-control">
                                 <r:validator event="blur"/>
                                 <f:validateDoubleRange minimum="0"/>
                                 <f:convertNumber pattern="#0.000"/>
                             </h:inputText>
-                            <ui:define name="tail">
-                                <r:message for="landArea"/>
-                            </ui:define>
+
                         </s:decorate>
 
 

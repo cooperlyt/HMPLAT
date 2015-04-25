@@ -10,19 +10,27 @@
 
     <s:decorate template="/layout/edit-multi.xhtml">
         <ui:param name="req" value="true"/>
-        <ui:define name="label">
+
+
+        <ui:define name="topValue">
             #{label}
         </ui:define>
+
+
         <ui:define name="values">
             <h:panelGroup>
 
                 <span class="value">
                     <h:selectOneMenu value="#{financialSubscribe.instance.financialType}"
                                      id="typeSelectInput"
-                                     label="#{label}#{messages.FinancialType}" required="true"
+                                     label="#{label}#{messages.FinancialType}"
+                                     required="true"
+                                     styleClass="selectpicker select-menu-btn input-group-first"
                                      valueChangeListener="#{financialSubscribe.typeChangeListener}">
                         <s:selectItems value="#{financialSubscribe.financialTypes}"
-                                       var="_type" itemValue="#{_type}" label="#{messages[_type.name()]}"/>
+                                       var="_type"
+                                       itemValue="#{_type}"
+                                       label="#{messages[_type.name()]}"/>
                         <a:ajax event="valueChange" execute="@this" render="financialCorpSelect,phoneOutPut">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
@@ -30,8 +38,8 @@
                     </h:selectOneMenu>
                 </span>
                 <a:outputPanel id="financialCorpSelect">
-
                     <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                        <hr/>
                         <ui:include src="/layout/system/PersonCardInput.xhtml">
                             <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
                             <ui:param name="render" value="phoneOutPut"/>
@@ -40,9 +48,11 @@
 
                     <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
                         <span class="value">
-                        <h:selectOneMenu style="width:130px" required="true"
-                                         label="#{label}" id="bankSelectInput"
-                                         value="#{financialSubscribe.filterBank}">
+                        <h:selectOneMenu id="bankSelectInput"
+                                         required="true"
+                                         label="#{label}"
+                                         value="#{financialSubscribe.filterBank}"
+                                         styleClass="selectpicker select-menu-btn input-group-first">
                             <s:selectItems var="_word" label="#{_word.value}"
                                            itemValue="#{_word.id}"
                                            value="#{dictionary.getWordList('erp.bank')}"
@@ -55,8 +65,9 @@
                         <a:outputPanel id="bankForkSelect">
                             <a:outputPanel rendered="#{not empty financialSubscribe.filterBank}">
                                 <span class="value">
-                                <h:selectOneMenu label="#{messages.Financial}" style="width:150px"
-                                                 value="#{financialSubscribe.selectName}">
+                                <h:selectOneMenu label="#{messages.Financial}"
+                                                 value="#{financialSubscribe.selectName}"
+                                                 styleClass="selectpicker select-menu-btn input-group-first">
                                     <s:selectItems var="_fork" label="#{_fork}"
                                                    itemValue="#{_fork}"
                                                    value="#{financialSubscribe.financialCorpNames}"
@@ -78,64 +89,73 @@
                 </a:outputPanel>
 
 
-
-
             </h:panelGroup>
 
 
             <a:outputPanel id="phoneOutPut">
                 <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
-                    <div style="clear: both;"/>
-                    <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
-                    <s:decorate template="/layout/edit.xhtml">
-                        <ui:define name="label">
-                            #{messages.Financial_name}
-                        </ui:define>
 
-                        <h:inputTextarea id="financeNameInput" required="true" label="#{messages.Financial_name}"
-                                         value="#{financialSubscribe.instance.name}" cols="40" rows="3"
-                                         disabled="#{financialSubscribe.selected}"/>
+                    <hr/>
+                    <div style="display: block;">
 
-                        <ui:define name="tail">
-                            <r:message for="financeNameInput"/>
-                        </ui:define>
-                    </s:decorate>
 
-                    <s:decorate template="/layout/edit.xhtml">
-                        <ui:define name="label">
-                            #{messages.Tel}
-                        </ui:define>
-                        <h:inputText id="financePhoneIpnut" value="#{financialSubscribe.instance.phone}" size="15"
-                                     maxlength="15"/>
-                        <ui:define name="tail">
-                            <r:message for="financePhoneIpnut"/>
-                        </ui:define>
-                    </s:decorate>
+                        <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+                            <ui:define name="label">
+                                #{messages.Financial_name}
+                            </ui:define>
+                            <ui:param name="for" value="financeNameInput"/>
+                            <h:inputText id="financeNameInput"
+                                         required="true"
+                                         label="#{messages.Financial_name}"
+                                         value="#{financialSubscribe.instance.name}"
+                                         disabled="#{financialSubscribe.selected}"
+                                         styleClass="form-control"/>
 
-                    <div style="clear: both;"/>
 
-                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+                        </s:decorate>
+
+                        <div class="form-inline">
+                            <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                    #{messages.Tel}
+                                </ui:define>
+
+                                <h:inputText id="financePhoneIpnut"
+                                             value="#{financialSubscribe.instance.phone}"
+                                             styleClass="form-control"/>
+
+                            </s:decorate>
+                        </div>
+                        <hr/>
+
+
+                    </div>
 
                 </a:outputPanel>
 
                 <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
-                    <div style="clear: both;"/>
-                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-                    
-                    <ui:include src="/layout/system/PersonNameInput.xhtml">
-                        <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
-                    </ui:include>
+                    <hr/>
+                    <div style="display: block;">
 
-                    <s:decorate template="/layout/edit.xhtml">
-                        <ui:define name="label">
-                            #{messages.Tel}
-                        </ui:define>
-                        <h:inputText label="#{messages.Tel}" size="15" maxlength="15"
-                                     value="#{financialSubscribe.instance.phone}"/>
-                    </s:decorate>
+                        <ui:include src="/layout/system/PersonNameInput.xhtml">
+                            <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
+                        </ui:include>
 
-                    <div style="clear: both;"/>
-                    <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
+
+                        <div class="form-inline">
+                            <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                    #{messages.Tel}
+                                </ui:define>
+
+
+                                <h:inputText label="#{messages.Tel}"
+                                             value="#{financialSubscribe.instance.phone}"
+                                             styleClass="form-control"/>
+                            </s:decorate>
+                        </div>
+                        <hr/>
+                    </div>
                 </a:outputPanel>
             </a:outputPanel>
         </ui:define>
