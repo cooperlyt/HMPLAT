@@ -9,20 +9,15 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
-    <s:decorate template="/layout/edit-multi.xhtml">
 
 
-        <ui:define name="topValue">
-         <label>
 
-         </label>
-        </ui:define>
 
-        <ui:define name="values">
+
 
             <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
                 <ui:define name="label">
-                    #{messages.Evaluate_assessmentPrice}
+                    #{messages.Evaluate_evaluateCorpName}
                 </ui:define>
 
                 <ui:param name="for" value="assessmentPriceInput"/>
@@ -45,6 +40,7 @@
                     <h:inputText value="#{evaluateSubscribe.instance.assessmentPrice}"
                                  size="20"
                                  required="true"
+                                 label="#{messages.Evaluate_assessmentPrice}"
                                  id="assessmentPriceInput"
                                  p:placeholder="#{messages.Evaluate_assessmentPrice}"
                                  styleClass="form-control">
@@ -57,8 +53,7 @@
                </div>
 
             </s:decorate>
-        </ui:define>
-    </s:decorate>
+
 
 
 

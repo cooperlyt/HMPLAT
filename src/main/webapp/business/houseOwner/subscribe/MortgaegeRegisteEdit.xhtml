@@ -5,91 +5,122 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.MortgaegeRegiste_HighestMountMoney}
-        </ui:define>
-        <h:inputText value="#{mortgaegeRegisteSubsrcribe.instance.highestMountMoney}" size="20"
-                     id="highestMountMoneyInput" label="#{messages.MortgaegeRegiste_HighestMountMoney}">
-            <r:validator event="blur"/>
-            <f:validateDoubleRange minimum="0"/>
-            <f:convertNumber pattern="#0.00"/>
-        </h:inputText>
-        <ui:define name="tail">
-            <r:message for="highestMountMoneyInput"/>
-        </ui:define>
-    </s:decorate>
 
-    <s:decorate template="/layout/edit.xhtml">
+
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.MortgaegeRegiste_InterestType}
         </ui:define>
-        <h:selectOneMenu required="true" id="interestTypenput"
-                         value="#{mortgaegeRegisteSubsrcribe.instance.interestType}"
-                         style="width: 140px"
-                         label="#{messages.MortgaegeRegiste_InterestType}">
-            <s:selectItems value="#{dictionary.getWordList('42')}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
-        <ui:define name="tail">
-            <r:message for="interestTypenput"/>
+        <ui:param name="for" value="highestMountMoneyInput"/>
+
+
+
+        <div style="display: block;">
+        <div class="input-group">
+
+            <a:outputPanel styleClass="input-group-btn">
+
+                <h:selectOneMenu required="true"
+                                 id="interestTypenput"
+                                 value="#{mortgaegeRegisteSubsrcribe.instance.interestType}"
+                                 styleClass="selectpicker select-menu-btn input-group-first"
+                                 label="#{messages.MortgaegeRegiste_InterestType}">
+                    <s:selectItems value="#{dictionary.getWordList('42')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"/>
+                </h:selectOneMenu>
+
+            </a:outputPanel>
+            <h:inputText value="#{mortgaegeRegisteSubsrcribe.instance.highestMountMoney}"
+                         size="20"
+                         id="highestMountMoneyInput"
+                         label="#{messages.MortgaegeRegiste_HighestMountMoney}"
+                         p:placeholder="#{messages.MortgaegeRegiste_HighestMountMoney}"
+                         styleClass="form-control"
+                         required="true">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
+
+            </h:inputText>
+        </div>
+        </div>
+
+    </s:decorate>
+
+
+
+
+
+
+    <div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+        #{messages.MortgaegeRegiste_MortgageDueTimeS}
         </ui:define>
+        <ui:param name="for" value="MortgageDueTimeS"/>
+
+        <h:inputText id="MortgageDueTimeS"
+                     required="true"
+                     styleClass="js-datepicker form-control"
+                     label="#{messages.MortgaegeRegiste_MortgageDueTimeS}"
+                     value="#{mortgaegeRegisteSubsrcribe.instance.mortgageDueTimeS}">
+            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+        </h:inputText>
     </s:decorate>
+    </div>
 
-
-
-
-    <s:decorate id="mortgageDueTimeSField" template="/layout/edit.xhtml">
-        <ui:define name="label">#{messages.MortgaegeRegiste_MortgageDueTimeS}</ui:define>
-        <r:calendar enableManualInput="true"
-                    inputSize="20"
-                    defaultLabel="#{currentDate}"
-                    required="true"
-                    timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                    value="#{mortgaegeRegisteSubsrcribe.instance.mortgageDueTimeS}"
-                    datePattern="#{messages.datePattern}"/>
-    </s:decorate>
-
-    <s:decorate template="/layout/edit.xhtml">
+    <div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.MortgaegeRegiste_MortgageTime}
         </ui:define>
+
+        <ui:param name="for" value="mortgageTimeInput"/>
         <h:inputText label="#{messages.MortgaegeRegiste_MortgageTime}"
-                     value="#{mortgaegeRegisteSubsrcribe.instance.mortgageTime}" required="true" id="mortgageTimeInput">
-            <r:validator event="blur"/>
+                     value="#{mortgaegeRegisteSubsrcribe.instance.mortgageTime}"
+                     required="true"
+                     id="mortgageTimeInput"
+                     styleClass="form-control">
+
         </h:inputText>
-
-        <ui:define name="tail">
-            <r:message for="mortgageTimeInput"/>
-        </ui:define>
     </s:decorate>
+    </div>
 
-    <s:decorate template="/layout/edit.xhtml">
+    <div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.MortgaegeRegiste_MortgageArea}
         </ui:define>
-        <h:inputText value="#{mortgaegeRegisteSubsrcribe.instance.mortgageArea}" size="20"
-                     id="mortgageAreaInput" required="true" label="#{messages.MortgaegeRegiste_MortgageArea}">
+        <ui:param name="for" value="mortgageAreaInput"/>
+        <h:inputText value="#{mortgaegeRegisteSubsrcribe.instance.mortgageArea}"
+                     id="mortgageAreaInput"
+                     required="true"
+                     label="#{messages.MortgaegeRegiste_MortgageArea}"
+                     styleClass="form-control">
             <r:validator event="blur"/>
             <f:validateDoubleRange minimum="0"/>
             <f:convertNumber pattern="#0.000"/>
         </h:inputText>
-        <ui:define name="tail">
-            <r:message for="mortgageAreaInput"/>
-        </ui:define>
     </s:decorate>
+    </div>
 
-    <s:decorate template="/layout/edit.xhtml">
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.MortgaegeRegiste_WarrantScope}
         </ui:define>
 
-        <h:inputTextarea label="#{messages.MortgaegeRegiste_WarrantScope}" cols="50" rows="4"
-                     value="#{mortgaegeRegisteSubsrcribe.instance.warrantScope}" id="warrantScopeInput">
-            <r:validator event="blur"/>
+        <h:inputTextarea label="#{messages.MortgaegeRegiste_WarrantScope}"
+                         cols="50"
+                         rows="4"
+                         value="#{mortgaegeRegisteSubsrcribe.instance.warrantScope}"
+                         id="warrantScopeInput">
+
         </h:inputTextarea>
     </s:decorate>
 
