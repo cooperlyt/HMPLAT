@@ -5,35 +5,64 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.Evaluate_assessmentPrice}
+    <s:decorate template="/layout/edit-multi.xhtml">
+
+
+        <ui:define name="topValue">
+         <label>
+
+         </label>
         </ui:define>
-        <h:inputText value="#{evaluateSubscribe.instance.assessmentPrice}" size="20" required="true"
-                     id="assessmentPriceInput" label="#{messages.Evaluate_assessmentPrice}">
-            <r:validator event="blur"/>
-            <f:validateDoubleRange minimum="0"/>
-            <f:convertNumber pattern="#0.00"/>
-        </h:inputText>
-        <ui:define name="tail">
-            <r:message for="assessmentPriceInput"/>
+
+        <ui:define name="values">
+
+            <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Evaluate_assessmentPrice}
+                </ui:define>
+
+                <ui:param name="for" value="assessmentPriceInput"/>
+                <div style="display: block;">
+
+                <div class="input-group">
+                    <a:outputPanel styleClass="input-group-btn">
+
+
+                        <h:selectOneMenu id="evaluateCorpNameInput"
+                                         value="#{evaluateSubscribe.instance.evaluateCorpN0}"
+                                         label="#{messages.Evaluate_evaluateCorpName}"
+                                         valueChangeListener="#{evaluateSubscribe.valueChangeListener}"
+                                         styleClass="selectpicker select-menu-btn input-group-first">
+                            <s:selectItems value="#{wordEvaluateCorporationList.resultList}" var="_word"
+                                           itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                        </h:selectOneMenu>
+                    </a:outputPanel>
+
+                    <h:inputText value="#{evaluateSubscribe.instance.assessmentPrice}"
+                                 size="20"
+                                 required="true"
+                                 id="assessmentPriceInput"
+                                 p:placeholder="#{messages.Evaluate_assessmentPrice}"
+                                 styleClass="form-control">
+                        <r:validator event="blur"/>
+                        <f:validateDoubleRange minimum="0"/>
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:inputText>
+
+               </div>
+               </div>
+
+            </s:decorate>
         </ui:define>
     </s:decorate>
 
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.Evaluate_evaluateCorpName}
-        </ui:define>
-        <h:selectOneMenu id="evaluateCorpNameInput" value="#{evaluateSubscribe.instance.evaluateCorpN0}"
-                         label="#{messages.Evaluate_evaluateCorpName}"  style="width: 140px"
-                         valueChangeListener="#{evaluateSubscribe.valueChangeListener}">
-            <s:selectItems value="#{wordEvaluateCorporationList.resultList}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
-    </s:decorate>
+
+
+
 
 
 </ui:composition>

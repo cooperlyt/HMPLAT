@@ -41,7 +41,8 @@
                     <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
                         <hr/>
                         <ui:include src="/layout/system/PersonCardInput.xhtml">
-                            <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
+                            <ui:param name="personEntityHelper"
+                                      value="#{financialSubscribe.personEntityHelper}"/>
                             <ui:param name="render" value="phoneOutPut"/>
                         </ui:include>
                     </a:outputPanel>
@@ -98,7 +99,7 @@
                     <hr/>
                     <div style="display: block;">
 
-
+                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
                         <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
                             <ui:define name="label">
                                 #{messages.Financial_name}
@@ -126,6 +127,7 @@
 
                             </s:decorate>
                         </div>
+                        </a:outputPanel>
                         <hr/>
 
 
@@ -135,8 +137,9 @@
 
                 <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
                     <hr/>
-                    <div style="display: block;">
 
+                    <div style="display: block;">
+                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
                         <ui:include src="/layout/system/PersonNameInput.xhtml">
                             <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
                         </ui:include>
@@ -154,6 +157,7 @@
                                              styleClass="form-control"/>
                             </s:decorate>
                         </div>
+                        </a:outputPanel>
                         <hr/>
                     </div>
                 </a:outputPanel>
