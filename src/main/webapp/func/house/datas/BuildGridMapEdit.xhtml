@@ -33,9 +33,8 @@
         <h:outputStylesheet library="github" name="/css/octicons.css"/>
 
 
-
-        <r:popupPanel id="updateFilePopup" modal="true" onmaskclick="#{r:component('updateFilePopup')}.hide();" autosized="true" resizeable="false" styleClass="context-modal-panel">
-
+        <r:popupPanel id="updateFilePopup" modal="true" onmaskclick="#{r:component('updateFilePopup')}.hide();"
+                      autosized="true" resizeable="false" styleClass="context-modal-panel">
 
 
             <h:form enctype="multipart/form-data">
@@ -63,7 +62,6 @@
                 </r:fileUpload>
             </h:form>
         </r:popupPanel>
-
 
 
         <s:div>
@@ -114,7 +112,7 @@
 
                             <li>
                                 <a:commandLink
-                                               onclick="#{r:component('deletePageConfirm')}.show(); return false;">
+                                        onclick="#{r:component('deletePageConfirm')}.show(); return false;">
                                     <span class="icon-remove icon-large"/>
 
                                     #{messages.DeletePage}
@@ -130,7 +128,6 @@
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
                             </li>
-
 
 
                             <li class="dropdown">
@@ -369,9 +366,6 @@
                 </h:form>
 
 
-
-
-
                 <h:outputStylesheet>
 
 
@@ -470,14 +464,13 @@
 
                 <a:status id="processWaiting" name="processWaiting"
                           onstart="#{r:component('wait')}.show()"
-                          onstop="#{r:component('wait')}.hide()"/>
-                <r:popupPanel id="wait" modal="true" autosized="true"
-                              moveable="false" resizeable="false">
-                    <h:panelGrid columns="3">
-                        <h:graphicImage value="/img/smalBlueWait.gif"/>
-                        &#160;
-                        <h:outputText value="#{messages.wait_please}..."/>
-                    </h:panelGrid>
+                          onstop="#{r:component('wait')}.hide()"/> <!--  -->
+                <r:popupPanel id="wait" modal="true" autosized="true" styleClass="transparent-popup"
+                              moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
+                    <p>      <h:graphicImage value="/img/wait-128.gif" width="64" height="64"/></p>
+                    <p>#{messages.ContextLoader}...</p>
+
+
                 </r:popupPanel>
 
                 <r:messages globalOnly="true" ajaxRendered="true"/>
@@ -673,29 +666,33 @@
                     </a:outputPanel>
 
 
-                    <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="100" minHeight="264" width="160"
-                                  height="200"
+                    <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="250" minHeight="264" width="250"
+                                  height="300"
                                   autosized="false" modal="false">
                         <f:facet name="header">
-                            <h:outputText value="#{messages.IdleHouse}"/>
+                            <h4>
+                            <h:outputText value="#{messages.IdleHouse}"/></h4>
                         </f:facet>
                         <f:facet name="controls">
-                            <a:commandButton style="padding: 2px" image="/img/icon24/fill.png"
-                                             title="#{messages.GridFillNew}"
-                                             status="processWaiting" action="#{buildGridMapHome.generateHouse}"
-                                             execute="@this"
-                                             immediate="true" render="grid_map">
+                            <a:commandLink styleClass="table-action" status="processWaiting"
+                                           title="#{messages.GridFillNew}"
+                                           action="#{buildGridMapHome.generateHouse}"
+                                           execute="@this"
+                                           immediate="true" render="grid_map">
+                                <span class="icon-plus"/>
+                                #{messages.create}
                                 <a:attachQueue requestDelay="0"/>
-                            </a:commandButton>
+                            </a:commandLink>
 
-
-                            <a:commandButton style="padding: 2px" image="/img/icon24/autoformat.png"
-                                             action="#{buildGridMapHome.matchIdle}"
-                                             status="processWaiting" title="#{messages.GridFillIdle}" execute="@this"
-                                             immediate="true"
-                                             render="grid_map,idle">
+                            <a:commandLink styleClass="table-action" action="#{buildGridMapHome.matchIdle}"
+                                           status="processWaiting" title="#{messages.GridFillIdle}" execute="@this"
+                                           immediate="true"
+                                           render="grid_map,idle">
+                                <span class="icon-magic"/>
+                                #{messages.Fill}
                                 <a:attachQueue requestDelay="0"/>
-                            </a:commandButton>
+                            </a:commandLink>
+
                         </f:facet>
                         <a:outputPanel id="idle">
                             <r:jQuery selector=".idle-house-con" event="mouseover"
@@ -704,7 +701,7 @@
                                       query="jQuery(this).find('.house-act').fadeOut(10);"/>
 
                             <r:panel
-                                    style="margin: 2px;float: left; width: 50px;height: 50px;background: url('#{facesContext.externalContext.requestContextPath}/img/house/createHouse.gif') center center no-repeat;">
+                                    style="color: #ddd; margin: 2px;float: left; width: 50px;height: 50px;background: url('#{facesContext.externalContext.requestContextPath}/img/house/createHouse.gif') center center no-repeat;">
                                 <a:outputPanel layout="block" styleClass="rf-ind-drag">
                                     <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
                                 </a:outputPanel>
@@ -837,41 +834,35 @@
                 </h:form>
 
 
-
                 <ui:decorate template="/layout/edit-modalpanel.xhtml">
                     <ui:param name="panelId" value="editPanel"/>
-                    <ui:param name="panelTitle" value="House Edit"/>
+                    <ui:param name="panelTitle" value="#{messages.House}#{messages.edit}"/>
 
-                    <a:outputPanel layout="block" styleClass="form-group" rendered="#{not empty buildGridMapHome.selectHouse}">
+                    <ui:define name="actionButtons">
+
+                        <a:commandButton value="#{messages.ok}" execute="@form" styleClass="btn btn-primary"
+                                         action="#{actionExecuteState.actionExecute}"
+                                         data="#{actionExecuteState.lastState}"
+                                         render="grid_map,idle"
+                                         oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#editPanel').modal('hide')}"/>
+
+                    </ui:define>
+
+                    <a:outputPanel layout="block" styleClass="form-group"
+                                   rendered="#{not empty buildGridMapHome.selectHouse}">
 
                         <a:outputPanel rendered="#{buildGridMapHome.houseCanEdit}">
 
 
-                                <div class="edit">
+                            <div class="edit">
 
-                                    <ui:include src="/layout/house/HouseEdit.xhtml">
-                                        <ui:param name="house" value="#{buildGridMapHome.selectHouse}"/>
-                                    </ui:include>
+                                <ui:include src="/layout/house/HouseEdit.xhtml">
+                                    <ui:param name="house" value="#{buildGridMapHome.selectHouse}"/>
+                                </ui:include>
 
-                                    <div style="clear:both">
-                                        <span class="required">*</span>
-                                        #{messages.requiredFields}
-                                    </div>
-                                </div>
+                            </div>
 
 
-
-                            <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                                <a:outputPanel id="#{panelId}_rrrbuttons">
-                                    <div class="actionButtons">
-                                        <a:commandButton value="#{messages.ok}" execute="@form"
-                                                         action="#{actionExecuteState.actionExecute}"
-                                                         data="#{actionExecuteState.lastState}"
-                                                         render="grid_map,idle"
-                                                         oncomplete="if (event.data == 'success'){#{r:component(panelId)}.hide(); return true;} else return false;"/>
-                                    </div>
-                                </a:outputPanel>
-                            </h:panelGrid>
                         </a:outputPanel>
 
 

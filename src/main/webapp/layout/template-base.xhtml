@@ -39,6 +39,17 @@
 
         <h:outputStylesheet name="other.css"/>
 
+        <a:status id="processWaiting" name="processWaiting"
+                  onstart="#{rich:component('wait')}.show()"
+                  onstop="#{rich:component('wait')}.hide()"/>
+        <rich:popupPanel id="wait" modal="true" autosized="true" styleClass="transparent-popup"
+                      moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
+            <p>      <h:graphicImage value="/img/wait-128.gif" width="64" height="64"/></p>
+            <p>#{messages.ContextLoader}...</p>
+
+
+        </rich:popupPanel>
+
 
         <div class="wrapper">
             <div class="header">

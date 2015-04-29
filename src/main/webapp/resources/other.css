@@ -492,8 +492,28 @@ input[type=button], input[type=reset], input[type=submit]{
 
 }
 
+.edit-select{
+    z-index: inherit !important;
+}
+
 .edit-select button{
     background-image: none;
+}
+
+.edit-select button:focus{
+    background-color: inherit;
+}
+
+.edit-select button:hover{
+    background-color: inherit;
+}
+
+.edit-select button:active{
+    background-color: inherit;
+}
+
+.edit-select>.dropdown-toggle.btn-default{
+    background-color: inherit;
 }
 
 .note{
@@ -582,6 +602,12 @@ input[type=button], input[type=reset], input[type=submit]{
     border-bottom-left-radius: 4px !important;
 }
 
+.input-group-mid button{
+    border-radius: 0px !important;
+}
+
+
+
 
 .table-list-header-toggle .minibutton{
     margin-top: 10px;
@@ -627,6 +653,18 @@ input[type=button], input[type=reset], input[type=submit]{
 }
 
 
+.transparent-popup{
+    border: 0;
+    background: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.transparent-popup .rf-pp-cnt-scrlr{
+    background: transparent;
+
+
+}
 
 
 

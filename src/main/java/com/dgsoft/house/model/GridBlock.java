@@ -4,6 +4,8 @@ package com.dgsoft.house.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,7 +33,7 @@ public class GridBlock implements java.io.Serializable {
     private String useType;
     private String structure;
     private String houseType;
-    private House house;
+    private Set<House> houses = new HashSet<House>(0);
     private String houseOrder;
 
     private String direction;
@@ -47,9 +49,9 @@ public class GridBlock implements java.io.Serializable {
     }
 
     public GridBlock(House house, int colspan, int rowspan) {
-        this.house = house;
         this.colspan = colspan;
         this.rowspan = rowspan;
+        setHouse(house);
     }
 
     public GridBlock(int colspan, int rowspan) {
@@ -246,14 +248,30 @@ public class GridBlock implements java.io.Serializable {
     }
 
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinColumn(name = "HOUSE_ID", nullable = true)
-    public House getHouse() {
-        return house;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gridBlock", cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
+    public Set<House> getHouses() {
+        return houses;
     }
 
+    public void setHouses(Set<House> houses) {
+        this.houses = houses;
+    }
+
+    @Transient
+    public House getHouse() {
+        if (getHouses().isEmpty()){
+            return null;
+        }else{
+            return getHouses().iterator().next();
+        }
+    }
+
+    @Transient
     public void setHouse(House house) {
-        this.house = house;
+        getHouses().clear();
+        getHouses().add(house);
     }
 
     @Column(name = "HOUSE_ORDER", nullable = true)
