@@ -9,15 +9,21 @@
 
 
 
-    <s:decorate template="/layout/edit.xhtml">
+    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
         <ui:define name="label">
             #{messages.MappingCorp_name}
         </ui:define>
-        <h:selectOneMenu id="mappingCorpNameInput" value="#{mappingCorpSubscribe.instance.code}"
+        <h:selectOneMenu id="mappingCorpNameInput"
+                         value="#{mappingCorpSubscribe.instance.code}"
                          style="width: 140px"
-                         label="#{messages.MappingCorp_name}" valueChangeListener="#{mappingCorpSubscribe.valueChangeListener}">
-            <s:selectItems value="#{wordMappingCorporationList.resultList}" var="_mapword"
-                           itemValue="#{_mapword.id}" label="#{_mapword.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                         label="#{messages.MappingCorp_name}"
+                         valueChangeListener="#{mappingCorpSubscribe.valueChangeListener}"
+                         styleClass="selectpicker edit-select">
+            <s:selectItems value="#{wordMappingCorporationList.resultList}"
+                           var="_mapword"
+                           itemValue="#{_mapword.id}"
+                           label="#{_mapword.name}"
+                           noSelectionLabel="#{messages.noSelectLabel}"/>
         </h:selectOneMenu>
     </s:decorate>
 

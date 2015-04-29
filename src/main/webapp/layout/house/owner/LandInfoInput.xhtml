@@ -5,135 +5,175 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <s:decorate template="/layout/edit-multi.xhtml">
 
-        <ui:define name="label">
-            #{label}
-        </ui:define>
+
         <ui:define name="topValue">
-        <span class="value">
-        <h:selectBooleanCheckbox value="#{land.have}">
-            <a:ajax event="click" render="landPanel" execute="@this" listener="#{land.checkHave}">
-                <a:attachQueue requestDelay="0"/>
-            </a:ajax>
-        </h:selectBooleanCheckbox>
-       </span>
-       </ui:define>
+            <div class="form-checkbox">
+                <label>
+                    #{label}
+                </label>
+
+                <h:selectBooleanCheckbox value="#{land.have}">
+                    <a:ajax event="click"
+                            render="landPanel"
+                            execute="@this"
+                            listener="#{land.checkHave}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:selectBooleanCheckbox>
+
+            </div>
+        </ui:define>
 
 
         <ui:define name="values">
-    <a:outputPanel id="landPanel">
-        <a:outputPanel rendered="#{land.have}">
-            <div style="clear: both;"/>
-            <hr style="width: 97%; border:1px dashed #{a4jSkin.panelBorderColor};" size="1"/>
+            <a:outputPanel id="landPanel">
+                <a:outputPanel rendered="#{land.have}">
 
-            
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.Land_Number}
-                </ui:define>
-                <h:inputText required="true" label="#{messages.Land_Number}" size="20" value="#{land.instance.number}"
-                             id="landNubmer">
-                </h:inputText>
-                <ui:define name="tail">
-                    <r:message for="landNubmer"/>
-                </ui:define>
-            </s:decorate>
+                    <hr/>
+                    <div style="display: block;">
 
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    <a:outputPanel style="text-align: center">
-                        <ui:include src="/layout/long-text-display.xhtml">
-                            <ui:param name="value" value="#{messages.Land_LandGetMode}"/>
-                            <ui:param name="size" value="5"/>
-                        </ui:include>
+
+
+                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
+
+                            <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+
+                                <ui:param name="for" value="landNubmer"/>
+
+                                <ui:define name="label">
+                                    #{messages.Land_LandGetMode}
+                                </ui:define>
+                                <div class="input-group">
+
+                                <a:outputPanel styleClass="input-group-btn">
+                                    <h:selectOneMenu id="landGetMode"
+                                                     label="#{messages.Land_LandGetMode}"
+                                                     value="#{land.instance.landGetMode}"
+                                                     p:data-width="140px"
+                                                     rendered="true"
+                                                     styleClass="selectpicker select-menu-btn input-group-first">
+                                        <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
+                                                       itemValue="#{_word.id}" label="#{_word.value}"/>
+                                    </h:selectOneMenu>
+
+                                        </a:outputPanel>
+
+
+                                    <h:inputText required="true"
+                                                 label="#{messages.Land_Number}"
+                                                 size="20" p:placeholder="#{messages.Land_Number}"
+                                                 value="#{land.instance.number}"
+                                                 styleClass="form-control"
+                                                 id="landNubmer">
+                                    </h:inputText>
+                                </div>
+
+
+                            </s:decorate>
+
+
+
+
+                        <div class="form-inline">
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                            <ui:define name="label">
+                                #{messages.Land_BeginUseTime}
+                            </ui:define>
+                            <ui:param name="for" value="LandBeginUseTime"/>
+
+
+                            <div class="input-group">
+                                <h:inputText id="LandBeginUseTime"
+                                             rendered="true"
+                                             styleClass="js-datepicker form-control"
+                                             label="#{messages.Land_BeginUseTime}"
+                                             value="#{land.instance.beginUseTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                </h:inputText>
+                                <span class="input-group-addon">-</span>
+
+                                <h:inputText id="LandEndUseTime"
+                                             rendered="true"
+                                             styleClass="js-datepicker form-control"
+                                             label="#{messages.Land_EndUseTime}"
+                                             value="#{land.instance.endUseTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                </h:inputText>
+                            </div>
+
+                            <ui:define name="message">
+                                <r:message for="LandBeginUseTime" styleClass="edit-below-msg" />
+                                <r:message for="LandEndUseTimes" styleClass="edit-below-msg" />
+                            </ui:define>
+
+
+                        </s:decorate>
+                        </div>
+
+
+
+
+
+
+
+                    <div class="form-inline">
+                        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                            <ui:define name="label">
+                                #{messages.Land_LandCardNo}
+                            </ui:define>
+                            <ui:param name="for" value="landCardNo"/>
+                            <h:inputText label="#{messages.Land_LandCardNo}"
+                                         id="landCardNo"
+                                         value="#{land.instance.landCardNo}"
+                                         styleClass="form-control"
+                                         maxlength="50" />
+                        </s:decorate>
+
+
+
+                        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                            <ui:define name="label">
+                                #{messages.Land_Area}
+                            </ui:define>
+
+                            <ui:param name="for" value="landArea"/>
+                            <h:inputText label="#{messages.Land_Area}"
+                                         id="landArea"
+                                         value="#{land.instance.landArea}"
+                                         styleClass="form-control">
+                                <r:validator event="blur"/>
+                                <f:validateDoubleRange minimum="0"/>
+                                <f:convertNumber pattern="#0.000"/>
+                            </h:inputText>
+
+                        </s:decorate>
+
+
+                        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                            <ui:define name="label">
+                                #{messages.Land_LandProperty}
+                            </ui:define>
+                            <h:selectOneMenu id="landProperty"
+                                             label="#{message.landArea}"
+                                             value="#{land.instance.landProperty}"
+                                             styleClass="selectpicker edit-select">
+                                <s:selectItems value="#{dictionary.getWordList('32')}" var="_word"
+                                               itemValue="#{_word.id}" label="#{_word.value}"
+                                               noSelectionLabel="#{messages.noSelectLabel}"/>
+                            </h:selectOneMenu>
+                        </s:decorate>
+
+                     </div>
                     </a:outputPanel>
-                </ui:define>
-                <h:selectOneMenu required="true" id="landGetMode" label="#{messages.Land_LandGetMode}"
-                                 value="#{land.instance.landGetMode}" style="width:140px">
-                    <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
-                                   itemValue="#{_word.id}" label="#{_word.value}"
-                                   noSelectionLabel="#{messages.noSelectLabel}"/>
-                </h:selectOneMenu>
-                <ui:define name="tail">
-                    <r:message for="landGetMode"/>
-                </ui:define>
-            </s:decorate>
-
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.Land_BeginUseTime}
-                </ui:define>
-                <r:calendar enableManualInput="true"
-                            id="landBeginUseTime"
-                            inputSize="20"
-                            defaultLabel="#{currentDate}"
-                            required="true"
-                            timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                            value="#{land.instance.beginUseTime}"
-                            datePattern="#{messages.datePattern}"/>
-                <ui:define name="tail">
-                    <r:message for="landBeginUseTime"/>
-                </ui:define>
-            </s:decorate>
-
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.Land_EndUseTime}
-                </ui:define>
-                <r:calendar enableManualInput="true"
-                            id="landEndUseTime"
-                            inputSize="20"
-                            defaultLabel="#{currentDate}"
-                            required="true"
-                            timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                            value="#{land.instance.endUseTime}"
-                            datePattern="#{messages.datePattern}"/>
-                <ui:define name="tail">
-                    <r:message for="landEndUseTime"/>
-                </ui:define>
-            </s:decorate>
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.Land_LandCardNo}
-                </ui:define>
-                <h:inputText label="#{messages.Land_LandCardNo}" id="landCardNo" value="#{land.instance.landCardNo}"
-                             maxlength="50"/>
-            </s:decorate>
-
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.Land_Area}
-                </ui:define>
-                <h:inputText label="#{messages.Land_Area}" id="landArea" value="#{land.instance.landArea}" size="20">
-                    <r:validator event="blur"/>
-                    <f:validateDoubleRange minimum="0"/>
-                    <f:convertNumber pattern="#0.000"/>
-                </h:inputText>
-                <ui:define name="tail">
-                    <r:message for="landArea"/>
-                </ui:define>
-            </s:decorate>
-
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">
-                    #{messages.Land_LandProperty}
-                </ui:define>
-                <h:selectOneMenu  id="landProperty" label="#{message.landArea}" value="#{land.instance.landProperty}"
-                                 style="width:140px">
-                    <s:selectItems value="#{dictionary.getWordList('32')}" var="_word"
-                                   itemValue="#{_word.id}" label="#{_word.value}"
-                                   noSelectionLabel="#{messages.noSelectLabel}"/>
-                </h:selectOneMenu>
-            </s:decorate>
-
-
-            <div style="clear: both"/>
-            <hr style="width: 97%; border:1px dashed #{richSkin.panelBorderColor};" size="1"/>
-        </a:outputPanel>
-    </a:outputPanel>
+                    </div>
+                    <hr/>
+                </a:outputPanel>
+            </a:outputPanel>
         </ui:define>
     </s:decorate>
 

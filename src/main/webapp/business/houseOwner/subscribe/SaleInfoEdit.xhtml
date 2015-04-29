@@ -5,33 +5,52 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
-    <s:decorate template="/layout/edit.xhtml">
+
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+        <ui:param name="for" value="sumPriceInput"/>
+
         <ui:define name="label">
             #{messages.SaleInfo_PayType}
         </ui:define>
-        <h:selectOneMenu id="payTypeInput" value="#{saleInfoSubscribe.instance.payType}"
-                         label="#{messages.SaleInfo_PayType}" style="width: 140px">
-            <s:selectItems value="#{dictionary.getWordList('54')}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
-    </s:decorate>
 
-    <s:decorate template="/layout/edit.xhtml">
-        <ui:define name="label">
-            #{messages.SaleInfo_SUM_PRICE}
-        </ui:define>
-        <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}" size="20" required="true"
-                     id="sumPriceInput" label="#{messages.SaleInfo_SUM_PRICE}">
-            <r:validator event="blur"/>
-            <f:validateDoubleRange minimum="0"/>
-            <f:convertNumber pattern="#0.00"/>
-        </h:inputText>
-        <ui:define name="tail">
-            <r:message for="sumPriceInput"/>
-        </ui:define>
+        <div class="input-group">
+            <a:outputPanel styleClass="input-group-btn">
+
+                <h:selectOneMenu id="payTypeInput"
+                                 value="#{saleInfoSubscribe.instance.payType}"
+                                 label="#{messages.SaleInfo_PayType}"
+                                 styleClass="selectpicker select-menu-btn input-group-first">
+                    <s:selectItems value="#{dictionary.getWordList('54')}"
+                                   var="_word"
+                                   itemValue="#{_word.id}"
+                                   label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+
+            </a:outputPanel>
+
+            <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}"
+                         size="20"
+                         required="true"
+                         id="sumPriceInput"
+                         p:placeholder="#{messages.SaleInfo_SUM_PRICE}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
+            </h:inputText>
+
+
+        </div>
+
+
+
     </s:decorate>
 
 

@@ -7,130 +7,142 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <s:decorate template="/layout/edit.xhtml">
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.CloseHouse_CloseDownClour}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_CloseDownClour}" size="40" maxlength="100" required="true"
-                     value="#{closeHouseSubsrcibe.instance.closeDownClour}" id="closeDownClourInput">
-            <r:validator event="blur"/>
+        <ui:param name="for" value="closeDownClourInput"/>
+        <h:inputText label="#{messages.CloseHouse_CloseDownClour}"
+                     required="true"
+                     value="#{closeHouseSubsrcibe.instance.closeDownClour}"
+                     id="closeDownClourInput"
+
+                     styleClass="form-control">
+
         </h:inputText>
-        <ui:define name="tail">
-            <r:message for="closeDownClourInput" />
-        </ui:define>
+
     </s:decorate>
 
-    <s:decorate template="/layout/edit.xhtml">
+
+
+        <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.CloseHouse_Action}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_Action}" size="40" maxlength="100" required="true"
-                     value="#{closeHouseSubsrcibe.instance.action}" id="actionInput">
-            <r:validator event="blur"/>
+        <ui:param name="for" value="actionInput"/>
+        <h:inputText label="#{messages.CloseHouse_Action}"
+                     required="true"
+                     value="#{closeHouseSubsrcibe.instance.action}"
+                     id="actionInput"
+                     styleClass="form-control">
+
         </h:inputText>
-        <ui:define name="tail">
-            <r:message for="actionInput" />
-        </ui:define>
     </s:decorate>
 
-    <s:decorate id="closeDateField" template="/layout/edit.xhtml">
-        <ui:define name="label">#{messages.CloseHouse_CloseDate}</ui:define>
-        <r:calendar label="#{messages.CloseHouse_CloseDate}"
-                    id="closeDate"
-                    enableManualInput="true"
-                    inputSize="20"
-                    required="true"
-                    timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                    value="#{closeHouseSubsrcibe.instance.closeDate}"
-                    datePattern="#{messages.datePattern}"/>
-        <ui:define name="tail">
-            <r:message for="closeDate" />
-        </ui:define>
-    </s:decorate>
 
-    <s:decorate id="toDateField" template="/layout/edit.xhtml">
-        <ui:define name="label">#{messages.CloseHouse_ToDate}</ui:define>
-        <r:calendar id="toDate"
-                    label="#{messages.CloseHouse_ToDate}"
-                    enableManualInput="true"
-                    inputSize="20"
-                    required="true"
-                    timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                    value="#{closeHouseSubsrcibe.instance.toDate}"
-                    datePattern="#{messages.datePattern}"/>
-        <ui:define name="tail">
-            <r:message for="toDate" />
-        </ui:define>
-    </s:decorate>
-    <s:decorate id="legalDocumentsInput" template="/layout/edit.xhtml">
+
+    <div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.CloseHouse_LegalDocuments}"/>
-                <ui:param name="size" value="5"/>
-            </ui:include>
+            #{messages.CloseHouse_CloseDate}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_LegalDocuments}" size="40" maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.legalDocuments}">
+        <ui:param name="for" value="closeDate"/>
+        <div class="input-group">
+            <h:inputText id="closeDate"
+                         rendered="true"
+                         styleClass="js-datepicker form-control"
+                         label="#{messages.CloseHouse_CloseDate}"
+                         value="#{closeHouseSubsrcibe.instance.closeDate}">
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            </h:inputText>
+            <span class="input-group-addon">-</span>
+
+            <h:inputText id="toDateField"
+                         rendered="true"
+                         styleClass="js-datepicker form-control"
+                         label="#{messages.timeZone}"
+                         value="#{closeHouseSubsrcibe.instance.toDate}">
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            </h:inputText>
+
+        </div>
+        <ui:define name="message">
+            <r:message for="closeDate" styleClass="edit-below-msg" />
+            <r:message for="toDateField" styleClass="edit-below-msg" />
+        </ui:define>
+   </s:decorate>
+   </div>
+
+
+
+
+    <div class="form-inline">
+
+
+    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+        <ui:define name="label">
+            #{messages.CloseHouse_ExecutionNotice}
+        </ui:define>
+        <h:inputText label="#{messages.CloseHouse_ExecutionNotice}"
+                     maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.executionNotice}"
+                     styleClass="form-control">
         </h:inputText>
     </s:decorate>
 
-    <s:decorate id="executionNoticeInput" template="/layout/edit.xhtml">
+    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
         <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.CloseHouse_ExecutionNotice}"/>
-                <ui:param name="size" value="5"/>
-            </ui:include>
+            #{messages.CloseHouse_SendPeople}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_ExecutionNotice}" size="40" maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.executionNotice}">
+        <h:inputText label="#{messages.CloseHouse_SendPeople}"
+                     maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.sendPeople}"
+                     styleClass="form-control">
         </h:inputText>
     </s:decorate>
 
-    <s:decorate id="sendPeopleInput" template="/layout/edit.xhtml">
+    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
         <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.CloseHouse_SendPeople}"/>
-                <ui:param name="size" value="5"/>
-            </ui:include>
+            #{messages.CloseHouse_Phone}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_SendPeople}" size="40" maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.sendPeople}">
+        <h:inputText label="#{messages.CloseHouse_Phone}"
+                     maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.phone}"
+                     styleClass="form-control">
         </h:inputText>
     </s:decorate>
 
-    <s:decorate id="phoneInput" template="/layout/edit.xhtml">
+    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
         <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.CloseHouse_Phone}"/>
-                <ui:param name="size" value="5"/>
-            </ui:include>
+            #{messages.CloseHouse_ExecutCardNo}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_Phone}" size="40" maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.phone}">
+        <h:inputText label="#{messages.CloseHouse_ExecutCardNo}"
+                     maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.executCardNo}"
+                     styleClass="form-control">
         </h:inputText>
     </s:decorate>
 
-    <s:decorate id="executCardNoInput" template="/layout/edit.xhtml">
+    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
         <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.CloseHouse_ExecutCardNo}"/>
-                <ui:param name="size" value="5"/>
-            </ui:include>
+            #{messages.CloseHouse_WorkCardNo}
         </ui:define>
-        <h:inputText label="#{messages.CloseHouse_ExecutCardNo}" size="40" maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.executCardNo}">
+        <h:inputText label="#{messages.CloseHouse_WorkCardNo}"
+                     maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.workCardNo}"
+                     styleClass="form-control">
         </h:inputText>
     </s:decorate>
-
-    <s:decorate id="workCardNoInput" template="/layout/edit.xhtml">
-        <ui:define name="label">
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="value" value="#{messages.CloseHouse_WorkCardNo}"/>
-                <ui:param name="size" value="5"/>
-            </ui:include>
-        </ui:define>
-        <h:inputText label="#{messages.CloseHouse_WorkCardNo}" size="40" maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.workCardNo}">
-        </h:inputText>
-    </s:decorate>
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_LegalDocuments}
+            </ui:define>
+            <h:inputText label="#{messages.CloseHouse_LegalDocuments}"
+                         maxlength="100"
+                         value="#{closeHouseSubsrcibe.instance.legalDocuments}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+    </div>
 </ui:composition>
