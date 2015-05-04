@@ -10,7 +10,7 @@
         <dt class="input-label">
             <s:label for="#{for}" styleClass="control-label #{invalid?'errors':''}">
                 <ui:insert name="label"/>
-                <s:span styleClass="required" rendered="#{required}">*</s:span>
+                <s:span styleClass="required" rendered="#{((empty showLabel) or showLabel) and required}">*</s:span>
             </s:label>
         </dt>
        <dd>

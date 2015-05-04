@@ -34,11 +34,11 @@
                             <ui:insert name="panelBody">
                                 <ui:insert/>
 
-
+                              <ui:remove>
                             <div style="clear:both">
                                 <span class="required">*</span>
                                 #{messages.requiredFields}
-                            </div>
+                            </div></ui:remove>
                             </ui:insert>
 
                         </a:outputPanel>

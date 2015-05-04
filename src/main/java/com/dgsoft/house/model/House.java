@@ -84,7 +84,7 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
     public enum HouseDataSource {
-        MAPPING, IMPORT, RECORD_ADD;
+        MAPPING, IMPORT, RECORD_ADD
     }
 
     private String id;
@@ -123,6 +123,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
     private Date createTime;
     //private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
+    private GridBlock gridBlock;
     private HouseOwner houseOwner;
     private LockStatus lockStatus;
 
@@ -630,6 +631,17 @@ public class House implements java.io.Serializable, HouseInfo {
 //    public void setGridBlock(Set<GridBlock> gridBlock) {
 //        this.gridBlock = gridBlock;
 //    }
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "GRID_BLOCK_ID", nullable = true)
+    public GridBlock getGridBlock() {
+        return gridBlock;
+    }
+
+    public void setGridBlock(GridBlock gridBlock) {
+        this.gridBlock = gridBlock;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,optional = true)
     @JoinColumn(name = "MASTER_OWNER",nullable = true)

@@ -6,7 +6,7 @@
 
 *.rf-p {
     background-color: #FFFFFF;
-    color: #BED6F8;
+    color: #ddd;
     border-width: 1px;
     border-style: solid;
     padding: 1px;
@@ -1837,6 +1837,8 @@ input.rf-insl-inp {
 }
 
 *.rf-pp-shdw {
+    display: none;
+    /*
     background-color: rgb(0, 0, 0);
     opacity: 0.1;
     filter: alpha(opacity=10);
@@ -1845,23 +1847,44 @@ input.rf-insl-inp {
     left: 6px;
     bottom: -6px;
     z-index: -1;
+    */
 }
 
 *.rf-pp-cntr {
+    /*
     border: 1px solid #BED6F8;
     background: #FFFFFF;
     z-index: 100;
+    */
+
+
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
 }
 
 *.rf-pp-hdr {
+    /*
     background: #BED6F8 url(../org.richfaces.images/gradientA.png) repeat-x scroll top left;
     position: relative;
     padding-left: 10px;
     cursor: move;
     padding: 2px;
+*/
+    cursor: move;
+    min-height: 16.43px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 *.rf-pp-hdr-cnt {
+    /*
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1871,12 +1894,18 @@ input.rf-insl-inp {
     font-size: 13px;
     padding: 2px;
     padding-left: 10px;
+    */
+    margin: 0;
+    line-height: 1.42857143;
 }
 
+
+
 *.rf-pp-hdr-cntrls {
+
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 26px;
+    right: 10px;
     white-space: nowrap;
     cursor: default;
     font-weight: bold;
@@ -1884,13 +1913,22 @@ input.rf-insl-inp {
     font-family: "microsoft yahei", Helvetica, Arial, "宋体", sans-serif;
     font-size: 13px;
     z-index: 100;
+
+
+
+
+
 }
 
 *.rf-pp-cnt-scrlr {
+    /*
     top: 0px;
     left: 0px;
     overflow: auto;
     background: #FFFFFF;
+    */
+    position: relative;
+    padding: 15px;
 }
 
 *.rf-pp-cnt {
