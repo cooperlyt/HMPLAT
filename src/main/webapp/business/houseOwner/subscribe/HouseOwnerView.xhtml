@@ -16,8 +16,10 @@
 
     <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.businessHouseOwner}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
+
             <ui:param name="title" value="#{messages.House_Owner}" />
             <ui:param name="noDataLabel" value="#{messages.House_Owner_not}"/>
+
         </ui:include>
     </a:outputPanel>
 
