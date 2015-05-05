@@ -20,7 +20,7 @@
     </h:head>
 
 
-    <h:body onload="#{r:component('idleHousePopup')}.show();">
+    <h:body onload="#{r:component('idleHousePopup')}.show();" >
 
         <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
         <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.min.css"/>
@@ -456,9 +456,7 @@
                     position: relative;
                 }
 
-                .totalHeader {
-                    background: #{a4jSkin.tableSubHeaderBackgroundColor};
-                }
+
 
                 </h:outputStylesheet>
 
@@ -605,9 +603,9 @@
 
                         </ui:decorate>
                         <br/>
-                        <r:dataTable style="float: right;" value="#{buildGridMapHome.useTypeTotalList}" var="_entry"
-                                     headerClass="totalHeader">
-                            <r:column headerClass="totalHeader">
+                        <h:dataTable style="float: right; width: 400px;"  styleClass="table table-striped table-hover table-floatThead result-data-table" value="#{buildGridMapHome.useTypeTotalList}" var="_entry"
+                                     >
+                            <h:column >
                                 <f:facet name="header">
                                     #{messages.House_UseType}
                                 </f:facet>
@@ -616,9 +614,9 @@
                                 <f:facet name="footer">
                                     #{messages.recordTotal}
                                 </f:facet>
-                            </r:column>
+                            </h:column>
 
-                            <r:column headerClass="totalHeader">
+                            <h:column >
                                 <f:facet name="header">
                                     #{messages.count}
                                 </f:facet>
@@ -628,9 +626,9 @@
                                     #{buildGridMapHome.houseCount}
                                 </f:facet>
 
-                            </r:column>
+                            </h:column>
 
-                            <r:column headerClass="totalHeader">
+                            <h:column >
                                 <f:facet name="header">
                                     #{messages.House_Area}
                                 </f:facet>
@@ -644,9 +642,9 @@
                                     </h:outputText>
 
                                 </f:facet>
-                            </r:column>
+                            </h:column>
 
-                            <r:column headerClass="totalHeader">
+                            <h:column >
                                 <f:facet name="header">
                                     #{messages.House_UseArea}
                                 </f:facet>
@@ -660,9 +658,9 @@
                                     </h:outputText>
 
                                 </f:facet>
-                            </r:column>
+                            </h:column>
 
-                        </r:dataTable>
+                        </h:dataTable>
                     </a:outputPanel>
 
 
