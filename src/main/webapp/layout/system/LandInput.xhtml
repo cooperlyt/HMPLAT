@@ -14,17 +14,6 @@
             <h:outputText value="#{messages.Land_Number}"/>
             <h:outputText value="#{landInfo.number}"/>
 
-            <h:outputText value="#{messages.Land_LandCardNo}"/>
-            <h:outputText value="#{landInfo.landCardNo}"/>
-
-            <h:outputText value="#{messages.Land_BeginUseTime}"/>
-            <h:outputText value="#{landInfo.beginUseTime}"/>
-
-            <h:outputText value="#{messages.Land_EndUseTime}"/>
-            <h:outputText value="#{landInfo.endUseTime}"/>
-        </dh:entryGridBlock>
-
-        <dh:entryGridBlock columns="6" >
             <a:outputPanel style="text-align: center">
                 <ui:include src="/layout/long-text-display.xhtml">
                     <ui:param name="value" value="#{messages.Land_LandGetMode}"/>
@@ -33,15 +22,33 @@
             </a:outputPanel>
             <h:outputText value="#{dictionary.getWordValue(landInfo.landGetMode)}"/>
 
+            <h:outputText value="#{messages.Land_BeginUseTime}"/>
+            <h:outputText value="#{landInfo.beginUseTime}"/>
+
+            <h:outputText value="#{messages.Land_EndUseTime}"/>
+            <h:outputText value="#{landInfo.endUseTime}"/>
+
+
+
+
+
             <h:outputText value="#{messages.Land_LandProperty}"/>
             <h:outputText value="#{dictionary.getWordValue(landInfo.landProperty)}"/>
 
+
+
             <h:outputText value="#{messages.Land_Area}"/>
-            <dh:entryGridColumn colspan="2">
-              <h:outputText value="#{landInfo.landArea}"/>
+            <h:outputText value="#{landInfo.landArea}"/>
+
+
+
+            <h:outputText value="#{messages.Land_LandCardNo}"/>
+            <dh:entryGridColumn colspan="3">
+              <h:outputText value="#{landInfo.landCardNo}"/>
             </dh:entryGridColumn>
 
         </dh:entryGridBlock>
+
 
 
 </ui:composition>

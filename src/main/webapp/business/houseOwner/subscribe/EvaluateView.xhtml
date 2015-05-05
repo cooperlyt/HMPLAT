@@ -5,16 +5,16 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getEvaluate()}">
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+        <dh:entryGridBlock columns="4" >
 
             <h:outputText value="#{messages.Evaluate_assessmentPrice}"/>
             <h:outputText value="#{ownerBusinessHome.getEvaluate().assessmentPrice}"/>
             <h:outputText value="#{messages.Evaluate_evaluateCorpName}"/>
             <h:outputText value="#{ownerBusinessHome.getEvaluate().evaluateCorpName}"/>
-        </h:panelGrid>
+        </dh:entryGridBlock>
     </a:outputPanel>
 </ui:composition>

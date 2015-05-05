@@ -5,14 +5,16 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getReasonByType('MODIFY_BEFOR_RENSON')}">
-        <h:panelGrid columns="2" styleClass="detailsTable"
-                columnClasses="detailsFirstCol,detailsLastValueCol">
+        <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.Reason_ModifyBeforReason}"/>
-            <h:outputText value="#{ownerBusinessHome.getReasonByType('MODIFY_BEFOR_RENSON').reason}"/>
-        </h:panelGrid>
+            <dh:entryGridColumn colspan="3">
+               <h:outputText value="#{ownerBusinessHome.getReasonByType('MODIFY_BEFOR_RENSON').reason}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
     </a:outputPanel>
 
 </ui:composition>

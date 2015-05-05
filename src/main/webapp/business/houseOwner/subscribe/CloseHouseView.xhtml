@@ -5,23 +5,22 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getCloseHouse()}">
 
 
-        <h:panelGrid columns="2"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsLastValueCol">
+        <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.CloseHouse_CloseDownClour}"/>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().closeDownClour}"/>
 
             <h:outputText value="#{messages.CloseHouse_Action}"/>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().action}"/>
 
-        </h:panelGrid>
 
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+
+
 
             <h:outputText value="#{messages.CloseHouse_CloseDate}"/>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().closeDate}"/>
@@ -29,10 +28,8 @@
             <h:outputText value="#{messages.CloseHouse_ToDate}"/>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().toDate}"/>
 
-        </h:panelGrid>
 
-        <h:panelGrid columns="2"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsLastValueCol">
+
             <a:outputPanel style="text-align: center">
                 <ui:include src="/layout/long-text-display.xhtml">
                     <ui:param name="value" value="#{messages.CloseHouse_LegalDocuments}"/>
@@ -45,10 +42,9 @@
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().executionNotice}"/>
 
 
-        </h:panelGrid>
 
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+
+
 
             <h:outputText value="#{messages.CloseHouse_SendPeople}"/>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().sendPeople}"/>
@@ -74,6 +70,6 @@
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().workCardNo}"/>
 
 
-        </h:panelGrid>
+        </dh:entryGridBlock>
     </a:outputPanel>
 </ui:composition>

@@ -5,17 +5,19 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: title , noDataLabel-->
 
+    <dh:entryGridBlock columns="4" >
 
-    <h:panelGrid columns="2"  styleClass="detailsTable"
-                 columnClasses="detailsFirstCol,detailsLastValueCol">
         <h:outputText value="#{title}"/>
+        <dh:entryGridColumn colspan="3">
         <h:outputText value="#{noDataLabel}"/>
+        </dh:entryGridColumn>
 
-    </h:panelGrid>
+    </dh:entryGridBlock>
 
 
 </ui:composition>

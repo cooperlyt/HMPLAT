@@ -6,14 +6,17 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
-        <s:decorate template="/layout/edit.xhtml">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            #{label}
+        #{label}
         </ui:define>
-        <h:inputTextarea label="#{label}" cols="50" rows="4" value="#{reason.reason}" id="resonIinputTextarea">
+        <h:inputTextarea
+                label="#{label}"
+                cols="50"
+                rows="3"
+                value="#{reason.reason}"
+                styleClass="form-control"
+                id="resonIinputTextarea">
         </h:inputTextarea>
-        <ui:define name="tail">
-            <r:message for="resonIinputTextarea" />
-        </ui:define>
     </s:decorate>
 </ui:composition>
