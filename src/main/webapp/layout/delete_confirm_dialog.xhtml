@@ -9,7 +9,7 @@
     <ui:param name="styleClass" value="modal-sm"/>
 
     <ui:define name="panelBody">
-        <p>#{messages.deleteWran1}#{' '}<strong>#{entityTitle}</strong>#{' '}#{messages.deleteWran2}</p>
+        <p>#{messages.deleteWran1}#{' '}<strong>#{entityTitle}</strong>#{' '} <h:outputText value="#{messages.deleteWran2}" style="color: #900"/> </p>
         <ui:insert name="deleteNote">
         <p>#{messages.deleteNote}</p>
         </ui:insert>

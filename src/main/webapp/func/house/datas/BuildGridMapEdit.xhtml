@@ -33,35 +33,6 @@
         <h:outputStylesheet library="github" name="/css/octicons.css"/>
 
 
-        <r:popupPanel id="updateFilePopup" modal="true" onmaskclick="#{r:component('updateFilePopup')}.hide();"
-                      autosized="true" resizeable="false" styleClass="context-modal-panel">
-
-
-            <h:form enctype="multipart/form-data">
-
-
-                <r:fileUpload maxFilesQuantity="5" title="#{messages.Upload_Build_XML}"
-                              serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
-                              deleteLabel="#{messages.fileUpload_deleteLabel}"
-                              doneLabel="#{messages.fileUpload_doneLabel}"
-                              cancelEntryControlLabel="#{messages.fileUpload_cancelEntryControlLabel}"
-                              addLabel="#{messages.fileUpload_addControlLabel}"
-                              progressLabel="#{messages.fileUpload_progressLabel}"
-                              sizeExceededLabel="#{messages.fileUpload_sizeErrorLabel}"
-                              uploadLabel="#{messages.fileUpload_uploadControlLabel}"
-                              transferErrorLabel="#{messages.fileUpload_transferErrorLabel}"
-                              clearAllLabel="#{messages.fileUpload_clearAllControlLabel}"
-                              clearLabel="#{messages.fileUpload_clearControlLabel}"
-                              stopControlLabel="#{messages.fileUpload_stopControlLabel}"
-                              fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
-                              ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
-                              render="grid_map,idle,toolbar"
-                              onuploadcomplete="#{r:component('updateFilePopup')}.hide();"
-                              acceptedTypes="xml">
-
-                </r:fileUpload>
-            </h:form>
-        </r:popupPanel>
 
 
         <s:div>
@@ -112,7 +83,7 @@
 
                             <li>
                                 <a:commandLink
-                                        onclick="#{r:component('deletePageConfirm')}.show(); return false;">
+                                        onclick="$('#deletePageConfirm').modal('show'); return false;">
                                     <span class="icon-remove icon-large"/>
 
                                     #{messages.DeletePage}
@@ -275,7 +246,7 @@
                         <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
                             <h:graphicImage value="/img/icons/delete.png"/>
                             <a:commandLink value="#{messages.DeletePage}"
-                                           onclick="#{r:component('deletePageConfirm')}.show(); return false;">
+                                           onclick="$('#deletePageConfirm').modal('show'); return false;">
                             </a:commandLink>
                         </r:toolbarGroup>
 
@@ -310,6 +281,45 @@
                         </ui:remove>
                     </r:toolbar>
 
+                </h:form>
+                    <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+                        <ui:param name="panelId" value="deletePageConfirm"/>
+
+                        <ui:define name="panelBody">
+                            <s:div >
+                                <h:outputText value="#{messages.HowOperDeleteGridHouse}"
+                                              style="font-size: 1.2em; font-weight: bold;"/>
+                                <br/>
+                                <h:outputText value="#{messages.DeleteAllHouseDescript}" style="color:#b92c28;"/>
+                                <br/>
+                                <h:outputText value="#{messages.IdleAllHouseDescript}" style="color:#e38d13;"/>
+                            </s:div>
+                        </ui:define>
+
+                        <a:commandButton action="#{buildGridMapHome.deleteGridMapAndHouse}"
+                                         styleClass="btn btn-danger"
+                                         render="grid_map,idle,toolbar" status="processWaiting"
+                                         onclick="$('#deletePageConfirm').modal('hide')"
+                                         value="#{messages.BuildMapAction_delete}" execute="@this"
+                                         immediate="true">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+
+                        <a:commandButton action="#{buildGridMapHome.deleteGridMapIdleHouse}"
+                                         value="#{messages.BuildMapAction_idle}"
+                                         styleClass="btn btn-warning"
+                                         onclick="$('#deletePageConfirm').modal('hide');"
+                                         status="processWaiting" immediate="true"
+                                         execute="@this" render="grid_map,idle,toolbar">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+                        <a:commandButton immediate="true" styleClass="btn btn-default"
+                                         execute="@this" value="#{messages.cancel}"
+                                         onclick="$('#deletePageConfirm').modal('hide'); return false;">
+                        </a:commandButton>
+                    </ui:decorate>
 
                     <r:popupPanel id="deletePageConfirm" width="300" height="140" modal="true" resizeable="false">
 
@@ -325,45 +335,18 @@
                         </f:facet>
                         <a:outputPanel>
 
-                            <s:div style="height: 60px">
-                                <h:outputText value="#{messages.HowOperDeleteGridHouse}"
-                                              style="font-size: 1.2em; font-weight: bold;"/>
-                                <br/>
-                                <h:outputText value="#{messages.DeleteAllHouseDescript}"/>
-                                <br/>
-                                <h:outputText value="#{messages.IdleAllHouseDescript}"/>
-                            </s:div>
+
                             <h:panelGrid columns="1" style="width: 100%; text-align: right">
                                 <a:outputPanel id="#{panelId}_buttons">
 
 
-                                    <a:commandButton action="#{buildGridMapHome.deleteGridMapAndHouse}"
-                                                     render="grid_map,idle,toolbar" status="processWaiting"
-                                                     onclick="#{r:component('deletePageConfirm')}.hide();"
-                                                     value="#{messages.BuildMapAction_delete}" execute="@this"
-                                                     immediate="true">
-                                        <a:attachQueue requestDelay="0"/>
-                                    </a:commandButton>
 
-
-                                    <a:commandButton action="#{buildGridMapHome.deleteGridMapIdleHouse}"
-                                                     value="#{messages.BuildMapAction_idle}"
-                                                     onclick="#{r:component('deletePageConfirm')}.hide();"
-                                                     status="processWaiting" immediate="true"
-                                                     execute="@this" render="grid_map,idle,toolbar">
-                                        <a:attachQueue requestDelay="0"/>
-                                    </a:commandButton>
-
-                                    <a:commandButton immediate="true"
-                                                     execute="@this" value="#{messages.cancel}"
-                                                     onclick="#{r:component('deletePageConfirm')}.hide(); return false;">
-                                    </a:commandButton>
                                 </a:outputPanel>
                             </h:panelGrid>
                         </a:outputPanel>
                     </r:popupPanel>
 
-                </h:form>
+
 
 
                 <h:outputStylesheet>
@@ -473,13 +456,20 @@
 
                 <r:messages globalOnly="true" ajaxRendered="true"/>
 
+
+
+
                 <h:form>
+
 
                     <r:dragIndicator id="indicator" acceptClass="indicator-acpt" draggingClass="indicator-drag"
                                      rejectClass="indicator-rejt"/>
 
                     <!-- oncontextmenu="window.event.returnValue = false" -->
                     <a:outputPanel id="grid_map">
+
+                        <a:jsFunction name="renderMap" render="grid_map,idle,toolbar" status="processWaiting"/>
+
                         <br/>
 
                         <s:div style="width: 100%;text-align: center;">
@@ -543,9 +533,9 @@
                                     <r:menuItem action="#{buildGridMapHome.deleteBlockHouse}"
                                                 icon="/img/icons/delete-red.png"
                                                 label="#{messages.BuildMapAction_delete}"
-                                                status="processWaiting" mode="ajax" execute="@this"
-                                                onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
-                                                render="grid_map">
+                                                mode="ajax" execute="@this"
+                                                oncomplete="$('#removeHouseConfig').modal('show')"
+                                                render="removeHouseConfig_form">
                                         <a:param name="blockId" value="#{_house.id}"
                                                  assignTo="#{buildGridMapHome.selectBlockId}"/>
                                     </r:menuItem>
@@ -560,7 +550,7 @@
                                     <r:menuItem label="#{messages.BuildMapAction_edit}" mode="ajax" execute="@this"
                                                 action="#{actionExecuteState.clearState}"
                                                 icon="/img/icons/info-blue.png"
-                                                oncomplete="#{r:component('editPanel')}.show();"
+                                                oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
                                                 render="editPanel_form">
                                         <a:param name="blockId" value="#{_house.id}"
                                                  assignTo="#{buildGridMapHome.selectBlockId}"/>
@@ -578,8 +568,8 @@
                             <ui:define name="house-action">
                                 <a:commandButton rendered="#{not empty _house.house}"
                                                  image="/img/icons/delete-blue.png"
-                                                 render="deleteActionForm"
-                                                 oncomplete="#{r:component('deleteHouseConfirm')}.show();"
+                                                 render="deleteHouseConfirm_form"
+                                                 oncomplete="$('#deleteHouseConfirm').modal({show: true});"
                                                  title="#{messages.BuildMapAction_delete}"
                                                  execute="@this" immediate="true">
                                     <a:param name="blockId" value="#{_house.id}"
@@ -662,6 +652,74 @@
 
                         </h:dataTable>
                     </a:outputPanel>
+
+
+                    <div class="modal fade data-dialog " id="deleteHouseConfirm" tabindex="-1" role="dialog"
+                         aria-labelledby="deleteHouseConfirm_ModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <a:outputPanel id="deleteHouseConfirm_controls">
+
+                                        <button type="button" class="close" aria-label="#{messages.close}"
+                                                data-dismiss="modal">
+                                            <span class="octicon octicon-remove-close" aria-hidden="true"></span>
+                                            <span class="sr-only">#{messages.close}</span></button>
+                                    </a:outputPanel>
+                                    <a:outputPanel id="deleteHouseConfirm_title">
+                                        <h2 class="facebox-header" id="deleteHouseConfirm_ModalLabel">#{messages.deleteConfirm}</h2>
+                                    </a:outputPanel>
+                                </div>
+                                <a:outputPanel id="deleteHouseConfirm_form" role="form">
+                                    <s:div styleClass="modal-body">
+
+
+                                        <a:outputPanel id="deleteHouseConfirm_inputs">
+                                            <s:div >
+                                                <h:outputText value="#{buildGridMapHome.selectHouse.houseOrder}"
+                                                              style="font-size: 1.2em; font-weight: bold;"/>
+                                                <h:graphicImage rendered="#{not buildGridMapHome.houseCanEdit}"
+                                                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+                                                <br/>
+                                                <h:outputText value="#{messages.DeleteMapHouseInfo}" style="color: #e38d13"/>
+                                                <br/>
+                                                <h:outputText value="#{messages.IdleMapHouseInfo}" style="color: #b92c28"/>
+                                            </s:div>
+
+                                        </a:outputPanel>
+                                    </s:div>
+                                    <a:outputPanel layout="block" styleClass="modal-footer" id="deleteHouseConfirm_buttons">
+                                        <a:commandButton action="#{buildGridMapHome.deleteBlockHouse}"
+                                                         disabled="#{not buildGridMapHome.houseCanEdit}"
+                                                         styleClass="btn btn-danger"
+                                                         render="grid_map" status="processWaiting"
+                                                         onclick="$('#deleteHouseConfirm').modal('hide');"
+                                                         value="#{messages.BuildMapAction_delete}" execute="@this">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:commandButton>
+
+
+                                        <a:commandButton action="#{buildGridMapHome.idleBlockHouse}"
+                                                         value="#{messages.BuildMapAction_idle}"
+                                                         onclick="$('#deleteHouseConfirm').modal('hide');"
+                                                         styleClass="btn btn-warning"
+                                                         status="processWaiting"
+                                                         execute="@this" render="grid_map,idle">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:commandButton>
+
+                                        <a:commandButton immediate="true"
+                                                         styleClass="btn btn-default"
+                                                         execute="@this" value="#{messages.cancel}"
+                                                         onclick="$('#deleteHouseConfirm').modal('hide'); return false;">
+                                        </a:commandButton>
+                                    </a:outputPanel>
+                                </a:outputPanel>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="250" minHeight="264" width="250"
@@ -749,9 +807,9 @@
                                     <s:div styleClass="house-act">
                                         <a:commandButton rendered="#{not _idleHouse.lockStatus.lock}"
                                                          image="/img/icons/delete-red.png"
-                                                         render="idle"
-                                                         onclick="JavaScript:if(confirm('#{messages.deleteConfirm}')){}else{return false;}"
-                                                         action="#{buildGridMapHome.deleteIdleHouse}"
+                                                         render="removeIdleHouseConfirm_form"
+                                                         oncomplete="$('#removeIdleHouseConfirm').modal('show')"
+                                                         action="#{buildGridMapHome.selectedIdleHouse}"
                                                          title="#{messages.BuildMapAction_delete}"
                                                          execute="@this" immediate="true">
                                             <a:attachQueue requestDelay="0"/>
@@ -761,7 +819,7 @@
                                                          image="/img/icons/info-blue.png"
                                                          action="#{buildGridMapHome.selectedIdleHouse}"
                                                          title="#{messages.BuildMapAction_edit}"
-                                                         oncomplete="#{r:component('editPanel')}.show();"
+                                                         oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
                                                          immediate="true" execute="@this" render="editPanel_form">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:commandButton>
@@ -773,63 +831,67 @@
                         </a:outputPanel>
                     </r:popupPanel>
 
-
-                    <r:popupPanel id="deleteHouseConfirm" width="300" height="140" modal="true" resizeable="false">
-
-                        <f:facet name="header">
-                            <h:outputText value="#{messages.deleteConfirm}"/>
-                        </f:facet>
-
-                        <f:facet name="controls">
-                            <a:commandButton immediate="true"
-                                             execute="@this" image="/img/close.png"
-                                             onclick="#{r:component('deleteHouseConfirm')}.hide(); return false;">
-                            </a:commandButton>
-                        </f:facet>
-                        <a:outputPanel id="deleteActionForm">
-
-                            <s:div style="height: 60px">
-                                <h:outputText value="#{buildGridMapHome.selectHouse.houseOrder}"
-                                              style="font-size: 1.2em; font-weight: bold;"/>
-                                <h:graphicImage rendered="#{not buildGridMapHome.houseCanEdit}"
-                                                value="/img/house/lock.png" title="#{messages.LockDecription}"/>
-                                <br/>
-                                <h:outputText value="#{messages.DeleteMapHouseInfo}"/>
-                                <br/>
-                                <h:outputText value="#{messages.IdleMapHouseInfo}"/>
-                            </s:div>
-                            <h:panelGrid columns="1" style="width: 100%; text-align: right">
-                                <a:outputPanel id="#{panelId}_buttons">
-
-
-                                    <a:commandButton action="#{buildGridMapHome.deleteBlockHouse}"
-                                                     disabled="#{not buildGridMapHome.houseCanEdit}"
-                                                     render="grid_map" status="processWaiting"
-                                                     onclick="#{r:component('deleteHouseConfirm')}.hide();"
-                                                     value="#{messages.BuildMapAction_delete}" execute="@this"
-                                                     immediate="true">
-                                        <a:attachQueue requestDelay="0"/>
-                                    </a:commandButton>
-
-
-                                    <a:commandButton action="#{buildGridMapHome.idleBlockHouse}"
-                                                     value="#{messages.BuildMapAction_idle}"
-                                                     onclick="#{r:component('deleteHouseConfirm')}.hide();"
-                                                     status="processWaiting" immediate="true"
-                                                     execute="@this" render="grid_map,idle">
-                                        <a:attachQueue requestDelay="0"/>
-                                    </a:commandButton>
-
-                                    <a:commandButton immediate="true"
-                                                     execute="@this" value="#{messages.cancel}"
-                                                     onclick="#{r:component('deleteHouseConfirm')}.hide(); return false;">
-                                    </a:commandButton>
-                                </a:outputPanel>
-                            </h:panelGrid>
-                        </a:outputPanel>
-                    </r:popupPanel>
-
                 </h:form>
+
+                <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+                    <ui:param name="panelId" value="removeIdleHouseConfirm"/>
+                    <ui:param name="entityTitle" value="#{buildGridMapHome.selectHouse.houseOrder}"/>
+                    <a:commandButton styleClass="btn btn-danger" action="#{buildGridMapHome.deleteIdleHouse}"
+                                     status="processWaiting" style="width: 100%"
+                                     value="#{messages.confirmDelete}" onclick="$('#removeIdleHouseConfirm').modal('hide')"
+                                     render="idle" immediate="true" execute="@this">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
+
+                </ui:decorate>
+
+                    <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+                        <ui:param name="panelId" value="removeHouseConfig"/>
+                        <ui:param name="entityTitle" value="#{buildGridMapHome.selectHouse.houseOrder}"/>
+                        <a:commandButton styleClass="btn btn-danger" action="#{buildGridMapHome.deleteBlockHouse}"
+                                         status="processWaiting" style="width: 100%"
+                                         value="#{messages.confirmDelete}" onclick="$('#removeHouseConfig').modal('hide')"
+                                         render="grid_map" immediate="true" execute="@this">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+                    </ui:decorate>
+
+
+
+
+
+
+                <r:popupPanel id="updateFilePopup" modal="true" onmaskclick="#{r:component('updateFilePopup')}.hide();"
+                              autosized="true" resizeable="false" styleClass="context-modal-panel">
+
+
+                    <h:form enctype="multipart/form-data">
+
+
+                        <r:fileUpload maxFilesQuantity="5" title="#{messages.Upload_Build_XML}"
+                                      serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
+                                      deleteLabel="#{messages.fileUpload_deleteLabel}"
+                                      doneLabel="#{messages.fileUpload_doneLabel}"
+                                      cancelEntryControlLabel="#{messages.fileUpload_cancelEntryControlLabel}"
+                                      addLabel="#{messages.fileUpload_addControlLabel}"
+                                      progressLabel="#{messages.fileUpload_progressLabel}"
+                                      sizeExceededLabel="#{messages.fileUpload_sizeErrorLabel}"
+                                      uploadLabel="#{messages.fileUpload_uploadControlLabel}"
+                                      transferErrorLabel="#{messages.fileUpload_transferErrorLabel}"
+                                      clearAllLabel="#{messages.fileUpload_clearAllControlLabel}"
+                                      clearLabel="#{messages.fileUpload_clearControlLabel}"
+                                      stopControlLabel="#{messages.fileUpload_stopControlLabel}"
+                                      fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
+                                      ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
+                                      onuploadcomplete="#{r:component('updateFilePopup')}.hide();renderMap();"
+                                      acceptedTypes="xml">
+
+                        </r:fileUpload>
+
+
+
+                    </h:form>
+                </r:popupPanel>
 
 
                 <ui:decorate template="/layout/edit-modalpanel.xhtml">
