@@ -231,7 +231,7 @@ input[type=button], input[type=reset], input[type=submit]{
     text-overflow: ellipsis
 }
 
-.dropdown-menu > li > a > .octicon, .dropdown-menu > li > a > .glyphicon {
+.dropdown-menu > li > a > .octicon, .dropdown-menu > li > a > .menu-icon, .dropdown-menu > li > a > .glyphicon {
     float: left;
     margin-top: 1px;
     margin-left: -23px;
@@ -244,7 +244,7 @@ input[type=button], input[type=reset], input[type=submit]{
     background: #4183c4
 }
 
-.dropdown-menu > li > a:hover > .octicon, .dropdown-menu > li > a:hover > .glyphicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .glyphicon {
+.dropdown-menu > li > a:hover > .octicon, .dropdown-menu > li > a:hover > .menu-icon , .dropdown-menu > li > a:hover > .glyphicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .octicon, .dropdown-menu > li > a.zeroclipboard-is-hover > .glyphicon {
     color: inherit;
     opacity: 1
 }

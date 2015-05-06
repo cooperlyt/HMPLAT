@@ -5,6 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
       xmlns:s="http://jboss.org/schema/seam/taglib">
 <f:view
@@ -38,6 +39,7 @@
         <s:div>
             <a:queue requestDelay="0" ignoreDupResponses="true"/>
 
+            <h:form id="toolbar">
 
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
@@ -50,7 +52,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Brand</a>
+                        <h:graphicImage value="/img/logo-icon.png" styleClass="navbar-brand"/>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -91,6 +93,9 @@
                             </li>
 
                             <li>
+
+
+
                                 <a:commandLink status="processWaiting"
                                                action="#{buildGridMapHome.saveGridMap}"
                                                render="grid_map,idle">
@@ -98,21 +103,24 @@
                                     #{messages.save}
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
+
+
+
                             </li>
 
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                   aria-expanded="false">#{buildGridMapHome.instance.order} . #{buildGridMapHome.instance.name} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <a:repeat value="#{buildHome.buildGridPages}" var="_page">
-                                        <li>
-                                            <a:commandLink immediate="true" execute="@this"
-                                                           render="grid_map,toolbar" action="#{buildGridMapHome.toPage}"
-                                                           disabled="#{_page.order eq buildGridMapHome.instance.order}"
-                                                           styleClass="rf-ds-nmb-btn #{(_page.order eq buildGridMapHome.instance.order) ? 'rf-ds-act' : ''}"
-                                                    >
-                                                #{_page.order}. #{_page.name}
+                                        <li role="presentation" class="#{(_page.order eq buildGridMapHome.instance.order) ? 'disabled' : ''}">
+                                            <a:commandLink  p:role="menuitem" p:tabindex="-1" immediate="true" execute="@this" status="processWaiting"
+                                                           render="grid_map,toolbar" action="#{buildGridMapHome.toPage}">
+                                                <span class="menu-icon">
+#{_page.order}
+                                                </span>
+                                                #{_page.name}
                                                 <a:attachQueue requestDelay="0"/>
                                                 <a:param value="#{_page.order}"
                                                          assignTo="#{buildGridMapHome.gotoPage}"/>
@@ -124,32 +132,17 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Link</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-expanded="false">
-                                    Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <s:link onclick="JavaScript:if(confirm('#{messages.ExitGridMapEditConfirm}')){}else{return false;}"
+                                        propagation="end"
+                                        view="/func/house/datas/ProjectView.xhtml"
+                                        value="#{messages.exit}">
+                                    <f:param name="projectId" value="#{buildHome.instance.project.id}"/>
+                                </s:link>
 
 
-                                    <a:repeat value="#{buildHome.buildGridPages}" var="_page">
-                                        <li>
-                                            <a:commandLink immediate="true" execute="@this"
-                                                           render="grid_map,toolbar" action="#{buildGridMapHome.toPage}"
-                                                           disabled="#{_page.order eq buildGridMapHome.instance.order}"
-                                                           styleClass="rf-ds-nmb-btn #{(_page.order eq buildGridMapHome.instance.order) ? 'rf-ds-act' : ''}"
-                                                    >
-                                                #{_page.order} #{_page.name}
-                                                <a:attachQueue requestDelay="0"/>
-                                                <a:param value="#{_page.order}"
-                                                         assignTo="#{buildGridMapHome.gotoPage}"/>
-                                            </a:commandLink>
-                                        </li>
-                                    </a:repeat>
-
-
-                                </ul>
                             </li>
+
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -157,131 +150,12 @@
                 <!-- /.container-fluid -->
             </nav>
 
-
-            <br/> <br/>
-
-            <div class="container-fluid">
-                <h:form>
+            </h:form>
 
 
-                    <r:toolbar id="toolbar" itemSeparator="line" height="30">
 
-                        <r:toolbarGroup rendered="#{buildHome.buildGridPages.size gt 1}">
-                            <a:outputPanel>
-    <span class="rf-ds">
-            <a:commandLink immediate="true" execute="@this"
-                           action="#{buildGridMapHome.firstPage}"
-                           render="grid_map,toolbar"
-                           styleClass="rf-ds-btn rf-ds-btn-first #{(buildGridMapHome.instance.order ge 2) ? '' : 'rf-ds-dis'}"
-                           disabled="#{not (buildGridMapHome.instance.order ge 2)}"
-                           value="#{messages.left}#{messages.left}">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
+            <div class="container-fluid" style="margin-top: 50px;">
 
-            <a:commandLink immediate="true" execute="@this"
-                           render="grid_map,toolbar"
-                           action="#{buildGridMapHome.previousPage}"
-                           disabled="#{not (buildGridMapHome.instance.order ge 2)}"
-                           styleClass="rf-ds-btn rf-ds-btn-prev #{(buildGridMapHome.instance.order ge 2) ? '' : 'rf-ds-dis'}"
-                           value="#{messages.left}">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
-
-
-        <a:repeat value="#{buildHome.buildGridPages}" var="_page">
-
-            <a:commandLink immediate="true" execute="@this"
-                           render="grid_map,toolbar" action="#{buildGridMapHome.toPage}"
-                           disabled="#{_page.order eq buildGridMapHome.instance.order}"
-                           styleClass="rf-ds-nmb-btn #{(_page.order eq buildGridMapHome.instance.order) ? 'rf-ds-act' : ''}"
-                           value="#{_page.order}">
-                <a:attachQueue requestDelay="0"/>
-                <a:param value="#{_page.order}" assignTo="#{buildGridMapHome.gotoPage}"/>
-            </a:commandLink>
-
-        </a:repeat>
-
-            <a:commandLink immediate="true" execute="@this"
-                           render="grid_map,toolbar"
-                           styleClass="rf-ds-btn rf-ds-btn-next #{(buildGridMapHome.instance.order lt buildHome.instance.buildGridMaps.size) ? '' : 'rf-ds-dis'}"
-                           action="#{buildGridMapHome.nextPage}"
-                           disabled="#{not (buildGridMapHome.instance.order lt buildHome.instance.buildGridMaps.size)}"
-                           value="#{messages.right}">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
-
-            <a:commandLink immediate="true" execute="@this"
-                           render="grid_map,toolbar"
-                           styleClass="rf-ds-btn rf-ds-btn-last #{(buildGridMapHome.instance.order lt buildHome.instance.buildGridMaps.size) ? '' : 'rf-ds-dis'}"
-                           disabled="#{not (buildGridMapHome.instance.order lt buildHome.instance.buildGridMaps.size)}"
-                           action="#{buildGridMapHome.lastPage}"
-                           value="#{messages.right}#{messages.right}">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
-
-    </span>
-                            </a:outputPanel>
-                        </r:toolbarGroup>
-
-                        <r:toolbarGroup>
-                            <h:graphicImage value="/img/icons/create.gif"/>
-                            <a:commandLink
-                                    value="#{(empty buildHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}"
-                                    immediate="true" execute="@this"
-                                    oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
-                                <a:attachQueue requestDelay="0"/>
-                                <a:param value="#{false}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
-                            </a:commandLink>
-                        </r:toolbarGroup>
-
-                        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
-                            <h:graphicImage value="/img/icons/out_edit.png"/>
-                            <a:commandLink value="#{messages.UpdateGridXML}" immediate="true" execute="@this"
-                                           oncomplete="#{r:component('updateFilePopup')}.show(); return false;">
-                                <a:attachQueue requestDelay="0"/>
-                                <a:param value="#{true}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
-                            </a:commandLink>
-                        </r:toolbarGroup>
-
-                        <r:toolbarGroup rendered="#{not empty buildHome.buildGridPages}">
-                            <h:graphicImage value="/img/icons/delete.png"/>
-                            <a:commandLink value="#{messages.DeletePage}"
-                                           onclick="$('#deletePageConfirm').modal('show'); return false;">
-                            </a:commandLink>
-                        </r:toolbarGroup>
-
-
-                        <r:toolbarGroup>
-                            <h:graphicImage value="/img/icons/save_all.gif"/>
-
-                            <a:commandLink value="#{messages.save}" status="processWaiting"
-                                           action="#{buildGridMapHome.saveGridMap}"
-                                           render="grid_map,idle">
-                                <a:attachQueue requestDelay="0"/>
-                            </a:commandLink>
-                        </r:toolbarGroup>
-                        <ui:remove>
-                            <r:toolbarGroup location="right">
-                                <a:status>
-                                    <f:facet name="start">
-                                        <h:graphicImage value="/img/connect.gif"/>
-                                    </f:facet>
-                                    <f:facet name="stop">
-                                        <h:graphicImage value="/img/connect_idle.gif"/>
-                                    </f:facet>
-                                </a:status>
-                                <s:button
-                                        onclick="JavaScript:if(confirm('#{messages.ExitGridMapEditConfirm}')){}else{return false;}"
-                                        propagation="end"
-                                        view="/func/house/datas/ProjectBuildEdit.xhtml"
-                                        value="#{messages.return} #{buildHome.instance.buildNo}">
-                                    <f:param name="projectId" value="#{buildHome.instance.project.id}"/>
-                                </s:button>
-                            </r:toolbarGroup>
-                        </ui:remove>
-                    </r:toolbar>
-
-                </h:form>
                     <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
                         <ui:param name="panelId" value="deletePageConfirm"/>
 
@@ -350,6 +224,7 @@
 
 
                 <h:outputStylesheet>
+
 
 
                     .panelc {
@@ -723,7 +598,7 @@
 
 
                     <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="250" minHeight="264" width="250"
-                                  height="300"
+                                  height="300" styleClass="cc"
                                   autosized="false" modal="false">
                         <f:facet name="header">
                             <h4>
@@ -750,7 +625,7 @@
                             </a:commandLink>
 
                         </f:facet>
-                        <a:outputPanel id="idle">
+                        <a:outputPanel layout="block" style="width: 100%; height: 100%" id="idle">
                             <r:jQuery selector=".idle-house-con" event="mouseover"
                                       query="jQuery(this).find('.house-act').stop().fadeIn(10);"/>
                             <r:jQuery selector=".idle-house-con" event="mouseout"
@@ -828,6 +703,7 @@
                                     </s:div>
                                 </r:panel>
                             </a:repeat>
+                            <div style="clear: both;"/>
                         </a:outputPanel>
                     </r:popupPanel>
 
