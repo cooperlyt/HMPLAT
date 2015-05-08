@@ -198,7 +198,7 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     private List<House> getAllIdleHouse() {
         if (idleHouse == null)
-            idleHouse = getEntityManager().createQuery("select house from House house where house.build.id = :buildId and not (house.id in (select block.house.id from GridBlock block where (block.house <> null) and (block.gridRow.buildGridMap.build.id = :buildId)))", House.class).
+            idleHouse = getEntityManager().createQuery("select house from House house where house.build.id = :buildId and  (house.gridBlock = null)", House.class).
                     setParameter("buildId", getId()).getResultList();
         return idleHouse;
 

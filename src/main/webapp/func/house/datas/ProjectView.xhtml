@@ -66,8 +66,9 @@
                     <f:facet name="header">
                         #{messages.Build_Id}
                     </f:facet>
-                    <s:link value="#{_build.id}" styleClass="tooltipped tooltipped-s">
+                    <s:link value="#{_build.id}" view="/func/house/datas/BuildView.xhtml" styleClass="tooltipped tooltipped-s">
                         <f:passThroughAttribute name="aria-label" value="#{_build.name}"/>
+                        <f:param name="buildId" value="#{_build.id}"/>
                     </s:link>
 
                 </h:column>

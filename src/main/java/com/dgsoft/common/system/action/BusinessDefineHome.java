@@ -129,6 +129,15 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return editSubscribes;
     }
 
+    public void initEditSubscribes(){
+        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+            if (define.isHaveComponent()) {
+                define.getComponents().initSubscribe();
+
+            }
+        }
+    }
+
     public List<SubscribeGroup> getViewSubscribeGroups() {
         if (viewSubscribeGroups == null){
             viewSubscribeGroups = new ArrayList<SubscribeGroup>();

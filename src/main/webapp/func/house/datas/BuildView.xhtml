@@ -6,14 +6,32 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-width-template.xhtml">
+                template="/layout/template-data.xhtml">
 
-    <ui:param name="functionTitle" value="#{buildHome.instance.buildName}"/>
+    <ui:define name="head-right">
+        <h1>
+            #{buildHome.instance.districtName}
+
+            <span class="path-divider">/</span>
+
+            #{buildHome.instance.sectionName}
+            <span class="path-divider">/</span>
+            #{buildHome.instance.projectName}
+            <span class="path-divider">/</span>
+            <strong>
+                #{buildHome.instance.name}
+            </strong>
+
+        </h1>
+    </ui:define>
 
 
 
 
-    <ui:define name="body">
+
+
+
+    <ui:define name="body-after">
 
         <r:dataTable value="#{buildHome.statusTotalList}" var="_status">
             <r:column style="border-right: 0;padding-right: 0;">

@@ -29,7 +29,10 @@ public class TaskPrepare {
         businessDefineHome.setId(taskInstance.getVariable("businessDefineId"));
         businessDefineHome.setTaskName(taskInstance.getName());
 
-        return TaskDescription.getTaskDescription(taskInstance.getId()).getTaskOperComponent().beginTask(taskInstance);
+
+        String result = TaskDescription.getTaskDescription(taskInstance.getId()).getTaskOperComponent().beginTask(taskInstance);
+        businessDefineHome.initEditSubscribes();
+        return result;
     }
 
 }
