@@ -85,7 +85,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     }
 
     public void addNewOwner() {
-        BusinessPool newOwner = new BusinessPool(new Date());
+        BusinessPool newOwner = new BusinessPool(new Date(),houseRegInfo);
         houseRegInfo.getBusinessPools().add(newOwner);
         poolOwners.add(new PersonEntityAdapter<BusinessPool>(newOwner));
     }

@@ -4,9 +4,107 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+    <a:outputPanel >
+
+    <a:repeat value="#{persons}" var="_person">
+
+        <f:subview >
+        <div class="context-panel">
+
+            <s:decorate styleClass="form-group" id="personCardInput" template="/layout/edit-big.xhtml">
+
+                <ui:param name="for" value="credentialsNumber"/>
+                <ui:param name="status" value="personCredentiaslNumberStatus"/>
+                <ui:param name="showLabel" value="false"/>
+
+
+
+                <div class="input-group">
+
+                <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
+
+                    <h:selectOneMenu  label="#{messages.person_field_credentialsType}" id="personCredentialsTypeInput"
+                                      styleClass="selectpicker select-menu-btn input-group-first"
+                                      value="#{_person.credentialsType}" required="true">
+                        <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+                        <s:convertEnum/>
+                        <a:ajax event="valueChange"
+                                render="credentialsNumber,readBtn"
+                                execute="@this" status="waitSearchPerson">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+
+
+                    </h:selectOneMenu>
+
+                    <a:commandLink styleClass="btn btn-default #{(_person.credentialsType.name() eq 'MASTER_ID') ? '' : 'disabled'}"
+                                   id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
+                                   execute="@this" immediate="true"
+                                   render="credentialsNumber,credentialsType,#{render}">
+                        <span class="octicon octicon-file-media" style="font-size: 20px; "/>
+                    </a:commandLink>
+                </a:outputPanel>
+                    <h:inputText id="credentialsNumber" disabled="#{(_person.credentialsType.name() eq 'OTHER')}"
+                                 label="#{messages.person_field_credentialsNO}"
+                                 styleClass="form-control"
+                                 required="true"
+                                 size="25"
+                                 maxlength="100"
+                                 value="#{_person.credentialsNumber}">
+                        <a:ajax event="blur" render="personCardInput,poolTable"
+                                status="personCredentiaslNumberStatus" execute="personCredentialsTypeInput,credentialsNumber">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                    </h:inputText>
+
+
+
+                    <div class="input-group-addon">
+                    </div>
+                    <h:inputText id="cerdentialsName" disabled="#{_person.manager}" value="#{_person.personName}"
+                                 required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
+
+                    </h:inputText>
+
+
+                    <div class="input-group-btn">
+                        <ui:insert name="removeAction"/>
+
+                    </div>
+
+                </div>
+
+                <ui:define name="message">
+                    <r:message for="cerdentialsName" styleClass="edit-below-msg"/>
+                    <r:message for="#{for}" styleClass="edit-below-msg" rendered="#{not empty for}"/>
+                </ui:define>
+
+            </s:decorate>
+
+
+
+
+        </div>
+
+            <div class="card-panel">
+                <ui:insert/>
+
+            </div>
+
+
+        </f:subview>
+
+
+    </a:repeat>
+
+    </a:outputPanel>
+
+
+    <ui:remove>
     <r:dataTable id="poolTable" style="width: 100%"
                  value="#{persons}" var="_person">
         <f:facet name="header">
@@ -58,21 +156,10 @@
 
 
         <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_name}
-            </f:facet>
 
-            <s:decorate template="/layout/grid-inside-edit.xhtml" rendered="#{not _person.manager}">
-                <r:inplaceInput value="#{_person.personName}" style="width: 90%" required="true"
-                                label="#{messages.BusinessPool_name}">
-                    <a:ajax event="blur" execute="@this" render="@none"/>
-                </r:inplaceInput>
-            </s:decorate>
-            <h:outputText rendered="#{_person.manager}"
-                          value="#{_person.personName}"/>
         </r:column>
 
-        <ui:insert name="columnAfter"/>
 
-    </r:dataTable>
+
+    </r:dataTable></ui:remove>
 </ui:composition>

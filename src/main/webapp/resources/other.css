@@ -662,9 +662,45 @@ input[type=button], input[type=reset], input[type=submit]{
 
 .transparent-popup .rf-pp-cnt-scrlr{
     background: transparent;
+}
+
+.context-panel{
+    margin-right: 0;
+    margin-left: 0;
+
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-style: solid;
+
+    position: relative;
+    padding: 15px 15px 15px;
+    background-color: #f7f7f9;
+
+
 
 
 }
+
+.card-panel{
+
+
+    padding: 9px 14px;
+    margin-bottom: 14px;
+
+    border: 1px solid #e1e1e8;
+
+
+    margin-top: -1px;
+    margin-right: 0;
+    margin-left: 0;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #fff;
+}
+
 
 
 
