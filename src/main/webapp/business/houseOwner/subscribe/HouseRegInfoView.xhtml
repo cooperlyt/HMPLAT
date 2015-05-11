@@ -17,11 +17,16 @@
             <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.houseRegInfo.houseFrom)}"/>
 
             <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.houseRegInfo.houseProperty)}"/>
+            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.houseRegInfo.poolType.name()]}"/>
+
 
             <h:outputText/>
             <h:outputText/>
         </dh:entryGridBlock>
+
+
     </a:outputPanel>
+
+
 
 </ui:composition>
