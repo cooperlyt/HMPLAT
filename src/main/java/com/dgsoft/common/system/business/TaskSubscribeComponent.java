@@ -5,14 +5,31 @@ package com.dgsoft.common.system.business;
  */
 public interface TaskSubscribeComponent {
 
+    public enum ValidResult{
+        SUCCESS(1),
+        INFO(2),
+        WARN(3),
+        ERROR(4),
+        FATAL(5);
+
+        private int pri;
+
+        private ValidResult(int pri){
+            this.pri = pri;
+        }
+
+        public int getPri() {
+            return pri;
+        }
+    }
+
     public abstract void initSubscribe();
 
-    // success return "success"
-    public abstract String validSubscribe();
+
+    public abstract ValidResult validSubscribe();
 
 
-    // success return "saved"
-    public abstract String saveSubscribe();
+    public abstract boolean saveSubscribe();
 
 
 

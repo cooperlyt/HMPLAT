@@ -87,7 +87,12 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     public void addNewOwner() {
         BusinessPool newOwner = new BusinessPool(new Date(),houseRegInfo);
         houseRegInfo.getBusinessPools().add(newOwner);
-        poolOwners.add(new PersonEntityAdapter<BusinessPool>(newOwner));
+        poolOwners.add(0,new PersonEntityAdapter<BusinessPool>(newOwner));
+    }
+
+    public void clearOwner(){
+        poolOwners.clear();
+        houseRegInfo.getBusinessPools().clear();
     }
 
     @Override
@@ -96,17 +101,17 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     }
 
     @Override
-    public String validSubscribe() {
+    public ValidResult validSubscribe() {
         if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType()) && poolOwners.isEmpty()) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
-            return null;
+            return ValidResult.ERROR;
         }
-        return "success";
+        return ValidResult.SUCCESS;
     }
 
 
     @Override
-    public String saveSubscribe() {
+    public boolean saveSubscribe() {
         if (ownerBusinessHome.getSingleHoues().getHouseRegInfo().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
             houseRegInfo.getBusinessPools().clear();
             poolOwners.clear();
@@ -116,6 +121,6 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
                 pool.setPoolArea(null);
             }
         }
-        return "saved";
+        return true;
     }
 }

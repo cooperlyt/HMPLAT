@@ -5,11 +5,19 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
     <navigation from-action="#{ownerTaskHandle.saveTask}">
-        <rule if-outcome="updated">
 
+
+
+        <rule if-outcome="SUCCESS">
             <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
-
         </rule>
+        <rule if-outcome="INFO">
+            <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
+        </rule>
+        <rule if-outcome="WARN">
+            <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
+        </rule>
+
 
     </navigation>
 

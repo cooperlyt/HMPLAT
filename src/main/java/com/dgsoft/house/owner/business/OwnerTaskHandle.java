@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.TaskDescription;
+import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
@@ -83,13 +84,25 @@ public class OwnerTaskHandle {
     private OwnerBusinessHome ownerBusinessHome;
 
     public String saveTask() {
-        if ("success".equals(businessDefineHome.saveSubscribe())) {
-            return ownerBusinessHome.update();
+        //TODO needFile
+
+        TaskSubscribeComponent.ValidResult result = businessDefineHome.validSubscribes();
+
+        if (result.getPri() > TaskSubscribeComponent.ValidResult.WARN.getPri()){
+            return result.name();
         }
-        return null;
+
+        if (businessDefineHome.saveSubscribes() && "updated".equals(ownerBusinessHome.update())) {
+             return result.name();
+        }else{
+            return TaskSubscribeComponent.ValidResult.FATAL.name();
+        }
+
     }
 
     protected String completeTask() {
+        //TODO no subscribe
+
         if ("updated".equals(ownerBusinessHome.update())) {
             return "taskCompleted";
         }

@@ -3,8 +3,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
@@ -43,7 +44,7 @@
             <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>
             <s:convertEnum/>
-            <a:ajax event="valueChange" render="poolOwnerTable">
+            <a:ajax event="valueChange" render="poolOwnerTable" oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
         </h:selectOneMenu>
@@ -58,22 +59,30 @@
             <a:outputPanel id="poolOwnerPersons">
 
 
-                <div class="select-menu">
-                    <div class="btn-group btn-group-sm right">
+                <div class="select-menu table-top-total">
+                    <div class="btn-group">
 
-                        <a:commandLink styleClass="btn btn-danger">
+                        <a:commandLink styleClass="btn btn-danger tooltipped tooltipped-s"
+                                       p:aria-label="#{messages.EmptyPoolOwner}"
+                                       immediate="true" execute="@this"
+                                       action="#{poolOwnerSubscribe.clearOwner}" render="poolOwnerPersons">
                             <span class="octicon octicon-trashcan"></span>
+                            <a:attachQueue requestDelay="0"/>
                         </a:commandLink>
 
 
-                        <a:commandLink styleClass="btn btn-primary" title="#{messages.AddPoolOwnerFromCard}">
+                        <a:commandLink styleClass="btn btn-primary tooltipped tooltipped-s"
+                                       p:aria-label="#{messages.PersonFromCard}"
+                                       oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
                             <span class="octicon octicon-file-media"></span>
                         </a:commandLink>
 
 
                         <a:commandLink execute="@this" immediate="true" title="#{messages.AddPoolOwner}"
                                        action="#{poolOwnerSubscribe.addNewOwner}"
-                                       styleClass="btn btn-success" render="poolOwnerPersons">
+                                       p:aria-label="#{messages.AddPoolOwner}"
+                                       oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')"
+                                       styleClass="btn btn-success tooltipped tooltipped-s" render="poolOwnerPersons">
                             <span class="octicon octicon-plus"></span>
                             <a:attachQueue requestDelay="0"/>
                         </a:commandLink>
@@ -82,11 +91,14 @@
 
 
                     <h3>
-                        #{messages.SerachResultCount}#{' '}
+
+                        <h:outputText value="#{messages.PoolOwnerIsEmpty}" style="color: #eb9316" rendered="#{newEditPoolOwners.size eq 0}"/>
+                        <a:outputPanel rendered="#{not (newEditPoolOwners.size eq 0)}">
+                        #{messages.AddedPoolOwnerCount}#{' '}
                         <h:outputText value="#{newEditPoolOwners.size}">
                             <f:convertNumber type="number" groupingUsed="true"/>
                         </h:outputText>
-                        #{''}#{messages.SerachResultCountPrefx}
+                        </a:outputPanel>
                     </h3>
                 </div>
 
@@ -175,9 +187,10 @@
                 <ui:define name="removeAction">
                     <a:commandLink styleClass="btn btn-danger"
                                    execute="@this" immediate="true"
+                                   style="height: 34px;"
                                    action="#{poolOwnerSubscribe.deleteSelectOwner}"
                                    render="poolOwnerPersons">
-                        <span class="octicon octicon-trashcan" style="font-size: 20px; "/>
+                        <span class="octicon octicon-trashcan"/>
                     </a:commandLink>
                 </ui:define>
 

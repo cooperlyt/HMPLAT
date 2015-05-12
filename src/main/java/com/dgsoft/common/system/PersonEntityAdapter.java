@@ -1,14 +1,19 @@
 package com.dgsoft.common.system;
 
+import java.util.UUID;
+
 /**
  * Created by cooper on 9/20/14.
  */
 public class PersonEntityAdapter<E extends PersonEntity> {
 
+    private String uuid;
+
     private PersonHelper<E> personHelper;
 
     public PersonEntityAdapter(E entity) {
         personHelper = new PersonHelper<E>(entity);
+        uuid = UUID.randomUUID().toString();
     }
 
     public E getPersonEntity(){
@@ -41,6 +46,9 @@ public class PersonEntityAdapter<E extends PersonEntity> {
         personHelper.setPersonName(name);
     }
 
+    public String getUuid() {
+        return uuid;
+    }
 
     public boolean isManager(){
         return personHelper.isManager();
