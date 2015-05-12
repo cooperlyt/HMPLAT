@@ -8,27 +8,24 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
     <a:outputPanel
-            rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse)}">
+            rendered="#{(not empty ownerBusinessHome.singleHoues.houseRegInfo)}">
         <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.RegisterProperty_HouseProperty}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseProperty)}"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.houseRegInfo.houseProperty)}"/>
 
             <h:outputText value="#{messages.RegisterProperty_HouseFrom}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.houseFrom)}"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.houseRegInfo.houseFrom)}"/>
 
             <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
-            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType.name()]}"/>
+            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.houseRegInfo.poolType.name()]}"/>
+
 
             <h:outputText/>
             <h:outputText/>
-       </dh:entryGridBlock>
+        </dh:entryGridBlock>
+
+
     </a:outputPanel>
-
-
-
-
-
-
 
 
 

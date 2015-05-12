@@ -26,6 +26,11 @@
             产权人查看
         </description>
     </view-subscribe>
+    <view-subscribe name="PersionOwnerEntrustView" page="/business/houseOwner/subscribe/PersionOwnerEntrustView.xhtml">
+        <description>
+            产权代理人查看
+        </description>
+    </view-subscribe>
 
     <view-subscribe name="mortgagerView" page="/business/houseOwner/subscribe/MortgagerView.xhtml">
         <description>
@@ -39,11 +44,6 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml">
-        <description>
-            备案人编辑
-        </description>
-    </view-subscribe>
 
     <view-subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml">
         <description>
@@ -155,11 +155,7 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="PersionOwnerEntrustView" page="/business/houseOwner/subscribe/PersionOwnerEntrustView.xhtml">
-        <description>
-            产权代理人查看
-        </description>
-    </view-subscribe>
+
 
     <view-subscribe name="PersionPreSaleEntrustView"
                     page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml">
@@ -180,8 +176,14 @@
 
 
     <view-subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml">
+    <description>
+        （启动） 共有情况，产权来源，产别
+    </description>
+   </view-subscribe>
+
+    <view-subscribe name="HouseRegInfoView" page="/business/houseOwner/subscribe/HouseRegInfoView.xhtml">
         <description>
-            （启动） 共有情况，产权来源，产别
+            （业务中） 共有情况，产权来源，产别
         </description>
     </view-subscribe>
 
@@ -237,12 +239,14 @@
         商品房合同备案号查看
     </subscribe>
     -->
+
     <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
             >
         <description>
             现产权人编辑
         </description>
     </edit-subscribe>
+
     <edit-subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="">
         <description>
             查封登记编辑
@@ -255,12 +259,7 @@
         </description>
     </edit-subscribe>
 
-    <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
-                    component="">
-        <description>
-            产权代理人编辑
-        </description>
-    </edit-subscribe>
+
 
     <edit-subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/ResonFillChangeEdit.xhtml"
                     component="">
@@ -320,11 +319,28 @@
             抵押权人编辑
         </description>
     </edit-subscribe>
+    <edit-subscribe name="mortgaegeRegisteEdit" page="/business/houseOwner/subscribe/MortgaegeRegisteEdit.xhtml"
+                    component="">
+        <description>
+            一般抵押权编辑,债权数额,权利种类,抵押时间始,抵押时间,抵押面积,担保范围
+        </description>
+    </edit-subscribe>
 
+    <view-subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml">
+        <description>
+            备案人编辑
+        </description>
+    </view-subscribe>
 
     <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
         <description>
             产权人编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
+                    component="">
+        <description>
+            产权代理人编辑
         </description>
     </edit-subscribe>
 
@@ -367,10 +383,14 @@
         </description>
     </edit-subscribe>
 
-    <edit-subscribe name="mortgaegeRegisteEdit" page="/business/houseOwner/subscribe/MortgaegeRegisteEdit.xhtml"
+
+
+
+
+    <edit-subscribe name="BusinessNowLandInfoEdit" page="/business/houseOwner/subscribe/BusinessNowLandInfoEdit.xhtml"
                     component="">
         <description>
-            一般抵押权编辑,债权数额,权利种类,抵押时间始,抵押时间,抵押面积,担保范围
+            土地信息编辑（有没有历史土地信息都编辑，更正，变更）
         </description>
     </edit-subscribe>
 
@@ -383,13 +403,6 @@
     <edit-subscribe name="mappingCorpEdit" page="/business/houseOwner/subscribe/MappingCorpEdit.xhtml" component="">
         <description>
             测绘机构编辑
-        </description>
-    </edit-subscribe>
-
-    <edit-subscribe name="BusinessNowLandInfoEdit" page="/business/houseOwner/subscribe/BusinessNowLandInfoEdit.xhtml"
-                    component="">
-        <description>
-            土地信息编辑（有没有历史土地信息都编辑，更正，变更）
         </description>
     </edit-subscribe>
 
