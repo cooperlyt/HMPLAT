@@ -64,6 +64,14 @@ function initEditInput(){
     $('.js-form-input').removeClass('edit-error');
 }
 
+function initDynamicEditInputs(id){
+    $('.js-input-field',document.getElementById(id)).removeClass('has-success');
+    $('.js-input-field',document.getElementById(id)).removeClass('has-error');
+    $('.js-form-input',document.getElementById(id)).removeClass('edit-valid');
+    $('.js-form-input',document.getElementById(id)).removeClass('edit-success');
+    $('.js-form-input',document.getElementById(id)).removeClass('edit-error');
+}
+
 
 function startEditValid(obj){
     $(document.getElementById(obj.id).parentElement).removeClass('edit-valid');

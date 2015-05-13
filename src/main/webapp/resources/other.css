@@ -453,6 +453,14 @@ input[type=button], input[type=reset], input[type=submit]{
     float: right;
 }
 
+.table-top-total.select-menu{
+    padding-bottom: 5px;
+}
+
+.table-top-total.select-menu .btn-group{
+    float: right;
+}
+
 .table-header{
     vertical-align: bottom;
     border-bottom: 2px solid #ddd;
@@ -678,10 +686,6 @@ input[type=button], input[type=reset], input[type=submit]{
     position: relative;
     padding: 15px 15px 15px;
     background-color: #f7f7f9;
-
-
-
-
 }
 
 .card-panel{

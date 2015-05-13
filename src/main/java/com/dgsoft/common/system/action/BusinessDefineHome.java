@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.action;
 
 import com.dgsoft.common.system.SystemEntityHome;
+import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.common.system.model.*;
 import org.jboss.seam.annotations.In;
@@ -33,28 +34,37 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     @In
     private FacesMessages facesMessages;
 
-    public String validSubscribe() {
+
+    public String validSubscribe(){
+        return validSubscribes().name();
+    }
+
+    public TaskSubscribeComponent.ValidResult validSubscribes(){
+        TaskSubscribeComponent.ValidResult result = TaskSubscribeComponent.ValidResult.SUCCESS;
+
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
-                if (!"success".equals(define.getComponents().validSubscribe())) {
-                    return "";
+                TaskSubscribeComponent.ValidResult r = define.getComponents().validSubscribe();
+                if (r.getPri() > result.getPri()) {
+                    result = r;
                 }
             }
         }
-        return "success";
+        return result;
     }
 
 
-    public String saveSubscribe() {
+    public boolean saveSubscribes() {
+
 
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
-                if (!"saved".equals(define.getComponents().saveSubscribe())) {
-                    return "";
+                if (!define.getComponents().saveSubscribe()) {
+                    return false;
                 }
             }
         }
-        return "success";
+        return true;
     }
 
     private String taskName = CREATE_TASK_NAME;

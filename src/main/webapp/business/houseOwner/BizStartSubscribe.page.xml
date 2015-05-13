@@ -5,7 +5,14 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
     <navigation from-action="#{businessDefineHome.validSubscribe}">
-        <rule if-outcome="success">
+
+        <rule if-outcome="SUCCESS">
+            <redirect view-id="/business/houseOwner/BizStartFileUpload.xhtml"/>
+        </rule>
+        <rule if-outcome="INFO">
+            <redirect view-id="/business/houseOwner/BizStartFileUpload.xhtml"/>
+        </rule>
+        <rule if-outcome="WARN">
             <redirect view-id="/business/houseOwner/BizStartFileUpload.xhtml"/>
         </rule>
     </navigation>

@@ -37,6 +37,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     public BusinessPool(Date createTime,HouseRegInfo houseRegInfo){
         this.createTime = createTime;
         this.houseRegInfo = houseRegInfo;
+        this.credentialsType = CredentialsType.MASTER_ID;
     }
 
     public BusinessPool(PoolOwner pool){

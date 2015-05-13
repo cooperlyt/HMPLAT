@@ -6,19 +6,22 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <a:outputPanel >
 
+
     <a:repeat value="#{persons}" var="_person">
 
         <f:subview >
+
         <div class="context-panel">
 
             <s:decorate styleClass="form-group" id="personCardInput" template="/layout/edit-big.xhtml">
 
                 <ui:param name="for" value="credentialsNumber"/>
-                <ui:param name="status" value="personCredentiaslNumberStatus"/>
+                <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
                 <ui:param name="showLabel" value="false"/>
 
 
@@ -33,8 +36,8 @@
                         <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                         <s:convertEnum/>
                         <a:ajax event="valueChange"
-                                render="credentialsNumber,readBtn"
-                                execute="@this" status="waitSearchPerson">
+                                render="personCardInput"
+                                execute="@this" status="#{_person.uuid}_personCredentiaslNumberStatus">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
 
@@ -43,9 +46,9 @@
 
                     <a:commandLink styleClass="btn btn-default #{(_person.credentialsType.name() eq 'MASTER_ID') ? '' : 'disabled'}"
                                    id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                                   execute="@this" immediate="true"
-                                   render="credentialsNumber,credentialsType,#{render}">
-                        <span class="octicon octicon-file-media" style="font-size: 20px; "/>
+                                   execute="@this" immediate="true" style="height: 34px;"
+                                   render="credentialsNumber,cerdentialsName">
+                        <span class="octicon octicon-file-media" />
                     </a:commandLink>
                 </a:outputPanel>
                     <h:inputText id="credentialsNumber" disabled="#{(_person.credentialsType.name() eq 'OTHER')}"
@@ -54,9 +57,10 @@
                                  required="true"
                                  size="25"
                                  maxlength="100"
+                                 p:placeholder="#{messages.person_field_credentialsNO}"
                                  value="#{_person.credentialsNumber}">
-                        <a:ajax event="blur" render="personCardInput,poolTable"
-                                status="personCredentiaslNumberStatus" execute="personCredentialsTypeInput,credentialsNumber">
+                        <a:ajax event="blur" render="personCardInput"
+                                status="#{_person.uuid}_personCredentiaslNumberStatus" execute="personCredentialsTypeInput,credentialsNumber">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:inputText>
@@ -64,8 +68,10 @@
 
 
                     <div class="input-group-addon">
+
                     </div>
                     <h:inputText id="cerdentialsName" disabled="#{_person.manager}" value="#{_person.personName}"
+                                 p:placeholder="#{messages.person_field_name}"
                                  required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
 
                     </h:inputText>
@@ -79,8 +85,9 @@
                 </div>
 
                 <ui:define name="message">
-                    <r:message for="cerdentialsName" styleClass="edit-below-msg"/>
-                    <r:message for="#{for}" styleClass="edit-below-msg" rendered="#{not empty for}"/>
+                    <r:message for="credentialsNumber" styleClass="edit-below-msg" ajaxRendered="false"/>
+                    <r:message for="cerdentialsName" styleClass="edit-below-msg" ajaxRendered="false"/>
+
                 </ui:define>
 
             </s:decorate>
@@ -90,11 +97,10 @@
 
         </div>
 
-            <div class="card-panel">
+            <a:outputPanel id="attFields" layout="block" class="card-panel">
                 <ui:insert/>
 
-            </div>
-
+            </a:outputPanel>
 
         </f:subview>
 
