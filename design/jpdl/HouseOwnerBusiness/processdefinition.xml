@@ -70,10 +70,10 @@
 
     <decision name="繕证判断">
         <transition to="缮证" name="to 证">
-			<condition expression="#{true}"></condition>
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP37','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84')}"></condition>
 		</transition>
         <transition to="归档" name="to 归档">
-			<condition expression="#{ (businessDefineHome.id eq 'WP12') or (businessDefineHome.id eq 'WP17') or (businessDefineHome.id eq 'WP21') or (businessDefineHome.id eq 'WP73') or (businessDefineHome.id eq 'WP74') or (businessDefineHome.id eq 'WP84')}"></condition>
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP38','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84')}"></condition>
 		</transition>
     </decision>
 
@@ -88,8 +88,12 @@
     </task-node>
 
     <decision name="收费判断">
-        <transition to="收费" name="to 收费"></transition>
-        <transition to="审核" name="to 审核"></transition>
+        <transition to="收费" name="to 收费">
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP38','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74')}"></condition>
+		</transition>
+        <transition to="审核" name="to 审核">
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP38','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74')}"></condition>
+		</transition>
     </decision>
 
 	<decision name="审核结果">
