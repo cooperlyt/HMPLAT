@@ -583,6 +583,7 @@ input[type=button], input[type=reset], input[type=submit]{
 
 .detailsTable{
     width: 100%;
+    table-layout: fixed;
 }
 
 .detailsTable th{
@@ -595,6 +596,18 @@ input[type=button], input[type=reset], input[type=submit]{
 .detailsTable td{
     white-space: nowrap;
     min-width: 100px;
+}
+
+.details-context-td{
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+}
+
+.details-table-group{
+    text-align: center !important;
+    vertical-align: middle !important;
+
 }
 
 

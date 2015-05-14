@@ -1162,7 +1162,8 @@ input.rf-insp-inp[type="text"] {
 
 *.rf-fu-btn-add {
     background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
-    padding: 6px 6px 0 6px;
+    padding: 6px 6px 6px 6px;
+
 }
 
 *.rf-fu-btn-clr{
@@ -1190,6 +1191,12 @@ input.rf-insp-inp[type="text"] {
 *.rf-fu-btn-cnt-add, *.rf-fu-btn-cnt-add-dis, *.rf-fu-btn-cnt-upl, *.rf-fu-btn-cnt-clr, *.rf-fu-itm-lbl, *.rf-fu-itm-st, *.rf-fu-itm-lnk {
     font-family: "microsoft yahei", Helvetica, Arial, "宋体", sans-serif;
     font-size: 14px;
+
+    line-height: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-style: normal;
+    text-align: start;
 }
 
 *.rf-fu-btn-cnt-add, *.rf-fu-btn-cnt-upl, *.rf-fu-btn-cnt-clr {
@@ -1210,8 +1217,11 @@ input.rf-insp-inp[type="text"] {
 *.rf-fu-btn-cnt-add {
     background-image: url(../../org.richfaces.images/fu-add.gif);
     position: relative;
-    background-position-y: 5px !important;
-    overflow: hidden;
+    background-position-y: 3px !important;
+    overflow: visible;
+
+
+
 }
 
 /*
@@ -1241,12 +1251,12 @@ input.rf-insp-inp[type="text"] {
 
 *.rf-fu-btn-cnt-upl {
     background-image: url(../../org.richfaces.images/fu-upl.gif);
-    background-position-y: 5px !important;
+    background-position-y: 3px !important;
 }
 
 *.rf-fu-btn-cnt-clr {
     background-image: url(../../org.richfaces.images/fu-clr.gif);
-    background-position-y: 5px !important;
+    background-position-y: 3px !important;
 }
 
 *.rf-fu-inp-cntr {

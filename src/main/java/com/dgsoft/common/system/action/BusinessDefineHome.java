@@ -180,7 +180,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         List<TaskSubscribeReg.SubscribeDefineGroup> result = new ArrayList<TaskSubscribeReg.SubscribeDefineGroup>();
 
         for(SubscribeGroup group: getViewSubscribeGroups()){
-            TaskSubscribeReg.SubscribeDefineGroup defineGroup = new TaskSubscribeReg.SubscribeDefineGroup(group.getName(),group.getIconCss());
+            TaskSubscribeReg.SubscribeDefineGroup defineGroup = new TaskSubscribeReg.SubscribeDefineGroup(group);
 
             for(ViewSubscribe subscribe : group.getViewSubscribeList()){
                 defineGroup.add(taskSubscribeReg.getViewDefineByName(subscribe.getRegName()));

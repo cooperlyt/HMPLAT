@@ -5,79 +5,89 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <r:dataTable style="width: 100%"
-                 value="#{poolOwners}" var="_pool">
-        <f:facet name="header">
-            #{title}
-        </f:facet>
+    <h:outputStylesheet>
+        .subTableHeader{
+            text-align: left !important;
+        }
+    </h:outputStylesheet>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_name}
-            </f:facet>
+    <dh:entryGridBlock columns="4" group="#{title}">
 
-            #{_pool.personName}
-        </r:column>
+        <dh:entryGridColumn colspan="4">
+            <h:dataTable style="width: 100%;" styleClass="table " headerClass="subTableHeader"
+                         value="#{poolOwners}" var="_pool">
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.person_field_credentialsType}
-            </f:facet>
-            #{messages[_pool.credentialsType.name()]}
-        </r:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_name}
+                    </f:facet>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.person_field_credentialsNO}
-            </f:facet>
-            #{_pool.cerdentialsNumber}
-        </r:column>
+                    #{_pool.personName}
+                </h:column>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_relation}
-            </f:facet>
-            #{dictionary.getWordValue(_pool.relation)}
-        </r:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.person_field_credentialsType}
+                    </f:facet>
+                    #{messages[_pool.credentialsType.name()]}
+                </h:column>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_area}
-            </f:facet>
-            <h:outputText value="#{_pool.poolArea}" rendered="#{not empty _pool.poolArea}">
-                <f:convertNumber pattern="#0.000"/>
-            </h:outputText>
-        </r:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.person_field_credentialsNO}
+                    </f:facet>
+                    #{_pool.credentialsNumber}
+                </h:column>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_perc}
-            </f:facet>
-            #{_pool.perc}
-        </r:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_relation}
+                    </f:facet>
+                    #{dictionary.getWordValue(_pool.relation)}
+                </h:column>
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_phone}
-            </f:facet>
-            #{_pool.phone}
-        </r:column>
+                <h:column rendered="#{_pool.houseRegInfo.poolType eq SHARE_OWNER}">
+                    <f:facet name="header">
+                        #{messages.BusinessPool_area}
+                    </f:facet>
+                    <h:outputText value="#{_pool.poolArea}" rendered="#{not empty _pool.poolArea}">
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column rendered="#{_pool.houseRegInfo.poolType eq SHARE_OWNER}">
+                    <f:facet name="header">
+                        #{messages.BusinessPool_perc}
+                    </f:facet>
+                    #{_pool.perc}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_phone}
+                    </f:facet>
+                    #{_pool.phone}
+                </h:column>
 
 
-        <r:column>
-            <f:facet name="header">
-                #{messages.BusinessPool_memo}
-            </f:facet>
-            <ui:include src="/layout/long-text-display.xhtml">
-                <ui:param name="size" value="5"/>
-                <ui:param name="value" value="#{_pool.memo}"/>
-            </ui:include>
-        </r:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_memo}
+                    </f:facet>
+                    <ui:include src="/layout/long-text-display.xhtml">
+                        <ui:param name="size" value="5"/>
+                        <ui:param name="value" value="#{_pool.memo}"/>
+                    </ui:include>
+                </h:column>
 
-        <ui:insert/>
+                <ui:insert/>
 
-    </r:dataTable>
+            </h:dataTable>
+        </dh:entryGridColumn>
+
+    </dh:entryGridBlock>
 </ui:composition>

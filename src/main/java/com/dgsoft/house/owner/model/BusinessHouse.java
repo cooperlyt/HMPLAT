@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public enum PoolType{
-        SINGLE_OWNER,TOGETHER_OWNER,SHARE_OWNER;
+        SINGLE_OWNER,TOGETHER_OWNER,SHARE_OWNER
     }
 
     private String id;

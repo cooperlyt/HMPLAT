@@ -9,8 +9,8 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <dh:entryGridBlock columns="4" >
-        <h:outputText value="#{nameLabel}"/>
+    <dh:entryGridBlock columns="4" group="#{nameLabel}">
+        <h:outputText value="#{messages.person_field_name}"/>
         <h:outputText value="#{businessHouse.personName}"/>
 
         <h:outputText value="#{messages.BusinessOwner_Phone}"/>
@@ -27,14 +27,12 @@
             <ui:param name="type" value="#{businessHouse.credentialsType}"/>
         </ui:include>
 
-    </dh:entryGridBlock>
-
-    <dh:entryGridBlock columns="4" >
         <h:outputText value="#{messages.BusinessOwner_RootAddress}"/>
         <dh:entryGridColumn colspan="3">
-        <h:outputText value="#{businessHouse.rootAddress}"/>
+            <h:outputText value="#{businessHouse.rootAddress}"/>
         </dh:entryGridColumn>
 
     </dh:entryGridBlock>
+
 
 </ui:composition>

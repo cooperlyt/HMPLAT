@@ -85,13 +85,21 @@
             <h:form id="groupEditForm" styleClass="new-label">
                 <a:outputPanel id="createGroupPanel" layout="block"
                                styleClass="label-edit edit-color-label-form open">
-                    <h:inputText required="true" size="30" maxlength="30"
-                                 p:placeholder="#{messages.SubscribeGropp_field_name_placeholder}"
+                    <h:inputText required="true" size="25" maxlength="30"
+                                 p:placeholder="#{messages.SubscribeGroup_field_name_placeholder}"
                                  label="#{messages.SubscribeGroup_field_name}"
-                                 value="#{businessSubscribeConfig.newGroupName}" id="groupNameInput">
+                                 value="#{businessSubscribeConfig.newGroup.name}" id="groupNameInput">
                         <r:validator/>
                     </h:inputText>
-                    <h:inputText style="margin-left: 5px;" value="#{businessSubscribeConfig.newGroupCssName}" size="20" maxlength="100"/>
+                    <h:inputText style="margin-left: 5px;" value="#{businessSubscribeConfig.newGroup.iconCss}"
+                                 p:placeholder="#{messages.SubscribeGroup_field_icon_css}" size="20" maxlength="100"/>
+                    <h:inputText style="margin-left: 5px;" value="#{businessSubscribeConfig.newGroup.groupWidth}"
+                                 p:placeholder="#{messages.SubscribeGroup_field_group_width}" size="5" maxlength="20"/>
+
+                    <h:inputText style="margin-left: 5px;" value="#{businessSubscribeConfig.newGroup.keyWidth}"
+                                 p:placeholder="#{messages.SubscribeGroup_field_key_width}" size="5" maxlength="20"/>
+                    <h:inputText style="margin-left: 5px;" value="#{businessSubscribeConfig.newGroup.valueWidth}"
+                                 p:placeholder="#{messages.SubscribeGroup_field_value_width}" size="5" maxlength="20"/>
                     <r:message for="groupNameInput"/>
 
                     <div class="new-label-actions">
@@ -141,9 +149,19 @@
                                         <a:outputPanel layout="block" styleClass="label-edit table-list-header-toggle left">
                                              <a:outputPanel ajaxRendered="true">
                                                  <s:decorate template="/layout/edit-validate.xhtml">
-                                            <h:inputText label="#{messages.SubscribeGroup_field_name}" value="#{_group.name}" size="30" maxlength="30"
+                                                     <h:inputText label="#{messages.SubscribeGroup_field_name}" value="#{_group.name}" size="25" maxlength="30"
+                                                                  p:placeholder="#{messages.SubscribeGroup_field_name_placeholder}"
                                                          styleClass="table-list-header-editor" required="true"/>
-                                                     <h:inputText value="#{_group.iconCss}" size="20" maxlength="100"/>
+                                                     <h:inputText value="#{_group.iconCss}" p:placeholder="#{messages.SubscribeGroup_field_icon_css}"
+                                                                  size="20" maxlength="100"/>
+
+                                                     <h:inputText style="margin-left: 5px;" value="#{_group.groupWidth}"
+                                                                  p:placeholder="#{messages.SubscribeGroup_field_group_width}" size="5" maxlength="20"/>
+
+                                                     <h:inputText style="margin-left: 5px;" value="#{_group.keyWidth}"
+                                                                  p:placeholder="#{messages.SubscribeGroup_field_key_width}" size="5" maxlength="20"/>
+                                                     <h:inputText style="margin-left: 5px;" value="#{_group.valueWidth}"
+                                                                  p:placeholder="#{messages.SubscribeGroup_field_value_width}" size="5" maxlength="20"/>
                                                  </s:decorate>
                                              </a:outputPanel>
 

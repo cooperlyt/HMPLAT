@@ -285,34 +285,50 @@ public class BusinessSubscribeConfig {
         businessDefineHome.update();
     }
 
-    private String newGroupName;
+    //private String newGroupName;
 
-    private String newGroupCssName;
+    //private String newGroupCssName;
 
-    public String getNewGroupCssName() {
-        return newGroupCssName;
+//    public String getNewGroupCssName() {
+//        return newGroupCssName;
+//    }
+
+    private SubscribeGroup newGroup = new SubscribeGroup();
+
+//    public void setNewGroupCssName(String newGroupCssName) {
+//        this.newGroupCssName = newGroupCssName;
+//    }
+//
+//    public String getNewGroupName() {
+//        return newGroupName;
+//    }
+//
+//    public void setNewGroupName(String newGroupName) {
+//        this.newGroupName = newGroupName;
+//    }
+
+
+    public SubscribeGroup getNewGroup() {
+        return newGroup;
     }
 
-    public void setNewGroupCssName(String newGroupCssName) {
-        this.newGroupCssName = newGroupCssName;
+    public void setNewGroup(SubscribeGroup newGroup) {
+        this.newGroup = newGroup;
     }
-
-    public String getNewGroupName() {
-        return newGroupName;
-    }
-
-    public void setNewGroupName(String newGroupName) {
-        this.newGroupName = newGroupName;
-    }
-
 
     @Transactional
     public String createNewGroup(){
-        businessDefineHome.getInstance().getSubscribeGroups().add(
-        new SubscribeGroup(businessDefineHome.getTaskName(),newGroupName,getSubscribeType(),businessDefineHome.getInstance(),getViewGroupMaxPriority() + 1, newGroupCssName)
-        );
-        newGroupName = "";
-        return businessDefineHome.update();
+
+        newGroup.setTaskName(businessDefineHome.getTaskName());
+        newGroup.setType(getSubscribeType());
+        newGroup.setBusinessDefine(businessDefineHome.getInstance());
+        newGroup.setPriority(getViewGroupMaxPriority() + 1);
+        businessDefineHome.getInstance().getSubscribeGroups().add(newGroup);
+
+        businessDefineHome.update();
+        newGroup = new SubscribeGroup();
+
+        return "updated";
     }
 
 

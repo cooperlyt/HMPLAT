@@ -24,6 +24,9 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     private Subscribe.SubscribeType type;
     private BusinessDefine businessDefine;
     private int priority;
+    private String groupWidth;
+    private String keyWidth;
+    private String valueWidth;
 
     private Set<ViewSubscribe> viewSubscribes = new HashSet<ViewSubscribe>(0);
 
@@ -125,6 +128,36 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     }
 
 
+    @Column(name="GROUP_WIDTH",nullable = true, length = 20)
+    @Size(max = 20)
+    public String getGroupWidth() {
+        return groupWidth;
+    }
+
+    public void setGroupWidth(String groupWidth) {
+        this.groupWidth = groupWidth;
+    }
+
+    @Column(name="KEY_WIDTH",nullable = true, length = 20)
+    @Size(max = 20)
+    public String getKeyWidth() {
+        return keyWidth;
+    }
+
+    public void setKeyWidth(String keyWidth) {
+        this.keyWidth = keyWidth;
+    }
+
+    @Column(name="VALUE_WIDTH",nullable = true, length = 20)
+    @Size(max = 20)
+    public String getValueWidth() {
+        return valueWidth;
+    }
+
+    public void setValueWidth(String valueWidth) {
+        this.valueWidth = valueWidth;
+    }
+
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, cascade = {CascadeType.ALL},mappedBy = "subscribeGroup")
     public Set<ViewSubscribe> getViewSubscribes() {
         return viewSubscribes;
@@ -133,6 +166,8 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     public void setViewSubscribes(Set<ViewSubscribe> viewSubscribes) {
         this.viewSubscribes = viewSubscribes;
     }
+
+
 
     @Transient
     public List<ViewSubscribe> getViewSubscribeList(){

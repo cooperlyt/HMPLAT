@@ -74,9 +74,11 @@ public class EntryGridBlockRender extends Renderer {
             }
 
             writer.startElement("th", component);
-
             writer.writeAttribute("rowspan", rowCount, null);
+
+
             writer.writeAttribute("style","width:" + parentGrid.getGroupWidth(),null);
+            writer.writeAttribute("class","details-table-group",null);
             writer.write(blockComponent.getGroup());
 
             writer.endElement("th");
@@ -85,13 +87,19 @@ public class EntryGridBlockRender extends Renderer {
 
         int count = 0;
         String elem = "th";
+
         for (int i = 0; i < childCount; i++) {
             UIComponent child = component.getChildren().get(i);
             if (count == 0) {
                 if (i > 0) {
                     writer.startElement("tr", component);
                 }
-                elem = "th";
+
+                if (childCount < 2){
+                    elem = "td";
+                }else{
+                    elem = "th";
+                }
             }
 
             int colspan = 1;
@@ -118,8 +126,17 @@ public class EntryGridBlockRender extends Renderer {
             if (colspan > 1) {
                 writer.writeAttribute("colspan", colspan, null);
             }
-            if (!parentGrid.isAutoLastWidth() || (count != 0))
-                writer.writeAttribute("style","width:" + ("th".equals(elem) ? parentGrid.getKeyWidth() : parentGrid.getValueWidth()),null);
+            if (!parentGrid.isAutoLastWidth() || (count != 0)){
+                String width = "th".equals(elem) ? parentGrid.getKeyWidth() : parentGrid.getValueWidth();
+                if ((width != null) && !"".equals(width.trim())){
+                    writer.writeAttribute("style","width:" + width,null);
+                }
+            }
+
+
+            if (childCount < 2){
+                writer.writeAttribute("class","details-context-td",null);
+            }
 
             child.encodeAll(facesContext);
 

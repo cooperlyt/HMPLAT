@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.business;
 
+import com.dgsoft.common.system.model.SubscribeGroup;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -139,22 +140,18 @@ public class TaskSubscribeReg {
 
     public static class SubscribeDefineGroup {
 
-        private String groupName;
 
-        private String iconCss;
+        private SubscribeGroup group;
+
 
         private List<SubscribeDefine> blocks = new ArrayList<SubscribeDefine>();
 
-        public SubscribeDefineGroup(String name, String iconCss) {
-            this.groupName = name; this.iconCss = iconCss;
+        public SubscribeDefineGroup(SubscribeGroup group){
+            this.group = group;
         }
 
-        public String getGroupName() {
-            return groupName;
-        }
-
-        public String getIconCss() {
-            return iconCss;
+        public SubscribeGroup getGroup() {
+            return group;
         }
 
         public void add(SubscribeDefine subscribeDefine){
