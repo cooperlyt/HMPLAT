@@ -36,6 +36,8 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
         this.houseCode = startBusinessHouse.getHouseCode();
         this.startBusinessHouse = startBusinessHouse;
+        this.afterBusinessHouse = new BusinessHouse(startBusinessHouse);
+
     }
 
     @Id
