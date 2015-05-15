@@ -274,12 +274,7 @@
         </description>
     </edit-subscribe>
 
-    <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
-                    component="">
-        <description>
-            土地信息编辑（有土地信息就不显示，没有编辑）
-        </description>
-    </edit-subscribe>
+
 
     <edit-subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml"
                     component="">
@@ -391,6 +386,13 @@
                     component="">
         <description>
             土地信息编辑（有没有历史土地信息都编辑，更正，变更）
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
+                    component="">
+        <description>
+            土地信息编辑（有土地信息就不显示，没有编辑）
         </description>
     </edit-subscribe>
 

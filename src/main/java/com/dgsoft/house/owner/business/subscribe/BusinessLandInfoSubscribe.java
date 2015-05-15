@@ -1,10 +1,12 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.LandInfo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,8 +15,9 @@ import org.jboss.seam.annotations.Name;
  * Time: 下午4:28
  * To change this template use File | Settings | File Templates.
  */
-@Name("businessLandInfoSubscribe")
-public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo>  {
+@Name("businessLandInfoSubscribe") //TaskSubscribeCompnent
+public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> implements TaskSubscribeComponent {
+
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
@@ -55,4 +58,22 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo>  {
             ownerBusinessHome.getSingleHoues().setLandInfo(null);
         }
     }
+
+
+
+    @Override
+    public void initSubscribe() {
+
+    }
+
+    @Override
+    public ValidResult validSubscribe() {
+        return null;
+    }
+
+    @Override
+    public boolean saveSubscribe() {
+        return false;
+    }
+
 }
