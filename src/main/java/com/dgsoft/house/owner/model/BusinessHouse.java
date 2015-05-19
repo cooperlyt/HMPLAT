@@ -260,7 +260,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.masterStatus = masterStatus;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "REG_INFO",nullable = true)
     public HouseRegInfo getHouseRegInfo() {
         return houseRegInfo;
