@@ -1,7 +1,11 @@
 package com.dgsoft.faces.component;
 
+import org.jboss.seam.log.Logging;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIPanel;
+import java.util.List;
+
 /**
  * Created by cooper on 11/17/14.
  */
@@ -21,27 +25,48 @@ public class UIEntryPanelGrid extends UIPanel {
         super();
     }
 
-    public String getGroupWidth() {
-        return (String) getStateHelper().eval(Properties.groupWidth);
+    public Integer getGroupWidth() {
+        Integer result =(Integer) getStateHelper().eval(Properties.groupWidth);
+        if (result == null || (result.compareTo(0) <= 0) ){
+            return null;
+        }else {
+            return result;
+        }
+
     }
 
-    public void setGroupWidth(String groupWidth) {
+
+
+    public void setGroupWidth(Integer groupWidth) {
         getStateHelper().put(Properties.groupWidth, groupWidth);
     }
 
-    public String getValueWidth() {
-        return (String) getStateHelper().eval(Properties.valueWidth);
+    public Integer getValueWidth() {
+        Integer result =(Integer) getStateHelper().eval(Properties.valueWidth);
+        if (result == null || (result.compareTo(0) <= 0) ){
+            return null;
+        }else {
+            return result;
+        }
     }
 
-    public void setValueWidth(String valueWidth) {
+    public void setValueWidth(Integer valueWidth) {
+
         getStateHelper().put(Properties.valueWidth,valueWidth);
     }
 
-    public String getKeyWidth() {
-        return (String) getStateHelper().eval(Properties.keyWidth);
+    public Integer getKeyWidth() {
+
+        Integer result =(Integer) getStateHelper().eval(Properties.keyWidth);
+        if (result == null || (result.compareTo(0) <= 0) ){
+            return null;
+        }else {
+            return result;
+        }
     }
 
-    public void setKeyWidth(String keyWidth) {
+    public void setKeyWidth(Integer keyWidth) {
+
         getStateHelper().put(Properties.keyWidth,keyWidth);
     }
 
@@ -61,17 +86,46 @@ public class UIEntryPanelGrid extends UIPanel {
         getStateHelper().put(Properties.style,style);
     }
 
-    public int getMaxColumn(){
+    private int getMaxColumn(List<UIComponent> components){
         int result = 0;
-        for(UIComponent child: getChildren()){
-           if (child instanceof UIEntryGridBlock){
-               int childColCount = ((UIEntryGridBlock)child).getColumns();
-               if (childColCount > result){
-                   result = childColCount;
-               }
-           }
+        for(UIComponent child: components){
+            int childColCount = 0;
+            if ((child instanceof UIEntryGridBlock) && child.isRendered()){
+                childColCount = ((UIEntryGridBlock)child).getColumns();
+
+            }else if (child.isRendered() && (child.getChildCount() > 0)){
+                childColCount = getMaxColumn(child.getChildren());
+            }
+            if (childColCount > result){
+                result = childColCount;
+            }
         }
-        return result;
+        return  result;
+    }
+
+    public int getMaxColumn(){
+        return getMaxColumn(getChildren());
+    }
+
+    private boolean isHaveGroup(List<UIComponent> components){
+        for(UIComponent child: components){
+
+            if ((child instanceof UIEntryGridBlock) && child.isRendered()){
+                if (((UIEntryGridBlock) child).isHaveGroup()){
+                    return true;
+                }
+
+            }else if (child.isRendered() && (child.getChildCount() > 0)){
+               if (isHaveGroup(child.getChildren())){
+                   return true;
+               }
+            }
+        }
+        return false;
+    }
+
+    public boolean isHaveGroup(){
+        return isHaveGroup(getChildren());
     }
 
     public boolean isAutoLastWidth() {

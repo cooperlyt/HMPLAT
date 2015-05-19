@@ -2,7 +2,7 @@ package com.dgsoft.common.system.action;
 
 import com.dgsoft.common.system.business.Subscribe;
 import com.dgsoft.common.system.business.TaskSubscribeReg;
-import com.dgsoft.common.system.model.EditSubscribe;
+import com.dgsoft.common.system.model.TaskSubscribe;
 import com.dgsoft.common.system.model.SubscribeGroup;
 import com.dgsoft.common.system.model.ViewSubscribe;
 import org.jboss.seam.annotations.In;
@@ -23,17 +23,6 @@ public class BusinessSubscribeConfig {
     private String editSubscribeId;
 
     private String createRegName;
-
-
-    private Subscribe.SubscribeType getSubscribeType(){
-        if ((businessDefineHome.getTaskName() == null) || businessDefineHome.getTaskName().trim().equals("") || businessDefineHome.getTaskName().trim().toUpperCase().equals(BusinessDefineHome.CREATE_TASK_NAME)){
-            return Subscribe.SubscribeType.START_TASK;
-        }else if (businessDefineHome.getTaskName().trim().toUpperCase().equals(BusinessDefineHome.BUSINESS_VIEW_TASK_NAME)){
-            return Subscribe.SubscribeType.BUSINESS_VIEW;
-        }else{
-            return Subscribe.SubscribeType.TASK_OPER;
-        }
-    }
 
     @In
     private TaskSubscribeReg taskSubscribeReg;
@@ -67,7 +56,7 @@ public class BusinessSubscribeConfig {
         List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();
         for(TaskSubscribeReg.SubscribeDefine define: taskSubscribeReg.getEditSubscribeDefines()){
             boolean existsInTask = false;
-            for(EditSubscribe subscribe: businessDefineHome.getInstance().getEditSubscribes()){
+            for(TaskSubscribe subscribe: businessDefineHome.getInstance().getTaskSubscribes()){
                 if (subscribe.getRegName().equals(define.getName()) && subscribe.getTask().equals(businessDefineHome.getTaskName())){
                     existsInTask = true;
                     break;
@@ -103,7 +92,7 @@ public class BusinessSubscribeConfig {
 
     private int getEditSubscribeMaxPriority() {
         int result = 0;
-        for (EditSubscribe subscribe : businessDefineHome.getInstance().getEditSubscribes()) {
+        for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
             if (businessDefineHome.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() > result)) {
                 result = subscribe.getPriority();
             }
@@ -111,8 +100,8 @@ public class BusinessSubscribeConfig {
         return result;
     }
 
-    private EditSubscribe getSelectEditTaskSubscribe(){
-        for(EditSubscribe subscribe: businessDefineHome.getEditSubscribes()){
+    private TaskSubscribe getSelectEditTaskSubscribe(){
+        for(TaskSubscribe subscribe: businessDefineHome.getEditSubscribes()){
             if (subscribe.getId().equals(editSubscribeId)){
                 return subscribe;
             }
@@ -123,9 +112,9 @@ public class BusinessSubscribeConfig {
     @Transactional
     public void createTaskSubscribe() {
 
-        EditSubscribe editSubscribe =
-                new EditSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
-                        businessDefineHome.getTaskName(), createRegName,getSubscribeType(),
+        TaskSubscribe editSubscribe =
+                new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
+                        businessDefineHome.getTaskName(), createRegName, Subscribe.SubscribeType.TASK_INFO,
                         businessDefineHome.getInstance(),getEditSubscribeMaxPriority() + 1);
 
         businessDefineHome.getEntityManager().persist(editSubscribe);
@@ -138,13 +127,13 @@ public class BusinessSubscribeConfig {
 
 
     public void upSelectTaskSubscribe() {
-        EditSubscribe editEditSubscribe = getSelectEditTaskSubscribe();
+        TaskSubscribe editEditSubscribe = getSelectEditTaskSubscribe();
         int selectPriority = editEditSubscribe.getPriority();
 
         //Integer maxPriority = null;
 
-        EditSubscribe maxSub = null;
-        for (EditSubscribe subscribe : businessDefineHome.getInstance().getEditSubscribes()) {
+        TaskSubscribe maxSub = null;
+        for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
             if (editEditSubscribe.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() < selectPriority)) {
                 if ((maxSub == null) || (maxSub.getPriority() < subscribe.getPriority())){
                     maxSub = subscribe;
@@ -164,10 +153,10 @@ public class BusinessSubscribeConfig {
     }
 
     public void downSelectTaskSubscribe() {
-        EditSubscribe editEditSubscribe = getSelectEditTaskSubscribe();
+        TaskSubscribe editEditSubscribe = getSelectEditTaskSubscribe();
         int selectPriority = editEditSubscribe.getPriority();
-        EditSubscribe minSub = null;
-        for (EditSubscribe subscribe : businessDefineHome.getInstance().getEditSubscribes()) {
+        TaskSubscribe minSub = null;
+        for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
             if (editEditSubscribe.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() > selectPriority)) {
                 if ((minSub == null) || (minSub.getPriority() > subscribe.getPriority())){
                     minSub = subscribe;
@@ -184,7 +173,7 @@ public class BusinessSubscribeConfig {
     }
 
     public void deleteSelectSubscribe(){
-        businessDefineHome.getInstance().getEditSubscribes().remove(getSelectEditTaskSubscribe());
+        businessDefineHome.getInstance().getTaskSubscribes().remove(getSelectEditTaskSubscribe());
         businessDefineHome.update();
         businessDefineHome.refreshSubscribe();
     }
@@ -320,7 +309,7 @@ public class BusinessSubscribeConfig {
     public String createNewGroup(){
 
         newGroup.setTaskName(businessDefineHome.getTaskName());
-        newGroup.setType(getSubscribeType());
+        newGroup.setType(Subscribe.SubscribeType.TASK_INFO);
         newGroup.setBusinessDefine(businessDefineHome.getInstance());
         newGroup.setPriority(getViewGroupMaxPriority() + 1);
         businessDefineHome.getInstance().getSubscribeGroups().add(newGroup);

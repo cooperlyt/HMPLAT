@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.action;
 
 import com.dgsoft.common.system.SystemEntityHome;
+import com.dgsoft.common.system.business.Subscribe;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.common.system.model.*;
@@ -24,9 +25,7 @@ import java.util.*;
 @Name("businessDefineHome")
 public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
-    public static final String CREATE_TASK_NAME = "_CREATE";
 
-    public static final String BUSINESS_VIEW_TASK_NAME = "_VIEW";
 
     @In
     private TaskSubscribeReg taskSubscribeReg;
@@ -54,6 +53,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
+
     public boolean saveSubscribes() {
 
 
@@ -67,7 +67,25 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return true;
     }
 
-    private String taskName = CREATE_TASK_NAME;
+    public TaskSubscribeComponent.ValidResult validTaskComplete(){
+        TaskSubscribeComponent.ValidResult result = TaskSubscribeComponent.ValidResult.SUCCESS;
+        for(TaskSubscribeReg.CompleteSubscribeDefine define: getCompleteSubscribeDefines()){
+            TaskSubscribeComponent.ValidResult r = define.getComponents().valid();
+            if (r.getPri() > result.getPri()) {
+                result = r;
+            }
+        }
+        return result;
+    }
+
+    public void completeTask(){
+        for (TaskSubscribeReg.CompleteSubscribeDefine define: getCompleteSubscribeDefines()) {
+            define.getComponents().complete();
+        }
+
+    }
+
+    private String taskName = Subscribe.CREATE_TASK_NAME;
 
     public String getTaskName() {
         return taskName;
@@ -114,26 +132,60 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     public void refreshSubscribe(){
         editSubscribes = null;
         viewSubscribeGroups = null;
+        operSubscribes = null;
+        completeSubscribes = null;
     }
 
-    private List<EditSubscribe> editSubscribes;
+    private List<TaskSubscribe> editSubscribes;
+
+    private List<TaskSubscribe> operSubscribes;
+
+    private List<TaskSubscribe> completeSubscribes;
 
     private List<SubscribeGroup> viewSubscribeGroups;
 
-    public List<EditSubscribe> getEditSubscribes() {
-        if (editSubscribes == null){
-            editSubscribes = new ArrayList<EditSubscribe>();
-            for(EditSubscribe subscribe: getInstance().getEditSubscribes()){
-                if (subscribe.getTaskName().equals(taskName)){
+    public List<TaskSubscribe> getOperSubscribes() {
+        if (operSubscribes == null){
+            loadSubscribes();
+        }
+        return operSubscribes;
+    }
+
+    public List<TaskSubscribe> getCompleteSubscribes() {
+        if (completeSubscribes == null){
+            loadSubscribes();
+        }
+        return completeSubscribes;
+    }
+
+
+    private void loadSubscribes(){
+        operSubscribes = new ArrayList<TaskSubscribe>();
+        editSubscribes = new ArrayList<TaskSubscribe>();
+        completeSubscribes = new ArrayList<TaskSubscribe>();
+        for(TaskSubscribe subscribe: getInstance().getTaskSubscribes()){
+            if (subscribe.getTaskName().equals(taskName)){
+                if (Subscribe.SubscribeType.TASK_INFO.equals(subscribe.getType())){
                     editSubscribes.add(subscribe);
+                }else if (Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())){
+                    completeSubscribes.add(subscribe);
+                }else if (Subscribe.SubscribeType.TASK_OPERATOR.equals(subscribe.getType())){
+                    operSubscribes.add(subscribe);
                 }
+
             }
-            Collections.sort(editSubscribes, new Comparator<EditSubscribe>() {
-                @Override
-                public int compare(EditSubscribe o1, EditSubscribe o2) {
-                    return new Integer(o2.getPriority()).compareTo(o1.getPriority());
-                }
-            });
+        }
+        Collections.sort(editSubscribes, new Comparator<TaskSubscribe>() {
+            @Override
+            public int compare(TaskSubscribe o1, TaskSubscribe o2) {
+                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+            }
+        });
+    }
+
+    public List<TaskSubscribe> getEditSubscribes() {
+        if (editSubscribes == null){
+            loadSubscribes();
         }
 
         return editSubscribes;
@@ -170,8 +222,24 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     public List<TaskSubscribeReg.EditSubscribeDefine> getEditSubscribeDefines(){
         List<TaskSubscribeReg.EditSubscribeDefine> result = new ArrayList<TaskSubscribeReg.EditSubscribeDefine>();
-        for(EditSubscribe subscribe: getEditSubscribes()){
+        for(TaskSubscribe subscribe: getEditSubscribes()){
            result.add(taskSubscribeReg.getEditDefineByName(subscribe.getRegName()));
+        }
+        return result;
+    }
+
+    public List<TaskSubscribeReg.CompleteSubscribeDefine> getCompleteSubscribeDefines(){
+        List<TaskSubscribeReg.CompleteSubscribeDefine> result = new ArrayList<TaskSubscribeReg.CompleteSubscribeDefine>();
+        for(TaskSubscribe subscribe: getCompleteSubscribes()){
+            result.add(taskSubscribeReg.getCompleteDefineByName(subscribe.getRegName()));
+        }
+        return result;
+    }
+
+    public List<TaskSubscribeReg.SubscribeDefine> getOperSubscribeDefines(){
+        List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();
+        for(TaskSubscribe subscribe: getOperSubscribes()){
+            result.add(taskSubscribeReg.getOperDefineByName(subscribe.getRegName()));
         }
         return result;
     }
@@ -217,7 +285,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     public int getSubscribeCount(String taskName){
         int result = 0;
-        for (EditSubscribe subscribe: getInstance().getEditSubscribes()){
+        for (TaskSubscribe subscribe: getInstance().getTaskSubscribes()){
             if (subscribe.getTask().equals(taskName)){
                 result ++;
             }

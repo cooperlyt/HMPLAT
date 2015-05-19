@@ -33,6 +33,9 @@ public class TaskSubscribeReg {
 
     private final static String VIEW_SUBSCRIBE_NODE_NAME = "view-subscribe";
     private final static String EDIT_SUBSCRIBE_NODE_NAME = "edit-subscribe";
+    private final static String END_SUBSCRIBE_NODE_NAME = "end-subscribe";
+    private final static String OPERATOR_SUBSCRIBE_NODE_NAME = "oper-subscribe";
+
 
 
     //private Map<String,SubscribeDefine> subscribeDefines;
@@ -40,6 +43,10 @@ public class TaskSubscribeReg {
     private List<EditSubscribeDefine> editSubscribeDefines;
 
     private List<SubscribeDefine> viewSubScribeDefines;
+
+    private List<SubscribeDefine> operSubscribeDefines;
+
+    private List<CompleteSubscribeDefine> completeSubscribeDefines;
 
     public List<EditSubscribeDefine> getEditSubscribeDefines() {
 
@@ -51,6 +58,13 @@ public class TaskSubscribeReg {
         return viewSubScribeDefines;
     }
 
+    public List<SubscribeDefine> getOperSubscribeDefines() {
+        return operSubscribeDefines;
+    }
+
+    public List<CompleteSubscribeDefine> getCompleteSubscribeDefines() {
+        return completeSubscribeDefines;
+    }
 
     public EditSubscribeDefine getEditDefineByName(String name){
         for(EditSubscribeDefine subscribeDefine: editSubscribeDefines){
@@ -70,11 +84,32 @@ public class TaskSubscribeReg {
         return null;
     }
 
+    public SubscribeDefine getOperDefineByName(String name){
+        for(SubscribeDefine subscribeDefine: operSubscribeDefines){
+            if (subscribeDefine.getName().equals(name)){
+                return subscribeDefine;
+            }
+        }
+        return null;
+    }
+
+    public CompleteSubscribeDefine getCompleteDefineByName(String name){
+        for(CompleteSubscribeDefine subscribeDefine: completeSubscribeDefines){
+            if (subscribeDefine.getName().equals(name)){
+                return subscribeDefine;
+            }
+        }
+        return null;
+    }
+
+
     @Create
     public void load() {
 
         editSubscribeDefines = new ArrayList<EditSubscribeDefine>();
         viewSubScribeDefines = new ArrayList<SubscribeDefine>();
+        completeSubscribeDefines = new ArrayList<CompleteSubscribeDefine>();
+        operSubscribeDefines = new ArrayList<SubscribeDefine>();
         //subscribeDefines = new HashMap<String, SubscribeDefine>();
         Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(ClasspathHelper.forPackage("com.dgsoft")).addScanners(new ResourcesScanner()));
         Set<String> confings = reflections.getResources(Pattern.compile(".*\\.tasksubscribe\\.xml"));
@@ -95,7 +130,7 @@ public class TaskSubscribeReg {
 
                         String name = regNode.getAttributes().getNamedItem("name").getNodeValue();
                         String description = null;
-                        String page = regNode.getAttributes().getNamedItem("page").getNodeValue();
+                        //String page = regNode.getAttributes().getNamedItem("page").getNodeValue();
                         for(int j = 0, subSize = regNode.getChildNodes().getLength(); j < subSize; j++){
                             Node subNode = regNode.getChildNodes().item(j);
                             if ((subNode.getNodeType() == Node.ELEMENT_NODE) && "description".equals(subNode.getNodeName())){
@@ -106,11 +141,15 @@ public class TaskSubscribeReg {
 
                         if (VIEW_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
 
-                            viewSubScribeDefines.add(new SubscribeDefine(name,description,page));
+                            viewSubScribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue()));
                         } else if (EDIT_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
-                            editSubscribeDefines.add(new EditSubscribeDefine(name,description,page,
+                            editSubscribeDefines.add(new EditSubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue(),
                                     regNode.getAttributes().getNamedItem("component").getNodeValue(),
                                     (regNode.getAttributes().getNamedItem("out-page") == null) ? "" : regNode.getAttributes().getNamedItem("out-page").getNodeValue()));
+                        } else if (END_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
+                            completeSubscribeDefines.add( new CompleteSubscribeDefine(name,description,regNode.getAttributes().getNamedItem("component").getNodeValue()));
+                        } else if (OPERATOR_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
+                            operSubscribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue()));
                         }
 
 
@@ -163,6 +202,21 @@ public class TaskSubscribeReg {
         }
     }
 
+    public static class CompleteSubscribeDefine extends SubscribeDefineBase{
+
+        private String component;
+
+
+        public CompleteSubscribeDefine(String name, String description, String component) {
+            super(name, description);
+            this.component = component;
+        }
+
+        public TaskCompleteSubscribeComponent getComponents(){
+            return (TaskCompleteSubscribeComponent) Component.getInstance(component, true, true);
+        }
+    }
+
 
     public static class EditSubscribeDefine extends SubscribeDefine{
         private String component;
@@ -198,25 +252,19 @@ public class TaskSubscribeReg {
         }
     }
 
-
-    public static class SubscribeDefine {
-
+    public static class SubscribeDefineBase{
         private String name;
 
         private String description;
 
-        private String page;
-
-
-
-
-        public SubscribeDefine(String name, String description, String page) {
+        public SubscribeDefineBase(String name, String description) {
             this.name = name;
             this.description = description;
-            this.page = page;
-
         }
 
+        public String getTitle(){
+            return description + "[" + name + "]";
+        }
 
         public String getName() {
             return name;
@@ -224,6 +272,20 @@ public class TaskSubscribeReg {
 
         public String getDescription() {
             return description;
+        }
+    }
+
+
+    public static class SubscribeDefine extends SubscribeDefineBase{
+
+
+        private String page;
+
+
+        public SubscribeDefine(String name, String description, String page) {
+            super(name,description);
+            this.page = page;
+
         }
 
         public String getPage() {
@@ -234,14 +296,10 @@ public class TaskSubscribeReg {
             }
         }
 
-        public String getTitle(){
-            return description + "[" + name + "]";
-        }
 
         public boolean isHavePage(){
             return (page != null) && (!page.trim().equals(""));
         }
-
 
 
     }

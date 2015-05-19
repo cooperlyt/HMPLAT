@@ -73,10 +73,9 @@ public class OwnerTaskHandle {
                 TaskOper.OperType.NEXT,ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
                 taskInstance.getName(),transitionComments,false));
-        if ("updated".equals(ownerBusinessHome.update())) {
-            return "taskCompleted";
-        }
-        return null;
+
+
+        return completeTask();
 
     }
 
@@ -103,9 +102,10 @@ public class OwnerTaskHandle {
     protected String completeTask() {
         //TODO no subscribe
 
+        businessDefineHome.completeTask();
         if ("updated".equals(ownerBusinessHome.update())) {
             return "taskCompleted";
-        }
+        }else
         return null;
     }
 

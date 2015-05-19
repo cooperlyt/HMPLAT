@@ -12,8 +12,11 @@ import javax.validation.constraints.Size;
  */
 public interface Subscribe extends OrderModel {
 
+    public static final String CREATE_TASK_NAME = "_CREATE";
+    public static final String BUSINESS_VIEW_TASK_NAME = "_VIEW";
+
     public enum SubscribeType {
-        START_TASK, TASK_OPER, BUSINESS_VIEW
+        TASK_INFO, TASK_COMPLETE, TASK_OPERATOR
     }
 
     public abstract String getTask();

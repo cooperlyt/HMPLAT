@@ -24,9 +24,9 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     private Subscribe.SubscribeType type;
     private BusinessDefine businessDefine;
     private int priority;
-    private String groupWidth;
-    private String keyWidth;
-    private String valueWidth;
+    private Integer groupWidth;
+    private Integer keyWidth;
+    private Integer valueWidth;
 
     private Set<ViewSubscribe> viewSubscribes = new HashSet<ViewSubscribe>(0);
 
@@ -89,8 +89,8 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
 
     @Transient
     public String getTask(){
-        if (Subscribe.SubscribeType.START_TASK.equals(getType())){
-            return "";
+        if ((getTaskName() == null) || getTaskName().trim().equals("")){
+            return Subscribe.CREATE_TASK_NAME;
         }else{
             return getTaskName();
         }
@@ -128,33 +128,30 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     }
 
 
-    @Column(name="GROUP_WIDTH",nullable = true, length = 20)
-    @Size(max = 20)
-    public String getGroupWidth() {
+    @Column(name="GROUP_WIDTH",nullable = true)
+    public Integer getGroupWidth() {
         return groupWidth;
     }
 
-    public void setGroupWidth(String groupWidth) {
+    public void setGroupWidth(Integer groupWidth) {
         this.groupWidth = groupWidth;
     }
 
     @Column(name="KEY_WIDTH",nullable = true, length = 20)
-    @Size(max = 20)
-    public String getKeyWidth() {
+    public Integer getKeyWidth() {
         return keyWidth;
     }
 
-    public void setKeyWidth(String keyWidth) {
+    public void setKeyWidth(Integer keyWidth) {
         this.keyWidth = keyWidth;
     }
 
     @Column(name="VALUE_WIDTH",nullable = true, length = 20)
-    @Size(max = 20)
-    public String getValueWidth() {
+    public Integer getValueWidth() {
         return valueWidth;
     }
 
-    public void setValueWidth(String valueWidth) {
+    public void setValueWidth(Integer valueWidth) {
         this.valueWidth = valueWidth;
     }
 

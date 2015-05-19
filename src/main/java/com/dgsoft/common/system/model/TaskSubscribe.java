@@ -1,9 +1,6 @@
 package com.dgsoft.common.system.model;
 
-import com.dgsoft.common.OrderModel;
 import com.dgsoft.common.system.business.Subscribe;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TASK_SUBSCRIBE", catalog = "DB_PLAT_SYSTEM")
-public class EditSubscribe implements java.io.Serializable, Subscribe {
+public class TaskSubscribe implements java.io.Serializable, Subscribe {
 
 
 
@@ -26,15 +23,15 @@ public class EditSubscribe implements java.io.Serializable, Subscribe {
     private BusinessDefine businessDefine;
     private int priority;
 
-    public EditSubscribe() {
+    public TaskSubscribe() {
     }
 
-    public EditSubscribe(String id, BusinessDefine businessDefine) {
+    public TaskSubscribe(String id, BusinessDefine businessDefine) {
         this.id = id;
         this.businessDefine = businessDefine;
     }
 
-    public EditSubscribe(String id, String taskName, String regName, SubscribeType type, BusinessDefine businessDefine, int priority) {
+    public TaskSubscribe(String id, String taskName, String regName, SubscribeType type, BusinessDefine businessDefine, int priority) {
         this.id = id;
         this.taskName = taskName;
         this.regName = regName;
@@ -67,8 +64,8 @@ public class EditSubscribe implements java.io.Serializable, Subscribe {
 
     @Transient
     public String getTask(){
-        if (SubscribeType.START_TASK.equals(getType())){
-            return "";
+        if (getTaskName() == null){
+            return Subscribe.BUSINESS_VIEW_TASK_NAME;
         }else{
             return getTaskName();
         }

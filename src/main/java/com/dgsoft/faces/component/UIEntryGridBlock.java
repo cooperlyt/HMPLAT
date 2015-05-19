@@ -1,6 +1,5 @@
 package com.dgsoft.faces.component;
 
-import javax.el.ValueExpression;
 import javax.faces.component.UIPanel;
 
 /**
@@ -36,6 +35,10 @@ public class UIEntryGridBlock extends UIPanel {
 
     public void setRendered(boolean rendered) {
         getStateHelper().put(Properties.rendered, rendered);
+    }
+
+    public boolean isHaveGroup(){
+        return (getGroup() != null) && !"".equals(getGroup().trim());
     }
 
     @Override

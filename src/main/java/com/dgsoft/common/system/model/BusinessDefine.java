@@ -23,7 +23,7 @@ public class BusinessDefine implements java.io.Serializable {
     private Integer version;
     private String startPropagation;
     private String rolePrefix;
-    private Set<EditSubscribe> editSubscribes = new HashSet<EditSubscribe>(0);
+    private Set<TaskSubscribe> taskSubscribes = new HashSet<TaskSubscribe>(0);
     private Set<BusinessNeedFile> businessNeedFiles = new HashSet<BusinessNeedFile>(0);
     private Set<SubscribeGroup> subscribeGroups = new HashSet<SubscribeGroup>(0);
 
@@ -123,12 +123,12 @@ public class BusinessDefine implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "businessDefine")
-    public Set<EditSubscribe> getEditSubscribes() {
-        return editSubscribes;
+    public Set<TaskSubscribe> getTaskSubscribes() {
+        return taskSubscribes;
     }
 
-    public void setEditSubscribes(Set<EditSubscribe> editSubscribes) {
-        this.editSubscribes = editSubscribes;
+    public void setTaskSubscribes(Set<TaskSubscribe> editSubscribes) {
+        this.taskSubscribes = editSubscribes;
     }
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "businessDefine")

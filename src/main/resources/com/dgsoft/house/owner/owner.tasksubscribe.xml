@@ -240,6 +240,8 @@
     </subscribe>
     -->
 
+    <!-- 编辑订阅 在业务信息 页面填写 表单型式提交 在FORM内 所以 订阅者page之中不可包含FORM 但out-page将在form外  -->
+
     <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
             >
         <description>
@@ -407,5 +409,31 @@
             测绘机构编辑
         </description>
     </edit-subscribe>
+
+
+    <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
+
+    <end-subscribe name="HouseInfoModify" component="writeHouseInfo">
+        <description>
+            空间库 房屋信息 回写
+        </description>
+
+    </end-subscribe>
+
+
+    <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
+
+
+
+    <oper-subscribe name="ApplyPaperPrint" page="">
+        <description>
+            打印受理单
+        </description>
+
+    </oper-subscribe>
+
+
+
+
 
 </subscribes>
