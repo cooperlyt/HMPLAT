@@ -53,6 +53,10 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         if (houseRegInfo == null) {
             houseRegInfo = new HouseRegInfo();
             ownerBusinessHome.getSingleHoues().setHouseRegInfo(houseRegInfo);
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setHouseRegInfo(houseRegInfo);
+
+
+
         }
 
         poolOwners = new ArrayList<PersonEntityAdapter<BusinessPool>>();
