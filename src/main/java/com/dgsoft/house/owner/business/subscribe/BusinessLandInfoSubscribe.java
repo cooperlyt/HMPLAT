@@ -16,7 +16,7 @@ import org.jboss.seam.annotations.Name;
  * To change this template use File | Settings | File Templates.
  */
 @Name("businessLandInfoSubscribe") //TaskSubscribeCompnent
-public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> implements TaskSubscribeComponent {
+public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -41,13 +41,19 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> impleme
     @Override
     public void create(){
         super.create();
-
         if (ownerBusinessHome.getSingleHoues().getLandInfo()!=null) {
             have = true;
             setId(ownerBusinessHome.getSingleHoues().getLandInfo().getId());
         } else {
             have = false;
         }
+    }
+
+    @Override
+    public LandInfo createInstance(){
+        LandInfo result = new LandInfo();
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(result);
+        return result;
     }
 
     public void checkHave(){
@@ -58,22 +64,4 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> impleme
             ownerBusinessHome.getSingleHoues().setLandInfo(null);
         }
     }
-
-
-
-    @Override
-    public void initSubscribe() {
-
-    }
-
-    @Override
-    public ValidResult validSubscribe() {
-        return null;
-    }
-
-    @Override
-    public boolean saveSubscribe() {
-        return false;
-    }
-
 }
