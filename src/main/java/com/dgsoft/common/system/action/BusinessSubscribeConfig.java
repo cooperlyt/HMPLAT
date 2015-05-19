@@ -52,6 +52,24 @@ public class BusinessSubscribeConfig {
         return result;
     }
 
+    public List<TaskSubscribeReg.CompleteSubscribeDefine> getCanAddCompleteSubscribeDefines(){
+        List<TaskSubscribeReg.CompleteSubscribeDefine> result = new ArrayList<TaskSubscribeReg.CompleteSubscribeDefine>();
+        for(TaskSubscribeReg.CompleteSubscribeDefine define: taskSubscribeReg.getCompleteSubscribeDefines()){
+            boolean existsInTask = false;
+            for(TaskSubscribe subscribe: businessDefineHome.getInstance().getTaskSubscribes()){
+                if (subscribe.getRegName().equals(define.getName()) && subscribe.getTask().equals(businessDefineHome.getTaskName())){
+                    existsInTask = true;
+                    break;
+                }
+            }
+            if (! existsInTask){
+                result.add(define);
+            }
+
+        }
+        return result;
+    }
+
     public List<TaskSubscribeReg.SubscribeDefine> getCanAddEditSubscribeDefines(){
         List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();
         for(TaskSubscribeReg.SubscribeDefine define: taskSubscribeReg.getEditSubscribeDefines()){
@@ -90,18 +108,19 @@ public class BusinessSubscribeConfig {
 
 
 
-    private int getEditSubscribeMaxPriority() {
+    private int getSubscribeMaxPriority(Subscribe.SubscribeType type) {
         int result = 0;
         for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
-            if (businessDefineHome.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() > result)) {
+            if (type.equals(subscribe.getType()) &&  businessDefineHome.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() > result)) {
                 result = subscribe.getPriority();
             }
         }
         return result;
     }
 
-    private TaskSubscribe getSelectEditTaskSubscribe(){
-        for(TaskSubscribe subscribe: businessDefineHome.getEditSubscribes()){
+
+    private TaskSubscribe getSelectTaskSubscribe(){
+        for(TaskSubscribe subscribe: businessDefineHome.getInstance().getTaskSubscribes()){
             if (subscribe.getId().equals(editSubscribeId)){
                 return subscribe;
             }
@@ -115,7 +134,7 @@ public class BusinessSubscribeConfig {
         TaskSubscribe editSubscribe =
                 new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
                         businessDefineHome.getTaskName(), createRegName, Subscribe.SubscribeType.TASK_INFO,
-                        businessDefineHome.getInstance(),getEditSubscribeMaxPriority() + 1);
+                        businessDefineHome.getInstance(),getSubscribeMaxPriority(Subscribe.SubscribeType.TASK_INFO) + 1);
 
         businessDefineHome.getEntityManager().persist(editSubscribe);
         businessDefineHome.getEntityManager().flush();
@@ -124,17 +143,31 @@ public class BusinessSubscribeConfig {
 
     }
 
+    @Transactional
+    public void createCompleteSubscribe(){
+        TaskSubscribe editSubscribe =
+                new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
+                        businessDefineHome.getTaskName(), createRegName, Subscribe.SubscribeType.TASK_COMPLETE,
+                        businessDefineHome.getInstance(),getSubscribeMaxPriority(Subscribe.SubscribeType.TASK_COMPLETE) + 1);
+
+        businessDefineHome.getEntityManager().persist(editSubscribe);
+        businessDefineHome.getEntityManager().flush();
+        createRegName = null;
+        businessDefineHome.refresh();
+    }
+
 
 
     public void upSelectTaskSubscribe() {
-        TaskSubscribe editEditSubscribe = getSelectEditTaskSubscribe();
+        TaskSubscribe editEditSubscribe = getSelectTaskSubscribe();
         int selectPriority = editEditSubscribe.getPriority();
 
         //Integer maxPriority = null;
 
         TaskSubscribe maxSub = null;
         for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
-            if (editEditSubscribe.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() < selectPriority)) {
+            if (editEditSubscribe.getType().equals(subscribe.getType()) &&
+                    editEditSubscribe.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() < selectPriority)) {
                 if ((maxSub == null) || (maxSub.getPriority() < subscribe.getPriority())){
                     maxSub = subscribe;
                 }
@@ -153,11 +186,12 @@ public class BusinessSubscribeConfig {
     }
 
     public void downSelectTaskSubscribe() {
-        TaskSubscribe editEditSubscribe = getSelectEditTaskSubscribe();
+        TaskSubscribe editEditSubscribe = getSelectTaskSubscribe();
         int selectPriority = editEditSubscribe.getPriority();
         TaskSubscribe minSub = null;
         for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
-            if (editEditSubscribe.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() > selectPriority)) {
+            if (editEditSubscribe.getType().equals(subscribe.getType()) &&
+                    editEditSubscribe.getTaskName().equals(subscribe.getTaskName()) && (subscribe.getPriority() > selectPriority)) {
                 if ((minSub == null) || (minSub.getPriority() > subscribe.getPriority())){
                     minSub = subscribe;
                 }
@@ -173,7 +207,7 @@ public class BusinessSubscribeConfig {
     }
 
     public void deleteSelectSubscribe(){
-        businessDefineHome.getInstance().getTaskSubscribes().remove(getSelectEditTaskSubscribe());
+        businessDefineHome.getInstance().getTaskSubscribes().remove(getSelectTaskSubscribe());
         businessDefineHome.update();
         businessDefineHome.refreshSubscribe();
     }

@@ -83,7 +83,7 @@ public class TaskSubscribe implements java.io.Serializable, Subscribe {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "TYPE", nullable = false, length = 10)
+    @Column(name = "TYPE", nullable = false, length = 20)
     @NotNull
     public SubscribeType getType() {
         return type;

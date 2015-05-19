@@ -97,7 +97,7 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "TYPE", nullable = false, length = 10)
+    @Column(name = "TYPE", nullable = false, length = 20)
     @NotNull
     public Subscribe.SubscribeType getType() {
         return type;
