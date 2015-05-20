@@ -242,13 +242,6 @@
 
     <!-- 编辑订阅 在业务信息 页面填写 表单型式提交 在FORM内 所以 订阅者page之中不可包含FORM 但out-page将在form外  -->
 
-    <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
-            >
-        <description>
-            现产权人编辑
-        </description>
-    </edit-subscribe>
-
     <edit-subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="">
         <description>
             查封登记编辑
@@ -328,6 +321,13 @@
             备案人编辑
         </description>
     </view-subscribe>
+
+    <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
+            >
+        <description>
+            现产权人编辑
+        </description>
+    </edit-subscribe>
 
     <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
         <description>
