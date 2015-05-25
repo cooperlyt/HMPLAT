@@ -60,8 +60,10 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
         clearInstance();
         if (have){
             ownerBusinessHome.getSingleHoues().setLandInfo(getInstance());
+
         } else {
             ownerBusinessHome.getSingleHoues().setLandInfo(null);
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(null);
         }
     }
 }

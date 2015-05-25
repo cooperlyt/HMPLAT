@@ -24,7 +24,7 @@
 
     <a:outputPanel id="houseDetails">
         <s:div rendered="#{houseHome.idDefined}" style="width: 980px">
-            <dh:entryGrid styleClass="detailsTable" autoLastWidth="true" keyWidth="115px" valueWidth="width: 100px;">
+            <dh:entryGrid styleClass="detailsTable" autoLastWidth="true" keyWidth="115" valueWidth="100">
                 <ui:include src="/layout/house/HouseInfoView.xhtml">
                     <ui:param name="houseInfo" value="#{houseHome.instance}"/>
                 </ui:include>
