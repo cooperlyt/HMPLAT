@@ -417,7 +417,12 @@
         <description>
             空间库 房屋信息 回写
         </description>
+    </end-subscribe>
 
+    <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
+        <description>
+            登记薄阶段业务状态改成已登薄
+        </description>
     </end-subscribe>
 
 
