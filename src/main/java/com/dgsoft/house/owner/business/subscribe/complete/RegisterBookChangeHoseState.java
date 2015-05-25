@@ -25,7 +25,7 @@ public class RegisterBookChangeHoseState implements TaskCompleteSubscribeCompone
 
     @Override
     public void complete() {
-        ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.MODIFYING);
+        ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.REGISTER);
     }
 
 
