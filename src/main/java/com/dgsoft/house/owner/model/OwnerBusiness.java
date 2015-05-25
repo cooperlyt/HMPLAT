@@ -21,7 +21,7 @@ public class OwnerBusiness implements java.io.Serializable {
     }
 
     public enum BusinessStatus {
-        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING;
+        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING, REGISTER
     }
 
 
