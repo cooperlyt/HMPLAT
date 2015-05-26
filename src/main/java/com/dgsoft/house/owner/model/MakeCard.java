@@ -19,12 +19,21 @@ public class MakeCard implements java.io.Serializable {
 	private OwnerBusiness ownerBusiness;
 	private String type;
 	private String number;
-	private String code;
-	private String memo;
-	private String makeEmpCode;
-	private String makeEmpName;
-    private Date printTime;
-    private boolean disable;
+
+
+
+    private CardInfo cardInfo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
+    }
+
 
 	public MakeCard() {
 	}
@@ -41,7 +50,7 @@ public class MakeCard implements java.io.Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+    @OneToOne
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
@@ -75,66 +84,5 @@ public class MakeCard implements java.io.Serializable {
 		this.number = number;
 	}
 
-	@Column(name = "CODE", length = 100)
-	@Size(max = 100)
-	public String getCode() {
-		return this.code;
-	}
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
-	@Column(name = "MAKE_EMP_CODE", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getMakeEmpCode() {
-		return this.makeEmpCode;
-	}
-
-	public void setMakeEmpCode(String makeEmpCode) {
-		this.makeEmpCode = makeEmpCode;
-	}
-
-	@Column(name = "MAKE_EMP_NAME", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
-	public String getMakeEmpName() {
-		return this.makeEmpName;
-	}
-
-	public void setMakeEmpName(String makeEmpName) {
-		this.makeEmpName = makeEmpName;
-	}
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "PRINT_TIME", nullable = false, length = 19)
-    @NotNull
-    public Date getPrintTime() {
-        return printTime;
-    }
-
-    public void setPrintTime(Date printTime) {
-        this.printTime = printTime;
-    }
-
-    @Column(name = "DISABLE",nullable = false)
-    public boolean isDisable() {
-        return disable;
-    }
-
-    public void setDisable(boolean disable) {
-        this.disable = disable;
-    }
 }
