@@ -20,6 +20,8 @@ public class Card implements java.io.Serializable {
 	private CardType type;
 	private String number;
 
+
+
 	public Card() {
 	}
 
