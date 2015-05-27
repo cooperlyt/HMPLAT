@@ -24,7 +24,7 @@ public class MakeCardOwnerRshipSubscribe extends OwnerEntityHome<MakeCard> {
   @Override
   public MakeCard createInstance(){
 
-      return new MakeCard(MakeCard.CardType.NOTICE,false,ownerNumberBuilder.useDayNumber("NOTICE"));
+      return new MakeCard(MakeCard.CardType.OWNER_RSHIP,false,ownerNumberBuilder.useDayNumber("OWNER_RSHIP"));
 
   }
   @Override
@@ -36,8 +36,6 @@ public class MakeCardOwnerRshipSubscribe extends OwnerEntityHome<MakeCard> {
           getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
           ownerBusinessHome.getInstance().getMakeCards().add(getInstance());
       }
-
-
   }
 
 

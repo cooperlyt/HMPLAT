@@ -6,17 +6,18 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
-    <s:decorate template="/layout/edit.xhtml">
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{label}
         </ui:define>
+        <ui:param name="for" value="cardIinputText"/>
+
         <h:inputText label="#{label}" size="20"
                      value="#{card.number}"
                      id="cardIinputText"
                      required="true">
         </h:inputText>
-        <ui:define name="tail">
-            <r:message for="cardIinputText" />
-        </ui:define>
+
     </s:decorate>
 </ui:composition>
