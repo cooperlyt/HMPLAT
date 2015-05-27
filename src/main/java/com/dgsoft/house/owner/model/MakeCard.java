@@ -15,9 +15,11 @@ import javax.validation.constraints.Size;
 @Table(name = "MAKE_CARD", catalog = "HOUSE_OWNER_RECORD")
 public class MakeCard implements java.io.Serializable {
 
+
+    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE,PROJECT_MORTGAGE};
 	private String id;
 	private OwnerBusiness ownerBusiness;
-	private String type;
+	private CardType type;
 	private String number;
     private boolean disable;
 
@@ -27,14 +29,25 @@ public class MakeCard implements java.io.Serializable {
 
 
 
-    public MakeCard(CardInfo cardInfo) {
-        this.cardInfo = cardInfo;
+    public MakeCard() {
+
     }
 
 
-    public MakeCard() {
+    public MakeCard(CardType type,boolean disable,String number) {
+        this.type = type;
+        this.disable = disable;
+        this.number = number;
 	}
 
+    public MakeCard(String id,OwnerBusiness ownerBusiness,CardType type,String number,boolean disable){
+        this.id = id;
+        this.ownerBusiness = ownerBusiness;
+        this.type = type;
+        this.number = number;
+        this.disable = disable;
+
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -72,11 +85,12 @@ public class MakeCard implements java.io.Serializable {
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
 	@Size(max = 20)
-	public String getType() {
+    @Enumerated(EnumType.STRING)
+	public CardType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(CardType type) {
 		this.type = type;
 	}
 
