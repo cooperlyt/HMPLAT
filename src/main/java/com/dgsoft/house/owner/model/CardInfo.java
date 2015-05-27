@@ -20,7 +20,7 @@ public class CardInfo  implements Serializable  {
     private String makeEmpCode;
     private String makeEmpName;
     private Date printTime;
-    private boolean disable;
+
 
 
     private MakeCard makeCard;
@@ -114,12 +114,5 @@ public class CardInfo  implements Serializable  {
         this.printTime = printTime;
     }
 
-    @Column(name = "DISABLE",nullable = false)
-    public boolean isDisable() {
-        return disable;
-    }
 
-    public void setDisable(boolean disable) {
-        this.disable = disable;
-    }
 }

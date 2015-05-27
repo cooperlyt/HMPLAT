@@ -19,10 +19,22 @@ public class MakeCard implements java.io.Serializable {
 	private OwnerBusiness ownerBusiness;
 	private String type;
 	private String number;
+    private boolean disable;
 
 
 
     private CardInfo cardInfo;
+
+
+
+    public MakeCard(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
+    }
+
+
+    public MakeCard() {
+	}
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -33,11 +45,6 @@ public class MakeCard implements java.io.Serializable {
     public void setCardInfo(CardInfo cardInfo) {
         this.cardInfo = cardInfo;
     }
-
-
-	public MakeCard() {
-	}
-
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -84,5 +91,14 @@ public class MakeCard implements java.io.Serializable {
 		this.number = number;
 	}
 
+
+    @Column(name = "DISABLE",nullable = false)
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
+    }
 
 }
