@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
-import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.MakeCard;
@@ -10,19 +9,20 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by Administrator on 15-5-27.
+ * Created by Administrator on 15-5-28.
  */
-@Name("makeCardOwnerRship")
-public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
-
-   @In
-   private OwnerBusinessHome ownerBusinessHome;
+@Name("makeCardMortgage")
+public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
 
 
-   @In(create = true)
-   private OwnerNumberBuilder ownerNumberBuilder;
+    @In
+    private OwnerBusinessHome ownerBusinessHome;
 
-   private MakeCard makeCard;
+
+    @In(create = true)
+    private OwnerNumberBuilder ownerNumberBuilder;
+
+    private MakeCard makeCard;
 
 
     public MakeCard getMakeCard() {
@@ -46,14 +46,14 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
     public void complete() {
         if (!ownerBusinessHome.getInstance().getMakeCards().isEmpty()){
             for (MakeCard m:ownerBusinessHome.getInstance().getMakeCards()){
-                if(m.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
+                if(m.getType().equals(MakeCard.CardType.MORTGAGE)){
                     this.makeCard = m;
                     return;
                 }
             }
 
         }else{
-            makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,false,ownerNumberBuilder.useDayNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+            makeCard = new MakeCard(MakeCard.CardType.MORTGAGE,false,ownerNumberBuilder.useDayNumber(MakeCard.CardType.MORTGAGE.name()));
         }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
