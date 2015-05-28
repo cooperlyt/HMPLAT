@@ -1,4 +1,4 @@
-package com.dgsoft.house.owner.business.subscribe;
+package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
@@ -12,8 +12,8 @@ import org.jboss.seam.annotations.Name;
 /**
  * Created by Administrator on 15-5-27.
  */
-@Name("makeCardOwnerRshipSubscribe")
-public class MakeCardOwnerRshipSubscribe implements TaskCompleteSubscribeComponent {
+@Name("makeCardOwnerRship")
+public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
 
    @In
    private OwnerBusinessHome ownerBusinessHome;
