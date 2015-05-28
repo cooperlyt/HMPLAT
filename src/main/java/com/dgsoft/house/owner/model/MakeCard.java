@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +65,8 @@ public class MakeCard implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -84,15 +88,14 @@ public class MakeCard implements java.io.Serializable {
 
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 20)
     @Enumerated(EnumType.STRING)
-	public CardType getType() {
-		return this.type;
-	}
+    public CardType getType() {
+        return this.type;
+    }
 
-	public void setType(CardType type) {
-		this.type = type;
-	}
+    public void setType(CardType type) {
+        this.type = type;
+    }
 
 	@Column(name = "NUMBER", nullable = false, length = 100)
 	@NotNull

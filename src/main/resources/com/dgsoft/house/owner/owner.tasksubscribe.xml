@@ -425,6 +425,13 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="MakeCardOwnerRshipEnd" component="makeCardOwnerRshipSubscribe">
+        <description>
+            生成房屋所有权证号
+        </description>
+    </end-subscribe>
+
+
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
 
