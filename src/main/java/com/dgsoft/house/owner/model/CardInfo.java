@@ -28,7 +28,7 @@ public class CardInfo  implements Serializable  {
 
 
     @OneToOne
-    @PrimaryKeyJoinColumn
+    @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id")
     public MakeCard getMakeCard() {
         return makeCard;
     }
