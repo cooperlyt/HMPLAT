@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,25 +17,56 @@ import javax.validation.constraints.Size;
 @Table(name = "MAKE_CARD", catalog = "HOUSE_OWNER_RECORD")
 public class MakeCard implements java.io.Serializable {
 
+
+    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE,PROJECT_MORTGAGE};
 	private String id;
 	private OwnerBusiness ownerBusiness;
-	private String type;
+	private CardType type;
 	private String number;
-	private String code;
-	private String memo;
-	private String makeEmpCode;
-	private String makeEmpName;
-    private Date printTime;
     private boolean disable;
 
-	public MakeCard() {
+
+
+    private CardInfo cardInfo;
+
+
+
+    public MakeCard() {
+
+    }
+
+
+    public MakeCard(CardType type,boolean disable,String number) {
+        this.type = type;
+        this.disable = disable;
+        this.number = number;
 	}
 
+    public MakeCard(String id,OwnerBusiness ownerBusiness,CardType type,String number,boolean disable){
+        this.id = id;
+        this.ownerBusiness = ownerBusiness;
+        this.type = type;
+        this.number = number;
+        this.disable = disable;
+
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
+    }
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -41,7 +74,7 @@ public class MakeCard implements java.io.Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+    @OneToOne
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull
@@ -55,14 +88,14 @@ public class MakeCard implements java.io.Serializable {
 
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 20)
-	public String getType() {
-		return this.type;
-	}
+    @Enumerated(EnumType.STRING)
+    public CardType getType() {
+        return this.type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(CardType type) {
+        this.type = type;
+    }
 
 	@Column(name = "NUMBER", nullable = false, length = 100)
 	@NotNull
@@ -75,59 +108,6 @@ public class MakeCard implements java.io.Serializable {
 		this.number = number;
 	}
 
-	@Column(name = "CODE", length = 100)
-	@Size(max = 100)
-	public String getCode() {
-		return this.code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
-	@Column(name = "MAKE_EMP_CODE", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getMakeEmpCode() {
-		return this.makeEmpCode;
-	}
-
-	public void setMakeEmpCode(String makeEmpCode) {
-		this.makeEmpCode = makeEmpCode;
-	}
-
-	@Column(name = "MAKE_EMP_NAME", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
-	public String getMakeEmpName() {
-		return this.makeEmpName;
-	}
-
-	public void setMakeEmpName(String makeEmpName) {
-		this.makeEmpName = makeEmpName;
-	}
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "PRINT_TIME", nullable = false, length = 19)
-    @NotNull
-    public Date getPrintTime() {
-        return printTime;
-    }
-
-    public void setPrintTime(Date printTime) {
-        this.printTime = printTime;
-    }
 
     @Column(name = "DISABLE",nullable = false)
     public boolean isDisable() {
@@ -137,4 +117,5 @@ public class MakeCard implements java.io.Serializable {
     public void setDisable(boolean disable) {
         this.disable = disable;
     }
+
 }

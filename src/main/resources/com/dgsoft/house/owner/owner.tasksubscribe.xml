@@ -200,6 +200,31 @@
     </view-subscribe>
 
 
+    <view-subscribe name="MakeCardOwnerRshipView" page="/business/houseOwner/subscribe/MakeCardOwnerRshipView.xhtml">
+        <description>
+            保存生成的单房屋所有权证号查看
+        </description>
+
+    </view-subscribe>
+
+    <view-subscribe name="MakeCardNoticeView" page="/business/houseOwner/subscribe/MakeCardNoticeView.xhtml">
+        <description>
+            保存生成的单房屋预告登记证明号查看
+        </description>
+    </view-subscribe>
+
+
+    <view-subscribe name="MakeCardMortgageView" page="/business/houseOwner/subscribe/MakeCardMortgageView.xhtml">
+        <description>
+            保存生成的单房屋抵押权权证号查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="MakeCardProjectMortgageView" page="/business/houseOwner/subscribe/MakeCardProjectMortgageView.xhtml">
+        <description>
+            保存生成的单房屋在建工程抵押登记号查看
+        </description>
+    </view-subscribe>
     <!--
     <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component=""  ><description>
         预告登记证明号编辑
@@ -424,6 +449,31 @@
             登记薄阶段业务状态改成已登薄
         </description>
     </end-subscribe>
+
+    <end-subscribe name="MakeCardOwnerRshipEnd" component="makeCardOwnerRship">
+        <description>
+            生成单房屋所有权证号
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="makeCardNoticeEnd" component="makeCardNotice">
+        <description>
+            生成单房屋预告登记证明号
+        </description>
+    </end-subscribe>
+    <end-subscribe name="makeCardMortgageEnd" component="makeCardMortgage">
+        <description>
+            生成单房屋所有权抵押权证号
+        </description>
+    </end-subscribe>
+    <end-subscribe name="makeCardProjectMortgageEnd" component="makeCardProjectMortgage">
+        <description>
+            生成单房屋在建工程许可证号
+        </description>
+    </end-subscribe>
+
+
+
 
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->

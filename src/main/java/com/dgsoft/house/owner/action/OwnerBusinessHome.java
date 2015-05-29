@@ -44,7 +44,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         }
         return null;
     }
-
+    public MakeCard getMakeCard(String typeName){
+        for (MakeCard makeCard:getInstance().getMakeCards()){
+            if(makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,typeName))){
+                return makeCard;
+            }
+        }
+        return null;
+    }
     public Financial getFinancial(){
         if(! getInstance().getFinancials().isEmpty()){
             return getInstance().getFinancials().iterator().next();
@@ -79,6 +86,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         }
         return null;
     }
+
+
     public HouseBusiness getSingleHoues() {
 
         Set<HouseBusiness> houseBusinesses = getInstance().getHouseBusinesses();

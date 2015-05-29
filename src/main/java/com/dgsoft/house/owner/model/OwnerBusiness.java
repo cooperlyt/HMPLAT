@@ -49,6 +49,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
     private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
     private Set<Card> cards = new HashSet<Card>(0);
+    private Set<MakeCard> makeCards= new HashSet<MakeCard>(0);
     private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
 
     private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
@@ -61,6 +62,7 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
     private OwnerBusiness selectBusiness;
     private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
+
 
     public OwnerBusiness() {
     }
@@ -210,6 +212,16 @@ public class OwnerBusiness implements java.io.Serializable {
     public void setCards(Set<Card> cards) {
         this.cards = cards;
     }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ownerBusiness",cascade = {CascadeType.ALL},orphanRemoval = true)
+    public Set<MakeCard> getMakeCards() {
+        return makeCards;
+    }
+
+    public void setMakeCards(Set<MakeCard> makeCards) {
+        this.makeCards = makeCards;
+    }
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<BusinessPersion> getBusinessPersions() {
