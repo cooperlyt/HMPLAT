@@ -11,9 +11,9 @@
     <task-node name="受理">
         <task name="受理">
             <description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
 			</description>
-            <assignment actor-id="#{ownerBusinessHome.instance.createEmpCode}"></assignment>
+            <assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
         </task>
         <transition to="收费判断"></transition>
     </task-node>
@@ -21,7 +21,7 @@
     <task-node name="审核">
         <task name="审核">
             <description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
         </task>
@@ -31,7 +31,7 @@
     <task-node name="登薄">
         <task name="登薄">
             <description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
 			</description>
             <assignment pooled-actors="RecordFile"></assignment>
         </task>
@@ -41,7 +41,7 @@
     <task-node name="归档">
         <task name="归档">
             <description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
 			</description>
             <assignment pooled-actors="RecordSave"></assignment>
         </task>
@@ -51,7 +51,7 @@
     <task-node name="收费">
         <task name="收费">
             <description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
 			</description>
             <assignment pooled-actors="Money"></assignment>
         </task>
@@ -61,7 +61,7 @@
     <task-node name="缮证">
         <task name="缮证">
             <description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
 			</description>
             <assignment pooled-actors="PrintCard"></assignment>
         </task>
@@ -80,7 +80,7 @@
     <task-node name="收费确认">
         <task name="收费确认">
 			<description>
-				{&quot;description&quot;:&quot;&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
 			</description>
 			<assignment actor-id="#{actor.id}"></assignment>
 		</task>

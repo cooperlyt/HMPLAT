@@ -1,6 +1,8 @@
 package com.dgsoft.common.system.model;
 // Generated Apr 28, 2013 11:02:59 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.OrderModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "BUSINESS_DEFINE",catalog = "DB_PLAT_SYSTEM")
-public class BusinessDefine implements java.io.Serializable {
+public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     private String id;
     private BusinessCategory businessCategory;
@@ -23,6 +25,8 @@ public class BusinessDefine implements java.io.Serializable {
     private Integer version;
     private String startPropagation;
     private String rolePrefix;
+    private String description;
+    private int priority;
     private Set<TaskSubscribe> taskSubscribes = new HashSet<TaskSubscribe>(0);
     private Set<BusinessNeedFile> businessNeedFiles = new HashSet<BusinessNeedFile>(0);
     private Set<SubscribeGroup> subscribeGroups = new HashSet<SubscribeGroup>(0);
@@ -149,6 +153,16 @@ public class BusinessDefine implements java.io.Serializable {
         this.version = version;
     }
 
+    @Column(name="DESCRIPTION",nullable = true,length = 500)
+    @Size(max = 500)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Column(name="ROLE_PREFIX",nullable = true,length = 20)
     @Size(max = 20)
     public String getRolePrefix() {
@@ -157,6 +171,17 @@ public class BusinessDefine implements java.io.Serializable {
 
     public void setRolePrefix(String rolePrefix) {
         this.rolePrefix = rolePrefix;
+    }
+
+    @Override
+    @Column(name = "PRIORITY",nullable = false)
+    public int getPriority() {
+        return this.priority;
+    }
+
+    @Override
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override

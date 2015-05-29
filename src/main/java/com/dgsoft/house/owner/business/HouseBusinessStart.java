@@ -72,9 +72,10 @@ public class HouseBusinessStart {
 
         ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
         ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-        ownerBusinessHome.getInstance().setRecorded(false);
-        ownerBusinessHome.getInstance().setCreateEmpCode(authInfo.getLoginEmployee().getId());
-        ownerBusinessHome.getInstance().setCreateEmpName(authInfo.getLoginEmployee().getPersonName());
+
+        ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(),
+                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
+                authInfo.getLoginEmployee().getPersonName()));
         ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(OwnerNumberBuilder.instance().useNumber("createBusinessId") * -1 ,ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));

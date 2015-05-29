@@ -6,8 +6,9 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                template="/layout/template.xhtml">
+                template="/layout/template-tab.xhtml">
 
 <ui:define name="taskChangePush">
     <a:push id="pushTask" address="pushTaskChange">
@@ -15,7 +16,331 @@
     </a:push>
 </ui:define>
 
-<ui:define name="body">
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:define name="function-tile">
+        <h1>#{messages.tasks}</h1>
+    </ui:define>
+    <ui:define name="head-tab">
+
+        <s:link styleClass="pagehead-nav-item">
+            <span class="octicon octicon-plus"></span>
+            #{messages.createBusiness}
+        </s:link>
+
+        <s:link styleClass="selected pagehead-nav-item">
+            <span class="octicon octicon-inbox"/>
+            #{messages.operateTask}
+        </s:link>
+
+        <s:link styleClass="pagehead-nav-item">
+            <span class="octicon octicon-eye"></span>
+            #{messages.checkTask}
+        </s:link>
+
+
+
+    </ui:define>
+
+    <h:outputStylesheet>
+        .sortSelect.bootstrap-select.btn-group > .btn{
+            width: auto;
+            float: right;
+        }
+    </h:outputStylesheet>
+
+
+    <div class="explore-pjax-container container explore-page stars-browser">
+        <div class="columns">
+            <div class="column three-fourths">
+                <div class="sort-bar">
+                    <div class="select-menu js-menu-container js-select-menu right select-menu-modal-right">
+
+
+
+
+                        <h:selectOneMenu p:data-header="#{messages.SortOption}" p:data-dlabel="#{messages.SortBy}" p:data-width="200px" styleClass="selectpicker sortSelect" value="#{taskFilter.sortBy}">
+                            <s:selectItems value="#{taskFilter.sortFields}" var="_field" itemValue="#{_field}"
+                                           label="#{messages[_field.name()]}"/>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <h:form id="keySearchForm" >
+
+
+                        <h:inputText value="#{taskFilter.searchKey}" id="searchKeyInput"
+                                     styleClass="filter_input" p:autocapitalize="off" p:placeholder="#{messages.searchTask}" autocomplete="off" >
+
+                        </h:inputText>
+
+                        <input style="display: none"/>
+
+                        <r:hotKey enabledInInput="true" key="return" selector="#keySearchForm"  onkeyup="searchByKey()">
+
+                        </r:hotKey>
+
+
+                        <a:jsFunction name="searchByKey" execute="@form" render="taskList" status="processWaiting">
+
+                        </a:jsFunction>
+                    </h:form>
+                </div>
+                <h:form>
+                <a:outputPanel id="taskList">
+                    <a:outputPanel rendered="#{curTaskType eq '2'}">
+                <ui:include src="taskInstanceList.xhtml">
+                    <ui:param name="taskList" value="#{pooledTaskAdapterCacheList}"/>
+                    <ui:param name="emptyTitle" value="#{messages.pooledTaskEmptyTitle}"/>
+                    <ui:param name="emptyDescription" value="#{messages.pooledTaskEmptyDescription}"/>
+                </ui:include>
+                    </a:outputPanel>
+                    <a:outputPanel rendered="#{(empty curTaskType) or curTaskType eq '1'}">
+                    <ui:include src="taskInstanceList.xhtml">
+                        <ui:param name="taskList" value="#{allTaskAdapterCacheList}"/>
+                        <ui:param name="emptyTitle" value="#{messages.allTaskEmptyTitle}"/>
+                        <ui:param name="emptyDescription" value="#{messages.allTaskEmptyDescription}"/>
+                    </ui:include>
+                    </a:outputPanel>
+                <a:outputPanel rendered="#{curTaskType eq '3'}">
+                    <ui:include src="taskInstanceList.xhtml">
+                        <ui:param name="taskList" value="#{ownerTaskAdapterCacheList}"/>
+                        <ui:param name="emptyTitle" value="#{messages.ownerTaskEmptyTitle}"/>
+                        <ui:param name="emptyDescription" value="#{messages.ownerTaskEmptyDescription}"/>
+                    </ui:include>
+                    </a:outputPanel>
+                </a:outputPanel>
+                </h:form>
+            </div>
+
+            <h:form id="taskFilterForm">
+            <div class="column one-fourth">
+                <ul class="filter-list">
+                    <li>
+
+
+
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskList"
+                                       styleClass="filter-item #{ ((empty curTaskType) or curTaskType eq '1') ? 'selected' : ''}">
+                            <span class="count">#{pooledTaskInstanceCacheList.taskInstancePriorityList.size + ownerTaskInstanceCacheList.taskInstanceCreateList.size}</span>
+                            #{messages.allTask}
+                            <f:param name="curTaskType" value="1"/>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandLink>
+
+                    </li>
+                    <li>
+
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskList"
+                                       styleClass="filter-item #{curTaskType eq '2' ? 'selected' : ''}">
+                            <span class="count">#{pooledTaskInstanceCacheList.taskInstancePriorityList.size}</span>
+                            #{messages.todoBussiness}
+                            <f:param name="curTaskType" value="2"/>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandLink>
+                    </li>
+                    <li>
+
+
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskList"
+                                       styleClass="filter-item #{curTaskType eq '3' ? 'selected' : ''}">
+                            <span class="count">#{ownerTaskInstanceCacheList.taskInstanceCreateList.size}</span>
+                            #{messages.myBussiness}
+                            <f:param name="curTaskType" value="3"/>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandLink>
+                    </li>
+                </ul>
+                <hr/>
+                <a:region>
+                    <div class="form-group">
+                    <div class="input-group date form_datetime" style="margin-bottom: 5px">
+
+                        <h:inputText value="#{taskFilter.searchDateArea.dateFrom}" styleClass="js-datepicker form-control">
+                            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                        </h:inputText>
+
+                        <span class="input-group-addon" onclick="alert('c')">
+
+                            <span class="glyphicon glyphicon-remove"></span></span>
+
+
+                    </div>
+
+                    <div class="input-group date form_datetime">
+                    <h:inputText value="#{taskFilter.searchDateArea.dateTo}" styleClass="js-datepicker form-control">
+                        <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                    </h:inputText>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+
+                    </div>
+                    </div>
+                </a:region>
+            </div>
+
+            </h:form>
+        </div>
+    </div>
+
+<ui:remove>
+
+<div id="notification-center">
+
+
+
+
+    <div class="columns">
+        <div class="column one-fourth">
+
+        </div>
+
+        <div class="column three-fourths">
+            <h:form>
+
+
+
+                <a:outputPanel id="dataResult">
+
+                    <div class="file-navigation in-mid-page" style="margin-top: 0">
+                        <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary tooltipped tooltipped-se left compare-button ">
+                            <span class="octicon octicon-git-compare"/>
+                        </a:commandLink>
+                        <h:selectOneMenu styleClass="selectpicker mini-select" p:data-header="dddddddd"  p:data-width="150px" value="#{pooledTaskAdapterCacheList.selectCategory}">
+                            <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
+                                           label="#{_category.name}" itemValue="#{_category}" noSelectionLabel=".."/>
+                            <f:converter converterId="systemEntityConverter"/>
+                            <a:ajax event="valueChange" execute="@this" render="myBizDefineFilter,taskList">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
+                        </h:selectOneMenu>
+
+                        <a:outputPanel id="myBizDefineFilter">
+                        <a:outputPanel rendered="#{not empty pooledTaskAdapterCacheList.selectCategory}">
+                            <span class="i-separator">/</span>
+                        <h:selectOneMenu styleClass="selectpicker mini-select"  value="#{pooledTaskAdapterCacheList.selectDefineId}">
+                            <s:selectItems value="#{pooledTaskAdapterCacheList.selectCategory.businessDefineList}" var="_define"
+                                           label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel=".."/>
+                            <a:ajax event="valueChange" execute="@this" render="taskList">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
+                        </h:selectOneMenu>
+                        </a:outputPanel>
+                        </a:outputPanel>
+                    </div>
+
+                    <a:outputPanel >
+
+                <r:extendedDataTable tableState="#{pooledTaskSortFilter.stateVar}" id="pooledTasks"
+                                     sortPriority="#{pooledTaskSortFilter.taskSortPriorities}"
+                                     value="#{pooledTaskInstanceCacheList.taskInstancePriorityList}" var="_task"
+                                     selectionMode="none" filterVar="_filterValue"
+                                     sortMode="#{pooledTaskSortFilter.sortMode}"
+                                     style="height:300px; width:100%;" clientRows="0" frozenColumns="5">
+
+                    <r:column width="30px">
+                        <f:facet name="header"></f:facet>
+                        <a:commandButton title="#{messages.acceptBusiness}" image="/img/icons/receive.png"
+                                         immediate="true"
+                                         value="#{messages.acceptBusiness}" execute="@this"
+                                         action="#{pooledTask.assignToCurrentActor}">
+                            <f:param name="taskId" value="#{_task.id}"/>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+                    </r:column>
+
+
+                    <r:column width="90px" sortBy="#{_task.processInstance.key}"
+                              filterValue="#{pooledTaskSortFilter.codeFilter}"
+                              filterExpression="#{empty _filterValue or _task.processInstance.key eq _filterValue}">
+                        <f:facet name="header">
+                            <h:outputText value="#{messages.businessKey}"/>
+                        </f:facet>
+                        <a:outputPanel>
+
+                            #{_task.processInstance.key}
+                            <r:tooltip mode="ajax" followMouse="false" showDelay="1500" styleClass="tooltip"
+                                       layout="block">
+                                <f:facet name="loading">
+                                    <h:graphicImage value="/img/icons/smalBlueWait.gif"/>
+                                    &#160;
+                                    <h:outputText value="#{messages.wait_please}..."/>
+                                </f:facet>
+                    <span style="white-space: nowrap">#{messages.businessDefineId}:<strong>#{_task.variables.businessDefineId}</strong><br/>
+                        #{messages.businessId}:<strong>#{_task.processInstance.id}</strong><br/>
+                        #{messages.taskId}:<strong>#{_task.id}</strong><br/>
+                        #{messages.processDefineDescription}: <strong>#{_task.processInstance.processDefinition.description}</strong>
+                    </span>
+
+                            </r:tooltip>
+                        </a:outputPanel>
+                    </r:column>
+                    <r:column width="120px" sortBy="#{_task.variables.businessName}"
+                              filterValue="#{pooledTaskSortFilter.nameFilter}"
+                              filterExpression="#{empty _filterValue or fn:startsWith(_task.variables.businessName,_filterValue)}">
+                        <f:facet name="header">#{messages.businessName}</f:facet>
+                        <h:graphicImage style="float:right" alt="rf" value="/img/new_messages.png"
+                                        rendered="#{pooledTaskInstanceCacheList.isNewTask(_task.id)}"/>
+
+
+                    </r:column>
+                    <r:column width="90px" sortBy="#{_task.name}" filterValue="#{pooledTaskSortFilter.taskNameFilter}"
+                              filterExpression="#{empty _filterValue or fn:startsWith(_task.name, _filterValue)}">
+                        <f:facet name="header">#{messages.taskName}</f:facet>
+
+                        <a:outputPanel>
+                            <h:outputText value="#{_task.name}"/>
+                            <r:tooltip followMouse="false" showDelay="1000" styleClass="tooltip"
+                                       layout="block" rendered="#{not empty _task.description}">
+                                <span style="white-space: nowrap">#{_task.description}</span>
+                            </r:tooltip>
+                        </a:outputPanel>
+                    </r:column>
+                    <r:column width="90px" sortBy="#{_task.variables.businessDescription}"
+                              filterValue="#{pooledTaskSortFilter.descripitionFilter}"
+                              filterExpression="#{empty _filterValue or fn:startsWith(_task.variables.businessDescription,_filterValue)}">
+                        <f:facet name="header">#{messages.businessDescription}</f:facet>
+                        #{_task.variables.businessDescription}
+                    </r:column>
+
+                    <r:column width="160px" sortBy="#{_task.processInstance.start}">
+                        <f:facet name="header">#{messages.businessCreatedTime}</f:facet>
+                        <h:outputText value="#{_task.processInstance.start}">
+                            <s:convertDateTime
+                                    pattern="#{messages.displayDateTimePattern}"/>
+                        </h:outputText>
+                    </r:column>
+                    <r:column width="160px" sortBy="#{_task.create}">
+                        <f:facet name="header">#{messages.taskCreatedTime}</f:facet>
+                        <h:outputText value="#{_task.create}">
+                            <s:convertDateTime
+                                    pattern="#{messages.displayDateTimePattern}"/>
+                        </h:outputText>
+                    </r:column>
+
+                    <r:column width="80px" sortBy="#{_task.priority}">
+                        <f:facet name="header">#{messages.taskPriority}</f:facet>
+                        <h:outputText value="#{_task.priority}">
+                            <f:converter converterId="priorityConverter"/>
+                        </h:outputText>
+
+                    </r:column>
+
+                    <r:column width="70px" sortBy="#{_task.processInstance.version}">
+                        <f:facet name="header">#{messages.version}</f:facet>
+                        #{_task.processInstance.processDefinition.version}
+                    </r:column>
+
+                    <f:facet name="footer">#{messages.todobusinessCount} #{pooledTaskInstanceCacheList.taskInstancePriorityList.size}</f:facet>
+                </r:extendedDataTable>
+                    </a:outputPanel>
+                </a:outputPanel>
+            </h:form>
+        </div>
+    </div>
+
+
 
 <r:toolbar height="30" itemSeparator="none">
     <r:toolbarGroup itemSeparator="none">
@@ -35,110 +360,7 @@
 
     </r:toolbarGroup>
 </r:toolbar>
-<h:form>
-    <r:extendedDataTable tableState="#{pooledTaskSortFilter.stateVar}" id="pooledTasks"
-                            sortPriority="#{pooledTaskSortFilter.taskSortPriorities}"
-                            value="#{pooledTaskInstanceCacheList.taskInstancePriorityList}" var="_task"
-                            selectionMode="none" filterVar="_filterValue"
-                            sortMode="#{pooledTaskSortFilter.sortMode}"
-                            style="height:300px; width:100%;" clientRows="0" frozenColumns="5">
 
-        <r:column width="30px">
-            <f:facet name="header"></f:facet>
-            <a:commandButton title="#{messages.acceptBusiness}" image="/img/icons/receive.png"
-                             immediate="true"
-                             value="#{messages.acceptBusiness}" execute="@this"
-                             action="#{pooledTask.assignToCurrentActor}">
-                <f:param name="taskId" value="#{_task.id}"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-        </r:column>
-
-
-        <r:column width="90px" sortBy="#{_task.processInstance.key}"
-                     filterValue="#{pooledTaskSortFilter.codeFilter}"
-                     filterExpression="#{empty _filterValue or _task.processInstance.key eq _filterValue}">
-            <f:facet name="header">
-                <h:outputText value="#{messages.businessKey}"/>
-            </f:facet>
-            <a:outputPanel>
-
-                #{_task.processInstance.key}
-                <r:tooltip mode="ajax" followMouse="false" showDelay="1500" styleClass="tooltip"
-                              layout="block">
-                    <f:facet name="loading">
-                        <h:graphicImage value="/img/icons/smalBlueWait.gif"/>
-                        &#160;
-                        <h:outputText value="#{messages.wait_please}..."/>
-                    </f:facet>
-                    <span style="white-space: nowrap">#{messages.businessDefineId}:<strong>#{_task.variables.businessDefineId}</strong><br/>
-                        #{messages.businessId}:<strong>#{_task.processInstance.id}</strong><br/>
-                        #{messages.taskId}:<strong>#{_task.id}</strong><br/>
-                        #{messages.processDefineDescription}: <strong>#{_task.processInstance.processDefinition.description}</strong>
-                    </span>
-
-                </r:tooltip>
-            </a:outputPanel>
-        </r:column>
-        <r:column width="120px" sortBy="#{_task.variables.businessName}"
-                     filterValue="#{pooledTaskSortFilter.nameFilter}"
-                     filterExpression="#{empty _filterValue or fn:startsWith(_task.variables.businessName,_filterValue)}">
-            <f:facet name="header">#{messages.businessName}</f:facet>
-            <h:graphicImage style="float:right" alt="rf" value="/img/new_messages.png"
-                            rendered="#{pooledTaskInstanceCacheList.isNewTask(_task.id)}"/>
-
-
-        </r:column>
-        <r:column width="90px" sortBy="#{_task.name}" filterValue="#{pooledTaskSortFilter.taskNameFilter}"
-                     filterExpression="#{empty _filterValue or fn:startsWith(_task.name, _filterValue)}">
-            <f:facet name="header">#{messages.taskName}</f:facet>
-
-            <a:outputPanel>
-                <h:outputText value="#{_task.name}"/>
-                <r:tooltip followMouse="false" showDelay="1000" styleClass="tooltip"
-                              layout="block" rendered="#{not empty _task.description}">
-                    <span style="white-space: nowrap">#{_task.description}</span>
-                </r:tooltip>
-            </a:outputPanel>
-        </r:column>
-        <r:column width="90px" sortBy="#{_task.variables.businessDescription}"
-                     filterValue="#{pooledTaskSortFilter.descripitionFilter}"
-                     filterExpression="#{empty _filterValue or fn:startsWith(_task.variables.businessDescription,_filterValue)}">
-            <f:facet name="header">#{messages.businessDescription}</f:facet>
-            #{_task.variables.businessDescription}
-        </r:column>
-
-        <r:column width="160px" sortBy="#{_task.processInstance.start}">
-            <f:facet name="header">#{messages.businessCreatedTime}</f:facet>
-            <h:outputText value="#{_task.processInstance.start}">
-                <s:convertDateTime
-                        pattern="#{messages.displayDateTimePattern}"/>
-            </h:outputText>
-        </r:column>
-        <r:column width="160px" sortBy="#{_task.create}">
-            <f:facet name="header">#{messages.taskCreatedTime}</f:facet>
-            <h:outputText value="#{_task.create}">
-                <s:convertDateTime
-                        pattern="#{messages.displayDateTimePattern}"/>
-            </h:outputText>
-        </r:column>
-
-        <r:column width="80px" sortBy="#{_task.priority}">
-            <f:facet name="header">#{messages.taskPriority}</f:facet>
-            <h:outputText value="#{_task.priority}">
-                <f:converter converterId="priorityConverter"/>
-            </h:outputText>
-
-        </r:column>
-
-        <r:column width="70px" sortBy="#{_task.processInstance.version}">
-            <f:facet name="header">#{messages.version}</f:facet>
-            #{_task.processInstance.processDefinition.version}
-        </r:column>
-
-        <f:facet name="footer">#{messages.todobusinessCount} #{pooledTaskInstanceCacheList.taskInstancePriorityList.size}</f:facet>
-    </r:extendedDataTable>
-</h:form>
 
 <r:toolbar height="30" itemSeparator="none">
     <r:toolbarGroup itemSeparator="none">
@@ -266,5 +488,8 @@
     </r:extendedDataTable>
 </h:form>
 
-</ui:define>
+
+</div>
+
+</ui:remove>
 </ui:composition>

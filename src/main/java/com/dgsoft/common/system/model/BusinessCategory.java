@@ -69,7 +69,6 @@ public class BusinessCategory implements java.io.Serializable, OrderModel {
 
     @Override
     @Column(name = "PRIORITY",nullable = false)
-    @NotNull
     public int getPriority() {
         return this.priority;
     }

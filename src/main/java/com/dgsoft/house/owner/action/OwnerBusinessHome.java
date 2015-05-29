@@ -15,8 +15,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     @Override
     public OwnerBusiness createInstance(){
-        return new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CAREATE,new Date(),
-                OwnerBusiness.BusinessStatus.RUNNING,new Date(),new Date());
+
+        return new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CAREATE,
+                OwnerBusiness.BusinessStatus.RUNNING,new Date(),false);
     }
 
     public Reason getReasonByType(String typeName){
@@ -99,5 +100,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+
+    public BusinessEmp getCreateEmp(){
+        for(BusinessEmp emp: getInstance().getBusinessEmps()){
+            if(emp.getType().equals(BusinessEmp.EmpType.CREATE_EMP)){
+                return emp;
+            }
+        }
+        throw new IllegalArgumentException("not have createEmp");
+    }
 
 }

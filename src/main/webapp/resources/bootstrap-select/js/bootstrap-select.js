@@ -76,10 +76,14 @@
   }
 
   var Selectpicker = function (element, options, e) {
+
+
+
     if (e) {
       e.stopPropagation();
       e.preventDefault();
     }
+
 
     this.$element = $(element);
     this.$newElement = null;
@@ -149,7 +153,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+      dlabel:null
   };
 
   Selectpicker.prototype = {
@@ -216,7 +221,8 @@
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
           '<button type="button" class="btn dropdown-toggle selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
-          '<span class="filter-option pull-left"></span>&nbsp;' +
+          (this.options.dlabel ? ('<i style="display: inline-block">' + this.options.dlabel + ':&nbsp;</i>') : '') +
+          '<span class="filter-option"></span>&nbsp;' +
           '<span class="caret"></span>' +
           '</button>' +
           '<div class="dropdown-menu open">' +
@@ -1158,8 +1164,13 @@
             options = typeof option == 'object' && option;
 
         if (!data) {
+
+
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
+
+
           $this.data('selectpicker', (data = new Selectpicker(this, config, event)));
+
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {

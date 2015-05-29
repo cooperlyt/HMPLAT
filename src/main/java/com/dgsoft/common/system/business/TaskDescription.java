@@ -14,6 +14,8 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 import static org.jboss.seam.annotations.Install.BUILT_IN;
 
 /**
@@ -118,6 +120,25 @@ public class TaskDescription {
         }
     }
 
+    public String getBusinessKey(){
+        try {
+            return jsonObject.getString("businessKey");
+        } catch (JSONException e) {
+            Logging.getLog(this.getClass()).error("businessKey is null", e);
+            throw new IllegalArgumentException("businessKey is null", e);
+        }
+    }
+
+
+    public String getBusinessDefineKey(){
+        try {
+            return jsonObject.getString("businessDefineKey");
+        } catch (JSONException e) {
+            Logging.getLog(this.getClass()).error("businessDefineName is null", e);
+            throw new IllegalArgumentException("businessDefineName is null", e);
+        }
+    }
+
     public String getValue(String key){
 
         try {
@@ -125,6 +146,16 @@ public class TaskDescription {
         } catch (JSONException e) {
             Logging.getLog(this.getClass()).warn("TaskDescription get task Description fail",e);
             return null;
+        }
+    }
+
+    public Date getCreateTime(){
+        try {
+
+            return new Date(jsonObject.getLong("createTime"));
+        } catch (JSONException e) {
+            Logging.getLog(this.getClass()).error("createTime is null", e);
+            throw new IllegalArgumentException("createTime is null", e);
         }
     }
 

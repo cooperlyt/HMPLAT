@@ -8,6 +8,7 @@ import com.dgsoft.common.system.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.bpm.ManagedJbpmContext;
+import org.jboss.seam.core.Expressions;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jbpm.graph.def.ProcessDefinition;
@@ -26,7 +27,6 @@ import java.util.*;
 public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
 
-
     @In
     private TaskSubscribeReg taskSubscribeReg;
 
@@ -34,11 +34,11 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     private FacesMessages facesMessages;
 
 
-    public String validSubscribe(){
+    public String validSubscribe() {
         return validSubscribes().name();
     }
 
-    public TaskSubscribeComponent.ValidResult validSubscribes(){
+    public TaskSubscribeComponent.ValidResult validSubscribes() {
         TaskSubscribeComponent.ValidResult result = TaskSubscribeComponent.ValidResult.SUCCESS;
 
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
@@ -52,6 +52,15 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return result;
     }
 
+    public String getDescription() {
+        String val = getInstance().getDescription();
+        if ((val == null) || val.trim().equals("")) {
+            return "";
+        } else {
+            return new Expressions().createValueExpression(val).toString();
+        }
+
+    }
 
 
     public boolean saveSubscribes() {
@@ -67,9 +76,9 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return true;
     }
 
-    public TaskSubscribeComponent.ValidResult validTaskComplete(){
+    public TaskSubscribeComponent.ValidResult validTaskComplete() {
         TaskSubscribeComponent.ValidResult result = TaskSubscribeComponent.ValidResult.SUCCESS;
-        for(TaskSubscribeReg.CompleteSubscribeDefine define: getCompleteSubscribeDefines()){
+        for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
             TaskSubscribeComponent.ValidResult r = define.getComponents().valid();
             if (r.getPri() > result.getPri()) {
                 result = r;
@@ -78,8 +87,8 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return result;
     }
 
-    public void completeTask(){
-        for (TaskSubscribeReg.CompleteSubscribeDefine define: getCompleteSubscribeDefines()) {
+    public void completeTask() {
+        for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
             define.getComponents().complete();
         }
 
@@ -92,7 +101,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public void setTaskName(String taskName) {
-        if ((taskName == null) || (this.taskName == null) || !taskName.equals(this.getTaskName())){
+        if ((taskName == null) || (this.taskName == null) || !taskName.equals(this.getTaskName())) {
             refreshSubscribe();
         }
         this.taskName = taskName;
@@ -106,12 +115,11 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
-
-    public List<BusinessNeedFile> getFileSubscribe(String taskName){
+    public List<BusinessNeedFile> getFileSubscribe(String taskName) {
         List<BusinessNeedFile> result = new ArrayList<BusinessNeedFile>(0);
-        for(BusinessNeedFile businessNeedFile: getInstance().getBusinessNeedFiles()){
-            if (((taskName == null) &&  ((businessNeedFile.getTaskName() == null) || (businessNeedFile.getTaskName().equals(""))) )
-                || ( (taskName != null) && taskName.equals(businessNeedFile.getTaskName()))){
+        for (BusinessNeedFile businessNeedFile : getInstance().getBusinessNeedFiles()) {
+            if (((taskName == null) && ((businessNeedFile.getTaskName() == null) || (businessNeedFile.getTaskName().equals(""))))
+                    || ((taskName != null) && taskName.equals(businessNeedFile.getTaskName()))) {
                 result.add(businessNeedFile);
             }
         }
@@ -129,7 +137,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         refreshSubscribe();
     }
 
-    public void refreshSubscribe(){
+    public void refreshSubscribe() {
         editSubscribes = null;
         viewSubscribeGroups = null;
         operSubscribes = null;
@@ -145,31 +153,31 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     private List<SubscribeGroup> viewSubscribeGroups;
 
     public List<TaskSubscribe> getOperSubscribes() {
-        if (operSubscribes == null){
+        if (operSubscribes == null) {
             loadSubscribes();
         }
         return operSubscribes;
     }
 
     public List<TaskSubscribe> getCompleteSubscribes() {
-        if (completeSubscribes == null){
+        if (completeSubscribes == null) {
             loadSubscribes();
         }
         return completeSubscribes;
     }
 
 
-    private void loadSubscribes(){
+    private void loadSubscribes() {
         operSubscribes = new ArrayList<TaskSubscribe>();
         editSubscribes = new ArrayList<TaskSubscribe>();
         completeSubscribes = new ArrayList<TaskSubscribe>();
-        for(TaskSubscribe subscribe: getInstance().getTaskSubscribes()){
-            if (subscribe.getTaskName().equals(taskName)){
-                if (Subscribe.SubscribeType.TASK_INFO.equals(subscribe.getType())){
+        for (TaskSubscribe subscribe : getInstance().getTaskSubscribes()) {
+            if (subscribe.getTaskName().equals(taskName)) {
+                if (Subscribe.SubscribeType.TASK_INFO.equals(subscribe.getType())) {
                     editSubscribes.add(subscribe);
-                }else if (Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())){
+                } else if (Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())) {
                     completeSubscribes.add(subscribe);
-                }else if (Subscribe.SubscribeType.TASK_OPERATOR.equals(subscribe.getType())){
+                } else if (Subscribe.SubscribeType.TASK_OPERATOR.equals(subscribe.getType())) {
                     operSubscribes.add(subscribe);
                 }
 
@@ -184,14 +192,14 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public List<TaskSubscribe> getEditSubscribes() {
-        if (editSubscribes == null){
+        if (editSubscribes == null) {
             loadSubscribes();
         }
 
         return editSubscribes;
     }
 
-    public void initEditSubscribes(){
+    public void initEditSubscribes() {
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
                 define.getComponents().initSubscribe();
@@ -201,10 +209,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public List<SubscribeGroup> getViewSubscribeGroups() {
-        if (viewSubscribeGroups == null){
+        if (viewSubscribeGroups == null) {
             viewSubscribeGroups = new ArrayList<SubscribeGroup>();
-            for(SubscribeGroup group: getInstance().getSubscribeGroups()){
-                if (group.getTaskName().equals(getTaskName())){
+            for (SubscribeGroup group : getInstance().getSubscribeGroups()) {
+                if (group.getTaskName().equals(getTaskName())) {
                     viewSubscribeGroups.add(group);
                 }
             }
@@ -220,41 +228,41 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
-    public List<TaskSubscribeReg.EditSubscribeDefine> getEditSubscribeDefines(){
+    public List<TaskSubscribeReg.EditSubscribeDefine> getEditSubscribeDefines() {
         List<TaskSubscribeReg.EditSubscribeDefine> result = new ArrayList<TaskSubscribeReg.EditSubscribeDefine>();
-        for(TaskSubscribe subscribe: getEditSubscribes()){
-           result.add(taskSubscribeReg.getEditDefineByName(subscribe.getRegName()));
+        for (TaskSubscribe subscribe : getEditSubscribes()) {
+            result.add(taskSubscribeReg.getEditDefineByName(subscribe.getRegName()));
         }
         return result;
     }
 
-    public List<TaskSubscribeReg.CompleteSubscribeDefine> getCompleteSubscribeDefines(){
+    public List<TaskSubscribeReg.CompleteSubscribeDefine> getCompleteSubscribeDefines() {
         List<TaskSubscribeReg.CompleteSubscribeDefine> result = new ArrayList<TaskSubscribeReg.CompleteSubscribeDefine>();
-        for(TaskSubscribe subscribe: getCompleteSubscribes()){
+        for (TaskSubscribe subscribe : getCompleteSubscribes()) {
             result.add(taskSubscribeReg.getCompleteDefineByName(subscribe.getRegName()));
         }
         return result;
     }
 
-    public List<TaskSubscribeReg.SubscribeDefine> getOperSubscribeDefines(){
+    public List<TaskSubscribeReg.SubscribeDefine> getOperSubscribeDefines() {
         List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();
-        for(TaskSubscribe subscribe: getOperSubscribes()){
+        for (TaskSubscribe subscribe : getOperSubscribes()) {
             result.add(taskSubscribeReg.getOperDefineByName(subscribe.getRegName()));
         }
         return result;
     }
 
-    public List<TaskSubscribeReg.SubscribeDefineGroup> getViewSubscribeDefineGroups(){
+    public List<TaskSubscribeReg.SubscribeDefineGroup> getViewSubscribeDefineGroups() {
         List<TaskSubscribeReg.SubscribeDefineGroup> result = new ArrayList<TaskSubscribeReg.SubscribeDefineGroup>();
 
-        for(SubscribeGroup group: getViewSubscribeGroups()){
+        for (SubscribeGroup group : getViewSubscribeGroups()) {
             TaskSubscribeReg.SubscribeDefineGroup defineGroup = new TaskSubscribeReg.SubscribeDefineGroup(group);
 
-            for(ViewSubscribe subscribe : group.getViewSubscribeList()){
+            for (ViewSubscribe subscribe : group.getViewSubscribeList()) {
                 defineGroup.add(taskSubscribeReg.getViewDefineByName(subscribe.getRegName()));
             }
-            if (! defineGroup.getDefineList().isEmpty())
-            result.add(defineGroup);
+            if (!defineGroup.getDefineList().isEmpty())
+                result.add(defineGroup);
 
         }
         return result;
@@ -283,15 +291,15 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return getEntityManager().createQuery("select bd from BusinessDefine bd where bd.id = ?1").setParameter(1, newId).getResultList().size() == 0;
     }
 
-    public int getSubscribeCount(String taskName){
+    public int getSubscribeCount(String taskName) {
         int result = 0;
-        for (TaskSubscribe subscribe: getInstance().getTaskSubscribes()){
-            if (subscribe.getTask().equals(taskName)){
-                result ++;
+        for (TaskSubscribe subscribe : getInstance().getTaskSubscribes()) {
+            if (subscribe.getTask().equals(taskName)) {
+                result++;
             }
         }
-        for (SubscribeGroup group: getInstance().getSubscribeGroups()){
-            if (group.getTask().equals(taskName)){
+        for (SubscribeGroup group : getInstance().getSubscribeGroups()) {
+            if (group.getTask().equals(taskName)) {
                 result += group.getViewSubscribes().size();
             }
         }
