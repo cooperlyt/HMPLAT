@@ -183,6 +183,26 @@ input[type=button], input[type=reset], input[type=submit]{
     width: 200px;
 }
 
+
+.mini-select{
+
+
+}
+
+.mini-select > button{
+    border-radius: 3px !important;
+}
+
+.i-separator:before, .i-separator:after{
+    content: " ";
+}
+
+.btn-sm-icon{
+    padding: 4px 10px;
+}
+
+
+
 .dropdown-menu-git {
     position: absolute;
     top: 100%;
@@ -249,9 +269,7 @@ input[type=button], input[type=reset], input[type=submit]{
     opacity: 1
 }
 
-.selectpicker > li > a{
-    padding: 3px 20px;
-}
+
 
 .dropdown-noicon > li > a {
     padding: 3px 20px;
@@ -500,30 +518,6 @@ input[type=button], input[type=reset], input[type=submit]{
 
 }
 
-.edit-select{
-    z-index: inherit !important;
-}
-
-.edit-select button{
-    background-image: none;
-}
-
-.edit-select button:focus{
-    background-color: inherit;
-}
-
-.edit-select button:hover{
-    background-color: inherit;
-}
-
-.edit-select button:active{
-    background-color: inherit;
-}
-
-.edit-select>.dropdown-toggle.btn-default{
-    background-color: inherit;
-}
-
 .note{
     min-height: 17px;
     margin: 4px 0 2px;
@@ -718,6 +712,24 @@ input[type=button], input[type=reset], input[type=submit]{
     background-color: #fff;
 }
 
+.boxed-group-table.table>tbody>tr>td{
+    border-top: 0;
+}
+
+.boxed-group-table.table-condensed>tbody>tr>td, .boxed-group-table.table-condensed>tbody>tr>th, .boxed-group-table.table-condensed>tfoot>tr>td, .boxed-group-table.table-condensed>tfoot>tr>th, .boxed-group-table.table-condensed>thead>tr>td, .boxed-group-table.table-condensed>thead>tr>th{
+    padding: 8px;
+}
+
+.boxed-group-table.table-hover>tbody>tr:hover {
+    background-color: #f5f9fc;
+}
+
+
+.list-group-item .type-icon {
+    float: left;
+    margin-top: 1px;
+    margin-left: -24px;
+}
 
 
 

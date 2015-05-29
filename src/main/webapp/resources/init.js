@@ -3,6 +3,7 @@
 $(document).ready(
     function(){
         $('.selectpicker').selectpicker();
+        $('.mini-select').selectpicker('setStyle', 'btn-sm');
         $('.js-switch').bootstrapSwitch();
 
         $('.js-only-int').keyup(function(){
@@ -45,13 +46,44 @@ $(document).ready(
             $('.js-form-input',document.getElementById(e.target.id)).removeClass('edit-error');
         });
 
-        $('.js-datepicker').datepicker({
+        $('.js-datepicker').datetimepicker({
             language: "zh-CN",
-            autoclose: true,
-            clearBtn: true,
-            todayHighlight: true,
-            todayBtn: true
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
         });
+
+        $('.js-datetimepicker').datetimepicker({
+            language: "zh-CN",
+
+            clearBtn: 1,
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+
+        $('.js-timepicker').datetimepicker({
+            language: "zh-CN",
+
+            clearBtn: 1,
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+
 
     }
 );

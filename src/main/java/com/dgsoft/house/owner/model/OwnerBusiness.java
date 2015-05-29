@@ -28,18 +28,21 @@ public class OwnerBusiness implements java.io.Serializable {
     private String id;
     private Integer version;
     private BusinessSource source;
-    private Date recordTime;
+
     private String processMessage;
     private String memo;
     private BusinessStatus status;
-    private Date applyTime;
-    private Date createTime;
-    private Date regTime;
     private String defineName;
     private String defineId;
+
+    private Date createTime;
+    private Date applyTime;
+    private Date checkTime;
+    private Date regTime;
+    private Date recordTime;
+
     private boolean recorded;
-    private String createEmpName;
-    private String createEmpCode;
+
     private Set<BusinessFile> uploadFileses = new HashSet<BusinessFile>(0);
     private Set<Reason> reasons = new HashSet<Reason>(0);
     private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
@@ -62,12 +65,11 @@ public class OwnerBusiness implements java.io.Serializable {
     public OwnerBusiness() {
     }
 
-    public OwnerBusiness(BusinessSource source, Date recordTime, BusinessStatus status, Date applyTime, Date createTime) {
+    public OwnerBusiness(BusinessSource source, BusinessStatus status, Date createTime, boolean recorded) {
         this.source = source;
-        this.recordTime = recordTime;
         this.status = status;
-        this.applyTime = applyTime;
         this.createTime = createTime;
+        this.recorded = recorded;
     }
 
     @Id
@@ -101,17 +103,6 @@ public class OwnerBusiness implements java.io.Serializable {
 
     public void setSource(BusinessSource source) {
         this.source = source;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "RECORD_TIME", nullable = false, length = 19)
-    @NotNull
-    public Date getRecordTime() {
-        return this.recordTime;
-    }
-
-    public void setRecordTime(Date recordTime) {
-        this.recordTime = recordTime;
     }
 
     @Column(name = "PROCESS_MESSAGE", length = 400)
@@ -165,37 +156,6 @@ public class OwnerBusiness implements java.io.Serializable {
         this.status = status;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "APPLY_TIME", nullable = false, length = 19)
-    @NotNull
-    public Date getApplyTime() {
-        return this.applyTime;
-    }
-
-    public void setApplyTime(Date applyTime) {
-        this.applyTime = applyTime;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATE_TIME", nullable = false, length = 19)
-    @NotNull
-    public Date getCreateTime() {
-        return this.createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "REG_TIME", nullable = true, length = 19)
-    public Date getRegTime() {
-        return regTime;
-    }
-
-    public void setRegTime(Date regTime) {
-        this.regTime = regTime;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<BusinessFile> getUploadFileses() {
@@ -363,27 +323,58 @@ public class OwnerBusiness implements java.io.Serializable {
         this.recorded = recorded;
     }
 
-    @Column(name = "CREATE_EMP_NAME",nullable = false,length = 50)
-    @Size(max = 50)
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME", nullable = false, length = 19)
     @NotNull
-    public String getCreateEmpName() {
-        return createEmpName;
+    public Date getCreateTime() {
+        return this.createTime;
     }
 
-    public void setCreateEmpName(String createEmpName) {
-        this.createEmpName = createEmpName;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    @Column(name = "CREATE_EMP_CODE",nullable = false,length = 32)
-    @Size(max = 32)
-    @NotNull
-    public String getCreateEmpCode() {
-        return createEmpCode;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "APPLY_TIME", nullable = true, length = 19)
+    public Date getApplyTime() {
+        return this.applyTime;
     }
 
-    public void setCreateEmpCode(String createEmpCode) {
-        this.createEmpCode = createEmpCode;
+    public void setApplyTime(Date applyTime) {
+        this.applyTime = applyTime;
     }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CHECK_TIME", nullable = true, length = 19)
+    public Date getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(Date checkTime) {
+        this.checkTime = checkTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "REG_TIME", nullable = true, length = 19)
+    public Date getRegTime() {
+        return regTime;
+    }
+
+    public void setRegTime(Date regTime) {
+        this.regTime = regTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "RECORD_TIME", nullable = true, length = 19)
+    public Date getRecordTime() {
+        return this.recordTime;
+    }
+
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
+    }
+
 
     @Transient
     public BusinessProject getBusinessProject(){

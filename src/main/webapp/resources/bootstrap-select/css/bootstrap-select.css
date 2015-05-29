@@ -24,7 +24,7 @@
   width: auto !important;
 }
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 220px;
+  width: auto;
 }
 .bootstrap-select .btn:focus {
   outline: thin dotted #333333 !important;
@@ -76,7 +76,7 @@
   outline: none !important;
 }
 .bootstrap-select.btn-group .btn .filter-option {
-  display: inline-block;
+  display: inline;
   overflow: hidden;
   width: 100%;
   text-align: left;
@@ -258,3 +258,147 @@
   opacity: 0;
 }
 /*# sourceMappingURL=bootstrap-select.css.map */
+
+
+.bootstrap-select.btn-group .dropdown-menu{
+    left: 0;
+    z-index: 1000;
+    width: inherit;
+    margin: 2px 0 0;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #666;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.bootstrap-select.btn-group .dropdown-menu .popover-title{
+    font-size: 12px;
+
+
+    padding: 8px 10px;
+    background: #f5f5f5;
+    border-bottom: 1px solid rgba(200,200,200,0.4);
+
+
+    font-weight: bold;
+    color: #333;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.bootstrap-select.btn-group .dropdown-menu .popover-title button{
+   font-size: 19px;
+    margin-top: -3px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li{
+
+    border-bottom: 1px solid #eee;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    line-height: 1.4;
+    color: inherit;
+}
+
+.bootstrap-select.btn-group .dropdown-menu > li > a {
+
+    line-height: 1.4;
+    padding: 8px 0 8px 32px;
+    color: #333;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: none;
+
+}
+
+.bootstrap-select.btn-group .dropdown-menu li:last-child{
+
+    border-bottom: 0;
+    border-radius: 0 0 3px 3px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu .selected{
+    color: #333;
+}
+
+.bootstrap-select.btn-group .dropdown-menu .selected a:focus{
+    outline: none;
+    font-weight: bold;
+    background: #fff;
+}
+
+.bootstrap-select.btn-group .dropdown-menu .selected a span.check-mark{
+    display: inline-block;
+    position:absolute ;
+    left:23px;
+    opacity: 1;
+    top: 0;
+    padding: 8px;
+}
+
+.bootstrap-select.btn-group > .btn{
+    text-align: left;
+}
+
+.bootstrap-select.btn-group > .btn > i{
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.bootstrap-select.btn-group .btn:focus{
+    outline: none !important;
+    border-color: #d5d5d5;
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.bootstrap-select.btn-group .dropdown-menu > li > a:hover{
+    color: #fff;
+    text-decoration: none;
+    background: #4183c4 !important;
+}
+
+
+/* change to git */
+
+
+.edit-select{
+    z-index: inherit !important;
+}
+
+.edit-select button{
+    background-image: none;
+}
+
+.edit-select button:focus{
+    background-color: inherit;
+    outline: none !important;
+    border-color: #51a7e8 !important;;
+    text-decoration: none;
+}
+
+.edit-select button:hover{
+    background-color: inherit;
+}
+
+.edit-select button:active{
+    background-color: inherit;
+}
+
+.edit-select>.dropdown-toggle.btn-default{
+    background-color: inherit;
+}
+
+.edit-select.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 220px;
+}
+
+
+
+
+
+

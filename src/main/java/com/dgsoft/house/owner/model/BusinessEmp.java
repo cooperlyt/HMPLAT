@@ -14,22 +14,23 @@ import javax.validation.constraints.Size;
 @Table(name = "BUSINESS_EMP", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessEmp implements java.io.Serializable {
 
+    public enum EmpType{
+        CREATE_EMP, CHECK_EMP
+    }
+
 	private String id;
 	private OwnerBusiness ownerBusiness;
-	private String type;
-	private String taskName;
+	private EmpType type;
 	private String empCode;
 	private String empName;
 
 	public BusinessEmp() {
 	}
 
-	public BusinessEmp(String id, OwnerBusiness ownerBusiness, String type,
-			String taskName, String empCode, String empName) {
-		this.id = id;
+	public BusinessEmp(OwnerBusiness ownerBusiness, EmpType type,
+			String empCode, String empName) {
 		this.ownerBusiness = ownerBusiness;
 		this.type = type;
-		this.taskName = taskName;
 		this.empCode = empCode;
 		this.empName = empName;
 	}
@@ -59,29 +60,19 @@ public class BusinessEmp implements java.io.Serializable {
 		this.ownerBusiness = ownerBusiness;
 	}
 
-	@Column(name = "TYPE", nullable = false, length = 10)
-	@NotNull
-	@Size(max = 10)
-	public String getType() {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false, length = 10)
+    @NotNull
+	public EmpType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
 
-	@Column(name = "TASK_NAME", nullable = false, length = 100)
-	@NotNull
-	@Size(max = 100)
-	public String getTaskName() {
-		return this.taskName;
-	}
+    public void setType(EmpType type) {
+        this.type = type;
+    }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
-
-	@Column(name = "EMP_CODE", nullable = false, length = 32)
+    @Column(name = "EMP_CODE", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
 	public String getEmpCode() {
