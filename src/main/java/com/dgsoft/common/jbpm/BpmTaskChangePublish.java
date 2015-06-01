@@ -52,6 +52,7 @@ public class BpmTaskChangePublish {
     public void onBusinessTaskChange() {
         log.info("onTaskChange");
         for(TaskInstanceListCache subscriber: subscribers){
+            log.debug("refresh task subscriber:" + subscriber.getClass().getName());
             subscriber.refresh();
         }
         sendTaskChangeMessage();
