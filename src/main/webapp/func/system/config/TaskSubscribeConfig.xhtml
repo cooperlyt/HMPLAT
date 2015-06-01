@@ -31,6 +31,12 @@
 
     </ui:define>
 
+    <h:outputStylesheet>
+        .edit-select > button{
+            width: 220px !important;
+        }
+    </h:outputStylesheet>
+
 
     <a:outputPanel layout="block" styleClass="columns">
         <a:outputPanel ajaxRendered="true" id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
@@ -293,6 +299,7 @@
                                             <s:decorate template="/layout/edit-validate.xhtml" style="display: inline;">
                                                 <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
                                                                  label="#{messages.TaskSubscribe_reg}"
+                                                                 p:data-width="400px"
                                                                  value="#{businessSubscribeConfig.createRegName}">
                                                     <s:selectItems
                                                             value="#{businessSubscribeConfig.canAddViewSubscribeDefines}"
@@ -460,6 +467,7 @@
                         <a:outputPanel  layout="block" ajaxRendered="true"
                                         styleClass="label-edit edit-color-label-form open">
                             <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
+                                             p:data-width="400px"
                                              label="#{messages.TaskSubscribe_reg}"
                                              value="#{businessSubscribeConfig.createRegName}">
                                 <s:selectItems value="#{businessSubscribeConfig.canAddCompleteSubscribeDefines}" var="_reg"
@@ -519,7 +527,7 @@
 
                                             <a:outputPanel styleClass="label-edit" layout="block">
 
-                                                <h:selectOneMenu required="true"
+                                                <h:selectOneMenu required="true" p:data-width="400px"
                                                                  styleClass="selectpicker edit-select"
                                                                  label="#{messages.TaskSubscribe_reg}"
                                                                  value="#{_subscribe.regName}">
@@ -645,6 +653,7 @@
                         <a:outputPanel id="createPanel" layout="block" ajaxRendered="true"
                                        styleClass="label-edit edit-color-label-form open">
                             <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
+                                             p:data-width="400px"
                                              label="#{messages.TaskSubscribe_reg}" id="subscribeInput"
                                              value="#{businessSubscribeConfig.createRegName}">
                                 <s:selectItems value="#{businessSubscribeConfig.canAddEditSubscribeDefines}" var="_reg"
@@ -705,6 +714,7 @@
                                                 <a:outputPanel styleClass="label-edit" layout="block">
 
                                                     <h:selectOneMenu required="true"
+                                                                     p:data-width="400px"
                                                                      styleClass="selectpicker edit-select"
                                                                      label="#{messages.TaskSubscribe_reg}"
                                                                      value="#{_subscribe.regName}">
