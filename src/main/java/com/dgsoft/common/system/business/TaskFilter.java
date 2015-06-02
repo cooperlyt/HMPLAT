@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.SearchDateArea;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
@@ -49,6 +50,8 @@ public class TaskFilter {
         this.searchKey = searchKey;
     }
 
+    private boolean createDate = true;
+
     public SearchDateArea getSearchDateArea() {
         return searchDateArea;
     }
@@ -57,6 +60,13 @@ public class TaskFilter {
         this.searchDateArea = searchDateArea;
     }
 
+    public boolean isCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(boolean createDate) {
+        this.createDate = createDate;
+    }
 
     public List<SystemTaskInstanceListCache.TaskInstanceAdapter> filter(List<SystemTaskInstanceListCache.TaskInstanceAdapter> tasks){
 
@@ -66,8 +76,14 @@ public class TaskFilter {
 
         if (searchDateArea.getDateFrom() != null){
             for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
-                if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getDateFrom()) >= 0 ){
-                    filterList.add(task);
+                if (createDate) {
+                    if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getDateFrom()) >= 0) {
+                        filterList.add(task);
+                    }
+                }else{
+                    if (task.getTaskInstance().getCreate().compareTo(searchDateArea.getDateFrom()) >= 0) {
+                        filterList.add(task);
+                    }
                 }
             }
             resultList.clear();
@@ -77,8 +93,14 @@ public class TaskFilter {
 
         if (searchDateArea.getSearchDateTo() != null){
             for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
-                if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getSearchDateTo()) <= 0 ){
-                    filterList.add(task);
+                if (createDate) {
+                    if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getSearchDateTo()) <= 0) {
+                        filterList.add(task);
+                    }
+                }else{
+                    if (task.getTaskInstance().getCreate().compareTo(searchDateArea.getSearchDateTo()) <= 0) {
+                        filterList.add(task);
+                    }
                 }
             }
             resultList.clear();
@@ -88,8 +110,8 @@ public class TaskFilter {
 
         if ((getSearchKey() != null) && (!getSearchKey().trim().equals(""))){
             for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
-                if (task.getTaskDescription().getDescription().contains(getSearchKey()) ||
-                        task.getTaskDescription().getBusinessKey().contains(getSearchKey())){
+                if (task.getTaskDescription().getDescription().toUpperCase().contains(getSearchKey().toUpperCase()) ||
+                        task.getTaskDescription().getBusinessKey().toUpperCase().contains(getSearchKey().toUpperCase())){
                     filterList.add(task);
                 }
             }
@@ -149,6 +171,19 @@ public class TaskFilter {
         }
 
         return resultList;
+    }
+
+    public void refreshAll(){
+        ((SystemTaskInstanceListCache)Component.getInstance(AllTaskAdapterCacheList.class,ScopeType.SESSION,true)).refresh();
+        ((SystemTaskInstanceListCache)Component.getInstance(OwnerTaskAdapterCacheList.class,ScopeType.SESSION,true)).refresh();
+        ((SystemTaskInstanceListCache)Component.getInstance(PooledTaskAdapterCacheList.class,ScopeType.SESSION,true)).refresh();
+    }
+
+    public void resetAll(){
+        ((SystemTaskInstanceListCache)Component.getInstance(AllTaskAdapterCacheList.class,ScopeType.SESSION,true)).reset();
+        ((SystemTaskInstanceListCache)Component.getInstance(OwnerTaskAdapterCacheList.class,ScopeType.SESSION,true)).reset();
+        ((SystemTaskInstanceListCache)Component.getInstance(PooledTaskAdapterCacheList.class,ScopeType.SESSION,true)).reset();
+
     }
 
 }

@@ -61,18 +61,28 @@
 
 
 
+                        <h:form>
+                        <h:selectOneMenu p:data-header="#{messages.SortOption}"
+                                         p:data-dlabel="#{messages.SortBy}"
+                                         p:data-width="200px" styleClass="selectpicker sortSelect"
 
-                        <h:selectOneMenu p:data-header="#{messages.SortOption}" p:data-dlabel="#{messages.SortBy}" p:data-width="200px" styleClass="selectpicker sortSelect" value="#{taskFilter.sortBy}">
+                                         value="#{taskFilter.sortBy}">
                             <s:selectItems value="#{taskFilter.sortFields}" var="_field" itemValue="#{_field}"
                                            label="#{messages[_field.name()]}"/>
+                            <s:convertEnum/>
+                            <a:ajax event="valueChange" execute="@this" render="taskList" listener="#{taskFilter.resetAll}">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
                         </h:selectOneMenu>
+                        </h:form>
                     </div>
 
                     <h:form id="keySearchForm" >
 
 
                         <h:inputText value="#{taskFilter.searchKey}" id="searchKeyInput"
-                                     styleClass="filter_input" p:autocapitalize="off" p:placeholder="#{messages.searchTask}" autocomplete="off" >
+                                     styleClass="filter_input" p:autocapitalize="off" p:placeholder="#{messages.searchTask}"
+                                     autocomplete="off" >
 
                         </h:inputText>
 
@@ -83,7 +93,7 @@
                         </r:hotKey>
 
 
-                        <a:jsFunction name="searchByKey" execute="@form" render="taskList" status="processWaiting">
+                        <a:jsFunction name="searchByKey" action="#{taskFilter.resetAll}" execute="@form" render="taskList" status="processWaiting">
 
                         </a:jsFunction>
                     </h:form>
@@ -95,6 +105,7 @@
                     <ui:param name="taskList" value="#{pooledTaskAdapterCacheList}"/>
                     <ui:param name="emptyTitle" value="#{messages.pooledTaskEmptyTitle}"/>
                     <ui:param name="emptyDescription" value="#{messages.pooledTaskEmptyDescription}"/>
+                    <ui:param name="taskListTitle" value="#{messages.todoBussiness}"/>
                 </ui:include>
                     </a:outputPanel>
                     <a:outputPanel rendered="#{(empty curTaskType) or curTaskType eq '1'}">
@@ -102,6 +113,7 @@
                         <ui:param name="taskList" value="#{allTaskAdapterCacheList}"/>
                         <ui:param name="emptyTitle" value="#{messages.allTaskEmptyTitle}"/>
                         <ui:param name="emptyDescription" value="#{messages.allTaskEmptyDescription}"/>
+                        <ui:param name="taskListTitle" value="#{messages.allTask}"/>
                     </ui:include>
                     </a:outputPanel>
                 <a:outputPanel rendered="#{curTaskType eq '3'}">
@@ -109,6 +121,7 @@
                         <ui:param name="taskList" value="#{ownerTaskAdapterCacheList}"/>
                         <ui:param name="emptyTitle" value="#{messages.ownerTaskEmptyTitle}"/>
                         <ui:param name="emptyDescription" value="#{messages.ownerTaskEmptyDescription}"/>
+                        <ui:param name="taskListTitle" value="#{messages.myBussiness}"/>
                     </ui:include>
                     </a:outputPanel>
                 </a:outputPanel>
@@ -116,7 +129,7 @@
             </div>
 
             <h:form id="taskFilterForm">
-            <div class="column one-fourth">
+            <a:outputPanel ajaxRendered="true" class="column one-fourth">
                 <ul class="filter-list">
                     <li>
 
@@ -124,7 +137,7 @@
 
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskList"
                                        styleClass="filter-item #{ ((empty curTaskType) or curTaskType eq '1') ? 'selected' : ''}">
-                            <span class="count">#{pooledTaskInstanceCacheList.taskInstancePriorityList.size + ownerTaskInstanceCacheList.taskInstanceCreateList.size}</span>
+                            <span class="count">#{allTaskAdapterCacheList.allSize}</span>
                             #{messages.allTask}
                             <f:param name="curTaskType" value="1"/>
                             <a:attachQueue requestDelay="0"/>
@@ -135,7 +148,7 @@
 
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskList"
                                        styleClass="filter-item #{curTaskType eq '2' ? 'selected' : ''}">
-                            <span class="count">#{pooledTaskInstanceCacheList.taskInstancePriorityList.size}</span>
+                            <span class="count">#{pooledTaskAdapterCacheList.allSize}</span>
                             #{messages.todoBussiness}
                             <f:param name="curTaskType" value="2"/>
                             <a:attachQueue requestDelay="0"/>
@@ -146,7 +159,7 @@
 
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskList"
                                        styleClass="filter-item #{curTaskType eq '3' ? 'selected' : ''}">
-                            <span class="count">#{ownerTaskInstanceCacheList.taskInstanceCreateList.size}</span>
+                            <span class="count">#{ownerTaskAdapterCacheList.allSize}</span>
                             #{messages.myBussiness}
                             <f:param name="curTaskType" value="3"/>
                             <a:attachQueue requestDelay="0"/>
@@ -178,7 +191,7 @@
                     </div>
                     </div>
                 </a:region>
-            </div>
+            </a:outputPanel>
 
             </h:form>
         </div>

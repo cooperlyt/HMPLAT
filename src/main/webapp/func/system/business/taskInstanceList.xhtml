@@ -12,19 +12,22 @@
     <a:outputPanel layout="block" styleClass="blankslate" rendered="#{empty taskList.resultList}">
         <h3>#{emptyTitle}</h3>
         <p>#{emptyDescription} <a:commandLink immediate="true" execute="@this" render="taskListPanel"
-                                              value="#{messages.refresh}" action="#{taskList.refresh}"/></p>
+                                              value="#{messages.refresh}" action="#{taskList.refresh}">
+            <a:attachQueue requestDelay="0"/>
+        </a:commandLink></p>
     </a:outputPanel>
 
     <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty taskList.resultList}">
         <div class="file-navigation in-mid-page" style="margin-top: 0">
-            <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button " render="taskListPanel">
+            <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button " action="#{taskList.refresh}" render="taskListPanel">
                 <span class="octicon octicon-sync"/>
+                <a:attachQueue requestDelay="0"/>
             </a:commandLink>
             <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
                              value="#{taskList.selectCategoryId}">
                 <s:selectItems value="#{taskList.filterCategorys}" var="_category"
                                label="#{_category.category.name}" itemValue="#{_category.category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                <a:ajax event="valueChange" execute="@this" render="myBizDefineFilter,taskList">
+                <a:ajax event="valueChange" execute="@this" listener="#{taskList.reset}" render="myBizDefineFilter,taskList">
                     <a:attachQueue requestDelay="0"/>
                 </a:ajax>
             </h:selectOneMenu>
@@ -35,7 +38,7 @@
                     <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="220px"  styleClass="selectpicker mini-select"  value="#{taskList.selectDefineId}">
                         <s:selectItems value="#{taskList.selectCategory.defineList}" var="_define"
                                        label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                        <a:ajax event="valueChange" execute="@this" render="taskList">
+                        <a:ajax event="valueChange" listener="#{taskList.reset}" execute="@this" render="taskList">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectOneMenu>
@@ -54,7 +57,7 @@
         <a:outputPanel layout="block" styleClass="notifications-list" id="taskList">
 
             <div class="boxed-group flush">
-                <h3>fff</h3>
+                <h3><span style="font-weight: bold;" >#{taskListTitle}</span>  <span class="counter"> #{taskList.resultList.size} </span> </h3>
                 <ul class="boxed-group-inner notifications">
                     <a:repeat value="#{taskList.resultList}" var="_task">
                         <li class="list-group-item read">

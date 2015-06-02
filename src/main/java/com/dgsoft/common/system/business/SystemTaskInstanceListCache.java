@@ -113,6 +113,10 @@ public abstract class SystemTaskInstanceListCache extends TaskInstanceListCache 
         return categories;
     }
 
+    public int getAllSize(){
+        return super.getTaskInstanceCreateList().size();
+    }
+
     public List<TaskInstanceAdapter> getResultList(){
         if (resultList == null){
             resultList = new ArrayList<TaskInstanceAdapter>();
@@ -146,7 +150,7 @@ public abstract class SystemTaskInstanceListCache extends TaskInstanceListCache 
             }
 
 
-            taskFilter.filter(resultList);
+            resultList = taskFilter.filter(resultList);
 
             categories = null;
 
