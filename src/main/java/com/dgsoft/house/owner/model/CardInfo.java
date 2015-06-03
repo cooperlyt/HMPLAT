@@ -1,4 +1,6 @@
 package com.dgsoft.house.owner.model;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -6,6 +8,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
 /**
  * Created by Administrator on 15-5-26.
  */
@@ -28,7 +31,7 @@ public class CardInfo  implements Serializable  {
 
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id")
+    @PrimaryKeyJoinColumn
     public MakeCard getMakeCard() {
         return makeCard;
     }
@@ -52,6 +55,11 @@ public class CardInfo  implements Serializable  {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
+    @GenericGenerator(name = "pkGenerator",
+            strategy = "foreign",
+            parameters = { @Parameter(name = "property", value = "makeCard") })
+    @GeneratedValue(generator = "pkGenerator")
+
     public String getId() {
         return this.id;
     }
@@ -104,8 +112,7 @@ public class CardInfo  implements Serializable  {
 
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "PRINT_TIME", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "PRINT_TIME", nullable = true, length = 19)
     public Date getPrintTime() {
         return printTime;
     }

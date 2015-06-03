@@ -92,8 +92,9 @@
                                              rendered="true"
                                              styleClass="js-datepicker form-control"
                                              label="#{messages.Land_BeginUseTime}"
-                                             value="#{land.instance.beginUseTime}">
-                                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                             value="#{land.instance.beginUseTime}"
+                                             autocomplete="off">
+                                    <s:convertDateTime pattern="#{messages.datePattern}"/>
                                 </h:inputText>
                                 <span class="input-group-addon">-</span>
 
@@ -101,8 +102,9 @@
                                              rendered="true"
                                              styleClass="js-datepicker form-control"
                                              label="#{messages.Land_EndUseTime}"
-                                             value="#{land.instance.endUseTime}">
-                                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                             value="#{land.instance.endUseTime}"
+                                             autocomplete="off">
+                                    <s:convertDateTime pattern="#{messages.datePattern}"/>
                                 </h:inputText>
                             </div>
 
