@@ -5,6 +5,10 @@ import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.bpm.BeginTask;
+import org.jboss.seam.bpm.Actor;
+import org.jboss.seam.bpm.PooledTask;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 /**
@@ -34,5 +38,27 @@ public class TaskPrepare {
         businessDefineHome.initEditSubscribes();
         return result;
     }
+
+    @In
+    private Actor actor;
+
+
+    @In(create=true)
+    private PooledTask pooledTask;
+
+
+    @BeginTask(flushMode = FlushModeType.MANUAL)
+    public String operTask(){
+
+        if (!actor.getId().equals(taskInstance.getActorId())){
+            if (!"taskAssignedToActor".equals(pooledTask.assignToCurrentActor())){
+                return null;
+            }
+        }
+
+       return beginTask();
+
+    }
+
 
 }

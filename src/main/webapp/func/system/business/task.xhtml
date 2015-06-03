@@ -8,6 +8,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 template="/layout/template-tab.xhtml">
 
 <ui:define name="taskChangePush">
@@ -80,7 +81,7 @@
                     <h:form id="keySearchForm" >
 
 
-                        <h:inputText value="#{taskFilter.searchKey}" id="searchKeyInput"
+                        <h:inputText value="#{taskFilter.searchKey}" id="searchKeyInput" onblur="searchByKey()"
                                      styleClass="filter_input" p:autocapitalize="off" p:placeholder="#{messages.searchTask}"
                                      autocomplete="off" >
 
@@ -167,33 +168,104 @@
                     </li>
                 </ul>
                 <hr/>
-                <a:region>
+
+            </a:outputPanel>
+            </h:form>
+               <h:form id="dataAreaForm">
+
+
                     <div class="form-group">
                     <div class="input-group date form_datetime" style="margin-bottom: 5px">
 
-                        <h:inputText value="#{taskFilter.searchDateArea.dateFrom}" styleClass="js-datepicker form-control">
-                            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                        <h:inputText value="#{taskFilter.searchDateArea.dateFrom}"
+                                     p:placeholder="#{messages.dateAreaBegin}"
+                                     onblur="filterDateAreaChange()"
+                                     styleClass="form-control js-filterDateAreaInput">
+                            <s:convertDateTime pattern="#{messages.datePattern}"/>
+
                         </h:inputText>
 
-                        <span class="input-group-addon" onclick="alert('c')">
+                        <span class="input-group-addon" onclick="clearDateFrom()">
 
                             <span class="glyphicon glyphicon-remove"></span></span>
 
+                        <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm,taskList" action="#{taskFilter.clearDateFrom}">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:jsFunction>
+
 
                     </div>
 
-                    <div class="input-group date form_datetime">
-                    <h:inputText value="#{taskFilter.searchDateArea.dateTo}" styleClass="js-datepicker form-control">
-                        <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                    <div class="input-group date form_datetime" style="margin-bottom: 5px">
+                    <h:inputText value="#{taskFilter.searchDateArea.dateTo}"
+                                 p:placeholder="#{messages.dateAreaTo}"
+                                 onblur="filterDateAreaChange()"
+                                 styleClass="form-control js-filterDateAreaInput">
+                        <s:convertDateTime pattern="#{messages.datePattern}"/>
+
                     </h:inputText>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon" onclick="clearDateTo()"><span class="glyphicon glyphicon-remove"></span></span>
+
+                        <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm,taskList" action="#{taskFilter.clearDateTo}">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:jsFunction>
+
 
                     </div>
-                    </div>
-                </a:region>
-            </a:outputPanel>
 
-            </h:form>
+                        <h:outputScript>
+
+                            $(document).ready(function () {
+
+                            $('.js-filterDateAreaInput')
+                            .datetimepicker({
+                                        language: "zh-CN",
+                                        format: 'yyyy-mm-dd',
+                                        weekStart: 1,
+                                        todayBtn:  1,
+                                        autoclose: 1,
+                                        todayHighlight: 1,
+                                        startView: 2,
+                                        minView: 2,
+                                        forceParse: 0
+                                    })
+                            .on('changeDate', function(ev){
+
+                                        filterDateAreaChange();
+                            });
+
+
+                            });
+                        </h:outputScript>
+
+
+                        <div class="right" >
+                            <dh:switch value="#{taskFilter.createDate}"
+                                       data-on-color="primary"
+                                       data-off-color="info"
+                                       onText="#{messages.BizCreateTimeShort}"
+                                       offText="#{messages.TaskCreateTimeShort}"
+                                       style="float: rigth"
+                                       onclick="filterDateAreaChange()"
+                                       styleClass="js-switch switch-small">
+
+                            </dh:switch>
+                        </div>
+
+                        <a:jsFunction name="filterDateAreaChange"
+                                      action="#{taskFilter.resetAll}"
+                                      execute="@form" render="taskList">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:jsFunction>
+                    </div>
+
+
+
+
+               </h:form>
+
+
+
         </div>
     </div>
 

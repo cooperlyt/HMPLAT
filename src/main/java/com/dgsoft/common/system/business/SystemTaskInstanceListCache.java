@@ -30,7 +30,7 @@ public abstract class SystemTaskInstanceListCache extends TaskInstanceListCache 
     @In
     private TaskFilter taskFilter;
 
-    private List<FilterBusinessCategory> categories;
+    private List<FilterBusinessCategory> categories = new ArrayList<FilterBusinessCategory>();
 
     @In
     private Actor actor;
@@ -89,27 +89,6 @@ public abstract class SystemTaskInstanceListCache extends TaskInstanceListCache 
     }
 
     public List<FilterBusinessCategory> getFilterCategorys(){
-        if (categories == null){
-            Map<String,FilterBusinessCategory> result = new HashMap<String, FilterBusinessCategory>();
-
-            for(TaskInstanceAdapter task: getResultList()){
-                BusinessCategory category = task.getBusinessDefine().getBusinessCategory();
-                FilterBusinessCategory fCategory = result.get(category.getId());
-                if (fCategory == null){
-                    fCategory = new FilterBusinessCategory(category);
-                    result.put(category.getId(),fCategory);
-                }
-                fCategory.putDefine(task.getBusinessDefine());
-            }
-            categories = new ArrayList<FilterBusinessCategory>(result.values());
-            Collections.sort(categories, new Comparator<FilterBusinessCategory>() {
-                @Override
-                public int compare(FilterBusinessCategory o1, FilterBusinessCategory o2) {
-                    return new Integer(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
-                }
-            });
-
-        }
         return categories;
     }
 
@@ -123,13 +102,32 @@ public abstract class SystemTaskInstanceListCache extends TaskInstanceListCache 
 
             List<TaskInstanceAdapter> filterList = new ArrayList<TaskInstanceAdapter>();
 
+            categories.clear();
+            Map<String,FilterBusinessCategory> categoryMap = new HashMap<String, FilterBusinessCategory>();
+
             for (TaskInstance taskInstance: super.getTaskInstanceCreateList()){
-                resultList.add(new TaskInstanceAdapter(taskInstance, actor.getId().equals(taskInstance.getActorId()), systemEntityLoader));
+                TaskInstanceAdapter task = new TaskInstanceAdapter(taskInstance, actor.getId().equals(taskInstance.getActorId()), systemEntityLoader);
+                resultList.add(task);
+
+                BusinessCategory category = task.getBusinessDefine().getBusinessCategory();
+                FilterBusinessCategory fCategory = categoryMap.get(category.getId());
+                if (fCategory == null){
+                    fCategory = new FilterBusinessCategory(category);
+                    categoryMap.put(category.getId(),fCategory);
+                }
+                fCategory.putDefine(task.getBusinessDefine());
+
             }
+            categories.addAll(categoryMap.values());
+            Collections.sort(categories, new Comparator<FilterBusinessCategory>() {
+                @Override
+                public int compare(FilterBusinessCategory o1, FilterBusinessCategory o2) {
+                    return new Integer(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
+                }
+            });
 
 
-
-            if ((selectDefineId != null) && !selectDefineId.trim().equals("")){
+            if ((selectCategory != null) && (selectDefineId != null) && !selectDefineId.trim().equals("")){
                 for(TaskInstanceAdapter task: resultList){
                     if (task.getBusinessDefine().getId().equals(selectDefineId)){
                         filterList.add(task);
@@ -152,7 +150,6 @@ public abstract class SystemTaskInstanceListCache extends TaskInstanceListCache 
 
             resultList = taskFilter.filter(resultList);
 
-            categories = null;
 
         }
 
