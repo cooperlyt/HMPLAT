@@ -9,39 +9,39 @@
     <f:subview >
 
         <a:outputPanel id="taskListPanel">
-    <a:outputPanel layout="block" styleClass="blankslate" rendered="#{empty taskList.resultList}">
+    <a:outputPanel layout="block" styleClass="blankslate" rendered="#{empty allTaskAdapterCacheList.resultList}">
         <h3>#{emptyTitle}</h3>
         <p>#{emptyDescription} <a:commandLink immediate="true" execute="@this" render="taskListPanel"
-                                              value="#{messages.refresh}" action="#{taskList.refresh}">
+                                              value="#{messages.refresh}" action="#{allTaskAdapterCacheList.refresh}">
             <a:attachQueue requestDelay="0"/>
         </a:commandLink></p>
     </a:outputPanel>
 
-    <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty taskList.resultList}">
+    <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty allTaskAdapterCacheList.resultList}">
         <div class="file-navigation in-mid-page" style="margin-top: 0">
             <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button "
                            immediate="true" execute="@this" status="processWaiting"
-                           action="#{taskList.refresh}" render="taskListPanel">
+                           action="#{allTaskAdapterCacheList.refresh}" render="taskListPanel">
                 <span class="octicon octicon-sync"/>
                 <a:attachQueue requestDelay="0"/>
             </a:commandLink>
             <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
-                             value="#{taskList.selectCategoryId}">
-                <s:selectItems value="#{taskList.filterCategorys}" var="_category"
+                             value="#{allTaskAdapterCacheList.selectCategoryId}">
+                <s:selectItems value="#{allTaskAdapterCacheList.filterCategorys}" var="_category"
                                label="#{_category.category.name}" itemValue="#{_category.category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                <a:ajax event="valueChange" execute="@this" listener="#{taskList.reset}" render="myBizDefineFilter,taskList">
+                <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.reset}" render="myBizDefineFilter,taskListDatas">
                     <a:attachQueue requestDelay="0"/>
                 </a:ajax>
             </h:selectOneMenu>
 
             <a:outputPanel id="myBizDefineFilter">
-                <a:outputPanel rendered="#{not empty taskList.selectCategory}">
+                <a:outputPanel rendered="#{not empty allTaskAdapterCacheList.selectCategory}">
                     <span class="i-separator">/</span>
                     <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="220px"
-                                     styleClass="selectpicker mini-select"  value="#{taskList.selectDefineId}">
-                        <s:selectItems value="#{taskList.selectCategory.defineList}" var="_define"
+                                     styleClass="selectpicker mini-select"  value="#{allTaskAdapterCacheList.selectDefineId}">
+                        <s:selectItems value="#{allTaskAdapterCacheList.selectCategory.defineList}" var="_define"
                                        label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                        <a:ajax event="valueChange" listener="#{taskList.reset}" execute="@this" render="taskList">
+                        <a:ajax event="valueChange" listener="#{allTaskAdapterCacheList.reset}" execute="@this" render="taskListDatas">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectOneMenu>
@@ -59,12 +59,12 @@
 
         </h:outputStylesheet>
 
-        <a:outputPanel layout="block" styleClass="notifications-list" id="taskList">
+        <a:outputPanel layout="block" styleClass="notifications-list" id="taskListDatas">
 
             <div class="boxed-group flush">
-                <h3><span style="font-weight: bold;" >#{taskListTitle}</span>  <span class="counter"> #{taskList.resultList.size} </span> </h3>
+                <h3><span style="font-weight: bold;" >#{taskListTitle}</span>  <span class="counter"> #{allTaskAdapterCacheList.resultList.size} </span> </h3>
                 <ul class="boxed-group-inner notifications">
-                    <a:repeat value="#{taskList.resultList}" var="_task">
+                    <a:repeat value="#{allTaskAdapterCacheList.resultList}" var="_task">
                         <li class="list-group-item read">
 
                             <div class="repo-list-stats">
@@ -100,7 +100,7 @@
 
 
                                 <s:link  styleClass="btn btn-sm btn-default" action="#{taskPrepare.operTask}"
-                                         taskInstance="#{_task.taskInstance}"
+                                         taskInstance="#{_task.taskInstance}" onclick="#{rich:component('wait')}.show()"
                                         style=" #{_task.myOnly ? 'border-bottom-left-radius: 3px; border-top-left-radius: 3px;' : ''}">
                                     #{_task.myTask ? messages.operTask : messages.acceptAndOperTask}
                                 </s:link>
