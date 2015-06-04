@@ -1,17 +1,14 @@
 package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.SearchDateArea;
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+
 
 /**
  * Created by cooper on 5/26/15.
@@ -69,24 +66,14 @@ public class TaskFilter {
         this.createDate = createDate;
     }
 
-    public void clearDateFrom(){
-        searchDateArea.setDateFrom(null);
-        resetAll();
-    }
+    public List<AllTaskAdapterCacheList.TaskInstanceAdapter> filter(List<AllTaskAdapterCacheList.TaskInstanceAdapter> tasks){
 
-    public void clearDateTo(){
-        searchDateArea.setDateTo(null);
-        resetAll();
-    }
+        List<AllTaskAdapterCacheList.TaskInstanceAdapter> filterList = new ArrayList<AllTaskAdapterCacheList.TaskInstanceAdapter>();
 
-    public List<SystemTaskInstanceListCache.TaskInstanceAdapter> filter(List<SystemTaskInstanceListCache.TaskInstanceAdapter> tasks){
-
-        List<SystemTaskInstanceListCache.TaskInstanceAdapter> filterList = new ArrayList<SystemTaskInstanceListCache.TaskInstanceAdapter>();
-
-        List<SystemTaskInstanceListCache.TaskInstanceAdapter> resultList = new ArrayList<SystemTaskInstanceListCache.TaskInstanceAdapter>(tasks);
+        List<AllTaskAdapterCacheList.TaskInstanceAdapter> resultList = new ArrayList<AllTaskAdapterCacheList.TaskInstanceAdapter>(tasks);
 
         if (searchDateArea.getDateFrom() != null){
-            for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
+            for(AllTaskAdapterCacheList.TaskInstanceAdapter task: resultList){
                 Logging.getLog(getClass()).debug("createDate:" + createDate + "|searchDateArea from:" + searchDateArea.getDateFrom());
                 if (createDate) {
                     if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getDateFrom()) >= 0) {
@@ -104,7 +91,7 @@ public class TaskFilter {
         }
 
         if (searchDateArea.getSearchDateTo() != null){
-            for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
+            for(AllTaskAdapterCacheList.TaskInstanceAdapter task: resultList){
                 Logging.getLog(getClass()).debug("createDate:" + createDate + "|searchDateArea from:" + searchDateArea.getSearchDateTo());
                 if (createDate) {
                     if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getSearchDateTo()) <= 0) {
@@ -122,7 +109,7 @@ public class TaskFilter {
         }
 
         if ((getSearchKey() != null) && (!getSearchKey().trim().equals(""))){
-            for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
+            for(AllTaskAdapterCacheList.TaskInstanceAdapter task: resultList){
                 if (task.getTaskDescription().getDescription().toUpperCase().contains(getSearchKey().toUpperCase()) ||
                         task.getTaskDescription().getBusinessKey().toUpperCase().contains(getSearchKey().toUpperCase())){
                     filterList.add(task);
@@ -139,43 +126,43 @@ public class TaskFilter {
         switch (sortBy) {
 
             case BUSINESS_CODE:
-                Collections.sort(resultList, new Comparator<SystemTaskInstanceListCache.TaskInstanceAdapter>() {
+                Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
-                    public int compare(SystemTaskInstanceListCache.TaskInstanceAdapter o1, SystemTaskInstanceListCache.TaskInstanceAdapter o2) {
+                    public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
                         return o1.getTaskDescription().getBusinessKey().compareTo(o2.getTaskDescription().getBusinessKey());
                     }
                 });
                 break;
 
             case BUSINESS_DEFINE:
-                Collections.sort(resultList, new Comparator<SystemTaskInstanceListCache.TaskInstanceAdapter>() {
+                Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
-                    public int compare(SystemTaskInstanceListCache.TaskInstanceAdapter o1, SystemTaskInstanceListCache.TaskInstanceAdapter o2) {
+                    public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
                         return o1.getBusinessDefine().getId().compareTo(o2.getBusinessDefine().getId());
                     }
                 });
                 break;
             case TASK_NAME:
-                Collections.sort(resultList, new Comparator<SystemTaskInstanceListCache.TaskInstanceAdapter>() {
+                Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
-                    public int compare(SystemTaskInstanceListCache.TaskInstanceAdapter o1, SystemTaskInstanceListCache.TaskInstanceAdapter o2) {
+                    public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
                         return o1.getTaskInstance().getName().compareTo(o2.getTaskInstance().getName());
                     }
                 });
 
                 break;
             case BUSINESS_CREATE_TIME:
-                Collections.sort(resultList, new Comparator<SystemTaskInstanceListCache.TaskInstanceAdapter>() {
+                Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
-                    public int compare(SystemTaskInstanceListCache.TaskInstanceAdapter o1, SystemTaskInstanceListCache.TaskInstanceAdapter o2) {
+                    public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
                         return o1.getTaskDescription().getCreateTime().compareTo(o2.getTaskDescription().getCreateTime());
                     }
                 });
                 break;
             case TASK_TIME:
-                Collections.sort(resultList, new Comparator<SystemTaskInstanceListCache.TaskInstanceAdapter>() {
+                Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
-                    public int compare(SystemTaskInstanceListCache.TaskInstanceAdapter o1, SystemTaskInstanceListCache.TaskInstanceAdapter o2) {
+                    public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
                         return o1.getTaskInstance().getCreate().compareTo(o2.getTaskInstance().getCreate());
                     }
                 });
@@ -186,17 +173,12 @@ public class TaskFilter {
         return resultList;
     }
 
-    public void refreshAll(){
-        ((SystemTaskInstanceListCache)Component.getInstance(AllTaskAdapterCacheList.class,ScopeType.SESSION,true)).refresh();
-        ((SystemTaskInstanceListCache)Component.getInstance(OwnerTaskAdapterCacheList.class,ScopeType.SESSION,true)).refresh();
-        ((SystemTaskInstanceListCache)Component.getInstance(PooledTaskAdapterCacheList.class,ScopeType.SESSION,true)).refresh();
+
+    public void clearCondition(){
+        getSearchDateArea().setDateTo(null);
+        getSearchDateArea().setDateFrom(null);
+        setSearchKey(null);
     }
 
-    public void resetAll(){
-        ((SystemTaskInstanceListCache)Component.getInstance(AllTaskAdapterCacheList.class,ScopeType.SESSION,true)).reset();
-        ((SystemTaskInstanceListCache)Component.getInstance(OwnerTaskAdapterCacheList.class,ScopeType.SESSION,true)).reset();
-        ((SystemTaskInstanceListCache)Component.getInstance(PooledTaskAdapterCacheList.class,ScopeType.SESSION,true)).reset();
-
-    }
 
 }
