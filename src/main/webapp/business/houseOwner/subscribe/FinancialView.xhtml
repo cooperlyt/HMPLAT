@@ -5,22 +5,21 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
      <a:outputPanel rendered="#{financia.financialType eq 'FINANCE_CORP'}">
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+         <dh:entryGridBlock columns="4" >
 
             <h:outputText value="#{label}"/>
             <h:outputText value="#{financia.name}"/>
 
            <h:outputText value="#{messages.Tel}"/>
            <h:outputText value="#{financia.phone}"/>
-        </h:panelGrid>
+        </dh:entryGridBlock>
      </a:outputPanel>
     <a:outputPanel rendered="#{financia.financialType eq 'FINANCE_PERSON'}">
-        <h:panelGrid columns="4"  styleClass="detailsTable"
-                     columnClasses="detailsFirstCol,detailsValueCol,detailsTitleCol,detailsLastValueCol">
+        <dh:entryGridBlock columns="4" >
 
             <h:outputText value="#{label}"/>
             <h:outputText value="#{financia.name}"/>
@@ -36,7 +35,7 @@
             <h:outputText value="#{financia.code}"/>
 
 
-        </h:panelGrid>
+        </dh:entryGridBlock>
     </a:outputPanel>
 
 </ui:composition>
