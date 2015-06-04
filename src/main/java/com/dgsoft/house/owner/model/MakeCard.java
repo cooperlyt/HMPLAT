@@ -25,7 +25,7 @@ public class MakeCard implements java.io.Serializable {
 	private String number;
     private boolean disable;
     private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
-    private Set<OtherPowerCard> otherPowerCardOwners = new HashSet<OtherPowerCard>(0);
+
     private CardInfo cardInfo;
 
 
@@ -130,13 +130,6 @@ public class MakeCard implements java.io.Serializable {
         this.otherPowerCards = otherPowerCards;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "makeCardByOwnerCard")
-    public Set<OtherPowerCard> getOtherPowerCardOwners() {
-        return otherPowerCardOwners;
-    }
 
-    public void setOtherPowerCardOwners(Set<OtherPowerCard> otherPowerCardOwners) {
-        this.otherPowerCardOwners = otherPowerCardOwners;
-    }
 
 }
