@@ -104,15 +104,25 @@ public class AuthenticationManager {
         for (BusinessDefine businessDefine : businessDefines) {
             bussinessCategorys.add(businessDefine.getBusinessCategory());
         }
+
+        List<FilterBusinessCategory> result = new ArrayList<FilterBusinessCategory>();
         for (BusinessCategory category : bussinessCategorys) {
-            Set<BusinessDefine> temp = new HashSet<BusinessDefine>();
+
+            FilterBusinessCategory filterBusinessCategory = new FilterBusinessCategory(category);
+            result.add(filterBusinessCategory);
+
             for (BusinessDefine businessDefine : category.getBusinessDefines()) {
                 if (businessDefines.contains(businessDefine)) {
-                    temp.add(businessDefine);
+                    filterBusinessCategory.putDefine(businessDefine);
                 }
             }
-            category.setBusinessDefines(temp);
         }
-        authInfo.getAuthenticationBussinessCategorys().addAll(bussinessCategorys);
+        Collections.sort(result, new Comparator<FilterBusinessCategory>() {
+            @Override
+            public int compare(FilterBusinessCategory o1, FilterBusinessCategory o2) {
+                return new Integer(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
+            }
+        });
+        authInfo.setAuthenticationBussinessCategorys(result);
     }
 }

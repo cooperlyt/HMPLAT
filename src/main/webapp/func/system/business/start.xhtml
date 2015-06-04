@@ -5,10 +5,130 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                template="/layout/template.xhtml">
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="/layout/template-tab.xhtml">
 
-    <ui:define name="body">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:define name="function-tile">
+        <h1>#{messages.createBusiness}</h1>
+    </ui:define>
+    <ui:define name="head-tab">
+
+        <s:link styleClass="selected pagehead-nav-item">
+            <span class="octicon octicon-plus"></span>
+            #{messages.createBusiness}
+        </s:link>
+
+        <s:link styleClass="pagehead-nav-item" view="/func/system/business/task.xhtml">
+            <span class="octicon octicon-inbox"/>
+            #{messages.operateTask}
+        </s:link>
+
+        <s:link styleClass="pagehead-nav-item">
+            <span class="octicon octicon-eye"></span>
+            #{messages.checkTask}
+        </s:link>
+
+
+    </ui:define>
+
+    <h:outputStylesheet>
+        .boxed-group-inner li:hover{
+            background-color: #f5f9fc;
+        }
+
+
+    </h:outputStylesheet>
+
+    <a:outputPanel styleClass="blankslate" layout="block" rendered="#{empty authInfo.authenticationBussinessCategorys}">
+        <span class="mega-octicon octicon-stop"></span>
+        <h3>#{messages.businessDefine_empty}</h3>
+        <p>
+            #{messages.businessDefine_empty_description}
+            <s:link
+                    view="/logout.xhtml"
+                    propagation="none">
+                #{messages.reLogin}
+
+            </s:link>
+        </p>
+    </a:outputPanel>
+
+    <a:outputPanel layout="block" styleClass="columns" rendered="#{not empty authInfo.authenticationBussinessCategorys}">
+
+        <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
+
+            <nav class="menu">
+                <a:repeat value="#{authInfo.authenticationBussinessCategorys}" var="_category">
+                    <a:commandLink styleClass="menu-item #{(_category.category.id eq authInfo.currBusinessCategoryId) ? 'selected' : ''}"
+                                   immediate="true" execute="@this" render="bizDefList">
+                        #{_category.category.name}
+                        <h:outputText styleClass="counter" value="#{_category.defineList.size}">
+                            <f:convertNumber type="number" groupingUsed="true"/>
+                        </h:outputText>
+                        <a:attachQueue requestDelay="0"/>
+                        <a:param value="#{_category.category.id}" assignTo="#{authInfo.currBusinessCategoryId}"/>
+                    </a:commandLink>
+
+                </a:repeat>
+
+            </nav>
+        </a:outputPanel>
+
+        <h:form>
+        <a:outputPanel id="bizDefList" layout="block" styleClass="column three-fourths codesearch-results">
+            <div class="notifications-list">
+                <div class="boxed-group flush">
+                    <h3>
+                        #{authInfo.currBusinessCategory.category.name}
+                    </h3>
+                    <ul class="boxed-group-inner notifications">
+
+                        <a:repeat value="#{authInfo.currBusinessCategory.defineList}" var="_define">
+
+                        <li class="list-group-item">
+                            <span class="list-group-item-name css-truncate">
+                               <span class="type-icon octicon octicon-repo"></span>
+                                                    <s:link propagation="#{empty _define.startPropagation ? 'begin' : _define.startPropagation}"
+                                                            view="#{_define.startPage}" styleClass="css-truncate-target list-group-item-link"
+                                                             rendered="#{not empty _define.startPage}">
+                                                        #{_define.name}
+                                                        <f:param name="bussinessDefineId" value="#{_define.id}"/>
+                                                    </s:link>
+                            </span>
+                            <ul class="notification-actions">
+                                <li >
+                                    <button type="submit" aria-label="Mute this thread" class="btn-link mute-note tooltipped tooltipped-w">
+                                            <span class="octicon octicon-x"></span>
+                                        </button>
+                                       </li>
+                                <li >
+                                    <button type="submit" aria-label="Stop ignoring this thread" class="btn-link mute-note tooltipped tooltipped-w">
+                                            <span class="octicon octicon-pencil"></span>
+                                        </button>
+                                </li>
+                            </ul>
+                        </li>
+                        </a:repeat>
+
+                    </ul>
+                </div>
+            </div>
+        </a:outputPanel>
+
+        </h:form>
+    </a:outputPanel>
+
+
+    <ui:remove>
 
         <s:decorate template="/layout/edit-modalpanel.xhtml">
             <ui:define name="panelTitle">
@@ -116,6 +236,6 @@
 
 
         </r:dataTable>
+    </ui:remove>
 
-    </ui:define>
 </ui:composition>
