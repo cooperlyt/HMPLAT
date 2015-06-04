@@ -38,6 +38,8 @@
         </description>
     </view-subscribe>
 
+
+
     <view-subscribe name="recordOwnerView" page="/business/houseOwner/subscribe/RecordOwnerView.xhtml">
         <description>
             备案人查看
@@ -136,7 +138,15 @@
         <description>
             现抵押权人信息查看
         </description>
+    </view-subscribe>抵押权人信息查看
+
+    <view-subscribe name="FinancialView" page="/business/houseOwner/subscribe/FinancialView.xhtml">
+        <description>
+            抵押权人信息查看
+        </description>
+
     </view-subscribe>
+
     <view-subscribe name="MappingCorpView" page="/business/houseOwner/subscribe/MappingCorpView.xhtml">
         <description>
             测绘信息查看
