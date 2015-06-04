@@ -12,9 +12,11 @@ import java.util.*;
  */
 public class AuthenticationInfo implements java.io.Serializable {
 
-    private List<BusinessCategory> authenticationBussinessCategorys = new ArrayList<BusinessCategory>();
+    private List<FilterBusinessCategory> authenticationBussinessCategorys = new ArrayList<FilterBusinessCategory>();
 
     private Role currRole;
+
+    private FilterBusinessCategory currBusinessCategory;
 
     private List<Role> functionRoleList;
 
@@ -26,6 +28,32 @@ public class AuthenticationInfo implements java.io.Serializable {
 
     public void setLoginEmployee(Employee loginEmployee) {
         this.loginEmployee = loginEmployee;
+    }
+
+    public FilterBusinessCategory getCurrBusinessCategory() {
+        return currBusinessCategory;
+    }
+
+    public String getCurrBusinessCategoryId(){
+        if (currBusinessCategory == null){
+            return null;
+        }else{
+            return currBusinessCategory.getCategory().getId();
+        }
+    }
+
+    public void setCurrBusinessCategoryId(String id){
+        if ((id == null) || id.trim().equals("")){
+            currBusinessCategory = null;
+        }else{
+            for (FilterBusinessCategory category: authenticationBussinessCategorys){
+                if (id.equals(category.getCategory().getId())){
+                    currBusinessCategory = category;
+                    return;
+                }
+            }
+            currBusinessCategory = null;
+        }
     }
 
     public Role getCurrRole() {
@@ -41,12 +69,15 @@ public class AuthenticationInfo implements java.io.Serializable {
     }
 
 
-    public List<BusinessCategory> getAuthenticationBussinessCategorys() {
+    public List<FilterBusinessCategory> getAuthenticationBussinessCategorys() {
         return authenticationBussinessCategorys;
     }
 
-    public void setAuthenticationBussinessCategorys(List<BusinessCategory> authenticationBussinessCategorys) {
+    public void setAuthenticationBussinessCategorys(List<FilterBusinessCategory> authenticationBussinessCategorys) {
         this.authenticationBussinessCategorys = authenticationBussinessCategorys;
+        if (! authenticationBussinessCategorys.isEmpty()){
+            currBusinessCategory = authenticationBussinessCategorys.get(0);
+        }
     }
 
     private List<Function> getFunctionsByCategory(Function.FunctionCategory category) {
@@ -79,39 +110,6 @@ public class AuthenticationInfo implements java.io.Serializable {
         return getFunctionsByCategory(Function.FunctionCategory.DAY_WORK);
     }
 
-//    public void generateFuncCategorys() {
-//
-//        authenticationFuncCategorys.clear();
-//
-//        Map<String, FuncCategory> result = new HashMap<String, FuncCategory>();
-//
-//        Collection<Function> showFunctions = new HashSet<Function>();
-//
-//        if (currRole == null) {
-//            for (Role role : functionRoleList) {
-//                showFunctions.addAll(role.getFunctions());
-//            }
-//        } else {
-//            showFunctions = currRole.getFunctions();
-//        }
-//
-//        for (Function function : showFunctions) {
-//
-//            FuncCategory curCategory = result.get(function.getFuncCategory().getId());
-//
-//            if (curCategory == null) {
-//                curCategory = new FuncCategory(function.getFuncCategory().getId(), function.getFuncCategory().getName());
-//                result.put(curCategory.getId(), curCategory);
-//            }
-//
-//            curCategory.getFunctions().add(function);
-//
-//        }
-//
-//
-//        authenticationFuncCategorys.addAll(result.values());
-//        Collections.sort(authenticationFuncCategorys, OrderBeanComparator.getInstance());
-//    }
 
     public List<Role> getFunctionRoleList() {
         return functionRoleList;

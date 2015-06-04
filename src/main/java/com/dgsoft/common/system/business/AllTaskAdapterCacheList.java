@@ -2,6 +2,7 @@ package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.jbpm.TaskInstanceListCache;
+import com.dgsoft.common.system.FilterBusinessCategory;
 import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
@@ -192,9 +193,6 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
                     return new Integer(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
                 }
             });
-            for(FilterBusinessCategory category: categories){
-                Collections.sort(category.getDefineList(),OrderBeanComparator.getInstance());
-            }
 
         }
         return categories;
@@ -306,30 +304,7 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         }
     }
 
-    public static class FilterBusinessCategory{
 
-        private BusinessCategory category;
-
-        private Set<BusinessDefine> businessDefines = new HashSet<BusinessDefine>();
-
-        public FilterBusinessCategory(BusinessCategory category) {
-            this.category = category;
-        }
-
-        public void putDefine(BusinessDefine define){
-            businessDefines.add(define);
-        }
-
-        public BusinessCategory getCategory() {
-            return category;
-        }
-
-        public List<BusinessDefine> getDefineList(){
-            List<BusinessDefine> result = new ArrayList<BusinessDefine>(businessDefines);
-            Collections.sort(result, OrderBeanComparator.getInstance());
-            return result;
-        }
-    }
 
 
 }

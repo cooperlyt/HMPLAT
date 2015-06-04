@@ -94,18 +94,19 @@ public class BusinessCategory implements java.io.Serializable, OrderModel {
 
 
     @Override
-    public int hashCode() {
-        return id.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BusinessCategory category = (BusinessCategory) o;
+
+        if (id != null ? !id.equals(category.id) : category.id != null) return false;
+
+        return true;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof BusinessCategory)) {
-            return false;
-        }
-        return id.equals(((BusinessCategory) obj).getId());
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
