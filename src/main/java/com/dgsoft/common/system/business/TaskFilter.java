@@ -6,6 +6,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,6 +69,16 @@ public class TaskFilter {
         this.createDate = createDate;
     }
 
+    public void clearDateFrom(){
+        searchDateArea.setDateFrom(null);
+        resetAll();
+    }
+
+    public void clearDateTo(){
+        searchDateArea.setDateTo(null);
+        resetAll();
+    }
+
     public List<SystemTaskInstanceListCache.TaskInstanceAdapter> filter(List<SystemTaskInstanceListCache.TaskInstanceAdapter> tasks){
 
         List<SystemTaskInstanceListCache.TaskInstanceAdapter> filterList = new ArrayList<SystemTaskInstanceListCache.TaskInstanceAdapter>();
@@ -76,6 +87,7 @@ public class TaskFilter {
 
         if (searchDateArea.getDateFrom() != null){
             for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
+                Logging.getLog(getClass()).debug("createDate:" + createDate + "|searchDateArea from:" + searchDateArea.getDateFrom());
                 if (createDate) {
                     if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getDateFrom()) >= 0) {
                         filterList.add(task);
@@ -93,6 +105,7 @@ public class TaskFilter {
 
         if (searchDateArea.getSearchDateTo() != null){
             for(SystemTaskInstanceListCache.TaskInstanceAdapter task: resultList){
+                Logging.getLog(getClass()).debug("createDate:" + createDate + "|searchDateArea from:" + searchDateArea.getSearchDateTo());
                 if (createDate) {
                     if (task.getTaskDescription().getCreateTime().compareTo(searchDateArea.getSearchDateTo()) <= 0) {
                         filterList.add(task);

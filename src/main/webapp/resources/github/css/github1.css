@@ -1046,6 +1046,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     border-radius: 20px
 }
 
+
+
+
+
 .btn {
     position: relative;
     display: inline-block;
@@ -1069,6 +1073,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none
 }
 
+
 .btn i {
     font-style: normal;
     font-weight: 500;
@@ -1084,6 +1089,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-color: #e5e5e5
 }
 
+/*
 .btn:focus {
     text-decoration: none;
     border-color: #51a7e8;
@@ -1102,7 +1108,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-image: linear-gradient(#eee, #ddd);
     border-color: #ccc
 }
-
+*/
 .btn:active, .btn.selected, .btn.zeroclipboard-is-active {
     background-color: #dcdcdc;
     background-image: none;
@@ -1121,6 +1127,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-image: none;
     border-color: rgba(197, 197, 197, 0.5);
     box-shadow: none
+}
+
+.btn-warning{
+    color: #fff;
+    background-image: none;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+
 }
 
 .btn-primary {
@@ -1143,6 +1157,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-image: -webkit-linear-gradient(#79d858, #569e3d);
     background-image: linear-gradient(#79d858, #569e3d);
     border-color: #4a993e
+}
+
+.btn-primary:focus{
+    background-color: inherit;
+    background-position: inherit;
 }
 
 .btn-primary:active, .btn-primary.selected {
@@ -12885,3 +12904,14 @@ input.color-editor-input:focus ~ .label-colors {
     background-color: #ffebe8;
     border: 1px solid #dd3c10
 }
+
+
+.select-menu-modal-holder.dropdown-menu{
+    border:0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+

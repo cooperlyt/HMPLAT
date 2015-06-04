@@ -19,7 +19,9 @@
 
     <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty taskList.resultList}">
         <div class="file-navigation in-mid-page" style="margin-top: 0">
-            <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button " action="#{taskList.refresh}" render="taskListPanel">
+            <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button "
+                           immediate="true" execute="@this" status="processWaiting"
+                           action="#{taskList.refresh}" render="taskListPanel">
                 <span class="octicon octicon-sync"/>
                 <a:attachQueue requestDelay="0"/>
             </a:commandLink>
@@ -35,7 +37,8 @@
             <a:outputPanel id="myBizDefineFilter">
                 <a:outputPanel rendered="#{not empty taskList.selectCategory}">
                     <span class="i-separator">/</span>
-                    <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="220px"  styleClass="selectpicker mini-select"  value="#{taskList.selectDefineId}">
+                    <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="220px"
+                                     styleClass="selectpicker mini-select"  value="#{taskList.selectDefineId}">
                         <s:selectItems value="#{taskList.selectCategory.defineList}" var="_define"
                                        label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
                         <a:ajax event="valueChange" listener="#{taskList.reset}" execute="@this" render="taskList">
@@ -52,6 +55,8 @@
             .boxed-group-inner li:hover{
                 background-color: #f5f9fc;
             }
+
+
         </h:outputStylesheet>
 
         <a:outputPanel layout="block" styleClass="notifications-list" id="taskList">
@@ -63,39 +68,97 @@
                         <li class="list-group-item read">
 
                             <div class="repo-list-stats">
+
+                            <div class="btn-group" role="group" aria-label="...">
+
+
                                 <a:commandLink action="#{pooledTask.unassign}" immediate="true" render="taskListPanel"
-                                               execute="@this" rendered="#{_task.myTask and (not _task.myOnly)}" styleClass="repo-list-stat-item tooltipped tooltipped-s">
-                                    <span class="octicon octicon-repo-push"/>
-                                    #{messages.unAcceptTask}
+                                               execute="@this" rendered="#{_task.myTask and (not _task.myOnly)}"
+                                               p:aria-label="#{messages.unAcceptTask}" status="processWaiting"
+                                               styleClass="btn btn-sm btn-warning tooltipped tooltipped-s">
+
+
                                     <f:param name="taskId" value="#{_task.taskInstance.id}"/>
                                     <a:attachQueue requestDelay="0"/>
+                                    <span class="btn-icon glyphicon glyphicon-export"></span>
+
                                 </a:commandLink>
 
-                                <s:link image="/img/icons/handle.png" rendered="#{_task.myTask}"
-                                        styleClass="repo-list-stat-item tooltipped tooltipped-s"
-                                        action="#{taskPrepare.beginTask}" taskInstance="#{_task.taskInstance}">
-                                    <span class="octicon octicon-repo"/>
-                                    #{messages.operTask}
-                                </s:link>
+
+
                                 <a:commandLink rendered="#{not _task.myTask}" immediate="true" execute="@this"
                                                action="#{pooledTask.assignToCurrentActor}" render="taskListPanel"
-                                               styleClass="repo-list-stat-item tooltipped tooltipped-s">
-                                    <span class="octicon octicon-repo-pull"/>
-                                    #{messages.acceptTask}
+                                               p:aria-label="#{messages.acceptTask}" status="processWaiting"
+                                               styleClass="btn btn-sm btn-primary tooltipped tooltipped-s">
+
+
                                     <f:param name="taskId" value="#{_task.taskInstance.id}"/>
                                     <a:attachQueue requestDelay="0"/>
+
+                                    <span class="btn-icon glyphicon glyphicon-import"></span>
                                 </a:commandLink>
 
 
-                                <a:commandLink rendered="#{not _task.myTask}" styleClass="repo-list-stat-item tooltipped tooltipped-s">
-                                    <span class="octicon octicon-repo-clone"/>
-                                    #{messages.acceptAndOperTask}
-                                </a:commandLink>
+                                <s:link  styleClass="btn btn-sm btn-default" action="#{taskPrepare.operTask}"
+                                         taskInstance="#{_task.taskInstance}"
+                                        style=" #{_task.myOnly ? 'border-bottom-left-radius: 3px; border-top-left-radius: 3px;' : ''}">
+                                    #{_task.myTask ? messages.operTask : messages.acceptAndOperTask}
+                                </s:link>
 
+                                <ui:remove>
+
+                                <div class="btn-group btn-group-sm task-action-down-menu">
+                                    <ui:decorate template="/layout/dropdown-actions.xhtml">
+
+                                        <ui:define name="caption">
+
+                                        </ui:define>
+                                        <ui:param name="menuTitle" value="#{messages.TaskOper}"/>
+
+
+                                        <a:commandLink action="#{pooledTask.unassign}" immediate="true" render="taskListPanel"
+                                                       execute="@this" rendered="#{_task.myTask and (not _task.myOnly)}"
+                                                       styleClass="select-menu-item">
+
+
+                                            <f:param name="taskId" value="#{_task.taskInstance.id}"/>
+                                            <a:attachQueue requestDelay="0"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text"> #{messages.unAcceptTask}</span>
+                                        </a:commandLink>
+
+                                        <a:commandLink rendered="#{not _task.myTask}" styleClass="select-menu-item">
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{messages.acceptAndOperTask}</span>
+
+                                        </a:commandLink>
+                                        <s:link rendered="#{_task.myTask}"
+                                                styleClass="select-menu-item"
+                                                action="#{taskPrepare.beginTask}" taskInstance="#{_task.taskInstance}">
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{messages.operTask}</span>
+
+                                        </s:link>
+
+                                        <a:commandLink rendered="#{not _task.myTask}" immediate="true" execute="@this"
+                                                       action="#{pooledTask.assignToCurrentActor}" render="taskListPanel"
+                                                       styleClass="select-menu-item">
+
+
+                                            <f:param name="taskId" value="#{_task.taskInstance.id}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{messages.acceptTask}</span>
+                                        </a:commandLink>
+
+                                    </ui:decorate>
+                                </div>
+                                </ui:remove>
 
                             </div>
+                            </div>
                             <h3 class="repo-list-name">
-                                  <span class="type-icon octicon #{(_task.myTask) ? ( _task.myOnly ? 'octicon-broadcast' : 'octicon-person') : 'octicon-organization'}"/>
+                                  <span class="type-icon octicon #{(_task.myTask) ? ( _task.myOnly ? 'octicon-broadcast' : 'octicon-person') : 'octicon-organization'}"
+                                          style="color:#{(_task.myTask) ? '#5cb85c' : '#337ab7'}"/>
                                 #{_task.businessDefine.businessCategory.name} / #{_task.businessDefine.name} / #{_task.taskInstance.name}
                             </h3>
 
