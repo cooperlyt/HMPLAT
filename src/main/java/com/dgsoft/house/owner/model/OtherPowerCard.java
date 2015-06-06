@@ -25,6 +25,15 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 	public OtherPowerCard() {
 	}
 
+    public OtherPowerCard(String financialName,String financialCode,String financialPhone,
+                          Financial.FinancialType financialType,CredentialsType credentialsType) {
+        this.financialName = financialName;
+        this.financialCode = financialCode;
+        this.financialPhone = financialPhone;
+        this.financialType = financialType;
+        this.credentialsType = credentialsType;
+    }
+
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
