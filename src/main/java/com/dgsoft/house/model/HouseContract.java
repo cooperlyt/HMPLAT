@@ -5,16 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -25,46 +16,25 @@ import javax.validation.constraints.Size;
 @Table(name = "HOUSE_CONTRACT", catalog = "HOUSE_INFO")
 public class HouseContract implements java.io.Serializable {
 
+    //签约 ， 备案， 撤消
+    public enum ContractStatus{
+        CREATE, RECORD, CANCEL
+    }
+
 	private String id;
 	private House house;
 	private String password;
 	private Date recordTime;
 	private BigDecimal price;
-	private int state;
+	private ContractStatus status;
 	private int partCount;
 	private String payType;
 	private String memo;
 	private Set<OldHousecontract> oldHousecontracts = new HashSet<OldHousecontract>(0);
-
 	private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
+    private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
 
 	public HouseContract() {
-	}
-
-	public HouseContract(String id, House house,
-			Date recordTime, int state, int partCount) {
-		this.id = id;
-		this.house = house;
-		this.recordTime = recordTime;
-		this.state = state;
-		this.partCount = partCount;
-	}
-	public HouseContract(String id, House house,
-			String password, Date recordTime, BigDecimal price, int state,
-			int partCount, String payType, String memo,
-			Set<OldHousecontract> oldHousecontracts,
-			Set<NewHouseContract> newHouseContracts) {
-		this.id = id;
-		this.house = house;
-		this.password = password;
-		this.recordTime = recordTime;
-		this.price = price;
-		this.state = state;
-		this.partCount = partCount;
-		this.payType = payType;
-		this.memo = memo;
-		this.oldHousecontracts = oldHousecontracts;
-		this.newHouseContracts = newHouseContracts;
 	}
 
 	@Id
@@ -120,13 +90,14 @@ public class HouseContract implements java.io.Serializable {
 		this.price = price;
 	}
 
-	@Column(name = "STATE", nullable = false)
-	public int getState() {
-		return this.state;
+    @Enumerated(EnumType.STRING)
+	@Column(name = "STATUS", nullable = false)
+	public ContractStatus getStatus() {
+		return this.status;
 	}
 
-	public void setState(int state) {
-		this.state = state;
+	public void setStatus(ContractStatus status) {
+		this.status = status;
 	}
 
 	@Column(name = "PART_COUNT", nullable = false)
@@ -176,4 +147,12 @@ public class HouseContract implements java.io.Serializable {
 		this.newHouseContracts = newHouseContracts;
 	}
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseContract")
+    public Set<PoolOwner> getPoolOwners() {
+        return poolOwners;
+    }
+
+    public void setPoolOwners(Set<PoolOwner> poolOwners) {
+        this.poolOwners = poolOwners;
+    }
 }

@@ -11,4 +11,6 @@ public interface HouseEditStrategy {
 
     public boolean isCanEdit(House house);
 
+    public boolean isCanEditArea(House house);
+
 }

@@ -30,7 +30,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String houseUnitName;
     private String inFloorName;
     private BigDecimal houseArea;
-    private BigDecimal prepareArea;
     private BigDecimal useArea;
     private BigDecimal commArea;
     private BigDecimal shineArea;
@@ -86,17 +85,20 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     public BusinessHouse(HouseInfo houseInfo) {
+
+        this.masterStatus = HouseStatus.HOUSE_INIT;
+        this.initRegStatus = InitRegStatus.NOT_INIT_REG;
+
         this.houseOrder = houseInfo.getHouseOrder();
         this.houseUnitName = houseInfo.getHouseUnitName();
         this.inFloorName = houseInfo.getInFloorName();
         this.houseArea = houseInfo.getHouseArea();
-        this.prepareArea = houseInfo.getPrepareArea();
         this.useArea = houseInfo.getUseArea();
         this.commArea = houseInfo.getCommArea();
         this.shineArea = houseInfo.getShineArea();
         this.loftArea = houseInfo.getLoftArea();
         this.commParam = houseInfo.getCommParam();
-        this.masterStatus = houseInfo.getMasterStatus();
+
         this.houseType = houseInfo.getHouseType();
         this.useType = houseInfo.getUseType();
         this.structure = houseInfo.getStructure();
@@ -108,7 +110,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.northWall = houseInfo.getNorthWall();
         this.mapTime = houseInfo.getMapTime();
         this.direction = houseInfo.getDirection();
-        this.initRegStatus = houseInfo.getInitRegStatus();
+
         this.houseCode = houseInfo.getHouseCode();
         this.haveDownRoom = houseInfo.isHaveDownRoom();
         this.buildCode = houseInfo.getBuildCode();
@@ -132,9 +134,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.sectionName = houseInfo.getSectionName();
         this.districtCode = houseInfo.getDistrictCode();
         this.districtName = houseInfo.getDistrictName();
-        for(HouseStatus status: houseInfo.getAllStatusList()){
-            getHouseStates().add(new HouseState(this,status));
-        }
+
     }
 
 
@@ -194,15 +194,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseArea = houseArea;
     }
 
-    @Column(name = "PREPARE_AREA", precision = 18, scale = 3)
-    public BigDecimal getPrepareArea() {
-        return this.prepareArea;
-    }
-
-    public void setPrepareArea(BigDecimal prepareArea) {
-        this.prepareArea = prepareArea;
-    }
-
     @Column(name = "USE_AREA", precision = 18, scale = 3)
     public BigDecimal getUseArea() {
         return this.useArea;
@@ -248,7 +239,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.commParam = commParam;
     }
 
-    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "HOUSE_STATUS", nullable = false,length = 32)
     @NotNull
@@ -270,7 +260,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseRegInfo = houseRegInfo;
     }
 
-    @Override
     @Transient
     public List<HouseStatus> getAllStatusList() {
         List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
@@ -414,7 +403,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.direction = direction;
     }
 
-    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "INIT_REG_STATUS",nullable = false,length = 20)
     @NotNull

@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 public class PoolOwner implements java.io.Serializable,PersonEntity {
 
 	private String id;
-	private House house;
     private String personName;
     private String credentialsNumber;
     private PersonEntity.CredentialsType credentialsType;
@@ -26,6 +25,7 @@ public class PoolOwner implements java.io.Serializable,PersonEntity {
     private BigDecimal area;
     private String memo;
     private String phone;
+    private HouseContract houseContract;
 
 	public PoolOwner() {
 	}
@@ -45,17 +45,17 @@ public class PoolOwner implements java.io.Serializable,PersonEntity {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HOUSE", nullable = false)
+	@JoinColumn(name = "CONTRACT_ID", nullable = false)
 	@NotNull
-	public House getHouse() {
-		return this.house;
-	}
+    public HouseContract getHouseContract() {
+        return houseContract;
+    }
 
-	public void setHouse(House house) {
-		this.house = house;
-	}
+    public void setHouseContract(HouseContract houseContract) {
+        this.houseContract = houseContract;
+    }
 
-	@Column(name = "RELATION", length = 32)
+    @Column(name = "RELATION", length = 32)
 	@Size(max = 32)
 	public String getRelation() {
 		return this.relation;

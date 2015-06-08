@@ -330,29 +330,29 @@ public class BuildHome extends HouseEntityHome<Build> {
         return result;
     }
 
-    public Map<HouseInfo.HouseStatus, CountAreaEntry> getStatusTotalMap() {
-        Map<HouseInfo.HouseStatus, CountAreaEntry> result = new HashMap<HouseInfo.HouseStatus, CountAreaEntry>();
-        for (House house : getInstance().getHouses()) {
-            CountAreaEntry entry = result.get(house.getMasterStatus());
-            if (entry == null) {
-                result.put(house.getMasterStatus(), new CountAreaEntry(house.getHouseArea(), house.getUseArea()));
-            } else {
-                entry.addArea(house.getHouseArea(), house.getUseArea());
-            }
-        }
-        return result;
-    }
+//    public Map<HouseInfo.HouseStatus, CountAreaEntry> getStatusTotalMap() {
+//        Map<HouseInfo.HouseStatus, CountAreaEntry> result = new HashMap<HouseInfo.HouseStatus, CountAreaEntry>();
+//        for (House house : getInstance().getHouses()) {
+//            CountAreaEntry entry = result.get(house.getMasterStatus());
+//            if (entry == null) {
+//                result.put(house.getMasterStatus(), new CountAreaEntry(house.getHouseArea(), house.getUseArea()));
+//            } else {
+//                entry.addArea(house.getHouseArea(), house.getUseArea());
+//            }
+//        }
+//        return result;
+//    }
 
-    public List<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>> getStatusTotalList() {
-        List<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>> result = new ArrayList<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>>(getStatusTotalMap().entrySet());
-        Collections.sort(result, new Comparator<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>>() {
-            @Override
-            public int compare(Map.Entry<HouseInfo.HouseStatus, CountAreaEntry> o1, Map.Entry<HouseInfo.HouseStatus, CountAreaEntry> o2) {
-                return HouseInfo.StatusComparator.getInstance().compare(o1.getKey(), o2.getKey());
-            }
-        });
-        return result;
-    }
+//    public List<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>> getStatusTotalList() {
+//        List<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>> result = new ArrayList<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>>(getStatusTotalMap().entrySet());
+//        Collections.sort(result, new Comparator<Map.Entry<HouseInfo.HouseStatus, CountAreaEntry>>() {
+//            @Override
+//            public int compare(Map.Entry<HouseInfo.HouseStatus, CountAreaEntry> o1, Map.Entry<HouseInfo.HouseStatus, CountAreaEntry> o2) {
+//                return HouseInfo.StatusComparator.getInstance().compare(o1.getKey(), o2.getKey());
+//            }
+//        });
+//        return result;
+//    }
 
     public Map<Word, CountAreaEntry> getUseTypeTotalMap() {
         Map<Word, CountAreaEntry> result = new HashMap<Word, CountAreaEntry>();
