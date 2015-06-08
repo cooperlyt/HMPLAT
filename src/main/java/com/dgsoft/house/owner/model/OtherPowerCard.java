@@ -16,7 +16,6 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 
 	private String id;
 	private MakeCard makeCardByCard;
-	private MakeCard makeCardByOwnerCard;
     private String financialName;
     private String financialCode;
     private String financialPhone;
@@ -25,6 +24,15 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 
 	public OtherPowerCard() {
 	}
+
+    public OtherPowerCard(String financialName,String financialCode,String financialPhone,
+                          Financial.FinancialType financialType,CredentialsType credentialsType) {
+        this.financialName = financialName;
+        this.financialCode = financialCode;
+        this.financialPhone = financialPhone;
+        this.financialType = financialType;
+        this.credentialsType = credentialsType;
+    }
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -49,16 +57,7 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 		this.makeCardByCard = makeCardByCard;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_CARD", nullable = false)
-	@NotNull
-	public MakeCard getMakeCardByOwnerCard() {
-		return this.makeCardByOwnerCard;
-	}
 
-	public void setMakeCardByOwnerCard(MakeCard makeCardByOwnerCard) {
-		this.makeCardByOwnerCard = makeCardByOwnerCard;
-	}
 
     @Column(name = "FINANCIAL_NAME",nullable = false,length = 120)
     @Size(max = 120)
