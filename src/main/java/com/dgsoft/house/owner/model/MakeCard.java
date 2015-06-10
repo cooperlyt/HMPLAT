@@ -24,9 +24,12 @@ public class MakeCard implements java.io.Serializable {
 	private CardType type;
 	private String number;
     private boolean disable;
-    private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
+    //private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
+
 
     private CardInfo cardInfo;
+
+
 
 
 
@@ -121,14 +124,14 @@ public class MakeCard implements java.io.Serializable {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "makeCardByCard")
-    public Set<OtherPowerCard> getOtherPowerCards() {
-        return otherPowerCards;
-    }
-
-    public void setOtherPowerCards(Set<OtherPowerCard> otherPowerCards) {
-        this.otherPowerCards = otherPowerCards;
-    }
+//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "makeCardByCard")
+//    public Set<OtherPowerCard> getOtherPowerCards() {
+//        return otherPowerCards;
+//    }
+//
+//    public void setOtherPowerCards(Set<OtherPowerCard> otherPowerCards) {
+//        this.otherPowerCards = otherPowerCards;
+//    }
 
 
 

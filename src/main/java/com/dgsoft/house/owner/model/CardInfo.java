@@ -29,6 +29,21 @@ public class CardInfo  implements Serializable  {
     private MakeCard makeCard;
 
 
+    private OtherPowerCard otherPowerCard;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public OtherPowerCard getOtherPowerCard() {
+        return otherPowerCard;
+    }
+
+    public void setOtherPowerCard(OtherPowerCard otherPowerCard) {
+        this.otherPowerCard = otherPowerCard;
+    }
+
+
+
+
 
     @OneToOne
     @PrimaryKeyJoinColumn

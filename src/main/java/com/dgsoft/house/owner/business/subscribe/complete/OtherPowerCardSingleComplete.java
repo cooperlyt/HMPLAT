@@ -55,15 +55,15 @@ public class OtherPowerCardSingleComplete implements TaskCompleteSubscribeCompon
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getMakeCards().iterator().next().getOtherPowerCards().isEmpty()){
-            otherPowerCard = ownerBusinessHome.getInstance().getMakeCards().iterator().next().getOtherPowerCards().iterator().next();
+        if(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo()!=null){
+            otherPowerCard = ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().getOtherPowerCard();
         }else{
             financial = ownerBusinessHome.getInstance().getFinancials().iterator().next();
             otherPowerCard = new OtherPowerCard(financial.getName(),
                     financial.getCode(),financial.getPhone(),financial.getFinancialType(),financial.getCredentialsType());
         }
-        otherPowerCard.setMakeCardByCard(ownerBusinessHome.getInstance().getMakeCards().iterator().next());
-        ownerBusinessHome.getInstance().getMakeCards().iterator().next().getOtherPowerCards().add(otherPowerCard);
+        otherPowerCard.setCardInfo(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo());
+        ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().setOtherPowerCard(otherPowerCard);
 
     }
 }
