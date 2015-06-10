@@ -24,6 +24,8 @@ public class TaskFilter {
 
     private SortField sortBy = SortField.TASK_TIME;
 
+    private boolean desc;
+
     private String searchKey;
 
     private SearchDateArea searchDateArea = new SearchDateArea();
@@ -64,6 +66,14 @@ public class TaskFilter {
 
     public void setCreateDate(boolean createDate) {
         this.createDate = createDate;
+    }
+
+    public boolean isDesc() {
+        return desc;
+    }
+
+    public void setDesc(boolean desc) {
+        this.desc = desc;
     }
 
     public List<AllTaskAdapterCacheList.TaskInstanceAdapter> filter(List<AllTaskAdapterCacheList.TaskInstanceAdapter> tasks){
@@ -129,7 +139,11 @@ public class TaskFilter {
                 Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
                     public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
-                        return o1.getTaskDescription().getBusinessKey().compareTo(o2.getTaskDescription().getBusinessKey());
+                        if (desc){
+                            return o2.getTaskDescription().getBusinessKey().compareTo(o1.getTaskDescription().getBusinessKey());
+                        }else
+                            return o1.getTaskDescription().getBusinessKey().compareTo(o2.getTaskDescription().getBusinessKey());
+
                     }
                 });
                 break;
@@ -138,7 +152,12 @@ public class TaskFilter {
                 Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
                     public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
-                        return o1.getBusinessDefine().getId().compareTo(o2.getBusinessDefine().getId());
+                        if (desc){
+                            return o2.getBusinessDefine().getId().compareTo(o1.getBusinessDefine().getId());
+                        }else{
+                            return o1.getBusinessDefine().getId().compareTo(o2.getBusinessDefine().getId());
+                        }
+
                     }
                 });
                 break;
@@ -146,7 +165,12 @@ public class TaskFilter {
                 Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
                     public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
-                        return o1.getTaskInstance().getName().compareTo(o2.getTaskInstance().getName());
+                        if (desc){
+                            return o2.getTaskInstance().getName().compareTo(o1.getTaskInstance().getName());
+                        }else{
+                            return o1.getTaskInstance().getName().compareTo(o2.getTaskInstance().getName());
+                        }
+
                     }
                 });
 
@@ -155,7 +179,11 @@ public class TaskFilter {
                 Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
                     public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
-                        return o1.getTaskDescription().getCreateTime().compareTo(o2.getTaskDescription().getCreateTime());
+                        if (desc){
+                            return o1.getTaskDescription().getCreateTime().compareTo(o2.getTaskDescription().getCreateTime());
+                        }else
+
+                            return o2.getTaskDescription().getCreateTime().compareTo(o1.getTaskDescription().getCreateTime());
                     }
                 });
                 break;
@@ -163,7 +191,11 @@ public class TaskFilter {
                 Collections.sort(resultList, new Comparator<AllTaskAdapterCacheList.TaskInstanceAdapter>() {
                     @Override
                     public int compare(AllTaskAdapterCacheList.TaskInstanceAdapter o1, AllTaskAdapterCacheList.TaskInstanceAdapter o2) {
-                        return o1.getTaskInstance().getCreate().compareTo(o2.getTaskInstance().getCreate());
+                        if (desc){
+                            return o1.getTaskInstance().getCreate().compareTo(o2.getTaskInstance().getCreate());
+
+                        }else
+                            return o2.getTaskInstance().getCreate().compareTo(o1.getTaskInstance().getCreate());
                     }
                 });
                 break;

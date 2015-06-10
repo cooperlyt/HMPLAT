@@ -182,6 +182,26 @@
                             <a:outputPanel layout="block" styleClass="notifications-list" id="taskListDatas">
 
                                 <div class="boxed-group flush">
+
+                                    <div class="right" style="  margin-right: 0;margin-top: 0;padding: 6px 6px 5px 10px;">
+                                        <a:region>
+
+                                    <dh:switch value="#{taskFilter.desc}" data-on-color="primary" onchange="sortOption()"
+                                               data-off-color="info"
+                                               data-in-link="true"
+                                               onText="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
+                                               offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
+                                               data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
+                                               data-size="mini" styleClass="js-switch"/>
+                                        <a:jsFunction name="sortOption" status="processWaiting"
+                                                      execute="@region" action="#{allTaskAdapterCacheList.reset}">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:jsFunction>
+                                        </a:region>
+                                    </div>
+
+
+
                                     <h3><span style="font-weight: bold;" >#{messages[allTaskAdapterCacheList.filterType.messageKey]}</span>  <span class="counter"> #{allTaskAdapterCacheList.resultList.size} </span> </h3>
                                     <ul class="boxed-group-inner notifications">
                                         <a:repeat value="#{allTaskAdapterCacheList.resultList}" var="_task">
@@ -441,7 +461,7 @@
                                        onText="#{messages.BizCreateTimeShort}"
                                        offText="#{messages.TaskCreateTimeShort}"
                                        style="float: rigth"
-                                       onclick="filterDateAreaChange()"
+                                       onchange="filterDateAreaChange()"
                                        styleClass="js-switch switch-small">
 
                             </dh:switch>
