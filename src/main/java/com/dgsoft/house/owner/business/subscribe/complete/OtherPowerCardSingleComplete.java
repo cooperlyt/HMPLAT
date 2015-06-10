@@ -4,9 +4,13 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
+import com.dgsoft.house.owner.model.MakeCard;
 import com.dgsoft.house.owner.model.OtherPowerCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
+
+import java.util.EnumSet;
 
 /**
  * Created by Administrator on 15-6-4.
@@ -20,50 +24,40 @@ public class OtherPowerCardSingleComplete implements TaskCompleteSubscribeCompon
 
 
 
-    private OtherPowerCard otherPowerCard;
-
-
-    public Financial getFinancial() {
-        return financial;
-    }
-
-    public void setFinancial(Financial financial) {
-        this.financial = financial;
-    }
-
-    private Financial financial;
-
-
-
-    public OtherPowerCard getOtherPowerCard() {
-        return otherPowerCard;
-    }
-
-    public void setOtherPowerCard(OtherPowerCard otherPowerCard) {
-        this.otherPowerCard = otherPowerCard;
-    }
-
     @Override
     public TaskSubscribeComponent.ValidResult valid() {
-        if (ownerBusinessHome.getInstance().getFinancials().isEmpty()
-                && ownerBusinessHome.getInstance().getMakeCards().isEmpty()){
 
-            return TaskSubscribeComponent.ValidResult.ERROR;
-        }
         return TaskSubscribeComponent.ValidResult.SUCCESS;
     }
 
     @Override
     public void complete() {
-        if(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo()!=null){
-            otherPowerCard = ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().getOtherPowerCard();
-        }else{
-            financial = ownerBusinessHome.getInstance().getFinancials().iterator().next();
-            otherPowerCard = new OtherPowerCard(financial.getName(),
-                    financial.getCode(),financial.getPhone(),financial.getFinancialType(),financial.getCredentialsType());
+
+        for(MakeCard makeCard: ownerBusinessHome.getMakeCardByType(EnumSet.of(MakeCard.CardType.MORTGAGE,MakeCard.CardType.NOTICE,MakeCard.CardType.PROJECT_MORTGAGE))){
+           Financial financial = ownerBusinessHome.getNowFinancial();
+            if (financial == null) {
+                throw new IllegalArgumentException("financial is null");
+            }
+                OtherPowerCard otherPowerCard = makeCard.getCardInfo().getOtherPowerCard();
+                if ( otherPowerCard == null) {
+                    otherPowerCard = new OtherPowerCard(financial.getName(),
+                            financial.getCode(), financial.getPhone(), financial.getFinancialType(), financial.getCredentialsType());
+                } else {
+                    otherPowerCard.setFinancialName(financial.getName());
+                    otherPowerCard.setFinancialCode(financial.getCode());
+                    otherPowerCard.setFinancialPhone(financial.getPhone());
+                    otherPowerCard.setCredentialsType(financial.getCredentialsType());
+                    otherPowerCard.setFinancialType(financial.getFinancialType());
+
+                }
+                otherPowerCard.setCardInfo(makeCard.getCardInfo());
+                makeCard.getCardInfo().setOtherPowerCard(otherPowerCard);
+
+
         }
-        otherPowerCard.setCardInfo(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo());
-        ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().setOtherPowerCard(otherPowerCard);
 
     }
 }
+
+
+

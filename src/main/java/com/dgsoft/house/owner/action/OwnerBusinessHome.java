@@ -4,8 +4,7 @@ import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.Name;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by cooper on 8/25/14.
@@ -44,20 +43,48 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         }
         return null;
     }
-    public MakeCard getMakeCard(String typeName){
+
+    public List<MakeCard> getMakeCardByType(EnumSet<MakeCard.CardType> types){
+        List<MakeCard> result = new ArrayList<MakeCard>();
         for (MakeCard makeCard:getInstance().getMakeCards()){
-            if(makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,typeName))){
-                return makeCard;
+            if(types.contains(makeCard.getType())){
+                result.add(makeCard);
             }
         }
-        return null;
+        return result;
     }
-    public Financial getFinancial(){
-        if(! getInstance().getFinancials().isEmpty()){
-            return getInstance().getFinancials().iterator().next();
+
+    public List<MakeCard> getMakeCardByType(MakeCard.CardType type){
+
+        return getMakeCardByType(EnumSet.of(type));
+    }
+
+
+
+    public List<MakeCard> getMakeCardByType(String typeName){
+
+        return getMakeCardByType(MakeCard.CardType.valueOf(typeName));
+    }
+
+
+    public Financial getOldFinancial(){
+
+        for(Financial financial: getInstance().getFinancials()){
+            if (financial.getType().equals(Financial.FinancialUseType.OLD))
+                return financial;
         }
         return null;
     }
+
+    public Financial getNowFinancial(){
+
+        for(Financial financial: getInstance().getFinancials()){
+            if (financial.getType().equals(Financial.FinancialUseType.NOW))
+                return financial;
+        }
+        return null;
+    }
+
 
     public MappingCorp getMappingCorp(){
         if(!getInstance().getMappingCorps().isEmpty()){
