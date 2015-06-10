@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
-import com.dgsoft.house.model.HouseOwner;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,14 +25,6 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     private MakeCard makeCard;
 
     public BusinessHouseOwner() {
-    }
-
-    public BusinessHouseOwner(HouseOwner houseOwner) {
-        this.personName = houseOwner.getPersonName();
-        this.credentialsType = houseOwner.getCredentialsType();
-        this.credentialsNumber = houseOwner.getCredentialsNumber();
-        this.phone = houseOwner.getPhone();
-        this.rootAddress = houseOwner.getRootAddress();
     }
 
     public BusinessHouseOwner(BusinessHouseOwner houseOwner) {

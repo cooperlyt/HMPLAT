@@ -357,8 +357,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         if (block != null) {
             if (block.getHouse() != null) {
                 idleHouses.add(block.getHouse());
-                //block.getHouse().getGridBlock().clear();
+                block.getHouse().setGridBlock(null);
                 block.setHouse(null);
+
 
             }
         }
@@ -522,7 +523,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() != null) {
-                    //block.getHouse().getGridBlock().clear();
+                    block.getHouse().setGridBlock(null);
                     idleHouses.add(block.getHouse());
                     block.setHouse(null);
                 }

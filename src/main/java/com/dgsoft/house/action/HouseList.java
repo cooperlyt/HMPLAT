@@ -18,7 +18,7 @@ public class HouseList extends HouseEntityQuery<House> {
 
     private static final String EJBQL = "select house from House house " +
             "left join fetch house.build build left join fetch build.project project " +
-            "left join fetch project.developer left join fetch project.section left join fetch house.houseOwner";
+            "left join fetch project.developer left join fetch project.section ";
 
     private static final String[] RESTRICTIONS = {
             "lower(house.build.project.name) like lower(concat('%',#{projectSearchCondition.projectName},'%'))",

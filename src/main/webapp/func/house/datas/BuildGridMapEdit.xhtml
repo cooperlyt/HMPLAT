@@ -27,7 +27,7 @@
         <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.css"/>
         <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
         <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.css"/>
-        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datepicker3.min.css"/>
+        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datetimepicker.min.css"/>
 
         <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
         <h:outputStylesheet name="other.css"/>
@@ -435,10 +435,6 @@
                             </a:outputPanel>
 
 
-                            <h:graphicImage
-                                    style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;"
-                                    rendered="#{(not empty _house.house) and (_house.house.lockStatus.lock)}"
-                                    value="/img/house/lock.png" title="#{messages.LockDecription}"/>
 
                             <ui:define name="house-action">
                                 <a:commandButton rendered="#{not empty _house.house}"
@@ -676,12 +672,9 @@
                                             <f:convertNumber pattern="#0.000"/>
                                         </h:outputText>
                                     </a:outputPanel>
-                                    <h:graphicImage rendered="#{_idleHouse.lockStatus.lock}"
-                                                    style="height: 16px;padding:0px;border: 0px;position:absolute; bottom:0;left:0"
-                                                    value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+
                                     <s:div styleClass="house-act">
-                                        <a:commandButton rendered="#{not _idleHouse.lockStatus.lock}"
-                                                         image="/img/icons/delete-red.png"
+                                        <a:commandButton image="/img/icons/delete-red.png"
                                                          render="removeIdleHouseConfirm_form"
                                                          oncomplete="$('#removeIdleHouseConfirm').modal('show')"
                                                          action="#{buildGridMapHome.selectedIdleHouse}"
@@ -825,8 +818,8 @@
         <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.js"/>
         <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.js"/>
         <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
-        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datepicker.min.js"/>
-        <h:outputScript library="bootstrap-datepicker" name="/locales/bootstrap-datepicker.zh-CN.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datetimepicker.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/locales/bootstrap-datetimepicker.zh-CN.js"/>
         <a:outputPanel ajaxRendered="true">
             <h:outputScript name="init.js"/>
         </a:outputPanel>

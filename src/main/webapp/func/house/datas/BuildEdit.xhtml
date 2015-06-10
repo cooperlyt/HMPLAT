@@ -7,6 +7,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 template="/layout/template-edit.xhtml">
     <div>
@@ -200,7 +201,7 @@
                 <ui:define name="label">
                     #{messages.Build_Structure}
                 </ui:define>
-                <h:selectOneMenu id="structureInput" styleClass="form-control selectpicker edit-select" required="true"
+                <h:selectOneMenu p:data-width="200px" id="structureInput" styleClass="form-control selectpicker edit-select" required="true"
                                  value="#{buildHome.instance.structure}" label="#{messages.Build_Structure}">
                     <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
                                    itemValue="#{_word.id}" label="#{_word.value}"
@@ -253,7 +254,7 @@
                 <ui:define name="label">
                     #{messages.Build_Type}
                 </ui:define>
-                <h:selectOneMenu id="buildTypeInput" styleClass="form-control selectpicker edit-select"
+                <h:selectOneMenu p:data-width="200px" id="buildTypeInput" styleClass="form-control selectpicker edit-select"
                                  value="#{buildHome.instance.buildType}" label="#{messages.Build_Type}">
                     <s:selectItems value="#{dictionary.getWordList('house.build.buildType')}" var="_word"
                                    itemValue="#{_word.id}" label="#{_word.value}"

@@ -59,9 +59,7 @@
         <class>com.dgsoft.house.model.House</class>
         <class>com.dgsoft.house.model.HouseContract</class>
         <class>com.dgsoft.house.model.HouseGridTitle</class>
-        <class>com.dgsoft.house.model.HouseOwner</class>
         <class>com.dgsoft.house.model.HouseSellCompany</class>
-        <class>com.dgsoft.house.model.HouseState</class>
         <class>com.dgsoft.house.model.MappingCorporation</class>
         <class>com.dgsoft.house.model.Mcompany</class>
         <class>com.dgsoft.house.model.NewHouseContract</class>
@@ -125,6 +123,7 @@
         <class>com.dgsoft.house.owner.model.CardInfo</class>
         <class>com.dgsoft.house.owner.model.OtherPowerCard</class>
         <class>com.dgsoft.house.owner.model.HouseRegInfo</class>
+        <class>com.dgsoft.house.owner.model.LockedHouse</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

@@ -94,13 +94,11 @@ public class House implements java.io.Serializable, HouseInfo {
     private String houseUnitName;
     private String inFloorName;
     private BigDecimal houseArea;
-    private BigDecimal prepareArea;
     private BigDecimal useArea;
     private BigDecimal commArea;
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private HouseStatus masterStatus;
     private String houseType;
     private String useType;
     private String structure;
@@ -113,19 +111,18 @@ public class House implements java.io.Serializable, HouseInfo {
     private String northWall;
     private Date mapTime;
     private String direction;
-    private InitRegStatus initRegStatus;
+
 
     private boolean haveDownRoom;
-    private boolean payWXZJ;
+
     private String memo;
     private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
-    private Set<HouseState> houseStates = new HashSet<HouseState>(0);
-    private Set<PoolOwner> poolOwners = new HashSet<PoolOwner>(0);
+
+
     private Date createTime;
     //private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
     private GridBlock gridBlock;
-    private HouseOwner houseOwner;
-    private LockStatus lockStatus;
+
 
     public House() {
     }
@@ -135,7 +132,6 @@ public class House implements java.io.Serializable, HouseInfo {
         this.id = id;
         this.build = build;
         this.houseArea = block.getArea();
-        this.prepareArea = this.houseArea;
         this.useArea = block.getUseArea();
         this.commArea = block.getCommArea();
         this.commParam = block.getCommParam();
@@ -153,10 +149,8 @@ public class House implements java.io.Serializable, HouseInfo {
         this.southWall = block.getSouthWall();
         this.northWall = block.getNorthWall();
         this.eastWall = block.getEastWall();
-        this.masterStatus = HouseStatus.CANTSALE;
         this.haveDownRoom = block.isHaveDownRoom();
-        this.initRegStatus = InitRegStatus.NOT_INIT_REG;
-        this.lockStatus = LockStatus.LOCK_OPEN;
+        this.gridBlock = block;
         dataSource = HouseDataSource.MAPPING;
 
         if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
@@ -240,18 +234,6 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
 
-    @Override
-    @Enumerated(EnumType.STRING)
-    @Column(name = "INIT_REG_STATUS",nullable = false,length = 20)
-    @NotNull
-    public InitRegStatus getInitRegStatus() {
-        return initRegStatus;
-    }
-
-    public void setInitRegStatus(InitRegStatus initRegStatus) {
-        this.initRegStatus = initRegStatus;
-    }
-
     @Column(name = "HOUSE_AREA", nullable = false, precision = 18, scale = 3)
     @NotNull
     public BigDecimal getHouseArea() {
@@ -271,15 +253,6 @@ public class House implements java.io.Serializable, HouseInfo {
         this.haveDownRoom = haveDownRoom;
     }
 
-
-    @Column(name = "PREPARE_AREA", precision = 18, scale = 3)
-    public BigDecimal getPrepareArea() {
-        return this.prepareArea;
-    }
-
-    public void setPrepareArea(BigDecimal prepareArea) {
-        this.prepareArea = prepareArea;
-    }
 
     @Column(name = "USE_AREA", precision = 18, scale = 3)
     public BigDecimal getUseArea() {
@@ -327,29 +300,6 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
     @Override
-    @Enumerated(EnumType.STRING)
-    @Column(name = "HOUSE_STATUS", nullable = false, length = 32)
-    @NotNull
-    public HouseStatus getMasterStatus() {
-        return masterStatus;
-    }
-
-    public void setMasterStatus(HouseStatus masterStatus) {
-        this.masterStatus = masterStatus;
-    }
-
-    @Override
-    @Transient
-    public List<HouseStatus> getAllStatusList() {
-        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
-        for (HouseState state : getHouseStates()) {
-            result.add(state.getState());
-        }
-        Collections.sort(result, new StatusComparator());
-        return result;
-    }
-
-    @Override
     @Transient
     public String getDisplayHouseCode() {
         switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
@@ -383,17 +333,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setUseType(String useType) {
         this.useType = useType;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name="LOCK_STATUS",nullable = false,length = 20)
-    @NotNull
-    public LockStatus getLockStatus() {
-        return lockStatus;
-    }
-
-    public void setLockStatus(LockStatus lockStatus) {
-        this.lockStatus = lockStatus;
     }
 
     @Override
@@ -567,15 +506,6 @@ public class House implements java.io.Serializable, HouseInfo {
         this.direction = direction;
     }
 
-    @Column(name = "PAY_WXZJ",nullable = false)
-    public boolean isPayWXZJ() {
-        return payWXZJ;
-    }
-
-    public void setPayWXZJ(boolean payWXZJ) {
-        this.payWXZJ = payWXZJ;
-    }
-
     @Column(name = "MEMO", length = 200)
     @Size(max = 200)
     public String getMemo() {
@@ -593,24 +523,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setHouseContracts(Set<HouseContract> houseContracts) {
         this.houseContracts = houseContracts;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-    public Set<HouseState> getHouseStates() {
-        return this.houseStates;
-    }
-
-    public void setHouseStates(Set<HouseState> houseStates) {
-        this.houseStates = houseStates;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-    public Set<PoolOwner> getPoolOwners() {
-        return this.poolOwners;
-    }
-
-    public void setPoolOwners(Set<PoolOwner> poolOwners) {
-        this.poolOwners = poolOwners;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -643,15 +555,6 @@ public class House implements java.io.Serializable, HouseInfo {
         this.gridBlock = gridBlock;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,optional = true)
-    @JoinColumn(name = "MASTER_OWNER",nullable = true)
-    public HouseOwner getHouseOwner() {
-        return houseOwner;
-    }
-
-    public void setHouseOwner(HouseOwner houseOwner) {
-        this.houseOwner = houseOwner;
-    }
 
     @Transient
     private Boolean orderValid;

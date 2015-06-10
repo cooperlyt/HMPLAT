@@ -90,17 +90,7 @@
                                 <h:graphicImage value="/img/icons/#{_house.house.masterStatus}.png"
                                                 title="#{messages[_house.house.masterStatus.name()]}"/>
 
-                                <h:graphicImage
-                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG_CONFIRM'}"
-                                        value="/img/icons/power.png" title="#{messages.INIT_REG_CONFIRM}"/>
 
-                                <h:graphicImage
-                                        rendered="#{_house.house.initRegStatus eq 'INIT_REG'}"
-                                        value="/img/icons/initReg.png" title="#{messages.INIT_REG}"/>
-
-                                <h:graphicImage
-                                        rendered="#{_house.house.lockStatus.lock}"
-                                        value="/img/house/lock.png" title="#{messages.LockDecription}"/>
 
 
                             </s:div>
@@ -165,9 +155,7 @@
                                         rendered="#{_house.house.initRegStatus eq 'INIT_REG'}"
                                         value="/img/icons/initReg.png" title="#{messages.INIT_REG}"/>
 
-                                <h:graphicImage
-                                        rendered="#{_house.house.lockStatus.lock}"
-                                        value="/img/house/lock.png" title="#{messages.LockDecription}"/>
+
 
 
                             </s:div>
