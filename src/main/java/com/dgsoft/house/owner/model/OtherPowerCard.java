@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 15, 2014 10:41:24 AM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,8 +37,11 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
+
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
