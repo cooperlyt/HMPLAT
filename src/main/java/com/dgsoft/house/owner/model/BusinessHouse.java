@@ -76,7 +76,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private Set<HouseState> houseStates = new HashSet<HouseState>(0);
     private LandInfo landInfo;
     private BusinessHouseOwner businessHouseOwner;
-    private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
+    private Set<CardInfo> otherPowerCards = new HashSet<CardInfo>(0);
     private HouseRegInfo houseRegInfo;
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
@@ -714,20 +714,20 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = OtherPowerCard.class,cascade = CascadeType.ALL)
     @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
-    public Set<OtherPowerCard> getOtherPowerCards() {
+    public Set<CardInfo> getOtherPowerCards() {
         return otherPowerCards;
     }
 
-    public void setOtherPowerCards(Set<OtherPowerCard> otherPowerCards) {
+    public void setOtherPowerCards(Set<CardInfo> otherPowerCards) {
         this.otherPowerCards = otherPowerCards;
     }
 
     @Transient
-    public List<OtherPowerCard> getOtherPowerCardList(){
-        List<OtherPowerCard> result = new ArrayList<OtherPowerCard>(getOtherPowerCards());
-        Collections.sort(result,new Comparator<OtherPowerCard>() {
+    public List<CardInfo> getOtherPowerCardList(){
+        List<CardInfo> result = new ArrayList<CardInfo>(getOtherPowerCards());
+        Collections.sort(result,new Comparator<CardInfo>() {
             @Override
-            public int compare(OtherPowerCard o1, OtherPowerCard o2) {
+            public int compare(CardInfo o1, CardInfo o2) {
                 return o1.getId().compareTo(o2.getId());
             }
         });

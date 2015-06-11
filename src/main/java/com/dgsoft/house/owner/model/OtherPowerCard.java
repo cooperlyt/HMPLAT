@@ -2,9 +2,11 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 15, 2014 10:41:24 AM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,12 +18,14 @@ import javax.validation.constraints.Size;
 public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 
 	private String id;
-	private MakeCard makeCardByCard;
     private String financialName;
     private String financialCode;
     private String financialPhone;
     private Financial.FinancialType financialType;
     private CredentialsType credentialsType;
+    private CardInfo cardInfo;
+
+
 
 	public OtherPowerCard() {
 	}
@@ -35,13 +39,26 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
         this.credentialsType = credentialsType;
     }
 
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
+    }
+
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 
 	@NotNull
 	@Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    @GenericGenerator(name = "pkGenerator",
+            strategy = "foreign",
+            parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "cardInfo") })
+    @GeneratedValue(generator = "pkGenerator")
 	public String getId() {
 		return this.id;
 	}
@@ -49,18 +66,6 @@ public class OtherPowerCard implements java.io.Serializable,PersonEntity {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CARD", nullable = false)
-	@NotNull
-	public MakeCard getMakeCardByCard() {
-		return this.makeCardByCard;
-	}
-
-	public void setMakeCardByCard(MakeCard makeCardByCard) {
-		this.makeCardByCard = makeCardByCard;
-	}
-
 
 
     @Column(name = "FINANCIAL_NAME",nullable = false,length = 120)

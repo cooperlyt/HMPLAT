@@ -22,16 +22,6 @@ public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
     @In(create = true)
     private OwnerNumberBuilder ownerNumberBuilder;
 
-    private MakeCard makeCard;
-
-
-    public MakeCard getMakeCard() {
-        return makeCard;
-    }
-
-    public void setMakeCard(MakeCard makeCard) {
-        this.makeCard = makeCard;
-    }
 
 
 
@@ -39,15 +29,20 @@ public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
 
     @Override
     public TaskSubscribeComponent.ValidResult valid() {
-        return TaskSubscribeComponent.ValidResult.SUCCESS;
+        if(ownerBusinessHome.getNowFinancial()==null){
+        return TaskSubscribeComponent.ValidResult.ERROR;
+
     }
+    return TaskSubscribeComponent.ValidResult.SUCCESS;
+}
 
     @Override
     public void complete() {
+        MakeCard makeCard = null;
         if (!ownerBusinessHome.getInstance().getMakeCards().isEmpty()){
             for (MakeCard m:ownerBusinessHome.getInstance().getMakeCards()){
                 if(m.getType().equals(MakeCard.CardType.MORTGAGE)){
-                    this.makeCard = m;
+                    makeCard = m;
                     return;
                 }
             }
