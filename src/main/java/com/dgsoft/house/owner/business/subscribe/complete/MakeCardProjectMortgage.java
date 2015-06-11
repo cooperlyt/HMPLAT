@@ -37,6 +37,10 @@ public class MakeCardProjectMortgage implements TaskCompleteSubscribeComponent {
 
     @Override
     public TaskSubscribeComponent.ValidResult valid() {
+        if(ownerBusinessHome.getNowFinancial()==null){
+            return TaskSubscribeComponent.ValidResult.ERROR;
+
+        }
         return TaskSubscribeComponent.ValidResult.SUCCESS;
     }
 
