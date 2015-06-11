@@ -13,7 +13,10 @@
                 template="/layout/template-base.xhtml">
 
     <ui:define name="navigation">
+
+        <ui:insert name="headRight">
         <h:graphicImage styleClass="site-search" value="/img/logo.png" rendered="#{not identity.loggedIn}"/>
+
 
         <a:outputPanel rendered="#{identity.loggedIn}">
         <span id="main-navigation">
@@ -75,6 +78,7 @@
 </span>
 
         </a:outputPanel>
+        </ui:insert>
 
 
         <a:outputPanel rendered="#{identity.loggedIn}">

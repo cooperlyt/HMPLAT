@@ -12523,3 +12523,11 @@ input.color-editor-input:focus ~ .label-colors {
 .context-loader.large-format-loader.is-loading {
     display: block
 }
+
+.bootstrap-select.btn-group .dropdown-menu.select-menu-modal-holder{
+    width: 300px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu.select-menu-modal-holder > .select-menu-modal {
+    width: 100%;
+}

@@ -2,20 +2,28 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-      xmlns:s="http://jboss.org/schema/seam/taglib">
+      xmlns:s="http://jboss.org/schema/seam/taglib"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://richfaces.org/a4j"
+
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:r="http://richfaces.org/rich">
 <f:view
         contentType="text/html">
 
 
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=8"/>
-        <title>#{messages.mainTitle}</title>
-        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+
+
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+            <title>#{messages.mainTitle}</title>
+
+            <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
 
 
         <script type="text/javascript">
@@ -66,9 +74,22 @@
             }
         </script>
 
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.css"/>
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.min.css"/>
+        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datetimepicker.min.css"/>
 
-        <h:outputStylesheet name="application.css"/>
-        <h:outputStylesheet name="theme.old.css"/>
+        <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
+
+            <h:outputStylesheet library="github" name="/css/github1_old.css"/>
+            <h:outputStylesheet library="github" name="/css/github2_old.css"/>
+
+        <h:outputStylesheet library="github" name="/css/octicons.css"/>
+
+
+        <h:outputStylesheet name="other.css"/>
+
         <h:outputStylesheet>
             .fullBody{
                 height: 100%;
@@ -111,7 +132,7 @@
 
             .default-main {
                 position: absolute;
-                top: 114px;
+                top: 50px;
                 bottom: 0px;
                 width: 100%;
                 overflow: hidden;
@@ -450,6 +471,10 @@
             white-space: nowrap;
         }
 
+            .edit-select {
+                margin-bottom: 5px !important;
+            }
+
         </h:outputStylesheet>
 
 
@@ -468,16 +493,123 @@
         </r:popupPanel>
 
 
-        <h:panelGroup styleClass="header" layout="block">
+
+        <div class="header">
+        <div class="container clearfix" style="white-space: nowrap;">
+            <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
+                <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
+            </s:link>
+
+            <div class="site-search">
+                <h:form>
 
 
-            <h:panelGroup layout="block" styleClass="fullHeaderCenter">
-                <h:panelGroup layout="block" styleClass="headerLogo">
-                    <h:graphicImage value="/img/logo.png" alt="#{messages.mainTitle}"/>
-                </h:panelGroup>
-            </h:panelGroup>
+                    <h:inputText styleClass="chromeless-input"
+                                 p:placeholder="Search" style="margin-left: 10px"
+                                  autocomplete="off">
+                        <r:placeholder value="#{messages.HouseDisplayCode}"/>
+                    </h:inputText>
 
-        </h:panelGroup>
+
+                </h:form>
+            </div>
+
+
+            <a:outputPanel rendered="#{identity.loggedIn}">
+
+                <ul class="header-nav user-nav right" id="user-links">
+                    <li class="header-nav-item dropdown js-menu-container">
+                        <div class="dropdown">
+                            <a id="userLabel" class="header-nav-link name" data-target="#"
+                               href="#{credentials.username}"
+                               data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+
+                                <span class="user-icon"/>
+
+
+      <span class="css-truncate">
+        <span class="css-truncate-target">#{authInfo.loginEmployee.personName}#{' '}#{(empty authInfo.currRole) ? messages.userNoRole : authInfo.currRole.name} </span>
+      </span>
+                                <span class="dropdown-caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-git" style="margin-top: 30px;" aria-labelledby="userLabel">
+                                <a:repeat value="#{authInfo.functionRoleList}" var="_roleCategory">
+                                    <li>
+                                        <s:link propagation="end" view="/home.xhtml">
+                                            <f:param name="Role" value="#{_roleCategory.id}"/>
+                                            <span
+                                                    class="octicon octicon-organization"></span>#{_roleCategory.name}
+                                        </s:link>
+                                    </li>
+                                </a:repeat>
+
+                            </ul>
+
+                        </div>
+
+                    </li>
+
+                    <li class="header-nav-item">
+
+                        <s:link view="/func/system/business/start.xhtml" propagation="end"
+                                styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                            <f:passThroughAttribute name="aria-label" value="You have no unread notifications" />
+                            <span class="octicon octicon-plus"></span>
+                        </s:link>
+
+                    </li>
+
+                    <li class="header-nav-item">
+                        <s:link view="/func/system/business/task.xhtml" propagation="end"
+                                p:aria-label="You have no unread notifications"
+                                styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                            <span class="mail-status unread"/>
+                            <span class="octicon octicon-inbox"></span>
+                        </s:link>
+
+
+                    </li>
+
+                    <li class="header-nav-item">
+                        <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile"
+                           id="account_settings" aria-label="Settings"
+                           data-ga-click="Header, go to settings, icon:settings">
+                            <span class="octicon octicon-gear"></span>
+                        </a>
+                    </li>
+
+                    <li class="header-nav-item">
+
+                        <s:link id="menuLogoutId"
+                                styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
+                                view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
+                                p:aria-label="#{messages.logout}"
+                                propagation="none">
+
+                            <span class="octicon octicon-sign-out"></span>
+                        </s:link>
+
+                    </li>
+
+                </ul>
+
+            </a:outputPanel>
+
+            <a:outputPanel rendered="#{not identity.loggedIn}">
+                <div class="header-actions">
+                    <s:link styleClass="button" value="#{messages.login}" view="/login.xhtml"/>
+                </div>
+            </a:outputPanel>
+
+
+        </div>
+        </div>
+
+
+
+
+
 
         <div class="default-main">
             <div class="main-wrapper">
@@ -485,67 +617,108 @@
                     <div class="leftbat-bottom-bg">
                         <div class="leftbar-outer">
                             <div class="leftbar">
-                                <div class="colum1-banner">
-
-                                <div class="searchBar">
-                                <h:form>
-
-                                    <span class="ui-watermark-container">
-                                        <h:inputText id="houseDisplayInput" value="#{houseStepSelect.houseDisplayCode}">
-                                            <r:placeholder value="#{messages.HouseDisplayCode}"/>
-                                        </h:inputText>
-                                        <a:commandButton styleClass="singleSearchSubmit" onclick="alert('ok')"/>
-                                    </span>
-
-                                </h:form>
-                                </div>
-                                </div>
-                                <div style="min-height: 105px;margin-top: 10px;">
+                                <div style="min-height: 105px;margin-top: 10px; padding: 0 4px">
 
                                 <h:form>
 
-                                    <h:selectOneMenu value="#{houseStepSelect.district}"
-                                                     style="width: 151px; background: #e7e7e7;margin: 0 10px 4px 10px;height: 25px;line-height: 25px;padding: 1px 0;">
+                                    <h:selectOneMenu value="#{sectionSelectList.districtId}"
+                                                     p:data-header="#{messages.districtSelect}"
+                                                     styleClass="selectpicker edit-select form-control">
                                         <s:selectItems value="#{allDistrict.resultList}" var="_district"
-                                                       itemValue="#{_district}" label="#{_district.name}"
-                                                       noSelectionLabel="#{messages.DistrictSelect}"/>
-                                        <f:converter converterId="houseEntityConverter"/>
-                                        <a:ajax event="valueChange" execute="@this" render="sectionSelectInputs">
+                                                       itemValue="#{_district.id}" label="#{_district.name}"
+                                                       noSelectionLabel="#{messages.districtSelect}"/>
+
+                                        <a:ajax event="valueChange" execute="@this" listener="#{houseStepSelect.resetSection}" render="sectionSelectInputs">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:ajax>
                                     </h:selectOneMenu>
+                                    <a:outputPanel id="sectionSelectInputs" >
 
-                                    <a:outputPanel id="sectionSelectInputs" layout="block" style="margin: 0 10px;padding-left: 26px;">
+                                    <div class="btn-group bootstrap-select edit-select" style="width: 100%;">
+                                        <button type="button" class=" btn dropdown-toggle btn-default"
+                                                data-toggle="dropdown" aria-expanded="false">
 
-                                        <a:jsFunction name="blurFunction" execute="sectionNameInput" render="projectSelectInputs"/>
+                                            <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
+                                                          value="#{(empty houseStepSelect.selectSection) ?  messages.sectionSelect : houseStepSelect.selectSection.name}">
+                                            </h:outputText>
+                                            <span class="caret"></span>
+                                        </button>
 
-                                            <span id="sectionNamePlaceHodle">
-                                                <script type="text/javascript">
-                                                    new RichFaces.ui.Placeholder("sectionNamePlaceHodle",{"targetId":"#{r:clientId('sectionNameInput')}Input","text":"#{messages.SectionPySelect}"});
-                                                </script>
-                                            </span>
 
-                                            <div class="colum1-sub-input">
-                                            <r:autocomplete id="sectionNameInput" mode="cachedAjax" minChars="2" value="#{houseStepSelect.sectionName}"
-                                                        inputClass="sectionName-input"
-                                                        autocompleteMethod="#{houseStepSelect.sectionNameAutoComplete}" onselectitem="blurFunction()"
-                                                        autofill="true" selectFirst="true" onblur="blurFunction()">
-                                            </r:autocomplete>
+                                        <div class="dropdown-menu select-menu-modal-holder" style="width: 100%;">
+                                            <div class="select-menu-modal" >
+                                                <div class="select-menu-header">
+                                                    <span class="select-menu-title">#{messages.SectionSelect}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                                </div>
+
+                                                <a:outputPanel layout="block" id="sectionSelectPanel">
+                                                    <div class="select-menu-filters">
+                                                        <div class="select-menu-text-filter">
+                                                            <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSelectList.searchKey}">
+                                                                <a:ajax event="keyup" immediate="true" execute="@this"
+                                                                        render="SectionSelectItemList">
+                                                                    <a:attachQueue requestDelay="500"/>
+                                                                </a:ajax>
+
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
+                                                    <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+
+
+                                                        <a:repeat value="#{sectionSelectList.resultList}" var="_item">
+
+                                                            <a:commandLink execute="@this" immediate="true"
+                                                                           render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs" action="#{houseStepSelect.resetPorject}"
+                                                                           styleClass="select-menu-item #{(houseStepSelect.selectSectionId eq _item.id) ? 'selected': ''}">
+
+                                                                <a:param value="#{_item.id}" assignTo="#{houseStepSelect.selectSectionId}"/>
+
+                                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                <span class="select-menu-item-text">#{_item.name}</span>
+                                                            </a:commandLink>
+                                                        </a:repeat>
+
+
+                                                        <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
+                                                                        oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                                                      render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
+                                                            <a:attachQueue requestDelay="0"/>
+                                                        </a:jsFunction>
+
+                                                        <a:commandLink onclick="moreResult(); event.stopPropagation(); return false;"
+                                                                       styleClass="select-menu-item last-visible"
+                                                                       rendered="#{sectionSelectList.nextExists}">
+
+
+                                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                            <span class="select-menu-item-text">#{messages.More}</span>
+                                                        </a:commandLink>
+
+                                                    </a:outputPanel>
+
+                                                </a:outputPanel>
+
                                             </div>
-
+                                        </div>
+                                    </div>
 
 
                                             <a:outputPanel id="projectSelectInputs">
 
-                                                <a:outputPanel rendered="#{((not empty houseStepSelect.section) or (not empty houseStepSelect.sectionName)) and (not empty houseStepSelect.projects)}">
+                                                <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
 
 
-                                                        <h:selectOneMenu value="#{houseStepSelect.project}" styleClass="colum1-sub-input">
-                                                            <s:selectItems value="#{houseStepSelect.projects}"
-                                                                           var="_project" itemValue="#{_project}"
+                                                        <h:selectOneMenu value="#{houseStepSelect.selectProjectId}"
+                                                                         p:data-header="#{messages.projectSelect}"
+                                                                         styleClass="selectpicker edit-select form-control">
+                                                            <s:selectItems value="#{houseStepSelect.selectSection.projectList}"
+                                                                           var="_project" itemValue="#{_project.id}"
                                                                            label="#{_project.name}"
-                                                                           noSelectionLabel="#{messages.ProjectSelect}"/>
-                                                            <f:converter converterId="houseEntityConverter"/>
+                                                                           noSelectionLabel="#{messages.projectSelect}"/>
+
                                                             <a:ajax event="valueChange" render="buildSelectInput">
                                                                 <a:attachQueue requestDelay="0"/>
                                                             </a:ajax>
@@ -554,11 +727,14 @@
 
                                                     <a:outputPanel id="buildSelectInput">
 
-                                                            <h:selectOneMenu rendered="#{not empty houseStepSelect.project}" styleClass="colum1-sub-input" value="#{buildHome.id}">
-                                                                <s:selectItems value="#{houseStepSelect.project.buildList}"
+                                                            <h:selectOneMenu rendered="#{not empty houseStepSelect.selectProjectId}"
+                                                                             p:data-header="#{messages.buildSelect}"
+                                                                             styleClass="selectpicker edit-select form-control"
+                                                                             value="#{buildHome.id}">
+                                                                <s:selectItems value="#{houseStepSelect.buildList}"
                                                                                var="_build" itemValue="#{_build.id}"
                                                                                label="#{_build.name}"
-                                                                               noSelectionLabel="#{messages.BuildSelect}"/>
+                                                                               noSelectionLabel="#{messages.buildSelect}"/>
                                                                 <a:ajax event="valueChange" render="gridMap">
                                                                     <a:attachQueue requestDelay="0"/>
                                                                 </a:ajax>
@@ -674,15 +850,8 @@
                                                           style="font-size: 1em; font-weight: bold; color: #000000;"/>
 
                                             <br/>
-                                            <a:outputPanel rendered="#{not empty _house.house.houseOwner}">
-                                                <ui:include src="/layout/long-text-display.xhtml">
-                                                    <ui:param name="value" value="#{_house.house.houseOwner.personName}"/>
-                                                    <ui:param name="size" value="6"/>
-                                                    <ui:param name="textStyle" value="font-size: 0.9em;color: #797268;"/>
-                                                </ui:include>
-                                            </a:outputPanel>
 
-                                            <br/>
+
                                             <s:div style="height: 16px;padding: 0px;border: 0px;position: absolute;bottom: 0;left: 0;">
                                                 <h:graphicImage value="/img/icons/#{_house.house.masterStatus}.png"
                                                                 title="#{messages[_house.house.masterStatus.name()]}"/>
@@ -795,7 +964,15 @@
         </div>
 
 
-
+        <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+        <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.js"/>
+        <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.js"/>
+        <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datetimepicker.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/locales/bootstrap-datetimepicker.zh-CN.js"/>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="init.js"/>
+        </a:outputPanel>
 
 
     </h:body>
