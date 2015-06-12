@@ -2,6 +2,7 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.Build;
+import com.dgsoft.house.model.BuildGridMap;
 import com.dgsoft.house.model.Section;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -23,6 +24,8 @@ public class HouseStepSelect {
     private String selectProjectId;
 
     private String selectBuildId;
+
+    private boolean dataTableList;
 
     public Section getSelectSection() {
         return selectSection;
@@ -59,6 +62,15 @@ public class HouseStepSelect {
         this.selectBuildId = selectBuildId;
     }
 
+    public boolean isDataTableList() {
+        return dataTableList;
+    }
+
+    public void setDataTableList(boolean dataTableList) {
+        this.dataTableList = dataTableList;
+    }
+
+
     public void resetSection(){
         selectSection = null;
         resetPorject();
@@ -77,6 +89,10 @@ public class HouseStepSelect {
 
     public List<Build> getBuildList(){
        return houseEntityLoader.getEntityManager().createQuery("select build from Build build where build.project.id = :projectId order by build.buildNo ").setParameter("projectId", getSelectProjectId()).getResultList();
+    }
+
+    public List<BuildGridMap> getBuildGridMaps(){
+        return houseEntityLoader.getEntityManager().createQuery("select buildGridMap from BuildGridMap buildGridMap where buildGridMap.build.id = :buildId order by buildGridMap.order").setParameter("buildId",getSelectBuildId()).getResultList();
     }
 
 

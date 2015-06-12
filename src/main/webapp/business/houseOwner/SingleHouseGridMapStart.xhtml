@@ -175,8 +175,8 @@
             }
 
         .leftbar-outer {
-            overflow-y: overlay;
-            overflow-x: visible;
+            overflow-y: hidden;
+            overflow-x: hidden;
             position: absolute;
             bottom: 0px;
             width: 100%;
@@ -202,6 +202,7 @@
             margin-top:0px;
             padding: 0;
             display: block;
+            height: 100%;
             overflow-x: visible;
         }
 
@@ -281,10 +282,12 @@
             margin: 5px 0px;
             padding-top: 10px;
             padding-left: 7px;
+            padding-right: 7px;
             height: auto;
             border-top: 1px solid #f2f3f6;
             line-height: 25px;
             position: relative;
+
         }
 
         .list-title {
@@ -495,7 +498,7 @@
 
 
         <div class="header">
-        <div class="container clearfix" style="white-space: nowrap;">
+        <div class="container-fluid clearfix" style="white-space: nowrap;">
             <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
                 <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
             </s:link>
@@ -613,13 +616,15 @@
 
         <div class="default-main">
             <div class="main-wrapper">
+                <h:form style="height: 100%">
                 <div class="mb-layout-bd column1">
                     <div class="leftbat-bottom-bg">
                         <div class="leftbar-outer">
-                            <div class="leftbar">
-                                <div style="min-height: 105px;margin-top: 10px; padding: 0 4px">
+                            <div class="leftbar" style="height: 100%">
 
-                                <h:form>
+                                <div style="min-height: 170px;margin-top: 10px; padding: 0 4px">
+
+
 
                                     <h:selectOneMenu value="#{sectionSelectList.districtId}"
                                                      p:data-header="#{messages.districtSelect}"
@@ -730,12 +735,12 @@
                                                             <h:selectOneMenu rendered="#{not empty houseStepSelect.selectProjectId}"
                                                                              p:data-header="#{messages.buildSelect}"
                                                                              styleClass="selectpicker edit-select form-control"
-                                                                             value="#{buildHome.id}">
+                                                                             value="#{houseStepSelect.selectBuildId}">
                                                                 <s:selectItems value="#{houseStepSelect.buildList}"
                                                                                var="_build" itemValue="#{_build.id}"
                                                                                label="#{_build.name}"
                                                                                noSelectionLabel="#{messages.buildSelect}"/>
-                                                                <a:ajax event="valueChange" render="gridMap">
+                                                                <a:ajax event="valueChange">
                                                                     <a:attachQueue requestDelay="0"/>
                                                                 </a:ajax>
                                                             </h:selectOneMenu>
@@ -747,55 +752,31 @@
 
                                     </a:outputPanel>
 
-                                </h:form>
+
                                 </div>
-                                <h:form>
-                                    <div class="list-all">
+
+                                    <a:outputPanel layout="block" style="height: 100%" styleClass="list-all"  ajaxRendered="true">
                                         <div class="list-title">
                                              #{messages.COBUORB}
+
                                         </div>
+                                        <div style="height: 100%; overflow: auto">
 
-                                        <div class="list-houseUnitCodeCondition">
-                                            <h:panelGrid columns="2">
-                                                <h:graphicImage value="/img/icons/map.png" style="margin: 1px 6px 0 8px"/>
+                                    <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{not empty houseStepSelect.selectBuildId}">
+                                        <a:repeat value="#{houseStepSelect.buildGridMaps}" var="_gridMap">
+                                            <a href="#" class="list-group-item #{(not houseStepSelect.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
+                                                #{_gridMap.name}
+                                            </a>
+                                        </a:repeat>
 
-                                                <h:inputText id="MapCodeInput" style="width: 114px;margin: 0" >
-                                                    <r:placeholder value="#{messages.Build_MapNO}"/>
-                                                </h:inputText>
+                                        <a href="#" class="list-group-item #{houseStepSelect.dataTableList ? 'active' : ''}" >ALL DATAS</a>
+                                    </a:outputPanel>
 
-                                                <h:graphicImage value="/img/icons/block.png" style="margin: 0px 6px 0 8px"/>
-                                                <h:inputText id="BlockCodeInput" style="width: 114px" >
-                                                    <r:placeholder value="#{runParam.getStringParamValue('HouseBlockCodeLabel')}"/>
-                                                </h:inputText>
-
-                                                <h:graphicImage value="/img/icons/build.png" style="margin: 0px 6px 0 8px"/>
-
-                                                <s:div styleClass="inputButton">
-                                                    <h:inputText id="BuildCodeInput">
-                                                        <r:placeholder value="#{messages.Build_BuildNO}"/>
-                                                    </h:inputText>
-
-                                                    <div class="inputButon-button">
-                                                        <a:commandButton image="/img/icons/search.png" style="width: 13px; height: 13px;padding: 1px"/>
-                                                    </div>
-                                                </s:div>
-
-                                            <h:graphicImage value="/img/icons/house.png" style="margin: 0px 6px 0 8px"/>
-                                                <s:div styleClass="inputButton">
-                                                    <h:inputText id="HouseOrderInput">
-                                                        <r:placeholder value="#{messages.House_Order}"/>
-                                                    </h:inputText>
-
-                                                    <div class="inputButon-button">
-                                                        <a:commandButton image="/img/icons/search.png" style="width: 13px; height: 13px;padding: 1px"/>
-                                                    </div>
-                                                </s:div>
-                                            </h:panelGrid>
                                         </div>
 
 
-                                    </div>
-                                </h:form>
+                                   </a:outputPanel>
+
 
                             </div>
                         </div>
@@ -803,7 +784,7 @@
                     </div>
 
                 </div>
-
+                </h:form>
                 <div class="mb-layout-bd column3" id="selectPanel">
                     <div class="album-wrapper">
                         <div class="album">
@@ -822,6 +803,7 @@
                 </div>
 
                 <div class="mb-layout-bd column2" id="contextPanel" onselectstart="return false;">
+                    <ui:remove>
                     <r:messages globalOnly="false" ajaxRendered="true"/>
 
                     <div style="width: 100%; height: 100%; overflow-x: auto; overflow-y: auto; margin: 5px 5px 5px 5px;">
@@ -957,7 +939,7 @@
                         </a:outputPanel>
                     </a:outputPanel>
                     </div>
-
+                    </ui:remove>
                 </div>
 
             </div>

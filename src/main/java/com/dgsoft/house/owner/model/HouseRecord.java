@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 		@UniqueConstraint(columnNames = "HOUSE")})
 public class HouseRecord implements java.io.Serializable {
 
-	private String id;
 	private BusinessHouse businessHouse;
 	private String houseCode;
 	private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
@@ -27,18 +26,6 @@ public class HouseRecord implements java.io.Serializable {
 	public HouseRecord() {
 	}
 
-
-	@Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HOUSE", unique = true, nullable = false)
@@ -51,6 +38,7 @@ public class HouseRecord implements java.io.Serializable {
 		this.businessHouse = businessHouse;
 	}
 
+    @Id
 	@Column(name = "HOUSE_CODE", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
