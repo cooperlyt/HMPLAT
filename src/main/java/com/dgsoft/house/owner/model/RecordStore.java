@@ -23,6 +23,9 @@ public class RecordStore implements java.io.Serializable {
     private String cabinet;
     private String box;
 
+
+    private String recordCode;
+
     public RecordStore() {
     }
 
@@ -95,5 +98,19 @@ public class RecordStore implements java.io.Serializable {
     public void setBox(String box) {
         this.box = box;
     }
+
+
+
+    @Column(name = "RECORD_CODE", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getRecordCode() {
+        return recordCode;
+    }
+
+    public void setRecordCode(String recordCode) {
+        this.recordCode = recordCode;
+    }
+
 
 }
