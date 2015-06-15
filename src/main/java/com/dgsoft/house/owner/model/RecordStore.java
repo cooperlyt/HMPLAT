@@ -22,11 +22,14 @@ public class RecordStore implements java.io.Serializable {
     private String frame;
     private String cabinet;
     private String box;
-
-
     private String recordCode;
 
     public RecordStore() {
+    }
+
+    public RecordStore(String id, HouseBusiness houseBusiness){
+        this.houseBusiness = houseBusiness;
+        this.id = id;
     }
 
 
@@ -34,8 +37,6 @@ public class RecordStore implements java.io.Serializable {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return this.id;
     }
@@ -56,7 +57,7 @@ public class RecordStore implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOUSE_RECORD", nullable = false)
+    @JoinColumn(name = "HOUSE_CODE", nullable = false)
     @NotNull
     public HouseRecord getHouseRecord() {
         return this.houseRecord;

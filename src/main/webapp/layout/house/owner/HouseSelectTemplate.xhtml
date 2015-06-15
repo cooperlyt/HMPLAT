@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:s="http://jboss.org/schema/seam/taglib"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://richfaces.org/a4j"
+
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:r="http://richfaces.org/rich">
+<f:view
+        contentType="text/html">
+
+
+    <h:head>
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+        <title>#{messages.mainTitle}</title>
+
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+
+
+
+
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.css"/>
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.min.css"/>
+        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datetimepicker.min.css"/>
+
+        <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
+
+        <h:outputStylesheet library="github" name="/css/github1_old.css"/>
+        <h:outputStylesheet library="github" name="/css/github2_old.css"/>
+
+        <h:outputStylesheet library="github" name="/css/octicons.css"/>
+
+
+        <h:outputStylesheet name="other.css"/>
+
+        <h:outputStylesheet>
+
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 14px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-width: 0;
+                border-style: solid;
+                border-radius: 6px;
+                background: #d9d9d9;
+            }
+
+            ::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece {
+                background: -webkit-gradient(linear, left top, right top, from(#f6f6f6), color-stop(50%, #fff), color-stop(75%, #fff), to(#fdfdfd));
+                width: 11px;
+                height: 11px;
+            }
+
+            ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece {
+                background: -webkit-gradient(linear, left top, right top, from(#f6f6f6), color-stop(50%, #fff), color-stop(75%, #fff), to(#fdfdfd));
+                width: 11px;
+                height: 11px;
+            }
+
+
+            html , body {
+                height: 100%;
+                max-height: 100%;
+                overflow: hidden;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+            
+            .header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+
+
+
+            .default-main {
+
+                overflow: hidden;
+                margin: 0;
+                padding: 50px 0 0 0;
+                display: block;
+                height: 100%;
+            }
+
+            .column1 {
+                width: 171px;
+                border-right: 1px solid #c1c1c1;
+                position: relative;
+                height: 100%;
+                background: url("#{facesContext.externalContext.requestContextPath}/img/fullRightBlackround.png") repeat-y 0 0;
+
+            }
+
+        .list-all {
+            margin: 0;
+            padding-top: 180px;
+            padding-left: 7px;
+            padding-right: 7px;
+            border-top: 1px solid #f2f3f6;
+            line-height: 25px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 171px;
+
+
+        }
+
+
+
+
+        .column2 {
+            left: 172px;
+            right: 250px;
+        }
+
+
+        .edit-select {
+            margin-top: 5px !important;
+        }
+
+        </h:outputStylesheet>
+
+
+    </h:head>
+    <h:body>
+
+
+
+        <div class="header">
+            <div class="container-fluid clearfix" style="white-space: nowrap;">
+                <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
+                    <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
+                </s:link>
+
+                <div class="site-search">
+                    <h:form>
+
+
+                        <h:inputText styleClass="chromeless-input"
+                                     p:placeholder="Search" style="margin-left: 10px"
+                                     autocomplete="off">
+                            <r:placeholder value="#{messages.HouseDisplayCode}"/>
+                        </h:inputText>
+
+
+                    </h:form>
+                </div>
+
+
+                <a:outputPanel rendered="#{identity.loggedIn}">
+
+                    <ul class="header-nav user-nav right" id="user-links">
+                        <li class="header-nav-item dropdown js-menu-container">
+                            <div class="dropdown">
+                                <a id="userLabel" class="header-nav-link name" data-target="#"
+                                   href="#{credentials.username}"
+                                   data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+
+                                    <span class="user-icon"/>
+
+
+      <span class="css-truncate">
+        <span class="css-truncate-target">#{authInfo.loginEmployee.personName}#{' '}#{(empty authInfo.currRole) ? messages.userNoRole : authInfo.currRole.name} </span>
+      </span>
+                                    <span class="dropdown-caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-git" style="margin-top: 30px;" aria-labelledby="userLabel">
+                                    <a:repeat value="#{authInfo.functionRoleList}" var="_roleCategory">
+                                        <li>
+                                            <s:link propagation="end" view="/home.xhtml">
+                                                <f:param name="Role" value="#{_roleCategory.id}"/>
+                                            <span
+                                                    class="octicon octicon-organization"></span>#{_roleCategory.name}
+                                            </s:link>
+                                        </li>
+                                    </a:repeat>
+
+                                </ul>
+
+                            </div>
+
+                        </li>
+
+                        <li class="header-nav-item">
+
+                            <s:link view="/func/system/business/start.xhtml" propagation="end"
+                                    styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                                <f:passThroughAttribute name="aria-label" value="You have no unread notifications" />
+                                <span class="octicon octicon-plus"></span>
+                            </s:link>
+
+                        </li>
+
+                        <li class="header-nav-item">
+                            <s:link view="/func/system/business/task.xhtml" propagation="end"
+                                    p:aria-label="You have no unread notifications"
+                                    styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                                <span class="mail-status unread"/>
+                                <span class="octicon octicon-inbox"></span>
+                            </s:link>
+
+
+                        </li>
+
+                        <li class="header-nav-item">
+                            <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile"
+                               id="account_settings" aria-label="Settings"
+                               data-ga-click="Header, go to settings, icon:settings">
+                                <span class="octicon octicon-gear"></span>
+                            </a>
+                        </li>
+
+                        <li class="header-nav-item">
+
+                            <s:link id="menuLogoutId"
+                                    styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
+                                    view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
+                                    p:aria-label="#{messages.logout}"
+                                    propagation="none">
+
+                                <span class="octicon octicon-sign-out"></span>
+                            </s:link>
+
+                        </li>
+
+                    </ul>
+
+                </a:outputPanel>
+
+                <a:outputPanel rendered="#{not identity.loggedIn}">
+                    <div class="header-actions">
+                        <s:link styleClass="button" value="#{messages.login}" view="/login.xhtml"/>
+                    </div>
+                </a:outputPanel>
+
+
+            </div>
+        </div>
+
+
+        <div class="container-fluid default-main">
+
+
+                <div class="column1" >
+
+
+                            <h:form style="height: 100%">
+
+
+                                <a:outputPanel layout="block" styleClass="list-all"  ajaxRendered="true">
+                                    <div class="list-title">
+                                        #{messages.COBUORB}
+
+                                    </div>
+                                    <div style="position: absolute; top: 0; bottom: 0; width: 157px; padding: 205px 0 0 0;">
+
+                                        <div style="height: 100% ;overflow-x: auto">
+                                        <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{not empty houseStepSelect.selectBuildId}">
+                                            <a:repeat value="#{houseStepSelect.buildGridMaps}" var="_gridMap">
+
+
+                                                <a:commandLink styleClass="list-group-item #{(not houseStepSelect.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
+                                                    #{_gridMap.name}
+                                                    <a:attachQueue requestDelay="0"/>
+                                                    <a:param value="#{_gridMap.id}" assignTo="#{ownerBuildGridMap.id}"/>
+                                                </a:commandLink>
+                                            </a:repeat>
+
+                                            <a href="#" class="list-group-item #{houseStepSelect.dataTableList ? 'active' : ''}" >ALL DATAS</a>
+                                        </a:outputPanel>
+                                        </div>
+                                    </div>
+
+
+                                </a:outputPanel>
+
+
+
+                                <div style="min-height: 170px; padding: 0 4px">
+
+
+
+                                        <h:selectOneMenu value="#{sectionSelectList.districtId}"
+                                                         p:data-header="#{messages.districtSelect}"
+                                                         styleClass="selectpicker edit-select form-control">
+                                            <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                                           itemValue="#{_district.id}" label="#{_district.name}"
+                                                           noSelectionLabel="#{messages.districtSelect}"/>
+
+                                            <a:ajax event="valueChange" execute="@this" listener="#{houseStepSelect.resetSection}" render="sectionSelectInputs">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:selectOneMenu>
+                                        <a:outputPanel id="sectionSelectInputs" >
+
+                                            <div class="btn-group bootstrap-select edit-select" style="width: 100%;">
+                                                <button type="button" class=" btn dropdown-toggle btn-default"
+                                                        data-toggle="dropdown" aria-expanded="false">
+
+                                                    <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
+                                                                  value="#{(empty houseStepSelect.selectSection) ?  messages.sectionSelect : houseStepSelect.selectSection.name}">
+                                                    </h:outputText>
+                                                    <span class="caret"></span>
+                                                </button>
+
+
+                                                <div class="dropdown-menu select-menu-modal-holder" >
+                                                    <div class="select-menu-modal" >
+                                                        <div class="select-menu-header">
+                                                            <span class="select-menu-title">#{messages.SectionSelect}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                                        </div>
+
+                                                        <a:outputPanel layout="block" id="sectionSelectPanel">
+                                                            <div class="select-menu-filters">
+                                                                <div class="select-menu-text-filter">
+                                                                    <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSelectList.searchKey}">
+                                                                        <a:ajax event="keyup" immediate="true" execute="@this"
+                                                                                render="SectionSelectItemList">
+                                                                            <a:attachQueue requestDelay="500"/>
+                                                                        </a:ajax>
+
+                                                                    </h:inputText>
+                                                                </div>
+                                                            </div>
+                                                            <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+
+
+                                                                <a:repeat value="#{sectionSelectList.resultList}" var="_item">
+
+                                                                    <a:commandLink execute="@this" immediate="true"
+                                                                                   render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs" action="#{houseStepSelect.resetPorject}"
+                                                                                   styleClass="select-menu-item #{(houseStepSelect.selectSectionId eq _item.id) ? 'selected': ''}">
+
+                                                                        <a:param value="#{_item.id}" assignTo="#{houseStepSelect.selectSectionId}"/>
+
+                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                        <span class="select-menu-item-text">#{_item.name}</span>
+                                                                    </a:commandLink>
+                                                                </a:repeat>
+
+
+                                                                <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
+                                                                              oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                                                              render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
+                                                                    <a:attachQueue requestDelay="0"/>
+                                                                </a:jsFunction>
+
+                                                                <a:commandLink onclick="moreResult(); event.stopPropagation(); return false;"
+                                                                               styleClass="select-menu-item last-visible"
+                                                                               rendered="#{sectionSelectList.nextExists}">
+
+
+                                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                    <span class="select-menu-item-text">#{messages.More}</span>
+                                                                </a:commandLink>
+
+                                                            </a:outputPanel>
+
+                                                        </a:outputPanel>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <a:outputPanel id="projectSelectInputs">
+
+                                                <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
+
+
+                                                    <h:selectOneMenu value="#{houseStepSelect.selectProjectId}"
+                                                                     p:data-header="#{messages.projectSelect}"
+                                                                     styleClass="selectpicker edit-select form-control">
+                                                        <s:selectItems value="#{houseStepSelect.selectSection.projectList}"
+                                                                       var="_project" itemValue="#{_project.id}"
+                                                                       label="#{_project.name}"
+                                                                       noSelectionLabel="#{messages.projectSelect}"/>
+
+                                                        <a:ajax event="valueChange" render="buildSelectInput">
+                                                            <a:attachQueue requestDelay="0"/>
+                                                        </a:ajax>
+                                                    </h:selectOneMenu>
+
+
+                                                    <a:outputPanel id="buildSelectInput">
+
+                                                        <h:selectOneMenu rendered="#{not empty houseStepSelect.selectProjectId}"
+                                                                         p:data-header="#{messages.buildSelect}"
+                                                                         styleClass="selectpicker edit-select form-control"
+                                                                         value="#{houseStepSelect.selectBuildId}">
+                                                            <s:selectItems value="#{houseStepSelect.buildList}"
+                                                                           var="_build" itemValue="#{_build.id}"
+                                                                           label="#{_build.name}"
+                                                                           noSelectionLabel="#{messages.buildSelect}"/>
+                                                            <a:ajax event="valueChange">
+                                                                <a:attachQueue requestDelay="0"/>
+                                                            </a:ajax>
+                                                        </h:selectOneMenu>
+                                                    </a:outputPanel>
+
+                                                </a:outputPanel>
+                                            </a:outputPanel>
+
+
+                                        </a:outputPanel>
+
+
+                                    </div>
+
+
+                                    </h:form>
+
+
+
+
+                </div>
+
+
+
+                <div class="mb-layout-bd column2" id="contextPanel" onselectstart="return false;">
+
+                    <a:outputPanel ajaxRendered="true">
+
+
+
+                        <a:outputPanel rendered="#{ownerBuildGridMap.idDefined}">
+
+                            <ui:decorate template="/layout/house/BuildGridMapTemplate.xhtml">
+                                <ui:param name="tdSize" value="50"/>
+                                <ui:param name="gridMap" value="#{ownerBuildGridMap.instance}"/>
+                            </ui:decorate>
+
+                        </a:outputPanel>
+
+                    </a:outputPanel>
+
+                </div>
+
+        </div>
+
+
+        <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+        <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.js"/>
+        <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.js"/>
+        <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datetimepicker.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/locales/bootstrap-datetimepicker.zh-CN.js"/>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="init.js"/>
+        </a:outputPanel>
+
+
+    </h:body>
+
+
+</f:view>
+
+
+</html>
+
+

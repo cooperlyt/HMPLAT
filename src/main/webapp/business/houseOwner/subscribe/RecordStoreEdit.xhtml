@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.houseBusinesses}" var="_houseBusiness">
+        <f:subview>
+        <a:commandLink value="+" action="#{recordStoreSubscribe.addNewStore}" execute="@this" immediate="true"
+                       render="recordList">
+            <a:param value="#{_houseBusiness.id}" assignTo="#{recordStoreSubscribe.selectHouseBusinessId}"/>
+            <a:attachQueue requestDelay="0" />
+        </a:commandLink>
+
+            <a:outputPanel id="recordList">
+        <a:repeat value="#{_houseBusiness.recordStoreList}" var="_store">
+            <h:inputText value="#{_store.houseRecord}" required="true" autocomplete="off"/>
+            <h:inputText value="#{_store.frame}" required="true" autocomplete="off"/>
+            <h:inputText value="#{_store.cabinet}" required="true" autocomplete="off"/>
+            <h:inputText value="#{_store.box}" required="true" autocomplete="off"/>
+
+            <a:commandLink value="-"/>
+
+
+
+            <ui:decorate template="/layout/dropdown-actions.xhtml">
+
+                <ui:define name="caption">
+                        getOld
+                </ui:define>
+                <ui:param name="menuTitle" value="#{messages.TaskOper}"/>
+
+                <a:repeat value="#{recordStoreSubscribe.getExistsStore(_houseBusiness.startBusinessHouse.houseCode)}" var="_oldStore">
+                    <a:commandLink styleClass="select-menu-item" immediate="true" execute="@this" render="recordList" action="#{recordStoreSubscribe.putToExistsStore}">
+                        <a:param value="#{_houseBusiness.id}" assignTo="#{recordStoreSubscribe.selectHouseBusinessId}"/>
+                        <a:param value="#{_store.id}" assignTo="#{recordStoreSubscribe.selectRecordStoreId}"/>
+                        <a:param value="#{_oldStore.id}" assignTo="#{recordStoreSubscribe.oldRecordStoreId}"/>
+                        <a:attachQueue requestDelay="0"/>
+
+                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                        <span class="select-menu-item-text">#{_oldStore.frame}-#{_oldStore.cabinet}-#{_oldStore.box}</span>
+                    </a:commandLink>
+
+                </a:repeat>
+
+
+
+            </ui:decorate>
+
+
+        </a:repeat>
+            </a:outputPanel>
+        </f:subview>
+
+    </a:repeat>
+
+
+
+</ui:composition>

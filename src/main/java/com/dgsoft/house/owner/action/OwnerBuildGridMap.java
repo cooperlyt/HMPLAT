@@ -1,4 +1,4 @@
-package com.dgsoft.house.action;
+package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.BuildGridMap;
@@ -10,4 +10,7 @@ import org.jboss.seam.annotations.Name;
 
 @Name("ownerBuildGridMap")
 public class OwnerBuildGridMap extends HouseEntityHome<BuildGridMap> {
+
+
+
 }

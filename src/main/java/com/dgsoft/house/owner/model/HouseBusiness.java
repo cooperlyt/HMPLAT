@@ -116,6 +116,18 @@ public class HouseBusiness implements java.io.Serializable {
         this.recordStores = recordStores;
     }
 
+    @Transient
+    public List<RecordStore> getRecordStoreList(){
+        List<RecordStore> result = new ArrayList<RecordStore>(getRecordStores());
+        Collections.sort(result, new Comparator<RecordStore>() {
+            @Override
+            public int compare(RecordStore o1, RecordStore o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+        return result;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "HOUSE_OWNER", nullable = true)
     public BusinessHouseOwner getBusinessHouseOwner() {
