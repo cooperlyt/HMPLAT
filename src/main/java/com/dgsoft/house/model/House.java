@@ -121,7 +121,7 @@ public class House implements java.io.Serializable, HouseInfo {
 
     private Date createTime;
     //private Set<GridBlock> gridBlock = new HashSet<GridBlock>(0);
-    private GridBlock gridBlock;
+    private String gridBlockId;
 
 
     public House() {
@@ -150,7 +150,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.northWall = block.getNorthWall();
         this.eastWall = block.getEastWall();
         this.haveDownRoom = block.isHaveDownRoom();
-        this.gridBlock = block;
+        this.gridBlockId = block.getId();
         dataSource = HouseDataSource.MAPPING;
 
         if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
@@ -545,14 +545,14 @@ public class House implements java.io.Serializable, HouseInfo {
 //    }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "GRID_BLOCK_ID", nullable = true)
-    public GridBlock getGridBlock() {
-        return gridBlock;
+    @Column(name = "GRID_BLOCK_ID",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getGridBlockId() {
+        return gridBlockId;
     }
 
-    public void setGridBlock(GridBlock gridBlock) {
-        this.gridBlock = gridBlock;
+    public void setGridBlockId(String gridBlockId) {
+        this.gridBlockId = gridBlockId;
     }
 
 

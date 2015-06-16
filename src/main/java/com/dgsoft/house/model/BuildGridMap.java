@@ -112,6 +112,14 @@ public class BuildGridMap implements java.io.Serializable {
     }
 
     @Transient
+    public List<HouseGridTitle> getHouseGridUnitList(){
+        List<HouseGridTitle> result = getHouseGridTitleList();
+        if (!result.isEmpty())
+            result.remove(0);
+        return result;
+    }
+
+    @Transient
     public List<GridRow> getGridRowList() {
         List<GridRow> result = new ArrayList<GridRow>(getGridRows());
         Collections.sort(result, new Comparator<GridRow>() {
@@ -131,6 +139,14 @@ public class BuildGridMap implements java.io.Serializable {
                 result.add(i);
             }
         }
+        return result;
+    }
+
+    @Transient
+    public List<Integer> getUnitColList() {
+        List<Integer> result = getColList();
+        if (!result.isEmpty())
+            result.remove(0);
         return result;
     }
 

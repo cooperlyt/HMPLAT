@@ -1,6 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.HouseInfo;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -33,7 +34,6 @@ public class GridBlock implements java.io.Serializable {
     private String useType;
     private String structure;
     private String houseType;
-    private Set<House> houses = new HashSet<House>(0);
     private String houseOrder;
 
     private String direction;
@@ -247,33 +247,6 @@ public class GridBlock implements java.io.Serializable {
         this.houseType = houseType;
     }
 
-
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gridBlock", cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
-    public Set<House> getHouses() {
-        return houses;
-    }
-
-    public void setHouses(Set<House> houses) {
-        this.houses = houses;
-    }
-
-    @Transient
-    public House getHouse() {
-        if (getHouses().isEmpty()){
-            return null;
-        }else{
-            return getHouses().iterator().next();
-        }
-    }
-
-    @Transient
-    public void setHouse(House house) {
-        getHouses().clear();
-        getHouses().add(house);
-    }
-
     @Column(name = "HOUSE_ORDER", nullable = true)
     @Size(max = 20)
     public String getHouseOrder() {
@@ -351,5 +324,17 @@ public class GridBlock implements java.io.Serializable {
 
     public void setHaveDownRoom(boolean haveDownRoom) {
         this.haveDownRoom = haveDownRoom;
+    }
+
+
+    @Transient
+    private HouseInfo house;
+    @Transient
+    public HouseInfo getHouse() {
+        return house;
+    }
+    @Transient
+    public void setHouse(HouseInfo house) {
+        this.house = house;
     }
 }

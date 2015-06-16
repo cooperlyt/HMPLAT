@@ -51,14 +51,15 @@
 
 
     <table oncontextmenu="window.event.returnValue = false"
+           class="js_build_grid_map"
            style="width: #{gridMap.colList.size * tdSize}px; border: 0px solid #98bf21;padding: 0px 0px 0px 0px;border-collapse: collapse;border-spacing:1px"
            id="buildGridMap">
-
+        <thead>
         <a:repeat value="#{gridMap.colList}" var="_col">
             <col style="width:#{tdSize}px;height: #{tdSize}px;"></col>
         </a:repeat>
 
-        <tbody>
+
         <tr>
             <a:repeat value="#{gridMap.houseGridTitleList}" var="_unit">
                 <th colspan="#{_unit.colspan}" rowspan="1" style="height: 40px;">
@@ -66,12 +67,14 @@
                 </th>
             </a:repeat>
         </tr>
+      </thead>
+        <tbody>
         <a:repeat value="#{gridMap.gridRowList}" var="_floor">
             <tr style="height: #{tdSize}px">
 
-                <th style="height: #{tdSize}px">
+                <td style="height: #{tdSize}px">
                     #{_floor.title}
-                </th>
+                </td>
 
                 <a:repeat value="#{_floor.gridBlockList}" var="_house">
                     <td colspan="#{_house.colspan}"

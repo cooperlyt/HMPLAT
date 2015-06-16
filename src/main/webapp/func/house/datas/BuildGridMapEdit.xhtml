@@ -464,7 +464,7 @@
 
                         </ui:decorate>
                         <br/>
-                        <h:dataTable style="float: right; width: 400px;"  styleClass="table table-striped table-hover table-floatThead result-data-table" value="#{buildGridMapHome.useTypeTotalList}" var="_entry"
+                        <h:dataTable rendered="#{not empty buildGridMapHome.instance}" style="float: right; width: 400px;"  styleClass="table table-striped table-hover table-floatThead result-data-table" value="#{buildGridMapHome.useTypeTotalList}" var="_entry"
                                      >
                             <h:column >
                                 <f:facet name="header">

@@ -10,8 +10,11 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.jboss.seam.Component;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
@@ -32,13 +35,24 @@ import java.util.*;
  * Time: 3:06 PM
  */
 @Name("buildGridMapHome")
-public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements DropListener {
+@Scope(ScopeType.CONVERSATION)
+public class BuildGridMapHome implements DropListener {
+
 
     @In
     private BuildHome buildHome;
 
     @In
+    private BuildGridMapHome buildGridMapHome;
+
+    private BuildGridMap curBuildGridMap;
+
+    @In
     private FacesMessages facesMessages;
+
+    public BuildGridMap getInstance(){
+        return curBuildGridMap;
+    }
 
     private boolean replaceGridMap;
 
@@ -70,30 +84,28 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     public void nextPage() {
         List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
-        int nowPage = gridMaps.indexOf(getInstance());
+        int nowPage = gridMaps.indexOf(buildGridMapHome.getInstance());
         if (nowPage < gridMaps.size()) {
-            clearInstance();
-            setInstance(gridMaps.get(nowPage + 1));
+            curBuildGridMap = gridMaps.get(nowPage + 1);
         }
     }
 
     public void lastPage() {
         List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
-        clearInstance();
-        setInstance(gridMaps.get(gridMaps.size() - 1));
+
+        curBuildGridMap = gridMaps.get(gridMaps.size() - 1);
     }
 
     public void firstPage() {
-        clearInstance();
-        setInstance(buildHome.getBuildGridPages().get(0));
+        curBuildGridMap = buildHome.getBuildGridPages().get(0);
+
     }
 
     public void previousPage() {
         List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
         int nowPage = gridMaps.indexOf(getInstance());
         if (nowPage >= 1) {
-            clearInstance();
-            setInstance(gridMaps.get(nowPage - 1));
+            curBuildGridMap = gridMaps.get(nowPage - 1);
         }
     }
 
@@ -112,48 +124,56 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
         for (BuildGridMap buildGridMap : buildHome.getBuildGridPages()) {
             if (buildGridMap.getOrder() == gotoPage) {
-                clearInstance();
-                setInstance(buildGridMap);
+                curBuildGridMap = buildGridMap;
                 break;
             }
         }
     }
 
-    private void initIdleHouse() {
-        List<House> result = new ArrayList<House>();
-        for (BuildGridMap gridMap : buildHome.getInstance().getBuildGridMaps()) {
-            for (GridRow gridRow : gridMap.getGridRows()) {
-                for (GridBlock gridBlock : gridRow.getGridBlocks()) {
-                    if (gridBlock.getHouse() != null)
-                        result.add(gridBlock.getHouse());
+
+
+
+    @Create
+    public void create() {
+        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
+
+        List<House> houses = new ArrayList<House>(buildHome.getInstance().getHouses());
+        for (BuildGridMap map: gridMaps){
+
+            for (GridRow row: map.getGridRows()){
+                for (GridBlock block: row.getGridBlocks()){
+                    for(House house: houses){
+                        if ((house.getGridBlockId()) != null && house.getGridBlockId().equals(block.getId())){
+                            block.setHouse(house);
+                            houses.remove(house);
+                            break;
+                        }
+                    }
+
                 }
             }
         }
         idleHouses.clear();
-        idleHouses.addAll(buildHome.getInstance().getHouses());
-        idleHouses.removeAll(result);
-//        idleHouses.clear();
-//        idleHouses.addAll(buildHome.getAllIdleHouse());
-    }
+        idleHouses.addAll(houses);
 
 
-    @Override
-    public void create() {
-        super.create();
-        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
-        if (!isIdDefined() && buildHome.isIdDefined()) {
+        if ((curBuildGridMap == null)) {
             if (!gridMaps.isEmpty()) {
-                setId(gridMaps.get(0).getId());
+                curBuildGridMap = gridMaps.get(0);
             }
-            initIdleHouse();
+
         }
     }
 
     public void deleteToIdle() {
         for (GridRow gridRow : getInstance().getGridRows()) {
             for (GridBlock gridBlock : gridRow.getGridBlocks()) {
-                if (gridBlock.getHouse() != null)
-                    idleHouses.add(gridBlock.getHouse());
+                if (gridBlock.getHouse() != null){
+                    House house = (House)gridBlock.getHouse();
+                    idleHouses.add(house);
+                    house.setGridBlockId(null);
+                }
+
             }
         }
 
@@ -166,8 +186,11 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                 if (gridBlock.getHouse() == null) {
                     for (House house : idleHouses) {
                         if (house.getHouseOrder().equals(gridBlock.getHouseOrder())) {
+
                             gridBlock.setHouse(house);
+                            house.setGridBlockId(gridBlock.getId());
                             idleHouses.remove(house);
+
                             break;
                         }
                     }
@@ -179,8 +202,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     public void templeteFileUploadListener(FileUploadEvent event) throws Exception {
 
-        if (isManaged()) {
-            getEntityManager().remove(getInstance());
+        if (curBuildGridMap != null) {
+            buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+
         }
         SAXReader reader = new SAXReader();
         Document doc = reader.read(event.getUploadedFile().getInputStream());
@@ -195,7 +219,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         } else {
             order = 0;
         }
-        clearInstance();
+        curBuildGridMap = new BuildGridMap();
 
 
         buildHome.getInstance().getBuildGridMaps().add(getInstance());
@@ -302,7 +326,8 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                 if (block.getHouse() == null) {
                     House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), block);
                     block.setHouse(newHouse);
-                    buildHome.getHouses().add(newHouse);
+                    newHouse.setGridBlockId(block.getId());
+                    buildHome.getInstance().getHouses().add(newHouse);
                 }
             }
         }
@@ -326,7 +351,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                 for (GridBlock block : row.getGridBlocks()) {
                     if (block.getId().equals(selectBlockId)) {
                         selectBlock = block;
-                        selectHouse = block.getHouse();
+                        selectHouse = (House)block.getHouse();
                         return;
                     }
                 }
@@ -356,11 +381,10 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         GridBlock block = getSelectBlock();
         if (block != null) {
             if (block.getHouse() != null) {
-                idleHouses.add(block.getHouse());
-                block.getHouse().setGridBlock(null);
+                House house = (House)block.getHouse();
+                idleHouses.add(house);
+                house.setGridBlockId(null);
                 block.setHouse(null);
-
-
             }
         }
     }
@@ -368,7 +392,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
     private boolean deleteHouse(House house) {
         if (isHouseCanEdit()) {
             //house.getGridBlock().clear();
-            buildHome.getHouses().remove(house);
+            buildHome.getInstance().getHouses().remove(house);
             return true;
         }
         facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "HouseCantEdit");
@@ -379,7 +403,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         GridBlock block = getSelectBlock();
         if (block != null) {
             if (block.getHouse() != null) {
-                if (deleteHouse(block.getHouse())) {
+                if (deleteHouse((House)block.getHouse())) {
                     block.setHouse(null);
                 }
             }
@@ -396,25 +420,31 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
 
     @Override
     public void processDrop(DropEvent dropEvent) {
-        log.debug("processDrop");
+
 
         GridBlock targetBlock = (GridBlock) dropEvent.getDropValue();
         if (dropEvent.getDragValue() instanceof GridBlock) {
 
-            House tempHouse = targetBlock.getHouse();
+            House tempHouse = (House)targetBlock.getHouse();
             targetBlock.setHouse(((GridBlock) dropEvent.getDragValue()).getHouse());
             ((GridBlock) dropEvent.getDragValue()).setHouse(tempHouse);
+            tempHouse.setGridBlockId(((GridBlock) dropEvent.getDragValue()).getId());
         } else if (dropEvent.getDragValue() instanceof House) {
             House tempHouse = (House) dropEvent.getDragValue();
             if (targetBlock.getHouse() != null) {
-                idleHouses.add(targetBlock.getHouse());
+                House house = (House)targetBlock.getHouse();
+                idleHouses.add(house);
+                house.setGridBlockId(null);
             }
             targetBlock.setHouse(tempHouse);
+            tempHouse.setGridBlockId(targetBlock.getId());
             idleHouses.remove(tempHouse);
+
         } else {
             House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock);
             targetBlock.setHouse(newHouse);
-            buildHome.getHouses().add(newHouse);
+            newHouse.setGridBlockId(targetBlock.getId());
+            buildHome.getInstance().getHouses().add(newHouse);
         }
     }
 
@@ -484,7 +514,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         List<BuildGridMap> gms = buildHome.getBuildGridPages();
 
         if (gms.isEmpty()) {
-            clearInstance();
+            curBuildGridMap = null;
         } else {
             for (BuildGridMap gm : gms) {
                 gm.setOrder(gms.indexOf(gm) + 1);
@@ -493,8 +523,7 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
                 oldOrder--;
             }
 
-
-            setInstance(gms.get(oldOrder - 1));
+            curBuildGridMap = gms.get(oldOrder - 1);
 
         }
 
@@ -506,12 +535,15 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
             for (GridBlock block : row.getGridBlockList()) {
                 if ((block.getHouse() != null)) {
                     //block.getHouse().getGridBlock().clear();
-                    if (getHouseEditStrategy().isCanEdit(block.getHouse())) {
-                        buildHome.getHouses().remove(block.getHouse());
+                    House house = (House)block.getHouse();
+                    if (getHouseEditStrategy().isCanEdit(house)) {
+                        buildHome.getInstance().getHouses().remove(house);
+
                     } else {
-                        idleHouses.add(block.getHouse());
+                        idleHouses.add(house);
                         facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "HouseCantDeleteMoveToIdle", block.getHouse().getHouseOrder());
                     }
+                    house.setGridBlockId(null);
                     block.setHouse(null);
                 }
             }
@@ -523,8 +555,9 @@ public class BuildGridMapHome extends HouseEntityHome<BuildGridMap> implements D
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() != null) {
-                    block.getHouse().setGridBlock(null);
-                    idleHouses.add(block.getHouse());
+                    House house = (House) block.getHouse();
+                    house.setGridBlockId(null);
+                    idleHouses.add(house);
                     block.setHouse(null);
                 }
             }
