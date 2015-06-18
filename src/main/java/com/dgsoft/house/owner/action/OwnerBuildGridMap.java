@@ -5,6 +5,7 @@ import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseRecord;
+import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
@@ -98,7 +99,9 @@ public class OwnerBuildGridMap {
                 .setParameter("buildCode", getBuildHome().getInstance().getId()).getResultList();
 
         List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.buildCode =:buildCode")
+                .setParameter("buildCode", getBuildHome().getInstance().getId()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
 
+        lockedHouseCode.addAll(inBusinessHouseCode);
         for(BuildGridMap map: buildGridMaps){
             for(GridRow row: map.getGridRows()){
                 for(GridBlock block: row.getGridBlocks()){
