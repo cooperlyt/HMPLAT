@@ -19,11 +19,12 @@ public class HouseStepSelect {
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
 
+    @In(required = false)
+    private BuildHome buildHome;
+
     private Section selectSection;
 
     private String selectProjectId;
-
-    private String selectBuildId;
 
     private boolean dataTableList;
 
@@ -54,13 +55,6 @@ public class HouseStepSelect {
         this.selectProjectId = selectProjectId;
     }
 
-    public String getSelectBuildId() {
-        return selectBuildId;
-    }
-
-    public void setSelectBuildId(String selectBuildId) {
-        this.selectBuildId = selectBuildId;
-    }
 
     public boolean isDataTableList() {
         return dataTableList;
@@ -79,20 +73,14 @@ public class HouseStepSelect {
 
     public void resetPorject(){
         selectProjectId = null;
-        resetBuild();
-    }
-
-    public void resetBuild(){
-
+        if (buildHome != null){
+            buildHome.clearInstance();
+        }
     }
 
 
     public List<Build> getBuildList(){
        return houseEntityLoader.getEntityManager().createQuery("select build from Build build where build.project.id = :projectId order by build.buildNo ").setParameter("projectId", getSelectProjectId()).getResultList();
-    }
-
-    public List<BuildGridMap> getBuildGridMaps(){
-        return houseEntityLoader.getEntityManager().createQuery("select buildGridMap from BuildGridMap buildGridMap where buildGridMap.build.id = :buildId order by buildGridMap.order").setParameter("buildId",getSelectBuildId()).getResultList();
     }
 
 

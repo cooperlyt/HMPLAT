@@ -12,18 +12,16 @@ import java.util.List;
  * Created by cooper on 10/11/14.
  */
 public interface HouseInfo extends BuildInfo {
-    //-- 不可售 CANTSALE 签约 CONTRACTS 备案 CONTRACTS_RECORD
-    // 初始，已办产权，商品房预告登记，
+    //-- 不可售 CANTSALE 签约 CONTRACTS
+    // 备案，已办产权，商品房预告登记，
     // 房屋转移预告登记，商品房预告抵押，屋屋转移预告抵押,
     // 抵押,在建工程抵押,异议,声明作废，查封,灭籍
+    // 确权,初始登记
     public enum HouseStatus{
-        HOUSE_INIT,OWNERED,SALE_REGISTER,
+        CONTRACTS_RECORD,OWNERED,SALE_REGISTER,
         DIVERT_REGISTER,SALE_MORTGAGE_REGISTER,DIVERT_MORTGAGE_REGISTER,
-        PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTORY;
-    }
-
-    public enum InitRegStatus{
-        NOT_INIT_REG,INIT_REG_CONFIRM,INIT_REG
+        PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTROY,
+        INIT_REG_CONFIRM,INIT_REG
     }
 
     public class StatusComparator implements Comparator<HouseStatus>{

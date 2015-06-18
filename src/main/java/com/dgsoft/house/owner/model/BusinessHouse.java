@@ -35,7 +35,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private HouseStatus masterStatus;
     private String houseType;
     private String useType;
     private String structure;
@@ -47,7 +46,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String northWall;
     private Date mapTime;
     private String direction;
-    private InitRegStatus initRegStatus;
     private String houseCode;
 
     private boolean haveDownRoom;
@@ -86,8 +84,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public BusinessHouse(HouseInfo houseInfo) {
 
-        this.masterStatus = HouseStatus.HOUSE_INIT;
-        this.initRegStatus = InitRegStatus.NOT_INIT_REG;
 
         this.houseOrder = houseInfo.getHouseOrder();
         this.houseUnitName = houseInfo.getHouseUnitName();
@@ -239,16 +235,12 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.commParam = commParam;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "HOUSE_STATUS", nullable = false,length = 32)
-    @NotNull
+    @Transient
     public HouseStatus getMasterStatus() {
-        return masterStatus;
+        //TODO return status
+        return null;
     }
 
-    public void setMasterStatus(HouseStatus masterStatus) {
-        this.masterStatus = masterStatus;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "REG_INFO",nullable = true)
@@ -401,17 +393,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setDirection(String direction) {
         this.direction = direction;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "INIT_REG_STATUS",nullable = false,length = 20)
-    @NotNull
-    public InitRegStatus getInitRegStatus() {
-        return initRegStatus;
-    }
-
-    public void setInitRegStatus(InitRegStatus initRegStatus) {
-        this.initRegStatus = initRegStatus;
     }
 
     @Column(name = "HOUSE_CODE", nullable = false, length = 32)

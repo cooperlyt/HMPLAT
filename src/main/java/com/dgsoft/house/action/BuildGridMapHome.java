@@ -47,6 +47,8 @@ public class BuildGridMapHome implements DropListener {
 
     private BuildGridMap curBuildGridMap;
 
+    private List<BuildGridMap> gridMaps;
+
     @In
     private FacesMessages facesMessages;
 
@@ -74,6 +76,12 @@ public class BuildGridMapHome implements DropListener {
     }
 
 
+
+
+    public List<BuildGridMap> getBuildGridPages() {
+        return gridMaps;
+    }
+
     public boolean isReplaceGridMap() {
         return replaceGridMap;
     }
@@ -83,7 +91,6 @@ public class BuildGridMapHome implements DropListener {
     }
 
     public void nextPage() {
-        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
         int nowPage = gridMaps.indexOf(buildGridMapHome.getInstance());
         if (nowPage < gridMaps.size()) {
             curBuildGridMap = gridMaps.get(nowPage + 1);
@@ -91,18 +98,16 @@ public class BuildGridMapHome implements DropListener {
     }
 
     public void lastPage() {
-        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
 
         curBuildGridMap = gridMaps.get(gridMaps.size() - 1);
     }
 
     public void firstPage() {
-        curBuildGridMap = buildHome.getBuildGridPages().get(0);
+        curBuildGridMap = getBuildGridPages().get(0);
 
     }
 
     public void previousPage() {
-        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
         int nowPage = gridMaps.indexOf(getInstance());
         if (nowPage >= 1) {
             curBuildGridMap = gridMaps.get(nowPage - 1);
@@ -122,7 +127,7 @@ public class BuildGridMapHome implements DropListener {
 
     public void toPage() {
 
-        for (BuildGridMap buildGridMap : buildHome.getBuildGridPages()) {
+        for (BuildGridMap buildGridMap : getBuildGridPages()) {
             if (buildGridMap.getOrder() == gotoPage) {
                 curBuildGridMap = buildGridMap;
                 break;
@@ -135,7 +140,14 @@ public class BuildGridMapHome implements DropListener {
 
     @Create
     public void create() {
-        List<BuildGridMap> gridMaps = buildHome.getBuildGridPages();
+        gridMaps = new ArrayList<BuildGridMap>(buildHome.getInstance().getBuildGridMaps()) ;
+
+        Collections.sort(gridMaps, new Comparator<BuildGridMap>() {
+            @Override
+            public int compare(BuildGridMap o1, BuildGridMap o2) {
+                return (new Integer(o1.getOrder())).compareTo(o2.getOrder());
+            }
+        });
 
         List<House> houses = new ArrayList<House>(buildHome.getInstance().getHouses());
         for (BuildGridMap map: gridMaps){
@@ -226,7 +238,7 @@ public class BuildGridMapHome implements DropListener {
         getInstance().setBuild(buildHome.getInstance());
         if (!replaceGridMap) {
 
-            for (BuildGridMap gridMap : buildHome.getBuildGridPages()) {
+            for (BuildGridMap gridMap : getBuildGridPages()) {
                 if (gridMap.getOrder() > order) {
                     order = gridMap.getOrder();
                 }
@@ -511,7 +523,7 @@ public class BuildGridMapHome implements DropListener {
     private void removeThisPage() {
         int oldOrder = getInstance().getOrder();
         buildHome.getInstance().getBuildGridMaps().remove(getInstance());
-        List<BuildGridMap> gms = buildHome.getBuildGridPages();
+        List<BuildGridMap> gms = getBuildGridPages();
 
         if (gms.isEmpty()) {
             curBuildGridMap = null;

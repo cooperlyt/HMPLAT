@@ -244,19 +244,21 @@
         <div class="container-fluid default-main">
 
 
-                <div style="display: inline-block; padding: 2px;width: 100%; height: 100%;" id="contextPanel" onselectstart="return false;">
+                <div style="display: inline-block; padding: 2px;width: 100%; height: 100%;" id="contextPanel"> <!-- onselectstart="return false;" -->
 
                     <a:outputPanel layout="block" style="height: 100%;width: 100%; " ajaxRendered="true">
+
+                        <a:outputPanel rendered="#{buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
                         <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd; border-right: 2px solid #ddd"/>
 
                         <div class="grid-map map-thead map-col-thead">
-                            <table class="map-col-thead-table" width="#{ownerBuildGridMap.instance.unitColList.size * 70}px ">
-                                <a:repeat value="#{ownerBuildGridMap.instance.unitColList}" var="_col">
+                            <table class="map-col-thead-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px ">
+                                <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
                                     <col/>
                                 </a:repeat>
                                 <tr>
-                                <a:repeat value="#{ownerBuildGridMap.instance.houseGridUnitList}" var="_unit">
+                                <a:repeat value="#{ownerBuildGridMap.curMap.houseGridUnitList}" var="_unit">
                                     <th colspan="#{_unit.colspan}">
                                         #{_unit.title}
                                     </th>
@@ -267,7 +269,7 @@
 
                         <div class="grid-map map-thead map-row-thead" >
                             <table class="map-row-thead-table" >
-                                <a:repeat value="#{ownerBuildGridMap.instance.gridRowList}" var="_floor">
+                                <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
                                     <tr>
 
                                         <th>
@@ -281,21 +283,38 @@
                         </div>
 
                         <div class="grid-map map-context">
-                            <table class="map-context-table" width="#{ownerBuildGridMap.instance.unitColList.size * 70}px">
+                            <table class="map-context-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px">
                                 <thead>
-                                <a:repeat value="#{ownerBuildGridMap.instance.unitColList}" var="_col">
+                                <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
                                     <col/>
                                 </a:repeat>
                                 </thead>
                                 <tbody>
 
-                                <a:repeat value="#{ownerBuildGridMap.instance.gridRowList}" var="_floor">
+                                <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
                                     <tr>
-                                        <a:repeat value="#{_floor.gridBlockList}" var="_house">
-                                            <td colspan="#{_house.colspan}"
-                                                rowspan="#{_house.rowspan}"
-                                                style="height: #{_house.rowspan * 70}px;">
-                                                a
+                                        <a:repeat value="#{_floor.gridBlockList}" var="_cell">
+                                            <td colspan="#{_cell.colspan}"
+                                                rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
+                                                <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}">
+                                                    <div class="#{_cell.house.masterStatus}">
+                                                        <div class="house-info-context">
+                                                        <ul >
+                                                            <li><h2>#{_cell.house.houseOrder}  </h2></li>
+                                                            <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
+                                                            <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.name}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="house-status" >
+                                                            <a:outputPanel styleClass="label" rendered="#{not empty _cell.house.masterStatus}">
+                                                            #{messages[_cell.house.masterStatus.name()]}
+                                                            </a:outputPanel>
+                                                       </div>
+                                                    </div>
+
+
+                                                </a:outputPanel>
+
                                             </td>
                                         </a:repeat>
                                     </tr>
@@ -317,8 +336,30 @@
                         </h:outputScript>
 
                         <h:outputStylesheet>
+
+                            /*,OWNERED,SALE_REGISTER,
+                            DIVERT_REGISTER,SALE_MORTGAGE_REGISTER,DIVERT_MORTGAGE_REGISTER,
+                            PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTORY;*/
+
+                            .house-info .house-status{
+                                float: right;
+                                min-height: 17px;
+                                max-height: 17px;
+                                height: 17px;
+                            }
+
+                            .house-info .OWNERED h2{
+                                color: #5cb85c;
+
+                            }
+
+                            .house-info .OWNERED .label{
+                                background-color: #5cb85c;
+                            }
+
+
                             .map-thead{
-                                position: absolute;  overflow: hidden
+                                position: absolute;  overflow: hidden;
                             }
 
 
@@ -334,7 +375,7 @@
                             .map-row-thead th{
                                 border-left: 0;
                                 border-right: 2px solid #ddd;
-                                height: 70px;
+                                height: 90px;
                                 width: 49px;
                             }
 
@@ -343,7 +384,7 @@
                                 border-bottom: 2px solid #ddd;
 
                                 height: 49px;
-                                width: 70px;
+                                width: 90px;
                             }
 
                             .grid-map table{
@@ -351,23 +392,53 @@
                             }
 
                             .grid-map col{
-                                width: 70px;
+                                width: 90px;
                             }
 
                             .grid-map td,th{
                                 border: 1px solid #ddd;
                                 vertical-align: middle;
                                 text-align: center;
+                                white-space:nowrap;
+                                overflow:hidden;text-overflow:ellipsis;
                             }
 
+                            .map-context-table td{
+                                padding: 2px;
 
+                            }
 
                             .map-context{
                                 position: absolute; top:100px; left: 221px;bottom: 0; right: 0;overflow: auto
                             }
 
-                        </h:outputStylesheet>
+                            .house-info-context{
+                                min-height: 63px;
+                                max-height: 63px;
+                                height: 63px;
+                            }
 
+
+                            .house-info ul{
+                                list-style: none;
+                            }
+
+                            .house-info li{
+                                min-height: 20px;
+                                white-space:nowrap;
+
+                            }
+
+                            .house-info li h2{
+                                margin: 3px 0;
+                                font-size: 19px;
+                                color: #337ab7;
+                            }
+
+
+
+                        </h:outputStylesheet>
+                        </a:outputPanel>
                     </a:outputPanel>
 
 
@@ -392,12 +463,12 @@
                     <div style="position: absolute; top: 0; bottom: 0; width: 157px; padding: 205px 0 0 0;">
 
                         <div style="height: 100% ;overflow-x: auto">
-                            <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{not empty houseStepSelect.selectBuildId}">
-                                <a:repeat value="#{houseStepSelect.buildGridMaps}" var="_gridMap">
+                            <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{buildHome.idDefined}">
+                                <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
 
 
                                     <a:commandLink styleClass="list-group-item #{(not houseStepSelect.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
-                                        #{_gridMap.name}
+                                        #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{_gridMap.id}" assignTo="#{ownerBuildGridMap.id}"/>
                                     </a:commandLink>
@@ -515,7 +586,7 @@
                                                    label="#{_project.name}"
                                                    noSelectionLabel="#{messages.projectSelect}"/>
 
-                                    <a:ajax event="valueChange" render="buildSelectInput">
+                                    <a:ajax event="valueChange" render="buildSelectInput" listener="#{buildHome.clearInstance}">
                                         <a:attachQueue requestDelay="0"/>
                                     </a:ajax>
                                 </h:selectOneMenu>
@@ -526,12 +597,12 @@
                                     <h:selectOneMenu rendered="#{not empty houseStepSelect.selectProjectId}"
                                                      p:data-header="#{messages.buildSelect}"
                                                      styleClass="selectpicker edit-select form-control"
-                                                     value="#{houseStepSelect.selectBuildId}">
+                                                     value="#{buildHome.id}">
                                         <s:selectItems value="#{houseStepSelect.buildList}"
                                                        var="_build" itemValue="#{_build.id}"
-                                                       label="#{_build.name}"
+                                                       label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.devBuildNumber}#{(empty _build.devBuildNumber) ? '' : messages.BuildBuildNameSuffix}"
                                                        noSelectionLabel="#{messages.buildSelect}"/>
-                                        <a:ajax event="valueChange">
+                                        <a:ajax event="valueChange" listener="#{ownerBuildGridMap.init}">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:ajax>
                                     </h:selectOneMenu>

@@ -48,9 +48,10 @@ public class GridBlock implements java.io.Serializable {
     public GridBlock() {
     }
 
-    public GridBlock(House house, int colspan, int rowspan) {
+    public GridBlock(HouseInfo house, int colspan, int rowspan, boolean locked) {
         this.colspan = colspan;
         this.rowspan = rowspan;
+        setLocked(locked);
         setHouse(house);
     }
 
@@ -336,5 +337,17 @@ public class GridBlock implements java.io.Serializable {
     @Transient
     public void setHouse(HouseInfo house) {
         this.house = house;
+    }
+
+    @Transient
+    private boolean locked = false;
+
+    @Transient
+    public boolean isLocked() {
+        return locked;
+    }
+    @Transient
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

@@ -8,6 +8,8 @@ import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.*;
+import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseRecord;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
@@ -172,22 +174,6 @@ public class BuildHome extends HouseEntityHome<Build> {
         return true;
     }
 
-
-    public List<BuildGridMap> getBuildGridPages() {
-        List<BuildGridMap> result = new ArrayList<BuildGridMap>(getInstance().getBuildGridMaps());
-        Collections.sort(result, new Comparator<BuildGridMap>() {
-            @Override
-            public int compare(BuildGridMap o1, BuildGridMap o2) {
-                return (new Integer(o1.getOrder())).compareTo(o2.getOrder());
-            }
-        });
-        return result;
-    }
-
-    public boolean isHaveIdleHouse(){
-        return getEntityManager().createQuery("select count(house.id) from House house where house.build.id=:buildId and house.gridBlockId = null ", Long.class)
-                .setParameter("buildId", getId()).getSingleResult().compareTo(new Long(0)) > 0;
-    }
 
 //    private List<House> idleHouse;
 //
@@ -419,5 +405,106 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     }
 
+    public static BuildGridMap genIdleHouseGridMap(Collection<? extends HouseInfo> houseInfos, Collection<String> lockedHouseCode) {
+        BuildGridMap result = new BuildGridMap();
+
+
+        Map<String, HouseGridTitle> titleMap = new HashMap<String, HouseGridTitle>();
+
+        Map<String, Map<String, List<GridBlock>>> floorHouse = new HashMap<String, Map<String, List<GridBlock>>>();
+        for (HouseInfo house : houseInfos) {
+
+            Map<String, List<GridBlock>> unitHouses = floorHouse.get(house.getInFloorName().trim());
+            if (unitHouses == null) {
+                unitHouses = new HashMap<String, List<GridBlock>>();
+                floorHouse.put(house.getInFloorName().trim(), unitHouses);
+            }
+
+            String unitName = (house.getHouseUnitName() == null) ? "" : house.getHouseUnitName().trim();
+            List<GridBlock> blockHouses = unitHouses.get(unitName);
+            HouseGridTitle title = titleMap.get(unitName);
+            if (blockHouses == null) {
+                blockHouses = new ArrayList<GridBlock>();
+                unitHouses.put(unitName, blockHouses);
+            }
+            blockHouses.add(new GridBlock(house, 1, 1,lockedHouseCode.contains(house.getHouseCode())));
+            if (title == null) {
+                title = new HouseGridTitle(result, 0, unitName);
+                titleMap.put(unitName, title);
+                result.getHouseGridTitles().add(title);
+            }
+        }
+
+
+        for (Map.Entry<String, Map<String, List<GridBlock>>> floorEntry : floorHouse.entrySet()) {
+            for (Map.Entry<String, List<GridBlock>> unitEntry : floorEntry.getValue().entrySet()) {
+                int houseCount = unitEntry.getValue().size();
+                HouseGridTitle title = titleMap.get(unitEntry.getKey());
+                if (title.getColspan() < houseCount) {
+                    title.setColspan(houseCount);
+                }
+            }
+        }
+
+
+        for (Map.Entry<String, Map<String, List<GridBlock>>> floorEntry : floorHouse.entrySet()) {
+            Integer index = DataFormat.strToInt(floorEntry.getKey());
+            GridRow row = new GridRow(result, floorEntry.getKey(), (index == null) ? -999 : index);
+            result.getGridRows().add(row);
+
+            List<GridBlock> blockList = new ArrayList<GridBlock>();
+            for (Map.Entry<String, List<GridBlock>> unitEntry : floorEntry.getValue().entrySet()) {
+
+                Collections.sort(unitEntry.getValue(), new Comparator<GridBlock>() {
+                    @Override
+                    public int compare(GridBlock o1, GridBlock o2) {
+                        return HouseInfo.OrderComparator.getInstance().compare(o1.getHouse().getHouseOrder(), o2.getHouse().getHouseOrder());
+                    }
+                });
+
+                blockList.addAll(unitEntry.getValue());
+
+                int colspan = titleMap.get(unitEntry.getKey()).getColspan();
+                if (unitEntry.getValue().size() < colspan) {
+                    for (int i = unitEntry.getValue().size() + 1; i <= colspan; i++) {
+                        blockList.add(new GridBlock(1, 1));
+                    }
+                }
+            }
+
+            for (GridBlock block : blockList) {
+                block.setOrder(blockList.indexOf(block));
+            }
+            row.getGridBlocks().addAll(blockList);
+        }
+
+
+        List<HouseGridTitle> titles = new ArrayList<HouseGridTitle>(result.getHouseGridTitles());
+        Collections.sort(titles, new Comparator<HouseGridTitle>() {
+            @Override
+            public int compare(HouseGridTitle o1, HouseGridTitle o2) {
+                return HouseInfo.OrderComparator.getInstance().compare(o1.getTitle(), o2.getTitle());
+            }
+        });
+        result.getHouseGridTitles().add(new HouseGridTitle(result, 0, "", 1));
+
+        for (HouseGridTitle title : titles) {
+            title.setOrder(titles.indexOf(title) + 1);
+        }
+
+
+        List<GridRow> rows = new ArrayList<GridRow>(result.getGridRows());
+        Collections.sort(rows, new Comparator<GridRow>() {
+            @Override
+            public int compare(GridRow o1, GridRow o2) {
+                return new Integer(o2.getFloorIndex()).compareTo(o1.getFloorIndex());
+            }
+        });
+
+        for (GridRow row : rows) {
+            row.setOrder(rows.indexOf(row));
+        }
+        return result;
+    }
 
 }

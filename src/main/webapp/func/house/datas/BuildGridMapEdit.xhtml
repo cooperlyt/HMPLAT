@@ -64,7 +64,7 @@
                                         immediate="true" execute="@this"
                                         oncomplete="#{r:component('updateFilePopup')}.show();">
                                     <span class="icon-folder-open icon-large"/>
-                                    #{(empty buildHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}
+                                    #{(empty buildGridMapHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}
                                     <a:attachQueue requestDelay="0"/>
                                     <a:param value="#{false}" assignTo="#{buildGridMapHome.replaceGridMap}"/>
                                 </a:commandLink>
@@ -113,7 +113,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-expanded="false">#{buildGridMapHome.instance.order} . #{buildGridMapHome.instance.name} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <a:repeat value="#{buildHome.buildGridPages}" var="_page">
+                                    <a:repeat value="#{buildGridMapHome.buildGridPages}" var="_page">
                                         <li role="presentation" class="#{(_page.order eq buildGridMapHome.instance.order) ? 'disabled' : ''}">
                                             <a:commandLink  p:role="menuitem" p:tabindex="-1" immediate="true" execute="@this" status="processWaiting"
                                                            render="grid_map,toolbar" action="#{buildGridMapHome.toPage}">
