@@ -20,6 +20,14 @@ public class UIEntryColumn extends UIPanel {
         getStateHelper().put("colspan",colspan);
     }
 
+    public String getExpandTarget(){
+        return (String) getStateHelper().eval("expandTarget","");
+    }
+
+    public void setExpandTarget(String target){
+        getStateHelper().put("expandTarget", target);
+    }
+
     @Override
     public String getFamily() {
         return "com.dgsoft.faces.EntryGrid";

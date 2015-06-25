@@ -15,8 +15,6 @@ public interface ProjectInfo extends SectionInfo {
 
     public String getProjectCode();
 
-    public Date getCompleteDate();
-
     public String getBuildSize();
 
 

@@ -49,8 +49,8 @@ public class House implements java.io.Serializable, HouseInfo {
 
     @Override
     @Transient
-    public Date getCompleteDate() {
-        return getBuild().getCompleteDate();
+    public String getCompleteYear() {
+        return getBuild().getCompleteYear();
     }
 
     @Override
@@ -401,12 +401,19 @@ public class House implements java.io.Serializable, HouseInfo {
         return getBuild().getBuildType();
     }
 
+    @Override
+    @Transient
+    public String getBuildDevNumber() {
+        return getBuild().getBuildDevNumber();
+    }
+
     @Column(name = "STRUCTURE", length = 32, nullable = false)
     @Size(max = 32)
     @NotNull
     public String getStructure() {
         return this.structure;
     }
+
 
     public void setStructure(String structure) {
         this.structure = structure;

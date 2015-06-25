@@ -50,6 +50,10 @@ public class EntryGridBlockRender extends Renderer {
 
         writer.startElement("tr", component);
 
+        if ((blockComponent.getExpandId() != null) && ! blockComponent.getExpandId().trim().equals("")){
+            writer.writeAttribute("class","expand-details-tr js-expand-tr-" + blockComponent.getExpandId(),null);
+        }
+
         boolean haveGroup = (blockComponent.getGroup() != null) && !"".equals(blockComponent.getGroup().trim());
 
         if (haveGroup) {
@@ -93,6 +97,9 @@ public class EntryGridBlockRender extends Renderer {
             if (count == 0) {
                 if (i > 0) {
                     writer.startElement("tr", component);
+                    if ((blockComponent.getExpandId() != null) && ! blockComponent.getExpandId().trim().equals("")){
+                        writer.writeAttribute("class","expand-details-tr js-expand-tr-" + blockComponent.getExpandId(),null);
+                    }
                 }
 
                 if (childCount < 2){
@@ -104,7 +111,10 @@ public class EntryGridBlockRender extends Renderer {
 
             int colspan = 1;
             if (child instanceof UIEntryColumn) {
+                UIEntryColumn entryColumn = (UIEntryColumn) child;
                 colspan = ((UIEntryColumn) child).getColspan();
+
+
             }
 
 
@@ -123,6 +133,27 @@ public class EntryGridBlockRender extends Renderer {
             }
 
             writer.startElement(elem, component);
+
+            if ((child instanceof UIEntryColumn) &&
+                    (((UIEntryColumn) child).getExpandTarget() != null) &&
+                    !((UIEntryColumn) child).getExpandTarget().trim().equals("")) {
+                writer.writeAttribute("class","details-expand-handle js-expand-handle-" +
+                        ((UIEntryColumn) child).getExpandTarget().trim(),null);
+                writer.writeAttribute("onclick","if (!$(this).hasClass('expanded')){ $('.js-expand-tr-"
+                        + ((UIEntryColumn) child).getExpandTarget().trim() +"').show(); $(this).addClass('expanded'); } else { $('.js-expand-tr-"
+                        + ((UIEntryColumn) child).getExpandTarget().trim() +
+                        "').hide(); $(this).removeClass('expanded'); } ;return false;",null);
+            }
+
+            /*
+
+            if ($(this).hasClass("hide")){
+                $(.js-expand-tr-).show();
+            }else{
+                $(.js-expand-tr-).hide();
+            }
+
+             */
 
             if (colspan > 1) {
                 writer.writeAttribute("colspan", colspan, null);

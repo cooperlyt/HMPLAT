@@ -63,7 +63,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String projectCode;
     private String projectName;
     private String buildSize;
-    private Date completeDate;
+    private String completeDate;
     private String developerCode;
     private String developerName;
     private String sectionCode;
@@ -76,6 +76,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private BusinessHouseOwner businessHouseOwner;
     private Set<CardInfo> otherPowerCards = new HashSet<CardInfo>(0);
     private HouseRegInfo houseRegInfo;
+    private String buildDevNumber;
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
@@ -123,7 +124,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.projectCode = houseInfo.getProjectCode();
         this.projectName = houseInfo.getProjectName();
         this.buildSize = houseInfo.getBuildSize();
-        this.completeDate = houseInfo.getCompleteDate();
+        this.completeDate = houseInfo.getCompleteYear();
+        this.buildDevNumber = houseInfo.getBuildDevNumber();
         this.developerCode = houseInfo.getDeveloperCode();
         this.developerName = houseInfo.getDeveloperName();
         this.sectionCode = houseInfo.getSectionCode();
@@ -561,13 +563,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.buildSize = buildSize;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "COMPLETE_DATE", length = 19)
-    public Date getCompleteDate() {
+
+    @Override
+    @Column(name = "COMPLETE_DATE", length = 6)
+    @Size(max = 6)
+    public String getCompleteYear() {
         return this.completeDate;
     }
 
-    public void setCompleteDate(Date completeDate) {
+    public void setCompleteYear(String completeDate) {
         this.completeDate = completeDate;
     }
 
@@ -635,6 +639,17 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.districtName = districtName;
     }
 
+    @Override
+    @Column(name="BUILD_DEVELOPER_NUMBER",nullable = true,length = 20)
+    @Size(max = 20)
+    public String getBuildDevNumber() {
+        return buildDevNumber;
+    }
+
+    public void setBuildDevNumber(String buildDevNumber) {
+        this.buildDevNumber = buildDevNumber;
+    }
+
     @Transient
     public HouseBusiness getLasterHouseBusiness() {
         if (getHousesForAfterBusiness().isEmpty()){
@@ -693,7 +708,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessHouseOwner = businessHouseOwner;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = OtherPowerCard.class,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
     public Set<CardInfo> getOtherPowerCards() {
         return otherPowerCards;

@@ -59,10 +59,10 @@ public class BuildHome extends HouseEntityHome<Build> {
 
 
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
-                "where build.project.id = :projectId and build.devBuildNumber <> null and " +
-                "build.devBuildNumber = :devBuildNumber and build.id <> :buildId", Long.class)
+                "where build.project.id = :projectId and build.buildDevNumber <> null and " +
+                "build.buildDevNumber = :devBuildNumber and build.id <> :buildId", Long.class)
                 .setParameter("projectId", getInstance().getProject().getId())
-                .setParameter("devBuildNumber", getInstance().getDevBuildNumber())
+                .setParameter("devBuildNumber", getInstance().getBuildDevNumber())
                 .setParameter("buildId", getInstance().getId()).getSingleResult() > 0) {
             addBuildPBConflictMessages();
             return false;
@@ -92,10 +92,10 @@ public class BuildHome extends HouseEntityHome<Build> {
     protected boolean verifyPersistAvailable() {
 
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
-                "where build.project.id = :projectId and build.devBuildNumber <> null and " +
-                "build.devBuildNumber = :devBuildNumber", Long.class)
+                "where build.project.id = :projectId and build.buildDevNumber <> null and " +
+                "build.buildDevNumber = :devBuildNumber", Long.class)
                 .setParameter("projectId", projectHome.getInstance().getId())
-                .setParameter("devBuildNumber", getInstance().getDevBuildNumber())
+                .setParameter("devBuildNumber", getInstance().getBuildDevNumber())
                 .getSingleResult() > 0) {
             addBuildPBConflictMessages();
             return false;
@@ -139,8 +139,8 @@ public class BuildHome extends HouseEntityHome<Build> {
             result += getInstance().getBuildNo() + messages.get("MapIdentification_build");
         }
 
-        if (getInstance().getDevBuildNumber() != null) {
-            result += getInstance().getDevBuildNumber() + messages.get("BuildBuildNameSuffix");
+        if (getInstance().getBuildDevNumber() != null) {
+            result += getInstance().getBuildDevNumber() + messages.get("BuildBuildNameSuffix");
         }
 
         getInstance().setName(result);

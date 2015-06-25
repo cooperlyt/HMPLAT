@@ -126,7 +126,7 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     @Override
     protected Project createInstance() {
-        return new Project(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), Project.ProjectState.BUILDING, new Date());
+        return new Project(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), new Date());
     }
 
 

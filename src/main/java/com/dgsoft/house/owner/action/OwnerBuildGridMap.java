@@ -12,6 +12,7 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Logging;
 
 import java.util.*;
 
@@ -37,6 +38,42 @@ public class OwnerBuildGridMap {
     private BuildGridMap curMap;
 
     private List<BuildGridMap> buildGridMaps;
+
+    private BusinessHouse selectBizHouse;
+
+    public BusinessHouse getSelectBizHouse() {
+        return selectBizHouse;
+    }
+
+    public void setSelectBizHouse(BusinessHouse selectBizHouse) {
+        this.selectBizHouse = selectBizHouse;
+    }
+
+    public String getSelectBizHouseId(){
+        if (selectBizHouse == null){
+            return null;
+        }
+        return selectBizHouse.getId();
+    }
+
+    public void setSelectBizHouseId(String id){
+        if ((id == null) || id.trim().equals("")){
+            selectBizHouse = null;
+        }
+
+            for (GridRow row: curMap.getGridRows()){
+                for (GridBlock block: row.getGridBlocks()){
+
+                    if ( (block.getHouse() != null) && block.getHouse().getHouseCode().equals(id)){
+                        selectBizHouse = (BusinessHouse) block.getHouse();
+                        return;
+                    }
+                }
+            }
+
+        Logging.getLog(getClass()).warn("houseCode not found in map");
+        selectBizHouse = null;
+    }
 
     public void setId(String buildId){
         if ((buildId == null) || buildId.trim().equals("")){

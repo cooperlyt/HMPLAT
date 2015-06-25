@@ -47,9 +47,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         return getSection().getSectionCode();
     }
 
-    public enum ProjectState {
-        BUILDING, SALE, LOCKED;
-    }
 
     private String id;
     private Integer version;
@@ -61,11 +58,10 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     private Integer buildCount;
     private BigDecimal area;
     private BigDecimal sumArea;
-    private ProjectState state;
     private String memo;
     private Date mapTime;
     private Date createTime;
-    private Date completeDate;
+
 
     private Set<Build> builds = new HashSet<Build>(0);
     private Set<ProjectBuildProcess> projectBuildProcesses = new HashSet<ProjectBuildProcess>(0);
@@ -79,16 +75,15 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         this.developer = developer;
     }
 
-    public Project(Section section,String id, ProjectState state, Date createTime) {
-        this.state = state;
+    public Project(Section section,String id, Date createTime) {
+
         this.section = section;
         this.createTime = createTime;
         this.id = id;
         this.address = section.getAddress();
     }
 
-    public Project(String id, ProjectState state, Date createTime) {
-        this.state = state;
+    public Project(String id, Date createTime) {
         this.createTime = createTime;
         this.id = id;
     }
@@ -196,18 +191,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         this.sumArea = sumArea;
     }
 
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATE", nullable = false)
-    @NotNull
-    public ProjectState getState() {
-        return this.state;
-    }
-
-    public void setState(ProjectState state) {
-        this.state = state;
-    }
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_TIME",nullable = false)
     @NotNull
@@ -283,15 +266,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         return getId();
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "COMPLETE_DATE",nullable = true)
-    public Date getCompleteDate() {
-        return completeDate;
-    }
-
-    public void setCompleteDate(Date completeDate) {
-        this.completeDate = completeDate;
-    }
 
     @Transient
     public List<Build> getBuildList() {
@@ -299,12 +273,12 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         Collections.sort(result, new Comparator<Build>() {
             @Override
             public int compare(Build o1, Build o2) {
-                if ((o1.getDevBuildNumber() == null) && (o2.getDevBuildNumber() == null)){
+                if ((o1.getBuildDevNumber() == null) && (o2.getBuildDevNumber() == null)){
                     return o1.getBuildNo().compareTo(o2.getBuildNo());
-                } else if ((o1.getDevBuildNumber() != null) && (o2.getDevBuildNumber() != null)){
-                    return o1.getDevBuildNumber().compareTo(o2.getDevBuildNumber());
+                } else if ((o1.getBuildDevNumber() != null) && (o2.getBuildDevNumber() != null)){
+                    return o1.getBuildDevNumber().compareTo(o2.getBuildDevNumber());
                 }else{
-                    if (o1.getDevBuildNumber() == null){
+                    if (o1.getBuildDevNumber() == null){
                         return -1;
                     }else{
                         return 1;

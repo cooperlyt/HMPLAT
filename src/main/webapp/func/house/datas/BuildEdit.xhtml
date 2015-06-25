@@ -70,7 +70,7 @@
                         <f:validateRegex pattern="^\d*$"/>
                     </h:inputText>
                     <span class="input-group-addon">#{messages.MapIdentification_dbuild}</span>
-                    <h:inputText id="devNoInput" value="#{buildHome.instance.devBuildNumber}"
+                    <h:inputText id="devNoInput" value="#{buildHome.instance.buildDevNumber}"
                                  styleClass="form-control"
                                  converter="javax.faces.Integer"
                                  label="#{messages.Build_devBuildNumber}" maxlength="4" size="10" autocomplete="off">

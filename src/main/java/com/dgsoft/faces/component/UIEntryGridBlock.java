@@ -10,7 +10,8 @@ public class UIEntryGridBlock extends UIPanel {
     protected enum Properties {
         group,
         columns,
-        rendered
+        rendered,
+        expandId
     }
 
     public String getGroup() {
@@ -39,6 +40,14 @@ public class UIEntryGridBlock extends UIPanel {
 
     public boolean isHaveGroup(){
         return (getGroup() != null) && !"".equals(getGroup().trim());
+    }
+
+    public String getExpandId(){
+        return (String) getStateHelper().eval(Properties.expandId,"");
+    }
+
+    public void setExpandId(String id){
+        getStateHelper().put(Properties.expandId, id);
     }
 
     @Override

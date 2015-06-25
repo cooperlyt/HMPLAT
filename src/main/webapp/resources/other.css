@@ -585,11 +585,15 @@ input[type=button], input[type=reset], input[type=submit]{
     text-align: center;
     background-color: #f9f9f9;
     min-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .detailsTable td{
     white-space: nowrap;
     min-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .details-context-td{
@@ -601,6 +605,25 @@ input[type=button], input[type=reset], input[type=submit]{
 .details-table-group{
     text-align: center !important;
     vertical-align: middle !important;
+
+}
+
+.expand-details-tr{
+    display: none;
+}
+
+.details-expand-handle{
+    color: #4183c4;
+    background-image: url("#{resource['org.richfaces:up_icon.gif']}");
+    background-size: 16px;
+    background-position-x: 98%;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+    cursor: hand;
+}
+
+.details-expand-handle.expanded{
+    background-image: url("#{resource['org.richfaces:down_icon.gif']}");
 
 }
 

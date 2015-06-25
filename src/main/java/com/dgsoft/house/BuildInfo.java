@@ -29,4 +29,8 @@ public interface BuildInfo extends ProjectInfo {
 
     public String getStructure();
 
+    public String getBuildDevNumber();
+
+    public String getCompleteYear();
+
 }

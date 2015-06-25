@@ -45,6 +45,7 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	private Integer shopCount;
 	private BigDecimal shopArea;
 	private String completeYear;
+    private String buildDevNumber;
 	private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
 
 	public BusinessBuild() {
@@ -253,7 +254,18 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 		return this.structure;
 	}
 
-	public void setStructure(String structure) {
+    @Override
+    @Column(name = "BUILD_DEVELOPER_NUMBER",length = 20, nullable = true)
+    @Size(max = 20)
+    public String getBuildDevNumber() {
+        return this.buildDevNumber;
+    }
+
+    public void setBuildDevNumber(String number){
+        this.buildDevNumber = number;
+    }
+
+    public void setStructure(String structure) {
 		this.structure = structure;
 	}
 
@@ -335,11 +347,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
         return getBusinessProject().getProjectCode();
     }
 
-    @Override
-    @Transient
-    public Date getCompleteDate() {
-        return getBusinessProject().getCompleteDate();
-    }
 
     @Column(name = "COMPLETE_DATE", length = 6)
 	@Size(max = 6)

@@ -10,4 +10,5 @@
     <param name="selectSectionId" value="#{houseStepSelect.selectSectionId}"/>
     <param name="selectBuildId" value="#{buildHome.id}"/>
     <param name="selectMapId" value="#{ownerBuildGridMap.id}"/>
+    <param name="selectHouseCode" value="#{ownerBuildGridMap.selectBizHouseId}"/>
 </page>

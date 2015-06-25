@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://richfaces.org/a4j"
-
+      xmlns:dh="http://www.dgsoft.com/jsf/html"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
@@ -126,6 +126,34 @@
     </h:head>
     <h:body>
 
+
+        <div class="modal fade info-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <a:outputPanel id="houseInfoContent" layout="block"  styleClass="modal-dialog modal-lg" >
+                <a:outputPanel layout="block" styleClass="modal-content" rendered="#{not empty ownerBuildGridMap.selectBizHouse}">
+
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                        <h2 class="modal-title">#{ownerBuildGridMap.selectBizHouse.houseOrder}</h2>
+                    </div>
+                    <a:outputPanel  ajaxRendered="true" layout="block" styleClass="modal-body">
+
+
+                        <dh:entryGrid styleClass="detailsTable table table-bordered ">
+                        <ui:include src="/layout/house/HouseInfoView.xhtml">
+                            <ui:param name="houseInfo" value="#{ownerBuildGridMap.selectBizHouse}"/>
+                        </ui:include>
+                        </dh:entryGrid>
+
+                    </a:outputPanel>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </a:outputPanel>
+            </a:outputPanel>
+        </div>
 
 
         <div class="header">
@@ -250,6 +278,14 @@
 
                         <a:outputPanel rendered="#{buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
+                            <h:form>
+                                <a:jsFunction name="houseClick"  oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+                                    <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
+
+                                </a:jsFunction>
+
+                            </h:form>
+
                         <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd; border-right: 2px solid #ddd"/>
 
                         <div class="grid-map map-thead map-col-thead">
@@ -296,8 +332,9 @@
                                         <a:repeat value="#{_floor.gridBlockList}" var="_cell">
                                             <td colspan="#{_cell.colspan}"
                                                 rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
-                                                <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}">
-                                                    <div class="#{_cell.house.masterStatus}">
+
+                                                <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" onclick="houseClick('#{_cell.house.houseCode}')">
+                                                    <div class="#{_cell.house.masterStatus}" >
                                                         <div class="house-info-context">
                                                         <ul >
                                                             <li><h2>#{_cell.house.houseOrder}  </h2></li>
@@ -306,7 +343,9 @@
                                                         </ul>
                                                         </div>
                                                         <div style="float: left">
-
+                                                            <a:outputPanel rendered="#{_cell.locked}">
+                                                                L
+                                                            </a:outputPanel>
                                                         </div>
                                                         <div class="house-status" >
                                                             <a:outputPanel styleClass="label" rendered="#{not empty _cell.house.masterStatus}">
@@ -343,6 +382,8 @@
                             /*,OWNERED,SALE_REGISTER,
                             DIVERT_REGISTER,SALE_MORTGAGE_REGISTER,DIVERT_MORTGAGE_REGISTER,
                             PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTORY;*/
+
+
 
                             .house-info .house-status{
                                 float: right;
@@ -406,10 +447,6 @@
                                 overflow:hidden;text-overflow:ellipsis;
                             }
 
-                            .map-context-table td{
-                                padding: 2px;
-
-                            }
 
                             .map-context{
                                 position: absolute; top:100px; left: 221px;bottom: 0; right: 0;overflow: auto
@@ -421,6 +458,13 @@
                                 height: 63px;
                             }
 
+                            .house-info{
+                                padding: 2px;
+                                width: 100%;
+                                height: 100%;
+                                vertical-align: middle;
+                                text-align: center;
+                            }
 
                             .house-info ul{
                                 list-style: none;
@@ -603,7 +647,7 @@
                                                      value="#{buildHome.id}">
                                         <s:selectItems value="#{houseStepSelect.buildList}"
                                                        var="_build" itemValue="#{_build.id}"
-                                                       label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.devBuildNumber}#{(empty _build.devBuildNumber) ? '' : messages.BuildBuildNameSuffix}"
+                                                       label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}"
                                                        noSelectionLabel="#{messages.buildSelect}"/>
                                         <a:ajax event="valueChange" listener="#{ownerBuildGridMap.init}">
                                             <a:attachQueue requestDelay="0"/>

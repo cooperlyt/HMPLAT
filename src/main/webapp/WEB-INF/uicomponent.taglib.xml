@@ -96,6 +96,17 @@
             <type>int</type>
         </attribute>
 
+        <attribute>
+            <description>
+                expandId
+            </description>
+            <name>expandId</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+
+
+
     </tag>
     <tag>
         <tag-name>entryGridColumn</tag-name>
@@ -111,7 +122,14 @@
             <required>true</required>
             <type>int</type>
         </attribute>
-
+        <attribute>
+            <description>
+                expand Target ID
+            </description>
+            <name>expandTarget</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
     <tag>
