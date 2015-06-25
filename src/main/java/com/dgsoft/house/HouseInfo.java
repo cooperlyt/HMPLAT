@@ -18,10 +18,20 @@ public interface HouseInfo extends BuildInfo {
     // 抵押,在建工程抵押,异议,声明作废，查封,灭籍
     // 确权,初始登记
     public enum HouseStatus{
-        CONTRACTS_RECORD,OWNERED,SALE_REGISTER,
-        DIVERT_REGISTER,SALE_MORTGAGE_REGISTER,DIVERT_MORTGAGE_REGISTER,
-        PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTROY,
-        INIT_REG_CONFIRM,INIT_REG
+        CONTRACTS_RECORD(12),OWNERED(11),SALE_REGISTER(10),
+        DIVERT_REGISTER(9),SALE_MORTGAGE_REGISTER(8),DIVERT_MORTGAGE_REGISTER(7),
+        PLEDGE(5),PROJECT_PLEDGE(6),DIFFICULTY(4),DECLARE_CANCEL(3),COURT_CLOSE(2),DESTROY(1),
+        INIT_REG_CONFIRM(14),INIT_REG(13);
+
+        private int pri;
+
+        private HouseStatus(int pri){
+            this.pri = pri;
+        }
+
+        public int getPri() {
+            return pri;
+        }
     }
 
     public class StatusComparator implements Comparator<HouseStatus>{
@@ -37,8 +47,7 @@ public interface HouseInfo extends BuildInfo {
 
         @Override
         public int compare(HouseStatus o1, HouseStatus o2) {
-            //TODO compare
-            return 0;
+            return  Integer.valueOf(o1.getPri()).compareTo(o2.getPri());
         }
     }
 

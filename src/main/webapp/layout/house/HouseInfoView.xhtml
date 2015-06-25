@@ -186,8 +186,18 @@
     <h:outputText value="#{messages.House_MasterStatus}"/>
     <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
 
+    <h:outputText value="#{messages.House_MasterStatus}"/>
+    <dh:entryGridColumn colspan="7">
+        <div style="width: 100%; height: 100%" class="house-info">
 
+            <a:repeat value="#{houseInfo.allStatusList}" var="_status">
+                <div class="#{_status.name()}" style="display: inline-block;">
+                    <span class="label"> #{messages[_status.name()]} </span>
+                </div>
+            </a:repeat>
 
+        </div>
+    </dh:entryGridColumn>
 
 
 <h:outputText value="#{messages.House_HouseType}"/>

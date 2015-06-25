@@ -239,8 +239,13 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Transient
     public HouseStatus getMasterStatus() {
-        //TODO return status
-        return null;
+        HouseStatus result = null;
+        for(HouseState houseState: getHouseStates()){
+            if ((result == null) || (houseState.getState().getPri() < result.getPri())){
+                result = houseState.getState();
+            }
+        }
+        return result;
     }
 
 
@@ -675,6 +680,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     public void setHouseStates(Set<HouseState> houseStates) {
         this.houseStates = houseStates;
     }
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
     public Set<HouseBusiness> getHousesForAfterBusiness() {
