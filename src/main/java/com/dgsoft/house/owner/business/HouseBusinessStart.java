@@ -3,11 +3,10 @@ package com.dgsoft.house.owner.business;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.business.TaskSubscribeReg;
-import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.model.House;
-import com.dgsoft.house.model.PoolOwner;
-import com.dgsoft.house.owner.HouseLinkHome;
+import com.dgsoft.common.system.business.BusinessDataValid;
+import com.dgsoft.common.system.business.TaskSubscribeComponent;
+import com.dgsoft.common.system.model.BusinessCreateDataValid;
+import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.*;
@@ -16,14 +15,9 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.Transactional;
-import org.jboss.seam.bpm.BusinessProcess;
+import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Logging;
 
-import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
 
 /**
  * Created by cooper on 8/28/14.
@@ -39,31 +33,33 @@ public class HouseBusinessStart {
     private OwnerBusinessHome ownerBusinessHome;
 
     @In(create = true)
-    private HouseLinkHome houseLinkHome;
+    private FacesMessages facesMessages;
+
 
     private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
     private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
     private static final String BUSINESS_PRINT_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
 
-    private BusinessHouse createStartHouse() {
-        if (houseLinkHome.getInstance() == null) {
-            throw new IllegalArgumentException("house not found");
-        }
 
-        if (houseLinkHome.isRecord()) {
-            return (BusinessHouse) houseLinkHome.getInstance();
-        } else {
-            House house = (House) houseLinkHome.getInstance();
-            BusinessHouse result = new BusinessHouse(house);
-            return result;
-        }
+    @In
+    private OwnerBuildGridMap ownerBuildGridMap;
 
+    public void validSelectHouse(){
+        for(BusinessCreateDataValid valid: businessDefineHome.getInstance().getBusinessCreateDataValids()){
+            BusinessDataValid.ValidResult result = ((BusinessDataValid) Component.getInstance(valid.getValidation(), true)).valid(ownerBuildGridMap.getSelectBizHouse());
+            if (result.getResult().equals(TaskSubscribeComponent.ValidResult.FATAL)){
+                throw new IllegalArgumentException(result.getMsgKey());
+            }
+            if (!result.getResult().equals(TaskSubscribeComponent.ValidResult.SUCCESS)){
+                facesMessages.addFromResourceBundle(result.getResult().getSeverity(),result.getMsgKey(),result.getParams());
+            }
+        }
     }
 
     public String singleHouseSelected() {
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), createStartHouse()));
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse()));
 
         return houseIsSelected();
     }

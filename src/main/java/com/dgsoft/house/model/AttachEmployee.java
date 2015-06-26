@@ -30,9 +30,8 @@ public class AttachEmployee implements java.io.Serializable {
 	private String phone;
 	private String deucation;
 	private String name;
-	private Integer credentialsType;
+	private String credentialsType;
 	private String credentialsNumber;
-	private String persionId;
 	private Boolean enable;
 	private Date createTime;
 	private Set<Demployee> demployees = new HashSet<Demployee>(0);
@@ -51,30 +50,7 @@ public class AttachEmployee implements java.io.Serializable {
 		this.name = name;
 		this.createTime = createTime;
 	}
-	public AttachEmployee(String id, String password, String licenseLeve,
-			String licenseNumber, Date licenseTimeTo, String phone,
-			String deucation, String name, Integer credentialsType,
-			String credentialsNumber, String persionId, Boolean enable,
-			Date createTime, Set<Demployee> demployees,
-			Set<SellEmployee> sellEmployees,
-			Set<EmployeeAttachAction> employeeAttachActions) {
-		this.id = id;
-		this.password = password;
-		this.licenseLeve = licenseLeve;
-		this.licenseNumber = licenseNumber;
-		this.licenseTimeTo = licenseTimeTo;
-		this.phone = phone;
-		this.deucation = deucation;
-		this.name = name;
-		this.credentialsType = credentialsType;
-		this.credentialsNumber = credentialsNumber;
-		this.persionId = persionId;
-		this.enable = enable;
-		this.createTime = createTime;
-		this.demployees = demployees;
-		this.sellEmployees = sellEmployees;
-		this.employeeAttachActions = employeeAttachActions;
-	}
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -162,11 +138,11 @@ public class AttachEmployee implements java.io.Serializable {
 	}
 
 	@Column(name = "CREDENTIALS_TYPE")
-	public Integer getCredentialsType() {
+	public String getCredentialsType() {
 		return this.credentialsType;
 	}
 
-	public void setCredentialsType(Integer credentialsType) {
+	public void setCredentialsType(String credentialsType) {
 		this.credentialsType = credentialsType;
 	}
 
@@ -180,15 +156,6 @@ public class AttachEmployee implements java.io.Serializable {
 		this.credentialsNumber = credentialsNumber;
 	}
 
-	@Column(name = "PERSION_ID", length = 32)
-	@Size(max = 32)
-	public String getPersionId() {
-		return this.persionId;
-	}
-
-	public void setPersionId(String persionId) {
-		this.persionId = persionId;
-	}
 
 	@Column(name = "ENABLE")
 	public Boolean getEnable() {

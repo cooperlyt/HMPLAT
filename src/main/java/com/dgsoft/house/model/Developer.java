@@ -30,6 +30,7 @@ public class Developer implements java.io.Serializable {
     private Date createTime;
     private Set<Demployee> demployees = new HashSet<Demployee>(0);
     private Set<Project> projects = new HashSet<Project>(0);
+    private String description;
     private boolean destroyed;
 
     public Developer() {
@@ -135,5 +136,14 @@ public class Developer implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Column(name = "DESCRIPTION", length = 200)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

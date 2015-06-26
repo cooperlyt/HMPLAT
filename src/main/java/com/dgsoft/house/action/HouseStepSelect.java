@@ -26,8 +26,6 @@ public class HouseStepSelect {
 
     private String selectProjectId;
 
-    private boolean dataTableList;
-
     public Section getSelectSection() {
         return selectSection;
     }
@@ -53,15 +51,6 @@ public class HouseStepSelect {
 
     public void setSelectProjectId(String selectProjectId) {
         this.selectProjectId = selectProjectId;
-    }
-
-
-    public boolean isDataTableList() {
-        return dataTableList;
-    }
-
-    public void setDataTableList(boolean dataTableList) {
-        this.dataTableList = dataTableList;
     }
 
 
