@@ -35,6 +35,8 @@ public class OwnerBuildGridMap {
 
     //private BuildGridMap idleHouseMap;
 
+    private boolean dataTableList;
+
     private BuildGridMap curMap;
 
     private List<BuildGridMap> buildGridMaps;
@@ -47,6 +49,14 @@ public class OwnerBuildGridMap {
 
     public void setSelectBizHouse(BusinessHouse selectBizHouse) {
         this.selectBizHouse = selectBizHouse;
+    }
+
+    public boolean isDataTableList() {
+        return dataTableList;
+    }
+
+    public void setDataTableList(boolean dataTableList) {
+        this.dataTableList = dataTableList;
     }
 
     public String getSelectBizHouseId(){

@@ -30,6 +30,9 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     private Date createTime;
     private String memo;
     private HouseRegInfo houseRegInfo;
+    private String legalPerson;
+    private String rootAddress;
+
 
     public BusinessPool() {
     }
@@ -198,5 +201,25 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
 
     public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
         this.houseRegInfo = houseRegInfo;
+    }
+
+    @Column(name = "LEGAL_PERSON", nullable = true, length = 50)
+    @Size(max = 50)
+    public String getLegalPerson() {
+        return legalPerson;
+    }
+
+    public void setLegalPerson(String legalPerson) {
+        this.legalPerson = legalPerson;
+    }
+
+    @Column(name = "ROOT_ADDRESS", length = 50)
+    @Size(max = 50)
+    public String getRootAddress() {
+        return this.rootAddress;
+    }
+
+    public void setRootAddress(String rootAddress) {
+        this.rootAddress = rootAddress;
     }
 }

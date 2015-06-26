@@ -23,6 +23,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     private String phone;
     private String rootAddress;
     private MakeCard makeCard;
+    private String legalPerson;
 
     public BusinessHouseOwner() {
     }
@@ -115,5 +116,15 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
 
     public void setMakeCard(MakeCard makeCard) {
         this.makeCard = makeCard;
+    }
+
+    @Column(name = "LEGAL_PERSON", nullable = true, length = 50)
+    @Size(max = 50)
+    public String getLegalPerson() {
+        return legalPerson;
+    }
+
+    public void setLegalPerson(String legalPerson) {
+        this.legalPerson = legalPerson;
     }
 }

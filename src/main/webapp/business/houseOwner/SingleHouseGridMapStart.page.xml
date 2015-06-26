@@ -11,4 +11,7 @@
     <param name="selectBuildId" value="#{buildHome.id}"/>
     <param name="selectMapId" value="#{ownerBuildGridMap.id}"/>
     <param name="selectHouseCode" value="#{ownerBuildGridMap.selectBizHouseId}"/>
+
+    <param name="bussinessDefineId" value="#{businessDefineHome.id}"/>
+    <param name="dataTableList" value="#{ownerBuildGridMap.dataTableList}"/>
 </page>

@@ -95,8 +95,8 @@
         .list-all {
             margin: 0;
             padding-top: 180px;
-            padding-left: 7px;
-            padding-right: 7px;
+            padding-left: 4px;
+            padding-right: 4px;
             border-top: 1px solid #f2f3f6;
             line-height: 25px;
             position: absolute;
@@ -141,7 +141,7 @@
                     </div>
                     <a:outputPanel  ajaxRendered="true" layout="block" styleClass="modal-body">
 
-
+                        <r:messages ajaxRendered="false" globalOnly="true"/>
                         <dh:entryGrid styleClass="detailsTable table table-bordered ">
                         <ui:include src="/layout/house/HouseInfoView.xhtml">
                             <ui:param name="houseInfo" value="#{ownerBuildGridMap.selectBizHouse}"/>
@@ -150,8 +150,11 @@
 
                     </a:outputPanel>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
+
+                        <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disable'}" action="#{houseBusinessStart.singleHouseSelected}">
+                                #{messages.select}
+                        </s:link>
                     </div>
                 </a:outputPanel>
             </a:outputPanel>
@@ -274,14 +277,14 @@
         <div class="container-fluid default-main">
 
 
-                <div style="display: inline-block; padding: 2px;width: 100%; height: 100%;" id="contextPanel"> <!-- onselectstart="return false;" -->
+                <div style="display: inline-block; padding: 2px;width: 100%; height: 100%;" id="contextPanel" onselectstart="return false;"> <!--  -->
 
                     <a:outputPanel layout="block" style="height: 100%;width: 100%; " ajaxRendered="true">
 
-                        <a:outputPanel rendered="#{buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
+                        <a:outputPanel rendered="#{not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
                             <h:form>
-                                <a:jsFunction name="houseClick"  oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+                                <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
                                     <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
 
                                 </a:jsFunction>
@@ -345,8 +348,8 @@
                                                         </ul>
                                                         </div>
                                                         <div style="float: left">
-                                                            <a:outputPanel rendered="#{_cell.locked}">
-                                                                L
+                                                            <a:outputPanel styleClass=" icon-lock" rendered="#{_cell.locked}">
+
                                                             </a:outputPanel>
                                                         </div>
                                                         <div class="house-status" >
@@ -502,21 +505,25 @@
                         #{messages.COBUORB}
 
                     </div>
-                    <div style="position: absolute; top: 0; bottom: 0; width: 157px; padding: 205px 0 0 0;">
+                    <div style="position: absolute; top: 0; bottom: 0; width: 162px; padding: 205px 0 0 0;">
 
                         <div style="height: 100% ;overflow-x: auto">
                             <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{buildHome.idDefined}">
                                 <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
 
 
-                                    <a:commandLink styleClass="list-group-item #{(not houseStepSelect.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
+                                    <a:commandLink styleClass="list-group-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
                                         #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{_gridMap.id}" assignTo="#{ownerBuildGridMap.id}"/>
+                                        <f:param value="#{false}" name="dataTableList"/>
                                     </a:commandLink>
                                 </a:repeat>
 
-                                <a href="#" class="list-group-item #{houseStepSelect.dataTableList ? 'active' : ''}" >ALL DATAS</a>
+                                <a:commandLink styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}">
+                                    #{messages.allHouse}
+                                    <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
+                                </a:commandLink>
                             </a:outputPanel>
                         </div>
                     </div>
