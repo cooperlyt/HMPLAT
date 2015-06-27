@@ -15,8 +15,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @Override
     public OwnerBusiness createInstance(){
 
-        return new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CAREATE,
-                OwnerBusiness.BusinessStatus.RUNNING,new Date(),false);
+        return new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
+                OwnerBusiness.BusinessStatus.RUNNING,new Date(),false, OwnerBusiness.BusinessType.NORMAL);
     }
 
     public Reason getReasonByType(String typeName){

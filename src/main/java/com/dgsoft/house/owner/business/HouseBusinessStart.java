@@ -5,7 +5,7 @@ import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
-import com.dgsoft.common.system.model.BusinessCreateDataValid;
+import com.dgsoft.common.system.model.CreateComponent;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
@@ -45,8 +45,8 @@ public class HouseBusinessStart {
     private OwnerBuildGridMap ownerBuildGridMap;
 
     public void validSelectHouse(){
-        for(BusinessCreateDataValid valid: businessDefineHome.getInstance().getBusinessCreateDataValids()){
-            BusinessDataValid.ValidResult result = ((BusinessDataValid) Component.getInstance(valid.getValidation(), true)).valid(ownerBuildGridMap.getSelectBizHouse());
+        for(CreateComponent valid: businessDefineHome.getInstance().getBusinessCreateDataValids()){
+            BusinessDataValid.ValidResult result = ((BusinessDataValid) Component.getInstance(valid.getComponent(), true)).valid(ownerBuildGridMap.getSelectBizHouse());
             if (result.getResult().equals(TaskSubscribeComponent.ValidResult.FATAL)){
                 throw new IllegalArgumentException(result.getMsgKey());
             }

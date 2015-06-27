@@ -94,7 +94,7 @@
 
         .list-all {
             margin: 0;
-            padding-top: 180px;
+            padding-top: 200px;
             padding-left: 4px;
             padding-right: 4px;
             border-top: 1px solid #f2f3f6;
@@ -116,7 +116,7 @@
         }
 
 
-        .edit-select {
+        .edit-select , .input-group {
             margin-top: 5px !important;
         }
 
@@ -501,10 +501,7 @@
 
 
                 <a:outputPanel layout="block" styleClass="list-all"  ajaxRendered="true">
-                    <div class="list-title">
-                        #{messages.COBUORB}
 
-                    </div>
                     <div style="position: absolute; top: 0; bottom: 0; width: 162px; padding: 205px 0 0 0;">
 
                         <div style="height: 100% ;overflow-x: auto">
@@ -520,8 +517,8 @@
                                     </a:commandLink>
                                 </a:repeat>
 
-                                <a:commandLink styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}">
-                                    #{messages.allHouse}
+                                <a:commandLink styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}" action="#{ownerBuildGridMap.fillDataByBuild}">
+                                    #{messages.RecordHouse}
                                     <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
                                 </a:commandLink>
                             </a:outputPanel>
@@ -583,6 +580,15 @@
                                         </div>
                                         <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
 
+                                            <a:commandLink execute="@this" immediate="true" action="#{houseStepSelect.resetSection}"
+                                                           render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs"
+                                                           styleClass="select-menu-item #{(empty houseStepSelect.selectSection) ? 'selected': ''}">
+
+                                                <a:param value="" assignTo="#{houseStepSelect.selectSectionId}"/>
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">#{messages.sectionSelect}</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
 
                                             <a:repeat value="#{sectionSelectList.resultList}" var="_item">
 
@@ -594,6 +600,7 @@
 
                                                     <span class="select-menu-item-icon octicon octicon-check"></span>
                                                     <span class="select-menu-item-text">#{_item.name}</span>
+                                                    <a:attachQueue requestDelay="0"/>
                                                 </a:commandLink>
                                             </a:repeat>
 
@@ -611,6 +618,7 @@
 
                                                 <span class="select-menu-item-icon octicon octicon-check"></span>
                                                 <span class="select-menu-item-text">#{messages.More}</span>
+                                                <a:attachQueue requestDelay="0"/>
                                             </a:commandLink>
 
                                         </a:outputPanel>
@@ -623,6 +631,39 @@
 
 
                         <a:outputPanel id="projectSelectInputs">
+
+                            <a:outputPanel  rendered="#{empty houseStepSelect.selectSection}">
+
+                                <a:region>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">#{messages.MapIdentification_map}</span>
+                                        <h:inputText/>
+
+
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">#{messages.MapIdentification_block}</span>
+                                        <h:inputText/>
+
+
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">#{messages.MapIdentification_build}</span>
+                                        <h:inputText/>
+
+
+                                    </div>
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon">#{messages.MapIdentification_house}</span>
+                                        <h:inputText styleClass="form-control" />
+
+
+                                    </div>
+                                </a:region>
+
+                            </a:outputPanel>
+
 
                             <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
 
@@ -651,10 +692,20 @@
                                                        var="_build" itemValue="#{_build.id}"
                                                        label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}"
                                                        noSelectionLabel="#{messages.buildSelect}"/>
-                                        <a:ajax event="valueChange" listener="#{ownerBuildGridMap.init}">
+                                        <a:ajax event="valueChange" listener="#{ownerBuildGridMap.init}" render="houseOrderInput">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:ajax>
                                     </h:selectOneMenu>
+
+                                    <a:outputPanel id="houseOrderInput">
+
+                                        <a:outputPanel styleClass="input-group" layout="block" rendered="#{buildHome.idDefined}">
+                                            <span class="input-group-addon">$</span>
+                                            <h:inputText/>
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
                                 </a:outputPanel>
 
                             </a:outputPanel>
