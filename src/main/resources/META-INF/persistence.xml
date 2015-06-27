@@ -27,7 +27,7 @@
         <class>com.dgsoft.common.system.model.BusinessNeedFile</class>
         <class>com.dgsoft.common.system.model.ViewSubscribe</class>
         <class>com.dgsoft.common.system.model.SubscribeGroup</class>
-        <class>com.dgsoft.common.system.model.BusinessCreateDataValid</class>
+        <class>com.dgsoft.common.system.model.CreateComponent</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
@@ -125,6 +125,7 @@
         <class>com.dgsoft.house.owner.model.OtherPowerCard</class>
         <class>com.dgsoft.house.owner.model.HouseRegInfo</class>
         <class>com.dgsoft.house.owner.model.LockedHouse</class>
+        <class>com.dgsoft.house.owner.model.ProcessMessage</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

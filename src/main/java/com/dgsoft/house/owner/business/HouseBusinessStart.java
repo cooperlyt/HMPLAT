@@ -3,9 +3,8 @@ package com.dgsoft.house.owner.business;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.business.BusinessDataValid;
-import com.dgsoft.common.system.business.TaskSubscribeComponent;
-import com.dgsoft.common.system.model.BusinessCreateDataValid;
+import com.dgsoft.common.system.business.*;
+import com.dgsoft.common.system.model.CreateComponent;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
@@ -17,6 +16,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Logging;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,14 +41,15 @@ public class HouseBusinessStart {
     private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
     private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
     private static final String BUSINESS_PRINT_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
+    private static final String BUSINESS_PICK_BIZ_PAGE = "";
 
 
     @In
     private OwnerBuildGridMap ownerBuildGridMap;
 
     public void validSelectHouse(){
-        for(BusinessCreateDataValid valid: businessDefineHome.getInstance().getBusinessCreateDataValids()){
-            BusinessDataValid.ValidResult result = ((BusinessDataValid) Component.getInstance(valid.getValidation(), true)).valid(ownerBuildGridMap.getSelectBizHouse());
+        for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
+            BusinessDataValid.ValidResult result = valid.valid(ownerBuildGridMap.getSelectBizHouse());
             if (result.getResult().equals(TaskSubscribeComponent.ValidResult.FATAL)){
                 throw new IllegalArgumentException(result.getMsgKey());
             }
@@ -56,11 +59,24 @@ public class HouseBusinessStart {
         }
     }
 
+
+    private List<OwnerBusiness> allowSelectBizs;
+
     public String singleHouseSelected() {
 
-        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse()));
-
+        allowSelectBizs = new ArrayList<OwnerBusiness>();
+        for(BusinessPickSelect component: businessDefineHome.getCreateBizSelectComponents()){
+            for(BusinessInstance bizInstance: component.getAllowSelectBusiness(ownerBuildGridMap.getSelectBizHouse()))
+                allowSelectBizs.add((OwnerBusiness)bizInstance);
+        }
+        if (allowSelectBizs.isEmpty()) {
+            ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse()));
+        } else if (allowSelectBizs.size() == 1){
+            ownerBusinessHome.getInstance().setSelectBusiness(allowSelectBizs.get(0));
+        }else{
+            return BUSINESS_PICK_BIZ_PAGE;
+        }
         return houseIsSelected();
     }
 
@@ -76,10 +92,15 @@ public class HouseBusinessStart {
         Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(OwnerNumberBuilder.instance().useNumber("createBusinessId") * -1 ,ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
 
+
+
     }
 
     private String houseIsSelected(){
         initBusinessData();
+        for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
+            component.fillData();
+        }
 
 
         if (businessDefineHome.getEditSubscribeDefines().isEmpty()){

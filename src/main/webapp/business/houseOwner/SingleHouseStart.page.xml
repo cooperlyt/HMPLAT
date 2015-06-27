@@ -4,7 +4,15 @@
       no-conversation-view-id="/func/system/business/start.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="selectHouseId" value="#{houseLinkHome.houseCode}"/>
+    <param name="sectionResultCount" value="#{sectionSelectList.maxResults}"/>
+    <param name="selectDistrictId" value="#{sectionSelectList.districtId}"/>
+    <param name="selectProjectId" value="#{houseStepSelect.selectProjectId}"/>
+    <param name="selectSectionId" value="#{houseStepSelect.selectSectionId}"/>
+    <param name="selectBuildId" value="#{buildHome.id}"/>
+    <param name="selectMapId" value="#{ownerBuildGridMap.id}"/>
+    <param name="selectHouseCode" value="#{ownerBuildGridMap.selectBizHouseId}"/>
+
     <param name="bussinessDefineId" value="#{businessDefineHome.id}"/>
+    <param name="dataTableList" value="#{ownerBuildGridMap.dataTableList}"/>
 
 </page>

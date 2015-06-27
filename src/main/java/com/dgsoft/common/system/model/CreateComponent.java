@@ -11,16 +11,22 @@ import javax.validation.constraints.Size;
  * Created by cooper on 6/25/15.
  */
 @Entity
-@Table(name = "BUSSINESS_CREATE_DATA_VALID",catalog = "DB_PLAT_SYSTEM",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"VALIDATION","BUSINESS_ID"})})
-public class BusinessCreateDataValid implements java.io.Serializable,OrderModel {
+@Table(name = "CREATE_COMPONENT",catalog = "DB_PLAT_SYSTEM",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"COMPONENT","BUSINESS_ID"})})
+public class CreateComponent implements java.io.Serializable,OrderModel {
+
+
+    public enum CreateComponentType{
+        DATA_VALID, BIZ_SELECT , DATA_FILL
+    }
 
     private String id;
-    private String validation;
+    private String component;
     private int priority;
     private BusinessDefine businessDefine;
+    private CreateComponentType type;
 
-    public BusinessCreateDataValid() {
+    public CreateComponent() {
     }
 
     @Id
@@ -37,15 +43,15 @@ public class BusinessCreateDataValid implements java.io.Serializable,OrderModel 
         this.id = id;
     }
 
-    @Column(name = "VALIDATION", nullable = true , length = 50)
+    @Column(name = "COMPONENT", nullable = true , length = 50)
     @NotNull
     @Size(max = 50)
-    public String getValidation() {
-        return validation;
+    public String getComponent() {
+        return component;
     }
 
-    public void setValidation(String validation) {
-        this.validation = validation;
+    public void setComponent(String validation) {
+        this.component = validation;
     }
 
     @Override
@@ -67,5 +73,16 @@ public class BusinessCreateDataValid implements java.io.Serializable,OrderModel 
 
     public void setBusinessDefine(BusinessDefine businessDefine) {
         this.businessDefine = businessDefine;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false, length = 20)
+    @NotNull
+    public CreateComponentType getType() {
+        return type;
+    }
+
+    public void setType(CreateComponentType type) {
+        this.type = type;
     }
 }

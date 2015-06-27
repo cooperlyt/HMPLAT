@@ -30,7 +30,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<TaskSubscribe> taskSubscribes = new HashSet<TaskSubscribe>(0);
     private Set<BusinessNeedFile> businessNeedFiles = new HashSet<BusinessNeedFile>(0);
     private Set<SubscribeGroup> subscribeGroups = new HashSet<SubscribeGroup>(0);
-    private Set<BusinessCreateDataValid> businessCreateDataValids = new HashSet<BusinessCreateDataValid>(0);
+    private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
 
     public BusinessDefine() {
     }
@@ -187,11 +187,11 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "businessDefine")
-    public Set<BusinessCreateDataValid> getBusinessCreateDataValids() {
+    public Set<CreateComponent> getBusinessCreateDataValids() {
         return businessCreateDataValids;
     }
 
-    public void setBusinessCreateDataValids(Set<BusinessCreateDataValid> businessCreateDataValids) {
+    public void setBusinessCreateDataValids(Set<CreateComponent> businessCreateDataValids) {
         this.businessCreateDataValids = businessCreateDataValids;
     }
 

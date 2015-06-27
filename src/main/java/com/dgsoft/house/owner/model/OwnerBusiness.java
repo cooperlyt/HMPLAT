@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.business.BusinessInstance;
+
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -15,27 +17,15 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "OWNER_BUSINESS", catalog = "HOUSE_OWNER_RECORD")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class OwnerBusiness implements java.io.Serializable {
-
-    public enum BusinessSource {
-        BIZ_CAREATE, BIZ_AFTER_SAVE, BIZ_IMPORT
-    }
-
-    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改 ， 修改中， 已完成但不生效（如已被解除抵押的抵押业务）
-    public enum BusinessStatus {
-        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING, COMPLETE_CANCEL;
-
-        public static EnumSet<BusinessStatus> runningStatus(){
-           return EnumSet.of(RUNNING,SUSPEND,MODIFYING);
-        }
-    }
+public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
 
 
     private String id;
     private Integer version;
     private BusinessSource source;
+    private BusinessType type;
 
-    private String processMessage;
+
     private String memo;
     private BusinessStatus status;
     private String defineName;
@@ -68,16 +58,18 @@ public class OwnerBusiness implements java.io.Serializable {
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
     private OwnerBusiness selectBusiness;
     private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
+    private Set<ProcessMessage> processMessages = new HashSet<ProcessMessage>(0);
 
 
     public OwnerBusiness() {
     }
 
-    public OwnerBusiness(BusinessSource source, BusinessStatus status, Date createTime, boolean recorded) {
+    public OwnerBusiness(BusinessSource source, BusinessStatus status, Date createTime, boolean recorded, BusinessType type) {
         this.source = source;
         this.status = status;
         this.createTime = createTime;
         this.recorded = recorded;
+        this.type = type;
     }
 
     @Id
@@ -113,14 +105,13 @@ public class OwnerBusiness implements java.io.Serializable {
         this.source = source;
     }
 
-    @Column(name = "PROCESS_MESSAGE", length = 400)
-    @Size(max = 400)
-    public String getProcessMessage() {
-        return this.processMessage;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<ProcessMessage> getProcessMessages() {
+        return processMessages;
     }
 
-    public void setProcessMessage(String processMessage) {
-        this.processMessage = processMessage;
+    public void setProcessMessages(Set<ProcessMessage> processMessages) {
+        this.processMessages = processMessages;
     }
 
     @Column(name = "DEFINE_NAME", nullable = true, length = 50)
@@ -164,6 +155,16 @@ public class OwnerBusiness implements java.io.Serializable {
         this.status = status;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="TYPE", nullable = false, length = 20)
+    @NotNull
+    public BusinessType getType() {
+        return type;
+    }
+
+    public void setType(BusinessType type) {
+        this.type = type;
+    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<BusinessFile> getUploadFileses() {

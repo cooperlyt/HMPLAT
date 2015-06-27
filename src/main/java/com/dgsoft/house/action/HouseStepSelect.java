@@ -7,6 +7,7 @@ import com.dgsoft.house.model.Section;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
@@ -30,18 +31,18 @@ public class HouseStepSelect {
         return selectSection;
     }
 
-    public String getSelectSectionId(){
-        if (selectSection == null){
+    public String getSelectSectionId() {
+        if (selectSection == null) {
             return null;
         }
         return selectSection.getId();
     }
 
-    public void setSelectSectionId(String id){
-        if ((id == null) && id.trim().equals("")){
+    public void setSelectSectionId(String id) {
+        if ((id == null) && id.trim().equals("")) {
             selectSection = null;
-        }else{
-            selectSection = houseEntityLoader.getEntityManager().find(Section.class,id);
+        } else {
+            selectSection = houseEntityLoader.getEntityManager().find(Section.class, id);
         }
     }
 
@@ -54,22 +55,22 @@ public class HouseStepSelect {
     }
 
 
-    public void resetSection(){
+    public void resetSection() {
         selectSection = null;
         resetPorject();
 
     }
 
-    public void resetPorject(){
+    public void resetPorject() {
         selectProjectId = null;
-        if (buildHome != null){
+        if (buildHome != null) {
             buildHome.clearInstance();
         }
     }
 
 
-    public List<Build> getBuildList(){
-       return houseEntityLoader.getEntityManager().createQuery("select build from Build build where build.project.id = :projectId order by build.buildNo ").setParameter("projectId", getSelectProjectId()).getResultList();
+    public List<Build> getBuildList() {
+        return houseEntityLoader.getEntityManager().createQuery("select build from Build build where build.project.id = :projectId order by build.buildNo ").setParameter("projectId", getSelectProjectId()).getResultList();
     }
 
 
