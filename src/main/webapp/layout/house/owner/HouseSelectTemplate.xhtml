@@ -281,6 +281,16 @@
 
                     <a:outputPanel layout="block" style="height: 100%;width: 100%; " ajaxRendered="true">
 
+                        <a:outputPanel rendered="#{ownerBuildGridMap.dataTableList}">
+                            <h:dataTable value="#{ownerBuildGridMap.resultBusinessHouse}" var="_house" width="100%">
+                                <h:column>
+                                    <f:facet name="header">
+
+                                    </f:facet>
+                                </h:column>
+                            </h:dataTable>
+                        </a:outputPanel>
+
                         <a:outputPanel rendered="#{not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
                             <h:form>
@@ -502,7 +512,7 @@
 
                 <a:outputPanel layout="block" styleClass="list-all"  ajaxRendered="true">
 
-                    <div style="position: absolute; top: 0; bottom: 0; width: 162px; padding: 205px 0 0 0;">
+                    <div style="position: absolute; top: 0; bottom: 0; width: 162px; padding: 240px 0 0 0;">
 
                         <div style="height: 100% ;overflow-x: auto">
                             <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{buildHome.idDefined}">
@@ -634,33 +644,45 @@
 
                             <a:outputPanel  rendered="#{empty houseStepSelect.selectSection}">
 
-                                <a:region>
+                                <a:region id="numbers-inputs">
                                     <div class="input-group">
                                         <span class="input-group-addon">#{messages.MapIdentification_map}</span>
-                                        <h:inputText/>
+                                        <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.mapNumber}" />
 
 
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">#{messages.MapIdentification_block}</span>
-                                        <h:inputText/>
+                                        <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.blockNumber}" autocomplete="off"/>
 
 
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">#{messages.MapIdentification_build}</span>
-                                        <h:inputText/>
-
-
-                                    </div>
-
-                                    <div class="input-group">
-                                        <span class="input-group-addon">#{messages.MapIdentification_house}</span>
-                                        <h:inputText styleClass="form-control" />
+                                        <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.buildNumber}" autocomplete="off"/>
+                                        <span class="input-group-btn">
+                                            <a:commandLink execute="@region" styleClass="btn btn-default" action="#{ownerBuildGridMap.findBuildByNumber}"
+                                                           render="houseOrderInput">
+                                                <span class="btn-icon octicon octicon-search"></span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+                                        </span>
 
 
                                     </div>
                                 </a:region>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">#{messages.MapIdentification_house}</span>
+                                        <h:inputText required="true" styleClass="form-control"  value="#{ownerBuildGridMap.houseOrder}" autocomplete="off"/>
+                                        <span class="input-group-btn">
+                                            <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" action="#{ownerBuildGridMap.findHouseByNumber}">
+                                                <span class="btn-icon octicon octicon-search"></span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+                                        </span>
+
+                                    </div>
+
 
                             </a:outputPanel>
 
@@ -692,7 +714,7 @@
                                                        var="_build" itemValue="#{_build.id}"
                                                        label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}"
                                                        noSelectionLabel="#{messages.buildSelect}"/>
-                                        <a:ajax event="valueChange" listener="#{ownerBuildGridMap.init}" render="houseOrderInput">
+                                        <a:ajax event="valueChange" listener="#{ownerBuildGridMap.findBuildBySection}" render="houseOrderInput">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:ajax>
                                     </h:selectOneMenu>
@@ -700,8 +722,14 @@
                                     <a:outputPanel id="houseOrderInput">
 
                                         <a:outputPanel styleClass="input-group" layout="block" rendered="#{buildHome.idDefined}">
-                                            <span class="input-group-addon">$</span>
-                                            <h:inputText/>
+                                            <span class="input-group-addon">#{messages.MapIdentification_house}</span>
+                                            <h:inputText styleClass="form-control" autocomplete="off" value="#{ownerBuildGridMap.houseOrder}"/>
+                                            <span class="input-group-btn">
+                                                <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" action="#{ownerBuildGridMap.findHouseBySection}">
+                                                    <span class="btn-icon octicon octicon-search"></span>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+                                            </span>
                                         </a:outputPanel>
 
                                     </a:outputPanel>

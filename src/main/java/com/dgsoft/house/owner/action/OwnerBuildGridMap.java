@@ -46,7 +46,7 @@ public class OwnerBuildGridMap {
 
     private boolean dataTableList;
 
-    private boolean showGridMapSelect;
+    private boolean findByNumber;
 
     private String mapNumber;
 
@@ -56,12 +56,12 @@ public class OwnerBuildGridMap {
 
     private List<BusinessHouse> resultBusinessHouse = new ArrayList<BusinessHouse>();
 
-    public boolean isShowGridMapSelect() {
-        return showGridMapSelect;
+    public boolean isFindByNumber() {
+        return findByNumber;
     }
 
-    public void setShowGridMapSelect(boolean showGridMapSelect) {
-        this.showGridMapSelect = showGridMapSelect;
+    public void setFindByNumber(boolean findByNumber) {
+        this.findByNumber = findByNumber;
     }
 
     public String getMapNumber() {
@@ -88,35 +88,9 @@ public class OwnerBuildGridMap {
         this.buildNumber = buildNumber;
     }
 
-    public void findBuildByNumber() {
-        try {
-            getBuildHome().setId(
-                    houseEntityLoader.getEntityManager().createQuery("select build.id from Build build where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and build.buildNo = :buildNumber", String.class)
-                            .setParameter("mapNumber", mapNumber).setParameter("blockNumber", blockNumber).setParameter("buildNumber", buildNumber).getSingleResult());
-        } catch (NoResultException e) {
-            getBuildHome().clearInstance();
-        }
-    }
+
 
     private String houseOrder;
-
-    public void selectHouseByNumber(){
-
-
-
-//        if (getBuildHome().isIdDefined()){
-//            List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord where houseRecord.businessHouse.buildCode = :buildCode and ",HouseRecord.class)
-//                    .setParameter("buildCode",getBuildHome().getInstance().getId()).getResultList();
-//
-//
-//        }else{
-//            selectBizHouse = null;
-//        }
-
-
-    }
-
-
 
 
     public BusinessHouse getSelectBizHouse() {
@@ -195,6 +169,9 @@ public class OwnerBuildGridMap {
         return curMap;
     }
 
+    public List<BusinessHouse> getResultBusinessHouse() {
+        return resultBusinessHouse;
+    }
 
     public List<BuildGridMap> getBuildGridMaps() {
         return buildGridMaps;
@@ -211,10 +188,68 @@ public class OwnerBuildGridMap {
     }
 
 
+    public void findBuildBySection(){
+        findByNumber = false;
+        init();
+    }
+
+    public void findBuildByNumber() {
+        try {
+            getBuildHome().setId(
+                    houseEntityLoader.getEntityManager().createQuery("select build.id from Build build where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and build.buildNo = :buildNumber", String.class)
+                            .setParameter("mapNumber", mapNumber).setParameter("blockNumber", blockNumber).setParameter("buildNumber", buildNumber).getSingleResult());
+            findByNumber = true;
+            init();
+        } catch (NoResultException e) {
+            getBuildHome().clearInstance();
+            dataTableList = false;
+        }
+    }
+
+    public void findHouseBySection(){
+        findByNumber = false;
+
+        try {
+
+            House house = houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.id =:buildCode and house.houseOrder = :houseOrder",House.class)
+                    .setParameter("buildCode", getBuildHome().getId()).setParameter("houseOrder", houseOrder).getSingleResult();
+            //TODO map show : house.getGridBlockId()
+            try {
+                selectBizHouse = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.houseCode = :houseCode", BusinessHouse.class)
+                    .setParameter("houseCode", house.getHouseCode()).getSingleResult();
+
+            } catch (NoResultException e2){
+                selectBizHouse = new BusinessHouse(house);
+            }
+
+        } catch (NoResultException e1){
+            selectBizHouse = null;
+        }
+
+
+    }
+
+    public void findHouseByNumber(){
+        findByNumber = true;
+        dataTableList = true;
+        resultBusinessHouse = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.mapNumber = :mapNumber and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", BusinessHouse.class)
+                .setParameter("mapNumber",mapNumber)
+                .setParameter("blockNumber",blockNumber)
+                .setParameter("buildNumber",buildNumber)
+                .setParameter("houseOrder",houseOrder).getResultList();
+        if (resultBusinessHouse.size() == 1){
+            selectBizHouse = resultBusinessHouse.get(0);
+        }else{
+            selectBizHouse = null;
+        }
+    }
+
+
+
     @Create
     public void init(){
 
-        showGridMapSelect = true;
+
 
 
         buildGridMaps = new ArrayList<BuildGridMap>(getBuildHome().getInstance().getBuildGridMaps());
@@ -282,14 +317,10 @@ public class OwnerBuildGridMap {
     }
 
     public void fillDataByBuild(){
+        resultBusinessHouse = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.buildCode = :buildCode", BusinessHouse.class)
+                .setParameter("buildCode",getBuildHome().getInstance().getId()).getResultList();
 
     }
-
-    public void fillDataByNumbers(){
-
-    }
-
-   // public void fillDataBy
 
 
 

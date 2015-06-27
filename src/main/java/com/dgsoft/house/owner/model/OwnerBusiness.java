@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.business.BusinessInstance;
+
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -15,24 +17,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "OWNER_BUSINESS", catalog = "HOUSE_OWNER_RECORD")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class OwnerBusiness implements java.io.Serializable {
-
-    public enum BusinessSource {
-        BIZ_CREATE, BIZ_AFTER_SAVE, BIZ_IMPORT
-    }
-
-    public enum BusinessType{
-        NORMAL,MODIFY,CANCEL
-    }
-
-    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改 ， 修改中， 已完成但不生效（如已被解除抵押的抵押业务）
-    public enum BusinessStatus {
-        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING, COMPLETE_CANCEL;
-
-        public static EnumSet<BusinessStatus> runningStatus(){
-           return EnumSet.of(RUNNING,SUSPEND,MODIFYING);
-        }
-    }
+public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
 
 
     private String id;

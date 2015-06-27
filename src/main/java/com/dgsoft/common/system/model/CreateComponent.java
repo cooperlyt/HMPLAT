@@ -17,7 +17,7 @@ public class CreateComponent implements java.io.Serializable,OrderModel {
 
 
     public enum CreateComponentType{
-        DATA_VALID, BIZ_VALID , DATA_FILL, BIZ_SELECT
+        DATA_VALID, BIZ_SELECT , DATA_FILL
     }
 
     private String id;

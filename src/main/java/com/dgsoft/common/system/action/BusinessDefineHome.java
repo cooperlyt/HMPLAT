@@ -1,10 +1,9 @@
 package com.dgsoft.common.system.action;
 
 import com.dgsoft.common.system.SystemEntityHome;
-import com.dgsoft.common.system.business.Subscribe;
-import com.dgsoft.common.system.business.TaskSubscribeComponent;
-import com.dgsoft.common.system.business.TaskSubscribeReg;
+import com.dgsoft.common.system.business.*;
 import com.dgsoft.common.system.model.*;
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.bpm.ManagedJbpmContext;
@@ -306,5 +305,40 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return result;
     }
 
+    public List<BusinessDataValid> getCreateDataValidComponents() {
+        List<BusinessDataValid> result = new ArrayList<BusinessDataValid>();
+
+        for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
+            if (component.getType().equals(CreateComponent.CreateComponentType.DATA_VALID)) {
+                result.add((BusinessDataValid)Component.getInstance(component.getComponent(),true));
+            }
+        }
+
+        return result;
+    }
+
+    public List<BusinessDataFill> getCreateDataFillComponents() {
+        List<BusinessDataFill> result = new ArrayList<BusinessDataFill>();
+
+        for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
+            if (component.getType().equals(CreateComponent.CreateComponentType.DATA_FILL)) {
+                result.add((BusinessDataFill)Component.getInstance(component.getComponent(),true));
+            }
+        }
+
+        return result;
+    }
+
+    public List<BusinessPickSelect> getCreateBizSelectComponents(){
+        List<BusinessPickSelect> result = new ArrayList<BusinessPickSelect>();
+
+        for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
+            if (component.getType().equals(CreateComponent.CreateComponentType.BIZ_SELECT)) {
+                result.add((BusinessPickSelect)Component.getInstance(component.getComponent(),true));
+            }
+        }
+
+        return result;
+    }
 
 }
