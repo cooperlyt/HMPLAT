@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class BusinessEmp implements java.io.Serializable {
 
     public enum EmpType{
-        CREATE_EMP, CHECK_EMP
+        CREATE_EMP, CHECK_EMP,REG_EMP
     }
 
 	private String id;
