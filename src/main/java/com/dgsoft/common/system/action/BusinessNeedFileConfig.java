@@ -57,13 +57,52 @@ public class BusinessNeedFileConfig {
         return selectNeedFile;
     }
 
+
+    private List<BusinessDefineHome.NeedFileTreeNode> tree;
+
     public List<BusinessDefineHome.NeedFileTreeNode> getTaskFileSubscribeTree() {
-
-        List<BusinessDefineHome.NeedFileTreeNode> result = new ArrayList<BusinessDefineHome.NeedFileTreeNode>(1);
-        result.add(new BusinessDefineHome.NeedFileTreeNode(businessDefineHome.getNeedFileRootList()));
-
-        return result;
+        if (tree == null) {
+            tree = new ArrayList<BusinessDefineHome.NeedFileTreeNode>(1);
+            tree.add(new BusinessDefineHome.NeedFileTreeNode(businessDefineHome.getNeedFileRootList()));
+        }
+        return tree;
     }
+
+//    private void refreshTree(){
+//        if (tree != null){
+//            List<BusinessDefineHome.NeedFileTreeNode> newTree = new ArrayList<BusinessDefineHome.NeedFileTreeNode>(1);
+//            newTree.add(new BusinessDefineHome.NeedFileTreeNode(businessDefineHome.getNeedFileRootList()));
+//            refreshTree(newTree.get(0));
+//            tree = newTree;
+//        }
+//    }
+//
+//    private void refreshTree(BusinessDefineHome.NeedFileTreeNode node){
+//        BusinessDefineHome.NeedFileTreeNode old = findNode(tree.get(0),node);
+//        if (node.equals(selectNeedFile)){
+//            node.setExpanded(true);
+//        }else if (old == null){
+//            node.setExpanded(true);
+//        }else{
+//            node.setExpanded(old.isExpanded());
+//        }
+//        for(BusinessDefineHome.NeedFileTreeNode child: node.getChild()){
+//            refreshTree(child);
+//        }
+//    }
+//
+//    private BusinessDefineHome.NeedFileTreeNode findNode(BusinessDefineHome.NeedFileTreeNode srcNode, BusinessDefineHome.NeedFileTreeNode targetNode){
+//        if (srcNode.equals(targetNode)){
+//            return targetNode;
+//        }
+//        for(BusinessDefineHome.NeedFileTreeNode node: srcNode.getChild()){
+//            BusinessDefineHome.NeedFileTreeNode result = findNode(node,targetNode);
+//            if (result != null){
+//                return result;
+//            }
+//        }
+//        return null;
+//    }
 
     public void delete() {
         if (businessDefineHome.getInstance().getBusinessNeedFiles().remove(selectNeedFile)) {
@@ -85,6 +124,11 @@ public class BusinessNeedFileConfig {
     public void save(){
         if (!isSelectManager()){
             businessDefineHome.getInstance().getBusinessNeedFiles().add(selectNeedFile);
+            BusinessNeedFile parent = selectNeedFile.getParent();
+            if (parent != null){
+                parent.getChildren().add(selectNeedFile);
+            }
+            tree = null;
         }
         businessDefineHome.update();
     }

@@ -363,6 +363,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     public static class NeedFileTreeNode implements TreeNode, OrderModel {
 
+        private boolean expanded = true;
 
         private BusinessNeedFile businessNeedFile;
 
@@ -393,6 +394,18 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         public String getType(){
 
             return (businessNeedFile == null) ? "ROOT" : businessNeedFile.getType().name();
+        }
+
+        public boolean isExpanded() {
+            return expanded;
+        }
+
+        public void setExpanded(boolean expanded) {
+            this.expanded = expanded;
+        }
+
+        public List<NeedFileTreeNode> getChild() {
+            return child;
         }
 
         @Override

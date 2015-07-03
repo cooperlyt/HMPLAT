@@ -176,7 +176,7 @@
         <h:form>
             <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="client"
                     value="#{businessNeedFileConfig.taskFileSubscribeTree}" var="_node">
-                <r:treeNode type="ALL" iconClass="octicon octicon-diff-ignored">
+                <r:treeNode type="ALL" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-ignored">
 
 
                     <h:outputText value="#{_node.businessNeedFile.name}" styleClass="treelabel"/>
@@ -251,7 +251,7 @@
 
                     </div>
                 </r:treeNode>
-                <r:treeNode type="ANYONE" iconClass="octicon octicon-diff-removed">
+                <r:treeNode type="ANYONE" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-removed">
 
                     <h:outputText value="#{_node.businessNeedFile.name}" styleClass="treelabel"/>
                     <h:outputText value="#{_node.businessNeedFile.description}" styleClass="treeDescription"/>
@@ -373,7 +373,7 @@
                     </div>
 
                 </r:treeNode>
-                <r:treeNode type="ROOT" expanded="true" iconClass="octicon octicon-diff-ignored">
+                <r:treeNode type="ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
                     <div style="width: 100%;display:inline-block;line-height: 22px">
                         #{messages.TaskSubscribeFile}
 

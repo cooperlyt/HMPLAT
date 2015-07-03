@@ -24,7 +24,6 @@ public class HouseBusiness implements java.io.Serializable {
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private BusinessHouseOwner businessHouseOwner;
     private LandInfo landInfo;
-    private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(0);
     private HouseRegInfo houseRegInfo;
 
 
@@ -148,14 +147,6 @@ public class HouseBusiness implements java.io.Serializable {
         this.landInfo = landInfo;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", orphanRemoval = true, cascade = CascadeType.ALL)
-    public Set<NewHouseContract> getNewHouseContracts() {
-        return this.newHouseContracts;
-    }
-
-    public void setNewHouseContracts(Set<NewHouseContract> newHouseContracts) {
-        this.newHouseContracts = newHouseContracts;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "REG_INFO",nullable = true)
