@@ -5,285 +5,96 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                template="/layout/template.xhtml">
-
-<ui:define name="toolbar">
-
-
-
-<h:form>
-    <r:toolbar height="26" itemSeparator="grid">
-        <r:toolbarGroup>
-            <a:outputPanel id="orgEditActionForm">
-                <a:commandButton image="/img/icons/create.gif" title="#{messages.createOrg}" execute="@this" immediate="true"
-                                 value="#{messages.createOrg}" styleClass="toolBarPic"
-                                 render="orgEditPanel_form,orgEditPanel_title,orgEditPanel_controls"
-                                 oncomplete="#{r:component('orgEditPanel')}.show();">
-                    <a:param name="orgId" value="" assignTo="#{organizationHome.id}"/>
-                    <a:param name="parentOrgId" value="#{organizationHome.instance.id}"
-                             assignTo="#{organizationHome.parentOrgId}"/>
-                    <s:conversationPropagation type="begin"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="/layout/template-data.xhtml">
 
 
-                #{' '}
-                <a:commandButton id="editOrgBtn" image="/img/icons/edit.png" title="#{messages.edit}" execute="@this"
-                                 immediate="true" styleClass="toolBarPic"
-                                 onclick="if (#{not organizationHome.idDefined}){alert('#{messages.plase_select_org_first}'); return false;}"
-                                 render="orgEditPanel_form,orgEditPanel_title,orgEditPanel_controls"
-                                 oncomplete="#{r:component('orgEditPanel')}.show();">
 
-                    <a:param id="editOrgId" name="editOrgId" value="#{organizationHome.instance.id}"
-                             assignTo="#{organizationHome.id}"/>
-                    <a:attachQueue requestDelay="0"/>
-                    <s:conversationPropagation type="begin"/>
-                </a:commandButton>
-
-            </a:outputPanel>
-        </r:toolbarGroup>
-        <r:toolbarGroup>
-            <h:panelGroup id="selectOrgLable">
-                <h:outputText value="#{organizationHome.instance.name}" rendered="#{organizationHome.idDefined}"/>
-
-                <h:outputText value="#{messages.plase_select_org_first}"
-                              rendered="#{not organizationHome.idDefined}"/>
-            </h:panelGroup>
-        </r:toolbarGroup>
-
-        <r:toolbarGroup location="right">
-
-            <a:commandButton id="empEditActionForm" value="#{messages.create}#{messages.employee}" execute="@this"
-                             immediate="true"
-                             oncomplete="#{r:component('empEditPanel')}.show();" styleClass="toolBarBtn"
-                             onclick="if (#{not organizationHome.idDefined}){alert('#{messages.plase_select_org_first}'); return false;}"
-                             render="credentialsForm,viewCredntials,empEditPanel_title,employeeEditPanelHideBtn">
-                <a:param name="empid" value="" assignTo="#{employeeHome.id}"/>
-                <a:param name="persionid" value="" assignTo="#{personHome.id}"/>
-                <a:param name="orgid" value="#{organizationHome.instance.id}" assignTo="#{organizationHome.id}"/>
-                <s:conversationPropagation type="begin"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-
-        </r:toolbarGroup>
-    </r:toolbar>
-</h:form>
-
-<r:popupPanel id="empEditPanel" modal="true" autosized="true" moveable="true"
-                 resizeable="false">
-<f:facet name="header">
-    <h:outputText id="empEditPanel_title"
-                  value="#{employeeHome.managed ? messages['edit'] : messages['add']} #{messages.employee}"/>
-</f:facet>
-<f:facet name="controls">
-    <h:panelGrid columns="3">
-        <a:status>
-            <f:facet name="start">
-                <h:graphicImage value="/img/connect_title_active.gif"/>
-            </f:facet>
-            <f:facet name="stop">
-                <h:graphicImage value="/img/connect_title.gif"/>
-            </f:facet>
-        </a:status>
-
-        <br/>
-        <h:form id="employeeEditPanelHideBtn">
-            <a:commandButton immediate="true"
-                             execute="@this" image="/img/close.png"
-                             oncomplete="#{r:component('empEditPanel')}.hide(); return false;">
-                <s:conversationPropagation type="end"/>
-
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-        </h:form>
-    </h:panelGrid>
-
-</f:facet>
-<r:messages ajaxRendered="true" globalOnly="true"/>
-
-<a:outputPanel id="empEditPanelContent" ajaxRendered="false">
-<a:outputPanel id="viewCredntials">
-    <h:panelGrid columns="2" rendered="#{employeeHome.managed}">
-        <s:decorate template="/layout/display.xhtml">
-            <ui:define name="label">
-                #{messages.person_field_credentialsType}
-            </ui:define>
+    <ui:param name="funcName" value="#{messages.EmployeeMgr}"/>
 
 
-            <r:select disabled="true" styleClass="credentialsTypeSelectWidth" listWidth="140px"
-                         label="#{messages.person_field_credentialsType}"
-                         value="#{personHome.instance.credentialsType}">
-                <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                <s:convertEnum/>
-            </r:select>
-        </s:decorate>
 
-        <s:decorate template="/layout/display.xhtml">
-            <ui:define name="label">#{messages.person_field_credentialsNO}</ui:define>
-            <h:inputText readonly="true" size="25" value="#{personHome.instance.credentialsNumber}"/>
-        </s:decorate>
-    </h:panelGrid>
-
-</a:outputPanel>
-
-<h:form id="credentialsForm">
-    <r:panel>
-        <ui:include src="/layout/system/PersonInput.xhtml">
-            <ui:param name="personEntityHelper" value="#{employeeEntityHelper}"/>
-        </ui:include>
-
-        <div style="clear: both"/>
-
-        <h:panelGrid columns="2">
-            <s:decorate id="empIdField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_id}</ui:define>
-                <h:inputText id="id"
-                             disabled="#{employeeHome.managed}"
-                             valueChangeListener="#{employeeHome.verifyIdAvailable}"
-                             required="true"
-                             size="20"
-                             maxlength="32"
-                             
-                             label="#{messages.employee_field_id}"
-                             value="#{employeeHome.instance.id}">
-                    <a:ajax event="blur" render="empIdField"
-                            />
-                </h:inputText>
-            </s:decorate>
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+    <ui:param name="panelId" value="editPanel"/>
+    <ui:param name="panelTitle" value="#{messages.create}#{' '}#{messages.Developer}"/>
 
 
-            <s:decorate id="empEnableField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_enable}</ui:define>
-                <h:selectBooleanCheckbox
-                        
-                        label="#{messages.employee_field_enable}"
-                        required="true"
-                        value="#{employeeHome.instance.enable}"/>
-            </s:decorate>
-
-            <s:decorate id="joinDateField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_joinDate}</ui:define>
-                <r:calendar enableManualInput="true"
-                               inputSize="20"
-                               required="true"
-                               timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-
-                               value="#{employeeHome.instance.joinDate}"
-                               datePattern="#{messages.datePattern}"/>
-            </s:decorate>
-
-            <s:decorate id="empJobField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_job}</ui:define>
-                <r:select style="width:150px"
-                             
-                             label="#{messages.employee_field_job}"
-                             value="#{employeeHome.instance.job}">
-                    <s:selectItems var="_word" label="#{_word.value}"
-                                   itemValue="#{_word.id}"
-                                   value="#{dictionary.getWordList('system.empJob')}"
-                                   noSelectionLabel="#{messages.noSelectLabel}"/>
-
-                </r:select>
-            </s:decorate>
-
-
-            <s:decorate id="empOrgField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_org}</ui:define>
-                <h:selectOneMenu disabled="#{not employeeHome.managed}"
-                                 style="width:150px;"
-                                 label="#{messages.employee_field_org}"
-                                 value="#{employeeHome.instance.organization}" required="true">
-                    <s:selectItems value="#{allOrganizationList.resultList}" var="_org" label="#{_org.name}"/>
-                    <f:converter converterId="systemEntityConverter"/>
-                    <a:ajax event="valueChange" render="empOrgField" disabled="#{not employeeHome.managed}"/>
-                </h:selectOneMenu>
-            </s:decorate>
-
-            <s:decorate id="empEMailField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_email}</ui:define>
-                <h:inputText id="EMail"
-                             size="20"
-                             maxlength="20"
-                             label="#{messages.employee_field_email}"
-                             value="#{employeeHome.instance.EMail}">
-
-
-                </h:inputText>
-
-                <ui:define name="tail">
-                    <r:message for="EMail" styleClass="message-icon"
-                               showDetail="true" showSummary="true" tooltip="true"/>
+        <div class="form-inline">
+            <s:decorate id="idField" styleClass="form-group " template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.employee_field_id}
                 </ui:define>
-            </s:decorate>
-
-
-        </h:panelGrid>
-
-        <h:panelGrid columns="1">
-
-            <s:decorate id="empPasswordField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.employee_field_password}</ui:define>
-                <h:inputTextarea cols="69" rows="3"
-                                 
-                                 label="#{messages.employee_field_password}"
-                                 value="#{employeeHome.instance.password}">
-                    <a:ajax event="blur" render="empPasswordField"/>
-                </h:inputTextarea>
-            </s:decorate>
-
-            <s:decorate id="empMemoField" template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.field_memo}</ui:define>
-                <h:inputTextarea cols="69" rows="3" value="#{employeeHome.instance.memo}"
-                                 
-                                 label="#{messages.field_memo}">
-                    <a:ajax event="blur" render="empMemoField"
-                            />
-                </h:inputTextarea>
+                <ui:param name="for" value="idInput"/>
+                <ui:param name="status" value="idStatus"/>
+                <h:inputText id="idInput" required="true" styleClass="form-control" maxlength="32"
+                             label="#{messages.employee_field_id}" size="32"
+                             value="#{employeeHome.instance.id}" disabled="#{employeeHome.managed}"
+                             valueChangeListener="#{employeeHome.verifyIdAvailable}">
+                    <f:validateRequired/>
+                    <a:ajax event="change" render="idField" status="idStatus"/>
+                </h:inputText>
 
             </s:decorate>
 
 
-        </h:panelGrid>
+            <div class="form-big-switch form-group">
+                <dh:switch value="#{employeeHome.instance.enable}"
+                           rendered="#{employeeHome.managed}"
+                           onText="#{messages.Enable}"
+                           offText="#{messages.Disable}"
+                           styleClass="js-switch "/>
 
-        <div style="clear:both">
-            <span class="required">*</span>
-            #{messages.requiredFields}
+
+            </div>
+
         </div>
 
-    </r:panel>
-    <h:panelGrid columns="1" style="width: 100%; text-align: right">
-        <a:outputPanel id="#{panelId}_buttons">
-            <div class="actionButtons">
-                <a:commandButton execute="@form"
-                                 render="employeeListPanel"
-                                 value="#{messages.save}" action="#{employeeHome.persistEnd}"
-                                 rendered="#{!employeeHome.managed}"
-                                 data="#{employeeHome.lastState}"
-                                 oncomplete="if (event.data == 'persisted'){#{r:component('empEditPanel')}.hide();}">
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-                <a:commandButton execute="@form" render="employeeListPanel"
-                                 value="#{messages.update}" action="#{employeeHome.updateEnd}"
-                                 rendered="#{employeeHome.managed}" data="#{employeeHome.lastState}"
-                                 oncomplete="if (event.data == 'updated')#{r:component('empEditPanel')}.hide();">
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-                <a:commandButton immediate="true" execute="@this"
-                                 value="#{messages.cancel}"
-                                 oncomplete="#{r:component('empEditPanel')}.hide();">
-                    <s:conversationPropagation type="end"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-            </div>
-        </a:outputPanel>
-    </h:panelGrid>
-</h:form>
+        <s:decorate id="nameField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.person_field_name}
+            </ui:define>
+            <ui:param name="for" value="nameInput"/>
+            <h:inputText id="nameInput" required="true" styleClass="form-control" maxlength="50"
+                         label="#{messages.person_field_name}"
+                         value="#{employeeHome.instance.personName}">
 
 
-</a:outputPanel>
+            </h:inputText>
+        </s:decorate>
 
-</r:popupPanel>
+        <s:decorate id="phoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.person_field_phone}
+            </ui:define>
+            <ui:param name="for" value="phoneInput"/>
+            <h:inputText id="phoneInput" styleClass="form-control" maxlength="20"
+                         label="#{messages.person_field_phone}"
+                         value="#{employeeHome.instance.phone}">
+
+
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate id="emailField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.employee_field_email}
+            </ui:define>
+            <ui:param name="for" value="emailInput"/>
+            <h:inputText id="emailInput" styleClass="form-control" maxlength="50"
+                         label="#{messages.employee_field_email}"
+                         value="#{employeeHome.instance.EMail}">
+
+
+            </h:inputText>
+        </s:decorate>
+
+
+
+    </ui:decorate>
+
+
 
 <s:decorate template="/layout/edit-modalpanel.xhtml">
     <ui:param name="panelId" value="powerEditPanel"/>
@@ -331,78 +142,8 @@
 </s:decorate>
 
 
-<s:decorate template="/layout/edit-modalpanel.xhtml">
-    <ui:param name="panelId" value="orgEditPanel"/>
-    <ui:define name="panelTitle">
-        <h:outputText
-                value="#{organizationHome.managed ? messages['edit'] : messages['add']} #{messages.organization}"/>
-    </ui:define>
 
-    <ui:define name="controls">
-        <a:commandButton immediate="true"
-                         execute="@this" image="/img/icons/close.png"
-                         oncomplete="#{r:component('orgEditPanel')}.hide(); return false;">
-            <s:conversationPropagation type="end"/>
-            <s:conversationId/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-    </ui:define>
-    <s:decorate template="/layout/seam-edit.xhtml">
-        <ui:define name="label">#{messages.organization_field_root}</ui:define>
-        <h:selectBooleanCheckbox value="#{organizationHome.instance.root}"
-                                 disabled="#{empty organizationHome.parentOrgId}"/>
-    </s:decorate>
 
-    <s:decorate id="orgNameField" template="/layout/seam-edit.xhtml">
-        <ui:define name="label">#{messages.organization_field_name}</ui:define>
-        <h:inputText value="#{organizationHome.instance.name}" required="true"
-                     label="#{messages.organization_field_name}" size="20" maxlength="50">
-            <a:ajax event="blur" render="orgNameField"/>
-        </h:inputText>
-    </s:decorate>
-
-    <s:decorate id="orgPhoneField" template="/layout/seam-edit.xhtml">
-        <ui:define name="label">#{messages.organization_field_phone}</ui:define>
-        <h:inputText label="#{messages.organization_field_phone}"
-                     value="#{organizationHome.instance.phoneNumber}"
-                     size="20" maxlength="20">
-            <a:ajax event="blur" render="orgPhoneField"/>
-        </h:inputText>
-
-    </s:decorate>
-    <s:decorate id="orgMemoField" template="/layout/seam-edit.xhtml">
-        <ui:define name="label">#{messages.field_memo}</ui:define>
-        <h:inputTextarea value="#{organizationHome.instance.memo}"
-                         label="#{messages.field_memo}" cols="20" rows="4"/>
-    </s:decorate>
-
-    <ui:define name="actionButtons">
-        <a:commandButton execute="@form"
-                         render="orgEditPanel_inputs,tree"
-                         value="#{messages.save}" action="#{organizationHome.persistEnd}"
-                         rendered="#{!organizationHome.managed}"
-                         data="#{organizationHome.lastState}"
-                         oncomplete="if (event.data == 'persisted'){#{r:component('orgEditPanel')}.hide();}">
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-        <a:commandButton execute="@form" render="orgEditPanel_inputs,tree"
-                         value="#{messages.update}" action="#{organizationHome.updateEnd}"
-                         rendered="#{organizationHome.managed}" data="#{organizationHome.lastState}"
-                         oncomplete="if (event.data == 'updated')#{r:component('orgEditPanel')}.hide();">
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-        <a:commandButton immediate="true" execute="@this"
-                         value="#{messages.cancel}"
-                         oncomplete="#{r:component('orgEditPanel')}.hide();">
-            <s:conversationPropagation type="end"/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-    </ui:define>
-</s:decorate>
-
-</ui:define>
-
-<ui:define name="body">
 
     <h:outputStylesheet>
         .columns_tree {
@@ -417,48 +158,58 @@
         }
     </h:outputStylesheet>
 
-    <h:panelGrid style="width: 100%" columns="2" columnClasses="columns_tree,columns_employee">
+
+
         <h:form>
-            <r:tree id="tree" render="orgEditActionForm,selectOrgLable,empEditActionForm,employeeListPanel"
-                       var="_node"
-                       value="#{rootOrganizationList.resultList}"
-                       onbeforeselectionchange=" if (arguments[2].newSelection[0].isSelected()) return false;"
-                       toggleType="client" selectionChangeListener="#{orgLimitEmployee.selectionChanged}"
-                       selectionType="ajax">
-                <r:treeNode>
-                    #{_node.name}
-                </r:treeNode>
-            </r:tree>
-        </h:form>
-        <h:form>
-            <r:dataTable style="width:100%" id="employeeListPanel" value="#{orgEmployees}"
-                            var="_emp" noDataLabel="#{messages.emptyResult}">
-                <r:column>
+
+            <s:div styleClass="blankslate" rendered="#{empty employeeList.resultList}">
+                <span class="mega-octicon octicon-search"></span>
+
+                <h3>#{messages.EmptyResult}</h3>
+
+                <p>  #{messages.YouCan}#{' '}
+                    <a:commandLink value="#{messages.create}"
+                                   oncomplete="$('#districtEditPanel').modal({backdrop: 'static'})"
+                                   render="districtEditPanel_form">
+                        <a:attachQueue requestDelay="0"/>
+                        <a:param value="" assignTo="#{districtHome.id}"/>
+                    </a:commandLink>
+
+
+                    #{' '} #{messages.Or}  #{messages.Try} #{' '}
+                    <s:link value="#{messages.AvancedSearch}"/></p>
+            </s:div>
+
+            <h:dataTable style="width:100%" id="employeeListPanel" value="#{employeeList.resultList}"
+                            var="_emp" render="#{not empty employeeList.resultList}">
+                <h:column>
                     <f:facet name="header">
                         #{messages.employee_field_id}
                     </f:facet>
-                    #{_emp.id}
-                </r:column>
-                <r:column>
+
+                    <h:outputText value="#{_emp.id}" styleClass="#{_emp.enable ? '' : ''}"/>
+                </h:column>
+                <h:column>
                     <f:facet name="header">
                         #{messages.person_field_name}
                     </f:facet>
-                    #{_emp.personName}
-                </r:column>
-                <r:column>
+
+                    <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : ''}"/>
+                </h:column>
+
+                <h:column >
                     <f:facet name="header">
-                        #{messages.employee_field_job}
+                        #{messages.person_field_phone}
                     </f:facet>
-                    <h:outputText value="#{_emp.job}">
-                        <f:converter converterId="dictionaryConverter"/>
-                    </h:outputText>
-                </r:column>
-                <r:column style="width: 30px">
+                    <h:outputText value="#{_emp.phone}" styleClass="#{_emp.enable ? '' : ''}"/>
+                </h:column>
+
+                <h:column >
                     <f:facet name="header">
-                        #{messages.employee_field_enable}
+                        #{messages.eMail}
                     </f:facet>
-                    <h:selectBooleanCheckbox disabled="true" value="#{_emp.enable}"/>
-                </r:column>
+                    <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : ''}"/>
+                </h:column>
                 <r:column style="width: 50px">
                     <f:facet name="header">
                         #{messages.action}
@@ -467,9 +218,9 @@
                     <a:commandButton immediate="true" image="/img/icons/edit.png" title="#{messages.edit}" execute="@this"
                                      render="credentialsForm,viewCredntials,empEditPanel_title,employeeEditPanelHideBtn"
                                      oncomplete="#{r:component('empEditPanel')}.show();">
-                        <a:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
+
                         <a:param name="empId" value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
-                        <s:conversationPropagation type="begin"/>
+
                         <a:attachQueue requestDelay="0"/>
                     </a:commandButton>
                     #{' '}
@@ -479,17 +230,16 @@
                                      action="#{employeeHome.readPower}"
                                      oncomplete="#{r:component('powerEditPanel')}.show();">
                         <a:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
-                        <a:param value="#{_emp.organization.id}" assignTo="#{organizationHome.id}"/>
-                        <s:conversationPropagation type="begin"/>
+
                         <a:attachQueue requestDelay="0"/>
                     </a:commandButton>
 
                 </r:column>
-            </r:dataTable>
+            </h:dataTable>
 
         </h:form>
-    </h:panelGrid>
 
-</ui:define>
+
+
 
 </ui:composition>

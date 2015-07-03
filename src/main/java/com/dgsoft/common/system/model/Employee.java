@@ -15,24 +15,19 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "EMPLOYEE",catalog = "DB_PLAT_SYSTEM")
-public class Employee implements java.io.Serializable,PersonEntity {
+public class Employee implements java.io.Serializable {
 
     private String id;
-    private Organization organization;
-    private String Job;
     private Date joinDate;
     private String EMail;
     private String password;
     private boolean enable;
-    private String memo;
     private Set<Role> roles = new HashSet<Role>(0);
     private String phone;
-    private CredentialsType credentialsType;
-    private String credentialsNumber;
     private String name;
 
     public Employee() {
-        enable = true;
+
     }
 
     public Employee(String id) {
@@ -40,15 +35,15 @@ public class Employee implements java.io.Serializable,PersonEntity {
         this.id = id;
     }
 
+    public Employee(Date joinDate){
+        this.joinDate = joinDate;
+        enable = true;
+    }
+
     public Employee(String name, String id) {
         enable = true;
         this.name = name;
         this.id = id;
-    }
-
-    public Employee(Organization organization) {
-        enable = true;
-        this.organization = organization;
     }
 
     @Id
@@ -63,27 +58,7 @@ public class Employee implements java.io.Serializable,PersonEntity {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORGANIZATION")
-    @NotNull
-    public Organization getOrganization() {
-        return this.organization;
-    }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
-
-    @Column(name = "JOB", length = 32)
-    @Size(max = 32)
-    public String getJob() {
-        return this.Job;
-    }
-
-    public void setJob(String Job) {
-        this.Job = Job;
-    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "JOIN_DATE", nullable = false, length = 19, columnDefinition = "DATETIME")
@@ -125,16 +100,6 @@ public class Employee implements java.io.Serializable,PersonEntity {
         this.enable = enable;
     }
 
-    @Column(name = "MEMO", length = 100)
-    @Size(max = 100)
-    public String getMemo() {
-        return this.memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
-    }
-
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Role.class)
     @JoinTable(name = "ROLE_EMP", joinColumns = @JoinColumn(name = "EMP_ID"), inverseJoinColumns = @JoinColumn(name = "ROL_ID"))
     public Set<Role> getRoles() {
@@ -144,20 +109,6 @@ public class Employee implements java.io.Serializable,PersonEntity {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "CREDENTIALS_TYPE", referencedColumnName = "CREDENTIALS_TYPE", nullable = false),
-//            @JoinColumn(name = "CREDENTIALS_NUMBER", referencedColumnName = "CREDENTIALS_NUMBER", nullable = false)})
-//    @NotNull
-//    public Person getPerson() {
-//        return this.person;
-//    }
-//
-//    public void setPerson(Person person) {
-//        this.person = person;
-//    }
-
 
     @Column(name = "PHONE", length = 20)
     @Size(max = 20)
@@ -169,33 +120,6 @@ public class Employee implements java.io.Serializable,PersonEntity {
         this.phone = phone;
     }
 
-    @Override
-    @Enumerated(EnumType.STRING)
-    @Column(name = "CREDENTIALS_TYPE", nullable = false,length = 32)
-    @NotNull
-    public CredentialsType getCredentialsType() {
-        return this.credentialsType;
-    }
-
-    @Override
-    public void setCredentialsType(CredentialsType credentialsType) {
-        this.credentialsType = credentialsType;
-    }
-
-    @Override
-    @Column(name = "CREDENTIALS_NUMBER",nullable = false,length = 100)
-    @Size(max = 100)
-    @NotNull
-    public String getCredentialsNumber() {
-        return this.credentialsNumber;
-    }
-
-    @Override
-    public void setCredentialsNumber(String credentialsNumber) {
-        this.credentialsNumber = credentialsNumber;
-    }
-
-    @Override
     @Column(name = "NAME", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
@@ -203,7 +127,6 @@ public class Employee implements java.io.Serializable,PersonEntity {
         return this.name;
     }
 
-    @Override
     public void setPersonName(String name) {
         this.name = name;
     }
