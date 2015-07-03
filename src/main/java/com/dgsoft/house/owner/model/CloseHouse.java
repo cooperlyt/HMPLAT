@@ -27,6 +27,8 @@ public class CloseHouse implements java.io.Serializable {
     private String phone;
     private String executCardNo;
     private String workCardNo;
+    private String closeDeadline;
+
 
 
 	public CloseHouse() {
@@ -42,7 +44,7 @@ public class CloseHouse implements java.io.Serializable {
 	public CloseHouse(String id, OwnerBusiness ownerBusiness,
 			String closeDownClour, String action, Date closeDate, Date toDate,
             String legalDocuments,String executionNotice,String sendPeople,String phone,
-            String executCardNo,String workCardNo) {
+            String executCardNo,String workCardNo,String closeDeadline) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
 		this.closeDownClour = closeDownClour;
@@ -55,6 +57,7 @@ public class CloseHouse implements java.io.Serializable {
         this.phone = phone;
         this.executCardNo = executCardNo;
         this.workCardNo= workCardNo;
+        this.closeDeadline = closeDeadline;
 
 	}
 
@@ -83,9 +86,9 @@ public class CloseHouse implements java.io.Serializable {
 		this.ownerBusiness = houseBusiness;
 	}
 
-	@Column(name = "CLOSE_DOWN_CLOUR", nullable = false, length = 32)
+	@Column(name = "CLOSE_DOWN_CLOUR", nullable = false, length = 100)
 	@NotNull
-	@Size(max = 32)
+	@Size(max = 100)
 	public String getCloseDownClour() {
 		return this.closeDownClour;
 	}
@@ -182,6 +185,16 @@ public class CloseHouse implements java.io.Serializable {
 
     public void setWorkCardNo(String workCardNo) {
         this.workCardNo = workCardNo;
+    }
+
+    @Column(name = "CLOSE_DEADLINE", length = 50)
+    @Size(max = 50)
+    public String getCloseDeadline() {
+        return closeDeadline;
+    }
+
+    public void setCloseDeadline(String closeDeadline) {
+        this.closeDeadline = closeDeadline;
     }
 
 
