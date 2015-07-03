@@ -16,14 +16,15 @@
                 <div class="modal-header">
 
                     <a:outputPanel id="#{panelId}_controls">
-
+                        <ui:insert name="panelControls">
                         <button type="button" class="close" aria-label="#{messages.close}"
                                 data-dismiss="modal">
                             <span class="octicon octicon-remove-close" aria-hidden="true"></span>
                             <span class="sr-only">#{messages.close}</span></button>
+                        </ui:insert>
                     </a:outputPanel>
                     <a:outputPanel id="#{panelId}_title">
-                        <h2 class="facebox-header" id="#{panelId}_ModalLabel">#{panelTitle}</h2>
+                        <h2 class="facebox-header"><ui:insert name="panelTitle">#{panelTitle}</ui:insert></h2>
                     </a:outputPanel>
                 </div>
                 <h:form id="#{panelId}_form" role="form">

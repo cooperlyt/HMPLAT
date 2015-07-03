@@ -8,6 +8,10 @@ input[type=button], input[type=reset], input[type=submit]{
     margin-left: 4px;
 }
 
+.modal-backdrop.fade.in{
+    display: block;
+}
+
 .panel-menu-link{
 
 }
@@ -202,7 +206,7 @@ input[type=button], input[type=reset], input[type=submit]{
 }
 
 
-
+/*
 .dropdown-menu-git {
     position: absolute;
     top: 100%;
@@ -220,6 +224,7 @@ input[type=button], input[type=reset], input[type=submit]{
     border-radius: 4px;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15)
 }
+*/
 
 .dropdown-menu-git:before {
     position: absolute;

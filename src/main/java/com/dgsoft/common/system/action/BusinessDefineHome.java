@@ -1,8 +1,11 @@
 package com.dgsoft.common.system.action;
 
+import com.dgsoft.common.OrderBeanComparator;
+import com.dgsoft.common.OrderModel;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.business.*;
 import com.dgsoft.common.system.model.*;
+import com.google.common.collect.Iterators;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -11,8 +14,11 @@ import org.jboss.seam.core.Expressions;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jbpm.graph.def.ProcessDefinition;
+import org.richfaces.model.SortMode;
 
 import javax.faces.event.ValueChangeEvent;
+import javax.persistence.criteria.Order;
+import javax.swing.tree.TreeNode;
 import java.util.*;
 
 /**
@@ -150,6 +156,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     private List<TaskSubscribe> completeSubscribes;
 
     private List<SubscribeGroup> viewSubscribeGroups;
+
 
     public List<TaskSubscribe> getOperSubscribes() {
         if (operSubscribes == null) {
@@ -310,7 +317,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
         for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
             if (component.getType().equals(CreateComponent.CreateComponentType.DATA_VALID)) {
-                result.add((BusinessDataValid)Component.getInstance(component.getComponent(),true));
+                result.add((BusinessDataValid) Component.getInstance(component.getComponent(), true));
             }
         }
 
@@ -322,23 +329,115 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
         for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
             if (component.getType().equals(CreateComponent.CreateComponentType.DATA_FILL)) {
-                result.add((BusinessDataFill)Component.getInstance(component.getComponent(),true));
+                result.add((BusinessDataFill) Component.getInstance(component.getComponent(), true));
             }
         }
 
         return result;
     }
 
-    public List<BusinessPickSelect> getCreateBizSelectComponents(){
+    public List<BusinessPickSelect> getCreateBizSelectComponents() {
         List<BusinessPickSelect> result = new ArrayList<BusinessPickSelect>();
 
         for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
             if (component.getType().equals(CreateComponent.CreateComponentType.BIZ_SELECT)) {
-                result.add((BusinessPickSelect)Component.getInstance(component.getComponent(),true));
+                result.add((BusinessPickSelect) Component.getInstance(component.getComponent(), true));
             }
         }
 
         return result;
+    }
+
+    public List<BusinessNeedFile> getNeedFileRootList(){
+        List<BusinessNeedFile> rootNodes = new ArrayList<BusinessNeedFile>();
+
+        for (BusinessNeedFile file : getInstance().getBusinessNeedFiles()) {
+            if (file.getParent() == null) {
+                rootNodes.add(file);
+            }
+        }
+        Collections.sort(rootNodes, OrderBeanComparator.getInstance());
+        return rootNodes;
+    }
+
+
+    public static class NeedFileTreeNode implements TreeNode, OrderModel {
+
+
+        private BusinessNeedFile businessNeedFile;
+
+        private List<NeedFileTreeNode> child;
+
+        private NeedFileTreeNode parent;
+
+        private NeedFileTreeNode(BusinessNeedFile businessNeedFile, NeedFileTreeNode parent) {
+            this(businessNeedFile.getChildren());
+            this.businessNeedFile = businessNeedFile;
+            this.parent = parent;
+        }
+
+
+
+        public NeedFileTreeNode(Collection<BusinessNeedFile> needFiles) {
+            this.child = new ArrayList<NeedFileTreeNode>(needFiles.size());
+            for (BusinessNeedFile needFile: needFiles){
+                this.child.add(new NeedFileTreeNode(needFile,this));
+            }
+            Collections.sort(child, OrderBeanComparator.getInstance());
+        }
+
+        public BusinessNeedFile getBusinessNeedFile() {
+            return businessNeedFile;
+        }
+
+        public String getType(){
+
+            return (businessNeedFile == null) ? "ROOT" : businessNeedFile.getType().name();
+        }
+
+        @Override
+        public TreeNode getChildAt(int childIndex) {
+            return child.get(childIndex);
+        }
+
+        @Override
+        public int getChildCount() {
+            return child.size();
+        }
+
+        @Override
+        public TreeNode getParent() {
+            return parent;
+        }
+
+        @Override
+        public int getIndex(TreeNode node) {
+            return child.indexOf(node);
+        }
+
+        @Override
+        public boolean getAllowsChildren() {
+            return (businessNeedFile == null) || !businessNeedFile.getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN);
+        }
+
+        @Override
+        public boolean isLeaf() {
+            return (businessNeedFile != null) && businessNeedFile.getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN);
+        }
+
+        @Override
+        public Enumeration children() {
+            return Iterators.asEnumeration(child.iterator());
+        }
+
+        @Override
+        public int getPriority() {
+            return (businessNeedFile == null) ? 0 : businessNeedFile.getPriority();
+        }
+
+        @Override
+        public void setPriority(int priority) {
+        }
     }
 
 }

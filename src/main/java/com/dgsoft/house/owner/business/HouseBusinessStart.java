@@ -4,16 +4,16 @@ import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.*;
-import com.dgsoft.common.system.model.CreateComponent;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.*;
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.datamodel.DataModel;
+import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Logging;
 
@@ -60,7 +60,11 @@ public class HouseBusinessStart {
     }
 
 
+    @DataModel
     private List<OwnerBusiness> allowSelectBizs;
+
+    @DataModelSelection
+    private OwnerBusiness selectedBusiness;
 
     public String singleHouseSelected() {
 
@@ -77,7 +81,7 @@ public class HouseBusinessStart {
         }else{
             return BUSINESS_PICK_BIZ_PAGE;
         }
-        return houseIsSelected();
+        return dataSelected();
     }
 
     private void initBusinessData() {
@@ -96,7 +100,12 @@ public class HouseBusinessStart {
 
     }
 
-    private String houseIsSelected(){
+    public String businessSelected(){
+        ownerBusinessHome.getInstance().setSelectBusiness(selectedBusiness);
+        return dataSelected();
+    }
+
+    private String dataSelected(){
         initBusinessData();
         for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
             component.fillData();
@@ -120,7 +129,7 @@ public class HouseBusinessStart {
 
     public String mulitHouseSelect() {
 
-        return houseIsSelected();
+        return dataSelected();
     }
 
     @In
