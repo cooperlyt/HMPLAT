@@ -1,0 +1,426 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                template="/layout/template-tab.xhtml">
+
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:param name="funcName" value="#{messages.TaskSubscribe}"/>
+    <ui:define name="head-tab">
+
+
+        <s:link styleClass="pagehead-nav-item" view="/func/system/config/TaskSubscribeConfig.xhtml">
+            <span class="octicon octicon-rss"/>
+            #{messages.TaskSubscribeComponent}
+        </s:link>
+
+        <s:link styleClass="selected pagehead-nav-item">
+            <span class="octicon octicon-repo-force-push"></span>
+            #{messages.TaskSubscribeFile}
+        </s:link>
+
+        <s:link styleClass="pagehead-nav-item">
+            <span class="glyphicon glyphicon-print"></span>
+            #{messages.TaskSubscribeReport}
+        </s:link>
+
+    </ui:define>
+
+    <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
+
+     <h:outputStylesheet name="treeview.css"/>
+    <a:outputPanel id="dataResult" layout="block" styleClass="codesearch-results">
+
+<ui:remove>
+        <h:outputScript>
+            $(document).ready(
+                    function () {
+                        $('.rf-trn-cnt').click(function(){
+                            $('.rf-trn').removeClass('rf-trn-select');
+                            $('.rf-trn-sel').parent().addClass('rf-trn-select');
+                        });
+
+                    }
+            );
+        </h:outputScript>
+
+
+</ui:remove>
+
+
+
+        <ui:decorate template="/layout/edit-modalpanel.xhtml">
+            <ui:param name="panelId" value="needFileEditPanel"/>
+            <ui:define name="panelControls">
+                <a:commandLink styleClass="close" p:aria-label="#{messages.close}" p:data-dismiss="modal">
+                    <s:conversationPropagation type="end"/>
+                    <span class="octicon octicon-remove-close" aria-hidden="true"></span>
+                    <span class="sr-only">#{messages.close}</span>
+                </a:commandLink>
+
+            </ui:define>
+            <ui:define name="panelTitle">
+                <h:outputText value="#{(businessNeedFileConfig.selectNeedFile.type eq 'CHILDREN') ? messages.NeedFile : messages.NeedFileNode}" rendered="#{not empty businessNeedFileConfig.selectNeedFile}"/>
+            </ui:define>
+
+            <a:outputPanel rendered="#{not empty businessNeedFileConfig.selectNeedFile}">
+            <s:decorate id="nameField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.name}
+                </ui:define>
+                <ui:param name="for" value="nameInput"/>
+                <h:inputText id="nameInput" value="#{businessNeedFileConfig.selectNeedFile.name}" required="true"
+                             styleClass="form-control" maxlength="50"
+                             label="#{messages.name}"/>
+
+
+            </s:decorate>
+            <s:decorate id="typeField" rendered="#{not (businessNeedFileConfig.selectNeedFile.type eq 'CHILDREN')}"
+                        styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Type}
+                </ui:define>
+                <ui:param name="for" value="typeInput"/>
+                <h:selectOneMenu required="true" id="typeInput" value="#{businessNeedFileConfig.selectNeedFile.type}"
+                                 label="#{messages.Type}" styleClass="selectpicker edit-select form-control">
+
+                    <s:selectItems value="#{businessNeedFileConfig.nodeTypes}" var="_type"
+                                   label="#{messages[_type.name()]}"/>
+
+                    <s:convertEnum/>
+                </h:selectOneMenu>
+
+
+            </s:decorate>
+
+            <s:decorate id="taskNameField" rendered="#{(businessNeedFileConfig.selectNeedFile.type eq 'CHILDREN')}"
+                        styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.ProcessTask}
+                </ui:define>
+                <ui:param name="for" value="taskNameInput"/>
+                <h:selectOneMenu required="true" id="taskNameInput"
+                                 value="#{businessNeedFileConfig.selectNeedFile.taskName}"
+                                 label="#{messages.ProcessTask}" styleClass="selectpicker edit-select form-control">
+                    <s:selectItems value="#{businessDefineHome.wfTaskNames}" var="_task" label="#{_task}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                    <f:selectItem itemLabel="#{messages.businessCreateTask}" itemValue="_CREATE"/>
+                </h:selectOneMenu>
+            </s:decorate>
+
+            <s:decorate id="conditionField" rendered="#{(businessNeedFileConfig.selectNeedFile.type eq 'CHILDREN')}"
+                        styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.CONDITION}
+                </ui:define>
+                <ui:param name="for" value="conditionInput"/>
+                <h:inputTextarea id="conditionInput" label="#{messages.CONDITION}"
+                                 value="#{businessNeedFileConfig.selectNeedFile.condition}" styleClass="form-control"/>
+            </s:decorate>
+
+            <s:decorate id="descriptionField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.description}
+                </ui:define>
+                <h:inputTextarea id="descriptionInput" label="#{messages.description}"
+                                 value="#{businessNeedFileConfig.selectNeedFile.description}" styleClass="form-control"/>
+            </s:decorate>
+
+            </a:outputPanel>
+
+            <ui:define name="actionButtons">
+                <a:commandLink styleClass="btn default" p:data-dismiss="modal">
+                    <s:conversationPropagation type="end"/>
+                    <span class="glyphicon glyphicon-floppy-remove"/>
+                    #{messages.abort}
+                </a:commandLink>
+
+                <a:commandLink styleClass="btn btn-primary" execute="@form" render="needFileEditPanel_inputs,fileTree"
+                               action="#{businessNeedFileConfig.save}"
+                               oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#needFileEditPanel').modal('hide')}">
+                    <a:attachQueue requestDelay="0"/>
+                    <span class="glyphicon glyphicon-floppy-disk"/>
+                    #{messages.save}
+                </a:commandLink>
+            </ui:define>
+
+        </ui:decorate>
+
+        <h:outputStylesheet>
+            .treeDescription{
+
+
+                margin-top: 8px;
+                margin-bottom: 0;
+                margin-left: 12px;
+                font-size: 13px;
+                color: #888;
+            }
+
+            .node-add-menu{
+                min-width: 140px;
+            }
+        </h:outputStylesheet>
+
+
+        <h:form>
+            <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="client"
+                    value="#{businessNeedFileConfig.taskFileSubscribeTree}" var="_node">
+                <r:treeNode type="ALL" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-ignored">
+
+
+                    <h:outputText value="#{_node.businessNeedFile.name}" styleClass="treelabel"/>
+                    <h:outputText value="#{_node.businessNeedFile.description}" styleClass="treeDescription"/>
+
+                    <div class="btn-group right" role="group">
+
+
+                    <div class="btn-group dropdown">
+                        <a class=" btn btn-sm btn-primary new-repo dropdown-toggle"
+                           aria-label="" data-target="#"
+                           data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                            <span class="octicon octicon-plus"></span>
+                        </a>
+                        <ul class="dropdown-menu node-add-menu" aria-labelledby="userLabel">
+
+                            <li>
+                                <a:commandLink immediate="true" execute="@this" action="#{businessNeedFileConfig.addFile}"
+                                               render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                               oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                                    <span class="octicon octicon-file-text"></span>
+                                    #{messages.createNeedFile}
+                                </a:commandLink>
+
+                            </li>
+
+                            <li>
+                                <a:commandLink render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                               immediate="true" execute="@this"
+                                               action="#{businessNeedFileConfig.addNode}"
+                                               oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+
+                                    <span class="octicon octicon-file-directory"></span>
+                                    #{messages.createNeedFileGroup}
+                                </a:commandLink>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                        <a:commandLink styleClass="btn btn-sm btn-danger" immediate="true" execute="@this"
+                                       render="fileTree" action="#{businessNeedFileConfig.delete}">
+                            <span class="octicon octicon-trashcan"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                        <a:commandLink class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                       render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                       oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                            <span class="octicon octicon-pencil"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+                        <a:commandLink  class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                        render="fileTree" action="#{businessNeedFileConfig.up}">
+                            <span class="octicon octicon-move-up"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                        <a:commandLink  class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                        render="fileTree" action="#{businessNeedFileConfig.down}">
+                            <span class="octicon octicon-move-down"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                    </div>
+                </r:treeNode>
+                <r:treeNode type="ANYONE" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-removed">
+
+                    <h:outputText value="#{_node.businessNeedFile.name}" styleClass="treelabel"/>
+                    <h:outputText value="#{_node.businessNeedFile.description}" styleClass="treeDescription"/>
+
+                    <div class="btn-group right">
+
+
+                    <div class="btn-group dropdown">
+                        <a class=" btn btn-sm btn-primary new-repo dropdown-toggle"
+                           aria-label="" data-target="#"
+                           data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                            <span class="octicon octicon-plus"></span>
+                        </a>
+                        <ul class="dropdown-menu node-add-menu" aria-labelledby="userLabel">
+
+                            <li>
+                                <a:commandLink immediate="true" execute="@this" action="#{businessNeedFileConfig.addFile}"
+                                               render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                               oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                                    <span class="octicon octicon-file-text"></span>
+                                    #{messages.createNeedFile}
+                                </a:commandLink>
+
+                            </li>
+
+                            <li>
+                                <a:commandLink render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                               immediate="true" execute="@this"
+                                               action="#{businessNeedFileConfig.addNode}"
+                                               oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+
+                                    <span class="octicon octicon-file-directory"></span>
+                                    #{messages.createNeedFileGroup}
+                                </a:commandLink>
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+                        <a:commandLink styleClass="btn btn-sm btn-danger" immediate="true" execute="@this"
+                                       render="fileTree" action="#{businessNeedFileConfig.delete}">
+                            <span class="octicon octicon-trashcan"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                        <a:commandLink class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                       render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                       oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                            <span class="octicon octicon-pencil"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+                        <a:commandLink  class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                        render="fileTree" action="#{businessNeedFileConfig.up}">
+                            <span class="octicon octicon-move-up"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                        <a:commandLink  class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                        render="fileTree" action="#{businessNeedFileConfig.down}">
+                            <span class="octicon octicon-move-down"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+
+                    </div>
+                </r:treeNode>
+
+                <r:treeNode type="CHILDREN" iconClass="octicon octicon-file-text">
+                    <h:outputText styleClass="label label-info" value="#{(_node.businessNeedFile.taskName eq '_CREATE') ? messages.businessCreateTask :  _node.businessNeedFile.taskName}" />
+
+
+                    <h:outputText value="#{_node.businessNeedFile.name}"
+                                  p:aria-label="#{_node.businessNeedFile.condition}"
+                                  styleClass="treelabel #{(empty _node.businessNeedFile.condition) ? '' : 'tooltipped tooltipped-s'}"
+                                  style="font-weight: bold; margin-left:5px;  #{(empty _node.businessNeedFile.condition) ? '' : 'color: #337ab7;'}"/>
+
+
+                    <h:outputText value="#{_node.businessNeedFile.description}" styleClass="treeDescription"/>
+
+                    <div class="btn-group right">
+
+                        <a:commandLink styleClass="btn btn-sm btn-danger" immediate="true" execute="@this"
+                                       render="fileTree" action="#{businessNeedFileConfig.delete}">
+                            <span class="octicon octicon-trashcan"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                        <a:commandLink class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                       render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                       oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                            <span class="octicon octicon-pencil"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+                        <a:commandLink  class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                        render="fileTree" action="#{businessNeedFileConfig.up}">
+                            <span class="octicon octicon-move-up"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                        <a:commandLink  class=" btn btn-sm btn-default" immediate="true" execute="@this"
+                                        render="fileTree" action="#{businessNeedFileConfig.down}">
+                            <span class="octicon octicon-move-down"></span>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                        </a:commandLink>
+
+                    </div>
+
+                </r:treeNode>
+                <r:treeNode type="ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
+                    <div style="width: 100%;display:inline-block;line-height: 22px">
+                        #{messages.TaskSubscribeFile}
+
+                        <h:outputText value="#{_node.businessNeedFile.description}"/>
+                        <div class="dropdown right">
+                            <a class=" btn btn-sm btn-primary new-repo"
+                               aria-label="" data-target="#"
+                               data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                                <span class="octicon octicon-plus"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right node-add-menu" aria-labelledby="userLabel">
+
+                                <li>
+                                    <a:commandLink immediate="true" execute="@this" action="#{businessNeedFileConfig.addFile}"
+                                                   render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                                   oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                                        <a:attachQueue requestDelay="0"/>
+                                        <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+                                        <span class="octicon octicon-file-text"></span>
+                                        #{messages.createNeedFile}
+                                    </a:commandLink>
+
+                                </li>
+
+                                <li>
+                                    <a:commandLink render="needFileEditPanel_form,needFileEditPanel_title,needFileEditPanel_buttons"
+                                                   immediate="true" execute="@this"
+                                                   action="#{businessNeedFileConfig.addNode}"
+                                                   oncomplete="$('#needFileEditPanel').modal({backdrop: 'static'})">
+                                        <a:attachQueue requestDelay="0"/>
+                                        <f:param name="selectId" value="#{_node.businessNeedFile.id}"/>
+
+                                        <span class="octicon octicon-file-directory"></span>
+                                        #{messages.createNeedFileGroup}
+                                    </a:commandLink>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </r:treeNode>
+            </r:tree>
+        </h:form>
+    </a:outputPanel>
+
+
+    <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
+
+</ui:composition>

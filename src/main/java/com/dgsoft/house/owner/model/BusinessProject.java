@@ -29,7 +29,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private BigDecimal area;
     private BigDecimal sumArea;
     private Date mapTime;
-    private Date completeDate;
+    private String completeDate;
     private String developerName;
     private String developerCode;
     private String sectionName;
@@ -156,13 +156,13 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.mapTime = mapTime;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "COMPLETE_DATE", length = 19)
-    public Date getCompleteDate() {
+    @Column(name = "COMPLETE_DATE", length = 6)
+    @Size(max = 6)
+    public String getCompleteDate() {
         return this.completeDate;
     }
 
-    public void setCompleteDate(Date completeDate) {
+    public void setCompleteDate(String completeDate) {
         this.completeDate = completeDate;
     }
 
