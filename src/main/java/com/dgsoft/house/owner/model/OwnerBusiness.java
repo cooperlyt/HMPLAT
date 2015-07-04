@@ -278,15 +278,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<Financial> getFinancials() {
-        return this.financials;
-    }
-
-    public void setFinancials(Set<Financial> financials) {
-        this.financials = financials;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<HouseBusiness> getHouseBusinesses() {
         return this.houseBusinesses;
     }

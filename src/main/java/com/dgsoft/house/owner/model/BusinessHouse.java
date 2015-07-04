@@ -749,6 +749,18 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Transient
+    public List<BusinessPool> getBusinessPoolList() {
+        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
+        Collections.sort(result, new Comparator<BusinessPool>() {
+            @Override
+            public int compare(BusinessPool o1, BusinessPool o2) {
+                return o1.getCreateTime().compareTo(o2.getCreateTime());
+            }
+        });
+        return result;
+    }
+
+    @Transient
     public List<CardInfo> getOtherPowerCardList(){
         List<CardInfo> result = new ArrayList<CardInfo>(getOtherPowerCards());
         Collections.sort(result,new Comparator<CardInfo>() {

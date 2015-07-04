@@ -187,15 +187,6 @@ public class CloseHouse implements java.io.Serializable {
         this.workCardNo = workCardNo;
     }
 
-    @Column(name = "CLOSE_DEADLINE", length = 50)
-    @Size(max = 50)
-    public String getCloseDeadline() {
-        return closeDeadline;
-    }
-
-    public void setCloseDeadline(String closeDeadline) {
-        this.closeDeadline = closeDeadline;
-    }
 
 
 }

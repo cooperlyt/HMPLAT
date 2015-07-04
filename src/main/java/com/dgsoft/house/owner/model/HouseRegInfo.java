@@ -17,6 +17,7 @@ public class HouseRegInfo implements java.io.Serializable {
     private String id;
     private String houseFrom;
     private String houseProperty;
+    private OwnerBusiness ownerBusiness;
 
     public HouseRegInfo() {
     }
@@ -58,17 +59,14 @@ public class HouseRegInfo implements java.io.Serializable {
         this.houseProperty = houseProperty;
     }
 
-
-    @Transient
-    public List<BusinessPool> getBusinessPoolList() {
-        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
-        Collections.sort(result, new Comparator<BusinessPool>() {
-            @Override
-            public int compare(BusinessPool o1, BusinessPool o2) {
-                return o1.getCreateTime().compareTo(o2.getCreateTime());
-            }
-        });
-        return result;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUSINESS",nullable = false)
+    @NotNull
+    public OwnerBusiness getOwnerBusiness() {
+        return ownerBusiness;
     }
 
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
+    }
 }

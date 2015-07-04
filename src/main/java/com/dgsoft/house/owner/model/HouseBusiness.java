@@ -19,12 +19,8 @@ public class HouseBusiness implements java.io.Serializable {
     private OwnerBusiness ownerBusiness;
     private BusinessHouse startBusinessHouse;
     private BusinessHouse afterBusinessHouse;
-    private BusinessBuild businessBuild;
     private String houseCode;
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
-    private BusinessHouseOwner businessHouseOwner;
-    private LandInfo landInfo;
-    private HouseRegInfo houseRegInfo;
 
 
     public HouseBusiness() {
@@ -84,15 +80,6 @@ public class HouseBusiness implements java.io.Serializable {
         this.afterBusinessHouse = afterBusinessHouse;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "BUILD_ID")
-    public BusinessBuild getBusinessBuild() {
-        return this.businessBuild;
-    }
-
-    public void setBusinessBuild(BusinessBuild businessBuild) {
-        this.businessBuild = businessBuild;
-    }
 
     @Column(name = "HOUSE_CODE", nullable = false, length = 32)
     @NotNull
@@ -127,34 +114,4 @@ public class HouseBusiness implements java.io.Serializable {
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOUSE_OWNER", nullable = true)
-    public BusinessHouseOwner getBusinessHouseOwner() {
-        return businessHouseOwner;
-    }
-
-    public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
-        this.businessHouseOwner = businessHouseOwner;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "LAND_INFO", nullable = true)
-    public LandInfo getLandInfo() {
-        return landInfo;
-    }
-
-    public void setLandInfo(LandInfo landInfo) {
-        this.landInfo = landInfo;
-    }
-
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
-    @JoinColumn(name = "REG_INFO",nullable = true)
-    public HouseRegInfo getHouseRegInfo() {
-        return houseRegInfo;
-    }
-
-    public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
-        this.houseRegInfo = houseRegInfo;
-    }
 }

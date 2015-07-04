@@ -30,12 +30,6 @@ public class MakeCard implements java.io.Serializable {
     private CardInfo cardInfo;
 
 
-
-
-
-
-
-
     public MakeCard() {
 
     }
@@ -79,7 +73,7 @@ public class MakeCard implements java.io.Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-    @OneToOne
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)
 	@NotNull

@@ -41,9 +41,9 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
     @Override
     public void create(){
         super.create();
-        if (ownerBusinessHome.getSingleHoues().getLandInfo()!=null) {
+        if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getLandInfo()!=null) {
             have = true;
-            setId(ownerBusinessHome.getSingleHoues().getLandInfo().getId());
+            setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getLandInfo().getId());
         } else {
             have = false;
         }
@@ -59,10 +59,9 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
     public void checkHave(){
         clearInstance();
         if (have){
-            ownerBusinessHome.getSingleHoues().setLandInfo(getInstance());
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(getInstance());
 
         } else {
-            ownerBusinessHome.getSingleHoues().setLandInfo(null);
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(null);
         }
     }
