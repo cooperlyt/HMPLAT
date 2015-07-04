@@ -34,10 +34,8 @@ public class OtherPowerCardSingleComplete implements TaskCompleteSubscribeCompon
     public void complete() {
 
         for(MakeCard makeCard: ownerBusinessHome.getMakeCardByType(EnumSet.of(MakeCard.CardType.MORTGAGE,MakeCard.CardType.NOTICE,MakeCard.CardType.PROJECT_MORTGAGE))){
-           Financial financial = ownerBusinessHome.getNowFinancial();
-            if (financial == null) {
-                throw new IllegalArgumentException("financial is null");
-            }
+           Financial financial = ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next().getFinancial();
+
                 OtherPowerCard otherPowerCard = makeCard.getCardInfo().getOtherPowerCard();
                 if ( otherPowerCard == null) {
                     otherPowerCard = new OtherPowerCard(financial.getName(),

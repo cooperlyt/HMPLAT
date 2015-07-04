@@ -22,6 +22,8 @@ import java.util.List;
  * Time: 下午4:55
  * To change this template use File | Settings | File Templates.
  */
+
+//TODO remove this
 @Name("financialSubscribe")
 public class FinancialSubscribe extends OwnerEntityHome<Financial> {
 
@@ -87,37 +89,37 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
         return getInstance().getBank();
     }
 
-    @Override
-    protected Financial createInstance() {
-        return new Financial(Financial.FinancialUseType.NOW);
-    }
-
-    @Override
-    public Class<Financial> getEntityClass() {
-        return Financial.class;
-    }
-
-    @Override
-    public void create(){
-        super.create();
-        for(Financial financial:ownerBusinessHome.getInstance().getFinancials()){
-            if(financial.getType().equals(Financial.FinancialUseType.NOW)){
-                setId(financial.getId());
-                return;
-            }
-        }
-        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().getFinancials().add(getInstance());
-    }
-
-    public void typeChangeListener(ValueChangeEvent e){
-        if (Financial.FinancialType.FINANCE_CORP.equals(e.getNewValue())){
-            Logging.getLog(getClass()).debug("type is finance corp");
-            getInstance().setCredentialsType(PersonEntity.CredentialsType.OTHER);
-        }else{
-            getInstance().setCredentialsType(PersonEntity.CredentialsType.MASTER_ID);
-        }
-
-    }
+//    @Override
+//    protected Financial createInstance() {
+//        return new Financial(Financial.FinancialUseType.NOW);
+//    }
+//
+//    @Override
+//    public Class<Financial> getEntityClass() {
+//        return Financial.class;
+//    }
+//
+//    @Override
+//    public void create(){
+//        super.create();
+//        for(Financial financial:ownerBusinessHome.getInstance().getFinancials()){
+//            if(financial.getType().equals(Financial.FinancialUseType.NOW)){
+//                setId(financial.getId());
+//                return;
+//            }
+//        }
+//        getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+//        ownerBusinessHome.getInstance().getFinancials().add(getInstance());
+//    }
+//
+//    public void typeChangeListener(ValueChangeEvent e){
+//        if (Financial.FinancialType.FINANCE_CORP.equals(e.getNewValue())){
+//            Logging.getLog(getClass()).debug("type is finance corp");
+//            getInstance().setCredentialsType(PersonEntity.CredentialsType.OTHER);
+//        }else{
+//            getInstance().setCredentialsType(PersonEntity.CredentialsType.MASTER_ID);
+//        }
+//
+//    }
 
 }

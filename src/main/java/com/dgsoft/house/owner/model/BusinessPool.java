@@ -29,7 +29,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     private MakeCard makeCard;
     private Date createTime;
     private String memo;
-    private HouseRegInfo houseRegInfo;
+
     private String legalPerson;
     private String rootAddress;
 
@@ -37,9 +37,8 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     public BusinessPool() {
     }
 
-    public BusinessPool(Date createTime,HouseRegInfo houseRegInfo){
+    public BusinessPool(Date createTime){
         this.createTime = createTime;
-        this.houseRegInfo = houseRegInfo;
         this.credentialsType = CredentialsType.MASTER_ID;
     }
 
@@ -193,15 +192,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.memo = memo;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "BUSINESS_ID",nullable = false)
-    public HouseRegInfo getHouseRegInfo() {
-        return houseRegInfo;
-    }
-
-    public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
-        this.houseRegInfo = houseRegInfo;
-    }
 
     @Column(name = "LEGAL_PERSON", nullable = true, length = 50)
     @Size(max = 50)

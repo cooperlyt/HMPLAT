@@ -46,7 +46,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	private BigDecimal shopArea;
 	private String completeYear;
     private String buildDevNumber;
-	private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
 
 	public BusinessBuild() {
 	}
@@ -362,15 +361,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 
     public void setCompleteYear(String completeDate) {
 		this.completeYear = completeDate;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "businessBuild")
-	public Set<HouseBusiness> getHouseBusinesses() {
-		return this.houseBusinesses;
-	}
-
-	public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
-		this.houseBusinesses = houseBusinesses;
 	}
 
     @Override

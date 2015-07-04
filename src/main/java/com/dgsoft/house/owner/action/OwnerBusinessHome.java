@@ -66,26 +66,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getMakeCardByType(MakeCard.CardType.valueOf(typeName));
     }
 
-
-    public Financial getOldFinancial(){
-
-        for(Financial financial: getInstance().getFinancials()){
-            if (financial.getType().equals(Financial.FinancialUseType.OLD))
-                return financial;
-        }
-        return null;
-    }
-
-    public Financial getNowFinancial(){
-
-        for(Financial financial: getInstance().getFinancials()){
-            if (financial.getType().equals(Financial.FinancialUseType.NOW))
-                return financial;
-        }
-        return null;
-    }
-
-
     public MappingCorp getMappingCorp(){
         if(!getInstance().getMappingCorps().isEmpty()){
             return getInstance().getMappingCorps().iterator().next();
