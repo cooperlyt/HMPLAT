@@ -24,36 +24,13 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	private Date mortgageDueTimeS;
 	private String mortgageTime;
 	private BigDecimal mortgageArea;
+    private Financial oldFinancial;
+    private Financial financial;
 
 	public MortgaegeRegiste() {
 	}
 
-	public MortgaegeRegiste(String id, OwnerBusiness ownerBusiness,
-			BigDecimal highestMountMoney, String warrantScope,
-			String interestType, Date mortgageDueTimeS, String mortgageTime,
-			BigDecimal mortgageArea) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.highestMountMoney = highestMountMoney;
-		this.warrantScope = warrantScope;
-		this.interestType = interestType;
-		this.mortgageDueTimeS = mortgageDueTimeS;
-		this.mortgageTime = mortgageTime;
-		this.mortgageArea = mortgageArea;
-	}
-	public MortgaegeRegiste(String id, OwnerBusiness ownerBusiness,
-			BigDecimal highestMountMoney, String warrantScope,
-			String interestType, Date mortgageDueTimeS, String mortgageTime,
-			BigDecimal mortgageArea, String deptSureFact) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.highestMountMoney = highestMountMoney;
-		this.warrantScope = warrantScope;
-		this.interestType = interestType;
-		this.mortgageDueTimeS = mortgageDueTimeS;
-		this.mortgageTime = mortgageTime;
-		this.mortgageArea = mortgageArea;
-	}
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -146,4 +123,24 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageArea = mortgageArea;
 	}
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "OLD_FIN", nullable = true)
+    public Financial getOldFinancial() {
+        return oldFinancial;
+    }
+
+    public void setOldFinancial(Financial oldFinancial) {
+        this.oldFinancial = oldFinancial;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FIN", nullable = false)
+    @NotNull
+    public Financial getFinancial() {
+        return financial;
+    }
+
+    public void setFinancial(Financial financial) {
+        this.financial = financial;
+    }
 }
