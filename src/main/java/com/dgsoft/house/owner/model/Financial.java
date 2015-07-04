@@ -125,7 +125,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name="FINANCIAL_TYPE",nullable = false,length = 20)
+    @Column(name="TYPE",nullable = false,length = 20)
     @NotNull
     public FinancialType getFinancialType() {
         return financialType;
