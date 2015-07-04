@@ -27,6 +27,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
     private Financial oldFinancial;
     private Financial financial;
 
+
 	public MortgaegeRegiste() {
 	}
 
@@ -134,8 +135,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FIN", nullable = false)
-    @NotNull
+    @JoinColumn(name = "FIN", nullable = true)
     public Financial getFinancial() {
         return financial;
     }

@@ -47,6 +47,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private Date mapTime;
     private String direction;
     private String houseCode;
+    private BusinessHouse.PoolType poolType;
 
     private boolean haveDownRoom;
     private String buildCode;
@@ -77,6 +78,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private Set<CardInfo> otherPowerCards = new HashSet<CardInfo>(0);
     private HouseRegInfo houseRegInfo;
     private String buildDevNumber;
+    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
+
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
 
@@ -235,6 +238,17 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setCommParam(BigDecimal commParam) {
         this.commParam = commParam;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "POOL_MEMO", nullable = false, length = 32)
+    @NotNull
+    public BusinessHouse.PoolType getPoolType() {
+        return this.poolType;
+    }
+
+    public void setPoolType(BusinessHouse.PoolType poolType) {
+        this.poolType = poolType;
     }
 
     @Transient
@@ -705,7 +719,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOUSE_OWNER",nullable = true)
+    @JoinColumn(name = "MAIN_OWNER",nullable = true)
     public BusinessHouseOwner getBusinessHouseOwner() {
         return businessHouseOwner;
     }
@@ -722,6 +736,16 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setOtherPowerCards(Set<CardInfo> otherPowerCards) {
         this.otherPowerCards = otherPowerCards;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "HOUSE_POOL", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL"))
+    public Set<BusinessPool> getBusinessPools() {
+        return businessPools;
+    }
+
+    public void setBusinessPools(Set<BusinessPool> businessPools) {
+        this.businessPools = businessPools;
     }
 
     @Transient

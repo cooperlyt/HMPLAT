@@ -15,11 +15,8 @@ import java.util.*;
 public class HouseRegInfo implements java.io.Serializable {
 
     private String id;
-
-    private BusinessHouse.PoolType poolType;
     private String houseFrom;
     private String houseProperty;
-    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
 
     public HouseRegInfo() {
     }
@@ -38,16 +35,6 @@ public class HouseRegInfo implements java.io.Serializable {
         this.id = id;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "POOL_MEMO", nullable = false, length = 32)
-    @NotNull
-    public BusinessHouse.PoolType getPoolType() {
-        return this.poolType;
-    }
-
-    public void setPoolType(BusinessHouse.PoolType poolType) {
-        this.poolType = poolType;
-    }
 
     @Column(name = "HOUSE_FROM", nullable = false, length = 32)
     @Size(max = 32)
@@ -71,15 +58,6 @@ public class HouseRegInfo implements java.io.Serializable {
         this.houseProperty = houseProperty;
     }
 
-
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "houseRegInfo")
-    public Set<BusinessPool> getBusinessPools() {
-        return businessPools;
-    }
-
-    public void setBusinessPools(Set<BusinessPool> businessPools) {
-        this.businessPools = businessPools;
-    }
 
     @Transient
     public List<BusinessPool> getBusinessPoolList() {

@@ -40,7 +40,7 @@ public class ProjectSellCard implements java.io.Serializable {
     private Date endUseTime;
     private BigDecimal landArea;
     private String landGetMode;
-    //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
+    private MakeCard makeCard;
 
 
 	public ProjectSellCard() {
@@ -266,5 +266,14 @@ public class ProjectSellCard implements java.io.Serializable {
         this.landGetMode = landGetMode;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CARD",nullable = false)
+    @NotNull
+    public MakeCard getMakeCard() {
+        return makeCard;
+    }
 
+    public void setMakeCard(MakeCard makeCard) {
+        this.makeCard = makeCard;
+    }
 }
