@@ -16,11 +16,8 @@ import java.util.Date;
 @Table(name = "FINANCIAL", catalog = "HOUSE_OWNER_RECORD")
 public class Financial implements java.io.Serializable, PersonEntity {
 
-    public enum FinancialUseType{OLD,NOW};
     public enum FinancialType{FINANCE_PERSON,FINANCE_CORP}
 	private String id;
-	private OwnerBusiness ownerBusiness;
-	private FinancialUseType type;
 	private String name;
 	private String code;
     private String phone;
@@ -31,12 +28,6 @@ public class Financial implements java.io.Serializable, PersonEntity {
 
 	public Financial() {
 	}
-
-    public Financial(FinancialUseType type){
-        this.type = type;
-        this.financialType = FinancialType.FINANCE_CORP;
-        this.createTime = new Date();
-    }
 
     public Financial(String name, String code, String phone, String bank) {
         this.name = name;
@@ -59,27 +50,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_ID", nullable = false)
-	@NotNull
-	public OwnerBusiness getOwnerBusiness() {
-		return this.ownerBusiness;
-	}
 
-	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-		this.ownerBusiness = ownerBusiness;
-	}
-
-	@Column(name = "TYPE", nullable = false, length = 20)
-	@NotNull
-    @Enumerated(EnumType.STRING)
-	public FinancialUseType getType() {
-		return this.type;
-	}
-
-	public void setType(FinancialUseType type) {
-		this.type = type;
-	}
 
 	@Column(name = "NAME", nullable = false, length = 120)
 	@NotNull
@@ -125,7 +96,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name="TYPE",nullable = false,length = 20)
+    @Column(name="FINANCIAL_TYPE",nullable = false,length = 20)
     @NotNull
     public FinancialType getFinancialType() {
         return financialType;
