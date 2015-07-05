@@ -140,31 +140,21 @@
         <ui:param name="panelId" value="powerEditPanel"/>
         <ui:param name="panelTitle" value="#{messages.employee_power_title}"/>
 
-        <ui:define name="controls">
-            <a:commandButton immediate="true"
-                             execute="@this" image="/img/icons/close.png"
-                             oncomplete="#{r:component('powerEditPanel')}.hide(); return false;">
-                <s:conversationPropagation type="end"/>
-                <s:conversationId/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-        </ui:define>
 
-        <r:panel>
-            <f:facet name="header">
-                #{messages.emp_power_role_select}
-            </f:facet>
 
-            <r:pickList value="#{employeeHome.selectedRoles}" listHeight="200px"
-                        addText="#{messages.pick_add}"
-                        removeAllText="#{messages.pick_removeAll}"
-                        addAllText="#{messages.pick_addAll}" removeText="#{messages.pick_remove}">
+
+
+
+            <r:pickList value="#{employeeHome.selectedRoles}" listHeight="300px" listWidth="242px"
+                        addText=""
+                        removeAllText=""
+                        addAllText="" removeText="">
 
                 <s:selectItems value="#{roleList.resultList}" var="_role"
                                label="#{_role.name}"/>
                 <f:converter converterId="systemEntityConverter"/>
             </r:pickList>
-        </r:panel>
+
         <ui:define name="actionButtons">
             <a:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
                              execute="@form" data="#{employeeHome.lastState}" render="powerEditPanel_inputs"
@@ -185,7 +175,9 @@
         .action-header{
             width: 140px !important;
             max-width: 140px !important;
+            background-color: #ffffff ;
         }
+
 
     </h:outputStylesheet>
 
@@ -334,9 +326,9 @@
                                              styleClass="table-action tooltipped tooltipped-s"
                                              p:aria-label="#{messages.employee_power_title}"
                                              execute="@this"
-                                             render="powerEditPanel_form,powerEditPanel_controls"
+                                             render="powerEditPanel_form"
                                              action="#{employeeHome.readPower}"
-                                             oncomplete="#{r:component('powerEditPanel')}.show();">
+                                             oncomplete="$('#powerEditPanel').modal({backdrop: 'static'})">
                                 <a:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
                                 <span class="octicon octicon-zap"/>
                                 <a:attachQueue requestDelay="0"/>

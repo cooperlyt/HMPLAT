@@ -1,5 +1,6 @@
 package com.dgsoft.common.system;
 
+import com.dgsoft.common.MD5Util;
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.model.*;
 import org.jboss.seam.ScopeType;
@@ -64,7 +65,7 @@ public class AuthenticationManager {
                 log.info("loginEmployee:" + (loginEmployee != null ? identity.getCredentials().getPassword() + "==" + loginEmployee.getPassword() + "|enable:" + loginEmployee.isEnable() : "null"));
 
 
-                if (loginEmployee == null || !loginEmployee.getPassword().equals(identity.getCredentials().getPassword()) || !loginEmployee.isEnable()) {
+                if (loginEmployee == null || !loginEmployee.getPassword().equals(MD5Util.makeMD5(identity.getCredentials().getPassword())) || !loginEmployee.isEnable()) {
                     return false;
                 }
                 roles.addAll(loginEmployee.getRoles());
