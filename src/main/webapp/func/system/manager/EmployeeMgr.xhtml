@@ -8,17 +8,38 @@
                 xmlns:a="http://richfaces.org/a4j"
                 xmlns:r="http://richfaces.org/rich"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template-data.xhtml">
-
 
 
     <ui:param name="funcName" value="#{messages.EmployeeMgr}"/>
 
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-group input-block">
+                        <h:inputText styleClass="form-control" value="#{employeeList.searchKey}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <a:commandLink styleClass="button" action="#{employeeList.refresh}" render="employeeListPanel"
+                                   value="#{messages.Search}">
+                    </a:commandLink>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
 
 
     <ui:decorate template="/layout/edit-modalpanel.xhtml">
-    <ui:param name="panelId" value="editPanel"/>
-    <ui:param name="panelTitle" value="#{messages.create}#{' '}#{messages.Developer}"/>
+        <ui:param name="panelId" value="editPanel"/>
+        <ui:param name="panelTitle"
+                  value="#{employeeHome.managed ? messages.update : messages.create}#{' '}#{messages.employee}"/>
 
 
         <div class="form-inline">
@@ -84,82 +105,92 @@
                          label="#{messages.employee_field_email}"
                          value="#{employeeHome.instance.EMail}">
 
-
             </h:inputText>
         </s:decorate>
 
 
+        <ui:define name="actionButtons">
+            <button type="button" class="button default" data-dismiss="modal">
+                <span class="glyphicon glyphicon-floppy-remove"/>
+                #{messages.abort}</button>
+            <a:commandLink styleClass="button submit primary" render="editPanel_inputs,employeeListPanel"
+                           rendered="#{not employeeHome.managed}" execute="@form"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#editPanel').modal('hide')}"
+                           action="#{employeeHome.persist}">
+
+                <span class="glyphicon glyphicon-floppy-disk"/>
+                #{messages.saveCreate}
+            </a:commandLink>
+            <a:commandLink styleClass="button submit primary" render="editPanel_inputs,employeeListPanel"
+                           execute="@form" rendered="#{employeeHome.managed}"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#editPanel').modal('hide')}"
+                           action="#{employeeHome.update}">
+
+                <span class="glyphicon glyphicon-floppy-disk"/>
+
+                <f:param name="employeeId" value="#{employeeHome.instance.id}"/>
+                #{messages.saveUpdate}
+            </a:commandLink>
+        </ui:define>
 
     </ui:decorate>
 
 
+    <s:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="powerEditPanel"/>
+        <ui:param name="panelTitle" value="#{messages.employee_power_title}"/>
 
-<s:decorate template="/layout/edit-modalpanel.xhtml">
-    <ui:param name="panelId" value="powerEditPanel"/>
-    <ui:param name="panelTitle" value="#{messages.employee_power_title}"/>
+        <ui:define name="controls">
+            <a:commandButton immediate="true"
+                             execute="@this" image="/img/icons/close.png"
+                             oncomplete="#{r:component('powerEditPanel')}.hide(); return false;">
+                <s:conversationPropagation type="end"/>
+                <s:conversationId/>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
+        </ui:define>
 
-    <ui:define name="controls">
-        <a:commandButton immediate="true"
-                         execute="@this" image="/img/icons/close.png"
-                         oncomplete="#{r:component('powerEditPanel')}.hide(); return false;">
-            <s:conversationPropagation type="end"/>
-            <s:conversationId/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-    </ui:define>
+        <r:panel>
+            <f:facet name="header">
+                #{messages.emp_power_role_select}
+            </f:facet>
 
-    <r:panel>
-        <f:facet name="header">
-            #{messages.emp_power_role_select}
-        </f:facet>
+            <r:pickList value="#{employeeHome.selectedRoles}" listHeight="200px"
+                        addText="#{messages.pick_add}"
+                        removeAllText="#{messages.pick_removeAll}"
+                        addAllText="#{messages.pick_addAll}" removeText="#{messages.pick_remove}">
 
-        <r:pickList value="#{employeeHome.selectedRoles}" listHeight="200px"
-                       addText="#{messages.pick_add}"
-                       removeAllText="#{messages.pick_removeAll}"
-                       addAllText="#{messages.pick_addAll}" removeText="#{messages.pick_remove}">
+                <s:selectItems value="#{roleList.resultList}" var="_role"
+                               label="#{_role.name}"/>
+                <f:converter converterId="systemEntityConverter"/>
+            </r:pickList>
+        </r:panel>
+        <ui:define name="actionButtons">
+            <a:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
+                             execute="@form" data="#{employeeHome.lastState}" render="powerEditPanel_inputs"
+                             oncomplete="if (event.data == 'updated'){#{r:component('powerEditPanel')}.hide();}">
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
 
-            <s:selectItems value="#{roleList.resultList}" var="_role"
-                           label="#{_role.name}"/>
-            <f:converter converterId="systemEntityConverter"/>
-        </r:pickList>
-    </r:panel>
-    <ui:define name="actionButtons">
-        <a:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
-                         execute="@form" data="#{employeeHome.lastState}" render="powerEditPanel_inputs"
-                         oncomplete="if (event.data == 'updated'){#{r:component('powerEditPanel')}.hide();}">
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-
-        <a:commandButton immediate="true" execute="@this"
-                         value="#{messages.cancel}"
-                         oncomplete="#{r:component('powerEditPanel')}.hide();">
-            <s:conversationPropagation type="end"/>
-            <a:attachQueue requestDelay="0"/>
-        </a:commandButton>
-    </ui:define>
-</s:decorate>
-
-
-
-
+            <a:commandButton immediate="true" execute="@this"
+                             value="#{messages.cancel}"
+                             oncomplete="#{r:component('powerEditPanel')}.hide();">
+                <s:conversationPropagation type="end"/>
+                <a:attachQueue requestDelay="0"/>
+            </a:commandButton>
+        </ui:define>
+    </s:decorate>
 
     <h:outputStylesheet>
-        .columns_tree {
-            vertical-align: top;
-            width: 30%;
+        .action-header{
+            width: 140px !important;
+            max-width: 140px !important;
         }
 
-        .columns_employee {
-            vertical-align: top;
-            text-align: center;
-            width: 70%;
-        }
     </h:outputStylesheet>
 
-
-
-        <h:form>
-
+    <h:form>
+        <a:outputPanel id="employeeListPanel">
             <s:div styleClass="blankslate" rendered="#{empty employeeList.resultList}">
                 <span class="mega-octicon octicon-search"></span>
 
@@ -167,10 +198,10 @@
 
                 <p>  #{messages.YouCan}#{' '}
                     <a:commandLink value="#{messages.create}"
-                                   oncomplete="$('#districtEditPanel').modal({backdrop: 'static'})"
-                                   render="districtEditPanel_form">
+                                   oncomplete="$('#editPanel').modal({backdrop: 'static'})"
+                                   render="editPanel_form,editPanel_buttons,editPanel_title">
                         <a:attachQueue requestDelay="0"/>
-                        <a:param value="" assignTo="#{districtHome.id}"/>
+                        <a:param value="" assignTo="#{employeeHome.id}"/>
                     </a:commandLink>
 
 
@@ -178,66 +209,172 @@
                     <s:link value="#{messages.AvancedSearch}"/></p>
             </s:div>
 
-            <h:dataTable style="width:100%" id="employeeListPanel" value="#{employeeList.resultList}"
-                            var="_emp" render="#{not empty employeeList.resultList}">
-                <h:column>
+            <div style="min-height: 300px;">
+                <h:dataTable style="margin-top: 0;" value="#{employeeList.resultList}"
+                             styleClass="table table-striped table-hover table-floatThead result-data-table"
+                             headerClass="table-tools-header"
+                             columnClasses=",,,,action-header"
+                             var="_emp" rendered="#{not empty employeeList.resultList}">
+
+
                     <f:facet name="header">
-                        #{messages.employee_field_id}
+
+                        <div class="select-menu">
+                            <div class="btn-group btn-group-sm">
+
+                                <a:commandLink styleClass="btn btn-success"
+                                               oncomplete="$('#editPanel').modal({backdrop: 'static'})"
+                                               render="editPanel_form,editPanel_buttons,editPanel_title"
+                                               aria-label="#{messages.create}#{messages.employee}">
+                                    <f:param name="employeeId" value=""/>
+                                    <a:attachQueue requestDelay="0"/>
+                                    <span class="octicon octicon-plus"/>
+                                </a:commandLink>
+
+                                <div class="btn-group btn-group-sm">
+                                    <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                        <ui:param name="caption"
+                                                  value="#{messages[employeeList.orderColumn]}"/>
+                                        <ui:define name="caption">
+                                            <i>#{messages.SortBy}:</i>
+                                            <span style="">#{messages[employeeList.orderColumn]}</span>
+                                        </ui:define>
+                                        <ui:param name="menuTitle" value="#{messages.SortOption}"/>
+
+                                        <a:repeat value="#{employeeList.sortColumns}" var="_col">
+                                            <s:link styleClass="select-menu-item #{(employeeList.orderColumn eq _col) ? 'selected': ''}">
+                                                <f:param name="sort" value="#{_col}"/>
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">#{messages[_col]}</span>
+                                            </s:link>
+                                        </a:repeat>
+                                    </ui:decorate>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <h3>
+                            #{messages.SerachResultCount}#{' '}
+                            <h:outputText value="#{developerList.resultCount}">
+                                <f:convertNumber type="number" groupingUsed="true"/>
+                            </h:outputText>
+                            #{''}#{messages.SerachResultCountPrefx}
+                        </h3>
                     </f:facet>
+                    <h:column>
+                        <f:facet name="header">
+                            #{messages.employee_field_id}
+                        </f:facet>
 
-                    <h:outputText value="#{_emp.id}" styleClass="#{_emp.enable ? '' : ''}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.person_field_name}
-                    </f:facet>
+                        <h:outputText value="#{_emp.id}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            #{messages.person_field_name}
+                        </f:facet>
 
-                    <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : ''}"/>
-                </h:column>
+                        <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
+                    </h:column>
 
-                <h:column >
-                    <f:facet name="header">
-                        #{messages.person_field_phone}
-                    </f:facet>
-                    <h:outputText value="#{_emp.phone}" styleClass="#{_emp.enable ? '' : ''}"/>
-                </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            #{messages.person_field_phone}
+                        </f:facet>
+                        <h:outputText value="#{_emp.phone}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
+                    </h:column>
 
-                <h:column >
-                    <f:facet name="header">
-                        #{messages.eMail}
-                    </f:facet>
-                    <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : ''}"/>
-                </h:column>
-                <r:column style="width: 50px">
-                    <f:facet name="header">
-                        #{messages.action}
-                    </f:facet>
-
-                    <a:commandButton immediate="true" image="/img/icons/edit.png" title="#{messages.edit}" execute="@this"
-                                     render="credentialsForm,viewCredntials,empEditPanel_title,employeeEditPanelHideBtn"
-                                     oncomplete="#{r:component('empEditPanel')}.show();">
-
-                        <a:param name="empId" value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
-
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
-                    #{' '}
-                    <a:commandButton immediate="true" image="/img/icons/power.png" title="#{messages.employee_power_title}"
-                                     execute="@this"
-                                     render="powerEditPanel_form,powerEditPanel_controls"
-                                     action="#{employeeHome.readPower}"
-                                     oncomplete="#{r:component('powerEditPanel')}.show();">
-                        <a:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
-
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandButton>
-
-                </r:column>
-            </h:dataTable>
-
-        </h:form>
+                    <h:column>
+                        <f:facet name="header">
+                            #{messages.employee_field_email}
+                        </f:facet>
+                        <h:outputText value="#{_emp.EMail}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
+                    </h:column>
 
 
+                    <h:column headerClass="action-header">
+                        <f:facet name="header">
+                            <s:link styleClass="right">
+                                <dh:switch value="#{employeeList.isOrderAsc}" data-on-color="primary"
+                                           data-off-color="info"
+                                           disabled="#{empty employeeList.isOrderAsc}"
+                                           data-in-link="true"
+                                           onText="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
+                                           offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
+                                           data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
+                                           data-size="mini" styleClass="js-switch "/>
 
+                                <f:param name="dir"
+                                         value="#{employeeList.isOrderAsc ? 'desc' : 'asc'}"/>
+
+
+                            </s:link>
+                        </f:facet>
+
+                        <div class="table-actions right">
+
+                            <a:commandLink styleClass="table-action tooltipped tooltipped-s"
+                                           oncomplete="$('#editPanel').modal({backdrop: 'static'})"
+                                           render="editPanel_form,editPanel_buttons,editPanel_title"
+                                           p:aria-label="#{messages.edit}">
+                                <span class="octicon octicon-pencil"/>
+                                <f:param name="employeeId" value="#{_emp.id}"/>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+
+
+                            <a class="table-action tooltipped tooltipped-s js-confirm"
+                               onclick="resetPasswordConfirm('#{_emp.id}'); return false;"
+                               aria-label="#{messages.resetPassowrd}">
+                                <span class="octicon octicon-key"/>
+                            </a>
+
+
+                            <a:commandLink immediate="true"
+                                             styleClass="table-action tooltipped tooltipped-s"
+                                             p:aria-label="#{messages.employee_power_title}"
+                                             execute="@this"
+                                             render="powerEditPanel_form,powerEditPanel_controls"
+                                             action="#{employeeHome.readPower}"
+                                             oncomplete="#{r:component('powerEditPanel')}.show();">
+                                <a:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
+                                <span class="octicon octicon-zap"/>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+                        </div>
+                    </h:column>
+                </h:dataTable>
+            </div>
+            <a:outputPanel layout="block" rendered="#{not empty employeeList.resultList}" class="paginate-container">
+
+                <a:outputPanel>
+                    <ui:include src="/layout/pages.xhtml">
+                        <ui:param name="entityList" value="#{employeeList}"/>
+                    </ui:include>
+                </a:outputPanel>
+
+            </a:outputPanel>
+        </a:outputPanel>
+
+
+        <a:jsFunction name="resetPass" immediate="true" execute="@this" action="#{employeeHome.resetPassword}">
+            <a:param name="employeeId" assignTo="#{employeeHome.id}"/>
+        </a:jsFunction>
+    </h:form>
+
+    <h:outputScript>
+
+        function resetPasswordConfirm(empId){
+        bootbox.confirm(
+        {
+        title:'#{messages.resetPassowrd}',
+        message: '#{messages.resetPassowrdConfirm}'
+        ,callback: function(result) {if (result) resetPass(empId)}
+        });
+        }
+    </h:outputScript>
+
+
+    <h:outputScript library="bootbox" name="bootbox.min.js"/>
 
 </ui:composition>

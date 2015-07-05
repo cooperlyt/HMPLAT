@@ -2,6 +2,7 @@ package com.dgsoft.common.system.model;
 // Generated Apr 28, 2013 11:02:59 AM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,9 +36,10 @@ public class Employee implements java.io.Serializable {
         this.id = id;
     }
 
-    public Employee(Date joinDate){
+    public Employee(Date joinDate, String password){
         this.joinDate = joinDate;
         enable = true;
+        this.password = password;
     }
 
     public Employee(String name, String id) {
@@ -73,6 +75,7 @@ public class Employee implements java.io.Serializable {
 
     @Column(name = "E_MAIL", length = 20)
     @Size(max = 20)
+    @Email
     public String getEMail() {
         return this.EMail;
     }
@@ -81,8 +84,9 @@ public class Employee implements java.io.Serializable {
         this.EMail = EMail;
     }
 
-    @Column(name = "PASSWORD", length = 100)
+    @Column(name = "PASSWORD", length = 32,nullable = false)
     @Size(max = 100)
+    @NotNull
     public String getPassword() {
         return this.password;
     }

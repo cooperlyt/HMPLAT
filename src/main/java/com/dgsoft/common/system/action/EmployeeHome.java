@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.action;
 
+import com.dgsoft.common.MD5Util;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.model.Employee;
 import com.dgsoft.common.system.model.Role;
@@ -11,6 +12,7 @@ import org.jboss.seam.international.StatusMessage;
 
 import javax.faces.event.ValueChangeEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +23,8 @@ import java.util.List;
  */
 @Name("employeeHome")
 public class EmployeeHome extends SystemEntityHome<Employee> {
+
+    private static final String DEFAULT_PASSWORD = "111111";
 
 
     @In
@@ -38,7 +42,7 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
 
     @Override
     public Employee createInstance() {
-        return new Employee();
+        return new Employee(new Date(), MD5Util.makeMD5(DEFAULT_PASSWORD));
     }
 
 
@@ -50,16 +54,18 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
         }
     }
 
+
     @Override
     protected boolean verifyPersistAvailable() {
+
         String id = this.getInstance().getId();
         if (!isIdAvailable(id)) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "fieldConflict", id);
             return false;
        } else
             return true;
-
     }
+
 
     public boolean isIdAvailable(String id) {
         return getEntityManager().createQuery("select emp from Employee emp where emp.id = ?1").setParameter(1, id).getResultList().size() == 0;
@@ -78,6 +84,11 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
         getInstance().getRoles().addAll(selectedRoles);
 
         return super.update();
+    }
+
+    public String resetPassword(){
+        getInstance().setPassword(MD5Util.makeMD5(DEFAULT_PASSWORD));
+        return update();
     }
 
 
