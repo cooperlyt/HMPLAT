@@ -140,52 +140,34 @@
         <ui:param name="panelId" value="powerEditPanel"/>
         <ui:param name="panelTitle" value="#{messages.employee_power_title}"/>
 
-        <ui:define name="controls">
-            <a:commandButton immediate="true"
-                             execute="@this" image="/img/icons/close.png"
-                             oncomplete="#{r:component('powerEditPanel')}.hide(); return false;">
-                <s:conversationPropagation type="end"/>
-                <s:conversationId/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-        </ui:define>
-
-        <r:panel>
-            <f:facet name="header">
-                #{messages.emp_power_role_select}
-            </f:facet>
-
-            <r:pickList value="#{employeeHome.selectedRoles}" listHeight="200px"
-                        addText="#{messages.pick_add}"
-                        removeAllText="#{messages.pick_removeAll}"
-                        addAllText="#{messages.pick_addAll}" removeText="#{messages.pick_remove}">
+            <r:pickList value="#{employeeHome.selectedRoles}" listHeight="300px" listWidth="242px"
+                        addText=""
+                        removeAllText=""
+                        addAllText="" removeText="">
 
                 <s:selectItems value="#{roleList.resultList}" var="_role"
                                label="#{_role.name}"/>
                 <f:converter converterId="systemEntityConverter"/>
             </r:pickList>
-        </r:panel>
-        <ui:define name="actionButtons">
-            <a:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
-                             execute="@form" data="#{employeeHome.lastState}" render="powerEditPanel_inputs"
-                             oncomplete="if (event.data == 'updated'){#{r:component('powerEditPanel')}.hide();}">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
 
-            <a:commandButton immediate="true" execute="@this"
-                             value="#{messages.cancel}"
-                             oncomplete="#{r:component('powerEditPanel')}.hide();">
-                <s:conversationPropagation type="end"/>
+        <ui:define name="actionButtons">
+            <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
+            <a:commandLink action="#{employeeHome.savePowerAssign}"
+                             styleClass="btn btn-primary"
+                             execute="@form" render="employeeListPanel"
+                             oncomplete="$('#powerEditPanel').modal('hide')">
+                #{messages.update}
                 <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
+            </a:commandLink>
         </ui:define>
     </s:decorate>
 
     <h:outputStylesheet>
-        .action-header{
+        .action-col{
             width: 140px !important;
             max-width: 140px !important;
         }
+
 
     </h:outputStylesheet>
 
@@ -209,11 +191,12 @@
                     <s:link value="#{messages.AvancedSearch}"/></p>
             </s:div>
 
+
             <div style="min-height: 300px;">
-                <h:dataTable style="margin-top: 0;" value="#{employeeList.resultList}"
-                             styleClass="table table-striped table-hover table-floatThead result-data-table"
+                <h:dataTable value="#{employeeList.resultList}"
+                             styleClass="table table-striped table-hover table-floatThead"
                              headerClass="table-tools-header"
-                             columnClasses=",,,,action-header"
+                             columnClasses=",,,,action-col"
                              var="_emp" rendered="#{not empty employeeList.resultList}">
 
 
@@ -256,20 +239,20 @@
 
                         <h3>
                             #{messages.SerachResultCount}#{' '}
-                            <h:outputText value="#{developerList.resultCount}">
+                            <h:outputText value="#{employeeList.resultCount}">
                                 <f:convertNumber type="number" groupingUsed="true"/>
                             </h:outputText>
                             #{''}#{messages.SerachResultCountPrefx}
                         </h3>
                     </f:facet>
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.employee_field_id}
                         </f:facet>
 
                         <h:outputText value="#{_emp.id}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.person_field_name}
                         </f:facet>
@@ -277,14 +260,14 @@
                         <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
                     </h:column>
 
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.person_field_phone}
                         </f:facet>
                         <h:outputText value="#{_emp.phone}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
                     </h:column>
 
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.employee_field_email}
                         </f:facet>
@@ -292,7 +275,7 @@
                     </h:column>
 
 
-                    <h:column headerClass="action-header">
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             <s:link styleClass="right">
                                 <dh:switch value="#{employeeList.isOrderAsc}" data-on-color="primary"
@@ -334,9 +317,9 @@
                                              styleClass="table-action tooltipped tooltipped-s"
                                              p:aria-label="#{messages.employee_power_title}"
                                              execute="@this"
-                                             render="powerEditPanel_form,powerEditPanel_controls"
+                                             render="powerEditPanel_form"
                                              action="#{employeeHome.readPower}"
-                                             oncomplete="#{r:component('powerEditPanel')}.show();">
+                                             oncomplete="$('#powerEditPanel').modal({backdrop: 'static'})">
                                 <a:param value="#{_emp.id}" assignTo="#{employeeHome.id}"/>
                                 <span class="octicon octicon-zap"/>
                                 <a:attachQueue requestDelay="0"/>

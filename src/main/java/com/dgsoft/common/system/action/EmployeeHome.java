@@ -77,8 +77,6 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
         selectedRoles.addAll(getInstance().getRoles());
     }
 
-
-    @End
     public String savePowerAssign() {
         getInstance().getRoles().clear();
         getInstance().getRoles().addAll(selectedRoles);
