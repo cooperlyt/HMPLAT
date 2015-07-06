@@ -32,17 +32,6 @@ input[type=button], input[type=reset], input[type=submit]{
     padding: 20px 0;
 }
 
-.table-floatThead thead{
-
-}
-
-.thead-floating thead{
-    background-color: #eee;
-}
-.thead-floating .table-tools-header{
-    background-color:#ffffff;
-}
-
 .select-menu-btn:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
     width: 140px;
 }
@@ -463,8 +452,16 @@ input[type=button], input[type=reset], input[type=submit]{
     padding: 0 3px;
 }
 
+.table-floatThead thead{
+
+}
+
+.thead-floating thead{
+    background-color: #fff;
+}
+
 .table-tools-header{
-    border-bottom: 1px solid #f1f1f1 !important;;
+    border-bottom: 1px solid #f1f1f1 !important;
     padding-right: 0 !important;
 }
 

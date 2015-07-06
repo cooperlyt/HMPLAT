@@ -140,11 +140,6 @@
         <ui:param name="panelId" value="powerEditPanel"/>
         <ui:param name="panelTitle" value="#{messages.employee_power_title}"/>
 
-
-
-
-
-
             <r:pickList value="#{employeeHome.selectedRoles}" listHeight="300px" listWidth="242px"
                         addText=""
                         removeAllText=""
@@ -156,26 +151,21 @@
             </r:pickList>
 
         <ui:define name="actionButtons">
-            <a:commandButton value="#{messages.update}" action="#{employeeHome.savePowerAssign}"
-                             execute="@form" data="#{employeeHome.lastState}" render="powerEditPanel_inputs"
-                             oncomplete="if (event.data == 'updated'){#{r:component('powerEditPanel')}.hide();}">
+            <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
+            <a:commandLink action="#{employeeHome.savePowerAssign}"
+                             styleClass="btn btn-primary"
+                             execute="@form" render="employeeListPanel"
+                             oncomplete="$('#powerEditPanel').modal('hide')">
+                #{messages.update}
                 <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-
-            <a:commandButton immediate="true" execute="@this"
-                             value="#{messages.cancel}"
-                             oncomplete="#{r:component('powerEditPanel')}.hide();">
-                <s:conversationPropagation type="end"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
+            </a:commandLink>
         </ui:define>
     </s:decorate>
 
     <h:outputStylesheet>
-        .action-header{
+        .action-col{
             width: 140px !important;
             max-width: 140px !important;
-            background-color: #ffffff ;
         }
 
 
@@ -201,11 +191,12 @@
                     <s:link value="#{messages.AvancedSearch}"/></p>
             </s:div>
 
+
             <div style="min-height: 300px;">
-                <h:dataTable style="margin-top: 0;" value="#{employeeList.resultList}"
-                             styleClass="table table-striped table-hover table-floatThead result-data-table"
+                <h:dataTable value="#{employeeList.resultList}"
+                             styleClass="table table-striped table-hover table-floatThead"
                              headerClass="table-tools-header"
-                             columnClasses=",,,,action-header"
+                             columnClasses=",,,,action-col"
                              var="_emp" rendered="#{not empty employeeList.resultList}">
 
 
@@ -248,20 +239,20 @@
 
                         <h3>
                             #{messages.SerachResultCount}#{' '}
-                            <h:outputText value="#{developerList.resultCount}">
+                            <h:outputText value="#{employeeList.resultCount}">
                                 <f:convertNumber type="number" groupingUsed="true"/>
                             </h:outputText>
                             #{''}#{messages.SerachResultCountPrefx}
                         </h3>
                     </f:facet>
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.employee_field_id}
                         </f:facet>
 
                         <h:outputText value="#{_emp.id}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.person_field_name}
                         </f:facet>
@@ -269,14 +260,14 @@
                         <h:outputText value="#{_emp.personName}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
                     </h:column>
 
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.person_field_phone}
                         </f:facet>
                         <h:outputText value="#{_emp.phone}" styleClass="#{_emp.enable ? '' : 'delete-data'}"/>
                     </h:column>
 
-                    <h:column>
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             #{messages.employee_field_email}
                         </f:facet>
@@ -284,7 +275,7 @@
                     </h:column>
 
 
-                    <h:column headerClass="action-header">
+                    <h:column headerClass="table-header">
                         <f:facet name="header">
                             <s:link styleClass="right">
                                 <dh:switch value="#{employeeList.isOrderAsc}" data-on-color="primary"
