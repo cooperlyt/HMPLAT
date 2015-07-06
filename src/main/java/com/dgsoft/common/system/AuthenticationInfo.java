@@ -110,7 +110,6 @@ public class AuthenticationInfo implements java.io.Serializable {
         return getFunctionsByCategory(Function.FunctionCategory.DAY_WORK);
     }
 
-
     public List<Role> getFunctionRoleList() {
         return functionRoleList;
     }

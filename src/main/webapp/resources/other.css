@@ -73,6 +73,7 @@ input[type=button], input[type=reset], input[type=submit]{
 
 .col {
     width: 169px;
+    min-height: 1px;
     float: left;
     padding-right: 40px;
 }
@@ -458,6 +459,10 @@ input[type=button], input[type=reset], input[type=submit]{
 
 .thead-floating thead{
     background-color: #fff;
+}
+
+.floatThead-container{
+    z-index: 999 !important;
 }
 
 .table-tools-header{

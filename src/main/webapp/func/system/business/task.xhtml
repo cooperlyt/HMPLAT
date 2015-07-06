@@ -167,6 +167,23 @@
                                         </h:selectOneMenu>
                                     </a:outputPanel>
                                 </a:outputPanel>
+
+                                <div class="right" >
+                                    <a:region>
+
+                                        <dh:switch value="#{taskFilter.desc}" data-on-color="primary" onchange="sortOption()"
+                                                   data-off-color="info"
+                                                   data-in-link="true"
+                                                   onText="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
+                                                   offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
+                                                   data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
+                                                   data-size="mini" styleClass="js-switch"/>
+                                        <a:jsFunction name="sortOption" status="processWaiting"
+                                                      execute="@region" action="#{allTaskAdapterCacheList.reset}">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:jsFunction>
+                                    </a:region>
+                                </div>
                             </div>
 
 
@@ -183,22 +200,9 @@
 
                                 <div class="boxed-group flush">
 
-                                    <div class="right" style="  margin-right: 0;margin-top: 0;padding: 6px 6px 5px 10px;">
-                                        <a:region>
+                                <div class="right" >
 
-                                    <dh:switch value="#{taskFilter.desc}" data-on-color="primary" onchange="sortOption()"
-                                               data-off-color="info"
-                                               data-in-link="true"
-                                               onText="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
-                                               offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
-                                               data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
-                                               data-size="mini" styleClass="js-switch"/>
-                                        <a:jsFunction name="sortOption" status="processWaiting"
-                                                      execute="@region" action="#{allTaskAdapterCacheList.reset}">
-                                            <a:attachQueue requestDelay="0"/>
-                                        </a:jsFunction>
-                                        </a:region>
-                                    </div>
+                                </div>
 
 
 
@@ -385,12 +389,24 @@
                 <hr/>
 
             </a:outputPanel>
+
+             <h:outputStylesheet>
+                 .dateAreaInput{
+                     margin-bottom: 5px;
+                     padding: 0 9px;
+                 }
+             </h:outputStylesheet>
             </h:form>
                <h:form id="dataAreaForm">
-
+                   <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm" action="#{taskFilter.clearDateFrom}">
+                       <a:attachQueue requestDelay="0"/>
+                   </a:jsFunction>
+                   <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm" action="#{taskFilter.clearDateTo}">
+                       <a:attachQueue requestDelay="0"/>
+                   </a:jsFunction>
 
                     <div class="form-group">
-                    <div class="input-group date form_datetime" style="margin-bottom: 5px">
+                    <div class="input-group date form_datetime dateAreaInput">
 
                         <h:inputText value="#{taskFilter.searchDateArea.dateFrom}"
                                      p:placeholder="#{messages.dateAreaBegin}"
@@ -404,14 +420,12 @@
 
                             <span class="glyphicon glyphicon-remove"></span></span>
 
-                        <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm" action="#{taskFilter.clearDateFrom}">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:jsFunction>
+
 
 
                     </div>
 
-                    <div class="input-group date form_datetime" style="margin-bottom: 5px">
+                    <div class="input-group date form_datetime dateAreaInput">
                     <h:inputText value="#{taskFilter.searchDateArea.dateTo}"
                                  p:placeholder="#{messages.dateAreaTo}"
                                  onblur="filterDateAreaChange()"
@@ -421,9 +435,6 @@
                     </h:inputText>
                         <span class="input-group-addon" onclick="clearDateTo()"><span class="glyphicon glyphicon-remove"></span></span>
 
-                        <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm" action="#{taskFilter.clearDateTo}">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:jsFunction>
 
 
                     </div>
@@ -454,7 +465,7 @@
                         </h:outputScript>
 
 
-                        <div class="right" >
+                        <div class="right dateAreaInput" >
                             <dh:switch value="#{taskFilter.createDate}"
                                        data-on-color="primary"
                                        data-off-color="info"

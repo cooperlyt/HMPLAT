@@ -241,8 +241,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "POOL_MEMO", nullable = false, length = 32)
-    @NotNull
+    @Column(name = "POOL_MEMO", nullable = true, length = 32)
     public BusinessHouse.PoolType getPoolType() {
         return this.poolType;
     }
