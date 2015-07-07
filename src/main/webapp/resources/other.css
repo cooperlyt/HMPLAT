@@ -773,6 +773,40 @@ input[type=button], input[type=reset], input[type=submit]{
     padding: 10px 15px;
 }
 
+.btn-reversal:not(:hover):not(:focus){
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
+    background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+    background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #dbdbdb;
+    border-color: #ccc;
+}
+
+
+.btn-primary.btn-reversal:not(:hover):not(:focus){
+    color: #337ab7;
+}
+
+.btn-success.btn-reversal:not(:hover):not(:focus){
+    color: #5cb85c;
+}
+
+.btn-info.btn-reversal:not(:hover):not(:focus){
+    color: #5bc0de;
+}
+
+.btn-warning.btn-reversal:not(:hover):not(:focus){
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-reversal:not(:hover):not(:focus){
+    color: #d9534f;
+}
+
 
 
 

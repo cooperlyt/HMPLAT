@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.Name;
@@ -16,7 +17,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     public OwnerBusiness createInstance(){
 
         return new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
-                OwnerBusiness.BusinessStatus.RUNNING,new Date(),false, OwnerBusiness.BusinessType.NORMAL);
+                OwnerBusiness.BusinessStatus.RUNNING,new Date(),false, OwnerBusiness.BusinessType.NORMAL_BIZ);
     }
 
     public Reason getReasonByType(String typeName){
@@ -125,6 +126,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
             }
         }
         throw new IllegalArgumentException("not have createEmp");
+    }
+
+    public List<TaskOper> getTaskOperList(){
+        List<TaskOper> result = new ArrayList<TaskOper>(getInstance().getTaskOpers());
+        Collections.sort(result, new Comparator<TaskOper>() {
+            @Override
+            public int compare(TaskOper o1, TaskOper o2) {
+                return o1.getOperTime().compareTo(o2.getOperTime());
+            }
+        });
+        return result;
     }
 
 }

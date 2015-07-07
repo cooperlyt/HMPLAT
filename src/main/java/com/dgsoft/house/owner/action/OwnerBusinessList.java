@@ -12,8 +12,8 @@ import java.util.EnumSet;
 /**
  * Created by cooper on 7/6/15.
  */
-@Name("runBusinessList")
-public class RunBusinessList extends OwnerEntityQuery<OwnerBusiness>{
+@Name("ownerBusinessList")
+public class OwnerBusinessList extends OwnerEntityQuery<OwnerBusiness>{
 
 
     private static final String EJBQL = "select business from OwnerBusiness business";
@@ -25,7 +25,7 @@ public class RunBusinessList extends OwnerEntityQuery<OwnerBusiness>{
 
     private String businessId;
 
-    public RunBusinessList() {
+    public OwnerBusinessList() {
         setEjbql(EJBQL);
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setOrderColumn("business.createTime");
