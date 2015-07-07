@@ -13,7 +13,7 @@ public interface BusinessInstance {
     }
 
     public enum BusinessType{
-        NORMAL,MODIFY,CANCEL
+        NORMAL_BIZ,MODIFY_BIZ,CANCEL_BIZ
     }
 
     //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改 ， 修改中， 已完成但不生效（如已被解除抵押的抵押业务）

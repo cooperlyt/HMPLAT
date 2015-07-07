@@ -24,15 +24,49 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class ProcessInstanceHome {
 
-    //private List<ProcessInstance>
+    public static class ProcessInstanceKey{
+
+        private String processDefineName;
+
+        private String processKey;
+
+        public ProcessInstanceKey(String processDefineName, String processKey) {
+            this.processDefineName = processDefineName;
+            this.processKey = processKey;
+        }
+
+        public String getProcessDefineName() {
+            return processDefineName;
+        }
+
+        public String getProcessKey() {
+            return processKey;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ProcessInstanceKey that = (ProcessInstanceKey) o;
+
+            if (!processDefineName.equals(that.processDefineName)) return false;
+            if (!processKey.equals(that.processKey)) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = processDefineName.hashCode();
+            result = 31 * result + processKey.hashCode();
+            return result;
+        }
+    }
 
     private ProcessInstance instance;
 
-    private String processDefineName;
-
-    private String processKey;
-
-    //private Long processId;
+    private ProcessInstanceKey key;
 
 
     public ProcessInstance getInstance() {
@@ -40,38 +74,24 @@ public class ProcessInstanceHome {
         return instance;
     }
 
-
-    public String getProcessDefineName() {
-        return processDefineName;
+    public ProcessInstanceKey getKey() {
+        return key;
     }
 
-    public void setProcessDefineName(String processDefineName) {
-        if ((processDefineName == null) || !processDefineName.equals(this.processDefineName)) {
+    public void setKey(ProcessInstanceKey key) {
+        if ((key == null) || !key.equals(this.key)){
             instance = null;
         }
-        this.processDefineName = processDefineName;
-
+        this.key = key;
     }
 
-    public String getProcessKey() {
-        return processKey;
-    }
-
-    public void setProcessKey(String processKey) {
-        if ((processKey == null) || (!processKey.equals(this.processKey))) {
-            instance = null;
-        }
-        this.processKey = processKey;
-    }
 
     public void initInstance() {
         if (instance == null) {
-            if ((processDefineName != null) && (processKey != null)) {
-                Logging.getLog(this.getClass()).debug("Locate processInstance - processDefineName:" + processDefineName + ";processKey:" + processKey);
-
-                ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(processDefineName);
+            if (key != null) {
+                ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(key.getProcessDefineName());
                 instance = definition == null ?
-                        null : ManagedJbpmContext.instance().getProcessInstanceForUpdate(definition, processKey);
+                        null : ManagedJbpmContext.instance().getProcessInstanceForUpdate(definition, key.getProcessKey());
             }
         }
     }

@@ -1,0 +1,292 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="#{messages.BusinessView}"/>
+
+    <ui:define name="funcNav">
+        <ui:include src="/layout/function-nav.xhtml">
+            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+        </ui:include>
+    </ui:define>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-group input-block">
+                        <h:inputText styleClass="form-control" value="#{ownerBusinessView.id}"
+                                     p:aria-label="#{messages.BUSINESS_CODE}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandLink styleClass="button" action="#{ownerBusinessHome.refresh}">
+                        #{messages.Search}
+                    </h:commandLink>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+
+    <div class="container">
+
+        <a:outputPanel layout="block" styleClass="blankslate" rendered="#{not ownerBusinessHome.idDefined}">
+
+            <span class="mega-octicon octicon-search"></span>
+
+            <h3>#{messages.EmptyResult}</h3>
+
+            <p>  #{messages.business_not_found_message}
+
+            </p>
+
+
+        </a:outputPanel>
+
+        <h:outputStylesheet>
+
+            .dashboard-notice.BIZ_CREATE .octicon-repo {
+                color: #4183c4;
+            }
+
+            .dashboard-notice.BIZ_AFTER_SAVE .octicon-repo {
+                color: #f0ad4e;
+            }
+
+            .dashboard-notice.BIZ_IMPORT .octicon-repo {
+                color: #d9534f;
+            }
+
+            .dashboard-notice.recorded h2 {
+                color: #4078c0;
+            }
+
+            .label-biz-status.RUNNING{
+                background-color:#337ab7;
+            }
+            .label-biz-status.COMPLETE{
+                background-color: #5cb85c;
+            }
+            .label-biz-status.ABORT{
+                background-color: #777;
+            }
+            .label-biz-status.SUSPEND{
+                background-color: #f0ad4e;
+            }
+            .label-biz-status.CANCEL{
+                background-color: #d9534f;
+            }
+
+            .label-biz-status.MODIFY{
+                background-color: #d9534f;
+            }
+
+            .label-biz-status.MODIFYING{
+                background-color: #d9534f;
+            }
+
+            .label-biz-status.COMPLETE_CANCEL{
+                background-color: #5cb85c;
+            }
+
+
+
+
+
+        </h:outputStylesheet>
+
+
+        <a:outputPanel rendered="#{ownerBusinessHome.idDefined}">
+
+
+
+            <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}">
+
+
+                <a:outputPanel layout="block" styleClass="right" rendered="#{s:hasRole('system.runBusinessMgr')}">
+                    <div class="btn-group" role="group" aria-label="...">
+
+                        <a:commandLink type="button" class="btn btn-success btn-reversal #{(ownerBusinessHome.instance.status eq 'SUSPEND') ? '' : 'disabled'}"
+                                       disabled="#{not (ownerBusinessHome.instance.status eq 'SUSPEND')}">
+                            <span class="octicon octicon-playback-play"></span>
+                        </a:commandLink>
+                    <a:commandLink type="button" class="btn btn-warning btn-reversal #{ (ownerBusinessHome.instance.status eq 'RUNNING') ? '' : 'disabled'}"
+                                   disabled="#{not (ownerBusinessHome.instance.status eq 'RUNNING')}">
+                        <span class="octicon octicon-playback-pause"></span>
+                    </a:commandLink>
+                    <a:commandLink type="button" class="btn btn-danger btn-reversal #{ ((ownerBusinessHome.instance.status eq 'RUNNING') or (ownerBusinessHome.instance.status eq 'SUSPEND') )? '' : 'disabled'}"
+                                   disabled="#{not ((ownerBusinessHome.instance.status eq 'RUNNING') or (ownerBusinessHome.instance.status eq 'SUSPEND'))}">
+                        <span class="octicon octicon-primitive-square"></span>
+                    </a:commandLink>
+                        <a:commandLink type="button" class="btn btn-default btn-reversal #{ ((ownerBusinessHome.instance.status eq 'RUNNING') or (ownerBusinessHome.instance.status eq 'SUSPEND') )? '' : 'disabled'}"
+                                disabled="#{not ((ownerBusinessHome.instance.status eq 'RUNNING') or (ownerBusinessHome.instance.status eq 'SUSPEND'))}">
+                        <span class="octicon octicon-person"></span>
+                        </a:commandLink>
+                    </div>
+                </a:outputPanel>
+
+                <span class="mega-octicon octicon-repo"></span>
+
+                <h2><strong>#{ownerBusinessHome.instance.defineName}</strong>
+                    <h:outputText value="#{messages[ownerBusinessHome.instance.type]}"
+                                  rendered="#{not (ownerBusinessHome.instance.type eq 'NORMAL_BIZ')}"/>
+                    #{ownerBusinessHome.instance.id}
+                    <span class="label label-biz-status #{ownerBusinessHome.instance.status} tooltipped tooltipped-s" aria-label="#{messages[ownerBusinessHome.instance.source]} #{ownerBusinessHome.instance.recorded ? messages.OwnerBusinessRecord : messages.OwnerBusinessNoRecord} #{messages[ownerBusinessHome.instance.status.name()]}"> #{messages[ownerBusinessHome.instance.status.name()]}</span>
+                </h2>
+
+                <p class="repo-list-description">
+                    #{ownerBusinessHome.instance.memo}
+                </p>
+
+
+                <p class="repo-list-meta">
+                    <strong>
+                        <a:repeat value="#{ownerBusinessView.openTasks}" var="_task">
+                            <h:outputText value="#{_task.name}"/>
+
+                            <h:outputText value="#{dictionary.getEmpNameById(_task.actorId)}" rendered="#{ (not empty _task.actorId)}"/>
+
+                        </a:repeat>
+
+                 </strong>
+
+                    <h:outputText value="#{messages['ownerBusiness.applyTime']}"
+                                  rendered="#{not empty ownerBusinessHome.instance.applyTime}"/>
+                    <h:outputText value="#{ownerBusinessHome.instance.applyTime}"
+                                  rendered="#{not empty ownerBusinessHome.instance.applyTime}">
+                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText>
+
+                    <h:outputText value="#{messages['ownerBusiness.checkTime']}"
+                                  rendered="#{not empty ownerBusinessHome.instance.checkTime}"/>
+                    <h:outputText value=" #{ownerBusinessHome.instance.checkTime}"
+                                  rendered="#{not empty ownerBusinessHome.instance.checkTime}">
+                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText>
+
+                    <h:outputText value="#{messages['ownerBusiness.regTime']}"
+                                  rendered="#{ownerBusinessHome.instance.recorded}"/>
+                    <h:outputText value="#{ownerBusinessHome.instance.regTime}"
+                                  rendered="#{ownerBusinessHome.instance.recorded}">
+                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText>
+
+                    <h:outputText value="#{messages['ownerBusiness.recordTime']}"
+                                  rendered="#{not empty ownerBusinessHome.instance.recordTime}"/>
+                    <h:outputText value="#{ownerBusinessHome.instance.recordTime}"
+                                  rendered="#{not empty ownerBusinessHome.instance.recordTime}">
+                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText>
+
+
+                </p>
+
+
+            </div>
+
+            <!-- TODO PROCESS MESSAGES -->
+            <r:tabPanel switchType="client">
+                <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
+
+                    <r:tab>
+
+                        <f:facet name="header">
+                            <span class="#{_group.group.iconCss}"/>
+                            #{_group.group.name}
+                        </f:facet>
+
+                        <dh:entryGrid styleClass="detailsTable table table-bordered "
+                                      groupWidth="#{_group.group.groupWidth}" keyWidth="#{_group.group.keyWidth}"
+                                      valueWidth="#{_group.group.valueWidth}">
+                            <c:forEach items="#{_group.defineList}" var="_item">
+
+                                <f:subview>
+                                    <ui:include src="#{_item.page}"/>
+                                </f:subview>
+                            </c:forEach>
+                        </dh:entryGrid>
+                    </r:tab>
+                </c:forEach>
+
+                <r:tab>
+                    <f:facet name="header">
+                        <span class="octicon octicon-file-submodule"/>
+                        #{messages.businessFile}
+                    </f:facet>
+
+
+
+                </r:tab>
+
+                <r:tab>
+                    <f:facet name="header">
+                        <span class="octicon octicon-milestone"/>
+                        #{messages.bussinessFlowRecord}
+                    </f:facet>
+
+                    <h:selectBooleanCheckbox value="#{ownerBusinessView.showAll}" styleClass="js-checkbox" />
+
+                    <h:dataTable styleClass="table table-striped table-hover" value="#{ownerBusinessView.taskHistoryList}" var="_task">
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.jbpm_task_name}
+                            </f:facet>
+                            <h:outputText value="#{_task.name}" style=" #{_task.open ? 'color: green' : ''}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.jbpm_task_create}
+                            </f:facet>
+                            <h:outputText value="#{_task.create}">
+                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.jbpm_task_end}
+                            </f:facet>
+                            <h:outputText value="#{_task.end}">
+                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.jbpm_task_actor}
+                            </f:facet>
+                            #{_task.empName}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+
+                            </f:facet>
+                        </h:column>
+
+                    </h:dataTable>
+                </r:tab>
+
+
+            </r:tabPanel>
+
+        </a:outputPanel>
+
+    </div>
+</ui:composition>
