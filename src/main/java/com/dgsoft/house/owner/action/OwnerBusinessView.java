@@ -1,12 +1,16 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.jbpm.ProcessInstanceHome;
+import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.Subscribe;
+import com.dgsoft.house.owner.model.OwnerBusiness;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.framework.EntityNotFoundException;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
@@ -28,10 +32,20 @@ public class OwnerBusinessView {
     @In(create = true)
     private ProcessInstanceHome processInstanceHome;
 
-    private boolean showAll = false;
+    @In
+    private AuthenticationInfo authInfo;
+
+    @In
+    private Map<String,String> messages;
 
     public void setId(String id){
-        ownerBusinessHome.setId(id);
+        if ((id == null) || id.trim().equals("")){
+            ownerBusinessHome.createInstance();
+            businessDefineHome.clearInstance();
+            processInstanceHome.setKey(null);
+            return;
+        }
+        ownerBusinessHome.setId(id.trim());
         try {
 
             businessDefineHome.setId(ownerBusinessHome.getInstance().getDefineId());
@@ -50,127 +64,94 @@ public class OwnerBusinessView {
        return (String)ownerBusinessHome.getId();
     }
 
-    public boolean isShowAll() {
-        return showAll;
+
+    @Transactional
+    public void suspendBiz(){
+        if (OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) &&
+                (processInstanceHome.getInstance() != null)) {
+            ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.SUSPEND);
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.SUSPEND, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.SUSPEND.name()), comments, true));
+            processInstanceHome.suspend();
+            ownerBusinessHome.update();
+        }
     }
 
-    public void setShowAll(boolean showAll) {
-        this.showAll = showAll;
+    @Transactional
+    public void resumeBiz(){
+        if (OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus()) &&
+                (processInstanceHome.getInstance() != null)) {
+            ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.RUNNING);
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.CONTINUE, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.CONTINUE.name()), comments, true));
+            processInstanceHome.suspend();
+            ownerBusinessHome.update();
+        }
     }
 
-    public List<TaskHistory> getTaskHistoryList(){
-        List<TaskHistory> result = new ArrayList<TaskHistory>();
-        if (showAll){
-            Map<Long,TaskOper> operMap = new HashMap<Long, TaskOper>();
-            for (TaskOper oper: ownerBusinessHome.getInstance().getTaskOpers()){
-                operMap.put(oper.getId(),oper);
-            }
-            for(TaskInstance instance: processInstanceHome.getTaskInstanceList()){
-                result.add(new TaskHistory(instance ,operMap.get(instance.getId())));
-            }
-
-        }else {
-            for(TaskOper oper: ownerBusinessHome.getTaskOperList()){
-                result.add(new TaskHistory(oper));
-            }
+    @Transactional
+    public void terminationBiz(){
+        if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) || OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus())) &&
+                (processInstanceHome.getInstance() != null) && !ownerBusinessHome.getInstance().isRecorded()) {
+            ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.ABORT);
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.TERMINATION.name()), comments, true));
+            processInstanceHome.stop();
+            ownerBusinessHome.update();
         }
-        return result;
     }
 
-    public List<TaskInstance> getOpenTasks(){
-        List<TaskInstance> result = new ArrayList<TaskInstance>();
-        if (processInstanceHome.getInstance() != null){
-            for(TaskInstance instance: processInstanceHome.getTaskInstanceList()){
-                if (instance.isOpen()){
-                    result.add(instance);
-                }
-            }
-        }
-        return result;
+    private String assignActorId;
+
+    private long taskInstanceId;
+
+    private String comments;
+
+    public String getComments() {
+        return comments;
     }
 
-    public static class TaskHistory{
-
-        private TaskInstance taskInstance;
-
-        private TaskOper taskOper;
-
-        public TaskHistory(TaskInstance taskInstance) {
-            this.taskInstance = taskInstance;
-        }
-
-        public TaskHistory(TaskOper taskOper) {
-            this.taskOper = taskOper;
-        }
-
-        public TaskHistory(TaskInstance taskInstance, TaskOper taskOper) {
-            this.taskInstance = taskInstance;
-            this.taskOper = taskOper;
-        }
-
-        public TaskInstance getTaskInstance() {
-            return taskInstance;
-        }
-
-        public TaskOper getTaskOper() {
-            return taskOper;
-        }
-
-        public Long getId(){
-            if (taskInstance != null){
-                return taskInstance.getId();
-            }else{
-                return taskOper.getId();
-            }
-        }
-
-        public String getName(){
-            if (taskInstance != null){
-                return taskInstance.getName();
-            }else{
-                return taskOper.getTaskName();
-            }
-        }
-
-        public Date getCreate(){
-            if (taskInstance != null){
-                return taskInstance.getCreate();
-            }else{
-                return null;
-            }
-        }
-
-        public Date getEnd(){
-            if (taskInstance != null){
-                return taskInstance.getEnd();
-            }else{
-                return taskOper.getOperTime();
-            }
-        }
-
-        public String getEmpId(){
-            if (taskInstance != null){
-                return taskInstance.getActorId();
-            }else{
-                return taskOper.getEmpCode();
-            }
-        }
-
-        public String getEmpName(){
-            if (taskOper != null){
-               return taskOper.getEmpName();
-            }else{
-                return DictionaryWord.instance().getEmpNameById(taskInstance.getActorId());
-            }
-        }
-
-        public Boolean getOpen(){
-            if (taskInstance != null){
-                return taskInstance.isOpen();
-            }
-            return null;
-        }
-
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
+    public String getAssignActorId() {
+        return assignActorId;
+    }
+
+    public void setAssignActorId(String assignActorId) {
+        this.assignActorId = assignActorId;
+    }
+
+    public long getTaskInstanceId() {
+        return taskInstanceId;
+    }
+
+    public void setTaskInstanceId(long taskInstanceId) {
+        this.taskInstanceId = taskInstanceId;
+    }
+
+    @Transactional
+    public void assignBizTo(){
+        if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus())) &&
+                (processInstanceHome.getInstance() != null)) {
+
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), comments, true));
+            processInstanceHome.assign(assignActorId);
+            ownerBusinessHome.update();
+        }
+    }
+
+    @Transactional
+    public void assignTaskTo(){
+        if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus())) &&
+                (processInstanceHome.getInstance() != null)) {
+
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), comments, true));
+            processInstanceHome.assign(taskInstanceId,assignActorId);
+            ownerBusinessHome.update();
+        }
+    }
 }

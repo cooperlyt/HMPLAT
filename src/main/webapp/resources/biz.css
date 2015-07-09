@@ -6,3 +6,102 @@
 .house-info .OWNERED .label{
     background-color: #5cb85c;
 }
+
+
+
+.task-type.CREATE{
+    color: #31708f;
+    background-color: #d9edf7;
+}
+
+.task-type.CHECK.accept{
+    color: #3c763d;
+    background-color: #dff0d8;
+}
+
+.task-type.CHECK.back{
+    color: #a94442;
+    background-color: #f2dede;
+}
+
+
+
+.task-oper.NEXT{
+    color: #5bc0de;
+}
+
+.task-oper.NEXT:before {
+    content: '\f01f';
+}
+
+.task-oper.TERMINATION{
+    color: #d9534f;
+}
+
+.task-oper.TERMINATION:before {
+    content: '\f053';
+}
+
+.task-oper.SUSPEND{
+    color: #f0ad4e;;
+}
+
+.task-oper.SUSPEND:before {
+    content: '\f0bb';
+}
+
+.task-oper.CONTINUE{
+    color:#5cb85c;
+}
+
+.task-oper.CONTINUE:before {
+    content: '\f0bf';
+}
+
+.task-oper.ASSIGN{
+    color: #337ab7;
+}
+
+.task-oper.ASSIGN:before{
+    content: '\f018';
+}
+
+.task-oper.BACK{
+    color:#f0ad4e;
+}
+
+.task-oper.BACK:before{
+    content: '\f0ac';
+}
+
+.boxed-group-inner{
+    padding: 0;
+}
+
+.label-biz-status.RUNNING{
+    background-color:#337ab7;
+}
+.label-biz-status.COMPLETE{
+    background-color: #5cb85c;
+}
+.label-biz-status.ABORT{
+    background-color: #777;
+}
+.label-biz-status.SUSPEND{
+    background-color: #f0ad4e;
+}
+.label-biz-status.CANCEL{
+    background-color: #d9534f;
+}
+
+.label-biz-status.MODIFY{
+    background-color: #d9534f;
+}
+
+.label-biz-status.MODIFYING{
+    background-color: #d9534f;
+}
+
+.label-biz-status.COMPLETE_CANCEL{
+    background-color: #5cb85c;
+}

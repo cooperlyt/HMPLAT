@@ -15,15 +15,17 @@ import java.util.Date;
 public class TaskOper implements java.io.Serializable {
 
     public enum TaskType {
-        CREATE, TASK, CHECK
+        CREATE, TASK, CHECK, MANAGER
     }
 
     public enum OperType{
-        NEXT,BACK
+        NEXT,BACK,TERMINATION,SUSPEND,CONTINUE,ASSIGN
     }
 
 
-    private long id;
+
+    private String id;
+    private Long taskId;
     private OwnerBusiness ownerBusiness;
     private Date operTime;
     private String empCode;
@@ -38,8 +40,8 @@ public class TaskOper implements java.io.Serializable {
     }
 
 
-    public TaskOper(long id, OwnerBusiness ownerBusiness, String empCode, String empName) {
-        this.id = id;
+    public TaskOper(Long taskId, OwnerBusiness ownerBusiness, String empCode, String empName) {
+        this.taskId = taskId;
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
@@ -51,8 +53,8 @@ public class TaskOper implements java.io.Serializable {
     }
 
 
-    public TaskOper(long id,TaskType taskType, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, boolean accept) {
-        this.id = id;
+    public TaskOper(Long taskId,TaskType taskType, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, boolean accept) {
+        this.taskId = taskId;
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
@@ -65,14 +67,26 @@ public class TaskOper implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
-    public long getId() {
+    @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    @Column(name = "TASK_ID",nullable = true)
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -138,6 +138,44 @@ public class ProcessInstanceHome {
         Events.instance().raiseTransactionSuccessEvent("org.jboss.seam.processResumed");
     }
 
+    public void assign(String actorId){
+        Collection listTasks = getInstance().getTaskMgmtInstance().getTaskInstances();
+        if (listTasks.size() > 0) {
+            for (Iterator iter = listTasks.iterator(); iter.hasNext(); ) {
+                TaskInstance ti = (TaskInstance) iter.next();
+                if (!ti.hasEnded() && !ti.isSuspended() && ti.isOpen()) {
+
+                    ti.setActorId(actorId);
+
+
+                    Logging.getLog(getClass()).debug("task instance " + ti.getName() + " has assigned");
+
+
+                }
+            }
+        }
+        Events.instance().raiseTransactionSuccessEvent("com.dgsot.jbpm.taskAssign");
+    }
+
+    public void assign(long taskInstanceId, String actorId){
+        Collection listTasks = getInstance().getTaskMgmtInstance().getTaskInstances();
+        if (listTasks.size() > 0) {
+            for (Iterator iter = listTasks.iterator(); iter.hasNext(); ) {
+                TaskInstance ti = (TaskInstance) iter.next();
+                if ((ti.getId() == taskInstanceId) && !ti.hasEnded() && !ti.isSuspended() && ti.isOpen()) {
+
+                    ti.setActorId(actorId);
+
+
+                    Logging.getLog(getClass()).debug("task instance " + ti.getName() + " has assigned");
+                    return;
+
+
+                }
+            }
+        }
+    }
+
 
     public List<TaskInstance> getTaskInstanceList() {
 
@@ -148,6 +186,19 @@ public class ProcessInstanceHome {
                 return o1.getCreate().compareTo(o2.getCreate());
             }
         });
+        return result;
+    }
+
+
+    public List<TaskInstance> getOpenTasks(){
+        List<TaskInstance> result = new ArrayList<TaskInstance>();
+        if (getInstance() != null){
+            for(TaskInstance instance: getTaskInstanceList()){
+                if (instance.isOpen()){
+                    result.add(instance);
+                }
+            }
+        }
         return result;
     }
 
