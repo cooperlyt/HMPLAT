@@ -6,4 +6,8 @@
     <restrict>#{s:hasRole('owner.businessView')}</restrict>
 
     <param name="businessId" value="#{ownerBusinessView.id}"/>
+    <param name="empRecordCount" value="#{employeeList.maxResults}"/>
+    <param name="actorId" value="#{ownerBusinessView.assignActorId}"/>
+    <param name="taskId" value="#{ownerBusinessView.taskInstanceId}"/>
+    <param name="actorName"/>
 </page>

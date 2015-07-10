@@ -77,12 +77,20 @@
                 #{messages.person_field_name}
             </ui:define>
             <ui:param name="for" value="nameInput"/>
-            <h:inputText id="nameInput" required="true" styleClass="form-control" maxlength="50"
+            <ui:param name="status" value="nameStatus"/>
+            <h:inputText id="nameInput" required="true" styleClass="form-control" maxlength="100"
                          label="#{messages.person_field_name}"
                          value="#{employeeHome.instance.personName}">
-
+                <a:ajax event="change" listener="#{employeeHome.nameInputedListener}"
+                        execute="@this" status="nameStatus" render="nameField,namePyCodeField"/>
 
             </h:inputText>
+            <ui:define name="note">
+                <p class="note">#{messages.PyCodeGen1}#{' '}<strong> <r:inplaceInput id="namePyCodeField"
+                                                                                        value="#{employeeHome.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
+                </p>
+            </ui:define>
+
         </s:decorate>
 
         <s:decorate id="phoneField" styleClass="form-group" template="/layout/edit-big.xhtml">

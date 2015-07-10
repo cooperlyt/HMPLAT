@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.action;
 
 import com.dgsoft.common.MD5Util;
+import com.dgsoft.common.PinyinTools;
 import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.model.Employee;
 import com.dgsoft.common.system.model.Role;
@@ -87,6 +88,26 @@ public class EmployeeHome extends SystemEntityHome<Employee> {
     public String resetPassword(){
         getInstance().setPassword(MD5Util.makeMD5(DEFAULT_PASSWORD));
         return update();
+    }
+
+    public void nameInputedListener() {
+        setPyCode(PinyinTools.getPinyinCode(getInstance().getPersonName()));
+    }
+
+    public void setPyCode(String pyCode) {
+        if (pyCode == null) {
+            getInstance().setPyCode(null);
+        } else {
+            String value = pyCode.toUpperCase();
+            if (value.length() > 100){
+                value = pyCode.substring(0,99);
+            }
+            getInstance().setPyCode(value);
+        }
+    }
+
+    public String getPyCode() {
+        return getInstance().getPyCode();
     }
 
 

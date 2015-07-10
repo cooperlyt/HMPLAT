@@ -103,7 +103,7 @@ public class OwnerBusinessView {
 
     private String assignActorId;
 
-    private long taskInstanceId;
+    private Long taskInstanceId;
 
     private String comments;
 
@@ -123,34 +123,27 @@ public class OwnerBusinessView {
         this.assignActorId = assignActorId;
     }
 
-    public long getTaskInstanceId() {
+    public Long getTaskInstanceId() {
         return taskInstanceId;
     }
 
-    public void setTaskInstanceId(long taskInstanceId) {
+    public void setTaskInstanceId(Long taskInstanceId) {
         this.taskInstanceId = taskInstanceId;
     }
 
     @Transactional
-    public void assignBizTo(){
+    public void assignTo(){
         if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus())) &&
                 (processInstanceHome.getInstance() != null)) {
 
             ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
                     authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), comments, true));
-            processInstanceHome.assign(assignActorId);
-            ownerBusinessHome.update();
-        }
-    }
 
-    @Transactional
-    public void assignTaskTo(){
-        if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus())) &&
-                (processInstanceHome.getInstance() != null)) {
-
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), comments, true));
-            processInstanceHome.assign(taskInstanceId,assignActorId);
+            if (taskInstanceId == null){
+                processInstanceHome.assign(assignActorId);
+            }else{
+                processInstanceHome.assign(taskInstanceId,assignActorId);
+            }
             ownerBusinessHome.update();
         }
     }

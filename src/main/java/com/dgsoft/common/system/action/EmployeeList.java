@@ -13,12 +13,14 @@ import java.util.List;
 @Name("employeeList")
 public class EmployeeList extends SystemEntityQuery<Employee> {
 
+    private static final int PAGE_RECORD_COUNT = 12;
 
     private static final String EJBQL = "select employee from Employee employee";
 
     private static final String[] RESTRICTIONS = {
             "lower(employee.id) like lower(concat('%',concat(#{employeeList.searchKey},'%')))",
-            "lower(employee.personName) like lower(concat('%',concat(#{employeeList.searchKey},'%')))",};
+            "lower(employee.personName) like lower(concat('%',concat(#{employeeList.searchKey},'%')))",
+            "lower(employee.pyCode) like lower(concat('%',concat(#{employeeList.searchKey},'%')))"};
 
     private static final String[] SORT_COLUMNS = {
             "employee.joinDate", "employee.id", "employee.personName"
@@ -44,6 +46,15 @@ public class EmployeeList extends SystemEntityQuery<Employee> {
 
     public List<String> getSortColumns() {
         return Arrays.asList(SORT_COLUMNS);
+    }
+
+    public void resetResultCount(){
+        searchKey = null;
+        setMaxResults(PAGE_RECORD_COUNT);
+    }
+
+    public void moreResult(){
+        setMaxResults(getMaxResults() + PAGE_RECORD_COUNT);
     }
 
 

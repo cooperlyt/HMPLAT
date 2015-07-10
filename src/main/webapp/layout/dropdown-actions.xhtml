@@ -4,14 +4,14 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
-
+    <ui:insert name="button">
     <button type="button" class="btn btn-default btn-git select-menu-button dropdown-toggle" data-toggle="dropdown">
         <ui:insert name="caption">
             #{caption}
             <span class="caret"></span>
         </ui:insert>
     </button>
-
+    </ui:insert>
 
     <div class="dropdown-menu dropdown-menu-right select-menu-modal-holder"
          aria-hidden="false">

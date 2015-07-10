@@ -26,6 +26,7 @@ public class Employee implements java.io.Serializable {
     private Set<Role> roles = new HashSet<Role>(0);
     private String phone;
     private String name;
+    private String pyCode;
 
     public Employee() {
 
@@ -124,7 +125,7 @@ public class Employee implements java.io.Serializable {
         this.phone = phone;
     }
 
-    @Column(name = "NAME", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 100)
     @NotNull
     @Size(max = 50)
     public String getPersonName() {
@@ -133,6 +134,16 @@ public class Employee implements java.io.Serializable {
 
     public void setPersonName(String name) {
         this.name = name;
+    }
+
+    @Column(name = "PY_CODE",nullable = true, length = 100)
+    @Size(max = 50)
+    public String getPyCode() {
+        return pyCode;
+    }
+
+    public void setPyCode(String pyCode) {
+        this.pyCode = pyCode;
     }
 
     @Override
