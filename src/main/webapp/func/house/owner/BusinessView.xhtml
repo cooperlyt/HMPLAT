@@ -215,7 +215,13 @@
                 color: #4078c0;
             }
 
+            .alert:not(:last-child){
+                margin-bottom: 5px;
+            }
 
+            .alert .octicon{
+                font-weight: bold;
+            }
 
         </h:outputStylesheet>
 
@@ -392,7 +398,34 @@
 
             </div>
 
-            <!-- TODO PROCESS MESSAGES -->
+    <div>
+
+        <a:repeat var="_msg" value="#{ownerBusinessHome.instance.processMessageList}">
+
+            <a:outputPanel layout="block" class="alert  alert-success"
+                           p:role="alert" rendered="#{_msg.level eq 'SUCCESS'}">
+                <span class="octicon octicon-info"></span> #{_msg.messages}
+            </a:outputPanel>
+
+            <a:outputPanel layout="block" class="alert  alert-info"
+                           p:role="alert" rendered="#{_msg.level eq 'INFO'}">
+                <span class="octicon octicon-info"></span> #{_msg.messages}
+            </a:outputPanel>
+
+            <a:outputPanel layout="block" class="alert  alert-warning"
+                           p:role="alert" rendered="#{_msg.level eq 'WARN'}">
+                <span class="octicon octicon octicon-alert"></span> #{_msg.messages}
+            </a:outputPanel>
+
+            <a:outputPanel layout="block" class="alert alert-danger" p:role="alert"
+                           rendered="#{(_msg.level eq 'ERROR') || (_msg.level eq 'FATAL') }">
+                <span class="octicon octicon-stop"></span> #{_msg.messages}
+            </a:outputPanel>
+
+            </a:repeat>
+
+    </div>
+
             <r:tabPanel switchType="client">
                 <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
 
@@ -597,7 +630,7 @@
                                             </a:jsFunction>
 
 
-                                                <a aria-label="#{messages.ASSIGN}" onclick="showSubEmpMenu()"
+                                                <a aria-label="#{messages.ASSIGN}" onclick="showSubEmpMenu()" style="cursor: pointer"
                                                         class=" #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
                                                     <span class="octicon octicon-person"></span>
                                                     <span class="dropdown-caret" style="vertical-align: -2px"/>

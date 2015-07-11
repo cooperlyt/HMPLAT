@@ -3,10 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.business.BusinessInstance;
 
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -112,6 +109,18 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
 
     public void setProcessMessages(Set<ProcessMessage> processMessages) {
         this.processMessages = processMessages;
+    }
+
+    @Transient
+    public List<ProcessMessage> getProcessMessageList(){
+        List<ProcessMessage> result = new ArrayList<ProcessMessage>(getProcessMessages());
+        Collections.sort(result, new Comparator<ProcessMessage>() {
+            @Override
+            public int compare(ProcessMessage o1, ProcessMessage o2) {
+                return Integer.valueOf(o1.getLevel().getPri()).compareTo(o2.getLevel().getPri());
+            }
+        });
+        return result;
     }
 
     @Column(name = "DEFINE_NAME", nullable = true, length = 50)
