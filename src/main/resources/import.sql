@@ -67,6 +67,8 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.EvaluateCorporation', '评估机构管理', 'DATA_MGR', '', '/func/house/datas/EvaluateCorporationMgr.xhtml', '', '3', '',b'0');
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.businessSearch','阶段查询','DAY_WORK','','/func/house/owner/BusinessSearch.xhtml','',1,'',b'0');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.businessMgr','业务管理','DAY_WORK','','/func/house/owner/BusinessView.xhtml','',1,'',b'0');
+
 
 -- 角色
 
@@ -97,6 +99,8 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.per
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.word');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.processInstanceMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.runBusinessMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.businessSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.businessMgr');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.manager', 'house.map.baseData');
 

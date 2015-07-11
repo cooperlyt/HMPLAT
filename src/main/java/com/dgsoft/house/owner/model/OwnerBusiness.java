@@ -355,7 +355,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "APPLY_TIME", nullable = true, length = 19)
+    @Column(name = "APPLY_TIME", nullable = false, length = 19)
+    @NotNull
     public Date getApplyTime() {
         return this.applyTime;
     }

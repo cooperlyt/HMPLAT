@@ -1,12 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
 
-</body>
-</html>
+
+    <ui:param name="funcName" value="#{messages.EmployeeMgr}"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-group input-block">
+                        <h:inputText styleClass="form-control" value="#{employeeList.searchKey}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <a:commandLink styleClass="button" action="#{employeeList.refresh}" render="employeeListPanel"
+                                   value="#{messages.Search}">
+                    </a:commandLink>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+
+    <h:dataTable value="#{houseBusinessList.resultList}" var="_b">
+        <h:column >
+            <f:facet name="header">
+                ID
+            </f:facet>
+            #{_b.id}
+        </h:column>
+    </h:dataTable>
+
+    </ui:composition>
