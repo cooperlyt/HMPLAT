@@ -9,28 +9,33 @@
 
 
 
-.task-type.CREATE{
-    color: #31708f;
-    background-color: #d9edf7;
+.task-type.BACK{
+    color: #fff;
+    background-color: #f0ad4e;
 }
 
-.task-type.CHECK.accept{
-    color: #3c763d;
-    background-color: #dff0d8;
+.task-type.CHECK_ACCEPT{
+    color: #fff;
+    background-color: #3c763d;
 }
 
-.task-type.CHECK.back{
-    color: #a94442;
-    background-color: #f2dede;
+.task-type.CHECK_BACK{
+    color: #fff;
+    background-color: #a94442;
 }
 
+/*
+.task-type.TERMINATION, .task-type.SUSPEND, .task-type.CONTINUE, .task-type.ASSIGN{
+    color: #fff;
+    background-color: #337ab7;
+}
+*/
 
-
-.task-oper.NEXT{
+.task-oper.NEXT, .task-oper.CREATE{
     color: #5bc0de;
 }
 
-.task-oper.NEXT:before {
+.task-oper.NEXT:before, .task-oper.CREATE:before {
     content: '\f01f';
 }
 
@@ -72,6 +77,22 @@
 
 .task-oper.BACK:before{
     content: '\f0ac';
+}
+
+.task-oper.CHECK_ACCEPT {
+    color:#5cb85c;
+}
+
+.task-oper.CHECK_ACCEPT:before{
+    content: '\f03a';
+}
+
+.task-oper.CHECK_BACK{
+    color: #d9534f;
+}
+
+.task-oper.CHECK_BACK:before{
+    content: '\f081';
 }
 
 .boxed-group-inner{

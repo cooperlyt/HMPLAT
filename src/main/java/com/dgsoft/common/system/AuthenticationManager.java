@@ -30,7 +30,7 @@ public class AuthenticationManager {
     @Logger
     private Log log;
 
-    @In
+    @In(create = true)
     private EntityManager systemEntityManager;
 
     @In
@@ -59,8 +59,8 @@ public class AuthenticationManager {
                 roles.addAll(systemEntityManager.createQuery("select r from Role r").getResultList());
 
             } else {
-
-                loginEmployee = (Employee) systemEntityManager.createQuery("select e from Employee e left join fetch e.roles r left join fetch r.businessDefines left join fetch r.functions f left join fetch f.funcCategory fc where e.id = :username").setParameter("username", identity.getCredentials().getUsername()).getSingleResult();
+                loginEmployee = systemEntityManager.createQuery("select e from Employee e where e.id = :username",Employee.class)
+                        .setParameter("username", identity.getCredentials().getUsername()).getSingleResult();
 
                 log.info("loginEmployee:" + (loginEmployee != null ? identity.getCredentials().getPassword() + "==" + loginEmployee.getPassword() + "|enable:" + loginEmployee.isEnable() : "null"));
 

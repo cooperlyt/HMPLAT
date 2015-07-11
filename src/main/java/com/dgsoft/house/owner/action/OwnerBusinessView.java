@@ -12,6 +12,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.framework.EntityNotFoundException;
+import org.jboss.seam.security.Identity;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 import java.util.*;
@@ -34,6 +35,9 @@ public class OwnerBusinessView {
 
     @In
     private AuthenticationInfo authInfo;
+
+    @In
+    private Identity identity;
 
     @In
     private Map<String,String> messages;
@@ -64,14 +68,33 @@ public class OwnerBusinessView {
        return (String)ownerBusinessHome.getId();
     }
 
+    public boolean isCanSuspend(){
+       return  identity.hasRole("system.runBusinessMgr") && OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) &&
+                (processInstanceHome.getInstance() != null);
+    }
+
+    public boolean isCanResume(){
+        return  identity.hasRole("system.runBusinessMgr") && OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus()) &&
+                (processInstanceHome.getInstance() != null);
+    }
+
+    public boolean isCanStop(){
+        return  identity.hasRole("system.runBusinessMgr") && (OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) || OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus())) &&
+                (processInstanceHome.getInstance() != null) && !ownerBusinessHome.getInstance().isRecorded();
+    }
+
+    public boolean isCanAssign(){
+        return  identity.hasRole("system.runBusinessMgr") && (OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) || OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus())) &&
+                (processInstanceHome.getInstance() != null);
+    }
+
 
     @Transactional
     public void suspendBiz(){
-        if (OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) &&
-                (processInstanceHome.getInstance() != null)) {
+        if (isCanSuspend()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.SUSPEND);
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.SUSPEND, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.SUSPEND.name()), comments, true));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.SUSPEND, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.SUSPEND.name()), comments));
             processInstanceHome.suspend();
             ownerBusinessHome.update();
         }
@@ -79,23 +102,21 @@ public class OwnerBusinessView {
 
     @Transactional
     public void resumeBiz(){
-        if (OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus()) &&
-                (processInstanceHome.getInstance() != null)) {
+        if (isCanResume()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.RUNNING);
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.CONTINUE, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.CONTINUE.name()), comments, true));
-            processInstanceHome.suspend();
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.CONTINUE, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.CONTINUE.name()), comments));
+            processInstanceHome.resume();
             ownerBusinessHome.update();
         }
     }
 
     @Transactional
     public void terminationBiz(){
-        if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) || OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus())) &&
-                (processInstanceHome.getInstance() != null) && !ownerBusinessHome.getInstance().isRecorded()) {
+        if (isCanStop()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.ABORT);
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.TERMINATION.name()), comments, true));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.TERMINATION.name()), comments));
             processInstanceHome.stop();
             ownerBusinessHome.update();
         }
@@ -133,11 +154,10 @@ public class OwnerBusinessView {
 
     @Transactional
     public void assignTo(){
-        if ((OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus())) &&
-                (processInstanceHome.getInstance() != null)) {
+        if (isCanAssign()) {
 
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.TaskType.MANAGER, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), comments, true));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), " > " + DictionaryWord.instance().getEmpNameById(assignActorId) + "  " + comments));
 
             if (taskInstanceId == null){
                 processInstanceHome.assign(assignActorId);

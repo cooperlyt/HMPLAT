@@ -56,10 +56,9 @@ public class OwnerTaskHandle {
     public String back(){
         transitionType = TaskOper.OperType.BACK.name();
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
-                taskDescription.isCheckTask() ? TaskOper.TaskType.CHECK :TaskOper.TaskType.TASK,
-                TaskOper.OperType.BACK,ownerBusinessHome.getInstance(),
+                taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_BACK : TaskOper.OperType.BACK,ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName(),transitionComments,false));
+                taskInstance.getName(),transitionComments));
         return "taskCompleted";
     }
 
@@ -69,10 +68,10 @@ public class OwnerTaskHandle {
         transitionType = TaskOper.OperType.NEXT.name();
 
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
-                taskDescription.isCheckTask() ? TaskOper.TaskType.CHECK :TaskOper.TaskType.TASK,
-                TaskOper.OperType.NEXT,ownerBusinessHome.getInstance(),
+                taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_ACCEPT :TaskOper.OperType.NEXT,
+                ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName(),transitionComments,false));
+                taskInstance.getName(),transitionComments));
 
 
         return completeTask();

@@ -143,7 +143,7 @@ public class ProcessInstanceHome {
         if (listTasks.size() > 0) {
             for (Iterator iter = listTasks.iterator(); iter.hasNext(); ) {
                 TaskInstance ti = (TaskInstance) iter.next();
-                if (!ti.hasEnded() && !ti.isSuspended() && ti.isOpen()) {
+                if (!ti.hasEnded() && ti.isOpen()) {
 
                     ti.setActorId(actorId);
 

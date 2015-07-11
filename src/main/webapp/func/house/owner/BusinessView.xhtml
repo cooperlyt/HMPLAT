@@ -223,7 +223,6 @@
         <a:outputPanel rendered="#{ownerBusinessHome.idDefined}">
 
 
-
             <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}">
 
 
@@ -231,23 +230,23 @@
 
                     <div class="btn-group" role="group" >
 
-                        <a:commandLink type="button" class="btn btn-success btn-reversal #{(ownerBusinessHome.instance.status eq 'SUSPEND') ? '' : 'disabled'} tooltipped tooltipped-s"
-                                       disabled="#{not (ownerBusinessHome.instance.status eq 'SUSPEND')}"
+                        <a:commandLink type="button" class="btn btn-success btn-reversal #{ownerBusinessView.canResume ? '' : 'disabled'} tooltipped tooltipped-s"
+                                       disabled="#{not ownerBusinessView.canResume}"
                                        oncomplete="$('#resumeConfirmPanel').modal('show')"
                                        p:aria-label="#{messages.CONTINUE}" immediate="true" execute="@this">
                             <span class="btn-icon octicon octicon-playback-play"></span>
                             <a:attachQueue requestDelay="0"/>
                             <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                         </a:commandLink>
-                    <a:commandLink type="button" class="btn btn-warning btn-reversal #{ (ownerBusinessHome.instance.status eq 'RUNNING') ? '' : 'disabled'} tooltipped tooltipped-s"
-                                   disabled="#{not (ownerBusinessHome.instance.status eq 'RUNNING')}" oncomplete="$('#suspendConfirmPanel').modal('show')"
+                    <a:commandLink type="button" class="btn btn-warning btn-reversal #{ ownerBusinessView.canSuspend ? '' : 'disabled'} tooltipped tooltipped-s"
+                                   disabled="#{not ownerBusinessView.canSuspend}" oncomplete="$('#suspendConfirmPanel').modal('show')"
                                    p:aria-label="#{messages.SUSPEND}" immediate="true" execute="@this">
                         <span class="btn-icon octicon octicon-playback-pause"></span>
                         <a:attachQueue requestDelay="0"/>
                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                     </a:commandLink>
-                    <a:commandLink type="button" class="btn btn-danger btn-reversal #{(not ownerBusinessHome.instance.recorded and ((ownerBusinessHome.instance.status eq 'RUNNING') or (ownerBusinessHome.instance.status eq 'SUSPEND') ) )? '' : 'disabled'} tooltipped tooltipped-s"
-                                   disabled="#{not ( not ownerBusinessHome.instance.recorded and  ((ownerBusinessHome.instance.status eq 'RUNNING') or (ownerBusinessHome.instance.status eq 'SUSPEND')))}"
+                    <a:commandLink type="button" class="btn btn-danger btn-reversal #{ownerBusinessView.canStop ? '' : 'disabled'} tooltipped tooltipped-s"
+                                   disabled="#{not ownerBusinessView.canStop}"
                                    oncomplete="$('#stopConfirmPanel').modal('show')" p:aria-label="#{messages.TERMINATION}"
                                    immediate="true" execute="@this">
                         <span class="btn-icon octicon octicon-primitive-square"></span>
@@ -466,6 +465,15 @@
                         }
 
 
+                        .task-status-group{
+                            display: inline-block;
+                            min-width: 80px;
+                        }
+
+                        .task-status-group .task-status{
+                            margin-left: 10px;
+                        }
+
 
                     </h:outputStylesheet>
 
@@ -473,7 +481,7 @@
                     <ul class="boxed-group-inner list-group notifications status-list-group">
 
                         <a:repeat value="#{ownerBusinessHome.taskOperList}" var="_task">
-                            <li class="list-group-item issue-notification task-type #{_task.taskType} #{_task.accept ? 'accept' : 'back'}">
+                            <li class="list-group-item issue-notification task-type #{_task.operType}">
                                 <span class="list-group-item-name css-truncate" style="max-width: 700px">
                                     <span class="type-icon octicon #{_task.operType} task-oper" aria-label="#{messages[_task.operType]}">
 
@@ -522,6 +530,47 @@
 
                                      <h:outputText value="#{_task.name}" styleClass="css-truncate-target list-item-title"/>
 
+
+                                    <div class="task-status-group">
+
+                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" p:aria-label="#{messages.jbpm_task_open}"  rendered="#{_task.open}" >
+                                                <a:outputPanel styleClass="octicon octicon-alignment-align status-icon"/>
+                                            </a:outputPanel>
+
+
+
+                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.signalling}" p:aria-label="#{messages.jbpm_task_signalling}">
+                                                <a:outputPanel styleClass="octicon octicon-git-pull-request status-icon"/>
+                                            </a:outputPanel>
+
+
+                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.last}" p:aria-label="#{messages.jbpm_task_last}">
+                                                <span class="octicon octicon-alignment-aligned-to status-icon"/>
+
+                                            </a:outputPanel>
+
+
+                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.suspended}" p:aria-label="#{messages.jbpm_task_suspended}">
+                                            <span class="octicon octicon-playback-pause status-icon">
+
+                                            </span>
+                                            </a:outputPanel>
+
+
+
+                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status " rendered="#{_task.blocking}" p:aria-label="#{messages.jbpm_task_blocking}">
+                                                <span class="octicon octicon-alignment-unalign status-icon"/>
+                                            </a:outputPanel>
+
+
+
+
+                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.cancelled}" p:aria-label="#{messages.jbpm_task_cancelled}">
+                                                <span class="octicon octicon-x status-icon"/>
+                                            </a:outputPanel>
+
+                                    </div>
+
                              <h:outputText value="#{_task.create}" styleClass="css-truncate-target list-item-description" style="max-width: 200px">
                                  <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
                              </h:outputText>
@@ -535,58 +584,109 @@
                                 <ul class="notification-actions">
 
                                     <li>
-                                        <a:commandLink rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr') and (_task.open) and _task.signalling}">
-                                                <span class="octicon octicon-person"></span>
+
+                                        <a:outputPanel rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr') and (_task.open) and _task.signalling}">
+                                        <f:subview>
+                                            <a:jsFunction name="showSubEmpMenu" action="#{employeeList.resetResultCount}"
+                                                          render="sectionSelectPanel" execute="@this" immediate="true"/>
+
+                                            <a:jsFunction name="moreSubResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
+                                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                                          render="SectionSelectItemList">
                                                 <a:attachQueue requestDelay="0"/>
+                                            </a:jsFunction>
+
+
+                                                <a aria-label="#{messages.ASSIGN}" onclick="showSubEmpMenu()"
+                                                        class=" #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
+                                                    <span class="octicon octicon-person"></span>
+                                                    <span class="dropdown-caret" style="vertical-align: -2px"/>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a>
+
+                                                <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
+                                                    <div class="select-menu-modal">
+                                                        <div class="select-menu-header">
+                                                            <span class="select-menu-title">#{messages.assign_title}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                                        </div>
+
+                                                        <a:outputPanel layout="block" id="sectionSelectPanel">
+                                                            <div class="select-menu-filters">
+                                                                <div class="select-menu-text-filter">
+                                                                    <h:inputText id="sectionSearchName" autocomplete="off" value="#{employeeList.searchKey}">
+                                                                        <a:ajax event="keyup" immediate="true" execute="@this"
+                                                                                render="SectionSelectItemList">
+                                                                            <a:attachQueue requestDelay="500"/>
+                                                                        </a:ajax>
+
+                                                                    </h:inputText>
+                                                                </div>
+                                                            </div>
+                                                            <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+
+
+                                                                <a:repeat value="#{employeeList.resultList}" var="_item">
+
+                                                                    <a:commandLink execute="@this" immediate="true"
+                                                                                   render="assignConfirmPanel_form,assignConfirmPanel_title"
+                                                                                   oncomplete="$('#assignConfirmPanel').modal('show')"
+                                                                                   disabled="#{(_task.actorId eq _item.id)}"
+                                                                                   styleClass="select-menu-item #{(_task.actorId eq _item.id) ? 'selected disabled': ''}">
+                                                                        <a:attachQueue requestDelay="0"/>
+                                                                        <f:param name="actorId" value="#{_item.id}"/>
+                                                                        <f:param name="taskId" value="#{null}"/>
+                                                                        <f:param name="actorName" value="#{_item.personName}"/>
+                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                        <span class="select-menu-item-text">#{_item.personName}</span>
+                                                                    </a:commandLink>
+                                                                </a:repeat>
+
+
+
+
+
+                                                                <a:commandLink onclick="moreSubResult(); event.stopPropagation(); return false;"
+                                                                               styleClass="select-menu-item last-visible"
+                                                                               rendered="#{employeeList.nextExists}">
+
+
+                                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                    <span class="select-menu-item-text">#{messages.More}</span>
+                                                                    <a:attachQueue requestDelay="0"/>
+                                                                </a:commandLink>
+                                                            </a:outputPanel>
+
+                                                        </a:outputPanel>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                        </f:subview>
+                                        </a:outputPanel>
+
+
+                                    </li>
+                                    <ui:remove>
+                                    <li>
+                                        <a:commandLink render="#{_task.suspended and _task.open and not _task.cancelled}">
+                                            <span class="octicon octicon-playback-play" style="color: #5cb85c"/>
+                                        </a:commandLink>
+
+                                        <a:commandLink render="#{not _task.suspended and _task.open and not _task.cancelled}">
+                                            <span class="octicon octicon-playback-pause" style="color: #f0ad4e"/>
                                         </a:commandLink>
                                     </li>
+                                    </ui:remove>
                                     <li>
                                         <h:outputText value="#{dictionary.getEmpNameById(_task.actorId)}"
                                                       styleClass="tooltipped tooltipped-w"
                                                       p:aria-label="#{_task.actorId}"
                                                       rendered="#{not empty _task.actorId}"/>
                                     </li>
-
-                                    <li>
-                                        <a:outputPanel styleClass="tooltipped tooltipped-w" p:aria-label="#{messages.jbpm_task_open}"  rendered="#{_task.open}" >
-                                            <a:outputPanel styleClass="octicon octicon-alignment-align status-icon"/>
-                                        </a:outputPanel>
-                                    </li>
-
-                                    <li>
-                                        <a:outputPanel styleClass="tooltipped tooltipped-w" rendered="#{_task.signalling}" p:aria-label="#{messages.jbpm_task_signalling}">
-                                            <a:outputPanel styleClass="octicon octicon-git-pull-request status-icon"/>
-                                        </a:outputPanel>
-                                    </li>
-
-                                    <li>
-                                        <a:outputPanel styleClass="tooltipped tooltipped-w" rendered="#{_task.last}" p:aria-label="#{messages.jbpm_task_last}">
-                                            <span class="octicon octicon-alignment-aligned-to status-icon"/>
-
-                                        </a:outputPanel>
-                                    </li>
-
-                                    <li>
-                                        <a:outputPanel styleClass="tooltipped tooltipped-w" rendered="#{_task.suspended}" p:aria-label="#{messages.jbpm_task_suspended}">
-                                            <span class="octicon octicon-playback-pause status-icon">
-
-                                            </span>
-                                        </a:outputPanel>
-                                    </li>
-
-                                    <li>
-                                        <a:outputPanel styleClass="tooltipped tooltipped-w " rendered="#{_task.blocking}" p:aria-label="#{messages.jbpm_task_blocking}">
-                                            <span class="octicon octicon-alignment-unalign status-icon"/>
-                                        </a:outputPanel>
-                                    </li>
-
-
-                                    <li>
-                                        <a:outputPanel styleClass="tooltipped tooltipped-w " rendered="#{_task.cancelled}" p:aria-label="#{messages.jbpm_task_cancelled}">
-                                            <span class="octicon octicon-x status-icon"/>
-                                        </a:outputPanel>
-                                    </li>
-
 
                                 </ul>
                             </li>

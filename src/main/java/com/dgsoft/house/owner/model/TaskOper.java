@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.EnumSet;
 
 /**
  * Created by cooper on 9/16/14.
@@ -14,12 +15,11 @@ import java.util.Date;
 @Table(name = "TASK_OPER", catalog = "HOUSE_OWNER_RECORD")
 public class TaskOper implements java.io.Serializable {
 
-    public enum TaskType {
-        CREATE, TASK, CHECK, MANAGER
-    }
 
     public enum OperType{
-        NEXT,BACK,TERMINATION,SUSPEND,CONTINUE,ASSIGN
+
+        CREATE,CHECK_ACCEPT,CHECK_BACK,NEXT,BACK,TERMINATION,SUSPEND,CONTINUE,ASSIGN
+
     }
 
 
@@ -33,8 +33,6 @@ public class TaskOper implements java.io.Serializable {
     private String taskName;
     private String comments;
     private OperType operType;
-    private TaskType taskType;
-    private boolean accept;
 
     public TaskOper() {
     }
@@ -47,13 +45,11 @@ public class TaskOper implements java.io.Serializable {
         this.empCode = empCode;
         this.empName = empName;
         this.taskName = "create";
-        this.operType = OperType.NEXT;
-        this.taskType = TaskType.CREATE;
-        this.accept = true;
+        this.operType = OperType.CREATE;
     }
 
 
-    public TaskOper(Long taskId,TaskType taskType, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, boolean accept) {
+    public TaskOper(Long taskId, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments) {
         this.taskId = taskId;
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
@@ -62,8 +58,6 @@ public class TaskOper implements java.io.Serializable {
         this.taskName = taskName;
         this.comments = comments;
         this.operType = operType;
-        this.taskType = taskType;
-        this.accept = accept;
     }
 
     @Id
@@ -165,23 +159,4 @@ public class TaskOper implements java.io.Serializable {
         this.operType = operType;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TASK_TYPE", nullable = false, length = 20)
-    @NotNull
-    public TaskType getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(TaskType taskType) {
-        this.taskType = taskType;
-    }
-
-    @Column(name = "ACCEPT", nullable = false)
-    public boolean isAccept() {
-        return accept;
-    }
-
-    public void setAccept(boolean accept) {
-        this.accept = accept;
-    }
 }
