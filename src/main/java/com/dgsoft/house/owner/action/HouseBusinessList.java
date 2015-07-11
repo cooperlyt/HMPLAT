@@ -19,13 +19,28 @@ import java.util.EnumSet;
 @Name("houseBusinessList")
 public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
-    private static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join fetch houseBusiness.afterBusinessHouse house  left join fetch house.businessPools pool";
+    private static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool left join fetch house.otherPowerCards cards left join fetch cards.makeCard makeCard";
 
     private static final String[] RESTRICTIONS = {
-            "houseBusiness.ownerBusiness.applyTime >= #{houseBusinessList.searchDateArea.dateFrom}",
-            "houseBusiness.ownerBusiness.applyTime <= #{houseBusinessList.searchDateArea.searchDateTo}",
-            "pool.personName like lower(concat('%',concat(#{houseBusinessList.personName},'%')))  "
+            "biz.applyTime >= #{houseBusinessList.searchDateArea.dateFrom}",
+            "biz.applyTime <= #{houseBusinessList.searchDateArea.searchDateTo}",
+            "lower(pool.personName) like lower(concat('%',concat(#{houseBusinessList.searchOwnerName},'%')))",
+            "lower(owner.personName) like lower(concat('%',concat(#{houseBusinessList.searchOwnerName},'%')))",
+            "pool.credentialsType = #{houseBusinessList.searchCredentialsType} ",
+            "owner.credentialsType = #{houseBusinessList.searchCredentialsType}",
+            "lower(pool.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})",
+            "lower(owner.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})",
+            "lower(house.projectName) like lower(concat('%',concat(#{houseBusinessList.searchProjectName},'%')))",
+            "lower(biz.id) = lower(#{houseBusinessList.searchBizId})",
+            "lower(houseBusiness.houseCode) = lower(#{houseBusinessList.searchHouseCode})",
+            "lower(cards.id) = lower(#{houseBusinessList.searchCardNumber})",
+            "makeCard.type = #{houseBusinessList.searchCardType}",
+            "lower(house.mapNumber) = lower(#{houseBusinessList.searchMapNumber})",
+            "lower(house.blockNo) = lower(#{houseBusinessList.searchBlockNumber})",
+            "lower(house.buildNo) = lower(#{houseBusinessList.searchBuildNumber})",
+            "lower(house.houseOrder) = lower(#{houseBusinessList.searchHouseNumber})"
     };
+
 
     public enum SearchType {
         OWNER_BIZ_ID,
@@ -54,6 +69,21 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         this.searchType = searchType;
     }
 
+    public void setSearchTypeName(String type){
+        if ((type == null) || type.trim().equals("")){
+            searchType = null;
+        }else{
+            searchType = SearchType.valueOf(type);
+        }
+    }
+
+    public String getSearchTypeName(){
+        if (searchType == null){
+            return null;
+        }
+        return searchType.name();
+    }
+
     public String getSearchKey() {
         return searchKey;
     }
@@ -65,6 +95,17 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     public void setSearchDateArea(SearchDateArea searchDateArea) {
         this.searchDateArea = searchDateArea;
+    }
+
+    public void refresh(){
+        super.refresh();
+        if (SearchType.HOUSE_MBBH.equals(searchType) ||
+                SearchType.PERSON.equals(searchType) ||
+                SearchType.HOUSE_CARD.equals(searchType)){
+            setRestrictionLogicOperator("and");
+        }else{
+            setRestrictionLogicOperator("or");
+        }
     }
 
     public HouseBusinessList() {
@@ -93,7 +134,7 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         return null;
     }
 
-    public String getCardNumber(){
+    public String getSearchCardNumber(){
         if ((searchType == null) || (searchType.equals(SearchType.HOUSE_CARD))){
             return searchKey;
         }
