@@ -669,7 +669,7 @@
                                                                                    styleClass="select-menu-item #{(_task.actorId eq _item.id) ? 'selected disabled': ''}">
                                                                         <a:attachQueue requestDelay="0"/>
                                                                         <f:param name="actorId" value="#{_item.id}"/>
-                                                                        <f:param name="taskId" value="#{null}"/>
+                                                                        <f:param name="taskId" value="#{_task.id}"/>
                                                                         <f:param name="actorName" value="#{_item.personName}"/>
                                                                         <span class="select-menu-item-icon octicon octicon-check"></span>
                                                                         <span class="select-menu-item-text">#{_item.personName}</span>

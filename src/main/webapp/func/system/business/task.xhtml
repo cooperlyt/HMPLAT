@@ -398,10 +398,10 @@
              </h:outputStylesheet>
             </h:form>
                <h:form id="dataAreaForm">
-                   <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm" action="#{taskFilter.clearDateFrom}">
+                   <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm" action="#{allTaskAdapterCacheList.clearDateFrom}">
                        <a:attachQueue requestDelay="0"/>
                    </a:jsFunction>
-                   <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm" action="#{taskFilter.clearDateTo}">
+                   <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm" action="#{allTaskAdapterCacheList.clearDateTo}">
                        <a:attachQueue requestDelay="0"/>
                    </a:jsFunction>
 

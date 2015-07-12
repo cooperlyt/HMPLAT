@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      login-required="true"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+    <restrict>#{s:hasRole('owner.businessView')}</restrict>
+
+
+    <param name="searchKey" value="#{houseBusinessList.searchKey}"/>
+    <param name="searchType" value="#{houseBusinessList.searchTypeName}"/>
+
+    <param name="mapNumber" value="#{houseBusinessList.mapNumber}"/>
+    <param name="blockNumber" value="#{houseBusinessList.blockNumber}"/>
+    <param name="buildNumber" value="#{houseBusinessList.buildNumber}"/>
+    <param name="houseNumber" value="#{houseBusinessList.houseNumber}"/>
+
+    <param name="cardTypeName" value="#{houseBusinessList.cardTypeName}"/>
+    <param name="credentialsTypeName" value="#{houseBusinessList.credentialsTypeName}"/>
+
+    <param name="firstResult" value="#{houseBusinessList.firstResult}"/>
+
+    <param name="sort" value="#{houseBusinessList.orderColumn}"/>
+    <param name="dir" value="#{houseBusinessList.orderDirection}"/>
+
+    <param name="restrictionLogicOperator" value="#{houseBusinessList.restrictionLogicOperator}"/>
+
+</page>

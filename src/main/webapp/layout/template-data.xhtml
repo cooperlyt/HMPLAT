@@ -19,7 +19,7 @@
 
         <div id="func-navigation" class="pagehead codesearch-head">
             <div class="container">
-                <div style="float: left; #{(empty funcName) ? '' : 'width: 250px;'} ">
+                <div style=" float: left; #{(empty funcName) ? '' : 'width: 250px;'} ">
                     <ui:insert name="funcNav">
                     <ui:include src="/layout/function-nav.xhtml">
                         <ui:param name="functions" value="#{authInfo.dataFunctions}"/>

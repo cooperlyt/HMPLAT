@@ -6,7 +6,7 @@ package com.dgsoft.common.system;
 public interface PersonEntity {
 
     public enum CredentialsType{
-        MASTER_ID,COMPANY_CODE,SOLDIER_CARD,PASSPORT,WORD_CARD,OTHER
+        MASTER_ID,COMPANY_CODE,SOLDIER_CARD,PASSPORT,OTHER
     }
 
     public CredentialsType getCredentialsType();

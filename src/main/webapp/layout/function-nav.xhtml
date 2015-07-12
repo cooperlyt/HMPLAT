@@ -8,9 +8,9 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <div class="dropdown" style="display: inline-block;">
+    <div class="dropdown" style="display: inline-block;float: left;">
         <a id="dLabel" class="funtion-nav" data-target="#" href="#" data-toggle="dropdown"
-           aria-haspopup="true"
+           aria-haspopup="true" style="display: inline-block; width: 60px; overflow: hidden;margin-top: -5px"
            aria-expanded="false">
             <span class="glyphicon glyphicon-list"></span>
             <span class="sr-only">Error:</span>
@@ -18,7 +18,7 @@
 
         </a>
 
-        <ul class="dropdown-menu dropdown-menu-left " aria-labelledby="dLabel">
+        <ul class="dropdown-menu dropdown-menu-left dropdown-menu-tab" aria-labelledby="dLabel">
             <a:repeat value="#{functions}" var="_func">
                 <li>
                     <s:link propagation="#{_func.needConversations ? 'endRoot' : 'end'}" view="#{_func.location}">

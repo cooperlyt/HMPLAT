@@ -1,0 +1,96 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="#{messages.HouseBusinessSearch}"/>
+
+    <ui:define name="funcNav">
+        <ui:include src="/layout/function-nav.xhtml">
+            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+        </ui:include>
+    </ui:define>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <a:outputPanel id="searchInputs" layout="block" styleClass="input-group input-block">
+                        <div class="input-group-btn">
+
+
+                            <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius"
+                                             value="#{houseBusinessList.searchType}">
+                                <s:selectItems value="#{houseBusinessList.allSearchTypes}" var="_item"
+                                               itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
+                                               label="#{messages[_item.name()]}"/>
+                                <a:ajax execute="@this" event="valueChange" render="searchInputs"/>
+                                <s:convertEnum/>
+                            </h:selectOneMenu>
+
+
+                        </div>
+                        <h:inputText styleClass="form-control" value="#{houseBusinessList.searchKey}" rendered="#{not (houseBusinessList.searchType eq 'HOUSE_MBBH')}"/>
+
+                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_map}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+
+                        <h:inputText styleClass="form-control" value="#{houseBusinessList.mapNumber}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+
+                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_block}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+
+                        <h:inputText styleClass="form-control" value="#{houseBusinessList.blockNumber}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_build}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+
+                        <h:inputText styleClass="form-control" value="#{houseBusinessList.buildNumber}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_house}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+
+                        <h:inputText styleClass="form-control" value="#{houseBusinessList.houseNumber}" rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+
+                        <a:outputPanel styleClass="input-group-btn" rendered="#{houseBusinessList.searchType eq 'HOUSE_CARD'}">
+
+                            <h:selectOneMenu styleClass="selectpicker select-menu-btn"
+                                             value="#{houseBusinessList.cardType}">
+                                <s:selectItems value="#{houseBusinessList.allCardTypes}" var="_item"
+                                               itemValue="#{_item}" label="#{messages[_item.name()]}"/>
+
+                                <s:convertEnum/>
+                            </h:selectOneMenu>
+
+                        </a:outputPanel>
+
+                        <a:outputPanel styleClass="input-group-btn" rendered="#{houseBusinessList.searchType eq 'PERSON'}">
+                            <h:selectOneMenu styleClass="selectpicker select-menu-btn"
+                                             value="#{houseBusinessList.credentialsType}">
+                                <s:selectItems value="#{credentialsTypes}" var="_item"
+                                               itemValue="#{_item}" label="#{messages[_item.name()]}"/>
+
+                                <s:convertEnum/>
+                            </h:selectOneMenu>
+
+                        </a:outputPanel>
+                        <!-- /btn-group -->
+                    </a:outputPanel>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandLink styleClass="button" action="#{houseBusinessList.search}"
+                                   value="#{messages.Search}">
+                    </h:commandLink>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+
+
+
+    </ui:composition>

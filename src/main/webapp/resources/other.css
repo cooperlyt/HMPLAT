@@ -150,7 +150,9 @@ input[type=button], input[type=reset], input[type=submit]{
     text-decoration: none;
 }
 
-.funtion-nav:focus {
+
+
+.dropdown.open  .funtion-nav {
     background-color: #FFF;
     text-decoration: none;
     border-color: #d26911 #ddd;
@@ -168,13 +170,48 @@ input[type=button], input[type=reset], input[type=submit]{
 
 }
 
+.dropdown-menu-tab{
+    border-top-left-radius: 0px !important;
+}
+
+.dropdown-menu-tab:before{
+    position: absolute;
+    top: -8px;
+    left: -1px;
+    display: inline-block;
+    content: "";
+    border: 1px solid transparent;
+    box-shadow: 2px 0 0 #eee;
+
+    border-right-color: #DDD;
+    border-left-color: #DDD;
+    height: 8px;
+    width: 60px;
+
+    right: auto;
+}
+.dropdown-menu-tab:after{
+    position: absolute;
+    top: -14px;
+    left: 0;
+    width: 58px;
+    display: inline-block;
+    content: "";
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+    border-left-color: #fff;
+    right: auto;
+}
+
 .funcTitle {
     font-size: 20px;
     color: #444;
     cursor: pointer;
     text-decoration: none;
     outline: 0;
-    width: 200px;
+    float:left;
+    padding: 5px 5px 0 5px;
 }
 
 
@@ -641,11 +678,16 @@ input[type=button], input[type=reset], input[type=submit]{
     padding: 8px 10px;
 }
 
+.input-group-first.sm-radius button{
+    border-top-left-radius: 3px !important;
+    border-bottom-left-radius: 3px !important;
+}
 
 .input-group-first button{
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
 }
+
 
 .input-group-mid button{
     border-radius: 0px !important;

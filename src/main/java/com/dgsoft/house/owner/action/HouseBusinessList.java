@@ -46,13 +46,23 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         OWNER_BIZ_ID,
         HOUSE_CODE,
         HOUSE_OWNER,
-
-        HOUSE_MBBH,
+        PROJECT_NAME,
         HOUSE_CARD,
-
         PERSON,
-        PROJECT_NAME
+        HOUSE_MBBH;
 
+        public boolean isSearchByOne(){
+            return EnumSet.of(OWNER_BIZ_ID,HOUSE_CODE,HOUSE_OWNER,PROJECT_NAME).contains(this);
+        }
+
+    }
+
+    public SearchType[] getAllSearchTypes(){
+        return SearchType.values();
+    }
+
+    public MakeCard.CardType[] getAllCardTypes(){
+        return MakeCard.CardType.values();
     }
 
     private SearchDateArea searchDateArea = new SearchDateArea(null,null);
@@ -97,8 +107,7 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         this.searchDateArea = searchDateArea;
     }
 
-    public void refresh(){
-        super.refresh();
+    public void search(){
         if (SearchType.HOUSE_MBBH.equals(searchType) ||
                 SearchType.PERSON.equals(searchType) ||
                 SearchType.HOUSE_CARD.equals(searchType)){
@@ -106,6 +115,7 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         }else{
             setRestrictionLogicOperator("or");
         }
+
     }
 
     public HouseBusinessList() {
@@ -125,6 +135,21 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     public void setCardType(MakeCard.CardType cardType) {
         this.cardType = cardType;
+    }
+
+    public String getCardTypeName(){
+        if (cardType == null){
+            return null;
+        }
+        return cardType.name();
+    }
+
+    public void setCardTypeName(String name){
+        if ((name == null) || name.trim().equals("")){
+            cardType = null;
+        }else{
+            cardType = MakeCard.CardType.valueOf(name);
+        }
     }
 
     public MakeCard.CardType getSearchCardType(){
@@ -149,6 +174,21 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
         this.credentialsType = credentialsType;
+    }
+
+    public String getCredentialsTypeName(){
+        if (credentialsType == null){
+            return null;
+        }
+        return credentialsType.name();
+    }
+
+    public void setCredentialsTypeName(String name){
+        if ((name == null) || name.trim().equals("")){
+            credentialsType = null;
+        }else{
+            credentialsType = PersonEntity.CredentialsType.valueOf(name);
+        }
     }
 
     public PersonEntity.CredentialsType getSearchCredentialsType(){
