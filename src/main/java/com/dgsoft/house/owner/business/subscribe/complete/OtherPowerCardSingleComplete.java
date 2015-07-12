@@ -33,7 +33,7 @@ public class OtherPowerCardSingleComplete implements TaskCompleteSubscribeCompon
     @Override
     public void complete() {
 
-        for(MakeCard makeCard: ownerBusinessHome.getMakeCardByType(EnumSet.of(MakeCard.CardType.MORTGAGE,MakeCard.CardType.NOTICE,MakeCard.CardType.PROJECT_MORTGAGE))){
+        for(MakeCard makeCard: ownerBusinessHome.getMakeCardByType(EnumSet.of(MakeCard.CardType.MORTGAGE_CARD,MakeCard.CardType.NOTICE,MakeCard.CardType.PROJECT_MORTGAGE))){
            Financial financial = ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next().getFinancial();
 
                 OtherPowerCard otherPowerCard = makeCard.getCardInfo().getOtherPowerCard();

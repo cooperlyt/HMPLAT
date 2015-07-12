@@ -21,13 +21,19 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     private static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool left join fetch house.otherPowerCards cards left join fetch cards.makeCard makeCard";
 
+    private static final String SHORT_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner ";
+
+    private static final String PERSON_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool " +
+            " where (pool.credentialsType = #{houseBusinessList.searchCredentialsType} and lower(pool.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})) " +
+            " or (owner.credentialsType = #{houseBusinessList.searchCredentialsType} and lower(owner.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber}))";
+
+
+
     private static final String[] RESTRICTIONS = {
             "biz.applyTime >= #{houseBusinessList.searchDateArea.dateFrom}",
             "biz.applyTime <= #{houseBusinessList.searchDateArea.searchDateTo}",
             "lower(pool.personName) like lower(concat('%',concat(#{houseBusinessList.searchOwnerName},'%')))",
             "lower(owner.personName) like lower(concat('%',concat(#{houseBusinessList.searchOwnerName},'%')))",
-            "pool.credentialsType = #{houseBusinessList.searchCredentialsType} ",
-            "owner.credentialsType = #{houseBusinessList.searchCredentialsType}",
             "lower(pool.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})",
             "lower(owner.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})",
             "lower(house.projectName) like lower(concat('%',concat(#{houseBusinessList.searchProjectName},'%')))",
@@ -55,6 +61,14 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
             return EnumSet.of(OWNER_BIZ_ID,HOUSE_CODE,HOUSE_OWNER,PROJECT_NAME).contains(this);
         }
 
+        public String getEjbql(){
+            if (EnumSet.of(OWNER_BIZ_ID,HOUSE_CODE,PROJECT_NAME,HOUSE_MBBH).contains(this)){
+                return SHORT_EJBQL;
+            }else{
+                return EJBQL;
+            }
+        }
+
     }
 
     public SearchType[] getAllSearchTypes(){
@@ -71,19 +85,45 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     private SearchType searchType;
 
+    public void search(){
+        if ((searchKey == null) || searchKey.trim().equals("")){
+            setEjbql(SHORT_EJBQL);
+            setRestrictionExpressionStrings(null);
+        }
+    }
+
     public SearchType getSearchType() {
         return searchType;
     }
 
     public void setSearchType(SearchType searchType) {
         this.searchType = searchType;
+
+         if (searchType == null) {
+            setEjbql(EJBQL);
+        }else if (SearchType.PERSON.equals(searchType)) {
+            setEjbql(PERSON_EJBQL);
+            setRestrictionExpressionStrings(null);
+            return;
+        }else{
+            setEjbql(searchType.getEjbql());
+        }
+
+        setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
+        if (SearchType.HOUSE_MBBH.equals(searchType) ||
+                SearchType.PERSON.equals(searchType) ||
+                SearchType.HOUSE_CARD.equals(searchType)){
+            setRestrictionLogicOperator("and");
+        }else{
+            setRestrictionLogicOperator("or");
+        }
     }
 
     public void setSearchTypeName(String type){
         if ((type == null) || type.trim().equals("")){
-            searchType = null;
+            setSearchType(null);
         }else{
-            searchType = SearchType.valueOf(type);
+            setSearchType(SearchType.valueOf(type));
         }
     }
 
@@ -91,11 +131,15 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         if (searchType == null){
             return null;
         }
-        return searchType.name();
+        return getSearchType().name();
     }
 
     public String getSearchKey() {
         return searchKey;
+    }
+
+    public void setSearchKey(String searchKey){
+        this.searchKey = searchKey;
     }
 
 
@@ -107,19 +151,8 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         this.searchDateArea = searchDateArea;
     }
 
-    public void search(){
-        if (SearchType.HOUSE_MBBH.equals(searchType) ||
-                SearchType.PERSON.equals(searchType) ||
-                SearchType.HOUSE_CARD.equals(searchType)){
-            setRestrictionLogicOperator("and");
-        }else{
-            setRestrictionLogicOperator("or");
-        }
-
-    }
-
     public HouseBusinessList() {
-        setEjbql(EJBQL);
+        setEjbql(SHORT_EJBQL);
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setRestrictionLogicOperator("or");
         setOrderColumn("houseBusiness.ownerBusiness.createTime");
