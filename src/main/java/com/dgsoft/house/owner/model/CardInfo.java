@@ -24,25 +24,7 @@ public class CardInfo  implements Serializable  {
     private String makeEmpName;
     private Date printTime;
     private BusinessHouseOwner businessHouseOwner;
-
-
-
     private MakeCard makeCard;
-
-
-    private OtherPowerCard otherPowerCard;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    public OtherPowerCard getOtherPowerCard() {
-        return otherPowerCard;
-    }
-
-    public void setOtherPowerCard(OtherPowerCard otherPowerCard) {
-        this.otherPowerCard = otherPowerCard;
-    }
-
-
 
 
 

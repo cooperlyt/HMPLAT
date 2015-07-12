@@ -25,6 +25,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
     private CredentialsType credentialsType;
     private String bank;
     private Date createTime;
+    private MakeCard makeCard;
 
 	public Financial() {
 	}
@@ -152,5 +153,14 @@ public class Financial implements java.io.Serializable, PersonEntity {
         setName(personName);
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CARD",nullable = false)
+    @NotNull
+    public MakeCard getMakeCard() {
+        return makeCard;
+    }
 
+    public void setMakeCard(MakeCard makeCard) {
+        this.makeCard = makeCard;
+    }
 }
