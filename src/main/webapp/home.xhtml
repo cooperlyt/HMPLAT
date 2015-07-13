@@ -5,6 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:a="http://richfaces.org/a4j"
                 template="/layout/template.xhtml">
 
@@ -32,20 +33,70 @@
                         </span>
                         #{messages.Wellcome}: #{authInfo.loginEmployee.personName}
                     </div>
+
+                    <div class="dashboard-notice" style="padding-left: 15px;padding-bottom: 0">
+
+
+                        <r:chart title="#{messages.cur_emp_oper_chart_y_label}" styleClass="graf">
+                            <a:repeat value="#{employeeTaskTotal.curEmpChartData}" var="_type" >
+                                <r:chartSeries label="#{messages[_type.key.name()]}" type="line">
+                                    <a:repeat value="#{_type.value}" var="_count">
+                                        <r:chartPoint x="#{_count.timeBlock}" y="#{_count.count}" />
+                                    </a:repeat>
+                                </r:chartSeries>
+                            </a:repeat>
+                            <r:chartXAxis  label=""/>
+                            <r:chartYAxis label=""/>
+                        </r:chart>
+
+
+
+
+                    </div>
                 </div>
 
                 <div class="dashboard-sidebar column one-third">
-                    <a:outputPanel layout="block" class="octofication" rendered="">
+                    <a:outputPanel layout="block" class="octofication" rendered="#{not (allTaskAdapterCacheList.allSize eq 0)}">
                         <div class="message">
                             <div class="broadcast-icon">
                                 <span class="mega-octicon octicon-radio-tower"></span>
                                 <span class="broadcast-icon-mask left"></span>
                                 <span class="broadcast-icon-mask right"></span>
                             </div>
-                            <h3>dsafsdafsdfsdaf</h3>
-                            <p>dafdadsfsad</p>
+                            <h3>#{messages.you_total_have_task} #{allTaskAdapterCacheList.allSize} #{messages.you_have_task}</h3>
+                            <p>#{messages.have_pool_task} #{allTaskAdapterCacheList.ownerSize},#{messages.have_owner_task} #{allTaskAdapterCacheList.pooledSize}</p>
                         </div>
                     </a:outputPanel>
+
+                    <div class="boxed-group flush repos user-repos">
+                        <h3>
+                            #{messages.AllFunction}
+                            <span class="counter"></span>
+                        </h3>
+                        <div class="boxed-group-inner">
+                            <div class="filter-repos filter-bar" role="search">
+                                <h:inputText styleClass="filter-input">
+
+                                </h:inputText>
+                                <ul class="repo-filterer">
+                                    <li>
+                                        <s:link value="1" styleClass="repo-filter js-repo-filter-tab filter-selected"/>
+                                    </li>
+                                    <li>
+                                        <s:link styleClass="repo-filter js-repo-filter-tab" value="2"/>
+                                    </li>
+                                    <li>
+                                        <s:link styleClass="repo-filter js-repo-filter-tab" value="3"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="mini-repo-list">
+                                <li class="public source">
+                                    <s:link styleClass="mini-repo-list-item css-truncate" value="func"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
             </div>
