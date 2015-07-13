@@ -10,8 +10,10 @@ import com.dgsoft.house.owner.model.MakeCard;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.Name;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by cooper on 7/6/15.
@@ -19,7 +21,7 @@ import java.util.EnumSet;
 @Name("houseBusinessList")
 public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
-    private static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool left join fetch house.otherPowerCards cards left join fetch cards.makeCard makeCard";
+    private static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool left join fetch house.otherPowerCards cards ";
 
     private static final String SHORT_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner ";
 
@@ -40,12 +42,44 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
             "lower(biz.id) = lower(#{houseBusinessList.searchBizId})",
             "lower(houseBusiness.houseCode) = lower(#{houseBusinessList.searchHouseCode})",
             "lower(cards.id) = lower(#{houseBusinessList.searchCardNumber})",
-            "makeCard.type = #{houseBusinessList.searchCardType}",
+            "cards.type = #{houseBusinessList.searchCardType}",
             "lower(house.mapNumber) = lower(#{houseBusinessList.searchMapNumber})",
             "lower(house.blockNo) = lower(#{houseBusinessList.searchBlockNumber})",
             "lower(house.buildNo) = lower(#{houseBusinessList.searchBuildNumber})",
             "lower(house.houseOrder) = lower(#{houseBusinessList.searchHouseNumber})"
     };
+
+    public enum SortCol{
+        ORDER_BY_CREATE_TIME("houseBusiness.ownerBusiness.createTime"),
+        ORDER_BY_BUSINESS_NAME("houseBusiness.ownerBusiness.defineName"),
+        ORDER_BY_PROJECT_NAME("houseBusiness.afterBusinessHouse.projectCode"),
+        ORDER_BY_BUILD_NUMBER("houseBusiness.afterBusinessHouse.buildCode"),
+        ORDER_BY_HOUSE_ORDER("houseBusiness.afterBusinessHouse.houseOrder"),
+        ORDER_BY_MAIN_OWNER("houseBusiness.afterBusinessHouse.businessHouseOwner.personName");
+
+        private String colPath;
+
+        SortCol(String colPath) {
+            this.colPath = colPath;
+        }
+
+        public String getColPath() {
+            return colPath;
+        }
+    }
+
+    public SortCol[] getAllSortCol(){
+        return SortCol.values();
+    }
+
+    public SortCol getSortCol(){
+        for(SortCol col: SortCol.values()){
+            if (getOrderColumn().equals(col.colPath)){
+                return col;
+            }
+        }
+        return null;
+    }
 
 
     public enum SearchType {
@@ -85,13 +119,6 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     private SearchType searchType;
 
-    public void search(){
-        if ((searchKey == null) || searchKey.trim().equals("")){
-            setEjbql(SHORT_EJBQL);
-            setRestrictionExpressionStrings(null);
-        }
-    }
-
     public SearchType getSearchType() {
         return searchType;
     }
@@ -99,24 +126,6 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
     public void setSearchType(SearchType searchType) {
         this.searchType = searchType;
 
-         if (searchType == null) {
-            setEjbql(EJBQL);
-        }else if (SearchType.PERSON.equals(searchType)) {
-            setEjbql(PERSON_EJBQL);
-            setRestrictionExpressionStrings(null);
-            return;
-        }else{
-            setEjbql(searchType.getEjbql());
-        }
-
-        setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-        if (SearchType.HOUSE_MBBH.equals(searchType) ||
-                SearchType.PERSON.equals(searchType) ||
-                SearchType.HOUSE_CARD.equals(searchType)){
-            setRestrictionLogicOperator("and");
-        }else{
-            setRestrictionLogicOperator("or");
-        }
     }
 
     public void setSearchTypeName(String type){
@@ -155,9 +164,17 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         setEjbql(SHORT_EJBQL);
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setRestrictionLogicOperator("or");
-        setOrderColumn("houseBusiness.ownerBusiness.createTime");
+        setOrderColumn(SortCol.ORDER_BY_CREATE_TIME.colPath);
         setOrderDirection("desc");
         setMaxResults(25);
+    }
+
+    public void resetCondition(){
+        searchKey = null;
+        mapNumber = null;
+        blockNumber = null;
+        buildNumber = null;
+        houseNumber = null;
     }
 
     private MakeCard.CardType cardType;
@@ -333,6 +350,57 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
             return houseNumber;
         }
         return null;
+    }
+
+
+    private void resetEjbql(String sql){
+        if (!getEjbql().equals(sql)){
+            setEjbql(sql);
+        }
+    }
+
+    private void clearRestrictionExpression(){
+        if (!getRestrictionExpressionStrings().isEmpty()){
+            setRestrictionExpressionStrings(new ArrayList<String>(0));
+        }
+    }
+
+    private void setAllRestrictionExpression(){
+        if (getRestrictionExpressionStrings().isEmpty()){
+            setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
+        }
+    }
+
+    private void resetRestrictionLogicOperator(String oper){
+        if (!oper.equals(getRestrictionLogicOperator())){
+            setRestrictionLogicOperator(oper);
+        }
+    }
+
+    public List<HouseBusiness> getSearchResult(){
+        if ((searchKey == null) || searchKey.trim().equals("")){
+            resetEjbql(SHORT_EJBQL);
+            clearRestrictionExpression();
+            return getResultList();
+        }else if (searchType == null) {
+            resetEjbql(EJBQL);
+        }else if (SearchType.PERSON.equals(searchType)) {
+            resetEjbql(PERSON_EJBQL);
+            clearRestrictionExpression();
+            return getResultList();
+        }else{
+            resetEjbql(searchType.getEjbql());
+        }
+
+        setAllRestrictionExpression();
+        if (SearchType.HOUSE_MBBH.equals(searchType) ||
+                SearchType.PERSON.equals(searchType) ||
+                SearchType.HOUSE_CARD.equals(searchType)){
+            resetRestrictionLogicOperator("and");
+        }else{
+            resetRestrictionLogicOperator("or");
+        }
+        return getResultList();
     }
 
 

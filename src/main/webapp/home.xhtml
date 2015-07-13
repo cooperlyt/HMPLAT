@@ -9,13 +9,55 @@
                 template="/layout/template.xhtml">
 
 
+    <h:outputStylesheet>
+        .wellcome-user{
+            margin-bottom: 20px;
+
+            font-size: 20px;
+            color: #444;
+            cursor: pointer;
+            text-decoration: none;
+            outline: 0;
+        }
+    </h:outputStylesheet>
+
+
+
         <a:outputPanel rendered="#{identity.loggedIn}">
-            logined
+            <div class="columns">
+                <div class="news column two-thirds">
+                    <div class="wellcome-user">
+                        <span class="mega-octicon octicon-organization">
+
+                        </span>
+                        #{messages.Wellcome}: #{authInfo.loginEmployee.personName}
+                    </div>
+                </div>
+
+                <div class="dashboard-sidebar column one-third">
+                    <a:outputPanel layout="block" class="octofication" rendered="">
+                        <div class="message">
+                            <div class="broadcast-icon">
+                                <span class="mega-octicon octicon-radio-tower"></span>
+                                <span class="broadcast-icon-mask left"></span>
+                                <span class="broadcast-icon-mask right"></span>
+                            </div>
+                            <h3>dsafsdafsdfsdaf</h3>
+                            <p>dafdadsfsad</p>
+                        </div>
+                    </a:outputPanel>
+                </div>
+
+            </div>
+
         </a:outputPanel>
 
         <a:outputPanel rendered="#{not identity.loggedIn}">
             not login
         </a:outputPanel>
+
+
+
 
 
 

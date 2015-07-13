@@ -20,52 +20,104 @@
         </ui:include>
     </ui:define>
 
+    <h:outputStylesheet>
+
+
+        .search_repos .search-key-input{
+            display: table-cell;
+            border-bottom-right-radius: 3px !important;
+            border-top-right-radius: 3px !important;
+        }
+
+        .search_repos.HOUSE_MBBH .search-key-input{
+            display: none;
+        }
+
+        .search_repos .search-mbbh-input{
+            display: none;
+        }
+
+
+        .search_repos.HOUSE_MBBH .search-mbbh-input{
+            display: table-cell;
+        }
+
+        .search_repos.HOUSE_CARD .card-type-select{
+            display: table-cell;
+        }
+
+        .search_repos .card-type-select{
+            display: none;
+        }
+
+        .search_repos.PERSON .person-type-select{
+            display: table-cell;
+        }
+
+        .search_repos.PERSON .search-key-input , .search_repos.HOUSE_CARD .search-key-input{
+            border-bottom-right-radius: 0px !important;
+            border-top-right-radius: 0px !important;
+        }
+
+        .search_repos .person-type-select{
+            display: none;
+        }
+
+        .person-type-select button , .card-type-select button{
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+        }
+
+
+
+
+    </h:outputStylesheet>
+
+    <h:outputScript>
+        function searchTypeChange(){
+
+            $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+            $('.search_repos').addClass($('.js-search-type-select').val())
+        }
+    </h:outputScript>
+
     <ui:define name="head-right">
-        <h:form styleClass="search_repos">
+        <h:form styleClass="search_repos #{houseBusinessList.searchType}">
             <div class="flex-table search-form-fluid">
+
                 <div class="flex-table-item flex-table-item-primary">
                     <a:outputPanel id="searchInputs" layout="block" styleClass="input-group input-block">
                         <div class="input-group-btn">
 
 
-                            <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius"
-                                             value="#{houseBusinessList.searchType}">
+                            <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
+                                             value="#{houseBusinessList.searchType}" onchange="searchTypeChange()">
                                 <s:selectItems value="#{houseBusinessList.allSearchTypes}" var="_item"
                                                itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
                                                label="#{messages[_item.name()]}"/>
-                                <a:ajax execute="@this" event="valueChange" render="searchInputs"/>
                                 <s:convertEnum/>
                             </h:selectOneMenu>
 
 
                         </div>
-                        <h:inputText styleClass="form-control" value="#{houseBusinessList.searchKey}"
-                                     rendered="#{not (houseBusinessList.searchType eq 'HOUSE_MBBH')}"/>
+                        <h:inputText styleClass="form-control search-key-input" value="#{houseBusinessList.searchKey}"/>
 
-                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_map}"
-                                      rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_map}"/>
 
-                        <h:inputText styleClass="form-control" value="#{houseBusinessList.mapNumber}"
-                                     rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessList.mapNumber}"/>
 
-                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_block}"
-                                      rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_block}"/>
 
-                        <h:inputText styleClass="form-control" value="#{houseBusinessList.blockNumber}"
-                                     rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
-                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_build}"
-                                      rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessList.blockNumber}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_build}"/>
 
-                        <h:inputText styleClass="form-control" value="#{houseBusinessList.buildNumber}"
-                                     rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
-                        <h:outputText styleClass="input-group-addon" value="#{messages.MapIdentification_house}"
-                                      rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessList.buildNumber}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_house}"/>
 
-                        <h:inputText styleClass="form-control" value="#{houseBusinessList.houseNumber}"
-                                     rendered="#{houseBusinessList.searchType eq 'HOUSE_MBBH'}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px"
+                                     value="#{houseBusinessList.houseNumber}"/>
 
-                        <a:outputPanel styleClass="input-group-btn"
-                                       rendered="#{houseBusinessList.searchType eq 'HOUSE_CARD'}">
+                        <a:outputPanel styleClass="input-group-btn card-type-select">
 
                             <h:selectOneMenu styleClass="selectpicker select-menu-btn"
                                              value="#{houseBusinessList.cardType}">
@@ -77,8 +129,7 @@
 
                         </a:outputPanel>
 
-                        <a:outputPanel styleClass="input-group-btn"
-                                       rendered="#{houseBusinessList.searchType eq 'PERSON'}">
+                        <a:outputPanel styleClass="input-group-btn person-type-select">
                             <h:selectOneMenu styleClass="selectpicker select-menu-btn"
                                              value="#{houseBusinessList.credentialsType}">
                                 <s:selectItems value="#{credentialsTypes}" var="_item"
@@ -92,8 +143,9 @@
                     </a:outputPanel>
                     <!-- /input-group -->
                 </div>
+
                 <div class="flex-table-item">
-                    <h:commandLink styleClass="button" action="#{houseBusinessList.search}"
+                    <h:commandLink styleClass="button" onclick="#{rich:component('wait')}.show()"
                                    value="#{messages.Search}">
                     </h:commandLink>
                 </div>
@@ -110,20 +162,23 @@
 
     </h:outputStylesheet>
 
-    <h:form>
-        <a:outputPanel>
-            <s:div styleClass="blankslate" rendered="#{empty houseBusinessList.resultList}">
+
+
+
+        <a:outputPanel ajaxRendered="false">
+            <a:outputPanel layout="block" styleClass="blankslate" rendered="#{empty houseBusinessList.searchResult}">
                 <span class="mega-octicon octicon-search"></span>
 
                 <h3>#{messages.EmptyResult}</h3>
 
-                <p>  #{messages.YouCan}#{' '}  #{messages.Try} #{' '}
+                <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessList.resetCondition}"/>
+                    #{' '}#{messages.orOther} #{messages.Try} #{' '}
                     <s:link value="#{messages.AvancedSearch}"/></p>
-            </s:div>
+            </a:outputPanel>
 
 
             <div style="min-height: 300px;">
-            <h:dataTable value="#{houseBusinessList.resultList}"
+            <h:dataTable value="#{houseBusinessList.searchResult}"
                          styleClass="table table-striped table-hover table-floatThead"
                          headerClass="table-tools-header"
                          columnClasses=",,,,action-col"
@@ -133,25 +188,24 @@
                 <f:facet name="header">
 
                     <div class="select-menu">
-
+                    <div class="btn-group btn-group-sm">
                                 <ui:decorate template="/layout/dropdown-actions.xhtml">
-                                    <ui:param name="caption"
-                                              value="#{messages[employeeList.orderColumn]}"/>
                                     <ui:define name="caption">
                                         <i>#{messages.SortBy}:</i>
-                                        <span style="">#{messages[employeeList.orderColumn]}</span>
+
+                                        <span style="">#{messages[houseBusinessList.sortCol.name()]}</span>
                                     </ui:define>
                                     <ui:param name="menuTitle" value="#{messages.SortOption}"/>
 
-                                    <a:repeat value="#{employeeList.sortColumns}" var="_col">
-                                        <s:link styleClass="select-menu-item #{(employeeList.orderColumn eq _col) ? 'selected': ''}">
-                                            <f:param name="sort" value="#{_col}"/>
+                                    <a:repeat value="#{houseBusinessList.allSortCol}" var="_col">
+                                        <s:link styleClass="select-menu-item #{(houseBusinessList.sortCol eq _col) ? 'selected': ''}">
+                                            <f:param name="sort" value="#{_col.colPath}"/>
                                             <span class="select-menu-item-icon octicon octicon-check"></span>
-                                            <span class="select-menu-item-text">#{messages[_col]}</span>
+                                            <span class="select-menu-item-text">#{messages[_col.name()]}</span>
                                         </s:link>
                                     </a:repeat>
                                 </ui:decorate>
-
+                    </div>
                     </div>
 
 
@@ -169,15 +223,89 @@
                         #{messages.OWNER_BIZ_ID}
                     </f:facet>
 
-                    #{_item.ownerBusiness.id}
+                     <s:link value="#{_item.ownerBusiness.id}" view="/func/house/owner/BusinessView.xhtml">
+                         <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
 
+                     </s:link>
+                    <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                    #{messages[_item.ownerBusiness.status.name()]}
+                    </span>
+
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessDefineName}
+                    </f:facet>
+                    #{_item.ownerBusiness.defineName}
+                    <h:outputText value="#{messages[_item.ownerBusiness.type]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.House_Code}
+                    </f:facet>
+                    <s:link value="#{_item.afterBusinessHouse.displayHouseCode}">
+
+                    </s:link>
+
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Project_name}
+                    </f:facet>
+                    #{_item.afterBusinessHouse.projectName}
+
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_BuildNO}
+                    </f:facet>
+                    #{_item.afterBusinessHouse.buildNo}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.House_Order}
+                    </f:facet>
+                    #{_item.afterBusinessHouse.houseOrder}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.House_Owner}
+                    </f:facet>
+                    <h:outputText value="#{_item.afterBusinessHouse.businessHouseOwner.personName}"
+                            rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
+
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages['ownerBusiness.applyTime']}
+                    </f:facet>
+                    <h:outputText value="#{_item.ownerBusiness.applyTime}">
+                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText>
                 </h:column>
 
             </h:dataTable>
             </div>
+            <a:outputPanel layout="block" rendered="#{not empty houseBusinessList.searchResult}" class="paginate-container">
+
+                <a:outputPanel>
+                    <ui:include src="/layout/pages.xhtml">
+                        <ui:param name="entityList" value="#{houseBusinessList}"/>
+                    </ui:include>
+                </a:outputPanel>
+
+            </a:outputPanel>
 
         </a:outputPanel>
-    </h:form>
+
 
 
 </ui:composition>
