@@ -736,8 +736,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessHouseOwner = businessHouseOwner;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "businessHouses")
     public Set<MakeCard> getOtherPowerCards() {
         return otherPowerCards;
     }
@@ -746,7 +745,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.otherPowerCards = otherPowerCards;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "HOUSE_POOL", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL"))
     public Set<BusinessPool> getBusinessPools() {
         return businessPools;

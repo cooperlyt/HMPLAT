@@ -58,11 +58,6 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         return poolOwners;
     }
 
-    public void setPoolOwners(List<PersonEntityAdapter<BusinessPool>> poolOwners) {
-        this.poolOwners = poolOwners;
-    }
-
-
     public void deleteSelectOwner() {
         if (selectPoolOwner != null) {
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().remove(selectPoolOwner.getPersonEntity());

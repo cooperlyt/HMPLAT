@@ -8,51 +8,30 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-            #{messages.RegisterProperty_HouseProperty}
-        </ui:define>
-        <ui:param name="for" value="housePropertyInput"/>
-        <h:selectOneMenu required="true" id="housePropertyInput" value="#{poolOwnerSubscribe.houseRegInfo.houseProperty}"
-                         label="#{messages.RegisterProperty_HouseProperty}" styleClass="selectpicker edit-select">
-
-            <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
 
 
-    </s:decorate>
 
-    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-            #{messages.RegisterProperty_HouseFrom}
-        </ui:define>
-        <h:selectOneMenu required="true" id="houseFromInput" value="#{poolOwnerSubscribe.houseRegInfo.houseFrom}"
-                         label="#{messages.RegisterProperty_HouseFrom}" styleClass="selectpicker edit-select">
-            <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
-        <ui:param name="for" value="houseFromInput"/>
-    </s:decorate>
 
-    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+    <s:decorate id="poolTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.RegisterProperty_PoolMemo}
         </ui:define>
-        <h:selectOneMenu id="poolTypeInput" value="#{poolOwnerSubscribe.houseRegInfo.poolType}" styleClass="selectpicker edit-select"
+        <h:selectOneMenu id="poolTypeInput" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType}" styleClass="selectpicker edit-select"
                          label="#{messages.RegisterProperty_PoolMemo}" required="true">
             <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>
             <s:convertEnum/>
-            <a:ajax event="valueChange" render="poolOwnerTable" oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
+            <a:ajax event="valueChange" render="poolOwnerTable,poolTypeField" oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
         </h:selectOneMenu>
         <ui:param name="for" value="poolTypeInput"/>
     </s:decorate>
+
+
     <div style="clear: both;"/>
     <a:outputPanel id="poolOwnerTable">
-        <a:outputPanel rendered="#{(not empty poolOwnerSubscribe.houseRegInfo.poolType) and (not (poolOwnerSubscribe.houseRegInfo.poolType eq 'SINGLE_OWNER'))}">
+        <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.afterBusinessHouse.poolType) and (not (ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SINGLE_OWNER'))}">
             <hr/>
             <div class="upgrade-upsell">
 
@@ -62,7 +41,7 @@
                 <div class="select-menu table-top-total">
                     <div class="btn-group">
 
-                        <a:commandLink styleClass="btn btn-danger tooltipped tooltipped-s"
+                        <a:commandLink styleClass="btn btn-danger btn-reversal tooltipped tooltipped-s"
                                        p:aria-label="#{messages.EmptyPoolOwner}"
                                        immediate="true" execute="@this"
                                        action="#{poolOwnerSubscribe.clearOwner}" render="poolOwnerPersons">
@@ -71,7 +50,7 @@
                         </a:commandLink>
 
 
-                        <a:commandLink styleClass="btn btn-primary tooltipped tooltipped-s"
+                        <a:commandLink styleClass="btn btn-primary btn-reversal tooltipped tooltipped-s"
                                        p:aria-label="#{messages.PersonFromCard}"
                                        oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
                             <span class="octicon octicon-file-media"></span>
@@ -116,8 +95,9 @@
                     </ui:define>
 
                     <ui:param name="for" value="reationInput"/>
-
-                    <h:selectOneMenu value="#{_person.personEntity.relation}" id="reationInput" styleClass="selectpicker edit-select"
+                    <div class="input-group">
+                        <div class="#{(ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER') ? 'input-group-btn' : ''}">
+                    <h:selectOneMenu value="#{_person.personEntity.relation}" id="reationInput" styleClass=" selectpicker  #{(ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER') ? 'select-menu-btn input-group-first' :'edit-select' } "
                                      label="#{messages.BusinessPool_relation}">
                         <s:selectItems var="_word" label="#{_word.value}"
                                        itemValue="#{_word.id}"
@@ -125,37 +105,34 @@
                                        noSelectionLabel="#{messages.noSelectLabel}"/>
                         <a:ajax event="blur" execute="@this"/>
                     </h:selectOneMenu>
+                        </div>
+
+                            <h:inputText value="#{_person.personEntity.poolArea}" id="poolAreaInput"
+                                         p:placeholder="#{messages.BusinessPool_area}"
+                                         label="#{messages.BusinessPool_area}" styleClass="form-control"
+                                         rendered="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}">
+                                <f:convertNumber pattern="#0.000"/>
+                                <a:ajax event="blur"
+                                        execute="@this" render="@none"/>
+                            </h:inputText>
+
+                        <a:outputPanel layout="block" class="input-group-addon" rendered="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}">
+                            %
+                        </a:outputPanel>
+
+                        <h:inputText value="#{_person.personEntity.perc}" id="poolPercInput"
+                                     p:placeholder="#{messages.BusinessPool_perc}"
+                                     label="#{messages.BusinessPool_perc}" styleClass="form-control"
+                                     rendered="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}">
+                            <a:ajax event="blur"
+                                    execute="@this" render="@none"/>
+                        </h:inputText>
+
+                    </div>
 
                 </s:decorate>
-                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" rendered="#{poolOwnerSubscribe.houseRegInfo.poolType eq 'SHARE_OWNER'}">
-                    <ui:define name="label">
-                        #{messages.BusinessPool_area}
-                    </ui:define>
-                    <ui:param name="for" value="poolAreaInput"/>
-                    <h:inputText value="#{_person.personEntity.poolArea}" id="poolAreaInput"
-                                    label="#{messages.BusinessPool_area}">
-                        <f:convertNumber pattern="#0.000"/>
-                        <a:ajax event="blur"
-                                execute="@this" render="@none"/>
-                    </h:inputText>
 
 
-                        </s:decorate>
-
-
-                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" rendered="#{poolOwnerSubscribe.houseRegInfo.poolType eq 'SHARE_OWNER'}">
-                    <ui:define name="label">
-                        #{messages.BusinessPool_perc}
-                    </ui:define>
-                    <ui:param name="for" value="poolPercInput"/>
-
-                    <h:inputText value="#{_person.personEntity.perc}" id="poolPercInput"
-                                    label="#{messages.BusinessPool_perc}">
-                        <a:ajax event="blur"
-                                execute="@this" render="@none"/>
-                    </h:inputText>
-
-                </s:decorate>
 
 
 
@@ -185,7 +162,7 @@
                 </s:decorate>
 
                 <ui:define name="removeAction">
-                    <a:commandLink styleClass="btn btn-danger"
+                    <a:commandLink styleClass="btn btn-danger btn-reversal"
                                    execute="@this" immediate="true"
                                    style="height: 34px;"
                                    action="#{poolOwnerSubscribe.deleteSelectOwner}"

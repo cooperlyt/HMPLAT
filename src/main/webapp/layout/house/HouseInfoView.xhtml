@@ -16,7 +16,7 @@
     <h:outputText value="#{houseInfo.doorNo}"/>
 </dh:entryGridBlock>
 
-<dh:entryGridBlock expandId="buildInfo" columns="8" group="a">
+<dh:entryGridBlock expandId="buildInfo" columns="8" group="#{messages.gorup_key_build_info}">
 
 
             <h:outputText value="#{messages.Build_Id}"/>
@@ -186,7 +186,7 @@
     <h:outputText value="#{messages.House_MasterStatus}"/>
     <h:outputText value="#{messages[houseInfo.masterStatus.name()]}"/>
 
-    <h:outputText value="#{messages.House_MasterStatus}"/>
+    <h:outputText value="#{messages.House_AllStatus}"/>
     <dh:entryGridColumn colspan="7">
         <div style="width: 100%; height: 100%" class="house-info">
 

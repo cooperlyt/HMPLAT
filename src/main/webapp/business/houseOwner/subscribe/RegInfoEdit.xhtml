@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseProperty}
+        </ui:define>
+        <ui:param name="for" value="housePropertyInput"/>
+        <h:selectOneMenu required="true" id="housePropertyInput" value="#{poolOwnerSubscribe.houseRegInfo.houseProperty}"
+                         label="#{messages.RegisterProperty_HouseProperty}" styleClass="selectpicker edit-select">
+
+            <s:selectItems value="#{dictionary.getWordList('26')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+
+
+    </s:decorate>
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_HouseFrom}
+        </ui:define>
+        <h:selectOneMenu required="true" id="houseFromInput" value="#{poolOwnerSubscribe.houseRegInfo.houseFrom}"
+                         label="#{messages.RegisterProperty_HouseFrom}" styleClass="selectpicker edit-select">
+            <s:selectItems value="#{dictionary.getWordList('28')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        <ui:param name="for" value="houseFromInput"/>
+    </s:decorate>
+
+
+</ui:composition>

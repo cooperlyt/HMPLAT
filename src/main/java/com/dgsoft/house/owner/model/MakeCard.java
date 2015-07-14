@@ -118,7 +118,8 @@ public class MakeCard implements java.io.Serializable {
         this.disable = disable;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "otherPowerCards")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "CARD"), inverseJoinColumns = @JoinColumn(name = "HOUSE"))
     public Set<BusinessHouse> getBusinessHouses() {
         return businessHouses;
     }

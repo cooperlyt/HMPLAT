@@ -137,12 +137,13 @@
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-                        <h2 class="modal-title">#{ownerBuildGridMap.selectBizHouse.houseOrder}</h2>
+                        <h2 class="modal-title">#{ownerBuildGridMap.selectBizHouse.displayHouseCode}</h2>
                     </div>
                     <a:outputPanel  ajaxRendered="true" layout="block" styleClass="modal-body">
 
                         <r:messages ajaxRendered="false" globalOnly="true"/>
-                        <dh:entryGrid styleClass="detailsTable table table-bordered ">
+                        <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true"
+                                groupWidth="50"  >
                         <ui:include src="/layout/house/HouseInfoView.xhtml">
                             <ui:param name="houseInfo" value="#{ownerBuildGridMap.selectBizHouse}"/>
                         </ui:include>
