@@ -26,9 +26,15 @@ public class Financial implements java.io.Serializable, PersonEntity {
     private String bank;
     private Date createTime;
     private MakeCard makeCard;
+    private MortgaegeRegiste mortgaegeForOld;
+    private MortgaegeRegiste mortgaegeForNew;
 
 	public Financial() {
 	}
+
+    public Financial(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public Financial(String name, String code, String phone, String bank) {
         this.name = name;
@@ -154,13 +160,30 @@ public class Financial implements java.io.Serializable, PersonEntity {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CARD",nullable = false)
-    @NotNull
+    @JoinColumn(name = "CARD",nullable = true)
     public MakeCard getMakeCard() {
         return makeCard;
     }
 
     public void setMakeCard(MakeCard makeCard) {
         this.makeCard = makeCard;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "oldFinancial")
+    public MortgaegeRegiste getMortgaegeForOld() {
+        return mortgaegeForOld;
+    }
+
+    public void setMortgaegeForOld(MortgaegeRegiste mortgaegeForOld) {
+        this.mortgaegeForOld = mortgaegeForOld;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "financial")
+    public MortgaegeRegiste getMortgaegeForNew() {
+        return mortgaegeForNew;
+    }
+
+    public void setMortgaegeForNew(MortgaegeRegiste mortgaegeForNew) {
+        this.mortgaegeForNew = mortgaegeForNew;
     }
 }

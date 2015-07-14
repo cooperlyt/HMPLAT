@@ -31,9 +31,11 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	public MortgaegeRegiste() {
 	}
 
+    public MortgaegeRegiste(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
+    }
 
-
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -124,7 +126,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageArea = mortgageArea;
 	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OLD_FIN", nullable = true)
     public Financial getOldFinancial() {
         return oldFinancial;
@@ -134,7 +136,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
         this.oldFinancial = oldFinancial;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FIN", nullable = true)
     public Financial getFinancial() {
         return financial;
