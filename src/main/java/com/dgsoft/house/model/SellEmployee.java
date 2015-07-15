@@ -25,8 +25,6 @@ public class SellEmployee implements java.io.Serializable {
 	private AttachEmployee attachEmployee;
 	private HouseSellCompany houseSellCompany;
 	private String memo;
-	private Set<OldHousecontract> oldHousecontracts = new HashSet<OldHousecontract>(
-			0);
 
 	public SellEmployee() {
 	}
@@ -36,15 +34,6 @@ public class SellEmployee implements java.io.Serializable {
 		this.id = id;
 		this.attachEmployee = attachEmployee;
 		this.houseSellCompany = houseSellCompany;
-	}
-	public SellEmployee(String id, AttachEmployee attachEmployee,
-			HouseSellCompany houseSellCompany, String memo,
-			Set<OldHousecontract> oldHousecontracts) {
-		this.id = id;
-		this.attachEmployee = attachEmployee;
-		this.houseSellCompany = houseSellCompany;
-		this.memo = memo;
-		this.oldHousecontracts = oldHousecontracts;
 	}
 
 	@Id
@@ -91,13 +80,5 @@ public class SellEmployee implements java.io.Serializable {
 		this.memo = memo;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sellEmployee")
-	public Set<OldHousecontract> getOldHousecontracts() {
-		return this.oldHousecontracts;
-	}
-
-	public void setOldHousecontracts(Set<OldHousecontract> oldHousecontracts) {
-		this.oldHousecontracts = oldHousecontracts;
-	}
 
 }

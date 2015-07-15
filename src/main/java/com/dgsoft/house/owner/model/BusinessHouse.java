@@ -253,7 +253,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name ="MASTER_STATUS",nullable = true,length = 32)
+    @Column(name ="HOUSE_STATUS",nullable = true,length = 32)
     public HouseStatus getMasterStatus() {
         return masterStatus;
     }

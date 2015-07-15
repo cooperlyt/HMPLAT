@@ -116,7 +116,6 @@ public class House implements java.io.Serializable, HouseInfo {
     private boolean haveDownRoom;
 
     private String memo;
-    private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
 
 
     private Date createTime;
@@ -521,15 +520,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setMemo(String memo) {
         this.memo = memo;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-    public Set<HouseContract> getHouseContracts() {
-        return this.houseContracts;
-    }
-
-    public void setHouseContracts(Set<HouseContract> houseContracts) {
-        this.houseContracts = houseContracts;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -490,12 +490,16 @@ input[type=button], input[type=reset], input[type=submit]{
     padding: 0 3px;
 }
 
+.table-floatThead.floatThead-table th{
+    background-color: #fff !important;
+}
+
 .table-floatThead thead{
 
 }
 
 .thead-floating thead{
-    background-color: #fff;
+    background-color: #fff !important;
 }
 
 .floatThead-container{

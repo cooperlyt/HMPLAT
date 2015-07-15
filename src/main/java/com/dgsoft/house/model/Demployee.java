@@ -25,8 +25,7 @@ public class Demployee implements java.io.Serializable {
 	private Developer developer;
 	private AttachEmployee attachEmployee;
 	private String memo;
-	private Set<NewHouseContract> newHouseContracts = new HashSet<NewHouseContract>(
-			0);
+
 
 	public Demployee() {
 	}
@@ -37,15 +36,7 @@ public class Demployee implements java.io.Serializable {
 		this.developer = developer;
 		this.attachEmployee = attachEmployee;
 	}
-	public Demployee(String id, Developer developer,
-			AttachEmployee attachEmployee, String memo,
-			Set<NewHouseContract> newHouseContracts) {
-		this.id = id;
-		this.developer = developer;
-		this.attachEmployee = attachEmployee;
-		this.memo = memo;
-		this.newHouseContracts = newHouseContracts;
-	}
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -91,13 +82,6 @@ public class Demployee implements java.io.Serializable {
 		this.memo = memo;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "demployee")
-	public Set<NewHouseContract> getNewHouseContracts() {
-		return this.newHouseContracts;
-	}
 
-	public void setNewHouseContracts(Set<NewHouseContract> newHouseContracts) {
-		this.newHouseContracts = newHouseContracts;
-	}
 
 }

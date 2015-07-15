@@ -27,6 +27,7 @@ $(document).ready(
             useAbsolutePositioning: false
         });
 
+
         $('.select-menu').on('show.bs.dropdown',function(){
             $('.table-floatThead').floatThead('destroy');
         });

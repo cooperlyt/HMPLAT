@@ -255,18 +255,13 @@
 
                 <h:column>
                     <f:facet name="header">
-                        #{messages.Project_name}
+                        #{messages.Build}
                     </f:facet>
-                    #{_item.afterBusinessHouse.projectName}
+                    #{_item.afterBusinessHouse.buildName}
 
                 </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.Build_BuildNO}
-                    </f:facet>
-                    #{_item.afterBusinessHouse.buildNo}
-                </h:column>
+
 
                 <h:column>
                     <f:facet name="header">
@@ -283,6 +278,14 @@
                             rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
 
                 </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.House_Address}
+                    </f:facet>
+                    #{_item.afterBusinessHouse.address}
+                </h:column>
+
                 <h:column>
                     <f:facet name="header">
                         #{messages['ownerBusiness.applyTime']}

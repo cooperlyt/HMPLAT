@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.PersonEntity;
-import com.dgsoft.house.model.PoolOwner;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -42,17 +41,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.credentialsType = CredentialsType.MASTER_ID;
     }
 
-    public BusinessPool(PoolOwner pool){
-        this.personName = pool.getPersonName();
-        this.credentialsNumber = pool.getCredentialsNumber();
-        this.credentialsType = pool.getCredentialsType();
-        this.relation = pool.getRelation();
-        this.poolArea = pool.getArea();
-        this.perc = pool.getPerc();
-        this.phone = pool.getPhone();
-        this.memo = pool.getMemo();
-        this.createTime = new Date();
-    }
 
     public BusinessPool(BusinessPool pool){
         this.personName = pool.getPersonName();

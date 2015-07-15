@@ -1,17 +1,12 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,7 +25,7 @@ public class AttachEmployee implements java.io.Serializable {
 	private String phone;
 	private String deucation;
 	private String name;
-	private String credentialsType;
+	private PersonEntity.CredentialsType credentialsType;
 	private String credentialsNumber;
 	private Boolean enable;
 	private Date createTime;
@@ -137,12 +132,14 @@ public class AttachEmployee implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "CREDENTIALS_TYPE")
-	public String getCredentialsType() {
+
+    @Enumerated(EnumType.STRING)
+	@Column(name = "CREDENTIALS_TYPE",length = 32)
+	public PersonEntity.CredentialsType getCredentialsType() {
 		return this.credentialsType;
 	}
 
-	public void setCredentialsType(String credentialsType) {
+	public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
 		this.credentialsType = credentialsType;
 	}
 

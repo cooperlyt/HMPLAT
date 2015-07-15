@@ -237,6 +237,28 @@ public class OwnerBuildGridMap {
                 .setParameter("blockNumber",blockNumber)
                 .setParameter("buildNumber",buildNumber)
                 .setParameter("houseOrder",houseOrder).getResultList();
+
+        List<House> houses = houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.mapNumber = :mapNumber and house.build.blockNo = :blockNumber and house.build.buildNo =: buildNumber and house.houseOrder = :houseOrder", House.class)
+                .setParameter("mapNumber",mapNumber)
+                .setParameter("blockNumber", blockNumber)
+                .setParameter("buildNumber", buildNumber)
+                .setParameter("houseOrder", houseOrder). getResultList();
+
+        for(House house: houses){
+            boolean find = false;
+            for (BusinessHouse businessHouse: resultBusinessHouse){
+                if (businessHouse.getHouseCode().equals(house.getHouseCode())){
+                    find = true;
+                    break;
+                }
+            }
+            if (!find){
+                resultBusinessHouse.add(new BusinessHouse(house));
+            }
+        }
+
+
+
         if (resultBusinessHouse.size() == 1){
             selectBizHouse = resultBusinessHouse.get(0);
         }else{

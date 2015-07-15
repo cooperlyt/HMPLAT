@@ -1,16 +1,13 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseEditStrategy;
-import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.House;
-import com.dgsoft.house.model.HouseContract;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.LockedHouse;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by cooper on 10/18/14.
@@ -25,12 +22,6 @@ public class OwnerHouseEditStrategy implements HouseEditStrategy {
 
     @Override
     public boolean isCanEdit(House house) {
-
-        for (HouseContract contract: house.getHouseContracts()){
-            if (HouseContract.ContractStatus.RECORD.equals(contract.getStatus())){
-                return false;
-            }
-        }
 
         if (ownerEntityLoader.getEntityManager().
                 createQuery("select count(biz.id) from HouseBusiness biz where biz.ownerBusiness.status != 'ABORT' and biz.ownerBusiness.status != 'CANCEL' and biz.startBusinessHouse.houseCode = :houseCode", Long.class)
