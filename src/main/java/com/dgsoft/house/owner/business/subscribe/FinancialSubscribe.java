@@ -1,7 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonEntity;
-import com.dgsoft.common.system.PersonEntityHomeHelper;
+import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
@@ -32,12 +32,6 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
     private OwnerBusinessHome ownerBusinessHome;
 
     private MortgaegeRegiste mortgaegeRegiste;
-
-    private PersonEntityHomeHelper<Financial> personEntityHelper = new PersonEntityHomeHelper<Financial>(this);
-
-    public PersonEntityHomeHelper<Financial> getPersonEntityHelper() {
-        return personEntityHelper;
-    }
 
     public Financial.FinancialType[] getFinancialTypes(){
         return Financial.FinancialType.values();
@@ -106,6 +100,11 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
     }
 
     @Override
+    public Financial createInstance(){
+        return new Financial(new Date(),Financial.FinancialType.FINANCE_CORP);
+    }
+
+    @Override
     public void create(){
         super.create();
 
@@ -127,9 +126,13 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
             Logging.getLog(getClass()).debug("type is finance corp");
             getInstance().setCredentialsType(PersonEntity.CredentialsType.OTHER);
         }else{
+            Logging.getLog(getClass()).debug("type is  Person");
             getInstance().setCredentialsType(PersonEntity.CredentialsType.MASTER_ID);
         }
+    }
 
+    public PersonHelper<Financial> getPersonInstance() {
+        return new PersonHelper<Financial>(getInstance());
     }
 
 }

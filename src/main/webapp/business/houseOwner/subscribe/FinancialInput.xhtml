@@ -5,176 +5,114 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+    <h:outputStylesheet>
+        .financial-title-inputs .input-group-first button {
+            border-radius: 0 !important;
 
-    <s:decorate template="/layout/edit-multi.xhtml">
+        }
+
+        .financial-type-select {
+            width: 100px;
+        }
+
+        .financial-title-inputs .financial-type-select button {
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+
+        }
+    </h:outputStylesheet>
+
+
+    <ui:decorate template="/layout/edit-multi.xhtml">
         <ui:param name="req" value="true"/>
 
 
         <ui:define name="topValue">
-            #{label}
-        </ui:define>
 
 
+            <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit-big.xhtml">
 
+                <ui:param name="for" value="credentialsNumber"/>
+                <ui:param name="status" value="mainOwner_personCredentiaslNumberStatus"/>
+                <ui:define name="label">
+                    #{label}
+                </ui:define>
 
-        <ui:define name="values">
-            <h:panelGroup>
+                <ui:define name="message">
+                    <r:message for="credentialsNumber" styleClass="edit-below-msg" ajaxRendered="false"/>
+                    <r:message for="cerdentialsName" styleClass="edit-below-msg" ajaxRendered="false"/>
+                    <r:message for="financeNameInput" styleClass="edit-below-msg" ajaxRendered="false"/>
+                </ui:define>
 
-                <span class="value">
+                <div class="input-group financial-title-inputs" style="width: 100%">
+                    <a:region>
                     <h:selectOneMenu value="#{financialSubscribe.instance.financialType}"
                                      id="typeSelectInput"
                                      label="#{label}#{messages.FinancialType}"
                                      required="true"
-                                     styleClass="selectpicker select-menu-btn input-group-first"
+                                     styleClass="selectpicker select-menu-btn financial-type-select"
                                      valueChangeListener="#{financialSubscribe.typeChangeListener}">
                         <s:selectItems value="#{financialSubscribe.financialTypes}"
                                        var="_type"
                                        itemValue="#{_type}"
                                        label="#{messages[_type.name()]}"/>
-                        <a:ajax event="valueChange" execute="@this" render="financialCorpSelect,phoneOutPut">
+                        <a:ajax event="valueChange" execute="@region"
+                                render="personInputFields">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
 
                     </h:selectOneMenu>
-                </span>
-                <a:outputPanel id="financialCorpSelect">
-                    <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
-                        <hr/>
-                        <ui:include src="/layout/system/PersonCardInput.xhtml">
-                            <ui:param name="personEntityHelper"
-                                      value="#{financialSubscribe.personEntityHelper}"/>
-                            <ui:param name="render" value="phoneOutPut"/>
-                        </ui:include>
-                    </a:outputPanel>
+                    </a:region>
 
-                    <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
-                        <span class="value">
-                        <h:selectOneMenu id="bankSelectInput"
-                                         required="true"
-                                         label="#{label}"
-                                         value="#{financialSubscribe.filterBank}"
-                                         styleClass="selectpicker select-menu-btn input-group-first">
-                            <s:selectItems var="_word" label="#{_word.value}"
-                                           itemValue="#{_word.id}"
-                                           value="#{dictionary.getWordList('erp.bank')}"
-                                           noSelectionLabel="#{messages.noSelectLabel}"/>
-                            <a:ajax event="valueChange" execute="@this" render="bankForkSelect">
-                                <a:attachQueue requestDelay="0"/>
-                            </a:ajax>
-                        </h:selectOneMenu>
-                        </span>
-                        <a:outputPanel id="bankForkSelect">
-                            <a:outputPanel rendered="#{not empty financialSubscribe.filterBank}">
-                                <span class="value">
-                                <h:selectOneMenu label="#{messages.Financial}"
-                                                 value="#{financialSubscribe.selectName}"
-                                                 styleClass="selectpicker select-menu-btn input-group-first">
-                                    <s:selectItems var="_fork" label="#{_fork}"
-                                                   itemValue="#{_fork}"
-                                                   value="#{financialSubscribe.financialCorpNames}"
-                                                   noSelectionLabel="#{messages.noSelectLabel}"/>
-
-                                    <a:ajax event="valueChange" execute="@this" render="phoneOutPut"/>
-                                </h:selectOneMenu>
-                                </span>
-                            </a:outputPanel>
-
+                        <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                            <ui:include src="/layout/system/PersonCardInput.xhtml">
+                                <ui:param name="_person" value="#{financialSubscribe.personInstance}"/>
+                                <ui:param name="status" value="mainOwner_personCredentiaslNumberStatus"/>
+                                <ui:param name="render" value="personInputFields,financeAttrField"/>
+                            </ui:include>
                         </a:outputPanel>
-                        <span class="value">
-                        <r:message for="typeSelectInput" style="float: left;"/>
-                        </span>
-                        <span class="value">
-                        <r:message for="bankSelectInput" style="float: left;"/>
-                        </span>
-                    </a:outputPanel>
-                </a:outputPanel>
 
 
-            </h:panelGroup>
+                    <h:inputText id="financeNameInput"
+                                 required="true"
+                                 p:pplaceholder="#{messages.Financial_name}"
+                                 rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}"
+                                 label="#{messages.Financial_name}"
+                                 value="#{financialSubscribe.instance.name}"
+                                 disabled="#{financialSubscribe.selected}"
+                                 styleClass="form-control"/>
 
+                </div>
 
-            <a:outputPanel id="phoneOutPut">
-                <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}">
+            </s:decorate>
 
-                    <hr/>
-                    <div style="display: block;">
-
-                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
-                        <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
-                            <ui:define name="label">
-                                #{messages.Financial_name}
-                            </ui:define>
-                            <ui:param name="for" value="financeNameInput"/>
-                            <h:inputText id="financeNameInput"
-                                         required="true"
-                                         label="#{messages.Financial_name}"
-                                         value="#{financialSubscribe.instance.name}"
-                                         disabled="#{financialSubscribe.selected}"
-                                         styleClass="form-control"/>
-
-
-                        </s:decorate>
-
-                        <div class="form-inline">
-                            <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
-                                <ui:define name="label">
-                                    #{messages.Tel}
-                                </ui:define>
-
-                                <h:inputText id="financePhoneIpnut"
-                                             value="#{financialSubscribe.instance.phone}"
-                                             styleClass="form-control"/>
-
-                            </s:decorate>
-                        </div>
-                        </a:outputPanel>
-                        <hr/>
-
-
-                    </div>
-
-                </a:outputPanel>
-
-                <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
-                    <hr/>
-
-                    <div style="display: block;">
-                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
-                        <ui:include src="/layout/system/PersonNameInput.xhtml">
-                            <ui:param name="personEntityHelper" value="#{financialSubscribe.personEntityHelper}"/>
-                        </ui:include>
-
-
-                        <div class="form-inline">
-                            <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
-                                <ui:define name="label">
-                                    #{messages.Tel}
-                                </ui:define>
-
-
-                                <h:inputText label="#{messages.Tel}"
-                                             value="#{financialSubscribe.instance.phone}"
-                                             styleClass="form-control"/>
-                            </s:decorate>
-                        </div>
-                        </a:outputPanel>
-                        <hr/>
-                    </div>
-                </a:outputPanel>
-            </a:outputPanel>
         </ui:define>
 
 
-    </s:decorate>
+        <a:outputPanel layout="block" styleClass="form-inline" id="financeAttrField">
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.Tel}
+                </ui:define>
 
-    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+
+                <h:inputText label="#{messages.Tel}"
+                             value="#{financialSubscribe.instance.phone}"
+                             styleClass="form-control"/>
+            </s:decorate>
+
+        </a:outputPanel>
+
+    </ui:decorate>
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.MortgaegeRegiste_InterestType}
         </ui:define>
         <ui:param name="for" value="highestMountMoneyInput"/>
-
 
 
         <div style="display: block;">
@@ -192,7 +130,7 @@
                     </h:selectOneMenu>
 
                 </a:outputPanel>
-                <h:inputText value="#{mfinancialSubscribe.mortgaegeRegiste.highestMountMoney}"
+                <h:inputText value="#{financialSubscribe.mortgaegeRegiste.highestMountMoney}"
                              size="20"
                              id="highestMountMoneyInput"
                              label="#{messages.MortgaegeRegiste_HighestMountMoney}"
@@ -210,10 +148,6 @@
     </s:decorate>
 
 
-
-
-
-
     <div class="form-inline">
         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
@@ -226,7 +160,7 @@
                          styleClass="js-datepicker form-control"
                          label="#{messages.MortgaegeRegiste_MortgageDueTimeS}"
                          value="#{financialSubscribe.mortgaegeRegiste.mortgageDueTimeS}">
-                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                <s:convertDateTime pattern="#{messages.datePattern}"/>
             </h:inputText>
         </s:decorate>
     </div>

@@ -10,25 +10,43 @@
     <!-- param: personEntityHelper  , render-->
 
 
-    <s:decorate template="/layout/edit-multi.xhtml">
-        <ui:define name="label">
-            #{label}
-        </ui:define>
+    <ui:decorate  template="/layout/edit-multi.xhtml">
 
         <ui:define name="topValue">
-            <ui:include src="/layout/system/PersonCardInput.xhtml">
-                <ui:param name="render" value="personEditFields"/>
-            </ui:include>
+            <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                <ui:param name="for" value="credentialsNumber"/>
+                <ui:param name="status" value="mainOwner_personCredentiaslNumberStatus"/>
+                <ui:define name="label">
+                    #{label}
+                </ui:define>
+
+                <ui:define name="message">
+                    <r:message for="credentialsNumber" styleClass="edit-below-msg" ajaxRendered="false"/>
+                    <r:message for="cerdentialsName" styleClass="edit-below-msg" ajaxRendered="false"/>
+
+                </ui:define>
+
+                <ui:include src="/layout/system/PersonCardInput.xhtml">
+                    <ui:param name="_person" value="#{personEntityHelper}"/>
+                    <ui:param name="status" value="mainOwner_personCredentiaslNumberStatus"/>
+                    <ui:param name="render" value="personEditFields personInputFields"/>
+                </ui:include>
+
+
+            </s:decorate>
+
+
+
+
         </ui:define>
 
         <a:outputPanel id="personEditFields">
-            <ui:include src="PersonNameInput.xhtml"/>
-
 
             <ui:insert/>
         </a:outputPanel>
 
-    </s:decorate>
+    </ui:decorate>
 
 
 </ui:composition>

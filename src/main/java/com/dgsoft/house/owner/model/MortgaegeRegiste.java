@@ -136,7 +136,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
         this.oldFinancial = oldFinancial;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "FIN", nullable = true)
     public Financial getFinancial() {
         return financial;
