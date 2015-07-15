@@ -9,56 +9,55 @@ import javax.persistence.EntityManager;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.UUID;
 
 /**
  * Created by cooper on 9/19/14.
  */
 public class PersonHelper<E extends PersonEntity>  {
-    public PersonHelper() {
-        isManager = false;
-    }
+
+    private String uuid;
+
 
     public PersonHelper(E entity) {
         this.entity = entity;
         isManager = false;
+        uuid = UUID.randomUUID().toString();
     }
 
     private E entity;
 
-    public E getEntity() {
+    public E getPersonEntity() {
         return entity;
     }
 
-    public void setEntity(E entity) {
-        this.entity = entity;
-        isManager = false;
-    }
-
-
     public PersonEntity.CredentialsType getCredentialsType() {
-        return getEntity().getCredentialsType();
+        return getPersonEntity().getCredentialsType();
     }
 
     public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
-        getEntity().setCredentialsType(credentialsType);
+        getPersonEntity().setCredentialsType(credentialsType);
     }
 
     public String getCredentialsNumber() {
-        return getEntity().getCredentialsNumber();
+        return getPersonEntity().getCredentialsNumber();
     }
 
     public void setCredentialsNumber(String credentialsNumber) {
-        getEntity().setCredentialsNumber(credentialsNumber);
+        getPersonEntity().setCredentialsNumber(credentialsNumber);
     }
 
     public String getPersonName() {
-        return getEntity().getPersonName();
+        return getPersonEntity().getPersonName();
     }
 
     public void setPersonName(String name) {
-        getEntity().setPersonName(name);
+        getPersonEntity().setPersonName(name);
     }
 
+    public String getUuid() {
+        return uuid;
+    }
 
     private boolean isManager = false;
 

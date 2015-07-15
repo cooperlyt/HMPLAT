@@ -5,66 +5,65 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: personEntityHelper  , render-->
 
 
-    <a:region>
+        <a:outputPanel id="personCardInput" layout="block" class="input-group">
 
-        <s:decorate styleClass="form-group" id="personCardInput" template="/layout/edit-big.xhtml">
+        <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
 
-            <ui:param name="for" value="credentialsNumber"/>
-            <ui:param name="status" value="personCredentiaslNumberStatus"/>
-
-            <ui:define name="label">
-                #{label}
-            </ui:define>
-            <div class="input-group">
-
-                <a:outputPanel id="credentialsType" styleClass="input-group-btn">
-
-                    <h:selectOneMenu  label="#{messages.person_field_credentialsType}"
-                                     styleClass="selectpicker select-menu-btn input-group-first"
-                                     value="#{personEntityHelper.credentialsType}" required="true">
-                        <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                        <s:convertEnum/>
-                        <a:ajax event="valueChange" listener="#{personEntityHelper.typeChange}"
-                                render="credentialsNumber,#{render}"
-                                execute="@this" status="waitSearchPerson">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-                    </h:selectOneMenu>
-                </a:outputPanel>
-
-                <h:inputText id="credentialsNumber" disabled="#{personEntityHelper.credentialsType.name() eq 'OTHER'}"
-                             label="#{messages.person_field_credentialsNO}"
-                             styleClass="form-control"
-                             required="true"
-                             size="25"
-                             maxlength="100"
-                             value="#{personEntityHelper.credentialsNumber}">
-                    <a:ajax event="blur" render="personCardInput,#{render}"
-                            status="personCredentiaslNumberStatus"
-                            listener="#{personEntityHelper.numberChange}" execute="@region">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:ajax>
-                </h:inputText>
+            <h:selectOneMenu  label="#{messages.person_field_credentialsType}" id="personCredentialsTypeInput"
+                              styleClass="selectpicker select-menu-btn input-group-first"
+                              value="#{_person.credentialsType}" required="true">
+                <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+                <s:convertEnum/>
+                <a:ajax event="valueChange"
+                        render="personCardInput #{render}"
+                        execute="@this" status="#{status}">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
 
 
-                <div class="input-group-btn">
-                    <a:commandLink styleClass="btn btn-default"
-                                     execute="@this" immediate="true"
-                                     render="credentialsNumber,credentialsType,#{render}">
-                        <span class="octicon octicon-person" style="font-size: 20px; "/>
-                    </a:commandLink>
-                </div>
+            </h:selectOneMenu>
 
-            </div>
-        </s:decorate>
+            <a:commandLink styleClass="btn btn-default #{(_person.credentialsType.name() eq 'MASTER_ID') ? '' : 'disabled'}"
+                           id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
+                           execute="@this" immediate="true" style="height: 34px;"
+                           render="credentialsNumber,cerdentialsName">
+                <span class="octicon octicon-file-media" />
+            </a:commandLink>
+        </a:outputPanel>
+        <h:inputText id="credentialsNumber" disabled="#{(_person.credentialsType.name() eq 'OTHER')}"
+                     label="#{messages.person_field_credentialsNO}"
+                     styleClass="form-control"
+                     required="true"
+                     size="25"
+                     maxlength="100"
+                     p:placeholder="#{messages.person_field_credentialsNO}"
+                     value="#{_person.credentialsNumber}">
+            <a:ajax event="blur" render="cerdentialsName #{render}"
+                    status="#{status}" execute="personCredentialsTypeInput,credentialsNumber">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:inputText>
 
 
 
-    </a:region>
+        <div class="input-group-addon">
+@
+        </div>
+        <h:inputText id="cerdentialsName" disabled="#{_person.manager}" value="#{_person.personName}"
+                     p:placeholder="#{messages.person_field_name}"
+                     required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
+
+        </h:inputText>
+
+            <ui:insert name="after"/>
+
+  </a:outputPanel>
+
 
 </ui:composition>

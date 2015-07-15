@@ -1,11 +1,11 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.common.EntityHomeAdapter;
-import com.dgsoft.common.system.PersonEntityHelper;
-import com.dgsoft.common.system.model.Person;
+import com.dgsoft.common.system.PersonHelper;
+
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
+
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -18,27 +18,6 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-    public class HouseOwnerEntityHelper extends PersonEntityHelper<BusinessHouseOwner> {
-
-        public HouseOwnerEntityHelper(BusinessHouseOwnerSubscribe businessHouseOwnerSubscribe) {
-            this.businessHouseOwnerSubscribe = businessHouseOwnerSubscribe;
-        }
-
-        private BusinessHouseOwnerSubscribe businessHouseOwnerSubscribe;
-
-        @Override
-        protected EntityHomeAdapter<BusinessHouseOwner> getEntityHome() {
-            return businessHouseOwnerSubscribe;
-        }
-
-        @Override
-        protected void fillPerson(Person person){
-            businessHouseOwnerSubscribe.getInstance().setRootAddress(person.getCredentialsOrgan());
-        }
-    }
-
-
-    private HouseOwnerEntityHelper houseOwnerEntityHelper;
 
     @Override
     public  BusinessHouseOwner createInstance(){
@@ -51,7 +30,6 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
     @Override
     public void create() {
         super.create();
-        houseOwnerEntityHelper = new HouseOwnerEntityHelper(this);
 
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner() != null) {
                 setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getId());
@@ -61,8 +39,14 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
         }
     }
 
-    public HouseOwnerEntityHelper getHouseOwnerEntityHelper() {
-        return houseOwnerEntityHelper;
+    private PersonHelper<BusinessHouseOwner> personHelper;
+
+    public PersonHelper<BusinessHouseOwner> getPersonInstance() {
+        if ((personHelper == null) || (personHelper.getPersonEntity() != getInstance())) {
+            personHelper = new PersonHelper<BusinessHouseOwner>(getInstance());
+        }
+        return personHelper;
     }
+
 
 }

@@ -18,71 +18,25 @@
 
         <div class="context-panel">
 
-            <s:decorate styleClass="form-group" id="personCardInput" template="/layout/edit-big.xhtml">
+            <s:decorate styleClass="form-group" id="singPersonCardInput" template="/layout/edit-big.xhtml">
 
                 <ui:param name="for" value="credentialsNumber"/>
                 <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
                 <ui:param name="showLabel" value="false"/>
 
 
+                <ui:decorate template="/layout/system/PersonCardInput.xhtml">
+                    <ui:param name="_person" value="#{_person}"/>
+                    <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
+                    <ui:param name="render" value="singPersonCardInput"/>
+                    <ui:define name="after">
+                        <div class="input-group-btn">
+                            <ui:insert name="removeAction"/>
 
-                <div class="input-group">
+                        </div>
+                    </ui:define>
+                </ui:decorate>
 
-                <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
-
-                    <h:selectOneMenu  label="#{messages.person_field_credentialsType}" id="personCredentialsTypeInput"
-                                      styleClass="selectpicker select-menu-btn input-group-first"
-                                      value="#{_person.credentialsType}" required="true">
-                        <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                        <s:convertEnum/>
-                        <a:ajax event="valueChange"
-                                render="personCardInput"
-                                execute="@this" status="#{_person.uuid}_personCredentiaslNumberStatus">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-
-
-                    </h:selectOneMenu>
-
-                    <a:commandLink styleClass="btn btn-default #{(_person.credentialsType.name() eq 'MASTER_ID') ? '' : 'disabled'}"
-                                   id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                                   execute="@this" immediate="true" style="height: 34px;"
-                                   render="credentialsNumber,cerdentialsName">
-                        <span class="octicon octicon-file-media" />
-                    </a:commandLink>
-                </a:outputPanel>
-                    <h:inputText id="credentialsNumber" disabled="#{(_person.credentialsType.name() eq 'OTHER')}"
-                                 label="#{messages.person_field_credentialsNO}"
-                                 styleClass="form-control"
-                                 required="true"
-                                 size="25"
-                                 maxlength="100"
-                                 p:placeholder="#{messages.person_field_credentialsNO}"
-                                 value="#{_person.credentialsNumber}">
-                        <a:ajax event="blur" render="personCardInput"
-                                status="#{_person.uuid}_personCredentiaslNumberStatus" execute="personCredentialsTypeInput,credentialsNumber">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-                    </h:inputText>
-
-
-
-                    <div class="input-group-addon">
-
-                    </div>
-                    <h:inputText id="cerdentialsName" disabled="#{_person.manager}" value="#{_person.personName}"
-                                 p:placeholder="#{messages.person_field_name}"
-                                 required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
-
-                    </h:inputText>
-
-
-                    <div class="input-group-btn">
-                        <ui:insert name="removeAction"/>
-
-                    </div>
-
-                </div>
 
                 <ui:define name="message">
                     <r:message for="credentialsNumber" styleClass="edit-below-msg" ajaxRendered="false"/>
@@ -110,62 +64,5 @@
     </a:outputPanel>
 
 
-    <ui:remove>
-    <r:dataTable id="poolTable" style="width: 100%"
-                 value="#{persons}" var="_person">
-        <f:facet name="header">
-            #{title}
-        </f:facet>
 
-        <r:column style="width: 100px">
-            <f:facet name="header">
-                #{messages.person_field_credentialsType}
-            </f:facet>
-            <s:decorate template="/layout/grid-inside-edit.xhtml">
-                <ui:define name="tail">
-                    <a:commandButton image="/img/icons/read_card.png" title="#{messages.AddPoolOwnerFromCard}"/>
-                </ui:define>
-                <r:inplaceSelect style="width: 90%" required="true" value="#{_person.credentialsType}"
-                                 label="#{messages.person_field_credentialsType}">
-                    <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
-                    <s:convertEnum/>
-                    <a:ajax event="selectitem"
-                            render="poolTable"
-                            execute="@this">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:ajax>
-                </r:inplaceSelect>
-
-            </s:decorate>
-
-        </r:column>
-
-
-        <r:column>
-            <f:facet name="header">
-                #{messages.person_field_credentialsNO}
-            </f:facet>
-            <s:decorate template="/layout/grid-inside-edit.xhtml"
-                        rendered="#{not (_person.credentialsType.name() eq 'OTHER')}">
-                <r:inplaceInput value="#{_person.credentialsNumber}" style="width: 90%" required="true"
-                                label="#{messages.person_field_credentialsNO}">
-                    <a:ajax event="blur"
-                            render="poolTable"
-                            execute="@this">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:ajax>
-                </r:inplaceInput>
-            </s:decorate>
-            <h:outputText rendered="#{_person.credentialsType.name() eq 'OTHER'}"
-                          value="#{_person.credentialsNumber}"/>
-        </r:column>
-
-
-        <r:column>
-
-        </r:column>
-
-
-
-    </r:dataTable></ui:remove>
 </ui:composition>

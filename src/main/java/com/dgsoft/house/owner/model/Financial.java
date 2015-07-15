@@ -32,8 +32,9 @@ public class Financial implements java.io.Serializable, PersonEntity {
 	public Financial() {
 	}
 
-    public Financial(Date createTime) {
+    public Financial(Date createTime, FinancialType financialType) {
         this.createTime = createTime;
+        this.financialType = financialType;
     }
 
     public Financial(String name, String code, String phone, String bank) {
