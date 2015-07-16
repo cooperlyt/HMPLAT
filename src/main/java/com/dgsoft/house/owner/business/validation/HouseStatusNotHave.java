@@ -18,7 +18,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 public class HouseStatusNotHave extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-       if (businessHouse.getHouseStates()==null){
+       if (businessHouse.getHouseStates().isEmpty()){
            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
        }
 
