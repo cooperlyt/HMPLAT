@@ -124,9 +124,17 @@ public class OwnerBuildGridMap {
                 return;
             }
         }
-
         Logging.getLog(getClass()).warn("houseCode not found in map");
-        selectBizHouse = null;
+        try {
+            selectBizHouse = ownerEntityLoader.getEntityManager().createQuery("select hr.businessHouse from HouseRecord hr where hr.houseCode =:houseCode", BusinessHouse.class)
+                    .setParameter("houseCode",id)
+                    .getSingleResult();
+
+        }catch (NoResultException e){
+            selectBizHouse = null;
+            Logging.getLog(getClass()).warn("houseCode not found in record");
+        }
+
     }
 
     public void setId(String buildId){
