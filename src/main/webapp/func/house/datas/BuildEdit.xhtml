@@ -72,7 +72,6 @@
                     <span class="input-group-addon">#{messages.MapIdentification_dbuild}</span>
                     <h:inputText id="devNoInput" value="#{buildHome.instance.buildDevNumber}"
                                  styleClass="form-control"
-                                 converter="javax.faces.Integer"
                                  label="#{messages.Build_devBuildNumber}" maxlength="4" size="10" autocomplete="off">
                         <a:ajax execute="@this,buildNoInput" listener="#{buildHome.genBuildName}"
                                 event="blur" render="buildNameInput">
