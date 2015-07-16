@@ -43,6 +43,8 @@ public class GridBlock implements java.io.Serializable {
     private String northWall;
     private String knotSize;
 
+    private String houseCode;
+
     private boolean haveDownRoom;
 
     public GridBlock() {
@@ -327,6 +329,15 @@ public class GridBlock implements java.io.Serializable {
         this.haveDownRoom = haveDownRoom;
     }
 
+    @Column(name = "HOUSE_CODE",nullable = true, length = 32)
+    @Size(max = 32)
+    public String getHouseCode() {
+        return houseCode;
+    }
+
+    public void setHouseCode(String houseCode) {
+        this.houseCode = houseCode;
+    }
 
     @Transient
     private HouseInfo house;
@@ -337,6 +348,10 @@ public class GridBlock implements java.io.Serializable {
     @Transient
     public void setHouse(HouseInfo house) {
         this.house = house;
+        if (house == null){
+            this.houseCode = null;
+        }else
+            this.houseCode = house.getHouseCode();
     }
 
     @Transient

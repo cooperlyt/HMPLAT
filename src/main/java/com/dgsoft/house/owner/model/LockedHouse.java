@@ -20,7 +20,6 @@ public class LockedHouse {
     private String empCode;
     private String empName;
     private Date lockedTime;
-    private String buildCode;
 
     public LockedHouse() {
     }
@@ -90,14 +89,4 @@ public class LockedHouse {
         this.lockedTime = lockedTime;
     }
 
-    @Column(name="BUILD_CODE", nullable = false, length = 32)
-    @NotNull
-    @Size(max = 32)
-    public String getBuildCode() {
-        return buildCode;
-    }
-
-    public void setBuildCode(String buildCode) {
-        this.buildCode = buildCode;
-    }
 }

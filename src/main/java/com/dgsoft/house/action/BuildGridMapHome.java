@@ -155,7 +155,7 @@ public class BuildGridMapHome implements DropListener {
             for (GridRow row: map.getGridRows()){
                 for (GridBlock block: row.getGridBlocks()){
                     for(House house: houses){
-                        if ((house.getGridBlockId()) != null && house.getGridBlockId().equals(block.getId())){
+                        if (house.getHouseCode().equals(block.getHouseCode())){
                             block.setHouse(house);
                             houses.remove(house);
                             break;
@@ -183,7 +183,7 @@ public class BuildGridMapHome implements DropListener {
                 if (gridBlock.getHouse() != null){
                     House house = (House)gridBlock.getHouse();
                     idleHouses.add(house);
-                    house.setGridBlockId(null);
+                    gridBlock.setHouseCode(null);
                 }
 
             }
@@ -200,7 +200,6 @@ public class BuildGridMapHome implements DropListener {
                         if (house.getHouseOrder().equals(gridBlock.getHouseOrder())) {
 
                             gridBlock.setHouse(house);
-                            house.setGridBlockId(gridBlock.getId());
                             idleHouses.remove(house);
 
                             break;
@@ -336,9 +335,10 @@ public class BuildGridMapHome implements DropListener {
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() == null) {
+
                     House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), block);
+                    block.setHouseCode(newHouse.getHouseCode());
                     block.setHouse(newHouse);
-                    newHouse.setGridBlockId(block.getId());
                     buildHome.getInstance().getHouses().add(newHouse);
                 }
             }
@@ -395,7 +395,6 @@ public class BuildGridMapHome implements DropListener {
             if (block.getHouse() != null) {
                 House house = (House)block.getHouse();
                 idleHouses.add(house);
-                house.setGridBlockId(null);
                 block.setHouse(null);
             }
         }
@@ -440,22 +439,20 @@ public class BuildGridMapHome implements DropListener {
             House tempHouse = (House)targetBlock.getHouse();
             targetBlock.setHouse(((GridBlock) dropEvent.getDragValue()).getHouse());
             ((GridBlock) dropEvent.getDragValue()).setHouse(tempHouse);
-            tempHouse.setGridBlockId(((GridBlock) dropEvent.getDragValue()).getId());
+            targetBlock.setHouseCode(tempHouse.getHouseCode());
         } else if (dropEvent.getDragValue() instanceof House) {
             House tempHouse = (House) dropEvent.getDragValue();
             if (targetBlock.getHouse() != null) {
                 House house = (House)targetBlock.getHouse();
                 idleHouses.add(house);
-                house.setGridBlockId(null);
+                targetBlock.setHouseCode(null);
             }
             targetBlock.setHouse(tempHouse);
-            tempHouse.setGridBlockId(targetBlock.getId());
             idleHouses.remove(tempHouse);
 
         } else {
             House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock);
             targetBlock.setHouse(newHouse);
-            newHouse.setGridBlockId(targetBlock.getId());
             buildHome.getInstance().getHouses().add(newHouse);
         }
     }
@@ -555,7 +552,6 @@ public class BuildGridMapHome implements DropListener {
                         idleHouses.add(house);
                         facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "HouseCantDeleteMoveToIdle", block.getHouse().getHouseOrder());
                     }
-                    house.setGridBlockId(null);
                     block.setHouse(null);
                 }
             }
@@ -568,7 +564,6 @@ public class BuildGridMapHome implements DropListener {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() != null) {
                     House house = (House) block.getHouse();
-                    house.setGridBlockId(null);
                     idleHouses.add(house);
                     block.setHouse(null);
                 }

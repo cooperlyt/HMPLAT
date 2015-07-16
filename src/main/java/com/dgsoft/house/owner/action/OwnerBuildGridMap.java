@@ -5,6 +5,7 @@ import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseRecord;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.Component;
@@ -28,9 +29,9 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class OwnerBuildGridMap {
 
-    public BuildHome getBuildHome(){
-       return (BuildHome)Component.getInstance(BuildHome.class,true);
-    }
+    @In(required = false)
+    private BuildHome buildHome;
+
 
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
@@ -40,13 +41,11 @@ public class OwnerBuildGridMap {
 
     private BuildGridMap curMap;
 
-    private List<BuildGridMap> buildGridMaps;
+    private List<BuildGridMap> buildGridMaps = new ArrayList<BuildGridMap>(0);
 
     private BusinessHouse selectBizHouse;
 
     private boolean dataTableList;
-
-    private boolean findByNumber;
 
     private String mapNumber;
 
@@ -54,15 +53,9 @@ public class OwnerBuildGridMap {
 
     private String buildNumber;
 
+    private String houseOrder;
+
     private List<BusinessHouse> resultBusinessHouse = new ArrayList<BusinessHouse>();
-
-    public boolean isFindByNumber() {
-        return findByNumber;
-    }
-
-    public void setFindByNumber(boolean findByNumber) {
-        this.findByNumber = findByNumber;
-    }
 
     public String getMapNumber() {
         return mapNumber;
@@ -88,11 +81,6 @@ public class OwnerBuildGridMap {
         this.buildNumber = buildNumber;
     }
 
-
-
-    private String houseOrder;
-
-
     public BusinessHouse getSelectBizHouse() {
         return selectBizHouse;
     }
@@ -108,7 +96,6 @@ public class OwnerBuildGridMap {
     public void setDataTableList(boolean dataTableList) {
         this.dataTableList = dataTableList;
     }
-
 
     public String getHouseOrder() {
         return houseOrder;
@@ -132,15 +119,13 @@ public class OwnerBuildGridMap {
             selectBizHouse = null;
         }
 
-            for (GridRow row: curMap.getGridRows()){
-                for (GridBlock block: row.getGridBlocks()){
 
-                    if ( (block.getHouse() != null) && block.getHouse().getHouseCode().equals(id)){
-                        selectBizHouse = (BusinessHouse) block.getHouse();
-                        return;
-                    }
-                }
+        for(BusinessHouse businessHouse: resultBusinessHouse){
+            if (businessHouse.getHouseCode().equals(id)){
+                selectBizHouse = businessHouse;
+                return;
             }
+        }
 
         Logging.getLog(getClass()).warn("houseCode not found in map");
         selectBizHouse = null;
@@ -177,86 +162,51 @@ public class OwnerBuildGridMap {
         return buildGridMaps;
     }
 
-    private BusinessHouse getBusinessHouse(House house , List<HouseRecord> houseRecords){
-
-        for(HouseRecord houseRecord: houseRecords){
-            if (houseRecord.getHouseCode().equals(house.getId())){
-                return houseRecord.getBusinessHouse();
-            }
-        }
-        return new BusinessHouse(house);
-    }
-
-
     public void findBuildBySection(){
-        findByNumber = false;
-        init();
+
+        mapNumber = buildHome.getInstance().getMapNumber();
+        blockNumber = buildHome.getInstance().getBlockNo();
+        buildNumber = buildHome.getInstance().getBuildNo();
+        initBuildMap();
     }
 
     public void findBuildByNumber() {
         try {
-            getBuildHome().setId(
+            buildHome.setId(
                     houseEntityLoader.getEntityManager().createQuery("select build.id from Build build where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and build.buildNo = :buildNumber", String.class)
                             .setParameter("mapNumber", mapNumber).setParameter("blockNumber", blockNumber).setParameter("buildNumber", buildNumber).getSingleResult());
-            findByNumber = true;
-            init();
+
+            initBuildMap();
         } catch (NoResultException e) {
-            getBuildHome().clearInstance();
+            buildHome.clearInstance();
             dataTableList = false;
         }
     }
 
-    public void findHouseBySection(){
-        findByNumber = false;
-
-        try {
-
-            House house = houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.id =:buildCode and house.houseOrder = :houseOrder",House.class)
-                    .setParameter("buildCode", getBuildHome().getId()).setParameter("houseOrder", houseOrder).getSingleResult();
-            //TODO map show : house.getGridBlockId()
-            try {
-                selectBizHouse = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.houseCode = :houseCode", BusinessHouse.class)
-                    .setParameter("houseCode", house.getHouseCode()).getSingleResult();
-
-            } catch (NoResultException e2){
-                selectBizHouse = new BusinessHouse(house);
-            }
-
-        } catch (NoResultException e1){
-            selectBizHouse = null;
+    private List<BusinessHouse> unionHouse(Collection<House> houses, List<BusinessHouse> businessHouses){
+        Map<String,BusinessHouse> businessHouseMap = new HashMap<String, BusinessHouse>();
+        for (BusinessHouse businessHouse: businessHouses){
+            businessHouseMap.put(businessHouse.getHouseCode(),businessHouse);
         }
+        List<BusinessHouse> result = new ArrayList<BusinessHouse>();
+        for(House house: houses){
 
-
+            BusinessHouse businessHouse = businessHouseMap.get(house.getHouseCode());
+            if(businessHouse == null){
+                result.add(new BusinessHouse(house));
+            }else{
+                result.add(businessHouse);
+                businessHouseMap.remove(businessHouse.getHouseCode());
+            }
+        }
+        result.addAll(businessHouseMap.values());
+        return result;
     }
 
-    public void findHouseByNumber(){
-        findByNumber = true;
-        dataTableList = true;
-        resultBusinessHouse = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.mapNumber = :mapNumber and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", BusinessHouse.class)
-                .setParameter("mapNumber",mapNumber)
-                .setParameter("blockNumber",blockNumber)
-                .setParameter("buildNumber",buildNumber)
-                .setParameter("houseOrder",houseOrder).getResultList();
 
-        List<House> houses = houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.mapNumber = :mapNumber and house.build.blockNo = :blockNumber and house.build.buildNo =: buildNumber and house.houseOrder = :houseOrder", House.class)
-                .setParameter("mapNumber",mapNumber)
-                .setParameter("blockNumber", blockNumber)
-                .setParameter("buildNumber", buildNumber)
-                .setParameter("houseOrder", houseOrder). getResultList();
+    private void findHouseByOrder(List<House> houses, List<BusinessHouse> businessHouses){
 
-        for(House house: houses){
-            boolean find = false;
-            for (BusinessHouse businessHouse: resultBusinessHouse){
-                if (businessHouse.getHouseCode().equals(house.getHouseCode())){
-                    find = true;
-                    break;
-                }
-            }
-            if (!find){
-                resultBusinessHouse.add(new BusinessHouse(house));
-            }
-        }
-
+        resultBusinessHouse = unionHouse(houses,businessHouses);
 
 
         if (resultBusinessHouse.size() == 1){
@@ -264,17 +214,47 @@ public class OwnerBuildGridMap {
         }else{
             selectBizHouse = null;
         }
+
+
+        buildHome.clearInstance();
+        buildGridMaps = new ArrayList<BuildGridMap>(0);
+        dataTableList = true;
+    }
+
+    public void findHouseBySection(){
+
+
+        findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.id = :buildCode  and house.houseOrder = :houseOrder", House.class)
+                        .setParameter("buildCode",buildHome.getInstance().getId())
+                        .setParameter("houseOrder", houseOrder). getResultList(),
+                ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.buildCode = :buildCode and houseRecord.businessHouse.houseOrder = :houseOrder", BusinessHouse.class)
+                        .setParameter("buildCode",buildHome.getInstance().getId())
+                        .setParameter("houseOrder",houseOrder).getResultList());
+
+
+    }
+
+    public void findHouseByNumber(){
+
+        findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.mapNumber = :mapNumber and house.build.blockNo = :blockNumber and house.build.buildNo =:buildNumber and house.houseOrder = :houseOrder", House.class)
+                .setParameter("mapNumber",mapNumber)
+                .setParameter("blockNumber", blockNumber)
+                .setParameter("buildNumber", buildNumber)
+                .setParameter("houseOrder", houseOrder). getResultList(),
+                ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.mapNumber = :mapNumber and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", BusinessHouse.class)
+                .setParameter("mapNumber",mapNumber)
+                .setParameter("blockNumber",blockNumber)
+                .setParameter("buildNumber",buildNumber)
+                .setParameter("houseOrder",houseOrder).getResultList());
+
     }
 
 
-
-    @Create
-    public void init(){
+    public void initBuildMap(){
 
 
-
-
-        buildGridMaps = new ArrayList<BuildGridMap>(getBuildHome().getInstance().getBuildGridMaps());
+        resultBusinessHouse.clear();
+        buildGridMaps = new ArrayList<BuildGridMap>(buildHome.getInstance().getBuildGridMaps());
         Collections.sort(buildGridMaps, new Comparator<BuildGridMap>() {
             @Override
             public int compare(BuildGridMap o1, BuildGridMap o2) {
@@ -284,42 +264,60 @@ public class OwnerBuildGridMap {
 
 
 
-        Set<House> houses = getBuildHome().getInstance().getHouses();
+        Map<String,House> houseMap = new HashMap<String, House>();
+        for (House house: buildHome.getInstance().getHouses()){
+            houseMap.put(house.getHouseCode(),house);
+        }
 
-        List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord where houseRecord.businessHouse.buildCode = :buildCode",HouseRecord.class)
-                .setParameter("buildCode",getBuildHome().getInstance().getId()).getResultList();
+        List<BusinessHouse> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where (houseRecord.businessHouse.buildCode = :buildCode) or (houseRecord.businessHouse.mapNumber =:mapNumber and  houseRecord.businessHouse.blockNo =:blockNumber and houseRecord.businessHouse.buildNo =:buildNumber)", BusinessHouse.class)
+                .setParameter("buildCode", buildHome.getInstance().getId())
+                .setParameter("mapNumber", buildHome.getInstance().getMapNumber())
+                .setParameter("blockNumber",buildHome.getInstance().getBlockNo())
+                .setParameter("buildNumber",buildHome.getInstance().getBuildNo())
+                .getResultList();
 
-        List<String> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.buildCode =:buildCode", String.class)
-                .setParameter("buildCode", getBuildHome().getInstance().getId()).getResultList();
 
-        List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.buildCode =:buildCode")
-                .setParameter("buildCode", getBuildHome().getInstance().getId()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
+        resultBusinessHouse = unionHouse(buildHome.getInstance().getHouses(),houseRecords);
+
+        Map<String,BusinessHouse> businessHouseMap = new HashMap<String, BusinessHouse>();
+        for (BusinessHouse house: resultBusinessHouse){
+            businessHouseMap.put(house.getHouseCode(),house);
+        }
+
+        List<String> houseCodes = new ArrayList<String>();
+        for (BusinessHouse house: resultBusinessHouse){
+            houseCodes.add(house.getHouseCode());
+        }
+
+        List<String> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
+                .setParameter("houseCodes", houseCodes).getResultList();
+
+        List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
+                .setParameter("houseCodes", houseCodes).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
 
         lockedHouseCode.addAll(inBusinessHouseCode);
         for(BuildGridMap map: buildGridMaps){
             for(GridRow row: map.getGridRows()){
                 for(GridBlock block: row.getGridBlocks()){
-
-                    for(House house: houses){
-                        if ((house.getGridBlockId() != null) && house.getGridBlockId().equals(block.getId())){
-
-                            block.setLocked(lockedHouseCode.contains(house.getId()));
-                            block.setHouse(getBusinessHouse(house,houseRecords));
-                            houses.remove(house);
-                            break;
-                        }
+                    BusinessHouse house = null;
+                    if ((block.getHouseCode() != null) && !block.getHouseCode().trim().equals(""))
+                        house = businessHouseMap.get(block.getHouseCode());
+                    if (house != null){
+                        block.setHouse(house);
+                        block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
+                        houseMap.remove(house.getHouseCode());
                     }
-
                 }
             }
 
         }
 
-        if (! houses.isEmpty()){
-            List<BusinessHouse> idleHouses = new ArrayList<BusinessHouse>(houses.size());
+        if (! houseMap.isEmpty()){
+            List<BusinessHouse> idleHouses = new ArrayList<BusinessHouse>(houseMap.size());
 
-            for (House house: houses){
-                idleHouses.add(getBusinessHouse(house,houseRecords));
+            for (House house: houseMap.values()){
+                BusinessHouse businessHouse = businessHouseMap.get(house.getHouseCode());
+                idleHouses.add(businessHouse);
             }
 
             BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses,lockedHouseCode);
@@ -333,17 +331,6 @@ public class OwnerBuildGridMap {
             dataTableList = false;
         }else{
             dataTableList = true;
-            fillDataByBuild();
         }
-
     }
-
-    public void fillDataByBuild(){
-        resultBusinessHouse = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord where houseRecord.businessHouse.buildCode = :buildCode", BusinessHouse.class)
-                .setParameter("buildCode",getBuildHome().getInstance().getId()).getResultList();
-
-    }
-
-
-
 }
