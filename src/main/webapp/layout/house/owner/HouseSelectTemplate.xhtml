@@ -126,7 +126,13 @@
     </h:head>
     <h:body>
 
+        <h:form>
+            <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+                <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
 
+            </a:jsFunction>
+
+        </h:form>
         <div class="modal fade info-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <a:outputPanel id="houseInfoContent" layout="block"  styleClass="modal-dialog modal-lg" >
                 <a:outputPanel layout="block" styleClass="modal-content" rendered="#{not empty ownerBuildGridMap.selectBizHouse}">
@@ -167,14 +173,25 @@
                 </s:link>
 
                 <div class="site-search">
-                    <h:form>
+                    <h:form id="keySearchForm" >
 
 
-                        <h:inputText styleClass="chromeless-input"
-                                     p:placeholder="Search" style="margin-left: 10px"
+                        <h:inputText styleClass="chromeless-input" value="#{houseRecordList.searchKey}"
+                                     p:placeholder="#{messages.search_record_list_tip}" style="margin-left: 10px"
                                      autocomplete="off">
                             <r:placeholder value="#{messages.HouseDisplayCode}"/>
                         </h:inputText>
+
+                        <input style="display: none"/>
+
+                        <r:hotKey enabledInInput="true" key="return" selector="#keySearchForm"  onkeyup="searchByKey()">
+
+                        </r:hotKey>
+
+
+                        <a:jsFunction name="searchByKey" action="#{houseRecordList.refresh}"  execute="@form" status="processWaiting">
+                            <f:param name="searchBykey" value="#{true}"/>
+                        </a:jsFunction>
 
 
                     </h:form>
@@ -282,100 +299,164 @@
     }
 </h:outputStylesheet>
 
-        <a:outputPanel ajaxRendered="true">
-
-        </a:outputPanel>
-
-
         <div class="container-fluid default-main">
 
 
                 <div style="display: inline-block; padding: 2px;width: 100%; height: 100%;" id="contextPanel" onselectstart="return false;"> <!--  -->
 
                     <a:outputPanel layout="block" style="height: 100%;width: 100%; " ajaxRendered="true">
+                        <h:outputScript>
+                            $(document).ready(function () {
+
+                            var $table = $('.record-data-table');
+
+                            $table.floatThead({
+                            scrollContainer: function($table){
+                            return $table.closest('.wrapper');
+                            }
+                            });
+
+                            });
 
 
-                        <a:outputPanel styleClass="wrapper" layout="block" style="height: 100%;width: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList}">
+                        </h:outputScript>
 
-                            <h:outputScript>
-                                $(document).ready(function () {
-
-                                var $table = $('.record-data-table');
-
-                                $table.floatThead({
-                                scrollContainer: function($table){
-                                return $table.closest('.wrapper');
-                                }
-                                });
-
-                                });
-
-
-                            </h:outputScript>
-
-
-                            <h:dataTable styleClass="table table-striped table-hover record-data-table" cellspacing="0"  value="#{ownerBuildGridMap.resultBusinessHouse}"
-                                         var="_house">
-                                <h:column>
-                                    <f:facet name="header">
-                                        #{messages.House_Code}
-                                    </f:facet>
-                                    #{_house.displayHouseCode}
-
+                    <a:outputPanel styleClass="wrapper" layout="block" style="height: 100%;width: 100%; overflow: auto" rendered="#{searchBykey}">
+                        <table class="table table-striped table-hover record-data-table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    #{messages.House_Id}
+                                </th>
+                                <th>
+                                    #{messages.House_Code}
+                                </th>
+                                <th>
+                                    #{messages.Build}
+                                </th>
+                                <th>
+                                    #{messages.House_Order}
+                                </th>
+                                <th>
+                                    #{messages.House_Owner}
+                                </th>
+                                <th>
+                                    #{messages.House_Address}
+                                </th>
+                            </tr>
 
 
-                                </h:column>
+                            </thead>
+
+                            <tbody>
+                            <a:repeat  value="#{houseRecordList.resultList}" var="_house">
+                                <tr onclick="houseClick('#{_house.businessHouse.houseCode}')">
+                                    <td>
+
+                                        #{_house.businessHouse.houseCode}
+                                                  <span class="house-info">
+                                                    <span class="#{_house.businessHouse.masterStatus}">
+                                                        <h:outputText styleClass="label" value="#{messages[_house.businessHouse.masterStatus.name()]}"/>
+                                                    </span>
+                                                </span>
+                                    </td>
+                                    <td>
+                                        #{_house.businessHouse.displayHouseCode}
+                                    </td>
+                                    <td>
+                                        #{_house.businessHouse.buildName}
+                                    </td>
+                                    <td>
+                                        #{_house.businessHouse.houseOrder}
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{_house.businessHouse.businessHouseOwner.personName}"
+                                                      rendered="#{not empty _house.businessHouse.businessHouseOwner}"/>
+
+                                    </td>
+                                    <td>
+                                        #{_house.businessHouse.address}
+                                    </td>
+                                </tr>
+                            </a:repeat>
+                            </tbody>
+
+                        </table>
+
+                    </a:outputPanel>
+
+                    <a:outputPanel styleClass="wrapper" layout="block" style="height: 100%;width: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList and (not searchBykey)}">
 
 
-                                <h:column>
-                                    <f:facet name="header">
-                                        #{messages.Build}
-                                    </f:facet>
-                                    #{_house.buildName}
-
-                                </h:column>
 
 
-
-                                <h:column>
-                                    <f:facet name="header">
-                                        #{messages.House_Order}
-                                    </f:facet>
-                                    #{_house.houseOrder}
-                                </h:column>
-
-                                <h:column>
-                                    <f:facet name="header">
-                                        #{messages.House_Owner}
-                                    </f:facet>
-                                    <h:outputText value="#{_item.afterBusinessHouse.businessHouseOwner.personName}"
-                                                  rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
-
-                                </h:column>
-
-                                <h:column>
-                                    <f:facet name="header">
-                                        #{messages.House_Address}
-                                    </f:facet>
-                                    #{_house.address}
-                                </h:column>
-
-                            </h:dataTable>
+                            <table class="table table-striped table-hover record-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #{messages.House_Id}
+                                        </th>
+                                        <th>
+                                            #{messages.House_Code}
+                                        </th>
+                                        <th>
+                                            #{messages.Build}
+                                        </th>
+                                        <th>
+                                            #{messages.House_Order}
+                                        </th>
+                                        <th>
+                                            #{messages.House_Owner}
+                                        </th>
+                                        <th>
+                                            #{messages.House_Address}
+                                        </th>
+                                    </tr>
 
 
+                                </thead>
+
+                                <tbody>
+                                    <a:repeat  value="#{ownerBuildGridMap.resultBusinessHouse}" var="_house">
+                                        <tr onclick="houseClick('#{_house.houseCode}')">
+                                            <td>
+
+                                                #{_house.houseCode}
+                                                  <span class="house-info">
+                                                    <span class="#{_house.masterStatus}">
+                                                        <h:outputText styleClass="label" value="#{messages[_house.masterStatus.name()]}"/>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                #{_house.displayHouseCode}
+                                            </td>
+                                            <td>
+                                                #{_house.buildName}
+                                            </td>
+                                            <td>
+                                                #{_house.houseOrder}
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{_house.businessHouseOwner.personName}"
+                                                              rendered="#{not empty _house.businessHouseOwner}"/>
+
+                                            </td>
+                                            <td>
+                                                #{_house.address}
+                                            </td>
+                                        </tr>
+                                    </a:repeat>
+                                </tbody>
+
+                            </table>
 
 
                         </a:outputPanel>
 
-                        <a:outputPanel rendered="#{not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
+                        <a:outputPanel rendered="#{not searchBykey and  not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
-                            <h:form>
-                                <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
-                                    <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
 
-                                </a:jsFunction>
-
-                            </h:form>
 
                         <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd; border-right: 2px solid #ddd"/>
 
@@ -531,6 +612,10 @@
                                 overflow:hidden;text-overflow:ellipsis;
                             }
 
+                            .grid-map td:hover{
+                                background-color: #f5f9fc;
+                                cursor: pointer;
+                            }
 
                             .map-context{
                                 position: absolute; top:100px; left: 221px;bottom: 0; right: 0;overflow: auto
@@ -591,7 +676,7 @@
                     <div style="position: absolute; top: 0; bottom: 0; width: 162px; padding: 240px 0 0 0;">
 
                         <div style="height: 100% ;overflow-x: auto">
-                            <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{buildHome.idDefined}">
+                            <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{not searchBykey and  buildHome.idDefined}">
                                 <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
 
 
@@ -741,6 +826,7 @@
                                                            render="houseOrderInput">
                                                 <span class="btn-icon octicon octicon-search"></span>
                                                 <a:attachQueue requestDelay="0"/>
+                                                <f:param name="searchBykey" value="#{false}"/>
                                             </a:commandLink>
                                         </span>
 
@@ -755,6 +841,7 @@
                                                            action="#{ownerBuildGridMap.findHouseByNumber}">
                                                 <span class="btn-icon octicon octicon-search"></span>
                                                 <a:attachQueue requestDelay="0"/>
+                                                <f:param name="searchBykey" value="#{false}"/>
                                             </a:commandLink>
                                         </span>
 
@@ -793,6 +880,7 @@
                                                        noSelectionLabel="#{messages.buildSelect}"/>
                                         <a:ajax event="valueChange" listener="#{ownerBuildGridMap.findBuildBySection}" render="houseOrderInput">
                                             <a:attachQueue requestDelay="0"/>
+                                            <f:param name="searchBykey" value="#{false}"/>
                                         </a:ajax>
                                     </h:selectOneMenu>
 
@@ -804,6 +892,7 @@
                                             <span class="input-group-btn">
                                                 <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" action="#{ownerBuildGridMap.findHouseBySection}">
                                                     <span class="btn-icon octicon octicon-search"></span>
+                                                    <f:param name="searchBykey" value="#{false}"/>
                                                     <a:attachQueue requestDelay="0"/>
                                                 </a:commandLink>
                                             </span>
