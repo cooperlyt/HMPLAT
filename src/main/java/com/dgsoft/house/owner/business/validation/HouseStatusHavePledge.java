@@ -10,7 +10,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by cooper on 6/25/15.
- * 房屋有抵押状态
+ * 房屋有必须有抵押状态 抵押注销
  */
 @Name("houseStatusHavePledge")
 @Scope(ScopeType.STATELESS)
