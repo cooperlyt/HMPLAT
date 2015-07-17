@@ -28,8 +28,15 @@ public class BusinessFile implements java.io.Serializable {
 	public BusinessFile() {
 	}
 
+    public BusinessFile(OwnerBusiness ownerBusiness, String name, String importantCode, boolean noFile, boolean important) {
+        this.ownerBusiness = ownerBusiness;
+        this.name = name;
+        this.importantCode = importantCode;
+        this.noFile = noFile;
+        this.important = important;
+    }
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

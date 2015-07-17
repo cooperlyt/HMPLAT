@@ -21,7 +21,7 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseStreetCodeLabel','STRI
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseCodeDisplayModel','INTEGER','3','1:国标;2:图-丘-幢-房;3：行政区-丘-幢-房;:4:丘-幢-房;');
 
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('BusinessPrintFirst','BOOLEAN','true','true: 先打印再上传要件，适合要求把打印的文件当要件上传的地区，false: 业务处理完成后再打印,适合文件上传后置地区');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('CreateUploadFile','BOOLEAN','true','true: 建立业务需要上传文件，false: 建立业务不需要上传文件');
 
 
 

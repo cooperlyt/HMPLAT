@@ -21,7 +21,7 @@ import java.util.List;
 public class HouseInBizValid extends BusinessHouseValid {
 
     @In(create = true)
-    private OwnerEntityLoader ownerEntityLoader;
+    protected OwnerEntityLoader ownerEntityLoader;
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {

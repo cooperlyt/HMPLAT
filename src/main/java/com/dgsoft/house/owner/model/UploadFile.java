@@ -20,6 +20,10 @@ public class UploadFile implements java.io.Serializable{
     public UploadFile() {
     }
 
+    public UploadFile(BusinessFile businessFile) {
+        this.businessFile = businessFile;
+    }
+
     @Id
     @Column(name = "FILE_NAME", unique = true, nullable = false, length = 255)
     @NotNull

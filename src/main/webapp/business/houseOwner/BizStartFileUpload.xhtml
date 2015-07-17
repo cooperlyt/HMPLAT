@@ -6,31 +6,42 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-template.xhtml">
-
-    <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Subscribe}"/>
-
-    <ui:define name="func-body">
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/layout/template.xhtml">
 
 
-        <div style="clear: both"/>
 
-        <div class="flow-steps">
-            <ol class="num4">
-                <li class="done">
-                    <span class="first">#{messages.HouseBusinessStep1}</span>
-                </li>
-                <li class="done current-prev">
-                    <span>#{messages.HouseBusinessStep2}</span>
-                </li>
-                <li class="current">
-                    <strong>#{messages.HouseBusinessStep3}</strong>
-                </li>
-                <li class="last">
-                    <span>#{messages.HouseBusinessStep4}</span>
-                </li>
-            </ol>
+    <ui:define name="body">
+
+
+
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>#{messages.createBusiness}</strong>
+                    <span class="path-divider">/</span>
+
+
+                    #{businessDefineHome.instance.businessCategory.name}
+
+                    <span class="path-divider">/</span>
+
+                    #{businessDefineHome.instance.name}
+                    <span class="path-divider">/</span>
+                    #{messages.Business_Start_Subscribe}
+
+                </h1>
+
+            </div>
+
+
         </div>
+        <div class="container">
 
 
         <r:toolbar>
@@ -38,12 +49,8 @@
                 <s:button value="#{messages.complete}" view="/business/houseOwner/BizStartConfirm.xhtml"/>
             </r:toolbarGroup>
         </r:toolbar>
-        <br/>
-            <r:messages ajaxRendered="true" globalOnly="true"/>
-        <br/>
 
-        <h:form>
-        </h:form>
+        </div>
 
 
     </ui:define>

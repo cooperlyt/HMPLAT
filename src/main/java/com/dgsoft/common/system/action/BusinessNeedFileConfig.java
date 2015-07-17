@@ -63,9 +63,26 @@ public class BusinessNeedFileConfig {
     public List<BusinessDefineHome.NeedFileTreeNode> getTaskFileSubscribeTree() {
         if (tree == null) {
             tree = new ArrayList<BusinessDefineHome.NeedFileTreeNode>(1);
-            tree.add(new BusinessDefineHome.NeedFileTreeNode(businessDefineHome.getNeedFileRootList()));
+            tree.add(new DefineNeedFileTreeNode(businessDefineHome.getNeedFileRootList()));
         }
         return tree;
+    }
+
+
+    public static class DefineNeedFileTreeNode extends BusinessDefineHome.NeedFileTreeNode<DefineNeedFileTreeNode> {
+
+        public DefineNeedFileTreeNode(Collection<BusinessNeedFile> needFiles) {
+            super(needFiles);
+        }
+
+        private DefineNeedFileTreeNode(BusinessNeedFile businessNeedFile, DefineNeedFileTreeNode parent) {
+            super(businessNeedFile, parent);
+        }
+
+        @Override
+        protected DefineNeedFileTreeNode createNewChild(BusinessNeedFile businessNeedFile) {
+            return new DefineNeedFileTreeNode(businessNeedFile,this);
+        }
     }
 
 //    private void refreshTree(){

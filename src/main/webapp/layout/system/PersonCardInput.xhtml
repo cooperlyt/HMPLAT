@@ -20,9 +20,9 @@
                               value="#{_person.credentialsType}" required="true">
                 <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                 <s:convertEnum/>
-                <a:ajax event="valueChange"
+                <a:ajax event="valueChange" listener="#{_person.typeChange}"
                         render="personCardInput #{render}"
-                        execute="@this" status="#{status}">
+                        execute="@this" status="#{personStatus}">
                     <a:attachQueue requestDelay="0"/>
                 </a:ajax>
 
@@ -45,7 +45,7 @@
                      p:placeholder="#{messages.person_field_credentialsNO}"
                      value="#{_person.credentialsNumber}">
             <a:ajax event="blur" render="cerdentialsName #{render}"
-                    status="#{status}" execute="personCredentialsTypeInput,credentialsNumber">
+                    status="#{personStatus}" execute="personCredentialsTypeInput,credentialsNumber">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
         </h:inputText>

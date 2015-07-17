@@ -36,7 +36,8 @@
             <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit-big.xhtml">
 
                 <ui:param name="for" value="credentialsNumber"/>
-                <ui:param name="status" value="mainOwner_personCredentiaslNumberStatus"/>
+
+                <ui:param name="status" value="final_personCredentiaslNumberStatus"/>
                 <ui:define name="label">
                     #{label}
                 </ui:define>
@@ -70,7 +71,7 @@
                         <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
                             <ui:include src="/layout/system/PersonCardInput.xhtml">
                                 <ui:param name="_person" value="#{financialSubscribe.personInstance}"/>
-                                <ui:param name="status" value="mainOwner_personCredentiaslNumberStatus"/>
+                                <ui:param name="personStatus" value="final_personCredentiaslNumberStatus"/>
                                 <ui:param name="render" value="personInputFields,financeAttrField"/>
                             </ui:include>
                         </a:outputPanel>

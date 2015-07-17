@@ -62,7 +62,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         if ((val == null) || val.trim().equals("")) {
             return "";
         } else {
-            return new Expressions().createValueExpression(val).toString();
+            return new Expressions().createValueExpression(val).getValue().toString();
         }
 
     }
@@ -361,28 +361,34 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
-    public static class NeedFileTreeNode implements TreeNode, OrderModel {
+
+
+    public static abstract class NeedFileTreeNode<T extends NeedFileTreeNode> implements TreeNode, OrderModel {
 
         private boolean expanded = true;
 
-        private BusinessNeedFile businessNeedFile;
+        protected BusinessNeedFile businessNeedFile;
 
-        private List<NeedFileTreeNode> child;
+        private List<T> child;
 
         private NeedFileTreeNode parent;
 
-        private NeedFileTreeNode(BusinessNeedFile businessNeedFile, NeedFileTreeNode parent) {
+        protected NeedFileTreeNode() {
+        }
+
+        protected NeedFileTreeNode(BusinessNeedFile businessNeedFile, T parent) {
             this(businessNeedFile.getChildren());
             this.businessNeedFile = businessNeedFile;
             this.parent = parent;
         }
 
+        protected abstract T createNewChild(BusinessNeedFile businessNeedFile);
 
 
         public NeedFileTreeNode(Collection<BusinessNeedFile> needFiles) {
-            this.child = new ArrayList<NeedFileTreeNode>(needFiles.size());
+            this.child = new ArrayList<T>(needFiles.size());
             for (BusinessNeedFile needFile: needFiles){
-                this.child.add(new NeedFileTreeNode(needFile,this));
+                this.child.add(createNewChild(needFile));
             }
             Collections.sort(child, OrderBeanComparator.getInstance());
         }
@@ -404,8 +410,12 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             this.expanded = expanded;
         }
 
-        public List<NeedFileTreeNode> getChild() {
+        public List<T> getChild() {
             return child;
+        }
+
+        protected void setChild(List<T> child) {
+            this.child = child;
         }
 
         @Override

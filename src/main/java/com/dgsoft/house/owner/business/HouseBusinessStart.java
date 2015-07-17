@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Name("houseBusinessStart")
 @Scope(ScopeType.CONVERSATION)
-public class HouseBusinessStart {
+public class HouseBusinessStart extends OwnerBusinessCreate {
 
     @In
     private BusinessDefineHome businessDefineHome;
@@ -40,7 +40,7 @@ public class HouseBusinessStart {
 
     private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
     private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
-    private static final String BUSINESS_PRINT_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
+    private static final String BUSINESS_CONFIRM_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
     private static final String BUSINESS_PICK_BIZ_PAGE = "";
 
 
@@ -112,20 +112,47 @@ public class HouseBusinessStart {
         }
 
 
-        if (businessDefineHome.getEditSubscribeDefines().isEmpty()){
+        if (!businessDefineHome.getEditSubscribeDefines().isEmpty()){
+            businessDefineHome.initEditSubscribes();
             return BUSINESS_INFO_PAGE;
         } else{
-            if (RunParam.instance().getBooleanParamValue("BusinessPrintFirst")){
-                return  BUSINESS_PRINT_PAGE;
-            }else if (businessDefineHome.haveNeedFile(null)) {
-                return BUSINESS_FILE_PAGE;
-            } else {
-                return BUSINESS_PRINT_PAGE;
-            }
+            return getInfoCompletePath();
         }
 
     }
 
+    private String getInfoCompletePath(){
+
+        if (RunParam.instance().getBooleanParamValue("CreateUploadFile") || businessDefineHome.haveNeedFile(Subscribe.CREATE_TASK_NAME)){
+            return  BUSINESS_FILE_PAGE;
+        }else {
+            return BUSINESS_CONFIRM_PAGE;
+        }
+    }
+
+    public String infoComplete(){
+        TaskSubscribeComponent.ValidResult result = businessDefineHome.validSubscribes();
+
+        if (result.getPri() > TaskSubscribeComponent.ValidResult.WARN.getPri()){
+            return null;
+        }
+
+
+        if (businessDefineHome.saveSubscribes()){
+            return getInfoCompletePath();
+        }else{
+            return null;
+        }
+
+    }
+
+
+    @Override
+    protected boolean verifyCreate() {
+
+        businessDefineHome.completeTask();
+        return super.verifyCreate();
+    }
 
     public String mulitHouseSelect() {
 
