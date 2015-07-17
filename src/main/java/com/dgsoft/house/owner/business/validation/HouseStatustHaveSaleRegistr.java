@@ -11,6 +11,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by Administrator on 15-7-16.
+ * 房屋必须有商品房预告登记业务， 预购商品房预告注销登记
  */
 @Name("houseStatustHaveSaleRegistr")
 @Scope(ScopeType.STATELESS)
@@ -21,6 +22,6 @@ public class HouseStatustHaveSaleRegistr extends BusinessHouseValid {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.SALE_REGISTER)){
             return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_Difficulty",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_SaleRegistr",TaskSubscribeComponent.ValidResult.ERROR);
     }
 }
