@@ -11,7 +11,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by Administrator on 15-7-17.
- * 房屋没有备案状态
+ * 不能有备案状态
  */
 @Name("houseStatusNotHaveContactsRecord")
 @Scope(ScopeType.STATELESS)

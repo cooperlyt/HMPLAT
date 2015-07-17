@@ -11,19 +11,18 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by Administrator on 15-7-17.
- * 不能有产权登记
+ * 灭籍
  */
-@Name("houseStatusNotHaveOwnerd")
+@Name("houseStatusHaveDestroy")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
+public class HouseStatusHaveDestroy extends BusinessHouseValid {
 
-public class HouseStatusNotHaveOwnerd extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.OWNERED)){
-            return new ValidResult("business_house_status_no_have_Ownerd", TaskSubscribeComponent.ValidResult.ERROR);
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DESTROY)){
+            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
         }
-        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
-
+        return new ValidResult("business_house_status_have_Destroy", TaskSubscribeComponent.ValidResult.ERROR);
     }
 }

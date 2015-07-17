@@ -11,7 +11,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by Administrator on 15-7-17.
- * 不能有房屋灭迹
+ * 不能有房屋灭籍
  */
 @Name("houseStatusNotHaveDestroy")
 @Scope(ScopeType.STATELESS)
