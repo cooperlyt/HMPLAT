@@ -13,10 +13,10 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
  * Created by Administrator on 15-7-17.
  * 不能有房屋灭迹
  */
-@Name("houseStatustNotHaveDestroy")
+@Name("houseStatusNotHaveDestroy")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustNotHaveDestroy extends BusinessHouseValid {
+public class HouseStatusNotHaveDestroy extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {

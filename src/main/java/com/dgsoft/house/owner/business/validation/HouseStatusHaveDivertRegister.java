@@ -10,18 +10,18 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
- * Created by Administrator on 15-7-16.
- * 房屋必须有商品房预告登记业务， 预购商品房预告注销登记
+ * Created by Administrator on 15-7-17.
+ * 房屋状态必须有房屋转移预告登记。房屋转移预告登记注销
  */
-@Name("houseStatustHaveSaleRegistr")
+@Name("houseStatusHaveDivertRegister")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveSaleRegistr extends BusinessHouseValid {
+public class HouseStatusHaveDivertRegister extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.SALE_REGISTER)){
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIVERT_REGISTER)){
             return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_SaleRegistr",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_DivertRegister",TaskSubscribeComponent.ValidResult.ERROR);
     }
 }

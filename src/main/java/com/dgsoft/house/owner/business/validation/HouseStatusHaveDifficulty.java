@@ -13,10 +13,10 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
  * Created by Administrator on 15-7-16.
  * 房屋必须有异议状态，异议注销
  */
-@Name("houseStatustHaveDifficulty")
+@Name("houseStatusHaveDifficulty")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveDifficulty extends BusinessHouseValid {
+public class HouseStatusHaveDifficulty extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIFFICULTY)){

@@ -10,19 +10,18 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
- * Created by Administrator on 15-7-17.
- * 房屋必须有房屋转移预告抵押
+ * Created by Administrator on 15-7-16.
+ * 房屋必须有查封状态，查封解除
  */
-@Name("houseStatustHaveDivertMortgageRegister")
+@Name("houseStatusHaveCourtClose")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveDivertMortgageRegister extends BusinessHouseValid {
-
+public class HouseStatusHaveCourtClose extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIVERT_MORTGAGE_REGISTER)){
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.COURT_CLOSE)){
             return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_DivertMortgageRegister",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_CourtClose", TaskSubscribeComponent.ValidResult.ERROR);
     }
 }

@@ -13,10 +13,10 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
  * Created by Administrator on 15-7-17.
  * 房屋必须有已办产权，二手房交易
  */
-@Name("houseStatustHaveOwnerd")
+@Name("houseStatusHaveOwnerd")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveOwnerd extends BusinessHouseValid{
+public class HouseStatusHaveOwnerd extends BusinessHouseValid{
 
 
     @Override

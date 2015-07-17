@@ -13,10 +13,10 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
  * Created by Administrator on 15-7-17.
  * 声明作废
  */
-@Name("houseStatustHaveDeclareCancel")
+@Name("houseStatusHaveDeclareCancel")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveDeclareCancel extends BusinessHouseValid{
+public class HouseStatusHaveDeclareCancel extends BusinessHouseValid{
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {

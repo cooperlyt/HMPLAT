@@ -11,17 +11,19 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by Administrator on 15-7-17.
- * 房屋状态必须有房屋转移预告登记。房屋转移预告登记注销
+ * 房屋没有备案状态
  */
-@Name("houseStatustHaveDivertRegister")
+@Name("houseStatusNotHaveContactsRecord")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveDivertRegister extends BusinessHouseValid {
+public class HouseStatusNotHaveContactsRecord extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIVERT_REGISTER)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
+            return new ValidResult("business_house_status_not_have_ContactsRecord", TaskSubscribeComponent.ValidResult.ERROR);
         }
-        return new ValidResult("business_house_status_have_DivertRegister",TaskSubscribeComponent.ValidResult.ERROR);
+
+        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+
     }
 }

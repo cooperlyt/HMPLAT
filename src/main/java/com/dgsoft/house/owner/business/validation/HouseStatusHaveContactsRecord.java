@@ -13,10 +13,10 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
  * Created by Administrator on 15-7-16.
  * 房屋必须有备案登记业务，备案注销，商品房预告登记
  */
-@Name("houseStatustHaveContactsRecord")
+@Name("houseStatusHaveContactsRecord")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveContactsRecord extends BusinessHouseValid {
+public class HouseStatusHaveContactsRecord extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
