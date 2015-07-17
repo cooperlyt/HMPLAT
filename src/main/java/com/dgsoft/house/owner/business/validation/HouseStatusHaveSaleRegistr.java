@@ -11,17 +11,17 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
  * Created by Administrator on 15-7-16.
- * 必须有房屋有初始登记状态，
+ * 房屋必须有商品房预告登记业务， 预购商品房预告注销登记
  */
-@Name("houseStatusHaveInitReg")
+@Name("houseStatusHaveSaleRegistr")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatusHaveInitReg  extends BusinessHouseValid {
+public class HouseStatusHaveSaleRegistr extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.INIT_REG)){
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.SALE_REGISTER)){
             return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_InitReg",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_SaleRegistr",TaskSubscribeComponent.ValidResult.ERROR);
     }
 }

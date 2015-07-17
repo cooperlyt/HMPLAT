@@ -10,18 +10,20 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
- * Created by Administrator on 15-7-16.
- * 必须有房屋有初始登记状态，
+ * Created by Administrator on 15-7-17.
+ * 房屋没有初始登记，无法办理商品房交易业务
  */
-@Name("houseStatusHaveInitReg")
+@Name("houseStatusNotHaveInitReg")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatusHaveInitReg  extends BusinessHouseValid {
+public class HouseStatusNotHaveInitReg extends BusinessHouseValid {
+
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.INIT_REG)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+            return new ValidResult("business_house_status_No_have_InitReg",TaskSubscribeComponent.ValidResult.ERROR);
         }
-        return new ValidResult("business_house_status_have_InitReg",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+
     }
 }

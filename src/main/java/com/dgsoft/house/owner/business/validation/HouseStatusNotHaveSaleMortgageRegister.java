@@ -10,19 +10,19 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 /**
- * Created by Administrator on 15-7-16.
- * 房屋必须有备案登记业务，备案注销，商品房预告登记
+ * Created by Administrator on 15-7-17.
+ * 房屋不能商品房预告抵押
  */
-@Name("houseStatustHaveContactsRecord")
+@Name("houseStatusNotHaveSaleMortgageRegister")
 @Scope(ScopeType.STATELESS)
 @BypassInterceptors
-public class HouseStatustHaveContactsRecord extends BusinessHouseValid {
-
+public class HouseStatusNotHaveSaleMortgageRegister extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.SALE_MORTGAGE_REGISTER)){
+            return new ValidResult("business_house_status_no_have_SaleMortgageRegister", TaskSubscribeComponent.ValidResult.ERROR);
         }
-        return new ValidResult("business_house_status_have_ContactsRecord",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+
     }
 }
