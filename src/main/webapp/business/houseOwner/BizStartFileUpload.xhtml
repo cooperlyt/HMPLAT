@@ -43,6 +43,50 @@
         </div>
         <div class="container">
 
+            <div class="columns">
+
+
+                <div class="column one-fourth codesearch-aside">
+
+                    <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="client"
+                            value="#{ownerBusinessFile.tree}" var="_node">
+                        <r:treeNode type="ALL" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-ignored">
+                                #{_node.businessNeedFile.name}
+
+                        </r:treeNode>
+
+
+                        <r:treeNode type="ANYONE" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-removed">
+                            #{_node.businessNeedFile.name}
+
+                        </r:treeNode>
+
+
+                        <r:treeNode type="CHILDREN" iconClass="octicon octicon-file-text">
+
+                            #{_node.businessNeedFile.name}
+                        </r:treeNode>
+
+
+                        <r:treeNode type="ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
+                            attriFile
+                        </r:treeNode>
+
+                        <r:treeNode type="I_ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
+                            needFile
+                        </r:treeNode>
+
+
+                    </r:tree>
+
+
+                </div>
+
+            </div>
+
+
+
+
 
         <r:toolbar>
             <r:toolbarGroup location="right">
