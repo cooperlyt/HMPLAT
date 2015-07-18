@@ -1,0 +1,197 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+
+    <div class="js-curd-table-box">
+        <div class="table-list-header" style="margin-right: 1px;">
+
+
+            <a:outputPanel layout="block" ajaxRendered="true" styleClass="table-list-filters">
+                <div class="table-list-header-toggle left">
+                    <h3>
+                        #{title}
+                        <a:outputPanel ajaxRendered="true" styleClass="counter">
+                            #{configComponent.existsComponent.size}
+                        </a:outputPanel>
+
+                    </h3>
+                </div>
+
+                <div class="table-list-header-toggle right">
+                    <div>
+                        <a href="#" class="minibutton primary js-create-data">
+                            <span class="octicon octicon-plus"/>
+                            #{messages.create}#{' '}#{messages.Subscribe}
+                        </a>
+                    </div>
+                </div>
+            </a:outputPanel>
+
+        </div>
+
+
+        <h:form styleClass="new-label table-new-label js-new-data-box">
+
+            <a:outputPanel layout="block" ajaxRendered="true"
+                           styleClass="label-edit edit-color-label-form open">
+                <h:selectOneMenu required="true" styleClass="selectpicker edit-select"
+                                 p:data-width="400px"
+                                 label="#{messages.TaskSubscribe_reg}" id="validComponentSubscribeInput"
+                                 value="#{configComponent.selectComponentName}">
+                    <s:selectItems value="#{configComponent.canAddCreateComponent}" var="_reg"
+                                   label="#{_reg.value}(#{_reg.key})"
+                                   itemValue="#{_reg.key}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                </h:selectOneMenu>
+                <r:message for="validComponentSubscribeInput"/>
+
+                <div class="new-label-actions">
+
+                    <button class="button js-create-cancel">
+                        #{messages.cancel}
+                    </button>
+                    <a:commandButton styleClass="button primary"
+                                     execute="@form" action="#{configComponent.createComponent}"
+                                     value="#{messages.createNew}#{''}#{messages.Subscribe}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
+                </div>
+            </a:outputPanel>
+
+        </h:form>
+
+        <h:form id="validDataList">
+
+            <a:outputPanel ajaxRendered="true">
+
+
+                <ul class="table-list table-list-bordered">
+                    <ui:repeat value="#{configComponent.existsComponent}" var="_subscribe">
+                        <li class="table-list-item labels-list-item">
+                            <a:region>
+                                <div class="js-table-edit-cell table-list-cell">
+                                    <a:outputPanel styleClass="label-delete" layout="block">
+                                                    <span class="label-delete-confirmation">
+                                                        <strong class="text-danger">
+                                                            #{messages.deleteConfirm}
+                                                        </strong>
+                                                        #{messages.subscribeDeleteDescript}
+                                                    </span>
+
+                                        <div class="right">
+                                            <a:commandButton styleClass="button danger" immediate="true"
+                                                             execute="@this"
+                                                             action="#{configComponent.removeComponent}"
+
+                                                             value="#{messages.delete}">
+                                                <a:param value="#{_subscribe.key.component}"
+                                                         assignTo="#{configComponent.selectComponentName}"/>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandButton>
+
+                                            <button class="button js-edit-cancel">
+                                                #{messages.cancel}
+                                            </button>
+                                        </div>
+                                    </a:outputPanel>
+
+                                    <a:outputPanel styleClass="label-edit" layout="block">
+
+                                        <h:selectOneMenu required="true"
+                                                         p:data-width="400px"
+                                                         styleClass="selectpicker edit-select"
+                                                         label="#{messages.TaskSubscribe_reg}"
+                                                         value="#{_subscribe.key.component}">
+                                            <s:selectItems
+                                                    value="#{configComponent.canAddCreateComponent}"
+                                                    var="_reg" label="#{_reg.value}(#{_reg.key})"
+                                                    itemValue="#{_reg.key}"
+                                                    noSelectionLabel="#{messages.noSelectLabel}"/>
+                                        </h:selectOneMenu>
+
+                                        <div class="right">
+                                            <button class="button js-edit-cancel">
+                                                #{messages.cancel}
+                                            </button>
+                                            <a:commandButton action="#{businessDefineHome.update}"
+                                                             value="#{messages.save}"
+                                                             oncomplete="editComplete(this)"
+                                                             execute="@region" render="js"
+                                                             styleClass="button primary">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandButton>
+
+
+                                        </div>
+
+                                    </a:outputPanel>
+
+
+                                    <div class="js-edit-actions labels-list-actions right ">
+                                        <a:commandLink styleClass="labels-list-action" execute="@this"
+                                                       immediate="true"
+                                                       render="validDataList"
+                                                       action="#{businessSubscribeConfig.downSelectTaskSubscribe}">
+                                            <span class="octicon octicon-move-up"/>
+                                            <a:attachQueue requestDelay="0"/>
+                                            <a:param value="#{_subscribe.key.component}"
+                                                     assignTo="#{configComponent.selectComponentName}"/>
+                                        </a:commandLink>
+                                        <a:commandLink styleClass="labels-list-action" execute="@this"
+                                                       immediate="true"
+                                                       render="validDataList"
+                                                       action="#{businessSubscribeConfig.upSelectTaskSubscribe}">
+                                            <span class="octicon octicon-move-down"/>
+                                            <a:attachQueue requestDelay="0"/>
+                                            <a:param value="#{_subscribe.key.component}"
+                                                     assignTo="#{configComponent.selectComponentName}"/>
+                                        </a:commandLink>
+
+
+
+                                    <span class="labels-list-action js-label-edit">
+                                                                <span class="octicon octicon-pencil"/>
+                                        #{messages.edit}
+                                    </span>
+
+                                    <span class="labels-list-action js-label-delete">
+                                                  <span class="glyphicon glyphicon-remove"/>
+                                        #{messages.delete}
+                                    </span>
+
+
+                                    </div>
+
+                                    <a:outputPanel styleClass="label-description right">
+
+                                        <a:outputPanel ajaxRendered="true">
+
+                                            #{_subscribe.value}
+                                        </a:outputPanel>
+                                    </a:outputPanel>
+                                    <a:outputPanel ajaxRendered="true" styleClass="label-label left">
+                                        #{_subscribe.key.priority}
+                                        <a:outputPanel ajaxRendered="true">
+                                            #{_subscribe.key.component}
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
+
+                                </div>
+                            </a:region>
+                        </li>
+                    </ui:repeat>
+                </ul>
+
+            </a:outputPanel>
+
+        </h:form>
+    </div>
+
+</ui:composition>

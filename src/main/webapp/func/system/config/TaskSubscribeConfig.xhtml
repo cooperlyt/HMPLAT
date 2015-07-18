@@ -76,6 +76,15 @@
                     <f:param name="taskName" value="_VIEW"/>
                 </s:link>
 
+                <s:link styleClass="menu-item #{(businessDefineHome.taskName eq '_PATCH') ? 'selected' : ''}" propagation="none">
+                    #{messages.businessPatchTask}
+                    <h:outputText styleClass="counter"
+                                  value="#{businessDefineHome.getSubscribeCount('_PATCH')}">
+                        <f:convertNumber type="number" groupingUsed="true"/>
+                    </h:outputText>
+                    <f:param name="taskName" value="_PATCH"/>
+                </s:link>
+
 
             </nav>
         </a:outputPanel>
@@ -618,8 +627,36 @@
 
                 </div>
 
+                <!-- create component -->
+                <a:outputPanel rendered="#{businessDefineHome.taskName eq '_CREATE'}">
 
-                <div class="js-curd-table-box">
+                    <f:subview id="dataValidConfig">
+                        <ui:include src="ComponentConfigTable.xhtml">
+                            <ui:param name="configComponent" value="#{dataValidComponentConfig}"/>
+                            <ui:param name="title" value="#{messages.create_data_valid_subscribe}"/>
+                        </ui:include>
+                    </f:subview>
+
+                    <f:subview id="dataFillConfig">
+                        <ui:include src="ComponentConfigTable.xhtml">
+                            <ui:param name="configComponent" value="#{dataFillComponentConfig}"/>
+                            <ui:param name="title" value="#{messages.create_data_fill}"/>
+                        </ui:include>
+                    </f:subview>
+
+                    <f:subview id="bizPickConfig">
+                        <ui:include src="ComponentConfigTable.xhtml">
+                            <ui:param name="configComponent" value="#{bizPickComponentConfig}"/>
+                            <ui:param name="title" value="#{messages.create_business_pick}"/>
+                        </ui:include>
+                    </f:subview>
+
+                </a:outputPanel>
+
+
+                <!-- editor subscribe -->
+
+                <a:outputPanel layout="block" rendered="#{not (businessDefineHome.taskName eq '_VIEW')}" styleClass="js-curd-table-box">
 
                     <div class="table-list-header" style="margin-right: 1px;">
 
@@ -680,6 +717,7 @@
                     <h:form id="dataList">
 
                         <a:outputPanel ajaxRendered="true">
+
 
                             <ul class="table-list table-list-bordered">
                                 <ui:repeat value="#{businessDefineHome.editSubscribes}" var="_subscribe">
@@ -799,10 +837,11 @@
                                     </li>
                                 </ui:repeat>
                             </ul>
+
                         </a:outputPanel>
 
                     </h:form>
-                </div>
+                </a:outputPanel>
 
             </a:outputPanel>
 

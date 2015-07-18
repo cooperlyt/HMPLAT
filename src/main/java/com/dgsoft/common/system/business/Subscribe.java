@@ -14,6 +14,7 @@ public interface Subscribe extends OrderModel {
 
     public static final String CREATE_TASK_NAME = "_CREATE";
     public static final String BUSINESS_VIEW_TASK_NAME = "_VIEW";
+    public static final String PATCH_TASK_NAME = "_PATCH";
 
     public enum SubscribeType {
         TASK_INFO, TASK_COMPLETE, TASK_OPERATOR

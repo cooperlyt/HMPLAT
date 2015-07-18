@@ -29,6 +29,13 @@ public class CreateComponent implements java.io.Serializable,OrderModel {
     public CreateComponent() {
     }
 
+    public CreateComponent(String component, int priority, BusinessDefine businessDefine, CreateComponentType type) {
+        this.component = component;
+        this.priority = priority;
+        this.businessDefine = businessDefine;
+        this.type = type;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull

@@ -138,8 +138,11 @@ public class TaskSubscribeReg {
                     Node regNode = regNodes.item(i);
                     if (regNode.getNodeType() == Node.ELEMENT_NODE) {
                         Logging.getLog(getClass()).debug(regNode.getNodeName());
+                        String name = null;
+                        if (regNode.getAttributes().getNamedItem("name") != null){
+                            name = regNode.getAttributes().getNamedItem("name").getNodeValue();
+                        }
 
-                        String name = regNode.getAttributes().getNamedItem("name").getNodeValue();
                         String description = null;
                         //String page = regNode.getAttributes().getNamedItem("page").getNodeValue();
                         for(int j = 0, subSize = regNode.getChildNodes().getLength(); j < subSize; j++){
