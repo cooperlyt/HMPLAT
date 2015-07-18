@@ -136,7 +136,7 @@
                                         <a:commandLink styleClass="labels-list-action" execute="@this"
                                                        immediate="true"
                                                        render="validDataList"
-                                                       action="#{businessSubscribeConfig.downSelectTaskSubscribe}">
+                                                       action="#{configComponent.up}">
                                             <span class="octicon octicon-move-up"/>
                                             <a:attachQueue requestDelay="0"/>
                                             <a:param value="#{_subscribe.key.component}"
@@ -145,7 +145,7 @@
                                         <a:commandLink styleClass="labels-list-action" execute="@this"
                                                        immediate="true"
                                                        render="validDataList"
-                                                       action="#{businessSubscribeConfig.upSelectTaskSubscribe}">
+                                                       action="#{configComponent.down}">
                                             <span class="octicon octicon-move-down"/>
                                             <a:attachQueue requestDelay="0"/>
                                             <a:param value="#{_subscribe.key.component}"

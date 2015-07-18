@@ -3,6 +3,7 @@ package com.dgsoft.common.system.action;
 import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.common.system.model.CreateComponent;
+import com.dgsoft.common.system.model.TaskSubscribe;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Transactional;
 
@@ -92,14 +93,46 @@ public abstract class CreateComponentConfig {
 
     @Transactional
     public void removeComponent(){
-        for(CreateComponent component: businessDefineHome.getInstance().getBusinessCreateDataValids()){
-            if (getType().equals(component.getType()) &&  component.getComponent().equals(selectComponentName)){
-                businessDefineHome.getInstance().getBusinessCreateDataValids().remove(component);
+                businessDefineHome.getInstance().getBusinessCreateDataValids().remove(getSelectCreateComponent());
                 businessDefineHome.update();
                 selectComponentName = null;
                 return;
+    }
+
+    private CreateComponent getSelectCreateComponent(){
+        for(CreateComponent component: businessDefineHome.getInstance().getBusinessCreateDataValids()) {
+            if (getType().equals(component.getType()) && component.getComponent().equals(selectComponentName)) {
+                return component;
             }
         }
+        return null;
+    }
+
+    private void sort(boolean up){
+        CreateComponent srcComponent = getSelectCreateComponent();
+        List<CreateComponent> components = new ArrayList<CreateComponent>(businessDefineHome.getInstance().getBusinessCreateDataValids());
+        Collections.sort(components, new Comparator<CreateComponent>() {
+            @Override
+            public int compare(CreateComponent o1, CreateComponent o2) {
+                return Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
+            }
+        });
+
+        int targetIndex = up ? components.indexOf(srcComponent) - 1 : components.indexOf(srcComponent) + 1;
+        if ((targetIndex >= 0) && (targetIndex < components.size())){
+            int srcPri = srcComponent.getPriority();
+            srcComponent.setPriority(components.get(targetIndex).getPriority());
+            components.get(targetIndex).setPriority(srcPri);
+        }
+        businessDefineHome.update();
+    }
+
+    public void up() {
+        sort(true);
+    }
+
+    public void down() {
+        sort(false);
     }
 
 }
