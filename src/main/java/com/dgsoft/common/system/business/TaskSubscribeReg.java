@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.business;
 
+import com.dgsoft.common.system.model.CreateComponent;
 import com.dgsoft.common.system.model.SubscribeGroup;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
@@ -35,10 +36,10 @@ public class TaskSubscribeReg {
     private final static String EDIT_SUBSCRIBE_NODE_NAME = "edit-subscribe";
     private final static String END_SUBSCRIBE_NODE_NAME = "end-subscribe";
     private final static String OPERATOR_SUBSCRIBE_NODE_NAME = "oper-subscribe";
+    private final static String CREATE_COMPONENT_NODE_NAME ="create-component";
 
+    private Map<CreateComponent.CreateComponentType,Map<String,String>> createComponents;
 
-
-    //private Map<String,SubscribeDefine> subscribeDefines;
 
     private List<EditSubscribeDefine> editSubscribeDefines;
 
@@ -47,6 +48,15 @@ public class TaskSubscribeReg {
     private List<SubscribeDefine> operSubscribeDefines;
 
     private List<CompleteSubscribeDefine> completeSubscribeDefines;
+
+    public Map<String,String> getCreateComponentsByType(CreateComponent.CreateComponentType type) {
+        Map<String,String> result = createComponents.get(type);
+        if (result == null){
+            return new HashMap<String, String>(0);
+        }else{
+            return result;
+        }
+    }
 
     public List<EditSubscribeDefine> getEditSubscribeDefines() {
 
@@ -105,6 +115,7 @@ public class TaskSubscribeReg {
 
     @Create
     public void load() {
+        createComponents = new HashMap<CreateComponent.CreateComponentType, Map<String, String>>();
 
         editSubscribeDefines = new ArrayList<EditSubscribeDefine>();
         viewSubScribeDefines = new ArrayList<SubscribeDefine>();
@@ -150,6 +161,15 @@ public class TaskSubscribeReg {
                             completeSubscribeDefines.add( new CompleteSubscribeDefine(name,description,regNode.getAttributes().getNamedItem("component").getNodeValue()));
                         } else if (OPERATOR_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
                             operSubscribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue()));
+                        }else if (CREATE_COMPONENT_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
+                            CreateComponent.CreateComponentType type = CreateComponent.CreateComponentType.valueOf(regNode.getAttributes().getNamedItem("type").getNodeValue());
+                            Map<String,String> cMap = createComponents.get(type);
+                            if (cMap == null){
+                                cMap = new HashMap<String, String>();
+                                createComponents.put(type,cMap);
+                            }
+                            cMap.put(regNode.getAttributes().getNamedItem("component").getNodeValue(),description);
+
                         }
 
 
