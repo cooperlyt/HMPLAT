@@ -608,11 +608,7 @@
     </description>
     </create-component>
 
-    <create-component type="DATA_VALID" component="houseStatusNotHavePledge">
-        <description>
-            没有抵押
-        </description>
-    </create-component>
+
 
     <create-component type="DATA_VALID" component="houseStatusNotHaveProjectPledge">
         <description>
@@ -620,11 +616,7 @@
         </description>
     </create-component>
 
-    <create-component type="DATA_VALID" component="houseStatusNotHaveProjectPledge">
-        <description>
-            没有在建工程抵押
-        </description>
-    </create-component>
+
 
     <create-component type="DATA_VALID" component="houseStatusNotHaveInitRegConfirm">
         <description>
@@ -651,6 +643,13 @@
             必须有产权
         </description>
     </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusHaveInitReg">
+        <description>
+            必须有商品房初始登记
+        </description>
+    </create-component>
+
 
     <create-component type="BIZ_SELECT" component="pledgeBizSelect">
         <description>
