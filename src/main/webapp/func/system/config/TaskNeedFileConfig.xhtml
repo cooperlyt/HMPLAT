@@ -10,12 +10,21 @@
                 template="/layout/template-tab.xhtml">
 
 
+
+    <ui:define name="function-tile">
+        <ui:include src="/layout/function-nav.xhtml">
+            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+        </ui:include>
+        <span class="funcTitle"><h:outputText value=" #{messages.BusinessDefingConfig}" /><span class="path-divider">/</span>
+            #{businessDefineHome.instance.name}
+
+        </span>
+    </ui:define>
     <ui:define name="outcss">
         <h:outputStylesheet library="github" name="/css/github1.css"/>
         <h:outputStylesheet library="github" name="/css/github2.css"/>
     </ui:define>
 
-    <ui:param name="funcName" value="#{messages.TaskSubscribe}"/>
     <ui:define name="head-tab">
 
 

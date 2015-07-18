@@ -59,7 +59,7 @@
     </component>
 
    <component name="selectBusinessDefineList" class="com.dgsoft.common.system.SystemEntityQuery" scope="page">
-        <property name="ejbql">select businessDefine from BusinessDefine businessDefine order by businessDefine.name</property>
+        <property name="ejbql">select businessDefine from BusinessDefine businessDefine where businessDefine.enable = true order by businessDefine.name</property>
    </component>
 
     <component name="allRoleCategoryList" class="com.dgsoft.common.system.SystemEntityQuery" scope="event">
