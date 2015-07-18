@@ -576,6 +576,20 @@
         </description>
     </create-component>
 
+    <create-component type="DATA_VALID" component="HouseStatusNotHaveContactsRecord">
+        <description>
+           没有备案状态
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="HouseStatusNotHaveSaleRegister">
+        <description>
+            没有预告登记
+        </description>
+    </create-component>
+
+
     <create-component type="DATA_VALID" component="houseStatusInitRegNotHaveInitReg">
         <description>
             办理过初始登记，无法办理第二次
