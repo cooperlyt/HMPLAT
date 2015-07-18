@@ -514,7 +514,25 @@
 
     <create-component type="DATA_VALID" component="houseInBizValid">
         <description>
-            业务中验证
+            不在业务中验证
+        </description>
+    </create-component>
+    <create-component type="DATA_VALID" component="houseInBizValid">
+        <description>
+            不在业务中验证
+        </description>
+    </create-component>
+
+    <create-component type="NotHaveDestroy" component="houseStatusNotHaveDestroy">
+        <description>
+            没有房屋灭迹
+        </description>
+    </create-component>
+
+
+    <create-component type="NotHaveDestroy" component="houseStatusNotHaveDestroy">
+        <description>
+            没有声明作废
         </description>
     </create-component>
 
@@ -524,6 +542,9 @@
             最房屋抵押业务
         </description>
     </create-component>
+
+
+
 
     <create-component type="DATA_FILL" component="pledgeBizFill">
         <description>
