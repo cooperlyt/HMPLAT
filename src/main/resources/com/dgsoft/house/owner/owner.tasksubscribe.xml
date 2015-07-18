@@ -517,25 +517,70 @@
             不在业务中验证
         </description>
     </create-component>
-    <create-component type="DATA_VALID" component="houseInBizValid">
+
+
+    <create-component type="DATA_VALID" component="houseStatusNotHave">
         <description>
-            不在业务中验证
+           房屋没有任务状态
         </description>
     </create-component>
 
-    <create-component type="NotHaveDestroy" component="houseStatusNotHaveDestroy">
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveDestroy">
         <description>
             没有房屋灭迹
         </description>
     </create-component>
 
-
-    <create-component type="NotHaveDestroy" component="houseStatusNotHaveDestroy">
+    <create-component type="DATA_VALID" component="houseStatusNotHaveDeclareCancel">
         <description>
             没有声明作废
         </description>
     </create-component>
 
+    <create-component type="DATA_VALID" component="houseStatusNotHaveDifficulty">
+        <description>
+            没有异议
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="HouseLockedValid">
+        <description>
+           没有冻结（预查封）
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="HouseStatusNotHaveCourtClose">
+        <description>
+           没有查封
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveOwnerd">
+        <description>
+            没有产权
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="HouseStatusNotHavePledge">
+        <description>
+            没有抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveProjectPledge">
+        <description>
+            没有在建工程抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusInitRegNotHaveInitReg">
+        <description>
+            办理过初始登记，无法办理第二次
+        </description>
+    </create-component>
 
     <create-component type="BIZ_SELECT" component="pledgeBizSelect">
         <description>
