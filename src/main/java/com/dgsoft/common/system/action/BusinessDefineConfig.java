@@ -1,9 +1,13 @@
 package com.dgsoft.common.system.action;
 
+import com.dgsoft.common.system.SystemEntityHome;
+import com.dgsoft.common.system.model.BusinessCategory;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.bpm.ManagedJbpmContext;
+import org.jboss.seam.framework.EntityQuery;
 import org.jbpm.graph.def.ProcessDefinition;
 
 import java.util.ArrayList;
@@ -17,20 +21,17 @@ import java.util.List;
  */
 
 @Name("businessDefineConfig")
-public class BusinessDefineConfig {
+public class BusinessDefineConfig extends SystemEntityHome<BusinessCategory>{
 
-    @RequestParameter
-    private String businessDefineId;
+
 
     @In(create = true)
     private BusinessDefineHome businessDefineHome;
 
 
-    @Begin(pageflow = "business-config",flushMode = FlushModeType.MANUAL)
-    public void addBusinessDefine(){
-        businessDefineHome.clearInstance();
+    public void editBusinessDefine(){
+        businessDefineHome.getInstance().setBusinessCategory(getInstance());
     }
-
 
     @Factory(value = "jpdlNameList", scope = ScopeType.CONVERSATION)
     public List<String> getJpdlNameList() {
@@ -41,6 +42,13 @@ public class BusinessDefineConfig {
         return result;
     }
 
+    @Override
+    public void create(){
+        super.create();
+         if(!((EntityQuery)Component.getInstance("businessCategoryList",true,true)).getResultList().isEmpty()){
+             setId(((BusinessCategory) ((EntityQuery) Component.getInstance("businessCategoryList", true, true)).getResultList().get(0)).getId());
+         }
+    }
 
 
 }

@@ -72,13 +72,13 @@ public abstract class CreateComponentConfig {
 
 
     private int getComponentMaxPri(CreateComponent.CreateComponentType type){
-        int result = 1;
+        int result = 0;
         for(CreateComponent component: businessDefineHome.getInstance().getBusinessCreateDataValids()){
             if (type.equals(component.getType()) && (result < component.getPriority())){
                 result = component.getPriority();
             }
         }
-        return result;
+        return result + 1;
     }
 
     @Transactional
