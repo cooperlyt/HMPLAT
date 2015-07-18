@@ -31,6 +31,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<BusinessNeedFile> businessNeedFiles = new HashSet<BusinessNeedFile>(0);
     private Set<SubscribeGroup> subscribeGroups = new HashSet<SubscribeGroup>(0);
     private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
+    private boolean enable;
 
     public BusinessDefine() {
     }
@@ -172,6 +173,15 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setRolePrefix(String rolePrefix) {
         this.rolePrefix = rolePrefix;
+    }
+
+    @Column(name="ENABLE",nullable = false)
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     @Override
