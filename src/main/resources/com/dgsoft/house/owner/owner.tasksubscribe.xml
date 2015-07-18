@@ -576,16 +576,65 @@
         </description>
     </create-component>
 
-    <create-component type="DATA_VALID" component="HouseStatusNotHaveContactsRecord">
+    <create-component type="DATA_VALID" component="houseStatusNotHaveContactsRecord">
         <description>
            没有备案状态
         </description>
     </create-component>
 
 
-    <create-component type="DATA_VALID" component="HouseStatusNotHaveSaleRegister">
+    <create-component type="DATA_VALID" component="houseStatusNotHaveSaleRegister">
         <description>
-            没有预告登记
+            没有预购商品房预告登记
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveSaleMortgageRegister">
+        <description>
+            没有预购商品房预告抵押
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveDivertRegister">
+        <description>
+            没有房屋转移预告
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveDivertMortgageRegister">
+    <description>
+        没有房屋转移预告抵押
+    </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHavePledge">
+        <description>
+            没有抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveProjectPledge">
+        <description>
+            没有在建工程抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveProjectPledge">
+        <description>
+            没有在建工程抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveInitRegConfirm">
+        <description>
+            没有确权
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusNotHaveInitReg">
+        <description>
+            没有初始登记
         </description>
     </create-component>
 
@@ -593,6 +642,13 @@
     <create-component type="DATA_VALID" component="houseStatusInitRegNotHaveInitReg">
         <description>
             办理过初始登记，无法办理第二次
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="houseStatusHaveOwnerd">
+        <description>
+            必须有产权
         </description>
     </create-component>
 
