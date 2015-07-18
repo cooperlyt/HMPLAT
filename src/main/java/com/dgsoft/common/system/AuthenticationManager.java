@@ -100,7 +100,12 @@ public class AuthenticationManager {
         Set<BusinessDefine> businessDefines = new HashSet<BusinessDefine>();
         Set<BusinessCategory> bussinessCategorys = new HashSet<BusinessCategory>();
         for (Role role : roles) {
-            businessDefines.addAll(role.getBusinessDefines());
+            for (BusinessDefine define: role.getBusinessDefines()){
+                if (define.isEnable()){
+                    businessDefines.add(define);
+                }
+            }
+
         }
         for (BusinessDefine businessDefine : businessDefines) {
             bussinessCategorys.add(businessDefine.getBusinessCategory());
