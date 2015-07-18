@@ -14,7 +14,7 @@ public abstract class BusinessHouseValid implements BusinessDataValid {
     @Override
     public ValidResult valid(Object data) {
         if (data instanceof BusinessHouse){
-            valid((BusinessHouse)data);
+            return valid((BusinessHouse)data);
         }
         return new ValidResult("config_error_data_not_house", TaskSubscribeComponent.ValidResult.FATAL);
     }
