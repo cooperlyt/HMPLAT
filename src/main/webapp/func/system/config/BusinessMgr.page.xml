@@ -7,4 +7,5 @@
     <restrict>#{s:hasRole('system.config')}</restrict>
 
     <param name="selectCategoryId" value="#{businessDefineConfig.id}"/>
+    <param name="businessDefineId" value="#{businessDefineHome.id}"/>
 </page>

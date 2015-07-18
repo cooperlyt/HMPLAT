@@ -29,7 +29,8 @@ public class BusinessDefineConfig extends SystemEntityHome<BusinessCategory>{
     private BusinessDefineHome businessDefineHome;
 
 
-    public void editBusinessDefine(){
+    public void createBusinessDefine(){
+        businessDefineHome.clearInstance();
         businessDefineHome.getInstance().setBusinessCategory(getInstance());
     }
 

@@ -288,8 +288,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         if (!isIdAvailable(newId)) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "fieldConflict", newId);
             return false;
-        } else
+        } else {
+            getInstance().setEnable(true);
             return true;
+        }
 
     }
 

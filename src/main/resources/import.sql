@@ -50,7 +50,7 @@ INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.commodity'
 -- 功能
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.param', '系统参数管理', 'DATA_MGR', '', '/func/system/config/SystemParams.xhtml', '', '2', '系统运行方式设置',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.person', '人员维护', 'DATA_MGR', '', '/func/system/manager/PersonMgr.xhtml', '', '3', '管理自然人',b'0');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.businessConfig','业务管理','DATA_MGR','','/func/system/config/BusinessMgr.xhtml','','3','业务处理配置',b'0');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.businessConfig','业务配置','DAY_WORK','','/func/system/config/BusinessMgr.xhtml','','3','业务处理配置',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.employee','员工管理','DATA_MGR', '', '/func/system/manager/EmployeeMgr.xhtml','','4','员工和组织机构管理',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.role','角色管理','DATA_MGR','','/func/system/config/RoleMgr.xhtml','','4','角色管理和角色分配启动业务',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.word','字典管理','DATA_MGR','','/func/system/manager/WordMgr.xhtml','','5','字典管理',b'0');

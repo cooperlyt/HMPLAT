@@ -12,6 +12,8 @@
 
 
 
+    <ui:param name="funcName" value="#{messages.BusinessDefingConfig}"/>
+
     <ui:decorate template="/layout/edit-modalpanel.xhtml">
         <ui:param name="panelId" value="editPanel"/>
         <ui:param name="panelTitle" value="#{messages.businessDefine}"/>
@@ -35,8 +37,6 @@
                            action="#{businessDefineHome.update}">
 
                 <span class="glyphicon glyphicon-floppy-disk"/>
-
-                <a:param value="#{businessDefineHome.instance.id}" assignTo="#{businessDefineHome.id}"/>
                 #{messages.saveUpdate}
             </a:commandLink>
 
@@ -72,7 +72,6 @@
                            onText="#{messages.Enable}"
                            offText="#{messages.Disable}"
                            styleClass="js-switch "/>
-
 
             </div>
 
@@ -135,10 +134,32 @@
         </s:decorate>
 
         <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
+            <ui:define name="label">#{messages.businessDefing_field_rolePrefix}</ui:define>
+            <ui:param name="for" value="rolePrefixInput"/>
+
+            <h:inputText id="rolePrefixInput"
+                         label=""
+                         value="#{businessDefineHome.instance.rolePrefix}" styleClass="form-control"
+                         maxlength="20"/>
+        </s:decorate>
+
+        <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
+            <ui:define name="label">#{messages.businessDefing_field_description}</ui:define>
+            <ui:param name="for" value="descriptionInput"/>
+            <h:inputTextarea value="#{businessDefineHome.instance.description}" id="descriptionInput"
+                             styleClass="form-control"
+                             label=""
+                             name="#{messages.businessDefine_field_memo}">
+
+            </h:inputTextarea>
+        </s:decorate>
+
+        <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
             <ui:define name="label">#{messages.businessDefine_field_memo}</ui:define>
             <ui:param name="for" value="memo"/>
             <h:inputTextarea value="#{businessDefineHome.instance.memo}" id="memo"
                              styleClass="form-control"
+                             label="#{messages.businessDefine_field_memo}"
                              name="#{messages.businessDefine_field_memo}">
 
             </h:inputTextarea>
@@ -165,7 +186,7 @@
     </nav>
     </a:outputPanel>
 
-
+<h:form>
 
     <a:outputPanel id="dataResult" layout="block" styleClass="column three-fourths codesearch-results">
 
@@ -176,10 +197,11 @@
 
             <p>  #{messages.YouCan}#{' '}
                 <a:commandLink value="#{messages.create}"
+                               execute="@this" immediate="true"
+                               action="#{businessDefineConfig.createBusinessDefine}"
                                oncomplete="$('#editPanel').modal({backdrop: 'static'})"
-                               render="districtEditPanel_form">
+                               render="editPanel_form">
                     <a:attachQueue requestDelay="0"/>
-                    <a:param value="" assignTo="#{businessDefineHome.id}"/>
 
                 </a:commandLink>
 
@@ -191,15 +213,16 @@
         <a:outputPanel rendered="#{not empty businessDefineConfig.instance.businessDefineList}" layout="block" styleClass="notifications-list">
             <div class="boxed-group flush" style="margin-bottom: 0">
 
-                <h:form class="boxed-group-action">
+                <div class="boxed-group-action">
                     <a:commandLink styleClass="mark-all-as-read css-truncate tooltipped tooltipped-w"
                                    p:aria-label="#{messages.create}#{messages.businessDefine}"
+                                   action="#{businessDefineConfig.createBusinessDefine}"
+                                   render="editPanel_form" execute="@this" immediate="true"
                                    oncomplete="$('#editPanel').modal({backdrop: 'static'})">
                         <span class="octicon octicon-plus"/>
-                        <a:param value="" assignTo="#{businessDefineHome.id}"/>
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
-                </h:form>
+                </div>
 
                 <h3>#{messages.businessDefine}
                     <h:outputText styleClass="counter" value="#{businessDefineConfig.instance.businessDefineList.size}">
@@ -225,21 +248,24 @@
 
 
                         <ul class="notification-actions">
-                            <li>
-                                <s:link styleClass="btn-link tooltipped tooltipped-w" p:aria-label="#{messages.BusinessDefingConfig}"
+                            <li class="mute">
+                                <s:link styleClass="btn-link tooltipped tooltipped-w" style="color: #767676" p:aria-label="#{messages.BusinessDefingConfig}"
                                         view="/func/system/config/TaskSubscribeConfig.xhtml">
                                     <f:param name="businessDefineId" value="#{_item.id}"/>
                                     <span class="octicon octicon-puzzle"/>
                                 </s:link>
                             </li>
-                            <li>
-                                <a:commandLink styleClass="btn-link tooltipped tooltipped-w"
-                                               action="#{businessDefineConfig.editBusinessDefine}"
+                            <li class="mute">
+
+                                <a:commandLink styleClass="btn-link tooltipped tooltipped-w"  style="color: #767676"
+                                               oncomplete="$('#editPanel').modal({backdrop: 'static'})"
+                                               render="editPanel_form" execute="@this" immediate="true"
                                                p:aria-label="#{messages.edit}">
                                     <span class="octicon octicon-pencil"/>
-                                    <a:param value="#{_item.id}" assignTo="#{businessDefineHome.id}"/>
+                                    <f:param name="businessDefineId" value="#{_item.id}"/>
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
+
                             </li>
 
                         </ul>
@@ -256,6 +282,8 @@
 
 
     </a:outputPanel>
+
+</h:form>
     </a:outputPanel>
 
         <s:button value="create" action="#{businessDefineConfig.addBusinessDefine}"/>
