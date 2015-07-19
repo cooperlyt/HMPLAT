@@ -79,11 +79,17 @@ public class HouseBusinessStart {
             for(BusinessInstance bizInstance: component.getAllowSelectBusiness(ownerBuildGridMap.getSelectBizHouse()))
                 allowSelectBizs.add((OwnerBusiness)bizInstance);
         }
+        if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) &&  !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
+            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE' and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.defineId =:defineId",OwnerBusiness.class)
+                    .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
+                    .setParameter("defineId", businessDefineHome.getInstance().getPickBusinessDefineId().trim()).getResultList());
+        }
         if (allowSelectBizs.isEmpty()) {
             ownerBusinessHome.getInstance().getHouseBusinesses().clear();
             ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse()));
         } else if (allowSelectBizs.size() == 1){
             ownerBusinessHome.getInstance().setSelectBusiness(allowSelectBizs.get(0));
+            return businessSelected();
         }else{
             return BUSINESS_PICK_BIZ_PAGE;
         }
@@ -102,12 +108,18 @@ public class HouseBusinessStart {
         Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(OwnerNumberBuilder.instance().useNumber("createBusinessId") * -1 ,ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
 
-
-
     }
 
     public String businessSelected(){
         ownerBusinessHome.getInstance().setSelectBusiness(selectedBusiness);
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+        if (selectedBusiness.getHouseBusinesses().isEmpty()){
+            throw new IllegalArgumentException("config exception not hove house");
+        }
+        for (HouseBusiness houseBusiness: selectedBusiness.getHouseBusinesses()){
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse()));
+        }
+
         return dataSelected();
     }
 

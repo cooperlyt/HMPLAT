@@ -140,6 +140,19 @@
         </s:decorate>
 
         <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
+            <ui:define name="label">#{messages.businessDefine_field_pickBizId}</ui:define>
+            <ui:param name="for" value="pickBizId"/>
+            <h:inputText id="pickBizId"
+                         name="#{messages.businessDefine_field_pickBizId}"
+                         styleClass="form-control"
+                         maxlength="32"
+                         value="#{businessDefineHome.instance.pickBusinessDefineId}">
+
+            </h:inputText>
+
+        </s:decorate>
+
+        <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
             <ui:define name="label">#{messages.businessDefing_field_rolePrefix}</ui:define>
             <ui:param name="for" value="rolePrefixInput"/>
 
