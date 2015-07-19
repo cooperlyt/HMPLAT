@@ -51,15 +51,13 @@
 
 
         <div class="container">
-        <r:tabPanel switchType="client">
+
         <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
 
-            <r:tab >
+            <div class="panel panel-default">
 
-                <f:facet name="header">
-                    <span class="#{_group.group.iconCss}"/>
-                    #{_group.group.name}
-                </f:facet>
+                <div class="panel-heading"><h3 style="margin: 0"> <span class="#{_group.group.iconCss}"/>
+                    #{_group.group.name}</h3> </div>
 
                 <dh:entryGrid styleClass="detailsTable table table-bordered "
                               groupWidth="#{_group.group.groupWidth}" keyWidth="#{_group.group.keyWidth}"
@@ -71,10 +69,9 @@
                         </f:subview>
                     </c:forEach>
                 </dh:entryGrid>
-            </r:tab>
+            </div>
         </c:forEach>
 
-        </r:tabPanel>
 
             <div class="right">
                 <s:link styleClass="btn btn-primary" action="#{ownerBusinessCreate.createBusiness}">
