@@ -22,6 +22,7 @@ public class OwnerBusinessCreate extends BusinessCreate {
 
     @Override
     protected boolean verifyCreate() {
+        businessDefineHome.completeTask();
 
         String result = ownerBusinessHome.persist();
         return ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&

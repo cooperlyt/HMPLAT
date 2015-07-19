@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Name("houseBusinessStart")
 @Scope(ScopeType.CONVERSATION)
-public class HouseBusinessStart extends OwnerBusinessCreate {
+public class HouseBusinessStart {
 
     @In
     private BusinessDefineHome businessDefineHome;
@@ -147,12 +147,6 @@ public class HouseBusinessStart extends OwnerBusinessCreate {
     }
 
 
-    @Override
-    protected boolean verifyCreate() {
-
-        businessDefineHome.completeTask();
-        return super.verifyCreate();
-    }
 
     public String mulitHouseSelect() {
 
