@@ -872,17 +872,19 @@
 
                                     <h:selectOneMenu rendered="#{not empty houseStepSelect.selectProjectId}"
                                                      p:data-header="#{messages.buildSelect}"
+                                                     onchange="findBuildBySection()"
                                                      styleClass="selectpicker edit-select form-control"
                                                      value="#{buildHome.id}">
                                         <s:selectItems value="#{houseStepSelect.buildList}"
                                                        var="_build" itemValue="#{_build.id}"
                                                        label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}"
                                                        noSelectionLabel="#{messages.buildSelect}"/>
-                                        <a:ajax event="valueChange" listener="#{ownerBuildGridMap.findBuildBySection}" render="houseOrderInput">
-                                            <a:attachQueue requestDelay="0"/>
-                                            <f:param name="searchBykey" value="#{false}"/>
-                                        </a:ajax>
+
                                     </h:selectOneMenu>
+
+                                    <a:jsFunction execute="@form" name="findBuildBySection" action="#{ownerBuildGridMap.findBuildBySection}" render="houseOrderInput">
+                                        <f:param name="searchBykey" value="#{false}"/>
+                                    </a:jsFunction>
 
                                     <a:outputPanel id="houseOrderInput">
 
