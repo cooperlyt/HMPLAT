@@ -1,7 +1,9 @@
 package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessDataFill;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
@@ -12,10 +14,15 @@ import org.jboss.seam.annotations.Scope;
 @Scope(ScopeType.STATELESS)
 public class PledgeBizFill implements BusinessDataFill {
 
+    @In
+    private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public void fillData() {
-        //TOTO fill
+
+        //ownerBusinessHome.getInstance().getSelectBusiness()
+       // ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(ownerBusinessHome.getSingleHoues().getStartBusinessHouse().getLandInfo());
+
     }
 
 }
