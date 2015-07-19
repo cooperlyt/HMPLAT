@@ -50,14 +50,6 @@ public class OwnerBusinessFile {
     }
 
 
-    private boolean expressCheck(String express) {
-        if ((express == null) || express.trim().equals("")) {
-            return true;
-        } else {
-            return (Boolean) new Expressions().createValueExpression(express).getValue();
-        }
-    }
-
     public List<BusinessFileTreeNode> getTree() {
         if (tree == null){
             initBusinessNeedFiles();
@@ -75,9 +67,7 @@ public class OwnerBusinessFile {
 
         fillTree(importantNode);
 
-        importantNode.clean();
-
-        tree.add(new BusinessFileTreeNode());
+       // tree.add(new BusinessFileTreeNode());
     }
 
 
@@ -88,17 +78,6 @@ public class OwnerBusinessFile {
                     if ((file.getImportantCode() != null) && (file.getImportantCode().trim().equals(child.getBusinessNeedFile().getId()))) {
                         child.setBusinessFile(file);
                         break;
-                    }
-                }
-                if (child.getBusinessFile() == null) {
-                    if (child.getBusinessNeedFile().getTaskName().equals(businessDefineHome.getTaskName()) &&
-                            expressCheck(child.getBusinessNeedFile().getCondition())){
-
-                        BusinessFile newFile = new BusinessFile(ownerBusinessHome.getInstance(),
-                                child.getBusinessNeedFile().getName(),
-                                child.getBusinessNeedFile().getId(),false,true);
-                        ownerBusinessHome.getInstance().getUploadFileses().add(newFile);
-                        child.setBusinessFile(newFile);
                     }
                 }
             }
@@ -128,6 +107,7 @@ public class OwnerBusinessFile {
 
         public BusinessFileTreeNode() {
             important = false;
+
         }
 
         private BusinessFileTreeNode(BusinessNeedFile businessNeedFile, BusinessFileTreeNode parent) {
@@ -136,7 +116,14 @@ public class OwnerBusinessFile {
 
         @Override
         protected BusinessFileTreeNode createNewChild(BusinessNeedFile businessNeedFile) {
-            return new BusinessFileTreeNode(businessNeedFile, this);
+
+            if (businessNeedFile.getCondition() == null ||
+                    businessNeedFile.getCondition().trim().equals("") ||
+                    Expressions.instance().createValueExpression(businessNeedFile.getCondition(),Boolean.class).getValue()) {
+                return new BusinessFileTreeNode(businessNeedFile, this);
+            }else{
+                return null;
+            }
         }
 
 
@@ -157,12 +144,27 @@ public class OwnerBusinessFile {
 
         public int getItemCount(){
 
-            if (getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+
+            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
                 return 1;
             }else{
                 int result = 0;
                     for (BusinessFileTreeNode child: getChild()){
-                        result += child.getItemCount();
+
+                        switch (child.getBusinessNeedFile().getType()){
+
+                            case ALL:
+                                result += child.getItemCount();
+                                break;
+                            case ANYONE:
+                                result ++;
+                                break;
+                            case CHILDREN:
+                                result ++;
+                                break;
+                        }
+
+
                     }
                 return result;
             }
@@ -170,7 +172,7 @@ public class OwnerBusinessFile {
         }
 
         public int getFileCount(){
-            if (getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
                 return getBusinessFile().getUploadFiles().size();
             }else{
                 int result = 0;
@@ -182,15 +184,17 @@ public class OwnerBusinessFile {
         }
 
         public FileStatus getStatus(){
-            if (getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
-                if (!getBusinessFile().getUploadFiles().isEmpty()){
-                    return FileStatus.OK;
+            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+                if (getBusinessFile() == null){
+                    return FileStatus.NO_UPLOAD;
                 }else if (getBusinessFile().isNoFile()){
                     return FileStatus.NO_FILE;
-                }else{
+                }else if (!getBusinessFile().getUploadFiles().isEmpty()){
+                    return FileStatus.OK;
+                }else
                     return FileStatus.NO_UPLOAD;
-                }
-            }else{
+
+            }else if ((getBusinessNeedFile() == null) || getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.ALL)){
                 FileStatus result = FileStatus.OK;
                 for (BusinessFileTreeNode child: getChild()){
                     if (result.getOrder() < child.getStatus().getOrder()){
@@ -198,32 +202,18 @@ public class OwnerBusinessFile {
                     }
                 }
                 return result;
-            }
-        }
-
-        private boolean isValid(){
-            if (getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
-                return businessFile != null;
-            }else{
+            }else {
+                FileStatus result = FileStatus.NO_UPLOAD;
                 for (BusinessFileTreeNode child: getChild()){
-                    if (child.isValid()){
-                        return true;
+                    if (result.getOrder() > child.getStatus().getOrder()){
+                        return child.getStatus();
                     }
                 }
-                return false;
+                return result;
             }
+
         }
 
-        public void clean(){
-            List<BusinessFileTreeNode> cleanChild = new ArrayList<BusinessFileTreeNode>();
-            for (BusinessFileTreeNode child: getChild()){
-                child.clean();
-                if (child.isValid()){
-                    cleanChild.add(child);
-                }
-            }
-            setChild(cleanChild);
-        }
 
         @Override
         public String getType() {
