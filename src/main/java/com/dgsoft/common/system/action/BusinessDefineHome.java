@@ -13,6 +13,7 @@ import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.core.Expressions;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.richfaces.model.SortMode;
 
@@ -319,7 +320,12 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
         for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
             if (component.getType().equals(CreateComponent.CreateComponentType.DATA_VALID)) {
-                result.add((BusinessDataValid) Component.getInstance(component.getComponent(), true));
+                BusinessDataValid valid = (BusinessDataValid) Component.getInstance(component.getComponent(), true);
+                if (valid == null){
+                    Logging.getLog(getClass()).error("confing error validatio not found:" + component.getComponent());
+                    throw new IllegalArgumentException("confing error validatio not found:" + component.getComponent());
+                }
+                result.add(valid);
             }
         }
 

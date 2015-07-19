@@ -49,7 +49,13 @@ public class HouseBusinessStart {
 
     public void validSelectHouse(){
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
-            BusinessDataValid.ValidResult result = valid.valid(ownerBuildGridMap.getSelectBizHouse());
+            BusinessDataValid.ValidResult result;
+            try {
+                result = valid.valid(ownerBuildGridMap.getSelectBizHouse());
+            }catch (Exception e){
+                Logging.getLog(getClass()).error(e,"config error:" + valid.getClass().getSimpleName());
+                throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
+            }
             if (result.getResult().equals(TaskSubscribeComponent.ValidResult.FATAL)){
                 throw new IllegalArgumentException(result.getMsgKey());
             }
