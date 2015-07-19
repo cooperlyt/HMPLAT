@@ -5,65 +5,85 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:f="http://java.sun.com/jsf/core"
-                template="/layout/full-template.xhtml">
+                template="/layout/template.xhtml">
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
 
-    <ui:param name="functionTitle" value="#{messages.createBusiness} - #{messages.Business_Start_Confirm}"/>
 
-    <ui:define name="func-body">
-
-
-        <div style="clear: both"/>
-
-        <div class="flow-steps">
-            <ol class="num4">
-                <li class="done">
-                    <span class="first">#{messages.HouseBusinessStep1}</span>
-                </li>
-                <li class="done">
-                    <span>#{messages.HouseBusinessStep2}</span>
-                </li>
-                <li class="done current-prev">
-                    <span>#{messages.HouseBusinessStep3}</span>
-                </li>
-                <li class="last-current">
-                    <strong>#{messages.HouseBusinessStep4}</strong>
-                </li>
-            </ol>
-        </div>
-
-        <r:messages ajaxRendered="true" globalOnly="true"/>
-        <br/>
+    <ui:define name="body">
 
 
 
-        <dh:entryGrid styleClass="detailsTable">
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>#{messages.createBusiness}</strong>
 
 
-            <c:forEach items="#{taskPublish.viewPageGroup}" var="_group">
-                #{_group.key}
-                <c:set var="first" value="true"/>
+                    <span class="path-divider">/</span>
 
-                <c:forEach items="#{_group.values}" var="_item">
+                    #{businessDefineHome.instance.name}
+                    <span class="path-divider">/</span>
+                    #{messages.Business_Start_Subscribe}
 
-                    <f:subview>
-                        <ui:include src="#{_item.page}"/>
-                    </f:subview>
-                </c:forEach>
+                </h1>
 
-            </c:forEach>
+                <div class="right">
+                    <s:link styleClass="btn btn-primary" action="#{ownerBusinessCreate.createBusiness}">
+                        #{messages.createBusiness}
 
-        </dh:entryGrid>
+                    </s:link>
+                </div>
 
-        <br/>
+            </div>
 
-        <div style="float: right;padding: 6px">
-
-            <s:button styleClass="subbtn" value="#{messages.createBusiness}" action="#{ownerBusinessCreate.createBusiness}"/>
 
         </div>
+
+
+        <div class="container">
+        <r:tabPanel switchType="client">
+        <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
+
+            <r:tab >
+
+                <f:facet name="header">
+                    <span class="#{_group.group.iconCss}"/>
+                    #{_group.group.name}
+                </f:facet>
+
+                <dh:entryGrid styleClass="detailsTable table table-bordered "
+                              groupWidth="#{_group.group.groupWidth}" keyWidth="#{_group.group.keyWidth}"
+                              valueWidth="#{_group.group.valueWidth}">
+                    <c:forEach items="#{_group.defineList}" var="_item">
+
+                        <f:subview>
+                            <ui:include src="#{_item.page}"/>
+                        </f:subview>
+                    </c:forEach>
+                </dh:entryGrid>
+            </r:tab>
+        </c:forEach>
+
+        </r:tabPanel>
+
+            <div class="right">
+                <s:link styleClass="btn btn-primary" action="#{ownerBusinessCreate.createBusiness}">
+                    #{messages.createBusiness}
+
+                </s:link>
+            </div>
+        </div>
+
     </ui:define>
 
 </ui:composition>
