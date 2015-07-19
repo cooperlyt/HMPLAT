@@ -651,6 +651,63 @@
     </create-component>
 
 
+    <create-component type="DATA_VALID" component="houseStatusHavePledge">
+        <description>
+            必须有所有权抵押
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="houseStatusHaveProjectPledge">
+        <description>
+            必须有在建工程抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusHaveContactsRecord">
+        <description>
+            必须有备案
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusHaveSaleRegistr">
+        <description>
+            必须有商品房预告
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusHaveDivertRegister">
+        <description>
+            必须有房屋转移预告
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusHaveDivertMortgageRegister">
+        <description>
+            必须有房屋转移预告抵押
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseStatusHaveCourtClose">
+        <description>
+            必须有查封
+        </description>
+    </create-component>
+    <create-component type="DATA_VALID" component="houseStatusHaveDifficulty">
+        <description>
+            必须有异议登记
+        </description>
+    </create-component>
+
+
+
+    <create-component type="DATA_VALID" component="houseStatusHaveSaleMortgageRegister">
+        <description>
+            必须有商品房抵押预告
+        </description>
+    </create-component>
+
+
     <create-component type="BIZ_SELECT" component="pledgeBizSelect">
         <description>
             最房屋抵押业务
