@@ -9,7 +9,10 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/layout/template.xhtml">
-
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
 
 
     <ui:define name="body">
@@ -24,10 +27,7 @@
                 <h1 class="entry-title public">
                     <span class="mega-octicon octicon-repo"></span>
                     <strong>#{messages.createBusiness}</strong>
-                    <span class="path-divider">/</span>
 
-
-                    #{businessDefineHome.instance.businessCategory.name}
 
                     <span class="path-divider">/</span>
 
@@ -37,34 +37,75 @@
 
                 </h1>
 
+                <div class="right">
+                    <s:link styleClass="btn btn-primary" view="/business/houseOwner/BizStartConfirm.xhtml">
+                        #{messages.complete}
+
+                    </s:link>
+                </div>
+
             </div>
 
 
         </div>
+
+        <h:outputScript>
+            $(document).ready(
+            function () {
+            $('.rf-trn-cnt').click(function(){
+            $('.rf-trn').removeClass('rf-trn-select');
+            $('.rf-trn-sel').parent().addClass('rf-trn-select');
+            });
+
+            }
+            );
+        </h:outputScript>
+
+        <h:outputStylesheet>
+            .rf-trn-select .file-status{
+                color: #FFFFFF !important;
+            }
+
+            .file-status.OK{
+                color: #5cb85c;
+            }
+
+            .file-status.NO_FILE{
+                color: #f0ad4e;;
+            }
+
+            .file-status.NO_UPLOAD{
+                color: #d9534f;
+            }
+
+        </h:outputStylesheet>
         <div class="container">
 
             <div class="columns">
+                <h:outputStylesheet name="treeview.css"/>
 
-
-                <div class="column one-fourth codesearch-aside">
+                <div class="column codesearch-aside" style="width: 30%">
 
                     <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="client"
                             value="#{ownerBusinessFile.tree}" var="_node">
                         <r:treeNode type="ALL" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-ignored">
-                                #{_node.businessNeedFile.name}
+                            <h:outputText value="#{_node.businessNeedFile.name}" styleClass="file-status #{_node.status}"/>
+
+                            <span class="counter right">#{_node.itemCount}</span>
 
                         </r:treeNode>
 
 
                         <r:treeNode type="ANYONE" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-removed">
-                            #{_node.businessNeedFile.name}
+                            <h:outputText value="#{_node.businessNeedFile.name}" styleClass="file-status #{_node.status}"/>
 
+                            <span class="counter right">#{_node.itemCount}</span>
                         </r:treeNode>
 
 
                         <r:treeNode type="CHILDREN" iconClass="octicon octicon-file-text">
-
-                            #{_node.businessNeedFile.name}
+                            <h:outputText value="#{_node.businessNeedFile.name}" styleClass="file-status #{_node.status}"/>
+                            <span class="counter right">#{_node.itemCount}</span>
                         </r:treeNode>
 
 
@@ -73,7 +114,8 @@
                         </r:treeNode>
 
                         <r:treeNode type="I_ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
-                            needFile
+                            <h:outputText value="#{messages.NeedFile}" styleClass="file-status #{_node.status}"/>
+                            <span class="counter right">#{_node.itemCount}</span>
                         </r:treeNode>
 
 
@@ -86,13 +128,6 @@
 
 
 
-
-
-        <r:toolbar>
-            <r:toolbarGroup location="right">
-                <s:button value="#{messages.complete}" view="/business/houseOwner/BizStartConfirm.xhtml"/>
-            </r:toolbarGroup>
-        </r:toolbar>
 
         </div>
 

@@ -50,21 +50,6 @@
      <h:outputStylesheet name="treeview.css"/>
     <a:outputPanel id="dataResult" layout="block" styleClass="codesearch-results">
 
-<ui:remove>
-        <h:outputScript>
-            $(document).ready(
-                    function () {
-                        $('.rf-trn-cnt').click(function(){
-                            $('.rf-trn').removeClass('rf-trn-select');
-                            $('.rf-trn-sel').parent().addClass('rf-trn-select');
-                        });
-
-                    }
-            );
-        </h:outputScript>
-
-
-</ui:remove>
 
 
 
@@ -127,7 +112,7 @@
                 </h:selectOneMenu>
             </s:decorate>
 
-            <s:decorate id="conditionField" rendered="#{(businessNeedFileConfig.selectNeedFile.type eq 'CHILDREN')}"
+            <s:decorate id="conditionField"
                         styleClass="form-group" template="/layout/edit-big.xhtml">
                 <ui:define name="label">
                     #{messages.CONDITION}
@@ -188,7 +173,8 @@
                 <r:treeNode type="ALL" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-ignored">
 
 
-                    <h:outputText value="#{_node.businessNeedFile.name}" styleClass="treelabel"/>
+                    <h:outputText value="#{_node.businessNeedFile.name}" p:aria-label="#{_node.businessNeedFile.condition}"
+                                  styleClass="treelabel #{(empty _node.businessNeedFile.condition) ? '' : 'tooltipped tooltipped-e'}" style="#{(empty _node.businessNeedFile.condition) ? '' : 'color: #337ab7;'}"/>
                     <h:outputText value="#{_node.businessNeedFile.description}" styleClass="treeDescription"/>
 
                     <div class="btn-group right" role="group">
@@ -262,7 +248,8 @@
                 </r:treeNode>
                 <r:treeNode type="ANYONE" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-removed">
 
-                    <h:outputText value="#{_node.businessNeedFile.name}" styleClass="treelabel"/>
+                    <h:outputText value="#{_node.businessNeedFile.name}" p:aria-label="#{_node.businessNeedFile.condition}"
+                                  styleClass="treelabel #{(empty _node.businessNeedFile.condition) ? '' : 'tooltipped tooltipped-e'}" style="#{(empty _node.businessNeedFile.condition) ? '' : 'color: #337ab7;'}"/>
                     <h:outputText value="#{_node.businessNeedFile.description}" styleClass="treeDescription"/>
 
                     <div class="btn-group right">
@@ -343,7 +330,7 @@
 
                     <h:outputText value="#{_node.businessNeedFile.name}"
                                   p:aria-label="#{_node.businessNeedFile.condition}"
-                                  styleClass="treelabel #{(empty _node.businessNeedFile.condition) ? '' : 'tooltipped tooltipped-s'}"
+                                  styleClass="treelabel #{(empty _node.businessNeedFile.condition) ? '' : 'tooltipped tooltipped-e'}"
                                   style="font-weight: bold; margin-left:5px;  #{(empty _node.businessNeedFile.condition) ? '' : 'color: #337ab7;'}"/>
 
 

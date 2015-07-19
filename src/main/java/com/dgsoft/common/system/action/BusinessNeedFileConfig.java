@@ -46,7 +46,6 @@ public class BusinessNeedFileConfig {
         }
         for (BusinessNeedFile needFile : businessDefineHome.getInstance().getBusinessNeedFiles()) {
             if (needFile.getId().equals(id)) {
-                selectNeedFile = needFile;
                 return needFile;
             }
         }
@@ -124,6 +123,7 @@ public class BusinessNeedFileConfig {
     public void delete() {
         if (businessDefineHome.getInstance().getBusinessNeedFiles().remove(selectNeedFile)) {
             businessDefineHome.update();
+            tree = null;
         }
     }
 
@@ -172,7 +172,7 @@ public class BusinessNeedFileConfig {
             }
         }
         businessDefineHome.update();
-
+        tree = null;
     }
 
     public void down(){
@@ -193,6 +193,7 @@ public class BusinessNeedFileConfig {
             }
         }
         businessDefineHome.update();
+        tree = null;
     }
 
     private int getNewPri(){

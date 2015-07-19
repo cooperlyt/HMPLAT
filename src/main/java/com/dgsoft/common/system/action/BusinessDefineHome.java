@@ -62,7 +62,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         if ((val == null) || val.trim().equals("")) {
             return "";
         } else {
-            return new Expressions().createValueExpression(val).getValue().toString();
+            return Expressions.instance().createValueExpression(val,String.class).getValue();
         }
 
     }
@@ -390,7 +390,9 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         public NeedFileTreeNode(Collection<BusinessNeedFile> needFiles) {
             this.child = new ArrayList<T>(needFiles.size());
             for (BusinessNeedFile needFile: needFiles){
-                this.child.add(createNewChild(needFile));
+                T newChild = createNewChild(needFile);
+                if (newChild != null)
+                    this.child.add(newChild);
             }
             Collections.sort(child, OrderBeanComparator.getInstance());
         }

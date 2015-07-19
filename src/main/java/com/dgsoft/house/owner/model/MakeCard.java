@@ -86,9 +86,9 @@ public class MakeCard implements java.io.Serializable {
 		this.ownerBusiness = ownerBusiness;
 	}
 
+    @Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-    @Enumerated(EnumType.STRING)
     public CardType getType() {
         return this.type;
     }
