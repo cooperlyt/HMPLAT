@@ -32,6 +32,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<SubscribeGroup> subscribeGroups = new HashSet<SubscribeGroup>(0);
     private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
     private boolean enable;
+    private String pickBusinessDefineId;
 
     public BusinessDefine() {
     }
@@ -203,6 +204,15 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setBusinessCreateDataValids(Set<CreateComponent> businessCreateDataValids) {
         this.businessCreateDataValids = businessCreateDataValids;
+    }
+
+    @Column(name = "PICK_BUSINESS_DEFINE_ID", nullable = true, length = 32)
+    public String getPickBusinessDefineId() {
+        return pickBusinessDefineId;
+    }
+
+    public void setPickBusinessDefineId(String pickBusinessDefineId) {
+        this.pickBusinessDefineId = pickBusinessDefineId;
     }
 
     @Override
