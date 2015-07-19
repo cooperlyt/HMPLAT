@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
 
 
-    private static final String EJBQL = "select houseRecord from HouseRecord houseRecord " +
+    private static final String EJBQL = "select distinct houseRecord from HouseRecord houseRecord " +
             "left join houseRecord.businessHouse businessHouse " +
             "left join businessHouse.businessHouseOwner owner " +
             "left join businessHouse.businessPools pool " +
@@ -38,7 +38,7 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
         setEjbql(EJBQL);
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setRestrictionLogicOperator("or");
-        setMaxResults(500);
+        setMaxResults(100);
     }
 
     private String searchKey;

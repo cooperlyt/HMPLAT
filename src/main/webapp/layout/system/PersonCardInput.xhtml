@@ -29,7 +29,7 @@
 
             </h:selectOneMenu>
 
-            <a:commandLink styleClass="btn btn-default #{(_person.credentialsType.name() eq 'MASTER_ID') ? '' : 'disabled'}"
+            <a:commandLink styleClass="btn btn-default #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
                            id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
                            execute="@this" immediate="true" style="height: 34px;"
                            render="credentialsNumber,cerdentialsName">
