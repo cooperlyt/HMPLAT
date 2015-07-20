@@ -25,6 +25,10 @@ public class FinancialFill implements BusinessDataFill {
 
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
 
+            for(MortgaegeRegiste mortgaegeRegiste:houseBusiness.getStartBusinessHouse().getMortgaegeRegistes()){
+                houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
+            }
+
 
 
 
