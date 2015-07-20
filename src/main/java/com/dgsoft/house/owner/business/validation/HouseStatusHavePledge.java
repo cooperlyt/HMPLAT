@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Name("houseStatusHavePledge")
 @Scope(ScopeType.STATELESS)
-
+@BypassInterceptors
 public class HouseStatusHavePledge extends BusinessHouseValid {
 
 
