@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +28,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	private BigDecimal mortgageArea;
     private Financial oldFinancial;
     private Financial financial;
+    private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
 
 	public MortgaegeRegiste() {
@@ -144,5 +147,14 @@ public class MortgaegeRegiste implements java.io.Serializable {
 
     public void setFinancial(Financial financial) {
         this.financial = financial;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "mortgaegeRegistes")
+    public Set<BusinessHouse> getBusinessHouses() {
+        return businessHouses;
+    }
+
+    public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
+        this.businessHouses = businessHouses;
     }
 }

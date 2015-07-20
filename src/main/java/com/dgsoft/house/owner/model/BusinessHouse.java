@@ -79,6 +79,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private HouseRegInfo houseRegInfo;
     private String buildDevNumber;
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
+    private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
 
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
@@ -742,6 +743,16 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setOtherPowerCards(Set<MakeCard> otherPowerCards) {
         this.otherPowerCards = otherPowerCards;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="HOUSE_AND_MOR",joinColumns = @JoinColumn(name="HOUSE"),inverseJoinColumns = @JoinColumn(name="MOR"))
+    public Set<MortgaegeRegiste> getMortgaegeRegistes() {
+        return mortgaegeRegistes;
+    }
+
+    public void setMortgaegeRegistes(Set<MortgaegeRegiste> mortgaegeRegistes) {
+        this.mortgaegeRegistes = mortgaegeRegistes;
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
