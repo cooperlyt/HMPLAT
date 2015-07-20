@@ -40,60 +40,36 @@
 		<use_bezier_curve>false</use_bezier_curve>
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
-			<export_ddl_setting>
-				<output_path></output_path>
-				<encoding></encoding>
-				<line_feed></line_feed>
-				<is_open_after_saved>true</is_open_after_saved>
-				<environment_id>null</environment_id>
-				<category_id>null</category_id>
-				<ddl_target>
-					<create_comment>true</create_comment>
-					<create_foreignKey>true</create_foreignKey>
-					<create_index>true</create_index>
-					<create_sequence>true</create_sequence>
-					<create_table>true</create_table>
-					<create_tablespace>true</create_tablespace>
-					<create_trigger>true</create_trigger>
-					<create_view>true</create_view>
-					<drop_index>true</drop_index>
-					<drop_sequence>true</drop_sequence>
-					<drop_table>true</drop_table>
-					<drop_tablespace>true</drop_tablespace>
-					<drop_trigger>true</drop_trigger>
-					<drop_view>true</drop_view>
-					<inline_column_comment>true</inline_column_comment>
-					<inline_table_comment>true</inline_table_comment>
-					<comment_value_description>true</comment_value_description>
-					<comment_value_logical_name>false</comment_value_logical_name>
-					<comment_value_logical_name_description>false</comment_value_logical_name_description>
-					<comment_replace_line_feed>false</comment_replace_line_feed>
-					<comment_replace_string></comment_replace_string>
-				</ddl_target>
-			</export_ddl_setting>
-			<export_excel_setting>
-				<category_id>null</category_id>
-				<output_path></output_path>
-				<template></template>
-				<template_path></template_path>
-				<used_default_template_lang></used_default_template_lang>
-				<image_output></image_output>
-				<is_open_after_saved>true</is_open_after_saved>
-				<is_put_diagram>true</is_put_diagram>
-				<is_use_logical_name>true</is_use_logical_name>
-			</export_excel_setting>
-			<export_html_setting>
-				<output_dir></output_dir>
-				<with_category_image>true</with_category_image>
-				<with_image>true</with_image>
-				<is_open_after_saved>true</is_open_after_saved>
-			</export_html_setting>
-			<export_image_setting>
-				<output_file_path></output_file_path>
-				<category_dir_path></category_dir_path>
-				<with_category_image>true</with_category_image>
-				<is_open_after_saved>true</is_open_after_saved>
-			</export_image_setting>
+			<category_name_to_export>All</category_name_to_export>
+			<html_output></html_output>
+			<ddl_output>D:\EWorkSpace\HMPLAT\design\database\SystemDBER.sql</ddl_output>
+			<excel_output></excel_output>
+			<excel_template></excel_template>
+			<image_output></image_output>
+			<put_diagram_on_excel>false</put_diagram_on_excel>
+			<use_logical_name_as_sheet>false</use_logical_name_as_sheet>
+			<open_after_saved>false</open_after_saved>
+			<create_comment>true</create_comment>
+			<create_foreignKey>true</create_foreignKey>
+			<create_index>true</create_index>
+			<create_sequence>true</create_sequence>
+			<create_table>true</create_table>
+			<create_tablespace>true</create_tablespace>
+			<create_trigger>true</create_trigger>
+			<create_view>true</create_view>
+			<drop_index>true</drop_index>
+			<drop_sequence>true</drop_sequence>
+			<drop_table>true</drop_table>
+			<drop_tablespace>true</drop_tablespace>
+			<drop_trigger>true</drop_trigger>
+			<drop_view>true</drop_view>
+			<inline_column_comment>true</inline_column_comment>
+			<inline_table_comment>true</inline_table_comment>
+			<comment_value_description>true</comment_value_description>
+			<comment_value_logical_name>false</comment_value_logical_name>
+			<comment_value_logical_name_description>false</comment_value_logical_name_description>
+			<comment_replace_line_feed>false</comment_replace_line_feed>
+			<comment_replace_string></comment_replace_string>
 			<export_java_setting>
 				<java_output></java_output>
 				<package_name></package_name>
@@ -135,7 +111,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-27 07:50:11</creation_date>
-			<updated_date>2015-07-19 16:24:54</updated_date>
+			<updated_date>2015-07-20 10:47:31</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -1567,7 +1543,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>33</word_id>
+					<word_id>32</word_id>
 					<id>6</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2339,7 +2315,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>39</word_id>
+					<word_id>42</word_id>
 					<id>21</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2821,7 +2797,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>41</word_id>
+					<word_id>39</word_id>
 					<id>31</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2922,7 +2898,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>22</word_id>
+					<word_id>25</word_id>
 					<id>33</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2955,7 +2931,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>42</word_id>
+					<word_id>41</word_id>
 					<id>34</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3111,7 +3087,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>22</word_id>
+					<word_id>25</word_id>
 					<id>37</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3490,7 +3466,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>32</word_id>
+					<word_id>33</word_id>
 					<id>47</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3558,7 +3534,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>22</word_id>
+					<word_id>25</word_id>
 					<id>48</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3692,7 +3668,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>39</word_id>
+					<word_id>42</word_id>
 					<id>51</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4833,7 +4809,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>43</word_id>
+					<word_id>44</word_id>
 					<id>81</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4956,7 +4932,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>25</word_id>
+					<word_id>23</word_id>
 					<id>83</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5344,7 +5320,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>21</word_id>
+					<word_id>22</word_id>
 					<id>93</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5830,7 +5806,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>23</word_id>
+					<word_id>21</word_id>
 					<id>103</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5996,7 +5972,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>44</word_id>
+					<word_id>43</word_id>
 					<id>108</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
