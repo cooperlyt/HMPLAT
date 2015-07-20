@@ -10,13 +10,16 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by cooper on 6/25/15.
  * 房屋有必须有抵押状态 抵押注销
  */
 @Name("houseStatusHavePledge")
 @Scope(ScopeType.STATELESS)
-
+@BypassInterceptors
 public class HouseStatusHavePledge extends BusinessHouseValid {
 
 
@@ -25,9 +28,13 @@ public class HouseStatusHavePledge extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
+        //List defineIdNames = new ArrayList();
+       // defineIdNames.add("WP9");
+       // defineIdNames.add("WP10");
+       // defineIdNames.add("WP11");
+        //ownerEntityLoader.getEntityManager().createQuery("select count(houseBusiness) from HouseBusiness houseBusiness where houseBusiness.houseCode=:houseCode and houuseBusiness.ownerBusiness.status='COMPLETE' and houseBusiness.ownerBusiness.defineId in(:defineIds)",Long.class).setParameter("houseCode",businessHouse.getHouseCode()).setParameter("defineIds",defineIdNames).getSingleResult().compareTo(Long.valueOf(0))>0;
 
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)
-        && ownerEntityLoader.getEntityManager().createQuery("select count(houseBusiness) from HouseBusiness houseBusiness where houseBusiness.houseCode=:houseCode and houuseBusiness.ownerBusiness.status='COMPLETE' and houseBusiness.ownerBusiness.defineId=:defineId",Long.class).setParameter("houseCode",businessHouse.getHouseCode()).setParameter("defineId","WP9").getSingleResult().compareTo(Long.valueOf(0))>0){
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)){
 
 
             return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
