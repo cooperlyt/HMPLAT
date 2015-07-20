@@ -28,13 +28,13 @@ public class HouseStatusHavePledge extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        List defineIdNames = new ArrayList();
-        defineIdNames.add("WP9");
-        defineIdNames.add("WP10");
-        defineIdNames.add("WP11");
+        //List defineIdNames = new ArrayList();
+       // defineIdNames.add("WP9");
+       // defineIdNames.add("WP10");
+       // defineIdNames.add("WP11");
+        //ownerEntityLoader.getEntityManager().createQuery("select count(houseBusiness) from HouseBusiness houseBusiness where houseBusiness.houseCode=:houseCode and houuseBusiness.ownerBusiness.status='COMPLETE' and houseBusiness.ownerBusiness.defineId in(:defineIds)",Long.class).setParameter("houseCode",businessHouse.getHouseCode()).setParameter("defineIds",defineIdNames).getSingleResult().compareTo(Long.valueOf(0))>0;
 
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)
-        && ownerEntityLoader.getEntityManager().createQuery("select count(houseBusiness) from HouseBusiness houseBusiness where houseBusiness.houseCode=:houseCode and houuseBusiness.ownerBusiness.status='COMPLETE' and houseBusiness.ownerBusiness.defineId in(:defineIds)",Long.class).setParameter("houseCode",businessHouse.getHouseCode()).setParameter("defineIds",defineIdNames).getSingleResult().compareTo(Long.valueOf(0))>0){
+        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)){
 
 
             return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
