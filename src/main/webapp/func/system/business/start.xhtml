@@ -62,13 +62,13 @@
             <nav class="menu">
                 <a:repeat value="#{authInfo.authenticationBussinessCategorys}" var="_category">
                     <a:commandLink styleClass="menu-item #{(_category.category.id eq authInfo.currBusinessCategoryId) ? 'selected' : ''}"
-                                   immediate="true" execute="@this" render="bizDefList">
+                                   immediate="true" execute="@this" render="bizDefList,dataNav">
                         #{_category.category.name}
                         <h:outputText styleClass="counter" value="#{_category.defineList.size}">
                             <f:convertNumber type="number" groupingUsed="true"/>
                         </h:outputText>
                         <a:attachQueue requestDelay="0"/>
-                        <a:param value="#{_category.category.id}" assignTo="#{authInfo.currBusinessCategoryId}"/>
+                        <f:param name="currBusinessCategoryId" value="#{_category.category.id}"/>
                     </a:commandLink>
 
                 </a:repeat>

@@ -62,6 +62,30 @@ public class OwnerBusinessFile {
         return result;
     }
 
+    public void setNoFile(boolean value){
+        if (selectNode != null){
+            if (selectNode.getBusinessFile() == null){
+                if (value) {
+                    BusinessFile newBizFile = new BusinessFile(ownerBusinessHome.getInstance(), selectNode.getBusinessNeedFile().getName(), selectNode.getBusinessNeedFile().getId(), true, true);
+                    selectNode.setBusinessFile(newBizFile);
+                    ownerBusinessHome.getInstance().getUploadFileses().add(newBizFile);
+                }
+            }else{
+                selectNode.getBusinessFile().setNoFile(value);
+            }
+        }
+    }
+
+    public boolean isNoFile(){
+        if (selectNode == null){
+            return false;
+        }
+        if (selectNode.getBusinessFile() == null){
+            return false;
+        }
+        return selectNode.getBusinessFile().isNoFile();
+    }
+
 
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
         // considering only single selection
@@ -83,6 +107,10 @@ public class OwnerBusinessFile {
         return tree;
     }
 
+    public boolean isPass(){
+       return ! FileStatus.NO_UPLOAD.equals(getTree().get(0).getStatus(businessDefineHome.getTaskName()));
+    }
+
     private void initBusinessNeedFiles() {
 
         tree = new ArrayList<BusinessFileTreeNode>(2);
@@ -95,6 +123,7 @@ public class OwnerBusinessFile {
 
        // tree.add(new BusinessFileTreeNode());
     }
+
 
 
     private void fillTree(BusinessFileTreeNode node) {
@@ -218,6 +247,7 @@ public class OwnerBusinessFile {
 
 
                 if (getBusinessNeedFile().getTaskName().equals(taskName)){
+
                     if (getBusinessFile() == null) {
                         return FileStatus.NO_UPLOAD;
                     }else if (getBusinessFile().isNoFile()){

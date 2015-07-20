@@ -18,8 +18,6 @@
     <ui:define name="body">
 
 
-
-
         <div class="pagehead repohead instapaper_ignore readability-menu">
 
             <div class="container">
@@ -37,52 +35,97 @@
 
                 </h1>
 
-                <div class="right">
-                    <s:link styleClass="btn btn-primary" view="/business/houseOwner/BizStartConfirm.xhtml">
+                <a:outputPanel layout="block" id="passBtn" class="right">
+                    <s:link styleClass="btn btn-primary #{ownerBusinessFile.pass ? '' : 'disabled'}"
+                            disabled="#{not ownerBusinessFile.pass}" view="/business/houseOwner/BizStartConfirm.xhtml">
                         #{messages.complete}
 
                     </s:link>
-                </div>
+                </a:outputPanel>
 
             </div>
 
 
         </div>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript>
+                $(document).ready(
+                        function () {
+                            $('.rf-trn-cnt').click(function () {
+                                $('.rf-trn').removeClass('rf-trn-select');
+                                $('.rf-trn-sel').parent().addClass('rf-trn-select');
+                            });
 
-        <h:outputScript>
-            $(document).ready(
-            function () {
-            $('.rf-trn-cnt').click(function(){
-            $('.rf-trn').removeClass('rf-trn-select');
-            $('.rf-trn-sel').parent().addClass('rf-trn-select');
-            });
+                            //------
 
-            }
-            );
-        </h:outputScript>
+                            $('.rf-tr-nd').each(
+                                    function(){
+                                      $(this).removeClass('OK');
+                                        $(this).removeClass('NO_FILE');
+                                        $(this).removeClass('NO_UPLOAD');
+                                        $(this).removeClass('OTHER_UPLOAD');
+
+                                      if( $(this).children(":first").hasClass("OK")){
+                                          $(this).addClass("OK");
+                                      }
+                                        if( $(this).children(":first").hasClass("NO_FILE")){
+                                            $(this).addClass("NO_FILE");
+                                        }
+                                        if( $(this).children(":first").hasClass("NO_UPLOAD")){
+                                            $(this).addClass("NO_UPLOAD");
+                                        }
+                                        if( $(this).children(":first").hasClass("OTHER_UPLOAD")){
+                                            $(this).addClass("OTHER_UPLOAD");
+                                        }
+
+
+                                    }
+                            );
+
+                        }
+                );
+
+
+            </h:outputScript>
+
+        </a:outputPanel>
 
         <h:outputStylesheet>
-            .rf-trn-select .file-status{
+            .rf-trn-select .file-status {
                 color: #FFFFFF !important;
             }
 
-            .file-status.OK{
+            .file-status {
+                color: #4183c4;
+            }
+
+            .OK .file-status{
                 color: #5cb85c;
             }
 
-            .file-status.NO_FILE{
+            .NO_FILE .file-status{
                 color: #f0ad4e;;
             }
 
-            .file-status.NO_UPLOAD{
+            .NO_UPLOAD .file-status{
                 color: #d9534f;
             }
 
-            .file-status.OTHER_UPLOAD{
+            .OTHER_UPLOAD .file-status{
                 color: rgb(170, 170, 170);
             }
 
+            .NO_FILE .NO_UPLOAD .file-status{
+                color: rgb(170, 170, 170);
+            }
+
+            .OK .NO_UPLOAD .file-status{
+                color: rgb(170, 170, 170);
+            }
+
+
         </h:outputStylesheet>
+
         <div class="container">
 
             <div class="columns">
@@ -90,110 +133,135 @@
 
                 <div class="column codesearch-aside" style="width: 30%">
                     <h:form>
-                    <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="ajax" render="resultDatas"
-                            value="#{ownerBusinessFile.tree}" var="_node" selectionChangeListener="#{ownerBusinessFile.selectionChanged}">
-                        <r:treeNode type="ALL" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-ignored">
-                            <h:outputText value="#{_node.businessNeedFile.name}" styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
+                        <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="ajax"
+                                render="resultDatas"
+                                value="#{ownerBusinessFile.tree}" var="_node"
+                                selectionChangeListener="#{ownerBusinessFile.selectionChanged}">
+                            <r:treeNode type="ALL" expanded="#{_node.expanded}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}"
+                                        iconClass="octicon octicon-diff-ignored">
+                                <h:outputText value="#{_node.businessNeedFile.name}"
+                                              styleClass="file-status"/>
 
-                            <span class="counter right">#{_node.fileCount}</span>
+                                <span class="counter right">#{_node.fileCount}</span>
 
-                        </r:treeNode>
-
-
-                        <r:treeNode type="ANYONE" expanded="#{_node.expanded}" iconClass="octicon octicon-diff-removed">
-                            <h:outputText value="#{_node.businessNeedFile.name}" styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
-
-                            <span class="counter right">#{_node.fileCount}</span>
-                        </r:treeNode>
+                            </r:treeNode>
 
 
-                        <r:treeNode type="CHILDREN" iconClass="octicon octicon-file-text">
-                            <h:outputText value="#{_node.businessNeedFile.name}" styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
-                            <span class="counter right">#{_node.fileCount}</span>
-                        </r:treeNode>
+                            <r:treeNode type="ANYONE" expanded="#{_node.expanded}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}"
+                                        iconClass="octicon octicon-diff-removed">
+                                <h:outputText value="#{_node.businessNeedFile.name}"
+                                              styleClass="file-status"/>
+
+                                <span class="counter right">#{_node.fileCount}</span>
+                            </r:treeNode>
 
 
-                        <r:treeNode type="ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
-                            attriFile
-                        </r:treeNode>
-
-                        <r:treeNode type="I_ROOT" expanded="#{true}" iconClass="octicon octicon-diff-ignored">
-                            <h:outputText value="#{messages.NeedFile}" styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
-                            <span class="counter right">#{_node.fileCount}</span>
-                        </r:treeNode>
+                            <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)}" iconClass="octicon octicon-file-text">
+                                <h:outputText value="#{_node.businessNeedFile.name}"
+                                              styleClass="file-status"/>
+                                <span class="counter right">#{_node.fileCount}</span>
+                            </r:treeNode>
 
 
-                    </r:tree>
+                            <r:treeNode type="ROOT" expanded="#{true}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}" iconClass="octicon octicon-diff-ignored">
+                                attriFile
+                            </r:treeNode>
+
+                            <r:treeNode type="I_ROOT" expanded="#{true}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}" iconClass="octicon octicon-diff-ignored">
+                                <h:outputText value="#{messages.NeedFile}"
+                                              styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
+                                <span class="counter right">#{_node.fileCount}</span>
+                            </r:treeNode>
+
+
+                        </r:tree>
                     </h:form>
 
                 </div>
 
                 <h:form>
-                <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 70%">
+                    <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 70%">
 
-                    <a:outputPanel rendered="#{(empty ownerBusinessFile.selectNode) or ownerBusinessFile.selectNode.emptyFile}" layout="block" styleClass="blankslate spacious large-format">
-                        <span class="mega-octicon octicon-file-submodule"></span>
-                        <h3>#{empty ownerBusinessFile.selectNode ? messages.plase_select_file_node :  messages.not_upload_file}</h3>
-                        <p>
-                            <a:outputPanel rendered="#{empty ownerBusinessFile.selectNode}">
-                            <h:outputText value="#{messages.file_ndoe_description}" />
-                            <a:outputPanel class="octicon octicon-diff-ignored" style="margin: 0 4px"/>
-                            <h:outputText value="#{messages.all_file_node_description}" />
-                            <a:outputPanel class="octicon octicon-diff-removed" style="margin: 0 4px"/>
-                            <h:outputText value="#{messages.any_file_node_description}" />
-                            <a:outputPanel class="octicon octicon-file-text" style="margin: 0 4px"/>
-                            <h:outputText value="#{messages.leaf_file_node_description}" />
-                            </a:outputPanel>
+                        <a:outputPanel
+                                rendered="#{(empty ownerBusinessFile.selectNode) or ownerBusinessFile.selectNode.emptyFile}"
+                                layout="block" styleClass="blankslate spacious large-format">
+                            <span class="mega-octicon octicon-file-submodule"></span>
 
-                            <a:outputPanel rendered="#{not empty ownerBusinessFile.selectNode}">
-                                <a:outputPanel class="octicon octicon-diff-ignored" rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}" style="margin: 0 4px"/>
+                            <h3>#{empty ownerBusinessFile.selectNode ? messages.plase_select_file_node :  messages.not_upload_file}</h3>
 
-                                <a:outputPanel class="octicon octicon-diff-removed" rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ANYONE'}" style="margin: 0 4px"/>
+                            <p>
+                                <a:outputPanel rendered="#{empty ownerBusinessFile.selectNode}">
+                                    <h:outputText value="#{messages.file_ndoe_description}"/>
+                                    <a:outputPanel class="octicon octicon-diff-ignored" style="margin: 0 4px"/>
+                                    <h:outputText value="#{messages.all_file_node_description}"/>
+                                    <a:outputPanel class="octicon octicon-diff-removed" style="margin: 0 4px"/>
+                                    <h:outputText value="#{messages.any_file_node_description}"/>
+                                    <a:outputPanel class="octicon octicon-file-text" style="margin: 0 4px"/>
+                                    <h:outputText value="#{messages.leaf_file_node_description}"/>
+                                </a:outputPanel>
 
-                                <a:outputPanel class="octicon octicon-file-text" rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN'}" style="margin: 0 4px"/>
+                                <a:outputPanel rendered="#{not empty ownerBusinessFile.selectNode}">
+                                    <a:outputPanel class="octicon octicon-diff-ignored"
+                                                   rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"
+                                                   style="margin: 0 4px"/>
 
-                                <h:outputText value="#{ownerBusinessFile.selectNode.businessNeedFile.name}"/>,
+                                    <a:outputPanel class="octicon octicon-diff-removed"
+                                                   rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ANYONE'}"
+                                                   style="margin: 0 4px"/>
 
-                                <h:outputText value="#{messages.YouCan}" rendered="#{ (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                    <a:outputPanel class="octicon octicon-file-text"
+                                                   rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN'}"
+                                                   style="margin: 0 4px"/>
 
-                                <a:commandLink value="#{messages.uploadFile}" style="margin: 0 4px" rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN'}"/>
+                                    <h:outputText value="#{ownerBusinessFile.selectNode.businessNeedFile.name}"/>,
 
-                                <h:outputText value="#{messages.Or}" rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                    <h:outputText value="#{messages.YouCan}"
+                                                  rendered="#{ (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
-                                <h:commandLink value="">
-                                    <a:attachQueue requestDelay="0"/>
-                                </h:commandLink>
+                                    <a:commandLink value="#{messages.uploadFile}" style="margin: 0 4px"
+                                                   rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN'}"/>
 
-                                <h:selectBooleanCheckbox value="#{}">
-                                    #{messages.temp_upload_file}
-                                </h:selectBooleanCheckbox>
+                                    <h:outputText value="#{messages.Or}"
+                                                  rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
+                                    <h:outputText value="#{messages.set}"
+                                                  rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
+                                    <h:selectBooleanCheckbox style="margin: 0 4px 0 8px"
+                                                             value="#{ownerBusinessFile.noFile}"
+                                                             rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}">
+                                        <a:ajax execute="@this" event="click" render="fileTree,passBtn">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:selectBooleanCheckbox>
 
-                                <h:outputText value="#{messages.all_file_node_description}" rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"/>
-
-                                <h:outputText value="#{messages.any_file_node_description}" rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ANYONE'}"/>
-
-                                <h:outputText value="#{messages.plase_select_item_node}"
-                                              rendered="#{not (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
-
-
-
-                                <a:outputPanel rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"/>
-
+                                    <h:outputText value="#{messages.temp_upload_file}"
+                                                  rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
 
-                            </a:outputPanel>
+                                    <h:outputText value="#{messages.all_file_node_description}"
+                                                  rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"/>
 
-                        </p>
+                                    <h:outputText value="#{messages.any_file_node_description}"
+                                                  rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ANYONE'}"/>
+
+                                    <h:outputText value="#{messages.plase_select_item_node}"
+                                                  rendered="#{not (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+
+
+                                    <a:outputPanel
+                                            rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"/>
+
+
+                                </a:outputPanel>
+
+                            </p>
+                        </a:outputPanel>
+
+
                     </a:outputPanel>
-
-
-                </a:outputPanel>
                 </h:form>
             </div>
-
-
 
 
         </div>
