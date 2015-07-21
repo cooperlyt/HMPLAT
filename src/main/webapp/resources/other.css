@@ -8,6 +8,14 @@ input[type=button], input[type=reset], input[type=submit]{
     margin-left: 4px;
 }
 
+a{
+    cursor: pointer;
+}
+
+a:focus, a:hover{
+    color: #4183c4;
+}
+
 .modal-backdrop.fade.in{
     display: block;
 }
