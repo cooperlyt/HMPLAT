@@ -24,6 +24,8 @@
         <title>#{messages.mainTitle}</title>
 
         <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+    </h:head>
+    <h:body>
 
 
         <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
@@ -123,9 +125,17 @@
 
 
 
-    </h:head>
-    <h:body>
 
+        <a:status id="processWaiting" name="processWaiting"
+                  onstart="#{r:component('wait')}.show()"
+                  onstop="#{r:component('wait')}.hide()"/>
+        <r:popupPanel id="wait" modal="true" autosized="true" styleClass="transparent-popup"
+                         moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
+            <p>      <h:graphicImage value="/img/wait-128.gif" width="64" height="64"/></p>
+            <p>#{messages.ContextLoader}...</p>
+
+
+        </r:popupPanel>
         <h:form>
             <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
                 <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
@@ -168,9 +178,9 @@
 
         <div class="header">
             <div class="container-fluid clearfix" style="white-space: nowrap;">
-                <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
+                <s:div styleClass="logo-icon">
                     <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
-                </s:link>
+                </s:div>
 
                 <div class="site-search">
                     <h:form id="keySearchForm" >
@@ -195,6 +205,12 @@
 
 
                     </h:form>
+                </div>
+
+                <div class="left" style="max-width: 350px;   text-overflow: ellipsis;
+  white-space: nowrap;overflow: hidden;display: inline-block;">
+                    <h3 style="margin: 5px; font-weight: bold">
+                    #{businessDefineHome.instance.name}</h3>
                 </div>
 
 
@@ -589,8 +605,8 @@
                             }
 
                             .map-col-thead th{
-                                border-top: 0;
-                                border-bottom: 2px solid #ddd;
+                                border-top: 0 !important;
+                                border-bottom: 2px solid #ddd !important;
 
                                 height: 49px;
                                 width: 90px;
