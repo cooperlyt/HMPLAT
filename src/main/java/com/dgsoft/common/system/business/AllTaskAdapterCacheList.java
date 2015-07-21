@@ -259,6 +259,16 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         reset();
     }
 
+    public List<TaskInstanceAdapter> getTaskByKey(String key){
+        List<TaskInstanceAdapter> result = new ArrayList<TaskInstanceAdapter>();
+        for(TaskInstanceAdapter task: getAllTasks()){
+            if (task.getTaskDescription().getBusinessKey().equals(key)){
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
     public static class TaskInstanceAdapter{
 
         private TaskInstance taskInstance;

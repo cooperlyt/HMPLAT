@@ -7,7 +7,7 @@
     <navigation from-action="#{ownerBusinessCreate.createBusiness}">
         <rule if-outcome="businessCreated">
             <end-conversation/>
-            <redirect view-id="/func/system/business/start.xhtml"/>
+            <redirect view-id="/business/houseOwner/BizCreated.xhtml"/>
 
         </rule>
 
