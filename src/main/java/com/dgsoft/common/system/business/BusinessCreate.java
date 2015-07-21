@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.exception.ProcessCreatePrepareException;
+import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.model.BusinessDefine;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -34,13 +35,16 @@ public abstract class BusinessCreate {
 //    private String businessName;
 
     @In
-    private FacesMessages facesMessages;
+    protected FacesMessages facesMessages;
 
     @Logger
     private Log log;
 
     @In
     private Events events;
+
+    @In
+    private AuthenticationInfo authInfo;
 
 
 
@@ -77,6 +81,13 @@ public abstract class BusinessCreate {
 
     @Transactional
     public String createBusiness() {
+        if (!authInfo.isHasCreateRole(getBusinessDefine().getId())){
+            log.warn("user try create an no role biz");
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"NoCreateBusinessRole");
+            return null;
+        }
+
+
         if (!verifyCreate())
             return null;
 

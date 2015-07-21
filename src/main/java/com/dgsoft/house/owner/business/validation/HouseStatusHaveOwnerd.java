@@ -22,8 +22,8 @@ public class HouseStatusHaveOwnerd extends BusinessHouseValid{
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.OWNERED)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+            return new ValidResult(ValidResultLevel.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_Ownerd",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_Ownerd",ValidResultLevel.ERROR);
     }
 }

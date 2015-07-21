@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.model;
 
+import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,7 +15,7 @@ import javax.validation.constraints.Size;
 @Table(name = "PROCESS_MESSAGES", catalog = "HOUSE_OWNER_RECORD")
 public class ProcessMessage implements java.io.Serializable{
 
-    private TaskSubscribeComponent.ValidResult level;
+    private BusinessDataValid.ValidResultLevel level;
 
     private String messages;
 
@@ -25,11 +26,11 @@ public class ProcessMessage implements java.io.Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name="LEVEL",nullable = false,length = 20)
     @NotNull
-    public TaskSubscribeComponent.ValidResult getLevel() {
+    public BusinessDataValid.ValidResultLevel getLevel() {
         return level;
     }
 
-    public void setLevel(TaskSubscribeComponent.ValidResult level) {
+    public void setLevel(BusinessDataValid.ValidResultLevel level) {
         this.level = level;
     }
 

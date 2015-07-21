@@ -37,8 +37,8 @@ public class HouseStatusHavePledge extends BusinessHouseValid {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)){
 
 
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+            return new ValidResult(ValidResultLevel.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_pledge", TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_pledge", ValidResultLevel.ERROR);
 }
         }

@@ -34,12 +34,13 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
     }
 
 
-
-
+    @Override
+    public void valid() {
+    }
 
     @Override
-    public TaskSubscribeComponent.ValidResult valid() {
-        return TaskSubscribeComponent.ValidResult.SUCCESS;
+    public boolean isPass() {
+        return true;
     }
 
     @Override

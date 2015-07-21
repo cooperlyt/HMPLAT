@@ -46,7 +46,9 @@
                 </h1>
 
                 <div class="right">
-                    <s:link styleClass="btn btn-primary" action="#{ownerBusinessCreate.createBusiness}">
+                    <s:link styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
+                            disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not houseBusinessStart.needFilePass}"
+                            action="#{ownerBusinessCreate.createBusiness}">
                         #{messages.createBusiness}
 
                     </s:link>

@@ -2,10 +2,12 @@ package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessCreate;
+import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.international.StatusMessage;
 
 /**
  * Created by cooper on 1/15/15.
@@ -22,11 +24,22 @@ public class OwnerBusinessCreate extends BusinessCreate {
 
     @Override
     protected boolean verifyCreate() {
-        businessDefineHome.completeTask();
+        boolean verify;
+        if (businessDefineHome.isSubscribesPass() && businessDefineHome.isCompletePass()){
+            businessDefineHome.completeTask();
+            String result = ownerBusinessHome.persist();
+            verify = ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&
+                    !businessDefineHome.getInstance().getWfName().trim().equals(""));
 
-        String result = ownerBusinessHome.persist();
-        return ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&
-                !businessDefineHome.getInstance().getWfName().trim().equals(""));
+        }else{
+            verify = false;
+        }
+
+        if (!verify){
+            throw new IllegalArgumentException("create business fail");
+        }
+
+        return verify;
     }
 
 

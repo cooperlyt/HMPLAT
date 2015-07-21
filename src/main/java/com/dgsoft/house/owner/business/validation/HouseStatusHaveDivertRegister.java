@@ -20,8 +20,8 @@ public class HouseStatusHaveDivertRegister extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIVERT_REGISTER)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+            return new ValidResult(ValidResultLevel.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_DivertRegister",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_DivertRegister",ValidResultLevel.ERROR);
     }
 }

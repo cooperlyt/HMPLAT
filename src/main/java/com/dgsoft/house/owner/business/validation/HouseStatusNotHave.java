@@ -19,9 +19,9 @@ public class HouseStatusNotHave extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
        if (businessHouse.getHouseStates().isEmpty()){
-           return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+           return new ValidResult(ValidResultLevel.SUCCESS);
        }
 
-        return new ValidResult("business_house_status_no_have", TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_no_have", ValidResultLevel.ERROR);
     }
 }

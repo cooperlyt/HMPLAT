@@ -40,34 +40,36 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     private FacesMessages facesMessages;
 
 
-    public String validSubscribe() {
-        return validSubscribes().name();
-    }
-
-    public TaskSubscribeComponent.ValidResult validSubscribes() {
-        TaskSubscribeComponent.ValidResult result = TaskSubscribeComponent.ValidResult.SUCCESS;
-
-        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
-            if (define.isHaveComponent()) {
-                TaskSubscribeComponent.ValidResult r = define.getComponents().validSubscribe();
-                if (r.getPri() > result.getPri()) {
-                    result = r;
-                }
-            }
-        }
-        return result;
-    }
-
     public String getDescription() {
         String val = getInstance().getDescription();
         if ((val == null) || val.trim().equals("")) {
             return "";
         } else {
-            return Expressions.instance().createValueExpression(val,String.class).getValue();
+            return Expressions.instance().createValueExpression(val, String.class).getValue();
         }
 
     }
 
+    public void validSubscribes() {
+
+        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+            if (define.isHaveComponent()) {
+                define.getComponents().validSubscribe();
+            }
+        }
+        log.debug("call validSubscribes");
+    }
+
+    public boolean isSubscribesPass() {
+        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+            if (define.isHaveComponent()) {
+                if (!define.getComponents().isPass()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public boolean saveSubscribes() {
 
@@ -82,23 +84,31 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return true;
     }
 
-    public TaskSubscribeComponent.ValidResult validTaskComplete() {
-        TaskSubscribeComponent.ValidResult result = TaskSubscribeComponent.ValidResult.SUCCESS;
+
+    public void validComplete() {
         for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
-            TaskSubscribeComponent.ValidResult r = define.getComponents().valid();
-            if (r.getPri() > result.getPri()) {
-                result = r;
+            define.getComponents().valid();
+        }
+        log.debug("call validComplete");
+    }
+
+    public boolean isCompletePass() {
+        for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
+            if (!define.getComponents().isPass()) {
+                return false;
             }
         }
-        return result;
+        return true;
     }
 
     public void completeTask() {
+
         for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
             define.getComponents().complete();
         }
 
     }
+
 
     private String taskName = Subscribe.CREATE_TASK_NAME;
 
@@ -132,8 +142,8 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return result;
     }
 
-    public boolean haveNeedFile(String taskName) {
-        return !getFileSubscribe(taskName).isEmpty();
+    public boolean isHaveNeedFile() {
+        return !getFileSubscribe(getTaskName()).isEmpty();
     }
 
 
@@ -321,7 +331,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         for (CreateComponent component : getInstance().getBusinessCreateDataValids()) {
             if (component.getType().equals(CreateComponent.CreateComponentType.DATA_VALID)) {
                 BusinessDataValid valid = (BusinessDataValid) Component.getInstance(component.getComponent(), true);
-                if (valid == null){
+                if (valid == null) {
                     Logging.getLog(getClass()).error("confing error validatio not found:" + component.getComponent());
                     throw new IllegalArgumentException("confing error validatio not found:" + component.getComponent());
                 }
@@ -354,11 +364,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         }
 
 
-
         return result;
     }
 
-    public List<BusinessNeedFile> getNeedFileRootList(){
+    public List<BusinessNeedFile> getNeedFileRootList() {
         List<BusinessNeedFile> rootNodes = new ArrayList<BusinessNeedFile>();
 
         for (BusinessNeedFile file : getInstance().getBusinessNeedFiles()) {
@@ -369,8 +378,6 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         Collections.sort(rootNodes, OrderBeanComparator.getInstance());
         return rootNodes;
     }
-
-
 
 
     public static abstract class NeedFileTreeNode<T extends NeedFileTreeNode> implements TreeNode, OrderModel {
@@ -397,7 +404,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
         public NeedFileTreeNode(Collection<BusinessNeedFile> needFiles) {
             this.child = new ArrayList<T>(needFiles.size());
-            for (BusinessNeedFile needFile: needFiles){
+            for (BusinessNeedFile needFile : needFiles) {
                 T newChild = createNewChild(needFile);
                 if (newChild != null)
                     this.child.add(newChild);
@@ -409,7 +416,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             return businessNeedFile;
         }
 
-        public String getType(){
+        public String getType() {
 
             return (businessNeedFile == null) ? "ROOT" : businessNeedFile.getType().name();
         }

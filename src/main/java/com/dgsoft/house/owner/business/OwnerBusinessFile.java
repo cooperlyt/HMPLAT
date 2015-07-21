@@ -110,6 +110,10 @@ public class OwnerBusinessFile {
         return tree;
     }
 
+    public FileStatus getImportantStatus(){
+        return getTree().get(0).getStatus(businessDefineHome.getTaskName());
+    }
+
     public boolean isPass(){
        return ! FileStatus.NO_UPLOAD.equals(getTree().get(0).getStatus(businessDefineHome.getTaskName()));
     }

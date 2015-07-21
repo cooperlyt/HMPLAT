@@ -22,8 +22,8 @@ public class HouseStatusHaveSaleMortgageRegister extends BusinessHouseValid{
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.SALE_MORTGAGE_REGISTER)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+            return new ValidResult(ValidResultLevel.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_SaleMortgageRegister",TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_SaleMortgageRegister",ValidResultLevel.ERROR);
     }
 }

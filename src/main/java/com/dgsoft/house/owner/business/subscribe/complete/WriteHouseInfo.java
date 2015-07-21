@@ -13,9 +13,13 @@ import org.jboss.seam.log.Logging;
 public class WriteHouseInfo implements TaskCompleteSubscribeComponent {
 
     @Override
-    public TaskSubscribeComponent.ValidResult valid() {
+    public void valid() {
 
-        return TaskSubscribeComponent.ValidResult.SUCCESS;
+    }
+
+    @Override
+    public boolean isPass() {
+        return false;
     }
 
     @Override

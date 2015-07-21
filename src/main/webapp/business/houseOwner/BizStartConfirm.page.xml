@@ -12,4 +12,8 @@
         </rule>
 
     </navigation>
+
+    <action execute="#{businessDefineHome.validComplete}"/>
+    <action execute="#{businessDefineHome.validSubscribes}"/>
+
 </page>
