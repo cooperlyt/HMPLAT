@@ -47,48 +47,57 @@
 
 
         </div>
-        <a:outputPanel ajaxRendered="true">
-            <h:outputScript>
-                $(document).ready(
+
+
+        <h:outputScript>
+
+            function treeNodeSelectChange(){
+
+                $('.rf-trn').removeClass('rf-trn-select');
+                $('.rf-trn-sel').parent().addClass('rf-trn-select');
+            }
+
+
+            function treeStatusRefresh() {
+
+
+                //------
+
+                $('.rf-tr-nd').each(
                         function () {
-                            $('.rf-trn-cnt').click(function () {
-                                $('.rf-trn').removeClass('rf-trn-select');
-                                $('.rf-trn-sel').parent().addClass('rf-trn-select');
-                            });
+                            $(this).removeClass('OK');
+                            $(this).removeClass('NO_FILE');
+                            $(this).removeClass('NO_UPLOAD');
+                            $(this).removeClass('OTHER_UPLOAD');
 
-                            //------
+                            if ($(this).children(":first").hasClass("OK")) {
+                                $(this).addClass("OK");
+                            }
+                            if ($(this).children(":first").hasClass("NO_FILE")) {
+                                $(this).addClass("NO_FILE");
+                            }
+                            if ($(this).children(":first").hasClass("NO_UPLOAD")) {
+                                $(this).addClass("NO_UPLOAD");
+                            }
+                            if ($(this).children(":first").hasClass("OTHER_UPLOAD")) {
+                                $(this).addClass("OTHER_UPLOAD");
+                            }
 
-                            $('.rf-tr-nd').each(
-                                    function(){
-                                      $(this).removeClass('OK');
-                                        $(this).removeClass('NO_FILE');
-                                        $(this).removeClass('NO_UPLOAD');
-                                        $(this).removeClass('OTHER_UPLOAD');
-
-                                      if( $(this).children(":first").hasClass("OK")){
-                                          $(this).addClass("OK");
-                                      }
-                                        if( $(this).children(":first").hasClass("NO_FILE")){
-                                            $(this).addClass("NO_FILE");
-                                        }
-                                        if( $(this).children(":first").hasClass("NO_UPLOAD")){
-                                            $(this).addClass("NO_UPLOAD");
-                                        }
-                                        if( $(this).children(":first").hasClass("OTHER_UPLOAD")){
-                                            $(this).addClass("OTHER_UPLOAD");
-                                        }
-
-
-                                    }
-                            );
 
                         }
                 );
 
+            }
 
-            </h:outputScript>
+            $(document).ready(function () {
 
-        </a:outputPanel>
+                        treeStatusRefresh();
+                    }
+            );
+
+
+        </h:outputScript>
+
 
         <h:outputStylesheet>
             .rf-trn-select .file-status {
@@ -99,28 +108,28 @@
                 color: #4183c4;
             }
 
-            .OK .file-status{
+            .rf-trn.OK .file-status {
                 color: #5cb85c;
             }
 
-            .NO_FILE .file-status{
+            .rf-trn.NO_FILE .file-status {
                 color: #f0ad4e;;
             }
 
-            .NO_UPLOAD .file-status{
+            .rf-trn.NO_UPLOAD .file-status {
                 color: #d9534f;
             }
 
-            .OTHER_UPLOAD .file-status{
+            .rf-trn.OTHER_UPLOAD .file-status {
                 color: rgb(170, 170, 170);
             }
 
-            .NO_FILE .NO_UPLOAD .file-status{
-                color: rgb(170, 170, 170);
+            .rf-tr-nd.NO_FILE .NO_UPLOAD .file-status {
+                color: rgb(170, 170, 170) !important;
             }
 
-            .OK .NO_UPLOAD .file-status{
-                color: rgb(170, 170, 170);
+            .rf-tr-nd.OK .NO_UPLOAD .file-status {
+                color: rgb(170, 170, 170) !important;
             }
 
 
@@ -132,22 +141,24 @@
                 <h:outputStylesheet name="treeview.css"/>
 
                 <div class="column codesearch-aside" style="width: 30%">
-                    <h:form>
+                    <h:form >
                         <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="ajax"
-                                render="resultDatas"
+                                render="resultDatas" onselectionchange="treeNodeSelectChange();"
                                 value="#{ownerBusinessFile.tree}" var="_node"
                                 selectionChangeListener="#{ownerBusinessFile.selectionChanged}">
-                            <r:treeNode type="ALL" expanded="#{_node.expanded}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}"
+                            <r:treeNode type="ALL" expanded="#{_node.expanded}"
+                                        styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (ownerBusinessFile.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                         iconClass="octicon octicon-diff-ignored">
                                 <h:outputText value="#{_node.businessNeedFile.name}"
-                                              styleClass="file-status"/>
+                                              styleClass="file-status "/>
 
                                 <span class="counter right">#{_node.fileCount}</span>
 
                             </r:treeNode>
 
 
-                            <r:treeNode type="ANYONE" expanded="#{_node.expanded}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}"
+                            <r:treeNode type="ANYONE" expanded="#{_node.expanded}"
+                                        styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (ownerBusinessFile.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                         iconClass="octicon octicon-diff-removed">
                                 <h:outputText value="#{_node.businessNeedFile.name}"
                                               styleClass="file-status"/>
@@ -156,18 +167,23 @@
                             </r:treeNode>
 
 
-                            <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)}" iconClass="octicon octicon-file-text">
+                            <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (ownerBusinessFile.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
+                                        iconClass="octicon octicon-file-text">
                                 <h:outputText value="#{_node.businessNeedFile.name}"
                                               styleClass="file-status"/>
                                 <span class="counter right">#{_node.fileCount}</span>
                             </r:treeNode>
 
 
-                            <r:treeNode type="ROOT" expanded="#{true}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}" iconClass="octicon octicon-diff-ignored">
+                            <r:treeNode type="ROOT" expanded="#{true}"
+                                        styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (empty ownerBusinessFile.selectNode.businessNeedFile) and ownerBusinessFile.selectNode.important) ? 'rf-trn-select' : '' }"
+                                        iconClass="octicon octicon-diff-ignored">
                                 attriFile
                             </r:treeNode>
 
-                            <r:treeNode type="I_ROOT" expanded="#{true}" styleClass="#{_node.getStatus(businessDefineHome.taskName)}" iconClass="octicon octicon-diff-ignored">
+                            <r:treeNode type="I_ROOT" expanded="#{true}"
+                                        styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (empty ownerBusinessFile.selectNode.businessNeedFile) and not ownerBusinessFile.selectNode.important) ? 'rf-trn-select' : '' }"
+                                        iconClass="octicon octicon-diff-ignored">
                                 <h:outputText value="#{messages.NeedFile}"
                                               styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
                                 <span class="counter right">#{_node.fileCount}</span>
@@ -230,7 +246,8 @@
                                     <h:selectBooleanCheckbox style="margin: 0 4px 0 8px"
                                                              value="#{ownerBusinessFile.noFile}"
                                                              rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}">
-                                        <a:ajax execute="@this" event="click" render="fileTree,passBtn">
+                                        <a:ajax execute="@this" event="click" render="fileTree,passBtn"
+                                                oncomplete="treeStatusRefresh();">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:ajax>
                                     </h:selectBooleanCheckbox>

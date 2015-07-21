@@ -12,7 +12,6 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Expressions;
 import org.richfaces.component.UITree;
 import org.richfaces.event.TreeSelectionChangeEvent;
-import org.richfaces.model.TreeNode;
 
 import java.util.*;
 
@@ -20,7 +19,7 @@ import java.util.*;
  * Created by cooper on 7/17/15.
  */
 @Name("ownerBusinessFile")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.CONVERSATION)
 public class OwnerBusinessFile {
 
     @In
@@ -90,6 +89,10 @@ public class OwnerBusinessFile {
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
         // considering only single selection
         List<Object> selection = new ArrayList<Object>(selectionChangeEvent.getNewSelection());
+        if (selection.size() == 0){
+            selectNode = null;
+            return;
+        }
         Object currentSelectionKey = selection.get(0);
         UITree tree = (UITree) selectionChangeEvent.getSource();
 
@@ -185,6 +188,10 @@ public class OwnerBusinessFile {
         public BusinessFileTreeNode(Collection<BusinessNeedFile> needFiles, boolean important) {
             super(needFiles);
             this.important = important;
+        }
+
+        public boolean isImportant() {
+            return important;
         }
 
         private BusinessFile businessFile;
