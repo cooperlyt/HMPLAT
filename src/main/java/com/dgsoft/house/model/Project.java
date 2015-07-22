@@ -245,12 +245,18 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     @Override
     @Transient
     public String getDeveloperName() {
+        if (getDeveloper() ==null){
+            return null;
+        }
         return getDeveloper().getName();
     }
 
     @Override
     @Transient
     public String getDeveloperCode() {
+        if  (getDeveloper() ==null){
+            return null;
+        }
         return getDeveloper().getId();
     }
 
