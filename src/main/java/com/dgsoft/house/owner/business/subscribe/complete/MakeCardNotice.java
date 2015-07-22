@@ -39,8 +39,12 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
 
 
     @Override
-    public TaskSubscribeComponent.ValidResult valid() {
-        return TaskSubscribeComponent.ValidResult.SUCCESS;
+    public void valid() {
+    }
+
+    @Override
+    public boolean isPass() {
+        return true;
     }
 
     @Override

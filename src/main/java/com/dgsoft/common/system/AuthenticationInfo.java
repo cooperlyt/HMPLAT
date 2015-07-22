@@ -135,4 +135,15 @@ public class AuthenticationInfo implements java.io.Serializable {
         currRole = null;
     }
 
+    public boolean isHasCreateRole(String businessDefineId){
+        for(FilterBusinessCategory category: authenticationBussinessCategorys){
+            for(BusinessDefine define: category.getDefineList()){
+                if (define.getId().equals(businessDefineId)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

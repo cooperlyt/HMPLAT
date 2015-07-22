@@ -79,17 +79,33 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     }
 
     @Override
-    public ValidResult validSubscribe() {
+    public void validSubscribe() {
+        if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType() == null){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolNotInput");
+        }
         if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
-            return ValidResult.ERROR;
         }
-        return ValidResult.SUCCESS;
+    }
+
+    @Override
+    public boolean isPass() {
+        if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType() == null){
+            return false;
+        }
+        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
 
     @Override
     public boolean saveSubscribe() {
+        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
+            return false;
+        }
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().clear();
             poolOwners.clear();

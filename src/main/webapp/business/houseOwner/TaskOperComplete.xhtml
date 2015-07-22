@@ -16,7 +16,9 @@
     <div class="new-repo-container">
     <div class="new-user-avatar-cta">
         <p>
-            <s:link styleClass="minibutton primary" action="#{ownerTaskHandle.complete}">
+            <s:link styleClass="minibutton primary #{( businessDefineHome.completePass and businessDefineHome.subscribesPass and ownerTaskHandle.needFilePass) ? '' : 'disabled'}"
+                    disabled="#{not businessDefineHome.completePass or not businessDefineHome.subscribesPass or not ownerTaskHandle.needFilePass}"
+                    action="#{ownerTaskHandle.complete}">
                 <span class="octicon octicon-split"/>
                 #{messages.completeTask}
             </s:link>

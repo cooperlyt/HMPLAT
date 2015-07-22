@@ -28,8 +28,8 @@ public class HouseLockedValid extends BusinessHouseValid{
         List<String> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.type from LockedHouse lockedHouse where lockedHouse.houseCode =:houseCode", String.class)
                 .setParameter("houseCode", businessHouse.getHouseCode()).getResultList();
         if (lockedHouseCode.size() > 0){
-            return new ValidResult("business_house_locked", TaskSubscribeComponent.ValidResult.ERROR, DictionaryWord.instance().getWordValue(lockedHouseCode.get(0)));
+            return new ValidResult("business_house_locked", ValidResultLevel.ERROR, DictionaryWord.instance().getWordValue(lockedHouseCode.get(0)));
         }
-        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+        return new ValidResult(ValidResultLevel.SUCCESS);
     }
 }

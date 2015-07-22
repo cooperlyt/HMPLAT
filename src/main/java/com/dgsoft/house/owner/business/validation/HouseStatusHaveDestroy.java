@@ -21,8 +21,8 @@ public class HouseStatusHaveDestroy extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DESTROY)){
-            return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+            return new ValidResult(ValidResultLevel.SUCCESS);
         }
-        return new ValidResult("business_house_status_have_Destroy", TaskSubscribeComponent.ValidResult.ERROR);
+        return new ValidResult("business_house_status_have_Destroy", ValidResultLevel.ERROR);
     }
 }

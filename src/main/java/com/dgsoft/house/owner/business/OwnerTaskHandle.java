@@ -84,28 +84,34 @@ public class OwnerTaskHandle {
     public String saveTask() {
         //TODO needFile
 
-        TaskSubscribeComponent.ValidResult result = businessDefineHome.validSubscribes();
-
-        if (result.getPri() > TaskSubscribeComponent.ValidResult.WARN.getPri()){
-            return result.name();
-        }
 
         if (businessDefineHome.saveSubscribes() && "updated".equals(ownerBusinessHome.update())) {
-             return result.name();
+             return "SUCCESS";
         }else{
-            return TaskSubscribeComponent.ValidResult.FATAL.name();
+            return "ERROR";
         }
+    }
 
+    @In(required = false)
+    private OwnerBusinessFile ownerBusinessFile;
+
+    public boolean isNeedFilePass(){
+        if (businessDefineHome.isHaveNeedFile()){
+            return (ownerBusinessFile != null) && ownerBusinessFile.isPass();
+        }
+        return true;
     }
 
     protected String completeTask() {
         //TODO no subscribe
+        if (businessDefineHome.isCompletePass() && businessDefineHome.isSubscribesPass()){
+            businessDefineHome.completeTask();
+            if ("updated".equals(ownerBusinessHome.update())) {
+                return "taskCompleted";
+            }
+        }
 
-        businessDefineHome.completeTask();
-        if ("updated".equals(ownerBusinessHome.update())) {
-            return "taskCompleted";
-        }else
-        return null;
+        throw new IllegalArgumentException("completeFail");
     }
 
 

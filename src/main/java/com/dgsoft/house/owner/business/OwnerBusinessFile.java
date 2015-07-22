@@ -12,7 +12,6 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Expressions;
 import org.richfaces.component.UITree;
 import org.richfaces.event.TreeSelectionChangeEvent;
-import org.richfaces.model.TreeNode;
 
 import java.util.*;
 
@@ -20,7 +19,7 @@ import java.util.*;
  * Created by cooper on 7/17/15.
  */
 @Name("ownerBusinessFile")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.CONVERSATION)
 public class OwnerBusinessFile {
 
     @In
@@ -62,10 +61,38 @@ public class OwnerBusinessFile {
         return result;
     }
 
+    public void setNoFile(boolean value){
+        if (selectNode != null){
+            if (selectNode.getBusinessFile() == null){
+                if (value) {
+                    BusinessFile newBizFile = new BusinessFile(ownerBusinessHome.getInstance(), selectNode.getBusinessNeedFile().getName(), selectNode.getBusinessNeedFile().getId(), true, true);
+                    selectNode.setBusinessFile(newBizFile);
+                    ownerBusinessHome.getInstance().getUploadFileses().add(newBizFile);
+                }
+            }else{
+                selectNode.getBusinessFile().setNoFile(value);
+            }
+        }
+    }
+
+    public boolean isNoFile(){
+        if (selectNode == null){
+            return false;
+        }
+        if (selectNode.getBusinessFile() == null){
+            return false;
+        }
+        return selectNode.getBusinessFile().isNoFile();
+    }
+
 
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
         // considering only single selection
         List<Object> selection = new ArrayList<Object>(selectionChangeEvent.getNewSelection());
+        if (selection.size() == 0){
+            selectNode = null;
+            return;
+        }
         Object currentSelectionKey = selection.get(0);
         UITree tree = (UITree) selectionChangeEvent.getSource();
 
@@ -83,6 +110,14 @@ public class OwnerBusinessFile {
         return tree;
     }
 
+    public FileStatus getImportantStatus(){
+        return getTree().get(0).getStatus(businessDefineHome.getTaskName());
+    }
+
+    public boolean isPass(){
+       return ! FileStatus.NO_UPLOAD.equals(getTree().get(0).getStatus(businessDefineHome.getTaskName()));
+    }
+
     private void initBusinessNeedFiles() {
 
         tree = new ArrayList<BusinessFileTreeNode>(2);
@@ -95,6 +130,7 @@ public class OwnerBusinessFile {
 
        // tree.add(new BusinessFileTreeNode());
     }
+
 
 
     private void fillTree(BusinessFileTreeNode node) {
@@ -158,6 +194,10 @@ public class OwnerBusinessFile {
             this.important = important;
         }
 
+        public boolean isImportant() {
+            return important;
+        }
+
         private BusinessFile businessFile;
 
         public BusinessFile getBusinessFile() {
@@ -218,6 +258,7 @@ public class OwnerBusinessFile {
 
 
                 if (getBusinessNeedFile().getTaskName().equals(taskName)){
+
                     if (getBusinessFile() == null) {
                         return FileStatus.NO_UPLOAD;
                     }else if (getBusinessFile().isNoFile()){

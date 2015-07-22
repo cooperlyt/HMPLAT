@@ -62,13 +62,13 @@
             <nav class="menu">
                 <a:repeat value="#{authInfo.authenticationBussinessCategorys}" var="_category">
                     <a:commandLink styleClass="menu-item #{(_category.category.id eq authInfo.currBusinessCategoryId) ? 'selected' : ''}"
-                                   immediate="true" execute="@this" render="bizDefList">
+                                   immediate="true" execute="@this" render="bizDefList,dataNav">
                         #{_category.category.name}
                         <h:outputText styleClass="counter" value="#{_category.defineList.size}">
                             <f:convertNumber type="number" groupingUsed="true"/>
                         </h:outputText>
                         <a:attachQueue requestDelay="0"/>
-                        <a:param value="#{_category.category.id}" assignTo="#{authInfo.currBusinessCategoryId}"/>
+                        <f:param name="currBusinessCategoryId" value="#{_category.category.id}"/>
                     </a:commandLink>
 
                 </a:repeat>
@@ -121,114 +121,5 @@
     </a:outputPanel>
 
 
-    <ui:remove>
-
-        <s:decorate template="/layout/edit-modalpanel.xhtml">
-            <ui:define name="panelTitle">
-                <h:outputText id="defaultBusinessCreatePanelTitle"
-                              value="#{messages.createBusiness}:#{businessDefineHome.instance.name}"/>
-            </ui:define>
-            <ui:param name="panelId" value="defaultBusinessDataPanel"/>
-            <s:decorate template="/layout/edit.xhtml">
-                <ui:define name="label">#{messages.businessDescription}</ui:define>
-                <h:inputText id="value"
-                             name="#{messages.businessDescription}"
-                             size="27"
-                             maxlength="100"
-                             value="#{startData.description}">
-                    <r:validator event="blur"/>
-                </h:inputText>
-                <r:message for="value" styleClass="message-icon" ajaxRendered="true"
-                           showDetail="true" showSummary="true" tooltip="true"/>
-            </s:decorate>
-            <ui:define name="actionButtons">
-
-                <h:commandButton id="createBusinessButton" value="#{messages.createBusiness}"
-                                 action="#{businessCreate.create}"/>
-
-
-                <a:commandButton id="cancelButton" value="#{messages.cancel}" immediate="true" execute="@this"
-
-                                 oncomplete="#{r:component('defaultBusinessDataPanel')}.hide()">
-                    <s:conversationPropagation type="end"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-            </ui:define>
-        </s:decorate>
-
-
-        <r:dataTable noDataLabel="#{messages.businessDefine_empty}" style="width:100%"
-                     value="#{authInfo.authenticationBussinessCategorys}" var="_category">
-            <f:facet name="header">
-                <r:columnGroup>
-                    <r:column colspan="4">
-                        <h:outputText value="#{messages.businessCategory}"/>
-                    </r:column>
-                    <r:column breakRowBefore="true">
-                        <h:outputText value="#{messages.businessDefine_field_id}"/>
-                    </r:column>
-                    <r:column>
-                        <h:outputText value="#{messages.businessDefine_field_name}"/>
-
-                    </r:column>
-                    <r:column>
-                        <h:outputText value="#{messages.version}"/>
-                    </r:column>
-                    <r:column>
-                        <h:outputText value="#{messages.action}"/>
-                    </r:column>
-                </r:columnGroup>
-            </f:facet>
-            <r:column colspan="4">
-                <r:collapsibleSubTableToggler for="subTable"/>
-                <h:outputText value="#{_category.name}"/>
-            </r:column>
-            <r:collapsibleSubTable value="#{_category.businessDefineList}" var="_bussinessDef" id="subTable"
-                                   expandMode="client" expanded="#{false}">
-                <r:column>
-                    <h:outputText value="#{_bussinessDef.id}"/>
-                </r:column>
-                <r:column>
-                    <a:outputPanel>
-
-                        <h:outputText value="#{_bussinessDef.name}"/>
-                        <r:tooltip followMouse="false" showDelay="1500" styleClass="tooltip-custom-body"
-                                   layout="block" rendered="#{not empty _bussinessDef.memo}">
-                            <span style="white-space: nowrap">#{_bussinessDef.memo}</span>
-                        </r:tooltip>
-
-                    </a:outputPanel>
-                </r:column>
-                <r:column>
-                    <h:outputText value=" "/>
-                </r:column>
-                <r:column>
-                    <s:link propagation="#{empty _bussinessDef.startPropagation ? 'begin' : _bussinessDef.startPropagation}"
-                            view="#{_bussinessDef.startPage}"
-                            value="#{messages.createBusiness}" rendered="#{not empty _bussinessDef.startPage}">
-                        <f:param name="bussinessDefineId" value="#{_bussinessDef.id}"/>
-                    </s:link>
-
-                    <a:commandLink id="createSimpleBussinessButton" value="#{messages.createBusiness}" execute="@this"
-                                   render="defaultBusinessDataPanel_buttons,defaultBusinessDataPanel_inputs,defaultBusinessCreatePanelTitle"
-                                   rendered="#{empty _bussinessDef.startPage}" action="#{startData.generateKey}"
-                                   oncomplete="#{r:component('defaultBusinessDataPanel')}.show()">
-                        <s:conversationPropagation type="begin"/>
-                        <a:param id="bussinessDefineId" name="bussinessDefineId" value="#{_bussinessDef.id}"
-                                 assignTo="#{businessDefineHome.id}"/>
-                        <a:attachQueue requestDelay="0"/>
-                    </a:commandLink>
-
-                </r:column>
-
-
-                <f:facet name="footer">
-                    <h:outputText value="#{_category.name}: #{_category.businessDefines.size}"/>
-                </f:facet>
-            </r:collapsibleSubTable>
-
-
-        </r:dataTable>
-    </ui:remove>
 
 </ui:composition>

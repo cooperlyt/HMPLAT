@@ -18,9 +18,13 @@ public class RegisterBookChangeHoseState implements TaskCompleteSubscribeCompone
     private OwnerBusinessHome ownerBusinessHome;
 
     @Override
-    public TaskSubscribeComponent.ValidResult valid() {
+    public void valid() {
 
-        return TaskSubscribeComponent.ValidResult.SUCCESS;
+    }
+
+    @Override
+    public boolean isPass() {
+        return true;
     }
 
     @Override

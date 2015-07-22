@@ -15,6 +15,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ import java.util.List;
 @Name("houseBusinessStart")
 @Scope(ScopeType.CONVERSATION)
 public class HouseBusinessStart {
+
+    @In
+    private AuthenticationInfo authInfo;
 
     @In
     private BusinessDefineHome businessDefineHome;
@@ -56,10 +60,10 @@ public class HouseBusinessStart {
                 Logging.getLog(getClass()).error(e,"config error:" + valid.getClass().getSimpleName());
                 throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
             }
-            if (result.getResult().equals(TaskSubscribeComponent.ValidResult.FATAL)){
+            if (result.getResult().equals(BusinessDataValid.ValidResultLevel.FATAL)){
                 throw new IllegalArgumentException(result.getMsgKey());
             }
-            if (!result.getResult().equals(TaskSubscribeComponent.ValidResult.SUCCESS)){
+            if (!result.getResult().equals(BusinessDataValid.ValidResultLevel.SUCCESS)){
                 facesMessages.addFromResourceBundle(result.getResult().getSeverity(),result.getMsgKey(),result.getParams());
             }
         }
@@ -141,7 +145,7 @@ public class HouseBusinessStart {
 
     private String getInfoCompletePath(){
 
-        if (RunParam.instance().getBooleanParamValue("CreateUploadFile") || businessDefineHome.haveNeedFile(Subscribe.CREATE_TASK_NAME)){
+        if (RunParam.instance().getBooleanParamValue("CreateUploadFile") || businessDefineHome.isHaveNeedFile()){
             return  BUSINESS_FILE_PAGE;
         }else {
             return BUSINESS_CONFIRM_PAGE;
@@ -149,12 +153,6 @@ public class HouseBusinessStart {
     }
 
     public String infoComplete(){
-        TaskSubscribeComponent.ValidResult result = businessDefineHome.validSubscribes();
-
-        if (result.getPri() > TaskSubscribeComponent.ValidResult.WARN.getPri()){
-            return null;
-        }
-
 
         if (businessDefineHome.saveSubscribes()){
             return getInfoCompletePath();
@@ -165,15 +163,21 @@ public class HouseBusinessStart {
     }
 
 
-
     public String mulitHouseSelect() {
 
         return dataSelected();
     }
 
-    @In
-    private AuthenticationInfo authInfo;
 
+    @In(required = false)
+    private OwnerBusinessFile ownerBusinessFile;
+
+    public boolean isNeedFilePass(){
+        if (businessDefineHome.isHaveNeedFile()){
+            return (ownerBusinessFile != null) && ownerBusinessFile.isPass();
+        }
+        return true;
+    }
 
 
 

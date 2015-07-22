@@ -20,10 +20,10 @@ public class HouseStatusNotHaveDifficulty extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIFFICULTY)){
-            return new ValidResult("business_house_status_no_have_Difficulty", TaskSubscribeComponent.ValidResult.ERROR);
+            return new ValidResult("business_house_status_no_have_Difficulty", ValidResultLevel.ERROR);
         }
 
-        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+        return new ValidResult(ValidResultLevel.SUCCESS);
 
     }
 }

@@ -8,6 +8,14 @@ input[type=button], input[type=reset], input[type=submit]{
     margin-left: 4px;
 }
 
+a{
+    cursor: pointer;
+}
+
+a:focus, a:hover{
+    color: #4183c4;
+}
+
 .modal-backdrop.fade.in{
     display: block;
 }
@@ -856,6 +864,16 @@ input[type=button], input[type=reset], input[type=submit]{
 .btn-danger.btn-reversal:not(:hover):not(:focus){
     color: #d9534f;
 }
+
+
+.info-header>.panel-heading {
+    color: #333;
+    background-color: #e6f1f6;
+    border-color: #ddd;
+    border-bottom: 0;
+    background-image: none;
+}
+
 
 
 

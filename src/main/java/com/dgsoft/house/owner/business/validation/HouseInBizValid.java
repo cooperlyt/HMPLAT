@@ -33,9 +33,9 @@ public class HouseInBizValid extends BusinessHouseValid {
             if(inBizNames.size() > 1){
                 Logging.getLog(getClass()).warn("one house have mulit business");
             }
-            return new ValidResult("business_house_in_biz", TaskSubscribeComponent.ValidResult.ERROR, inBizNames.get(0));
+            return new ValidResult("business_house_in_biz", ValidResultLevel.ERROR, inBizNames.get(0));
         }
 
-        return new ValidResult(TaskSubscribeComponent.ValidResult.SUCCESS);
+        return new ValidResult(ValidResultLevel.SUCCESS);
     }
 }

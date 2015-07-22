@@ -24,14 +24,17 @@ public class OtherPowerCardSingleComplete implements TaskCompleteSubscribeCompon
 
 
     @Override
-    public TaskSubscribeComponent.ValidResult valid() {
+    public void valid() {
 
-        return TaskSubscribeComponent.ValidResult.SUCCESS;
+    }
+
+    @Override
+    public boolean isPass() {
+        return false;
     }
 
     @Override
     public void complete() {
-
 
 
     }
