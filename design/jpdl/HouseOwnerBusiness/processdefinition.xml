@@ -4,8 +4,8 @@
 
 
     <start-state name="业务受理">
-        <transition to="受理"></transition>
-    </start-state>
+		<transition to="收费判断"></transition>
+	</start-state>
 
 
     <task-node name="受理">
