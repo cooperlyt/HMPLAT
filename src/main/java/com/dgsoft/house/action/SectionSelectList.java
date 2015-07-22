@@ -2,7 +2,9 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.house.HouseEntityQuery;
 import com.dgsoft.house.model.Section;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 
 import javax.persistence.TypedQuery;
 import java.util.Arrays;
@@ -11,6 +13,7 @@ import java.util.Arrays;
  * Created by cooper on 6/11/15.
  */
 @Name("sectionSelectList")
+@Scope(ScopeType.CONVERSATION)
 public class SectionSelectList extends HouseEntityQuery<Section> {
 
     private static final String EJBQL = "select section from Section section";

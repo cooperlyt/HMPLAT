@@ -111,10 +111,16 @@ public class OwnerBusinessFile {
     }
 
     public FileStatus getImportantStatus(){
+        if(getTree().size() < 2){
+            return FileStatus.OK;
+        }
         return getTree().get(0).getStatus(businessDefineHome.getTaskName());
     }
 
     public boolean isPass(){
+        if(getTree().size() < 2){
+            return true;
+        }
        return ! FileStatus.NO_UPLOAD.equals(getTree().get(0).getStatus(businessDefineHome.getTaskName()));
     }
 
@@ -122,11 +128,16 @@ public class OwnerBusinessFile {
 
         tree = new ArrayList<BusinessFileTreeNode>(2);
 
-        BusinessFileTreeNode importantNode = new BusinessFileTreeNode(businessDefineHome.getNeedFileRootList(), true);
+        List<BusinessNeedFile> rootNeedFile = businessDefineHome.getNeedFileRootList();
+        if (!rootNeedFile.isEmpty()){
+            BusinessFileTreeNode importantNode = new BusinessFileTreeNode(rootNeedFile, true);
 
-        tree.add(importantNode);
+            tree.add(importantNode);
 
-        fillTree(importantNode);
+            fillTree(importantNode);
+        }
+
+
 
        // tree.add(new BusinessFileTreeNode());
     }
