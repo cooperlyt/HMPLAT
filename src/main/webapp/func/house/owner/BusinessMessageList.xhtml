@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+    <a:repeat var="_msg" value="#{processMessageList}">
+
+        <a:outputPanel layout="block" class="alert  alert-success"
+                       p:role="alert" rendered="#{_msg.level eq 'SUCCESS'}">
+            <span class="octicon octicon-info"></span> #{_msg.messages}
+        </a:outputPanel>
+
+        <a:outputPanel layout="block" class="alert  alert-info"
+                       p:role="alert" rendered="#{_msg.level eq 'INFO'}">
+            <span class="octicon octicon-info"></span> #{_msg.messages}
+        </a:outputPanel>
+
+        <a:outputPanel layout="block" class="alert  alert-warning"
+                       p:role="alert" rendered="#{_msg.level eq 'WARN'}">
+            <span class="octicon octicon-alert"></span> #{_msg.messages}
+        </a:outputPanel>
+
+        <a:outputPanel layout="block" class="alert alert-danger" p:role="alert"
+                       rendered="#{(_msg.level eq 'ERROR') || (_msg.level eq 'FATAL') }">
+            <span class="octicon octicon-stop"></span> #{_msg.messages}
+        </a:outputPanel>
+
+    </a:repeat>
+</ui:composition>

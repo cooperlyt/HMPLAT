@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <ul class="boxed-group-inner list-group notifications status-list-group">
+
+        <a:repeat value="#{taskOperList}" var="_task">
+            <li class="list-group-item issue-notification task-type #{_task.operType}">
+                                <span class="list-group-item-name css-truncate" style="max-width: 700px">
+                                    <span class="type-icon octicon #{_task.operType} task-oper"
+                                          aria-label="#{messages[_task.operType]}">
+
+                                    </span>
+
+                                     <h:outputText value="#{_task.taskName}"
+                                                   styleClass="css-truncate-target list-item-title"/>
+
+                                    <h:outputText value="#{_task.comments}"
+                                                  styleClass="css-truncate-target list-item-description"
+                                                  style="max-width: 600px"/>
+
+
+
+                                </span>
+
+                <ul class="notification-actions">
+                    <li class="time"><h:outputText value="#{_task.operTime}">
+                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText></li>
+                    <li><h:outputText value="#{_task.empName}"
+                                      styleClass="tooltipped tooltipped-w"
+                                      p:aria-label="#{_task.empCode}"/></li>
+                </ul>
+            </li>
+        </a:repeat>
+    </ul>
+
+</ui:composition>

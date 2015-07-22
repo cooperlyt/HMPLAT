@@ -13,17 +13,39 @@
 
     <ui:param name="selectTabIndex" value="1"/>
 
+    <div>
+
+        <ui:include src="/func/house/owner/BusinessMessageList.xhtml">
+            <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
+        </ui:include>
+
+    </div>
+
     <div class="new-user-avatar-cta">
-        <p>
+
             <s:link styleClass="minibutton primary" >
                 <span class="octicon octicon-git-compare"/>
                 #{messages.BackTask}
             </s:link>
-        </p>
 
-        <p>
-            <strong>#{taskInstance.processInstance.key}</strong>
 
+       <h3>
+         <strong>#{taskInstance.processInstance.key}</strong>
+
+       </h3>
+        <p class="repo-list-description">#{taskDescription.description}</p>
+        <p class="repo-list-meta">
+
+
+            #{messages.businessCreatedTimeBy}:
+            <h:outputText value="#{taskDescription.createTime}">
+                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+            </h:outputText>
+            #{' '}
+            #{messages.taskCreatedTimeBy}:
+            <h:outputText value="#{taskInstance.create}">
+                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+            </h:outputText>
         </p>
     </div>
 
@@ -57,6 +79,10 @@
                     <span class="octicon octicon-milestone"/>
                     #{messages.bussinessFlowRecord}
                 </f:facet>
+
+                <ui:include src="/func/house/owner/TaskOperListGroup.xhtml">
+                    <ui:param name="taskOperList" value="#{ownerBusinessHome.taskOperList}"/>
+                </ui:include>
             </r:tab>
         </r:tabPanel>
 

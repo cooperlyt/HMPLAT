@@ -126,3 +126,49 @@
 .label-biz-status.COMPLETE_CANCEL{
     background-color: #5cb85c;
 }
+
+/* full task status*/
+
+
+
+.status-list-group  .notifications .list-group-item{
+    padding-left: 45px;
+    padding-right: 20px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+.status-list-group .notification-actions{
+    right: 20px;
+    top: 10px;
+}
+
+.status-list-group .notification-actions .time{
+    font-size: 12px;
+    color: #767676;
+}
+
+.status-list-group .list-item-title{
+    font-weight: bold; font-size: 14px
+}
+
+.status-list-group .list-item-description{
+    padding-left: 10px; color: #767676;line-height: 13px; margin-top:4px; font-size: 13px;
+}
+
+.status-list-group .status-icon{
+    color: #767676;;
+}
+
+
+.task-status-group{
+    display: inline-block;
+    min-width: 80px;
+}
+
+.task-status-group .task-status{
+    margin-left: 10px;
+}
+
+
+/*-------*/

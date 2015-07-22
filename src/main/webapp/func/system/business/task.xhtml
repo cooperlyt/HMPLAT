@@ -249,54 +249,7 @@
                                                             #{_task.myTask ? messages.operTask : messages.acceptAndOperTask}
                                                         </s:link>
 
-                                                        <ui:remove>
 
-                                                            <div class="btn-group btn-group-sm task-action-down-menu">
-                                                                <ui:decorate template="/layout/dropdown-actions.xhtml">
-
-                                                                    <ui:define name="caption">
-
-                                                                    </ui:define>
-                                                                    <ui:param name="menuTitle" value="#{messages.TaskOper}"/>
-
-
-                                                                    <a:commandLink action="#{pooledTask.unassign}" immediate="true"
-                                                                                   execute="@this" rendered="#{_task.myTask and (not _task.myOnly)}"
-                                                                                   styleClass="select-menu-item">
-
-
-                                                                        <f:param name="taskId" value="#{_task.taskInstance.id}"/>
-                                                                        <a:attachQueue requestDelay="0"/>
-                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                                        <span class="select-menu-item-text"> #{messages.unAcceptTask}</span>
-                                                                    </a:commandLink>
-
-                                                                    <a:commandLink rendered="#{not _task.myTask}" styleClass="select-menu-item">
-                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                                        <span class="select-menu-item-text">#{messages.acceptAndOperTask}</span>
-
-                                                                    </a:commandLink>
-                                                                    <s:link rendered="#{_task.myTask}"
-                                                                            styleClass="select-menu-item"
-                                                                            action="#{taskPrepare.beginTask}" taskInstance="#{_task.taskInstance}">
-                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                                        <span class="select-menu-item-text">#{messages.operTask}</span>
-
-                                                                    </s:link>
-
-                                                                    <a:commandLink rendered="#{not _task.myTask}" immediate="true" execute="@this"
-                                                                                   action="#{pooledTask.assignToCurrentActor}"
-                                                                                   styleClass="select-menu-item">
-
-
-                                                                        <f:param name="taskId" value="#{_task.taskInstance.id}"/>
-                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                                        <span class="select-menu-item-text">#{messages.acceptTask}</span>
-                                                                    </a:commandLink>
-
-                                                                </ui:decorate>
-                                                            </div>
-                                                        </ui:remove>
 
                                                     </div>
                                                 </div>

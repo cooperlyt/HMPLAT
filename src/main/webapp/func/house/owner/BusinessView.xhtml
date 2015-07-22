@@ -400,29 +400,9 @@
 
     <div>
 
-        <a:repeat var="_msg" value="#{ownerBusinessHome.instance.processMessageList}">
-
-            <a:outputPanel layout="block" class="alert  alert-success"
-                           p:role="alert" rendered="#{_msg.level eq 'SUCCESS'}">
-                <span class="octicon octicon-info"></span> #{_msg.messages}
-            </a:outputPanel>
-
-            <a:outputPanel layout="block" class="alert  alert-info"
-                           p:role="alert" rendered="#{_msg.level eq 'INFO'}">
-                <span class="octicon octicon-info"></span> #{_msg.messages}
-            </a:outputPanel>
-
-            <a:outputPanel layout="block" class="alert  alert-warning"
-                           p:role="alert" rendered="#{_msg.level eq 'WARN'}">
-                <span class="octicon octicon-alert"></span> #{_msg.messages}
-            </a:outputPanel>
-
-            <a:outputPanel layout="block" class="alert alert-danger" p:role="alert"
-                           rendered="#{(_msg.level eq 'ERROR') || (_msg.level eq 'FATAL') }">
-                <span class="octicon octicon-stop"></span> #{_msg.messages}
-            </a:outputPanel>
-
-            </a:repeat>
+        <ui:include src="BusinessMessageList.xhtml">
+            <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
+        </ui:include>
 
     </div>
 
@@ -464,81 +444,11 @@
                         #{messages.bussinessFlowRecord}
                     </f:facet>
 
-                    <h:outputStylesheet>
 
 
-
-                        .status-list-group  .notifications .list-group-item{
-                            padding-left: 45px;
-                            padding-right: 20px;
-                            padding-top: 9px;
-                            padding-bottom: 9px;
-                        }
-
-                        .status-list-group .notification-actions{
-                            right: 20px;
-                            top: 10px;
-                        }
-
-                        .status-list-group .notification-actions .time{
-                            font-size: 12px;
-                            color: #767676;
-                        }
-
-                        .status-list-group .list-item-title{
-                            font-weight: bold; font-size: 14px
-                        }
-
-                        .status-list-group .list-item-description{
-                            padding-left: 10px; color: #767676;line-height: 13px; margin-top:4px; font-size: 13px;
-                        }
-
-                        .status-list-group .status-icon{
-                            color: #767676;;
-                        }
-
-
-                        .task-status-group{
-                            display: inline-block;
-                            min-width: 80px;
-                        }
-
-                        .task-status-group .task-status{
-                            margin-left: 10px;
-                        }
-
-
-                    </h:outputStylesheet>
-
-
-                    <ul class="boxed-group-inner list-group notifications status-list-group">
-
-                        <a:repeat value="#{ownerBusinessHome.taskOperList}" var="_task">
-                            <li class="list-group-item issue-notification task-type #{_task.operType}">
-                                <span class="list-group-item-name css-truncate" style="max-width: 700px">
-                                    <span class="type-icon octicon #{_task.operType} task-oper" aria-label="#{messages[_task.operType]}">
-
-                                    </span>
-
-                                     <h:outputText value="#{_task.taskName}" styleClass="css-truncate-target list-item-title" />
-
-                                    <h:outputText value="#{_task.comments}" styleClass="css-truncate-target list-item-description" style="max-width: 600px"/>
-
-
-
-                                </span>
-
-                                <ul class="notification-actions">
-                                    <li class="time">       <h:outputText value="#{_task.operTime}">
-                                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                                    </h:outputText></li>
-                                    <li>                    <h:outputText value="#{_task.empName}"
-                                                                          styleClass="tooltipped tooltipped-w"
-                                                                          p:aria-label="#{_task.empCode}"/></li>
-                                </ul>
-                            </li>
-                        </a:repeat>
-                    </ul>
+                    <ui:include src="TaskOperListGroup.xhtml">
+                        <ui:param name="taskOperList" value="#{ownerBusinessHome.taskOperList}"/>
+                    </ui:include>
 
 
                 </r:tab>
