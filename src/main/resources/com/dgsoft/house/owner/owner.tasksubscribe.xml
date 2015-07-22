@@ -724,4 +724,40 @@
         </description>
     </create-component>
 
+    <create-component type="DATA_FILL" component="businessHouseOwnerFill">
+        <description>
+            产权人信息提取
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_FILL" component="businessPoolFill">
+        <description>
+            共有权人信息提取
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="financialFill">
+        <description>
+            抵押权人，抵押信息提取
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_FILL" component="saleInfoFill">
+        <description>
+            单房屋购房款，付款方式填充
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="landInfoFill">
+        <description>
+            土地信息提取
+        </description>
+    </create-component>
+
+
+
+
+
 </subscribes>

@@ -23,6 +23,12 @@ public class SaleInfo implements java.io.Serializable {
 	public SaleInfo() {
 	}
 
+    public SaleInfo(SaleInfo saleInfo,OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
+        this.payType = saleInfo.getPayType();
+        this.sumPrice = saleInfo.getSumPrice();
+    }
+
 	public SaleInfo(String id, OwnerBusiness ownerBusiness, BigDecimal sumPrice) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
