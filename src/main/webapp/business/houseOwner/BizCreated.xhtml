@@ -13,11 +13,52 @@
                 template="/layout/template-base.xhtml">
     <ui:define name="body">
 
-    打印
 
-    返回建立业务
-    办理业务
 
-    重建业务
+
+        <div class="container">
+        <div class="dashboard-notice ">
+            <span class="mega-octicon octicon-info" style="color: #4183c4;"/>
+            <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong> #{(businessDefineHome.taskName eq '_CREATE') ? '' : businessDefineHome.taskName } #{(businessDefineHome.taskName eq '_CREATE') ? messages.BusinessCreated : messages.TaskCompleted }</h2>
+            <p> 打印.</p>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+
+            <p>#{messages.NextYouCan}</p>
+            <ul>
+                <a:repeat value="#{taskCompletedOper.tasks}" var="_task">
+
+
+                    <li>
+
+                        <s:link  action="#{taskPrepare.operTask}"
+                                 taskInstance="#{_task.taskInstance}">
+                            #{_task.myTask ? messages.Operator : messages.AcceptAndOper}
+                        </s:link>
+
+
+                    #{messages.HaveNextTaskMessages} <strong>#{_task.taskInstance.name} </strong>
+                    </li>
+                </a:repeat>
+
+                <li><s:link value="#{messages.returnToCreateBusiness}" view="/func/system/business/start.xhtml"></s:link> </li>
+                <li>
+
+
+                    <s:link propagation="#{empty businessDefineHome.instance.startPropagation ? 'begin' : businessDefineHome.instance.startPropagation}"
+                            view="#{businessDefineHome.instance.startPage}"
+                            value="#{messages.createBusinessAgain}">
+
+                        <f:param name="bussinessDefineId" value="#{businessDefineHome.instance.id}"/>
+                    </s:link>
+                </li>
+            </ul>
+
+
+        </div>
+        </div>
     </ui:define>
 </ui:composition>

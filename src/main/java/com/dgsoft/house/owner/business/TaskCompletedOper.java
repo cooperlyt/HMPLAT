@@ -33,6 +33,6 @@ public class TaskCompletedOper {
     }
 
     public boolean isHaveNextTask(){
-        return !tasks.isEmpty();
+        return !getTasks().isEmpty();
     }
 }
