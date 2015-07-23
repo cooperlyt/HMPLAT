@@ -5,6 +5,7 @@ package com.dgsoft.common.utils.seam;
  */
 
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.log.Logging;
 import org.jboss.seam.persistence.PersistenceProvider;
 import org.jboss.seam.transaction.Transaction;
 
@@ -178,9 +179,12 @@ public class MultiOperatorEntityQuery<E> extends MultiOperatorQuery<EntityManage
 
         joinTransaction();
 
+        Logging.getLog(getClass()).debug("renderedEjbql:" + getRenderedEjbql());
+
         javax.persistence.Query query = getEntityManager().createQuery( getRenderedEjbql() );
         RestrictionGroup.setParameters(query, getQueryParameterValues(), 0);
-        getRestrictionGroup().setParameters( query, getQueryParameterValues().size() );
+        if (getRestrictionGroup() != null)
+            getRestrictionGroup().setParameters( query, getQueryParameterValues().size() );
         if ( getFirstResult()!=null) query.setFirstResult( getFirstResult() );
         if ( getMaxResults()!=null) query.setMaxResults( getMaxResults()+1 ); //add one, so we can tell if there is another page
         if ( getHints()!=null )
@@ -202,8 +206,10 @@ public class MultiOperatorEntityQuery<E> extends MultiOperatorQuery<EntityManage
         joinTransaction();
 
         javax.persistence.Query query = getEntityManager().createQuery( getCountEjbql() );
+
         RestrictionGroup.setParameters(query, getQueryParameterValues(), 0);
-        getRestrictionGroup().setParameters( query, getQueryParameterValues().size() );
+        if (getRestrictionGroup() != null)
+            getRestrictionGroup().setParameters( query, getQueryParameterValues().size() );
         return query;
     }
 

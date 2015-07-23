@@ -164,29 +164,51 @@ public class RestrictionGroup {
         }
     }
 
-    public StringBuilder getRenderedEjbql(){
+    public String getRenderedEjbql(){
 
-        StringBuilder builder = new StringBuilder(" (");
+        StringBuilder builder = new StringBuilder();
+
+        boolean added = false;
         for (int i=0; i<getRestrictions().size(); i++)
         {
             Object parameterValue = restrictionParameters.get(i).getValue();
             if ( isRestrictionParameterSet(parameterValue) )
             {
-
-                builder.append(" ").append(getItemLogicOperator()).append(" ");
+                if (added) {
+                    builder.append(" ").append(getItemLogicOperator()).append(" ");
+                }
 
                 builder.append( parsedRestrictions.get(i) );
+                added = true;
             }
         }
+
         for (RestrictionGroup child : children){
-            builder.append(" ").append(getItemLogicOperator()).append(" ");
-            builder.append(child.getRenderedEjbql());
+
+            String childEjbql = child.getRenderedEjbql();
+
+            if ((childEjbql != null) && !childEjbql.trim().equals("")){
+
+                if (added)
+                    builder.append(" ").append(getItemLogicOperator()).append(" ");
+
+
+                builder.append(" (");
+                builder.append(child.getRenderedEjbql());
+                builder.append(") ");
+                added = true;
+
+            }
+
+        }
+
+        if(added){
+            return builder.toString();
+        }else {
+            return null;
         }
 
 
-        builder.append(") ");
-
-        return builder;
     }
 
     public void setParameters(javax.persistence.Query query,int start){

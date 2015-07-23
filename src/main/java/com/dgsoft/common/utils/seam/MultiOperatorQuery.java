@@ -247,12 +247,15 @@ public abstract class MultiOperatorQuery<T, E>
         StringBuilder builder = new StringBuilder().append(parsedEjbql);
 
         if (restrictionGroup != null) {
-            if (WHERE_PATTERN.matcher(builder).find()) {
-                builder.append(" ").append(getRestrictionLogicOperator()).append(" ");
-            } else {
-                builder.append(" where ");
+            String restrictionEjbql =  restrictionGroup.getRenderedEjbql();
+            if ((restrictionEjbql != null) && !restrictionEjbql.trim().equals("")) {
+                if (WHERE_PATTERN.matcher(builder).find()) {
+                    builder.append(" ").append(getRestrictionLogicOperator()).append(" ");
+                } else {
+                    builder.append(" where ");
+                }
+                builder.append(restrictionEjbql);
             }
-            builder.append(restrictionGroup.getRenderedEjbql());
         }
 
         if (getGroupBy()!=null) {

@@ -2,26 +2,20 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
-import com.dgsoft.common.utils.seam.TestEntityQuery;
-import com.dgsoft.house.HouseEntityQuery;
 import com.dgsoft.house.model.Section;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.framework.EntityQuery;
 import org.jboss.seam.log.Logging;
-import org.json.Test;
 
-import javax.persistence.TypedQuery;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by cooper on 6/11/15.
  */
 @Name("sectionSelectList")
 @Scope(ScopeType.CONVERSATION)
-public class SectionSelectList extends TestEntityQuery<Section> {
+public class SectionSelectList extends MultiOperatorEntityQuery<Section> {
 
     private static final String EJBQL = "select section from Section section";
 
@@ -48,6 +42,7 @@ public class SectionSelectList extends TestEntityQuery<Section> {
         RestrictionGroup districtRestriction = new RestrictionGroup("and",Arrays.asList(RESTRICTIONS1));
 
         districtRestriction.getChildren().add(new RestrictionGroup("or",Arrays.asList(RESTRICTIONS2)));
+        setRestrictionGroup(districtRestriction);
 
         setMaxResults(PAGE_COUNT);
 
