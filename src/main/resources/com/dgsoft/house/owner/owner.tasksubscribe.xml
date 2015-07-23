@@ -446,10 +446,9 @@
         </description>
     </edit-subscribe>
   <edit-subscribe name="cardInfoEdit"  page="/business/houseOwner/subscribe/CardInfoEdit.xhtml" component="">
-      <description>
-          权证编号、附记编辑，缮证人
-      </description>
-
+    <description>
+        权证编号、附记编辑，缮证人
+    </description>
   </edit-subscribe>
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
