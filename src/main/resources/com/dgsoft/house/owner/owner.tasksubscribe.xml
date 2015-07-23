@@ -451,6 +451,14 @@
     </description>
   </edit-subscribe>
 
+    <edit-subscribe name="houseRegInfoEdit"  page="/business/houseOwner/subscribe/HouseRegInfoEdit.xhtml" component="">
+        <description>
+            产权来源、产别编辑
+        </description>
+    </edit-subscribe>
+
+
+
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
     <end-subscribe name="HouseInfoModify" component="writeHouseInfo">
