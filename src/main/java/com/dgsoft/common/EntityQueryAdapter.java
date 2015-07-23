@@ -1,13 +1,16 @@
 package com.dgsoft.common;
 
 import org.jboss.seam.framework.EntityQuery;
+import org.jboss.seam.framework.Query;
 import org.jboss.seam.log.Logging;
 import org.jboss.seam.persistence.QueryParser;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.

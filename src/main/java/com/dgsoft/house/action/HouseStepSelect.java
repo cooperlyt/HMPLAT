@@ -23,9 +23,13 @@ public class HouseStepSelect {
     @In(required = false)
     private BuildHome buildHome;
 
+    @In(required = false)
+    private SectionSelectList sectionSelectList;
+
     private Section selectSection;
 
     private String selectProjectId;
+
 
     public Section getSelectSection() {
         return selectSection;
@@ -56,6 +60,9 @@ public class HouseStepSelect {
 
 
     public void resetSection() {
+        if (sectionSelectList != null){
+            sectionSelectList.reset();
+        }
         selectSection = null;
         resetPorject();
 

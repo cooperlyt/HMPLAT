@@ -696,7 +696,7 @@
                                 <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
 
 
-                                    <a:commandLink styleClass="list-group-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
+                                    <a:commandLink status="processWaiting" styleClass="list-group-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
                                         #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{_gridMap.id}" assignTo="#{ownerBuildGridMap.id}"/>
@@ -704,7 +704,7 @@
                                     </a:commandLink>
                                 </a:repeat>
 
-                                <a:commandLink styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}" >
+                                <a:commandLink status="processWaiting" styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}" >
                                     #{messages.RecordHouse}
                                     <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
                                 </a:commandLink>
@@ -733,6 +733,29 @@
                         </a:ajax>
                     </h:selectOneMenu>
                     <a:outputPanel id="sectionSelectInputs" >
+
+                        <h:outputScript>
+                            var scrollTopValue = 0;
+
+                            function moreBefor(){
+                            var div = #{r:element('SectionSelectItemList')};
+                            scrollTopValue = div.scrollTop;
+
+                            }
+
+                            function scrollToBefor(){
+                            var div = #{r:element('SectionSelectItemList')};
+
+                            div.scrollTop = scrollTopValue;
+                            }
+
+                        </h:outputScript>
+
+                        <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
+                                      oncomplete="scrollToBefor(); "
+                                      render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:jsFunction>
 
                         <div class="btn-group bootstrap-select edit-select" style="width: 100%;">
                             <button type="button" class=" btn dropdown-toggle btn-default"
@@ -792,13 +815,11 @@
                                             </a:repeat>
 
 
-                                            <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
-                                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
-                                                          render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
-                                                <a:attachQueue requestDelay="0"/>
-                                            </a:jsFunction>
 
-                                            <a:commandLink onclick="moreResult(); event.stopPropagation(); return false;"
+
+
+
+                                            <a:commandLink onclick="moreBefor(); moreResult(); event.stopPropagation(); return false;"
                                                            styleClass="select-menu-item last-visible"
                                                            rendered="#{sectionSelectList.nextExists}">
 
@@ -838,7 +859,7 @@
                                         <span class="input-group-addon">#{messages.MapIdentification_build}</span>
                                         <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.buildNumber}" autocomplete="off"/>
                                         <span class="input-group-btn">
-                                            <a:commandLink execute="@region" styleClass="btn btn-default" action="#{ownerBuildGridMap.findBuildByNumber}"
+                                            <a:commandLink execute="@region" status="processWaiting" styleClass="btn btn-default" action="#{ownerBuildGridMap.findBuildByNumber}"
                                                            render="houseOrderInput">
                                                 <span class="btn-icon octicon octicon-search"></span>
                                                 <a:attachQueue requestDelay="0"/>
@@ -853,7 +874,7 @@
                                         <span class="input-group-addon">#{messages.MapIdentification_house}</span>
                                         <h:inputText id="houseOrder" required="true" styleClass="form-control"  value="#{ownerBuildGridMap.houseOrder}" autocomplete="off"/>
                                         <span class="input-group-btn">
-                                            <a:commandLink execute="numbers-inputs,houseOrder" styleClass="btn btn-default"
+                                            <a:commandLink execute="numbers-inputs,houseOrder" styleClass="btn btn-default" status="processWaiting"
                                                            action="#{ownerBuildGridMap.findHouseByNumber}">
                                                 <span class="btn-icon octicon octicon-search"></span>
                                                 <a:attachQueue requestDelay="0"/>
@@ -898,7 +919,7 @@
 
                                     </h:selectOneMenu>
 
-                                    <a:jsFunction execute="@form" name="findBuildBySection" action="#{ownerBuildGridMap.findBuildBySection}" render="houseOrderInput">
+                                    <a:jsFunction execute="@form" name="findBuildBySection" action="#{ownerBuildGridMap.findBuildBySection}" status="processWaiting" render="houseOrderInput">
                                         <f:param name="searchBykey" value="#{false}"/>
                                     </a:jsFunction>
 
@@ -908,7 +929,7 @@
                                             <span class="input-group-addon">#{messages.MapIdentification_house}</span>
                                             <h:inputText styleClass="form-control" autocomplete="off" value="#{ownerBuildGridMap.houseOrder}"/>
                                             <span class="input-group-btn">
-                                                <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" action="#{ownerBuildGridMap.findHouseBySection}">
+                                                <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" status="processWaiting" action="#{ownerBuildGridMap.findHouseBySection}">
                                                     <span class="btn-icon octicon octicon-search"></span>
                                                     <f:param name="searchBykey" value="#{false}"/>
                                                     <a:attachQueue requestDelay="0"/>
