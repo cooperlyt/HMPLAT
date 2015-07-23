@@ -56,7 +56,7 @@
 
     <view-subscribe name="PoolOwnerView" page="/business/houseOwner/subscribe/PoolOwnerView.xhtml">
         <description>
-            共有权人查看（启动显示）
+            共有权人查看（业务中）
         </description>
     </view-subscribe>
 
@@ -187,13 +187,13 @@
 
     <view-subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml">
     <description>
-        （启动） 共有情况，产权来源，产别
+        （启动） 产权来源，产别
     </description>
    </view-subscribe>
 
     <view-subscribe name="HouseRegInfoView" page="/business/houseOwner/subscribe/HouseRegInfoView.xhtml">
         <description>
-            （业务中） 共有情况，产权来源，产别
+            （业务中） 产权来源，产别
         </description>
     </view-subscribe>
 

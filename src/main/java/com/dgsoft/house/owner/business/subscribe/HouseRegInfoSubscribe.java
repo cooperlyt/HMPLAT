@@ -21,11 +21,12 @@ public class HouseRegInfoSubscribe extends OwnerEntityHome<HouseRegInfo> {
     public void create(){
 
         super.create();
-        if(!ownerBusinessHome.getInstance().getMappingCorps().isEmpty()){
+        if(!ownerBusinessHome.getInstance().getHouseRegInfos().isEmpty()){
             setId(ownerBusinessHome.getInstance().getHouseRegInfos().iterator().next());
         }else {
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getHouseRegInfos().add(getInstance());
+            //循环房屋添加HouseRegInfos关系
         }
 
 

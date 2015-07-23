@@ -32,12 +32,6 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
     }
 
 
-
-
-
-
-
-
     @Override
     public void create(){
         super.create();
@@ -51,7 +45,7 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
 
     @Override
     public LandInfo createInstance(){
-        LandInfo result = new LandInfo();
+        LandInfo result = new LandInfo(ownerBusinessHome.getInstance());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(result);
         return result;
     }
