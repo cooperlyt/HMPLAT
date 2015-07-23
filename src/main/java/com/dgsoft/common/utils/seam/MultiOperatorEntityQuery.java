@@ -179,7 +179,7 @@ public class MultiOperatorEntityQuery<E> extends MultiOperatorQuery<EntityManage
 
         joinTransaction();
 
-        Logging.getLog(getClass()).debug("renderedEjbql:" + getRenderedEjbql());
+        //Logging.getLog(getClass()).debug("renderedEjbql:" + getRenderedEjbql());
 
         javax.persistence.Query query = getEntityManager().createQuery( getRenderedEjbql() );
         RestrictionGroup.setParameters(query, getQueryParameterValues(), 0);
