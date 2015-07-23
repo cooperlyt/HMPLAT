@@ -27,8 +27,8 @@ public class SectionSelectList extends MultiOperatorEntityQuery<Section> {
     };
 
     private static final String[] RESTRICTIONS2 ={
-            "(lower(section.pyCode) like lower(concat('%',#{sectionSelectList.searchKey},'%')) ) " ,
-            " (lower(section.name) like lower(concat('%','#{sectionSelectList.searchKey}','%')))"
+            "lower(section.pyCode) like lower(concat('%',#{sectionSelectList.searchKey},'%')) " ,
+            " (lower(section.name) like lower(concat('%',#{sectionSelectList.searchKey},'%')))"
     };
 
     public SectionSelectList() {
@@ -48,12 +48,16 @@ public class SectionSelectList extends MultiOperatorEntityQuery<Section> {
 
     }
 
+    public void reset(){
+        searchKey = null;
+        setMaxResults(PAGE_COUNT);
+    }
+
     public void moreResult(){
         if (getMaxResults() == null){
             setMaxResults(PAGE_COUNT);
         }else{
             setMaxResults(getMaxResults() + PAGE_COUNT);
-            Logging.getLog(getClass()).debug("section moreResult count:" + getMaxResults());
         }
     }
 
