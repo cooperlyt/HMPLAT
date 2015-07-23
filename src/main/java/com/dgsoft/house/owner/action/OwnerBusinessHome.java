@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.Name;
@@ -138,5 +139,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         });
         return result;
     }
+
 
 }

@@ -23,16 +23,44 @@ public class HouseInfoCompare {
             "getCommParam"
     };
 
+    public static class ChangeData{
+
+        private String method;
+
+        private Object value1;
+
+        private Object value2;
+
+        public ChangeData(String method, Object value1, Object value2) {
+            this.method = method;
+            this.value1 = value1;
+            this.value2 = value2;
+        }
+
+        public String getMethod() {
+            return method;
+        }
+
+        public String getField(){
+            return method.replaceFirst("^get" , "").replaceFirst("^is","").trim();
+        }
+
+        public Object getValue1() {
+            return value1;
+        }
+
+        public Object getValue2() {
+            return value2;
+        }
+    }
 
 
-    public List<String> compare(HouseInfo srcHouseInfo, HouseInfo descHouseInfo, Map<String,String> titles, boolean area){
-        List<String> result = new ArrayList<String>();
+    public static List<ChangeData> compare(HouseInfo srcHouseInfo, HouseInfo descHouseInfo){
+        List<ChangeData> result = new ArrayList<ChangeData>();
         for(Method m :HouseInfo.class.getDeclaredMethods()){
             try {
                if (! m.invoke(srcHouseInfo).equals(m.invoke(descHouseInfo))){
-                    titles.get("house_field_" + m.getName().replaceFirst("^get" , "").trim());
-
-                   //+ "%" +
+                  result.add(new ChangeData(m.getName(),m.invoke(srcHouseInfo),m.invoke(descHouseInfo)));
                }
             } catch (IllegalAccessException e) {
                 throw new IllegalArgumentException(e);
@@ -44,13 +72,6 @@ public class HouseInfoCompare {
 
     }
 
-    public static void main(String[] args){
-        System.out.println("--------");
-       for(Method f :HouseInfo.class.getDeclaredMethods()){
-           System.out.println(f.getName());
-       }
-        System.out.println("--------");
-    }
 
 
 }
