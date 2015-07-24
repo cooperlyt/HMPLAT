@@ -28,28 +28,17 @@
 
         <ui:define name="values">
 
-            <a:outputPanel id="contextPanel">
-                <a:outputPanel rendered="#{persion.have}">
-                    <hr/>
-                    <div style="display: block;">
-                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
+            <a:outputPanel id="contextPanel" >
+                <a:outputPanel layout="block"  rendered="#{persion.have}" style="margin-top: -20px">
 
-                            <a:outputPanel id="personCard">
+                            <ui:decorate template="/layout/system/PersonInput.xhtml">
+                                <ui:param name="label" value=""/>
+                                <ui:param name="showLabel" value="false"/>
+                                <ui:param name="personEntityHelper" value="#{persion.personInstance}"/>
 
-                                <ui:include src="/layout/system/PersonCardInput.xhtml">
-                                    <ui:param name="personEntityHelper"
-                                              value="#{persion.persionPersonEntityHomeHelper}"/>
-                                </ui:include>
-
-                            </a:outputPanel>
-
-                            <a:outputPanel id="persionOwnerEntrustPanel">
-                                <ui:include src="/layout/system/PersonNameInput.xhtml">
-                                    <ui:param name="personEntityHelper"
-                                              value="#{persion.persionPersonEntityHomeHelper}"/>
-                                </ui:include>
 
                                 <div class="form-inline">
+
                                     <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
                                         <ui:define name="label">
                                             #{messages.Tel}
@@ -67,10 +56,8 @@
                                         </h:inputText>
                                     </s:decorate>
                                 </div>
-                            </a:outputPanel>
-                        </a:outputPanel>
-                    </div>
-                    <hr/>
+
+                            </ui:decorate>
                 </a:outputPanel>
             </a:outputPanel>
         </ui:define>
