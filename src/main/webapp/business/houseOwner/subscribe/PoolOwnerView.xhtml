@@ -5,13 +5,16 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel
-            rendered="#{(not empty ownerBusinessHome.singleHoues.houseRegInfo) and not (ownerBusinessHome.singleHoues.houseRegInfo.poolType eq 'SINGLE_OWNER')}">
+            rendered="#{not (ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SINGLE_OWNER')}">
+
         <ui:include src="/layout/house/owner/PoolOwnerTable.xhtml">
-            <ui:param name="poolOwners" value="#{ownerBusinessHome.singleHoues.houseRegInfo.businessPoolList}"/>
-            <ui:param name="title" value="#{messages.BusinessPool}"/>
+            <ui:param name="poolOwners" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessPoolList}"/>
+            <ui:param name="title" value="#{messages.BusinessPool_view}"/>
         </ui:include>
     </a:outputPanel>
+
 </ui:composition>

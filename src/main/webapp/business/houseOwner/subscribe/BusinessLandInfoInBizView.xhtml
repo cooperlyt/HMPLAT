@@ -7,13 +7,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
 
                 xmlns:h="http://java.sun.com/jsf/html">
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.landInfo}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.landInfo}">
        <ui:include src="/layout/system/LandInput.xhtml">
-           <ui:param name="landInfo" value="#{ownerBusinessHome.singleHoues.landInfo}"/>
+           <ui:param name="landInfo" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.landInfo}"/>
        </ui:include>
 
     </a:outputPanel>
-    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.landInfo}">
+    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.afterBusinessHouse.landInfo}">
 
        <ui:include src="/layout/emptyViewGrid.xhtml">
            <ui:param name="title" value="#{messages.Land_Info}" />

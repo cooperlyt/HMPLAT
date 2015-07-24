@@ -7,17 +7,17 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.businessHouseOwner}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}">
         <ui:include src="/layout/house/HouseOwnerView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.House_Owner}"/>
-            <ui:param name="businessHouse" value="#{ownerBusinessHome.singleHoues.businessHouseOwner}"/>
+            <ui:param name="nameLabel" value="#{messages.House_Owner_view}"/>
+            <ui:param name="businessHouse" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}"/>
         </ui:include>
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.businessHouseOwner}">
+    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
 
-            <ui:param name="title" value="#{messages.House_Owner}" />
+            <ui:param name="title" value="#{messages.House_Owner_view}" />
             <ui:param name="noDataLabel" value="#{messages.House_Owner_not}"/>
 
         </ui:include>

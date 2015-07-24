@@ -13,18 +13,18 @@
         <ui:define name="label">
             #{messages.HOUSE_PORPERTY}
         </ui:define>
-            <a:outputPanel styleClass="input-group-btn">
+
                 <h:selectOneMenu id="housePorperInput"
                                  value="#{houseRegInfoSubscribe.instance.houseProperty}"
                                  label="#{messages.HOUSE_PORPERTY}"
-                                 styleClass="selectpicker select-menu-btn input-group-first">
+                                 styleClass="selectpicker edit-select">
                     <s:selectItems value="#{dictionary.getWordList('26')}"
                                    var="_word"
                                    itemValue="#{_word.id}"
                                    label="#{_word.value}"
                                    noSelectionLabel="#{messages.noSelectLabel}"/>
                 </h:selectOneMenu>
-            </a:outputPanel>
+
     </s:decorate>
 
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
@@ -36,7 +36,7 @@
             <h:selectOneMenu id="houseFromInput"
                              value="#{houseRegInfoSubscribe.instance.houseFrom}"
                              label="#{messages.HOUSE_FROM}"
-                             styleClass="selectpicker select-menu-btn input-group-first">
+                             styleClass="selectpicker edit-select">
                 <s:selectItems value="#{dictionary.getWordList('28')}"
                                var="_word"
                                itemValue="#{_word.id}"
