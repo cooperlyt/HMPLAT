@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseRegInfo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -26,7 +27,10 @@ public class HouseRegInfoSubscribe extends OwnerEntityHome<HouseRegInfo> {
         }else {
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getHouseRegInfos().add(getInstance());
-            //循环房屋添加HouseRegInfos关系
+            for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+                houseBusiness.getAfterBusinessHouse().setHouseRegInfo(getInstance());
+            }
+
         }
 
 

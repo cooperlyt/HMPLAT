@@ -8,29 +8,12 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-
-
-
-
-
-    <a:outputPanel
-            rendered="#{(not empty ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo)}">
-        <dh:entryGridBlock columns="4" >
-
-            <h:outputText value="#{messages.RegisterProperty_HouseProperty}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseProperty)}"/>
-
-            <h:outputText value="#{messages.RegisterProperty_HouseFrom}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseFrom)}"/>
-
-
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.getReasonByType('RECEIVE')}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.Reason_Logout}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.getReasonByType('RECEIVE').reason}"/>
+            </dh:entryGridColumn>
         </dh:entryGridBlock>
-
-
-
-
     </a:outputPanel>
-
-
-
 </ui:composition>

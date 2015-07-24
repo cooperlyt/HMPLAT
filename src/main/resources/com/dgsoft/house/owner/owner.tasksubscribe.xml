@@ -108,6 +108,15 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="ReasonReceiveView" page="/business/houseOwner/subscribe/ReasonReceiveView.xhtml">
+        <description>
+            受理备注查看
+        </description>
+    </view-subscribe>
+
+
+
+
 
     <view-subscribe name="EvaluateView" page="/business/houseOwner/subscribe/EvaluateView.xhtml">
         <description>
@@ -241,6 +250,14 @@
             权证编号、附记编辑，缮证人信息查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="poolTypeInBizView" page="/business/houseOwner/subscribe/PoolTypeInBizView.xhtml">
+        <description>
+            共有情况（业务中）
+        </description>
+    </view-subscribe>
+
+
     <!--
     <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component=""  ><description>
         预告登记证明号编辑
@@ -307,6 +324,12 @@
     <edit-subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="">
         <description>
             注销原因编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ReasonReceiveEdit" page="/business/houseOwner/subscribe/ReasonReceiveEdit.xhtml" component="">
+        <description>
+            受理备注编辑
         </description>
     </edit-subscribe>
 
