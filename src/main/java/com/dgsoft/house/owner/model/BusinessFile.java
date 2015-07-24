@@ -4,8 +4,10 @@ package com.dgsoft.house.owner.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.swing.tree.TreeNode;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -117,4 +119,5 @@ public class BusinessFile implements java.io.Serializable {
     public void setUploadFiles(Set<UploadFile> uploadFiles) {
         this.uploadFiles = uploadFiles;
     }
+
 }
