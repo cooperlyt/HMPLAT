@@ -228,8 +228,22 @@
 
         <a:outputPanel rendered="#{ownerBusinessHome.idDefined}">
 
+            <div>
 
-            <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}">
+                <ui:include src="BusinessMessageList.xhtml">
+                    <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
+                </ui:include>
+
+                <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
+                               rendered="#{ownerBusinessHome.haveLaterUploadFile}">
+                    <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
+                </a:outputPanel>
+
+            </div>
+
+
+
+            <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}" style="margin-top: 5px">
 
 
                 <a:outputPanel layout="block" styleClass="right" rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}">
@@ -398,13 +412,6 @@
 
             </div>
 
-    <div>
-
-        <ui:include src="BusinessMessageList.xhtml">
-            <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
-        </ui:include>
-
-    </div>
 
             <r:tabPanel switchType="client">
                 <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">

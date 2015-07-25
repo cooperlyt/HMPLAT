@@ -62,13 +62,14 @@
 
 
         <div class="container">
+            <div style="margin-bottom: 5px">
 
             <a:outputPanel rendered="#{not houseBusinessStart.needFilePass}" layout="block" styleClass="rf-msgs-wrn" p:role="alert">
                 <span class="octicon octicon-stop" style="font-weight: bold"/> #{messages.needFileNotUpload}
             </a:outputPanel>
 
         <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
-                       rendered="#{businessDefineHome.haveNeedFile and (ownerBusinessFile.importantStatus eq 'NO_FILE')}">
+                                               rendered="#{businessDefineHome.haveNeedFile and (ownerBusinessFile.importantStatus eq 'NO_FILE')}">
             <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
         </a:outputPanel>
 
@@ -79,7 +80,7 @@
                 </ui:decorate>
             </a:repeat>
 
-
+            </div>
         <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
 
             <div class="panel panel-default info-header">

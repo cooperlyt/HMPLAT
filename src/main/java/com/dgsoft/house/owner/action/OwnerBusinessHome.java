@@ -141,5 +141,13 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return result;
     }
 
+    public boolean isHaveLaterUploadFile(){
+        for(BusinessFile file: getInstance().getUploadFileses()){
+            if (file.isNoFile() && file.getUploadFiles().isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
