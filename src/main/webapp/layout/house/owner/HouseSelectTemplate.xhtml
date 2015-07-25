@@ -191,10 +191,16 @@
                                     color: #8A6D3C;
                                     font-size: 14px;
                                 }
+                                #house_change_data_details>.table td:first-child{
+                                    font-weight: bold;
+                                }
+
+
                             </h:outputStylesheet>
 
                             <div id="house_change_data_details" class="hidden">
-                                <h:dataTable styleClass="table table-striped table-condensed " value="#{ownerBuildGridMap.selectHouseChangeData}" var="_changeData">
+                                <h:dataTable styleClass="table table-striped table-condensed "
+                                             value="#{ownerBuildGridMap.selectHouseChangeData}" var="_changeData">
                                     <h:column>
                                         <f:facet name="header">
 
