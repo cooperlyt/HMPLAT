@@ -67,6 +67,10 @@ public class HouseBusinessStart {
                 facesMessages.addFromResourceBundle(result.getResult().getSeverity(),result.getMsgKey(),result.getParams());
             }
         }
+
+        ownerBuildGridMap.getSelectBizHouse().getHouseCode();
+
+
     }
 
 
