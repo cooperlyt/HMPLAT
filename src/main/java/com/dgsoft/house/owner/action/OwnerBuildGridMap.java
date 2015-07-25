@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.action;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
+import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseBusiness;
@@ -55,6 +56,8 @@ public class OwnerBuildGridMap {
 
     private String houseOrder;
 
+    private List<HouseInfoCompare.ChangeData> selectHouseChangeData;
+
     private List<BusinessHouse> resultBusinessHouse = new ArrayList<BusinessHouse>();
 
     public String getMapNumber() {
@@ -87,6 +90,22 @@ public class OwnerBuildGridMap {
 
     public void setSelectBizHouse(BusinessHouse selectBizHouse) {
         this.selectBizHouse = selectBizHouse;
+        selectHouseChangeData = null;
+    }
+
+    public List<HouseInfoCompare.ChangeData> getSelectHouseChangeData() {
+        if (selectHouseChangeData == null){
+            if (selectBizHouse != null){
+                House mapHouse = houseEntityLoader.getEntityManager().find(House.class,selectBizHouse.getHouseCode());
+                if (mapHouse == null){
+                    selectHouseChangeData = new ArrayList<HouseInfoCompare.ChangeData>(0);
+                }else{
+                    selectHouseChangeData = HouseInfoCompare.compare(selectBizHouse,mapHouse,false);
+                }
+
+            }
+        }
+        return selectHouseChangeData;
     }
 
     public boolean isDataTableList() {
@@ -105,6 +124,8 @@ public class OwnerBuildGridMap {
         this.houseOrder = houseOrder;
     }
 
+
+
     public String getSelectBizHouseId(){
         if (selectBizHouse == null){
             return null;
@@ -114,24 +135,24 @@ public class OwnerBuildGridMap {
 
     public void setSelectBizHouseId(String id){
         if ((id == null) || id.trim().equals("")){
-            selectBizHouse = null;
+            setSelectBizHouse(null);
         }
 
 
         for(BusinessHouse businessHouse: resultBusinessHouse){
             if (businessHouse.getHouseCode().equals(id)){
-                selectBizHouse = businessHouse;
+                setSelectBizHouse(businessHouse);
                 return;
             }
         }
         Logging.getLog(getClass()).warn("houseCode not found in map");
         try {
-            selectBizHouse = ownerEntityLoader.getEntityManager().createQuery("select hr.businessHouse from HouseRecord hr where hr.houseCode =:houseCode", BusinessHouse.class)
-                    .setParameter("houseCode",id)
-                    .getSingleResult();
+            setSelectBizHouse(ownerEntityLoader.getEntityManager().createQuery("select hr.businessHouse from HouseRecord hr where hr.houseCode =:houseCode", BusinessHouse.class)
+                    .setParameter("houseCode", id)
+                    .getSingleResult());
 
         }catch (NoResultException e){
-            selectBizHouse = null;
+            setSelectBizHouse(null);
             Logging.getLog(getClass()).warn("houseCode not found in record");
         }
 
@@ -216,9 +237,9 @@ public class OwnerBuildGridMap {
 
 
         if (resultBusinessHouse.size() == 1){
-            selectBizHouse = resultBusinessHouse.get(0);
+            setSelectBizHouse(resultBusinessHouse.get(0));
         }else{
-            selectBizHouse = null;
+            setSelectBizHouse(null);
         }
 
 

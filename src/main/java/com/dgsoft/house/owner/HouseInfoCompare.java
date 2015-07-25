@@ -5,9 +5,7 @@ import com.dgsoft.house.HouseInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by cooper on 7/22/15.
@@ -23,7 +21,28 @@ public class HouseInfoCompare {
             "getCommParam"
     };
 
-    public static class ChangeData{
+    private static final String[] WORD_METHOD_NAME = {
+
+     "getHouseType",
+
+     "getUseType",
+
+     "getKnotSize",
+
+     "getEastWall",
+
+     "getWestWall",
+
+     "getSouthWall",
+
+     "getNorthWall",
+
+     "getDirection",
+
+     "getBuildSize"
+    };
+
+    public static class ChangeData {
 
         private String method;
 
@@ -37,12 +56,53 @@ public class HouseInfoCompare {
             this.value2 = value2;
         }
 
+        private Object getValue(){
+            if (value1 != null){
+                return value1;
+            }
+            return value2;
+        }
+
+        public boolean isDate(){
+            if (getValue() != null){
+                return getValue() instanceof Date;
+            }
+            return false;
+        }
+
+        public boolean isBoolean(){
+            if (getValue() != null){
+                return getValue() instanceof Boolean;
+            }
+            return false;
+        }
+
+        public boolean isWord(){
+            return Arrays.asList(WORD_METHOD_NAME).contains(method);
+        }
+
+
+        public boolean isEnum(){
+            if (getValue() != null){
+                return getValue() instanceof Enum;
+            }
+            return false;
+        }
+
+        public boolean isString(){
+            return !isDate() && !isBoolean() && !isWord() && !isEnum();
+        }
+
+        public String getMedthodKey(){
+            return "House_" + getField  ();
+        }
+
         public String getMethod() {
             return method;
         }
 
-        public String getField(){
-            return method.replaceFirst("^get" , "").replaceFirst("^is","").trim();
+        public String getField() {
+            return method.replaceFirst("^get", "").replaceFirst("^is", "").trim();
         }
 
         public Object getValue1() {
@@ -55,23 +115,33 @@ public class HouseInfoCompare {
     }
 
 
-    public static List<ChangeData> compare(HouseInfo srcHouseInfo, HouseInfo descHouseInfo){
+    public static List<ChangeData> compare(HouseInfo srcHouseInfo, HouseInfo descHouseInfo,boolean compareArea) {
         List<ChangeData> result = new ArrayList<ChangeData>();
-        for(Method m :HouseInfo.class.getDeclaredMethods()){
-            try {
-               if (! m.invoke(srcHouseInfo).equals(m.invoke(descHouseInfo))){
-                  result.add(new ChangeData(m.getName(),m.invoke(srcHouseInfo),m.invoke(descHouseInfo)));
-               }
-            } catch (IllegalAccessException e) {
-                throw new IllegalArgumentException(e);
-            } catch (InvocationTargetException e) {
-                throw new IllegalArgumentException(e);
-            }
+        for (Method m : HouseInfo.class.getMethods()) {
+            if (!"getMapTime".equals(m.getName()) && (compareArea || !Arrays.asList(AREA_METHOD_NAME).contains(m.getName()) ))
+                try {
+                    Object srcValue = m.invoke(srcHouseInfo);
+                    Object descValue = m.invoke(descHouseInfo);
+                    if (srcValue != null) {
+                        if (!srcValue.equals(descValue)) {
+                            result.add(new ChangeData(m.getName(), srcValue, descValue));
+                        }
+                    } else if (descValue != null) {
+                        result.add(new ChangeData(m.getName(), srcValue, descValue));
+                    }
+
+                } catch (IllegalAccessException e) {
+                    throw new IllegalArgumentException(e);
+                } catch (InvocationTargetException e) {
+                    throw new IllegalArgumentException(e);
+                }
+        }
+        if (!result.isEmpty()){
+            result.add(new ChangeData("getMapTime", srcHouseInfo.getMapTime(), descHouseInfo.getMapTime()));
         }
         return result;
 
     }
-
 
 
 }

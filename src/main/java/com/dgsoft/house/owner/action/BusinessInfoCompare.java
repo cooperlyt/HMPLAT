@@ -32,7 +32,7 @@ public class BusinessInfoCompare {
         for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
             House house = houseEntityLoader.getEntityManager().find(House.class,houseBusiness.getHouseCode());
             if (house != null){
-                result.put(houseBusiness.getAfterBusinessHouse().getDisplayHouseCode(), HouseInfoCompare.compare(house, houseBusiness.getAfterBusinessHouse()));
+                result.put(houseBusiness.getAfterBusinessHouse().getDisplayHouseCode(), HouseInfoCompare.compare(house, houseBusiness.getAfterBusinessHouse(),true));
             }
         }
         //TODO PROJECT
