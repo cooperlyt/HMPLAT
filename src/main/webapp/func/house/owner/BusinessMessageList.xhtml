@@ -10,22 +10,22 @@
 
     <a:repeat var="_msg" value="#{processMessageList}">
 
-        <a:outputPanel layout="block" class="alert  alert-success"
+        <a:outputPanel layout="block" class="rf-msgs-ok"
                        p:role="alert" rendered="#{_msg.level eq 'SUCCESS'}">
             <span class="octicon octicon-info"></span> #{_msg.messages}
         </a:outputPanel>
 
-        <a:outputPanel layout="block" class="alert  alert-info"
+        <a:outputPanel layout="block" class="rf-msgs-inf"
                        p:role="alert" rendered="#{_msg.level eq 'INFO'}">
             <span class="octicon octicon-info"></span> #{_msg.messages}
         </a:outputPanel>
 
-        <a:outputPanel layout="block" class="alert  alert-warning"
+        <a:outputPanel layout="block" class="rf-msgs-wrn"
                        p:role="alert" rendered="#{_msg.level eq 'WARN'}">
             <span class="octicon octicon-alert"></span> #{_msg.messages}
         </a:outputPanel>
 
-        <a:outputPanel layout="block" class="alert alert-danger" p:role="alert"
+        <a:outputPanel layout="block" class="rf-msgs-errr" p:role="alert"
                        rendered="#{(_msg.level eq 'ERROR') || (_msg.level eq 'FATAL') }">
             <span class="octicon octicon-stop"></span> #{_msg.messages}
         </a:outputPanel>

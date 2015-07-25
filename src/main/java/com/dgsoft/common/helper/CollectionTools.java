@@ -1,8 +1,10 @@
 package com.dgsoft.common.helper;
 
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
 
 import java.util.*;
 
@@ -36,5 +38,14 @@ public class CollectionTools {
             return null;
         }
         return new ArrayList<E>(set);
+    }
+
+
+    public static CollectionTools instance(){
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (CollectionTools) Component.getInstance(CollectionTools.class, true);
     }
 }

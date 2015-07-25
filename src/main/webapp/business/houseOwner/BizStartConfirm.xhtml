@@ -63,14 +63,23 @@
 
         <div class="container">
 
-            <a:outputPanel rendered="#{not houseBusinessStart.needFilePass}" layout="block" styleClass="alert alert-danger" p:role="alert">
+            <a:outputPanel rendered="#{not houseBusinessStart.needFilePass}" layout="block" styleClass="rf-msgs-wrn" p:role="alert">
                 <span class="octicon octicon-stop" style="font-weight: bold"/> #{messages.needFileNotUpload}
             </a:outputPanel>
 
-        <a:outputPanel layout="block" styleClass="alert alert-warning"
+        <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
                        rendered="#{businessDefineHome.haveNeedFile and (ownerBusinessFile.importantStatus eq 'NO_FILE')}">
             <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
         </a:outputPanel>
+
+            <a:repeat value="#{businessInfoCompare.changeInfo}" var="_info">
+                <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+                    <ui:param name="changeDatas" value="#{_info.value}"/>
+                  #{_info.key}:#{messages.HouseInfoCompareCreateWarning}
+                </ui:decorate>
+            </a:repeat>
+
+
         <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
 
             <div class="panel panel-default info-header">
@@ -93,7 +102,11 @@
 
 
             <div class="right">
-                <s:link styleClass="btn btn-primary" action="#{ownerBusinessCreate.createBusiness}">
+
+
+                <s:link styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
+                        disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not houseBusinessStart.needFilePass}"
+                        action="#{ownerBusinessCreate.createBusiness}">
                     #{messages.createBusiness}
 
                 </s:link>

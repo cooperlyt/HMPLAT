@@ -157,92 +157,10 @@
 
                         <r:messages ajaxRendered="false" globalOnly="true"/>
 
-                        <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerBuildGridMap.selectHouseChangeData}" style="margin-bottom: 5px">
-
-                            <h:outputScript>
-
-                                function toggleCompareDetails(){
-                                    if ($('#house_change_data_details').hasClass('hidden')){
-                                        $('#house_change_data_details').removeClass('hidden');
-                                        $('#house_change_data_details').addClass('show');
-
-
-                                        $('#toggleLink').addClass('expanded');
-
-                                    }else {
-                                        $('#house_change_data_details').removeClass('show');
-                                        $('#house_change_data_details').addClass('hidden');
-                                        $('#toggleLink').removeClass('expanded');
-                                    }
-                                }
-
-                            </h:outputScript>
-
-                            <span class="octicon octicon-alert"/>
-
-                            #{messages.HouseInfoCompareCreateWarning} <a id="toggleLink" onclick="toggleCompareDetails();return false;" class="details-expand-handle" style="padding-right: 20px">#{messages.details}  </a>
-
-                            <h:outputStylesheet>
-                                #house_change_data_details>.table-striped>tbody>tr:nth-of-type(odd){
-                                    background-color: rgb(249,238,179);
-                                }
-
-                                #house_change_data_details>.table td,#house_change_data_details>.table th{
-                                    color: #8A6D3C;
-                                    font-size: 14px;
-                                }
-                                #house_change_data_details>.table td:first-child{
-                                    font-weight: bold;
-                                }
-
-
-                            </h:outputStylesheet>
-
-                            <div id="house_change_data_details" class="hidden">
-                                <h:dataTable styleClass="table table-striped table-condensed "
-                                             value="#{ownerBuildGridMap.selectHouseChangeData}" var="_changeData">
-                                    <h:column>
-                                        <f:facet name="header">
-
-                                        </f:facet>
-                                        #{messages[_changeData.medthodKey]}
-
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            #{messages.RecordHouseInfo}
-                                        </f:facet>
-
-                                        <h:outputText value="#{_changeData.value1}" rendered="#{_changeData.date}">
-                                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                                        </h:outputText>
-                                        <h:outputText value="#{messages[_changeData.value1.name()]}" rendered="#{_changeData.enum}"/>
-                                        <h:outputText value="#{_changeData.value1 ? messages.Yes : messages.No}" rendered="#{_changeData.boolean}"/>
-                                        <h:outputText value="#{_changeData.value1}" rendered="#{_changeData.string}"/>
-
-                                        <h:outputText value="#{dictionary.getWordValue(_changeData.value1)}" rendered="#{_changeData.word}"/>
-
-
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            #{messages.MapHouseInfo}
-                                        </f:facet>
-                                        <h:outputText value="#{_changeData.value2}" rendered="#{_changeData.date}">
-                                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                                        </h:outputText>
-                                        <h:outputText value="#{messages[_changeData.value2.name()]}" rendered="#{_changeData.enum}"/>
-                                        <h:outputText value="#{_changeData.value2 ? messages.Yes : messages.No}" rendered="#{_changeData.boolean}"/>
-                                        <h:outputText value="#{_changeData.value2}" rendered="#{_changeData.string}"/>
-
-                                        <h:outputText value="#{dictionary.getWordValue(_changeData.value2)}" rendered="#{_changeData.word}"/>
-
-                                    </h:column>
-                                </h:dataTable>
-                            </div>
-
-                        </a:outputPanel>
-
+ <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+     <ui:param name="changeDatas" value="#{ownerBuildGridMap.selectHouseChangeData}"/>
+   #{messages.HouseInfoCompareCreateWarning}
+ </ui:decorate>
 
                         <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true"
                                 groupWidth="50"  >

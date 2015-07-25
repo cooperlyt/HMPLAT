@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.helper.CollectionTools;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.House;
@@ -27,16 +28,20 @@ public class BusinessInfoCompare {
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
 
-    public Map<String,List<HouseInfoCompare.ChangeData>> getChangeInfo(){
+    public List<Map.Entry<String, List<HouseInfoCompare.ChangeData>>> getChangeInfo(){
         Map<String,List<HouseInfoCompare.ChangeData>> result = new HashMap<String, List<HouseInfoCompare.ChangeData>>();
         for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
             House house = houseEntityLoader.getEntityManager().find(House.class,houseBusiness.getHouseCode());
             if (house != null){
-                result.put(houseBusiness.getAfterBusinessHouse().getDisplayHouseCode(), HouseInfoCompare.compare(house, houseBusiness.getAfterBusinessHouse(),true));
+                List<HouseInfoCompare.ChangeData> changeDataList = HouseInfoCompare.compare(houseBusiness.getAfterBusinessHouse(),house, true);
+                if ((changeDataList != null) && !changeDataList.isEmpty())
+                    result.put(houseBusiness.getHouseCode(), changeDataList);
             }
         }
+
+
         //TODO PROJECT
-        return result;
+        return CollectionTools.instance().mapToList(result);
     }
 
 

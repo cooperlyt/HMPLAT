@@ -21,6 +21,13 @@
 
     </div>
 
+    <a:repeat value="#{businessInfoCompare.changeInfo}" var="_info">
+        <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+            <ui:param name="changeDatas" value="#{_info.value}"/>
+            #{_info.key}:#{messages.HouseInfoCompareCreateWarning}
+        </ui:decorate>
+    </a:repeat>
+
     <div class="new-user-avatar-cta">
 
             <s:link styleClass="minibutton primary" >
