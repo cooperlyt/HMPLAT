@@ -428,5 +428,21 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
             getBusinessProjects().add(businessProject);
         }
     }
+    @Transient
+    public HouseRegInfo getHouseRegInfo(){
+        if (getHouseRegInfos().isEmpty()){
+            return null;
+        }else{
+            return getHouseRegInfos().iterator().next();
+        }
+    }
+    @Transient
+    public void setHouseRegInfo(HouseRegInfo houseRegInfo){
+        getHouseRegInfos().clear();
+        if(houseRegInfo !=null){
+            getHouseRegInfos().add(houseRegInfo);
 
+        }
+
+    }
 }

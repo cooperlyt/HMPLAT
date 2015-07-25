@@ -20,6 +20,7 @@ public class RegisterBookChangeHoseState implements TaskCompleteSubscribeCompone
     @Override
     public void valid() {
 
+
     }
 
     @Override
