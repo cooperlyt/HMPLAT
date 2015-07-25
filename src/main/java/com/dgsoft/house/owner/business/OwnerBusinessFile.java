@@ -25,7 +25,7 @@ import java.util.*;
 public class OwnerBusinessFile {
 
     @In
-    private OwnerBusinessHome ownerBusinessHome;
+    protected OwnerBusinessHome ownerBusinessHome;
 
     @In
     private BusinessDefineHome businessDefineHome;

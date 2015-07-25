@@ -296,11 +296,8 @@ public class OwnerBuildGridMap {
             houseMap.put(house.getHouseCode(),house);
         }
 
-        List<BusinessHouse> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord left join fetch houseRecord.businessHouse.businessHouseOwner where (houseRecord.businessHouse.buildCode = :buildCode) or (houseRecord.businessHouse.mapNumber =:mapNumber and  houseRecord.businessHouse.blockNo =:blockNumber and houseRecord.businessHouse.buildNo =:buildNumber)", BusinessHouse.class)
-                .setParameter("buildCode", buildHome.getInstance().getId())
-                .setParameter("mapNumber", buildHome.getInstance().getMapNumber())
-                .setParameter("blockNumber",buildHome.getInstance().getBlockNo())
-                .setParameter("buildNumber",buildHome.getInstance().getBuildNo())
+        List<BusinessHouse> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord left join fetch houseRecord.businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", BusinessHouse.class)
+                .setParameter("houseCodes", houseMap.keySet())
                 .getResultList();
 
 
