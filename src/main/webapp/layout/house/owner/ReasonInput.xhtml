@@ -7,9 +7,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-        #{label}
-        </ui:define>
+
+            <ui:define name="label">
+             #{label}
+            </ui:define>
+
         <h:inputTextarea
                 label="#{label}"
                 cols="50"

@@ -16,4 +16,14 @@
            </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
+
+
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getCardByType('SALE_LICENSE')}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.Card_SaleLicense}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{messages.Card_SaleLicense_NOT}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
 </ui:composition>

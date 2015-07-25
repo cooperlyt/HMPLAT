@@ -10,10 +10,21 @@
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getReasonByType('RECEIVE')}">
         <dh:entryGridBlock columns="4">
-            <h:outputText value="#{messages.Reason_Logout}"/>
+            <h:outputText value="#{messages.Reason_RECEIVE}"/>
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.getReasonByType('RECEIVE').reason}"/>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
+
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getReasonByType('RECEIVE')}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.Reason_RECEIVE}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{messages.Reason_RECEIVE_NOT}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+
 </ui:composition>
