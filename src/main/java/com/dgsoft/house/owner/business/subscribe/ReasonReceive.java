@@ -18,7 +18,7 @@ public class ReasonReceive extends OwnerEntityHome<Reason> {
 
     @Override
     public Reason createInstance(){
-        return new Reason(Reason.ReasonType.MODIFY_BEFOR_RENSON);
+        return new Reason(Reason.ReasonType.RECEIVE);
     }
 
 

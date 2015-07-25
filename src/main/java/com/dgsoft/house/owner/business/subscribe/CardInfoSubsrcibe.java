@@ -18,7 +18,6 @@ public class CardInfoSubsrcibe extends OwnerEntityHome<CardInfo> {
 
     @In()
     private AuthenticationInfo authInfo;
-
     @Override
     public void create(){
         super.create();
@@ -26,10 +25,14 @@ public class CardInfoSubsrcibe extends OwnerEntityHome<CardInfo> {
                 ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo()!=null){
             setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().getId());
         }else{
-            getInstance().setMakeEmpCode(authInfo.getLoginEmployee().getId());
-            getInstance().setMakeEmpName(authInfo.getLoginEmployee().getPersonName());
-            ownerBusinessHome.getInstance().getMakeCards().iterator().next().setCardInfo(getInstance());
-            getInstance().setMakeCard(ownerBusinessHome.getInstance().getMakeCards().iterator().next());
+
+               getInstance().setMakeEmpCode(authInfo.getLoginEmployee().getId());
+               getInstance().setMakeEmpName(authInfo.getLoginEmployee().getPersonName());
+               ownerBusinessHome.getInstance().getMakeCards().iterator().next().setCardInfo(getInstance());
+               getInstance().setMakeCard(ownerBusinessHome.getInstance().getMakeCards().iterator().next());
+               getInstance().setBusinessHouseOwner(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
+
+
         }
     }
 
