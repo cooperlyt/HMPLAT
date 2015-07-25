@@ -5,6 +5,7 @@ import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.*;
 
@@ -37,10 +38,10 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
-    public Card getCardByType(String typeName){
-        for (Card card:getInstance().getCards()){
-            if (card.getType().equals(Card.CardType.valueOf(Card.CardType.class,typeName))){
-                return card;
+    public MakeCard getCardByType(String typeName){
+        for (MakeCard makeCard:getInstance().getMakeCards()){
+              if (makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,typeName))){
+                return makeCard;
             }
         }
         return null;

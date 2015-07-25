@@ -8,12 +8,23 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getMakeCard('OWNER_RSHIP')}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.getCardByType('OWNER_RSHIP')}">
+
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Card_OwnerRship}"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{ownerBusinessHome.getMakeCard('OWNER_RSHIP').number}"/>
+                <h:outputText value="#{ownerBusinessHome.getCardByType('OWNER_RSHIP').number}"/>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
+
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getCardByType('OWNER_RSHIP')}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.Card_OwnerRship}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{messages.Card_OwnerRship_NOT}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
 </ui:composition>
