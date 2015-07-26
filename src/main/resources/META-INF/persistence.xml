@@ -26,6 +26,9 @@
         <class>com.dgsoft.common.system.model.ViewSubscribe</class>
         <class>com.dgsoft.common.system.model.SubscribeGroup</class>
         <class>com.dgsoft.common.system.model.CreateComponent</class>
+        <class>com.dgsoft.common.system.model.Fee</class>
+        <class>com.dgsoft.common.system.model.FeeCategory</class>
+        <class>com.dgsoft.common.system.model.FeeTimeArea</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

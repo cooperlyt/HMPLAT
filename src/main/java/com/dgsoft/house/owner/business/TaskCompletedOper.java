@@ -14,8 +14,6 @@ import java.util.List;
 @Name("taskCompletedOper")
 public class TaskCompletedOper {
 
-    @In
-    private BusinessDefineHome businessDefineHome;
 
     @In
     private OwnerBusinessHome ownerBusinessHome;

@@ -13,8 +13,7 @@ public class TaskOwnerBusinessFile extends OwnerBusinessFile {
     public void setNoFile(boolean value){
         super.setNoFile(value);
         if (getSelectNode() != null){
-            ownerBusinessHome.getEntityManager().persist(getSelectNode().getBusinessFile());
-            ownerBusinessHome.getEntityManager().flush();
+            ownerBusinessHome.update();
         }
     }
 
