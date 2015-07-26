@@ -31,28 +31,16 @@ public class BusinessMoney implements java.io.Serializable {
 	public BusinessMoney() {
 	}
 
-    public BusinessMoney(String moneyTypeId) {
+
+	public BusinessMoney(OwnerBusiness ownerBusiness,
+                         String moneyTypeId,String typeName, BigDecimal shouldMoney,String chargeDetails) {
         this.typeName = typeName;
-
-    }
-
-
-    public BusinessMoney(String id, OwnerBusiness ownerBusiness,
-                         String moneyTypeId) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.moneyTypeId = moneyTypeId;
-	}
-	public BusinessMoney(String id, OwnerBusiness ownerBusiness,
-                         String moneyTypeId, BigDecimal shouldMoney, BigDecimal factMoney,
-			String chargeDetails, String memo) {
-		this.id = id;
 		this.ownerBusiness = ownerBusiness;
 		this.moneyTypeId = moneyTypeId;
 		this.shouldMoney = shouldMoney;
-		this.factMoney = factMoney;
+        this.factMoney = shouldMoney;
 		this.chargeDetails = chargeDetails;
-		this.memo = memo;
+
 	}
 
 	@Id

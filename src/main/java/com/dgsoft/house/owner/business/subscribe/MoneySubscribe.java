@@ -19,9 +19,9 @@ import java.util.*;
 
 /**
  * Created by Administrator on 15-7-25.
- * 登记费
+ *
  */
-@Name("moneyRegister")
+@Name("calcBusinessMoney")
 @Scope(ScopeType.CONVERSATION)
 public class MoneySubscribe implements TaskSubscribeComponent {
 
@@ -45,17 +45,21 @@ public class MoneySubscribe implements TaskSubscribeComponent {
         final Map<String,Fee> feeMap = new HashMap<String, Fee>();
 
         for (Fee fee:businessDefineHome.getInstance().getFees()){
-
             feeMap.put(fee.getId(),fee);
-            BusinessMoney businessMoney = new BusinessMoney();
-            businessMoney.setTypeName(fee.getName());
-            businessMoney.setMoneyTypeId(fee.getId());
-            businessMoney.setShouldMoney(new BigDecimal(0));
-            businessMoney.setFactMoney(new BigDecimal(0));
-            businessMoney.setOwnerBusiness(ownerBusinessHome.getInstance());
-            businessMoney.setChargeDetails(fee.getDetailsEl());
-            businessMoneyList.add(businessMoney);
-            ownerBusinessHome.getInstance().getBusinessMoneys().add(businessMoney);
+            boolean exists = false;
+            for(BusinessMoney bm: ownerBusinessHome.getInstance().getBusinessMoneys()) {
+                if (fee.getId().equals(bm.getMoneyTypeId())){
+                    businessMoneyList.add(bm);
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists){
+                BusinessMoney businessMoney = new BusinessMoney(ownerBusinessHome.getInstance(),fee.getId(),fee.getName(),new BigDecimal(0),null);
+                ownerBusinessHome.getInstance().getBusinessMoneys().add(businessMoney);
+                businessMoneyList.add(businessMoney);
+            }
+
         }
 
         Collections.sort(businessMoneyList,new Comparator<BusinessMoney>() {
@@ -81,14 +85,14 @@ public class MoneySubscribe implements TaskSubscribeComponent {
 
     @Override
     public void validSubscribe() {
-       //if (businessDefineHome.getInstance().getFees().isEmpty() && businessDefineHome.getInstance().getFees()==null){
-      //     facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "fee_not");
-     //  }
+        if (businessDefineHome.getInstance().getFees().size() !=  ownerBusinessHome.getInstance().getBusinessMoneys().size()){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"");
+        }
     }
 
     @Override
     public boolean isPass() {
-        return false;
+        return businessDefineHome.getInstance().getFees().size() ==  ownerBusinessHome.getInstance().getBusinessMoneys().size();
     }
 
 

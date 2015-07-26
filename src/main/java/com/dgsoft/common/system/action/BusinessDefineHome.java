@@ -52,37 +52,36 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     public void validSubscribes() {
 
-        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
-            if (define.isHaveComponent()) {
-                define.getComponents().validSubscribe();
+
+        for(SubscribeGroup group: getEditSubscribeGroups()){
+            for(ViewSubscribe subscribe: group.getViewSubscribeList()){
+                TaskSubscribeReg.EditSubscribeDefine define =
+                        taskSubscribeReg.getEditDefineByName(subscribe.getRegName());
+                if (define.isHaveComponent()) {
+                    define.getComponents().validSubscribe();
+                }
             }
         }
+
         log.debug("call validSubscribes");
     }
 
     public boolean isSubscribesPass() {
-        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
-            if (define.isHaveComponent()) {
-                if (!define.getComponents().isPass()) {
-                    return false;
+        for(SubscribeGroup group: getEditSubscribeGroups()){
+            for(ViewSubscribe subscribe: group.getViewSubscribeList()){
+                TaskSubscribeReg.EditSubscribeDefine define =
+                        taskSubscribeReg.getEditDefineByName(subscribe.getRegName());
+                if (define.isHaveComponent()) {
+                    if (!define.getComponents().isPass()){
+                        return false;
+                    }
                 }
             }
         }
         return true;
     }
 
-    public boolean saveSubscribes() {
 
-
-        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
-            if (define.isHaveComponent()) {
-                if (!define.getComponents().saveSubscribe()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
 
     public void validComplete() {
@@ -154,13 +153,13 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public void refreshSubscribe() {
-        editSubscribes = null;
+        editSubscribeGroups = null;
         viewSubscribeGroups = null;
         operSubscribes = null;
         completeSubscribes = null;
     }
 
-    private List<TaskSubscribe> editSubscribes;
+    //private List<TaskSubscribe> editSubscribes;
 
     private List<TaskSubscribe> operSubscribes;
 
@@ -168,6 +167,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private List<SubscribeGroup> viewSubscribeGroups;
 
+    private List<SubscribeGroup> editSubscribeGroups;
 
     public List<TaskSubscribe> getOperSubscribes() {
         if (operSubscribes == null) {
@@ -183,16 +183,27 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return completeSubscribes;
     }
 
+    public List<SubscribeGroup> getEditSubscribeGroups() {
+        if (editSubscribeGroups == null){
+            loadSubscribeGroup();
+        }
+        return editSubscribeGroups;
+    }
+
+    public List<SubscribeGroup> getViewSubscribeGroups() {
+        if (viewSubscribeGroups == null) {
+            loadSubscribeGroup();
+        }
+
+        return viewSubscribeGroups;
+    }
 
     private void loadSubscribes() {
         operSubscribes = new ArrayList<TaskSubscribe>();
-        editSubscribes = new ArrayList<TaskSubscribe>();
         completeSubscribes = new ArrayList<TaskSubscribe>();
         for (TaskSubscribe subscribe : getInstance().getTaskSubscribes()) {
             if (subscribe.getTaskName().equals(taskName)) {
-                if (Subscribe.SubscribeType.TASK_INFO.equals(subscribe.getType())) {
-                    editSubscribes.add(subscribe);
-                } else if (Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())) {
+                if (Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())) {
                     completeSubscribes.add(subscribe);
                 } else if (Subscribe.SubscribeType.TASK_OPERATOR.equals(subscribe.getType())) {
                     operSubscribes.add(subscribe);
@@ -200,23 +211,112 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
             }
         }
-        Collections.sort(editSubscribes, new Comparator<TaskSubscribe>() {
+        Collections.sort(completeSubscribes, new Comparator<TaskSubscribe>() {
             @Override
             public int compare(TaskSubscribe o1, TaskSubscribe o2) {
                 return new Integer(o2.getPriority()).compareTo(o1.getPriority());
             }
         });
+        Collections.sort(operSubscribes, new Comparator<TaskSubscribe>() {
+            @Override
+            public int compare(TaskSubscribe o1, TaskSubscribe o2) {
+                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+            }
+        });
+
     }
 
-    public List<TaskSubscribe> getEditSubscribes() {
-        if (editSubscribes == null) {
-            loadSubscribes();
+    private void loadSubscribeGroup(){
+        viewSubscribeGroups = new ArrayList<SubscribeGroup>();
+        editSubscribeGroups = new ArrayList<SubscribeGroup>();
+        for (SubscribeGroup group : getInstance().getSubscribeGroups()) {
+            if (group.getTaskName().equals(getTaskName())) {
+                if (Subscribe.SubscribeType.TASK_INFO.equals(group.getType())){
+                    viewSubscribeGroups.add(group);
+                }else if (Subscribe.SubscribeType.TASK_OPERATOR.equals(group.getType())){
+                    editSubscribeGroups.add(group);
+                }
+
+
+            }
         }
-
-        return editSubscribes;
+        Collections.sort(viewSubscribeGroups, new Comparator<SubscribeGroup>() {
+            @Override
+            public int compare(SubscribeGroup o1, SubscribeGroup o2) {
+                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+            }
+        });
+        Collections.sort(editSubscribeGroups, new Comparator<SubscribeGroup>() {
+            @Override
+            public int compare(SubscribeGroup o1, SubscribeGroup o2) {
+                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+            }
+        });
     }
 
-    public void initEditSubscribes() {
+
+    private SubscribeGroup curEditGroup;
+
+    public SubscribeGroup getCurEditGroup() {
+        return curEditGroup;
+    }
+
+    public void setCurEditGroup(SubscribeGroup curEditGroup) {
+        this.curEditGroup = curEditGroup;
+        if (curEditGroup != null){
+            initEditSubscribes();
+        }
+    }
+
+    public String getCurEditGroupId(){
+        if (curEditGroup == null){
+            return null;
+        }
+        return curEditGroup.getId();
+    }
+
+    public void setCurEditGroupId(String id){
+        if (id == null || id.trim().equals("")){
+           setCurEditGroup(null);
+        }
+        for (SubscribeGroup group: getEditSubscribeGroups()){
+            if (id.equals(group.getId())){
+                setCurEditGroup(group);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("edit gorup id not found");
+    }
+
+    private boolean saveEditSubscribes() {
+
+
+        for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+            if (define.isHaveComponent()) {
+                if (!define.getComponents().saveSubscribe()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean nextEditGroup(){
+        // exception
+        if (curEditGroup == null){
+            curEditGroup = getEditSubscribeGroups().get(0);
+        }else{
+            if (!saveEditSubscribes()) {
+                return false;
+            }
+            curEditGroup = getEditSubscribeGroups().get(getEditSubscribeGroups().indexOf(curEditGroup) + 1);
+
+        }
+        initEditSubscribes();
+        return true;
+    }
+
+    private void initEditSubscribes() {
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
                 define.getComponents().initSubscribe();
@@ -225,29 +325,54 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         }
     }
 
-    public List<SubscribeGroup> getViewSubscribeGroups() {
-        if (viewSubscribeGroups == null) {
-            viewSubscribeGroups = new ArrayList<SubscribeGroup>();
-            for (SubscribeGroup group : getInstance().getSubscribeGroups()) {
-                if (group.getTaskName().equals(getTaskName())) {
-                    viewSubscribeGroups.add(group);
+    public boolean isHaveNextEditGroup() {
+        if (getEditSubscribeGroups().isEmpty()) {
+            return false;
+        }
+        if (curEditGroup == null) {
+            return true;
+        }
+        return (getEditSubscribeGroups().indexOf(curEditGroup) == (getEditSubscribeGroups().size() - 1));
+    }
+
+    public void previousEditGroup(){
+        //exception
+        curEditGroup = getEditSubscribeGroups().get(getEditSubscribeGroups().indexOf(curEditGroup) - 1);
+        initEditSubscribes();
+    }
+
+    public boolean isHavePreviousEditGroup(){
+        if (getEditSubscribeGroups().isEmpty()) {
+            return false;
+        }
+        if (curEditGroup == null) {
+            return false;
+        }
+        return getEditSubscribeGroups().indexOf(curEditGroup) > 0;
+    }
+
+    public List<SubscribeGroup> getPastEditGroups(){
+        List<SubscribeGroup> result = new ArrayList<SubscribeGroup>();
+        if (curEditGroup != null){
+            for (SubscribeGroup group: getEditSubscribeGroups()){
+                if (curEditGroup.equals(group)){
+                    return result;
+                }else{
+                    result.add(group);
                 }
             }
-            Collections.sort(viewSubscribeGroups, new Comparator<SubscribeGroup>() {
-                @Override
-                public int compare(SubscribeGroup o1, SubscribeGroup o2) {
-                    return new Integer(o2.getPriority()).compareTo(o1.getPriority());
-                }
-            });
         }
-
-        return viewSubscribeGroups;
+        return result;
     }
 
 
+    public boolean isHaveEditSubscribe(){
+        return !getEditSubscribeGroups().isEmpty();
+    }
+
     public List<TaskSubscribeReg.EditSubscribeDefine> getEditSubscribeDefines() {
         List<TaskSubscribeReg.EditSubscribeDefine> result = new ArrayList<TaskSubscribeReg.EditSubscribeDefine>();
-        for (TaskSubscribe subscribe : getEditSubscribes()) {
+        for(ViewSubscribe subscribe: curEditGroup.getViewSubscribeList()){
             result.add(taskSubscribeReg.getEditDefineByName(subscribe.getRegName()));
         }
         return result;

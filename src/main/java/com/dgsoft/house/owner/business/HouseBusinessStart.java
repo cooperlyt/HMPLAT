@@ -143,8 +143,8 @@ public class HouseBusinessStart {
         }
 
 
-        if (!businessDefineHome.getEditSubscribeDefines().isEmpty()){
-            businessDefineHome.initEditSubscribes();
+        if (businessDefineHome.isHaveEditSubscribe()){
+            businessDefineHome.nextEditGroup();
             return BUSINESS_INFO_PAGE;
         } else{
             return getInfoCompletePath();
@@ -163,10 +163,11 @@ public class HouseBusinessStart {
 
     public String infoComplete(){
 
-        if (businessDefineHome.saveSubscribes()){
-            return getInfoCompletePath();
+        if (businessDefineHome.isHaveNextEditGroup()){
+            businessDefineHome.nextEditGroup();
+            return BUSINESS_INFO_PAGE;
         }else{
-            return null;
+            return getInfoCompletePath();
         }
 
     }
