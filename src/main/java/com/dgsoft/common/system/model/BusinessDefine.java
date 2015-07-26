@@ -34,6 +34,11 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private boolean enable;
     private String pickBusinessDefineId;
 
+    private Set<Fee> fees = new HashSet<Fee>(0);
+
+
+
+
     public BusinessDefine() {
     }
 
@@ -229,6 +234,16 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
             return false;
         }
         return id.equals(((BusinessDefine) obj).getId());
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "BUSINESS_AND_FEE",joinColumns=@JoinColumn(name="BUSINESS"),inverseJoinColumns = @JoinColumn(name = "FEE"))
+    public Set<Fee> getFees() {
+        return fees;
+    }
+
+    public void setFees(Set<Fee> fees) {
+        this.fees = fees;
     }
 
 }
