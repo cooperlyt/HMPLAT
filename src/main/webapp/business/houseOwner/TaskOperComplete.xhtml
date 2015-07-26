@@ -13,6 +13,48 @@
 
     <ui:param name="selectTabIndex" value="3"/>
 
+    <a:outputPanel layout="block" styleClass="rf-msgs-err"
+                   rendered="#{businessDefineHome.haveNeedFile and (taskOwnerBusinessFile.importantStatus eq 'NO_UPLOAD')}">
+        <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveNeedFileNotUpload}
+    </a:outputPanel>
+
+    <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerTaskHandle.backComments}">
+        <span class="octicon octicon-alert"/>
+        <strong>#{messages.fallback}! </strong>#{ownerTaskHandle.backComments}
+    </a:outputPanel>
+
+    <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerTaskHandle.checkComments}">
+        <span class="octicon octicon-alert"/>
+        <strong>#{messages.checkFail}! </strong>#{ownerTaskHandle.checkComments}
+    </a:outputPanel>
+
+
+
+    <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
+                   rendered="#{(taskOwnerBusinessFile.importantStatus eq 'NO_FILE')}">
+        <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
+    </a:outputPanel>
+
+    <div>
+
+        <ui:include src="/func/house/owner/BusinessMessageList.xhtml">
+            <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
+        </ui:include>
+
+    </div>
+
+    <a:repeat value="#{businessInfoCompare.changeInfo}" var="_info">
+        <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+            <ui:param name="changeDatas" value="#{_info.value}"/>
+            #{_info.key}:#{messages.HouseInfoCompareCreateWarning}
+        </ui:decorate>
+    </a:repeat>
+
+
+
+
+
+
     <div class="new-repo-container">
     <div class="new-user-avatar-cta">
 

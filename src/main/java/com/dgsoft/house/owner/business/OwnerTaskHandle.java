@@ -44,6 +44,10 @@ public class OwnerTaskHandle {
     @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
     private String transitionComments;
 
+    @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    private String backTaskName;
+
     @In
     private AuthenticationInfo authInfo;
 
@@ -74,30 +78,70 @@ public class OwnerTaskHandle {
     @Transactional
     @End
     public String back(){
-        transitionType = TaskOper.OperType.BACK.name();
+        TaskOper.OperType operType = taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_BACK : TaskOper.OperType.BACK;
+
+        transitionType = operType.name();
 
 
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
-                taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_BACK : TaskOper.OperType.BACK,ownerBusinessHome.getInstance(),
+                operType, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName(),transitionComments));
-        businessProcess.endTask(transitionName);
-        return "taskCompleted";
+                taskInstance.getName() + (taskDescription.isCheckTask() ? "" : " " + transitionName),transitionComments));
+        backTaskName = taskInstance.getName();
+        if ("updated".equals(ownerBusinessHome.update())) {
+            businessProcess.endTask(transitionName);
+            return "taskCompleted";
+        }
+        throw new IllegalArgumentException("backFail");
+
+    }
+
+    public void init(){
+       if(taskDescription.isCheckTask() && taskInstance.getName().equals(backTaskName)){
+           transitionComments = null;
+       }
+    }
+
+    public String getBackComments(){
+        if (TaskOper.OperType.BACK.name().equals(transitionType)
+                && (transitionComments != null) && !transitionComments.trim().equals("")){
+            return transitionComments;
+        }
+        return null;
+    }
+
+    public String getCheckComments(){
+        if (TaskOper.OperType.CHECK_BACK.name().equals(transitionType)
+                && (transitionComments != null) && !transitionComments.trim().equals("")){
+            return transitionComments;
+        }
+        return null;
     }
 
     @Transactional
     @EndTask
     public String complete() {
-        transitionType = TaskOper.OperType.NEXT.name();
+        if (taskDescription.isCheckTask()) {
+            transitionType = TaskOper.OperType.CHECK_ACCEPT.name();
+        }else if (taskInstance.getName().equals(backTaskName)){
+            transitionComments = null;
+            transitionType = null;
+        }
 
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_ACCEPT :TaskOper.OperType.NEXT,
                 ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName(),transitionComments));
+                taskInstance.getName(),taskDescription.isCheckTask() ? transitionComments : null));
 
+        if (businessDefineHome.isCompletePass() && businessDefineHome.isSubscribesPass()){
+            businessDefineHome.completeTask();
+            if ("updated".equals(ownerBusinessHome.update())) {
+                return "taskCompleted";
+            }
+        }
 
-        return completeTask();
+        throw new IllegalArgumentException("completeFail");
 
     }
 
@@ -123,18 +167,6 @@ public class OwnerTaskHandle {
             return taskOwnerBusinessFile.isPass();
         }
         return true;
-    }
-
-    protected String completeTask() {
-        //TODO no subscribe
-        if (businessDefineHome.isCompletePass() && businessDefineHome.isSubscribesPass()){
-            businessDefineHome.completeTask();
-            if ("updated".equals(ownerBusinessHome.update())) {
-                return "taskCompleted";
-            }
-        }
-
-        throw new IllegalArgumentException("completeFail");
     }
 
     private List<String> backTransitions;
