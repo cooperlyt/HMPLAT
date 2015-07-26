@@ -8,10 +8,39 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="template-task-oper.xhtml">
 
 
     <ui:param name="selectTabIndex" value="1"/>
+    <a:outputPanel rendered="#{ownerTaskHandle.canBack}">
+
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="backPanel"/>
+        <ui:param name="panelTitle" value="#{messages.fallback}"/>
+
+        <h:selectOneMenu value="#{ownerTaskHandle.transitionName}" styleClass="selectpicker edit-select form-control">
+            <s:selectItems var="_tran" value="#{ownerTaskHandle.backTransitions}" itemValue="#{_tran}" label="#{_tran}"/>
+        </h:selectOneMenu>
+
+
+
+        <h:inputTextarea style="margin-top: 10px" styleClass="form-control" value="#{ownerTaskHandle.transitionComments}" rows="5" label="#{messages.fallbackComments}"
+                         p:placeholder="#{messages.fallbackComments}"/>
+
+        <ui:define name="actionButtons">
+            <button type="button" class="button default" data-dismiss="modal">
+
+                #{messages.cancel}</button>
+
+
+            <h:commandLink styleClass="button submit primary" action="#{ownerTaskHandle.back}">
+                #{messages.fallback}
+            </h:commandLink>
+
+        </ui:define>
+    </ui:decorate>
+    </a:outputPanel>
 
     <div>
 
@@ -29,12 +58,12 @@
     </a:repeat>
 
     <div class="new-user-avatar-cta" style="margin-top: 5px">
-
-            <s:link styleClass="minibutton primary" >
+            <a:outputPanel rendered="#{ownerTaskHandle.canBack}">
+            <a class="minibutton primary" onclick="$('#backPanel').modal({backdrop: 'static'});return false;">
                 <span class="octicon octicon-git-compare"/>
                 #{messages.BackTask}
-            </s:link>
-
+            </a>
+            </a:outputPanel>
 
        <h3>
          <strong>#{taskInstance.processInstance.key}</strong>

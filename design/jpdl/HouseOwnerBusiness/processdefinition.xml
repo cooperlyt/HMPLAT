@@ -35,7 +35,8 @@
 			</description>
             <assignment pooled-actors="RecordFile"></assignment>
         </task>
-        <transition to="登簿结果"></transition>
+		<transition to="受理" name="退回受理"></transition>
+		<transition to="繕证判断"></transition>
     </task-node>
 
     <task-node name="归档">
@@ -55,7 +56,8 @@
 			</description>
             <assignment pooled-actors="Money"></assignment>
         </task>
-        <transition to="收费确认"></transition>
+		<transition to="审核"></transition>
+		<transition to="受理" name="退回受理"></transition>
     </task-node>
 
     <task-node name="缮证">
@@ -69,29 +71,19 @@
     </task-node>
 
     <decision name="繕证判断">
-        <transition to="缮证" name="to 证">
+        <transition to="缮证" name="缮证">
 			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP37','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84')}"></condition>
 		</transition>
-        <transition to="归档" name="to 归档">
+        <transition to="归档" name="无缮证业务">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP38','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84')}"></condition>
 		</transition>
     </decision>
 
-    <task-node name="收费确认">
-        <task name="收费确认">
-			<description>
-				{&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
-			</description>
-			<assignment actor-id="#{actor.id}"></assignment>
-		</task>
-		<transition to="审核"></transition>
-    </task-node>
-
     <decision name="收费判断">
-        <transition to="收费" name="to 收费">
+        <transition to="收费" name="收费">
 			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP38','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74')}"></condition>
 		</transition>
-        <transition to="审核" name="to 审核">
+        <transition to="审核" name="无收费业务">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP38','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74')}"></condition>
 		</transition>
     </decision>
@@ -102,15 +94,6 @@
 		</transition>
 		<transition to="受理" name="审核不通过">
 			<condition expression="#{transitionType eq 'BACK'}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="登簿结果">
-		<transition to="受理" name="回退">
-			<condition expression="#{transitionType eq 'BACK'}"></condition>
-		</transition>
-		<transition to="繕证判断" name="登薄完成">
-			<condition expression="#{transitionType eq 'NEXT'}"></condition>
 		</transition>
 	</decision>
 

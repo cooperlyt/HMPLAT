@@ -9,7 +9,14 @@ import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.annotations.bpm.EndTask;
+import org.jboss.seam.bpm.BusinessProcess;
+import org.jboss.seam.bpm.ManagedJbpmContext;
+import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.taskmgmt.exe.TaskInstance;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by cooper on 9/4/14.
@@ -25,6 +32,9 @@ public class OwnerTaskHandle {
 
     @In
     private BusinessDefineHome businessDefineHome;
+
+    @In
+    private BusinessProcess businessProcess;
 
     @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
     @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
@@ -51,14 +61,27 @@ public class OwnerTaskHandle {
         this.transitionComments = transitionComments;
     }
 
+    public String transitionName;
+
+    public String getTransitionName() {
+        return transitionName;
+    }
+
+    public void setTransitionName(String transitionName) {
+        this.transitionName = transitionName;
+    }
+
     @Transactional
-    @EndTask
+    @End
     public String back(){
         transitionType = TaskOper.OperType.BACK.name();
+
+
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_BACK : TaskOper.OperType.BACK,ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
                 taskInstance.getName(),transitionComments));
+        businessProcess.endTask(transitionName);
         return "taskCompleted";
     }
 
@@ -92,12 +115,12 @@ public class OwnerTaskHandle {
         }
     }
 
-    @In(required = false)
+    @In(create = true)
     private OwnerBusinessFile ownerBusinessFile;
 
     public boolean isNeedFilePass(){
         if (businessDefineHome.isHaveNeedFile()){
-            return (ownerBusinessFile != null) && ownerBusinessFile.isPass();
+            return ownerBusinessFile.isPass();
         }
         return true;
     }
@@ -114,7 +137,20 @@ public class OwnerTaskHandle {
         throw new IllegalArgumentException("completeFail");
     }
 
+    private List<String> backTransitions;
 
+    public List<String> getBackTransitions(){
+        if (backTransitions == null){
+            backTransitions = new ArrayList<String>(taskInstance.getProcessInstance().getProcessDefinition().getNode(taskInstance.getName()).getLeavingTransitionsMap().keySet());
+            backTransitions.remove(null);
+            Collections.sort(backTransitions);
+        }
+        return backTransitions;
+    }
+
+    public boolean isCanBack(){
+        return !getBackTransitions().isEmpty();
+    }
 
 
 }

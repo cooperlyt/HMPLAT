@@ -29,6 +29,8 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('CreateUploadFile','BOOLEAN'
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AllowBusinessNoFile','BOOLEAN','true','true: 可以暂不上传要件，false: 不可以暂不上传要件');
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AllowNoFileRecord','BOOLEAN','true','true: 有暂缺要件可以归档，false: 有暂缺要件不可以归档');
 
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('CreateBizTaskName','STRING','受理业务','建立业务的阶段名称');
+
 
 
 

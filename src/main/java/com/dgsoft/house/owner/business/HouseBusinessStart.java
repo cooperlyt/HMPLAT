@@ -114,7 +114,10 @@ public class HouseBusinessStart {
                 authInfo.getLoginEmployee().getPersonName()));
         ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
-        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(OwnerNumberBuilder.instance().useNumber("createBusinessId") * -1 ,ownerBusinessHome.getInstance(), authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
+        ownerBusinessHome.getInstance().getTaskOpers().add(
+                new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,
+                        RunParam.instance().getStringParamValue("CreateBizTaskName"),
+                        authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
 
     }
 
@@ -125,7 +128,9 @@ public class HouseBusinessStart {
             throw new IllegalArgumentException("config exception not hove house");
         }
         for (HouseBusiness houseBusiness: selectedBusiness.getHouseBusinesses()){
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse()));
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(
+                    new HouseBusiness(ownerBusinessHome.getInstance(),
+                            ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse()));
         }
 
         return dataSelected();
