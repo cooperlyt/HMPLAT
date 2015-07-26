@@ -57,7 +57,9 @@
 
         <div class="container">
 
-            <ui:include src="BusinessFile.xhtml"/>
+            <ui:include src="BusinessFile.xhtml">
+                <ui:param name="businessFileEntity" value="#{ownerBusinessFile}"/>
+            </ui:include>
 
 
         </div>

@@ -102,10 +102,10 @@
             <h:form >
                 <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="ajax"
                         render="resultDatas" onselectionchange="treeNodeSelectChange();"
-                        value="#{ownerBusinessFile.tree}" var="_node"
-                        selectionChangeListener="#{ownerBusinessFile.selectionChanged}">
+                        value="#{businessFileEntity.tree}" var="_node"
+                        selectionChangeListener="#{businessFileEntity.selectionChanged}">
                     <r:treeNode type="ALL" expanded="#{_node.expanded}"
-                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (ownerBusinessFile.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
+                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-diff-ignored">
                         <h:outputText value="#{_node.businessNeedFile.name}"
                                       styleClass="file-status "/>
@@ -116,7 +116,7 @@
 
 
                     <r:treeNode type="ANYONE" expanded="#{_node.expanded}"
-                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (ownerBusinessFile.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
+                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-diff-removed">
                         <h:outputText value="#{_node.businessNeedFile.name}"
                                       styleClass="file-status"/>
@@ -125,7 +125,7 @@
                     </r:treeNode>
 
 
-                    <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (ownerBusinessFile.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
+                    <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-file-text">
                         <h:outputText value="#{_node.businessNeedFile.name}"
                                       styleClass="file-status"/>
@@ -134,14 +134,14 @@
 
 
                     <r:treeNode type="ROOT" expanded="#{true}"
-                                styleClass=" #{((not empty ownerBusinessFile.selectNode) and (empty ownerBusinessFile.selectNode.businessNeedFile) and ownerBusinessFile.selectNode.important) ? 'rf-trn-select' : '' }"
+                                styleClass=" #{((not empty businessFileEntity.selectNode) and (empty businessFileEntity.selectNode.businessNeedFile) and businessFileEntity.selectNode.important) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-diff-ignored">
                         <h:outputText value="#{messages.attachFile}" styleClass="file-status"/>
                         <span class="counter right">#{_node.fileCount}</span>
                     </r:treeNode>
 
                     <r:treeNode type="I_ROOT" expanded="#{true}"
-                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty ownerBusinessFile.selectNode) and (empty ownerBusinessFile.selectNode.businessNeedFile) and not ownerBusinessFile.selectNode.important) ? 'rf-trn-select' : '' }"
+                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (empty businessFileEntity.selectNode.businessNeedFile) and not businessFileEntity.selectNode.important) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-diff-ignored">
                         <h:outputText value="#{messages.NeedFile}"
                                       styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
@@ -158,14 +158,14 @@
             <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 70%">
 
                 <a:outputPanel
-                        rendered="#{(empty ownerBusinessFile.selectNode) or ownerBusinessFile.selectNode.emptyFile}"
+                        rendered="#{(empty businessFileEntity.selectNode) or businessFileEntity.selectNode.emptyFile}"
                         layout="block" styleClass="blankslate spacious large-format">
                     <span class="mega-octicon octicon-file-submodule"></span>
 
-                    <h3>#{empty ownerBusinessFile.selectNode ? messages.plase_select_file_node :  messages.not_upload_file}</h3>
+                    <h3>#{empty businessFileEntity.selectNode ? messages.plase_select_file_node :  messages.not_upload_file}</h3>
 
                     <p>
-                        <a:outputPanel rendered="#{empty ownerBusinessFile.selectNode}">
+                        <a:outputPanel rendered="#{empty businessFileEntity.selectNode}">
                             <h:outputText value="#{messages.file_ndoe_description}"/>
                             <a:outputPanel class="octicon octicon-diff-ignored" style="margin: 0 4px"/>
                             <h:outputText value="#{messages.all_file_node_description}"/>
@@ -175,36 +175,36 @@
                             <h:outputText value="#{messages.leaf_file_node_description}"/>
                         </a:outputPanel>
 
-                        <a:outputPanel rendered="#{not empty ownerBusinessFile.selectNode}">
+                        <a:outputPanel rendered="#{not empty businessFileEntity.selectNode}">
                             <a:outputPanel class="octicon octicon-diff-ignored"
-                                           rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"
+                                           rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'ALL'}"
                                            style="margin: 0 4px"/>
 
                             <a:outputPanel class="octicon octicon-diff-removed"
-                                           rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ANYONE'}"
+                                           rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'ANYONE'}"
                                            style="margin: 0 4px"/>
 
                             <a:outputPanel class="octicon octicon-file-text"
-                                           rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN'}"
+                                           rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN'}"
                                            style="margin: 0 4px"/>
 
-                            <h:outputText value="#{ownerBusinessFile.selectNode.businessNeedFile.name}"/>,
+                            <h:outputText value="#{businessFileEntity.selectNode.businessNeedFile.name}"/>,
 
                             <h:outputText value="#{messages.YouCan}"
-                                          rendered="#{ (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                          rendered="#{ (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
                             <a:commandLink value="#{messages.uploadFile}" style="margin: 0 4px"
-                                           rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN'}"/>
+                                           rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN'}"/>
 
                             <h:outputText value="#{messages.Or}"
-                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
                             <h:outputText value="#{messages.set}"
-                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
                             <h:selectBooleanCheckbox style="margin: 0 4px 0 8px"
-                                                     value="#{ownerBusinessFile.noFile}"
-                                                     rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}">
+                                                     value="#{businessFileEntity.noFile}"
+                                                     rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}">
                                 <a:ajax execute="@this" event="click" render="fileTree,passBtn"
                                         oncomplete="treeStatusRefresh();">
                                     <a:attachQueue requestDelay="0"/>
@@ -212,21 +212,21 @@
                             </h:selectBooleanCheckbox>
 
                             <h:outputText value="#{messages.temp_upload_file}"
-                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
 
                             <h:outputText value="#{messages.all_file_node_description}"
-                                          rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"/>
+                                          rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'ALL'}"/>
 
                             <h:outputText value="#{messages.any_file_node_description}"
-                                          rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ANYONE'}"/>
+                                          rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'ANYONE'}"/>
 
                             <h:outputText value="#{messages.plase_select_item_node}"
-                                          rendered="#{not (ownerBusinessFile.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
+                                          rendered="#{not (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
 
                             <a:outputPanel
-                                    rendered="#{ownerBusinessFile.selectNode.businessNeedFile.type eq 'ALL'}"/>
+                                    rendered="#{businessFileEntity.selectNode.businessNeedFile.type eq 'ALL'}"/>
 
 
                         </a:outputPanel>
