@@ -15,14 +15,14 @@ import javax.validation.constraints.Size;
 @Table(name = "BUSINESS_MONEY", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessMoney implements java.io.Serializable {
     // 登记费,变更登记费（半价登记费）,工本费,继承赠与手续费,交易手续费,回迁手续费,商品房交易手续费,备案手续费,测绘费
-    public enum  MoneyType{
-       REGISTER,REGISTER_CHANGE,CARD,DEAL_INHERIT_GIFT,DEAL,DEAL_BACK,DEAL_COMMERCIAL,DEAL_RECORD,MAPPING
-    }
+//    public enum  MoneyType{
+//       REGISTER,REGISTER_CHANGE,CARD,DEAL_INHERIT_GIFT,DEAL,DEAL_BACK,DEAL_COMMERCIAL,DEAL_RECORD,MAPPING
+//    }
 
 	private String id;
     private String typeName;
 	private OwnerBusiness ownerBusiness;
-	private MoneyType moneyTypeId;
+	private String moneyTypeId;
 	private BigDecimal shouldMoney;
 	private BigDecimal factMoney;
 	private String chargeDetails;
@@ -31,20 +31,20 @@ public class BusinessMoney implements java.io.Serializable {
 	public BusinessMoney() {
 	}
 
-    public BusinessMoney(MoneyType moneyTypeId) {
+    public BusinessMoney(String moneyTypeId) {
         this.typeName = typeName;
 
     }
 
 
     public BusinessMoney(String id, OwnerBusiness ownerBusiness,
-                         MoneyType moneyTypeId) {
+                         String moneyTypeId) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
 		this.moneyTypeId = moneyTypeId;
 	}
 	public BusinessMoney(String id, OwnerBusiness ownerBusiness,
-            MoneyType moneyTypeId, BigDecimal shouldMoney, BigDecimal factMoney,
+                         String moneyTypeId, BigDecimal shouldMoney, BigDecimal factMoney,
 			String chargeDetails, String memo) {
 		this.id = id;
 		this.ownerBusiness = ownerBusiness;
@@ -96,15 +96,15 @@ public class BusinessMoney implements java.io.Serializable {
 		this.ownerBusiness = ownerBusiness;
 	}
 
-	@Column(name = "MONEY_TYPE_ID", nullable = false, length = 20)
+	@Column(name = "MONEY_TYPE_ID", nullable = false, length = 32)
 	@NotNull
-	@Size(max = 20)
-    @Enumerated(EnumType.STRING)
-	public MoneyType getMoneyTypeId() {
+	@Size(max = 32)
+
+	public String getMoneyTypeId() {
 		return this.moneyTypeId;
 	}
 
-	public void setMoneyTypeId(MoneyType moneyTypeId) {
+	public void setMoneyTypeId(String moneyTypeId) {
 		this.moneyTypeId = moneyTypeId;
 	}
 
