@@ -23,7 +23,7 @@ import java.util.*;
  */
 @Name("moneyRegister")
 @Scope(ScopeType.CONVERSATION)
-public class MoneyRegister implements TaskSubscribeComponent {
+public class MoneySubscribe implements TaskSubscribeComponent {
 
 
     @In
