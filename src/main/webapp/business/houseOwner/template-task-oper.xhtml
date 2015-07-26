@@ -35,7 +35,7 @@
                     </s:link>
 
 
-                    <s:link styleClass="#{(selectTabIndex eq 3) ? 'selected' : ''} pagehead-nav-item" view="/business/houseOwner/TaskOperEdit.xhtml">
+                    <s:link styleClass="#{(selectTabIndex eq 3) ? 'selected' : ''} pagehead-nav-item" action="#{ownerTaskHandle.operationTask}">
                         <span class="octicon octicon-git-pull-request"></span>
                         #{messages.businessTaskOper}
                     </s:link>

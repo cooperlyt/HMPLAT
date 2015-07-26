@@ -184,5 +184,14 @@ public class OwnerTaskHandle {
         return !getBackTransitions().isEmpty();
     }
 
+    public String operationTask(){
+        if (!businessDefineHome.getEditSubscribeDefines().isEmpty()){
+            businessDefineHome.initEditSubscribes();
+            return "EDIT";
+        }
+        return "COMPLETE";
+
+    }
+
 
 }

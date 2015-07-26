@@ -34,9 +34,8 @@ public class TaskPrepare {
         businessDefineHome.setTaskName(taskInstance.getName());
 
 
-        String result = TaskDescription.getTaskDescription(taskInstance.getId()).getTaskOperComponent().beginTask(taskInstance);
-        businessDefineHome.initEditSubscribes();
-        return result;
+        return TaskDescription.getTaskDescription(taskInstance.getId()).getTaskOperComponent().beginTask(taskInstance);
+        //businessDefineHome.initEditSubscribes();
     }
 
     @In

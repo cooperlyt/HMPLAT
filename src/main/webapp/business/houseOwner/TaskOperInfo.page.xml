@@ -4,27 +4,6 @@
       no-conversation-view-id="/func/system/business/task.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <navigation from-action="#{ownerTaskHandle.complete}">
-
-            <rule if-outcome="taskCompleted" if="#{empty from}">
-                <redirect include-page-params="true"
-                          view-id="/func/system/business/task.xhtml">
-                    <message severity="INFO">
-                        #{messages.taskCompleted}
-                    </message>
-                </redirect>
-            </rule>
-            <rule if-outcome="taskCompleted" if="#{not empty from}">
-                <redirect view-id="#{from}">
-                    <message severity="INFO">
-                        #{messages.taskCompleted}
-                    </message>
-                </redirect>
-            </rule>
-
-
-    </navigation>
-
     <navigation from-action="#{ownerTaskHandle.operationTask}">
 
 
@@ -37,6 +16,8 @@
 
     </navigation>
 
+
+
     <navigation from-action="#{ownerTaskHandle.back}">
 
         <rule if-outcome="taskCompleted">
@@ -46,6 +27,4 @@
 
     </navigation>
 
-    <action execute="#{businessDefineHome.validComplete}"/>
-    <action execute="#{businessDefineHome.validSubscribes}"/>
 </page>
