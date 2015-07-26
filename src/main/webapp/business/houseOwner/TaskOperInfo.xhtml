@@ -42,6 +42,17 @@
     </ui:decorate>
     </a:outputPanel>
 
+
+    <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerTaskHandle.backComments}">
+        <span class="octicon octicon-alert"/>
+        <strong>#{messages.fallback}! </strong>#{ownerTaskHandle.backComments}
+    </a:outputPanel>
+
+    <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerTaskHandle.checkComments}">
+        <span class="octicon octicon-alert"/>
+        <strong>#{messages.checkFail}! </strong>#{ownerTaskHandle.checkComments}
+    </a:outputPanel>
+
     <div>
 
         <ui:include src="/func/house/owner/BusinessMessageList.xhtml">
@@ -56,6 +67,8 @@
             #{_info.key}:#{messages.HouseInfoCompareCreateWarning}
         </ui:decorate>
     </a:repeat>
+
+
 
     <div class="new-user-avatar-cta" style="margin-top: 5px">
             <a:outputPanel rendered="#{ownerTaskHandle.canBack}">

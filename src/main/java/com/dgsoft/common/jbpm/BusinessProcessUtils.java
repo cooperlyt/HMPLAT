@@ -47,7 +47,7 @@ public class BusinessProcessUtils extends BusinessProcess {
     @Override
     public void endTask(String transitionName) {
         super.endTask(transitionName);
-        ManagedJbpmContext.instance().getSession().flush();
+       // ManagedJbpmContext.instance().getSession().flush();
         Logging.getLog(getClass()).debug("call endTask:" + transitionName);
         Events.instance().raiseTransactionSuccessEvent("org.jboss.seam.endTask");
     }

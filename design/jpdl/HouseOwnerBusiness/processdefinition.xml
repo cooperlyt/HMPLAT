@@ -90,10 +90,10 @@
 
 	<decision name="审核结果">
 		<transition to="登薄" name="审核通过">
-			<condition expression="#{transitionType eq 'NEXT'}"></condition>
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
 		<transition to="受理" name="审核不通过">
-			<condition expression="#{transitionType eq 'BACK'}"></condition>
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
 	</decision>
 
