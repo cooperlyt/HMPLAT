@@ -13,82 +13,12 @@
 
     <ui:param name="selectTabIndex" value="3"/>
 
+    <ui:decorate template="EditSubscribeStepNav.xhtml">
+        <h:commandLink styleClass="button primary first-in-line" action="#{ownerTaskHandle.saveTask}">
+            #{messages.save}
+        </h:commandLink>
 
-    <div class="new-repo-container">
-        <r:messages globalOnly="true" ajaxRendered="false"/>
-        <br/>
-
-        <h:form rendered="#{taskDescription.checkTask}">
-
-            <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
-                <ui:define name="label">
-                    #{messages.taskCheckComments}
-                </ui:define>
-                <ui:param name="for" value="taskCheckCommentsInput"/>
-                <h:inputTextarea label="#{messages.taskCheckComments}" required="true" id="taskCheckCommentsInput" styleClass="form-control"
-                                 value="#{ownerTaskHandle.transitionComments}" rows="4">
-                    <r:validator event="change"/>
-                </h:inputTextarea>
-            </s:decorate>
-
-            <hr/>
-
-            <div class="subnav org-toolbar">
-                <h:commandLink styleClass="button primary right" action="#{ownerTaskHandle.complete}">
-                    #{messages.Agree}
-                </h:commandLink>
-                <h:commandLink styleClass="button danger right" action="#{ownerTaskHandle.back}">
-                    #{messages.Reject}
-                </h:commandLink>
-
-            </div>
+    </ui:decorate>
 
 
-        </h:form>
-
-        <a:outputPanel rendered="#{not taskDescription.checkTask}">
-
-
-            <c:forEach items="#{businessDefineHome.editSubscribeDefines}" var="_item">
-                    <a:outputPanel rendered="#{_item.haveOutPage}">
-                    <f:subview>
-                        <ui:include src="#{_item.outPage}"/>
-                    </f:subview>
-
-                    </a:outputPanel>
-
-            </c:forEach>
-
-        <h:form >
-
-
-            <c:forEach items="#{businessDefineHome.editSubscribeDefines}" var="_item">
-                <a:outputPanel rendered="#{_item.havePage}">
-                    <f:subview>
-                        <ui:include src="#{_item.page}"/>
-                    </f:subview>
-
-                </a:outputPanel>
-
-            </c:forEach>
-
-            <hr/>
-
-
-
-            <h:commandLink styleClass="button primary first-in-line" action="#{ownerTaskHandle.saveTask}">
-                #{messages.save}
-            </h:commandLink>
-
-        </h:form>
-        </a:outputPanel>
-    </div>
-
-    <h:outputScript rendered="#{(facesContext.maximumSeverity==null) or (facesContext.maximumSeverity.ordinal lt 2)}">
-        $(document).ready(
-        function(){
-        initEditInput();
-        });
-
-    </h:outputScript>
 </ui:composition>

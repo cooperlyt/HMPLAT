@@ -8,15 +8,13 @@
 
 
 
-        <rule if-outcome="SUCCESS">
+        <rule if-outcome="SUCCESS" >
             <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
         </rule>
-        <rule if-outcome="INFO">
-            <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
+        <rule if-outcome="CONTINUE">
+            <redirect view-id="/business/houseOwner/TaskOperEdit.xhtml"/>
         </rule>
-        <rule if-outcome="WARN">
-            <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
-        </rule>
+
 
 
     </navigation>

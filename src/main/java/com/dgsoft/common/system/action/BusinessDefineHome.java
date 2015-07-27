@@ -217,13 +217,13 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         Collections.sort(completeSubscribes, new Comparator<TaskSubscribe>() {
             @Override
             public int compare(TaskSubscribe o1, TaskSubscribe o2) {
-                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
             }
         });
         Collections.sort(operSubscribes, new Comparator<TaskSubscribe>() {
             @Override
             public int compare(TaskSubscribe o1, TaskSubscribe o2) {
-                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
             }
         });
 
@@ -246,13 +246,13 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         Collections.sort(viewSubscribeGroups, new Comparator<SubscribeGroup>() {
             @Override
             public int compare(SubscribeGroup o1, SubscribeGroup o2) {
-                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
             }
         });
         Collections.sort(editSubscribeGroups, new Comparator<SubscribeGroup>() {
             @Override
             public int compare(SubscribeGroup o1, SubscribeGroup o2) {
-                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
             }
         });
     }
@@ -291,8 +291,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         throw new IllegalArgumentException("edit gorup id not found");
     }
 
-    private boolean saveEditSubscribes() {
-
+    public boolean saveEditSubscribes() {
 
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
@@ -304,18 +303,22 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return true;
     }
 
+    public void firstEditGroup(){
+        setCurEditGroup(getEditSubscribeGroups().get(0));
+    }
+
     public boolean nextEditGroup(){
         // exception
         if (curEditGroup == null){
-            curEditGroup = getEditSubscribeGroups().get(0);
+            setCurEditGroup(getEditSubscribeGroups().get(0));
         }else{
             if (!saveEditSubscribes()) {
                 return false;
             }
-            curEditGroup = getEditSubscribeGroups().get(getEditSubscribeGroups().indexOf(curEditGroup) + 1);
+            setCurEditGroup(getEditSubscribeGroups().get(getEditSubscribeGroups().indexOf(curEditGroup) + 1));
 
         }
-        initEditSubscribes();
+
         return true;
     }
 
@@ -397,7 +400,11 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public List<TaskSubscribeReg.EditSubscribeDefine> getEditSubscribeDefines() {
+        if(curEditGroup == null){
+            return new ArrayList<TaskSubscribeReg.EditSubscribeDefine>(0);
+        }
         List<TaskSubscribeReg.EditSubscribeDefine> result = new ArrayList<TaskSubscribeReg.EditSubscribeDefine>();
+
         for(ViewSubscribe subscribe: curEditGroup.getViewSubscribeList()){
             result.add(taskSubscribeReg.getEditDefineByName(subscribe.getRegName()));
         }

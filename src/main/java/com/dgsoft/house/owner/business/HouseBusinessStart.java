@@ -143,13 +143,17 @@ public class HouseBusinessStart {
         }
 
 
+        return beginEdit();
+
+    }
+
+    public String beginEdit(){
         if (businessDefineHome.isHaveEditSubscribe()){
-            businessDefineHome.nextEditGroup();
+            businessDefineHome.firstEditGroup();
             return BUSINESS_INFO_PAGE;
         } else{
             return getInfoCompletePath();
         }
-
     }
 
     private String getInfoCompletePath(){
@@ -167,7 +171,12 @@ public class HouseBusinessStart {
             businessDefineHome.nextEditGroup();
             return BUSINESS_INFO_PAGE;
         }else{
-            return getInfoCompletePath();
+            if (businessDefineHome.saveEditSubscribes()){
+                return getInfoCompletePath();
+            }else{
+                return BUSINESS_INFO_PAGE;
+            }
+
         }
 
     }

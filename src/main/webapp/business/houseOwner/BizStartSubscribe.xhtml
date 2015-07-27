@@ -45,87 +45,14 @@
 
     </div>
     <div class="container">
-        <a:outputPanel rendered="#{not businessDefineHome.onePageEdit}">
-        <ol class="steps">
-            <a:repeat value="#{businessDefineHome.pastEditGroups}" var="_group">
-                <li class="complete" >
-                    <s:link styleClass="inner-block-link">
-                    <span class="mega-octicon octicon-check"></span>
-                    <strong class="step">#{messages.complete} </strong>
-                    #{_group.name}
-                        <f:param name="curEditGroupId" value="#{_group.id}"/>
-                    </s:link>
-                </li>
-            </a:repeat>
+        <ui:decorate template="EditSubscribeStepNav.xhtml">
+            <h:commandLink styleClass="button primary first-in-line" action="#{houseBusinessStart.infoComplete}">
+                #{messages.contiune}
+            </h:commandLink>
+
+        </ui:decorate>
 
 
-            <li class="current">
-                <span class=" #{(empty businessDefineHome.curEditGroup.iconCss) ? 'mega-octicon octicon-file-text' : businessDefineHome.curEditGroup.iconCss}"/>
-                <strong class="step">#{messages.Step}#{' '}#{businessDefineHome.curEditGroup.priority + 1}:</strong>
-                #{businessDefineHome.curEditGroup.name}
-            </li>
-
-            <a:repeat value="#{businessDefineHome.afterEditGroups}" var="_group">
-                <li>
-                    <span class="#{(empty _group.iconCss) ? 'mega-octicon octicon-file-text' : _group.iconCss}"></span>
-                    <strong class="step">#{messages.Step}#{' '}#{_group.priority + 1}:</strong>
-                    #{_group.name}
-                </li>
-            </a:repeat>
-
-
-        </ol>
-        </a:outputPanel>
-
-        <div class="new-repo-container">
-            <r:messages globalOnly="true" ajaxRendered="false"/>
-            <br/>
-
-
-            <a:outputPanel >
-
-
-                <c:forEach items="#{businessDefineHome.editSubscribeDefines}" var="_item">
-                    <a:outputPanel rendered="#{_item.haveOutPage}">
-                        <f:subview>
-                            <ui:include src="#{_item.outPage}"/>
-                        </f:subview>
-
-                    </a:outputPanel>
-
-                </c:forEach>
-
-                <h:form >
-
-
-                    <c:forEach items="#{businessDefineHome.editSubscribeDefines}" var="_item">
-                        <a:outputPanel rendered="#{_item.havePage}">
-                            <f:subview>
-                                <ui:include src="#{_item.page}"/>
-                            </f:subview>
-
-                        </a:outputPanel>
-
-                    </c:forEach>
-
-                    <hr/>
-
-
-                    <h:commandLink styleClass="button primary first-in-line" action="#{houseBusinessStart.infoComplete}">
-                        #{messages.contiune}
-                    </h:commandLink>
-
-                </h:form>
-            </a:outputPanel>
-        </div>
-
-        <h:outputScript rendered="#{(facesContext.maximumSeverity==null) or (facesContext.maximumSeverity.ordinal lt 2)}">
-            $(document).ready(
-            function(){
-            initEditInput();
-            });
-
-        </h:outputScript>
 
     </div>
 

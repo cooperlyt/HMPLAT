@@ -150,10 +150,16 @@ public class OwnerTaskHandle {
 
     public String saveTask() {
         //TODO needFile
-        if (businessDefineHome.nextEditGroup() && "updated".equals(ownerBusinessHome.update())) {
-             return "SUCCESS";
-        }else{
-            return "ERROR";
+        if (businessDefineHome.isHaveNextEditGroup()){
+            businessDefineHome.nextEditGroup();
+            ownerBusinessHome.update();
+            return "CONTINUE";
+        }else {
+            if (businessDefineHome.saveEditSubscribes() && "updated".equals(ownerBusinessHome.update())){
+                return "SUCCESS";
+            }else{
+                return "CONTINUE";
+            }
         }
     }
 
@@ -185,7 +191,7 @@ public class OwnerTaskHandle {
     public String operationTask(){
 
         if (businessDefineHome.isHaveEditSubscribe()){
-            businessDefineHome.nextEditGroup();
+            businessDefineHome.firstEditGroup();
             return "EDIT";
         }
         return "COMPLETE";
