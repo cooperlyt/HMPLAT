@@ -102,4 +102,17 @@ public class MoneySubscribe implements TaskSubscribeComponent {
 
         return true;
     }
+
+    public BusinessMoney getTotal(){
+        BusinessMoney result = new BusinessMoney();
+        result.setShouldMoney(BigDecimal.ZERO);
+        result.setFactMoney(BigDecimal.ZERO);
+        for(BusinessMoney money: businessMoneyList){
+            result.setShouldMoney(result.getShouldMoney().add(money.getShouldMoney()));
+            result.setFactMoney(result.getFactMoney().add(money.getFactMoney()));
+        }
+        return result;
+    }
+
+
 }

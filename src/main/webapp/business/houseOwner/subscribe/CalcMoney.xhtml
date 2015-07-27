@@ -8,33 +8,79 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+    <a:outputPanel layout="block" styleClass="panel panel-default"
+                   rendered="#{not empty calcBusinessMoney.businessMoneyList}">
 
-    <a:repeat var="_item" value="#{calcBusinessMoney.businessMoneyList}">
-        <f:subview>
-        <s:decorate  styleClass="form-group" template="/layout/edit-big.xhtml">
-            <ui:define name="label">
-                #{_item.typeName}
-            </ui:define>
-            <ui:param name="for" value="shouldMoneyInput"/>
-            <div class="input-group">
-                <span class="input-group-addon">#{messages.shouldMoney}</span>
-                <h:inputText id="shouldMoneyInput" value="#{_item.shouldMoney}" required="true" class="form-control" label="#{_item.typeName} #{messages.shouldMoney}"
-                             p:placeholder="#{messages.shouldMoney}">
-                    <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}" type="currency"/>
-                    <f:validateDoubleRange minimum="0"/>
-                </h:inputText>
-                <span class="input-group-addon">#{messages.factMoney}</span>
-                <h:inputText id="factMoneyInput" value="#{_item.factMoney}" required="true" class="form-control" label="#{_item.typeName} #{messages.messages.factMoney}"
-                             p:placeholder="#{messages.factMoney}">
-                    <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}" type="currency"/>
-                    <f:validateDoubleRange minimum="0"/>
-                </h:inputText>
-            </div>
-        </s:decorate>
 
-        </f:subview>
-        
+        <div class="panel-body">
+            <a:region >
+            <a:repeat var="_item" value="#{calcBusinessMoney.businessMoneyList}">
 
-    </a:repeat>
+                <f:subview>
+                    <s:decorate id="moneyCalcInput" styleClass="form-group" template="/layout/edit-big.xhtml">
+                        <ui:define name="label">
+                            #{_item.typeName}
+                        </ui:define>
+                        <ui:param name="for" value="shouldMoneyInput"/>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">#{messages.shouldMoney}</span>
+                            <h:inputText id="shouldMoneyInput" value="#{_item.shouldMoney}" required="true"
+                                         class="form-control" label="#{_item.typeName} #{messages.shouldMoney}"
+                                         p:placeholder="#{messages.shouldMoney}">
+                                <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
+                                                 type="currency"/>
+                                <f:validateDoubleRange minimum="0"/>
+                                <a:ajax event="change" render="moneyCalcInput,calcMoneyTotal" execute="@region"/>
+                            </h:inputText>
+                            <span class="input-group-addon">#{messages.factMoney}</span>
+                            <h:inputText id="factMoneyInput" value="#{_item.factMoney}" required="true"
+                                         class="form-control" label="#{_item.typeName} #{messages.messages.factMoney}"
+                                         p:placeholder="#{messages.factMoney}">
+                                <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
+                                                 type="currency"/>
+                                <f:validateDoubleRange minimum="0"/>
+                                <a:ajax event="change" render="moneyCalcInput,calcMoneyTotal" execute="@region"/>
+                            </h:inputText>
+                        </div>
+                    </s:decorate>
+
+                </f:subview>
+
+
+            </a:repeat>
+            </a:region>
+
+
+
+
+        </div>
+        <div class="panel-footer">
+            #{messages.recordTotal}
+            <a:outputPanel id="calcMoneyTotal" layout="block" class="right">
+
+                <div style="display: table-cell;">
+                    #{messages.shouldMoney}
+                </div>
+                <div style="display: table-cell;">
+                    <h:outputText value="#{calcBusinessMoney.total.shouldMoney}">
+                        <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
+                                         type="currency"/>
+                    </h:outputText>
+
+                </div>
+                <div style="display: table-cell;">
+                    #{messages.factMoney}
+                </div>
+                <div style="display: table-cell;">
+                    <h:outputText value="#{calcBusinessMoney.total.factMoney}">
+                        <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
+                                         type="currency"/>
+                    </h:outputText>
+                </div>
+
+            </a:outputPanel>
+        </div>
+    </a:outputPanel>
 
 </ui:composition>
