@@ -335,7 +335,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         if (curEditGroup == null) {
             return true;
         }
-        return (getEditSubscribeGroups().indexOf(curEditGroup) == (getEditSubscribeGroups().size() - 1));
+        return (getEditSubscribeGroups().indexOf(curEditGroup) != (getEditSubscribeGroups().size() - 1));
     }
 
     public void previousEditGroup(){
