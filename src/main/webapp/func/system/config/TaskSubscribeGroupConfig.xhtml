@@ -14,6 +14,11 @@
 
         <div class="tabnav">
             <div class="right">
+                <a onclick="if(jQuery(#{r:element('groupEditForm')}).is(':visible')){jQuery(#{r:element('groupEditForm')}).hide();}else{jQuery(#{r:element('groupEditForm')}).show();}; return false;"
+                        class="minibutton primary">
+                    <span class="octicon octicon-plus"></span>
+                    #{messages.create}#{messages.ViewSubscribeGroup}
+                </a>
             </div>
 
             <nav class="tabnav-tabs">
@@ -36,14 +41,6 @@
             </nav>
 
         </div>
-
-
-    <div class="subnav">
-        <button onclick="if(jQuery(#{r:element('groupEditForm')}).is(':visible')){jQuery(#{r:element('groupEditForm')}).hide();}else{jQuery(#{r:element('groupEditForm')}).show();}; return false;"
-                class="button primary right">
-            #{messages.create}#{' '}#{messages.ViewSubscribeGroup}
-        </button>
-    </div>
 
 
     <h:form id="groupEditForm" styleClass="new-label">
