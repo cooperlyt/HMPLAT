@@ -11,6 +11,31 @@
 
     <ui:define name="subscribeBody">
 
+        <div class="tabnav">
+            <div class="right">
+            </div>
+
+            <nav class="tabnav-tabs">
+                <s:link view="/func/system/config/TaskSubscribeGroupConfig.xhtml" class="tabnav-tab">
+                    <span class="octicon octicon-eye"></span>
+                    #{messages.viewSubscribe}
+                    <f:param name="groupType" value="TASK_INFO"/>
+                </s:link>
+                <s:link view="/func/system/config/TaskSubscribeGroupConfig.xhtml" class="tabnav-tab ">
+                    <span class="octicon octicon-pencil"></span>
+                    #{messages.editSubscribe}
+                    <f:param name="groupType" value="TASK_OPERATOR"/>
+                </s:link>
+
+                <s:link view="/func/system/config/TaskComponentSubscribeConfig.xhtml" class="tabnav-tab selected">
+                    <span class="octicon octicon-puzzle"></span>
+                    #{messages.componentSubscribe}
+                </s:link>
+
+            </nav>
+
+        </div>
+
     <div class="js-curd-table-box">
         <div class="table-list-header" style="margin-right: 1px;">
             <a:outputPanel layout="block" ajaxRendered="true" styleClass="table-list-filters">

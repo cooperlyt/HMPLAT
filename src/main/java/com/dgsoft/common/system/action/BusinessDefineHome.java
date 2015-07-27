@@ -123,7 +123,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
+
     public List<String> getWfTaskNames() {
+
+
         ProcessDefinition lasterPD = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(getInstance().getWfName());
 
         return new ArrayList<String>(lasterPD.getTaskMgmtDefinition().getTasks().keySet());

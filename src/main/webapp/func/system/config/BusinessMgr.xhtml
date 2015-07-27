@@ -268,10 +268,12 @@
 
                         <ul class="notification-actions">
                             <li class="mute">
-                                <s:link styleClass="btn-link tooltipped tooltipped-w" style="color: #767676" p:aria-label="#{messages.BusinessDefingConfig}"
-                                        view="/func/system/config/TaskSubscribeConfig.xhtml">
+                                <s:link styleClass="btn-link tooltipped tooltipped-w" style="color: #767676"
+                                        p:aria-label="#{messages.BusinessDefingConfig}"
+                                        view="/func/system/config/TaskSubscribeGroupConfig.xhtml">
                                     <f:param name="businessDefineId" value="#{_item.id}"/>
-                                    <span class="octicon octicon-puzzle"/>
+                                    <f:param name="groupType" value="TASK_INFO"/>
+                                    <span class="octicon octicon-tools"/>
                                 </s:link>
                             </li>
                             <li class="mute">

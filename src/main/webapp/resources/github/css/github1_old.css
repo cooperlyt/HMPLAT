@@ -1446,7 +1446,8 @@ p.explain .minibutton {
 }
 
 .tabnav-tabs {
-    display: inline-block
+    display: inline-block;
+    margin-bottom: -1px;
 }
 
 .tabnav-tabs > li {

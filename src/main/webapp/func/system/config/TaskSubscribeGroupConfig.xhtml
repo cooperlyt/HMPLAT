@@ -12,6 +12,32 @@
 
     <ui:define name="subscribeBody">
 
+        <div class="tabnav">
+            <div class="right">
+            </div>
+
+            <nav class="tabnav-tabs">
+                <s:link view="/func/system/config/TaskSubscribeGroupConfig.xhtml" class="tabnav-tab #{(businessSubscribeConfig.groupTypeName eq 'TASK_INFO') ? 'selected' : ''} ">
+                    <span class="octicon octicon-eye"></span>
+                    #{messages.viewSubscribe}
+                    <f:param name="groupType" value="TASK_INFO"/>
+                </s:link>
+                <s:link view="/func/system/config/TaskSubscribeGroupConfig.xhtml" class="tabnav-tab #{(businessSubscribeConfig.groupTypeName eq 'TASK_OPERATOR') ? 'selected' : ''}">
+                    <span class="octicon octicon-pencil"></span>
+                    #{messages.editSubscribe}
+                    <f:param name="groupType" value="TASK_OPERATOR"/>
+                </s:link>
+
+                <s:link view="/func/system/config/TaskComponentSubscribeConfig.xhtml" class="tabnav-tab ">
+                    <span class="octicon octicon-puzzle"></span>
+                    #{messages.componentSubscribe}
+                </s:link>
+
+            </nav>
+
+        </div>
+
+
     <div class="subnav">
         <button onclick="if(jQuery(#{r:element('groupEditForm')}).is(':visible')){jQuery(#{r:element('groupEditForm')}).hide();}else{jQuery(#{r:element('groupEditForm')}).show();}; return false;"
                 class="button primary right">
@@ -60,7 +86,7 @@
     <h:form>
         <a:outputPanel id="viewGroupList">
 
-            <a:repeat value="#{businessDefineHome.viewSubscribeGroups}" var="_group">
+            <a:repeat value="#{(businessSubscribeConfig.groupTypeName eq 'TASK_INFO') ? businessDefineHome.viewSubscribeGroups : businessDefineHome.editSubscribeGroups}" var="_group">
                 <div class="js-curd-table-box" style="margin-bottom: 20px">
 
 
