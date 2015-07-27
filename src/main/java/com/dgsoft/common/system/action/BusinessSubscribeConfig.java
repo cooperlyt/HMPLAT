@@ -245,11 +245,19 @@ public class BusinessSubscribeConfig {
         for (SubscribeGroup group : businessDefineHome.getInstance().getSubscribeGroups()) {
             if (group.getId().equals(selectGroupId)) {
                 businessDefineHome.getInstance().getSubscribeGroups().remove(group);
-                businessDefineHome.update();
-                businessDefineHome.refreshSubscribe();
-                return;
+
+                break;
             }
         }
+        businessDefineHome.refreshSubscribe();
+        List<SubscribeGroup> groups = getSubscribeGroups();
+
+        for(int i = 0 ; i < groups.size(); i++){
+            groups.get(i).setPriority(i + 1);
+        }
+
+        businessDefineHome.update();
+
 
     }
 

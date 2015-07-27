@@ -4,6 +4,8 @@
       no-conversation-view-id="/func/system/business/task.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
+    <param name="curEditGroupId" value="#{businessDefineHome.curEditGroupId}"/>
+
     <navigation from-action="#{ownerTaskHandle.saveTask}">
 
 

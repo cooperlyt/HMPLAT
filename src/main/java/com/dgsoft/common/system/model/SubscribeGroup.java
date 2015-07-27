@@ -172,7 +172,7 @@ public class SubscribeGroup implements java.io.Serializable, OrderModel {
         Collections.sort(result, new Comparator<ViewSubscribe>() {
             @Override
             public int compare(ViewSubscribe o1, ViewSubscribe o2) {
-                return new Integer(o2.getPriority()).compareTo(o1.getPriority());
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
             }
         });
         return result;
