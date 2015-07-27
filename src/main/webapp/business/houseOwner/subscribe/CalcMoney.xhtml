@@ -14,19 +14,19 @@
 
         <div class="panel-body">
             <a:region >
-            <a:repeat var="_item" value="#{calcBusinessMoney.businessMoneyList}">
+            <a:repeat var="_moneyItem" value="#{calcBusinessMoney.businessMoneyList}">
 
                 <f:subview>
                     <s:decorate id="moneyCalcInput" styleClass="form-group" template="/layout/edit-big.xhtml">
                         <ui:define name="label">
-                            #{_item.typeName}
+                            #{_moneyItem.typeName}
                         </ui:define>
                         <ui:param name="for" value="shouldMoneyInput"/>
 
                         <div class="input-group">
                             <span class="input-group-addon">#{messages.shouldMoney}</span>
-                            <h:inputText id="shouldMoneyInput" value="#{_item.shouldMoney}" required="true"
-                                         class="form-control" label="#{_item.typeName} #{messages.shouldMoney}"
+                            <h:inputText id="shouldMoneyInput" value="#{_moneyItem.shouldMoney}" required="true"
+                                         class="form-control" label="#{_moneyItem.typeName} #{messages.shouldMoney}"
                                          p:placeholder="#{messages.shouldMoney}">
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
                                                  type="currency"/>
@@ -34,8 +34,8 @@
                                 <a:ajax event="change" render="moneyCalcInput,calcMoneyTotal" execute="@region"/>
                             </h:inputText>
                             <span class="input-group-addon">#{messages.factMoney}</span>
-                            <h:inputText id="factMoneyInput" value="#{_item.factMoney}" required="true"
-                                         class="form-control" label="#{_item.typeName} #{messages.messages.factMoney}"
+                            <h:inputText id="factMoneyInput" value="#{_moneyItem.factMoney}" required="true"
+                                         class="form-control" label="#{_moneyItem.typeName} #{messages.messages.factMoney}"
                                          p:placeholder="#{messages.factMoney}">
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
                                                  type="currency"/>
