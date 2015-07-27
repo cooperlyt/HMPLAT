@@ -388,7 +388,7 @@ public class BusinessSubscribeConfig {
     @Transactional
     public void createViewSubscribe() {
         subscribeGroupHome.getInstance().getViewSubscribes().add(
-                new ViewSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(), createRegName, subscribeGroupHome.getMaxPriority() + 1, subscribeGroupHome.getInstance()));
+                new ViewSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(), createRegName, subscribeGroupHome.getMaxPriority(groupType) + 1, subscribeGroupHome.getInstance()));
         subscribeGroupHome.update();
     }
 
