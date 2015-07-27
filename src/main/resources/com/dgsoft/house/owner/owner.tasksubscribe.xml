@@ -381,6 +381,13 @@
         </description>
     </view-subscribe>
 
+    <edit-subscribe name="calcMoney" page="/business/houseOwner/subscribe/CalcMoney.xhtml"
+                    out-page="" component="calcBusinessMoney">
+        <description>
+            核费
+        </description>
+    </edit-subscribe>
+
     <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
             >
         <description>
