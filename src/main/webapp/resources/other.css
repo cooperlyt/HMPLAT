@@ -874,6 +874,20 @@ a:focus, a:hover{
     background-image: none;
 }
 
+.inner-block-link{
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: #777;
+}
+
+.inner-block-link,.inner-block-link:hover,.inner-block-link:active,.inner-block-link:focus{
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
 
 
 

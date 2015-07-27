@@ -484,11 +484,6 @@
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
-    <end-subscribe name="HouseInfoModify" component="writeHouseInfo">
-        <description>
-            空间库 房屋信息 回写
-        </description>
-    </end-subscribe>
 
     <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
         <description>

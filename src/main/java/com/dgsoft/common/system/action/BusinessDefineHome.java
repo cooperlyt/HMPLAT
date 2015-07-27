@@ -368,6 +368,29 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return result;
     }
 
+    public List<SubscribeGroup> getAfterEditGroups(){
+
+        if (curEditGroup != null){
+            List<SubscribeGroup> result = new ArrayList<SubscribeGroup>();
+            boolean find = false;
+            for (SubscribeGroup group: getEditSubscribeGroups()){
+                if (curEditGroup.equals(group)){
+                    find = true;
+                }else if (find){
+                    result.add(group);
+                }
+            }
+            return result;
+        }else{
+            return getEditSubscribeGroups();
+        }
+
+    }
+
+    public boolean isOnePageEdit(){
+        return getEditSubscribeGroups().size() == 1;
+    }
+
 
     public boolean isHaveEditSubscribe(){
         return !getEditSubscribeGroups().isEmpty();

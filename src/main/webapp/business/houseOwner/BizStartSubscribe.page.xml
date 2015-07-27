@@ -16,4 +16,6 @@
             <redirect view-id="/business/houseOwner/BizStartFileUpload.xhtml"/>
         </rule>
     </navigation>
+
+    <param name="curEditGroupId" value="#{businessDefineHome.curEditGroupId}"/>
 </page>

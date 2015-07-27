@@ -45,7 +45,37 @@
 
     </div>
     <div class="container">
+        <a:outputPanel rendered="#{not businessDefineHome.onePageEdit}">
+        <ol class="steps">
+            <a:repeat value="#{businessDefineHome.pastEditGroups}" var="_group">
+                <li class="complete" >
+                    <s:link styleClass="inner-block-link">
+                    <span class="mega-octicon octicon-check"></span>
+                    <strong class="step">#{messages.complete} </strong>
+                    #{_group.name}
+                        <f:param name="curEditGroupId" value="#{_group.id}"/>
+                    </s:link>
+                </li>
+            </a:repeat>
 
+
+            <li class="current">
+                <span class=" #{(empty businessDefineHome.curEditGroup.iconCss) ? 'mega-octicon octicon-file-text' : businessDefineHome.curEditGroup.iconCss}"/>
+                <strong class="step">#{messages.Step}#{' '}#{businessDefineHome.curEditGroup.priority + 1}:</strong>
+                #{businessDefineHome.curEditGroup.name}
+            </li>
+
+            <a:repeat value="#{businessDefineHome.afterEditGroups}" var="_group">
+                <li>
+                    <span class="#{(empty _group.iconCss) ? 'mega-octicon octicon-file-text' : _group.iconCss}"></span>
+                    <strong class="step">#{messages.Step}#{' '}#{_group.priority + 1}:</strong>
+                    #{_group.name}
+                </li>
+            </a:repeat>
+
+
+        </ol>
+        </a:outputPanel>
 
         <div class="new-repo-container">
             <r:messages globalOnly="true" ajaxRendered="false"/>
@@ -82,7 +112,7 @@
 
 
                     <h:commandLink styleClass="button primary first-in-line" action="#{houseBusinessStart.infoComplete}">
-                        #{messages.save}
+                        #{messages.contiune}
                     </h:commandLink>
 
                 </h:form>
