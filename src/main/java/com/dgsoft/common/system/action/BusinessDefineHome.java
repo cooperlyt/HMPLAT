@@ -450,6 +450,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
                 result += group.getViewSubscribes().size();
             }
         }
+
+        if (Subscribe.CREATE_TASK_NAME.equals(taskName)){
+            result += getInstance().getBusinessCreateDataValids().size();
+        }
         return result;
     }
 

@@ -363,7 +363,8 @@
                                             <a:outputPanel styleClass="label-description right">
 
                                                 <a:outputPanel ajaxRendered="true">
-                                                    #{taskSubscribeReg.getViewDefineByName(_subscribe.regName).description}
+                                                    <h:outputText value="#{taskSubscribeReg.getViewDefineByName(_subscribe.regName).description}" rendered="#{businessSubscribeConfig.groupTypeName eq 'TASK_INFO'}" />
+                                                    <h:outputText value="#{taskSubscribeReg.getViewDefineByName(_subscribe.regName).description}" rendered="#{businessSubscribeConfig.groupTypeName eq 'TASK_OPERATOR'}" />
                                                 </a:outputPanel>
                                             </a:outputPanel>
                                             <a:outputPanel ajaxRendered="true"
