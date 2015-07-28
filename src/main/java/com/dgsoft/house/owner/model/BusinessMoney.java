@@ -4,6 +4,7 @@ package com.dgsoft.house.owner.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +28,9 @@ public class BusinessMoney implements java.io.Serializable {
 	private BigDecimal factMoney;
 	private String chargeDetails;
 	private String memo;
+    private Date factTime;
+    private String paymentNo;
+
 
 	public BusinessMoney() {
 	}
@@ -133,5 +137,27 @@ public class BusinessMoney implements java.io.Serializable {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+
+    @Column(name = "PAYMENT_NO",length = 25,nullable = true)
+    @Size(max = 25)
+    @NotNull
+    public String getPaymentNo() {
+        return paymentNo;
+    }
+
+    public void setPaymentNo(String paymentNo) {
+        this.paymentNo = paymentNo;
+    }
+
+
+    @Column(name = "FACT_TIME",nullable = true)
+    @NotNull
+    public Date getFactTime() {
+        return factTime;
+    }
+
+    public void setFactTime(Date factTime) {
+        this.factTime = factTime;
+    }
 
 }
