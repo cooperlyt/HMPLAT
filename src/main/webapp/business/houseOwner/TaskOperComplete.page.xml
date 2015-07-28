@@ -25,6 +25,18 @@
 
     </navigation>
 
+
+    <navigation from-action="#{ownerTaskHandle.reject}">
+        <rule if-outcome="taskCompleted">
+            <redirect include-page-params="true"
+                      view-id="/func/system/business/task.xhtml">
+                <message severity="INFO">
+                    #{messages.taskCompleted}
+                </message>
+            </redirect>
+        </rule>
+    </navigation>
+
     <navigation from-action="#{ownerTaskHandle.operationTask}">
 
 
