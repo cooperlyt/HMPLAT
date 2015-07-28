@@ -56,7 +56,9 @@
 
 
     <div class="new-repo-container">
-    <div class="new-user-avatar-cta">
+
+
+    <a:outputPanel layout="block" styleClass="new-user-avatar-cta" rendered="#{not taskDescription.checkTask}">
 
         <p>
 
@@ -72,7 +74,7 @@
         <strong>#{messages.TaskVariableSaved}</strong>
             #{messages.completeDescription}
         </p>
-    </div>
+   </a:outputPanel>
 
         <h:form rendered="#{taskDescription.checkTask}">
 
@@ -93,7 +95,7 @@
                 <h:commandLink styleClass="button primary right" action="#{ownerTaskHandle.complete}">
                     #{messages.Agree}
                 </h:commandLink>
-                <h:commandLink styleClass="button danger right" action="#{ownerTaskHandle.back}">
+                <h:commandLink styleClass="button danger right" action="#{ownerTaskHandle.reject}">
                     #{messages.Reject}
                 </h:commandLink>
 

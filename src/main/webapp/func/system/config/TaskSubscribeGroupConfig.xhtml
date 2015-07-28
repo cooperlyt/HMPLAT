@@ -197,7 +197,7 @@
                                                            style="min-width: 37px"
                                                            immediate="true"
                                                            render="viewGroupList"
-                                                           action="#{businessSubscribeConfig.downSelectGroup}">
+                                                           action="#{businessSubscribeConfig.upSelectGroup}">
                                                 <span class="octicon octicon-move-up"/>
                                                 <a:attachQueue requestDelay="0"/>
                                                 <a:param value="#{_group.id}"
@@ -206,7 +206,7 @@
                                             <a:commandLink styleClass="btn btn-default" execute="@this"
                                                            style="min-width: 37px"
                                                            immediate="true" render="viewGroupList"
-                                                           action="#{businessSubscribeConfig.upSelectGroup}">
+                                                           action="#{businessSubscribeConfig.downSelectGroup}">
                                                 <span class="octicon octicon-move-down"/>
                                                 <a:attachQueue requestDelay="0"/>
                                                 <a:param value="#{_group.id}"

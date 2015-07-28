@@ -76,18 +76,39 @@ public class OwnerTaskHandle {
     }
 
     @Transactional
+    @EndTask
+    public String reject(){
+        if (!taskDescription.isCheckTask()){
+            throw new IllegalArgumentException("only check Task can call reject");
+        }
+        transitionType = TaskOper.OperType.CHECK_BACK.name();
+        backTaskName = taskInstance.getName();
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
+                TaskOper.OperType.CHECK_BACK, ownerBusinessHome.getInstance(),
+                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
+                taskInstance.getName(),transitionComments));
+        if ("updated".equals(ownerBusinessHome.update())) {
+            return "taskCompleted";
+        }
+        throw new IllegalArgumentException("backFail");
+    }
+
+    @Transactional
     @End
     public String back(){
-        TaskOper.OperType operType = taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_BACK : TaskOper.OperType.BACK;
 
-        transitionType = operType.name();
+        if (taskDescription.isCheckTask()){
+            throw new IllegalArgumentException("check Task can't call back");
+        }
 
 
-        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
-                operType, ownerBusinessHome.getInstance(),
-                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName() + (taskDescription.isCheckTask() ? "" : " " + transitionName),transitionComments));
+        transitionType = TaskOper.OperType.BACK.name();
         backTaskName = taskInstance.getName();
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
+                TaskOper.OperType.BACK, ownerBusinessHome.getInstance(),
+                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
+                taskInstance.getName() + transitionName,transitionComments));
+
         if ("updated".equals(ownerBusinessHome.update())) {
             businessProcess.endTask(transitionName);
             return "taskCompleted";
