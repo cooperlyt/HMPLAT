@@ -39,7 +39,7 @@
                                    label="#{messages.login_password}"
                                    value="#{credentials.password}"/>
 
-                    <h:commandButton id="loginButton" styleClass="button" data-loading-text="Signing in…"
+                    <h:commandButton id="loginButton" styleClass="button" data-loading-text="#{messages.SigningIn}"
                                      value="#{messages.login}" action="#{identity.login}"
                                      onclick="$(this).button('loading');"/>
 

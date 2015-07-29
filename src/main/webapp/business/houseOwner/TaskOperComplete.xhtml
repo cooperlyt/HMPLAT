@@ -64,7 +64,7 @@
 
             <s:link styleClass="minibutton primary #{( businessDefineHome.completePass and businessDefineHome.subscribesPass and ownerTaskHandle.needFilePass) ? '' : 'disabled'}"
                     disabled="#{not businessDefineHome.completePass or not businessDefineHome.subscribesPass or not ownerTaskHandle.needFilePass}"
-                    action="#{ownerTaskHandle.complete}">
+                    action="#{ownerTaskHandle.complete}" onclick="#{r:component('wait')}.show()">
                 <span class="octicon octicon-split"/>
                 #{messages.completeTask}
             </s:link>
@@ -104,10 +104,10 @@
             <hr/>
 
             <div class="subnav org-toolbar">
-                <h:commandLink styleClass="button primary right" action="#{ownerTaskHandle.complete}">
+                <h:commandLink styleClass="button primary right" action="#{ownerTaskHandle.complete}" onclick="#{r:component('wait')}.show()">
                     #{messages.Agree}
                 </h:commandLink>
-                <h:commandLink styleClass="button danger right" action="#{ownerTaskHandle.reject}">
+                <h:commandLink styleClass="button danger right" action="#{ownerTaskHandle.reject}" onclick="#{r:component('wait')}.show()">
                     #{messages.Reject}
                 </h:commandLink>
 

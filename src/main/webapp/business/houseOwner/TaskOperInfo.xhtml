@@ -34,7 +34,7 @@
                 #{messages.cancel}</button>
 
 
-            <h:commandLink styleClass="button submit primary" action="#{ownerTaskHandle.back}">
+            <h:commandLink styleClass="button submit primary" action="#{ownerTaskHandle.back}" onclick="#{r:component('wait')}.show()">
                 #{messages.fallback}
             </h:commandLink>
 

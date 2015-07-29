@@ -47,12 +47,13 @@
                 </h1>
 
                 <div class="right">
-                    <s:link styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
+                    <s:button styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
                             disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not houseBusinessStart.needFilePass}"
-                            action="#{ownerBusinessCreate.createBusiness}">
-                        #{messages.createBusiness}
+                            action="#{ownerBusinessCreate.createBusiness}" value="#{messages.createBusiness}"
+                            p:data-loading-text="#{messages.businessCreating}" onclick="#{r:component('wait')}.show()">
 
-                    </s:link>
+
+                    </s:button>
                 </div>
 
             </div>
@@ -108,7 +109,7 @@
 
                 <s:link styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
                         disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not houseBusinessStart.needFilePass}"
-                        action="#{ownerBusinessCreate.createBusiness}">
+                        action="#{ownerBusinessCreate.createBusiness}" p:data-loading-text="#{messages.businessCreating}" onclick="#{r:component('wait')}.show()">
                     #{messages.createBusiness}
 
                 </s:link>
