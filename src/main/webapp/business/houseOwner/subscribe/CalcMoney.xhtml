@@ -35,7 +35,7 @@
                             </h:inputText>
                             <span class="input-group-addon">#{messages.factMoney}</span>
                             <h:inputText id="factMoneyInput" value="#{_moneyItem.factMoney}" required="true"
-                                         class="form-control" label="#{_moneyItem.typeName} #{messages.messages.factMoney}"
+                                         class="form-control" label="#{_moneyItem.typeName} #{messages.factMoney}"
                                          p:placeholder="#{messages.factMoney}">
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
                                                  type="currency"/>

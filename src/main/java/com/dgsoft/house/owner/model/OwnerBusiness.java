@@ -62,6 +62,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
 
 
 
+    private Set<FactMoneyInfo> factMoneyInfos = new HashSet<FactMoneyInfo>(0);
+
+
+
+
     public OwnerBusiness() {
     }
 
@@ -349,6 +354,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.businessProjects = businessProjects;
     }
 
+    @OneToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "ownerBusiness",orphanRemoval = true)
+    public Set<FactMoneyInfo> getFactMoneyInfos() {
+        return factMoneyInfos;
+    }
+
+    public void setFactMoneyInfos(Set<FactMoneyInfo> factMoneyInfos) {
+        this.factMoneyInfos = factMoneyInfos;
+    }
+
     @Column(name = "RECORDED" ,nullable = false)
     public boolean isRecorded() {
         return recorded;
@@ -445,4 +459,5 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         }
 
     }
+
 }

@@ -186,7 +186,6 @@ public class OwnerTaskHandle {
 
     @In(create = true)
     private TaskOwnerBusinessFile taskOwnerBusinessFile;
-
     public boolean isNeedFilePass(){
         if (businessDefineHome.isHaveNeedFile()){
             return taskOwnerBusinessFile.isPass();

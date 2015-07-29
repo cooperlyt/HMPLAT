@@ -6,7 +6,6 @@ import com.dgsoft.common.system.model.Fee;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessMoney;
-import com.sun.javafx.collections.MappingChange;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;

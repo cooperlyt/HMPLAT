@@ -686,7 +686,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         }
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse",cascade = CascadeType.ALL)
     public Set<HouseState> getHouseStates() {
         return this.houseStates;
     }
