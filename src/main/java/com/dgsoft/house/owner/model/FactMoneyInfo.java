@@ -1,14 +1,14 @@
 package com.dgsoft.house.owner.model;
 
+import com.dgsoft.common.OrderBeanComparator;
 import org.hibernate.annotations.GenericGenerator;
 import org.jboss.seam.annotations.Name;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * Created by Administrator on 15-7-28.
@@ -23,6 +23,7 @@ public class FactMoneyInfo implements java.io.Serializable {
     private Date factTime;
     private String paymentNo;
     private OwnerBusiness ownerBusiness;
+    private String memo;
     private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
 
 
@@ -80,5 +81,39 @@ public class FactMoneyInfo implements java.io.Serializable {
 
     public void setBusinessMoneys(Set<BusinessMoney> businessMoneys) {
         this.businessMoneys = businessMoneys;
+    }
+
+    @Column(name = "MEMO", nullable = true, length = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    @Transient
+    public List<BusinessMoney> getBusinessMoneyList(){
+        List<BusinessMoney> result = new ArrayList<BusinessMoney>(getBusinessMoneys());
+        Collections.sort(result, OrderBeanComparator.getInstance());
+        return result;
+    }
+
+    @Transient
+    public BigDecimal getShouldMoney(){
+        BigDecimal result = BigDecimal.ZERO;
+        for (BusinessMoney money: getBusinessMoneys()){
+            result = result.add(money.getShouldMoney());
+        }
+        return result;
+    }
+
+    @Transient
+    public BigDecimal getFactMoney(){
+        BigDecimal result = BigDecimal.ZERO;
+        for (BusinessMoney money: getBusinessMoneys()){
+            result = result.add(money.getFactMoney());
+        }
+        return result;
     }
 }

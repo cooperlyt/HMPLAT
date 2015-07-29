@@ -172,8 +172,8 @@ public class OwnerTaskHandle {
     public String saveTask() {
         //TODO needFile
         if (businessDefineHome.isHaveNextEditGroup()){
-            businessDefineHome.nextEditGroup();
-            ownerBusinessHome.update();
+            if(businessDefineHome.nextEditGroup())
+                ownerBusinessHome.update();
             return "CONTINUE";
         }else {
             if (businessDefineHome.saveEditSubscribes() && "updated".equals(ownerBusinessHome.update())){

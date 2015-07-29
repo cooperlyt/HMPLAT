@@ -79,19 +79,29 @@ public class BusinessSubscribeConfig {
     }
 
     public List<TaskSubscribeReg.CompleteSubscribeDefine> getCanAddCompleteSubscribeDefines() {
-        List<TaskSubscribeReg.CompleteSubscribeDefine> result = new ArrayList<TaskSubscribeReg.CompleteSubscribeDefine>();
-        for (TaskSubscribeReg.CompleteSubscribeDefine define : taskSubscribeReg.getCompleteSubscribeDefines()) {
+
+        return getCanAddOperSubscribeDefines(taskSubscribeReg.getCompleteSubscribeDefines());
+    }
+
+    public List<TaskSubscribeReg.SubscribeDefine> getCanAddOperSubscribeDefines(){
+
+        return getCanAddOperSubscribeDefines(taskSubscribeReg.getOperSubscribeDefines());
+    }
+
+
+    private <T extends TaskSubscribeReg.SubscribeDefineBase> List<T> getCanAddOperSubscribeDefines(Collection<T> defines){
+        List<T> result = new ArrayList<T>();
+        for(T define: defines){
             boolean existsInTask = false;
-            for (TaskSubscribe subscribe : businessDefineHome.getInstance().getTaskSubscribes()) {
-                if (subscribe.getRegName().equals(define.getName()) && subscribe.getTask().equals(businessDefineHome.getTaskName())) {
+            for (TaskSubscribe subscribe: businessDefineHome.getInstance().getTaskSubscribes()){
+                if (subscribe.getRegName().equals(define.getName()) && subscribe.getTask().equals(businessDefineHome.getTaskName())){
                     existsInTask = true;
                     break;
                 }
             }
-            if (!existsInTask) {
+            if (!existsInTask){
                 result.add(define);
             }
-
         }
         return result;
     }
@@ -134,32 +144,41 @@ public class BusinessSubscribeConfig {
         return null;
     }
 
-    @Transactional
-    public void createTaskSubscribe() {
+//    @Transactional
+//    public void createTaskSubscribe() {
+//
+//        TaskSubscribe editSubscribe =
+//                new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
+//                        businessDefineHome.getTaskName(), createRegName, Subscribe.SubscribeType.TASK_INFO,
+//                        businessDefineHome.getInstance(), getSubscribeMaxPriority(Subscribe.SubscribeType.TASK_INFO) + 1);
+//
+//        businessDefineHome.getEntityManager().persist(editSubscribe);
+//        businessDefineHome.getEntityManager().flush();
+//        createRegName = null;
+//        businessDefineHome.refresh();
+//
+//    }
 
+    private void createSubscribe(Subscribe.SubscribeType type){
         TaskSubscribe editSubscribe =
                 new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
-                        businessDefineHome.getTaskName(), createRegName, Subscribe.SubscribeType.TASK_INFO,
-                        businessDefineHome.getInstance(), getSubscribeMaxPriority(Subscribe.SubscribeType.TASK_INFO) + 1);
+                        businessDefineHome.getTaskName(), createRegName, type,
+                        businessDefineHome.getInstance(), getSubscribeMaxPriority(type) + 1);
 
         businessDefineHome.getEntityManager().persist(editSubscribe);
         businessDefineHome.getEntityManager().flush();
         createRegName = null;
         businessDefineHome.refresh();
+    }
 
+    @Transactional
+    public void createOperSubscribe(){
+        createSubscribe(Subscribe.SubscribeType.TASK_OPERATOR);
     }
 
     @Transactional
     public void createCompleteSubscribe() {
-        TaskSubscribe editSubscribe =
-                new TaskSubscribe(UUID.randomUUID().toString().replace("-", "").toUpperCase(),
-                        businessDefineHome.getTaskName(), createRegName, Subscribe.SubscribeType.TASK_COMPLETE,
-                        businessDefineHome.getInstance(), getSubscribeMaxPriority(Subscribe.SubscribeType.TASK_COMPLETE) + 1);
-
-        businessDefineHome.getEntityManager().persist(editSubscribe);
-        businessDefineHome.getEntityManager().flush();
-        createRegName = null;
-        businessDefineHome.refresh();
+        createSubscribe(Subscribe.SubscribeType.TASK_COMPLETE);
     }
 
 

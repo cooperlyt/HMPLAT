@@ -1,0 +1,99 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.factMoneyInfos}" var="_feePrint">
+
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+
+                #{messages.FactMoneyInfo_factTime}
+
+                #{messages.FactMoneyInfo_paymentNo}
+
+                #{messages.FactMoneyInfo_memo}
+            </div>
+            <h:dataTable value="#{_feePrint.businessMoneyList}" var="_feeItem" styleClass="table">
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessMoney_typeName}
+                    </f:facet>
+                    #{_feeItem.typeName}
+
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessMoney_ShouldMoney}
+                    </f:facet>
+                    <h:outputText value="#{_feeItem.shouldMoney}">
+                        <f:convertNumber locale="#{calendarBean.locale}" groupingUsed="true"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessMoney_FactMoney}
+                    </f:facet>
+                    <h:outputText value="#{_feeItem.factMoney}">
+                        <f:convertNumber locale="#{calendarBean.locale}" groupingUsed="true"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessMoney_ChargeDetails}
+                    </f:facet>
+                    #{_feeItem.chargeDetails}
+
+                </h:column>
+
+                <h:column>
+
+                </h:column>
+
+            </h:dataTable>
+
+            <div class="panel-footer">
+                #{messages.recordTotal}
+                <a:outputPanel id="calcMoneyTotal" layout="block" class="right">
+
+                    <div style="display: table-cell;">
+                        #{messages.shouldMoney}
+                    </div>
+                    <div style="display: table-cell;">
+                        <h:outputText value="#{_feePrint.shouldMoney}">
+                            <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
+                                             type="currency"/>
+                        </h:outputText>
+
+                    </div>
+                    <div style="display: table-cell;">
+                        #{messages.factMoney}
+                    </div>
+                    <div style="display: table-cell;">
+                        <h:outputText value="#{_feePrint.factMoney}">
+                            <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
+                                             type="currency"/>
+                        </h:outputText>
+                    </div>
+
+                </a:outputPanel>
+
+            </div>
+        </div>
+
+
+    </a:repeat>
+
+
+</ui:composition>

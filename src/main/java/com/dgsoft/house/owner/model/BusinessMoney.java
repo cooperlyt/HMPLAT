@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.OrderBeanComparator;
+import com.dgsoft.common.OrderModel;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -14,7 +16,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUSINESS_MONEY", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessMoney implements java.io.Serializable {
+public class BusinessMoney implements java.io.Serializable , OrderModel {
     // 登记费,变更登记费（半价登记费）,工本费,继承赠与手续费,交易手续费,回迁手续费,商品房交易手续费,备案手续费,测绘费
 //    public enum  MoneyType{
 //       REGISTER,REGISTER_CHANGE,CARD,DEAL_INHERIT_GIFT,DEAL,DEAL_BACK,DEAL_COMMERCIAL,DEAL_RECORD,MAPPING
@@ -27,8 +29,8 @@ public class BusinessMoney implements java.io.Serializable {
 	private BigDecimal shouldMoney;
 	private BigDecimal factMoney;
 	private String chargeDetails;
-	private String memo;
     private FactMoneyInfo factMoneyInfo;
+    private int pri;
 
 
 
@@ -38,14 +40,14 @@ public class BusinessMoney implements java.io.Serializable {
 
 
 	public BusinessMoney(OwnerBusiness ownerBusiness,
-                         String moneyTypeId,String typeName, BigDecimal shouldMoney,String chargeDetails) {
+                         String moneyTypeId,String typeName, BigDecimal shouldMoney,String chargeDetails,int pri) {
         this.typeName = typeName;
 		this.ownerBusiness = ownerBusiness;
 		this.moneyTypeId = moneyTypeId;
 		this.shouldMoney = shouldMoney;
         this.factMoney = shouldMoney;
 		this.chargeDetails = chargeDetails;
-
+        this.pri = pri;
 	}
 
 	@Id
@@ -129,15 +131,6 @@ public class BusinessMoney implements java.io.Serializable {
 		this.chargeDetails = chargeDetails;
 	}
 
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FEE",nullable = true)
@@ -147,5 +140,16 @@ public class BusinessMoney implements java.io.Serializable {
 
     public void setFactMoneyInfo(FactMoneyInfo factMoneyInfo) {
         this.factMoneyInfo = factMoneyInfo;
+    }
+
+    @Override
+    @Column(name = "PRI" , nullable = false )
+    public int getPriority() {
+        return pri;
+    }
+
+    @Override
+    public void setPriority(int priority) {
+        this.pri = priority;
     }
 }

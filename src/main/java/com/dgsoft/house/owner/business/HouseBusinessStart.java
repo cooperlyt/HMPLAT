@@ -68,9 +68,6 @@ public class HouseBusinessStart {
             }
         }
 
-        ownerBuildGridMap.getSelectBizHouse().getHouseCode();
-
-
     }
 
 

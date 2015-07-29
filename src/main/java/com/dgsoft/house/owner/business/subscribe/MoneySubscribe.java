@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.common.system.model.Fee;
@@ -41,10 +42,9 @@ public class MoneySubscribe implements TaskSubscribeComponent {
     @Override
     public void initSubscribe() {
         businessMoneyList = new ArrayList<BusinessMoney>();
-        final Map<String,Fee> feeMap = new HashMap<String, Fee>();
 
         for (Fee fee:businessDefineHome.getInstance().getFees()){
-            feeMap.put(fee.getId(),fee);
+
             boolean exists = false;
             for(BusinessMoney bm: ownerBusinessHome.getInstance().getBusinessMoneys()) {
                 if (fee.getId().equals(bm.getMoneyTypeId())){
@@ -54,24 +54,14 @@ public class MoneySubscribe implements TaskSubscribeComponent {
                 }
             }
             if (!exists){
-                BusinessMoney businessMoney = new BusinessMoney(ownerBusinessHome.getInstance(),fee.getId(),fee.getName(),new BigDecimal(0),null);
+                BusinessMoney businessMoney = new BusinessMoney(ownerBusinessHome.getInstance(),fee.getId(),fee.getName(),new BigDecimal(0),null,fee.getPriority());
                 ownerBusinessHome.getInstance().getBusinessMoneys().add(businessMoney);
                 businessMoneyList.add(businessMoney);
             }
 
         }
 
-        Collections.sort(businessMoneyList,new Comparator<BusinessMoney>() {
-
-            public int compare(BusinessMoney b1,BusinessMoney b2){
-                int p1 = feeMap.get(b1.getMoneyTypeId()).getPriority();
-                int p2 = feeMap.get(b2.getMoneyTypeId()).getPriority();
-                return Integer.valueOf(p1).compareTo(p2);
-
-            }
-
-
-        });
+        Collections.sort(businessMoneyList, OrderBeanComparator.getInstance());
 
 
     }
