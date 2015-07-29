@@ -199,6 +199,7 @@ public class OwnerTaskHandle {
         if (backTransitions == null){
             backTransitions = new ArrayList<String>(taskInstance.getProcessInstance().getProcessDefinition().getNode(taskInstance.getName()).getLeavingTransitionsMap().keySet());
             backTransitions.remove(null);
+
             Collections.sort(backTransitions);
         }
         return backTransitions;

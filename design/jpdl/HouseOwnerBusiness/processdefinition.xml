@@ -35,8 +35,11 @@
 			</description>
             <assignment pooled-actors="RecordFile"></assignment>
         </task>
-		<transition to="受理" name="退回受理"></transition>
-		<transition to="繕证判断"></transition>
+        <transition to="繕证判断"></transition>
+		<transition to="受理" name="退回受理">
+			<condition expression=""></condition>
+		</transition>
+
     </task-node>
 
     <task-node name="归档">
