@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Administrator on 15-7-28.
@@ -21,6 +23,7 @@ public class FactMoneyInfo implements java.io.Serializable {
     private Date factTime;
     private String paymentNo;
     private OwnerBusiness ownerBusiness;
+    private Set<BusinessMoney> businessMoneys = new HashSet<BusinessMoney>(0);
 
 
 
@@ -68,5 +71,14 @@ public class FactMoneyInfo implements java.io.Serializable {
 
     public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
         this.ownerBusiness = ownerBusiness;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "factMoneyInfo")
+    public Set<BusinessMoney> getBusinessMoneys() {
+        return businessMoneys;
+    }
+
+    public void setBusinessMoneys(Set<BusinessMoney> businessMoneys) {
+        this.businessMoneys = businessMoneys;
     }
 }

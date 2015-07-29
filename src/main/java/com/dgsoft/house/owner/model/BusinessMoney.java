@@ -28,6 +28,8 @@ public class BusinessMoney implements java.io.Serializable {
 	private BigDecimal factMoney;
 	private String chargeDetails;
 	private String memo;
+    private FactMoneyInfo factMoneyInfo;
+
 
 
 
@@ -137,6 +139,13 @@ public class BusinessMoney implements java.io.Serializable {
 		this.memo = memo;
 	}
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FEE",nullable = true)
+    public FactMoneyInfo getFactMoneyInfo() {
+        return factMoneyInfo;
+    }
 
-
+    public void setFactMoneyInfo(FactMoneyInfo factMoneyInfo) {
+        this.factMoneyInfo = factMoneyInfo;
+    }
 }
