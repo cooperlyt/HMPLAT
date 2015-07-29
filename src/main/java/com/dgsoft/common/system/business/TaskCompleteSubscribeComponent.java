@@ -5,7 +5,7 @@ package com.dgsoft.common.system.business;
  */
 public interface TaskCompleteSubscribeComponent {
 
-    //验证数据 添加消息
+    //1验证数据 添加消息
     public abstract void valid();
 
     //是否可以完成本业务 不要添加消息
