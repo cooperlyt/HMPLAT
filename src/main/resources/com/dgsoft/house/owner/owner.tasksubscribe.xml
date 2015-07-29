@@ -533,12 +533,83 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addContractsRecordCompleteEnd" component="addContractsRecord">
+        <description>
+            添加已办产权状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addSaleRegisterCompleteEnd" component="addSaleRegister">
+        <description>
+            添加商品房预告登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addDivertRegisterCompleteEnd" component="addDivertRegister">
+        <description>
+            添加房屋转移预告登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addSaleMortgageRegisterCompleteEnd" component="addSaleMortgageRegister">
+        <description>
+            添加商品房预告抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addDivrtMortgageRegisterCompleteEnd" component="addDivrtMortgageRegister">
+        <description>
+            添加屋屋转移预告抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="adPledgeCompleteEnd" component="adPledge">
+        <description>
+            添加抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addProjectPledgeCompleteEnd" component="addProjectPledge">
+        <description>
+            添加在建工程抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addDifficultyCompleteEnd" component="addDifficulty">
+        <description>
+            添加异议状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addDeclareCancelCompleteEnd" component="addDeclareCancel">
+        <description>
+            添加声明作废状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addCourtCloseCompleteEnd" component="addCourtClose">
+        <description>
+            添加查封状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addDestroyCompleteEnd" component="addDestroy">
+        <description>
+            添加灭籍状态(单，多房屋)
+        </description>
+    </end-subscribe>
+    <end-subscribe name="addInitRegConfirmCompleteEnd" component="addInitRegConfirm">
+        <description>
+            添加确权状态(单，多房屋)
+        </description>
+    </end-subscribe>
 
 
-
-
-
-
+    <end-subscribe name="addInitRegCompleteEnd" component="addInitReg">
+        <description>
+            添加初始登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
 
