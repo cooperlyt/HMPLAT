@@ -63,6 +63,7 @@
 
         <div class="container">
             <div style="margin-bottom: 5px">
+                <r:messages globalOnly="true"/>
 
             <a:outputPanel rendered="#{not houseBusinessStart.needFilePass}" layout="block" styleClass="rf-msgs-wrn" p:role="alert">
                 <span class="octicon octicon-stop" style="font-weight: bold"/> #{messages.needFileNotUpload}
