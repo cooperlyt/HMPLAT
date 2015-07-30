@@ -611,6 +611,14 @@
         </description>
     </end-subscribe>
 
+
+    <end-subscribe name="moveContractsRecordCompleteEnd" component="moveContractsRecord">
+        <description>
+            去掉备案状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
 
 
