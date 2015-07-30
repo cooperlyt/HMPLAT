@@ -17,6 +17,10 @@
     <param name="cardTypeName" value="#{houseBusinessList.cardTypeName}"/>
     <param name="credentialsTypeName" value="#{houseBusinessList.credentialsTypeName}"/>
 
+
+    <param name="bizCategoryId" value="#{houseBusinessList.businessCategoryId}"/>
+    <param name="bizDefineId" value="#{houseBusinessList.businessDefineId}"/>
+
     <param name="firstResult" value="#{houseBusinessList.firstResult}"/>
 
     <param name="sort" value="#{houseBusinessList.orderColumn}"/>

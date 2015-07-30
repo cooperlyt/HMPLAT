@@ -2,12 +2,17 @@ package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.SearchDateArea;
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
+import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
+import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.owner.OwnerEntityQuery;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MakeCard;
 import com.dgsoft.house.owner.model.OwnerBusiness;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 import java.util.ArrayList;
@@ -19,15 +24,15 @@ import java.util.List;
  * Created by cooper on 7/6/15.
  */
 @Name("houseBusinessList")
-public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
+public class HouseBusinessList extends MultiOperatorEntityQuery<HouseBusiness> {
 
     private static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool left join fetch house.otherPowerCards cards ";
 
     private static final String SHORT_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner ";
 
     private static final String PERSON_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool " +
-            " where (pool.credentialsType = #{houseBusinessList.searchCredentialsType} and lower(pool.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})) " +
-            " or (owner.credentialsType = #{houseBusinessList.searchCredentialsType} and lower(owner.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber}))";
+            " where biz.defineId in (#{houseBusinessList.filterBizDefineId}) and ((pool.credentialsType = #{houseBusinessList.searchCredentialsType} and lower(pool.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})) " +
+            " or (owner.credentialsType = #{houseBusinessList.searchCredentialsType} and lower(owner.credentialsNumber) = lower(#{houseBusinessList.searchCredentialsNumber})))";
 
 
 
@@ -48,6 +53,14 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
             "lower(house.buildNo) = lower(#{houseBusinessList.searchBuildNumber})",
             "lower(house.houseOrder) = lower(#{houseBusinessList.searchHouseNumber})"
     };
+
+
+    private static final String[] RESTRICTIONS_BIZ = {
+
+            "biz.defineId in (#{houseBusinessList.filterBizDefineId})"
+
+    };
+
 
     public enum SortCol{
         ORDER_BY_CREATE_TIME("houseBusiness.ownerBusiness.createTime"),
@@ -103,6 +116,63 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
             }
         }
 
+    }
+
+    @In(create = true)
+    private SystemEntityLoader systemEntityLoader;
+
+    private BusinessCategory businessCategory;
+
+    private String businessDefineId;
+
+    public BusinessCategory getBusinessCategory() {
+        return businessCategory;
+    }
+
+    public void setBusinessCategory(BusinessCategory businessCategory) {
+        this.businessCategory = businessCategory;
+    }
+
+    public String getBusinessCategoryId(){
+        if (businessCategory == null){
+            return null;
+        }
+        return businessCategory.getId();
+    }
+
+    public void setBusinessCategoryId(String id){
+        if (id == null || id.trim().equals("")){
+            businessCategory = null;
+        }else{
+            businessCategory = systemEntityLoader.getEntityManager().find(BusinessCategory.class,id);
+        }
+
+    }
+
+    public String getBusinessDefineId() {
+        return businessDefineId;
+    }
+
+    public void setBusinessDefineId(String businessDefineId) {
+        this.businessDefineId = businessDefineId;
+    }
+
+    public List<String> getFilterBizDefineId(){
+        if (businessDefineId == null || businessDefineId.trim().equals("")){
+            if (businessCategory == null){
+                return null;
+            }
+            List<BusinessDefine> defines = new ArrayList<BusinessDefine>(businessCategory.getBusinessDefines());
+            List<String> result = new ArrayList<String>(defines.size());
+            for(BusinessDefine define: defines){
+                result.add(define.getId());
+            }
+            return result;
+        }else {
+           List<String> result = new ArrayList<String>(1);
+            result.add(businessDefineId);
+            return  result;
+        }
     }
 
     public SearchType[] getAllSearchTypes(){
@@ -162,8 +232,11 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
 
     public HouseBusinessList() {
         setEjbql(SHORT_EJBQL);
-        setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-        setRestrictionLogicOperator("or");
+        //setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
+        setRestrictionLogicOperator("and");
+
+
+
         setOrderColumn(SortCol.ORDER_BY_CREATE_TIME.colPath);
         setOrderDirection("desc");
         setMaxResults(25);
@@ -175,6 +248,13 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         blockNumber = null;
         buildNumber = null;
         houseNumber = null;
+        businessDefineId = null;
+        businessCategory = null;
+        resetPage();
+    }
+
+    public void resetPage(){
+        setFirstResult(0);
     }
 
     private MakeCard.CardType cardType;
@@ -359,18 +439,6 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         }
     }
 
-    private void clearRestrictionExpression(){
-        if (!getRestrictionExpressionStrings().isEmpty()){
-            setRestrictionExpressionStrings(new ArrayList<String>(0));
-        }
-    }
-
-    private void setAllRestrictionExpression(){
-        if (getRestrictionExpressionStrings().isEmpty()){
-            setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-        }
-    }
-
     private void resetRestrictionLogicOperator(String oper){
         if (!oper.equals(getRestrictionLogicOperator())){
             setRestrictionLogicOperator(oper);
@@ -380,19 +448,23 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
     public List<HouseBusiness> getSearchResult(){
         if ((searchKey == null) || searchKey.trim().equals("")){
             resetEjbql(SHORT_EJBQL);
-            clearRestrictionExpression();
+            setRestrictionGroup(new RestrictionGroup("and",Arrays.asList(RESTRICTIONS_BIZ)));
             return getResultList();
         }else if (searchType == null) {
             resetEjbql(EJBQL);
         }else if (SearchType.PERSON.equals(searchType)) {
             resetEjbql(PERSON_EJBQL);
-            clearRestrictionExpression();
+            setRestrictionGroup(null);
             return getResultList();
         }else{
             resetEjbql(searchType.getEjbql());
         }
 
-        setAllRestrictionExpression();
+        RestrictionGroup districtRestriction = new RestrictionGroup("and",Arrays.asList(RESTRICTIONS_BIZ));
+
+        districtRestriction.getChildren().add(new RestrictionGroup("or",Arrays.asList(RESTRICTIONS)));
+
+        setRestrictionGroup(districtRestriction);
         if (SearchType.HOUSE_MBBH.equals(searchType) ||
                 SearchType.PERSON.equals(searchType) ||
                 SearchType.HOUSE_CARD.equals(searchType)){
@@ -403,5 +475,10 @@ public class HouseBusinessList extends OwnerEntityQuery<HouseBusiness>{
         return getResultList();
     }
 
+
+    @Override
+    protected String getPersistenceContextName() {
+        return "ownerEntityManager";
+    }
 
 }
