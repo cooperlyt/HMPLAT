@@ -44,7 +44,7 @@ public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
             }
 
         } else {
-            makeCard = new MakeCard(MakeCard.CardType.MORTGAGE_CARD, false, ownerNumberBuilder.useDayNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
+            makeCard = new MakeCard(MakeCard.CardType.MORTGAGE_CARD, ownerNumberBuilder.useDayNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
         }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);

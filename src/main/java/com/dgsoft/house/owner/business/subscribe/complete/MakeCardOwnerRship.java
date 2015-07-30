@@ -54,7 +54,7 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
             }
 
         }else{
-            makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,false,ownerNumberBuilder.useDayNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+            makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,ownerNumberBuilder.useDayNumber(MakeCard.CardType.OWNER_RSHIP.name()));
         }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);

@@ -23,7 +23,6 @@ public class MakeCard implements java.io.Serializable {
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
 	private String number;
-    private boolean disable;
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
     //private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
 
@@ -36,18 +35,17 @@ public class MakeCard implements java.io.Serializable {
     }
 
 
-    public MakeCard(CardType type,boolean disable,String number) {
+    public MakeCard(CardType type ,String number) {
         this.type = type;
-        this.disable = disable;
         this.number = number;
 	}
 
-    public MakeCard(String id,OwnerBusiness ownerBusiness,CardType type,String number,boolean disable){
+    public MakeCard(String id,OwnerBusiness ownerBusiness,CardType type,String number){
         this.id = id;
         this.ownerBusiness = ownerBusiness;
         this.type = type;
         this.number = number;
-        this.disable = disable;
+
 
     }
 
@@ -108,15 +106,6 @@ public class MakeCard implements java.io.Serializable {
 		this.number = number;
 	}
 
-
-    @Column(name = "DISABLE",nullable = false)
-    public boolean isDisable() {
-        return disable;
-    }
-
-    public void setDisable(boolean disable) {
-        this.disable = disable;
-    }
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "CARD"), inverseJoinColumns = @JoinColumn(name = "HOUSE"))

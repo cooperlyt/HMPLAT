@@ -58,7 +58,7 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
             }
 
         }else{
-            makeCard = new MakeCard(MakeCard.CardType.NOTICE,false,ownerNumberBuilder.useDayNumber(MakeCard.CardType.NOTICE.name()));
+            makeCard = new MakeCard(MakeCard.CardType.NOTICE,ownerNumberBuilder.useDayNumber(MakeCard.CardType.NOTICE.name()));
         }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);

@@ -89,9 +89,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     public BusinessHouse() {
     }
 
-    public BusinessHouse(BusinessHouse houseInfo) {
-
-
+    public BusinessHouse(HouseInfo houseInfo) {
         this.houseOrder = houseInfo.getHouseOrder();
         this.houseUnitName = houseInfo.getHouseUnitName();
         this.inFloorName = houseInfo.getInFloorName();
@@ -138,6 +136,12 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.sectionName = houseInfo.getSectionName();
         this.districtCode = houseInfo.getDistrictCode();
         this.districtName = houseInfo.getDistrictName();
+    }
+
+    public BusinessHouse(BusinessHouse houseInfo) {
+        this((HouseInfo)houseInfo);
+
+
 
         for(HouseState state: houseInfo.getHouseStates()){
             this.houseStates.add(new HouseState(this,state.getState(),state.getCreateDate()));
