@@ -498,6 +498,19 @@
         </description>
     </end-subscribe>
 
+
+    <end-subscribe name="houseRecordCompleteEnd" component="houseRecordComplete">
+        <description>
+            登记薄建立房屋档案关联
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
+        <description>
+            登记薄阶段是否完成登记薄
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="MakeCardOwnerRshipEnd" component="makeCardOwnerRship">
         <description>
             生成单房屋所有权证号
@@ -612,11 +625,12 @@
     </end-subscribe>
 
 
-    <end-subscribe name="moveContractsRecordCompleteEnd" component="moveContractsRecord">
+    <end-subscribe name="moveContractsRecordEnd" component="moveContractsRecord">
         <description>
-            去掉备案状态(单，多房屋)
+            删除备案状态(单，多房屋)
         </description>
     </end-subscribe>
+
 
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
