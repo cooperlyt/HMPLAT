@@ -10,6 +10,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 import sun.rmi.runtime.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 15-7-29.
  * 去掉一个备案状态
@@ -36,14 +39,22 @@ public class MoveContractsRecord implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-
-
+        Logging.getLog(getClass()).debug("2222");
+        List<HouseState> houseStateList = new ArrayList<HouseState>();
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+            houseStateList.clear();
+            Logging.getLog(getClass()).debug("moveContractsRecord--:"+houseBusiness.getAfterBusinessHouse().getHouseStates().size());
             for(HouseState houseState:houseBusiness.getAfterBusinessHouse().getHouseStates()){
-                if(houseState.getState().equals(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
+                Logging.getLog(getClass()).debug("moveContractsRecord+111111111111111");
 
-                    houseBusiness.getAfterBusinessHouse().getHouseStates().remove(houseState);
+
+                if(houseState.getState().equals(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
+                    houseStateList.add(houseState);
+                    break;
                 }
+            }
+            if (!houseStateList.isEmpty()){
+                houseBusiness.getAfterBusinessHouse().getHouseStates().removeAll(houseStateList);
             }
 
         }

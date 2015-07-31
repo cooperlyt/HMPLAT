@@ -25,6 +25,10 @@ public class HouseRecord implements java.io.Serializable {
 
 	public HouseRecord() {
 	}
+    public HouseRecord(BusinessHouse businessHouse,String houseCode){
+       this.businessHouse = businessHouse;
+       this.houseCode = houseCode;
+    }
 
 
 	@OneToOne(fetch = FetchType.LAZY)
