@@ -1,9 +1,10 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.common.utils.seam.RestrictionGroup;
-import com.dgsoft.house.owner.action.HouseBusinessCondition;
-import com.dgsoft.house.owner.action.HouseBusinessSearch;
+import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.web.RequestParameter;
@@ -12,36 +13,43 @@ import org.jboss.seam.annotations.web.RequestParameter;
  * Created by cooper on 7/31/15.
  */
 @Name("houseBusinessModifyStart")
-public class HouseBusinessModifyStart extends HouseBusinessSearch {
+public class HouseBusinessModifyStart {
 
-    public HouseBusinessModifyStart(){
-        super();
-        setEjbql(houseBusinessCondition.SHORT_EJBQL);
-    }
 
     @RequestParameter
-    private String businessDefineId;
+    private String selectBusinessId;
 
-    public String getBusinessDefineId() {
-        return businessDefineId;
-    }
-
-    public void setBusinessDefineId(String businessDefineId) {
-        this.businessDefineId = businessDefineId;
-    }
 
     @In(create = true)
-    private HouseBusinessCondition houseBusinessCondition;
+    private OwnerEntityLoader ownerEntityLoader;
 
-    @Override
-    protected RestrictionGroup getUseRestrictionGroup() {
+    @In(create = true)
+    private OwnerBusinessHome ownerBusinessHome;
 
-        return houseBusinessCondition.getRestrictionGroup();
+    @In(create = true)
+    private BusinessDefineHome businessDefineHome;
+
+
+
+    public String startModify(){
+        //TODO ROLE
+        cloneData(ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId));
+
+
+        return null;
     }
 
-    @Override
-    protected String getUseEjbql() {
-        String result = houseBusinessCondition.getEjbql();
-        return result + " where biz.defineId = #{houseBusinessModifyStart.businessDefineId} and biz.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ')";
+    private void cloneData(OwnerBusiness ownerBusiness){
+        //TODO needFile
+        ownerBusiness.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+
+        businessDefineHome.setId(ownerBusiness.getDefineId());
+        ownerBusinessHome.clearInstance();
+        ownerBusinessHome.getInstance().setSelectBusiness(ownerBusiness);
+        ownerBusinessHome.getInstance().setType(BusinessInstance.BusinessType.MODIFY_BIZ);
+
+
+
     }
+
 }

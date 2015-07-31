@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" login-required="true"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+
+    <param name="searchKey" value="#{houseBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{houseBusinessCondition.searchTypeName}"/>
+
+    <param name="mapNumber" value="#{houseBusinessCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{houseBusinessCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{houseBusinessCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{houseBusinessCondition.houseNumber}"/>
+
+    <param name="cardTypeName" value="#{houseBusinessCondition.cardTypeName}"/>
+    <param name="credentialsTypeName" value="#{houseBusinessCondition.credentialsTypeName}"/>
+
+
+    <param name="firstResult" value="#{houseBusinessModifyList.firstResult}"/>
+
+    <param name="sort" value="#{houseBusinessModifyList.orderColumn}"/>
+    <param name="dir" value="#{houseBusinessModifyList.orderDirection}"/>
+
+
+    <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+
+</page>

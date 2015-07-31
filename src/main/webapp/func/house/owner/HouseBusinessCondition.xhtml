@@ -1,0 +1,142 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+
+    <h:outputStylesheet>
+
+
+        .search_repos .search-key-input{
+            display: table-cell;
+            border-bottom-right-radius: 3px !important;
+            border-top-right-radius: 3px !important;
+        }
+
+        .search_repos.HOUSE_MBBH .search-key-input{
+            display: none;
+        }
+
+        .search_repos .search-mbbh-input{
+            display: none;
+        }
+
+
+        .search_repos.HOUSE_MBBH .search-mbbh-input{
+            display: table-cell;
+        }
+
+        .search_repos.HOUSE_CARD .card-type-select{
+            display: table-cell;
+        }
+
+        .search_repos .card-type-select{
+            display: none;
+        }
+
+        .search_repos.PERSON .person-type-select{
+            display: table-cell;
+        }
+
+        .search_repos.PERSON .search-key-input , .search_repos.HOUSE_CARD .search-key-input{
+            border-bottom-right-radius: 0px !important;
+            border-top-right-radius: 0px !important;
+        }
+
+        .search_repos .person-type-select{
+            display: none;
+        }
+
+        .person-type-select button , .card-type-select button{
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+        }
+
+
+
+
+    </h:outputStylesheet>
+
+    <h:outputScript>
+        function searchTypeChange(){
+
+        $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+        $('.search_repos').addClass($('.js-search-type-select').val())
+        }
+    </h:outputScript>
+    <h:form styleClass="search_repos #{conditionBean.searchType}">
+        <div class="flex-table search-form-fluid">
+
+            <div class="flex-table-item flex-table-item-primary">
+                <a:outputPanel id="searchInputs" layout="block" styleClass="input-group input-block">
+                    <div class="input-group-btn">
+
+
+                        <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
+                                         value="#{conditionBean.searchType}" onchange="searchTypeChange()">
+                            <s:selectItems value="#{conditionBean.allSearchTypes}" var="_item"
+                                           itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
+                                           label="#{messages[_item.name()]}"/>
+                            <s:convertEnum/>
+                        </h:selectOneMenu>
+
+
+                    </div>
+                    <h:inputText styleClass="form-control search-key-input" value="#{conditionBean.searchKey}"/>
+
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_map}"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" value="#{conditionBean.mapNumber}"/>
+
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_block}"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" value="#{conditionBean.blockNumber}"/>
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_build}"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" value="#{conditionBean.buildNumber}"/>
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_house}"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px"
+                                 value="#{conditionBean.houseNumber}"/>
+
+                    <a:outputPanel styleClass="input-group-btn card-type-select">
+
+                        <h:selectOneMenu styleClass="selectpicker select-menu-btn"
+                                         value="#{conditionBean.cardType}">
+                            <s:selectItems value="#{conditionBean.allCardTypes}" var="_item"
+                                           itemValue="#{_item}" label="#{messages[_item.name()]}"/>
+
+                            <s:convertEnum/>
+                        </h:selectOneMenu>
+
+                    </a:outputPanel>
+
+                    <a:outputPanel styleClass="input-group-btn person-type-select">
+                        <h:selectOneMenu styleClass="selectpicker select-menu-btn"
+                                         value="#{conditionBean.credentialsType}">
+                            <s:selectItems value="#{credentialsTypes}" var="_item"
+                                           itemValue="#{_item}" label="#{messages[_item.name()]}"/>
+
+                            <s:convertEnum/>
+                        </h:selectOneMenu>
+
+                    </a:outputPanel>
+                    <!-- /btn-group -->
+                </a:outputPanel>
+                <!-- /input-group -->
+            </div>
+
+            <div class="flex-table-item">
+                <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseBusinessList.resetPage}"
+                               value="#{messages.Search}">
+                </h:commandLink>
+            </div>
+        </div>
+    </h:form>
+
+
+
+</ui:composition>

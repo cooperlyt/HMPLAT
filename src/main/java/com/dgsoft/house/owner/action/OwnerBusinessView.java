@@ -167,4 +167,22 @@ public class OwnerBusinessView {
             ownerBusinessHome.update();
         }
     }
+
+    public boolean isHasCreateRole(){
+        if (businessDefineHome.isIdDefined()) {
+            return authInfo.isHasCreateRole(businessDefineHome.getInstance().getId());
+        }else return false;
+    }
+
+
+    public boolean isHasViewRole(){
+        if (identity.hasRole("owner.businessView")) {
+            return true;
+        }
+        if (businessDefineHome.isIdDefined()){
+            return authInfo.isHasCreateRole(businessDefineHome.getInstance().getId());
+        }else{
+            return false;
+        }
+    }
 }

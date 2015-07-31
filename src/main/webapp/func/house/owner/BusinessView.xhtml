@@ -10,468 +10,499 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-                template="/layout/template-data.xhtml">
+                template="/layout/template.xhtml">
 
 
-    <ui:param name="funcName" value="#{messages.BusinessView}"/>
-
-    <ui:define name="funcNav">
-        <ui:include src="/layout/function-nav.xhtml">
-            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
-        </ui:include>
-    </ui:define>
-
-    <ui:define name="head-right">
-        <h:form styleClass="search_repos">
-            <div class="flex-table search-form-fluid">
-                <div class="flex-table-item flex-table-item-primary">
-                    <div class="input-group input-block">
-                        <h:inputText styleClass="form-control" value="#{ownerBusinessView.id}"
-                                     p:placeholder="#{messages.BUSINESS_CODE}"/>
+    <ui:define name="func-body">
 
 
-                        <!-- /btn-group -->
-                    </div>
-                    <!-- /input-group -->
+        <a:outputPanel id="func-navigation" rendered="#{s:hasRole('system.runBusinessMgr')}" class="pagehead codesearch-head">
+            <div class="container">
+                <div style=" float: left; width: 250px; ">
+
+                    <ui:include src="/layout/function-nav.xhtml">
+                        <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+                    </ui:include>
+
+                    <span class="funcTitle">#{messages.BusinessView}</span>
+
+
                 </div>
-                <div class="flex-table-item">
-                    <h:commandLink styleClass="button" action="#{ownerBusinessHome.refresh}">
-                        #{messages.Search}
-                    </h:commandLink>
-                </div>
-            </div>
-        </h:form>
-    </ui:define>
 
-    <h:outputStylesheet name="biz.css"/>
+                    <h:form styleClass="search_repos">
+                        <div class="flex-table search-form-fluid">
+                            <div class="flex-table-item flex-table-item-primary">
+                                <div class="input-group input-block">
+                                    <h:inputText styleClass="form-control" value="#{ownerBusinessView.id}"
+                                                 p:placeholder="#{messages.BUSINESS_CODE}"/>
 
-    <a:outputPanel rendered="#{s:hasRole('system.runBusinessMgr')}">
 
-
-
-    <ui:decorate template="/layout/edit-modalpanel.xhtml">
-        <ui:param name="panelId" value="stopConfirmPanel"/>
-        <ui:param name="panelTitle" value="#{messages.StopConfirmTitle}"/>
-        <ui:define name="panelBody">
-
-            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
-                <ui:define name="label">
-                    <p>#{messages.StopConfirm_confirm_description}</p>
-                </ui:define>
-                <ui:param name="for" value="stopCommentsInput"/>
-                <h:inputTextarea id="stopCommentsInput" styleClass="form-control" rows="4" value="#{ownerBusinessView.comments}"
-                                 p:placeholder="#{messages.businessComments}">
-
-                </h:inputTextarea>
-
-            </s:decorate>
-        </ui:define>
-        <ui:define name="actionButtons">
-
-            <a:commandButton styleClass="button button-block danger" action="#{ownerBusinessView.terminationBiz}"
-                             value="#{messages.confirmStop}" render="context"
-                             oncomplete="$('#stopConfirmPanel').modal('hide')"
-                             execute="@form">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-
-
-        </ui:define>
-
-    </ui:decorate>
-
-    <ui:decorate template="/layout/edit-modalpanel.xhtml">
-        <ui:param name="panelId" value="suspendConfirmPanel"/>
-        <ui:param name="panelTitle" value="#{messages.SuspendConfirmTitle}"/>
-        <ui:define name="panelBody">
-
-            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
-                <ui:define name="label">
-                    <p>#{messages.suspend_confirm_description}</p>
-                </ui:define>
-                <ui:param name="for" value="suspendCommentsInput"/>
-                <h:inputTextarea id="suspendCommentsInput" styleClass="form-control" rows="4" value="#{ownerBusinessView.comments}"
-                                 p:placeholder="#{messages.businessComments}">
-
-                </h:inputTextarea>
-
-            </s:decorate>
-        </ui:define>
-        <ui:define name="actionButtons">
-
-            <a:commandButton styleClass="button button-block danger" action="#{ownerBusinessView.suspendBiz}"
-                             value="#{messages.confirmSuspend}" render="context"
-                             oncomplete="$('#suspendConfirmPanel').modal('hide')"
-                             execute="@form">
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-
-
-        </ui:define>
-
-    </ui:decorate>
-
-    <ui:decorate template="/layout/edit-modalpanel.xhtml">
-        <ui:param name="panelId" value="resumeConfirmPanel"/>
-        <ui:param name="panelTitle" value="#{messages.ResumeConfirmeTitle}"/>
-        <ui:define name="panelBody">
-
-
-            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
-                <ui:define name="label">
-                    <p>#{messages.resume_confirme_description}</p>
-                </ui:define>
-                <ui:param name="for" value="resumeCommentsInput"/>
-                <h:inputTextarea id="resumeCommentsInput" styleClass="form-control" rows="4"
-                                 p:placeholder="#{messages.businessComments}" value="#{ownerBusinessView.comments}">
-
-                </h:inputTextarea>
-
-            </s:decorate>
-        </ui:define>
-        <ui:define name="actionButtons">
-
-            <a:commandButton styleClass="btn button-block btn-success btn-reversal" action="#{ownerBusinessView.resumeBiz}"
-                             value="#{messages.confirmResume}" render="context"
-                             oncomplete="$('#resumeConfirmPanel').modal('hide')"
-                             execute="@form">
-                <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandButton>
-
-
-        </ui:define>
-
-    </ui:decorate>
-
-
-        <ui:decorate template="/layout/edit-modalpanel.xhtml">
-            <ui:param name="panelId" value="assignConfirmPanel"/>
-            <ui:param name="panelTitle" value="#{messages.AssignConfirmTitle}#{' '}#{actorName}"/>
-            <ui:define name="panelBody">
-
-
-                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
-                    <ui:define name="label">
-                        <p>#{messages.assign_confirm_description}</p>
-                    </ui:define>
-                    <ui:param name="for" value="assignCommentsInput"/>
-                    <h:inputTextarea id="assignCommentsInput" styleClass="form-control" rows="4"
-                                     p:placeholder="#{messages.businessComments}" value="#{ownerBusinessView.comments}">
-
-                    </h:inputTextarea>
-
-                </s:decorate>
-            </ui:define>
-            <ui:define name="actionButtons">
-
-                <a:commandButton styleClass="btn button-block btn-success btn-reversal" action="#{ownerBusinessView.assignTo}"
-                                 value="#{messages.confirmAssign}#{' '}#{actorName}" render="context"
-                                 oncomplete="$('#assignConfirmPanel').modal('hide')"
-                                 execute="@form">
-
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
-
-
-            </ui:define>
-
-        </ui:decorate>
-
-    </a:outputPanel>
-
-    <h:form>
-
-    <a:outputPanel layout="block" id="context" styleClass="container">
-
-        <a:outputPanel layout="block" styleClass="blankslate" rendered="#{not ownerBusinessHome.idDefined}">
-
-            <span class="mega-octicon octicon-search"></span>
-
-            <h3>#{messages.EmptyResult}</h3>
-
-            <p>  #{messages.business_not_found_message}
-
-            </p>
-
-
-        </a:outputPanel>
-
-        <h:outputStylesheet>
-
-            .dashboard-notice.BIZ_CREATE .octicon-repo {
-                color: #4183c4;
-            }
-
-            .dashboard-notice.BIZ_AFTER_SAVE .octicon-repo {
-                color: #f0ad4e;
-            }
-
-            .dashboard-notice.BIZ_IMPORT .octicon-repo {
-                color: #d9534f;
-            }
-
-            .dashboard-notice.recorded h2 {
-                color: #4078c0;
-            }
-
-            .alert:not(:last-child){
-                margin-bottom: 5px;
-            }
-
-            .alert .octicon{
-                font-weight: bold;
-            }
-
-        </h:outputStylesheet>
-
-
-        <a:outputPanel rendered="#{ownerBusinessHome.idDefined}">
-
-            <div>
-
-                <ui:include src="BusinessMessageList.xhtml">
-                    <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
-                </ui:include>
-
-                <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
-                               rendered="#{ownerBusinessHome.haveLaterUploadFile}">
-                    <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
-                </a:outputPanel>
-
-            </div>
-
-
-
-            <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}" style="margin-top: 5px">
-
-                <a:outputPanel layout="block" styleClass="right" rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}">
-
-                    <div class="btn-group" role="group" >
-
-                        <a:commandLink type="button" class="btn btn-success btn-reversal #{ownerBusinessView.canResume ? '' : 'disabled'} tooltipped tooltipped-s"
-                                       disabled="#{not ownerBusinessView.canResume}"
-                                       oncomplete="$('#resumeConfirmPanel').modal('show')"
-                                       p:aria-label="#{messages.CONTINUE}" immediate="true" execute="@this">
-                            <span class="btn-icon octicon octicon-playback-play"></span>
-                            <a:attachQueue requestDelay="0"/>
-                            <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
-                        </a:commandLink>
-                    <a:commandLink type="button" class="btn btn-warning btn-reversal #{ ownerBusinessView.canSuspend ? '' : 'disabled'} tooltipped tooltipped-s"
-                                   disabled="#{not ownerBusinessView.canSuspend}" oncomplete="$('#suspendConfirmPanel').modal('show')"
-                                   p:aria-label="#{messages.SUSPEND}" immediate="true" execute="@this">
-                        <span class="btn-icon octicon octicon-playback-pause"></span>
-                        <a:attachQueue requestDelay="0"/>
-                        <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
-                    </a:commandLink>
-                    <a:commandLink type="button" class="btn btn-danger btn-reversal #{ownerBusinessView.canStop ? '' : 'disabled'} tooltipped tooltipped-s"
-                                   disabled="#{not ownerBusinessView.canStop}"
-                                   oncomplete="$('#stopConfirmPanel').modal('show')" p:aria-label="#{messages.TERMINATION}"
-                                   immediate="true" execute="@this">
-                        <span class="btn-icon octicon octicon-primitive-square"></span>
-                        <a:attachQueue requestDelay="0"/>
-                        <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
-                    </a:commandLink>
-
-                        <a:jsFunction name="showEmpMenu" action="#{employeeList.resetResultCount}"
-                                      render="sectionSelectPanel" execute="@this" immediate="true"/>
-
-                        <div class="btn-group">
-
-
-                            <button type="button" disabled="#{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}"
-                                    aria-label="#{messages.ASSIGN}" onclick="showEmpMenu()"
-                                    class="btn btn-default btn-git select-menu-button dropdown-toggle #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
-                                <ui:insert name="caption">
-                                    <span class="btn-icon octicon octicon-person"></span>
-
-                                </ui:insert>
-                            </button>
-
-                            <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
-                                <div class="select-menu-modal">
-                                    <div class="select-menu-header">
-                                        <span class="select-menu-title">#{messages.assign_title}</span>
-                                            <span class="octicon octicon-x js-menu-close"
-                                                  aria-label="#{messages.close}"></span>
-                                    </div>
-
-                                    <a:outputPanel layout="block" id="sectionSelectPanel">
-                                        <div class="select-menu-filters">
-                                            <div class="select-menu-text-filter">
-                                                <h:inputText id="sectionSearchName" autocomplete="off" value="#{employeeList.searchKey}">
-                                                    <a:ajax event="keyup" immediate="true" execute="@this"
-                                                            render="SectionSelectItemList">
-                                                        <a:attachQueue requestDelay="500"/>
-                                                    </a:ajax>
-
-                                                </h:inputText>
-                                            </div>
-                                        </div>
-                                        <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
-
-
-                                            <a:repeat value="#{employeeList.resultList}" var="_item">
-
-                                                <a:commandLink execute="@this" immediate="true"
-                                                               render="assignConfirmPanel_form,assignConfirmPanel_title"
-                                                               oncomplete="$('#assignConfirmPanel').modal('show')"
-                                                               styleClass="select-menu-item">
-                                                    <a:attachQueue requestDelay="0"/>
-                                                    <f:param name="actorId" value="#{_item.id}"/>
-                                                    <f:param name="taskId" value="#{null}"/>
-                                                    <f:param name="actorName" value="#{_item.personName}"/>
-                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                    <span class="select-menu-item-text">#{_item.personName}</span>
-                                                </a:commandLink>
-                                            </a:repeat>
-
-
-
-
-
-                                            <a:commandLink onclick="moreResult(); event.stopPropagation(); return false;"
-                                                           styleClass="select-menu-item last-visible"
-                                                           rendered="#{employeeList.nextExists}">
-
-
-                                                <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                <span class="select-menu-item-text">#{messages.More}</span>
-                                                <a:attachQueue requestDelay="0"/>
-                                            </a:commandLink>
-                                        </a:outputPanel>
-
-                                    </a:outputPanel>
-
+                                    <!-- /btn-group -->
                                 </div>
+                                <!-- /input-group -->
                             </div>
+                            <div class="flex-table-item">
+                                <h:commandLink styleClass="button" action="#{ownerBusinessHome.refresh}">
+                                    #{messages.Search}
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </h:form>
+
+            </div>
+        </a:outputPanel>
+        <div class="container">
+            <h:outputStylesheet name="biz.css"/>
+
+            <a:outputPanel rendered="#{s:hasRole('system.runBusinessMgr')}">
+
+
+
+                <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelId" value="stopConfirmPanel"/>
+                    <ui:param name="panelTitle" value="#{messages.StopConfirmTitle}"/>
+                    <ui:define name="panelBody">
+
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
+                            <ui:define name="label">
+                                <p>#{messages.StopConfirm_confirm_description}</p>
+                            </ui:define>
+                            <ui:param name="for" value="stopCommentsInput"/>
+                            <h:inputTextarea id="stopCommentsInput" styleClass="form-control" rows="4" value="#{ownerBusinessView.comments}"
+                                             p:placeholder="#{messages.businessComments}">
+
+                            </h:inputTextarea>
+
+                        </s:decorate>
+                    </ui:define>
+                    <ui:define name="actionButtons">
+
+                        <a:commandButton styleClass="button button-block danger" action="#{ownerBusinessView.terminationBiz}"
+                                         value="#{messages.confirmStop}" render="context"
+                                         oncomplete="$('#stopConfirmPanel').modal('hide')"
+                                         execute="@form">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+
+                    </ui:define>
+
+                </ui:decorate>
+
+                <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelId" value="suspendConfirmPanel"/>
+                    <ui:param name="panelTitle" value="#{messages.SuspendConfirmTitle}"/>
+                    <ui:define name="panelBody">
+
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
+                            <ui:define name="label">
+                                <p>#{messages.suspend_confirm_description}</p>
+                            </ui:define>
+                            <ui:param name="for" value="suspendCommentsInput"/>
+                            <h:inputTextarea id="suspendCommentsInput" styleClass="form-control" rows="4" value="#{ownerBusinessView.comments}"
+                                             p:placeholder="#{messages.businessComments}">
+
+                            </h:inputTextarea>
+
+                        </s:decorate>
+                    </ui:define>
+                    <ui:define name="actionButtons">
+
+                        <a:commandButton styleClass="button button-block danger" action="#{ownerBusinessView.suspendBiz}"
+                                         value="#{messages.confirmSuspend}" render="context"
+                                         oncomplete="$('#suspendConfirmPanel').modal('hide')"
+                                         execute="@form">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+
+                    </ui:define>
+
+                </ui:decorate>
+
+                <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelId" value="resumeConfirmPanel"/>
+                    <ui:param name="panelTitle" value="#{messages.ResumeConfirmeTitle}"/>
+                    <ui:define name="panelBody">
+
+
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
+                            <ui:define name="label">
+                                <p>#{messages.resume_confirme_description}</p>
+                            </ui:define>
+                            <ui:param name="for" value="resumeCommentsInput"/>
+                            <h:inputTextarea id="resumeCommentsInput" styleClass="form-control" rows="4"
+                                             p:placeholder="#{messages.businessComments}" value="#{ownerBusinessView.comments}">
+
+                            </h:inputTextarea>
+
+                        </s:decorate>
+                    </ui:define>
+                    <ui:define name="actionButtons">
+
+                        <a:commandButton styleClass="btn button-block btn-success btn-reversal" action="#{ownerBusinessView.resumeBiz}"
+                                         value="#{messages.confirmResume}" render="context"
+                                         oncomplete="$('#resumeConfirmPanel').modal('hide')"
+                                         execute="@form">
+                            <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+
+                    </ui:define>
+
+                </ui:decorate>
+
+
+                <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelId" value="assignConfirmPanel"/>
+                    <ui:param name="panelTitle" value="#{messages.AssignConfirmTitle}#{' '}#{actorName}"/>
+                    <ui:define name="panelBody">
+
+
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
+                            <ui:define name="label">
+                                <p>#{messages.assign_confirm_description}</p>
+                            </ui:define>
+                            <ui:param name="for" value="assignCommentsInput"/>
+                            <h:inputTextarea id="assignCommentsInput" styleClass="form-control" rows="4"
+                                             p:placeholder="#{messages.businessComments}" value="#{ownerBusinessView.comments}">
+
+                            </h:inputTextarea>
+
+                        </s:decorate>
+                    </ui:define>
+                    <ui:define name="actionButtons">
+
+                        <a:commandButton styleClass="btn button-block btn-success btn-reversal" action="#{ownerBusinessView.assignTo}"
+                                         value="#{messages.confirmAssign}#{' '}#{actorName}" render="context"
+                                         oncomplete="$('#assignConfirmPanel').modal('hide')"
+                                         execute="@form">
+
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+
+
+                    </ui:define>
+
+                </ui:decorate>
+
+            </a:outputPanel>
+
+            <h:form>
+
+                <a:outputPanel layout="block" id="context" styleClass="container">
+
+                    <a:outputPanel layout="block" styleClass="blankslate" rendered="#{not ownerBusinessHome.idDefined}">
+
+                        <span class="mega-octicon octicon-search"></span>
+
+                        <h3>#{messages.EmptyResult}</h3>
+
+                        <p>  #{messages.business_not_found_message}
+
+                        </p>
+
+
+                    </a:outputPanel>
+
+                    <h:outputStylesheet>
+
+                        .dashboard-notice.BIZ_CREATE .octicon-repo {
+                            color: #4183c4;
+                        }
+
+                        .dashboard-notice.BIZ_AFTER_SAVE .octicon-repo {
+                            color: #f0ad4e;
+                        }
+
+                        .dashboard-notice.BIZ_IMPORT .octicon-repo {
+                            color: #d9534f;
+                        }
+
+                        .dashboard-notice.recorded h2 {
+                            color: #4078c0;
+                        }
+
+                        .alert:not(:last-child){
+                            margin-bottom: 5px;
+                        }
+
+                        .alert .octicon{
+                            font-weight: bold;
+                        }
+
+                    </h:outputStylesheet>
+
+
+                    <a:outputPanel rendered="#{ownerBusinessHome.idDefined}">
+
+                        <div>
+
+                            <ui:include src="BusinessMessageList.xhtml">
+                                <ui:param name="processMessageList" value="#{ownerBusinessHome.instance.processMessageList}"/>
+                            </ui:include>
+
+                            <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
+                                           rendered="#{ownerBusinessHome.haveLaterUploadFile}">
+                                <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
+                            </a:outputPanel>
+
                         </div>
 
 
 
+                        <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}" style="margin-top: 5px">
 
-                    </div>
+                            <a:outputPanel layout="block" styleClass="right" >
 
-                </a:outputPanel>
+                                <div class="btn-group" role="group" >
 
-                <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
-                              oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
-                              render="SectionSelectItemList">
-                    <a:attachQueue requestDelay="0"/>
-                </a:jsFunction>
+                                    <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
+                                            p:aria-label="#{messages.modifyBusiness}"
+                                            action="#{houseBusinessModifyStart.startModify}"
+                                            styleClass="btn btn-defautl #{ownerBusinessHome.canModify ? '' : 'disabled'} tooltipped tooltipped-s"
+                                            disabled="#{not ownerBusinessHome.canModify}">
 
-                <span class="mega-octicon octicon-repo"></span>
+                                        <span class="btn-icon octicon octicon-pencil"></span>
+                                        <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
+                                    </s:link>
 
-                <h2><strong>#{ownerBusinessHome.instance.defineName}</strong>
-                    <h:outputText value="#{messages[ownerBusinessHome.instance.type]}"
-                                  rendered="#{not (ownerBusinessHome.instance.type eq 'NORMAL_BIZ')}"/>
-                    #{ownerBusinessHome.instance.id}
-                    <span class="label label-biz-status #{ownerBusinessHome.instance.status} tooltipped tooltipped-s" aria-label="#{messages[ownerBusinessHome.instance.source]} #{ownerBusinessHome.instance.recorded ? messages.OwnerBusinessRecord : messages.OwnerBusinessNoRecord} #{messages[ownerBusinessHome.instance.status.name()]}"> #{messages[ownerBusinessHome.instance.status.name()]}</span>
-                </h2>
+                                    <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
+                                            p:aria-label="#{messages.cancelBusiness}"
+                                            styleClass="btn btn-defautl #{ownerBusinessHome.canCancel ? '' : 'disabled'} tooltipped tooltipped-s"
+                                            disabled="#{not ownerBusinessHome.canCancel}">
 
-                <p class="repo-list-description">
-                    #{ownerBusinessHome.instance.memo}
-                </p>
+                                        <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
+                                        <span class="btn-icon octicon octicon-x"></span>
+                                    </s:link>
 
+                                    <a:commandLink type="button" class="btn btn-success btn-reversal #{ownerBusinessView.canResume ? '' : 'disabled'} tooltipped tooltipped-s"
+                                                   disabled="#{not ownerBusinessView.canResume}"
+                                                   rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
+                                                   oncomplete="$('#resumeConfirmPanel').modal('show')"
+                                                   p:aria-label="#{messages.CONTINUE}" immediate="true" execute="@this">
+                                        <span class="btn-icon octicon octicon-playback-play"></span>
+                                        <a:attachQueue requestDelay="0"/>
+                                        <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
+                                    </a:commandLink>
+                                    <a:commandLink type="button" class="btn btn-warning btn-reversal #{ ownerBusinessView.canSuspend ? '' : 'disabled'} tooltipped tooltipped-s"
+                                                   disabled="#{not ownerBusinessView.canSuspend}" oncomplete="$('#suspendConfirmPanel').modal('show')"
+                                                   rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
+                                                   p:aria-label="#{messages.SUSPEND}" immediate="true" execute="@this">
+                                        <span class="btn-icon octicon octicon-playback-pause"></span>
+                                        <a:attachQueue requestDelay="0"/>
+                                        <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
+                                    </a:commandLink>
+                                    <a:commandLink type="button" class="btn btn-danger btn-reversal #{ownerBusinessView.canStop ? '' : 'disabled'} tooltipped tooltipped-s"
+                                                   disabled="#{not ownerBusinessView.canStop}"
+                                                   rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
+                                                   oncomplete="$('#stopConfirmPanel').modal('show')" p:aria-label="#{messages.TERMINATION}"
+                                                   immediate="true" execute="@this">
+                                        <span class="btn-icon octicon octicon-primitive-square"></span>
+                                        <a:attachQueue requestDelay="0"/>
+                                        <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
+                                    </a:commandLink>
 
-                <p class="repo-list-meta">
+                                    <a:jsFunction name="showEmpMenu" action="#{employeeList.resetResultCount}"
+                                                  render="sectionSelectPanel" execute="@this" immediate="true"/>
 
-
-                    <h:outputText value="#{messages['ownerBusiness.applyTime']}"
-                                  rendered="#{not empty ownerBusinessHome.instance.applyTime}"/>
-                    <h:outputText value="#{ownerBusinessHome.instance.applyTime}"
-                                  rendered="#{not empty ownerBusinessHome.instance.applyTime}">
-                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                    </h:outputText>
-
-                    <h:outputText value="#{messages['ownerBusiness.checkTime']}"
-                                  rendered="#{not empty ownerBusinessHome.instance.checkTime}"/>
-                    <h:outputText value=" #{ownerBusinessHome.instance.checkTime}"
-                                  rendered="#{not empty ownerBusinessHome.instance.checkTime}">
-                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                    </h:outputText>
-
-                    <h:outputText value="#{messages['ownerBusiness.regTime']}"
-                                  rendered="#{ownerBusinessHome.instance.recorded}"/>
-                    <h:outputText value="#{ownerBusinessHome.instance.regTime}"
-                                  rendered="#{ownerBusinessHome.instance.recorded}">
-                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                    </h:outputText>
-
-                    <h:outputText value="#{messages['ownerBusiness.recordTime']}"
-                                  rendered="#{not empty ownerBusinessHome.instance.recordTime}"/>
-                    <h:outputText value="#{ownerBusinessHome.instance.recordTime}"
-                                  rendered="#{not empty ownerBusinessHome.instance.recordTime}">
-                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                    </h:outputText>
-
-
-                </p>
+                                    <a:outputPanel layout="block" styleClass="btn-group" rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}">
 
 
-            </div>
+                                        <button type="button"
+                                                aria-label="#{messages.ASSIGN}" onclick="showEmpMenu()"
+                                                class="btn btn-default btn-git select-menu-button dropdown-toggle #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
+                                            <ui:insert name="caption">
+                                                <span class="btn-icon octicon octicon-person"></span>
+
+                                            </ui:insert>
+                                        </button>
+
+                                        <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
+                                            <div class="select-menu-modal">
+                                                <div class="select-menu-header">
+                                                    <span class="select-menu-title">#{messages.assign_title}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                                </div>
+
+                                                <a:outputPanel layout="block" id="sectionSelectPanel">
+                                                    <div class="select-menu-filters">
+                                                        <div class="select-menu-text-filter">
+                                                            <h:inputText id="sectionSearchName" autocomplete="off" value="#{employeeList.searchKey}">
+                                                                <a:ajax event="keyup" immediate="true" execute="@this"
+                                                                        render="SectionSelectItemList">
+                                                                    <a:attachQueue requestDelay="500"/>
+                                                                </a:ajax>
+
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
+                                                    <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
 
 
-            <r:tabPanel switchType="client">
-                <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
+                                                        <a:repeat value="#{employeeList.resultList}" var="_item">
 
-                    <r:tab>
+                                                            <a:commandLink execute="@this" immediate="true"
+                                                                           render="assignConfirmPanel_form,assignConfirmPanel_title"
+                                                                           oncomplete="$('#assignConfirmPanel').modal('show')"
+                                                                           styleClass="select-menu-item">
+                                                                <a:attachQueue requestDelay="0"/>
+                                                                <f:param name="actorId" value="#{_item.id}"/>
+                                                                <f:param name="taskId" value="#{null}"/>
+                                                                <f:param name="actorName" value="#{_item.personName}"/>
+                                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                <span class="select-menu-item-text">#{_item.personName}</span>
+                                                            </a:commandLink>
+                                                        </a:repeat>
 
-                        <f:facet name="header">
-                            <span class="#{_group.group.iconCss}"/>
-                            #{_group.group.name}
-                        </f:facet>
 
-                        <dh:entryGrid styleClass="detailsTable table table-bordered "
-                                      groupWidth="#{_group.group.groupWidth}" keyWidth="#{_group.group.keyWidth}"
-                                      valueWidth="#{_group.group.valueWidth}">
-                            <c:forEach items="#{_group.defineList}" var="_item">
 
-                                <f:subview>
-                                    <ui:include src="#{_item.page}"/>
-                                </f:subview>
+
+
+                                                        <a:commandLink onclick="moreResult(); event.stopPropagation(); return false;"
+                                                                       styleClass="select-menu-item last-visible"
+                                                                       rendered="#{employeeList.nextExists}">
+
+
+                                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                            <span class="select-menu-item-text">#{messages.More}</span>
+                                                            <a:attachQueue requestDelay="0"/>
+                                                        </a:commandLink>
+                                                    </a:outputPanel>
+
+                                                </a:outputPanel>
+
+                                            </div>
+                                        </div>
+                                    </a:outputPanel>
+
+
+
+
+                                </div>
+
+                            </a:outputPanel>
+
+                            <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
+                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                          render="SectionSelectItemList">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:jsFunction>
+
+                            <span class="mega-octicon octicon-repo"></span>
+
+                            <h2><strong>#{ownerBusinessHome.instance.defineName}</strong>
+                                <h:outputText value="#{messages[ownerBusinessHome.instance.type]}"
+                                              rendered="#{not (ownerBusinessHome.instance.type eq 'NORMAL_BIZ')}"/>
+                                #{ownerBusinessHome.instance.id}
+                                <span class="label label-biz-status #{ownerBusinessHome.instance.status} tooltipped tooltipped-s" aria-label="#{messages[ownerBusinessHome.instance.source]} #{ownerBusinessHome.instance.recorded ? messages.OwnerBusinessRecord : messages.OwnerBusinessNoRecord} #{messages[ownerBusinessHome.instance.status.name()]}"> #{messages[ownerBusinessHome.instance.status.name()]}</span>
+                            </h2>
+
+                            <p class="repo-list-description">
+                                #{ownerBusinessHome.instance.memo}
+                            </p>
+
+
+                            <p class="repo-list-meta">
+
+
+                                <h:outputText value="#{messages['ownerBusiness.applyTime']}"
+                                              rendered="#{not empty ownerBusinessHome.instance.applyTime}"/>
+                                <h:outputText value="#{ownerBusinessHome.instance.applyTime}"
+                                              rendered="#{not empty ownerBusinessHome.instance.applyTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+
+                                <h:outputText value="#{messages['ownerBusiness.checkTime']}"
+                                              rendered="#{not empty ownerBusinessHome.instance.checkTime}"/>
+                                <h:outputText value=" #{ownerBusinessHome.instance.checkTime}"
+                                              rendered="#{not empty ownerBusinessHome.instance.checkTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+
+                                <h:outputText value="#{messages['ownerBusiness.regTime']}"
+                                              rendered="#{ownerBusinessHome.instance.recorded}"/>
+                                <h:outputText value="#{ownerBusinessHome.instance.regTime}"
+                                              rendered="#{ownerBusinessHome.instance.recorded}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+
+                                <h:outputText value="#{messages['ownerBusiness.recordTime']}"
+                                              rendered="#{not empty ownerBusinessHome.instance.recordTime}"/>
+                                <h:outputText value="#{ownerBusinessHome.instance.recordTime}"
+                                              rendered="#{not empty ownerBusinessHome.instance.recordTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+
+
+                            </p>
+
+
+                        </div>
+
+
+                        <r:tabPanel switchType="client">
+                            <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
+
+                                <r:tab>
+
+                                    <f:facet name="header">
+                                        <span class="#{_group.group.iconCss}"/>
+                                        #{_group.group.name}
+                                    </f:facet>
+
+                                    <dh:entryGrid styleClass="detailsTable table table-bordered "
+                                                  groupWidth="#{_group.group.groupWidth}" keyWidth="#{_group.group.keyWidth}"
+                                                  valueWidth="#{_group.group.valueWidth}">
+                                        <c:forEach items="#{_group.defineList}" var="_item">
+
+                                            <f:subview>
+                                                <ui:include src="#{_item.page}"/>
+                                            </f:subview>
+                                        </c:forEach>
+                                    </dh:entryGrid>
+                                </r:tab>
                             </c:forEach>
-                        </dh:entryGrid>
-                    </r:tab>
-                </c:forEach>
 
-                <r:tab>
-                    <f:facet name="header">
-                        <span class="octicon octicon-file-submodule"/>
-                        #{messages.businessFile}
-                    </f:facet>
+                            <r:tab>
+                                <f:facet name="header">
+                                    <span class="octicon octicon-file-submodule"/>
+                                    #{messages.businessFile}
+                                </f:facet>
 
 
 
-                </r:tab>
-                <r:tab>
-                    <f:facet name="header">
-                        <span class="octicon octicon-milestone"/>
-                        #{messages.bussinessFlowRecord}
-                    </f:facet>
+                            </r:tab>
+                            <r:tab>
+                                <f:facet name="header">
+                                    <span class="octicon octicon-milestone"/>
+                                    #{messages.bussinessFlowRecord}
+                                </f:facet>
 
 
 
-                    <ui:include src="TaskOperListGroup.xhtml">
-                        <ui:param name="taskOperList" value="#{ownerBusinessHome.taskOperList}"/>
-                    </ui:include>
+                                <ui:include src="TaskOperListGroup.xhtml">
+                                    <ui:param name="taskOperList" value="#{ownerBusinessHome.taskOperList}"/>
+                                </ui:include>
 
 
-                </r:tab>
+                            </r:tab>
 
 
 
 
-                <r:tab rendered="#{not empty processInstanceHome.instance}">
-                    <f:facet name="header">
-                        <span class="octicon octicon-clock"/>
-                        #{messages.processTaskLog}
-                    </f:facet>
+                            <r:tab rendered="#{not empty processInstanceHome.instance}">
+                                <f:facet name="header">
+                                    <span class="octicon octicon-clock"/>
+                                    #{messages.processTaskLog}
+                                </f:facet>
 
 
-                    <ul class="boxed-group-inner list-group notifications status-list-group">
-                        <a:repeat value="#{processInstanceHome.taskInstanceList}" var="_task">
-                            <li class="list-group-item issue-notification #{(_task.open and _task.signalling) ? 'list-group-item-info' : ''}">
+                                <ul class="boxed-group-inner list-group notifications status-list-group">
+                                    <a:repeat value="#{processInstanceHome.taskInstanceList}" var="_task">
+                                        <li class="list-group-item issue-notification #{(_task.open and _task.signalling) ? 'list-group-item-info' : ''}">
                                 <span class="list-group-item-name css-truncate"  style="max-width: 700px">
                                     <span class="type-icon octicon octicon-git-commit">
 
@@ -482,41 +513,41 @@
 
                                     <div class="task-status-group">
 
-                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" p:aria-label="#{messages.jbpm_task_open}"  rendered="#{_task.open}" >
-                                                <a:outputPanel styleClass="octicon octicon-alignment-align status-icon"/>
-                                            </a:outputPanel>
+                                        <a:outputPanel styleClass="tooltipped tooltipped-w task-status" p:aria-label="#{messages.jbpm_task_open}"  rendered="#{_task.open}" >
+                                            <a:outputPanel styleClass="octicon octicon-alignment-align status-icon"/>
+                                        </a:outputPanel>
 
 
 
-                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.signalling}" p:aria-label="#{messages.jbpm_task_signalling}">
-                                                <a:outputPanel styleClass="octicon octicon-git-pull-request status-icon"/>
-                                            </a:outputPanel>
+                                        <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.signalling}" p:aria-label="#{messages.jbpm_task_signalling}">
+                                            <a:outputPanel styleClass="octicon octicon-git-pull-request status-icon"/>
+                                        </a:outputPanel>
 
 
-                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.last}" p:aria-label="#{messages.jbpm_task_last}">
-                                                <span class="octicon octicon-alignment-aligned-to status-icon"/>
+                                        <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.last}" p:aria-label="#{messages.jbpm_task_last}">
+                                            <span class="octicon octicon-alignment-aligned-to status-icon"/>
 
-                                            </a:outputPanel>
+                                        </a:outputPanel>
 
 
-                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.suspended}" p:aria-label="#{messages.jbpm_task_suspended}">
+                                        <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.suspended}" p:aria-label="#{messages.jbpm_task_suspended}">
                                             <span class="octicon octicon-playback-pause status-icon">
 
                                             </span>
-                                            </a:outputPanel>
+                                        </a:outputPanel>
 
 
 
-                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status " rendered="#{_task.blocking}" p:aria-label="#{messages.jbpm_task_blocking}">
-                                                <span class="octicon octicon-alignment-unalign status-icon"/>
-                                            </a:outputPanel>
+                                        <a:outputPanel styleClass="tooltipped tooltipped-w task-status " rendered="#{_task.blocking}" p:aria-label="#{messages.jbpm_task_blocking}">
+                                            <span class="octicon octicon-alignment-unalign status-icon"/>
+                                        </a:outputPanel>
 
 
 
 
-                                            <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.cancelled}" p:aria-label="#{messages.jbpm_task_cancelled}">
-                                                <span class="octicon octicon-x status-icon"/>
-                                            </a:outputPanel>
+                                        <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.cancelled}" p:aria-label="#{messages.jbpm_task_cancelled}">
+                                            <span class="octicon octicon-x status-icon"/>
+                                        </a:outputPanel>
 
                                     </div>
 
@@ -530,125 +561,135 @@
 
                                 </span>
 
-                                <ul class="notification-actions">
+                                            <ul class="notification-actions">
 
-                                    <li>
+                                                <li>
 
-                                        <a:outputPanel rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr') and (_task.open) and _task.signalling}">
-                                        <f:subview>
-                                            <a:jsFunction name="showSubEmpMenu" action="#{employeeList.resetResultCount}"
-                                                          render="sectionSelectPanel" execute="@this" immediate="true"/>
+                                                    <a:outputPanel rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr') and (_task.open) and _task.signalling}">
+                                                        <f:subview>
+                                                            <a:jsFunction name="showSubEmpMenu" action="#{employeeList.resetResultCount}"
+                                                                          render="sectionSelectPanel" execute="@this" immediate="true"/>
 
-                                            <a:jsFunction name="moreSubResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
-                                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
-                                                          render="SectionSelectItemList">
-                                                <a:attachQueue requestDelay="0"/>
-                                            </a:jsFunction>
+                                                            <a:jsFunction name="moreSubResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
+                                                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                                                          render="SectionSelectItemList">
+                                                                <a:attachQueue requestDelay="0"/>
+                                                            </a:jsFunction>
 
 
-                                                <a aria-label="#{messages.ASSIGN}" onclick="showSubEmpMenu()" style="cursor: pointer"
-                                                        class=" #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
-                                                    <span class="octicon octicon-person"></span>
-                                                    <span class="dropdown-caret" style="vertical-align: -2px"/>
-                                                    <a:attachQueue requestDelay="0"/>
-                                                </a>
+                                                            <a aria-label="#{messages.ASSIGN}" onclick="showSubEmpMenu()" style="cursor: pointer"
+                                                               class=" #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
+                                                                <span class="octicon octicon-person"></span>
+                                                                <span class="dropdown-caret" style="vertical-align: -2px"/>
+                                                                <a:attachQueue requestDelay="0"/>
+                                                            </a>
 
-                                                <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
-                                                    <div class="select-menu-modal">
-                                                        <div class="select-menu-header">
-                                                            <span class="select-menu-title">#{messages.assign_title}</span>
+                                                            <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
+                                                                <div class="select-menu-modal">
+                                                                    <div class="select-menu-header">
+                                                                        <span class="select-menu-title">#{messages.assign_title}</span>
                                             <span class="octicon octicon-x js-menu-close"
                                                   aria-label="#{messages.close}"></span>
-                                                        </div>
+                                                                    </div>
 
-                                                        <a:outputPanel layout="block" id="sectionSelectPanel">
-                                                            <div class="select-menu-filters">
-                                                                <div class="select-menu-text-filter">
-                                                                    <h:inputText id="sectionSearchName" autocomplete="off" value="#{employeeList.searchKey}">
-                                                                        <a:ajax event="keyup" immediate="true" execute="@this"
-                                                                                render="SectionSelectItemList">
-                                                                            <a:attachQueue requestDelay="500"/>
-                                                                        </a:ajax>
+                                                                    <a:outputPanel layout="block" id="sectionSelectPanel">
+                                                                        <div class="select-menu-filters">
+                                                                            <div class="select-menu-text-filter">
+                                                                                <h:inputText id="sectionSearchName" autocomplete="off" value="#{employeeList.searchKey}">
+                                                                                    <a:ajax event="keyup" immediate="true" execute="@this"
+                                                                                            render="SectionSelectItemList">
+                                                                                        <a:attachQueue requestDelay="500"/>
+                                                                                    </a:ajax>
 
-                                                                    </h:inputText>
+                                                                                </h:inputText>
+                                                                            </div>
+                                                                        </div>
+                                                                        <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+
+
+                                                                            <a:repeat value="#{employeeList.resultList}" var="_item">
+
+                                                                                <a:commandLink execute="@this" immediate="true"
+                                                                                               render="assignConfirmPanel_form,assignConfirmPanel_title"
+                                                                                               oncomplete="$('#assignConfirmPanel').modal('show')"
+                                                                                               disabled="#{(_task.actorId eq _item.id)}"
+                                                                                               styleClass="select-menu-item #{(_task.actorId eq _item.id) ? 'selected disabled': ''}">
+                                                                                    <a:attachQueue requestDelay="0"/>
+                                                                                    <f:param name="actorId" value="#{_item.id}"/>
+                                                                                    <f:param name="taskId" value="#{_task.id}"/>
+                                                                                    <f:param name="actorName" value="#{_item.personName}"/>
+                                                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                                    <span class="select-menu-item-text">#{_item.personName}</span>
+                                                                                </a:commandLink>
+                                                                            </a:repeat>
+
+
+
+
+
+                                                                            <a:commandLink onclick="moreSubResult(); event.stopPropagation(); return false;"
+                                                                                           styleClass="select-menu-item last-visible"
+                                                                                           rendered="#{employeeList.nextExists}">
+
+
+                                                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                                <span class="select-menu-item-text">#{messages.More}</span>
+                                                                                <a:attachQueue requestDelay="0"/>
+                                                                            </a:commandLink>
+                                                                        </a:outputPanel>
+
+                                                                    </a:outputPanel>
+
                                                                 </div>
                                                             </div>
-                                                            <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
-
-
-                                                                <a:repeat value="#{employeeList.resultList}" var="_item">
-
-                                                                    <a:commandLink execute="@this" immediate="true"
-                                                                                   render="assignConfirmPanel_form,assignConfirmPanel_title"
-                                                                                   oncomplete="$('#assignConfirmPanel').modal('show')"
-                                                                                   disabled="#{(_task.actorId eq _item.id)}"
-                                                                                   styleClass="select-menu-item #{(_task.actorId eq _item.id) ? 'selected disabled': ''}">
-                                                                        <a:attachQueue requestDelay="0"/>
-                                                                        <f:param name="actorId" value="#{_item.id}"/>
-                                                                        <f:param name="taskId" value="#{_task.id}"/>
-                                                                        <f:param name="actorName" value="#{_item.personName}"/>
-                                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                                        <span class="select-menu-item-text">#{_item.personName}</span>
-                                                                    </a:commandLink>
-                                                                </a:repeat>
 
 
 
+                                                        </f:subview>
+                                                    </a:outputPanel>
 
 
-                                                                <a:commandLink onclick="moreSubResult(); event.stopPropagation(); return false;"
-                                                                               styleClass="select-menu-item last-visible"
-                                                                               rendered="#{employeeList.nextExists}">
+                                                </li>
+                                                <ui:remove>
+                                                    <li>
+                                                        <a:commandLink render="#{_task.suspended and _task.open and not _task.cancelled}">
+                                                            <span class="octicon octicon-playback-play" style="color: #5cb85c"/>
+                                                        </a:commandLink>
 
+                                                        <a:commandLink render="#{not _task.suspended and _task.open and not _task.cancelled}">
+                                                            <span class="octicon octicon-playback-pause" style="color: #f0ad4e"/>
+                                                        </a:commandLink>
+                                                    </li>
+                                                </ui:remove>
+                                                <li>
+                                                    <h:outputText value="#{dictionary.getEmpNameById(_task.actorId)}"
+                                                                  styleClass="tooltipped tooltipped-w"
+                                                                  p:aria-label="#{_task.actorId}"
+                                                                  rendered="#{not empty _task.actorId}"/>
+                                                </li>
 
-                                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
-                                                                    <span class="select-menu-item-text">#{messages.More}</span>
-                                                                    <a:attachQueue requestDelay="0"/>
-                                                                </a:commandLink>
-                                                            </a:outputPanel>
-
-                                                        </a:outputPanel>
-
-                                                    </div>
-                                                </div>
-
-
-
-                                        </f:subview>
-                                        </a:outputPanel>
-
-
-                                    </li>
-                                    <ui:remove>
-                                    <li>
-                                        <a:commandLink render="#{_task.suspended and _task.open and not _task.cancelled}">
-                                            <span class="octicon octicon-playback-play" style="color: #5cb85c"/>
-                                        </a:commandLink>
-
-                                        <a:commandLink render="#{not _task.suspended and _task.open and not _task.cancelled}">
-                                            <span class="octicon octicon-playback-pause" style="color: #f0ad4e"/>
-                                        </a:commandLink>
-                                    </li>
-                                    </ui:remove>
-                                    <li>
-                                        <h:outputText value="#{dictionary.getEmpNameById(_task.actorId)}"
-                                                      styleClass="tooltipped tooltipped-w"
-                                                      p:aria-label="#{_task.actorId}"
-                                                      rendered="#{not empty _task.actorId}"/>
-                                    </li>
+                                            </ul>
+                                        </li>
+                                    </a:repeat>
 
                                 </ul>
-                            </li>
-                        </a:repeat>
-
-                    </ul>
-   </r:tab>
+                            </r:tab>
 
 
-            </r:tabPanel>
+                        </r:tabPanel>
 
-        </a:outputPanel>
+                    </a:outputPanel>
 
-    </a:outputPanel>
-    </h:form>
+                </a:outputPanel>
+            </h:form>
+        </div>
+
+
+    </ui:define>
+
+
+
+
+
+
 </ui:composition>
