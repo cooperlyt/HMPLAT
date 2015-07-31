@@ -6,16 +6,16 @@
     <restrict>#{s:hasRole('owner.businessView')}</restrict>
 
 
-    <param name="searchKey" value="#{houseBusinessList.searchKey}"/>
-    <param name="searchType" value="#{houseBusinessList.searchTypeName}"/>
+    <param name="searchKey" value="#{houseBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{houseBusinessCondition.searchTypeName}"/>
 
-    <param name="mapNumber" value="#{houseBusinessList.mapNumber}"/>
-    <param name="blockNumber" value="#{houseBusinessList.blockNumber}"/>
-    <param name="buildNumber" value="#{houseBusinessList.buildNumber}"/>
-    <param name="houseNumber" value="#{houseBusinessList.houseNumber}"/>
+    <param name="mapNumber" value="#{houseBusinessCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{houseBusinessCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{houseBusinessCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{houseBusinessCondition.houseNumber}"/>
 
-    <param name="cardTypeName" value="#{houseBusinessList.cardTypeName}"/>
-    <param name="credentialsTypeName" value="#{houseBusinessList.credentialsTypeName}"/>
+    <param name="cardTypeName" value="#{houseBusinessCondition.cardTypeName}"/>
+    <param name="credentialsTypeName" value="#{houseBusinessCondition.credentialsTypeName}"/>
 
 
     <param name="bizCategoryId" value="#{houseBusinessList.businessCategoryId}"/>

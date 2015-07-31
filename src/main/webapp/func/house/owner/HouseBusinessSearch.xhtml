@@ -87,7 +87,7 @@
     </h:outputScript>
 
     <ui:define name="head-right">
-        <h:form styleClass="search_repos #{houseBusinessList.searchType}">
+        <h:form styleClass="search_repos #{houseBusinessCondition.searchType}">
             <div class="flex-table search-form-fluid">
 
                 <div class="flex-table-item flex-table-item-primary">
@@ -96,8 +96,8 @@
 
 
                             <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
-                                             value="#{houseBusinessList.searchType}" onchange="searchTypeChange()">
-                                <s:selectItems value="#{houseBusinessList.allSearchTypes}" var="_item"
+                                             value="#{houseBusinessCondition.searchType}" onchange="searchTypeChange()">
+                                <s:selectItems value="#{houseBusinessCondition.allSearchTypes}" var="_item"
                                                itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
                                                label="#{messages[_item.name()]}"/>
                                 <s:convertEnum/>
@@ -105,28 +105,28 @@
 
 
                         </div>
-                        <h:inputText styleClass="form-control search-key-input" value="#{houseBusinessList.searchKey}"/>
+                        <h:inputText styleClass="form-control search-key-input" value="#{houseBusinessCondition.searchKey}"/>
 
                         <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_map}"/>
 
-                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessList.mapNumber}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessCondition.mapNumber}"/>
 
                         <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_block}"/>
 
-                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessList.blockNumber}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessCondition.blockNumber}"/>
                         <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_build}"/>
 
-                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessList.buildNumber}"/>
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseBusinessCondition.buildNumber}"/>
                         <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_house}"/>
 
                         <h:inputText styleClass="form-control search-mbbh-input" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px"
-                                     value="#{houseBusinessList.houseNumber}"/>
+                                     value="#{houseBusinessCondition.houseNumber}"/>
 
                         <a:outputPanel styleClass="input-group-btn card-type-select">
 
                             <h:selectOneMenu styleClass="selectpicker select-menu-btn"
-                                             value="#{houseBusinessList.cardType}">
-                                <s:selectItems value="#{houseBusinessList.allCardTypes}" var="_item"
+                                             value="#{houseBusinessCondition.cardType}">
+                                <s:selectItems value="#{houseBusinessCondition.allCardTypes}" var="_item"
                                                itemValue="#{_item}" label="#{messages[_item.name()]}"/>
 
                                 <s:convertEnum/>
@@ -136,7 +136,7 @@
 
                         <a:outputPanel styleClass="input-group-btn person-type-select">
                             <h:selectOneMenu styleClass="selectpicker select-menu-btn"
-                                             value="#{houseBusinessList.credentialsType}">
+                                             value="#{houseBusinessCondition.credentialsType}">
                                 <s:selectItems value="#{credentialsTypes}" var="_item"
                                                itemValue="#{_item}" label="#{messages[_item.name()]}"/>
 
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="flex-table-item">
-                    <h:commandLink styleClass="btn" onclick="#{rich:component('wait')}.show()" action="#{houseBusinessList.resetPage}"
+                    <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseBusinessList.resetPage}"
                                    value="#{messages.Search}">
                     </h:commandLink>
                 </div>
@@ -187,7 +187,7 @@
                                      value="#{houseBusinessList.businessCategoryId}">
                         <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
                                        label="#{_category.name}" itemValue="#{_category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.resetPage}" render="myBizDefineFilter,resultBlank,resultDatas">
+                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.resetPage}" status="processWaiting" render="myBizDefineFilter,resultBlank,resultDatas">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectOneMenu>
@@ -199,7 +199,8 @@
                                                  styleClass="selectpicker mini-select"  value="#{houseBusinessList.businessDefineId}">
                                     <s:selectItems value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define"
                                                    label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                                    <a:ajax event="valueChange" listener="#{houseBusinessList.resetPage}" execute="@form" render="resultDatas">
+                                    <a:ajax event="valueChange" listener="#{houseBusinessList.resetPage}" status="processWaiting" execute="@form"
+                                            render="resultDatas,resultBlank">
                                         <a:attachQueue requestDelay="0"/>
                                     </a:ajax>
                                 </h:selectOneMenu>
