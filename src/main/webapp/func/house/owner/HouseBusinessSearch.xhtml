@@ -14,6 +14,11 @@
 
     <ui:param name="funcName" value="#{messages.HouseBusinessSearch}"/>
 
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
     <ui:define name="funcNav">
         <ui:include src="/layout/function-nav.xhtml">
             <ui:param name="functions" value="#{authInfo.workFunctions}"/>
@@ -145,7 +150,7 @@
                 </div>
 
                 <div class="flex-table-item">
-                    <h:commandLink styleClass="button" onclick="#{rich:component('wait')}.show()"
+                    <h:commandLink styleClass="btn" onclick="#{rich:component('wait')}.show()" action="#{houseBusinessList.resetPage}"
                                    value="#{messages.Search}">
                     </h:commandLink>
                 </div>
@@ -159,6 +164,9 @@
             max-width: 140px !important;
         }
 
+        .repo-list-description{
+            max-width: none;
+        }
 
     </h:outputStylesheet>
 
@@ -166,29 +174,43 @@
 
 
         <a:outputPanel ajaxRendered="false">
-            <a:outputPanel layout="block" styleClass="blankslate" rendered="#{empty houseBusinessList.searchResult}">
-                <span class="mega-octicon octicon-search"></span>
-
-                <h3>#{messages.EmptyResult}</h3>
-
-                <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessList.resetCondition}"/>
-                    #{' '}#{messages.orOther} #{messages.Try} #{' '}
-                    <s:link value="#{messages.AvancedSearch}"/></p>
-            </a:outputPanel>
 
 
-            <div style="min-height: 300px;">
-            <h:dataTable value="#{houseBusinessList.searchResult}"
-                         styleClass="table table-striped table-hover table-floatThead"
-                         headerClass="table-tools-header"
-                         columnClasses=",,,,action-col"
-                         var="_item" rendered="#{not empty houseBusinessList.resultList}">
 
 
-                <f:facet name="header">
 
-                    <div class="select-menu">
-                    <div class="btn-group btn-group-sm">
+            <a:outputPanel layout="block" style="min-height: 300px;">
+
+                <div class="file-navigation in-mid-page" style="margin-top: 0">
+                    <h:form>
+                    <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
+                                     value="#{houseBusinessList.businessCategoryId}">
+                        <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
+                                       label="#{_category.name}" itemValue="#{_category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
+                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.resetPage}" render="myBizDefineFilter,resultBlank,resultDatas">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                    </h:selectOneMenu>
+
+                        <a:outputPanel id="myBizDefineFilter">
+                            <a:outputPanel rendered="#{not empty houseBusinessList.businessCategory}">
+                                <span class="i-separator">/</span>
+                                <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
+                                                 styleClass="selectpicker mini-select"  value="#{houseBusinessList.businessDefineId}">
+                                    <s:selectItems value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define"
+                                                   label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
+                                    <a:ajax event="valueChange" listener="#{houseBusinessList.resetPage}" execute="@form" render="resultDatas">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:ajax>
+                                </h:selectOneMenu>
+                            </a:outputPanel>
+                        </a:outputPanel>
+
+
+
+                    <div class="right" >
+                        <div class="select-menu">
+                            <div class="btn-group btn-group-sm">
                                 <ui:decorate template="/layout/dropdown-actions.xhtml">
                                     <ui:define name="caption">
                                         <i>#{messages.SortBy}:</i>
@@ -205,8 +227,100 @@
                                         </s:link>
                                     </a:repeat>
                                 </ui:decorate>
+                            </div>
+                        </div>
                     </div>
-                    </div>
+                    </h:form>
+                </div>
+
+
+                <a:outputPanel id="resultBlank">
+                    <a:outputPanel layout="block" styleClass="blankslate" rendered="#{empty houseBusinessList.searchResult}">
+                        <span class="mega-octicon octicon-search"></span>
+
+                        <h3>#{messages.EmptyResult}</h3>
+
+                        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessList.resetCondition}"/>
+                            #{' '}#{messages.orOther} #{messages.Try} #{' '}
+                            <s:link value="#{messages.AvancedSearch}"/></p>
+                    </a:outputPanel>
+                </a:outputPanel>
+
+
+                <a:outputPanel id="resultDatas">
+                    <a:outputPanel rendered="#{not empty houseBusinessList.resultList}">
+                        <ul class="repo-list js-repo-list">
+                            <a:repeat value="#{houseBusinessList.searchResult}" var="_item">
+                                <li class="repo-list-item public source">
+                                    <div class="repo-list-stats">
+
+                                    </div>
+                                    <h3 class="repo-list-name">
+
+                                        <s:link view="/func/house/owner/BusinessView.xhtml">
+                                            <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
+                                            #{_item.ownerBusiness.defineName}
+                                            <h:outputText value="#{messages[_item.ownerBusiness.type]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+                                            /#{_item.ownerBusiness.id}
+                                        </s:link>
+
+                                        <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                                            #{messages[_item.ownerBusiness.status.name()]}
+                                        </span>
+                                    </h3>
+
+                                    <p class="repo-list-description">
+                                        <s:link value="#{_item.afterBusinessHouse.displayHouseCode}">
+
+                                        </s:link>
+
+                                        #{_item.afterBusinessHouse.buildName}
+                                        #{_item.afterBusinessHouse.houseOrder}
+                                        <strong>
+                                        <h:outputText value="#{_item.afterBusinessHouse.businessHouseOwner.personName}"
+                                                      rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
+                                        </strong>
+
+                                    </p>
+                                    <p class="repo-list-description">
+                                        #{_item.afterBusinessHouse.address}
+                                            </p>
+
+                                    <p class="repo-list-meta">
+                                        #{messages['ownerBusiness.applyTime']}
+                                        <h:outputText value="#{_item.ownerBusiness.applyTime}">
+                                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                        </h:outputText>
+                                    </p>
+                                </li>
+                            </a:repeat>
+                        </ul>
+                    </a:outputPanel>
+                    <a:outputPanel layout="block" rendered="#{not empty houseBusinessList.searchResult}" class="paginate-container">
+
+                        <a:outputPanel>
+                            <ui:include src="/layout/pages.xhtml">
+                                <ui:param name="entityList" value="#{houseBusinessList}"/>
+                            </ui:include>
+                        </a:outputPanel>
+
+                    </a:outputPanel>
+                </a:outputPanel>
+
+            </a:outputPanel>
+
+            <ui:remove>
+            <div style="min-height: 300px;">
+            <h:dataTable value="#{houseBusinessList.searchResult}"
+                         styleClass="table table-striped table-hover table-floatThead"
+                         headerClass="table-tools-header"
+                         columnClasses=",,,,action-col"
+                         var="_item" rendered="#{not empty houseBusinessList.resultList}">
+
+
+                <f:facet name="header">
+
+
 
 
                     <h3>
@@ -237,27 +351,18 @@
                     <f:facet name="header">
                         #{messages.BusinessDefineName}
                     </f:facet>
-                    #{_item.ownerBusiness.defineName}
-                    <h:outputText value="#{messages[_item.ownerBusiness.type]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+
 
                 </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.House_Code}
-                    </f:facet>
-                    <s:link value="#{_item.afterBusinessHouse.displayHouseCode}">
 
-                    </s:link>
-
-                </h:column>
 
 
                 <h:column>
                     <f:facet name="header">
                         #{messages.Build}
                     </f:facet>
-                    #{_item.afterBusinessHouse.buildName}
+
 
                 </h:column>
 
@@ -274,8 +379,7 @@
                     <f:facet name="header">
                         #{messages.House_Owner}
                     </f:facet>
-                    <h:outputText value="#{_item.afterBusinessHouse.businessHouseOwner.personName}"
-                            rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
+
 
                 </h:column>
 
@@ -283,29 +387,20 @@
                     <f:facet name="header">
                         #{messages.House_Address}
                     </f:facet>
-                    #{_item.afterBusinessHouse.address}
+
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">
-                        #{messages['ownerBusiness.applyTime']}
+
                     </f:facet>
-                    <h:outputText value="#{_item.ownerBusiness.applyTime}">
-                        <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                    </h:outputText>
+
                 </h:column>
 
             </h:dataTable>
             </div>
-            <a:outputPanel layout="block" rendered="#{not empty houseBusinessList.searchResult}" class="paginate-container">
+            </ui:remove>
 
-                <a:outputPanel>
-                    <ui:include src="/layout/pages.xhtml">
-                        <ui:param name="entityList" value="#{houseBusinessList}"/>
-                    </ui:include>
-                </a:outputPanel>
-
-            </a:outputPanel>
 
         </a:outputPanel>
 

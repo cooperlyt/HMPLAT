@@ -11,6 +11,7 @@ import org.jboss.seam.transaction.Transaction;
 
 import javax.persistence.EntityManager;
 import javax.transaction.SystemException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -236,5 +237,80 @@ public class MultiOperatorEntityQuery<E> extends MultiOperatorQuery<EntityManage
             throw new RuntimeException("could not join transaction", se);
         }
     }
+
+    public List<Long> getShowPageNumbers(Long maxPageCount) {
+        long halfCount = (maxPageCount.longValue() - 1) / 2;
+        long beginPage = getPage().longValue() - halfCount;
+        if (beginPage <= 0) {
+            beginPage = 1;
+        }
+        if ((getPageCount().longValue() - beginPage + 1) < maxPageCount) {
+            beginPage = getPageCount().longValue() - (maxPageCount - 1);
+        }
+        if (beginPage <= 0) {
+            beginPage = 1;
+        }
+
+
+        List<Long> result = new ArrayList<Long>(maxPageCount.intValue());
+        for (int i = 0; i < maxPageCount; i++) {
+            if (beginPage > getPageCount()) {
+                break;
+            }
+            result.add(Long.valueOf(beginPage));
+
+            beginPage++;
+        }
+        return result;
+    }
+
+    private String orderExpress;
+
+    private String order;
+
+    public String getOrderExpress() {
+        return orderExpress;
+    }
+
+    public void setOrderExpress(String orderExpress) {
+        this.orderExpress = orderExpress;
+    }
+
+    @Override
+    public void setOrder(String order) {
+        this.order = order;
+        refresh();
+    }
+
+    @Override
+    public String getOrder() {
+        String column = getOrderColumn();
+
+        if (column == null) {
+            column = getOrderExpress();
+        }
+
+        if (column == null) {
+            return order;
+        }
+
+        String direction = getOrderDirection();
+
+        if (direction == null) {
+            return column;
+        } else {
+            return column + ' ' + direction;
+        }
+    }
+
+    public Long getPage() {
+
+        if ((getFirstResult() == null) || getFirstResult().equals(0)) {
+            return Long.valueOf(1);
+        }
+
+        return getFirstResult().longValue() / getMaxResults().longValue() + 1;
+    }
+
 
 }

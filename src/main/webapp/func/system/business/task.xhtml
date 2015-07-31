@@ -157,7 +157,7 @@
                                 <a:outputPanel id="myBizDefineFilter">
                                     <a:outputPanel rendered="#{not empty allTaskAdapterCacheList.selectCategory}">
                                         <span class="i-separator">/</span>
-                                        <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="220px"
+                                        <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
                                                          styleClass="selectpicker mini-select"  value="#{allTaskAdapterCacheList.selectDefineId}">
                                             <s:selectItems value="#{allTaskAdapterCacheList.selectCategory.defineList}" var="_define"
                                                            label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
