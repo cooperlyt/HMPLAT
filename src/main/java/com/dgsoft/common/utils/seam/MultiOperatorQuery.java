@@ -254,7 +254,9 @@ public abstract class MultiOperatorQuery<T, E>
                 } else {
                     builder.append(" where ");
                 }
+                builder.append("(");
                 builder.append(restrictionEjbql);
+                builder.append(")");
             }
         }
 
@@ -265,6 +267,8 @@ public abstract class MultiOperatorQuery<T, E>
         if (getOrder()!=null) {
             builder.append(" order by ").append( getOrder() );
         }
+
+        Logging.getLog(getClass()).debug("MultiOperatorQuery sql:" + builder.toString());
 
         return builder.toString();
     }

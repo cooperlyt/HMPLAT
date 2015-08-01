@@ -33,6 +33,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
     private boolean enable;
     private String pickBusinessDefineId;
+    private String modifyPage;
 
     private Set<Fee> fees = new HashSet<Fee>(0);
 
@@ -246,4 +247,13 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         this.fees = fees;
     }
 
+    @Column(name = "MODIFY_PAGE",nullable = true, length = 200)
+    @Size(max = 200)
+    public String getModifyPage() {
+        return modifyPage;
+    }
+
+    public void setModifyPage(String modifyPage) {
+        this.modifyPage = modifyPage;
+    }
 }

@@ -1,9 +1,13 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.RunParam;
+import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 
@@ -15,11 +19,32 @@ import java.util.*;
 @Name("ownerBusinessHome")
 public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
+    @In(required = false)
+    private BusinessDefineHome businessDefineHome;
+
+    @In
+    private AuthenticationInfo authInfo;
+
+
     @Override
     public OwnerBusiness createInstance(){
+        OwnerBusiness result = new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
+                OwnerBusiness.BusinessStatus.RUNNING, new Date(), false, OwnerBusiness.BusinessType.NORMAL_BIZ);
 
-        return new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
-                OwnerBusiness.BusinessStatus.RUNNING,new Date(),false, OwnerBusiness.BusinessType.NORMAL_BIZ);
+        result.setDefineId(businessDefineHome.getInstance().getId());
+        result.setDefineName(businessDefineHome.getInstance().getName());
+
+        result.getBusinessEmps().add(new BusinessEmp(result,
+                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
+                authInfo.getLoginEmployee().getPersonName()));
+        result.setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
+        Logging.getLog(getClass()).debug("businessID:" + result.getId());
+        result.getTaskOpers().add(
+                new TaskOper(result, TaskOper.OperType.CREATE,
+                        RunParam.instance().getStringParamValue("CreateBizTaskName"),
+                        authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
+
+        return result;
     }
 
     public Reason getReasonByType(String typeName){
@@ -146,6 +171,28 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
             if (file.isNoFile() && file.getUploadFiles().isEmpty()){
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean isCanModify(){
+        if (isIdDefined()){
+            return getInstance().getStatus().equals(BusinessInstance.BusinessStatus.COMPLETE) &&
+                    (getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ) ||
+                    getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ));
+        }
+        return false;
+    }
+
+    public boolean isCanCancel(){
+        if (isIdDefined()){
+            for(HouseBusiness business: getInstance().getHouseBusinesses()){
+                if (business.getAfterBusinessHouse().getHouseRecord() == null){
+                    return false;
+                }
+            }
+
+            return isCanModify();
         }
         return false;
     }

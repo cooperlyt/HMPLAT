@@ -30,9 +30,6 @@ import java.util.List;
 public class HouseBusinessStart {
 
     @In
-    private AuthenticationInfo authInfo;
-
-    @In
     private BusinessDefineHome businessDefineHome;
 
     @In(create = true)
@@ -101,23 +98,6 @@ public class HouseBusinessStart {
         return dataSelected();
     }
 
-    private void initBusinessData() {
-
-        ownerBusinessHome.getInstance().setDefineId(businessDefineHome.getInstance().getId());
-        ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-
-        ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(),
-                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
-                authInfo.getLoginEmployee().getPersonName()));
-        ownerBusinessHome.getInstance().setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
-        Logging.getLog(getClass()).debug("businessID:" + ownerBusinessHome.getInstance().getId());
-        ownerBusinessHome.getInstance().getTaskOpers().add(
-                new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,
-                        RunParam.instance().getStringParamValue("CreateBizTaskName"),
-                        authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
-
-    }
-
     public String businessSelected(){
         ownerBusinessHome.getInstance().setSelectBusiness(selectedBusiness);
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
@@ -134,7 +114,6 @@ public class HouseBusinessStart {
     }
 
     private String dataSelected(){
-        initBusinessData();
         for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
             component.fillData();
         }

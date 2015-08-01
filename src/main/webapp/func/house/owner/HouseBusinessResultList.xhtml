@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+
+    <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty listBean.searchResult}">
+        <span class="mega-octicon octicon-search"></span>
+
+        <h3>#{messages.EmptyResult}</h3>
+
+        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{listBean.resetCondition}"/>
+            #{' '}#{messages.orOther} #{messages.Try} #{' '}
+            <s:link value="#{messages.AvancedSearch}"/></p>
+    </a:outputPanel>
+
+
+    <a:outputPanel rendered="#{not empty listBean.resultList}">
+        <ul class="repo-list js-repo-list">
+            <a:repeat value="#{listBean.searchResult}" var="_item">
+                <li class="repo-list-item public source">
+                    <div class="repo-list-stats">
+
+                    </div>
+                    <h3 class="repo-list-name">
+
+                        <s:link view="/func/house/owner/BusinessView.xhtml">
+                            <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
+                            #{_item.ownerBusiness.defineName}
+                            <h:outputText value="#{messages[_item.ownerBusiness.type]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+                            /#{_item.ownerBusiness.id}
+                        </s:link>
+
+                                        <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                                            #{messages[_item.ownerBusiness.status.name()]}
+                                        </span>
+                    </h3>
+
+                    <p class="repo-list-description">
+                        <s:link value="#{_item.afterBusinessHouse.displayHouseCode}">
+
+                        </s:link>
+
+                        #{_item.afterBusinessHouse.buildName}
+                        #{_item.afterBusinessHouse.houseOrder}
+                        <strong>
+                            <h:outputText value="#{_item.afterBusinessHouse.businessHouseOwner.personName}"
+                                          rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
+                        </strong>
+
+                    </p>
+                    <p class="repo-list-description">
+                        #{_item.afterBusinessHouse.address}
+                    </p>
+
+                    <p class="repo-list-meta">
+                        #{messages['ownerBusiness.applyTime']}
+                        <h:outputText value="#{_item.ownerBusiness.applyTime}">
+                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                        </h:outputText>
+                    </p>
+                </li>
+            </a:repeat>
+        </ul>
+    </a:outputPanel>
+    <a:outputPanel layout="block" rendered="#{not empty listBean.searchResult}" class="paginate-container">
+
+        <a:outputPanel>
+            <ui:include src="/layout/pages.xhtml">
+                <ui:param name="entityList" value="#{listBean}"/>
+            </ui:include>
+        </a:outputPanel>
+
+    </a:outputPanel>
+</ui:composition>
