@@ -23,6 +23,7 @@ public class MakeCard implements java.io.Serializable {
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
 	private String number;
+    private boolean enable;
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
     //private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
@@ -127,5 +128,14 @@ public class MakeCard implements java.io.Serializable {
 
     public void setProjectCard(ProjectCard projectCard) {
         this.projectCard = projectCard;
+    }
+
+    @Column(name="ENABLE", nullable = false)
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

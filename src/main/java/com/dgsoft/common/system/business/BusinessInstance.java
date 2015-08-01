@@ -16,9 +16,9 @@ public interface BusinessInstance {
         NORMAL_BIZ,MODIFY_BIZ,CANCEL_BIZ
     }
 
-    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改 ， 修改中， 已完成但不生效（如已被解除抵押的抵押业务）
+    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改中， 已完成但不生效（如已被解除抵押的抵押业务）
     public enum BusinessStatus {
-        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFY, MODIFYING, COMPLETE_CANCEL;
+        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFYING, COMPLETE_CANCEL;
 
         public static EnumSet<BusinessStatus> runningStatus(){
             return EnumSet.of(RUNNING,SUSPEND,MODIFYING);
