@@ -841,6 +841,12 @@
     </create-component>
 
 
+    <create-component type="DATA_VALID" component="houseHaveDeveloper">
+        <description>
+            必须有开发商
+        </description>
+    </create-component>
+
     <!--
     <create-component type="BIZ_SELECT" component="pledgeBizSelect">
         <description>
@@ -872,7 +878,7 @@
 
     <create-component type="DATA_FILL" component="houseRegInfoFill">
         <description>
-            产别，产权来源信息提取
+            产别,产权来源提取
         </description>
     </create-component>
 
@@ -899,6 +905,12 @@
         </description>
     </create-component>
 
+
+    <create-component type="DATA_FILL" component="developerChangeOwner">
+        <description>
+            开发商转换成产前人
+        </description>
+    </create-component>
 
 
 
