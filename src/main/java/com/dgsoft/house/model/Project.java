@@ -54,9 +54,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     private Developer developer;
     private String name;
     private String address;
-    private String buildSize;
-    private Integer buildCount;
-    private BigDecimal area;
     private BigDecimal sumArea;
     private String memo;
     private Date mapTime;
@@ -152,35 +149,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         this.address = address;
     }
 
-    @Override
-    @Column(name = "BUILD_SIZE", length = 32)
-    @Size(max = 32)
-    public String getBuildSize() {
-        return this.buildSize;
-    }
-
-    public void setBuildSize(String buildSize) {
-        this.buildSize = buildSize;
-    }
-
-    @Column(name = "BUILD_COUNT")
-    public Integer getBuildCount() {
-        return this.buildCount;
-    }
-
-    public void setBuildCount(Integer buildCount) {
-        this.buildCount = buildCount;
-    }
-
-
-    @Column(name = "AREA", precision = 18, scale = 3)
-    public BigDecimal getArea() {
-        return this.area;
-    }
-
-    public void setArea(BigDecimal area) {
-        this.area = area;
-    }
 
     @Column(name = "SUM_AREA", precision = 18, scale = 3)
     public BigDecimal getSumArea() {

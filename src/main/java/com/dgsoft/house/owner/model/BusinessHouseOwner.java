@@ -78,8 +78,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     }
 
     @Override
-    @Column(name = "ID_NO", nullable = false, length = 100)
-    @NotNull
+    @Column(name = "ID_NO", nullable = true, length = 100)
     @Size(max = 100)
     public String getCredentialsNumber() {
         return this.credentialsNumber;
@@ -89,8 +88,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
         this.credentialsNumber = idNo;
     }
 
-    @Column(name = "PHONE", nullable = false, length = 15)
-    @NotNull
+    @Column(name = "PHONE", nullable = true, length = 15)
     @Size(max = 15)
     public String getPhone() {
         return this.phone;

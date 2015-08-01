@@ -5,6 +5,7 @@ import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.BusinessProject;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
@@ -39,7 +40,11 @@ public class HouseBusinessModifyStart {
         cloneData(selectOwnerBusiness);
 
 //        for (HouseBusiness houseBusiness: selectOwnerBusiness.getHouseBusinesses())
-//        HouseInfoCompare.compare()
+//            HouseInfoCompare.compare()
+//
+//        for(BusinessProject project: selectOwnerBusiness.getBusinessProjects()){
+//
+//        }
 
         return null;
     }
