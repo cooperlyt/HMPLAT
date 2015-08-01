@@ -22,6 +22,7 @@ import java.util.UUID;
 
 /**
  * Created by Administrator on 15-6-11.
+ * 档案位管理
  */
 
 @Name("recordStoreSubscribe")

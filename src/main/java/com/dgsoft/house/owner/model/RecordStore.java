@@ -67,8 +67,7 @@ public class RecordStore implements java.io.Serializable {
         this.houseRecord = houseRecord;
     }
 
-    @Column(name = "FRAME", nullable = false, length = 10)
-    @NotNull
+    @Column(name = "FRAME", nullable = true, length = 10)
     @Size(max = 10)
     public String getFrame() {
         return this.frame;
@@ -78,8 +77,7 @@ public class RecordStore implements java.io.Serializable {
         this.frame = frame;
     }
 
-    @Column(name = "CABINET", nullable = false, length = 20)
-    @NotNull
+    @Column(name = "CABINET", nullable = true, length = 20)
     @Size(max = 20)
     public String getCabinet() {
         return this.cabinet;
@@ -89,8 +87,7 @@ public class RecordStore implements java.io.Serializable {
         this.cabinet = cabinet;
     }
 
-    @Column(name = "BOX", nullable = false, length = 50)
-    @NotNull
+    @Column(name = "BOX", nullable = true, length = 50)
     @Size(max = 50)
     public String getBox() {
         return this.box;
