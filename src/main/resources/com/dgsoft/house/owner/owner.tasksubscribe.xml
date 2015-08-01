@@ -53,6 +53,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="poolTypeInBizView" page="/business/houseOwner/subscribe/PoolTypeInBizView.xhtml">
+        <description>
+            共有情况（业务中）
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="PoolOwnerView" page="/business/houseOwner/subscribe/PoolOwnerView.xhtml">
         <description>
@@ -66,11 +72,7 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="newPoolOwnerView" page="/business/houseOwner/subscribe/NewPoolOwnerView.xhtml">
-        <description>
-            现共有权人查看
-        </description>
-    </view-subscribe>
+
 
     <view-subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml">
         <description>
@@ -134,7 +136,7 @@
 
     <view-subscribe name="BusinessLandStartView" page="/business/houseOwner/subscribe/BusinessLandStartView.xhtml">
         <description>
-            土地信息启动（导入原土地信息）查看
+            土地信息启动（导入原土地信息,启动）查看
         </description>
     </view-subscribe>
 
@@ -218,6 +220,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PoolTypeStartView" page="/business/houseOwner/subscribe/PoolTypeStartView.xhtml">
+        <description>
+            (启动)共有情况
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="MakeCardOwnerRshipView" page="/business/houseOwner/subscribe/MakeCardOwnerRshipView.xhtml">
         <description>
@@ -251,11 +259,6 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="poolTypeInBizView" page="/business/houseOwner/subscribe/PoolTypeInBizView.xhtml">
-        <description>
-            共有情况（业务中）
-        </description>
-    </view-subscribe>
 
 
     <!--
@@ -375,11 +378,11 @@
     </edit-subscribe>
 
 
-    <view-subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml">
+    <edit-subscribe name="recordOwnerEdit" page="/business/houseOwner/subscribe/RecordOwnerEdit.xhtml" component="">
         <description>
             备案人编辑
         </description>
-    </view-subscribe>
+    </edit-subscribe>
 
     <edit-subscribe name="calcMoney" page="/business/houseOwner/subscribe/CalcMoney.xhtml"
                     out-page="" component="calcBusinessMoney">
@@ -505,11 +508,6 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
-        <description>
-            登记薄阶段是否完成登记薄
-        </description>
-    </end-subscribe>
 
     <end-subscribe name="MakeCardOwnerRshipEnd" component="makeCardOwnerRship">
         <description>
@@ -546,7 +544,7 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="addContractsRecordCompleteEnd" component="addContractsRecord">
+    <end-subscribe name="addOwnerdCompleteEnd" component="addOwnerd">
         <description>
             添加已办产权状态(单，多房屋)
         </description>
@@ -871,6 +869,16 @@
             共有权人信息提取
         </description>
     </create-component>
+
+    <create-component type="DATA_FILL" component="houseRegInfoFill">
+        <description>
+            产别，产权来源信息提取
+        </description>
+    </create-component>
+
+
+
+
 
     <create-component type="DATA_FILL" component="financialFill">
         <description>

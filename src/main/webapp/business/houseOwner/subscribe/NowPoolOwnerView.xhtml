@@ -8,12 +8,12 @@
                 xmlns:h="http://java.sun.com/jsf/html">
     <a:outputPanel
             rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse) and
-            (not empty ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.poolType)
-            and not (ownerBusinessHome.singleHoues.houseRegInfo.poolType eq 'SINGLE_OWNER')}">
+            (not empty ownerBusinessHome.singleHoues.startBusinessHouse.poolType)
+            and not (ownerBusinessHome.singleHoues.poolType eq 'SINGLE_OWNER')}">
 
         <ui:include src="/layout/house/owner/PoolOwnerTable.xhtml">
             <ui:param name="poolOwners"
-                      value="#{ownerBusinessHome.singleHoues.startBusinessHouse.houseRegInfo.businessPoolList}"/>
+                      value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessPoolList}"/>
             <ui:param name="title" value="#{messages.NowBusinessPool}"/>
         </ui:include>
     </a:outputPanel>

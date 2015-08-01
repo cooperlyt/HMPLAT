@@ -11,7 +11,7 @@ import org.jboss.seam.annotations.Scope;
 
 /**
  * Created by Administrator on 15-7-20.
- * 共有权人填充
+ * 共有权人填充,共有情况
  */
 @Name("businessPoolFill")
 @Scope(ScopeType.STATELESS)
@@ -25,9 +25,10 @@ public class BusinessPoolFill implements BusinessDataFill {
     public void fillData() {
 
        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-
+           houseBusiness.getAfterBusinessHouse().setPoolType(houseBusiness.getStartBusinessHouse().getPoolType());
            for(BusinessPool businessPool:houseBusiness.getStartBusinessHouse().getBusinessPools()){
                houseBusiness.getAfterBusinessHouse().getBusinessPools().add(businessPool);
+
 
            }
        }
