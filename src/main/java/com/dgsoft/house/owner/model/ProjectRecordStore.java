@@ -63,7 +63,7 @@ public class ProjectRecordStore implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RECORD", nullable = false)
+	@JoinColumn(name = "PROJECT_CODE", nullable = false)
 	@NotNull
 	public ProjectRecord getProjectRecord() {
 		return this.projectRecord;

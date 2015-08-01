@@ -115,6 +115,10 @@ public class OwnerBusinessView {
     public void terminationBiz(){
         if (isCanStop()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.ABORT);
+            if (ownerBusinessHome.getInstance().getSelectBusiness() != null &&
+                    BusinessInstance.BusinessStatus.MODIFYING.equals(ownerBusinessHome.getInstance().getSelectBusiness().getStatus())){
+                ownerBusinessHome.createInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+            }
             ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
                     authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.TERMINATION.name()), comments));
             processInstanceHome.stop();

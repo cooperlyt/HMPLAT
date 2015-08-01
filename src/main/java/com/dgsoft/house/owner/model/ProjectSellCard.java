@@ -1,13 +1,15 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -50,8 +52,10 @@ public class ProjectSellCard implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    @GenericGenerator(name = "pkGenerator",
+            strategy = "foreign",
+            parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "businessProject") })
+    @GeneratedValue(generator = "pkGenerator")
 	public String getId() {
 		return this.id;
 	}
@@ -60,9 +64,8 @@ public class ProjectSellCard implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PROJECT", nullable = false)
-	@NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
 	public BusinessProject getBusinessProject() {
 		return this.businessProject;
 	}

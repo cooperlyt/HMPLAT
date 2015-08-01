@@ -2,8 +2,10 @@ package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -33,11 +35,16 @@ public class HouseBusinessModifyStart {
 
     public String startModify(){
         //TODO ROLE
-        cloneData(ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId));
+        OwnerBusiness selectOwnerBusiness = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId);
+        cloneData(selectOwnerBusiness);
 
+//        for (HouseBusiness houseBusiness: selectOwnerBusiness.getHouseBusinesses())
+//        HouseInfoCompare.compare()
 
         return null;
     }
+
+
 
     private void cloneData(OwnerBusiness ownerBusiness){
         //TODO needFile

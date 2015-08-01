@@ -28,7 +28,7 @@ public class CardInfo  implements Serializable  {
 
 
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public MakeCard getMakeCard() {
         return makeCard;

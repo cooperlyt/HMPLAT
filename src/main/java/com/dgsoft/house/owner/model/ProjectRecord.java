@@ -22,7 +22,6 @@ import javax.validation.constraints.Size;
 @Table(name = "PROJECT_RECORD", catalog = "HOUSE_OWNER_RECORD", uniqueConstraints = @UniqueConstraint(columnNames = "PROJECT_CODE"))
 public class ProjectRecord implements java.io.Serializable {
 
-	private String id;
 	private ProjectSellCard projectSellCard;
 	private String projectCode;
 	private Set<ProjectRecordStore> projectRecordStores = new HashSet<ProjectRecordStore>(0);
@@ -30,30 +29,7 @@ public class ProjectRecord implements java.io.Serializable {
 	public ProjectRecord() {
 	}
 
-	public ProjectRecord(String id, String projectCode) {
-		this.id = id;
-		this.projectCode = projectCode;
-	}
-	public ProjectRecord(String id, ProjectSellCard projectSellCard,
-			LandInfo landInfo, String projectCode,
-			Set<ProjectRecordStore> projectRecordStores) {
-		this.id = id;
-		this.projectSellCard = projectSellCard;
-		this.projectCode = projectCode;
-		this.projectRecordStores = projectRecordStores;
-	}
 
-	@Id
-	@Column(name = "ID", unique = true, nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SALE_CARD")
@@ -65,6 +41,7 @@ public class ProjectRecord implements java.io.Serializable {
 		this.projectSellCard = projectSellCard;
 	}
 
+    @Id
 	@Column(name = "PROJECT_CODE", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

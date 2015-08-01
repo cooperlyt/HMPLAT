@@ -39,7 +39,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String projectCode;
     private Set<ProjectRecordStore> projectRecordStores = new HashSet<ProjectRecordStore>(0);
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
-    private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
+    private ProjectSellCard projectSellCard;
 
     public BusinessProject() {
     }
@@ -273,16 +273,15 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.businessBuilds = businessBuilds;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
-    public Set<ProjectSellCard> getProjectSellCards() {
-        return this.projectSellCards;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public ProjectSellCard getProjectSellCard() {
+        return projectSellCard;
     }
 
-    public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-        this.projectSellCards = projectSellCards;
+    public void setProjectSellCard(ProjectSellCard projectSellCard) {
+        this.projectSellCard = projectSellCard;
     }
-
-
 }
 
 
