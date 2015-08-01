@@ -20,24 +20,10 @@ public class ProjectRecordStore implements java.io.Serializable {
 
 	private String id;
 	private BusinessProject businessProject;
-	private ProjectRecord projectRecord;
 	private String frame;
 	private String cabinet;
 	private String box;
 
-	public ProjectRecordStore() {
-	}
-
-	public ProjectRecordStore(String id, BusinessProject businessProject,
-			ProjectRecord projectRecord, String frame, String cabinet,
-			String box) {
-		this.id = id;
-		this.businessProject = businessProject;
-		this.projectRecord = projectRecord;
-		this.frame = frame;
-		this.cabinet = cabinet;
-		this.box = box;
-	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -62,16 +48,6 @@ public class ProjectRecordStore implements java.io.Serializable {
 		this.businessProject = businessProject;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RECORD", nullable = false)
-	@NotNull
-	public ProjectRecord getProjectRecord() {
-		return this.projectRecord;
-	}
-
-	public void setProjectRecord(ProjectRecord projectRecord) {
-		this.projectRecord = projectRecord;
-	}
 
 	@Column(name = "FRAME", nullable = false, length = 10)
 	@NotNull

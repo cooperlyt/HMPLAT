@@ -15,8 +15,11 @@
 
     <ui:define name="func-body">
 
-
-        <a:outputPanel id="func-navigation" rendered="#{s:hasRole('system.runBusinessMgr')}" class="pagehead codesearch-head">
+        <ui:define name="outcss">
+            <h:outputStylesheet library="github" name="/css/github1.css"/>
+            <h:outputStylesheet library="github" name="/css/github2.css"/>
+        </ui:define>
+        <a:outputPanel id="func-navigation" rendered="#{s:hasRole('system.runBusinessMgr')}" layout="block" styleClass="pagehead codesearch-head">
             <div class="container">
                 <div style=" float: left; width: 250px; ">
 
@@ -259,23 +262,25 @@
                                 <div class="btn-group" role="group" >
 
                                     <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
+                                            p:aria-label="#{messages.cancelBusiness}"
+                                            styleClass="btn btn-default #{ownerBusinessHome.canCancel ? '' : 'disabled'} tooltipped tooltipped-s"
+                                            disabled="#{not ownerBusinessHome.canCancel}">
+
+                                        <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
+                                        <span class="btn-icon octicon octicon-x"></span>
+                                    </s:link>
+
+
+                                    <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
                                             p:aria-label="#{messages.modifyBusiness}"
                                             action="#{houseBusinessModifyStart.startModify}"
-                                            styleClass="btn btn-defautl #{ownerBusinessHome.canModify ? '' : 'disabled'} tooltipped tooltipped-s"
+                                            styleClass="btn btn-default #{ownerBusinessHome.canModify ? '' : 'disabled'} tooltipped tooltipped-s"
                                             disabled="#{not ownerBusinessHome.canModify}">
 
                                         <span class="btn-icon octicon octicon-pencil"></span>
                                         <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
                                     </s:link>
 
-                                    <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
-                                            p:aria-label="#{messages.cancelBusiness}"
-                                            styleClass="btn btn-defautl #{ownerBusinessHome.canCancel ? '' : 'disabled'} tooltipped tooltipped-s"
-                                            disabled="#{not ownerBusinessHome.canCancel}">
-
-                                        <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
-                                        <span class="btn-icon octicon octicon-x"></span>
-                                    </s:link>
 
                                     <a:commandLink type="button" class="btn btn-success btn-reversal #{ownerBusinessView.canResume ? '' : 'disabled'} tooltipped tooltipped-s"
                                                    disabled="#{not ownerBusinessView.canResume}"
@@ -361,7 +366,7 @@
 
 
 
-                                                        <a:commandLink onclick="moreResult(); event.stopPropagation(); return false;"
+                                                        <a:commandLink onclick="moreBefor();moreResult(); event.stopPropagation(); return false;"
                                                                        styleClass="select-menu-item last-visible"
                                                                        rendered="#{employeeList.nextExists}">
 
@@ -385,8 +390,25 @@
 
                             </a:outputPanel>
 
+                            <h:outputScript>
+                                var scrollTopValue1 = 0;
+
+                                function moreBefor(){
+                                var div = #{r:element('SectionSelectItemList')};
+                                scrollTopValue1 = div.scrollTop;
+
+                                }
+
+                                function scrollToBefor(){
+                                var div = #{r:element('SectionSelectItemList')};
+
+                                div.scrollTop = scrollTopValue1;
+                                }
+
+                            </h:outputScript>
+
                             <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
-                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                          oncomplete="scrollToBefor() "
                                           render="SectionSelectItemList">
                                 <a:attachQueue requestDelay="0"/>
                             </a:jsFunction>
@@ -567,11 +589,29 @@
 
                                                     <a:outputPanel rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr') and (_task.open) and _task.signalling}">
                                                         <f:subview>
+
+                                                            <h:outputScript>
+                                                                var scrollTopValue2 = 0;
+
+                                                                function moreBefor(){
+                                                                var div = #{r:element('SectionSelectItemList')};
+                                                                scrollTopValue2 = div.scrollTop;
+
+                                                                }
+
+                                                                function scrollToBefor(){
+                                                                var div = #{r:element('SectionSelectItemList')};
+
+                                                                div.scrollTop = scrollTopValue2;
+                                                                }
+
+                                                            </h:outputScript>
+
                                                             <a:jsFunction name="showSubEmpMenu" action="#{employeeList.resetResultCount}"
                                                                           render="sectionSelectPanel" execute="@this" immediate="true"/>
 
                                                             <a:jsFunction name="moreSubResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
-                                                                          oncomplete="var div = #{r:element('SectionSelectItemList')};div.scrollTop = div.scrollHeight; "
+                                                                          oncomplete="scrollToBefor() "
                                                                           render="SectionSelectItemList">
                                                                 <a:attachQueue requestDelay="0"/>
                                                             </a:jsFunction>
@@ -627,7 +667,7 @@
 
 
 
-                                                                            <a:commandLink onclick="moreSubResult(); event.stopPropagation(); return false;"
+                                                                            <a:commandLink onclick="moreBefor();moreSubResult(); event.stopPropagation(); return false;"
                                                                                            styleClass="select-menu-item last-visible"
                                                                                            rendered="#{employeeList.nextExists}">
 

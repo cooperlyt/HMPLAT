@@ -271,6 +271,10 @@
                         <span class="list-group-item-name css-truncate" style="max-width:600px">
                             <span class="type-icon octicon octicon-three-bars" aria-label="issues"></span>
 
+                                <h:outputText value="#{_item.id}" style="padding-right: 5px; min-width: 55px; display: inline-block" styleClass="#{_item.enable ? '' : 'delete-data'}">
+
+                                </h:outputText>
+
                                 <h:outputText value="#{_item.name}" styleClass="css-truncate-target #{_item.enable ? '' : 'delete-data'}" style="max-width: 600px">
 
                                 </h:outputText>

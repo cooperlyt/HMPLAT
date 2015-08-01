@@ -34,8 +34,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	private String address;
 	private Integer houseCount;
 	private BigDecimal area;
-	private BigDecimal lng;
-	private BigDecimal lat;
 	private String buildType;
 	private String structure;
 	private Integer homeCount;
@@ -46,6 +44,7 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	private BigDecimal shopArea;
 	private String completeYear;
     private String buildDevNumber;
+    private Set<ProjectExceptHouse> projectExceptHouses = new HashSet<ProjectExceptHouse>(0);
 
 	public BusinessBuild() {
 	}
@@ -218,23 +217,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 		this.area = area;
 	}
 
-	@Column(name = "LNG", precision = 18, scale = 14)
-	public BigDecimal getLng() {
-		return this.lng;
-	}
-
-	public void setLng(BigDecimal lng) {
-		this.lng = lng;
-	}
-
-	@Column(name = "LAT", precision = 18, scale = 14)
-	public BigDecimal getLat() {
-		return this.lat;
-	}
-
-	public void setLat(BigDecimal lat) {
-		this.lat = lat;
-	}
 
 	@Column(name = "BUILD_TYPE", length = 32)
 	@Size(max = 32)
@@ -322,6 +304,15 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 		this.shopArea = shopArea;
 	}
 
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "businessBuild")
+    public Set<ProjectExceptHouse> getProjectExceptHouses() {
+        return projectExceptHouses;
+    }
+
+    public void setProjectExceptHouses(Set<ProjectExceptHouse> projectExceptHouses) {
+        this.projectExceptHouses = projectExceptHouses;
+    }
+
     @Override
     @Transient
     public String getDeveloperName() {
@@ -352,12 +343,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	public String getCompleteYear() {
 		return this.completeYear;
 	}
-
-    @Override
-    @Transient
-    public String getBuildSize() {
-        return getBusinessProject().getBuildSize();
-    }
 
     public void setCompleteYear(String completeDate) {
 		this.completeYear = completeDate;

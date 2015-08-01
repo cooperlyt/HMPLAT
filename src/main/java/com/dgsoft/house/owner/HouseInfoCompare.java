@@ -1,8 +1,9 @@
 package com.dgsoft.house.owner;
 
+import com.dgsoft.house.BuildInfo;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.ProjectInfo;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -143,5 +144,14 @@ public class HouseInfoCompare {
 
     }
 
+    public static List<ChangeData> compare(ProjectInfo projectInfo1, ProjectInfo projectInfo2){
+
+        return new ArrayList<ChangeData>(0);
+    }
+
+    public static List<ChangeData> compare(BuildInfo buildInfo1, BuildInfo buildInfo2){
+
+        return new ArrayList<ChangeData>(0);
+    }
 
 }

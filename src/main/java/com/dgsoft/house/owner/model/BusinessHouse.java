@@ -63,7 +63,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String buildType;
     private String projectCode;
     private String projectName;
-    private String buildSize;
     private String completeDate;
     private String developerCode;
     private String developerName;
@@ -127,7 +126,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.buildType = houseInfo.getBuildType();
         this.projectCode = houseInfo.getProjectCode();
         this.projectName = houseInfo.getProjectName();
-        this.buildSize = houseInfo.getBuildSize();
         this.completeDate = houseInfo.getCompleteYear();
         this.buildDevNumber = houseInfo.getBuildDevNumber();
         this.developerCode = houseInfo.getDeveloperCode();
@@ -578,16 +576,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
-    }
-
-    @Column(name = "BUILD_SIZE", length = 32)
-    @Size(max = 32)
-    public String getBuildSize() {
-        return this.buildSize;
-    }
-
-    public void setBuildSize(String buildSize) {
-        this.buildSize = buildSize;
     }
 
 

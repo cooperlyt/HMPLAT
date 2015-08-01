@@ -130,12 +130,6 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
         this.completeYear = completeDate;
     }
 
-    @Override
-    @Transient
-    public String getBuildSize() {
-        return getProject().getBuildSize();
-    }
-
 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PROJECT_ID", nullable = false)

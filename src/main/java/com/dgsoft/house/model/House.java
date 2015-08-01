@@ -55,12 +55,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     @Override
     @Transient
-    public String getBuildSize() {
-        return getBuild().getBuildSize();
-    }
-
-    @Override
-    @Transient
     public String getDistrictName() {
         return getBuild().getDistrictName();
     }

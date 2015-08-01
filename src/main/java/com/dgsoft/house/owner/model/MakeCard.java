@@ -24,10 +24,12 @@ public class MakeCard implements java.io.Serializable {
 	private CardType type;
 	private String number;
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+
     //private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
 
 
     private CardInfo cardInfo;
+    private ProjectCard projectCard;
 
 
     public MakeCard() {
@@ -117,15 +119,13 @@ public class MakeCard implements java.io.Serializable {
         this.businessHouses = businessHouses;
     }
 
-    //    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "makeCardByCard")
-//    public Set<OtherPowerCard> getOtherPowerCards() {
-//        return otherPowerCards;
-//    }
-//
-//    public void setOtherPowerCards(Set<OtherPowerCard> otherPowerCards) {
-//        this.otherPowerCards = otherPowerCards;
-//    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    public ProjectCard getProjectCard() {
+        return projectCard;
+    }
 
-
-
+    public void setProjectCard(ProjectCard projectCard) {
+        this.projectCard = projectCard;
+    }
 }

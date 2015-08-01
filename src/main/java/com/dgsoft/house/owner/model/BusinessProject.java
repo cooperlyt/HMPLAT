@@ -24,10 +24,6 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private OwnerBusiness ownerBusiness;
     private String name;
     private String address;
-    private String buildSize;
-    private Integer buildCount;
-    private BigDecimal area;
-    private BigDecimal sumArea;
     private Date mapTime;
     private String completeDate;
     private String developerName;
@@ -39,24 +35,10 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String projectCode;
     private Set<ProjectRecordStore> projectRecordStores = new HashSet<ProjectRecordStore>(0);
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
-    private Set<ProjectSellCard> projectSellCards = new HashSet<ProjectSellCard>(0);
+    private ProjectSellInfo projectSellInfo;
 
     public BusinessProject() {
     }
-
-
-    public BusinessProject(String id, OwnerBusiness ownerBusiness, String name, Date mapTime, String sectionName, String sectionCode, String districtCode, String districtName, String projectCode) {
-        this.id = id;
-        this.ownerBusiness = ownerBusiness;
-        this.name = name;
-        this.mapTime = mapTime;
-        this.sectionName = sectionName;
-        this.sectionCode = sectionCode;
-        this.districtCode = districtCode;
-        this.districtName = districtName;
-        this.projectCode = projectCode;
-    }
-
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -104,46 +86,6 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.address = address;
     }
 
-
-    @Column(name = "BUILD_SIZE", length = 32)
-    @Size(max = 32)
-    public String getBuildSize() {
-        return this.buildSize;
-    }
-
-    public void setBuildSize(String buildSize) {
-        this.buildSize = buildSize;
-    }
-
-
-    @Column(name = "BUILD_COUNT")
-    public Integer getBuildCount() {
-        return this.buildCount;
-    }
-
-    public void setBuildCount(Integer buildCount) {
-        this.buildCount = buildCount;
-    }
-
-
-    @Column(name = "AREA", precision = 18, scale = 3)
-    public BigDecimal getArea() {
-        return this.area;
-    }
-
-    public void setArea(BigDecimal area) {
-        this.area = area;
-    }
-
-
-    @Column(name = "SUM_AREA", precision = 18, scale = 3)
-    public BigDecimal getSumArea() {
-        return this.sumArea;
-    }
-
-    public void setSumArea(BigDecimal sumArea) {
-        this.sumArea = sumArea;
-    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MAP_TIME", nullable = false, length = 19)
@@ -264,7 +206,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.projectRecordStores = projectRecordStores;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessProject")
     public Set<BusinessBuild> getBusinessBuilds() {
         return this.businessBuilds;
     }
@@ -273,16 +215,15 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.businessBuilds = businessBuilds;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
-    public Set<ProjectSellCard> getProjectSellCards() {
-        return this.projectSellCards;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public ProjectSellInfo getProjectSellInfo() {
+        return projectSellInfo;
     }
 
-    public void setProjectSellCards(Set<ProjectSellCard> projectSellCards) {
-        this.projectSellCards = projectSellCards;
+    public void setProjectSellInfo(ProjectSellInfo projectSellInfo) {
+        this.projectSellInfo = projectSellInfo;
     }
-
-
 }
 
 
