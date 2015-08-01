@@ -38,27 +38,14 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            HouseRecord houseRecord =ownerEntityLoader.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode());
-            if (houseRecord == null){
-                houseRecord = new HouseRecord(houseBusiness.getAfterBusinessHouse(),houseBusiness.getAfterBusinessHouse().getHouseCode());
-            }else{
-                houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
-            }
-            houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
-
-        }
-
-
-
 
         //TODO CARD
         Set<HouseBusiness> cancelHouse = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses();
 
-        if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
-            for(HouseBusiness old: cancelHouse){
-                for(HouseBusiness now: ownerBusinessHome.getInstance().getHouseBusinesses()){
-                    if (old.getHouseCode().equals(now.getHouseCode())){
+        if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+            for (HouseBusiness old : cancelHouse) {
+                for (HouseBusiness now : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                    if (old.getHouseCode().equals(now.getHouseCode())) {
                         cancelHouse.remove(old);
                     }
                 }
@@ -67,9 +54,27 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
 
         }
 
-        for (HouseBusiness houseBusiness: cancelHouse){
+        for (HouseBusiness houseBusiness : cancelHouse) {
             //TODO cancel record
         }
+
+        if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.CANCEL_BIZ)) {
+
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
+                if (houseRecord == null) {
+                    houseRecord = new HouseRecord(houseBusiness.getAfterBusinessHouse(), houseBusiness.getAfterBusinessHouse().getHouseCode());
+                } else {
+                    houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
+                }
+                houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
+
+            }
+
+
+        }
+
+
 
     }
 }
