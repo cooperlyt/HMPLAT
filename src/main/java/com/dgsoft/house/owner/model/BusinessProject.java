@@ -197,7 +197,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject", cascade = CascadeType.ALL)
     public Set<ProjectRecordStore> getProjectRecordStores() {
         return this.projectRecordStores;
     }

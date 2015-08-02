@@ -82,7 +82,7 @@ public class ProjectCard implements java.io.Serializable{
         this.memo = memo;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public MakeCard getMakeCard() {
         return makeCard;
