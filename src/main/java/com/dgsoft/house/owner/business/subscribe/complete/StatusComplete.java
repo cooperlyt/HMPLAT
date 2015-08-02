@@ -13,8 +13,8 @@ import java.util.Set;
 /**
  * Created by cooper on 8/1/15.
  */
-@Name("businessCompleteStatus")
-public class BusinessCompleteStatus implements TaskCompleteSubscribeComponent {
+@Name("statusComplete")
+public class StatusComplete implements TaskCompleteSubscribeComponent {
 
 
     @In

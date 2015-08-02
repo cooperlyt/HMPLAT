@@ -25,9 +25,9 @@ public class HouseRecord implements java.io.Serializable {
 
 	public HouseRecord() {
 	}
-    public HouseRecord(BusinessHouse businessHouse,String houseCode){
+    public HouseRecord(BusinessHouse businessHouse){
        this.businessHouse = businessHouse;
-       this.houseCode = houseCode;
+       this.houseCode = businessHouse.getHouseCode();
     }
 
 

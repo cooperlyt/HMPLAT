@@ -56,7 +56,7 @@ public class RecordStore implements java.io.Serializable {
         this.houseBusiness = houseBusiness;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "HOUSE_CODE", nullable = false)
     @NotNull
     public HouseRecord getHouseRecord() {

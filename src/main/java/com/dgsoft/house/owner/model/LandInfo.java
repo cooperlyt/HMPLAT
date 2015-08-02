@@ -30,14 +30,8 @@ public class LandInfo implements java.io.Serializable {
     private Date endUseTime;
     private BigDecimal landArea;
     private String landGetMode;
-    private OwnerBusiness ownerBusiness;
 
     public LandInfo(){
-    }
-
-
-    public LandInfo(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
     }
 
     public LandInfo(LandInfo landInfo){
@@ -49,6 +43,7 @@ public class LandInfo implements java.io.Serializable {
         this.landArea = landInfo.getLandArea();
         this.landGetMode = landInfo.getLandGetMode();
     }
+
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -141,16 +136,6 @@ public class LandInfo implements java.io.Serializable {
         this.landGetMode = landGetMode;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS",nullable = false)
-    @NotNull
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
-    }
-
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
-    }
 }
 
 
