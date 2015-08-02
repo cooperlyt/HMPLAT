@@ -289,7 +289,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.houseCloseCancels = houseCloseCancels;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
     public Set<HouseRegInfo> getHouseRegInfos() {
         return HouseRegInfos;
     }
