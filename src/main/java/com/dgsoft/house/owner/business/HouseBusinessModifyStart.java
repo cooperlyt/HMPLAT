@@ -139,7 +139,7 @@ public class HouseBusinessModifyStart {
 
             for(MortgaegeRegiste mr: oldBusiness.getAfterBusinessHouse().getMortgaegeRegistes()){
                 if (mr.getOwnerBusiness().getId().equals(oldBusiness.getId())){
-                   // newBusiness.
+                  // newBusiness.
                 }
             }
 
