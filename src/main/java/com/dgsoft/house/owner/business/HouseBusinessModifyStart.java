@@ -8,10 +8,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessHouse;
-import com.dgsoft.house.owner.model.BusinessProject;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -47,22 +44,22 @@ public class HouseBusinessModifyStart {
     private BusinessDefineHome businessDefineHome;
 
 
-    private Map<String,List<HouseInfoCompare.ChangeData>> houseChangeDatas;
+    private Map<String, List<HouseInfoCompare.ChangeData>> houseChangeDatas;
 
-    public String startModify(){
+    public String startModify() {
         //TODO ROLE
         OwnerBusiness selectOwnerBusiness = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId);
         cloneData(selectOwnerBusiness);
 
         houseChangeDatas = new HashMap<String, List<HouseInfoCompare.ChangeData>>();
-        for (HouseBusiness houseBusiness: selectOwnerBusiness.getHouseBusinesses()) {
-            HouseInfo mapHouse = houseEntityLoader.getEntityManager().find(House.class,houseBusiness.getHouseCode());
+        for (HouseBusiness houseBusiness : selectOwnerBusiness.getHouseBusinesses()) {
+            HouseInfo mapHouse = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
             if (mapHouse != null) {
                 HouseInfoCompare.compare(houseBusiness.getStartBusinessHouse(), mapHouse);
             }
 
         }
-        for(BusinessProject project: selectOwnerBusiness.getBusinessProjects()){
+        for (BusinessProject project : selectOwnerBusiness.getBusinessProjects()) {
 
         }
 
@@ -70,8 +67,7 @@ public class HouseBusinessModifyStart {
     }
 
 
-
-    private void cloneData(OwnerBusiness ownerBusiness){
+    private void cloneData(OwnerBusiness ownerBusiness) {
         //TODO needFile
         ownerBusiness.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
 
@@ -85,7 +81,7 @@ public class HouseBusinessModifyStart {
     }
 
 
-    public class HouseChangeData{
+    public class HouseChangeData {
 
         private HouseBusiness oldBusiness;
 
@@ -93,16 +89,20 @@ public class HouseBusinessModifyStart {
 
         private BusinessHouse afterHouse;
 
+        private OwnerBusiness newBusiness;
+
         private House mapHouse;
 
         private List<HouseInfoCompare.ChangeData> changeDatas;
 
-        public HouseChangeData(HouseBusiness oldBusiness, House mapHouse) {
+        public HouseChangeData(HouseBusiness oldBusiness, House mapHouse, OwnerBusiness newBusiness) {
             this.oldBusiness = oldBusiness;
             this.startHouse = oldBusiness.getStartBusinessHouse();
             this.mapHouse = mapHouse;
+            this.newBusiness = newBusiness;
             assignOld();
             changeDatas = HouseInfoCompare.compare(startHouse, mapHouse);
+
         }
 
         public BusinessHouse getStartHouse() {
@@ -121,18 +121,27 @@ public class HouseBusinessModifyStart {
             this.afterHouse = afterHouse;
         }
 
-        public boolean isChangeHouse(){
+        public boolean isChangeHouse() {
             return !startHouse.getHouseCode().equals(afterHouse.getHouseCode());
         }
 
-        public void assignOld(){
+        public void assignOld() {
             afterHouse = new BusinessHouse(oldBusiness.getAfterBusinessHouse());
             afterHouse.setPoolType(oldBusiness.getAfterBusinessHouse().getPoolType());
 
 
+            for(MortgaegeRegiste mr: oldBusiness.getAfterBusinessHouse().getMortgaegeRegistes()){
+                if (mr.getOwnerBusiness().getId().equals(oldBusiness.getId())){
+                   // newBusiness
+                }
+            }
+
+
+
+
         }
 
-        public void modifyHouseFormMap(){
+        public void modifyHouseFormMap() {
             //afterHouse =
         }
 

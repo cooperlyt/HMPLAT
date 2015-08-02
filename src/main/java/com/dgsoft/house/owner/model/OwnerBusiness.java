@@ -49,23 +49,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
     private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
     private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(0);
-    private Set<Financial> financials = new HashSet<Financial>(0);
     private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
 
-    private Set<HouseRegInfo>HouseRegInfos= new HashSet<HouseRegInfo>(0);
 
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
     private OwnerBusiness selectBusiness;
     private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
     private Set<ProcessMessage> processMessages = new HashSet<ProcessMessage>(0);
-
-
-
     private Set<FactMoneyInfo> factMoneyInfos = new HashSet<FactMoneyInfo>(0);
-
-
-
 
     public OwnerBusiness() {
     }
@@ -297,17 +289,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<HouseRegInfo> getHouseRegInfos() {
-        return HouseRegInfos;
-    }
-
-    public void setHouseRegInfos(Set<HouseRegInfo> houseRegInfos) {
-        HouseRegInfos = houseRegInfos;
-    }
-
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<HouseBusiness> getHouseBusinesses() {
         return this.houseBusinesses;
     }
@@ -441,23 +422,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         if (businessProject != null){
             getBusinessProjects().add(businessProject);
         }
-    }
-    @Transient
-    public HouseRegInfo getHouseRegInfo(){
-        if (getHouseRegInfos().isEmpty()){
-            return null;
-        }else{
-            return getHouseRegInfos().iterator().next();
-        }
-    }
-    @Transient
-    public void setHouseRegInfo(HouseRegInfo houseRegInfo){
-        getHouseRegInfos().clear();
-        if(houseRegInfo !=null){
-            getHouseRegInfos().add(houseRegInfo);
-
-        }
-
     }
 
 }

@@ -60,7 +60,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "START_HOUSE", nullable = false)
     public BusinessHouse getStartBusinessHouse() {
         return startBusinessHouse;

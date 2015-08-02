@@ -147,9 +147,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         for(HouseState state: houseInfo.getHouseStates()){
             this.houseStates.add(new HouseState(this,state.getState(),state.getCreateDate()));
         }
+        genMasterStatus();
 
+        if (houseInfo.getLandInfo() != null){
+            this.landInfo = new LandInfo(houseInfo.getLandInfo());
+        }
 
-
+        if (houseInfo.getHouseRegInfo() != null){
+            this.houseRegInfo = new HouseRegInfo(houseInfo.getHouseRegInfo());
+        }
     }
 
 
@@ -282,16 +288,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
         this.houseRegInfo = houseRegInfo;
-    }
-
-    @Transient
-    public List<HouseStatus> getAllStatusList() {
-        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
-        for (HouseState state: getHouseStates()){
-            result.add(state.getState());
-        }
-        Collections.sort(result,new StatusComparator());
-        return result;
     }
 
     @Override
@@ -670,22 +666,22 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.buildDevNumber = buildDevNumber;
     }
 
-    @Transient
-    public HouseBusiness getLasterHouseBusiness() {
-        if (getHousesForAfterBusiness().isEmpty()){
-            return null;
-        }else{
-            return getHousesForAfterBusiness().iterator().next();
-        }
-    }
-
-    @Transient
-    public void setLasterHouseBusiness(HouseBusiness lasterHouseBusiness) {
-        getHousesForAfterBusiness().clear();
-        if (lasterHouseBusiness != null){
-            getHousesForAfterBusiness().add(lasterHouseBusiness);
-        }
-    }
+//    @Transient
+//    public HouseBusiness getLasterHouseBusiness() {
+//        if (getHousesForAfterBusiness().isEmpty()){
+//            return null;
+//        }else{
+//            return getHousesForAfterBusiness().iterator().next();
+//        }
+//    }
+//
+//    @Transient
+//    public void setLasterHouseBusiness(HouseBusiness lasterHouseBusiness) {
+//        getHousesForAfterBusiness().clear();
+//        if (lasterHouseBusiness != null){
+//            getHousesForAfterBusiness().add(lasterHouseBusiness);
+//        }
+//    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse",cascade = CascadeType.ALL,orphanRemoval = true)
     public Set<HouseState> getHouseStates() {
@@ -792,13 +788,45 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Transient
     public void addStatus(HouseInfo.HouseStatus... status){
-
-
+        for (HouseInfo.HouseStatus s: status){
+            getHouseStates().add(new HouseState(this,s,new Date()));
+        }
+        genMasterStatus();
     }
 
     @Transient
-    public void removeStatus(HouseInfo.HouseStatus... status){
-
+    public int removeStatus(HouseInfo.HouseStatus... status){
+        int result = 0;
+        for(HouseInfo.HouseStatus s: status){
+            for(HouseState sh: getHouseStates()){
+                if(s.equals(sh.getState())){
+                    getHouseStates().remove(sh);
+                    result ++;
+                    break;
+                }
+            }
+        }
+        genMasterStatus();
+        return result;
     }
+
+    @Transient
+    public List<HouseStatus> getAllStatusList() {
+        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
+        for (HouseState state: getHouseStates()){
+            result.add(state.getState());
+        }
+        Collections.sort(result,new StatusComparator());
+        return result;
+    }
+
+    @Transient
+    private void genMasterStatus(){
+        if (getHouseStates().isEmpty()){
+            setMasterStatus(null);
+        }else
+            setMasterStatus(getAllStatusList().get(0));
+    }
+
 
 }

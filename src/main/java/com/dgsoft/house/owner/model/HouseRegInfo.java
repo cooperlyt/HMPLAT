@@ -17,10 +17,16 @@ public class HouseRegInfo implements java.io.Serializable {
     private String id;
     private String houseFrom;
     private String houseProperty;
-    private OwnerBusiness ownerBusiness;
 
     public HouseRegInfo() {
     }
+
+    public HouseRegInfo(HouseRegInfo houseRegInfo) {
+
+        this.houseFrom = houseRegInfo.getHouseFrom();
+        this.houseProperty = houseRegInfo.getHouseProperty();
+    }
+
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -59,14 +65,4 @@ public class HouseRegInfo implements java.io.Serializable {
         this.houseProperty = houseProperty;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS",nullable = false)
-    @NotNull
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
-    }
-
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
-    }
 }
