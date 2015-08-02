@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>553</x>
-	<y>421</y>
+	<x>721</x>
+	<y>264</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2014-06-09 15:05:35</creation_date>
-			<updated_date>2015-08-02 15:20:32</updated_date>
+			<updated_date>2015-08-02 15:41:29</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -8568,8 +8568,8 @@
 			<width>318</width>
 				<font_name>Cantarell</font_name>
 				<font_size>9</font_size>
-			<x>1788</x>
-			<y>885</y>
+			<x>1800</x>
+			<y>943</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -27479,7 +27479,7 @@
 				<font_name>.Helvetica Neue DeskInterface</font_name>
 				<font_size>9</font_size>
 			<x>900</x>
-			<y>876</y>
+			<y>905</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -39257,14 +39257,36 @@
 			<width>290</width>
 				<font_name>WenQuanYi Zen Hei</font_name>
 				<font_size>9</font_size>
-			<x>1788</x>
-			<y>1068</y>
+			<x>817</x>
+			<y>477</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
 				<b>192</b>
 			</color>
 			<connections>
+				<relation>
+					<id>53</id>
+					<source>34</source>
+					<target>44</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>HOUSE_REG_INFO</physical_name>
 			<logical_name>HOUSE_REG_INFO</logical_name>
@@ -39351,6 +39373,40 @@
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
+					<not_null>true</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
+					<id>638</id>
+					<referenced_column>506</referenced_column>
+					<relation>53</relation>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name>BUSINESS</logical_name>
+					<physical_name>BUSINESS</physical_name>
+					<type>varchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>true</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>false</primary_key>
 					<unique_key>false</unique_key>
