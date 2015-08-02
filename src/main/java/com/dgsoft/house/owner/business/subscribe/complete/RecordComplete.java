@@ -5,11 +5,14 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseRecord;
+import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -36,38 +39,56 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
         return true;
     }
 
+    private void recordHouse(BusinessHouse house){
+        HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
+        if (houseRecord == null) {
+            houseRecord = new HouseRecord(house);
+        } else {
+            houseRecord.setBusinessHouse(house);
+        }
+
+        house.setHouseRecord(houseRecord);
+    }
+
     @Override
     public void complete() {
 
-        //TODO CARD
-        Set<HouseBusiness> cancelHouse = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses();
+        if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)) {
 
-        if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
-            for (HouseBusiness old : cancelHouse) {
-                for (HouseBusiness now : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                    if (old.getHouseCode().equals(now.getHouseCode())) {
-                        cancelHouse.remove(old);
+            Set<MakeCard> cancelCards = new HashSet<MakeCard>(ownerBusinessHome.getInstance().getSelectBusiness().getMakeCards());
+
+            Set<HouseBusiness> cancelHouse = new HashSet<HouseBusiness>(ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses());
+
+            if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                for (HouseBusiness old : ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()) {
+                    for (HouseBusiness now : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                        if (old.getHouseCode().equals(now.getHouseCode())) {
+                            cancelHouse.remove(old);
+                        }
+                    }
+                }
+                for (MakeCard old: ownerBusinessHome.getInstance().getSelectBusiness().getMakeCards()){
+                    for(MakeCard now: ownerBusinessHome.getInstance().getMakeCards()){
+                        if (old.getId().equals(now.getId())){
+                            cancelCards.remove(old);
+                        }
                     }
                 }
             }
 
+            for(MakeCard card: cancelCards){
+                card.setEnable(false);
+            }
 
-        }
-
-        for (HouseBusiness houseBusiness : cancelHouse) {
-            //TODO cancel record
+            for (HouseBusiness houseBusiness : cancelHouse) {
+                recordHouse(houseBusiness.getStartBusinessHouse());
+            }
         }
 
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.CANCEL_BIZ)) {
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
-                if (houseRecord == null) {
-                    houseRecord = new HouseRecord(houseBusiness.getAfterBusinessHouse(), houseBusiness.getAfterBusinessHouse().getHouseCode());
-                } else {
-                    houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
-                }
-                houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
+                recordHouse(houseBusiness.getAfterBusinessHouse());
 
             }
 

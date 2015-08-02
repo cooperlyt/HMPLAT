@@ -508,6 +508,11 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="statusComplete" component="statusComplete">
+        <description>
+            业务完成设置业务状态
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="MakeCardOwnerRshipEnd" component="makeCardOwnerRship">
         <description>
