@@ -129,10 +129,17 @@ public class HouseBusinessModifyStart {
             afterHouse = new BusinessHouse(oldBusiness.getAfterBusinessHouse());
             afterHouse.setPoolType(oldBusiness.getAfterBusinessHouse().getPoolType());
 
+            if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo() != null){
+                if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo().getId().equals(oldBusiness.getOwnerBusiness().getId())){
+                    afterHouse.setHouseRegInfo(new HouseRegInfo(newBusiness,oldBusiness.getAfterBusinessHouse().getHouseRegInfo()));
+                }else{
+                    afterHouse.setHouseRegInfo(oldBusiness.getAfterBusinessHouse().getHouseRegInfo());
+                }
+            }
 
             for(MortgaegeRegiste mr: oldBusiness.getAfterBusinessHouse().getMortgaegeRegistes()){
                 if (mr.getOwnerBusiness().getId().equals(oldBusiness.getId())){
-                   // newBusiness
+                  // newBusiness.
                 }
             }
 
