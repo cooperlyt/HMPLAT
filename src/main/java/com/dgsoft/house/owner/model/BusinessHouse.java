@@ -790,4 +790,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         return result;
     }
 
+    @Transient
+    public void addStatus(HouseInfo.HouseStatus... status){
+
+
+    }
+
+    @Transient
+    public void removeStatus(HouseInfo.HouseStatus... status){
+
+    }
+
 }
