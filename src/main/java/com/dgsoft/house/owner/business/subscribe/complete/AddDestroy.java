@@ -46,8 +46,8 @@ public class AddDestroy implements TaskCompleteSubscribeComponent {
 
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.DESTROY,new Date());
-            houseBusiness.getAfterBusinessHouse().getHouseStates().add(state);
+           // HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.DESTROY,new Date());
+            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.DESTROY);
         }
 
 

@@ -34,8 +34,7 @@ public class AddDivertRegister implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.DIVERT_REGISTER,new Date());
-            houseBusiness.getAfterBusinessHouse().getHouseStates().add(state);
+            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.DIVERT_REGISTER);
 
         }
 
