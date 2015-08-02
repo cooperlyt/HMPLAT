@@ -104,7 +104,9 @@
                                         </button>
                                        </li>
                                 <li >
-                                    <s:link p:aria-label="#{messages.businessModify}" view="#{_define.modifyPage}" class="btn-link mute-note tooltipped tooltipped-w">
+                                    <s:link p:aria-label="#{messages.businessModify}" view="#{_define.modifyPage}"
+                                            rendered="#{not empty _define.modifyPage}"
+                                            class="btn-link mute-note tooltipped tooltipped-w">
                                             <span class="octicon octicon-pencil"></span>
                                         <f:param name="businessDefineId" value="#{_define.id}"/>
                                     </s:link>

@@ -88,7 +88,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     public BusinessHouse() {
     }
 
-    public BusinessHouse(HouseInfo houseInfo) {
+    @Transient
+    public void modifyFormMapHouse(HouseInfo houseInfo){
         this.houseOrder = houseInfo.getHouseOrder();
         this.houseUnitName = houseInfo.getHouseUnitName();
         this.inFloorName = houseInfo.getInFloorName();
@@ -136,14 +137,18 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.districtName = houseInfo.getDistrictName();
     }
 
+    public BusinessHouse(HouseInfo houseInfo) {
+        modifyFormMapHouse(houseInfo);
+    }
+
     public BusinessHouse(BusinessHouse houseInfo) {
         this((HouseInfo)houseInfo);
-
-
 
         for(HouseState state: houseInfo.getHouseStates()){
             this.houseStates.add(new HouseState(this,state.getState(),state.getCreateDate()));
         }
+
+
 
     }
 

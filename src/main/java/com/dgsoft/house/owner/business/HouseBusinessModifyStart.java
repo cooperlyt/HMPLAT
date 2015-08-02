@@ -8,6 +8,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessProject;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
@@ -84,5 +85,57 @@ public class HouseBusinessModifyStart {
     }
 
 
+    public class HouseChangeData{
+
+        private HouseBusiness oldBusiness;
+
+        private BusinessHouse startHouse;
+
+        private BusinessHouse afterHouse;
+
+        private House mapHouse;
+
+        private List<HouseInfoCompare.ChangeData> changeDatas;
+
+        public HouseChangeData(HouseBusiness oldBusiness, House mapHouse) {
+            this.oldBusiness = oldBusiness;
+            this.startHouse = oldBusiness.getStartBusinessHouse();
+            this.mapHouse = mapHouse;
+            assignOld();
+            changeDatas = HouseInfoCompare.compare(startHouse, mapHouse);
+        }
+
+        public BusinessHouse getStartHouse() {
+            return startHouse;
+        }
+
+        public House getMapHouse() {
+            return mapHouse;
+        }
+
+        public BusinessHouse getAfterHouse() {
+            return afterHouse;
+        }
+
+        public void setAfterHouse(BusinessHouse afterHouse) {
+            this.afterHouse = afterHouse;
+        }
+
+        public boolean isChangeHouse(){
+            return !startHouse.getHouseCode().equals(afterHouse.getHouseCode());
+        }
+
+        public void assignOld(){
+            afterHouse = new BusinessHouse(oldBusiness.getAfterBusinessHouse());
+            afterHouse.setPoolType(oldBusiness.getAfterBusinessHouse().getPoolType());
+
+
+        }
+
+        public void modifyHouseFormMap(){
+            //afterHouse =
+        }
+
+    }
 
 }
