@@ -45,7 +45,7 @@ public class BusinessLandInfoSubscribe extends OwnerEntityHome<LandInfo> {
 
     @Override
     public LandInfo createInstance(){
-        LandInfo result = new LandInfo(ownerBusinessHome.getInstance());
+        LandInfo result = new LandInfo();
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setLandInfo(result);
         return result;
     }

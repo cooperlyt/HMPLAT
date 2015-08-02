@@ -31,21 +31,10 @@ public class AddOwnerd implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        boolean have = false;
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-               for (HouseState houseState:houseBusiness.getAfterBusinessHouse().getHouseStates()){
-                    if(houseState.getState().equals(HouseInfo.HouseStatus.OWNERED)){
-                        have=true;
-                        break;
-
-                    }
-               }
-               if (!have){
-                  HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(),HouseInfo.HouseStatus.OWNERED,new Date());
-                  houseBusiness.getAfterBusinessHouse().getHouseStates().add(state);
-               }
+        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            if (!houseBusiness.getAfterBusinessHouse().getAllStatusList().contains(HouseInfo.HouseStatus.OWNERED)) {
+                houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.OWNERED);
+            }
         }
-
-
     }
 }

@@ -47,8 +47,8 @@ public class AddCourtClose implements TaskCompleteSubscribeComponent {
 
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.COURT_CLOSE,new Date());
-            houseBusiness.getAfterBusinessHouse().getHouseStates().add(state);
+           // HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.COURT_CLOSE,new Date());
+            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.COURT_CLOSE);
 
         }
 

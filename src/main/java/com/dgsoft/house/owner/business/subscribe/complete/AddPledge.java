@@ -33,8 +33,8 @@ public class AddPledge implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.PLEDGE,new Date());
-            houseBusiness.getAfterBusinessHouse().getHouseStates().add(state);
+         //   HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.PLEDGE,new Date());
+            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.PLEDGE);
 
         }
 

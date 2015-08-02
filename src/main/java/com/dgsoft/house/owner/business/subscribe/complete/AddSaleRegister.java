@@ -34,11 +34,8 @@ public class AddSaleRegister implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.SALE_REGISTER,new Date());
-            houseBusiness.getAfterBusinessHouse().getHouseStates().add(state);
+            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.SALE_REGISTER);
 
         }
-
-
     }
 }
