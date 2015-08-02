@@ -190,10 +190,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     public boolean isCanCancel(){
-        if (isIdDefined()){
-            return isCanModify();
-        }
-        return false;
+        return isCanModify();
     }
 
 }
