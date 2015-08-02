@@ -149,7 +149,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.phone = phone;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "CARD", nullable = true)
     public MakeCard getMakeCard() {
         return this.makeCard;

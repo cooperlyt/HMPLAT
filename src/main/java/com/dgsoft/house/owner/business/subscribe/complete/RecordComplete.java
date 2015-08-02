@@ -43,11 +43,11 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
         HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
         if (houseRecord == null) {
             houseRecord = new HouseRecord(house);
+            ownerEntityLoader.getEntityManager().persist(houseRecord);
         } else {
             houseRecord.setBusinessHouse(house);
+            ownerEntityLoader.getEntityManager().merge(houseRecord);
         }
-
-        house.setHouseRecord(houseRecord);
     }
 
     @Override

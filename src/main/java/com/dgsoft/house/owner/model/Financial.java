@@ -160,7 +160,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
         setName(personName);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "CARD",nullable = true)
     public MakeCard getMakeCard() {
         return makeCard;

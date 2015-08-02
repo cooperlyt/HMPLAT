@@ -232,7 +232,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.cards = cards;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ownerBusiness",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ownerBusiness",cascade = {CascadeType.ALL})
     public Set<MakeCard> getMakeCards() {
         return makeCards;
     }
@@ -261,7 +261,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.evaluates = evaluates;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
     public Set<MortgaegeRegiste> getMortgaegeRegistes() {
         return this.mortgaegeRegistes;
     }
