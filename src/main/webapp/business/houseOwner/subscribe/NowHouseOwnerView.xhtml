@@ -8,6 +8,7 @@
                 xmlns:h="http://java.sun.com/jsf/html">
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}">
 
+
         <ui:include src="/layout/house/HouseOwnerView.xhtml">
             <ui:param name="nameLabel" value="#{messages.NowHouseOwner}"/>
             <ui:param name="businessHouse"
