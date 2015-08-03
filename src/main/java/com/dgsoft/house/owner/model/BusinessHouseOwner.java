@@ -26,6 +26,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     private String rootAddress;
     private String legalPerson;
     private Set<CardInfo> cardInfos = new HashSet<CardInfo>(0);
+    private BusinessHouse businessHouse;
 
     public BusinessHouseOwner() {
     }
@@ -36,18 +37,19 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
         this.credentialsType = credentialsType;
         this.credentialsNumber = credentialsNumber;
         this.phone = phone;
-
-
     }
 
-//    public BusinessHouseOwner(BusinessHouseOwner houseOwner) {
-//        this.personName = houseOwner.getPersonName();
-//        this.credentialsNumber = houseOwner.getCredentialsNumber();
-//        this.credentialsType = houseOwner.getCredentialsType();
-//        this.phone = houseOwner.getPhone();
-//        this.rootAddress = houseOwner.getRootAddress();
-//        this.makeCard = houseOwner.getMakeCard();
-//    }
+
+    public BusinessHouseOwner(BusinessHouse businessHouse,BusinessHouseOwner houseOwner) {
+        this.businessHouse = businessHouse;
+        this.personName = houseOwner.getPersonName();
+        this.credentialsNumber = houseOwner.getCredentialsNumber();
+        this.credentialsType = houseOwner.getCredentialsType();
+        this.phone = houseOwner.getPhone();
+        this.rootAddress = houseOwner.getRootAddress();
+        this.legalPerson = houseOwner.getLegalPerson();
+
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -120,7 +122,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
 
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouseOwner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouseOwner", cascade = CascadeType.ALL)
     public Set<CardInfo> getCardInfos() {
         return cardInfos;
     }
@@ -137,5 +139,14 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
 
     public void setLegalPerson(String legalPerson) {
         this.legalPerson = legalPerson;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "businessHouseOwner")
+    public BusinessHouse getBusinessHouse() {
+        return businessHouse;
+    }
+
+    public void setBusinessHouse(BusinessHouse businessHouse) {
+        this.businessHouse = businessHouse;
     }
 }

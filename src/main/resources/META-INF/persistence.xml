@@ -29,6 +29,8 @@
         <class>com.dgsoft.common.system.model.Fee</class>
         <class>com.dgsoft.common.system.model.FeeCategory</class>
         <class>com.dgsoft.common.system.model.FeeTimeArea</class>
+        <class>com.dgsoft.common.system.model.Report</class>
+        <class>com.dgsoft.common.system.model.BusinessReport</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

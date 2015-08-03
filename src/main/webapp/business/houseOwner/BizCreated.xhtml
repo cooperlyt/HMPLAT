@@ -22,9 +22,9 @@
             <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong> #{(businessDefineHome.taskName eq '_CREATE') ? '' : businessDefineHome.taskName } #{(businessDefineHome.taskName eq '_CREATE') ? messages.BusinessCreated : messages.TaskCompleted }</h2>
             <p> 打印.</p>
             <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
+                <a:repeat value="#{businessDefineHome.reprotList}" var="_report">
+                    <li><s:link view="#{_report.page}" value="#{_report.name}"></s:link></li>
+                </a:repeat>
             </ul>
 
             <p>#{messages.NextYouCan}</p>

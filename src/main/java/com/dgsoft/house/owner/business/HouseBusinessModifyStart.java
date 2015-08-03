@@ -80,78 +80,99 @@ public class HouseBusinessModifyStart {
 
     }
 
+//
+//    public void assignOld() {
+//        afterHouse = new BusinessHouse(oldBusiness.getAfterBusinessHouse());
+//        afterHouse.setPoolType(oldBusiness.getAfterBusinessHouse().getPoolType());
+//
+//        if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo() != null){
+//            if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo().getId().equals(oldBusiness.getOwnerBusiness().getId())){
+//                afterHouse.setHouseRegInfo(new HouseRegInfo(newBusiness,oldBusiness.getAfterBusinessHouse().getHouseRegInfo()));
+//            }else{
+//                afterHouse.setHouseRegInfo(oldBusiness.getAfterBusinessHouse().getHouseRegInfo());
+//            }
+//        }
+//
+////            for(MortgaegeRegiste mr: oldBusiness.getAfterBusinessHouse().getMortgaegeRegistes()){
+////                if (mr.getOwnerBusiness().getId().equals(oldBusiness.getId())){
+////                   afterHouse.getMortgaegeRegistes().add(new MortgaegeRegiste(newBusiness, mr));
+////                }else{
+////                    afterHouse.getMortgaegeRegistes().add(mr);
+////                }
+////            }
+//
+//
+//        for(BusinessPool pool :oldBusiness.getAfterBusinessHouse().getBusinessPools()){
+//            if ((pool.getMakeCard() == null) || pool.getMakeCard().getOwnerBusiness().getId().equals(oldBusiness.getId())){
+//                afterHouse.getBusinessPools().add(new BusinessPool(pool));
+//            }else{
+//                afterHouse.getBusinessPools().add(pool);
+//            }
+//        }
+//
+//        for(MakeCard makeCard: oldBusiness.getAfterBusinessHouse().getOtherPowerCards()){
+//            if (!makeCard.getOwnerBusiness().getId().equals(oldBusiness.getId())){
+//                afterHouse.getOtherPowerCards().add(makeCard);
+//            }
+//        }
+//
+//
+//
+//        if(oldBusiness.getStartBusinessHouse().getBusinessHouseOwner() != null &&
+//                oldBusiness.getStartBusinessHouse().getBusinessHouseOwner().getId().equals(oldBusiness.getAfterBusinessHouse().getBusinessHouseOwner().getId())){
+//            afterHouse.setBusinessHouseOwner(oldBusiness.getAfterBusinessHouse().getBusinessHouseOwner());
+//        }else{
+//            afterHouse.setBusinessHouseOwner(new BusinessHouseOwner(afterHouse, oldBusiness.getAfterBusinessHouse().getBusinessHouseOwner()));
+//        }
+//
+//
+//
+//    }
+
 
     public class HouseChangeData {
 
-        private HouseBusiness oldBusiness;
-
-        private BusinessHouse startHouse;
-
-        private BusinessHouse afterHouse;
-
-        private OwnerBusiness newBusiness;
-
-        private House mapHouse;
+        private BusinessHouse sourceBusinessHouse;
 
         private List<HouseInfoCompare.ChangeData> changeDatas;
 
-        public HouseChangeData(HouseBusiness oldBusiness, House mapHouse, OwnerBusiness newBusiness) {
-            this.oldBusiness = oldBusiness;
-            this.startHouse = oldBusiness.getStartBusinessHouse();
-            this.mapHouse = mapHouse;
-            this.newBusiness = newBusiness;
-            assignOld();
-            changeDatas = HouseInfoCompare.compare(startHouse, mapHouse);
+        private String houseCode;
 
+        private boolean useMapInfo;
+
+        public HouseChangeData(BusinessHouse sourceBusinessHouse, List<HouseInfoCompare.ChangeData> changeDatas) {
+            this.changeDatas = changeDatas;
+            this.sourceBusinessHouse = sourceBusinessHouse;
+            houseCode = sourceBusinessHouse.getHouseCode();
         }
 
-        public BusinessHouse getStartHouse() {
-            return startHouse;
+        public BusinessHouse getSourceBusinessHouse() {
+            return sourceBusinessHouse;
         }
 
-        public House getMapHouse() {
-            return mapHouse;
+        public List<HouseInfoCompare.ChangeData> getChangeDatas() {
+            return changeDatas;
         }
 
-        public BusinessHouse getAfterHouse() {
-            return afterHouse;
+        public String getHouseCode() {
+            return houseCode;
         }
 
-        public void setAfterHouse(BusinessHouse afterHouse) {
-            this.afterHouse = afterHouse;
+        public void setHouseCode(String houseCode) {
+            this.houseCode = houseCode;
         }
 
         public boolean isChangeHouse() {
-            return !startHouse.getHouseCode().equals(afterHouse.getHouseCode());
+            return !sourceBusinessHouse.getHouseCode().equals(houseCode);
         }
 
-        public void assignOld() {
-            afterHouse = new BusinessHouse(oldBusiness.getAfterBusinessHouse());
-            afterHouse.setPoolType(oldBusiness.getAfterBusinessHouse().getPoolType());
-
-            if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo() != null){
-                if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo().getId().equals(oldBusiness.getOwnerBusiness().getId())){
-                    afterHouse.setHouseRegInfo(new HouseRegInfo(newBusiness,oldBusiness.getAfterBusinessHouse().getHouseRegInfo()));
-                }else{
-                    afterHouse.setHouseRegInfo(oldBusiness.getAfterBusinessHouse().getHouseRegInfo());
-                }
-            }
-
-            for(MortgaegeRegiste mr: oldBusiness.getAfterBusinessHouse().getMortgaegeRegistes()){
-                if (mr.getOwnerBusiness().getId().equals(oldBusiness.getId())){
-                  // newBusiness.
-                }
-            }
-
-
-
-
+        public boolean isUseMapInfo() {
+            return useMapInfo;
         }
 
-        public void modifyHouseFormMap() {
-            //afterHouse =
+        public void setUseMapInfo(boolean useMapInfo) {
+            this.useMapInfo = useMapInfo;
         }
-
     }
 
 }

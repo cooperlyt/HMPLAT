@@ -36,6 +36,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private String modifyPage;
 
     private Set<Fee> fees = new HashSet<Fee>(0);
+    private Set<BusinessReport> businessReports = new HashSet<BusinessReport>(0);
 
 
 
@@ -255,5 +256,14 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setModifyPage(String modifyPage) {
         this.modifyPage = modifyPage;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessDefine")
+    public Set<BusinessReport> getBusinessReports() {
+        return businessReports;
+    }
+
+    public void setBusinessReports(Set<BusinessReport> businessReports) {
+        this.businessReports = businessReports;
     }
 }

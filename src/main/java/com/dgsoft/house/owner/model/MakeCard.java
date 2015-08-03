@@ -26,11 +26,9 @@ public class MakeCard implements java.io.Serializable {
     private boolean enable;
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
-    //private Set<OtherPowerCard> otherPowerCards = new HashSet<OtherPowerCard>(0);
-
-
     private CardInfo cardInfo;
     private ProjectCard projectCard;
+    private Financial financial;
 
 
     public MakeCard() {
@@ -52,7 +50,7 @@ public class MakeCard implements java.io.Serializable {
 
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     public CardInfo getCardInfo() {
         return cardInfo;
@@ -110,8 +108,7 @@ public class MakeCard implements java.io.Serializable {
 	}
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "CARD"), inverseJoinColumns = @JoinColumn(name = "HOUSE"))
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "otherPowerCards")
     public Set<BusinessHouse> getBusinessHouses() {
         return businessHouses;
     }
@@ -128,6 +125,15 @@ public class MakeCard implements java.io.Serializable {
 
     public void setProjectCard(ProjectCard projectCard) {
         this.projectCard = projectCard;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "makeCard")
+    public Financial getFinancial() {
+        return financial;
+    }
+
+    public void setFinancial(Financial financial) {
+        this.financial = financial;
     }
 
     @Column(name="ENABLE", nullable = false)

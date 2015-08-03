@@ -541,6 +541,21 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return rootNodes;
     }
 
+    public List<Report> getReprotList(){
+        List<BusinessReport> result = new ArrayList<BusinessReport>();
+        for (BusinessReport br: getInstance().getBusinessReports()){
+            if (br.getTaskName().equals(taskName)){
+                result.add(br);
+            }
+        }
+        Collections.sort(result,OrderBeanComparator.getInstance());
+
+        List<Report> reports = new ArrayList<Report>(result.size());
+        for(BusinessReport br: result){
+            reports.add(br.getReport());
+        }
+        return reports;
+    }
 
     public static abstract class NeedFileTreeNode<T extends NeedFileTreeNode> implements TreeNode, OrderModel {
 

@@ -720,7 +720,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MAIN_OWNER",nullable = true)
     public BusinessHouseOwner getBusinessHouseOwner() {
         return businessHouseOwner;
@@ -730,7 +730,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessHouseOwner = businessHouseOwner;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "businessHouses")
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
     public Set<MakeCard> getOtherPowerCards() {
         return otherPowerCards;
     }
@@ -739,7 +740,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.otherPowerCards = otherPowerCards;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="HOUSE_AND_MOR",joinColumns = @JoinColumn(name="HOUSE"),inverseJoinColumns = @JoinColumn(name="MOR"))
     public Set<MortgaegeRegiste> getMortgaegeRegistes() {
         return mortgaegeRegistes;

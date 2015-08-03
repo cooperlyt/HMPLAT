@@ -53,6 +53,8 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.makeCard = pool.getMakeCard();
         this.memo = pool.getMemo();
         this.createTime = new Date();
+        this.legalPerson = pool.getLegalPerson();
+        this.rootAddress = pool.getRootAddress();
     }
 
 
@@ -149,7 +151,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.phone = phone;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "CARD", nullable = true)
     public MakeCard getMakeCard() {
         return this.makeCard;
