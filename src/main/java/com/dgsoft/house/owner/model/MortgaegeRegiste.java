@@ -24,7 +24,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	private String warrantScope;
 	private String interestType;
 	private Date mortgageDueTimeS;
-	private String mortgageTime;
+	private Date mortgageTime;
 	private BigDecimal mortgageArea;
     private Financial oldFinancial;
     private Financial financial;
@@ -36,6 +36,26 @@ public class MortgaegeRegiste implements java.io.Serializable {
 
     public MortgaegeRegiste(OwnerBusiness ownerBusiness) {
         this.ownerBusiness = ownerBusiness;
+    }
+
+    public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste) {
+        this.ownerBusiness = ownerBusiness;
+        highestMountMoney = mortgaegeRegiste.getHighestMountMoney();
+        warrantScope = mortgaegeRegiste.getWarrantScope();
+        interestType = mortgaegeRegiste.getInterestType();
+        mortgageDueTimeS = mortgaegeRegiste.getMortgageDueTimeS();
+        mortgageTime = mortgaegeRegiste.getMortgageTime();
+        mortgageArea = mortgaegeRegiste.getMortgageArea();
+        oldFinancial = mortgaegeRegiste.getOldFinancial();
+        financial = mortgaegeRegiste.getFinancial();
+        if (mortgaegeRegiste.getOldFinancial() != null){
+            oldFinancial = mortgaegeRegiste.getOldFinancial();
+        }
+        if (mortgaegeRegiste.getFinancial() != null){
+            financial = new Financial(mortgaegeRegiste.getFinancial());
+            financial.setMortgaegeForNew(this);
+        }
+
     }
 
     @Id
@@ -108,14 +128,13 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	}
 
 
-	@Column(name = "MORTGAGE_TIME", nullable = false, length = 50)
+	@Column(name = "MORTGAGE_TIME", nullable = false)
 	@NotNull
-    @Size(max = 50)
-	public String getMortgageTime() {
+	public Date getMortgageTime() {
 		return this.mortgageTime;
 	}
 
-	public void setMortgageTime(String mortgageTime) {
+	public void setMortgageTime(Date mortgageTime) {
 		this.mortgageTime = mortgageTime;
 	}
 

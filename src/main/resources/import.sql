@@ -45,6 +45,12 @@ INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.notice','�
 INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.other','其它登记',8);
 INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.commodity','商品房登记',9);
 
+
+
+-- 报表
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('owner.apply.check','房地产登记受理审核业务书','房地产登记受理审核业务书','/report/ReisterApplyCheckTable.xhtml');
+
+
 -- 收费种类
 INSERT INTO FEE_CATEGORY(ID, NAME, PRIORITY,DESCRIPTION) VALUES('REGISTER','登记费',1,null);
 INSERT INTO FEE_CATEGORY(ID, NAME, PRIORITY,DESCRIPTION) VALUES('MAPPING','测绘费',2,null);

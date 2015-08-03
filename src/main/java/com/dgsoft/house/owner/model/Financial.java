@@ -44,6 +44,17 @@ public class Financial implements java.io.Serializable, PersonEntity {
         this.bank = bank;
     }
 
+    public Financial(Financial financial) {
+        createTime = new Date();
+        name = financial.getName();
+        code = financial.getCode();
+        phone = financial.getPhone();
+        financialType = financial.getFinancialType();
+        credentialsType = financial.getCredentialsType();
+        bank = financial.getBank();
+    }
+
+
     @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
