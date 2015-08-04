@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.house.model.House;
 
 import java.util.*;
 import javax.persistence.*;
@@ -307,6 +308,18 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
 
     public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
         this.houseBusinesses = houseBusinesses;
+    }
+
+    @Transient
+    public List<HouseBusiness> getHouseBusinessList(){
+        List<HouseBusiness> result = new ArrayList<HouseBusiness>(getHouseBusinesses());
+        Collections.sort(result, new Comparator<HouseBusiness>() {
+            @Override
+            public int compare(HouseBusiness o1, HouseBusiness o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+        return result;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)

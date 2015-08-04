@@ -541,6 +541,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return rootNodes;
     }
 
+    public boolean isHaveReport(){
+        return !getReprotList().isEmpty();
+    }
+
     public List<Report> getReprotList(){
         List<BusinessReport> result = new ArrayList<BusinessReport>();
         for (BusinessReport br: getInstance().getBusinessReports()){

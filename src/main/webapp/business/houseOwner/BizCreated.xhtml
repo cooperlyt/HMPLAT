@@ -20,13 +20,16 @@
         <div class="dashboard-notice ">
             <span class="mega-octicon octicon-info" style="color: #4183c4;"/>
             <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong> #{(businessDefineHome.taskName eq '_CREATE') ? '' : businessDefineHome.taskName } #{(businessDefineHome.taskName eq '_CREATE') ? messages.BusinessCreated : messages.TaskCompleted }</h2>
-            <p> 打印.</p>
+
+            <a:outputPanel rendered="#{businessDefineHome.haveReport}">
+            <p> #{messages.YouCanPrint}</p>
             <ul>
                 <a:repeat value="#{businessDefineHome.reprotList}" var="_report">
-                    <li><s:link view="#{_report.page}" value="#{_report.name}"></s:link></li>
+                    <li><s:link view="#{_report.page}" value="#{_report.name}" target="_blank"></s:link></li>
                 </a:repeat>
             </ul>
 
+            </a:outputPanel>
             <p>#{messages.NextYouCan}</p>
             <ul>
                 <a:repeat value="#{taskCompletedOper.tasks}" var="_task">

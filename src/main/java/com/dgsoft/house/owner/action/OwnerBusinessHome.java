@@ -4,6 +4,7 @@ import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.common.system.model.Person;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
@@ -34,9 +35,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         result.setDefineId(businessDefineHome.getInstance().getId());
         result.setDefineName(businessDefineHome.getInstance().getName());
 
-        result.getBusinessEmps().add(new BusinessEmp(result,
-                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
-                authInfo.getLoginEmployee().getPersonName()));
+//        result.getBusinessEmps().add(new BusinessEmp(result,
+//                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
+//                authInfo.getLoginEmployee().getPersonName(),new Date()));
         result.setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + result.getId());
         result.getTaskOpers().add(
@@ -146,13 +147,38 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
 
-    public BusinessEmp getCreateEmp(){
+    public BusinessEmp getApplyEmp(){
+        return getOperEmp(BusinessEmp.EmpType.APPLY_EMP);
+    }
+
+    public BusinessEmp getCheckEmp(){
+        return getOperEmp(BusinessEmp.EmpType.CHECK_EMP);
+    }
+
+    public BusinessEmp getRegisterEmp(){
+        return getOperEmp(BusinessEmp.EmpType.REG_EMP);
+    }
+
+    public BusinessEmp getCardPrinterEmp(){
+        return getOperEmp(BusinessEmp.EmpType.CARD_PRINTER);
+    }
+
+    public BusinessPersion getApplyPersion(){
+       for(BusinessPersion persion:getInstance().getBusinessPersions()) {
+           if (persion.getType().equals(BusinessPersion.PersionType.APPLY_PERSION)){
+               return persion;
+           }
+       }
+        return null;
+    }
+
+    private BusinessEmp getOperEmp(BusinessEmp.EmpType empType){
         for(BusinessEmp emp: getInstance().getBusinessEmps()){
-            if(emp.getType().equals(BusinessEmp.EmpType.CREATE_EMP)){
+            if(emp.getType().equals(empType)){
                 return emp;
             }
         }
-        throw new IllegalArgumentException("not have createEmp");
+        return null;
     }
 
     public List<TaskOper> getTaskOperList(){

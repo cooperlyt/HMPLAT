@@ -4,7 +4,8 @@
       login-required="true"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
+    <param name="businessId" value="#{ownerBusinessHome.id}"/>
     <param name="businessDefineId" value="#{businessDefineHome.id}"/>
-    <param name="ownerBusinessId" value="#{ownerBusinessHouse.id}"/>
+
 
 </page>

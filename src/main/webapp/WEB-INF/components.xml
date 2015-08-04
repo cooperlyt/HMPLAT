@@ -7,10 +7,11 @@
             xmlns:mail="http://jboss.org/schema/seam/mail"
             xmlns:web="http://jboss.org/schema/seam/web"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:document="http://jboss.org/schema/seam/document"
             xsi:schemaLocation=
                     "http://jboss.org/schema/seam/core http://jboss.org/schema/seam/core-2.3.xsd
                  http://jboss.org/schema/seam/persistence http://jboss.org/schema/seam/persistence-2.3.xsd
-
+                 http://jboss.org/schema/seam/document http://jboss.org/schema/seam/document-2.3.xsd
                  http://jboss.org/schema/seam/bpm http://jboss.org/schema/seam/bpm-2.3.xsd
                  http://jboss.org/schema/seam/security http://jboss.org/schema/seam/security-2.3.xsd
                  http://jboss.org/schema/seam/mail http://jboss.org/schema/seam/mail-2.3.xsd
@@ -18,6 +19,7 @@
                  http://jboss.org/schema/seam/components http://jboss.org/schema/seam/components-2.3.xsd">
     <core:init debug="true" jndi-pattern="@jndiPattern@"/>
 
+    <document:document-store use-extensions="true" />
 
     <core:manager concurrent-request-timeout="5000"
                   conversation-timeout="120000"
