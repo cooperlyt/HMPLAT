@@ -7,18 +7,19 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml">
-        <description>
-            原产权人查看
-        </description>
-    </view-subscribe>
+    <!--
+      <view-subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml">
+          <description>
+              原产权人查看
+          </description>
+      </view-subscribe>
 
-
-    <view-subscribe name="newOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml">
-        <description>
-            现产权人查看
-        </description>
-    </view-subscribe>
+      <view-subscribe name="newOwnerView" page="/business/houseOwner/subscribe/NewHouseOwnerView.xhtml">
+          <description>
+              现产权人查看
+          </description>
+      </view-subscribe>
+    -->
 
 
     <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml">
@@ -65,12 +66,13 @@
             共有权人查看（业务中）
         </description>
     </view-subscribe>
-
+  <!--
     <view-subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml">
         <description>
             原共有权人查看
         </description>
     </view-subscribe>
+  -->
 
 
 
@@ -149,7 +151,7 @@
         <description>
             现抵押权人信息查看
         </description>
-    </view-subscribe>抵押权人信息查看
+    </view-subscribe>
 
     <view-subscribe name="FinancialView" page="/business/houseOwner/subscribe/FinancialView.xhtml">
         <description>
@@ -390,13 +392,13 @@
             核费
         </description>
     </edit-subscribe>
-
-    <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component=""
-            >
+    <!--
+    <edit-subscribe name="newOwnerEdit" page="/business/houseOwner/subscribe/NewHouseOwnerEdit.xhtml" out-page="" component="">
         <description>
             现产权人编辑
         </description>
     </edit-subscribe>
+    -->
 
     <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
         <description>
@@ -450,14 +452,10 @@
     </edit-subscribe>
 
 
-
-
-
-
     <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
                     component="">
         <description>
-            土地信息编辑（有土地信息就不显示，没有编辑）
+            土地信息编辑（每次都新建一个，然后填充）
         </description>
     </edit-subscribe>
 
@@ -504,7 +502,7 @@
 
     <end-subscribe name="statusComplete" component="statusComplete">
         <description>
-            业务完成设置业务状态
+            业务完成设置业务状态(归档阶段配置)
         </description>
     </end-subscribe>
 

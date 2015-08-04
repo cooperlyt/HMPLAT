@@ -39,24 +39,10 @@ public class MoveContractsRecord implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        Logging.getLog(getClass()).debug("2222");
-        List<HouseState> houseStateList = new ArrayList<HouseState>();
+
+
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseStateList.clear();
-            Logging.getLog(getClass()).debug("moveContractsRecord--:"+houseBusiness.getAfterBusinessHouse().getHouseStates().size());
-            for(HouseState houseState:houseBusiness.getAfterBusinessHouse().getHouseStates()){
-                Logging.getLog(getClass()).debug("moveContractsRecord+111111111111111");
-
-
-                if(houseState.getState().equals(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
-                    houseStateList.add(houseState);
-                    break;
-                }
-            }
-            if (!houseStateList.isEmpty()){
-                houseBusiness.getAfterBusinessHouse().getHouseStates().removeAll(houseStateList);
-            }
-
+            houseBusiness.getAfterBusinessHouse().getAllStatusList().remove(HouseInfo.HouseStatus.CONTRACTS_RECORD);
         }
     }
 }
