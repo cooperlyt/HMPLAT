@@ -35,9 +35,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         result.setDefineId(businessDefineHome.getInstance().getId());
         result.setDefineName(businessDefineHome.getInstance().getName());
 
-//        result.getBusinessEmps().add(new BusinessEmp(result,
-//                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
-//                authInfo.getLoginEmployee().getPersonName(),new Date()));
+        result.getBusinessEmps().add(new BusinessEmp(result,
+                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
+                authInfo.getLoginEmployee().getPersonName(),new Date()));
         result.setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + result.getId());
         result.getTaskOpers().add(
@@ -161,6 +161,10 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     public BusinessEmp getCardPrinterEmp(){
         return getOperEmp(BusinessEmp.EmpType.CARD_PRINTER);
+    }
+
+    public BusinessEmp getCreateEmp(){
+        return getOperEmp(BusinessEmp.EmpType.CREATE_EMP);
     }
 
     public BusinessPersion getApplyPersion(){

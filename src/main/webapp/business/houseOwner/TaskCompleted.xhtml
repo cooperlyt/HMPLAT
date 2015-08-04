@@ -19,13 +19,17 @@
         <div class="container">
             <div class="dashboard-notice ">
                 <span class="mega-octicon octicon-info" style="color: #4183c4;"/>
-                <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong> #{(businessDefineHome.taskName eq '_CREATE') ? '' : businessDefineHome.taskName } #{(businessDefineHome.taskName eq '_CREATE') ? messages.BusinessCreated : messages.TaskCompleted }</h2>
-                <p> 打印.</p>
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </ul>
+                <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong> #{businessDefineHome.taskName}  #{operType}</h2>
+                <a:outputPanel rendered="#{businessDefineHome.haveReport and canPrint}">
+                    <p> #{messages.YouCanPrint}</p>
+                    <ul>
+                        <a:repeat value="#{businessDefineHome.reprotList}" var="_report">
+                            <li><s:link view="#{_report.page}" value="#{_report.name}" target="_blank"></s:link></li>
+                        </a:repeat>
+                    </ul>
+
+                </a:outputPanel>
+
 
                 <p>#{messages.NextYouCan}</p>
                 <ul>
@@ -44,15 +48,13 @@
                         </li>
                     </a:repeat>
 
-                    <li><s:link value="#{messages.returnToCreateBusiness}" view="/func/system/business/start.xhtml"></s:link> </li>
+                    <li><s:link value="#{messages.returnToTaskList}" view="/func/system/business/task.xhtml"></s:link> </li>
                     <li>
 
 
-                        <s:link propagation="#{empty businessDefineHome.instance.startPropagation ? 'begin' : businessDefineHome.instance.startPropagation}"
-                                view="#{businessDefineHome.instance.startPage}"
-                                value="#{messages.createBusinessAgain}">
+                        <s:link  view="/home.xhtml"
+                                value="#{messages.returnHome}">
 
-                            <f:param name="bussinessDefineId" value="#{businessDefineHome.instance.id}"/>
                         </s:link>
                     </li>
                 </ul>

@@ -19,7 +19,7 @@
         <div class="container">
         <div class="dashboard-notice ">
             <span class="mega-octicon octicon-info" style="color: #4183c4;"/>
-            <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong> #{(businessDefineHome.taskName eq '_CREATE') ? '' : businessDefineHome.taskName } #{(businessDefineHome.taskName eq '_CREATE') ? messages.BusinessCreated : messages.TaskCompleted }</h2>
+            <h2>#{businessDefineHome.instance.name} <strong> #{ownerBusinessHome.instance.id}</strong>  #{messages.BusinessCreated}</h2>
 
             <a:outputPanel rendered="#{businessDefineHome.haveReport}">
             <p> #{messages.YouCanPrint}</p>
@@ -52,9 +52,8 @@
 
 
                     <s:link propagation="#{empty businessDefineHome.instance.startPropagation ? 'begin' : businessDefineHome.instance.startPropagation}"
-                            view="#{businessDefineHome.instance.startPage}"
-                            value="#{messages.createBusinessAgain}">
-
+                            view="#{businessDefineHome.instance.startPage}">
+                        #{messages.createBusinessAgain} #{businessDefineHome.instance.name}
                         <f:param name="bussinessDefineId" value="#{businessDefineHome.instance.id}"/>
                     </s:link>
                 </li>

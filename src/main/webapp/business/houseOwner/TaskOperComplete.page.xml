@@ -6,22 +6,36 @@
 
     <navigation from-action="#{ownerTaskHandle.complete}">
 
-            <rule if-outcome="taskCompleted" if="#{empty from}">
+            <rule if-outcome="taskCompleted" if="#{taskDescription.checkTask}">
                 <redirect include-page-params="true"
-                          view-id="/func/system/business/task.xhtml">
+                          view-id="/business/houseOwner/TaskCompleted.xhtml">
+
                     <message severity="INFO">
                         #{messages.taskCompleted}
                     </message>
-                </redirect>
-            </rule>
-            <rule if-outcome="taskCompleted" if="#{not empty from}">
-                <redirect view-id="#{from}">
-                    <message severity="INFO">
-                        #{messages.taskCompleted}
-                    </message>
+                    <param name="operType" value="#{messages.CheckCompleted}"/>
+                    <param name="businessId" value="#{ownerBusinessHome.id}"/>
+                    <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+                    <param name="taskName" value="#{businessDefineHome.taskName}"/>
+                    <param name="canPrint" value="#{true}"/>
+
                 </redirect>
             </rule>
 
+        <rule if-outcome="taskCompleted" if="#{not taskDescription.checkTask}">
+            <redirect include-page-params="true"
+                      view-id="/business/houseOwner/TaskCompleted.xhtml">
+
+                <message severity="INFO">
+                    #{messages.taskCompleted}
+                </message>
+                <param name="operType" value="#{messages.TaskCompleted}"/>
+                <param name="businessId" value="#{ownerBusinessHome.id}"/>
+                <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+                <param name="taskName" value="#{businessDefineHome.taskName}"/>
+                <param name="canPrint" value="#{true}"/>
+            </redirect>
+        </rule>
 
     </navigation>
 
@@ -29,10 +43,15 @@
     <navigation from-action="#{ownerTaskHandle.reject}">
         <rule if-outcome="taskCompleted">
             <redirect include-page-params="true"
-                      view-id="/func/system/business/task.xhtml">
+                      view-id="/business/houseOwner/TaskCompleted.xhtml">
                 <message severity="INFO">
                     #{messages.taskCompleted}
                 </message>
+                <param name="operType" value="#{messages.Rejected}"/>
+                <param name="businessId" value="#{ownerBusinessHome.id}"/>
+                <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+                <param name="taskName" value="#{businessDefineHome.taskName}"/>
+                <param name="canPrint" value="#{false}"/>
             </redirect>
         </rule>
     </navigation>
@@ -52,7 +71,13 @@
     <navigation from-action="#{ownerTaskHandle.back}">
 
         <rule if-outcome="taskCompleted">
-            <redirect view-id="/business/houseOwner/TaskCompleted.xhtml"/>
+            <redirect view-id="/business/houseOwner/TaskCompleted.xhtml">
+                <param name="operType" value="#{messages.Backed}"/>
+                <param name="businessId" value="#{ownerBusinessHome.id}"/>
+                <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+                <param name="taskName" value="#{businessDefineHome.taskName}"/>
+                <param name="canPrint" value="#{false}"/>
+            </redirect>
         </rule>
 
 

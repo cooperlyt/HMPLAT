@@ -4,4 +4,10 @@
       no-conversation-view-id="/func/system/business/task.xhtml"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
+    <param name="businessId" value="#{ownerBusinessHome.id}"/>
+    <param name="businessDefineId" value="#{businessDefineHome.id}"/>
+    <param name="taskName" value="#{businessDefineHome.taskName}"/>
+
+    <param name="operType"/>
+    <param name="canPrint"/>
 </page>
