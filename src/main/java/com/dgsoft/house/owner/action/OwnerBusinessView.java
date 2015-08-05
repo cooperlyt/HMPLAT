@@ -39,9 +39,6 @@ public class OwnerBusinessView {
     @In
     private Identity identity;
 
-    @In
-    private Map<String,String> messages;
-
     public void setId(String id){
         if ((id == null) || id.trim().equals("")){
             ownerBusinessHome.createInstance();
@@ -93,8 +90,8 @@ public class OwnerBusinessView {
     public void suspendBiz(){
         if (isCanSuspend()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.SUSPEND);
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.SUSPEND, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.SUSPEND.name()), comments));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.SUSPEND, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
             processInstanceHome.suspend();
             ownerBusinessHome.update();
         }
@@ -104,8 +101,8 @@ public class OwnerBusinessView {
     public void resumeBiz(){
         if (isCanResume()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.RUNNING);
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.CONTINUE, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.CONTINUE.name()), comments));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.CONTINUE, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
             processInstanceHome.resume();
             ownerBusinessHome.update();
         }
@@ -119,8 +116,8 @@ public class OwnerBusinessView {
                     BusinessInstance.BusinessStatus.MODIFYING.equals(ownerBusinessHome.getInstance().getSelectBusiness().getStatus())){
                 ownerBusinessHome.createInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
             }
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.TERMINATION.name()), comments));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
             processInstanceHome.stop();
             ownerBusinessHome.update();
         }
@@ -160,8 +157,8 @@ public class OwnerBusinessView {
     public void assignTo(){
         if (isCanAssign()) {
 
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(null, TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
-                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), messages.get(TaskOper.OperType.ASSIGN.name()), " > " + DictionaryWord.instance().getEmpNameById(assignActorId) + "  " + comments));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.ASSIGN, ownerBusinessHome.getInstance(),
+                    authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), " > " + DictionaryWord.instance().getEmpNameById(assignActorId) + "  " + comments));
 
             if (taskInstanceId == null){
                 processInstanceHome.assign(assignActorId);

@@ -9,6 +9,7 @@
                 xmlns:a="http://richfaces.org/a4j"
                 template="/layout/template.xhtml">
 
+    <ui:define name="func-body">
 
     <h:outputStylesheet>
         .wellcome-user{
@@ -20,11 +21,31 @@
             text-decoration: none;
             outline: 0;
         }
+
+        .alert.push{
+            margin-bottom: 0;
+        }
+
+        .alert.push .title{
+
+            border: 0;
+            font-size: inherit;
+
+        }
+
+        blockquote{
+            border-left: 0;
+        }
+
     </h:outputStylesheet>
 
 
 
-        <a:outputPanel rendered="#{identity.loggedIn}">
+
+
+        <a:outputPanel layout="block" styleClass="container" rendered="#{identity.loggedIn}">
+
+            <h:outputStylesheet name="biz.css"/>
             <div class="columns">
                 <div class="news column two-thirds">
                     <div class="wellcome-user">
@@ -53,6 +74,77 @@
 
 
                     </div>
+
+                     <a:outputPanel id="operList">
+                    <a:repeat value="#{employeeBusinessOperList.resultList}" var="_item">
+                        <div class="alert push"><div class="body"><!-- push -->
+                            <span class="mega-octicon #{_item.operType.manager ? _item.operType : 'octicon-git-commit'} task-oper"></span>
+
+                            <div class="time">
+                               <h:outputText value="#{_item.operTime}">
+                                   <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                               </h:outputText>
+                            </div>
+
+                            <div class="title">
+                               <s:link view="/func/house/owner/BusinessView.xhtml" >
+                                   <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
+                               #{_item.ownerBusiness.id}
+                               </s:link> <strong> #{_item.ownerBusiness.defineName} </strong>
+                            </div>
+
+                            <div class="details">
+
+                                <div class="commits pusher-is-only-committer">
+                                    <ul>
+                                        <li>
+          <span title="#{messages[_item.operType]}" class="type-icon octicon #{_item.operType.manager ? _item.operType : 'octicon-git-commit'} task-oper"
+                aria-label="#{messages[_item.operType]}">
+
+          </span>
+                                           <h:outputText style="font-size: 12px;font-weight: bold" value="#{_item.operType.manager ? messages[_item.operType.name()] : ((_item.operType eq 'CREATE') ? runParam.getStringParamValue('CreateBizTaskName') : _item.taskName)}" ></h:outputText>
+
+
+                                            <div class="message">
+                                                <blockquote>
+                                                    #{_item.operType.manager ? _item.comments : _item.taskDescription}
+                                                </blockquote>
+                                            </div>
+                                        </li>
+<a:outputPanel rendered="#{_item.operType.otherOper}">
+                                        <li>
+          <span title="#{messages[_item.operType]}" class="type-icon octicon #{_item.operType} task-oper"
+                aria-label="#{messages[_item.operType]}">
+
+          </span>
+                                            <h:outputText style="font-size: 12px;font-weight: bold" value="#{messages[_item.operType.name()]}" ></h:outputText>
+
+
+                                            <div class="message">
+                                                <blockquote>
+                                                    #{_item.comments}
+                                                </blockquote>
+                                            </div>
+                                        </li>
+</a:outputPanel>
+
+                                      </ul>
+                                </div>
+                            </div>
+                        </div></div>
+                    </a:repeat>
+                     </a:outputPanel>
+                    <h:form id="moreAction">
+                        <a:outputPanel layout="block" class="pagination ajax_paginate">
+                            <a:commandLink class="js-events-pagination" execute="@this" immediate="true"
+                                           render="moreAction,operList"
+                                           rendered="#{employeeBusinessOperList.nextExists}">
+                                #{messages.More}
+                                <a:attachQueue requestDelay="0"/>
+                                <a:param value="#{employeeBusinessOperList.maxResults + 30}" assignTo="#{employeeBusinessOperList.maxResults}"/>
+                            </a:commandLink>
+                        </a:outputPanel>
+                    </h:form>
                 </div>
 
                 <div class="dashboard-sidebar column one-third">
@@ -103,13 +195,27 @@
 
         </a:outputPanel>
 
-        <a:outputPanel rendered="#{not identity.loggedIn}">
-            not login
+        <a:outputPanel layout="block" style="padding: 10px" rendered="#{not identity.loggedIn}">
+
+
+            <r:chart id="bar" >
+                <r:chartLegend sorting="ascending"/>
+                <a:repeat value="#{ownerBusinessTotal.resultData}" var="_data">
+                    <r:chartSeries label="#{_data.key.name}" type="bar">
+                        <a:repeat value="#{_data.value}" var="_item">
+                            <r:chartPoint x="#{_item.businessDefine.name}" y="#{_item.count}"/>
+                        </a:repeat>
+                    </r:chartSeries>
+                </a:repeat>
+            </r:chart>
+
         </a:outputPanel>
 
 
 
 
+
+    </ui:define>
 
 
 </ui:composition>

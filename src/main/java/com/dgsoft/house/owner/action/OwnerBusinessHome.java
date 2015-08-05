@@ -43,7 +43,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         result.getTaskOpers().add(
                 new TaskOper(result, TaskOper.OperType.CREATE,
                         RunParam.instance().getStringParamValue("CreateBizTaskName"),
-                        authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName()));
+                        authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),businessDefineHome.getDescription()));
 
         return result;
     }

@@ -87,7 +87,7 @@ public class OwnerTaskHandle {
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 TaskOper.OperType.CHECK_BACK, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName(),transitionComments));
+                taskInstance.getName(),transitionComments,taskDescription.getDescription()));
         if ("updated".equals(ownerBusinessHome.update())) {
             return "taskCompleted";
         }
@@ -108,7 +108,7 @@ public class OwnerTaskHandle {
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 TaskOper.OperType.BACK, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName() + transitionName,transitionComments));
+                taskInstance.getName() + transitionName,transitionComments,taskDescription.getDescription()));
 
         if ("updated".equals(ownerBusinessHome.update())) {
             businessProcess.endTask(transitionName);
@@ -154,7 +154,7 @@ public class OwnerTaskHandle {
                 taskDescription.isCheckTask() ? TaskOper.OperType.CHECK_ACCEPT :TaskOper.OperType.NEXT,
                 ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName(),taskDescription.isCheckTask() ? transitionComments : null));
+                taskInstance.getName(),taskDescription.isCheckTask() ? transitionComments : null,taskDescription.getDescription()));
 
         if (businessDefineHome.isCompletePass() && businessDefineHome.isSubscribesPass()){
             businessDefineHome.completeTask();

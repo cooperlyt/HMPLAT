@@ -75,6 +75,12 @@ public class AuthenticationInfo implements java.io.Serializable {
 
     public void setAuthenticationBussinessCategorys(List<FilterBusinessCategory> authenticationBussinessCategorys) {
         this.authenticationBussinessCategorys = authenticationBussinessCategorys;
+        Collections.sort(authenticationBussinessCategorys, new Comparator<FilterBusinessCategory>() {
+            @Override
+            public int compare(FilterBusinessCategory o1, FilterBusinessCategory o2) {
+                return Integer.valueOf(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
+            }
+        });
         if (! authenticationBussinessCategorys.isEmpty()){
             currBusinessCategory = authenticationBussinessCategorys.get(0);
         }

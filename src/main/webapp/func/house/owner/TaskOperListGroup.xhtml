@@ -19,8 +19,11 @@
 
                                     </span>
 
-                                     <h:outputText value="#{_task.taskName}"
-                                                   styleClass="css-truncate-target list-item-title"/>
+                                     <h:outputText value="#{(_task.operType eq 'CREATE') ? runParam.getStringParamValue('CreateBizTaskName') : _task.taskName}"
+                                                   styleClass="css-truncate-target list-item-title" rendered="#{not _task.operType.manager}"/>
+
+                                        <h:outputText value="#{messages[_task.operType.name()]}"
+                                                      styleClass="css-truncate-target list-item-title" rendered="#{_task.operType.manager}"/>
 
                                     <h:outputText value="#{_task.comments}"
                                                   styleClass="css-truncate-target list-item-description"

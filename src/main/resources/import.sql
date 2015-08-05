@@ -182,7 +182,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.houseMgr', '房屋管理', 'DATA_MGR', '', '/func/house/datas/HouseMgr.xhtml', '', '2', '',b'0');
 
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.map.baseData', '测绘基础数据', 'DATA_MGR', '', '/func/house/datas/BaseDataMgr.xhtml', '', '1', '',b'0');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.map.baseData', '测绘成果数据', 'DATA_MGR', '', '/func/house/datas/BaseDataMgr.xhtml', '', '1', '',b'0');
 
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.Developer', '开发商管理', 'DATA_MGR', '', '/func/house/datas/DeveloperMgr.xhtml', '', '1', '',b'0');

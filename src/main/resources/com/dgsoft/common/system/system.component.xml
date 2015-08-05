@@ -19,7 +19,7 @@
     </component>
 
     <component name="businessCategoryList" class="com.dgsoft.common.system.SystemEntityQuery" scope="conversation">
-        <property name="ejbql">select bc from BusinessCategory bc</property>
+        <property name="ejbql">select bc from BusinessCategory bc order by bc.priority</property>
     </component>
 
     <component name="wordCategoryList" class="com.dgsoft.common.system.SystemEntityQuery" scope="conversation">

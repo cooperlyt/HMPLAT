@@ -18,7 +18,15 @@ public class TaskOper implements java.io.Serializable {
 
     public enum OperType{
 
-        CREATE,CHECK_ACCEPT,CHECK_BACK,NEXT,BACK,TERMINATION,SUSPEND,CONTINUE,ASSIGN
+        CREATE,CHECK_ACCEPT,CHECK_BACK,NEXT,BACK,TERMINATION,SUSPEND,CONTINUE,ASSIGN;
+
+        public boolean isManager(){
+            return EnumSet.of(TERMINATION,SUSPEND,CONTINUE,ASSIGN).contains(this);
+        }
+
+        public boolean isOtherOper(){
+            return EnumSet.of(CREATE,CHECK_BACK,CHECK_ACCEPT,BACK).contains(this);
+        }
 
     }
 
@@ -33,28 +41,40 @@ public class TaskOper implements java.io.Serializable {
     private String taskName;
     private String comments;
     private OperType operType;
+    private String taskDescription;
 
     public TaskOper() {
     }
 
 
-    public TaskOper(OwnerBusiness ownerBusiness,OperType operType, String operName, String empCode, String empName) {
+    public TaskOper(OwnerBusiness ownerBusiness,OperType operType, String operName, String empCode, String empName, String taskDescription) {
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
         this.empName = empName;
         this.taskName = operName;
         this.operType = operType;
+        this.taskDescription = taskDescription;
     }
 
 
-    public TaskOper(Long taskId, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments) {
+    public TaskOper(Long taskId, OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String taskName, String comments, String taskDescription) {
         this.taskId = taskId;
         this.ownerBusiness = ownerBusiness;
         this.operTime = new Date();
         this.empCode = empCode;
         this.empName = empName;
         this.taskName = taskName;
+        this.comments = comments;
+        this.operType = operType;
+        this.taskDescription = taskDescription;
+    }
+
+    public TaskOper(OperType operType, OwnerBusiness ownerBusiness, String empCode, String empName, String comments) {
+        this.ownerBusiness = ownerBusiness;
+        this.operTime = new Date();
+        this.empCode = empCode;
+        this.empName = empName;
         this.comments = comments;
         this.operType = operType;
     }
@@ -126,8 +146,7 @@ public class TaskOper implements java.io.Serializable {
         this.empName = empName;
     }
 
-    @Column(name = "TASK_NAME", nullable = false, length = 100)
-    @NotNull
+    @Column(name = "TASK_NAME", nullable = true, length = 100)
     @Size(max = 100)
     public String getTaskName() {
         return taskName;
@@ -158,4 +177,13 @@ public class TaskOper implements java.io.Serializable {
         this.operType = operType;
     }
 
+    @Column(name = "TASK_DESCRIPTION", nullable = true ,length = 500)
+    @Size(max = 500)
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
 }
