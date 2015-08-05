@@ -281,6 +281,48 @@
                                         <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
                                     </s:link>
 
+                                    <a:outputPanel layout="block" styleClass="btn-group">
+
+
+                                        <button type="button" disabled="#{businessDefineHome.haveReport ? '' : 'disabled'}"
+                                                aria-label="#{messages.ASSIGN}" onclick="showEmpMenu()"
+                                                class="btn btn-default btn-git select-menu-button dropdown-toggle #{businessDefineHome.haveReport ? '' : 'disabled'}" data-toggle="dropdown">
+
+                                                <span class="btn-icon glyphicon glyphicon-print"></span>
+
+                                        </button>
+
+
+                                        <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
+                                        <div class="select-menu-modal">
+                                            <div class="select-menu-header">
+                                                <span class="select-menu-title">#{messages.print_title}</span>
+                                                <span class="octicon octicon-x js-menu-close"
+                                                      aria-label="#{messages.close}"></span>
+                                            </div>
+                                                <div>
+                                            <div class="select-menu-list">
+                                                <a:repeat value="#{businessDefineHome.reprotList}" var="_item">
+
+                                                    <s:link styleClass="select-menu-item" view="#{_item.page}" target="_blank">
+
+                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                        <span class="select-menu-item-text">#{_item.name}</span>
+
+                                                        <f:param name="businessId" value="#{ownerBusinessHome.id}"/>
+                                                        <f:param name="businessDefineId" value="#{businessDefineHome.id}"/>
+                                                    </s:link>
+
+                                                </a:repeat>
+                                            </div>
+                                                </div>
+                                        </div>
+
+
+                                        </div>
+
+                                    </a:outputPanel>
+
 
                                     <a:commandLink type="button" class="btn btn-success btn-reversal #{ownerBusinessView.canResume ? '' : 'disabled'} tooltipped tooltipped-s"
                                                    disabled="#{not ownerBusinessView.canResume}"
@@ -318,10 +360,10 @@
                                         <button type="button"
                                                 aria-label="#{messages.ASSIGN}" onclick="showEmpMenu()"
                                                 class="btn btn-default btn-git select-menu-button dropdown-toggle #{ (ownerBusinessHome.instance.status eq 'RUNNING')? '' : 'disabled'}" data-toggle="dropdown">
-                                            <ui:insert name="caption">
+
                                                 <span class="btn-icon octicon octicon-person"></span>
 
-                                            </ui:insert>
+
                                         </button>
 
                                         <div class="dropdown-menu select-menu-modal-holder dropdown-menu-right">
