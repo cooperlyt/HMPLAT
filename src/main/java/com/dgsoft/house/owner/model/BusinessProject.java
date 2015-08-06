@@ -40,6 +40,21 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     public BusinessProject() {
     }
 
+    public BusinessProject(OwnerBusiness ownerBusiness, BusinessProject other) {
+        this.ownerBusiness = ownerBusiness;
+        this.name = other.getName();
+        this.address = other.getAddress();
+        this.mapTime = other.getMapTime();
+        this.completeDate = other.getCompleteDate();
+        this.developerName = other.getDeveloperName();
+        this.developerCode = other.getDeveloperCode();
+        this.sectionName = other.getSectionName();
+        this.sectionCode = other.getSectionCode();
+        this.districtCode = other.getDistrictCode();
+        this.districtName = other.getDistrictName();
+        this.projectCode = other.getProjectCode();
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull

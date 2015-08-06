@@ -32,6 +32,8 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     private String legalPerson;
     private String rootAddress;
 
+    private OwnerBusiness ownerBusiness;
+
 
     public BusinessPool() {
     }
@@ -42,7 +44,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     }
 
 
-    public BusinessPool(BusinessPool pool){
+    public BusinessPool(OwnerBusiness ownerBusiness, BusinessPool pool){
         this.personName = pool.getPersonName();
         this.credentialsNumber = pool.getCredentialsNumber();
         this.credentialsType = pool.getCredentialsType();
@@ -55,6 +57,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.createTime = new Date();
         this.legalPerson = pool.getLegalPerson();
         this.rootAddress = pool.getRootAddress();
+        this.ownerBusiness = ownerBusiness;
     }
 
 
@@ -201,5 +204,15 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
 
     public void setRootAddress(String rootAddress) {
         this.rootAddress = rootAddress;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUSINESS",nullable = false)
+    public OwnerBusiness getOwnerBusiness() {
+        return ownerBusiness;
+    }
+
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
     }
 }

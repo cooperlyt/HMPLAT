@@ -29,6 +29,8 @@ public class HouseCloseCancel implements java.io.Serializable {
 		this.cancelDate = cancelDate;
 	}
 
+
+
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull

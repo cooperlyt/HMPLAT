@@ -29,15 +29,13 @@ public class Card implements java.io.Serializable {
         this.type = type;
     }
 
-	public Card(String id, OwnerBusiness ownerBusiness, CardType type,
-			String number) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.type = type;
-		this.number = number;
-	}
+    public Card(OwnerBusiness ownerBusiness, Card card) {
+        this.ownerBusiness = ownerBusiness;
+        this.type = card.getType();
+        this.number = card.getNumber();
+    }
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

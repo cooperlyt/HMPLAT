@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessDataFill;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
@@ -24,15 +25,19 @@ public class FinancialFill implements BusinessDataFill {
     public void fillData() {
 
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-
             for(MortgaegeRegiste mortgaegeRegiste:houseBusiness.getStartBusinessHouse().getMortgaegeRegistes()){
                 houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
             }
-
-
-
-
         }
+        if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
+            MortgaegeRegiste mr = ownerBusinessHome.getInstance().getSelectBusiness().getMortgaegeRegiste();
+            if (mr != null){
+                for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
+                    houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(new MortgaegeRegiste(ownerBusinessHome.getInstance(),mr));
+                }
+            }
+        }
+
 
 
     }

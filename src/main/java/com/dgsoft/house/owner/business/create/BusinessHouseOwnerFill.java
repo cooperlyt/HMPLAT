@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessDataFill;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import org.jboss.seam.ScopeType;

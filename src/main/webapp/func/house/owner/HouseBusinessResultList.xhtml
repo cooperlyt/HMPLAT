@@ -7,18 +7,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
-    <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty listBean.searchResult}">
-        <span class="mega-octicon octicon-search"></span>
-
-        <h3>#{messages.EmptyResult}</h3>
-
-        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{listBean.resetCondition}"/>
-            #{' '}#{messages.orOther} #{messages.Try} #{' '}
-            <s:link value="#{messages.AvancedSearch}"/></p>
-    </a:outputPanel>
 
 
-    <a:outputPanel rendered="#{not empty listBean.resultList}">
+
+    <a:outputPanel rendered="#{not empty listBean.searchResult}">
         <ul class="repo-list js-repo-list">
             <a:repeat value="#{listBean.searchResult}" var="_item">
                 <li class="repo-list-item public source">

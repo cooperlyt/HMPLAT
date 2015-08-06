@@ -1,7 +1,9 @@
 package com.dgsoft.house;
 
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.ui.JpaEntityLoader;
 
 import javax.persistence.EntityManager;
@@ -28,5 +30,14 @@ public class HouseEntityLoader extends JpaEntityLoader {
     public EntityManager getPersistenceContext(){
 
         return houseEntityManager;
+    }
+
+    public static HouseEntityLoader instance()
+    {
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (HouseEntityLoader) Component.getInstance(HouseEntityLoader.class, true);
     }
 }

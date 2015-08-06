@@ -42,6 +42,12 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
         return getResultList();
     }
 
+    public Long getResultCount(){
+        resetEjbql(getUseEjbql());
+        setRestrictionGroup(getUseRestrictionGroup());
+        return super.getResultCount();
+    }
+
     public enum SortCol{
         ORDER_BY_CREATE_TIME("houseBusiness.ownerBusiness.createTime"),
         ORDER_BY_BUSINESS_NAME("houseBusiness.ownerBusiness.defineName"),

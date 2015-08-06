@@ -24,23 +24,15 @@ public class Evaluate implements java.io.Serializable {
 	public Evaluate() {
 	}
 
-	public Evaluate(String id, OwnerBusiness ownerBusiness,
-			BigDecimal assessmentPrice) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.assessmentPrice = assessmentPrice;
-	}
-	public Evaluate(String id, OwnerBusiness ownerBusiness,
-			String evaluateCorpName, String evaluateCorpN0,
-			BigDecimal assessmentPrice) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.evaluateCorpName = evaluateCorpName;
-		this.evaluateCorpN0 = evaluateCorpN0;
-		this.assessmentPrice = assessmentPrice;
-	}
 
-	@Id
+    public Evaluate(OwnerBusiness ownerBusiness, Evaluate evaluate) {
+        this.ownerBusiness = ownerBusiness;
+        this.evaluateCorpName = evaluate.getEvaluateCorpName();
+        this.evaluateCorpN0 = evaluate.getEvaluateCorpN0();
+        this.assessmentPrice = evaluate.getAssessmentPrice();
+    }
+
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

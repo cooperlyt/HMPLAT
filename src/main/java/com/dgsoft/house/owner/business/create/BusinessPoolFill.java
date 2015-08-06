@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessDataFill;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessPool;
 import com.dgsoft.house.owner.model.HouseBusiness;
@@ -24,14 +25,12 @@ public class BusinessPoolFill implements BusinessDataFill {
     @Override
     public void fillData() {
 
-       for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-           houseBusiness.getAfterBusinessHouse().setPoolType(houseBusiness.getStartBusinessHouse().getPoolType());
-           for(BusinessPool businessPool:houseBusiness.getStartBusinessHouse().getBusinessPools()){
-               houseBusiness.getAfterBusinessHouse().getBusinessPools().add(businessPool);
-
-
-           }
-       }
+        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            houseBusiness.getAfterBusinessHouse().setPoolType(houseBusiness.getStartBusinessHouse().getPoolType());
+            for (BusinessPool businessPool : houseBusiness.getStartBusinessHouse().getBusinessPools()) {
+                houseBusiness.getAfterBusinessHouse().getBusinessPools().add(businessPool);
+            }
+        }
 
     }
 }

@@ -3,7 +3,6 @@ package com.dgsoft.house.owner.business;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
@@ -15,9 +14,8 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by cooper on 7/31/15.
@@ -35,37 +33,46 @@ public class HouseBusinessModifyStart {
     private OwnerEntityLoader ownerEntityLoader;
 
     @In(create = true)
-    private HouseEntityLoader houseEntityLoader;
-
-    @In(create = true)
     private OwnerBusinessHome ownerBusinessHome;
 
     @In(create = true)
     private BusinessDefineHome businessDefineHome;
 
 
-    private Map<String, List<HouseInfoCompare.ChangeData>> houseChangeDatas;
+    private List<ModifyHouse> houseBusinessAdapters;
+
+    private OwnerBusiness selectOwnerBusiness;
+
 
     public String startModify() {
         //TODO ROLE
-        OwnerBusiness selectOwnerBusiness = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId);
+        //HouseState inBiz and locked
+
+
+        selectOwnerBusiness = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId);
+
+        if (selectOwnerBusiness.getHouseBusinesses().isEmpty()){
+            return "DATA_COMPLETE";
+        }
+
+        houseBusinessAdapters = new ArrayList<ModifyHouse>(selectOwnerBusiness.getHouseBusinesses().size());
+        for (HouseBusiness houseBusiness : selectOwnerBusiness.getHouseBusinesses()) {
+            houseBusinessAdapters.add(new SelectBusinessModify(houseBusiness));
+        }
+
+        return "HOUSE_OPERATOR";
+    }
+
+    public String dataModify() {
         cloneData(selectOwnerBusiness);
 
-        houseChangeDatas = new HashMap<String, List<HouseInfoCompare.ChangeData>>();
-        for (HouseBusiness houseBusiness : selectOwnerBusiness.getHouseBusinesses()) {
-            HouseInfo mapHouse = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
-            if (mapHouse != null) {
-                HouseInfoCompare.compare(houseBusiness.getStartBusinessHouse(), mapHouse);
-            }
-
+        for (ModifyHouse houseBusinessAdapter : houseBusinessAdapters) {
+            selectOwnerBusiness.getHouseBusinesses().add(houseBusinessAdapter.genModifyHouseBusiness(ownerBusinessHome.getInstance()));
         }
-        for (BusinessProject project : selectOwnerBusiness.getBusinessProjects()) {
 
-        }
 
         return null;
     }
-
 
     private void cloneData(OwnerBusiness ownerBusiness) {
         //TODO needFile
@@ -75,104 +82,204 @@ public class HouseBusinessModifyStart {
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusiness);
         ownerBusinessHome.getInstance().setType(BusinessInstance.BusinessType.MODIFY_BIZ);
+        for(Evaluate evaluate: ownerBusiness.getEvaluates()) {
+            ownerBusinessHome.getInstance().getEvaluates().add(new Evaluate(ownerBusinessHome.getInstance(),evaluate));
+        }
+
+        for(MappingCorp mappingCorp: ownerBusiness.getMappingCorps()) {
+            ownerBusinessHome.getInstance().getMappingCorps().add(new MappingCorp(ownerBusinessHome.getInstance(), mappingCorp));
+        }
+
+        for(Card card: ownerBusiness.getCards()) {
+            ownerBusinessHome.getInstance().getCards().add(new Card(ownerBusinessHome.getInstance(), card));
+        }
+
+        for(BusinessPersion businessPersion: ownerBusiness.getBusinessPersions()) {
+            ownerBusinessHome.getInstance().getBusinessPersions().add(new BusinessPersion(ownerBusinessHome.getInstance(), businessPersion));
+        }
+
+        for(Reason reason: ownerBusiness.getReasons()) {
+            ownerBusinessHome.getInstance().getReasons().add(new Reason(ownerBusinessHome.getInstance(), reason));
+        }
+
+        for(SaleInfo saleInfo: ownerBusiness.getSaleInfos()) {
+            ownerBusinessHome.getInstance().getSaleInfos().add(new SaleInfo(saleInfo,ownerBusinessHome.getInstance()));
+        }
+
 
         //TODO clone
 
     }
 
-//
-//    public void assignOld() {
-//        afterHouse = new BusinessHouse(oldBusiness.getAfterBusinessHouse());
-//        afterHouse.setPoolType(oldBusiness.getAfterBusinessHouse().getPoolType());
-//
-//        if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo() != null){
-//            if (oldBusiness.getAfterBusinessHouse().getHouseRegInfo().getId().equals(oldBusiness.getOwnerBusiness().getId())){
-//                afterHouse.setHouseRegInfo(new HouseRegInfo(newBusiness,oldBusiness.getAfterBusinessHouse().getHouseRegInfo()));
-//            }else{
-//                afterHouse.setHouseRegInfo(oldBusiness.getAfterBusinessHouse().getHouseRegInfo());
-//            }
-//        }
-//
-////            for(MortgaegeRegiste mr: oldBusiness.getAfterBusinessHouse().getMortgaegeRegistes()){
-////                if (mr.getOwnerBusiness().getId().equals(oldBusiness.getId())){
-////                   afterHouse.getMortgaegeRegistes().add(new MortgaegeRegiste(newBusiness, mr));
-////                }else{
-////                    afterHouse.getMortgaegeRegistes().add(mr);
-////                }
-////            }
-//
-//
-//        for(BusinessPool pool :oldBusiness.getAfterBusinessHouse().getBusinessPools()){
-//            if ((pool.getMakeCard() == null) || pool.getMakeCard().getOwnerBusiness().getId().equals(oldBusiness.getId())){
-//                afterHouse.getBusinessPools().add(new BusinessPool(pool));
-//            }else{
-//                afterHouse.getBusinessPools().add(pool);
-//            }
-//        }
-//
-//        for(MakeCard makeCard: oldBusiness.getAfterBusinessHouse().getOtherPowerCards()){
-//            if (!makeCard.getOwnerBusiness().getId().equals(oldBusiness.getId())){
-//                afterHouse.getOtherPowerCards().add(makeCard);
-//            }
-//        }
-//
-//
-//
-//        if(oldBusiness.getStartBusinessHouse().getBusinessHouseOwner() != null &&
-//                oldBusiness.getStartBusinessHouse().getBusinessHouseOwner().getId().equals(oldBusiness.getAfterBusinessHouse().getBusinessHouseOwner().getId())){
-//            afterHouse.setBusinessHouseOwner(oldBusiness.getAfterBusinessHouse().getBusinessHouseOwner());
-//        }else{
-//            afterHouse.setBusinessHouseOwner(new BusinessHouseOwner(afterHouse, oldBusiness.getAfterBusinessHouse().getBusinessHouseOwner()));
-//        }
-//
-//
-//
-//    }
+    public List<ModifyHouse> getHouseBusinessAdapters() {
+        return houseBusinessAdapters;
+    }
 
 
-    public class HouseChangeData {
-
-        private BusinessHouse sourceBusinessHouse;
-
-        private List<HouseInfoCompare.ChangeData> changeDatas;
-
-        private String houseCode;
+    public static abstract class ModifyHouse {
 
         private boolean useMapInfo;
 
-        public HouseChangeData(BusinessHouse sourceBusinessHouse, List<HouseInfoCompare.ChangeData> changeDatas) {
-            this.changeDatas = changeDatas;
-            this.sourceBusinessHouse = sourceBusinessHouse;
-            houseCode = sourceBusinessHouse.getHouseCode();
-        }
+        private List<HouseInfoCompare.ChangeData> changeDatas;
 
-        public BusinessHouse getSourceBusinessHouse() {
-            return sourceBusinessHouse;
-        }
+        private House mapHouse;
 
-        public List<HouseInfoCompare.ChangeData> getChangeDatas() {
-            return changeDatas;
-        }
+        private Boolean haveMapHouse = null;
 
-        public String getHouseCode() {
-            return houseCode;
-        }
+        public abstract BusinessHouse getStartHouse();
 
-        public void setHouseCode(String houseCode) {
-            this.houseCode = houseCode;
-        }
-
-        public boolean isChangeHouse() {
-            return !sourceBusinessHouse.getHouseCode().equals(houseCode);
-        }
+        public abstract HouseBusiness genModifyHouseBusiness(OwnerBusiness ownerBusiness);
 
         public boolean isUseMapInfo() {
+            if (mapHouse == null) {
+                return false;
+            }
             return useMapInfo;
         }
 
         public void setUseMapInfo(boolean useMapInfo) {
             this.useMapInfo = useMapInfo;
         }
+
+        protected House getMapHouse(){
+            if (haveMapHouse == null){
+                mapHouse = HouseEntityLoader.instance().getEntityManager().find(House.class, getStartHouse().getHouseCode());
+                haveMapHouse = (mapHouse != null);
+            }
+            if (haveMapHouse){
+                return mapHouse;
+            }else
+                return null;
+        }
+
+        public List<HouseInfoCompare.ChangeData> getChangeDatas() {
+            if (changeDatas == null){
+                if (getMapHouse() != null){
+                    changeDatas = HouseInfoCompare.compare(getStartHouse(), mapHouse);
+                }else{
+                    changeDatas = new ArrayList<HouseInfoCompare.ChangeData>(0);
+                }
+            }
+            return changeDatas;
+        }
+
+
+        protected void refresh(){
+            haveMapHouse = null;
+            changeDatas = null;
+        }
+
+    }
+
+    public static class NewHouseBusinessModify extends ModifyHouse {
+
+        private BusinessHouse startHouse;
+
+        public NewHouseBusinessModify(BusinessHouse startHouse) {
+            this.startHouse = startHouse;
+        }
+
+        @Override
+        public BusinessHouse getStartHouse() {
+            return startHouse;
+        }
+
+        @Override
+        public HouseBusiness genModifyHouseBusiness(OwnerBusiness ownerBusiness) {
+            HouseBusiness result = new HouseBusiness(ownerBusiness);
+            result.setStartBusinessHouse(startHouse);
+            result.setHouseCode(startHouse.getHouseCode());
+            result.setAfterBusinessHouse(new BusinessHouse(startHouse));
+            if (isUseMapInfo()){
+                result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());
+            }
+            return result;
+        }
+    }
+
+
+    public static class SelectBusinessModify extends ModifyHouse {
+
+        private HouseBusiness houseBusiness;
+
+        private BusinessHouse changeHouse;
+
+        public BusinessHouse getChangeHouse() {
+            return changeHouse;
+        }
+
+        public void setChangeHouse(BusinessHouse changeHouse) {
+            this.changeHouse = changeHouse;
+            refresh();
+        }
+
+        public boolean isChangeHouse() {
+            return changeHouse != null;
+        }
+
+        public SelectBusinessModify(HouseBusiness houseBusiness) {
+            this.houseBusiness = houseBusiness;
+            setUseMapInfo(false);
+        }
+
+
+        @Override
+        public BusinessHouse getStartHouse() {
+            if (isChangeHouse()) {
+                return changeHouse;
+            } else{
+                return houseBusiness.getStartBusinessHouse();
+            }
+        }
+
+        @Override
+        public HouseBusiness genModifyHouseBusiness(OwnerBusiness ownerBusiness) {
+            HouseBusiness result = new HouseBusiness(ownerBusiness);
+
+            result.setStartBusinessHouse(getStartHouse());
+
+            result.setHouseCode(result.getStartBusinessHouse().getHouseCode());
+
+            result.setAfterBusinessHouse(new BusinessHouse(houseBusiness.getStartBusinessHouse()));
+
+            if (isUseMapInfo()) {
+                result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());
+            }
+
+            if (houseBusiness.getAfterBusinessHouse().getLandInfo() != null) {
+                if (result.getAfterBusinessHouse().getLandInfo() == null) {
+                    result.getAfterBusinessHouse().setLandInfo(new LandInfo(houseBusiness.getAfterBusinessHouse().getLandInfo()));
+                } else {
+                    result.getAfterBusinessHouse().getLandInfo().assignInfo(houseBusiness.getAfterBusinessHouse().getLandInfo());
+                }
+            } else {
+                result.getAfterBusinessHouse().setLandInfo(null);
+            }
+
+            result.getAfterBusinessHouse().getOtherPowerCards().addAll(houseBusiness.getAfterBusinessHouse().getOtherPowerCards());
+
+            for (BusinessPool pool : houseBusiness.getAfterBusinessHouse().getBusinessPools()) {
+                if (pool.getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {
+                    result.getAfterBusinessHouse().getBusinessPools().add(new BusinessPool(ownerBusiness, pool));
+                } //else {
+                  //  result.getAfterBusinessHouse().getBusinessPools().add(pool);
+                //}
+            }
+            result.getAfterBusinessHouse().setPoolType(houseBusiness.getAfterBusinessHouse().getPoolType());
+
+            if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner() != null) {
+
+                if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner().getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {
+                    result.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusiness, result.getAfterBusinessHouse(), houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()));
+                } //else {
+                  //  result.getAfterBusinessHouse().setBusinessHouseOwner(houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner());
+                //}
+            }
+
+            return result;
+        }
+
+
     }
 
 }

@@ -262,7 +262,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.evaluates = evaluates;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "ownerBusiness")
     public Set<MortgaegeRegiste> getMortgaegeRegistes() {
         return this.mortgaegeRegistes;
     }
@@ -463,7 +463,21 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
             getHouseRegInfos().add(houseRegInfo);
 
         }
+    }
 
+    @Transient
+    public MortgaegeRegiste getMortgaegeRegiste(){
+        if (getMortgaegeRegistes().isEmpty()){
+            return null;
+        }else{
+            return getMortgaegeRegistes().iterator().next();
+        }
+    }
+
+    @Transient
+    public void setMortgaegeRegiste(MortgaegeRegiste mortgaegeRegiste){
+        getMortgaegeRegistes().clear();
+        getMortgaegeRegistes().add(mortgaegeRegiste);
     }
 
 }

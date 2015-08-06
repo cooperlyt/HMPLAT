@@ -34,22 +34,19 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 	}
 
 	public BusinessPersion(PersionType type) {
-
         this.type = type;
-
-	}
-	public BusinessPersion(String id, OwnerBusiness ownerBusiness, String credentialsNumber,
-                           CredentialsType credentialsType, String personName, PersionType type, String phone) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.credentialsNumber = credentialsNumber;
-		this.credentialsType = credentialsType;
-		this.personName = personName;
-		this.type = type;
-		this.phone = phone;
 	}
 
-	@Id
+    public BusinessPersion(OwnerBusiness ownerBusiness, BusinessPersion businessPersion) {
+        this.ownerBusiness = ownerBusiness;
+        this.credentialsNumber = businessPersion.getCredentialsNumber();
+        this.credentialsType = businessPersion.getCredentialsType();
+        this.personName = businessPersion.getPersonName();
+        this.type = businessPersion.getType();
+        this.phone = businessPersion.getPhone();
+    }
+
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

@@ -46,8 +46,9 @@
         </div>
 
 
-        <a:outputPanel layout="block" styleClass="container" id="resultDatas">
+        <a:outputPanel  layout="block" styleClass="container" id="resultDatas">
 
+            <a:outputPanel rendered="#{not empty houseBusinessModifyList.searchResult}">
             <div class="right" >
                 <div class="select-menu">
                     <div class="btn-group btn-group-sm">
@@ -80,8 +81,17 @@
                 #{messages.CountUnit}<strong> #{businessDefineHome.instance.name} </strong> #{messages.BusinessDefineName}
             </h3>
 
+            </a:outputPanel>
 
+            <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseBusinessModifyList.searchResult}">
+                <span class="mega-octicon octicon-search"></span>
 
+                <h3>#{messages.EmptyResult}</h3>
+
+                <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessModifyList.resetCondition}"/>
+                    #{' '}#{messages.orOther} #{messages.Try} #{' '}
+                    <s:link value="#{messages.AvancedSearch}"/></p>
+            </a:outputPanel>
 
             <ui:include src="/func/house/owner/HouseBusinessResultList.xhtml">
                 <ui:param name="listBean" value="#{houseBusinessModifyList}"/>

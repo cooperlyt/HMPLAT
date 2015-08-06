@@ -113,6 +113,15 @@
 
 
                 <a:outputPanel id="resultDatas">
+                    <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseBusinessList.searchResult}">
+                        <span class="mega-octicon octicon-search"></span>
+
+                        <h3>#{messages.EmptyResult}</h3>
+
+                        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessList.resetCondition}"/>
+                            #{' '}#{messages.orOther} #{messages.Try} #{' '}
+                            <s:link value="#{messages.AvancedSearch}"/></p>
+                    </a:outputPanel>
 
                     <ui:include src="HouseBusinessResultList.xhtml">
                         <ui:param name="listBean" value="#{houseBusinessList}"/>

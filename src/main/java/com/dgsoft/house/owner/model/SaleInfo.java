@@ -29,20 +29,8 @@ public class SaleInfo implements java.io.Serializable {
         this.sumPrice = saleInfo.getSumPrice();
     }
 
-	public SaleInfo(String id, OwnerBusiness ownerBusiness, BigDecimal sumPrice) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.sumPrice = sumPrice;
-	}
-	public SaleInfo(String id, OwnerBusiness ownerBusiness, String payType,
-			BigDecimal sumPrice) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.payType = payType;
-		this.sumPrice = sumPrice;
-	}
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

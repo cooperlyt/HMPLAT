@@ -22,15 +22,13 @@ public class MappingCorp implements java.io.Serializable {
 	public MappingCorp() {
 	}
 
-	public MappingCorp(String id, OwnerBusiness ownerBusiness, String name,
-			String code) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.name = name;
-		this.code = code;
-	}
+    public MappingCorp(OwnerBusiness ownerBusiness, MappingCorp mappingCorp) {
+        this.ownerBusiness = ownerBusiness;
+        this.name = mappingCorp.getName();
+        this.code = mappingCorp.getCode();
+    }
 
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

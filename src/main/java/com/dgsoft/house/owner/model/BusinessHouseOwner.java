@@ -27,6 +27,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     private String legalPerson;
     private Set<CardInfo> cardInfos = new HashSet<CardInfo>(0);
     private BusinessHouse businessHouse;
+    private OwnerBusiness ownerBusiness;
 
     public BusinessHouseOwner() {
     }
@@ -40,8 +41,9 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     }
 
 
-    public BusinessHouseOwner(BusinessHouse businessHouse,BusinessHouseOwner houseOwner) {
+    public BusinessHouseOwner(OwnerBusiness ownerBusiness, BusinessHouse businessHouse,BusinessHouseOwner houseOwner) {
         this.businessHouse = businessHouse;
+        this.ownerBusiness = ownerBusiness;
         this.personName = houseOwner.getPersonName();
         this.credentialsNumber = houseOwner.getCredentialsNumber();
         this.credentialsType = houseOwner.getCredentialsType();
@@ -148,5 +150,15 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
 
     public void setBusinessHouse(BusinessHouse businessHouse) {
         this.businessHouse = businessHouse;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUSINESS",nullable = false)
+    public OwnerBusiness getOwnerBusiness() {
+        return ownerBusiness;
+    }
+
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
     }
 }

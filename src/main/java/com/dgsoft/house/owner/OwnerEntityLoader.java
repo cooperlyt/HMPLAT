@@ -1,7 +1,9 @@
 package com.dgsoft.house.owner;
 
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.ui.JpaEntityLoader;
 
 import javax.persistence.EntityManager;
@@ -28,5 +30,14 @@ public class OwnerEntityLoader extends JpaEntityLoader {
     public EntityManager getPersistenceContext(){
 
         return ownerEntityManager;
+    }
+
+    public static OwnerEntityLoader instance()
+    {
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (OwnerEntityLoader) Component.getInstance(OwnerEntityLoader.class, true);
     }
 }

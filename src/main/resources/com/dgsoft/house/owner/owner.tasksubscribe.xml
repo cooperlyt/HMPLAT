@@ -875,9 +875,17 @@
 
     <create-component type="DATA_FILL" component="houseRegInfoFill">
         <description>
-            产别,产权来源提取
+            产别,产权来源提取(连接)
         </description>
     </create-component>
+
+    <create-component type="DATA_FILL" component="houseRegInfoInput">
+        <description>
+            产别,产权来源提取(新建)
+        </description>
+    </create-component>
+
+
 
 
 
@@ -896,11 +904,6 @@
         </description>
     </create-component>
 
-    <create-component type="DATA_FILL" component="landInfoFill">
-        <description>
-            土地信息提取
-        </description>
-    </create-component>
 
 
     <create-component type="DATA_FILL" component="developerChangeOwner">

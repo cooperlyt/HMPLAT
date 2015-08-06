@@ -26,6 +26,9 @@ public class HouseBusiness implements java.io.Serializable {
     public HouseBusiness() {
     }
 
+    public HouseBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
+    }
 
     public HouseBusiness(OwnerBusiness ownerBusiness, BusinessHouse startBusinessHouse) {
         this.ownerBusiness = ownerBusiness;

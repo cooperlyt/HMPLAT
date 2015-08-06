@@ -30,6 +30,12 @@ public class Reason implements java.io.Serializable {
         this.type = type;
     }
 
+    public Reason(OwnerBusiness ownerBusiness, Reason other) {
+        this.ownerBusiness = ownerBusiness;
+        this.type = other.getType();
+        this.reason = other.getReason();
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull

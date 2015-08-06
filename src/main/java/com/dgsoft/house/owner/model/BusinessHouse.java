@@ -153,6 +153,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
             this.landInfo = new LandInfo(houseInfo.getLandInfo());
         }
 
+        otherPowerCards.addAll(houseInfo.getOtherPowerCards());
+
     }
 
 
