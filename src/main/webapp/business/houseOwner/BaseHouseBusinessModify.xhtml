@@ -48,8 +48,15 @@
                 <div class="panel-heading">Panel heading</div>
                 <div class="panel-body">
 
+                    <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml" >
+                        <ui:param name="changeDatas" value="#{_house.changeDatas}"/>
+                        <a:outputPanel rendered="#{not empty _house.changeDatas}">
+                            【档案房屋信息】与【测绘房屋信息】数据不同，你可以 <s:link>提取测绘房屋数据</s:link> 来更正此业务
+                        </a:outputPanel>
+                    </ui:decorate>
 
-                    <p style="font-size: 14px">
+
+                    <p style="font-size: 14px; margin-top: 10px; margin-bottom: 0">
 
                         <strong>
 
@@ -65,7 +72,7 @@
                                 已由原业务中的房屋【】更换为此房屋
                             </a:outputPanel>
 
-                            ，原业务中已填写的信息将被提取至本业务中
+                            ，原业务中该房屋已填写的信息将被提取至本业务中
                         </a:outputPanel>
 
                         <a:outputPanel rendered="#{not _house.oldStartHouse}">
@@ -81,25 +88,20 @@
 
                             更换房屋
                             <f:param name="from" value="#{thisPageLocation}"/>
-                            <f:param name="selectHouseCode" value="#{_house.startHouse.houseCode}"/>
+                            <f:param name="selectModifyHouseCode" value="#{_house.startHouse.houseCode}"/>
                         </s:link>
 
                         <a:outputPanel rendered="#{canChangeHouseCount}">
                             <h:outputText value=" 或 " rendered="#{_house.oldStartHouse}"/>
 
-                            <s:link>移除此房屋</s:link>
+                            <s:link action="#{houseBusinessModifyStart.removeSelectHouse}">移除此房屋
+                                <f:param name="selectModifyHouseCode" value="#{_house.startHouse.houseCode}"/>
+                            </s:link>
                         </a:outputPanel>
 
                     </p>
 
-                    <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
-                        <ui:param name="changeDatas" value=""/>
-                        #{messages.HouseInfoCompareCreateWarning}
-                    </ui:decorate>
 
-                    <a:outputPanel rendered="#{not empty _house.changeDatas}">
-                        房屋的档案信息与测绘的房屋信息不同，你可以 <s:link>提取测绘房屋数据</s:link> 来更正此业务
-                    </a:outputPanel>
 
                 </div>
 

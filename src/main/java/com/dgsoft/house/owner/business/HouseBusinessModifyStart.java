@@ -15,6 +15,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +61,20 @@ public class HouseBusinessModifyStart {
 
     public String changeHouse(){
         for(ModifyHouse modifyHouse: modifyHouses){
-            if (modifyHouse.getStartHouse().getHouseCode().equals(selectHouseCode) && modifyHouse.isOldStartHouse()){
+             if (modifyHouse.getStartHouse().getHouseCode().equals(selectHouseCode) && modifyHouse.isOldStartHouse()){
                 ((SelectBusinessModify)modifyHouse).setChangeHouse(ownerBuildGridMap.getSelectBizHouse());
                 return "CHANGED";
+            }
+        }
+        throw new IllegalArgumentException("old house not found");
+    }
+
+    public String removeSelectHouse(){
+
+        for(ModifyHouse modifyHouse: modifyHouses){
+            if (modifyHouse.getStartHouse().getHouseCode().equals(selectHouseCode) && modifyHouse.isOldStartHouse()){
+                modifyHouses.remove(modifyHouse);
+                return "REMOVED";
             }
         }
         throw new IllegalArgumentException("old house not found");
@@ -192,7 +204,7 @@ public class HouseBusinessModifyStart {
         public List<HouseInfoCompare.ChangeData> getChangeDatas() {
             if (changeDatas == null){
                 if (getMapHouse() != null){
-                    changeDatas = HouseInfoCompare.compare(getStartHouse(), mapHouse);
+                    changeDatas = HouseInfoCompare.compare(getStartHouse(), mapHouse, true);
                 }else{
                     changeDatas = new ArrayList<HouseInfoCompare.ChangeData>(0);
                 }
