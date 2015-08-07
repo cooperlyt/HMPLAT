@@ -103,7 +103,6 @@ public class House implements java.io.Serializable, HouseInfo {
     private String westWall;
     private String southWall;
     private String northWall;
-    private Date mapTime;
     private String direction;
 
 
@@ -399,6 +398,12 @@ public class House implements java.io.Serializable, HouseInfo {
         return getBuild().getBuildDevNumber();
     }
 
+    @Override
+    @Transient
+    public Date getMapTime() {
+        return getBuild().getMapTime();
+    }
+
     @Column(name = "STRUCTURE", length = 32, nullable = false)
     @Size(max = 32)
     @NotNull
@@ -483,16 +488,6 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setNorthWall(String northWall) {
         this.northWall = northWall;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = true, length = 19)
-    public Date getMapTime() {
-        return this.mapTime;
-    }
-
-    public void setMapTime(Date mapTime) {
-        this.mapTime = mapTime;
     }
 
     @Column(name = "DIRECTION", length = 32)

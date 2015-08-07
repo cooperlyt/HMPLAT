@@ -1,0 +1,116 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/layout/template.xhtml">
+
+
+    <ui:define name="body">
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+
+        <div class="container">
+
+            <h1 class="entry-title public">
+                <span class="mega-octicon octicon-repo"></span>
+                <strong>
+
+                    #{messages.modifyBusiness}
+
+                </strong>
+
+                <span class="path-divider">/</span>
+
+
+                #{businessDefineHome.instance.name}
+
+
+
+                <span class="path-divider">/</span>
+                #{messages.modifyBusiness_houseInfo}
+
+            </h1>
+
+        </div>
+
+
+    </div>
+    <div class="container">
+
+        <a:repeat value="#{houseBusinessModifyStart.modifyHouses}" var="_house">
+            <f:subview >
+            <div class="panel #{_house.oldStartHouse ?  'panel-success' : 'panel-info'}">
+                <div class="panel-heading">Panel heading</div>
+                <div class="panel-body">
+
+
+                    <p style="font-size: 14px">
+
+                        <strong>
+
+                        <a:outputPanel rendered="#{_house.oldStartHouse}">
+
+                            <a:outputPanel  rendered="#{not _house.changeHouse}">
+                                <span class="octicon octicon-link-external"/>
+
+                                此房屋信息为原业务办理前的房屋信息
+                            </a:outputPanel>
+                            <a:outputPanel rendered="#{_house.changeHouse}">
+                                <span class="octicon octicon-sync"/>
+                                已由原业务中的房屋【】更换为此房屋
+                            </a:outputPanel>
+
+                            ，原业务中已填写的信息将被提取至本业务中
+                        </a:outputPanel>
+
+                        <a:outputPanel rendered="#{not _house.oldStartHouse}">
+                            <span class="octicon octicon-plus"/>
+                            原业务中并不包括此房屋，为更正业务新加入的房屋
+                        </a:outputPanel>
+
+                        </strong>
+
+                        ，你也可以在本业务中
+
+                        <s:link rendered="#{_house.oldStartHouse}" view="/business/houseOwner/HouseChangeSelect.xhtml">
+
+                            更换房屋
+                            <f:param name="from" value="#{thisPageLocation}"/>
+                            <f:param name="selectHouseCode" value="#{_house.startHouse.houseCode}"/>
+                        </s:link>
+
+                        <a:outputPanel rendered="#{canChangeHouseCount}">
+                            <h:outputText value=" 或 " rendered="#{_house.oldStartHouse}"/>
+
+                            <s:link>移除此房屋</s:link>
+                        </a:outputPanel>
+
+                    </p>
+
+                    <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+                        <ui:param name="changeDatas" value=""/>
+                        #{messages.HouseInfoCompareCreateWarning}
+                    </ui:decorate>
+
+                    <a:outputPanel rendered="#{not empty _house.changeDatas}">
+                        房屋的档案信息与测绘的房屋信息不同，你可以 <s:link>提取测绘房屋数据</s:link> 来更正此业务
+                    </a:outputPanel>
+
+                </div>
+
+                <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
+                    <ui:param name="houseInfo" value="#{_house.startHouse}"/>
+                </ui:include>
+            </div>
+            </f:subview>
+
+        </a:repeat>
+    </div>
+</ui:define>
+
+</ui:composition>

@@ -34,6 +34,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private boolean enable;
     private String pickBusinessDefineId;
     private String modifyPage;
+    private String modifySearchPage;
 
     private Set<Fee> fees = new HashSet<Fee>(0);
     private Set<BusinessReport> businessReports = new HashSet<BusinessReport>(0);
@@ -256,6 +257,16 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setModifyPage(String modifyPage) {
         this.modifyPage = modifyPage;
+    }
+
+    @Column(name = "MODIFY_SEARCH_PAGE", length = 200)
+    @Size(max = 200)
+    public String getModifySearchPage() {
+        return modifySearchPage;
+    }
+
+    public void setModifySearchPage(String modifySearchPage) {
+        this.modifySearchPage = modifySearchPage;
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessDefine")

@@ -27,41 +27,27 @@ public class CloseHouse implements java.io.Serializable {
     private String phone;
     private String executCardNo;
     private String workCardNo;
-    private String closeDeadline;
 
 
 
 	public CloseHouse() {
 	}
 
-	public CloseHouse(String id, OwnerBusiness ownerBusiness,
-			String closeDownClour, Date closeDate) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.closeDownClour = closeDownClour;
-		this.closeDate = closeDate;
-	}
-	public CloseHouse(String id, OwnerBusiness ownerBusiness,
-			String closeDownClour, String action, Date closeDate, Date toDate,
-            String legalDocuments,String executionNotice,String sendPeople,String phone,
-            String executCardNo,String workCardNo,String closeDeadline) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.closeDownClour = closeDownClour;
-		this.action = action;
-		this.closeDate = closeDate;
-		this.toDate = toDate;
-        this.legalDocuments =legalDocuments;
-        this.executionNotice = executionNotice;
-        this.sendPeople = sendPeople;
-        this.phone = phone;
-        this.executCardNo = executCardNo;
-        this.workCardNo= workCardNo;
-        this.closeDeadline = closeDeadline;
+    public CloseHouse(OwnerBusiness ownerBusiness, CloseHouse other) {
+        this.ownerBusiness = ownerBusiness;
+        this.closeDownClour = other.getCloseDownClour();
+        this.action = other.getAction();
+        this.closeDate = other.getCloseDate();
+        this.toDate = other.getToDate();
+        this.legalDocuments = other.getLegalDocuments();
+        this.executionNotice = other.getExecutionNotice();
+        this.sendPeople = other.getSendPeople();
+        this.phone = other.getPhone();
+        this.executCardNo = other.getExecutCardNo();
+        this.workCardNo = other.getWorkCardNo();
+    }
 
-	}
-
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

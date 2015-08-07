@@ -42,6 +42,7 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 	private String buildType;
 	private String structure;
 	private String memo;
+    private Date mapTime;
 
 
 
@@ -369,6 +370,16 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 
     public void setDownFloorCount(int downFloorCount) {
         this.downFloorCount = downFloorCount;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "MAP_TIME", nullable = true, length = 19)
+    public Date getMapTime() {
+        return this.mapTime;
+    }
+
+    public void setMapTime(Date mapTime) {
+        this.mapTime = mapTime;
     }
 
     @Override

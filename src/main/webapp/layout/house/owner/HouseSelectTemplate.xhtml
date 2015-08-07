@@ -162,22 +162,17 @@
    #{messages.HouseInfoCompareCreateWarning}
  </ui:decorate>
 
-                        <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
-                                groupWidth="50"  >
-                        <ui:include src="/layout/house/HouseInfoView.xhtml">
+                        <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
                             <ui:param name="houseInfo" value="#{ownerBuildGridMap.selectBizHouse}"/>
                         </ui:include>
-                        </dh:entryGrid>
 
                     </a:outputPanel>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
 
-                        <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disabled'}"
-                                disabled="#{not ((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2))}"
-                                action="#{houseBusinessStart.singleHouseSelected}">
-                                #{messages.select}
-                        </s:link>
+                        <ui:insert name="houseSelectAction">
+
+                        </ui:insert>
                     </div>
                 </a:outputPanel>
             </a:outputPanel>

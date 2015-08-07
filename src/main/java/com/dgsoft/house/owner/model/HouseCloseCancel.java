@@ -18,20 +18,33 @@ public class HouseCloseCancel implements java.io.Serializable {
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private Date cancelDate;
+    private String clour;
+    private String action;
+    private String legalDocuments;
+    private String executionNotice;
+    private String sendPerson;
+    private String phone;
+    private String executionCardNumber;
+    private String workCardNumber;
+
 
 	public HouseCloseCancel() {
 	}
 
-	public HouseCloseCancel(String id, OwnerBusiness ownerBusiness,
-			Date cancelDate) {
-		this.id = id;
-		this.ownerBusiness = ownerBusiness;
-		this.cancelDate = cancelDate;
-	}
+    public HouseCloseCancel(OwnerBusiness ownerBusiness,HouseCloseCancel other) {
+        this.ownerBusiness = ownerBusiness;
+        this.cancelDate = other.getCancelDate();
+        this.clour = other.getClour();
+        this.action = other.getAction();
+        this.legalDocuments = other.getLegalDocuments();
+        this.executionNotice = other.getExecutionNotice();
+        this.sendPerson = other.getSendPerson();
+        this.phone = other.getPhone();
+        this.executionCardNumber = other.getExecutionCardNumber();
+        this.workCardNumber = other.getWorkCardNumber();
+    }
 
-
-
-	@Id
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
@@ -67,4 +80,84 @@ public class HouseCloseCancel implements java.io.Serializable {
 		this.cancelDate = cancelDate;
 	}
 
+    @Column(name = "CANCEL_DOWN_CLOUR", length = 100, nullable = false)
+    @NotNull
+    @Size(max = 100)
+    public String getClour() {
+        return clour;
+    }
+
+    public void setClour(String clour) {
+        this.clour = clour;
+    }
+
+    @Column(name="ACTION",length = 100)
+    @Size(max = 100)
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    @Column(name = "LEGAL_DOCUMENTS", length = 50)
+    @Size(max = 50)
+    public String getLegalDocuments() {
+        return legalDocuments;
+    }
+
+    public void setLegalDocuments(String legalDocuments) {
+        this.legalDocuments = legalDocuments;
+    }
+
+    @Column(name = "EXECUTION_NOTICE", length = 50)
+    @Size(max = 50)
+    public String getExecutionNotice() {
+        return executionNotice;
+    }
+
+    public void setExecutionNotice(String executionNotice) {
+        this.executionNotice = executionNotice;
+    }
+
+    @Column(name = "SEND_PEOPLE",length = 10)
+    @Size(max = 10)
+    public String getSendPerson() {
+        return sendPerson;
+    }
+
+    public void setSendPerson(String sendPerson) {
+        this.sendPerson = sendPerson;
+    }
+
+    @Column(name = "PHONE", length = 15)
+    @Size(max = 15)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column(name = "EXECUTION_CARD_NO", length = 30)
+    @Size(max = 30)
+    public String getExecutionCardNumber() {
+        return executionCardNumber;
+    }
+
+    public void setExecutionCardNumber(String executionCardNumber) {
+        this.executionCardNumber = executionCardNumber;
+    }
+
+    @Column(name = "WORK_CARD_NO", length = 30)
+    @Size(max = 30)
+    public String getWorkCardNumber() {
+        return workCardNumber;
+    }
+
+    public void setWorkCardNumber(String workCardNumber) {
+        this.workCardNumber = workCardNumber;
+    }
 }
