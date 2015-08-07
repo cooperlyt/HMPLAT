@@ -7,13 +7,12 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}">
+
 
         <ui:include src="BusinessHouseOwnerEdit.xhtml">
             <ui:param name="label" value="#{messages.RecordOwner}"/>
         </ui:include>
 
-    </a:outputPanel>
 
 
 </ui:composition>

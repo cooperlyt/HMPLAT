@@ -76,6 +76,13 @@
 
 
 
+
+
+    <view-subscribe name="ReasonReceiveView" page="/business/houseOwner/subscribe/ReasonReceiveView.xhtml">
+        <description>
+            受理备注查看
+        </description>
+    </view-subscribe>
     <view-subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml">
         <description>
             变更前查看
@@ -111,13 +118,6 @@
             注销原因查看
         </description>
     </view-subscribe>
-
-    <view-subscribe name="ReasonReceiveView" page="/business/houseOwner/subscribe/ReasonReceiveView.xhtml">
-        <description>
-            受理备注查看
-        </description>
-    </view-subscribe>
-
 
 
 
@@ -165,7 +165,7 @@
             测绘信息查看
         </description>
     </view-subscribe>
-
+   <!--
     <view-subscribe name="PersionPreBuyEntrustView"
                     page="/business/houseOwner/subscribe/PersionPreBuyEntrustView.xhtml">
         <description>
@@ -177,15 +177,17 @@
             买方代理人查看
         </description>
     </view-subscribe>
-
-
-
-    <view-subscribe name="PersionPreSaleEntrustView"
+     <view-subscribe name="PersionPreSaleEntrustView"
                     page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml">
         <description>
             预售代理人查看
         </description>
     </view-subscribe>
+    -->
+
+
+
+
     <view-subscribe name="PersionSellEntrustView" page="/business/houseOwner/subscribe/PersionSellEntrustView.xhtml">
         <description>
             卖方代理人查看
@@ -305,67 +307,64 @@
 
     <!-- 编辑订阅 在业务信息 页面填写 表单型式提交 在FORM内 所以 订阅者page之中不可包含FORM 但out-page将在form外  -->
 
-    <edit-subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="">
+    <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
         <description>
-            查封登记编辑
+            产权人编辑
         </description>
     </edit-subscribe>
-    <edit-subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml"
+    <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
                     component="">
         <description>
-            解封登记编辑
+            产权代理人编辑
         </description>
     </edit-subscribe>
 
 
-
-    <edit-subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/ResonFillChangeEdit.xhtml"
-                    component="">
+    <edit-subscribe name="poolOwnerEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml"
+                    component="poolOwnerSubscribe">
         <description>
-            补（换）证事由编辑
+            共有情况,共有权人,编辑
         </description>
     </edit-subscribe>
 
-    <edit-subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="">
-        <description>
-            注销原因编辑
-        </description>
-    </edit-subscribe>
-
-    <edit-subscribe name="ReasonReceiveEdit" page="/business/houseOwner/subscribe/ReasonReceiveEdit.xhtml" component="">
-        <description>
-            受理备注编辑
-        </description>
-    </edit-subscribe>
-
-
-
-    <edit-subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml"
-                    component="">
-        <description>
-            买方代理人编辑
-        </description>
-    </edit-subscribe>
-
-    <edit-subscribe name="PersionSellEntrustEdit" page="/business/houseOwner/subscribe/PersionSellEntrustEdit.xhtml"
-                    component="">
-        <description>
-            卖方代理人编辑
-        </description>
-    </edit-subscribe>
-
-    <edit-subscribe name="PersionPreSaleEntrustEdit"
+    <!--
+     <edit-subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml"
+                     component="">
+         <description>
+             买方代理人编辑
+         </description>
+     </edit-subscribe>
+     <edit-subscribe name="PersionPreSaleEntrustEdit"
                     page="/business/houseOwner/subscribe/PersionPreSaleEntrustEdit.xhtml" component="">
         <description>
             预售代理人编辑
         </description>
     </edit-subscribe>
+    -->
+
+     <edit-subscribe name="PersionSellEntrustEdit" page="/business/houseOwner/subscribe/PersionSellEntrustEdit.xhtml"
+                     component="">
+         <description>
+             卖方代理人编辑
+         </description>
+     </edit-subscribe>
+
+
+
+    <edit-subscribe name="DeclareOwnerEdit" page="/business/houseOwner/subscribe/DeclareOwnerEdit.xhtml"
+                    component="">
+        <description>
+            预购人编辑
+        </description>
+    </edit-subscribe>
+    <!--
     <edit-subscribe name="PersionPreBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionPreBuyEntrustEdit.xhtml"
                     component="">
         <description>
             预购代理人编辑
         </description>
     </edit-subscribe>
+    -->
 
     <edit-subscribe name="FinancialNowEdit" page="/business/houseOwner/subscribe/FinancialNowEdit.xhtml" component="">
         <description>
@@ -400,51 +399,15 @@
     </edit-subscribe>
     -->
 
-    <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
+
+
+
+    <edit-subscribe name="houseRegInfoEdit"  page="/business/houseOwner/subscribe/HouseRegInfoEdit.xhtml" component="">
         <description>
-            产权人编辑
-        </description>
-    </edit-subscribe>
-    <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
-                    component="">
-        <description>
-            产权代理人编辑
+            产权来源、产别编辑
         </description>
     </edit-subscribe>
 
-
-    <edit-subscribe name="poolOwnerEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml"
-                    component="poolOwnerSubscribe">
-        <description>
-            共有情况,共有权人,编辑
-        </description>
-    </edit-subscribe>
-
-
-    <edit-subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml"
-                    component="">
-        <description>
-            变更前编辑
-        </description>
-    </edit-subscribe>
-    <edit-subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml"
-                    component="">
-        <description>
-            变更后编辑
-        </description>
-    </edit-subscribe>
-    <edit-subscribe name="changBeforReasonEdit" page="/business/houseOwner/subscribe/ChangBeforRensonEdit.xhtml"
-                    component="">
-        <description>
-            更正前编辑
-        </description>
-    </edit-subscribe>
-    <edit-subscribe name="changAfterRensonEdit" page="/business/houseOwner/subscribe/ChangAfterRensonEdit.xhtml"
-                    component="">
-        <description>
-            更正后编辑
-        </description>
-    </edit-subscribe>
     <edit-subscribe name="saleInfoEdit" page="/business/houseOwner/subscribe/SaleInfoEdit.xhtml" component="">
         <description>
             房屋交易信息,付款方式,购房款编辑
@@ -476,9 +439,67 @@
     </description>
   </edit-subscribe>
 
-    <edit-subscribe name="houseRegInfoEdit"  page="/business/houseOwner/subscribe/HouseRegInfoEdit.xhtml" component="">
+
+
+    <edit-subscribe name="ReasonReceiveEdit" page="/business/houseOwner/subscribe/ReasonReceiveEdit.xhtml" component="">
         <description>
-            产权来源、产别编辑
+            受理备注编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/ResonFillChangeEdit.xhtml"
+                    component="">
+        <description>
+            补（换）证事由编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ReasonLogoutEdit" page="/business/houseOwner/subscribe/ReasonLogoutEdit.xhtml" component="">
+        <description>
+            注销原因编辑
+        </description>
+    </edit-subscribe>
+
+
+
+    <edit-subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml"
+                    component="">
+        <description>
+            变更前编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml"
+                    component="">
+        <description>
+            变更后编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="changBeforReasonEdit" page="/business/houseOwner/subscribe/ChangBeforRensonEdit.xhtml"
+                    component="">
+        <description>
+            更正前编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="changAfterRensonEdit" page="/business/houseOwner/subscribe/ChangAfterRensonEdit.xhtml"
+                    component="">
+        <description>
+            更正后编辑
+        </description>
+    </edit-subscribe>
+
+
+
+
+
+    <edit-subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml" component="">
+        <description>
+            查封登记编辑
+        </description>
+    </edit-subscribe>
+    <edit-subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml"
+                    component="">
+        <description>
+            解封登记编辑
         </description>
     </edit-subscribe>
 
