@@ -56,7 +56,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     private String address;
     private BigDecimal sumArea;
     private String memo;
-    private Date mapTime;
     private Date createTime;
 
 
@@ -178,16 +177,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
 
     public void setMemo(String memo) {
         this.memo = memo;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = true, length = 19)
-    public Date getMapTime() {
-        return this.mapTime;
-    }
-
-    public void setMapTime(Date mapTime) {
-        this.mapTime = mapTime;
     }
 
 

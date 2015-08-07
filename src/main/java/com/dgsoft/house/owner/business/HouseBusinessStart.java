@@ -29,6 +29,11 @@ import java.util.List;
 @Scope(ScopeType.CONVERSATION)
 public class HouseBusinessStart {
 
+    private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
+    private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
+    private static final String BUSINESS_CONFIRM_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
+    private static final String BUSINESS_PICK_BIZ_PAGE = "";
+
     @In
     private BusinessDefineHome businessDefineHome;
 
@@ -37,13 +42,6 @@ public class HouseBusinessStart {
 
     @In(create = true)
     private FacesMessages facesMessages;
-
-
-    private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
-    private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
-    private static final String BUSINESS_CONFIRM_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
-    private static final String BUSINESS_PICK_BIZ_PAGE = "";
-
 
     @In
     private OwnerBuildGridMap ownerBuildGridMap;

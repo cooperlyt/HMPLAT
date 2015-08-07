@@ -10,7 +10,13 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/layout/house/owner/HouseSelectTemplate.xhtml">
 
-
+<ui:define name="houseSelectAction">
+    <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disabled'}"
+            disabled="#{not ((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2))}"
+            action="#{houseBusinessStart.singleHouseSelected}">
+        #{messages.select}
+    </s:link>
+</ui:define>
 
 
 </ui:composition>

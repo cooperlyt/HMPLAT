@@ -206,17 +206,18 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     public boolean isCanModify(){
-        if (isIdDefined()){
-            for(HouseBusiness business: getInstance().getHouseBusinesses()){
-                if (business.getAfterBusinessHouse().getHouseRecord() == null){
-                    return false;
-                }
-            }
-            return getInstance().getStatus().equals(BusinessInstance.BusinessStatus.COMPLETE) &&
-                    (getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ) ||
-                    getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ));
-        }
-        return false;
+//        if (isIdDefined()){
+//            for(HouseBusiness business: getInstance().getHouseBusinesses()){
+//                if (business.getAfterBusinessHouse().getHouseRecord() == null){
+//                    return false;
+//                }
+//            }
+//            return getInstance().getStatus().equals(BusinessInstance.BusinessStatus.COMPLETE) &&
+//                    (getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ) ||
+//                    getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ));
+//        }
+//        return false;
+        return true;
     }
 
     public boolean isCanCancel(){

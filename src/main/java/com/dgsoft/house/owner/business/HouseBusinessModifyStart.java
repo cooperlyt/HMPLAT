@@ -6,8 +6,10 @@ import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.*;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -38,10 +40,34 @@ public class HouseBusinessModifyStart {
     @In(create = true)
     private BusinessDefineHome businessDefineHome;
 
+    @In(create = true)
+    private OwnerBuildGridMap ownerBuildGridMap;
 
-    private List<ModifyHouse> houseBusinessAdapters;
+
+    private List<ModifyHouse> modifyHouses;
 
     private OwnerBusiness selectOwnerBusiness;
+
+    private String selectHouseCode;
+
+    public String getSelectHouseCode() {
+        return selectHouseCode;
+    }
+
+    public void setSelectHouseCode(String selectHouseCode) {
+        this.selectHouseCode = selectHouseCode;
+    }
+
+    public String changeHouse(){
+        for(ModifyHouse modifyHouse: modifyHouses){
+            if (modifyHouse.getStartHouse().getHouseCode().equals(selectHouseCode) && modifyHouse.isOldStartHouse()){
+                ((SelectBusinessModify)modifyHouse).setChangeHouse(ownerBuildGridMap.getSelectBizHouse());
+                return "CHANGED";
+            }
+        }
+        throw new IllegalArgumentException("old house not found");
+    }
+
 
 
     public String startModify() {
@@ -50,25 +76,29 @@ public class HouseBusinessModifyStart {
 
 
         selectOwnerBusiness = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId);
-
+        businessDefineHome.setId(selectOwnerBusiness.getDefineId());
+        cloneData(selectOwnerBusiness);
         if (selectOwnerBusiness.getHouseBusinesses().isEmpty()){
             return "DATA_COMPLETE";
         }
 
-        houseBusinessAdapters = new ArrayList<ModifyHouse>(selectOwnerBusiness.getHouseBusinesses().size());
+        //TODO PROJECT
+
+        modifyHouses = new ArrayList<ModifyHouse>(selectOwnerBusiness.getHouseBusinesses().size());
         for (HouseBusiness houseBusiness : selectOwnerBusiness.getHouseBusinesses()) {
-            houseBusinessAdapters.add(new SelectBusinessModify(houseBusiness));
+            modifyHouses.add(new SelectBusinessModify(houseBusiness));
         }
 
-        return "HOUSE_OPERATOR";
+        return businessDefineHome.getInstance().getModifyPage();
     }
 
     public String dataModify() {
-        cloneData(selectOwnerBusiness);
 
-        for (ModifyHouse houseBusinessAdapter : houseBusinessAdapters) {
+
+        for (ModifyHouse houseBusinessAdapter : modifyHouses) {
             selectOwnerBusiness.getHouseBusinesses().add(houseBusinessAdapter.genModifyHouseBusiness(ownerBusinessHome.getInstance()));
         }
+
 
 
         return null;
@@ -78,7 +108,7 @@ public class HouseBusinessModifyStart {
         //TODO needFile
         ownerBusiness.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
 
-        businessDefineHome.setId(ownerBusiness.getDefineId());
+
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusiness);
         ownerBusinessHome.getInstance().setType(BusinessInstance.BusinessType.MODIFY_BIZ);
@@ -106,13 +136,18 @@ public class HouseBusinessModifyStart {
             ownerBusinessHome.getInstance().getSaleInfos().add(new SaleInfo(saleInfo,ownerBusinessHome.getInstance()));
         }
 
+        for(CloseHouse closeHouse: ownerBusiness.getCloseHouses()) {
+            ownerBusinessHome.getInstance().getCloseHouses().add(new CloseHouse(ownerBusinessHome.getInstance(),closeHouse));
+        }
 
-        //TODO clone
+        for(HouseCloseCancel houseCloseCancel: ownerBusiness.getHouseCloseCancels()) {
+            ownerBusinessHome.getInstance().getHouseCloseCancels().add(new HouseCloseCancel(ownerBusinessHome.getInstance(),houseCloseCancel));
+        }
 
     }
 
-    public List<ModifyHouse> getHouseBusinessAdapters() {
-        return houseBusinessAdapters;
+    public List<ModifyHouse> getModifyHouses() {
+        return modifyHouses;
     }
 
 
@@ -129,6 +164,8 @@ public class HouseBusinessModifyStart {
         public abstract BusinessHouse getStartHouse();
 
         public abstract HouseBusiness genModifyHouseBusiness(OwnerBusiness ownerBusiness);
+
+        public abstract boolean isOldStartHouse();
 
         public boolean isUseMapInfo() {
             if (mapHouse == null) {
@@ -194,6 +231,11 @@ public class HouseBusinessModifyStart {
                 result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());
             }
             return result;
+        }
+
+        @Override
+        public boolean isOldStartHouse() {
+            return false;
         }
     }
 
@@ -277,6 +319,11 @@ public class HouseBusinessModifyStart {
             }
 
             return result;
+        }
+
+        @Override
+        public boolean isOldStartHouse() {
+            return true;
         }
 
 
