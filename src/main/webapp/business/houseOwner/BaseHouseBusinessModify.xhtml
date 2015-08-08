@@ -41,6 +41,18 @@
 
     </div>
     <div class="container">
+        <h:outputStylesheet>
+            .house-data-option-radio{
+                display: inline-block;
+
+            }
+
+            .house-data-option-radio td{
+                padding: 0 5px;
+            }
+
+
+        </h:outputStylesheet>
 
         <a:repeat value="#{houseBusinessModifyStart.modifyHouses}" var="_house">
             <f:subview >
@@ -51,7 +63,13 @@
                     <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml" >
                         <ui:param name="changeDatas" value="#{_house.changeDatas}"/>
                         <a:outputPanel rendered="#{not empty _house.changeDatas}">
-                            【档案房屋信息】与【测绘房屋信息】数据不同，你可以 <s:link>提取测绘房屋数据</s:link> 来更正此业务
+                             <h:outputText value="【档案房屋信息】与【测绘房屋信息】数据不同，你可以"></h:outputText>
+
+                            <span>
+                            <h:selectOneRadio value="#{_house.useMapInfo}" styleClass="house-data-option-radio">
+                                <f:selectItem itemValue="#{true}" itemLabel="提取测绘房屋数据"/>
+                                <f:selectItem itemValue="#{false}" itemLabel="使用原房屋数据"/>
+                            </h:selectOneRadio></span> <span> 来更正此业务</span>
                         </a:outputPanel>
                     </ui:decorate>
 
