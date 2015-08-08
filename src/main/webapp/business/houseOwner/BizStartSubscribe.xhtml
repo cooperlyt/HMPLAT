@@ -33,7 +33,7 @@
                 <span class="path-divider">/</span>
 
 
-                    #{businessDefineHome.instance.name}
+                #{ownerBusinessHome.instance.defineName}
 
                 <span class="path-divider">/</span>
                     #{messages.Business_Start_Subscribe}
@@ -46,7 +46,7 @@
     </div>
     <div class="container">
         <ui:decorate template="EditSubscribeStepNav.xhtml">
-            <h:commandLink styleClass="button primary first-in-line" action="#{houseBusinessStart.infoComplete}">
+            <h:commandLink styleClass="button primary first-in-line" action="#{ownerBusinessStart.infoComplete}">
                 #{messages.contiune}
             </h:commandLink>
 

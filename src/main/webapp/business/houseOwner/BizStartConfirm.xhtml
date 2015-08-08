@@ -32,9 +32,9 @@
 
                     <span class="path-divider">/</span>
 
-                    #{businessDefineHome.instance.name}
+                    #{ownerBusinessHome.instance.defineName}
                     <span class="path-divider">/</span>
-                    <s:link action="#{houseBusinessStart.beginEdit}">
+                    <s:link action="#{ownerBusinessStart.beginEdit}">
                         #{messages.Business_Start_Subscribe}
                     </s:link>
                     <span class="path-divider">/</span>
@@ -47,8 +47,8 @@
                 </h1>
 
                 <div class="right">
-                    <s:button styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
-                            disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not houseBusinessStart.needFilePass}"
+                    <s:button styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and ownerBusinessStart.needFilePass) ? '' : 'disabled'}"
+                            disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not ownerBusinessStart.needFilePass}"
                             action="#{ownerBusinessCreate.createBusiness}" value="#{messages.createBusiness}"
                             p:data-loading-text="#{messages.businessCreating}" onclick="#{r:component('wait')}.show()">
 
@@ -66,7 +66,7 @@
             <div style="margin-bottom: 5px">
                 <r:messages globalOnly="true"/>
 
-            <a:outputPanel rendered="#{not houseBusinessStart.needFilePass}" layout="block" styleClass="rf-msgs-wrn" p:role="alert">
+            <a:outputPanel rendered="#{not ownerBusinessStart.needFilePass}" layout="block" styleClass="rf-msgs-wrn" p:role="alert">
                 <span class="octicon octicon-stop" style="font-weight: bold"/> #{messages.needFileNotUpload}
             </a:outputPanel>
 
@@ -107,8 +107,8 @@
             <div class="right">
 
 
-                <s:link styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and houseBusinessStart.needFilePass) ? '' : 'disabled'}"
-                        disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not houseBusinessStart.needFilePass}"
+                <s:link styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and ownerBusinessStart.needFilePass) ? '' : 'disabled'}"
+                        disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not ownerBusinessStart.needFilePass}"
                         action="#{ownerBusinessCreate.createBusiness}" p:data-loading-text="#{messages.businessCreating}" onclick="#{r:component('wait')}.show()">
                     #{messages.createBusiness}
 

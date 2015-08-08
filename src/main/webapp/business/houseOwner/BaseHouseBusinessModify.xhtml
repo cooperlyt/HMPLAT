@@ -38,7 +38,15 @@
                 #{messages.modifyBusiness_houseInfo}
 
             </h1>
+            <div class="right">
+                <s:button styleClass="btn btn-success #{(not empty houseBusinessModifyStart.modifyHouses) ? '' : 'disabled'}"
+                          disabled="#{empty houseBusinessModifyStart.modifyHouses}"
+                          action="#{houseBusinessModifyStart.dataComplete}" value="#{messages.contiune}"
+                          onclick="#{r:component('wait')}.show()">
 
+
+                </s:button>
+            </div>
         </div>
 
 
@@ -158,6 +166,20 @@
 
         </a:repeat>
         </h:form>
+
+
+
+        <div class="right">
+
+
+            <s:button styleClass="btn btn-success #{(not empty houseBusinessModifyStart.modifyHouses) ? '' : 'disabled'}"
+                      disabled="#{empty houseBusinessModifyStart.modifyHouses}"
+                      action="#{houseBusinessModifyStart.dataComplete}" value="#{messages.contiune}"
+                      onclick="#{r:component('wait')}.show()">
+
+
+            </s:button>
+        </div>
     </div>
 </ui:define>
 
