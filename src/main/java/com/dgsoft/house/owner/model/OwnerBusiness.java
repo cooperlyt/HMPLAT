@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.model.House;
 
@@ -479,5 +480,14 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         getMortgaegeRegistes().clear();
         getMortgaegeRegistes().add(mortgaegeRegiste);
     }
+
+
+    @Transient
+    public List<BusinessMoney> getBusinessMoneyList(){
+        List<BusinessMoney> result = new ArrayList<BusinessMoney>(getBusinessMoneys());
+        Collections.sort(result, OrderBeanComparator.getInstance());
+        return result;
+    }
+
 
 }

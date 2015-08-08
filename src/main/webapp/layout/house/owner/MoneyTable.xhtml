@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <h:outputStylesheet>
+        .subTableHeader{
+            text-align: left !important;
+        }
+    </h:outputStylesheet>
+
+    <dh:entryGridBlock columns="1" group="#{title}">
+
+        <dh:entryGridColumn colspan="1">
+            <h:dataTable style="width: 100%;" styleClass="table " headerClass="subTableHeader"
+                         value="#{Moneys}" var="_Moneys">
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_name}
+                    </f:facet>
+
+                    #{_pool.personName}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.person_field_credentialsType}
+                    </f:facet>
+                    #{messages[_pool.credentialsType.name()]}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.person_field_credentialsNO}
+                    </f:facet>
+                    #{_pool.credentialsNumber}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_relation}
+                    </f:facet>
+                    #{dictionary.getWordValue(_pool.relation)}
+                </h:column>
+
+                <h:column rendered="#{_pool.houseRegInfo.poolType eq SHARE_OWNER}">
+                    <f:facet name="header">
+                        #{messages.BusinessPool_area}
+                    </f:facet>
+                    <h:outputText value="#{_pool.poolArea}" rendered="#{not empty _pool.poolArea}">
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column rendered="#{_pool.houseRegInfo.poolType eq SHARE_OWNER}">
+                    <f:facet name="header">
+                        #{messages.BusinessPool_perc}
+                    </f:facet>
+                    #{_pool.perc}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_phone}
+                    </f:facet>
+                    #{_pool.phone}
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessPool_memo}
+                    </f:facet>
+                    <ui:include src="/layout/long-text-display.xhtml">
+                        <ui:param name="size" value="5"/>
+                        <ui:param name="value" value="#{_pool.memo}"/>
+                    </ui:include>
+                </h:column>
+
+                <ui:insert/>
+
+            </h:dataTable>
+        </dh:entryGridColumn>
+
+    </dh:entryGridBlock>
+</ui:composition>
