@@ -29,9 +29,7 @@ import java.util.List;
 @Scope(ScopeType.CONVERSATION)
 public class HouseBusinessStart {
 
-    private static final String BUSINESS_INFO_PAGE = "/business/houseOwner/BizStartSubscribe.xhtml";
-    private static final String BUSINESS_FILE_PAGE = "/business/houseOwner/BizStartFileUpload.xhtml";
-    private static final String BUSINESS_CONFIRM_PAGE = "/business/houseOwner/BizStartConfirm.xhtml";
+
     private static final String BUSINESS_PICK_BIZ_PAGE = "";
 
     @In
@@ -45,6 +43,9 @@ public class HouseBusinessStart {
 
     @In
     private OwnerBuildGridMap ownerBuildGridMap;
+
+    @In(create = true)
+    private OwnerBusinessStart ownerBusinessStart;
 
     public void validSelectHouse(){
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
@@ -93,7 +94,7 @@ public class HouseBusinessStart {
         }else{
             return BUSINESS_PICK_BIZ_PAGE;
         }
-        return dataSelected();
+        return ownerBusinessStart.dataSelected();
     }
 
     public String businessSelected(){
@@ -108,69 +109,17 @@ public class HouseBusinessStart {
                             ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse()));
         }
 
-        return dataSelected();
-    }
-
-    private String dataSelected(){
-        for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
-            component.fillData();
-        }
-
-
-        return beginEdit();
-
-    }
-
-    public String beginEdit(){
-        if (businessDefineHome.isHaveEditSubscribe()){
-            businessDefineHome.firstEditGroup();
-            return BUSINESS_INFO_PAGE;
-        } else{
-            return getInfoCompletePath();
-        }
-    }
-
-    private String getInfoCompletePath(){
-
-        if (RunParam.instance().getBooleanParamValue("CreateUploadFile") || businessDefineHome.isHaveNeedFile()){
-            return  BUSINESS_FILE_PAGE;
-        }else {
-            return BUSINESS_CONFIRM_PAGE;
-        }
-    }
-
-    public String infoComplete(){
-
-        if (businessDefineHome.isHaveNextEditGroup()){
-            businessDefineHome.nextEditGroup();
-            return BUSINESS_INFO_PAGE;
-        }else{
-            if (businessDefineHome.saveEditSubscribes()){
-                return getInfoCompletePath();
-            }else{
-                return BUSINESS_INFO_PAGE;
-            }
-
-        }
-
+        return ownerBusinessStart.dataSelected();
     }
 
 
     public String mulitHouseSelect() {
 
-        return dataSelected();
+        return ownerBusinessStart.dataSelected();
     }
 
 
-    @In(required = false)
-    private OwnerBusinessFile ownerBusinessFile;
 
-    public boolean isNeedFilePass(){
-        if (businessDefineHome.isHaveNeedFile()){
-            return (ownerBusinessFile != null) && ownerBusinessFile.isPass();
-        }
-        return true;
-    }
 
 
 

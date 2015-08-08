@@ -19,6 +19,7 @@ import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cooper on 7/31/15.
@@ -43,6 +44,12 @@ public class HouseBusinessModifyStart {
 
     @In(create = true)
     private OwnerBuildGridMap ownerBuildGridMap;
+
+    @In
+    private Map<String,String> messages;
+
+    @In(create = true)
+    private OwnerBusinessStart ownerBusinessStart;
 
 
     private List<ModifyHouse> modifyHouses;
@@ -118,16 +125,13 @@ public class HouseBusinessModifyStart {
         return businessDefineHome.getInstance().getModifyPage();
     }
 
-    public String dataModify() {
-
-
+    public String dataComplete() {
         for (ModifyHouse houseBusinessAdapter : modifyHouses) {
-            selectOwnerBusiness.getHouseBusinesses().add(houseBusinessAdapter.genModifyHouseBusiness(ownerBusinessHome.getInstance()));
+            HouseBusiness houseBusiness = houseBusinessAdapter.genModifyHouseBusiness(ownerBusinessHome.getInstance());
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(houseBusiness);
+
         }
-
-
-
-        return null;
+        return ownerBusinessStart.dataSelected();
     }
 
     private void cloneData(OwnerBusiness ownerBusiness) {
@@ -138,6 +142,7 @@ public class HouseBusinessModifyStart {
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusiness);
         ownerBusinessHome.getInstance().setType(BusinessInstance.BusinessType.MODIFY_BIZ);
+        ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName() + " " + messages.get(BusinessInstance.BusinessType.MODIFY_BIZ.name()));
         for(Evaluate evaluate: ownerBusiness.getEvaluates()) {
             ownerBusinessHome.getInstance().getEvaluates().add(new Evaluate(ownerBusinessHome.getInstance(),evaluate));
         }

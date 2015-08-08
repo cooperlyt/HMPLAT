@@ -139,6 +139,16 @@ public class TaskDescription {
         }
     }
 
+    public String getBusinessName(){
+        try {
+            return jsonObject.getString("businessName");
+        } catch (JSONException e) {
+            Logging.getLog(this.getClass()).error("businessName is null", e);
+            //throw new IllegalArgumentException("businessName is null", e);
+            return null;
+        }
+    }
+
     public String getValue(String key){
 
         try {

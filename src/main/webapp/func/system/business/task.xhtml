@@ -244,7 +244,7 @@
 
 
                                                         <s:link  styleClass="btn btn-sm btn-default" action="#{taskPrepare.operTask}"
-                                                                 taskInstance="#{_task.taskInstance}" onclick="#{rich:component('wait')}.show()"
+                                                                 taskInstance="#{_task.taskInstance}" onclick="#{r:component('wait')}.show()"
                                                                  style=" #{_task.myOnly ? 'border-bottom-left-radius: 3px; border-top-left-radius: 3px;' : ''}">
                                                             #{_task.myTask ? messages.operTask : messages.acceptAndOperTask}
                                                         </s:link>
@@ -256,7 +256,7 @@
                                                 <h3 class="repo-list-name">
                                   <span class="type-icon octicon #{(_task.myTask) ? ( _task.myOnly ? 'octicon-broadcast' : 'octicon-person') : 'octicon-organization'}"
                                         style="color:#{(_task.myTask) ? '#5cb85c' : '#337ab7'}"/>
-                                                    #{_task.businessDefine.businessCategory.name} / #{_task.businessDefine.name} / #{_task.taskInstance.name}
+                                                    #{_task.businessDefine.businessCategory.name} / #{_task.taskDescription.businessName} / #{_task.taskInstance.name}
                                                 </h3>
 
                                                 <p class="repo-list-description">
