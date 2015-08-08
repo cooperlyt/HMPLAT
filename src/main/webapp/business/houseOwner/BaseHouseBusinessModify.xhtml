@@ -5,7 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/layout/template.xhtml">
@@ -20,7 +21,7 @@
                 <span class="mega-octicon octicon-repo"></span>
                 <strong>
 
-                    #{messages.modifyBusiness}
+                    #{messages.createBusiness}
 
                 </strong>
 
@@ -29,6 +30,8 @@
 
                 #{businessDefineHome.instance.name}
 
+
+                #{messages.MODIFY_BIZ}
 
 
                 <span class="path-divider">/</span>
@@ -53,25 +56,49 @@
 
 
         </h:outputStylesheet>
+
+        <div class="sort-bar">
+
+
+            <div class="btn-group right" role="group" >
+
+
+            <s:link styleClass="btn btn-danger btn-reversal tooltipped tooltipped-s" action="#{houseBusinessModifyStart.resetModifyHouse}" p:aria-label="#{messages.reset}">
+                <span class="btn-icon-sm glyphicon glyphicon-repeat"/>
+            </s:link>
+
+            <s:link  rendered="#{canChangeHouseCount}" p:aria-label="#{messages.modify_add_house}"
+                     styleClass="btn btn-default tooltipped tooltipped-s" view="/business/houseOwner/HouseChangeSelect.xhtml">
+
+                <span class="btn-icon-sm octicon octicon-plus"/>
+                <f:param name="from" value="#{thisPageLocation}"/>
+                <f:param name="selectModifyHouseCode" value=""/>
+            </s:link>
+
+         </div>
+            <h3>#{messages.modify_business} <strong>#{houseBusinessModifyStart.modifyHouses.size}</strong> #{messages.modify_house_count}</h3>
+        </div>
         <h:form>
+
+
         <a:repeat value="#{houseBusinessModifyStart.modifyHouses}" var="_house">
             <f:subview >
             <div class="panel #{_house.oldStartHouse ?  'panel-success' : 'panel-info'}">
-                <div class="panel-heading">Panel heading</div>
+                <div class="panel-heading">#{_house.startHouse.displayHouseCode}</div>
                 <div class="panel-body">
 
                     <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml" >
                         <ui:param name="changeDatas" value="#{_house.changeDatas}"/>
                         <a:outputPanel rendered="#{not empty _house.changeDatas}">
-                             <span>【档案房屋信息】与【测绘房屋信息】数据不同，你可以</span>
+                             <span>#{messages.map_house_and_record_house_diff}</span>
 
                             <div style="display: inline-block">
 
                             <h:selectOneRadio value="#{_house.useMapInfo}" styleClass="house-data-option-radio">
-                                <f:selectItem itemValue="#{true}" itemLabel="提取测绘房屋数据"/>
-                                <f:selectItem itemValue="#{false}" itemLabel="使用原房屋数据"/>
+                                <f:selectItem itemValue="#{true}" itemLabel="#{messages.use_map_house_info}"/>
+                                <f:selectItem itemValue="#{false}" itemLabel="#{messages.use_record_house_info}"/>
                                 <a:ajax event="click" execute="@this" render="@none"/>
-                            </h:selectOneRadio></div> <span> 来更正此业务</span>
+                            </h:selectOneRadio></div> <span> #{messages.modify_this_business}</span>
                         </a:outputPanel>
                     </ui:decorate>
 
@@ -85,43 +112,41 @@
                             <a:outputPanel  rendered="#{not _house.changeHouse}">
                                 <span class="octicon octicon-link-external"/>
 
-                                此房屋信息为原业务办理前的房屋信息
+                                #{messages.modify_use_old_house}
                             </a:outputPanel>
                             <a:outputPanel rendered="#{_house.changeHouse}">
                                 <span class="octicon octicon-sync"/>
-                                已由原业务中的房屋【】更换为此房屋
+                                #{messages.modify_house_change}【#{_house.srcHouse.displayHouseCode}】#{messages.modify_change_to_this_house}
                             </a:outputPanel>
 
-                            ，原业务中该房屋已填写的信息将被提取至本业务中
+                            ,#{messages.modify_old_input_info}
                         </a:outputPanel>
 
                         <a:outputPanel rendered="#{not _house.oldStartHouse}">
                             <span class="octicon octicon-plus"/>
-                            原业务中并不包括此房屋，为更正业务新加入的房屋
+                            #{messages.modify_is_add_new_house}
                         </a:outputPanel>
 
                         </strong>
 
-                        ，你也可以在本业务中
+                        ，#{messages.modify_you_can_do}
 
                         <s:link rendered="#{_house.oldStartHouse}" view="/business/houseOwner/HouseChangeSelect.xhtml">
 
-                            更换房屋
+                            #{messages.modify_change_house}
                             <f:param name="from" value="#{thisPageLocation}"/>
                             <f:param name="selectModifyHouseCode" value="#{_house.startHouse.houseCode}"/>
                         </s:link>
 
                         <a:outputPanel rendered="#{canChangeHouseCount}">
-                            <h:outputText value=" 或 " rendered="#{_house.oldStartHouse}"/>
+                            <h:outputText value=" #{messages.Or} " rendered="#{_house.oldStartHouse}"/>
 
-                            <s:link action="#{houseBusinessModifyStart.removeSelectHouse}">移除此房屋
+                            <s:link action="#{houseBusinessModifyStart.removeSelectHouse}">#{messages.modify_remove_house}
                                 <f:param name="selectModifyHouseCode" value="#{_house.startHouse.houseCode}"/>
                             </s:link>
                         </a:outputPanel>
 
                     </p>
-
-
 
                 </div>
 

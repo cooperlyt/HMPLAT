@@ -60,13 +60,31 @@ public class HouseBusinessModifyStart {
     }
 
     public String changeHouse(){
-        for(ModifyHouse modifyHouse: modifyHouses){
-             if (modifyHouse.getStartHouse().getHouseCode().equals(selectHouseCode) && modifyHouse.isOldStartHouse()){
-                ((SelectBusinessModify)modifyHouse).setChangeHouse(ownerBuildGridMap.getSelectBizHouse());
-                return "CHANGED";
+
+        if (selectHouseCode == null || selectHouseCode.trim().equals("")){
+            modifyHouses.add(new NewHouseBusinessModify(ownerBuildGridMap.getSelectBizHouse()));
+            return "CHANGED";
+        }else {
+            for (ModifyHouse modifyHouse : modifyHouses) {
+                if (modifyHouse.getStartHouse().getHouseCode().equals(selectHouseCode) && modifyHouse.isOldStartHouse()) {
+                    ((SelectBusinessModify) modifyHouse).setChangeHouse(ownerBuildGridMap.getSelectBizHouse());
+                    return "CHANGED";
+                }
             }
         }
         throw new IllegalArgumentException("old house not found");
+    }
+
+    public void initModifyHouse(){
+        modifyHouses = new ArrayList<ModifyHouse>(selectOwnerBusiness.getHouseBusinesses().size());
+        for (HouseBusiness houseBusiness : selectOwnerBusiness.getHouseBusinesses()) {
+            modifyHouses.add(new SelectBusinessModify(houseBusiness));
+        }
+    }
+
+    public String resetModifyHouse(){
+        initModifyHouse();
+        return "RESET";
     }
 
     public String removeSelectHouse(){
@@ -95,11 +113,7 @@ public class HouseBusinessModifyStart {
         }
 
         //TODO PROJECT
-
-        modifyHouses = new ArrayList<ModifyHouse>(selectOwnerBusiness.getHouseBusinesses().size());
-        for (HouseBusiness houseBusiness : selectOwnerBusiness.getHouseBusinesses()) {
-            modifyHouses.add(new SelectBusinessModify(houseBusiness));
-        }
+        initModifyHouse();
 
         return businessDefineHome.getInstance().getModifyPage();
     }
@@ -274,6 +288,10 @@ public class HouseBusinessModifyStart {
         public SelectBusinessModify(HouseBusiness houseBusiness) {
             this.houseBusiness = houseBusiness;
             setUseMapInfo(false);
+        }
+
+        public BusinessHouse getSrcHouse(){
+            return houseBusiness.getStartBusinessHouse();
         }
 
 

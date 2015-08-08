@@ -823,7 +823,15 @@ a:focus, a:hover{
 }
 
 .btn .btn-icon.glyphicon{
-    padding: 2px 0;
+    padding: 3px 0;
+}
+
+.btn .btn-icon-sm.octicon{
+    padding: 0;
+}
+
+.btn .btn-icon-sm.glyphicon{
+    padding: 1px 0;
 }
 
 .btn-sm .btn-icon.glyphicon{
