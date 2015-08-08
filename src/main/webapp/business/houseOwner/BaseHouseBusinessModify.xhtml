@@ -53,7 +53,7 @@
 
 
         </h:outputStylesheet>
-
+        <h:form>
         <a:repeat value="#{houseBusinessModifyStart.modifyHouses}" var="_house">
             <f:subview >
             <div class="panel #{_house.oldStartHouse ?  'panel-success' : 'panel-info'}">
@@ -66,9 +66,11 @@
                              <span>【档案房屋信息】与【测绘房屋信息】数据不同，你可以</span>
 
                             <div style="display: inline-block">
+
                             <h:selectOneRadio value="#{_house.useMapInfo}" styleClass="house-data-option-radio">
                                 <f:selectItem itemValue="#{true}" itemLabel="提取测绘房屋数据"/>
                                 <f:selectItem itemValue="#{false}" itemLabel="使用原房屋数据"/>
+                                <a:ajax event="click" execute="@this" render="@none"/>
                             </h:selectOneRadio></div> <span> 来更正此业务</span>
                         </a:outputPanel>
                     </ui:decorate>
@@ -130,6 +132,7 @@
             </f:subview>
 
         </a:repeat>
+        </h:form>
     </div>
 </ui:define>
 

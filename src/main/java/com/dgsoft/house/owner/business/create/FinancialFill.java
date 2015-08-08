@@ -12,7 +12,7 @@ import org.jboss.seam.annotations.Scope;
 
 /**
  * Created by nistrator on 15-7-20.
- * 金融机构填充
+ * 金融机构填充 每个可以走的业务都配
  */
 @Name("financialFill")
 @Scope(ScopeType.STATELESS)

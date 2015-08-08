@@ -10,7 +10,7 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by Administrator on 15-8-1.
- * 产别，产权来源
+ * 产别，产权来源 每个可以走的业务都配
  */
 @Name("houseRegInfoFill")
 public class HouseRegInfoFill implements BusinessDataFill {
