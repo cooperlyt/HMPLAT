@@ -29,51 +29,19 @@
 
 
         <h:outputText value="#{messages.Developer}"/>
-        <dh:entryGridColumn colspan="3">
+        <dh:entryGridColumn colspan="5">
         <h:outputText value="#{project.developer.name}"/>
         </dh:entryGridColumn>
 
 
-        <h:outputText value="#{messages.Project_state}"/>
-        <h:outputText value="TODO"/>
-
-
-
-
-
-        <h:outputText value="#{messages.Project_area}"/>
-        <h:outputText value="#{project.area}">
-            <f:convertNumber pattern="#0.000"/>
-        </h:outputText>
-
-        <h:outputText value="#{messages.Project_sumArea}"/>
-        <h:outputText value="#{project.sumArea}">
-            <f:convertNumber pattern="#0.000"/>
-        </h:outputText>
-        <h:outputText value="#{messages.Project_buildSize}"/>
-        <h:outputText value="#{dictionary.getWordValue(project.buildSize)}"/>
-
-
-
 
         <h:outputText value="#{messages.Project_address}"/>
-        <dh:entryGridColumn colspan="3">
+        <dh:entryGridColumn colspan="5">
         <h:outputText value="#{project.address}"/>
         </dh:entryGridColumn>
 
-        <h:outputText value="#{messages.Project_buildCount}"/>
-        <h:outputText value="#{project.buildCount}"/>
 
 
-        <h:outputText value="#{messages.MapMemo}"/>
-        <dh:entryGridColumn colspan="3">
-        <h:outputText value="#{project.memo}"/>
-        </dh:entryGridColumn>
-
-        <h:outputText value="#{messages.Project_mapTime}"/>
-        <h:outputText value="#{project.mapTime}">
-            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
-        </h:outputText>
 
 </dh:entryGridBlock>
 </ui:composition>

@@ -902,6 +902,22 @@ a:focus, a:hover{
 }
 
 
+.check-box-link, .check-box-link:hover, .check-box-link:focus{
+    text-decoration: none;
+}
+
+
+
+.check-box-link .icon-check{
+    color: #5cb85c;
+}
+
+.check-box-link .icon-check-empty{
+    color: #666;
+}
+
+
+
 
 
 

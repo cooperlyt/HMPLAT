@@ -11,12 +11,12 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审核" x="381" y="122" width="132" height="36">
+  <node name="审核" x="393" y="127" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="登薄" x="215" y="259" width="132" height="36">
+  <node name="登薄" x="126" y="256" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -29,7 +29,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="收费" x="213" y="123" width="132" height="36">
+  <node name="收费" x="213" y="128" width="132" height="36">
     <edge>
       <label x="-18" y="-12"/>
     </edge>
@@ -58,7 +58,7 @@
       <label x="-10" y="-10"/>
     </edge>
   </node>
-  <node name="审核结果" x="381" y="187" width="132" height="36">
+  <node name="审核结果" x="395" y="187" width="132" height="36">
     <edge>
       <label x="-21" y="-7"/>
     </edge>
@@ -67,4 +67,12 @@
     </edge>
   </node>
   <node name="结束" x="515" y="401" width="132" height="36"/>
+  <node name="是否登薄" x="323" y="255" width="132" height="36">
+    <edge>
+      <label x="-15" y="-16"/>
+    </edge>
+    <edge>
+      <label x="-1" y="-4"/>
+    </edge>
+  </node>
 </root-container>

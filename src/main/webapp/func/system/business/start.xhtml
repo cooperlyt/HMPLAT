@@ -92,7 +92,7 @@
                                <span class="type-icon octicon octicon-repo"></span>
                                                     <s:link propagation="#{empty _define.startPropagation ? 'begin' : _define.startPropagation}"
                                                             view="#{_define.startPage}" styleClass="css-truncate-target list-group-item-link"
-                                                             rendered="#{not empty _define.startPage}">
+                                                             rendered="#{not empty _define.startPage}" includePageParams="false">
                                                         #{_define.name}
                                                         <f:param name="bussinessDefineId" value="#{_define.id}"/>
                                                     </s:link>
@@ -101,7 +101,7 @@
 
                                 <li >
                                     <s:link p:aria-label="#{messages.businessModifyAndCancel}" view="#{_define.modifySearchPage}"
-                                            rendered="#{not empty _define.modifySearchPage}"
+                                            rendered="#{not empty _define.modifySearchPage}" includePageParams="false"
                                             class="btn-link mute-note tooltipped tooltipped-w">
                                             <span class="octicon octicon-pencil"></span>
                                         <f:param name="businessDefineId" value="#{_define.id}"/>

@@ -46,6 +46,8 @@ public class OwnerBuildGridMap {
 
     private BusinessHouse selectBizHouse;
 
+    private List<BusinessHouse> selectBizHouses = new ArrayList<BusinessHouse>();
+
     private boolean dataTableList;
 
     private String mapNumber;
@@ -91,6 +93,37 @@ public class OwnerBuildGridMap {
     public void setSelectBizHouse(BusinessHouse selectBizHouse) {
         this.selectBizHouse = selectBizHouse;
         selectHouseChangeData = null;
+    }
+
+    public List<BusinessHouse> getSelectBizHouses() {
+        return selectBizHouses;
+    }
+
+    public void addToMulitSelect(){
+        if (!selectBizHouses.contains(getSelectBizHouse())){
+            selectBizHouses.add(getSelectBizHouse());
+        }
+    }
+
+    public void removeMulitSelect(){
+        selectBizHouses.remove(getSelectBizHouse());
+    }
+
+    public void clearMulitSelect(){
+        selectBizHouses.clear();
+    }
+
+    public boolean isSelectInMulit(){
+        return selectBizHouses.contains(getSelectBizHouse());
+    }
+
+    public boolean inMulitSelect(String houseCode){
+        for(BusinessHouse house: getSelectBizHouses()){
+            if (house.getHouseCode().equals(houseCode)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<HouseInfoCompare.ChangeData> getSelectHouseChangeData() {

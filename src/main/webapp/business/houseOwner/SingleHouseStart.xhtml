@@ -8,7 +8,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
-                template="/layout/house/owner/HouseSelectTemplate.xhtml">
+                template="/layout/house/owner/SingleHouseSelect.xhtml">
 
 <ui:define name="houseSelectAction">
     <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disabled'}"
@@ -17,6 +17,16 @@
         #{messages.select}
     </s:link>
 </ui:define>
+
+    <ui:define name="header">
+        <h:form>
+            <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+                <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
+
+            </a:jsFunction>
+
+        </h:form>
+    </ui:define>
 
 
 </ui:composition>
