@@ -22,6 +22,7 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
     @Override
     public  BusinessHouseOwner createInstance(){
         BusinessHouseOwner result = new BusinessHouseOwner();
+        result.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setBusinessHouseOwner(result);
         return result;
 
