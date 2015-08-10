@@ -11,14 +11,25 @@
                 template="/layout/house/owner/MulitHouseSelect.xhtml">
 
 
-    <ui:define name="header">
+    <ui:define name="js-header">
         <h:form>
-            <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}"
-                          oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+            <a:jsFunction name="houseValid" action="#{houseBusinessStart.validSelectHouse}"
+
+                          oncomplete="restoreSelectedScroll();restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'});"
+                          render="houseInfoContent">
                 <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
 
             </a:jsFunction>
 
+            <h:outputScript>
+                function houseClick(houseCode){
+                    saveSelectedScroll();
+                    saveMapScroll();
+                    saveDataTableScroll();
+
+                    houseValid(houseCode);
+                }
+            </h:outputScript>
         </h:form>
     </ui:define>
 
@@ -28,8 +39,9 @@
     
     <ui:define name="selectHouseCheckBox">
         <a:commandLink styleClass="check-box-link" action="#{houseBusinessStart.fastAddToMulit}"
+                       onclick="saveSelectedScroll();saveMapScroll()"
                        render="mulitSelected,blankslate, houseInfoContent" execute="@this" immediate="true"
-                       data="#{houseBusinessStart.lastMulitAddOK}" oncomplete="if (!event.data) {$('.info-modal-lg').modal({backdrop: 'static'})}">
+                       data="#{houseBusinessStart.lastMulitAddOK}" oncomplete=" restoreSelectedScroll();restoreMapScroll();if (!event.data) {$('.info-modal-lg').modal({backdrop: 'static'})} ">
             <span class="#{ownerBuildGridMap.inMulitSelect(_cell.house.houseCode) ? 'icon-check' : 'icon-check-empty'}"/>
             <a:attachQueue requestDelay="0"/>
             <f:param name="selectHouseCode" value="#{_cell.house.houseCode}"/>
@@ -39,7 +51,8 @@
     <ui:define name="houseDataSelectCheckBox">
         <a:commandLink styleClass="check-box-link" action="#{houseBusinessStart.fastAddToMulit}"
                        render="mulitSelected,blankslate, houseInfoContent" execute="@this" immediate="true"
-                       data="#{houseBusinessStart.lastMulitAddOK}" oncomplete="if (!event.data) {$('.info-modal-lg').modal({backdrop: 'static'})}">
+                       onclick="saveSelectedScroll();saveDataTableScroll();"
+                       data="#{houseBusinessStart.lastMulitAddOK}" oncomplete="if (!event.data) {$('.info-modal-lg').modal({backdrop: 'static'})} restoreSelectedScroll();">
             <span class="#{ownerBuildGridMap.inMulitSelect(_house.businessHouse.houseCode) ? 'icon-check' : 'icon-check-empty'}"/>
             <a:attachQueue requestDelay="0"/>
             <f:param name="selectHouseCode" value="#{_house.businessHouse.houseCode}"/>
@@ -49,7 +62,8 @@
     <ui:define name="houseMapDataSelectCheckBox">
         <a:commandLink styleClass="check-box-link" action="#{houseBusinessStart.fastAddToMulit}"
                        render="mulitSelected,blankslate, houseInfoContent" execute="@this" immediate="true"
-                       data="#{houseBusinessStart.lastMulitAddOK}" oncomplete="if (!event.data) {$('.info-modal-lg').modal({backdrop: 'static'})}">
+                       onclick="saveSelectedScroll();saveDataTableScroll();"
+                       data="#{houseBusinessStart.lastMulitAddOK}" oncomplete="if (!event.data) {$('.info-modal-lg').modal({backdrop: 'static'})} restoreSelectedScroll();">
             <span class="#{ownerBuildGridMap.inMulitSelect(_house.houseCode) ? 'icon-check' : 'icon-check-empty'}"/>
             <a:attachQueue requestDelay="0"/>
             <f:param name="selectHouseCode" value="#{_house.houseCode}"/>

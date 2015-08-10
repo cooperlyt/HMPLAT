@@ -13,12 +13,32 @@
 
     <ui:param name="rightWidth" value="150px"/>
 
+    <ui:define name="header">
+        <ui:insert name="js-header"/>
+
+        <h:outputScript>
+            var selectedScrollTopValue = 0;
+            var selectedScrollLeftValue = 0;
+
+            function saveSelectedScroll(){
+
+            }
+
+            function restoreSelectedScroll(){
+
+            }
+
+        </h:outputScript>
+    </ui:define>
+
     <ui:define name="houseSelectAction">
-        <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) and not ownerBuildGridMap.selectInMulit ? '' : 'disabled'}"
+        <a:commandLink styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) and not ownerBuildGridMap.selectInMulit ? '' : 'disabled'}"
                 disabled="#{not ((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) || ownerBuildGridMap.selectInMulit}"
-                action="#{ownerBuildGridMap.addToMulitSelect}">
+                immediate="true" execute="@this"
+                action="#{ownerBuildGridMap.addToMulitSelect}" onclick="saveSelectedScroll();saveMapScroll();saveDataTableScroll();"
+                oncomplete="restoreSelectedScroll();restoreMapScroll();$('.info-modal-lg').modal('hide')">
             #{ownerBuildGridMap.selectInMulit ? messages.selected : messages.select}
-        </s:link>
+        </a:commandLink>
     </ui:define>
 
     <ui:define name="houseTitle">
@@ -60,7 +80,7 @@
 
                 <div style=" padding: 5px; width: 100%;">
 
-                    <h:form>
+
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                             <div class="btn-group" role="group">
                                 <a:commandLink action="#{ownerBuildGridMap.clearMulitSelect}"
@@ -77,10 +97,10 @@
 
                             </div>
                         </div>
-                    </h:form>
+
 
                 </div>
-            <h:form >
+
 
                 <a:outputPanel id="mulitSelected" rendered="#{not empty ownerBuildGridMap.selectBizHouses}" layout="block" style="padding: 5px;height: 100%; width: 100%;overflow: auto;"
                            styleClass="wrapper">
@@ -91,6 +111,9 @@
                        <li ondblclick="houseClick('#{_house.houseCode}')">
                                            <span class="notice-dismiss">
                                                      <a:commandLink styleClass="close-button" render="mulitSelected,blankslate"
+                                                                    onclick="       saveSelectedScroll();
+                    saveMapScroll();
+                    saveDataTableScroll();" oncomplete="restoreSelectedScroll();restoreMapScroll();"
                                                                     action="#{ownerBuildGridMap.removeMulitSelect}" execute="@this" immediate="true" >
                                                            <span class="octicon octicon-x">
 
@@ -109,7 +132,7 @@
                 </a:repeat>
                 </ul>
             </a:outputPanel>
-            </h:form>
+
         </div>
 
     <h:outputStylesheet>

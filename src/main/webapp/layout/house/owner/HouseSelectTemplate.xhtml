@@ -127,6 +127,53 @@
 
         </ui:insert>
 
+        <h:outputScript>
+
+
+            var mapScrollTopValue = 0;
+            var mapScrollLeftValue = 0;
+
+            var dataTableScrollTop = 0;
+            var dataTableScrollLeft = 0;
+
+
+            function saveMapScroll() {
+                var div = $('.map-context');
+
+                if (div) {
+
+                    mapScrollLeftValue = div.scrollLeft();
+                    mapScrollTopValue = div.scrollTop();
+
+                }
+            }
+
+            function restoreMapScroll() {
+                var div = $('.map-context');
+                if (div) {
+                    div.scrollTop(mapScrollTopValue);
+                    div.scrollLeft(mapScrollLeftValue);
+
+                }
+
+
+            }
+
+
+            function saveDataTableScroll() {
+
+
+                    var $table = $('.record-data-table');
+                    if ($table){
+                        dataTableScrollTop = $table.closest('.wrapper').scrollTop();
+                        dataTableScrollLeft = $table.closest('.wrapper').scrollLeft();
+
+                    }
+            }
+
+
+
+        </h:outputScript>
 
         <a:status id="processWaiting" name="processWaiting"
                   onstart="#{r:component('wait')}.show()"
@@ -328,18 +375,25 @@
                             var $table = $('.record-data-table');
 
                             $table.floatThead({
+
                             scrollContainer: function($table){
-                            return $table.closest('.wrapper');
-                            }
-                            });
+                                return $table.closest('.wrapper');
+                                }
+                                });
+
+
+                                $table.closest('.wrapper').scrollTop(dataTableScrollTop);
+                                $table.closest('.wrapper').scrollLeft(dataTableScrollLeft);
+
 
                             });
+
 
 
                         </h:outputScript>
 
                         <a:outputPanel layout="block" style="position: absolute;bottom:0; left: 171px; top: 50px; right: #{rightWidth};" rendered="#{searchBykey or ownerBuildGridMap.dataTableList}">
-                        <a:outputPanel styleClass="wrapper" layout="block" style="width: 100%; height: 100% ;overflow: auto" rendered="#{searchBykey}">
+                        <a:outputPanel styleClass="wrapper js-recordDataTable" layout="block" style="width: 100%; height: 100% ;overflow: auto" rendered="#{searchBykey}">
                         <table class="table table-striped table-hover record-data-table">
                             <thead>
                             <tr>
@@ -401,9 +455,9 @@
 
                         </table>
 
-                    </a:outputPanel>
+                        </a:outputPanel>
 
-                        <a:outputPanel styleClass="wrapper" layout="block" style="width: 100%; height: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList and (not searchBykey)}">
+                        <a:outputPanel styleClass="wrapper js-mapDataTable" layout="block" style="width: 100%; height: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList and (not searchBykey)}">
 
 
 

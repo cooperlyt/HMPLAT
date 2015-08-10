@@ -12,12 +12,22 @@
 
     <ui:define name="header">
         <h:form>
-            <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+            <a:jsFunction name="houseValid" action="#{houseBusinessStart.validSelectHouse}"
+                          oncomplete="restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})"
+                          render="houseInfoContent">
                 <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
 
             </a:jsFunction>
 
         </h:form>
+
+
+        <h:outputScript>
+            function houseClick(houseCode){
+            saveMapScroll();saveDataTableScroll();
+            houseValid(houseCode);
+            }
+        </h:outputScript>
     </ui:define>
 
     <ui:define name="houseSelectAction">
