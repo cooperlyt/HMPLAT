@@ -18,14 +18,20 @@
 
         <h:outputScript>
             var selectedScrollTopValue = 0;
-            var selectedScrollLeftValue = 0;
 
             function saveSelectedScroll(){
+
+            var div = #{r:element('mulitSelected')};
+            if (div){
+                selectedScrollTopValue = div.scrollTop;
+            }
 
             }
 
             function restoreSelectedScroll(){
-
+               var div = #{r:jQuery('mulitSelected')};
+            if (div){
+                div.scrollTop(selectedScrollTopValue);}
             }
 
         </h:outputScript>
@@ -102,7 +108,7 @@
                 </div>
 
 
-                <a:outputPanel id="mulitSelected" rendered="#{not empty ownerBuildGridMap.selectBizHouses}" layout="block" style="padding: 5px;height: 100%; width: 100%;overflow: auto;"
+                <a:outputPanel id="mulitSelected" rendered="#{not empty ownerBuildGridMap.selectBizHouses}" layout="block" style="position: absolute; padding: 5px;top: 44px; bottom: 0; width: 149px;overflow: auto;"
                            styleClass="wrapper">
                 <ul class="block-list">
 
@@ -115,9 +121,7 @@
                     saveMapScroll();
                     saveDataTableScroll();" oncomplete="restoreSelectedScroll();restoreMapScroll();"
                                                                     action="#{ownerBuildGridMap.removeMulitSelect}" execute="@this" immediate="true" >
-                                                           <span class="octicon octicon-x">
-
-                                                           </span>
+                                                           <span class="octicon octicon-x"/>
                                                             <f:param name="selectHouseCode" value="#{_house.houseCode}"/>
                                                          <a:attachQueue requestDelay="0"/>
                                                      </a:commandLink>
