@@ -34,7 +34,7 @@
     </ui:define>
 
     <ui:define name="mulitSelectCompleteAction">
-        <button type="button" class="btn btn-success">#{messages.MulitHouseSelectComplete}</button>
+        <s:link onclick="#{r:component('wait')}.show()" styleClass="btn btn-success" action="#{houseBusinessStart.mulitHouseSelect}">#{messages.MulitHouseSelectComplete}</s:link>
     </ui:define>
     
     <ui:define name="selectHouseCheckBox">

@@ -145,6 +145,11 @@ public class HouseBusinessStart {
 
 
     public String mulitHouseSelect() {
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+
+        for(BusinessHouse businessHouse: ownerBuildGridMap.getSelectBizHouses())
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+
 
         return ownerBusinessStart.dataSelected();
     }
