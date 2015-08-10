@@ -1,12 +1,9 @@
 package com.dgsoft.house.owner.business;
 
-import com.dgsoft.common.system.AuthenticationInfo;
-import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.*;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.action.OwnerNumberBuilder;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -15,7 +12,6 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
-import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
@@ -48,6 +44,12 @@ public class HouseBusinessStart {
     private OwnerBusinessStart ownerBusinessStart;
 
     public void validSelectHouse(){
+
+        validSelectHouseResult();
+    }
+
+    private boolean validSelectHouseResult(){
+        boolean sucess = true;
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
             BusinessDataValid.ValidResult result;
             try {
@@ -62,8 +64,12 @@ public class HouseBusinessStart {
             if (!result.getResult().equals(BusinessDataValid.ValidResultLevel.SUCCESS)){
                 facesMessages.addFromResourceBundle(result.getResult().getSeverity(),result.getMsgKey(),result.getParams());
             }
-        }
 
+            if (sucess && Integer.valueOf(result.getResult().getPri()).compareTo(BusinessDataValid.ValidResultLevel.WARN.getPri()) > 0){
+                sucess = false;
+            }
+        }
+        return sucess;
     }
 
 
@@ -110,6 +116,31 @@ public class HouseBusinessStart {
         }
 
         return ownerBusinessStart.dataSelected();
+    }
+
+
+    private boolean lastMulitAddOK;
+
+    public boolean isLastMulitAddOK() {
+        return lastMulitAddOK;
+    }
+
+    public void setLastMulitAddOK(boolean lastMulitAddOK) {
+        this.lastMulitAddOK = lastMulitAddOK;
+    }
+
+    public void fastAddToMulit(){
+        if (ownerBuildGridMap.getSelectBizHouses().contains(ownerBuildGridMap.getSelectBizHouse())){
+            ownerBuildGridMap.getSelectBizHouses().remove(ownerBuildGridMap.getSelectBizHouse());
+            lastMulitAddOK = true;
+        }else {
+
+            lastMulitAddOK = validSelectHouseResult();
+            if (lastMulitAddOK) {
+                ownerBuildGridMap.getSelectBizHouses().add(ownerBuildGridMap.getSelectBizHouse());
+            }
+        }
+        Logging.getLog(getClass()).debug("fast add house result:" + lastMulitAddOK);
     }
 
 

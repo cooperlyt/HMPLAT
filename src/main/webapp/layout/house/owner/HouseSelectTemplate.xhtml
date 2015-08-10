@@ -82,13 +82,13 @@
 
             .column1 {
                 width: 171px;
-                border-right: 1px solid #c1c1c1;
+
                 position: absolute;
                 top: 50px;
                 left: 0;
                 bottom: 0;
-                background: url("#{facesContext.externalContext.requestContextPath}/img/fullRightBlackround.png") repeat-y 0 0;
-
+                background-color: #f5f5f5;
+                border-right:  1px solid #e5e5e5;
 
             }
 
@@ -123,7 +123,9 @@
         </h:outputStylesheet>
 
 
+        <ui:insert name="header">
 
+        </ui:insert>
 
 
         <a:status id="processWaiting" name="processWaiting"
@@ -136,13 +138,7 @@
 
 
         </r:popupPanel>
-        <h:form>
-            <a:jsFunction name="houseClick" action="#{houseBusinessStart.validSelectHouse}" oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
-                <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
 
-            </a:jsFunction>
-
-        </h:form>
         <div class="modal fade info-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <a:outputPanel id="houseInfoContent" layout="block"  styleClass="modal-dialog modal-lg" >
                 <a:outputPanel layout="block" styleClass="modal-content" rendered="#{not empty ownerBuildGridMap.selectBizHouse}">
@@ -321,9 +317,11 @@
         <div class="container-fluid default-main">
 
 
-                <div style="display: inline-block; padding: 2px;width: 100%; height: 100%;" id="contextPanel" onselectstart="return false;"> <!--  -->
 
-                    <a:outputPanel layout="block" style="height: 100%;width: 100%; " ajaxRendered="true">
+
+                <div style="display: inline-block; padding: 2px;right: 0; height: 100%;" id="contextPanel" onselectstart="return false;"> <!--  -->
+
+                    <a:outputPanel layout="block" style="width: 100%; height: 100%" ajaxRendered="true">
                         <h:outputScript>
                             $(document).ready(function () {
 
@@ -340,7 +338,8 @@
 
                         </h:outputScript>
 
-                    <a:outputPanel styleClass="wrapper" layout="block" style="height: 100%;width: 100%; overflow: auto" rendered="#{searchBykey}">
+                        <a:outputPanel layout="block" style="position: absolute;bottom:0; left: 171px; top: 50px; right: #{rightWidth};" rendered="#{searchBykey or ownerBuildGridMap.dataTableList}">
+                        <a:outputPanel styleClass="wrapper" layout="block" style="width: 100%; height: 100% ;overflow: auto" rendered="#{searchBykey}">
                         <table class="table table-striped table-hover record-data-table">
                             <thead>
                             <tr>
@@ -369,10 +368,10 @@
 
                             <tbody>
                             <a:repeat  value="#{houseRecordList.resultList}" var="_house">
-                                <tr onclick="houseClick('#{_house.businessHouse.houseCode}')">
+                                <tr ondblclick="houseClick('#{_house.businessHouse.houseCode}')">
                                     <td>
-
-                                        #{_house.businessHouse.houseCode}
+                                        <ui:insert name="houseDataTitle">
+                                        #{_house.businessHouse.houseCode}</ui:insert>
                                                   <span class="house-info">
                                                     <span class="#{_house.businessHouse.masterStatus}">
                                                         <h:outputText styleClass="label" value="#{messages[_house.businessHouse.masterStatus.name()]}"/>
@@ -404,7 +403,7 @@
 
                     </a:outputPanel>
 
-                    <a:outputPanel styleClass="wrapper" layout="block" style="height: 100%;width: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList and (not searchBykey)}">
+                        <a:outputPanel styleClass="wrapper" layout="block" style="width: 100%; height: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList and (not searchBykey)}">
 
 
 
@@ -437,10 +436,10 @@
 
                                 <tbody>
                                     <a:repeat  value="#{ownerBuildGridMap.resultBusinessHouse}" var="_house">
-                                        <tr onclick="houseClick('#{_house.houseCode}')">
+                                        <tr ondblclick="houseClick('#{_house.houseCode}')">
                                             <td>
-
-                                                #{_house.houseCode}
+                                                <ui:insert name="houseMapDataTitle">
+                                                    #{_house.houseCode}</ui:insert>
                                                   <span class="house-info">
                                                     <span class="#{_house.masterStatus}">
                                                         <h:outputText styleClass="label" value="#{messages[_house.masterStatus.name()]}"/>
@@ -472,12 +471,13 @@
 
 
                         </a:outputPanel>
-
+                        </a:outputPanel>
                         <a:outputPanel rendered="#{not searchBykey and  not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
 
 
-                        <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd; border-right: 2px solid #ddd"/>
+
+                        <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd;"/>
 
                         <div class="grid-map map-thead map-col-thead">
                             <table class="map-col-thead-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px ">
@@ -524,11 +524,11 @@
                                             <td colspan="#{_cell.colspan}"
                                                 rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
 
-                                                <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" onclick="houseClick('#{_cell.house.houseCode}')">
+                                                <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" ondblclick="houseClick('#{_cell.house.houseCode}')">
                                                     <div class="#{_cell.house.masterStatus}" >
                                                         <div class="house-info-context">
                                                         <ul >
-                                                            <li><h2>#{_cell.house.houseOrder}  </h2></li>
+                                                            <li><ui:insert name="houseTitle"><h2>#{_cell.house.houseOrder}  </h2> </ui:insert> </li>
                                                             <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
                                                             <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.personName}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
                                                         </ul>
@@ -555,6 +555,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        </a:outputPanel>
                         <h:outputScript>
                             $(document).ready(
                                 function () {
@@ -593,7 +595,7 @@
 
 
                             .map-col-thead{
-                                top: 50px; left: 221px; right: 0; height: 50px;
+                                top: 50px; left: 221px; right: #{rightWidth}; height: 50px;
                             }
 
                             .map-row-thead{
@@ -601,15 +603,15 @@
                             }
 
                             .map-row-thead th{
-                                border-left: 0;
-                                border-right: 2px solid #ddd;
+                                border-left: 0 !important;
+                                border-right: 2px solid #e5e5e5;
                                 height: 90px;
                                 width: 49px;
                             }
 
                             .map-col-thead th{
                                 border-top: 0 !important;
-                                border-bottom: 2px solid #ddd !important;
+                                border-bottom: 2px solid #e5e5e5 !important;
 
                                 height: 49px;
                                 width: 90px;
@@ -637,7 +639,7 @@
                             }
 
                             .map-context{
-                                position: absolute; top:100px; left: 221px;bottom: 0; right: 0;overflow: auto
+                                position: absolute; top:100px; left: 221px;bottom: 0; right: #{rightWidth};overflow: auto
                             }
 
                             .house-info-context{
@@ -673,7 +675,11 @@
 
 
                         </h:outputStylesheet>
-                        </a:outputPanel>
+
+                        <ui:insert name="contextRight"/>
+
+
+
                     </a:outputPanel>
 
 
@@ -702,7 +708,7 @@
                                     <a:commandLink status="processWaiting" styleClass="list-group-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
                                         #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
                                         <a:attachQueue requestDelay="0"/>
-                                        <a:param value="#{_gridMap.id}" assignTo="#{ownerBuildGridMap.id}"/>
+                                        <f:param value="#{_gridMap.id}" name="selectMapId"/>
                                         <f:param value="#{false}" name="dataTableList"/>
                                     </a:commandLink>
                                 </a:repeat>
