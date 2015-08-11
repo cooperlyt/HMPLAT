@@ -264,6 +264,20 @@
         </div>
 
 
+
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.Project_mapTime}
+            </ui:define>
+
+            <ui:param name="for" value="mapTimeInput"/>
+            <h:inputText label="#{messages.Project_mapTime}" value="#{buildHome.instance.mapTime}" styleClass="js-datepicker">
+                <s:convertDateTime pattern="#{messages.datePattern}"/>
+            </h:inputText>
+
+        </s:decorate>
+
+
         <s:decorate styleClass="form-group" template="/layout/edit-inline.xhtml">
             <ui:define name="label">
                 #{messages.MapMemo}

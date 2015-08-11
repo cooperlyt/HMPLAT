@@ -79,6 +79,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String buildDevNumber;
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
     private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
+    private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
 
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
@@ -760,6 +761,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setBusinessPools(Set<BusinessPool> businessPools) {
         this.businessPools = businessPools;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
+    public Set<HouseBusiness> getHouseBusinessesForAfter() {
+        return houseBusinessesForAfter;
+    }
+
+    public void setHouseBusinessesForAfter(Set<HouseBusiness> houseBusinessesForAfter) {
+        this.houseBusinessesForAfter = houseBusinessesForAfter;
     }
 
     @Transient

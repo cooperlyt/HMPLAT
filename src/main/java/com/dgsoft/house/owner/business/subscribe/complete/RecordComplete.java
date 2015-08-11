@@ -86,13 +86,9 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
         }
 
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.CANCEL_BIZ)) {
-
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                 recordHouse(houseBusiness.getAfterBusinessHouse());
-
             }
-
-
         }
 
 

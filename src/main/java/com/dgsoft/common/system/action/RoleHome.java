@@ -28,12 +28,22 @@ public class RoleHome extends SystemEntityHome<Role> {
 
     private List<BusinessDefine> selectBusinessList = new ArrayList<BusinessDefine>();
 
+    private List<BusinessDefine> selectOldBusinessList = new ArrayList<BusinessDefine>();
+
     public List<BusinessDefine> getSelectBusinessList() {
         return selectBusinessList;
     }
 
     public void setSelectBusinessList(List<BusinessDefine> selectBusinessList) {
         this.selectBusinessList = selectBusinessList;
+    }
+
+    public List<BusinessDefine> getSelectOldBusinessList() {
+        return selectOldBusinessList;
+    }
+
+    public void setSelectOldBusinessList(List<BusinessDefine> selectOldBusinessList) {
+        this.selectOldBusinessList = selectOldBusinessList;
     }
 
     @Override
@@ -49,6 +59,8 @@ public class RoleHome extends SystemEntityHome<Role> {
         super.initInstance();
         selectBusinessList.clear();
         selectBusinessList.addAll(getInstance().getBusinessDefines());
+        selectOldBusinessList.clear();
+        selectOldBusinessList.addAll(getInstance().getOldBusinessDefines());
     }
 
     public boolean isEditing() {
@@ -75,6 +87,8 @@ public class RoleHome extends SystemEntityHome<Role> {
         String result;
         getInstance().getBusinessDefines().clear();
         getInstance().getBusinessDefines().addAll(selectBusinessList);
+        getInstance().getOldBusinessDefines().clear();
+        getInstance().getOldBusinessDefines().addAll(selectOldBusinessList);
         if (isManaged()) {
             result = update();
             if (!"updated".equals(result)) {

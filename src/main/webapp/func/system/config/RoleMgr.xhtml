@@ -145,9 +145,22 @@
                         </f:facet>
 
                         <r:pickList disabled="#{not roleHome.editing}" value="#{roleHome.selectBusinessList}"
-                                       listHeight="200px" addText="#{messages.pick_add}"
-                                       removeAllText="#{messages.pick_removeAll}"
-                                       addAllText="#{messages.pick_addAll}" removeText="#{messages.pick_remove}">
+                                       listHeight="200px" >
+                            <s:selectItems value="#{selectBusinessDefineList.resultList}" var="_business"
+                                           itemValue="#{_business}" label="#{_business.name}[#{_business.id}]"/>
+                            <f:converter converterId="systemEntityConverter"/>
+
+                        </r:pickList>
+
+                    </r:panel>
+
+                    <r:panel>
+                        <f:facet name="header">
+                            #{messages.oldBussinessCreatePower}
+                        </f:facet>
+
+                        <r:pickList disabled="#{not roleHome.editing}" value="#{roleHome.selectOldBusinessList}"
+                                    listHeight="200px">
                             <s:selectItems value="#{selectBusinessDefineList.resultList}" var="_business"
                                            itemValue="#{_business}" label="#{_business.name}[#{_business.id}]"/>
                             <f:converter converterId="systemEntityConverter"/>
