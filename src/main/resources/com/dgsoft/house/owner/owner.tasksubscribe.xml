@@ -203,6 +203,12 @@
             房屋交易信息,付款方式,购房款查看
         </description>
     </view-subscribe>
+    <view-subscribe name="FactMoneyInfoView" page="/business/houseOwner/subscribe/FactMoneyInfoView.xhtml">
+        <description>
+           缴费信息查看（缴款书编号，备注）
+        </description>
+    </view-subscribe>
+
 
 
     <view-subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml">
@@ -438,11 +444,19 @@
             测绘机构编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="factMoneyInfoEdit"  page="/business/houseOwner/subscribe/FactMoneyInfoEdit.xhtml" component="">
+        <description>
+           收费(缴款书编号,备注)
+        </description>
+    </edit-subscribe>
+
   <edit-subscribe name="cardInfoEdit"  page="/business/houseOwner/subscribe/CardInfoEdit.xhtml" component="">
     <description>
         权证编号、附记编辑，缮证人
     </description>
   </edit-subscribe>
+
 
 
 
