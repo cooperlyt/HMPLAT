@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,16 @@ public class OwnerHouseHelper {
 
 
     public List<HouseInfo.HouseStatus> getHouseAllStatus(String houseCode) {
-        List<HouseInfo.HouseStatus> result = ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus.status from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded = true))", HouseInfo.HouseStatus.class).setParameter("houseCode",houseCode).getResultList();
+        List<HouseInfo.HouseStatus> result = new ArrayList<HouseInfo.HouseStatus>();
+
+
+         for(HouseInfo.HouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus.status from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded = true))", HouseInfo.HouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
+            if (status.isAllowRepeat() || !result.contains(status)){
+                result.add(status);
+            }
+         }
+
+
         Collections.sort(result, new HouseInfo.StatusComparator());
         return result;
     }
