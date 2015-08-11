@@ -23,7 +23,7 @@ public class HouseRegInfoSubscribe extends OwnerEntityHome<HouseRegInfo> {
 
         super.create();
         if(!ownerBusinessHome.getInstance().getHouseRegInfos().isEmpty()){
-            setId(ownerBusinessHome.getInstance().getHouseRegInfos().iterator().next());
+            setId(ownerBusinessHome.getInstance().getHouseRegInfos().iterator().next().getId());
         }else {
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getHouseRegInfos().add(getInstance());

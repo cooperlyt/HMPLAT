@@ -24,7 +24,7 @@ public class FactMoneyInfoSubscribe extends OwnerEntityHome<FactMoneyInfo> {
     public void create(){
         super.create();
         if(!ownerBusinessHome.getInstance().getFactMoneyInfos().isEmpty()){
-            setId(ownerBusinessHome.getInstance().getFactMoneyInfos().iterator().next());
+            setId(ownerBusinessHome.getInstance().getFactMoneyInfos().iterator().next().getId());
         }else{
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             getInstance().setFactTime(new Date());

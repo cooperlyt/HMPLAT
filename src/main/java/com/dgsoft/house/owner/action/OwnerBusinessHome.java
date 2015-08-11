@@ -11,6 +11,7 @@ import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
+import sun.util.logging.resources.logging;
 
 import java.util.*;
 
@@ -124,7 +125,11 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     public FactMoneyInfo getFactMoneyInfo(){
+
+        log.debug("11111111");
         if (!getInstance().getFactMoneyInfos().isEmpty()){
+            log.debug("2222");
+            log.debug("3333+:"+getInstance().getFactMoneyInfos().size());
             return getInstance().getFactMoneyInfos().iterator().next();
         }
         return null;

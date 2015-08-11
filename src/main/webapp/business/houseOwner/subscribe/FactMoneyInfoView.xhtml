@@ -8,9 +8,9 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getFactMoneyInfo()}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.factMoneyInfo}">
         <dh:entryGridBlock columns="4" >
-
+              
             <h:outputText value="#{messages.FactMoneyInfo_paymentNo}"/>
             <h:outputText value="#{ownerBusinessHome.getFactMoneyInfo().paymentNo}"/>
 
