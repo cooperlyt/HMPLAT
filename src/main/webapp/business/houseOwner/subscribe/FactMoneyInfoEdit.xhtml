@@ -7,43 +7,33 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+
     <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            #{messages.Evaluate_evaluateCorpName}
+            #{messages.FactMoneyInfo_paymentNo}
         </ui:define>
-
-        <ui:param name="for" value="assessmentPriceInput"/>
-        <div style="display: block;">
-
-            <div class="input-group">
-                <a:outputPanel styleClass="input-group-btn">
-
-
-                    <h:selectOneMenu id="evaluateCorpNameInput"
-                                     value="#{evaluateSubscribe.instance.evaluateCorpN0}"
-                                     label="#{messages.Evaluate_evaluateCorpName}"
-                                     valueChangeListener="#{evaluateSubscribe.valueChangeListener}"
-                                     styleClass="selectpicker select-menu-btn input-group-first">
-                        <s:selectItems value="#{wordEvaluateCorporationList.resultList}" var="_word"
-                                       itemValue="#{_word.id}" label="#{_word.name}" noSelectionLabel="#{messages.noSelectLabel}"/>
-                    </h:selectOneMenu>
-                </a:outputPanel>
-
-                <h:inputText value="#{evaluateSubscribe.instance.assessmentPrice}"
-                             size="20"
-                             required="true"
-                             label="#{messages.Evaluate_assessmentPrice}"
-                             id="assessmentPriceInput"
-                             p:placeholder="#{messages.Evaluate_assessmentPrice}"
-                             styleClass="form-control">
-                    <r:validator event="blur"/>
-                    <f:validateDoubleRange minimum="0"/>
-                    <f:convertNumber pattern="#0.00"/>
-                </h:inputText>
-
-            </div>
-        </div>
-
+        <ui:param name="for" value="paymentNoInput"/>
+        <h:inputText label="#{messages.FactMoneyInfo_paymentNo}"
+                     id="paymentNoInput"
+                     value="#{factMoneyInfoSubsrcibe.instance.paymentNo}"
+                     styleClass="form-control"
+                     maxlength="25" />
     </s:decorate>
 
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+        <ui:define name="label">
+            #{messages.FactMoneyInfo_memo}
+        </ui:define>
+
+        <h:inputTextarea
+                label="#{messages.FactMoneyInfo_memo}"
+                cols="50"
+                rows="3"
+                value="#{factMoneyInfoSubsrcibe.instance.memo}"
+                styleClass="form-control"
+                id="FactMoneyInfo_memo">
+        </h:inputTextarea>
+    </s:decorate>
 </ui:composition>

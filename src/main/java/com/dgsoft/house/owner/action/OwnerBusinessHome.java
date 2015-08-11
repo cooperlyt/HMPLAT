@@ -123,6 +123,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    public FactMoneyInfo getFactMoneyInfo(){
+        if (!getInstance().getFactMoneyInfos().isEmpty()){
+            return getInstance().getFactMoneyInfos().iterator().next();
+        }
+        return null;
+    }
 
     public CardInfo getCardInfo(){
         if (!getInstance().getMakeCards().isEmpty() &&
