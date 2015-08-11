@@ -21,6 +21,7 @@ public class HouseBusiness implements java.io.Serializable {
     private BusinessHouse afterBusinessHouse;
     private String houseCode;
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
+    private Set<AddHouseStatus> addHouseStatuses = new HashSet<AddHouseStatus>(0);
 
 
     public HouseBusiness() {
@@ -103,6 +104,16 @@ public class HouseBusiness implements java.io.Serializable {
 
     public void setRecordStores(Set<RecordStore> recordStores) {
         this.recordStores = recordStores;
+    }
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = CascadeType.ALL)
+    public Set<AddHouseStatus> getAddHouseStatuses() {
+        return addHouseStatuses;
+    }
+
+    public void setAddHouseStatuses(Set<AddHouseStatus> addHouseStatuses) {
+        this.addHouseStatuses = addHouseStatuses;
     }
 
     @Transient
