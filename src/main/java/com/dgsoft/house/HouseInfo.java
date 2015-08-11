@@ -18,19 +18,25 @@ public interface HouseInfo extends BuildInfo {
     // 抵押,在建工程抵押,异议,声明作废，查封,灭籍
     // 确权,初始登记
     public enum HouseStatus{
-        CONTRACTS_RECORD(12),OWNERED(11),SALE_REGISTER(10),
-        DIVERT_REGISTER(9),SALE_MORTGAGE_REGISTER(8),DIVERT_MORTGAGE_REGISTER(7),
-        PLEDGE(5),PROJECT_PLEDGE(6),DIFFICULTY(4),DECLARE_CANCEL(3),COURT_CLOSE(2),DESTROY(1),
-        INIT_REG_CONFIRM(14),INIT_REG(13);
+        CONTRACTS_RECORD(12,false),OWNERED(11,false),SALE_REGISTER(10,false),
+        DIVERT_REGISTER(9,false),SALE_MORTGAGE_REGISTER(8,false),DIVERT_MORTGAGE_REGISTER(7,false),
+        PLEDGE(5,true),PROJECT_PLEDGE(6,true),DIFFICULTY(4,false),DECLARE_CANCEL(3,false),COURT_CLOSE(2,true),DESTROY(1,false),
+        INIT_REG_CONFIRM(14,false),INIT_REG(13,false);
 
         private int pri;
+        private boolean allowRepeat;
 
-        private HouseStatus(int pri){
+        private HouseStatus(int pri, boolean allowRepeat){
             this.pri = pri;
+            this.allowRepeat = allowRepeat;
         }
 
         public int getPri() {
             return pri;
+        }
+
+        public boolean isAllowRepeat() {
+            return allowRepeat;
         }
     }
 
