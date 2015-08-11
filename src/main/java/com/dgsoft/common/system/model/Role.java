@@ -22,6 +22,7 @@ public class Role implements java.io.Serializable, OrderModel {
     private int priority;
 
     private Set<BusinessDefine> businessDefines = new HashSet<BusinessDefine>(0);
+    private Set<BusinessDefine> oldBusinessDefines = new HashSet<BusinessDefine>(0);
     private Set<Function> functions = new HashSet<Function>(0);
     private Set<Employee> employees = new HashSet<Employee>(0);
 
@@ -81,6 +82,16 @@ public class Role implements java.io.Serializable, OrderModel {
 
     public void setBusinessDefines(Set<BusinessDefine> businessDefines) {
         this.businessDefines = businessDefines;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = BusinessDefine.class)
+    @JoinTable(name = "OLD_CREATE_BIZ", joinColumns = @JoinColumn(name = "ROL"), inverseJoinColumns = @JoinColumn(name = "BIZ"))
+    public Set<BusinessDefine> getOldBusinessDefines() {
+        return oldBusinessDefines;
+    }
+
+    public void setOldBusinessDefines(Set<BusinessDefine> oldBusinessDefines) {
+        this.oldBusinessDefines = oldBusinessDefines;
     }
 
     @Override
