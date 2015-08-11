@@ -5,6 +5,7 @@ import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.House;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import org.apache.batik.gvt.flow.RegionInfo;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -71,7 +72,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String districtCode;
     private String districtName;
     private Set<HouseBusiness> housesForAfterBusiness;
-    private Set<HouseState> houseStates = new HashSet<HouseState>(0);
+
     private LandInfo landInfo;
     private BusinessHouseOwner businessHouseOwner;
     private Set<MakeCard> otherPowerCards = new HashSet<MakeCard>(0);
@@ -142,13 +143,10 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         modifyFormMapHouse(houseInfo);
     }
 
-    public BusinessHouse(BusinessHouse houseInfo) {
+    public BusinessHouse(BusinessHouse houseInfo, boolean toDOMasterStatus) {
         this((HouseInfo)houseInfo);
 
-        for(HouseState state: houseInfo.getHouseStates()){
-            this.houseStates.add(new HouseState(this,state.getState(),state.getCreateDate()));
-        }
-        genMasterStatus();
+
 
         if (houseInfo.getLandInfo() != null){
             this.landInfo = new LandInfo(houseInfo.getLandInfo());
@@ -683,15 +681,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 //        }
 //    }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse",cascade = CascadeType.ALL,orphanRemoval = true)
-    public Set<HouseState> getHouseStates() {
-        return this.houseStates;
-    }
-
-    public void setHouseStates(Set<HouseState> houseStates) {
-        this.houseStates = houseStates;
-    }
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
     public Set<HouseBusiness> getHousesForAfterBusiness() {
@@ -797,46 +786,12 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Transient
-    public void addStatus(HouseInfo.HouseStatus... status){
-        for (HouseInfo.HouseStatus s: status){
-            getHouseStates().add(new HouseState(this,s,new Date()));
-        }
-        genMasterStatus();
-    }
-
-    @Transient
-    public int removeStatus(HouseInfo.HouseStatus... status){
-        int result = 0;
-        for(HouseInfo.HouseStatus s: status){
-            for(HouseState sh: getHouseStates()){
-                if(s.equals(sh.getState())){
-                    getHouseStates().remove(sh);
-                    result ++;
-                    break;
-                }
-            }
-        }
-        genMasterStatus();
-        return result;
-    }
-
-    @Transient
+    @Deprecated
     public List<HouseStatus> getAllStatusList() {
-        List<HouseStatus> result = new ArrayList<HouseStatus>(getHouseStates().size());
-        for (HouseState state: getHouseStates()){
-            result.add(state.getState());
-        }
-        Collections.sort(result,new StatusComparator());
-        return result;
+
+        return OwnerHouseHelper.instance().getHouseAllStatus(getHouseCode());
     }
 
-    @Transient
-    private void genMasterStatus(){
-        if (getHouseStates().isEmpty()){
-            setMasterStatus(null);
-        }else
-            setMasterStatus(getAllStatusList().get(0));
-    }
 
 
 }

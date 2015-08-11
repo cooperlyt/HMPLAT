@@ -23,7 +23,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private String startPage;
     private String memo;
     private Integer version;
-    private String startPropagation;
+
     private String rolePrefix;
     private String description;
     private int priority;
@@ -33,11 +33,11 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
     private boolean enable;
     private String pickBusinessDefineId;
-    private String modifyPage;
-    private String modifySearchPage;
+
 
     private Set<Fee> fees = new HashSet<Fee>(0);
     private Set<BusinessReport> businessReports = new HashSet<BusinessReport>(0);
+    private String modifyPage;
 
 
 
@@ -127,15 +127,6 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         this.businessNeedFiles = businessNeedFiles;
     }
 
-    @Column(name = "START_PROPAGATION",nullable = true,length = 10)
-    @Size(max = 10)
-    public String getStartPropagation() {
-        return startPropagation;
-    }
-
-    public void setStartPropagation(String startPropagation) {
-        this.startPropagation = startPropagation;
-    }
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "businessDefine")
     public Set<TaskSubscribe> getTaskSubscribes() {
@@ -259,15 +250,6 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         this.modifyPage = modifyPage;
     }
 
-    @Column(name = "MODIFY_SEARCH_PAGE", length = 200)
-    @Size(max = 200)
-    public String getModifySearchPage() {
-        return modifySearchPage;
-    }
-
-    public void setModifySearchPage(String modifySearchPage) {
-        this.modifySearchPage = modifySearchPage;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessDefine")
     public Set<BusinessReport> getBusinessReports() {

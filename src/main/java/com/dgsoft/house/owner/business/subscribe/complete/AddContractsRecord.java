@@ -4,7 +4,6 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseState;
 import org.apache.poi.ss.formula.functions.Now;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
