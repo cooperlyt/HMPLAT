@@ -139,31 +139,7 @@
 
         </s:decorate>
 
-        <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
-            <ui:define name="label">#{messages.businessDefine_field_modifyPage}</ui:define>
-            <ui:param name="for" value="modifyPage"/>
-            <h:inputText id="modifyPage"
-                         name="#{messages.businessDefine_field_modifyPage}"
-                         styleClass="form-control"
-                         maxlength="200"
-                         value="#{businessDefineHome.instance.modifyPage}">
 
-            </h:inputText>
-
-        </s:decorate>
-
-        <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
-            <ui:define name="label">#{messages.businessDefine_field_modifySearchPage}</ui:define>
-            <ui:param name="for" value="modifyPage"/>
-            <h:inputText id="modifySearchPage"
-                         name="#{messages.businessDefine_field_modifySearchPage}"
-                         styleClass="form-control"
-                         maxlength="200"
-                         value="#{businessDefineHome.instance.modifySearchPage}">
-
-            </h:inputText>
-
-        </s:decorate>
 
         <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
             <ui:define name="label">#{messages.businessDefine_field_pickBizId}</ui:define>

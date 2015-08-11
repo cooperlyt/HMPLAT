@@ -51,10 +51,10 @@
                 <li>
 
 
-                    <s:link propagation="#{empty businessDefineHome.instance.startPropagation ? 'begin' : businessDefineHome.instance.startPropagation}"
-                            view="#{businessDefineHome.instance.startPage}">
+                    <s:link action="#{businessCreateBegin.startCreate}">
                         #{messages.createBusinessAgain} #{businessDefineHome.instance.name}
-                        <f:param name="bussinessDefineId" value="#{businessDefineHome.instance.id}"/>
+                        <f:param name="bussinessDefineId" value="#{_define.id}"/>
+                        <f:param name="normalBiz" value="#{true}"/>
                     </s:link>
                 </li>
             </ul>

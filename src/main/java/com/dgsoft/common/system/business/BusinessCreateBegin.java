@@ -6,6 +6,7 @@ import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by cooper on 8/11/15.
@@ -13,25 +14,24 @@ import org.jboss.seam.annotations.web.RequestParameter;
 @Name("businessCreateBegin")
 public class BusinessCreateBegin {
 
-    @In
-    private BusinessDefine businessDefine;
 
     @RequestParameter
-    private String businessDefineId;
+    private String bussinessDefineId;
 
 
     @In(create = true)
     private BusinessDefineHome businessDefineHome;
 
     public String startCreate(){
-        businessDefineHome.setId(businessDefineId);
-        return ((BusinessCreateComponent) Component.getInstance(businessDefine.getStartPage(),true,true)).startCreate();
+
+        businessDefineHome.setId(bussinessDefineId);
+        return ((BusinessCreateComponent) Component.getInstance(businessDefineHome.getInstance().getStartPage(),true,true)).startCreate();
     }
 
 
     public String searchModify(){
-        businessDefineHome.setId(businessDefineId);
-        return ((BusinessCreateComponent) Component.getInstance(businessDefine.getStartPage(),true,true)).searchModify();
+        businessDefineHome.setId(bussinessDefineId);
+        return ((BusinessCreateComponent) Component.getInstance(businessDefineHome.getInstance().getStartPage(),true,true)).searchModify();
 
     }
 

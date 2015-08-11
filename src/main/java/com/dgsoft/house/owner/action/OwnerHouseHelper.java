@@ -20,12 +20,12 @@ import java.util.List;
 public class OwnerHouseHelper {
 
 
-    @In
+    @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
 
 
     public List<HouseInfo.HouseStatus> getHouseAllStatus(String houseCode) {
-        List<HouseInfo.HouseStatus> result = ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus.status from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode =:houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded))", HouseInfo.HouseStatus.class).getResultList();
+        List<HouseInfo.HouseStatus> result = ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus.status from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded = true))", HouseInfo.HouseStatus.class).setParameter("houseCode",houseCode).getResultList();
         Collections.sort(result, new HouseInfo.StatusComparator());
         return result;
     }
