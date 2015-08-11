@@ -34,7 +34,7 @@ public class HouseStatusHavePledge extends BusinessHouseValid {
        // defineIdNames.add("WP11");
     //    ownerEntityLoader.getEntityManager().createQuery("select count(houseBusiness) from HouseBusiness houseBusiness where houseBusiness.houseCode=:houseCode and houuseBusiness.ownerBusiness.status='COMPLETE' and houseBusiness.ownerBusiness.defineId in(:defineIds)",Long.class).setParameter("houseCode",businessHouse.getHouseCode()).setParameter("defineIds",defineIdNames).getSingleResult().compareTo(Long.valueOf(0))>0;
 
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.PLEDGE)){
 
 
             return new ValidResult(ValidResultLevel.SUCCESS);

@@ -20,7 +20,7 @@ public class HouseStatusNotHavePledge extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PLEDGE)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.PLEDGE)){
             return new ValidResult("business_house_status_no_have_pledge", ValidResultLevel.ERROR);
         }
         return new ValidResult(ValidResultLevel.SUCCESS);

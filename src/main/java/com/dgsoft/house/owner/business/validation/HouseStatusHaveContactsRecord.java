@@ -20,7 +20,7 @@ public class HouseStatusHaveContactsRecord extends BusinessHouseValid {
     //ValidResultLevel.
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
             return new ValidResult(ValidResultLevel.SUCCESS);
         }
         return new ValidResult("business_house_status_have_ContactsRecord",ValidResultLevel.ERROR);

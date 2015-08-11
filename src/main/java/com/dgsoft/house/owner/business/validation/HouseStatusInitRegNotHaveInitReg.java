@@ -20,7 +20,7 @@ public class HouseStatusInitRegNotHaveInitReg extends BusinessHouseValid {
 
     @Override
     public BusinessDataValid.ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.INIT_REG)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.INIT_REG)){
             return new BusinessDataValid.ValidResult("business_house_InitReg_status_No_have_InitReg", ValidResultLevel.ERROR);
         }
         return new BusinessDataValid.ValidResult(ValidResultLevel.SUCCESS);

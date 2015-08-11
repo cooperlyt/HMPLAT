@@ -19,7 +19,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 public class HouseStatusNotHaveDivertMortgageRegister extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DIVERT_MORTGAGE_REGISTER)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.DIVERT_MORTGAGE_REGISTER)){
             return new ValidResult("business_house_status_no_have_DivertMortgageRegister", ValidResultLevel.ERROR);
         }
 

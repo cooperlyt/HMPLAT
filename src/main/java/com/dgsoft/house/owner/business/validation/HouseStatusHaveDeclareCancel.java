@@ -20,7 +20,7 @@ public class HouseStatusHaveDeclareCancel extends BusinessHouseValid{
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DECLARE_CANCEL)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.DECLARE_CANCEL)){
             return new ValidResult(ValidResultLevel.SUCCESS);
         }
         return new ValidResult("business_house_status_have_DeclareCancel", ValidResultLevel.ERROR);

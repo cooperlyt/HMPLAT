@@ -19,7 +19,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 public class HouseStatusHaveCourtClose extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.COURT_CLOSE)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.COURT_CLOSE)){
             return new ValidResult(ValidResultLevel.SUCCESS);
         }
         return new ValidResult("business_house_status_have_CourtClose", ValidResultLevel.ERROR);

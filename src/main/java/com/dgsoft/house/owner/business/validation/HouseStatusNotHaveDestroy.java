@@ -20,7 +20,7 @@ public class HouseStatusNotHaveDestroy extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.DESTROY)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.DESTROY)){
             return new ValidResult("business_house_status_no_have_Destroy", ValidResultLevel.ERROR);
         }
 

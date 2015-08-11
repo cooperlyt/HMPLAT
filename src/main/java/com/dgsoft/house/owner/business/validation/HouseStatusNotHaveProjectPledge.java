@@ -19,7 +19,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 public class HouseStatusNotHaveProjectPledge extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getHouseStates().contains(HouseInfo.HouseStatus.PROJECT_PLEDGE)){
+        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.PROJECT_PLEDGE)){
             return new ValidResult("business_house_status_no_have_ProjectPledge", ValidResultLevel.ERROR);
         }
         return new ValidResult(ValidResultLevel.SUCCESS);
