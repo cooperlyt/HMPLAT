@@ -60,7 +60,7 @@
                 display: block;
                 min-width: 0;
             }
-            
+
             .header {
                 position: absolute;
                 top: 0;
@@ -92,33 +92,33 @@
 
             }
 
-        .list-all {
-            margin: 0;
-            padding-top: 200px;
-            padding-left: 4px;
-            padding-right: 4px;
-            border-top: 1px solid #f2f3f6;
-            line-height: 25px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 171px;
+            .list-all {
+                margin: 0;
+                padding-top: 200px;
+                padding-left: 4px;
+                padding-right: 4px;
+                border-top: 1px solid #f2f3f6;
+                line-height: 25px;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 171px;
 
 
-        }
+            }
 
 
 
 
-        .column2 {
-            left: 172px;
-            right: 250px;
-        }
+            .column2 {
+                left: 172px;
+                right: 250px;
+            }
 
 
-        .edit-select , .input-group {
-            margin-top: 5px !important;
-        }
+            .edit-select , .input-group {
+                margin-top: 5px !important;
+            }
 
         </h:outputStylesheet>
 
@@ -138,23 +138,23 @@
 
 
             function saveMapScroll() {
-                var div = $('.map-context');
+            var div = $('.map-context');
 
-                if (div) {
+            if (div) {
 
-                    mapScrollLeftValue = div.scrollLeft();
-                    mapScrollTopValue = div.scrollTop();
+            mapScrollLeftValue = div.scrollLeft();
+            mapScrollTopValue = div.scrollTop();
 
-                }
+            }
             }
 
             function restoreMapScroll() {
-                var div = $('.map-context');
-                if (div) {
-                    div.scrollTop(mapScrollTopValue);
-                    div.scrollLeft(mapScrollLeftValue);
+            var div = $('.map-context');
+            if (div) {
+            div.scrollTop(mapScrollTopValue);
+            div.scrollLeft(mapScrollLeftValue);
 
-                }
+            }
 
 
             }
@@ -163,12 +163,12 @@
             function saveDataTableScroll() {
 
 
-                    var $table = $('.record-data-table');
-                    if ($table){
-                        dataTableScrollTop = $table.closest('.wrapper').scrollTop();
-                        dataTableScrollLeft = $table.closest('.wrapper').scrollLeft();
+            var $table = $('.record-data-table');
+            if ($table){
+            dataTableScrollTop = $table.closest('.wrapper').scrollTop();
+            dataTableScrollLeft = $table.closest('.wrapper').scrollLeft();
 
-                    }
+            }
             }
 
 
@@ -179,7 +179,7 @@
                   onstart="#{r:component('wait')}.show()"
                   onstop="#{r:component('wait')}.hide()"/>
         <r:popupPanel id="wait" modal="true" autosized="true" styleClass="transparent-popup"
-                         moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
+                      moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
             <p>      <h:graphicImage value="/img/wait-128.gif" width="64" height="64"/></p>
             <p>#{messages.ContextLoader}...</p>
 
@@ -200,10 +200,10 @@
 
                         <r:messages ajaxRendered="false" globalOnly="true"/>
 
- <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
-     <ui:param name="changeDatas" value="#{ownerBuildGridMap.selectHouseChangeData}"/>
-   #{messages.HouseInfoCompareCreateWarning}
- </ui:decorate>
+                        <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+                            <ui:param name="changeDatas" value="#{ownerBuildGridMap.selectHouseChangeData}"/>
+                            #{messages.HouseInfoCompareCreateWarning}
+                        </ui:decorate>
 
                         <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
                             <ui:param name="houseInfo" value="#{ownerBuildGridMap.selectBizHouse}"/>
@@ -229,34 +229,14 @@
                 </s:div>
 
                 <div class="site-search">
-                    <h:form id="keySearchForm" >
+                    <ui:insert name="h-header-title"/>
 
-
-                        <h:inputText styleClass="chromeless-input" value="#{houseRecordList.searchKey}"
-                                     p:placeholder="#{messages.search_record_list_tip}" style="margin-left: 10px"
-                                     autocomplete="off">
-                            <r:placeholder value="#{messages.HouseDisplayCode}"/>
-                        </h:inputText>
-
-                        <input style="display: none"/>
-
-                        <r:hotKey enabledInInput="true" key="return" selector="#keySearchForm"  onkeyup="searchByKey()">
-
-                        </r:hotKey>
-
-
-                        <a:jsFunction name="searchByKey" action="#{houseRecordList.refresh}"  execute="@form" status="processWaiting">
-                            <f:param name="searchBykey" value="#{true}"/>
-                        </a:jsFunction>
-
-
-                    </h:form>
                 </div>
 
                 <div class="left" style="max-width: 350px;   text-overflow: ellipsis;
   white-space: nowrap;overflow: hidden;display: inline-block;">
                     <h3 style="margin: 5px; font-weight: bold">
-                    #{businessDefineHome.instance.name}</h3>
+                        #{businessDefineHome.instance.name}</h3>
                 </div>
 
 
@@ -351,395 +331,26 @@
             </div>
         </div>
 
-<h:outputStylesheet>
-    .record-data-table td, .record-data-table th{
-        white-space: nowrap;
-    }
+        <h:outputStylesheet>
+            .record-data-table td, .record-data-table th{
+                white-space: nowrap;
+            }
 
-    .record-data-table.floatThead-table th{
-        background-color: #fff;
-    }
-</h:outputStylesheet>
+            .record-data-table.floatThead-table th{
+                background-color: #fff;
+            }
+        </h:outputStylesheet>
 
         <div class="container-fluid default-main">
 
 
 
 
-                <div style="display: inline-block; padding: 2px;right: 0; height: 100%;" id="contextPanel" onselectstart="return false;"> <!--  -->
+            <div style="display: inline-block; padding: 2px;right: 0; height: 100%;" id="contextPanel" onselectstart="return false;"> <!--  -->
 
-                    <a:outputPanel layout="block" style="width: 100%; height: 100%" ajaxRendered="true">
-                        <h:outputScript>
-                            $(document).ready(function () {
+                <ui:insert name="h-data-context"/>
 
-                            var $table = $('.record-data-table');
-
-                            $table.floatThead({
-
-                            scrollContainer: function($table){
-                                return $table.closest('.wrapper');
-                                }
-                                });
-
-
-                                $table.closest('.wrapper').scrollTop(dataTableScrollTop);
-                                $table.closest('.wrapper').scrollLeft(dataTableScrollLeft);
-
-
-                            });
-
-
-
-                        </h:outputScript>
-
-                        <a:outputPanel layout="block" style="position: absolute;bottom:0; left: 171px; top: 50px; right: #{rightWidth};" rendered="#{searchBykey or ownerBuildGridMap.dataTableList}">
-                        <a:outputPanel styleClass="wrapper js-recordDataTable" layout="block" style="width: 100%; height: 100% ;overflow: auto" rendered="#{searchBykey}">
-                        <table class="table table-striped table-hover record-data-table">
-                            <thead>
-                            <tr>
-                                <th>
-                                    #{messages.House_Id}
-                                </th>
-                                <th>
-                                    #{messages.House_Code}
-                                </th>
-                                <th>
-                                    #{messages.Build}
-                                </th>
-                                <th>
-                                    #{messages.House_Order}
-                                </th>
-                                <th>
-                                    #{messages.House_Owner}
-                                </th>
-                                <th>
-                                    #{messages.House_Address}
-                                </th>
-                            </tr>
-
-
-                            </thead>
-
-                            <tbody>
-                            <a:repeat  value="#{houseRecordList.resultList}" var="_house">
-                                <tr ondblclick="houseClick('#{_house.businessHouse.houseCode}')">
-                                    <td>
-                                        <ui:insert name="houseDataTitle">
-                                        #{_house.businessHouse.houseCode}</ui:insert>
-                                                  <span class="house-info">
-                                                    <span class="#{_house.businessHouse.masterStatus}">
-                                                        <h:outputText styleClass="label" value="#{messages[_house.businessHouse.masterStatus.name()]}"/>
-                                                    </span>
-                                                </span>
-                                    </td>
-                                    <td>
-                                        #{_house.businessHouse.displayHouseCode}
-                                    </td>
-                                    <td>
-                                        #{_house.businessHouse.buildName}
-                                    </td>
-                                    <td>
-                                        #{_house.businessHouse.houseOrder}
-                                    </td>
-                                    <td>
-                                        <h:outputText value="#{_house.businessHouse.businessHouseOwner.personName}"
-                                                      rendered="#{not empty _house.businessHouse.businessHouseOwner}"/>
-
-                                    </td>
-                                    <td>
-                                        #{_house.businessHouse.address}
-                                    </td>
-                                </tr>
-                            </a:repeat>
-                            </tbody>
-
-                        </table>
-
-                        </a:outputPanel>
-
-                        <a:outputPanel styleClass="wrapper js-mapDataTable" layout="block" style="width: 100%; height: 100%; overflow: auto" rendered="#{ownerBuildGridMap.dataTableList and (not searchBykey)}">
-
-
-
-
-                            <table class="table table-striped table-hover record-data-table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            #{messages.House_Id}
-                                        </th>
-                                        <th>
-                                            #{messages.House_Code}
-                                        </th>
-                                        <th>
-                                            #{messages.Build}
-                                        </th>
-                                        <th>
-                                            #{messages.House_Order}
-                                        </th>
-                                        <th>
-                                            #{messages.House_Owner}
-                                        </th>
-                                        <th>
-                                            #{messages.House_Address}
-                                        </th>
-                                    </tr>
-
-
-                                </thead>
-
-                                <tbody>
-                                    <a:repeat  value="#{ownerBuildGridMap.resultBusinessHouse}" var="_house">
-                                        <tr ondblclick="houseClick('#{_house.houseCode}')">
-                                            <td>
-                                                <ui:insert name="houseMapDataTitle">
-                                                    #{_house.houseCode}</ui:insert>
-                                                  <span class="house-info">
-                                                    <span class="#{_house.masterStatus}">
-                                                        <h:outputText styleClass="label" value="#{messages[_house.masterStatus.name()]}"/>
-                                                    </span>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                #{_house.displayHouseCode}
-                                            </td>
-                                            <td>
-                                                #{_house.buildName}
-                                            </td>
-                                            <td>
-                                                #{_house.houseOrder}
-                                            </td>
-                                            <td>
-                                                <h:outputText value="#{_house.businessHouseOwner.personName}"
-                                                              rendered="#{not empty _house.businessHouseOwner}"/>
-
-                                            </td>
-                                            <td>
-                                                #{_house.address}
-                                            </td>
-                                        </tr>
-                                    </a:repeat>
-                                </tbody>
-
-                            </table>
-
-
-                        </a:outputPanel>
-                        </a:outputPanel>
-                        <a:outputPanel rendered="#{not searchBykey and  not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
-
-
-
-
-                        <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd;"/>
-
-                        <div class="grid-map map-thead map-col-thead">
-                            <table class="map-col-thead-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px ">
-                                <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
-                                    <col/>
-                                </a:repeat>
-                                <tr>
-                                <a:repeat value="#{ownerBuildGridMap.curMap.houseGridUnitList}" var="_unit">
-                                    <th colspan="#{_unit.colspan}">
-                                        #{_unit.title}
-                                    </th>
-                                </a:repeat>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="grid-map map-thead map-row-thead" >
-                            <table class="map-row-thead-table" >
-                                <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
-                                    <tr>
-
-                                        <th>
-                                            #{_floor.title}
-                                        </th>
-
-                                    </tr>
-
-                                </a:repeat>
-                            </table>
-                        </div>
-
-                        <div class="grid-map map-context">
-                            <table class="map-context-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px">
-                                <thead>
-                                <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
-                                    <col/>
-                                </a:repeat>
-                                </thead>
-                                <tbody>
-
-                                <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
-                                    <tr>
-                                        <a:repeat value="#{_floor.gridBlockList}" var="_cell">
-                                            <td colspan="#{_cell.colspan}"
-                                                rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
-
-                                                <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" ondblclick="houseClick('#{_cell.house.houseCode}')">
-                                                    <div class="#{_cell.house.masterStatus}" >
-                                                        <div class="house-info-context">
-                                                        <ul >
-                                                            <li><ui:insert name="houseTitle"><h2>#{_cell.house.houseOrder}  </h2> </ui:insert> </li>
-                                                            <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
-                                                            <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.personName}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
-                                                        </ul>
-                                                        </div>
-                                                        <div style="float: left">
-                                                            <a:outputPanel styleClass=" icon-lock" rendered="#{_cell.locked}">
-
-                                                            </a:outputPanel>
-                                                        </div>
-                                                        <div class="house-status" >
-                                                            <a:outputPanel styleClass="label" rendered="#{not empty _cell.house.masterStatus}">
-                                                            #{messages[_cell.house.masterStatus.name()]}
-                                                            </a:outputPanel>
-                                                       </div>
-                                                    </div>
-
-
-                                                </a:outputPanel>
-
-                                            </td>
-                                        </a:repeat>
-                                    </tr>
-                                </a:repeat>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        </a:outputPanel>
-                        <h:outputScript>
-                            $(document).ready(
-                                function () {
-                                    $(".map-context").scroll(function() {
-
-                                        $(".map-col-thead").scrollTo($('.map-context').scrollLeft(),0)
-                                        $(".map-row-thead").scrollTo($('.map-context').scrollTop(),0);
-
-                                    });
-                                }
-                            );
-                        </h:outputScript>
-
-                        <h:outputStylesheet>
-
-                            /*,OWNERED,SALE_REGISTER,
-                            DIVERT_REGISTER,SALE_MORTGAGE_REGISTER,DIVERT_MORTGAGE_REGISTER,
-                            PLEDGE,PROJECT_PLEDGE,DIFFICULTY,DECLARE_CANCEL,COURT_CLOSE,DESTORY;*/
-
-
-
-                            .house-info .house-status{
-                                float: right;
-                                min-height: 17px;
-                                max-height: 17px;
-                                height: 17px;
-                            }
-
-
-
-
-                            .map-thead{
-                                position: absolute;  overflow: hidden;
-                            }
-
-
-
-                            .map-col-thead{
-                                top: 50px; left: 221px; right: #{rightWidth}; height: 50px;
-                            }
-
-                            .map-row-thead{
-                                top:100px; left: 171px; bottom: 0; width: 50px;
-                            }
-
-                            .map-row-thead th{
-                                border-left: 0 !important;
-                                border-right: 2px solid #e5e5e5;
-                                height: 90px;
-                                width: 49px;
-                            }
-
-                            .map-col-thead th{
-                                border-top: 0 !important;
-                                border-bottom: 2px solid #e5e5e5 !important;
-
-                                height: 49px;
-                                width: 90px;
-                            }
-
-                            .grid-map table{
-                                table-layout: fixed;
-                            }
-
-                            .grid-map col{
-                                width: 90px;
-                            }
-
-                            .grid-map td, .grid-map th{
-                                border: 1px solid #ddd;
-                                vertical-align: middle;
-                                text-align: center;
-                                white-space:nowrap;
-                                overflow:hidden;text-overflow:ellipsis;
-                            }
-
-                            .grid-map td:hover{
-                                background-color: #f5f9fc;
-                                cursor: pointer;
-                            }
-
-                            .map-context{
-                                position: absolute; top:100px; left: 221px;bottom: 0; right: #{rightWidth};overflow: auto
-                            }
-
-                            .house-info-context{
-                                min-height: 63px;
-                                max-height: 63px;
-                                height: 63px;
-                            }
-
-                            .house-info{
-                                padding: 2px;
-                                width: 100%;
-                                height: 100%;
-                                vertical-align: middle;
-                                text-align: center;
-                            }
-
-                            .house-info ul{
-                                list-style: none;
-                            }
-
-                            .house-info li{
-                                min-height: 20px;
-                                white-space:nowrap;
-
-                            }
-
-                            .house-info li h2{
-                                margin: 3px 0;
-                                font-size: 19px;
-                                color: #337ab7;
-                            }
-
-
-
-                        </h:outputStylesheet>
-
-                        <ui:insert name="contextRight"/>
-
-
-
-                    </a:outputPanel>
-
-
-
-
-                </div>
+            </div>
 
         </div>
 
@@ -933,9 +544,9 @@
 
                                     </div>
                                 </a:region>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">#{messages.MapIdentification_house}</span>
-                                        <h:inputText id="houseOrder" required="true" styleClass="form-control"  value="#{ownerBuildGridMap.houseOrder}" autocomplete="off"/>
+                                <div class="input-group">
+                                    <span class="input-group-addon">#{messages.MapIdentification_house}</span>
+                                    <h:inputText id="houseOrder" required="true" styleClass="form-control"  value="#{ownerBuildGridMap.houseOrder}" autocomplete="off"/>
                                         <span class="input-group-btn">
                                             <a:commandLink execute="numbers-inputs,houseOrder" styleClass="btn btn-default" status="processWaiting"
                                                            action="#{ownerBuildGridMap.findHouseByNumber}">
@@ -945,7 +556,7 @@
                                             </a:commandLink>
                                         </span>
 
-                                    </div>
+                                </div>
 
 
                             </a:outputPanel>
