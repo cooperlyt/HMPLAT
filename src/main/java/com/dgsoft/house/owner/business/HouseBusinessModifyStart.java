@@ -8,6 +8,7 @@ import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.jboss.seam.ScopeType;
@@ -17,6 +18,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.log.Logging;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -257,7 +259,7 @@ public class HouseBusinessModifyStart {
             HouseBusiness result = new HouseBusiness(ownerBusiness);
             result.setStartBusinessHouse(startHouse);
             result.setHouseCode(startHouse.getHouseCode());
-            result.setAfterBusinessHouse(new BusinessHouse(startHouse));
+            result.setAfterBusinessHouse(new BusinessHouse(startHouse, OwnerHouseHelper.instance().getMasterStatus(result.getHouseCode())));
             if (isUseMapInfo()){
                 result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());
             }
@@ -317,7 +319,7 @@ public class HouseBusinessModifyStart {
 
             result.setHouseCode(result.getStartBusinessHouse().getHouseCode());
 
-            result.setAfterBusinessHouse(new BusinessHouse(houseBusiness.getStartBusinessHouse()));
+            result.setAfterBusinessHouse(new BusinessHouse(houseBusiness.getStartBusinessHouse(), OwnerHouseHelper.instance().getMasterStatus(result.getHouseCode())));
 
             if (isUseMapInfo()) {
                 result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());

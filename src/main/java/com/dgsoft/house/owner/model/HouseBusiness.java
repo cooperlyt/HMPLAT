@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.HouseInfo;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.*;
@@ -31,11 +32,11 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    public HouseBusiness(OwnerBusiness ownerBusiness, BusinessHouse startBusinessHouse) {
+    public HouseBusiness(OwnerBusiness ownerBusiness, BusinessHouse startBusinessHouse, HouseInfo.HouseStatus masterStatus) {
         this.ownerBusiness = ownerBusiness;
         this.houseCode = startBusinessHouse.getHouseCode();
         this.startBusinessHouse = startBusinessHouse;
-        this.afterBusinessHouse = new BusinessHouse(startBusinessHouse);
+        this.afterBusinessHouse = new BusinessHouse(startBusinessHouse,masterStatus);
 
     }
 

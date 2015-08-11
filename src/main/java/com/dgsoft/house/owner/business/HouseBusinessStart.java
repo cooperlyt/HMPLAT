@@ -4,6 +4,7 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.*;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -93,7 +94,7 @@ public class HouseBusinessStart {
         }
         if (allowSelectBizs.isEmpty()) {
             ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse()));
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse(), OwnerHouseHelper.instance().getMasterStatus(ownerBuildGridMap.getSelectBizHouse().getHouseCode())));
         } else if (allowSelectBizs.size() == 1){
             ownerBusinessHome.getInstance().setSelectBusiness(allowSelectBizs.get(0));
             return businessSelected();
@@ -112,7 +113,7 @@ public class HouseBusinessStart {
         for (HouseBusiness houseBusiness: selectedBusiness.getHouseBusinesses()){
             ownerBusinessHome.getInstance().getHouseBusinesses().add(
                     new HouseBusiness(ownerBusinessHome.getInstance(),
-                            ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse()));
+                            ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse(),OwnerHouseHelper.instance().getMasterStatus(houseBusiness.getHouseCode())));
         }
 
         return ownerBusinessStart.dataSelected();
@@ -148,7 +149,7 @@ public class HouseBusinessStart {
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
 
         for(BusinessHouse businessHouse: ownerBuildGridMap.getSelectBizHouses())
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse, OwnerHouseHelper.instance().getMasterStatus(businessHouse.getHouseCode())));
 
 
         return ownerBusinessStart.dataSelected();
