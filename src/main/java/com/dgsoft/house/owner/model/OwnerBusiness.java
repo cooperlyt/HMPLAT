@@ -489,5 +489,10 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         return result;
     }
 
+    @Transient
+    public List<MakeCard> getMakeCardList(){
+        List<MakeCard> result = new ArrayList<MakeCard>(getMakeCards());
+        return result;
+    }
 
 }

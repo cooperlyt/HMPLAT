@@ -270,7 +270,13 @@
 
     <view-subscribe name="CardInfoView" page="/business/houseOwner/subscribe/CardInfoView.xhtml">
         <description>
-            权证编号、附记编辑，缮证人信息查看
+          权证编号、附记编辑，缮证人信息查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="MakeCardView" page="/business/houseOwner/subscribe/MakeCardView.xhtml">
+        <description>
+            业务全部权证号查看(业务ID,权证类型,权证号)
         </description>
     </view-subscribe>
 
