@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import org.apache.poi.ss.formula.functions.Now;
 import org.jboss.seam.annotations.In;
@@ -49,9 +50,7 @@ public class AddContractsRecord implements TaskCompleteSubscribeComponent {
 
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-
-            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.CONTRACTS_RECORD);
-
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.CONTRACTS_RECORD,houseBusiness));
         }
 
 

@@ -3,8 +3,8 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseState;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -31,10 +31,18 @@ public class AddOwnerd implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            if (!houseBusiness.getAfterBusinessHouse().getAllStatusList().contains(HouseInfo.HouseStatus.OWNERED)) {
-                houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.OWNERED);
-            }
+//        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()) {
+//            if (!houseBusiness.getAfterBusinessHouse().getAllStatusList().contains(HouseInfo.HouseStatus.OWNERED)) {
+//                houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.OWNERED);
+//
+//            }
+//        }
+        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+            // HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.INIT_REG_CONFIRM,new Date());
+            // houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.INIT_REG_CONFIRM);
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.OWNERED,houseBusiness));
         }
+
+
     }
 }

@@ -3,8 +3,8 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseState;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
@@ -47,9 +47,7 @@ public class AddCourtClose implements TaskCompleteSubscribeComponent {
 
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-           // HouseState state = new HouseState(houseBusiness.getAfterBusinessHouse(), HouseInfo.HouseStatus.COURT_CLOSE,new Date());
-            houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.COURT_CLOSE);
-
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.COURT_CLOSE,houseBusiness));
         }
 
 

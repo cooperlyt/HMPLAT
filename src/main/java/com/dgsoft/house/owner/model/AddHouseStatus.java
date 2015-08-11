@@ -21,6 +21,12 @@ public class AddHouseStatus implements java.io.Serializable {
     public AddHouseStatus() {
     }
 
+    public AddHouseStatus(HouseInfo.HouseStatus status,HouseBusiness houseBusiness){
+        this.status = status;
+        this.houseBusiness = houseBusiness;
+
+    }
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false, length = 32)
     @NotNull
