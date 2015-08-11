@@ -143,9 +143,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         modifyFormMapHouse(houseInfo);
     }
 
-    public BusinessHouse(BusinessHouse houseInfo, boolean toDOMasterStatus) {
-        this((HouseInfo)houseInfo);
-
+    public BusinessHouse(BusinessHouse houseInfo, HouseStatus masterStatus) {
+        this(houseInfo);
+        this.masterStatus = masterStatus;
 
 
         if (houseInfo.getLandInfo() != null){
