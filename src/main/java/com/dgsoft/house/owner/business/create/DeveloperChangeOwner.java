@@ -32,7 +32,9 @@ public class DeveloperChangeOwner implements BusinessDataFill {
                     && !houseBusiness.getStartBusinessHouse().getDeveloperCode().equals("")){
                 businessHouseOwner.setCredentialsNumber(houseBusiness.getStartBusinessHouse().getDeveloperCode());
             }
+            businessHouseOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
             houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(businessHouseOwner);
+
         }
     }
 }
