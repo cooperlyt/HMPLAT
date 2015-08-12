@@ -28,9 +28,12 @@ public class CardInfoSubsrcibe extends OwnerEntityHome<CardInfo> {
 
                getInstance().setMakeEmpCode(authInfo.getLoginEmployee().getId());
                getInstance().setMakeEmpName(authInfo.getLoginEmployee().getPersonName());
-               ownerBusinessHome.getInstance().getMakeCards().iterator().next().setCardInfo(getInstance());
-               getInstance().setMakeCard(ownerBusinessHome.getInstance().getMakeCards().iterator().next());
                getInstance().setBusinessHouseOwner(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
+               ownerBusinessHome.getInstance().getMakeCards().iterator().next().setCardInfo(getInstance());
+
+               getInstance().setMakeCard(ownerBusinessHome.getInstance().getMakeCards().iterator().next());
+
+
 
 
         }
