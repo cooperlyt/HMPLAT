@@ -132,7 +132,7 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
 	}
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "FEE",nullable = true)
     public FactMoneyInfo getFactMoneyInfo() {
         return factMoneyInfo;
