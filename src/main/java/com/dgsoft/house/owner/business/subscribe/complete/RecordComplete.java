@@ -85,6 +85,11 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
             }
         }
 
+        for (MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
+            makeCard.setEnable(true);
+        }
+
+
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.CANCEL_BIZ)) {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                 recordHouse(houseBusiness.getAfterBusinessHouse());

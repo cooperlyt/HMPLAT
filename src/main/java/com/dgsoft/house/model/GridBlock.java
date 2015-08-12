@@ -355,6 +355,29 @@ public class GridBlock implements java.io.Serializable {
     }
 
     @Transient
+    private String OwnerName;
+
+    @Transient
+    private HouseInfo.HouseStatus houseStatus;
+
+    @Transient
+    public String getOwnerName() {
+        return OwnerName;
+    }
+    @Transient
+    public void setOwnerName(String ownerName) {
+        OwnerName = ownerName;
+    }
+    @Transient
+    public HouseInfo.HouseStatus getHouseStatus() {
+        return houseStatus;
+    }
+    @Transient
+    public void setHouseStatus(HouseInfo.HouseStatus houseStatus) {
+        this.houseStatus = houseStatus;
+    }
+
+    @Transient
     private boolean locked = false;
 
     @Transient

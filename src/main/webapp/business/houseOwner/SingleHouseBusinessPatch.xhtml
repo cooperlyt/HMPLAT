@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/layout/house/owner/SingleMapHouseHouseSelect.xhtml">
+
+    <ui:define name="houseSelectAction">
+        <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disabled'}"
+                disabled="#{not ((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2))}"
+                action="#{houseBusinessStart.singleHouseSelected}">
+            #{messages.select}
+        </s:link>
+    </ui:define>
+
+    <ui:define name="header">
+        <h:form>
+            <a:jsFunction name="houseValid" action="#{houseBusinessStart.validSelectHouse}" oncomplete="restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+                <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
+
+            </a:jsFunction>
+
+        </h:form>
+
+
+
+        <h:outputScript>
+            function houseClick(houseCode){
+            saveMapScroll();saveDataTableScroll();
+            houseValid(houseCode);
+            }
+        </h:outputScript>
+    </ui:define>
+
+
+</ui:composition>

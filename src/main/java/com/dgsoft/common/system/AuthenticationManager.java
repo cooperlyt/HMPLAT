@@ -27,6 +27,8 @@ import java.util.*;
 @Name("authenticationManager")
 public class AuthenticationManager {
 
+    public static final String SUPER_ADMIN_USER_NAME = "root";
+
     @Logger
     private Log log;
 
@@ -53,7 +55,7 @@ public class AuthenticationManager {
             Set<Role> roles = new HashSet<Role>();
 
             Employee loginEmployee;
-            if (identity.getCredentials().getUsername().equals("root") && identity.getCredentials().getPassword().equals("dgsoft")) {
+            if (SUPER_ADMIN_USER_NAME.equals(identity.getCredentials().getUsername()) && identity.getCredentials().getPassword().equals("dgsoft")) {
                 loginEmployee = new Employee("Root","root");
 
                 roles.addAll(systemEntityManager.createQuery("select r from Role r").getResultList());

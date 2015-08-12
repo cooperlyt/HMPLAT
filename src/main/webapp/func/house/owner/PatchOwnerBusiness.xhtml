@@ -1,0 +1,114 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:param name="funcName" value="#{messages.BusinessPatch}"/>
+
+    <ui:define name="funcNav">
+        <ui:include src="/layout/function-nav.xhtml">
+            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+        </ui:include>
+    </ui:define>
+
+
+
+
+    <a:outputPanel styleClass="blankslate" layout="block" rendered="#{empty ownerBusinessPatch.filterBusinessCategories}">
+        <span class="mega-octicon octicon-stop"></span>
+        <h3>#{messages.businessPatch_empty}</h3>
+        <p>
+            #{messages.businessPatch_empty_description}
+            <s:link
+                    view="/logout.xhtml"
+                    propagation="none">
+                #{messages.reLogin}
+
+            </s:link>
+        </p>
+    </a:outputPanel>
+
+    <a:outputPanel layout="block" styleClass="columns" rendered="#{not empty ownerBusinessPatch.filterBusinessCategories}">
+
+        <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
+
+            <nav class="menu">
+                <a:repeat value="#{ownerBusinessPatch.filterBusinessCategories}" var="_category">
+                    <a:commandLink styleClass="menu-item #{(_category.category.id eq ownerBusinessPatch.selectCategoryId) ? 'selected' : ''}"
+                                   immediate="true" execute="@this" render="bizDefList,dataNav">
+                        #{_category.category.name}
+                        <h:outputText styleClass="counter" value="#{_category.defineList.size}">
+                            <f:convertNumber type="number" groupingUsed="true"/>
+                        </h:outputText>
+                        <a:attachQueue requestDelay="0"/>
+                        <f:param name="currBusinessCategoryId" value="#{_category.category.id}"/>
+                    </a:commandLink>
+
+                </a:repeat>
+
+            </nav>
+        </a:outputPanel>
+
+        <h:form>
+            <a:outputPanel id="bizDefList" layout="block" styleClass="column three-fourths codesearch-results">
+                <div class="notifications-list">
+                    <div class="boxed-group flush">
+                        <h3>
+                            #{ownerBusinessPatch.selectCategory.category.name}
+                        </h3>
+                        <ul class="boxed-group-inner notifications">
+
+                            <a:repeat value="#{ownerBusinessPatch.selectCategory.defineList}" var="_define">
+
+                                <li class="list-group-item">
+                            <span class="list-group-item-name css-truncate">
+                               <span class="type-icon octicon octicon-repo"></span>
+                                                    <s:link action="#{businessCreateBegin.startCreate}" styleClass="css-truncate-target list-group-item-link"
+                                                            includePageParams="false">
+                                                        #{_define.name}
+                                                        <f:param name="bussinessDefineId" value="#{_define.id}"/>
+                                                        <f:param name="normalBiz" value="#{false}"/>
+                                                    </s:link>
+                            </span>
+                                    <ui:remove> <!--
+                                    <ul class="notification-actions">
+
+                                        <li >
+                                            <s:link p:aria-label="#{messages.businessModifyAndCancel}"
+                                                    includePageParams="false" action="#{businessCreateBegin.searchModify}"
+                                                    class="btn-link mute-note tooltipped tooltipped-w">
+                                                <span class="octicon octicon-pencil"></span>
+                                                <f:param name="businessDefineId" value="#{_define.id}"/>
+                                                <f:param name="normalBiz" value="#{false}"/>
+                                            </s:link>
+                                        </li>
+                                    </ul> -->
+                                    </ui:remove>
+                                </li>
+                            </a:repeat>
+
+                        </ul>
+                    </div>
+                </div>
+            </a:outputPanel>
+
+        </h:form>
+    </a:outputPanel>
+
+
+
+</ui:composition>

@@ -10,7 +10,7 @@ public class SingleHouseBusinessCreate extends HouseBusinessCreateComponent {
 
 
     private static final String NORMAL_BIZ_BEGIN_PAGE = "/business/houseOwner/SingleHouseStart.xhtml";
-    private static final String PATCH_BIZ_BEGIN_PAGE = "";
+    private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/SingleHouseBusinessPatch.xhtml";
 
 
 

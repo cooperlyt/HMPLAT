@@ -12,6 +12,129 @@
                 template="HouseSelectTemplete.xhtml">
 
 
+    <ui:define name="h-house-modal-info">
+        <a:outputPanel layout="block" styleClass="modal-content" rendered="#{not empty ownerBuildGridMap.selectBizHouse}">
+
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h2 class="modal-title">#{ownerBuildGridMap.selectBizHouse.displayHouseCode}</h2>
+            </div>
+            <a:outputPanel  ajaxRendered="false" layout="block" styleClass="modal-body">
+
+                <r:messages ajaxRendered="false" globalOnly="true"/>
+
+                <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+                    <ui:param name="changeDatas" value="#{ownerBuildGridMap.selectHouseChangeData}"/>
+                    #{messages.HouseInfoCompareCreateWarning}
+                </ui:decorate>
+
+                <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
+                    <ui:param name="houseInfo" value="#{ownerBuildGridMap.selectBizHouse}"/>
+                </ui:include>
+
+            </a:outputPanel>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
+
+                <ui:insert name="houseSelectAction">
+
+                </ui:insert>
+            </div>
+        </a:outputPanel>
+    </ui:define>
+
+    <ui:define name="h-build-pick">
+
+        <a:jsFunction execute="@form" name="findBuildBySection" action="#{ownerBuildGridMap.findBuildBySection}" status="processWaiting" render="houseOrderInput">
+            <f:param name="searchBykey" value="#{false}"/>
+        </a:jsFunction>
+
+        <a:outputPanel id="houseOrderInput">
+
+            <a:outputPanel styleClass="input-group" layout="block" rendered="#{buildHome.idDefined}">
+                <span class="input-group-addon">#{messages.MapIdentification_house}</span>
+                <h:inputText styleClass="form-control" autocomplete="off" value="#{ownerBuildGridMap.houseOrder}"/>
+                                            <span class="input-group-btn">
+                                                <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" status="processWaiting" action="#{ownerBuildGridMap.findHouseBySection}">
+                                                    <span class="btn-icon octicon octicon-search"></span>
+                                                    <f:param name="searchBykey" value="#{false}"/>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+                                            </span>
+            </a:outputPanel>
+
+        </a:outputPanel>
+    </ui:define>
+
+    <ui:define name="h-MBBH-SEARCH">
+
+        <a:region id="numbers-inputs">
+            <div class="input-group">
+                <span class="input-group-addon">#{messages.MapIdentification_map}</span>
+                <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.mapNumber}" />
+
+
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">#{messages.MapIdentification_block}</span>
+                <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.blockNumber}" autocomplete="off"/>
+
+
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">#{messages.MapIdentification_build}</span>
+                <h:inputText required="true" styleClass="form-control" value="#{ownerBuildGridMap.buildNumber}" autocomplete="off"/>
+                                        <span class="input-group-btn">
+                                            <a:commandLink execute="@region" status="processWaiting" styleClass="btn btn-default" action="#{ownerBuildGridMap.findBuildByNumber}"
+                                                           render="houseOrderInput">
+                                                <span class="btn-icon octicon octicon-search"></span>
+                                                <a:attachQueue requestDelay="0"/>
+                                                <f:param name="searchBykey" value="#{false}"/>
+                                            </a:commandLink>
+                                        </span>
+
+
+            </div>
+        </a:region>
+        <div class="input-group">
+            <span class="input-group-addon">#{messages.MapIdentification_house}</span>
+            <h:inputText id="houseOrder" required="true" styleClass="form-control"  value="#{ownerBuildGridMap.houseOrder}" autocomplete="off"/>
+                                        <span class="input-group-btn">
+                                            <a:commandLink execute="numbers-inputs,houseOrder" styleClass="btn btn-default" status="processWaiting"
+                                                           action="#{ownerBuildGridMap.findHouseByNumber}">
+                                                <span class="btn-icon octicon octicon-search"></span>
+                                                <a:attachQueue requestDelay="0"/>
+                                                <f:param name="searchBykey" value="#{false}"/>
+                                            </a:commandLink>
+                                        </span>
+
+        </div>
+
+    </ui:define>
+
+    <ui:define name="h-build-map-list">
+
+        <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{not searchBykey and  buildHome.idDefined}">
+            <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
+
+
+                <a:commandLink status="processWaiting" styleClass="list-group-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
+                    #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
+                    <a:attachQueue requestDelay="0"/>
+                    <f:param value="#{_gridMap.id}" name="selectMapId"/>
+                    <f:param value="#{false}" name="dataTableList"/>
+                </a:commandLink>
+            </a:repeat>
+
+            <a:commandLink status="processWaiting" styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}" >
+                #{messages.RecordHouse}
+                <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
+            </a:commandLink>
+        </a:outputPanel>
+    </ui:define>
+
     <ui:define name="h-header-title">
         <h:form id="keySearchForm" >
 

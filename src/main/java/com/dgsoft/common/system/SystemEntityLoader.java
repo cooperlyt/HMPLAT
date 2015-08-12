@@ -1,5 +1,6 @@
 package com.dgsoft.common.system;
 
+import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -33,5 +34,10 @@ public class SystemEntityLoader extends JpaEntityLoader {
     public EntityManager getPersistenceContext(){
 
         return systemEntityManager;
+    }
+
+
+    public static SystemEntityLoader instance(){
+        return (SystemEntityLoader) Component.getInstance(SystemEntityLoader.class,true);
     }
 }

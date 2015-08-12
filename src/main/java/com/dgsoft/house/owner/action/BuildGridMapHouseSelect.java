@@ -1,6 +1,7 @@
-package com.dgsoft.house.action;
+package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.BuildGridMap;
 import com.dgsoft.house.model.GridBlock;
 import com.dgsoft.house.model.GridRow;
@@ -9,8 +10,10 @@ import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.OwnerBusiness;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
@@ -20,6 +23,7 @@ import java.util.*;
  * Created by cooper on 8/11/15.
  */
 @Name("buildGridMapHouseSelect")
+@Scope(ScopeType.CONVERSATION)
 public class BuildGridMapHouseSelect {
 
     @In(required = false)
@@ -27,6 +31,10 @@ public class BuildGridMapHouseSelect {
 
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
+
+
+    @In(create = true)
+    private OwnerEntityLoader ownerEntityLoader;
 
     private BuildGridMap curMap;
 
@@ -36,7 +44,6 @@ public class BuildGridMapHouseSelect {
 
     private List<House> selectBizHouses = new ArrayList<House>();
 
-    private boolean dataTableList;
 
     private String mapNumber;
 
@@ -110,14 +117,6 @@ public class BuildGridMapHouseSelect {
     }
 
 
-    public boolean isDataTableList() {
-        return dataTableList;
-    }
-
-    public void setDataTableList(boolean dataTableList) {
-        this.dataTableList = dataTableList;
-    }
-
     public String getHouseOrder() {
         return houseOrder;
     }
@@ -126,7 +125,9 @@ public class BuildGridMapHouseSelect {
         this.houseOrder = houseOrder;
     }
 
-
+    public List<BuildGridMap> getBuildGridMaps() {
+        return buildGridMaps;
+    }
 
     public String getSelectBizHouseId(){
         if (selectBizHouse == null){
@@ -182,6 +183,30 @@ public class BuildGridMapHouseSelect {
         initBuildMap();
     }
 
+    private boolean houseLocated;
+
+    public boolean isHouseLocated() {
+        return houseLocated;
+    }
+
+    public void setHouseLocated(boolean houseLocated) {
+        this.houseLocated = houseLocated;
+    }
+
+    public void findHouseByNumber(){
+        try {
+
+            selectBizHouse = houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.mapNumber = :mapNumber and house.build.blockNo = :blockNumber and house.build.buildNo = :buildNumber and house.houseOrder = :houseOrder", House.class)
+                            .setParameter("mapNumber", mapNumber).setParameter("blockNumber", blockNumber).setParameter("buildNumber", buildNumber).setParameter("houseOrder",houseOrder).getSingleResult();
+            houseLocated = true;
+
+        } catch (NoResultException e) {
+            selectBizHouse = null;
+            houseLocated = false;
+
+        }
+    }
+
     public void findBuildByNumber() {
         try {
             buildHome.setId(
@@ -191,8 +216,24 @@ public class BuildGridMapHouseSelect {
             initBuildMap();
         } catch (NoResultException e) {
             buildHome.clearInstance();
-            dataTableList = false;
+
         }
+    }
+
+    public void findHouseBySection(){
+        if (buildHome.isIdDefined()){
+            for(House house: buildHome.getInstance().getHouses()){
+                if (house.getHouseOrder().equals(houseOrder)){
+                    houseLocated = true;
+                    selectBizHouse = house;
+                    return;
+                }
+            }
+            houseLocated = false;
+            selectBizHouse = null;
+            return;
+        }
+        throw new IllegalArgumentException("buildHouse is not Defined");
     }
 
 
@@ -200,7 +241,7 @@ public class BuildGridMapHouseSelect {
 
         buildHome.clearInstance();
         buildGridMaps = new ArrayList<BuildGridMap>(0);
-        dataTableList = true;
+
     }
 
 
@@ -232,7 +273,23 @@ public class BuildGridMapHouseSelect {
             houseMap.put(house.getHouseCode(),house);
         }
 
+        List<BusinessHouse> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord left join fetch houseRecord.businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", BusinessHouse.class)
+                .setParameter("houseCodes", houseMap.keySet())
+                .getResultList();
 
+
+        Map<String,BusinessHouse> businessHouseMap = new HashMap<String, BusinessHouse>();
+        for (BusinessHouse house: houseRecords){
+            businessHouseMap.put(house.getHouseCode(),house);
+        }
+
+
+        List<String> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
+                .setParameter("houseCodes", houseMap.keySet()).getResultList();
+
+        List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
+                .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
+        lockedHouseCode.addAll(inBusinessHouseCode);
 
         for(BuildGridMap map: buildGridMaps){
             for(GridRow row: map.getGridRows()){
@@ -242,6 +299,12 @@ public class BuildGridMapHouseSelect {
                         house = houseMap.get(block.getHouseCode());
                     if (house != null){
                         block.setHouse(house);
+                        block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
+                        BusinessHouse businessHouse =  businessHouseMap.get(house.getHouseCode());
+                        if (businessHouse != null) {
+                            block.setOwnerName(businessHouse.getBusinessHouseOwner().getPersonName());
+                            block.setHouseStatus(businessHouse.getMasterStatus());
+                        }
                         houseMap.remove(house.getHouseCode());
                     }
                 }
@@ -265,9 +328,6 @@ public class BuildGridMapHouseSelect {
 
         if (!buildGridMaps.isEmpty()){
             curMap = buildGridMaps.get(0);
-            dataTableList = false;
-        }else{
-            dataTableList = true;
         }
     }
 }
