@@ -233,10 +233,9 @@ public class OwnerBusinessPatch {
         ownerBusinessHome.getInstance().setRecordTime(ownerBusinessHome.getInstance().getApplyTime());
 
         ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(), BusinessEmp.EmpType.PATCH_EMP,authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),new Date()));
-        if (ownerBusinessHome.getInstance().getStatus() == null ||
-                !ownerBusinessHome.getInstance().getStatus().equals(BusinessInstance.BusinessStatus.COMPLETE_CANCEL)) {
-            ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
-        }
+
+        ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+
         recordStore.setOwnerBusiness(ownerBusinessHome.getInstance());
         recordStore.setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
 
@@ -249,7 +248,7 @@ public class OwnerBusinessPatch {
                     houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse()));
                 } else {
                     try {
-                        Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status = 'COMPLETE' or houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL') and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
+                        Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE'  and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
                         if (maxPatchDate != null &&  (maxPatchDate.compareTo(ownerBusinessHome.getInstance().getApplyTime()) > 0)) {
                             houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
                             houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
