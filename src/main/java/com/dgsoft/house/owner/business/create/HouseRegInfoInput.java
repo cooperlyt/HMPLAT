@@ -10,6 +10,7 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by cooper on 8/6/15.
+ * 在业务中,许要编辑产别，产权来源信息不，如果需要编辑配置这个，eg抵押的时候是连接，交易的时候编辑
  */
 @Name("houseRegInfoInput")
 public class HouseRegInfoInput implements BusinessDataFill {
