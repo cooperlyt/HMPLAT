@@ -21,7 +21,7 @@ public class HouseBusiness implements java.io.Serializable {
     private BusinessHouse startBusinessHouse;
     private BusinessHouse afterBusinessHouse;
     private String houseCode;
-    private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
+    private RecordStore recordStore;
     private Set<AddHouseStatus> addHouseStatuses = new HashSet<AddHouseStatus>(0);
 
 
@@ -97,16 +97,15 @@ public class HouseBusiness implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = CascadeType.ALL)
-    public Set<RecordStore> getRecordStores() {
-        return this.recordStores;
+    @ManyToOne(fetch = FetchType.LAZY,optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "RECORD_STORE" ,nullable = true)
+    public RecordStore getRecordStore() {
+        return recordStore;
     }
 
-    public void setRecordStores(Set<RecordStore> recordStores) {
-        this.recordStores = recordStores;
+    public void setRecordStore(RecordStore recordStore) {
+        this.recordStore = recordStore;
     }
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = CascadeType.ALL)
     public Set<AddHouseStatus> getAddHouseStatuses() {
@@ -117,16 +116,5 @@ public class HouseBusiness implements java.io.Serializable {
         this.addHouseStatuses = addHouseStatuses;
     }
 
-    @Transient
-    public List<RecordStore> getRecordStoreList(){
-        List<RecordStore> result = new ArrayList<RecordStore>(getRecordStores());
-        Collections.sort(result, new Comparator<RecordStore>() {
-            @Override
-            public int compare(RecordStore o1, RecordStore o2) {
-                return o1.getId().compareTo(o2.getId());
-            }
-        });
-        return result;
-    }
 
 }

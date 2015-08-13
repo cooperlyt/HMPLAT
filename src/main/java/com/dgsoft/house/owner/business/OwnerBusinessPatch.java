@@ -1,10 +1,8 @@
 package com.dgsoft.house.owner.business;
 
-import com.dgsoft.common.system.AuthenticationManager;
-import com.dgsoft.common.system.FilterBusinessCategory;
-import com.dgsoft.common.system.RunParam;
-import com.dgsoft.common.system.SystemEntityLoader;
+import com.dgsoft.common.system.*;
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.common.system.model.Employee;
@@ -12,10 +10,7 @@ import com.dgsoft.common.system.model.Role;
 import com.dgsoft.house.owner.action.BuildGridMapHouseSelect;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
-import com.dgsoft.house.owner.model.BusinessHouse;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseRecord;
-import com.dgsoft.house.owner.model.RecordStore;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.faces.FacesMessages;
@@ -54,6 +49,11 @@ public class OwnerBusinessPatch {
     @In("#{messages.datetimepattern}")
     private String dateFormat;
 
+    @In
+    private AuthenticationInfo authInfo;
+
+    @In
+    private FacesMessages facesMessages;
 
     @In(required = false)
     private BuildGridMapHouseSelect buildGridMapHouseSelect;
@@ -72,9 +72,9 @@ public class OwnerBusinessPatch {
         this.selectCategoryId = selectCategoryId;
     }
 
-    public FilterBusinessCategory getSelectCategory(){
-        for(FilterBusinessCategory category: filterBusinessCategories){
-            if (category.getCategory().getId().equals(selectCategoryId)){
+    public FilterBusinessCategory getSelectCategory() {
+        for (FilterBusinessCategory category : filterBusinessCategories) {
+            if (category.getCategory().getId().equals(selectCategoryId)) {
                 return category;
             }
         }
@@ -89,7 +89,7 @@ public class OwnerBusinessPatch {
         this.recordStore = recordStore;
     }
 
-    public void intiBusinessCategory(){
+    public void intiBusinessCategory() {
 
 
         Set<BusinessDefine> businessDefines = new HashSet<BusinessDefine>();
@@ -97,14 +97,14 @@ public class OwnerBusinessPatch {
 
 
         List<Role> roles;
-        if (AuthenticationManager.SUPER_ADMIN_USER_NAME.equals(credentials.getUsername())){
+        if (AuthenticationManager.SUPER_ADMIN_USER_NAME.equals(credentials.getUsername())) {
             roles = systemEntityManager.createQuery("select role from Role role", Role.class).getResultList();
-        }else{
+        } else {
             roles = new ArrayList<Role>(systemEntityManager.find(Employee.class, credentials.getUsername()).getRoles());
         }
 
-        for(Role role : roles){
-            for(BusinessDefine define: role.getOldBusinessDefines()){
+        for (Role role : roles) {
+            for (BusinessDefine define : role.getOldBusinessDefines()) {
                 if (define.isEnable()) {
                     businessDefines.add(define);
                     businessCategorys.add(define.getBusinessCategory());
@@ -132,7 +132,7 @@ public class OwnerBusinessPatch {
             }
         });
 
-        if (selectCategoryId == null && !filterBusinessCategories.isEmpty()){
+        if (selectCategoryId == null && !filterBusinessCategories.isEmpty()) {
             selectCategoryId = filterBusinessCategories.get(0).getCategory().getId();
         }
 
@@ -140,7 +140,7 @@ public class OwnerBusinessPatch {
 
     public List<FilterBusinessCategory> getFilterBusinessCategories() {
 
-        if (filterBusinessCategories == null){
+        if (filterBusinessCategories == null) {
             intiBusinessCategory();
         }
 
@@ -148,7 +148,7 @@ public class OwnerBusinessPatch {
     }
 
 
-    public String singleHouseSelected(){
+    public String singleHouseSelected() {
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         ownerBusinessHome.getInstance().setApplyTime(null);
@@ -160,25 +160,25 @@ public class OwnerBusinessPatch {
 
     }
 
-    private String getInfoCompletePath(){
+    private String getInfoCompletePath() {
 
-        if (RunParam.instance().getBooleanParamValue("CreateUploadFile")){
-            return  PATCH_BUSINESS_FILE_PAGE;
-        }else {
+        if (RunParam.instance().getBooleanParamValue("CreateUploadFile")) {
+            return PATCH_BUSINESS_FILE_PAGE;
+        } else {
             return PATCH_BUSINESS_CONFIRM_PAGE;
         }
     }
 
 
-    public String infoComplete(){
+    public String infoComplete() {
 
-        if (businessDefineHome.isHaveNextEditGroup()){
+        if (businessDefineHome.isHaveNextEditGroup()) {
             businessDefineHome.nextEditGroup();
             return BUSINESS_PATCH_EDIT_PAGE;
-        }else{
-            if (businessDefineHome.saveEditSubscribes()){
+        } else {
+            if (businessDefineHome.saveEditSubscribes()) {
                 return getInfoCompletePath();
-            }else{
+            } else {
                 return BUSINESS_PATCH_EDIT_PAGE;
             }
 
@@ -186,25 +186,25 @@ public class OwnerBusinessPatch {
 
     }
 
-    public String beginEdit(){
-        if (businessDefineHome.isHaveEditSubscribe()){
+    public String beginEdit() {
+        if (businessDefineHome.isHaveEditSubscribe()) {
             businessDefineHome.firstEditGroup();
             return BUSINESS_PATCH_EDIT_PAGE;
-        } else{
+        } else {
             return getInfoCompletePath();
         }
     }
 
-    public Date getMaxDateTime(){
+    public Date getMaxDateTime() {
         Date result = new Date();
 
-        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
+        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
             try {
                 Date normalBizDate = ownerBusinessHome.getEntityManager().createQuery("select min(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source = 'BIZ_CREATE' and houseBusiness.houseCode = :houseCode", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
-               if(normalBizDate != null && normalBizDate.compareTo(result) < 0){
-                   result = normalBizDate;
-               }
-            } catch (NoResultException e){
+                if (normalBizDate != null && normalBizDate.compareTo(result) < 0) {
+                    result = normalBizDate;
+                }
+            } catch (NoResultException e) {
 
             }
         }
@@ -213,24 +213,58 @@ public class OwnerBusinessPatch {
 
     }
 
-    public String getLocalMaxDateTime(){
-       return new SimpleDateFormat(dateFormat).format(getMaxDateTime());
+    public String getLocalMaxDateTime() {
+        return new SimpleDateFormat(dateFormat).format(getMaxDateTime());
     }
 
     @End
-    public String completeAndSave(){
-        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            if(ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source = 'BIZ_CREATE' and houseBusiness.houseCode = :houseCode",Long.class).setParameter("houseCode",houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0){
+    @Transactional
+    public String completeAndSave() {
 
-                HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode());
-                if (houseRecord == null){
-                  //  houseBusiness.getAfterBusinessHouse().setHouseRecord();  new HouseRecord(houseBusiness.getAfterBusinessHouse());
-                }else{
+        if (getMaxDateTime().compareTo(ownerBusinessHome.getInstance().getApplyTime()) < 0){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"PatchDateTimeError",getLocalMaxDateTime());
+            return null;
 
+        }
+
+        ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_AFTER_SAVE);
+        ownerBusinessHome.getInstance().setRecorded(true);
+        ownerBusinessHome.getInstance().setRegTime(ownerBusinessHome.getInstance().getApplyTime());
+        ownerBusinessHome.getInstance().setRecordTime(ownerBusinessHome.getInstance().getApplyTime());
+
+        ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(), BusinessEmp.EmpType.PATCH_EMP,authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),new Date()));
+
+        ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+
+        recordStore.setOwnerBusiness(ownerBusinessHome.getInstance());
+        recordStore.setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
+
+        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            houseBusiness.setRecordStore(recordStore);
+            if (ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source <> 'BIZ_AFTER_SAVE' and houseBusiness.houseCode = :houseCode", Long.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
+
+                HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
+                if (houseRecord == null) {
+                    houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse()));
+                } else {
+                    try {
+                        Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE'  and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
+                        if (maxPatchDate != null &&  (maxPatchDate.compareTo(ownerBusinessHome.getInstance().getApplyTime()) > 0)) {
+                            houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
+                            houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
+                        }
+                    } catch (NoResultException e) {
+
+                    }
                 }
 
-                //ownerBusinessHome.getEntityManager().createQuery("select houseBusiness.ownerBusiness.applyTime from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status = 'COMPLETE' or houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL') and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ")
             }
+
+        }
+
+
+        for (BusinessProject businessProject : ownerBusinessHome.getInstance().getBusinessProjects()) {
+            businessProject.setRecordStore(recordStore);
 
         }
         return ownerBusinessHome.persist();

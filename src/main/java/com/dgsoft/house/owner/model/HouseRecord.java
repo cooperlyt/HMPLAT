@@ -21,7 +21,6 @@ public class HouseRecord implements java.io.Serializable {
 
 	private BusinessHouse businessHouse;
 	private String houseCode;
-	private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
 
 	public HouseRecord() {
 	}
@@ -53,17 +52,6 @@ public class HouseRecord implements java.io.Serializable {
     public void setHouseCode(String houseCode) {
         this.houseCode = houseCode;
     }
-
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseRecord")
-	public Set<RecordStore> getRecordStores() {
-		return this.recordStores;
-	}
-
-	public void setRecordStores(Set<RecordStore> recordStores) {
-		this.recordStores = recordStores;
-	}
-
 
 
 }

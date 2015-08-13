@@ -24,9 +24,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @In(required = false)
     private BusinessDefineHome businessDefineHome;
 
-    @In
-    private AuthenticationInfo authInfo;
-
 
     @Override
     public OwnerBusiness createInstance(){
@@ -36,15 +33,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         result.setDefineId(businessDefineHome.getInstance().getId());
         result.setDefineName(businessDefineHome.getInstance().getName());
 
-        result.getBusinessEmps().add(new BusinessEmp(result,
-                BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
-                authInfo.getLoginEmployee().getPersonName(),new Date()));
+
         result.setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + result.getId());
-        result.getTaskOpers().add(
-                new TaskOper(result, TaskOper.OperType.CREATE,
-                        RunParam.instance().getStringParamValue("CreateBizTaskName"),
-                        authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),businessDefineHome.getDescription()));
 
         return result;
     }

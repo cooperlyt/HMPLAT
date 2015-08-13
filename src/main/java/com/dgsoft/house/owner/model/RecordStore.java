@@ -17,8 +17,9 @@ import java.util.Set;
 public class RecordStore implements java.io.Serializable {
 
     private String id;
-    private HouseBusiness houseBusiness;
-    private HouseRecord houseRecord;
+    private Set<HouseBusiness> houseBusiness = new HashSet<HouseBusiness>(0);
+    private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
+    private OwnerBusiness ownerBusiness;
     private String frame;
     private String cabinet;
     private String box;
@@ -27,10 +28,6 @@ public class RecordStore implements java.io.Serializable {
     public RecordStore() {
     }
 
-    public RecordStore(String id, HouseBusiness houseBusiness){
-        this.houseBusiness = houseBusiness;
-        this.id = id;
-    }
 
 
     @Id
@@ -45,27 +42,6 @@ public class RecordStore implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS_HOUSE", nullable = false)
-    @NotNull
-    public HouseBusiness getHouseBusiness() {
-        return this.houseBusiness;
-    }
-
-    public void setHouseBusiness(HouseBusiness houseBusiness) {
-        this.houseBusiness = houseBusiness;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = true,cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOUSE_CODE", nullable = true)
-    @NotNull
-    public HouseRecord getHouseRecord() {
-        return this.houseRecord;
-    }
-
-    public void setHouseRecord(HouseRecord houseRecord) {
-        this.houseRecord = houseRecord;
-    }
 
     @Column(name = "FRAME", nullable = true, length = 10)
     @Size(max = 10)
@@ -110,5 +86,32 @@ public class RecordStore implements java.io.Serializable {
         this.recordCode = recordCode;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recordStore")
+    public Set<HouseBusiness> getHouseBusiness() {
+        return houseBusiness;
+    }
 
+    public void setHouseBusiness(Set<HouseBusiness> houseBusiness) {
+        this.houseBusiness = houseBusiness;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recordStore")
+    public Set<BusinessProject> getBusinessProjects() {
+        return businessProjects;
+    }
+
+    public void setBusinessProjects(Set<BusinessProject> businessProjects) {
+        this.businessProjects = businessProjects;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "BUSINESS",nullable = false)
+    @NotNull
+    public OwnerBusiness getOwnerBusiness() {
+        return ownerBusiness;
+    }
+
+    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+        this.ownerBusiness = ownerBusiness;
+    }
 }

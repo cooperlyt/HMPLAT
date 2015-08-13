@@ -32,15 +32,10 @@ public class StatusComplete implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)){
-            if (ownerBusinessHome.getInstance().getSelectBusiness() != null){
-                ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE_CANCEL);
-            }
-        }else{
+        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)){
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
         }
-
-
         ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+
     }
 }

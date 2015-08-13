@@ -14,7 +14,7 @@
             </s:label>
         </dt>
        <dd>
-        <a:outputPanel id="#{for}_inputArea" styleClass="js-form-input #{invalid?'edit-error':'edit-success'}">
+        <a:outputPanel id="#{for}_inputArea" styleClass="js-form-input #{((empty showTip) or showTip) ?  (invalid?'edit-error':'edit-success') : ''}">
             <ui:insert/>
             <a:status name="#{status}" rendered="#{not empty status}"
                       onstart="startEditValid(this);"/>

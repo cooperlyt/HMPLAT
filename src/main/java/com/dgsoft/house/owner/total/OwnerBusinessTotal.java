@@ -26,7 +26,7 @@ public class OwnerBusinessTotal {
 
     private void initData(){
         resultData = new HashMap<BusinessCategory, List<OwnerBusinessTotalData>>();
-        List<OwnerBusinessTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.OwnerBusinessTotalData(ob.defineId,count(ob.id)) from OwnerBusiness ob where ob.status = 'COMPLETE' or ob.status = 'COMPLETE_CANCEL' group by ob.defineId", OwnerBusinessTotalData.class).getResultList();
+        List<OwnerBusinessTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.OwnerBusinessTotalData(ob.defineId,count(ob.id)) from OwnerBusiness ob where ob.status = 'COMPLETE' group by ob.defineId", OwnerBusinessTotalData.class).getResultList();
         for(OwnerBusinessTotalData data: datas){
             BusinessDefine define = systemEntityLoader.getEntityManager().find(BusinessDefine.class,data.getDefineId());
             if (define != null && define.isEnable()){
