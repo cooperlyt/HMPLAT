@@ -61,6 +61,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     private Set<BusinessProject> businessProjects = new HashSet<BusinessProject>(0);
     private Set<ProcessMessage> processMessages = new HashSet<ProcessMessage>(0);
     private Set<FactMoneyInfo> factMoneyInfos = new HashSet<FactMoneyInfo>(0);
+    private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
 
     public OwnerBusiness() {
     }
@@ -432,6 +433,14 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.recordTime = recordTime;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+    public Set<RecordStore> getRecordStores() {
+        return recordStores;
+    }
+
+    public void setRecordStores(Set<RecordStore> recordStores) {
+        this.recordStores = recordStores;
+    }
 
     @Transient
     public BusinessProject getBusinessProject(){

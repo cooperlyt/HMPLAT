@@ -69,7 +69,7 @@ public class RecordStoreSubscribe {
 
     public void addNewStore(){
         HouseBusiness houseBusiness = getSelectHouseBusiness();
-        houseBusiness.getRecordStores().add(new RecordStore(UUID.randomUUID().toString().replace("-", "").toUpperCase(), houseBusiness));
+       // houseBusiness.getRecordStores().add(new RecordStore(UUID.randomUUID().toString().replace("-", "").toUpperCase(), houseBusiness));
     }
 
     private HouseBusiness getSelectHouseBusiness(){
@@ -83,27 +83,28 @@ public class RecordStoreSubscribe {
 
     public List<RecordStore> getExistsStore(String houseCode){
        return ownerEntityLoader.getEntityManager().createQuery("select recordStore from RecordStore recordStore where recordStore.houseRecord.houseCode = :houseCode order by recordStore.houseBusiness.ownerBusiness.recordTime desc",RecordStore.class).setParameter("houseCode",houseCode).getResultList();
+
     }
 
 
     public void putToExistsStore(){
-        for(RecordStore store: getSelectHouseBusiness().getRecordStores()){
-            if (store.getId().equals(selectRecordStoreId)){
-                RecordStore oldStore = ownerEntityLoader.getEntityManager().find(RecordStore.class,oldRecordStoreId);
-                store.setFrame(oldStore.getFrame());
-                store.setCabinet(oldStore.getCabinet());
-                store.setBox(oldStore.getBox());
-            }
-        }
+//        for(RecordStore store: getSelectHouseBusiness().getRecordStores()){
+//            if (store.getId().equals(selectRecordStoreId)){
+//                RecordStore oldStore = ownerEntityLoader.getEntityManager().find(RecordStore.class,oldRecordStoreId);
+//                store.setFrame(oldStore.getFrame());
+//                store.setCabinet(oldStore.getCabinet());
+//                store.setBox(oldStore.getBox());
+//            }
+//        }
     }
 
     @Create
     public void initSubscribe() {
-        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            if (houseBusiness.getRecordStores().isEmpty()) {
-                houseBusiness.getRecordStores().add(new RecordStore(UUID.randomUUID().toString().replace("-", "").toUpperCase(),houseBusiness));
-            }
-        }
+//        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+//            if (houseBusiness.getRecordStores().isEmpty()) {
+//                houseBusiness.getRecordStores().add(new RecordStore(UUID.randomUUID().toString().replace("-", "").toUpperCase(),houseBusiness));
+//            }
+//        }
 
     }
 

@@ -33,7 +33,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String districtCode;
     private String districtName;
     private String projectCode;
-    private Set<ProjectRecordStore> projectRecordStores = new HashSet<ProjectRecordStore>(0);
+    private RecordStore recordStore;
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
     private ProjectSellInfo projectSellInfo;
 
@@ -212,13 +212,14 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessProject", cascade = CascadeType.ALL)
-    public Set<ProjectRecordStore> getProjectRecordStores() {
-        return this.projectRecordStores;
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,optional = true)
+    @JoinColumn(name = "RECORD_STORE" , nullable = true)
+    public RecordStore getRecordStore() {
+        return recordStore;
     }
 
-    public void setProjectRecordStores(Set<ProjectRecordStore> projectRecordStores) {
-        this.projectRecordStores = projectRecordStores;
+    public void setRecordStore(RecordStore recordStore) {
+        this.recordStore = recordStore;
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessProject")

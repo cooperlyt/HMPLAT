@@ -6,4 +6,14 @@
     <restrict>#{s:hasRole('owner.patchBusiness')}</restrict>
     <action execute="#{businessDefineHome.validComplete}"/>
     <action execute="#{businessDefineHome.validSubscribes}"/>
+
+
+    <navigation from-action="#{ownerBusinessPatch.completeAndSave}">
+        <rule if-outcome="persisted">
+            <redirect view-id="/func/house/owner/PatchOwnerBusiness.xhtml"/>
+        </rule>
+    </navigation>
+
+
+
 </page>

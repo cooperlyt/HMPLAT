@@ -37,6 +37,7 @@
                             endDate: '#{ownerBusinessPatch.localMaxDateTime}'
 
                         });
+                        initEditInput();
 
                     }
             );
@@ -99,7 +100,7 @@
                 <s:decorate id="recordStoreField" styleClass="form-group " template="/layout/edit-big.xhtml">
                     <ui:param name="for" value="recordNumberInput"/>
                     <ui:param name="showLabel" value="#{false}"/>
-
+                    <ui:param name="showTip" value="#{false}"/>
                     <div class="input-group">
                                  <span class="input-group-addon">
                                #{messages.businessPatchTime}
@@ -114,7 +115,7 @@
                         <span class="input-group-addon">
                                #{messages.RecordStore_Code}
                         </span>
-                    <h:inputText id="recordNumberInput" label="#{messages.RecordStore_FRAME}"
+                    <h:inputText id="recordNumberInput" label="#{messages.RecordStore_Code}"
                                  required="true" maxlength="50" styleClass="form-control"
                                  value="#{ownerBusinessPatch.recordStore.recordCode}"/>
 
