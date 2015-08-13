@@ -50,20 +50,20 @@
         <ui:param name="for" value="closeDate"/>
         <div class="input-group">
             <h:inputText id="closeDate"
-                         rendered="true"
+                         required="true"
                          styleClass="js-datepicker form-control"
                          label="#{messages.CloseHouse_CloseDate}"
                          value="#{closeHouseSubsrcibe.instance.closeDate}">
-                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                <s:convertDateTime pattern="#{messages.datePattern}"/>
             </h:inputText>
             <span class="input-group-addon">-</span>
 
             <h:inputText id="toDateField"
-                         rendered="true"
+                         required="true"
                          styleClass="js-datepicker form-control"
                          label="#{messages.timeZone}"
                          value="#{closeHouseSubsrcibe.instance.toDate}">
-                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                <s:convertDateTime pattern="#{messages.datePattern}"/>
             </h:inputText>
 
         </div>

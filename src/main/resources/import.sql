@@ -24,7 +24,7 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('HouseCodeDisplayModel','INT
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('CreateUploadFile','BOOLEAN','true','true: 建立业务需要上传文件，false: 建立业务不需要上传文件');
 
 
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('CreateUploadFile','BOOLEAN','true','true: 建立业务需要上传文件，false: 建立业务不需要上传文件');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('CreateUploadFile','BOOLEAN','false','true: 建立业务需要上传文件，false: 建立业务不需要上传文件');
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AllowBusinessNoFile','BOOLEAN','true','true: 可以暂不上传要件，false: 不可以暂不上传要件');
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AllowNoFileRecord','BOOLEAN','true','true: 有暂缺要件可以归档，false: 有暂缺要件不可以归档');
