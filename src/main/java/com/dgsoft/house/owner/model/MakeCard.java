@@ -50,7 +50,7 @@ public class MakeCard implements java.io.Serializable {
 
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public CardInfo getCardInfo() {
         return cardInfo;

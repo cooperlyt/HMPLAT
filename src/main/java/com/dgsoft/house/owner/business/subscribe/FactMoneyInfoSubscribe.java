@@ -29,8 +29,12 @@ public class FactMoneyInfoSubscribe extends OwnerEntityHome<FactMoneyInfo> {
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             getInstance().setFactTime(new Date());
             ownerBusinessHome.getInstance().getFactMoneyInfos().add(getInstance());
+
+
             for (BusinessMoney businessMoney:ownerBusinessHome.getInstance().getBusinessMoneys()){
+                businessMoney.setFactMoneyInfo(getInstance());
                 getInstance().getBusinessMoneys().add(businessMoney);
+
             }
         }
     }

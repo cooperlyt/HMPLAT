@@ -349,7 +349,7 @@ public class HouseBusinessModifyStart {
             if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner() != null) {
 
                 if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner().getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {
-                    result.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusiness, result.getAfterBusinessHouse(), houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()));
+                    result.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusiness, houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()));
                 } //else {
                   //  result.getAfterBusinessHouse().setBusinessHouseOwner(houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner());
                 //}

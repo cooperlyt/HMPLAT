@@ -125,12 +125,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     public FactMoneyInfo getFactMoneyInfo(){
-
-        log.debug("11111111");
         if (!getInstance().getFactMoneyInfos().isEmpty()){
-            log.debug("2222");
-            log.debug("3333+:"+getInstance().getFactMoneyInfos().size());
-            return getInstance().getFactMoneyInfos().iterator().next();
+             return getInstance().getFactMoneyInfos().iterator().next();
         }
         return null;
     }

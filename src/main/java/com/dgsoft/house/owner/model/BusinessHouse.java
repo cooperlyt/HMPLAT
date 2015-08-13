@@ -712,7 +712,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MAIN_OWNER",nullable = true)
     public BusinessHouseOwner getBusinessHouseOwner() {
         return businessHouseOwner;

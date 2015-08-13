@@ -361,7 +361,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.businessProjects = businessProjects;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",orphanRemoval = true,cascade = CascadeType.ALL)
     public Set<FactMoneyInfo> getFactMoneyInfos() {
         return factMoneyInfos;
     }
