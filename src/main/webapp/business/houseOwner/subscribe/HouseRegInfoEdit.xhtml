@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <div class="form-inline">
+
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:param name="for" value="housePorperInput"/>
         <ui:define name="label">
@@ -32,7 +32,7 @@
         <ui:define name="label">
             #{messages.HOUSE_FROM}
         </ui:define>
-        <a:outputPanel styleClass="input-group-btn">
+
             <h:selectOneMenu id="houseFromInput"
                              value="#{houseRegInfoSubscribe.instance.houseFrom}"
                              label="#{messages.HOUSE_FROM}"
@@ -43,9 +43,9 @@
                                label="#{_word.value}"
                                noSelectionLabel="#{messages.noSelectLabel}"/>
             </h:selectOneMenu>
-        </a:outputPanel>
+
     </s:decorate>
-    </div>
+
 
 
 

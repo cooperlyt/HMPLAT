@@ -362,7 +362,7 @@
      <edit-subscribe name="PersionSellEntrustEdit" page="/business/houseOwner/subscribe/PersionSellEntrustEdit.xhtml"
                      component="">
          <description>
-             卖方代理人编辑
+             原产权代理人编辑
          </description>
      </edit-subscribe>
 
@@ -927,7 +927,7 @@
 
     <create-component type="DATA_FILL" component="houseRegInfoInput">
         <description>
-            产别,产权来源提取(新建,编辑提取)
+            产别,产权来源提取(新建,编辑提取,更正登记)
         </description>
     </create-component>
 
