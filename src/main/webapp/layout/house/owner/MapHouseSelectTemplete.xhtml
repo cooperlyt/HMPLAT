@@ -30,7 +30,7 @@
                               groupWidth="50"  >
                     <ui:include src="/layout/house/HouseInfoView.xhtml">
                         <ui:param name="houseInfo" value="#{buildGridMapHouseSelect.selectBizHouse}"/>
-
+                        <ui:param name="showStatus" value="#{false}"/>
                     </ui:include>
 
                 </dh:entryGrid>
@@ -56,11 +56,12 @@
 
             <a:outputPanel styleClass="input-group" layout="block" rendered="#{buildHome.idDefined}">
                 <span class="input-group-addon">#{messages.MapIdentification_house}</span>
-                <h:inputText styleClass="form-control" autocomplete="off" value="#{buildGridMapHouseSelect.houseOrder}"/>
+                <h:inputText styleClass="form-control" id="sectionHouseOrderInput" autocomplete="off" value="#{buildGridMapHouseSelect.houseOrder}"/>
                                             <span class="input-group-btn">
-                                                <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default"
+                                                <a:commandLink execute="numbers-inputs,@this,sectionHouseOrderInput" styleClass="btn btn-default"
                                                                data="#{buildGridMapHouseSelect.houseLocated}"
-                                                               oncomplete="if(event.data){alert('TODO')}else{alert('TODO')}"
+                                                               render="houseInfoContent"
+                                                               oncomplete="if(event.data){restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})}else{bootbox.alert('#{messages.MapHouseNotFound}');}"
                                                                status="processWaiting" action="#{buildGridMapHouseSelect.findHouseBySection}">
                                                     <span class="btn-icon octicon octicon-search"></span>
                                                     <a:attachQueue requestDelay="0"/>
@@ -106,7 +107,8 @@
                                         <span class="input-group-btn">
                                             <a:commandLink execute="numbers-inputs,houseOrder" styleClass="btn btn-default" status="processWaiting"
                                                            data="#{buildGridMapHouseSelect.houseLocated}"
-                                                           oncomplete="if(event.data){alert('TODO')}else{alert('TODO')}"
+                                                           render="houseInfoContent"
+                                                           oncomplete="if(event.data){restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})}else{bootbox.alert('#{messages.MapHouseNotFound}');}"
                                                            action="#{buildGridMapHouseSelect.findHouseByNumber}">
                                                 <span class="btn-icon octicon octicon-search"></span>
                                                 <a:attachQueue requestDelay="0"/>
@@ -345,7 +347,7 @@
 
             <ui:insert name="contextRight"/>
 
-
+            <h:outputScript library="bootbox" name="bootbox.min.js"/>
 
         </a:outputPanel>
 

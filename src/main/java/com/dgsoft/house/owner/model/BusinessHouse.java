@@ -692,7 +692,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.housesForAfterBusiness = housesForAfterBusiness;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "businessHouse")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "businessHouse")
     public HouseRecord getHouseRecord() {
         return houseRecord;
     }

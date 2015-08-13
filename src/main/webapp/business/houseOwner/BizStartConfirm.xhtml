@@ -50,7 +50,7 @@
                     <s:button styleClass="btn btn-primary #{(businessDefineHome.subscribesPass and businessDefineHome.completePass and ownerBusinessStart.needFilePass) ? '' : 'disabled'}"
                             disabled="#{not businessDefineHome.subscribesPass or not businessDefineHome.completePass or not ownerBusinessStart.needFilePass}"
                             action="#{ownerBusinessCreate.createBusiness}" value="#{messages.createBusiness}"
-                            p:data-loading-text="#{messages.businessCreating}" onclick="#{r:component('wait')}.show()">
+                            data-loading-text="#{messages.businessCreating}" onclick="#{r:component('wait')}.show()">
 
 
                     </s:button>

@@ -2,12 +2,20 @@ package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.AuthenticationManager;
 import com.dgsoft.common.system.FilterBusinessCategory;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.SystemEntityLoader;
+import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.common.system.model.Employee;
 import com.dgsoft.common.system.model.Role;
 import com.dgsoft.house.owner.action.BuildGridMapHouseSelect;
+import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
+import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseBusiness;
+import com.dgsoft.house.owner.model.HouseRecord;
+import com.dgsoft.house.owner.model.RecordStore;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.faces.FacesMessages;
@@ -16,6 +24,8 @@ import org.jboss.seam.log.Logging;
 import org.jboss.seam.security.Credentials;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -24,17 +34,26 @@ import java.util.*;
 @Name("ownerBusinessPatch")
 public class OwnerBusinessPatch {
 
+    private static final String BUSINESS_PATCH_EDIT_PAGE = "/business/houseOwner/BusinessPatchSubscribe.xhtml";
+    private static final String PATCH_BUSINESS_FILE_PAGE = "/business/houseOwner/BusinessPatchFileUpload.xhtml";
+    private static final String PATCH_BUSINESS_CONFIRM_PAGE = "/business/houseOwner/BusinessPatchConfirm.xhtml";
+
+
     @In
     private Credentials credentials;
 
     @In(create = true)
     private EntityManager systemEntityManager;
 
-    @In(create = true)
-    private EntityManager ownerEntityManager;
+    @In(required = false)
+    private BusinessDefineHome businessDefineHome;
 
-    @In
-    private FacesMessages facesMessages;
+    @In(create = true)
+    private OwnerBusinessHome ownerBusinessHome;
+
+    @In("#{messages.datetimepattern}")
+    private String dateFormat;
+
 
     @In(required = false)
     private BuildGridMapHouseSelect buildGridMapHouseSelect;
@@ -42,6 +61,8 @@ public class OwnerBusinessPatch {
     private List<FilterBusinessCategory> filterBusinessCategories;
 
     private String selectCategoryId;
+
+    private RecordStore recordStore = new RecordStore();
 
     public String getSelectCategoryId() {
         return selectCategoryId;
@@ -60,7 +81,13 @@ public class OwnerBusinessPatch {
         return null;
     }
 
+    public RecordStore getRecordStore() {
+        return recordStore;
+    }
 
+    public void setRecordStore(RecordStore recordStore) {
+        this.recordStore = recordStore;
+    }
 
     public void intiBusinessCategory(){
 
@@ -121,7 +148,94 @@ public class OwnerBusinessPatch {
     }
 
 
+    public String singleHouseSelected(){
 
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+        ownerBusinessHome.getInstance().setApplyTime(null);
+        BusinessHouse startHouse = new BusinessHouse(buildGridMapHouseSelect.getSelectBizHouse());
+
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), startHouse, OwnerHouseHelper.instance().getMasterStatus(startHouse.getHouseCode())));
+
+        return beginEdit();
+
+    }
+
+    private String getInfoCompletePath(){
+
+        if (RunParam.instance().getBooleanParamValue("CreateUploadFile")){
+            return  PATCH_BUSINESS_FILE_PAGE;
+        }else {
+            return PATCH_BUSINESS_CONFIRM_PAGE;
+        }
+    }
+
+
+    public String infoComplete(){
+
+        if (businessDefineHome.isHaveNextEditGroup()){
+            businessDefineHome.nextEditGroup();
+            return BUSINESS_PATCH_EDIT_PAGE;
+        }else{
+            if (businessDefineHome.saveEditSubscribes()){
+                return getInfoCompletePath();
+            }else{
+                return BUSINESS_PATCH_EDIT_PAGE;
+            }
+
+        }
+
+    }
+
+    public String beginEdit(){
+        if (businessDefineHome.isHaveEditSubscribe()){
+            businessDefineHome.firstEditGroup();
+            return BUSINESS_PATCH_EDIT_PAGE;
+        } else{
+            return getInfoCompletePath();
+        }
+    }
+
+    public Date getMaxDateTime(){
+        Date result = new Date();
+
+        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
+            try {
+                Date normalBizDate = ownerBusinessHome.getEntityManager().createQuery("select min(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source = 'BIZ_CREATE' and houseBusiness.houseCode = :houseCode", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
+               if(normalBizDate != null && normalBizDate.compareTo(result) < 0){
+                   result = normalBizDate;
+               }
+            } catch (NoResultException e){
+
+            }
+        }
+
+        return result;
+
+    }
+
+    public String getLocalMaxDateTime(){
+       return new SimpleDateFormat(dateFormat).format(getMaxDateTime());
+    }
+
+    @End
+    public String completeAndSave(){
+        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            if(ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source = 'BIZ_CREATE' and houseBusiness.houseCode = :houseCode",Long.class).setParameter("houseCode",houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0){
+
+                HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode());
+                if (houseRecord == null){
+                  //  houseBusiness.getAfterBusinessHouse().setHouseRecord();  new HouseRecord(houseBusiness.getAfterBusinessHouse());
+                }else{
+
+                }
+
+                //ownerBusinessHome.getEntityManager().createQuery("select houseBusiness.ownerBusiness.applyTime from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status = 'COMPLETE' or houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL') and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ")
+            }
+
+        }
+        return ownerBusinessHome.persist();
+
+    }
 
 
 }

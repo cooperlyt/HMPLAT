@@ -53,11 +53,11 @@
 
         <a:outputPanel id="houseOrderInput">
 
-            <a:outputPanel styleClass="input-group" layout="block" rendered="#{buildHome.idDefined}">
+            <a:outputPanel styleClass="input-group" id="sectionHouseOrderInput" layout="block" rendered="#{buildHome.idDefined}">
                 <span class="input-group-addon">#{messages.MapIdentification_house}</span>
                 <h:inputText styleClass="form-control" autocomplete="off" value="#{ownerBuildGridMap.houseOrder}"/>
                                             <span class="input-group-btn">
-                                                <a:commandLink execute="numbers-inputs,@this" styleClass="btn btn-default" status="processWaiting" action="#{ownerBuildGridMap.findHouseBySection}">
+                                                <a:commandLink execute="sectionHouseOrderInput,numbers-inputs,@this" styleClass="btn btn-default" status="processWaiting" action="#{ownerBuildGridMap.findHouseBySection}">
                                                     <span class="btn-icon octicon octicon-search"></span>
                                                     <f:param name="searchBykey" value="#{false}"/>
                                                     <a:attachQueue requestDelay="0"/>
@@ -158,6 +158,10 @@
 
 
         </h:form>
+
+        <ui:insert name="function-title"/>
+
+
     </ui:define>
 
 
