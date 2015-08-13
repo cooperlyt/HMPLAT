@@ -14,14 +14,13 @@
 
 
     <a:outputPanel
-            rendered="#{(not empty ownerBusinessHome.instance.houseRegInfo)}">
+            rendered="#{(not empty ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo)}">
         <dh:entryGridBlock columns="4" >
-
             <h:outputText value="#{messages.RegisterProperty_HouseProperty}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.instance.houseRegInfo.houseProperty)}"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseProperty)}"/>
 
             <h:outputText value="#{messages.RegisterProperty_HouseFrom}"/>
-            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.instance.houseRegInfo.houseFrom)}"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseFrom)}"/>
 
 
         </dh:entryGridBlock>
