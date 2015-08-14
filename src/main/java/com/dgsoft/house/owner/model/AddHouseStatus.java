@@ -17,6 +17,7 @@ public class AddHouseStatus implements java.io.Serializable {
     private HouseInfo.HouseStatus status;
     private String id;
     private HouseBusiness houseBusiness;
+    private boolean remove;
 
     public AddHouseStatus() {
     }
@@ -61,5 +62,14 @@ public class AddHouseStatus implements java.io.Serializable {
 
     public void setHouseBusiness(HouseBusiness houseBusiness) {
         this.houseBusiness = houseBusiness;
+    }
+
+    @Column(name = "IS_REMOVE", nullable = false)
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
     }
 }

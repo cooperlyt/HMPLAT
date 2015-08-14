@@ -2,11 +2,13 @@ package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.model.AddHouseStatus;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,9 +31,14 @@ public class OwnerHouseHelper {
         List<HouseInfo.HouseStatus> result = new ArrayList<HouseInfo.HouseStatus>();
 
 
-         for(HouseInfo.HouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus.status from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded = true))", HouseInfo.HouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
-            if (status.isAllowRepeat() || !result.contains(status)){
-                result.add(status);
+         for(AddHouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) order by remove", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
+            if(status.isRemove()){
+
+                if (!result.remove(status.getStatus())){
+                    Logging.getLog(getClass()).warn("calc all house status remove fail.");
+                }
+            }else if (status.getStatus().isAllowRepeat() || !result.contains(status.getStatus())){
+                result.add(status.getStatus());
             }
          }
 
