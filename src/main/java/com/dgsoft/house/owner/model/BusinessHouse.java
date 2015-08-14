@@ -75,6 +75,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     private LandInfo landInfo;
     private BusinessHouseOwner businessHouseOwner;
+    private ContractOwner contractOwner;
     private Set<MakeCard> otherPowerCards = new HashSet<MakeCard>(0);
     private HouseRegInfo houseRegInfo;
     private String buildDevNumber;
@@ -712,7 +713,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "MAIN_OWNER",nullable = true)
     public BusinessHouseOwner getBusinessHouseOwner() {
         return businessHouseOwner;
@@ -720,6 +721,16 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
         this.businessHouseOwner = businessHouseOwner;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "CONTRACT_OWNER",nullable = true)
+    public ContractOwner getContractOwner() {
+        return contractOwner;
+    }
+
+    public void setContractOwner(ContractOwner contractOwner) {
+        this.contractOwner = contractOwner;
     }
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

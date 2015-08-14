@@ -1,8 +1,5 @@
 package com.dgsoft.house.owner.business;
 
-import com.dgsoft.common.system.business.BusinessCreateComponent;
-import org.jboss.seam.annotations.Begin;
-import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.Name;
 
 /**
@@ -10,18 +7,23 @@ import org.jboss.seam.annotations.Name;
  */
 
 @Name("projectBusinessCreateComponent")
-public class ProjectBusinessCreateComponent implements BusinessCreateComponent {
+public class ProjectBusinessCreateComponent extends OwnerBusinessCreateComponent {
 
-    private static final String PROJECT_START_PAGE = "";
+    private static final String PROJECT_BUSINESS_START_PAGE = "/business/houseOwner/ProjectBusinessStart.xhtml";
+    private static final String PROJECT_BUSINESS_PATCH_PAGE = "";
 
     @Override
-    @Begin(flushMode = FlushModeType.MANUAL)
-    public String startCreate() {
-        return PROJECT_START_PAGE;
+    protected String getNormalBusinessPage() {
+        return PROJECT_BUSINESS_START_PAGE;
     }
 
     @Override
-    public String searchModify() {
+    protected String getPatchBusinessPage() {
+        return PROJECT_BUSINESS_PATCH_PAGE;
+    }
+
+    @Override
+    public String searchModify(){
         return null;
     }
 

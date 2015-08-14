@@ -124,6 +124,7 @@
         <class>com.dgsoft.house.owner.model.LockedHouse</class>
         <class>com.dgsoft.house.owner.model.ProcessMessage</class>
         <class>com.dgsoft.house.owner.model.FactMoneyInfo</class>
+        <class>com.dgsoft.house.owner.model.ContractOwner</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

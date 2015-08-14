@@ -355,6 +355,14 @@ public class HouseBusinessModifyStart {
                 //}
             }
 
+            if (houseBusiness.getAfterBusinessHouse().getContractOwner() != null) {
+                if (houseBusiness.getAfterBusinessHouse().getContractOwner().getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())){
+                    result.getAfterBusinessHouse().setContractOwner(new ContractOwner(ownerBusiness,houseBusiness.getAfterBusinessHouse().getContractOwner()));
+                }
+
+            }
+
+
             return result;
         }
 

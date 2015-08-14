@@ -30,7 +30,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     private String memo;
 
     private String legalPerson;
-    private String rootAddress;
 
     private OwnerBusiness ownerBusiness;
 
@@ -56,7 +55,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.memo = pool.getMemo();
         this.createTime = new Date();
         this.legalPerson = pool.getLegalPerson();
-        this.rootAddress = pool.getRootAddress();
         this.ownerBusiness = ownerBusiness;
     }
 
@@ -196,15 +194,6 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.legalPerson = legalPerson;
     }
 
-    @Column(name = "ROOT_ADDRESS", length = 50)
-    @Size(max = 50)
-    public String getRootAddress() {
-        return this.rootAddress;
-    }
-
-    public void setRootAddress(String rootAddress) {
-        this.rootAddress = rootAddress;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BUSINESS",nullable = false)

@@ -5,7 +5,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://richfaces.org/a4j"
-
+                xmlns:r="http://richfaces.org/rich"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
@@ -44,7 +44,28 @@
 
     <div class="container">
 
+        <h:outputScript>
+            var scrollTopValue = 0;
 
+            function moreBefor(){
+            var div = #{r:element('SectionSelectItemList')};
+            scrollTopValue = div.scrollTop;
+
+            }
+
+            function scrollToBefor(){
+            var div = #{r:element('SectionSelectItemList')};
+
+            div.scrollTop = scrollTopValue;
+            }
+
+        </h:outputScript>
+
+        <h:form styleClass="form-inline">
+
+            <div class="setup-form " style="width: 100%">
+
+            <div class="form-group" style="width: 20%">
         <h:selectOneMenu value="#{sectionSelectList.districtId}"
                          p:data-header="#{messages.districtSelect}"
                          styleClass="selectpicker edit-select form-control">
@@ -56,24 +77,8 @@
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
         </h:selectOneMenu>
+                </div>
         <a:outputPanel id="sectionSelectInputs" >
-
-            <h:outputScript>
-                var scrollTopValue = 0;
-
-                function moreBefor(){
-                var div = #{r:element('SectionSelectItemList')};
-                scrollTopValue = div.scrollTop;
-
-                }
-
-                function scrollToBefor(){
-                var div = #{r:element('SectionSelectItemList')};
-
-                div.scrollTop = scrollTopValue;
-                }
-
-            </h:outputScript>
 
             <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
                           oncomplete="scrollToBefor(); "
@@ -81,7 +86,7 @@
                 <a:attachQueue requestDelay="0"/>
             </a:jsFunction>
 
-            <div class="btn-group bootstrap-select edit-select" style="width: 100%;">
+            <div class="btn-group bootstrap-select edit-select form-group"  style="width: 30%">
                 <button type="button" class=" btn dropdown-toggle btn-default"
                         data-toggle="dropdown" aria-expanded="false">
 
@@ -162,14 +167,14 @@
             </div>
 
 
-            <a:outputPanel id="projectSelectInputs">
+            <a:outputPanel layout="block" styleClass="form-group" style="width: 40%" id="projectSelectInputs">
 
 
 
                 <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
 
 
-                    <h:selectOneMenu value="#{houseStepSelect.selectProjectId}"
+                    <h:selectOneMenu value="#{projectHome.id}"
                                      p:data-header="#{messages.projectSelect}"
                                      styleClass="selectpicker edit-select form-control">
                         <s:selectItems value="#{houseStepSelect.selectSection.projectList}"
@@ -177,7 +182,7 @@
                                        label="#{_project.name}"
                                        noSelectionLabel="#{messages.projectSelect}"/>
 
-                        <a:ajax event="valueChange" render="buildSelectInput" listener="#{buildHome.clearInstance}">
+                        <a:ajax event="valueChange" render="buildSelectForm">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectOneMenu>
@@ -189,6 +194,25 @@
 
 
         </a:outputPanel>
+            </div>
+        </h:form>
+
+
+        <h:form id="buildSelectForm">
+
+        <a:outputPanel layout="block" rendered="#{not projectHome.idDefined or (empty projectHome.instance.builds)}" styleClass="blankslate spacious large-format">
+            <span class="mega-octicon octicon-inbox"></span>
+
+            <h3>#{projectHome.idDefined ? messages.projectBusinessBuildEmpty : messages.projectBusinessBuildNoSelect}</h3>
+            <p>#{projectHome.idDefined ? messages.projectBusinessBuildEmptyDescript : messages.projectBusinessBuildNoSelectDescript}</p>
+        </a:outputPanel>
+
+         <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds)}">
+
+
+         </a:outputPanel>
+
+        </h:form>
     </div>
 
     </ui:define>

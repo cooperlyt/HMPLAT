@@ -30,6 +30,7 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 	private PersionType type;
 	private String phone;
 
+
 	public BusinessPersion() {
 	}
 
@@ -106,6 +107,7 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 	public void setPersonName(String Name) {
 		this.personName = Name;
 	}
+
 
     @Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 20)
