@@ -5,10 +5,10 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2015-08-14.
- * 备案人
+ * 业务相关人 没有CHECKBOX
  */
-@Name("persionRecordOwnerSubscribe")
-public class PersionRecordOwnerSubscribe extends BaseBusinessPersionSubscribe {
+@Name("basePersionMustHaveSubscribe")
+public class BasePersionMustHaveSubscribe extends BaseBusinessPersionSubscribe {
 
 
     @Override
