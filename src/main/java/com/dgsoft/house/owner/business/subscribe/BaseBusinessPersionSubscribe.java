@@ -17,7 +17,7 @@ import org.jboss.seam.annotations.In;
 public abstract class BaseBusinessPersionSubscribe extends OwnerEntityHome<BusinessPersion> {
 
     @In
-    private OwnerBusinessHome ownerBusinessHome;
+    protected OwnerBusinessHome ownerBusinessHome;
 
     public boolean isHave() {
         return have;

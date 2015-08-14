@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:decorate template="/layout/edit-multi.xhtml">
+
+
+        <ui:define name="topValue">
+            <label>
+               #{label}
+             </label>
+        </ui:define>
+
+        <ui:define name="values">
+
+            <a:outputPanel id="contextPanel" >
+                <a:outputPanel layout="block"  rendered="#{persion.have}">
+
+                    <ui:decorate template="/layout/system/PersonInput.xhtml">
+                        <ui:param name="label" value=""/>
+                        <ui:param name="showLabel" value="false"/>
+                        <ui:param name="personEntityHelper" value="#{persion.personInstance}"/>
+
+
+                        <div class="form-inline">
+
+                            <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+                                <ui:define name="label">
+                                    #{messages.Tel}
+                                </ui:define>
+                                <ui:param name="for" value="persionPhoneInput"/>
+
+                                <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                                             styleClass="form-control"
+                                             validatorMessage="#{messages.requiredPhoneValidator}"
+                                             value="#{persion.instance.phone}" required="true"
+                                             id="persionPhoneInput">
+                                    <f:validateRegex
+                                            pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                                    <r:validator event="blur"/>
+                                </h:inputText>
+                            </s:decorate>
+                        </div>
+
+                    </ui:decorate>
+                </a:outputPanel>
+            </a:outputPanel>
+        </ui:define>
+    </ui:decorate>
+
+</ui:composition>
