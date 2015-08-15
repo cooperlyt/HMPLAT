@@ -17,6 +17,24 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
     private OwnerBusinessHome ownerBusinessHome;
 
 
+
+    private boolean have;
+
+
+    public boolean isHave() {
+        return have;
+    }
+
+    public void setHave(boolean have) {
+        this.have = have;
+    }
+
+    public void checkHave(){
+
+            setHave(true);
+        //}
+    }
+
     @Override
     public  ContractOwner createInstance(){
         ContractOwner result = new ContractOwner();

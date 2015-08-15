@@ -24,8 +24,9 @@
                 <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
                              styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
                              value="#{contractOwnerSubscribe.instance.phone}" required="true" id="persionPhoneInput">
-                    <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
-                    <r:validator event="blur" />
+                    <f:validateRegex
+                            pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                    <r:validator event="blur"/>
                 </h:inputText>
 
             </s:decorate>
@@ -56,7 +57,7 @@
                 </ui:define>
                 <h:inputTextarea
                         label="#{messages.BusinessOwner_Address}"
-                        cols="50"
+                        cols="55"
                         rows="3"
                         value="#{contractOwnerSubscribe.instance.address}"
                         styleClass="form-control"
@@ -66,6 +67,100 @@
             </s:decorate>
         </div>
 
+        <s:decorate template="/layout/edit-multi.xhtml">
+            <ui:define name="topValue">
+                <div class="form-checkbox">
+                    <label>
+                        #{messages.ContractOwner_OtherInfo}
+                    </label>
+                    <h:selectBooleanCheckbox value="#{contractOwnerSubscribe.have}">
+                        <a:ajax event="click"
+                                render="recordPanel"
+                                execute="@this">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                    </h:selectBooleanCheckbox>
+                </div>
+            </ui:define>
+
+            <ui:define name="values">
+                <a:outputPanel id="recordPanel">
+                    <a:outputPanel rendered="#{contractOwnerSubscribe.have}">
+                        <hr/>
+                        <div style="display: block;">
+                            <a:outputPanel layout="block" styleClass="upgrade-upsell">
+                                <div class="form-inline">
+                                    <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner.credentialsType) and
+                                    ((ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner.credentialsType eq 'OTHER') or (ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner.credentialsType eq 'COMPANY_CODE'))}">
+                                        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                                            <ui:define name="label">
+                                                #{messages.AttachCorporation_ownerName}
+                                            </ui:define>
+                                            <ui:param name="for" value="contractOwnerLegalPerson"/>
+                                            <h:inputText label="#{messages.AttachCorporation_ownerName}"
+                                                         id="contractOwnerLegalPerson"
+                                                         value="#{contractOwnerSubscribe.instance.legalPerson}"
+                                                         styleClass="form-control"
+                                                         maxlength="50"/>
+                                        </s:decorate>
+                                    </a:outputPanel>
+
+
+                                    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                                        <ui:define name="label">
+                                            #{messages.ContractOwner_birthday}
+                                        </ui:define>
+                                        <ui:param name="for" value="ContractOwnerBirthday"/>
+                                        <h:inputText id="ContractOwnerBirthday"
+
+                                                     styleClass="js-datepicker form-control"
+                                                     label="#{messages.ContractOwner_birthday}"
+                                                     value="#{contractOwnerSubscribe.instance.birthday}"
+                                                     autocomplete="off">
+                                            <s:convertDateTime pattern="#{messages.datePattern}"/>
+                                        </h:inputText>
+                                    </s:decorate>
+
+                                    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                                        <ui:define name="label">
+                                            #{messages.ContractOwner_postCode}
+                                        </ui:define>
+                                        <ui:param name="for" value="ContractOwnerPostCode"/>
+                                        <h:inputText label="#{messages.ContractOwner_postCode}"
+                                                     id="ContractOwnerPostCode"
+                                                     value="#{contractOwnerSubscribe.instance.postCode}"
+                                                     styleClass="form-control"
+                                                     maxlength="50"/>
+                                    </s:decorate>
+
+                                    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group"
+                                                id="sexField">
+                                        <ui:define name="label">
+                                            #{messages.person_field_sex}
+                                        </ui:define>
+                                        <ui:param name="for" value="sex"/>
+
+                                        <r:select id="sex" styleClass="sexSelectWidth" listWidth="60px"
+                                                  label="#{messages.person_field_sex}"
+                                                  value="#{contractOwnerSubscribe.instance.sex}">
+                                            <s:selectItems var="_sex" value="#{sexs}" label="#{messages[_sex.name()]}"
+                                                           noSelectionLabel="#{messages.noSelectLabel}"/>
+                                            <s:convertEnum/>
+                                            <a:ajax event="selectitem" render="sexField"/>
+                                        </r:select>
+
+                                    </s:decorate>
+
+
+                                </div>
+                            </a:outputPanel>
+                        </div>
+                    </a:outputPanel>
+                </a:outputPanel>
+            </ui:define>
+
+
+        </s:decorate>
     </ui:decorate>
 
 </ui:composition>

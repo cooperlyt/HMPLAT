@@ -27,6 +27,8 @@
             <ui:param name="type" value="#{businessHouse.credentialsType}"/>
         </ui:include>
 
+
+
         <h:outputText value="#{messages.BusinessOwner_RootAddress}"/>
         <dh:entryGridColumn colspan="3">
             <h:outputText value="#{businessHouse.rootAddress}"/>
@@ -38,6 +40,18 @@
             <h:outputText value="#{businessHouse.address}"/>
         </dh:entryGridColumn>
 
+
+        <h:outputText value="#{messages.AttachCorporation_ownerName}"/>
+        <h:outputText value="#{businessHouse.legalPerson}"/>
+
+        <h:outputText value="#{messages.ContractOwner_birthday}"/>
+        <h:outputText value="#{businessHouse.birthday}"/>
+
+        <h:outputText value="#{messages.ContractOwner_postCode}"/>
+        <h:outputText value="#{businessHouse.postCode}"/>
+
+        <h:outputText value="#{messages.person_field_sex}"/>
+        <h:outputText value="#{messages[businessHouse.sex.name()]}"/>
     </dh:entryGridBlock>
 
 

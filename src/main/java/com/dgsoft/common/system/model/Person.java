@@ -4,16 +4,7 @@ package com.dgsoft.common.system.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,7 +22,7 @@ public class Person implements java.io.Serializable {
 	private PersonId id;
 	private String name;
 	private String credentialsOrgan;
-	private String sex;
+	private Sex sex;
 	private String ethnic;
 	private Date dateOfBirth;
 	private String address;
@@ -82,12 +73,13 @@ public class Person implements java.io.Serializable {
 	}
 
 	@Column(name = "SEX", length = 32)
+    @Enumerated(EnumType.STRING)
 	@Size(max = 32)
-	public String getSex() {
+	public Sex getSex() {
 		return this.sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Sex sex) {
 		this.sex = sex;
 	}
 
