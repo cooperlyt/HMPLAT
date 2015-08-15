@@ -7,12 +7,12 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-
+    <ui:param name="label" value="#{messages.RecordOwner}"/>
 
     <ui:decorate template="/layout/system/PersonInput.xhtml">
 
-        <ui:param name="personEntityHelper" value="#{businessHouseOwnerSubscribe.personInstance}"/>
-        <ui:param name="personStatus" value="mainOwner_personCredentiaslNumberStatus"/>
+        <ui:param name="personEntityHelper" value="#{contractOwnerSubscribe.personInstance}"/>
+        <ui:param name="personStatus" value="contractOwner_NumberStatus"/>
 
         <div class="form-inline">
 
@@ -23,13 +23,14 @@
                 <ui:param name="for" value="persionPhoneInput"/>
                 <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
                              styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
-                             value="#{businessHouseOwnerSubscribe.instance.phone}" required="true" id="persionPhoneInput">
+                             value="#{contractOwnerSubscribe.instance.phone}" required="true" id="persionPhoneInput">
                     <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
                     <r:validator event="blur" />
                 </h:inputText>
 
             </s:decorate>
         </div>
+
         <div class="form-inline">
             <s:decorate template="/layout/edit-big.xhtml">
                 <ui:param name="for" value="persionRootAddressInput"/>
@@ -38,7 +39,7 @@
                     #{messages.BusinessOwner_RootAddress}
                 </ui:define>
                 <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="55" maxlength="50"
-                             value="#{businessHouseOwnerSubscribe.instance.rootAddress}" id="persionRootAddressInput">
+                             value="#{contractOwnerSubscribe.instance.rootAddress}" id="persionRootAddressInput">
                     <r:validator event="blur"/>
                 </h:inputText>
 
@@ -57,7 +58,7 @@
                         label="#{messages.BusinessOwner_Address}"
                         cols="50"
                         rows="3"
-                        value="#{businessHouseOwnerSubscribe.instance.address}"
+                        value="#{contractOwnerSubscribe.instance.address}"
                         styleClass="form-control"
                         id="addressInput">
                 </h:inputTextarea>

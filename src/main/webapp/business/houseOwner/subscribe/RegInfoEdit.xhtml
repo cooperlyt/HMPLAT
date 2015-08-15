@@ -8,7 +8,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.RegisterProperty_HouseProperty}
@@ -25,6 +24,7 @@
     </s:decorate>
 
 
+
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.RegisterProperty_HouseFrom}
@@ -36,6 +36,7 @@
         </h:selectOneMenu>
         <ui:param name="for" value="houseFromInput"/>
     </s:decorate>
+
 
 
 </ui:composition>
