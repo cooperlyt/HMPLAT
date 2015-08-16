@@ -30,6 +30,9 @@ public class BusinessEmp implements java.io.Serializable {
 	public BusinessEmp() {
 	}
 
+    public BusinessEmp(EmpType type) {
+        this.type=type;
+    }
 	public BusinessEmp(OwnerBusiness ownerBusiness, EmpType type,
 			String empCode, String empName, Date operDate) {
 		this.ownerBusiness = ownerBusiness;

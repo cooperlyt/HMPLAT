@@ -16,7 +16,7 @@ public class CardInfoSubsrcibe extends OwnerEntityHome<CardInfo> {
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-    @In()
+    @In
     private AuthenticationInfo authInfo;
     @Override
     public void create(){

@@ -33,6 +33,14 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PersionCorrctView" page="/business/houseOwner/subscribe/PersionCorrctView.xhtml">
+        <description>
+           申请人查看
+        </description>
+    </view-subscribe>
+
+
+
     <view-subscribe name="mortgagerView" page="/business/houseOwner/subscribe/MortgagerView.xhtml">
         <description>
             抵押人查看
@@ -280,6 +288,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PeopleApplyView" page="/business/houseOwner/subscribe/PeopleApplyView.xhtml">
+        <description>
+            受理意见查看
+        </description>
+    </view-subscribe>
+
 
 
     <!--
@@ -327,6 +341,12 @@
     <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
         <description>
             产权人编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
+        <description>
+            申请人编辑
         </description>
     </edit-subscribe>
 
@@ -527,6 +547,13 @@
                     component="">
         <description>
             解封登记编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="PeopleApplyEdit" page="/business/houseOwner/subscribe/PeopleApplyEdit.xhtml"
+                    component="">
+        <description>
+            受理意见编辑（添加受理时间）
         </description>
     </edit-subscribe>
 

@@ -11,6 +11,14 @@ import org.jboss.seam.annotations.Name;
 public class BasePersionMustHaveSubscribe extends BaseBusinessPersionSubscribe {
 
 
+
+
+
+    @Override
+    protected BusinessPersion.PersionType getType() {
+        return BusinessPersion.PersionType.CORRECT;
+    }
+
     @Override
     public void create(){
         super.create();
@@ -22,12 +30,6 @@ public class BasePersionMustHaveSubscribe extends BaseBusinessPersionSubscribe {
         }
 
     }
-
-    @Override
-    protected BusinessPersion.PersionType getType() {
-        return BusinessPersion.PersionType.RECORD_OWNER;
-    }
-
 
 
 }
