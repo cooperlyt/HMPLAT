@@ -2,6 +2,8 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.house.BuildInfo;
+import com.dgsoft.house.model.Build;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -31,7 +33,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	private int floorCount;
 	private int upFloorCount;
 	private int downFloorCount;
-	private String address;
 	private Integer houseCount;
 	private BigDecimal area;
 	private String buildType;
@@ -44,16 +45,42 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 	private BigDecimal shopArea;
 	private String completeYear;
     private String buildDevNumber;
+	private Date mapTime;
     private Set<ProjectExceptHouse> projectExceptHouses = new HashSet<ProjectExceptHouse>(0);
 
 	public BusinessBuild() {
 	}
 
+	public BusinessBuild(BusinessProject businessProject, Build build) {
+		this.businessProject = businessProject;
+		this.mapNumber = build.getMapNumber();
+		this.blockNo = build.getBlockNo();
+		this.buildNo = build.getBuildNo();
+		this.buildCode = build.getBuildCode();
+		this.streetCode = build.getStreetCode();
+		this.name = build.getBuildName();
+		this.doorNo = build.getDoorNo();
+		this.unintCount = build.getUnintCount();
+		this.floorCount = build.getFloorCount();
+		this.upFloorCount = build.getUpFloorCount();
+		this.downFloorCount = build.getDownFloorCount();
+
+		this.area = build.getArea();
+		this.buildType = build.getBuildType();
+		this.structure = build.getStructure();
+		this.homeCount = build.getHouseCount();
+
+		this.completeYear = build.getCompleteYear();
+		this.buildDevNumber = build.getBuildDevNumber();
+		this.mapTime = build.getMapTime();
+	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -189,14 +216,14 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
 		this.downFloorCount = downFloorCount;
 	}
 
-	@Column(name = "ADDRESS", length = 50)
-	@Size(max = 50)
-	public String getAddress() {
-		return this.address;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MAP_TIME",nullable = true)
+	public Date getMapTime() {
+		return mapTime;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setMapTime(Date mapTime) {
+		this.mapTime = mapTime;
 	}
 
 	@Column(name = "HOUSE_COUNT")

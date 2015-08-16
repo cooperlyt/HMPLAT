@@ -1,5 +1,7 @@
 package com.dgsoft.house.owner.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,12 +12,17 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "LOCKED_HOUSE"
-        , catalog = "HOUSE_OWNER_RECORD"
+        , catalog = "HOUSE_OWNER_RECORD",uniqueConstraints = {@UniqueConstraint(columnNames = {"HOUSE_CODE","TYPE"})}
 )
 public class LockedHouse {
 
+    public enum LockType{
+        CANT_SALE,PREPARE_CLOSE
+    }
+
+    private String id;
     private String houseCode;
-    private String type;
+    private LockType type;
     private String description;
     private String empCode;
     private String empName;
@@ -24,7 +31,29 @@ public class LockedHouse {
     public LockedHouse() {
     }
 
+    public LockedHouse(String houseCode, LockType type, String empCode, String empName, Date lockedTime) {
+        this.houseCode = houseCode;
+        this.type = type;
+        this.empCode = empCode;
+        this.empName = empName;
+        this.lockedTime = lockedTime;
+    }
+
     @Id
+    @Column(name = "ID", unique = true, nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
     @Column(name="HOUSE_CODE",nullable = false,length = 32)
     @NotNull
     @Size(max = 32)
@@ -36,14 +65,14 @@ public class LockedHouse {
         this.houseCode = houseCode;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "TYPE" , nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
-    public String getType() {
+    public LockType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(LockType type) {
         this.type = type;
     }
 

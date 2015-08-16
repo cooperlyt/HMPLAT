@@ -8,7 +8,10 @@
   </node>
   <node name="受理" x="35" y="187" width="132" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-52" y="20"/>
+    </edge>
+    <edge>
+      <label x="-11" y="-10"/>
     </edge>
   </node>
   <node name="审核" x="393" y="127" width="132" height="36">
@@ -24,7 +27,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="归档" x="345" y="402" width="132" height="36">
+  <node name="归档" x="214" y="400" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -37,14 +40,14 @@
       <label x="-8" y="-3"/>
     </edge>
   </node>
-  <node name="缮证" x="136" y="401" width="132" height="36">
+  <node name="缮证" x="398" y="323" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
   <node name="繕证判断" x="216" y="323" width="132" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-15" y="-12"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
@@ -74,5 +77,5 @@
       <label x="-1" y="-4"/>
     </edge>
   </node>
-  <node name="结束" x="515" y="401" width="132" height="36"/>
+  <node name="结束" x="34" y="399" width="132" height="36"/>
 </root-container>

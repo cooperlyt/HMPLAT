@@ -346,13 +346,17 @@ public class OwnerBuildGridMap {
             houseCodes.add(house.getHouseCode());
         }
 
-        List<String> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
-                .setParameter("houseCodes", houseCodes).getResultList();
+        List<String> lockedHouseCode;
+        if (!houseMap.isEmpty()){
+            lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
+                    .setParameter("houseCodes", houseMap.keySet()).getResultList();
+            List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
+                    .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
+            lockedHouseCode.addAll(inBusinessHouseCode);
+        }else{
+            lockedHouseCode = new ArrayList<String>(0);
+        }
 
-        List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
-                .setParameter("houseCodes", houseCodes).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
-
-        lockedHouseCode.addAll(inBusinessHouseCode);
         for(BuildGridMap map: buildGridMaps){
             for(GridRow row: map.getGridRows()){
                 for(GridBlock block: row.getGridBlocks()){
@@ -377,7 +381,15 @@ public class OwnerBuildGridMap {
                 idleHouses.add(businessHouse);
             }
 
-            BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses,lockedHouseCode);
+            BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses);
+            for (GridRow gridRow: idleMap.getGridRows()){
+                for(GridBlock block: gridRow.getGridBlocks()){
+                    if (block.getHouse()!= null){
+                        block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
+                    }
+                }
+            }
+
             idleMap.setId("idleHouse");
             buildGridMaps.add(idleMap);
 

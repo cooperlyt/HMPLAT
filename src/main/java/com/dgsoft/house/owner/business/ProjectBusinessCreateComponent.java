@@ -1,6 +1,15 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.BatchOperData;
+import com.dgsoft.house.action.ProjectHome;
+import com.dgsoft.house.model.Build;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cooper on 8/14/15.
@@ -26,5 +35,6 @@ public class ProjectBusinessCreateComponent extends OwnerBusinessCreateComponent
     public String searchModify(){
         return null;
     }
+
 
 }

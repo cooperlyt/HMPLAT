@@ -271,7 +271,7 @@
             </ui:define>
 
             <ui:param name="for" value="mapTimeInput"/>
-            <h:inputText label="#{messages.Project_mapTime}" value="#{buildHome.instance.mapTime}" styleClass="js-datepicker">
+            <h:inputText required="true" label="#{messages.Project_mapTime}" value="#{buildHome.instance.mapTime}" styleClass="js-datepicker">
                 <s:convertDateTime pattern="#{messages.datePattern}"/>
             </h:inputText>
 

@@ -4,8 +4,10 @@ import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.BuildGridMap;
 import com.dgsoft.house.model.Section;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 
 @Name("houseStepSelect")
+@Scope(ScopeType.CONVERSATION)
 public class HouseStepSelect {
 
     @In(create = true)

@@ -8,8 +8,9 @@ import java.util.EnumSet;
  */
 public interface BusinessInstance {
 
+        //业务建立， 补录， 导入， 外部程序（如：网签）
     public enum BusinessSource {
-        BIZ_CREATE, BIZ_AFTER_SAVE, BIZ_IMPORT
+        BIZ_CREATE, BIZ_AFTER_SAVE, BIZ_IMPORT, BIZ_OUTSIDE
     }
 
     public enum BusinessType{
