@@ -41,7 +41,7 @@
 
 
 
-    <view-subscribe name="recordOwnerView" page="/business/houseOwner/subscribe/RecordOwnerView.xhtml">
+    <view-subscribe name="ContractOwnerView" page="/business/houseOwner/subscribe/ContractOwnerView.xhtml">
         <description>
             备案人查看
         </description>
@@ -329,6 +329,8 @@
             产权人编辑
         </description>
     </edit-subscribe>
+
+
     <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
                     component="">
         <description>

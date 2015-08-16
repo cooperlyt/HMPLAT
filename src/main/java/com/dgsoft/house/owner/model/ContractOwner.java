@@ -1,11 +1,13 @@
 package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.model.Person;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by cooper on 8/14/15.
@@ -22,6 +24,10 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private String rootAddress;
     private String address;
     private String legalPerson;
+    private Date birthday;
+    private String postCode;
+    private Person.Sex sex;
+
 
     //由备案人得房屋没意义，因为有startHouse 和 afterHouse 可以使用 houseBusiness left join afterHouse left join ContractOwner
     //private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
@@ -142,5 +148,38 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
         this.ownerBusiness = ownerBusiness;
     }
+
+    @Column(name = "SEX", nullable = true, length =20)
+    @Enumerated(EnumType.STRING)
+    public Person.Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Person.Sex sex) {
+        this.sex = sex;
+    }
+
+
+    @Column(name = "POST_CODE", nullable = true, length =50)
+    @Size(max = 50)
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "BIRTHDAY", nullable = true,length = 19)
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
 
 }
