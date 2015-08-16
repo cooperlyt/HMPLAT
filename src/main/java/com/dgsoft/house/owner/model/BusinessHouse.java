@@ -402,8 +402,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "MAP_TIME", nullable = true, length = 19)
     public Date getMapTime() {
         return this.mapTime;
     }

@@ -3,6 +3,8 @@ package com.dgsoft.house.owner.model;
 
 
 import com.dgsoft.house.ProjectInfo;
+import com.dgsoft.house.model.Project;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,8 +26,6 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private OwnerBusiness ownerBusiness;
     private String name;
     private String address;
-    private Date mapTime;
-    private String completeDate;
     private String developerName;
     private String developerCode;
     private String sectionName;
@@ -33,6 +33,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String districtCode;
     private String districtName;
     private String projectCode;
+
     private RecordStore recordStore;
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
     private ProjectSellInfo projectSellInfo;
@@ -40,12 +41,23 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     public BusinessProject() {
     }
 
+    public BusinessProject(OwnerBusiness ownerBusiness, Project project){
+        this.ownerBusiness = ownerBusiness;
+        this.name = project.getProjectName();
+        this.address = project.getAddress();
+        this.developerName = project.getDeveloperName();
+        this.developerCode = project.getDeveloperCode();
+        this.sectionName = project.getSectionName();
+        this.sectionCode = project.getSectionCode();
+        this.districtCode = project.getDistrictCode();
+        this.districtName = project.getDistrictName();
+        this.projectCode = project.getProjectCode();
+    }
+
     public BusinessProject(OwnerBusiness ownerBusiness, BusinessProject other) {
         this.ownerBusiness = ownerBusiness;
         this.name = other.getName();
         this.address = other.getAddress();
-        this.mapTime = other.getMapTime();
-        this.completeDate = other.getCompleteDate();
         this.developerName = other.getDeveloperName();
         this.developerCode = other.getDeveloperCode();
         this.sectionName = other.getSectionName();
@@ -59,6 +71,8 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return this.id;
     }
@@ -100,29 +114,6 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     public void setAddress(String address) {
         this.address = address;
     }
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = false, length = 19)
-    @NotNull
-    public Date getMapTime() {
-        return this.mapTime;
-    }
-
-    public void setMapTime(Date mapTime) {
-        this.mapTime = mapTime;
-    }
-
-    @Column(name = "COMPLETE_DATE", length = 6)
-    @Size(max = 6)
-    public String getCompleteDate() {
-        return this.completeDate;
-    }
-
-    public void setCompleteDate(String completeDate) {
-        this.completeDate = completeDate;
-    }
-
 
     @Column(name = "DEVELOPER_NAME", length = 100)
     @Size(max = 100)

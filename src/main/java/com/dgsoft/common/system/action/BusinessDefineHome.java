@@ -516,6 +516,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return result;
     }
 
+    public void runAction(String name){
+
+    }
+
     public List<BusinessPickSelect> getCreateBizSelectComponents() {
         List<BusinessPickSelect> result = new ArrayList<BusinessPickSelect>();
 

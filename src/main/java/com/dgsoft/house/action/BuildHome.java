@@ -46,6 +46,11 @@ public class BuildHome extends HouseEntityHome<Build> {
 //        return houses;
 //    }
 
+    @Override
+    protected Build createInstance(){
+        return new Build(new Date());
+    }
+
     private void addBuildMBBConflictMessages() {
         facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ConflictMBB");
     }
@@ -59,10 +64,10 @@ public class BuildHome extends HouseEntityHome<Build> {
 
 
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
-                "where build.project.id = :projectId and build.buildDevNumber <> null and " +
-                "build.buildDevNumber = :devBuildNumber and build.id <> :buildId", Long.class)
+                "where build.project.id = :projectId and build.buildNo <> null and " +
+                "build.buildNo = :buildNo and build.id <> :buildId", Long.class)
                 .setParameter("projectId", getInstance().getProject().getId())
-                .setParameter("devBuildNumber", getInstance().getBuildDevNumber())
+                .setParameter("buildNo", getInstance().getBuildNo())
                 .setParameter("buildId", getInstance().getId()).getSingleResult() > 0) {
             addBuildPBConflictMessages();
             return false;
@@ -92,10 +97,10 @@ public class BuildHome extends HouseEntityHome<Build> {
     protected boolean verifyPersistAvailable() {
 
         if (getEntityManager().createQuery("select count(build.id) from Build build " +
-                "where build.project.id = :projectId and build.buildDevNumber <> null and " +
-                "build.buildDevNumber = :devBuildNumber", Long.class)
+                "where build.project.id = :projectId and build.buildNo <> null and " +
+                "build.buildNo = :buildNo", Long.class)
                 .setParameter("projectId", projectHome.getInstance().getId())
-                .setParameter("devBuildNumber", getInstance().getBuildDevNumber())
+                .setParameter("buildNo", getInstance().getBuildNo())
                 .getSingleResult() > 0) {
             addBuildPBConflictMessages();
             return false;
@@ -405,7 +410,7 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     }
 
-    public static BuildGridMap genIdleHouseGridMap(Collection<? extends HouseInfo> houseInfos, Collection<String> lockedHouseCode) {
+    public static BuildGridMap genIdleHouseGridMap(Collection<? extends HouseInfo> houseInfos) {
         BuildGridMap result = new BuildGridMap();
 
 
@@ -427,7 +432,7 @@ public class BuildHome extends HouseEntityHome<Build> {
                 blockHouses = new ArrayList<GridBlock>();
                 unitHouses.put(unitName, blockHouses);
             }
-            blockHouses.add(new GridBlock(house, 1, 1,lockedHouseCode.contains(house.getHouseCode())));
+            blockHouses.add(new GridBlock(house, 1, 1));
             if (title == null) {
                 title = new HouseGridTitle(result, 0, unitName);
                 titleMap.put(unitName, title);

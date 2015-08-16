@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:s="http://jboss.org/schema/seam/taglib"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://richfaces.org/a4j"
+      xmlns:dh="http://www.dgsoft.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:r="http://richfaces.org/rich">
+<f:view
+        contentType="text/html">
+
+
+    <h:head>
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+        <title>#{messages.mainTitle}</title>
+
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+    </h:head>
+    <h:body>
+
+
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.css"/>
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.min.css"/>
+        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datetimepicker.min.css"/>
+
+        <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
+
+        <h:outputStylesheet library="github" name="/css/github1_old.css"/>
+        <h:outputStylesheet library="github" name="/css/github2_old.css"/>
+
+        <h:outputStylesheet library="github" name="/css/octicons.css"/>
+
+
+        <h:outputStylesheet name="other.css"/>
+
+        <h:outputStylesheet name="biz.css"/>
+
+        <h:outputStylesheet>
+
+
+
+            html , body {
+                height: 100%;
+                max-height: 100%;
+                overflow: hidden;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                display: block;
+                min-width: 0;
+            }
+
+            .header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+
+
+
+            .default-main {
+
+                overflow: hidden;
+                margin: 0;
+                padding: 50px 0 0 171px;
+                display: block;
+                height: 100%;
+
+            }
+
+            .column1 {
+                width: 171px;
+
+                position: absolute;
+                top: 50px;
+                left: 0;
+                bottom: 0;
+                background-color: #f5f5f5;
+                border-right:  1px solid #e5e5e5;
+
+            }
+
+            .list-all {
+                margin: 0;
+                padding-top: 200px;
+                padding-left: 4px;
+                padding-right: 4px;
+                border-top: 1px solid #f2f3f6;
+                line-height: 25px;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 171px;
+
+
+            }
+
+
+
+
+            .column2 {
+                left: 172px;
+                right: 250px;
+            }
+
+
+            .edit-select , .input-group {
+                margin-top: 5px !important;
+            }
+
+        </h:outputStylesheet>
+
+
+        <ui:insert name="header">
+
+        </ui:insert>
+
+
+        <a:status id="processWaiting" name="processWaiting"
+                  onstart="#{r:component('wait')}.show()"
+                  onstop="#{r:component('wait')}.hide()"/>
+        <r:popupPanel id="wait" modal="true" autosized="true" styleClass="transparent-popup"
+                      moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
+            <p>      <h:graphicImage value="/img/wait-128.gif" width="64" height="64"/></p>
+            <p>#{messages.ContextLoader}...</p>
+
+
+        </r:popupPanel>
+
+
+        <div class="header">
+            <div class="container-fluid clearfix" style="white-space: nowrap;">
+                <s:div styleClass="logo-icon">
+                    <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
+                </s:div>
+
+                <div class="site-search">
+                    <ui:insert name="header-title"/>
+
+                </div>
+
+
+
+                <a:outputPanel rendered="#{identity.loggedIn}">
+
+                    <ul class="header-nav user-nav right" id="user-links">
+                        <li class="header-nav-item dropdown js-menu-container">
+                            <div class="dropdown">
+                                <a id="userLabel" class="header-nav-link name" data-target="#"
+                                   href="#{credentials.username}"
+                                   data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+
+                                    <span class="user-icon"/>
+
+
+      <span class="css-truncate">
+        <span class="css-truncate-target">#{authInfo.loginEmployee.personName}#{' '}#{(empty authInfo.currRole) ? messages.userNoRole : authInfo.currRole.name} </span>
+      </span>
+                                    <span class="dropdown-caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-git" style="margin-top: 30px;" aria-labelledby="userLabel">
+                                    <a:repeat value="#{authInfo.functionRoleList}" var="_roleCategory">
+                                        <li>
+                                            <s:link propagation="end" view="/home.xhtml">
+                                                <f:param name="Role" value="#{_roleCategory.id}"/>
+                                            <span
+                                                    class="octicon octicon-organization"></span>#{_roleCategory.name}
+                                            </s:link>
+                                        </li>
+                                    </a:repeat>
+
+                                </ul>
+
+                            </div>
+
+                        </li>
+
+                        <li class="header-nav-item">
+
+                            <s:link view="/func/system/business/start.xhtml" propagation="end"
+                                    styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                                <f:passThroughAttribute name="aria-label" value="You have no unread notifications" />
+                                <span class="octicon octicon-plus"></span>
+                            </s:link>
+
+                        </li>
+
+                        <li class="header-nav-item">
+                            <s:link view="/func/system/business/task.xhtml" propagation="end"
+                                    p:aria-label="You have no unread notifications"
+                                    styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
+                                <span class="mail-status unread"/>
+                                <span class="octicon octicon-inbox"></span>
+                            </s:link>
+
+
+                        </li>
+
+                        <li class="header-nav-item">
+                            <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile"
+                               id="account_settings" aria-label="Settings"
+                               data-ga-click="Header, go to settings, icon:settings">
+                                <span class="octicon octicon-gear"></span>
+                            </a>
+                        </li>
+
+                        <li class="header-nav-item">
+
+                            <s:link id="menuLogoutId"
+                                    styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
+                                    view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
+                                    p:aria-label="#{messages.logout}"
+                                    propagation="none">
+
+                                <span class="octicon octicon-sign-out"></span>
+                            </s:link>
+
+                        </li>
+
+                    </ul>
+
+                </a:outputPanel>
+
+                <a:outputPanel rendered="#{not identity.loggedIn}">
+                    <div class="header-actions">
+                        <s:link styleClass="button" value="#{messages.login}" view="/login.xhtml"/>
+                    </div>
+                </a:outputPanel>
+
+
+            </div>
+        </div>
+
+
+
+        <div class="container-fluid default-main">
+
+
+
+            <ui:insert name="body"/>
+        </div>
+
+
+
+
+        <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+        <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.js"/>
+        <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.js"/>
+        <h:outputScript library="floatThead" name="jquery.floatThead.min.js"/>
+        <h:outputScript library="jquery-scrollTo" name="/js/jquery.scrollTo.min.js"/>
+
+
+
+        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datetimepicker.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/locales/bootstrap-datetimepicker.zh-CN.js"/>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="init.js"/>
+
+        </a:outputPanel>
+
+
+    </h:body>
+
+
+</f:view>
+
+
+</html>
+
+

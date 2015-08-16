@@ -50,10 +50,9 @@ public class GridBlock implements java.io.Serializable {
     public GridBlock() {
     }
 
-    public GridBlock(HouseInfo house, int colspan, int rowspan, boolean locked) {
+    public GridBlock(HouseInfo house, int colspan, int rowspan) {
         this.colspan = colspan;
         this.rowspan = rowspan;
-        setLocked(locked);
         setHouse(house);
     }
 

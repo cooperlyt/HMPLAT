@@ -63,7 +63,11 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
         this.project = project;
     }
 
-	public Build(String id, Project project, String mapNumber, String blockNo,
+    public Build(Date mapTime) {
+        this.mapTime = mapTime;
+    }
+
+    public Build(String id, Project project, String mapNumber, String blockNo,
 			String buildNo, String name) {
 		this.id = id;
 		this.project = project;
@@ -373,7 +377,8 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = true, length = 19)
+    @Column(name = "MAP_TIME", nullable = false, length = 19)
+    @NotNull
     public Date getMapTime() {
         return this.mapTime;
     }

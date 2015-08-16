@@ -283,13 +283,20 @@ public class BuildGridMapHouseSelect {
             businessHouseMap.put(house.getHouseCode(),house);
         }
 
+        List<String> lockedHouseCode;
+        if (!houseMap.isEmpty()){
+            lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
+                    .setParameter("houseCodes", houseMap.keySet()).getResultList();
+            List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
+                    .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
+            lockedHouseCode.addAll(inBusinessHouseCode);
+        }else{
+            lockedHouseCode = new ArrayList<String>(0);
+        }
 
-        List<String> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
-                .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
-        List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
-                .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
-        lockedHouseCode.addAll(inBusinessHouseCode);
+
+
 
         for(BuildGridMap map: buildGridMaps){
             for(GridRow row: map.getGridRows()){
@@ -309,7 +316,6 @@ public class BuildGridMapHouseSelect {
                     }
                 }
             }
-
         }
 
         if (! houseMap.isEmpty()){
@@ -320,7 +326,19 @@ public class BuildGridMapHouseSelect {
                 idleHouses.add(businessHouse);
             }
 
-            BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses,new ArrayList<String>(0));
+            BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses);
+            for (GridRow gridRow: idleMap.getGridRows()){
+                for(GridBlock block: gridRow.getGridBlocks()){
+                    if (block.getHouse()!= null){
+                        block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
+                        BusinessHouse businessHouse =  businessHouseMap.get(block.getHouseCode());
+                        if (businessHouse != null) {
+                            block.setOwnerName(businessHouse.getBusinessHouseOwner().getPersonName());
+                            block.setHouseStatus(businessHouse.getMasterStatus());
+                        }
+                    }
+                }
+            }
             idleMap.setId("idleHouse");
             buildGridMaps.add(idleMap);
 

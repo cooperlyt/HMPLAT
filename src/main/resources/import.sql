@@ -212,6 +212,8 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('house.data.attachCorp
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness', '档案补录', '档案补录', 7);
 
+INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
+
 
 -- ROLE_FUNCTION 角色种类
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.param');
@@ -241,6 +243,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.data.attachCorp', 'hou
 
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner.patchBusiness');
+
 
 -- ADMIN INSERY
 -- INSERT INTO PERSON (ID,NAME,CREDENTIALS_TYPE,_FOREIGN,CREDENTIALS_NUMBER,DATE_OF_BIRTH) VALUES ('admin','admin','OTHER',1,'1','2013-07-15 10:27:08');

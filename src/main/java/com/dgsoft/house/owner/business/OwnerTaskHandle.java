@@ -105,6 +105,7 @@ public class OwnerTaskHandle {
 
         transitionType = TaskOper.OperType.BACK.name();
         backTaskName = taskInstance.getName();
+        ownerBusinessHome.refresh();
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 TaskOper.OperType.BACK, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),

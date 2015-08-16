@@ -44,6 +44,12 @@
 
     <div class="container">
 
+        <h:outputStylesheet>
+            .checkHeader{
+                width: 15px;
+            }
+        </h:outputStylesheet>
+
         <h:outputScript>
             var scrollTopValue = 0;
 
@@ -64,6 +70,9 @@
         <h:form styleClass="form-inline">
 
             <div class="setup-form " style="width: 100%">
+                <s:link styleClass="right btn btn-primary" action="#{projectBusinessStart.buildComplete}">
+                    #{messages.complete}
+                </s:link>
 
             <div class="form-group" style="width: 20%">
         <h:selectOneMenu value="#{sectionSelectList.districtId}"
@@ -182,7 +191,7 @@
                                        label="#{_project.name}"
                                        noSelectionLabel="#{messages.projectSelect}"/>
 
-                        <a:ajax event="valueChange" render="buildSelectForm">
+                        <a:ajax event="valueChange" listener="#{projectBusinessStart.projectSelectedListener}" execute="@this" render="buildSelectForm">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectOneMenu>
@@ -198,8 +207,7 @@
         </h:form>
 
 
-        <h:form id="buildSelectForm">
-
+        <h:form id="buildSelectForm" styleClass="setup-form">
         <a:outputPanel layout="block" rendered="#{not projectHome.idDefined or (empty projectHome.instance.builds)}" styleClass="blankslate spacious large-format">
             <span class="mega-octicon octicon-inbox"></span>
 
@@ -209,6 +217,56 @@
 
          <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds)}">
 
+             <h:dataTable styleClass="boxed-group-table setup-plans" value="#{projectBusinessStart.builds}" var="_build">
+
+                 <h:column headerClass="checkHeader" >
+                     <f:facet name="header">
+                         <h:selectBooleanCheckbox value="#{projectBusinessStart.selectAll}">
+                             <a:ajax render="buildSelectForm" event="click" execute="@this" immediate="true">
+                                 <a:attachQueue requestDelay="0"/>
+                             </a:ajax>
+                         </h:selectBooleanCheckbox>
+                     </f:facet>
+                     <h:selectBooleanCheckbox value="#{_build.selected}">
+                         <a:ajax render="buildSelectForm" event="click" execute="@this">
+                             <a:attachQueue requestDelay="0"/>
+                         </a:ajax>
+                     </h:selectBooleanCheckbox>
+                 </h:column>
+
+                 <h:column>
+                     <f:facet name="header">
+                        #{messages.Build_Id}
+                     </f:facet>
+                     #{_build.data.id}
+                 </h:column>
+                 <h:column>
+                     <f:facet name="header">
+                         #{messages.Build_Name}
+                     </f:facet>
+                     #{_build.data.buildName}
+                 </h:column>
+
+
+                 <h:column>
+                     <f:facet name="header">
+                         #{messages.Build_BuildNO}
+                     </f:facet>
+                     #{_build.data.buildNo}
+                 </h:column>
+                 <h:column>
+                     <f:facet name="header">
+                         #{messages.Build_devBuildNumber}
+                     </f:facet>
+                     #{_build.data.buildDevNumber}
+                 </h:column>
+                 <h:column>
+                     <f:facet name="header">
+                         #{messages.Build_DoorNO}
+                     </f:facet>
+                     #{_build.data.doorNo}
+                 </h:column>
+             </h:dataTable>
 
          </a:outputPanel>
 
