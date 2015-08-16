@@ -5,6 +5,7 @@ import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.UseTypeWordAdapter;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.action.ProjectHome;
 import com.dgsoft.house.model.*;
@@ -16,6 +17,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -313,25 +315,56 @@ public class ProjectBusinessStart {
         throw new IllegalArgumentException("invail gridMap id:" + mapId);
     }
 
-    private void addExceptHouse(String buildCode, String houseCode){
+    private BusinessBuild getBusinessBuild(String buildCode){
         for(BusinessBuild businessBuild: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()){
             if(businessBuild.getBuildCode().equals(buildCode)){
-                businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(houseCode,businessBuild));
+                return businessBuild;
+                //businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(houseCode,businessBuild));
             }
         }
+        throw new IllegalArgumentException("invalid build code:" + buildCode);
     }
 
     public String dataComplete(){
 
         for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()){
+            BusinessBuild businessBuild = getBusinessBuild(entry.getKey().getBuildCode());
+            businessBuild.setHouseCount(0);
+            businessBuild.setArea(BigDecimal.ZERO);
+            businessBuild.setHomeCount(0);
+            businessBuild.setHomeArea(BigDecimal.ZERO);
+            businessBuild.setUnhomeCount(0);
+            businessBuild.setUnhomeArea(BigDecimal.ZERO);
+            businessBuild.setShopCount(0);
+            businessBuild.setShopArea(BigDecimal.ZERO);
+
             Set<String> exceptHouseCode = new HashSet<String>();
             for(BuildGridMap gridMap: entry.getValue()){
                 for(GridRow row: gridMap.getGridRows()){
                     for(GridBlock block: row.getGridBlocks()){
-                        if (block.getHouse() != null && !block.isLocked()){
-                            addExceptHouse(entry.getKey().getBuildCode(),block.getHouse().getHouseCode());
-                            exceptHouseCode.add(block.getHouseCode());
+
+                        if (block.getHouse() != null) {
+                            if (block.isLocked()){
+                                UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
+                                businessBuild.setHouseCount(businessBuild.getHomeCount() + 1);
+                                businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
+
+                                if (useType.isDwelling()){
+                                    businessBuild.setHomeCount(businessBuild.getHomeCount() + 1);
+                                    businessBuild.setHomeArea(businessBuild.getHomeArea().add(block.getHouse().getHouseArea()));
+                                }else if (useType.isShopHouse()){
+                                    businessBuild.setShopCount(businessBuild.getShopCount() + 1);
+                                    businessBuild.setShopArea(businessBuild.getShopArea().add(block.getHouse().getHouseArea()));
+                                }else{
+                                    businessBuild.setUnhomeCount(businessBuild.getUnhomeCount() + 1);
+                                    businessBuild.setUnhomeArea(businessBuild.getUnhomeArea().add(block.getHouse().getHouseArea()));
+                                }
+                            } else {
+                                businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(block.getHouseCode(), businessBuild));
+                                exceptHouseCode.add(block.getHouseCode());
+                            }
                         }
+
                     }
                 }
             }
