@@ -49,6 +49,16 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
            return null;
     }
 
+    public BusinessEmp getBusinessEmpByType(String typeName){
+        for(BusinessEmp businessEmp:getInstance().getBusinessEmps()){
+            if (businessEmp.getType().equals(BusinessEmp.EmpType.valueOf(BusinessEmp.EmpType.class,typeName))){
+                return businessEmp;
+            }
+        }
+        return null;
+
+    }
+
     public Evaluate getEvaluate(){
         if (!getInstance().getEvaluates().isEmpty()){
             return getInstance().getEvaluates().iterator().next();

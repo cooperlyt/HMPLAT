@@ -16,7 +16,7 @@ import java.util.Date;
 public class BusinessEmp implements java.io.Serializable {
 
     public enum EmpType{
-        CREATE_EMP, APPLY_EMP, CHECK_EMP,REG_EMP, CARD_PRINTER, PATCH_EMP
+        CREATE_EMP, APPLY_EMP, CHECK_EMP,REG_EMP, CARD_PRINTER, PATCH_EMP,RECORD_EMP,MONEY_EMP
     }
 
 	private String id;
@@ -30,6 +30,9 @@ public class BusinessEmp implements java.io.Serializable {
 	public BusinessEmp() {
 	}
 
+    public BusinessEmp(EmpType type) {
+        this.type=type;
+    }
 	public BusinessEmp(OwnerBusiness ownerBusiness, EmpType type,
 			String empCode, String empName, Date operDate) {
 		this.ownerBusiness = ownerBusiness;
