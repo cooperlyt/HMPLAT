@@ -51,6 +51,7 @@ public class AddContractsRecord implements TaskCompleteSubscribeComponent {
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
             houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.CONTRACTS_RECORD,houseBusiness));
+
         }
 
 
