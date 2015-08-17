@@ -16,6 +16,8 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -27,7 +29,7 @@ import java.util.List;
 public class HouseBusinessStart {
 
 
-    private static final String BUSINESS_PICK_BIZ_PAGE = "";
+    private static final String BUSINESS_PICK_BIZ_PAGE = "/business/houseOwner/HouseBusinessSelect.xhtml";
 
     @In
     private BusinessDefineHome businessDefineHome;
@@ -74,7 +76,7 @@ public class HouseBusinessStart {
     }
 
 
-    @DataModel
+    @DataModel("houseStartAllowBusiness")
     private List<OwnerBusiness> allowSelectBizs;
 
     @DataModelSelection
@@ -92,30 +94,26 @@ public class HouseBusinessStart {
                     .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
                     .setParameter("defineId", businessDefineHome.getInstance().getPickBusinessDefineId().trim()).getResultList());
         }
-        if (allowSelectBizs.isEmpty()) {
-            ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse(), OwnerHouseHelper.instance().getMasterStatus(ownerBuildGridMap.getSelectBizHouse().getHouseCode())));
-        } else if (allowSelectBizs.size() == 1){
-            ownerBusinessHome.getInstance().setSelectBusiness(allowSelectBizs.get(0));
-            return businessSelected();
+
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse(), OwnerHouseHelper.instance().getMasterStatus(ownerBuildGridMap.getSelectBizHouse().getHouseCode())));
+
+        if (allowSelectBizs.isEmpty()){
+            return ownerBusinessStart.dataSelected();
         }else{
+            Collections.sort(allowSelectBizs, new Comparator<OwnerBusiness>() {
+                @Override
+                public int compare(OwnerBusiness o1, OwnerBusiness o2) {
+                    return o2.getApplyTime().compareTo(o1.getApplyTime());
+                }
+            });
             return BUSINESS_PICK_BIZ_PAGE;
         }
-        return ownerBusinessStart.dataSelected();
+
     }
 
     public String businessSelected(){
         ownerBusinessHome.getInstance().setSelectBusiness(selectedBusiness);
-        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-        if (selectedBusiness.getHouseBusinesses().isEmpty()){
-            throw new IllegalArgumentException("config exception not hove house");
-        }
-        for (HouseBusiness houseBusiness: selectedBusiness.getHouseBusinesses()){
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(
-                    new HouseBusiness(ownerBusinessHome.getInstance(),
-                            ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode()).getBusinessHouse(),OwnerHouseHelper.instance().getMasterStatus(houseBusiness.getHouseCode())));
-        }
-
         return ownerBusinessStart.dataSelected();
     }
 

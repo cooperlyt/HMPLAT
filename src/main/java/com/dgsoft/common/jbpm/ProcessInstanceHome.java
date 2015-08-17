@@ -30,9 +30,17 @@ public class ProcessInstanceHome {
 
         private String processKey;
 
+        private Integer processVersion;
+
         public ProcessInstanceKey(String processDefineName, String processKey) {
             this.processDefineName = processDefineName;
             this.processKey = processKey;
+        }
+
+        public ProcessInstanceKey(String processDefineName, String processKey, Integer processVersion) {
+            this.processDefineName = processDefineName;
+            this.processKey = processKey;
+            this.processVersion = processVersion;
         }
 
         public String getProcessDefineName() {
@@ -41,6 +49,10 @@ public class ProcessInstanceHome {
 
         public String getProcessKey() {
             return processKey;
+        }
+
+        public Integer getProcessVersion() {
+            return processVersion;
         }
 
         @Override
@@ -52,14 +64,15 @@ public class ProcessInstanceHome {
 
             if (!processDefineName.equals(that.processDefineName)) return false;
             if (!processKey.equals(that.processKey)) return false;
+            return !(processVersion != null ? !processVersion.equals(that.processVersion) : that.processVersion != null);
 
-            return true;
         }
 
         @Override
         public int hashCode() {
             int result = processDefineName.hashCode();
             result = 31 * result + processKey.hashCode();
+            result = 31 * result + (processVersion != null ? processVersion.hashCode() : 0);
             return result;
         }
     }
@@ -89,7 +102,12 @@ public class ProcessInstanceHome {
     public void initInstance() {
         if (instance == null) {
             if (key != null) {
-                ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(key.getProcessDefineName());
+                ProcessDefinition definition;
+                if (key.getProcessKey() == null) {
+                    definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(key.getProcessDefineName());
+                }else{
+                    definition = ManagedJbpmContext.instance().getGraphSession().findProcessDefinition(key.getProcessDefineName(),key.getProcessVersion());
+                }
                 instance = definition == null ?
                         null : ManagedJbpmContext.instance().getProcessInstanceForUpdate(definition, key.getProcessKey());
             }

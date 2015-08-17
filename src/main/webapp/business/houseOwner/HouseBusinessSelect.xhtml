@@ -1,0 +1,72 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template.xhtml">
+
+    <ui:define name="func-body">
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>           <s:link value="#{messages.BusinessPatch}" view="/func/house/owner/PatchOwnerBusiness.xhtml" propagation="end"/>
+                    </strong>
+
+
+                    <span class="path-divider">/</span>
+
+                    #{ownerBusinessHome.instance.defineName}
+                    <span class="path-divider">/</span>
+                    <s:link action="#{ownerBusinessPatch.beginEdit}">
+                        #{messages.Business_Start_Subscribe}
+                    </s:link>
+                    <span class="path-divider">/</span>
+                    <s:link view="/business/houseOwner/BusinessPatchFileUpload.xhtml">
+                        #{messages.Business_Start_File_Upload}
+
+                    </s:link>
+                    <span class="path-divider">/</span>
+                    #{messages.Business_patch_confirm}
+                </h1>
+
+                <div class="right">
+                    <s:button styleClass="btn btn-primary"
+                                     action="#{ownerBusinessStart.dataSelected}" value="#{messages.skipStep}"
+                                     p:data-loading-text="#{messages.skipStep}" onclick="#{r:component('wait')}.show()">
+
+
+                    </s:button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="container">
+            <h:form>
+            <ul class="repo-list js-repo-list">
+                <a:repeat value="#{houseStartAllowBusiness}" var="_item">
+                    <ui:include src="#{(empty businessDefineHome.instance.pickBusinessViewPage) ? '/business/houseOwner/BusinessSelectListItem.xhtml' : businessDefineHome.instance.pickBusinessViewPage}">
+
+                    </ui:include>
+                </a:repeat>
+            </ul>
+
+            </h:form>
+            
+        </div>
+    </ui:define>
+
+</ui:composition>

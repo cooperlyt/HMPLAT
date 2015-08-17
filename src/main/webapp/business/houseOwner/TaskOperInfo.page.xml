@@ -24,7 +24,12 @@
             <redirect view-id="/business/houseOwner/TaskCompleted.xhtml"/>
         </rule>
 
+    </navigation>
 
+    <navigation from-action="#{ownerTaskHandle.endBusiness}">
+        <rule if-outcome="businessEnd">
+            <redirect view-id="/func/system/business/task.xhtml"/>
+        </rule>
     </navigation>
 
 </page>

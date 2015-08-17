@@ -1,0 +1,49 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <li class="repo-list-item public source">
+        <div class="repo-list-stats">
+            <h:commandButton styleClass="btn btn-sm btn-success" value="#{messages.Select}" action="#{houseBusinessStart.businessSelected}"
+                    onclick="#{r:component('wait')}.show()">
+
+            </h:commandButton>
+        </div>
+        <h3 class="repo-list-name">
+            <ui:insert name="itemTitle">
+
+                    <f:param value="#{_item.id}" name="businessId"/>
+                    #{_item.defineName} / #{_item.id}
+
+
+            </ui:insert>
+        </h3>
+
+        <ui:insert name="itemDescription">
+            <p class="repo-list-description">
+
+            </p>
+
+            <p class="repo-list-description">
+
+            </p>
+
+        </ui:insert>
+
+        <p class="repo-list-meta">
+            <ui:insert name="itemMeta">
+                #{messages['ownerBusiness.applyTime']}
+                <h:outputText value="#{_item.applyTime}">
+                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                </h:outputText>
+            </ui:insert>
+        </p>
+    </li>
+
+</ui:composition>

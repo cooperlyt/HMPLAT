@@ -29,12 +29,14 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     private BusinessStatus status;
     private String defineName;
     private String defineId;
+    private Integer defineVersion;
 
     private Date createTime;
     private Date applyTime;
     private Date checkTime;
     private Date regTime;
     private Date recordTime;
+
 
     private boolean recorded;
 
@@ -130,8 +132,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         return result;
     }
 
-    @Column(name = "DEFINE_NAME", nullable = true, length = 50)
+    @Column(name = "DEFINE_NAME", nullable = false, length = 50)
     @Size(max = 50)
+    @NotNull
     public String getDefineName() {
         return defineName;
     }
@@ -140,14 +143,24 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.defineName = defineName;
     }
 
-    @Column(name = "DEFINE_ID", nullable = true, length = 32)
+    @Column(name = "DEFINE_ID", nullable = false, length = 32)
     @Size(max = 32)
+    @NotNull
     public String getDefineId() {
         return defineId;
     }
 
     public void setDefineId(String defineId) {
         this.defineId = defineId;
+    }
+
+    @Column(name ="DEFINE_VERSION", nullable = true)
+    public Integer getDefineVersion() {
+        return defineVersion;
+    }
+
+    public void setDefineVersion(Integer defineVersion) {
+        this.defineVersion = defineVersion;
     }
 
     @Column(name = "MEMO", length = 200)
