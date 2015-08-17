@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskDescription;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -24,6 +25,8 @@ import java.util.List;
 @Name("ownerTaskHandle")
 @Scope(ScopeType.CONVERSATION)
 public class OwnerTaskHandle {
+
+    private final static String END_TRANSITION_NAME = "_END";
 
     public enum TransitionType{
         NEXT,BACK,REJECT
@@ -53,6 +56,9 @@ public class OwnerTaskHandle {
 
     @In
     private TaskInstance taskInstance;
+
+
+
 
 
     @In
@@ -109,14 +115,28 @@ public class OwnerTaskHandle {
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 TaskOper.OperType.BACK, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
-                taskInstance.getName() + transitionName,transitionComments,taskDescription.getDescription()));
+                taskInstance.getName() + transitionName, transitionComments, taskDescription.getDescription()));
 
         if ("updated".equals(ownerBusinessHome.update())) {
             businessProcess.endTask(transitionName);
             return "taskCompleted";
         }
         throw new IllegalArgumentException("backFail");
+    }
 
+    @Transactional
+    @EndTask(transition = END_TRANSITION_NAME)
+    public String endBusiness(){
+        ownerBusinessHome.refresh();
+        ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
+                TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
+                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
+                taskInstance.getName(), transitionComments, taskDescription.getDescription()));
+        if ("updated".equals(ownerBusinessHome.update())) {
+            return "businessEnd";
+        }
+        throw new IllegalArgumentException("endBusiness fail");
     }
 
     public void init(){
@@ -165,7 +185,6 @@ public class OwnerTaskHandle {
         }
 
         throw new IllegalArgumentException("completeFail");
-
     }
 
     @In
@@ -195,16 +214,21 @@ public class OwnerTaskHandle {
         return true;
     }
 
-    private List<String> backTransitions;
+    private List<String> leaveTransitionNames;
+
+    protected List<String> getLeaveTransitionNames(){
+        if (leaveTransitionNames == null){
+            leaveTransitionNames = new ArrayList<String>(taskInstance.getProcessInstance().getProcessDefinition().getNode(taskInstance.getName()).getLeavingTransitionsMap().keySet());
+        }
+        return leaveTransitionNames;
+    }
 
     public List<String> getBackTransitions(){
-        if (backTransitions == null){
-            backTransitions = new ArrayList<String>(taskInstance.getProcessInstance().getProcessDefinition().getNode(taskInstance.getName()).getLeavingTransitionsMap().keySet());
-            backTransitions.remove(null);
-
-            Collections.sort(backTransitions);
-        }
-        return backTransitions;
+        List<String> result = new ArrayList<String>(getLeaveTransitionNames());
+        result.remove(null);
+        result.remove(END_TRANSITION_NAME);
+        Collections.sort(result);
+        return result;
     }
 
     public boolean isCanBack(){
@@ -219,6 +243,10 @@ public class OwnerTaskHandle {
         }
         return "COMPLETE";
 
+    }
+
+    public boolean isCanEndBusiness(){
+       return getLeaveTransitionNames().contains(END_TRANSITION_NAME);
     }
 
 

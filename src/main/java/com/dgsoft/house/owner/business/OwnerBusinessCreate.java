@@ -12,8 +12,10 @@ import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
+import org.jbpm.graph.def.ProcessDefinition;
 import sun.rmi.runtime.Log;
 
 import java.util.Date;
@@ -41,14 +43,17 @@ public class OwnerBusinessCreate extends BusinessCreate {
             businessDefineHome.completeTask();
 
             ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(),
-                    BusinessEmp.EmpType.CREATE_EMP,authInfo.getLoginEmployee().getId(),
-                    authInfo.getLoginEmployee().getPersonName(),new Date()));
+                    BusinessEmp.EmpType.CREATE_EMP, authInfo.getLoginEmployee().getId(),
+                    authInfo.getLoginEmployee().getPersonName(), new Date()));
             ownerBusinessHome.getInstance().getTaskOpers().add(
                     new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,
                             RunParam.instance().getStringParamValue("CreateBizTaskName"),
-                            authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),businessDefineHome.getDescription()));
+                            authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), businessDefineHome.getDescription()));
 
 
+            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
+
+            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
             String result = ownerBusinessHome.persist();
             verify = ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&
                     !businessDefineHome.getInstance().getWfName().trim().equals(""));

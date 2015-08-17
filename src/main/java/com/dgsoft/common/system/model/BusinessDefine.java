@@ -33,6 +33,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
     private boolean enable;
     private String pickBusinessDefineId;
+    private String pickBusinessViewPage;
 
 
     private Set<Fee> fees = new HashSet<Fee>(0);
@@ -206,12 +207,23 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     }
 
     @Column(name = "PICK_BUSINESS_DEFINE_ID", nullable = true, length = 32)
+    @Size(max = 32)
     public String getPickBusinessDefineId() {
         return pickBusinessDefineId;
     }
 
     public void setPickBusinessDefineId(String pickBusinessDefineId) {
         this.pickBusinessDefineId = pickBusinessDefineId;
+    }
+
+    @Column(name="PICK_BUSINESS_VIEW_PAGE", nullable = true, length = 255)
+    @Size(max = 255)
+    public String getPickBusinessViewPage() {
+        return pickBusinessViewPage;
+    }
+
+    public void setPickBusinessViewPage(String pickBusinessViewPage) {
+        this.pickBusinessViewPage = pickBusinessViewPage;
     }
 
     @Override

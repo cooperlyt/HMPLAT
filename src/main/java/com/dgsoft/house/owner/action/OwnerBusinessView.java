@@ -52,7 +52,11 @@ public class OwnerBusinessView {
             businessDefineHome.setId(ownerBusinessHome.getInstance().getDefineId());
             businessDefineHome.setTaskName(Subscribe.BUSINESS_VIEW_TASK_NAME);
             try {
-                processInstanceHome.setKey(new ProcessInstanceHome.ProcessInstanceKey(businessDefineHome.getInstance().getWfName(),id));
+                if (ownerBusinessHome.getInstance().getDefineVersion() == null) {
+                    processInstanceHome.setKey(new ProcessInstanceHome.ProcessInstanceKey(businessDefineHome.getInstance().getWfName(), id));
+                }else{
+                    processInstanceHome.setKey(new ProcessInstanceHome.ProcessInstanceKey(businessDefineHome.getInstance().getWfName(), id, ownerBusinessHome.getInstance().getDefineVersion()));
+                }
             }catch (EntityNotFoundException e){
                 businessDefineHome.clearInstance();
             }

@@ -154,6 +154,22 @@
 
         </s:decorate>
 
+
+
+        <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
+            <ui:define name="label">#{messages.BusinessSelectStartSummaryPage}</ui:define>
+            <ui:param name="for" value="pickBizItemPage"/>
+            <h:inputText id="pickBizItemPage"
+                         name="#{messages.BusinessSelectStartSummaryPage}"
+                         styleClass="form-control"
+                         maxlength="255"
+                         value="#{businessDefineHome.instance.pickBusinessViewPage}">
+
+            </h:inputText>
+
+        </s:decorate>
+
+
         <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
             <ui:define name="label">#{messages.businessDefing_field_rolePrefix}</ui:define>
             <ui:param name="for" value="rolePrefixInput"/>

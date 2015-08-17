@@ -43,6 +43,30 @@
     </a:outputPanel>
 
 
+    <a:outputPanel rendered="#{ownerTaskHandle.canEndBusiness}">
+
+        <ui:decorate template="/layout/edit-modalpanel.xhtml">
+            <ui:param name="panelId" value="endPanel"/>
+            <ui:param name="panelTitle" value="#{messages.endBusiness}"/>
+
+            <h:inputTextarea style="margin-top: 10px" styleClass="form-control" value="#{ownerTaskHandle.transitionComments}" rows="5" label="#{messages.endComments}"
+                             p:placeholder="#{messages.endComments}"/>
+
+            <ui:define name="actionButtons">
+                <button type="button" class="button default" data-dismiss="modal">
+
+                    #{messages.cancel}</button>
+
+
+                <h:commandLink styleClass="button submit primary" action="#{ownerTaskHandle.endBusiness}" onclick="#{r:component('wait')}.show()">
+                    #{messages.TERMINATION}
+                </h:commandLink>
+
+            </ui:define>
+        </ui:decorate>
+    </a:outputPanel>
+
+
     <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerTaskHandle.backComments}">
         <span class="octicon octicon-alert"/>
         <strong>#{messages.fallback}! </strong>#{ownerTaskHandle.backComments}
@@ -78,6 +102,12 @@
             </a>
             </a:outputPanel>
 
+        <a:outputPanel rendered="#{ownerTaskHandle.canEndBusiness}">
+            <a class="minibutton danger" onclick="$('#endPanel').modal({backdrop: 'static'});return false;">
+                <span class="octicon octicon-primitive-square"/>
+                #{messages.endBusiness}
+            </a>
+        </a:outputPanel>
        <h3>
          <strong>#{taskInstance.processInstance.key}</strong>
 
