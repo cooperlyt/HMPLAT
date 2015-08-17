@@ -295,6 +295,17 @@
     </view-subscribe>
 
 
+    <view-subscribe name="PeopleCheckEmpView" page="/business/houseOwner/subscribe/PeopleCheckEmpView.xhtml">
+        <description>
+            审核意见查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="PeopleRegEmpView" page="/business/houseOwner/subscribe/PeopleRegEmpView.xhtml">
+        <description>
+            登薄意见查看
+        </description>
+    </view-subscribe>
 
     <!--
     <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component=""  ><description>
@@ -558,6 +569,16 @@
     </edit-subscribe>
 
 
+    <edit-subscribe name="PeopleRegEmpEdit" page="/business/houseOwner/subscribe/PeopleRegEmpEdit.xhtml"
+                    component="">
+        <description>
+            登簿意见(登薄人，时间)
+        </description>
+    </edit-subscribe>
+
+
+
+
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
@@ -702,6 +723,18 @@
     </end-subscribe>
 
 
+
+    <end-subscribe name="addMoneyEmpEnd" component="addMoneyEmp">
+        <description>
+            收费人(收费人、时间)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addCheckEmpEnd" component="addCheckEmp">
+        <description>
+            审核人(审核人、时间、意见)
+        </description>
+    </end-subscribe>
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
 
