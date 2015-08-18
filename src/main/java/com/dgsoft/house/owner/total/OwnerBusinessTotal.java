@@ -22,49 +22,51 @@ public class OwnerBusinessTotal {
     @In(create = true)
     private SystemEntityLoader systemEntityLoader;
 
-    private Map<BusinessCategory,List<OwnerBusinessTotalData>> resultData;
+    //private Map<BusinessCategory,List<OwnerBusinessTotalData>> resultData;
+    private List<OwnerBusinessTotalData> resultData;
 
     private void initData(){
-        resultData = new HashMap<BusinessCategory, List<OwnerBusinessTotalData>>();
-        List<OwnerBusinessTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.OwnerBusinessTotalData(ob.defineId,count(ob.id)) from OwnerBusiness ob where ob.status = 'COMPLETE' group by ob.defineId", OwnerBusinessTotalData.class).getResultList();
-        for(OwnerBusinessTotalData data: datas){
+
+        resultData = new ArrayList<OwnerBusinessTotalData>();
+        List<OwnerBusinessTotalData> result = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.OwnerBusinessTotalData(ob.defineId,count(ob.id)) from OwnerBusiness ob where ob.status = 'COMPLETE' group by ob.defineId", OwnerBusinessTotalData.class).getResultList();
+        for(OwnerBusinessTotalData data: result){
             BusinessDefine define = systemEntityLoader.getEntityManager().find(BusinessDefine.class,data.getDefineId());
             if (define != null && define.isEnable()){
                 data.setBusinessDefine(define);
-                List<OwnerBusinessTotalData> defineDatas = resultData.get(define.getBusinessCategory());
-                if (defineDatas == null){
-                    defineDatas = new ArrayList<OwnerBusinessTotalData>();
-                    resultData.put(define.getBusinessCategory(),defineDatas);
-                }
-                defineDatas.add(data);
+                resultData.add(data);
+//                List<OwnerBusinessTotalData> defineDatas = resultData.get(define.getBusinessCategory());
+//                if (defineDatas == null){
+//                    defineDatas = new ArrayList<OwnerBusinessTotalData>();
+//                    resultData.put(define.getBusinessCategory(),defineDatas);
+//                }
+//                defineDatas.add(data);
 
             }
         }
-
-        for(List<OwnerBusinessTotalData> item: resultData.values()){
-            Collections.sort(item, new Comparator<OwnerBusinessTotalData>() {
-                @Override
-                public int compare(OwnerBusinessTotalData o1, OwnerBusinessTotalData o2) {
-                    return Integer.valueOf(o1.getBusinessDefine().getPriority()).compareTo(o2.getBusinessDefine().getPriority());
-                }
-            });
-        }
+//
+//        for(List<OwnerBusinessTotalData> item: resultData.values()){
+//            Collections.sort(item, new Comparator<OwnerBusinessTotalData>() {
+//                @Override
+//                public int compare(OwnerBusinessTotalData o1, OwnerBusinessTotalData o2) {
+//                    return Integer.valueOf(o1.getBusinessDefine().getPriority()).compareTo(o2.getBusinessDefine().getPriority());
+//                }
+//            });
+//        }
+        Collections.sort(resultData, new Comparator<OwnerBusinessTotalData>() {
+            @Override
+            public int compare(OwnerBusinessTotalData o1, OwnerBusinessTotalData o2) {
+                return o1.getDefineId().compareTo(o2.getDefineId());
+            }
+        });
     }
 
-    public List<Map.Entry<BusinessCategory,List<OwnerBusinessTotalData>>> getResultData(){
+
+    public List<OwnerBusinessTotalData> getResultData(){
         if(resultData == null){
             initData();
         }
-        List<Map.Entry<BusinessCategory,List<OwnerBusinessTotalData>>> result = new ArrayList<Map.Entry<BusinessCategory, List<OwnerBusinessTotalData>>>(resultData.entrySet());
 
-
-        Collections.sort(result, new Comparator<Map.Entry<BusinessCategory, List<OwnerBusinessTotalData>>>() {
-            @Override
-            public int compare(Map.Entry<BusinessCategory, List<OwnerBusinessTotalData>> o1, Map.Entry<BusinessCategory, List<OwnerBusinessTotalData>> o2) {
-                return Integer.valueOf(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
-            }
-        });
-        return result;
+        return resultData;
     }
 
 
