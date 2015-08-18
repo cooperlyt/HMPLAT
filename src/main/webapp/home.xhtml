@@ -7,6 +7,7 @@
                 xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:a="http://richfaces.org/a4j"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 template="/layout/template.xhtml">
 
     <ui:define name="func-body">
@@ -198,15 +199,17 @@
         <a:outputPanel layout="block" style="padding: 10px" rendered="#{not identity.loggedIn}">
 
 
+
             <r:chart id="bar" >
                 <r:chartLegend sorting="ascending"/>
-                <a:repeat value="#{ownerBusinessTotal.resultData}" var="_data">
-                    <r:chartSeries label="#{_data.key.name}" type="bar">
-                        <a:repeat value="#{_data.value}" var="_item">
+
+
+                    <r:chartSeries  label=""  type="bar">
+                        <a:repeat var="_item" value="#{ownerBusinessTotal.resultData}">
                             <r:chartPoint x="#{_item.businessDefine.name}" y="#{_item.count}"/>
                         </a:repeat>
                     </r:chartSeries>
-                </a:repeat>
+
             </r:chart>
 
         </a:outputPanel>
