@@ -735,6 +735,13 @@
             审核人(审核人、时间、意见)
         </description>
     </end-subscribe>
+    <end-subscribe name="addRecordEmpEnd" component="addRecordEmp">
+        <description>
+            归档人(归档人、时间、意见)
+        </description>
+    </end-subscribe>
+
+
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
 
