@@ -53,6 +53,9 @@ INSERT INTO `business_define` (`ID`, `NAME`, `WF_NAME`, `START_PAGE`, `CATEGORY`
 -- 报表
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('owner.apply.check','房地产登记受理审核业务书','房地产登记受理审核业务书','/report/ReisterApplyCheckTable.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('1','业务受理单（存根联）','业务受理单（存根联）','/report/BusinessHandleStub.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('2','询问笔录（初始登记）','询问笔录（初始登记）','/report/InitRegAskRecord.xhtml');
+
+
 
 -- 收费种类
 INSERT INTO FEE_CATEGORY(ID, NAME, PRIORITY,DESCRIPTION) VALUES('REGISTER','登记费',1,null);
