@@ -128,8 +128,8 @@
                                                                  action="#{businessPrintConfig.removeReport}"
 
                                                                  value="#{messages.delete}">
-                                                    <a:param value="#{_subscribe.id}"
-                                                             assignTo="#{businessPrintConfig.selectId}"/>
+
+                                                    <f:param value="#{_subscribe.report.id}" name="selectId"/>
                                                     <a:attachQueue requestDelay="0"/>
                                                 </a:commandButton>
 
@@ -149,7 +149,7 @@
                                                 <s:selectItems
                                                         value="#{businessPrintConfig.canAddReports}"
                                                         var="_reg" label="#{_reg.name}"
-                                                        itemValue="#{_reg.id}"
+                                                        itemValue="#{_reg}"
                                                         noSelectionLabel="#{messages.noSelectLabel}"/>
                                                 <f:converter converterId="systemEntityConverter"/>
                                             </h:selectOneMenu>
@@ -179,7 +179,7 @@
                                                            action="#{businessPrintConfig.up}">
                                                 <span class="octicon octicon-move-up"/>
                                                 <a:attachQueue requestDelay="0"/>
-                                                <a:param value="#{_subscribe.id}"
+                                                <a:param value="#{_subscribe.report.id}"
                                                          assignTo="#{businessPrintConfig.selectId}"/>
                                             </a:commandLink>
                                             <a:commandLink styleClass="labels-list-action" execute="@this"
@@ -188,7 +188,7 @@
                                                            action="#{businessPrintConfig.down}">
                                                 <span class="octicon octicon-move-down"/>
                                                 <a:attachQueue requestDelay="0"/>
-                                                <a:param value="#{_subscribe.id}"
+                                                <a:param value="#{_subscribe.report.id}"
                                                          assignTo="#{businessPrintConfig.selectId}"/>
                                             </a:commandLink>
 
