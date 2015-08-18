@@ -107,11 +107,18 @@
                         <p:paragraph>提供要件</p:paragraph>
                 </p:cell>
 
+                <p:cell colspan="4"  verticalAlignment="top" horizontalAlignment="left" noWrap="false" >
+                    <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
+                            <p:paragraph rendered="#{not empty ownerBusinessHome.businessFileNames}"> #{ownerBusinessHome.businessFileNames}</p:paragraph>
+                        </p:cell>
+
+                    </p:table>
+                </p:cell>
 
 
-
-                <p:cell fixedHeight="150">
-                    <p:paragraph>受理意见</p:paragraph>
+                <p:cell colspan="4"  verticalAlignment="middle" horizontalAlignment="center" noWrap="false" >
+                    <p:paragraph>收费合计</p:paragraph>
                 </p:cell>
 
                 <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">

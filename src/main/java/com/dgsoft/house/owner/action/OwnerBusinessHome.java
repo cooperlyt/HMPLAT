@@ -154,6 +154,19 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+    public String getBusinessFileNames(){
+        List<String> filesesList = new ArrayList<String>();
+        if (!getInstance().getUploadFileses().isEmpty()){
+            for (BusinessFile businessFile:getInstance().getUploadFileses()){
+                filesesList.add(businessFile.getName());
+            }
+
+        }
+        return filesesList.toString().substring(1,filesesList.toString().indexOf("]"));
+
+    }
+
+
 
     public BusinessEmp getApplyEmp(){
         return getOperEmp(BusinessEmp.EmpType.APPLY_EMP);
@@ -177,7 +190,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     public BusinessPersion getApplyPersion(){
        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-           if (persion.getType().equals(BusinessPersion.PersionType.APPLY_PERSION)){
+           if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)){
                return persion;
            }
        }
