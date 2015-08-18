@@ -13,7 +13,7 @@
 
 <ui:define name="taskChangePush">
     <a:push id="pushTask" address="pushTaskChange">
-        <a:ajax event="dataavailable" render="taskFilterForm"/>
+        <a:ajax event="dataavailable" render="taskFilterForm,taskListForm"/>
     </a:push>
 </ui:define>
 
@@ -94,14 +94,14 @@
                         </r:hotKey>
 
 
-                        <a:jsFunction name="searchByKey" action="#{allTaskAdapterCacheList.reset}" execute="@form" status="processWaiting">
+                        <a:jsFunction name="searchByKey" action="#{allTaskAdapterCacheList.reset}" render="taskListForm" execute="@form" status="processWaiting">
 
                         </a:jsFunction>
                     </h:form>
                 </div>
                 <h:form>
 
-                    <a:outputPanel ajaxRendered="true">
+                    <a:outputPanel id="taskListForm">
 
                         <a:outputPanel layout="block" styleClass="blankslate"
                                        rendered="#{(empty allTaskAdapterCacheList.resultList) and allTaskAdapterCacheList.emptyTask}">
@@ -110,7 +110,8 @@
 
 
                             <h3>#{messages.emptyTask}#{messages[allTaskAdapterCacheList.filterType.messageKey]}</h3>
-                            <p>#{messages.emptyTaskDescription} <a:commandLink immediate="true" execute="@this" render="taskFilterForm"
+                            <p>#{messages.emptyTaskDescription}
+                                <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
                                                                                status="processWaiting"
                                                                   value="#{messages.manualRefresh}" action="#{allTaskAdapterCacheList.refresh}">
                                 <a:attachQueue requestDelay="0"/>
@@ -127,11 +128,11 @@
                             <p>#{messages.emptySearchTaskDescription}
                                 <a:commandLink immediate="true" execute="@this" status="processWaiting"
                                                                                      value="#{messages.clearCondition}"
-                                                                                     render="dataAreaForm,keySearchForm"
+                                                                                     render="dataAreaForm,keySearchForm,taskListForm"
                                                                                      action="#{allTaskAdapterCacheList.clearCondition}">
                                 <a:attachQueue requestDelay="0"/>
                                 </a:commandLink> #{messages.orOther}
-                                <a:commandLink immediate="true" execute="@this" render="taskFilterForm" status="processWaiting"
+                                <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm" status="processWaiting"
                                                                   value="#{messages.refresh}" action="#{allTaskAdapterCacheList.refresh}">
                                 <a:attachQueue requestDelay="0"/>
                             </a:commandLink></p>
@@ -141,7 +142,7 @@
                             <div class="file-navigation in-mid-page" style="margin-top: 0">
                                 <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button "
                                                immediate="true" execute="@this" status="processWaiting"
-                                               action="#{allTaskAdapterCacheList.refresh}" render="taskFilterForm">
+                                               action="#{allTaskAdapterCacheList.refresh}" render="taskFilterForm,taskListDatas">
                                     <span class="octicon octicon-sync"/>
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
@@ -178,7 +179,7 @@
                                                    offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
                                                    data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
                                                    data-size="mini" styleClass="js-switch"/>
-                                        <a:jsFunction name="sortOption" status="processWaiting"
+                                        <a:jsFunction name="sortOption" status="processWaiting" render="taskListDatas"
                                                       execute="@region" action="#{allTaskAdapterCacheList.reset}">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:jsFunction>
@@ -216,7 +217,7 @@
                                                     <div class="btn-group" role="group" aria-label="...">
 
 
-                                                        <a:commandLink action="#{pooledTask.unassign}" immediate="true" render="taskFilterForm"
+                                                        <a:commandLink action="#{pooledTask.unassign}" immediate="true" render="taskFilterForm,taskListForm"
                                                                        execute="@this" rendered="#{_task.myTask and (not _task.myOnly)}"
                                                                        p:aria-label="#{messages.unAcceptTask}" status="processWaiting"
                                                                        styleClass="btn btn-sm btn-warning tooltipped tooltipped-s">
@@ -231,7 +232,7 @@
 
 
                                                         <a:commandLink rendered="#{not _task.myTask}" immediate="true" execute="@this"
-                                                                       action="#{pooledTask.assignToCurrentActor}" render="taskFilterForm"
+                                                                       action="#{pooledTask.assignToCurrentActor}" render="taskFilterForm,taskListDatas"
                                                                        p:aria-label="#{messages.acceptTask}" status="processWaiting"
                                                                        styleClass="btn btn-sm btn-primary tooltipped tooltipped-s">
 
@@ -300,7 +301,7 @@
 
 
 
-                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm"
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
                                        action="#{allTaskAdapterCacheList.reset}"
                                        styleClass="filter-item #{ (allTaskAdapterCacheList.filterTypeName eq 'ALL') ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.allSize}</span>
@@ -314,7 +315,7 @@
                     </li>
                     <li>
 
-                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm"
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
                                        action="#{allTaskAdapterCacheList.reset}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'POOLED' ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.pooledSize}</span>
@@ -328,7 +329,7 @@
                     <li>
 
 
-                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm"
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
                                        action="#{allTaskAdapterCacheList.reset}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'OWNER' ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.ownerSize}</span>
@@ -351,10 +352,10 @@
              </h:outputStylesheet>
             </h:form>
                <h:form id="dataAreaForm">
-                   <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm" action="#{allTaskAdapterCacheList.clearDateFrom}">
+                   <a:jsFunction name="clearDateFrom" execute="@this" immediate="true" render="dataAreaForm,taskListForm" action="#{allTaskAdapterCacheList.clearDateFrom}">
                        <a:attachQueue requestDelay="0"/>
                    </a:jsFunction>
-                   <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm" action="#{allTaskAdapterCacheList.clearDateTo}">
+                   <a:jsFunction name="clearDateTo" execute="@this" immediate="true" render="dataAreaForm,taskListForm" action="#{allTaskAdapterCacheList.clearDateTo}">
                        <a:attachQueue requestDelay="0"/>
                    </a:jsFunction>
 
@@ -431,7 +432,7 @@
                             </dh:switch>
                         </div>
 
-                        <a:jsFunction name="filterDateAreaChange"
+                        <a:jsFunction name="filterDateAreaChange" render="taskListForm"
                                       action="#{allTaskAdapterCacheList.reset}"
                                       execute="@form" >
                             <a:attachQueue requestDelay="0"/>

@@ -58,7 +58,7 @@ public class HouseBusinessStart {
             try {
                 result = valid.valid(ownerBuildGridMap.getSelectBizHouse());
             }catch (Exception e){
-                Logging.getLog(getClass()).error(e,"config error:" + valid.getClass().getSimpleName());
+                Logging.getLog(getClass()).error(e.getMessage(),e,"config error:" + valid.getClass().getSimpleName());
                 throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
             }
             if (result.getResult().equals(BusinessDataValid.ValidResultLevel.FATAL)){
