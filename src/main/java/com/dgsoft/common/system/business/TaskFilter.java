@@ -1,10 +1,12 @@
 package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.SearchDateArea;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.log.Logging;
 
 import java.util.*;
@@ -212,5 +214,14 @@ public class TaskFilter {
         setSearchKey(null);
     }
 
+
+    public static TaskFilter instance()
+    {
+        if ( !Contexts.isSessionContextActive() )
+        {
+            throw new IllegalStateException("No active session context");
+        }
+        return (TaskFilter) Component.getInstance(TaskFilter.class);
+    }
 
 }

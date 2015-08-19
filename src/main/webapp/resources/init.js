@@ -2,6 +2,7 @@
 
 $(document).ready(
     function(){
+
         $('.selectpicker').selectpicker();
         $('.mini-select').selectpicker('setStyle', 'btn-sm');
         $('.js-switch').bootstrapSwitch();

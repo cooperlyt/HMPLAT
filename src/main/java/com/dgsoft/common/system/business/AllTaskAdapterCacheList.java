@@ -1,22 +1,14 @@
 package com.dgsoft.common.system.business;
 
-import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.jbpm.TaskInstanceListCache;
 import com.dgsoft.common.system.FilterBusinessCategory;
-import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.model.BusinessCategory;
-import com.dgsoft.common.system.model.BusinessDefine;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
-import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.bpm.Actor;
-import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.*;
 
@@ -28,16 +20,85 @@ import java.util.*;
 @AutoCreate
 public class AllTaskAdapterCacheList extends TaskInstanceListCache {
 
-
     @Override
-    protected Set<TaskInstance> searchTaskInstances() {
+    protected Set<TaskInstanceAdapter> initAllTaskInstances() {
+
+
+
         List<TaskInstance> taskInstanceList = (List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.taskInstanceList");
+
+
         taskInstanceList.addAll((List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.pooledTaskInstanceList"));
-        return new HashSet<TaskInstance>(taskInstanceList);
+
+
+
+
+        Set<TaskInstanceAdapter> result = new HashSet<TaskInstanceAdapter>();
+        for (TaskInstance taskInstance : taskInstanceList) {
+            result.add(new TaskInstanceAdapter(taskInstance));
+        }
+        return result;
     }
 
-    public enum TaskFilterType{
-        ALL("allTask"),OWNER("myBussiness"),POOLED("todoBussiness");
+    @Override
+    public List<TaskInstanceAdapter> initResultTask() {
+
+
+        Map<String, FilterBusinessCategory> categoryMap = new HashMap<String, FilterBusinessCategory>();
+
+        for (TaskInstanceAdapter task : getCurTypeTasks()) {
+
+
+            BusinessCategory category = task.getBusinessDefine().getBusinessCategory();
+            FilterBusinessCategory fCategory = categoryMap.get(category.getId());
+            if (fCategory == null) {
+                fCategory = new FilterBusinessCategory(category);
+                categoryMap.put(category.getId(), fCategory);
+            }
+            fCategory.putDefine(task.getBusinessDefine());
+
+        }
+        categories = new ArrayList<FilterBusinessCategory>(categoryMap.values());
+        Collections.sort(categories, new Comparator<FilterBusinessCategory>() {
+            @Override
+            public int compare(FilterBusinessCategory o1, FilterBusinessCategory o2) {
+                return new Integer(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
+            }
+        });
+
+        //--------------
+
+        List<TaskInstanceAdapter> resultList = new ArrayList<TaskInstanceAdapter>(getCurTypeTasks());
+        List<TaskInstanceAdapter> filterList = new ArrayList<TaskInstanceAdapter>();
+
+        if ((selectCategory != null) && (selectDefineId != null) && !selectDefineId.trim().equals("")) {
+            for (TaskInstanceAdapter task : resultList) {
+                if (task.getBusinessDefine().getId().equals(selectDefineId)) {
+                    filterList.add(task);
+                }
+            }
+            resultList.clear();
+            resultList.addAll(filterList);
+            filterList.clear();
+        } else if (selectCategory != null) {
+            for (TaskInstanceAdapter task : resultList) {
+                if (task.getBusinessDefine().getBusinessCategory().getId().equals(selectCategory.getCategory().getId())) {
+                    filterList.add(task);
+                }
+            }
+            resultList.clear();
+            resultList.addAll(filterList);
+            filterList.clear();
+        }
+
+
+        resultList = TaskFilter.instance().filter(resultList);
+
+        return resultList;
+    }
+
+    public enum TaskFilterType {
+        ALL("allTask"), OWNER("myBussiness"), POOLED("todoBussiness");
 
         private String messageKey;
 
@@ -45,7 +106,7 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
             return messageKey;
         }
 
-        private TaskFilterType(String messageKey){
+        TaskFilterType(String messageKey) {
             this.messageKey = messageKey;
         }
     }
@@ -56,38 +117,24 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         return filterType;
     }
 
-    public void setFilterTypeName(String typeName){
+    public void setFilterTypeName(String typeName) {
         filterType = TaskFilterType.valueOf(typeName);
     }
 
-    public String getFilterTypeName(){
+    public String getFilterTypeName() {
         return filterType.name();
     }
 
-    private List<TaskInstanceAdapter> allTasks;
 
-    private List<TaskInstanceAdapter> resultList;
-
-    protected List<TaskInstanceAdapter> getAllTasks(){
-        if (allTasks == null){
-            allTasks = new ArrayList<TaskInstanceAdapter>();
-            for (TaskInstance taskInstance: super.getTaskInstanceCreateList()){
-                TaskInstanceAdapter task = new TaskInstanceAdapter(taskInstance, actor.getId().equals(taskInstance.getActorId()), systemEntityLoader);
-                allTasks.add(task);
-            }
-        }
-        return allTasks;
-    }
-
-    protected List<TaskInstanceAdapter> getTasksByType(TaskFilterType type){
+    protected List<TaskInstanceAdapter> getTasksByType(TaskFilterType type) {
         List<TaskInstanceAdapter> result = new ArrayList<TaskInstanceAdapter>();
-        if (TaskFilterType.ALL.equals(type)){
-            result.addAll(getAllTasks());
-        }else{
-            for(TaskInstanceAdapter task: getAllTasks()){
-                if (TaskFilterType.OWNER.equals(type) && task.isMyTask()){
+        if (TaskFilterType.ALL.equals(type)) {
+            result.addAll(getAllTask());
+        } else {
+            for (TaskInstanceAdapter task : getAllTask()) {
+                if (TaskFilterType.OWNER.equals(type) && task.isMyTask()) {
                     result.add(task);
-                }else if (TaskFilterType.POOLED.equals(type) && !task.isMyTask()){
+                } else if (TaskFilterType.POOLED.equals(type) && !task.isMyTask()) {
                     result.add(task);
                 }
             }
@@ -95,36 +142,21 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         return result;
     }
 
-    protected List<TaskInstanceAdapter> getCurTypeTasks(){
+    protected List<TaskInstanceAdapter> getCurTypeTasks() {
         return getTasksByType(filterType);
     }
 
-    @In(create = true)
-    private SystemEntityLoader systemEntityLoader;
-
-    @In
-    private TaskFilter taskFilter;
-
     private List<FilterBusinessCategory> categories;
 
-    @In
-    private Actor actor;
+    public void clearCondition() {
+        TaskFilter.instance().clearCondition();
+        refreshResult();
+    }
 
     @Override
-    public void refresh(){
-        super.refresh();
-        allTasks = null;
-        reset();
-    }
-
-    public void reset(){
-        resultList = null;
-        categories = null;
-    }
-
-    public void clearCondition(){
-        taskFilter.clearCondition();
-        reset();
+    public void initTaskList(){
+        TaskFilter.instance().clearCondition();
+        super.initTaskList();
     }
 
 
@@ -141,22 +173,22 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         this.selectCategory = selectCategory;
     }
 
-    public String getSelectCategoryId(){
-        if (selectCategory == null){
+    public String getSelectCategoryId() {
+        if (selectCategory == null) {
             return null;
-        }else{
+        } else {
             return selectCategory.getCategory().getId();
         }
     }
 
-    public void setSelectCategoryId(String id){
-        if ((id == null) || id.trim().equals("")){
+    public void setSelectCategoryId(String id) {
+        if ((id == null) || id.trim().equals("")) {
             selectCategory = null;
-        }else{
-            for (FilterBusinessCategory category: getFilterCategorys()){
-                if (category.getCategory().getId().equals(id)){
+        } else {
+            for (FilterBusinessCategory category : getFilterCategorys()) {
+                if (category.getCategory().getId().equals(id)) {
                     selectCategory = category;
-                    return ;
+                    return;
                 }
             }
         }
@@ -170,151 +202,45 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         this.selectDefineId = selectDefineId;
     }
 
-    public List<FilterBusinessCategory> getFilterCategorys(){
+    public List<FilterBusinessCategory> getFilterCategorys() {
         if (categories == null) {
-            Map<String, FilterBusinessCategory> categoryMap = new HashMap<String, FilterBusinessCategory>();
 
-            for (TaskInstanceAdapter task: getCurTypeTasks()) {
-
-
-                BusinessCategory category = task.getBusinessDefine().getBusinessCategory();
-                FilterBusinessCategory fCategory = categoryMap.get(category.getId());
-                if (fCategory == null) {
-                    fCategory = new FilterBusinessCategory(category);
-                    categoryMap.put(category.getId(), fCategory);
-                }
-                fCategory.putDefine(task.getBusinessDefine());
-
-            }
-            categories = new ArrayList<FilterBusinessCategory>(categoryMap.values());
-            Collections.sort(categories, new Comparator<FilterBusinessCategory>() {
-                @Override
-                public int compare(FilterBusinessCategory o1, FilterBusinessCategory o2) {
-                    return new Integer(o1.getCategory().getPriority()).compareTo(o2.getCategory().getPriority());
-                }
-            });
 
         }
         return categories;
     }
 
-    public int getAllSize(){
-        return super.getTaskInstanceCreateList().size();
-    }
-
-    public int getOwnerSize(){
+    public int getOwnerSize() {
         return getTasksByType(TaskFilterType.OWNER).size();
     }
 
-    public int getPooledSize(){
+    public int getPooledSize() {
         return getTasksByType(TaskFilterType.POOLED).size();
     }
 
-    public boolean isEmptyTask(){
+    public boolean isEmptyTask() {
         return getCurTypeTasks().isEmpty();
     }
 
-    public List<TaskInstanceAdapter> getResultList(){
-        if (resultList == null){
-            resultList = new ArrayList<TaskInstanceAdapter>(getCurTypeTasks());
-            List<TaskInstanceAdapter> filterList = new ArrayList<TaskInstanceAdapter>();
-
-            if ((selectCategory != null) && (selectDefineId != null) && !selectDefineId.trim().equals("")){
-                for(TaskInstanceAdapter task: resultList){
-                    if (task.getBusinessDefine().getId().equals(selectDefineId)){
-                        filterList.add(task);
-                    }
-                }
-                resultList.clear();
-                resultList.addAll(filterList);
-                filterList.clear();
-            } else if (selectCategory != null){
-                for(TaskInstanceAdapter task: resultList){
-                    if (task.getBusinessDefine().getBusinessCategory().getId().equals(selectCategory.getCategory().getId())){
-                        filterList.add(task);
-                    }
-                }
-                resultList.clear();
-                resultList.addAll(filterList);
-                filterList.clear();
-            }
-
-
-            resultList = taskFilter.filter(resultList);
-
-        }
-
-
-
-        return resultList;
-    }
-
-    public void clearDateFrom(){
-        taskFilter.getSearchDateArea().setDateFrom(null);
+    public void clearDateFrom() {
+        TaskFilter.instance().getSearchDateArea().setDateFrom(null);
         reset();
     }
 
-    public void clearDateTo(){
-        taskFilter.getSearchDateArea().setDateTo(null);
+    public void clearDateTo() {
+        TaskFilter.instance().getSearchDateArea().setDateTo(null);
         reset();
     }
 
-    public List<TaskInstanceAdapter> getTaskByKey(String key){
+    public List<TaskInstanceAdapter> getTaskByKey(String key) {
         List<TaskInstanceAdapter> result = new ArrayList<TaskInstanceAdapter>();
-        for(TaskInstanceAdapter task: getAllTasks()){
-            if (task.getTaskDescription().getBusinessKey().equals(key)){
+        for (TaskInstanceAdapter task : getAllTask()) {
+            if (task.getTaskDescription().getBusinessKey().equals(key)) {
                 result.add(task);
             }
         }
         return result;
     }
-
-    public static class TaskInstanceAdapter{
-
-        private TaskInstance taskInstance;
-
-        private TaskDescription taskDescription;
-
-        private BusinessDefine businessDefine;
-
-        private boolean myTask;
-
-        public TaskInstanceAdapter(TaskInstance taskInstance, boolean myTask, SystemEntityLoader entityLoader){
-            this.myTask = myTask;
-            this.taskInstance = taskInstance;
-
-            try {
-                taskDescription = new TaskDescription(new JSONObject(taskInstance.getDescription()));
-                this.businessDefine = entityLoader.getEntityManager().createQuery("select define from BusinessDefine define left join fetch define.businessCategory where define.id = :id", BusinessDefine.class)
-                        .setParameter("id", taskDescription.getBusinessDefineKey()).getSingleResult();
-            } catch (JSONException e) {
-                Logging.getLog(getClass()).debug("taskDescription Error",e);
-                throw new IllegalArgumentException("taskDescription Error",e);
-            }
-        }
-
-        public TaskInstance getTaskInstance() {
-            return taskInstance;
-        }
-
-        public TaskDescription getTaskDescription() {
-            return taskDescription;
-        }
-
-        public BusinessDefine getBusinessDefine() {
-            return businessDefine;
-        }
-
-        public boolean isMyTask() {
-            return myTask;
-        }
-
-        public boolean isMyOnly(){
-            if (myTask) return taskInstance.getPooledActors().isEmpty(); else return false;
-        }
-    }
-
-
 
 
 }
