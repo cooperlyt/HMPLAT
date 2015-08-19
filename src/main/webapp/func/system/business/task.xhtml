@@ -11,11 +11,9 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 template="/layout/template-tab.xhtml">
 
-<ui:define name="taskChangePush">
-    <a:push id="pushTask" address="pushTaskChange">
-        <a:ajax event="dataavailable" render="taskFilterForm,taskListForm"/>
-    </a:push>
-</ui:define>
+
+
+
 
     <ui:define name="outcss">
         <h:outputStylesheet library="github" name="/css/github1.css"/>
@@ -23,7 +21,7 @@
     </ui:define>
 
     <ui:define name="function-tile">
-        <h1>#{messages.tasks}</h1>
+        <h1>#{messages.taskOperFunction}</h1>
     </ui:define>
     <ui:define name="head-tab">
 
@@ -53,7 +51,22 @@
         }
     </h:outputStylesheet>
 
+    <a:push id="pushTask" address="pushTaskChange" ondataavailable="taskChangeDataavailable()" >
 
+    </a:push>
+
+    <h:form>
+        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true" action="#{allTaskAdapterCacheList.taskRefresh}" data="#{allTaskAdapterCacheList.resultTaskListChange}" oncomplete=" if(event.data){;renderTaskList();};"/>
+
+        <a:jsFunction name="renderTaskList" status="taskChangeWaiting" action="#{allTaskAdapterCacheList.clearResultChangeTag}" execute="@this" immediate="true" render="taskFilterForm,taskListForm"/>
+
+
+        <a:status id="taskChangeWaiting" name="taskChangeWaiting"
+                  onstart="$('#taskLoader').show();"
+                  onstop="$('#taskLoader').hide();"/>
+
+
+    </h:form>
     <div class="explore-pjax-container container explore-page stars-browser">
         <div class="columns">
             <div class="column three-fourths">
@@ -104,7 +117,7 @@
                     <a:outputPanel id="taskListForm">
 
                         <a:outputPanel layout="block" styleClass="blankslate"
-                                       rendered="#{(empty allTaskAdapterCacheList.resultList) and allTaskAdapterCacheList.emptyTask}">
+                                       rendered="#{(empty allTaskAdapterCacheList.resultTask) and allTaskAdapterCacheList.emptyTask}">
                             <a:outputPanel styleClass="mega-octicon octicon-inbox"></a:outputPanel>
 
 
@@ -113,13 +126,13 @@
                             <p>#{messages.emptyTaskDescription}
                                 <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
                                                                                status="processWaiting"
-                                                                  value="#{messages.manualRefresh}" action="#{allTaskAdapterCacheList.refresh}">
+                                                                  value="#{messages.manualRefresh}" action="#{allTaskAdapterCacheList.refreshResult}">
                                 <a:attachQueue requestDelay="0"/>
                             </a:commandLink></p>
                         </a:outputPanel>
 
                         <a:outputPanel layout="block" styleClass="blankslate"
-                                       rendered="#{(empty allTaskAdapterCacheList.resultList) and (not allTaskAdapterCacheList.emptyTask)}">
+                                       rendered="#{(empty allTaskAdapterCacheList.resultTask) and (not allTaskAdapterCacheList.emptyTask)}">
                             <a:outputPanel styleClass="mega-octicon octicon-search"></a:outputPanel>
 
 
@@ -133,16 +146,16 @@
                                 <a:attachQueue requestDelay="0"/>
                                 </a:commandLink> #{messages.orOther}
                                 <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm" status="processWaiting"
-                                                                  value="#{messages.refresh}" action="#{allTaskAdapterCacheList.refresh}">
+                                                                  value="#{messages.refresh}" action="#{allTaskAdapterCacheList.refreshResult}">
                                 <a:attachQueue requestDelay="0"/>
                             </a:commandLink></p>
                         </a:outputPanel>
 
-                        <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty allTaskAdapterCacheList.resultList}">
+                        <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty allTaskAdapterCacheList.resultTask}">
                             <div class="file-navigation in-mid-page" style="margin-top: 0">
                                 <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button "
                                                immediate="true" execute="@this" status="processWaiting"
-                                               action="#{allTaskAdapterCacheList.refresh}" render="taskFilterForm,taskListDatas">
+                                               action="#{allTaskAdapterCacheList.refreshResult}" render="taskFilterForm,taskListDatas">
                                     <span class="octicon octicon-sync"/>
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
@@ -205,11 +218,16 @@
 
                                 </div>
 
+                                    <div class="right" id="taskLoader" style="padding: 8px; display: none;">
+                                        <h:graphicImage style="width: 20px; height: 20px" value="/img/octocat-spinner-32.gif"/>
+                                    </div>
 
 
-                                    <h3><span style="font-weight: bold;" >#{messages[allTaskAdapterCacheList.filterType.messageKey]}</span>  <span class="counter"> #{allTaskAdapterCacheList.resultList.size} </span> </h3>
+                                    <h3><span style="font-weight: bold;" >#{messages[allTaskAdapterCacheList.filterType.messageKey]}</span>  <span class="counter"> #{allTaskAdapterCacheList.resultTask.size} </span> </h3>
+
+
                                     <ul class="boxed-group-inner notifications">
-                                        <a:repeat value="#{allTaskAdapterCacheList.resultList}" var="_task">
+                                        <a:repeat value="#{allTaskAdapterCacheList.resultTask}" var="_task">
                                             <li class="list-group-item read">
 
                                                 <div class="repo-list-stats">
@@ -217,9 +235,9 @@
                                                     <div class="btn-group" role="group" aria-label="...">
 
 
-                                                        <a:commandLink action="#{pooledTask.unassign}" immediate="true" render="taskFilterForm,taskListForm"
+                                                        <a:commandLink action="#{pooledTask.unassign}" immediate="true"
                                                                        execute="@this" rendered="#{_task.myTask and (not _task.myOnly)}"
-                                                                       p:aria-label="#{messages.unAcceptTask}" status="processWaiting"
+                                                                       p:aria-label="#{messages.unAcceptTask}" status="taskChangeWaiting"
                                                                        styleClass="btn btn-sm btn-warning tooltipped tooltipped-s">
 
 
@@ -232,8 +250,8 @@
 
 
                                                         <a:commandLink rendered="#{not _task.myTask}" immediate="true" execute="@this"
-                                                                       action="#{pooledTask.assignToCurrentActor}" render="taskFilterForm,taskListDatas"
-                                                                       p:aria-label="#{messages.acceptTask}" status="processWaiting"
+                                                                       action="#{pooledTask.assignToCurrentActor}"
+                                                                       p:aria-label="#{messages.acceptTask}" status="taskChangeWaiting"
                                                                        styleClass="btn btn-sm btn-primary tooltipped tooltipped-s">
 
 
@@ -258,6 +276,10 @@
                                   <span class="type-icon octicon #{(_task.myTask) ? ( _task.myOnly ? 'octicon-broadcast' : 'octicon-person') : 'octicon-organization'}"
                                         style="color:#{(_task.myTask) ? '#5cb85c' : '#337ab7'}"/>
                                                     #{_task.businessDefine.businessCategory.name} / #{_task.taskDescription.businessName} / #{_task.taskInstance.name}
+
+                                                    <a:outputPanel styleClass="label label-info" rendered="#{allTaskAdapterCacheList.isCome(_task.taskInstance.id)}">
+                                                        new
+                                                    </a:outputPanel>
                                                 </h3>
 
                                                 <p class="repo-list-description">

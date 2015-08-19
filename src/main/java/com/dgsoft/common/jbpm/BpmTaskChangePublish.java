@@ -3,7 +3,9 @@ package com.dgsoft.common.jbpm;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.annotations.async.Asynchronous;
+import org.jboss.seam.bpm.Actor;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.log.Logging;
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
 
@@ -27,7 +29,7 @@ public class BpmTaskChangePublish {
 
     public static final String PUSH_TASK_CHANGE_TOPIC = "pushTaskChange";
 
-    private List<TaskInstanceListCache> subscribers = new ArrayList<TaskInstanceListCache>();
+   // private List<TaskInstanceListCache> subscribers = new ArrayList<TaskInstanceListCache>();
 
     protected void sendTaskChangeMessage() {
         try {
@@ -50,28 +52,28 @@ public class BpmTaskChangePublish {
     @Transactional
     @Asynchronous
     public void onBusinessTaskChange() {
-        log.info("onTaskChange");
-        for(TaskInstanceListCache subscriber: subscribers){
-            log.debug("refresh task subscriber:" + subscriber.getClass().getName());
-            subscriber.refresh();
-        }
+//        for(TaskInstanceListCache subscriber: subscribers){
+//            Logging.getLog(getClass()).debug("sub actor:" + subscriber.getActorId() + "=" + Actor.instance().getId());
+//            if (!subscriber.getActorId().equals(Actor.instance().getId()))
+//                subscriber.refresh();
+//        }
         sendTaskChangeMessage();
     }
 
-
-    public synchronized void unSubscribe(TaskInstanceListCache subscriber) {
-        log.debug("unSubscribe = Publish:" + this + "|subscriber:" + subscriber);
-        if (subscribers.contains(subscriber)) {
-            subscribers.remove(subscriber);
-        } else {
-            log.warn("unSubscribe fail! subscriber not in list");
-        }
-    }
-
-
-    public synchronized void subscribe(TaskInstanceListCache subscriber) {
-        log.debug("subscribe = Publish:" + this + "|subscriber:" + subscriber);
-        subscribers.add(subscriber);
-    }
+//
+//    public synchronized void unSubscribe(TaskInstanceListCache subscriber) {
+//        log.debug("unSubscribe = Publish:" + this + "|subscriber:" + subscriber);
+//        if (subscribers.contains(subscriber)) {
+//            subscribers.remove(subscriber);
+//        } else {
+//            log.warn("unSubscribe fail! subscriber not in list");
+//        }
+//    }
+//
+//
+//    public synchronized void subscribe(TaskInstanceListCache subscriber) {
+//        log.debug("subscribe = Publish:" + this + "|subscriber:" + subscriber);
+//        subscribers.add(subscriber);
+//    }
 
 }

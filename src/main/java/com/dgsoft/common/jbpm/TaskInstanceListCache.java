@@ -1,11 +1,14 @@
 package com.dgsoft.common.jbpm;
 
-import org.jboss.seam.Component;
-import org.jboss.seam.ScopeType;
+import com.dgsoft.common.system.business.BusinessDefineCache;
+import com.dgsoft.common.system.business.TaskDescription;
+import com.dgsoft.common.system.model.BusinessDefine;
 import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.Destroy;
+import org.jboss.seam.bpm.Actor;
 import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.*;
 
@@ -17,116 +20,234 @@ import java.util.*;
  */
 public abstract class TaskInstanceListCache {
 
-    protected abstract Set<TaskInstance> searchTaskInstances();
+    protected abstract Set<TaskInstanceAdapter> initAllTaskInstances();
 
-    private Set<TaskInstance> taskInstances;
+    private boolean allTaskListChange = false;
 
-    private Set<Long> taskInstanceIds;
+    private boolean resultTaskListChange = false;
 
-    private Set<Long> newTaskInstanceIds = new HashSet<Long>();
+    private Set<TaskInstanceAdapter> allTask;
 
-    private List<String> taskNoticeMsgs = new ArrayList<String>();
+    private List<TaskInstanceAdapter> resultTask;
+
+    private List<TaskInstanceAdapter> comeTask = new ArrayList<TaskInstanceAdapter>();
+
+
+    public abstract List<TaskInstanceAdapter> initResultTask();
+
+    //private String actorId;
+
+//    public String getActorId() {
+//        return actorId;
+//    }
+
+//    @Create
+//    public void register() {
+//        //actorId = Actor.instance().getId();
+//        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).subscribe(this);
+//        refresh();
+//    }
+
+//    @Destroy
+//    public void unRegister(){
+//        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).unSubscribe(this);
+//    }
+
+
+    public void initTaskList(){
+        refresh();
+        clearResultChangeTag();
+    }
+
+    public void refreshResult(){
+        comeTask.clear();
+        refresh();
+        clearResultChangeTag();
+    }
+
+    public void taskRefresh(){
+        comeTask.clear();
+        refresh();
+    }
 
     @Create
-    public void register() {
-        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).subscribe(this);
-    }
-
-    @Destroy
-    public void unRegister(){
-        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).unSubscribe(this);
-    }
-
-    private Set<TaskInstance> getTaskInstances() {
-        initTaskInstances();
-        return taskInstances;
-    }
-
-    private void initTaskInstances() {
-        if (taskInstances == null) {
-            Logging.getLog(this.getClass()).debug("init getTaskInstances");
-
-            taskInstances = searchTaskInstances();
+    public void refresh() {
 
 
-            if (taskInstanceIds == null) {
-                taskInstanceIds = new HashSet<Long>();
-            } else {
+        Set<TaskInstanceAdapter> newTasks = initAllTaskInstances();
 
+        if (allTask != null ){
+            Set<TaskInstanceAdapter> temp = new HashSet<TaskInstanceAdapter>(newTasks);
+            for(TaskInstanceAdapter task: newTasks){
+                if (allTask.remove(task)){
+                    temp.remove(task);
+                }
+            }
 
-                Set<Long> prepareIds = new HashSet<Long>();
+            if (!allTaskListChange && (!temp.isEmpty() || !allTask.isEmpty())){
+                allTaskListChange = true;
+            }
 
-                for (TaskInstance taskInstance : taskInstances) {
-                    if (!taskInstanceIds.contains(taskInstance.getId())) {
-                        prepareIds.add(taskInstance.getId());
-
-                        //TODO messages details
-                        taskNoticeMsgs.add(taskInstance.getName());
+            for(TaskInstanceAdapter task: temp){
+                boolean existsCome = false;
+                for(TaskInstanceAdapter comeinTask: comeTask){
+                    if (comeinTask.getTaskInstance().getId() == task.getTaskInstance().getId()){
+                        existsCome = true;
+                        break;
                     }
                 }
-
-                if (!prepareIds.isEmpty()) {
-                    newTaskInstanceIds.clear();
-                    newTaskInstanceIds.addAll(prepareIds);
-
+                if (!existsCome){
+                    comeTask.add(task);
                 }
             }
 
-            taskInstanceIds.clear();
-            for (TaskInstance taskInstance : taskInstances) {
-                taskInstanceIds.add(taskInstance.getId());
+        }
+
+        allTask = newTasks;
+
+        reset();
+    }
+
+    public void reset(){
+        List<TaskInstanceAdapter> newTasks = initResultTask();
+        if (!resultTaskListChange && resultTask != null){
+            Set<TaskInstanceAdapter> temp = new HashSet<TaskInstanceAdapter>(newTasks);
+            for(TaskInstanceAdapter task: newTasks){
+                if (resultTask.contains(task)){
+                    temp.remove(task);
+                    resultTask.remove(task);
+                }
+            }
+            if (!temp.isEmpty() || !resultTask.isEmpty()){
+                resultTaskListChange = true;
             }
         }
+
+
+        resultTask = newTasks;
+
     }
 
-    public void refresh() {
-        taskInstances = null;
+    public int getAllSize(){
+        if (allTask == null){
+            return 0;
+        }
+        return allTask.size();
     }
 
+    protected Set<TaskInstanceAdapter> getAllTask() {
+        return allTask;
+    }
 
-    public List<TaskInstance> getTaskInstancePriorityList() {
+    public boolean isAllTaskListChange() {
+        return allTaskListChange;
+    }
 
-        List<TaskInstance> result = new ArrayList<TaskInstance>(getTaskInstances());
-        Collections.sort(result, new Comparator<TaskInstance>() {
-            @Override
-            public int compare(TaskInstance o1, TaskInstance o2) {
-                int cResult = new Integer(o1.getPriority()).compareTo(o2.getPriority());
-                if (cResult == 0){
-                    return o2.getCreate().compareTo(o1.getCreate());
-                }else{
-                    return cResult;
-                }
+    public boolean isResultTaskListChange() {
+        return resultTaskListChange;
+    }
+
+    public void clearResultChangeTag(){
+
+        allTaskListChange = false;
+        resultTaskListChange = false;
+    }
+
+    public void clearAllTaskChangeTag(){
+        allTaskListChange = false;
+    }
+
+    public List<TaskInstanceAdapter> getResultTask() {
+        return resultTask;
+    }
+
+    public List<TaskInstanceAdapter> getComeTask() {
+        return comeTask;
+    }
+
+    public boolean isCome(long taskId){
+        for(TaskInstanceAdapter taskInstanceAdapter : getComeTask()){
+            if (taskInstanceAdapter.getTaskInstance().getId() == taskId){
+                return true;
             }
-        });
-        return result;
+        }
+        return false;
     }
 
+    public boolean isHaveComeTask(){
+        return !comeTask.isEmpty();
+    }
 
-    public List<TaskInstance> getTaskInstanceCreateList() {
-        List<TaskInstance> result = new ArrayList<TaskInstance>(getTaskInstances());
-        Collections.sort(result, new Comparator<TaskInstance>() {
-            @Override
-            public int compare(TaskInstance o1, TaskInstance o2) {
-                return o2.getCreate().compareTo(o1.getCreate());
+    public static class TaskInstanceAdapter{
+
+        private TaskInstance taskInstance;
+
+        private TaskDescription taskDescription;
+
+        private BusinessDefine businessDefine;
+
+        //private boolean myTask;
+
+        private boolean selected = false;
+
+        public TaskInstanceAdapter(TaskInstance taskInstance){
+            this.taskInstance = taskInstance;
+
+            try {
+                taskDescription = new TaskDescription(new JSONObject(taskInstance.getDescription()));
+
+                this.businessDefine = BusinessDefineCache.instance().getDefine(taskDescription.getBusinessDefineKey());;
+            } catch (JSONException e) {
+                Logging.getLog(getClass()).debug("taskDescription Error",e);
+                throw new IllegalArgumentException("taskDescription Error",e);
             }
-        });
-        return result;
-    }
+        }
 
-    public boolean isNewTask(Long taskId) {
-        return newTaskInstanceIds.contains(taskId);
-    }
+        public TaskInstance getTaskInstance() {
+            return taskInstance;
+        }
 
-    public boolean isHaveNotice() {
-        initTaskInstances();
-        return !taskNoticeMsgs.isEmpty();
-    }
+        public TaskDescription getTaskDescription() {
+            return taskDescription;
+        }
 
-    public String getTaskNoticeMsg() {
-        if (taskNoticeMsgs.isEmpty()) {
-            return null;
-        } else {
-            return taskNoticeMsgs.remove(0);
+        public BusinessDefine getBusinessDefine() {
+            return businessDefine;
+        }
+
+        public boolean isSelected() {
+            return selected;
+        }
+
+        public void setSelected(boolean selected) {
+            this.selected = selected;
+        }
+
+        public boolean isMyTask() {
+            return  Actor.instance().getId().equals(taskInstance.getActorId());
+        }
+
+        public boolean isMyOnly(){
+            if (isMyTask()) return taskInstance.getPooledActors().isEmpty(); else return false;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            TaskInstanceAdapter that = (TaskInstanceAdapter) o;
+
+            if (isMyTask() != that.isMyTask()) return false;
+            return (taskInstance.getId() == that.taskInstance.getId());
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = (int) (taskInstance.getId() ^ (taskInstance.getId() >>> 32));
+            result = 31 * result + (isMyTask() ? 1 : 0);
+            return result;
         }
     }
 
