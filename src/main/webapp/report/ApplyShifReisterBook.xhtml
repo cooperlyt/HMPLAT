@@ -1,0 +1,127 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="房屋所有权转移登记申请书">
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">房屋所有权转移登记申请书
+            </p:paragraph>
+        </p:font>
+
+
+        <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:table columns="3" widths="2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+                <p:cell colspan="2" alignment="left" border="0" horizontalAlignment="justify"
+                        verticalAlignment="bottom">
+                    <p:paragraph> 登记机构：开原市房地产管理局房产交易中心</p:paragraph>
+                </p:cell>
+
+                <p:cell alignment="left" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>本信息收集声明：本申请书信息系依法定职权收集，用于房地产登记和登记资料利用</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" border="0" fixedHeight="2">
+                </p:cell>
+            </p:table>
+        </p:font>
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+
+            <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100" borderWidth="0">
+
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" fixedHeight="320">
+                    <p:paragraph>申
+                        请
+                        人
+                        情
+                        况
+                    </p:paragraph>
+                </p:cell>
+                <p:cell padding="0">
+                    <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+                        <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="160" horizontalAlignment="center" verticalAlignment="middle">
+                            <p:paragraph >转
+                                让
+                                人
+                            </p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidthTop="0" borderWidthRight="0" padding="0" >
+
+                            <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                                <f:facet name="defaultCell">
+                                    <p:cell padding="0" paddingBottom="10" paddingTop="10" noWrap="true"
+                                            horizontalAlignment="center" verticalAlignment="middle"/>
+                                </f:facet>
+                                <p:cell >
+                                    <p:paragraph>姓名(名称)</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3">
+                                    <p:paragraph>1111</p:paragraph>
+                                </p:cell>
+                                <p:cell>
+                                    <p:paragraph>联系电话</p:paragraph>
+                                </p:cell>
+                                <p:cell>
+                                    <p:paragraph>12233</p:paragraph>
+                                </p:cell>
+
+                                <p:cell>
+                                    <p:paragraph>证件类型</p:paragraph>
+                                </p:cell>
+                                <p:cell>
+                                    <p:paragraph>证件类型</p:paragraph>
+                                </p:cell>
+                                <p:cell>
+                                    <p:paragraph>证件号</p:paragraph>
+                                </p:cell>
+
+                                <p:cell colspan="4">
+                                    <p:paragraph>证件号</p:paragraph>
+                                </p:cell>
+
+                            </p:table>
+                        </p:cell>
+                        <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="160" horizontalAlignment="center" verticalAlignment="middle">
+                            <p:paragraph>受
+                                让
+                                人
+                            </p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidthTop="0" borderWidthRight="0">
+                            55555
+                        </p:cell>
+
+
+                    </p:table>
+
+
+                </p:cell>
+
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" fixedHeight="240" padding="0">
+                    <p:paragraph>申
+                        请
+                        内
+                        容
+                    </p:paragraph>
+                </p:cell>
+
+                <p:cell>333</p:cell>
+
+
+                <p:cell colspan="2" fixedHeight="130">
+
+                </p:cell>
+
+
+            </p:table>
+        </p:font>
+        <p:newPage/>
+    </a:repeat>
+</p:document>
