@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 import sun.util.logging.resources.logging;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -142,6 +143,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
 
+
+
     public HouseBusiness getSingleHoues() {
 
         Set<HouseBusiness> houseBusinesses = getInstance().getHouseBusinesses();
@@ -154,17 +157,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
-    public String getBusinessFileNames(){
-        List<String> filesesList = new ArrayList<String>();
-        if (!getInstance().getUploadFileses().isEmpty()){
-            for (BusinessFile businessFile:getInstance().getUploadFileses()){
-                filesesList.add(businessFile.getName());
-            }
-
-        }
-        return filesesList.toString().substring(1,filesesList.toString().indexOf("]"));
-
-    }
 
 
 
@@ -194,6 +186,21 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
                return persion;
            }
        }
+        return null;
+    }
+
+
+    public BusinessMoney getTotal(){
+        if (!getInstance().getBusinessMoneys().isEmpty()) {
+            BusinessMoney result = new BusinessMoney();
+            result.setShouldMoney(BigDecimal.ZERO);
+            result.setFactMoney(BigDecimal.ZERO);
+            for (BusinessMoney money : getInstance().getBusinessMoneys()) {
+                result.setShouldMoney(result.getShouldMoney().add(money.getShouldMoney()));
+                result.setFactMoney(result.getFactMoney().add(money.getFactMoney()));
+            }
+            return result;
+        }
         return null;
     }
 
