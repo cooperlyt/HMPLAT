@@ -16,7 +16,11 @@
 
 .task-type.CHECK_ACCEPT{
     color: #fff;
-    background-color: #3c763d;
+    background-color: #60b044;
+}
+
+.task-type.CHECK_ACCEPT .task-oper.CHECK_ACCEPT {
+    color:#fff;
 }
 
 .task-type.CHECK_BACK{

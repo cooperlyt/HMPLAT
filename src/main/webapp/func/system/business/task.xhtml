@@ -35,12 +35,6 @@
             #{messages.operateTask}
         </s:link>
 
-        <s:link styleClass="pagehead-nav-item">
-            <span class="octicon octicon-eye"></span>
-            #{messages.checkTask}
-        </s:link>
-
-
 
     </ui:define>
 
@@ -56,7 +50,7 @@
     </a:push>
 
     <h:form>
-        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true" action="#{allTaskAdapterCacheList.taskRefresh}" data="#{allTaskAdapterCacheList.resultTaskListChange}" oncomplete=" if(event.data){;renderTaskList();};"/>
+        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true" data="#{allTaskAdapterCacheList.resultTaskListChange}" oncomplete=" if(event.data){;renderTaskList();};"/>
 
         <a:jsFunction name="renderTaskList" status="taskChangeWaiting" action="#{allTaskAdapterCacheList.clearResultChangeTag}" execute="@this" immediate="true" render="taskFilterForm,taskListForm"/>
 
@@ -67,6 +61,43 @@
 
 
     </h:form>
+
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="checkPanel"/>
+        <ui:param name="panelTitle" value="#{messages.TaskCheck}"/>
+        <ui:define name="panelBody">
+
+            <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.taskCheckComments}
+                </ui:define>
+                <ui:param name="for" value="taskCheckCommentsInput"/>
+                <h:inputTextarea label="#{messages.taskCheckComments}" required="true" id="taskCheckCommentsInput" styleClass="form-control"
+                                 value="#{checkTaskOperation.transitionComments}" rows="4">
+                    <r:validator event="change"/>
+                </h:inputTextarea>
+            </s:decorate>
+        </ui:define>
+        <ui:define name="actionButtons">
+
+
+            <a:commandLink styleClass="btn btn-danger"  execute="@form" action="#{checkTaskOperation.check}" render="checkPanel_inputs"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#checkPanel').modal('hide')}">
+                #{messages.Reject}
+                <a:attachQueue requestDelay="0"/>
+                <f:param name="transitionType" value="#{'CHECK_BACK'}"/>
+            </a:commandLink>
+            <a:commandLink styleClass="btn btn-primary" execute="@form" action="#{checkTaskOperation.check}" render="checkPanel_inputs"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#checkPanel').modal('hide')}">
+                #{messages.Agree}
+                <a:attachQueue requestDelay="0"/>
+                <f:param name="transitionType" value="#{'CHECK_ACCEPT'}"/>
+            </a:commandLink>
+
+        </ui:define>
+
+    </ui:decorate>
+
     <div class="explore-pjax-container container explore-page stars-browser">
         <div class="columns">
             <div class="column three-fourths">
@@ -218,12 +249,26 @@
 
                                 </div>
 
+                                    <a:outputPanel layout="block" style="padding: 5px" rendered="#{allTaskAdapterCacheList.filterType eq 'CHECK'}" styleClass="right">
+                                        <a:commandLink styleClass="btn btn-sm btn-primary" execute="@this" immediate="true"
+                                                       render="checkPanel_form"
+                                                       oncomplete="$('#checkPanel').modal({backdrop: 'static'})">
+                                            <a:attachQueue requestDelay="0"/>
+                                            <f:param name="selectTaskId" value="#{null}"/>
+                                            #{messages.BatchTaskCheck}
+                                        </a:commandLink>
+                                    </a:outputPanel>
                                     <div class="right" id="taskLoader" style="padding: 8px; display: none;">
                                         <h:graphicImage style="width: 20px; height: 20px" value="/img/octocat-spinner-32.gif"/>
                                     </div>
 
 
-                                    <h3><span style="font-weight: bold;" >#{messages[allTaskAdapterCacheList.filterType.messageKey]}</span>  <span class="counter"> #{allTaskAdapterCacheList.resultTask.size} </span> </h3>
+                                    <h3> <h:selectBooleanCheckbox id="selectAllCheckbox" style="margin: 0 4px" value="#{allTaskAdapterCacheList.allSelect}" rendered="#{allTaskAdapterCacheList.filterType eq 'CHECK'}">
+                                        <a:ajax render="taskListForm" event="click" immediate="true" execute="@this">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:selectBooleanCheckbox>
+                                        <span style="font-weight: bold;" >#{messages[allTaskAdapterCacheList.filterType.messageKey]}</span>  <span class="counter"> #{allTaskAdapterCacheList.resultTask.size} </span> </h3>
 
 
                                     <ul class="boxed-group-inner notifications">
@@ -263,18 +308,33 @@
 
 
                                                         <s:link  styleClass="btn btn-sm btn-default" action="#{taskPrepare.operTask}"
+                                                                 rendered="#{not (allTaskAdapterCacheList.filterTypeName eq 'CHECK')}"
                                                                  taskInstance="#{_task.taskInstance}" onclick="#{r:component('wait')}.show()"
                                                                  style=" #{_task.myOnly ? 'border-bottom-left-radius: 3px; border-top-left-radius: 3px;' : ''}">
                                                             #{_task.myTask ? messages.operTask : messages.acceptAndOperTask}
                                                         </s:link>
 
 
+                                                        <a:commandLink styleClass="btn btn-sm btn-default" render="checkPanel_form"
+                                                                       oncomplete="$('#checkPanel').modal({backdrop: 'static'})"
+                                                                       rendered="#{allTaskAdapterCacheList.filterType eq 'CHECK'}">
+                                                            <a:attachQueue requestDelay="0"/>
+                                                            <f:param name="selectTaskId" value="#{_task.taskInstance.id}"/>
+
+                                                            #{messages.TaskCheck}
+                                                        </a:commandLink>
 
                                                     </div>
                                                 </div>
                                                 <h3 class="repo-list-name">
-                                  <span class="type-icon octicon #{(_task.myTask) ? ( _task.myOnly ? 'octicon-broadcast' : 'octicon-person') : 'octicon-organization'}"
-                                        style="color:#{(_task.myTask) ? '#5cb85c' : '#337ab7'}"/>
+                                  <a:outputPanel styleClass="type-icon octicon #{(_task.myTask) ? ( _task.myOnly ? 'octicon-broadcast' : 'octicon-person') : 'octicon-organization'}"
+                                        style="color:#{(_task.myTask) ? '#5cb85c' : '#337ab7'}" rendered="#{not (allTaskAdapterCacheList.filterType eq 'CHECK')}"/>
+
+                                                    <a:outputPanel styleClass="type-icon " rendered="#{ (allTaskAdapterCacheList.filterType eq 'CHECK')}">
+                                                        <h:selectBooleanCheckbox value="#{_task.selected}">
+                                                            <a:ajax event="click" render="selectAllCheckbox"/>
+                                                        </h:selectBooleanCheckbox>
+                                                    </a:outputPanel>
                                                     #{_task.businessDefine.businessCategory.name} / #{_task.taskDescription.businessName} / #{_task.taskInstance.name}
 
                                                     <a:outputPanel styleClass="label label-info" rendered="#{allTaskAdapterCacheList.isCome(_task.taskInstance.id)}">
@@ -327,6 +387,7 @@
                                        action="#{allTaskAdapterCacheList.reset}"
                                        styleClass="filter-item #{ (allTaskAdapterCacheList.filterTypeName eq 'ALL') ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.allSize}</span>
+                            <span class="octicon octicon-inbox"/>
                             #{messages.allTask}
 
                             <a:param value="ALL" assignTo="#{allTaskAdapterCacheList.filterTypeName}"/>
@@ -341,6 +402,7 @@
                                        action="#{allTaskAdapterCacheList.reset}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'POOLED' ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.pooledSize}</span>
+                            <span class="octicon octicon-organization"/>
                             #{messages.todoBussiness}
 
                             <a:param value="POOLED" assignTo="#{allTaskAdapterCacheList.filterTypeName}"/>
@@ -355,8 +417,22 @@
                                        action="#{allTaskAdapterCacheList.reset}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'OWNER' ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.ownerSize}</span>
+                            <span class="octicon octicon-person" style="padding:0 3px"/>
                             #{messages.myBussiness}
                             <a:param value="OWNER" assignTo="#{allTaskAdapterCacheList.filterTypeName}"/>
+                            <a:param assignTo="#{allTaskAdapterCacheList.selectCategoryId}" value=""/>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandLink>
+                    </li>
+
+                    <li>
+                        <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
+                                       action="#{allTaskAdapterCacheList.reset}"
+                                       styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'CHECK' ? 'selected' : ''}">
+                            <span class="octicon octicon-eye"/>
+                            <span class="count">#{allTaskAdapterCacheList.checkSize}</span>
+                            #{messages.checkBusiness}
+                            <a:param value="CHECK" assignTo="#{allTaskAdapterCacheList.filterTypeName}"/>
                             <a:param assignTo="#{allTaskAdapterCacheList.selectCategoryId}" value=""/>
                             <a:attachQueue requestDelay="0"/>
                         </a:commandLink>

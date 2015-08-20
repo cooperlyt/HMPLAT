@@ -5,4 +5,7 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
     <action execute="#{allTaskAdapterCacheList.initTaskList}" on-postback="false"/>
+
+    <param name="selectTaskId" value="#{checkTaskOperation.selectTaskId}"/>
+    <param name="transitionType" value="#{checkTaskOperation.transitionType}"/>
 </page>
