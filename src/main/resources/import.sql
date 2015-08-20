@@ -54,6 +54,11 @@ INSERT INTO `business_define` (`ID`, `NAME`, `WF_NAME`, `START_PAGE`, `CATEGORY`
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('owner.apply.check','房地产登记受理审核业务书','房地产登记受理审核业务书','/report/ReisterApplyCheckTable.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('1','业务受理单（存根联）','业务受理单（存根联）','/report/BusinessHandleStub.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('2','询问笔录（初始登记）','询问笔录（初始登记）','/report/InitRegAskRecord.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('3','询问笔录（转移登记）','询问笔录（转移登记）','/report/ShiftAskRecord.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('4','房屋所有权转移登记申请书','房屋所有权转移登记申请书','/report/ApplyShifReisterBook.xhtml');
+
+
+
 
 
 
