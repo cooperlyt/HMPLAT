@@ -31,10 +31,11 @@
         </p:font>
 
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
-
-            <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100" borderWidth="0">
-
-                <p:cell horizontalAlignment="center" verticalAlignment="middle" fixedHeight="320">
+            <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                </f:facet>
+                <p:cell fixedHeight="320">
                     <p:paragraph>申
                         请
                         人
@@ -42,69 +43,151 @@
                         况
                     </p:paragraph>
                 </p:cell>
-                <p:cell padding="0">
-                    <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100">
-
-
-                        <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="160" horizontalAlignment="center" verticalAlignment="middle">
+                <p:cell>
+                    <p:table columns="2" widths="1 20" headerRows="0" footerRows="0" widthPercentage="100">
+                        <f:facet name="defaultCell">
+                            <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                        </f:facet>
+                        <p:cell borderWidthLeft="0" borderWidthTop="0" borderWidthRight="0" fixedHeight="160">
                             <p:paragraph >转
                                 让
                                 人
                             </p:paragraph>
                         </p:cell>
-                        <p:cell borderWidthTop="0" borderWidthRight="0" padding="0" >
-
+                        <p:cell borderWidthTop="0" borderWidthRight="0">
                             <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
                                 <f:facet name="defaultCell">
-                                    <p:cell padding="0" paddingBottom="10" paddingTop="10" noWrap="true"
-                                            horizontalAlignment="center" verticalAlignment="middle"/>
+                                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
                                 </f:facet>
-                                <p:cell >
+                                <p:cell fixedHeight="28">
                                     <p:paragraph>姓名(名称)</p:paragraph>
                                 </p:cell>
-                                <p:cell colspan="3">
-                                    <p:paragraph>1111</p:paragraph>
+                                <p:cell colspan="3" borderWidthLeft="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.personName}</p:paragraph>
                                 </p:cell>
-                                <p:cell>
+                                <p:cell borderWidthLeft="0">
                                     <p:paragraph>联系电话</p:paragraph>
                                 </p:cell>
-                                <p:cell>
-                                    <p:paragraph>12233</p:paragraph>
+                                <p:cell borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.phone}</p:paragraph>
                                 </p:cell>
-
-                                <p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="28">
                                     <p:paragraph>证件类型</p:paragraph>
                                 </p:cell>
-                                <p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.credentialsType}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>证件号码</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="45">
+                                    <p:paragraph>共有情况</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>共有情况1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="28">
+                                    <p:paragraph>代理人姓名</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0">
+                                    <p:paragraph>代理人姓名1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>联系电话</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>联系电话1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="28">
                                     <p:paragraph>证件类型</p:paragraph>
                                 </p:cell>
-                                <p:cell>
-                                    <p:paragraph>证件号</p:paragraph>
+                                <p:cell borderWidthLeft="0" borderWidthBottom="0">
+                                    <p:paragraph>证件类型1</p:paragraph>
                                 </p:cell>
-
-                                <p:cell colspan="4">
-                                    <p:paragraph>证件号</p:paragraph>
+                                <p:cell borderWidthLeft="0" borderWidthBottom="0">
+                                    <p:paragraph>证件号码</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
+                                    <p:paragraph>证件号码1</p:paragraph>
                                 </p:cell>
 
                             </p:table>
                         </p:cell>
-                        <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="160" horizontalAlignment="center" verticalAlignment="middle">
+                        <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="160" borderWidthRight="0" borderWidthBottom="0">
                             <p:paragraph>受
                                 让
                                 人
                             </p:paragraph>
                         </p:cell>
-                        <p:cell borderWidthTop="0" borderWidthRight="0">
-                            55555
+                        <p:cell borderWidthTop="0" borderWidthRight="0" borderWidthBottom="0">
+                            <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                                <f:facet name="defaultCell">
+                                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
+                                </f:facet>
+                                <p:cell fixedHeight="28">
+                                    <p:paragraph>姓名(名称)</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>联系电话</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.phone}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="28">
+                                    <p:paragraph>证件类型</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.credentialsType}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>证件号码</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="45">
+                                    <p:paragraph>共有情况</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>共有情况1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="28">
+                                    <p:paragraph>代理人姓名</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0">
+                                    <p:paragraph>代理人姓名1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>联系电话</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>联系电话1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="28">
+                                    <p:paragraph>证件类型</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthBottom="0">
+                                    <p:paragraph>证件类型1</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" borderWidthBottom="0">
+                                    <p:paragraph>证件号码</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
+                                    <p:paragraph>证件号码1</p:paragraph>
+                                </p:cell>
+
+                            </p:table>
                         </p:cell>
-
-
                     </p:table>
-
-
                 </p:cell>
 
-                <p:cell horizontalAlignment="center" verticalAlignment="middle" fixedHeight="240" padding="0">
+                <p:cell fixedHeight="240">
                     <p:paragraph>申
                         请
                         内
