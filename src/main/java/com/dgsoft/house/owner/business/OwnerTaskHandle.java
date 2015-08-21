@@ -28,11 +28,6 @@ public class OwnerTaskHandle {
 
     private final static String END_TRANSITION_NAME = "_END";
 
-    public enum TransitionType{
-        NEXT,BACK,REJECT
-    }
-
-
     @In
     private BusinessDefineHome businessDefineHome;
 
@@ -56,9 +51,6 @@ public class OwnerTaskHandle {
 
     @In
     private TaskInstance taskInstance;
-
-
-
 
 
     @In

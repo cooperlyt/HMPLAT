@@ -3,7 +3,10 @@ package com.dgsoft.common.jbpm;
 import com.dgsoft.common.system.business.BusinessDefineCache;
 import com.dgsoft.common.system.business.TaskDescription;
 import com.dgsoft.common.system.model.BusinessDefine;
+import org.jboss.seam.Component;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
+import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.bpm.Actor;
 import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
@@ -35,50 +38,57 @@ public abstract class TaskInstanceListCache {
 
     public abstract List<TaskInstanceAdapter> initResultTask();
 
-    //private String actorId;
+    private Actor actor;
 
-//    public String getActorId() {
-//        return actorId;
-//    }
 
-//    @Create
-//    public void register() {
-//        //actorId = Actor.instance().getId();
-//        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).subscribe(this);
-//        refresh();
-//    }
+    @Create
+    public void register() {
+        actor = Actor.instance();
+        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).subscribe(this);
+        refresh();
+    }
 
-//    @Destroy
-//    public void unRegister(){
-//        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).unSubscribe(this);
-//    }
+    @Destroy
+    public void unRegister(){
+        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).unSubscribe(this);
+    }
 
+    public Actor getActor() {
+        return actor;
+    }
 
     public void initTaskList(){
         refresh();
-        clearResultChangeTag();
+        allTaskListChange = false;
+        resultTaskListChange = false;
     }
 
     public void refreshResult(){
         comeTask.clear();
         refresh();
-        clearResultChangeTag();
+        allTaskListChange = false;
+        resultTaskListChange = false;
     }
 
-    public void taskRefresh(){
-        comeTask.clear();
-        refresh();
-    }
-
-    @Create
     public void refresh() {
 
 
         Set<TaskInstanceAdapter> newTasks = initAllTaskInstances();
 
         if (allTask != null ){
+            Set<Long> selectedTask = new HashSet<Long>();
+            for(TaskInstanceAdapter task: allTask){
+                if (task.isSelected()){
+                    selectedTask.add(task.getTaskInstance().getId());
+                }
+            }
+
             Set<TaskInstanceAdapter> temp = new HashSet<TaskInstanceAdapter>(newTasks);
             for(TaskInstanceAdapter task: newTasks){
+                if (selectedTask.contains(Long.valueOf(task.getTaskInstance().getId()))){
+                    task.setSelected(true);
+                }
+
                 if (allTask.remove(task)){
                     temp.remove(task);
                 }
@@ -151,6 +161,7 @@ public abstract class TaskInstanceListCache {
 
         allTaskListChange = false;
         resultTaskListChange = false;
+        comeTask.clear();
     }
 
     public void clearAllTaskChangeTag(){
@@ -176,6 +187,28 @@ public abstract class TaskInstanceListCache {
 
     public boolean isHaveComeTask(){
         return !comeTask.isEmpty();
+    }
+
+    public void setAllSelect(boolean select){
+        for(TaskInstanceAdapter task: allTask){
+            if (resultTask.contains(task)){
+                task.setSelected(select);
+            }else {
+                task.setSelected(false);
+            }
+        }
+    }
+
+    public boolean isAllSelect(){
+        if (resultTask.isEmpty()){
+            return false;
+        }
+        for(TaskInstanceAdapter task: resultTask){
+            if (!task.isSelected()){
+                return false;
+            }
+        }
+        return true;
     }
 
     public static class TaskInstanceAdapter{

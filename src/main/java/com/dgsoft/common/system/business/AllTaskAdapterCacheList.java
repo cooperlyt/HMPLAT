@@ -8,6 +8,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 import java.util.*;
@@ -25,11 +26,13 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
 
 
 
-        List<TaskInstance> taskInstanceList = (List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.taskInstanceList");
+        List<TaskInstance> taskInstanceList = ManagedJbpmContext.instance().getTaskList(getActor().getId());;
 
+        ArrayList groupIds = new ArrayList( getActor().getGroupActorIds() );
 
-        taskInstanceList.addAll((List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.pooledTaskInstanceList"));
+        groupIds.add(getActor().getId());
 
+        taskInstanceList.addAll(ManagedJbpmContext.instance().getGroupTaskList(groupIds));
 
 
 
@@ -98,7 +101,7 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
     }
 
     public enum TaskFilterType {
-        ALL("allTask"), OWNER("myBussiness"), POOLED("todoBussiness");
+        ALL("allTask"), OWNER("myBussiness"), POOLED("todoBussiness"),CHECK("checkBusiness");
 
         private String messageKey;
 
@@ -127,10 +130,17 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
 
 
     protected List<TaskInstanceAdapter> getTasksByType(TaskFilterType type) {
+
         List<TaskInstanceAdapter> result = new ArrayList<TaskInstanceAdapter>();
         if (TaskFilterType.ALL.equals(type)) {
             result.addAll(getAllTask());
-        } else {
+        }else if (TaskFilterType.CHECK.equals(type)){
+            for (TaskInstanceAdapter task : getAllTask()){
+                if (task.getTaskDescription().isCheckTask()){
+                    result.add(task);
+                }
+            }
+        }else {
             for (TaskInstanceAdapter task : getAllTask()) {
                 if (TaskFilterType.OWNER.equals(type) && task.isMyTask()) {
                     result.add(task);
@@ -217,6 +227,8 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
     public int getPooledSize() {
         return getTasksByType(TaskFilterType.POOLED).size();
     }
+
+    public int getCheckSize(){return getTasksByType(TaskFilterType.CHECK).size();}
 
     public boolean isEmptyTask() {
         return getCurTypeTasks().isEmpty();
