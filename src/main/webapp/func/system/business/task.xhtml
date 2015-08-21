@@ -50,10 +50,15 @@
     </a:push>
 
     <h:form>
-        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true" data="#{allTaskAdapterCacheList.resultTaskListChange}" oncomplete=" if(event.data){;renderTaskList();};"/>
+        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true" data="#{allTaskAdapterCacheList.resultTaskListChange}" oncomplete=" if(event.data){;renderTaskList();};">
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
 
-        <a:jsFunction name="renderTaskList" status="taskChangeWaiting" action="#{allTaskAdapterCacheList.clearResultChangeTag}" execute="@this" immediate="true" render="taskFilterForm,taskListForm"/>
+        <a:jsFunction name="renderTaskList" status="taskChangeWaiting" action="#{allTaskAdapterCacheList.clearResultChangeTag}" execute="@this" immediate="true" render="taskFilterForm,taskListForm">
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
 
+        <a:jsFunction name="clearComeTask" action="#{allTaskAdapterCacheList.clearResultCome}" execute="@this" immediate="true" render="@none"/>
 
         <a:status id="taskChangeWaiting" name="taskChangeWaiting"
                   onstart="$('#taskLoader').show();"
@@ -66,7 +71,7 @@
         <ui:param name="panelId" value="checkPanel"/>
         <ui:param name="panelTitle" value="#{messages.TaskCheck}"/>
         <ui:define name="panelBody">
-
+            <r:messages globalOnly="true"/>
             <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
                 <ui:define name="label">
                     #{messages.taskCheckComments}
@@ -370,6 +375,13 @@
 
                             </a:outputPanel>
                         </a:outputPanel>
+
+
+                        <h:outputScript>
+                            clearComeTask();
+                        </h:outputScript>
+
+
                     </a:outputPanel>
 
                 </h:form>
@@ -546,5 +558,33 @@
 
         </div>
     </div>
+
+
+
+    <ui:define name="pageMessages">
+
+        <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
+            <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
+
+                <h:outputScript>
+                    if (#{_msg.severity.ordinal == 1}){
+                    $.scojs_message.options.delay = 4000;
+                    $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_WRN);
+
+
+                    }else if(#{_msg.severity.ordinal == 0}){
+                    $.scojs_message.options.delay = 1000;
+                    $.scojs_message('#{_msg.summary}', $.scojs_message.TYPE_OK );
+
+                    }
+
+
+                </h:outputScript>
+
+            </a:repeat>
+        </a:outputPanel>
+
+    </ui:define>
+
 
 </ui:composition>

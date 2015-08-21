@@ -51,6 +51,7 @@
         <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>
 
         <a:outputPanel ajaxRendered="true">
+            <ui:insert name="pageMessages">
 
             <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
                 <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
@@ -73,7 +74,7 @@
                 </a:repeat>
             </a:outputPanel>
 
-
+            </ui:insert>
         </a:outputPanel>
     </ui:define>
 </ui:composition>
