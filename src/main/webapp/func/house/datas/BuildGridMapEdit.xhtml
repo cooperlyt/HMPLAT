@@ -252,51 +252,51 @@
                         width: 100%;
                         height: 100%;
                         padding: 0px;
+
                     }
 
                     .indicator-drag {
-                        border: 1px solid #000000;
+                        border: 1px solid #ddd;
                         background-color: gray;
                         opacity: 0.3;
                         margin: 2px;
-                        height: 64px;
-                        width: 64px;
+                        height: 60px;
+                        width: 60px;
                         text-align: center;
-                        background: url('#{facesContext.externalContext.requestContextPath}/img/
-                house
+                        padding: 10px;
+                        border-radius: 5px;
 
-                /
-                dragHouse.png
 
-                ') center center no-repeat;
-                }
+                        color: #333;
+                        outline: none;
+
+                    }
+
+                    .indicator-drag:before{
+                        content: '\f08d';
+                        font: normal normal normal 32px/1 octicons;
+                        display: inline-block;
+                        text-decoration: none;
+                        text-rendering: auto;
+                        -webkit-font-smoothing: antialiased;
+                        -moz-osx-font-smoothing: grayscale;
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                    }
 
                 .indicator-acpt {
-                    height: 48px;
-                    width: 48px;
+
                     border: 1px dotted green;
-                    background-color: green;
-                    background: url('#{facesContext.externalContext.requestContextPath}/img/
-                house
+                    color: green;
 
-                /
-                dragInHouse.png
-
-                ') center center no-repeat;
                 }
 
                 .indicator-rejt {
-                    height: 48px;
-                    width: 48px;
+
                     border: 1px dotted red;
-                    background-color: red;
-                    background: url('#{facesContext.externalContext.requestContextPath}/img/
-                house
-
-                /
-                dragStopHouse.png
-
-                ') center center no-repeat;
+                    color: red;
                 }
 
                 .rf-p-b {
@@ -305,15 +305,58 @@
                     padding: 0px;
                 }
 
-                .idle-house-con {
-                    float: left;
-                    width: 50px;
-                    height: 50px;
-                    margin: 2px;
-                    text-align: center;
-                    position: relative;
-                }
+                    .idle-house-popup .rf-pp-cnt{
+                        padding: 0;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                        width: 100%;
+                        height: 100%;
+                    }
 
+                    .idle-house-popup .rf-pp-cnt-scrlr{
+                        overflow: hidden;
+                        padding-right: 10px;
+                    }
+                    .idle-list{
+                        list-style-type: none;
+                        padding-left: 0;
+                        overflow: hidden;
+                        margin-right: -10px;
+                        margin-top: 0;
+                    }
+
+                    .idle-list li{
+                        display: inline-block;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                        float: left;
+                        background-color: #fff;
+                    }
+
+                    .idle-list .house-block{
+                        display: block;
+                        border: 1px solid #ddd;
+                        padding: 5px;
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 5px;
+
+                        text-align: center;
+                        vertical-align: middle;
+                        color: #333;
+                        outline: none;
+                        font-size: 13px;
+                    }
+
+                    .idle-house-act{
+                        height: 16px;
+                        padding: 0px;
+                        border: 0px;
+                        position: relative;
+                        bottom: 12px;
+                        right: -12px;
+                        display: none;
+                    }
 
 
                 </h:outputStylesheet>
@@ -551,7 +594,7 @@
                                             <s:div >
                                                 <h:outputText value="#{buildGridMapHome.selectHouse.houseOrder}"
                                                               style="font-size: 1.2em; font-weight: bold;"/>
-                                                <h:graphicImage rendered="#{not buildGridMapHome.houseCanEdit}"
+                                                <h:graphicImage
                                                                 value="/img/house/lock.png" title="#{messages.LockDecription}"/>
                                                 <br/>
                                                 <h:outputText value="#{messages.DeleteMapHouseInfo}" style="color: #e38d13"/>
@@ -563,7 +606,6 @@
                                     </s:div>
                                     <a:outputPanel layout="block" styleClass="modal-footer" id="deleteHouseConfirm_buttons">
                                         <a:commandButton action="#{buildGridMapHome.deleteBlockHouse}"
-                                                         disabled="#{not buildGridMapHome.houseCanEdit}"
                                                          styleClass="btn btn-danger"
                                                          render="grid_map" status="processWaiting"
                                                          onclick="$('#deleteHouseConfirm').modal('hide');"
@@ -593,8 +635,8 @@
                     </div>
 
 
-                    <r:popupPanel id="idleHousePopup" resizeable="true" minWidth="250" minHeight="264" width="250"
-                                  height="300" styleClass="cc"
+                    <r:popupPanel id="idleHousePopup" resizeable="true"  minWidth="250" minHeight="264" width="250"
+                                  height="300" styleClass="idle-house-popup"
                                   autosized="false" modal="false">
                         <f:facet name="header">
                             <h4>
@@ -621,82 +663,92 @@
                             </a:commandLink>
 
                         </f:facet>
-                        <a:outputPanel layout="block" style="width: 100%; height: 100%" id="idle">
+
+
+                        <a:outputPanel layout="block" id="idle">
                             <r:jQuery selector=".idle-house-con" event="mouseover"
-                                      query="jQuery(this).find('.house-act').stop().fadeIn(10);"/>
+                                      query="jQuery(this).find('.idle-house-act').stop().fadeIn(10);"/>
                             <r:jQuery selector=".idle-house-con" event="mouseout"
-                                      query="jQuery(this).find('.house-act').fadeOut(10);"/>
+                                      query="jQuery(this).find('.idle-house-act').fadeOut(10);"/>
 
-                            <r:panel
-                                    style="color: #ddd; margin: 2px;float: left; width: 50px;height: 50px;background: url('#{facesContext.externalContext.requestContextPath}/img/house/createHouse.gif') center center no-repeat;">
-                                <a:outputPanel layout="block" styleClass="rf-ind-drag">
-                                    <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
-                                </a:outputPanel>
-                            </r:panel>
-                            <a:repeat value="#{idleHouses}" var="_idleHouse">
-                                <r:panel styleClass="idle-house-con">
-                                    <a:outputPanel layout="block" styleClass="rf-idle-drag">
+                            <ul class="idle-list">
 
-                                        <r:dragSource id="idle_source" type="house" dragValue="#{_idleHouse}"
-                                                      dragIndicator="indicator"/>
+                                <li>
+                                    <a:outputPanel layout="block" styleClass="rf-ind-drag house-block" style="padding: 12px">
+                                        <span class="mega-octicon more-mega octicon-home"/>
+                                        <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
+                                    </a:outputPanel>
+                                </li>
 
-                                        <a:outputPanel>
-                                            <h:outputText value="#{_idleHouse.houseOrder}"
-                                                          style="font-size: 1em; font-weight: bold;#{_idleHouse.validator ? 'color: #000000;' : 'color: red;' }"/>
-                                            <r:tooltip styleClass="tooltip-custom-body"
-                                                       layout="block" mode="client"
-                                                       rendered="#{(not _idleHouse.detailsValid) or (not _idleHouse.orderValid)}">
-                                                <s:span rendered="#{not _idleHouse.detailsValid}"
-                                                        style="white-space: normal">
-                                                    <h:outputText styleClass="errors"
-                                                                  value="#{messages.HouseDetailsError}"/>
+                                <a:repeat value="#{idleHouses}" var="_idleHouse">
+                                    <li>
+                                    <div class="idle-house-con house-block">
+                                        <a:outputPanel layout="block" styleClass="rf-idle-drag">
 
-                                                </s:span>
-                                                <s:span rendered="#{not _idleHouse.orderValid}"
-                                                        style="white-space: normal">
-                                                    <h:outputText styleClass="errors"
-                                                                  value="#{messages.HouseOrderConflict}"/>
-                                                </s:span>
-                                            </r:tooltip>
+                                            <r:dragSource id="idle_source" type="house" dragValue="#{_idleHouse}"
+                                                          dragIndicator="indicator"/>
 
+                                            <a:outputPanel>
+                                                <h:outputText value="#{_idleHouse.houseOrder}"
+                                                              style="font-size: 1em; font-weight: bold;#{_idleHouse.validator ? 'color: #000000;' : 'color: red;' }"/>
+                                                <r:tooltip styleClass="tooltip-custom-body"
+                                                           layout="block" mode="client"
+                                                           rendered="#{(not _idleHouse.detailsValid) or (not _idleHouse.orderValid)}">
+                                                    <s:span rendered="#{not _idleHouse.detailsValid}"
+                                                            style="white-space: normal">
+                                                        <h:outputText styleClass="errors"
+                                                                      value="#{messages.HouseDetailsError}"/>
+
+                                                    </s:span>
+                                                    <s:span rendered="#{not _idleHouse.orderValid}"
+                                                            style="white-space: normal">
+                                                        <h:outputText styleClass="errors"
+                                                                      value="#{messages.HouseOrderConflict}"/>
+                                                    </s:span>
+                                                </r:tooltip>
+
+                                            </a:outputPanel>
+
+                                            <br/>
+                                            <h:outputText value="#{_idleHouse.houseArea}"
+                                                          style="font-size: 0.9em;color: #797268;">
+                                                <f:convertNumber pattern="#0.000"/>
+                                            </h:outputText>
+                                            <br/>
+                                            <h:outputText value="#{_idleHouse.useArea}"
+                                                          style="font-size: 0.9em;color: #797268;">
+                                                <f:convertNumber pattern="#0.000"/>
+                                            </h:outputText>
                                         </a:outputPanel>
 
-                                        <br/>
-                                        <h:outputText value="#{_idleHouse.houseArea}"
-                                                      style="font-size: 0.9em;color: #797268;">
-                                            <f:convertNumber pattern="#0.000"/>
-                                        </h:outputText>
-                                        <br/>
-                                        <h:outputText value="#{_idleHouse.useArea}"
-                                                      style="font-size: 0.9em;color: #797268;">
-                                            <f:convertNumber pattern="#0.000"/>
-                                        </h:outputText>
-                                    </a:outputPanel>
+                                        <s:div styleClass="idle-house-act">
+                                            <a:commandButton image="/img/icons/delete-red.png"
+                                                             render="removeIdleHouseConfirm_form"
+                                                             oncomplete="$('#removeIdleHouseConfirm').modal('show')"
+                                                             action="#{buildGridMapHome.selectedIdleHouse}"
+                                                             title="#{messages.BuildMapAction_delete}"
+                                                             execute="@this" immediate="true">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandButton>
 
-                                    <s:div styleClass="house-act">
-                                        <a:commandButton image="/img/icons/delete-red.png"
-                                                         render="removeIdleHouseConfirm_form"
-                                                         oncomplete="$('#removeIdleHouseConfirm').modal('show')"
-                                                         action="#{buildGridMapHome.selectedIdleHouse}"
-                                                         title="#{messages.BuildMapAction_delete}"
-                                                         execute="@this" immediate="true">
-                                            <a:attachQueue requestDelay="0"/>
-                                        </a:commandButton>
-
-                                        <a:commandButton style="padding-left: 1px; padding-right: 1px;"
-                                                         image="/img/icons/info-blue.png"
-                                                         action="#{buildGridMapHome.selectedIdleHouse}"
-                                                         title="#{messages.BuildMapAction_edit}"
-                                                         oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
-                                                         immediate="true" execute="@this" render="editPanel_form">
-                                            <a:attachQueue requestDelay="0"/>
-                                        </a:commandButton>
+                                            <a:commandButton style="padding-left: 1px; padding-right: 1px;"
+                                                             image="/img/icons/info-blue.png"
+                                                             action="#{buildGridMapHome.selectedIdleHouse}"
+                                                             title="#{messages.BuildMapAction_edit}"
+                                                             oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
+                                                             immediate="true" execute="@this" render="editPanel_form">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandButton>
 
 
-                                    </s:div>
-                                </r:panel>
-                            </a:repeat>
-                            <div style="clear: both;"/>
+                                        </s:div>
+                                    </div>
+                                    </li>
+                                </a:repeat>
+
+                            </ul>
+
+
                         </a:outputPanel>
                     </r:popupPanel>
 
@@ -705,6 +757,9 @@
                 <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
                     <ui:param name="panelId" value="removeIdleHouseConfirm"/>
                     <ui:param name="entityTitle" value="#{buildGridMapHome.selectHouse.houseOrder}"/>
+                    <ui:define name="deleteNote">
+                        <p>#{messages.deleteMapHouseNote}</p>
+                    </ui:define>
                     <a:commandButton styleClass="btn btn-danger" action="#{buildGridMapHome.deleteIdleHouse}"
                                      status="processWaiting" style="width: 100%"
                                      value="#{messages.confirmDelete}" onclick="$('#removeIdleHouseConfirm').modal('hide')"
@@ -780,7 +835,7 @@
                     <a:outputPanel layout="block" styleClass="form-group"
                                    rendered="#{not empty buildGridMapHome.selectHouse}">
 
-                        <a:outputPanel rendered="#{buildGridMapHome.houseCanEdit}">
+                        <a:outputPanel >
 
 
                             <div class="edit">
@@ -795,17 +850,6 @@
                         </a:outputPanel>
 
 
-                        <s:div rendered="#{not buildGridMapHome.houseCanEdit}" style="width: 980px">
-                            <table class="detailsTable">
-                                <tr>
-                                    <td class="detailsHead"></td>
-                                </tr>
-                            </table>
-                            <ui:include src="/layout/house/HouseInfoView.xhtml">
-                                <ui:param name="houseInfo" value="#{buildGridMapHome.selectHouse}"/>
-                                <ui:param name="showStatus" value="#{false}"/>
-                            </ui:include>
-                        </s:div>
                     </a:outputPanel>
 
 

@@ -6,11 +6,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://richfaces.org/a4j"
-      xmlns:dh="http://www.dgsoft.com/jsf/html"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
       xmlns:r="http://richfaces.org/rich">
 <f:view
         contentType="text/html">
@@ -120,6 +117,8 @@
                 margin-top: 5px !important;
             }
 
+
+
         </h:outputStylesheet>
 
 
@@ -127,7 +126,7 @@
 
         </ui:insert>
 
-
+        <a:queue requestDelay="1000" ignoreDupResponses="true"/>
         <a:status id="processWaiting" name="processWaiting"
                   onstart="#{r:component('wait')}.show()"
                   onstop="#{r:component('wait')}.hide()"/>
