@@ -33,4 +33,43 @@
         <action execute="#{bpmTaskChangePublish.onBusinessTaskChange}"/>
     </event>
 
+
+
+
+
+
+
+    <event type="org.jboss.seam.createProcess">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+    <event type="org.jboss.seam.endTask">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+
+
+    <event type="com.dgsot.jbpm.taskAssign">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+    <event type="com.dgsot.jbpm.taskUnassign">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+
+    <event type="org.jboss.seam.processStoped">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+    <event type="org.jboss.seam.processSuspended">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+
+    <event type="org.jboss.seam.processResumed">
+        <action execute="#{allTaskAdapterCacheList.refresh}"/>
+    </event>
+
+
 </components>

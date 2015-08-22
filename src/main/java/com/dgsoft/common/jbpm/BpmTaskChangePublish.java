@@ -29,7 +29,7 @@ public class BpmTaskChangePublish {
 
     public static final String PUSH_TASK_CHANGE_TOPIC = "pushTaskChange";
 
-    private List<TaskInstanceListCache> subscribers = new ArrayList<TaskInstanceListCache>();
+    //private List<TaskInstanceListCache> subscribers = new ArrayList<TaskInstanceListCache>();
 
     protected void sendTaskChangeMessage() {
         try {
@@ -52,28 +52,28 @@ public class BpmTaskChangePublish {
     @Transactional
     @Asynchronous
     public void onBusinessTaskChange() {
-        for(TaskInstanceListCache subscriber: subscribers){
-            //Logging.getLog(getClass()).debug("sub actor:" + subscriber.getActorId() + "=" + Actor.instance().getId());
-            //if (!subscriber.getActorId().equals(Actor.instance().getId()))
-            subscriber.refresh();
-        }
+//        for(TaskInstanceListCache subscriber: subscribers){
+//            //Logging.getLog(getClass()).debug("sub actor:" + subscriber.getActorId() + "=" + Actor.instance().getId());
+//            //if (!subscriber.getActorId().equals(Actor.instance().getId()))
+//            subscriber.refresh();
+//        }
         sendTaskChangeMessage();
     }
 
 
-    public synchronized void unSubscribe(TaskInstanceListCache subscriber) {
-        log.debug("unSubscribe = Publish:" + this + "|subscriber:" + subscriber);
-        if (subscribers.contains(subscriber)) {
-            subscribers.remove(subscriber);
-        } else {
-            log.warn("unSubscribe fail! subscriber not in list");
-        }
-    }
-
-
-    public synchronized void subscribe(TaskInstanceListCache subscriber) {
-        log.debug("subscribe = Publish:" + this + "|subscriber:" + subscriber);
-        subscribers.add(subscriber);
-    }
+//    public synchronized void unSubscribe(TaskInstanceListCache subscriber) {
+//        log.debug("unSubscribe = Publish:" + this + "|subscriber:" + subscriber);
+//        if (subscribers.contains(subscriber)) {
+//            subscribers.remove(subscriber);
+//        } else {
+//            log.warn("unSubscribe fail! subscriber not in list");
+//        }
+//    }
+//
+//
+//    public synchronized void subscribe(TaskInstanceListCache subscriber) {
+//        log.debug("subscribe = Publish:" + this + "|subscriber:" + subscriber);
+//        subscribers.add(subscriber);
+//    }
 
 }

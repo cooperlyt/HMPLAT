@@ -24,17 +24,9 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
     @Override
     protected Set<TaskInstanceAdapter> initAllTaskInstances() {
 
+        List<TaskInstance> taskInstanceList = (List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.taskInstanceList");
 
-
-        List<TaskInstance> taskInstanceList = ManagedJbpmContext.instance().getTaskList(getActor().getId());;
-
-        ArrayList groupIds = new ArrayList( getActor().getGroupActorIds() );
-
-        groupIds.add(getActor().getId());
-
-        taskInstanceList.addAll(ManagedJbpmContext.instance().getGroupTaskList(groupIds));
-
-
+        taskInstanceList.addAll((List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.pooledTaskInstanceList"));
 
         Set<TaskInstanceAdapter> result = new HashSet<TaskInstanceAdapter>();
         for (TaskInstance taskInstance : taskInstanceList) {

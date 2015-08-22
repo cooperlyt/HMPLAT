@@ -22,7 +22,7 @@
         <h:outputStylesheet>
             .more-link{
                     padding: 4px;    display: block;  font-size: 13px;
-            font-weight: bold;  position: relative; font-style: normal;   margin-left: -28px;    color: #4183c4;
+            font-weight: bold;  position: relative; font-style: normal;   color: #4183c4;
                 white-space: nowrap;
                 vertical-align: middle;
                 cursor: pointer;
@@ -40,6 +40,10 @@
 
             .boxed-group-inner .list-group-item.more-item:hover{
                 background-color: #fff;
+            }
+
+            .list-group-item.more-item{
+                padding: 0;
             }
         </h:outputStylesheet>
     </ui:define>
@@ -74,11 +78,16 @@
     </a:push>
 
     <h:form>
-        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true" data="#{allTaskAdapterCacheList.resultTaskListChange}" oncomplete=" if(event.data){;renderTaskList();};">
+        <a:jsFunction name="taskChangeDataavailable" execute="@this" immediate="true"
+                      action="#{allTaskAdapterCacheList.refresh}"
+                      data="#{allTaskAdapterCacheList.resultTaskListChange}"
+                      oncomplete="if(event.data){;renderTaskList();};">
             <a:attachQueue requestDelay="0"/>
         </a:jsFunction>
 
-        <a:jsFunction name="renderTaskList" status="taskChangeWaiting" action="#{allTaskAdapterCacheList.clearResultChangeTag}" execute="@this" immediate="true" render="taskFilterForm,taskListForm">
+        <a:jsFunction name="renderTaskList" status="taskChangeWaiting"
+                      action="#{allTaskAdapterCacheList.clearResultChangeTag}"
+                      execute="@this" immediate="true" render="taskFilterForm,taskListForm">
             <a:attachQueue requestDelay="0"/>
         </a:jsFunction>
 
