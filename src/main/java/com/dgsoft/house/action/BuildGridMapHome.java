@@ -3,8 +3,6 @@ package com.dgsoft.house.action;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
-import com.dgsoft.house.HouseEditStrategy;
-import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -381,13 +379,7 @@ public class BuildGridMapHome implements DropListener {
         return selectHouse;
     }
 
-    private HouseEditStrategy getHouseEditStrategy() {
-        return (HouseEditStrategy) Component.getInstance(RunParam.instance().getStringParamValue(HouseEditStrategy.RUN_PARAM_NAME), true, true);
-    }
 
-    public boolean isHouseCanEdit() {
-        return (selectHouse != null) && getHouseEditStrategy().isCanEdit(selectHouse);
-    }
 
     public void idleBlockHouse() {
         GridBlock block = getSelectBlock();
@@ -401,12 +393,9 @@ public class BuildGridMapHome implements DropListener {
     }
 
     private boolean deleteHouse(House house) {
-        if (isHouseCanEdit()) {
-            //house.getGridBlock().clear();
-            buildHome.getInstance().getHouses().remove(house);
-            return true;
-        }
-        facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "HouseCantEdit");
+
+        buildHome.getInstance().getHouses().remove(house);
+
         return false;
     }
 
@@ -422,11 +411,9 @@ public class BuildGridMapHome implements DropListener {
     }
 
     public void deleteIdleHouse() {
-        if (isHouseCanEdit()) {
             if (deleteHouse(selectIdleHouse)) {
                 idleHouses.remove(selectIdleHouse);
             }
-        }
     }
 
     @Override
@@ -545,13 +532,10 @@ public class BuildGridMapHome implements DropListener {
                 if ((block.getHouse() != null)) {
                     //block.getHouse().getGridBlock().clear();
                     House house = (House)block.getHouse();
-                    if (getHouseEditStrategy().isCanEdit(house)) {
+
                         buildHome.getInstance().getHouses().remove(house);
 
-                    } else {
-                        idleHouses.add(house);
-                        facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "HouseCantDeleteMoveToIdle", block.getHouse().getHouseOrder());
-                    }
+
                     block.setHouse(null);
                 }
             }

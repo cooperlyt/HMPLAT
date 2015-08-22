@@ -64,7 +64,6 @@ public abstract class TaskInstanceListCache {
     }
 
     public void refreshResult(){
-        comeTask.clear();
         refresh();
         allTaskListChange = false;
         resultTaskListChange = false;
@@ -161,7 +160,16 @@ public abstract class TaskInstanceListCache {
 
         allTaskListChange = false;
         resultTaskListChange = false;
+    }
+
+    public void clearCome(){
         comeTask.clear();
+    }
+
+    public void clearResultCome(){
+        for(TaskInstanceAdapter task: getResultTask()){
+            comeTask.remove(task);
+        }
     }
 
     public void clearAllTaskChangeTag(){
@@ -261,7 +269,7 @@ public abstract class TaskInstanceListCache {
         }
 
         public boolean isMyOnly(){
-            if (isMyTask()) return taskInstance.getPooledActors().isEmpty(); else return false;
+            if (isMyTask()) return (taskInstance.getPooledActors() == null) || taskInstance.getPooledActors().isEmpty() ; else return false;
         }
 
         @Override

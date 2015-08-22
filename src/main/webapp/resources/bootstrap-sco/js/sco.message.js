@@ -37,9 +37,11 @@
 		}
 		$selector.html(message);
 		if (type === undefined || type == $[pluginName].TYPE_ERROR) {
-			$selector.removeClass($[pluginName].options.okClass).addClass($[pluginName].options.errClass);
+			$selector.removeClass($[pluginName].options.okClass).removeClass($[pluginName].options.wrnClass).addClass($[pluginName].options.errClass);
 		} else if (type == $[pluginName].TYPE_OK) {
-			$selector.removeClass($[pluginName].options.errClass).addClass($[pluginName].options.okClass);
+			$selector.removeClass($[pluginName].options.errClass).removeClass($[pluginName].options.wrnClass).addClass($[pluginName].options.okClass);
+		} else if (type == $[pluginName].TYPE_WRN){
+			$selector.removeClass($[pluginName].options.errClass).removeClass($[pluginName].options.okClass).addClass($[pluginName].options.wrnClass);
 		}
 		$selector.slideDown('fast', function() {
 			$[pluginName].timeout = setTimeout(function() { $selector.slideUp('fast'); }, $[pluginName].options.delay);
@@ -52,12 +54,14 @@
 			 id: 'page_message'
 			,okClass: 'page_mess_ok'
 			,errClass: 'page_mess_error'
+			,wrnClass: 'page_mess_wrn'
 			,animate: true
 			,delay: 4000
 			,appendTo: 'body'	// where should the modal be appended to (default to document.body). Added for unit tests, not really needed in real life.
 		},
 
 		TYPE_ERROR: 1,
+		TYPE_WRN: 3,
 		TYPE_OK: 2
 	});
 })(jQuery);

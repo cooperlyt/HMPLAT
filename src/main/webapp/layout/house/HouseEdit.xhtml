@@ -152,7 +152,7 @@
         <div class="input-group">
             <span class="input-group-addon">#{messages.House_UseType}<s:span styleClass="required">*</s:span></span>
 
-            <h:selectOneMenu required="true" id="useTypeInput" value="#{house.useType}" label="#{messages.House_UseType}"
+            <h:selectOneMenu style="width: 255px" required="true" id="useTypeInput" value="#{house.useType}" label="#{messages.House_UseType}"
                              styleClass="form-control selectpicker edit-select input-group-mid">
                 <s:selectItems value="#{dictionary.getWordList('house.useType')}" var="_word"
                                itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
@@ -161,21 +161,22 @@
 
             <span class="input-group-addon">#{messages.House_Structure}<s:span styleClass="required">*</s:span></span>
 
-            <h:selectOneMenu required="true" id="structureInput" value="#{house.structure}"
+            <h:selectOneMenu style="width: 171px" required="true" id="structureInput" value="#{house.structure}"
                              styleClass="form-control selectpicker edit-select input-group-mid"
                              label="#{messages.House_Structure}">
                 <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
 
                                itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
             </h:selectOneMenu>
-            <span class="input-group-addon">#{messages.House_HouseType}</span>
 
-            <h:selectOneMenu id="houseTypeInput" value="#{house.houseType}" label="#{messages.House_HouseType}"
-                             styleClass="form-control selectpicker edit-select">
-                <s:selectItems value="#{dictionary.getWordList('house.houseType')}" var="_word"
-                               itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
-            </h:selectOneMenu>
+                        <span class="input-group-addon">
 
+                <h:selectBooleanCheckbox id="haveDownRoomInput" value="#{house.haveDownRoom}" label="#{messages.Build_HaveDownRoom}"/>
+
+
+                            #{' '} #{messages.Build_HaveDownRoom}
+
+            </span>
 
 
         </div>
@@ -189,9 +190,19 @@
 
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:param name="showLabel" value="false"/>
-        <ui:param name="for" value="useTypeInput"/>
+        <ui:param name="for" value="houseTypeInput"/>
 
         <div class="input-group">
+
+            <span class="input-group-addon">#{messages.House_HouseType}</span>
+
+            <h:selectOneMenu id="houseTypeInput" value="#{house.houseType}" label="#{messages.House_HouseType}"
+                             styleClass="form-control selectpicker edit-select input-group-mid">
+                <s:selectItems value="#{dictionary.getWordList('house.houseType')}" var="_word"
+                               itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+            </h:selectOneMenu>
+
+
             <span class="input-group-addon">#{messages.House_KnotSize}</span>
 
             <h:selectOneMenu id="knotSizeInput" value="#{house.knotSize}" label="#{messages.House_KnotSize}"
@@ -206,16 +217,9 @@
             <h:selectOneMenu id="directionInput" value="#{house.direction}" label="#{messages.House_Direction}"
                              styleClass="form-control selectpicker edit-select input-group-mid">
                 <s:selectItems value="#{dictionary.getWordList('house.direction')}" var="_word"
-                               itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                               itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabelShort}"/>
             </h:selectOneMenu>
-            <span class="input-group-addon">
 
-                <h:selectBooleanCheckbox id="haveDownRoomInput" value="#{house.haveDownRoom}" label="#{messages.Build_HaveDownRoom}"/>
-
-
-                   #{' '} #{messages.Build_HaveDownRoom}
-
-            </span>
 
 
 

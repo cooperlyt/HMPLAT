@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.Entry;
 import com.dgsoft.common.jbpm.TaskInstanceListCache;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.action.BusinessDefineHome;
@@ -13,6 +14,8 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.core.Events;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 /**
@@ -27,13 +30,13 @@ public class CheckTaskOperation {
     @In
     private AuthenticationInfo authInfo;
 
-    @In(required = false)
-    @Out(required = false)
+    @In(required = false, scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false, scope = ScopeType.BUSINESS_PROCESS)
     private String transitionComments;
 
 
-    @In(required = false)
-    @Out(required = false)
+    @In(required = false, scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false, scope = ScopeType.BUSINESS_PROCESS)
     private String transitionType;
 
     @In(create = true)
@@ -41,6 +44,9 @@ public class CheckTaskOperation {
 
     @In(create = true)
     private OwnerBusinessHome ownerBusinessHome;
+
+    @In(create = true)
+    private FacesMessages facesMessages;
 
     private Long selectTaskId;
 
@@ -68,20 +74,30 @@ public class CheckTaskOperation {
         this.transitionComments = transitionComments;
     }
 
-    private void singleEnd(long taskid, TaskOper.OperType operType){
+    private boolean singleEnd(long taskid, TaskOper.OperType operType) {
 
-        for(TaskInstanceListCache.TaskInstanceAdapter task: allTaskAdapterCacheList.getResultTask()){
-            if (task.getTaskInstance().getId() == taskid){
-                singleEnd(task,operType);
-                return;
+        for (TaskInstanceListCache.TaskInstanceAdapter task : allTaskAdapterCacheList.getResultTask()) {
+            if (task.getTaskInstance().getId() == taskid) {
+                return singleEnd(task, operType);
             }
         }
+        return false;
 
     }
 
-    private void singleEnd(TaskInstanceListCache.TaskInstanceAdapter task, TaskOper.OperType operType ){
+    private boolean singleEnd(TaskInstanceListCache.TaskInstanceAdapter task, TaskOper.OperType operType) {
         ownerBusinessHome.setId(task.getTaskDescription().getBusinessKey());
         businessDefineHome.setId(task.getTaskDescription().getBusinessDefineKey());
+
+        businessDefineHome.setTaskName(task.getTaskInstance().getName());
+
+        if (TaskOper.OperType.CHECK_ACCEPT.equals(operType)) {
+            if (businessDefineHome.isCompletePass()) {
+                businessDefineHome.completeTask();
+            } else {
+                return false;
+            }
+        }
 
         TaskInstance taskInstance = ManagedJbpmContext.instance().getTaskInstanceForUpdate(task.getTaskInstance().getId());
 
@@ -95,27 +111,51 @@ public class CheckTaskOperation {
 
         taskInstance.end();
         ownerBusinessHome.update();
+
+        return true;
     }
 
-    private void mulitEnd(TaskOper.OperType operType){
-        for(TaskInstanceListCache.TaskInstanceAdapter task: allTaskAdapterCacheList.getResultTask()){
-            if (task.isSelected()){
-                singleEnd(task,operType);
+    private Entry<Integer,Integer> mulitEnd(TaskOper.OperType operType) {
+        int successCount = 0;
+        int failCount = 0;
+        for (TaskInstanceListCache.TaskInstanceAdapter task : allTaskAdapterCacheList.getResultTask()) {
+            if (task.isSelected()) {
+                if (singleEnd(task, operType)){
+                    successCount++;
+                }else{
+                    failCount++;
+                }
             }
         }
+        return new Entry<Integer, Integer>(successCount,failCount);
     }
 
     @Transactional
-    public void check(){
+    public void check() {
 
         TaskOper.OperType operType = TaskOper.OperType.valueOf(transitionType);
         transitionType = TaskOper.OperType.CHECK_ACCEPT.name();
-        if (selectTaskId == null){
+        if (selectTaskId == null) {
 
-            mulitEnd(operType);
+            Entry<Integer,Integer> result = mulitEnd(operType);
 
-        }else{
-            singleEnd(selectTaskId,operType);
+            StatusMessage.Severity severity;
+            if (result.getKey().compareTo(0) <= 0){
+                severity = StatusMessage.Severity.ERROR;
+            } else if(result.getValue().compareTo(0) > 0){
+                severity = StatusMessage.Severity.WARN;
+            }else {
+                severity = StatusMessage.Severity.INFO;
+            }
+
+
+            facesMessages.addFromResourceBundle(severity,"CheckMessage", result.getKey(), result.getValue() );
+        } else {
+           if (singleEnd(selectTaskId, operType)){
+               facesMessages.addFromResourceBundle(StatusMessage.Severity.INFO,"CheckSuccess");
+           }else{
+               facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"CheckFail");
+           }
         }
         Events.instance().raiseTransactionSuccessEvent("org.jboss.seam.endTask");
     }
