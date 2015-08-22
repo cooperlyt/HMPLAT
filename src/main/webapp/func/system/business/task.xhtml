@@ -6,6 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
@@ -18,6 +19,29 @@
     <ui:define name="outcss">
         <h:outputStylesheet library="github" name="/css/github1.css"/>
         <h:outputStylesheet library="github" name="/css/github2.css"/>
+        <h:outputStylesheet>
+            .more-link{
+                    padding: 4px;    display: block;  font-size: 13px;
+            font-weight: bold;  position: relative; font-style: normal;   margin-left: -28px;    color: #4183c4;
+                white-space: nowrap;
+                vertical-align: middle;
+                cursor: pointer;
+                background: #fff;
+                text-align: center;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+            .more-link:hover{
+                z-index: 2;
+                background-color: #f5f9fc;
+                border-color: #e5e5e5;
+                text-decoration: none;
+            }
+
+            .boxed-group-inner .list-group-item.more-item:hover{
+                background-color: #fff;
+            }
+        </h:outputStylesheet>
     </ui:define>
 
     <ui:define name="function-tile">
@@ -63,6 +87,10 @@
         <a:status id="taskChangeWaiting" name="taskChangeWaiting"
                   onstart="$('#taskLoader').show();"
                   onstop="$('#taskLoader').hide();"/>
+
+        <a:status id="moreResultWaiting" name="moreResultWaiting"
+                onstart="$('.more-link-more').hide();$('.more-watting').show();"
+                  onstop="$('.more-link-more').show();$('.more-watting').hide();"/>
 
 
     </h:form>
@@ -120,7 +148,7 @@
                             <s:selectItems value="#{taskFilter.sortFields}" var="_field" itemValue="#{_field}"
                                            label="#{messages[_field.name()]}"/>
                             <s:convertEnum/>
-                            <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.reset}">
+                            <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.resetCondition}">
                                 <a:attachQueue requestDelay="0"/>
                             </a:ajax>
                         </h:selectOneMenu>
@@ -128,9 +156,9 @@
                     </div>
 
                     <h:form id="keySearchForm" >
+                        <!-- onblur="searchByKey()" -->
 
-
-                        <h:inputText value="#{taskFilter.searchKey}" id="searchKeyInput" onblur="searchByKey()"
+                        <h:inputText value="#{taskFilter.searchKey}" id="searchKeyInput"
                                      styleClass="filter_input" p:autocapitalize="off" p:placeholder="#{messages.searchTask}"
                                      autocomplete="off" >
 
@@ -143,8 +171,8 @@
                         </r:hotKey>
 
 
-                        <a:jsFunction name="searchByKey" action="#{allTaskAdapterCacheList.reset}" render="taskListForm" execute="@form" status="processWaiting">
-
+                        <a:jsFunction name="searchByKey" action="#{allTaskAdapterCacheList.resetCondition}" render="taskListForm" execute="@form" status="processWaiting">
+                            <a:attachQueue requestDelay="0"/>
                         </a:jsFunction>
                     </h:form>
                 </div>
@@ -199,7 +227,7 @@
                                                  value="#{allTaskAdapterCacheList.selectCategoryId}">
                                     <s:selectItems value="#{allTaskAdapterCacheList.filterCategorys}" var="_category"
                                                    label="#{_category.category.name}" itemValue="#{_category.category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                                    <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.reset}" render="myBizDefineFilter,taskListDatas">
+                                    <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.resetCondition}" render="myBizDefineFilter,taskListDatas">
                                         <a:attachQueue requestDelay="0"/>
                                     </a:ajax>
                                 </h:selectOneMenu>
@@ -211,7 +239,7 @@
                                                          styleClass="selectpicker mini-select"  value="#{allTaskAdapterCacheList.selectDefineId}">
                                             <s:selectItems value="#{allTaskAdapterCacheList.selectCategory.defineList}" var="_define"
                                                            label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                                            <a:ajax event="valueChange" listener="#{allTaskAdapterCacheList.reset}" execute="@this" render="taskListDatas">
+                                            <a:ajax event="valueChange" listener="#{allTaskAdapterCacheList.resetCondition}" execute="@this" render="taskListDatas">
                                                 <a:attachQueue requestDelay="0"/>
                                             </a:ajax>
                                         </h:selectOneMenu>
@@ -229,7 +257,7 @@
                                                    data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
                                                    data-size="mini" styleClass="js-switch"/>
                                         <a:jsFunction name="sortOption" status="processWaiting" render="taskListDatas"
-                                                      execute="@region" action="#{allTaskAdapterCacheList.reset}">
+                                                      execute="@region" action="#{allTaskAdapterCacheList.resetCondition}">
                                             <a:attachQueue requestDelay="0"/>
                                         </a:jsFunction>
                                     </a:region>
@@ -277,7 +305,7 @@
 
 
                                     <ul class="boxed-group-inner notifications">
-                                        <a:repeat value="#{allTaskAdapterCacheList.resultTask}" var="_task">
+                                        <a:repeat value="#{allTaskAdapterCacheList.showResultTask}" var="_task">
                                             <li class="list-group-item read">
 
                                                 <div class="repo-list-stats">
@@ -370,6 +398,22 @@
 
                                             </li>
                                         </a:repeat>
+
+
+                                        <c:if test="#{allTaskAdapterCacheList.haveMore}">
+                                        <li class=" list-group-item more-item " >
+                                            <a:commandLink action="#{allTaskAdapterCacheList.more}" status="moreResultWaiting"
+                                                           styleClass="more-link more-link-more" execute="@this" immediate="true" render="taskListDatas">
+                                                #{messages.More}
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+                                            <div class="more-link more-watting" style="background: #e7e7e7; display: none;" >
+                                               <h:graphicImage style="height: 16px; width: 16px;" value="/img/octocat-spinner-32.gif"/>
+                                            </div>
+
+                                        </li>
+                                        </c:if>
                                     </ul>
                                 </div>
 
@@ -396,7 +440,7 @@
 
 
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
-                                       action="#{allTaskAdapterCacheList.reset}"
+                                       action="#{allTaskAdapterCacheList.resetCondition}"
                                        styleClass="filter-item #{ (allTaskAdapterCacheList.filterTypeName eq 'ALL') ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.allSize}</span>
                             <span class="octicon octicon-inbox"/>
@@ -411,7 +455,7 @@
                     <li>
 
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
-                                       action="#{allTaskAdapterCacheList.reset}"
+                                       action="#{allTaskAdapterCacheList.resetCondition}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'POOLED' ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.pooledSize}</span>
                             <span class="octicon octicon-organization"/>
@@ -426,7 +470,7 @@
 
 
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
-                                       action="#{allTaskAdapterCacheList.reset}"
+                                       action="#{allTaskAdapterCacheList.resetCondition}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'OWNER' ? 'selected' : ''}">
                             <span class="count">#{allTaskAdapterCacheList.ownerSize}</span>
                             <span class="octicon octicon-person" style="padding:0 3px"/>
@@ -439,7 +483,7 @@
 
                     <li>
                         <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
-                                       action="#{allTaskAdapterCacheList.reset}"
+                                       action="#{allTaskAdapterCacheList.resetCondition}"
                                        styleClass="filter-item #{allTaskAdapterCacheList.filterTypeName eq 'CHECK' ? 'selected' : ''}">
                             <span class="octicon octicon-eye"/>
                             <span class="count">#{allTaskAdapterCacheList.checkSize}</span>
@@ -543,7 +587,7 @@
                         </div>
 
                         <a:jsFunction name="filterDateAreaChange" render="taskListForm"
-                                      action="#{allTaskAdapterCacheList.reset}"
+                                      action="#{allTaskAdapterCacheList.resetCondition}"
                                       execute="@form" >
                             <a:attachQueue requestDelay="0"/>
                         </a:jsFunction>

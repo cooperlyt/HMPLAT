@@ -135,15 +135,24 @@
                         </div></div>
                     </a:repeat>
                      </a:outputPanel>
+
+                    <a:status id="moreResultWaiting" name="moreResultWaiting"
+                              onstart="$('.js-events-pagination').hide();$('.js-events-pagination-waiting').show();"
+                              onstop="$('.js-events-pagination').show();$('.js-events-pagination-waiting').hide();"/>
                     <h:form id="moreAction">
+
+
                         <a:outputPanel layout="block" class="pagination ajax_paginate">
                             <a:commandLink class="js-events-pagination" execute="@this" immediate="true"
-                                           render="moreAction,operList"
+                                           render="moreAction,operList" status="moreResultWaiting"
                                            rendered="#{employeeBusinessOperList.nextExists}">
                                 #{messages.More}
                                 <a:attachQueue requestDelay="0"/>
                                 <a:param value="#{employeeBusinessOperList.maxResults + 30}" assignTo="#{employeeBusinessOperList.maxResults}"/>
                             </a:commandLink>
+                            <span class="js-events-pagination-waiting" style="background-color: #e7e7e7; display: block; padding: 6px; text-align: center; width: 100%;display: none;">
+                                <h:graphicImage style="height: 16px; width: 16px;" value="/img/octocat-spinner-32.gif"/>
+                            </span>
                         </a:outputPanel>
                     </h:form>
                 </div>
