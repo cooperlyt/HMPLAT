@@ -30,6 +30,8 @@
             </p:table>
         </p:font>
 
+
+
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
             <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100">
                 <f:facet name="defaultCell">
@@ -285,6 +287,24 @@
                    </p:table>
                 </p:cell>
 
+
+            </p:table>
+            <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="0" border="0"/>
+                </f:facet>
+                <p:cell>
+                    <p:paragraph>业务编号:</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>房屋编号:</p:paragraph>
+                </p:cell>
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{_houseBusiness.houseCode}</p:paragraph>
+                </p:cell>
 
             </p:table>
         </p:font>

@@ -56,6 +56,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('1','业务受理单（存�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('2','询问笔录（初始登记）','询问笔录（初始登记）','/report/InitRegAskRecord.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('3','询问笔录（转移登记）','询问笔录（转移登记）','/report/ShiftAskRecord.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('4','房屋所有权转移登记申请书','房屋所有权转移登记申请书','/report/ApplyShifReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('5','房屋所有权变更登记申请书','房屋所有权变更登记申请书','/report/ApplyChangeReisterBook.xhtml');
 
 
 
