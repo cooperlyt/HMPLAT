@@ -180,6 +180,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getOperEmp(BusinessEmp.EmpType.CREATE_EMP);
     }
 
+    public BusinessPersion getSellEntrust(){
+        return getBusinessPersionByType("SELL_ENTRUST");
+    }
+
+    public BusinessPersion getOwnerEntrust(){
+        return getBusinessPersionByType("OWNER_ENTRUST");
+    }
+
+    public Reason getReceive(){
+        return getReasonByType("RECEIVE");
+    }
     public BusinessPersion getApplyPersion(){
        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
            if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)){
