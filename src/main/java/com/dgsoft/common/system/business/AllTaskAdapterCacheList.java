@@ -236,12 +236,12 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
 
     public void clearDateFrom() {
         TaskFilter.instance().getSearchDateArea().setDateFrom(null);
-        reset();
+        resetCondition();
     }
 
     public void clearDateTo() {
         TaskFilter.instance().getSearchDateArea().setDateTo(null);
-        reset();
+        resetCondition();
     }
 
     public List<TaskInstanceAdapter> getTaskByKey(String key) {

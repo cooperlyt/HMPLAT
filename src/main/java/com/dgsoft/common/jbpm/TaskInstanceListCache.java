@@ -23,6 +23,8 @@ import java.util.*;
  */
 public abstract class TaskInstanceListCache {
 
+    private static final int DEFAULT_MAX_RESULT = 30;
+
     protected abstract Set<TaskInstanceAdapter> initAllTaskInstances();
 
     private boolean allTaskListChange = false;
@@ -34,6 +36,8 @@ public abstract class TaskInstanceListCache {
     private List<TaskInstanceAdapter> resultTask;
 
     private List<TaskInstanceAdapter> comeTask = new ArrayList<TaskInstanceAdapter>();
+
+    private Integer maxResult = DEFAULT_MAX_RESULT;
 
 
     public abstract List<TaskInstanceAdapter> initResultTask();
@@ -59,6 +63,7 @@ public abstract class TaskInstanceListCache {
 
     public void initTaskList(){
         refresh();
+        resetResultCount();
         allTaskListChange = false;
         resultTaskListChange = false;
     }
@@ -67,6 +72,19 @@ public abstract class TaskInstanceListCache {
         refresh();
         allTaskListChange = false;
         resultTaskListChange = false;
+        resetResultCount();
+    }
+
+    public Integer getMaxResult() {
+        return maxResult;
+    }
+
+    public void setMaxResult(Integer maxResult) {
+        this.maxResult = maxResult;
+    }
+
+    protected void resetResultCount(){
+        maxResult = DEFAULT_MAX_RESULT;
     }
 
     public void refresh() {
@@ -134,8 +152,21 @@ public abstract class TaskInstanceListCache {
 
 
         resultTask = newTasks;
-
     }
+
+    public void resetCondition(){
+        resetResultCount();
+        reset();
+    }
+
+    public void more(){
+        setMaxResult(getMaxResult() + DEFAULT_MAX_RESULT);
+    }
+
+    public boolean isHaveMore(){
+        return getMaxResult().compareTo(resultTask.size()) < 0;
+    }
+
 
     public int getAllSize(){
         if (allTask == null){
@@ -178,6 +209,19 @@ public abstract class TaskInstanceListCache {
 
     public List<TaskInstanceAdapter> getResultTask() {
         return resultTask;
+    }
+
+    public List<TaskInstanceAdapter> getShowResultTask(){
+        List<TaskInstanceAdapter> result = new ArrayList<TaskInstanceAdapter>(getMaxResult());
+        for(int i = 0 ; i < getMaxResult() ; i++){
+            if (i >= resultTask.size()){
+                break;
+            }
+            result.add(resultTask.get(i));
+
+        }
+
+        return result;
     }
 
     public List<TaskInstanceAdapter> getComeTask() {
