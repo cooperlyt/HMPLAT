@@ -42,24 +42,24 @@ public abstract class TaskInstanceListCache {
 
     public abstract List<TaskInstanceAdapter> initResultTask();
 
-    private Actor actor;
+//    private Actor actor;
 
 
-    @Create
-    public void register() {
-        actor = Actor.instance();
-        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).subscribe(this);
-        refresh();
-    }
+//    @Create
+//    public void register() {
+//        actor = Actor.instance();
+//        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).subscribe(this);
+//        refresh();
+//    }
+//
+//    @Destroy
+//    public void unRegister(){
+//        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).unSubscribe(this);
+//    }
 
-    @Destroy
-    public void unRegister(){
-        ((BpmTaskChangePublish) Component.getInstance(BpmTaskChangePublish.class, ScopeType.APPLICATION, true)).unSubscribe(this);
-    }
-
-    public Actor getActor() {
-        return actor;
-    }
+//    public Actor getActor() {
+//        return actor;
+//    }
 
     public void initTaskList(){
         refresh();
@@ -87,6 +87,7 @@ public abstract class TaskInstanceListCache {
         maxResult = DEFAULT_MAX_RESULT;
     }
 
+    @Create
     public void refresh() {
 
 
