@@ -10,6 +10,7 @@ import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.action.ProjectHome;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -29,13 +30,13 @@ import java.util.*;
 public class ProjectBusinessStart {
 
 
-    @In
+    @In(create = true)
     private ProjectHome projectHome;
 
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
 
-    @In
+    @In(create = true)
     private OwnerBusinessHome ownerBusinessHome;
 
     @In(create = true)
@@ -44,12 +45,22 @@ public class ProjectBusinessStart {
     @In
     private AuthenticationInfo authInfo;
 
+    private boolean forProject;
+
     private List<BatchOperData<Build>> builds = new ArrayList<BatchOperData<Build>>(0);
 
     private Map<Build,List<BuildGridMap>> buildGridMaps;
 
     public List<BatchOperData<Build>> getBuilds() {
         return builds;
+    }
+
+    public boolean isForProject() {
+        return forProject;
+    }
+
+    public void setForProject(boolean forProject) {
+        this.forProject = forProject;
     }
 
     private House selectHouse;
@@ -325,7 +336,50 @@ public class ProjectBusinessStart {
         throw new IllegalArgumentException("invalid build code:" + buildCode);
     }
 
-    public String dataComplete(){
+
+    public void dataCompleteForHouse(){
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+
+        Map<String,HouseInfo> houseMap = new HashMap<String, HouseInfo>();
+
+        for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()) {
+            for (BuildGridMap gridMap : entry.getValue()) {
+                for (GridRow row : gridMap.getGridRows()) {
+                    for (GridBlock block : row.getGridBlocks()) {
+                        if (block.getHouse() != null) {
+                            if (block.isLocked()) {
+                                houseMap.put(block.getHouse().getHouseCode(), block.getHouse());
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        List<HouseRecord> houseRecords = ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)",HouseRecord.class)
+                .setParameter("houseCodes", houseMap.keySet()).getResultList();
+
+        List<BusinessHouse> businessHouses = new ArrayList<BusinessHouse>();
+        for(HouseInfo houseInfo: houseMap.values()){
+            boolean recordExists = false;
+            for(HouseRecord houseRecord: houseRecords){
+                if (houseRecord.getHouseCode().equals(houseInfo.getHouseCode())){
+                    recordExists = true;
+                    businessHouses.add(houseRecord.getBusinessHouse());
+                }
+            }
+            if(!recordExists){
+                businessHouses.add(new BusinessHouse(houseInfo));
+            }
+        }
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+
+        for(BusinessHouse businessHouse: businessHouses)
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+    }
+
+    public void dataCompleteForProject(){
 
         for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()){
             BusinessBuild businessBuild = getBusinessBuild(entry.getKey().getBuildCode());
@@ -392,9 +446,15 @@ public class ProjectBusinessStart {
 
         }
 
+    }
 
+    public String dataComplete(){
+        if(isForProject()){
+            dataCompleteForProject();
+        }else{
+            dataCompleteForHouse();
+        }
 
         return ownerBusinessStart.dataSelected();
-
     }
 }

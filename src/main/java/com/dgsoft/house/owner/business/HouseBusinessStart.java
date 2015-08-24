@@ -96,7 +96,7 @@ public class HouseBusinessStart {
         }
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse(), OwnerHouseHelper.instance().getMasterStatus(ownerBuildGridMap.getSelectBizHouse().getHouseCode())));
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBuildGridMap.getSelectBizHouse()));
 
         if (allowSelectBizs.isEmpty()){
             return ownerBusinessStart.dataSelected();
@@ -147,7 +147,7 @@ public class HouseBusinessStart {
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
 
         for(BusinessHouse businessHouse: ownerBuildGridMap.getSelectBizHouses())
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse, OwnerHouseHelper.instance().getMasterStatus(businessHouse.getHouseCode())));
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
 
 
         return ownerBusinessStart.dataSelected();

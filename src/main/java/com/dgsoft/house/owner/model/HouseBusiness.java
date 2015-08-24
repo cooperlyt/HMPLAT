@@ -32,11 +32,11 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    public HouseBusiness(OwnerBusiness ownerBusiness, BusinessHouse startBusinessHouse, HouseInfo.HouseStatus masterStatus) {
+    public HouseBusiness(OwnerBusiness ownerBusiness, BusinessHouse startBusinessHouse) {
         this.ownerBusiness = ownerBusiness;
         this.houseCode = startBusinessHouse.getHouseCode();
         this.startBusinessHouse = startBusinessHouse;
-        this.afterBusinessHouse = new BusinessHouse(startBusinessHouse,masterStatus);
+        this.afterBusinessHouse = new BusinessHouse(startBusinessHouse);
 
     }
 

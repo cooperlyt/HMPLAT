@@ -27,6 +27,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private Date birthday;
     private String postCode;
     private Person.Sex sex;
+    private HouseContract houseContract;
 
 
     //由备案人得房屋没意义，因为有startHouse 和 afterHouse 可以使用 houseBusiness left join afterHouse left join ContractOwner
@@ -181,5 +182,12 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.birthday = birthday;
     }
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contractOwner", cascade = CascadeType.ALL)
+    public HouseContract getHouseContract() {
+        return houseContract;
+    }
 
+    public void setHouseContract(HouseContract houseContract) {
+        this.houseContract = houseContract;
+    }
 }

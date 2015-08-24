@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
 @Table(name = "HOUSE", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
+    private BusinessHouse houseInfo;
+
     public enum PoolType{
         SINGLE_OWNER,TOGETHER_OWNER,SHARE_OWNER
     }
@@ -144,9 +146,10 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         modifyFormMapHouse(houseInfo);
     }
 
-    public BusinessHouse(BusinessHouse houseInfo, HouseStatus masterStatus) {
-        this(houseInfo);
-        this.masterStatus = masterStatus;
+    public BusinessHouse(BusinessHouse houseInfo) {
+
+        this((HouseInfo)houseInfo);
+
 
 
         if (houseInfo.getLandInfo() != null){

@@ -154,7 +154,7 @@ public class OwnerBusinessPatch {
         ownerBusinessHome.getInstance().setApplyTime(null);
         BusinessHouse startHouse = new BusinessHouse(buildGridMapHouseSelect.getSelectBizHouse());
 
-        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), startHouse, OwnerHouseHelper.instance().getMasterStatus(startHouse.getHouseCode())));
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), startHouse));
 
         return beginEdit();
 
