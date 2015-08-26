@@ -110,6 +110,7 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
 
         if(ownerBusinessHome.getInstance().getMortgaegeRegistes().isEmpty()){
             mortgaegeRegiste = new MortgaegeRegiste(ownerBusinessHome.getInstance());
+            mortgaegeRegiste.setFinancial(getInstance());
             ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
         }else{
