@@ -259,7 +259,7 @@ public class HouseBusinessModifyStart {
             HouseBusiness result = new HouseBusiness(ownerBusiness);
             result.setStartBusinessHouse(startHouse);
             result.setHouseCode(startHouse.getHouseCode());
-            result.setAfterBusinessHouse(new BusinessHouse(startHouse, OwnerHouseHelper.instance().getMasterStatus(result.getHouseCode())));
+            result.setAfterBusinessHouse(new BusinessHouse(startHouse));
             if (isUseMapInfo()){
                 result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());
             }
@@ -319,7 +319,7 @@ public class HouseBusinessModifyStart {
 
             result.setHouseCode(result.getStartBusinessHouse().getHouseCode());
 
-            result.setAfterBusinessHouse(new BusinessHouse(houseBusiness.getStartBusinessHouse(), OwnerHouseHelper.instance().getMasterStatus(result.getHouseCode())));
+            result.setAfterBusinessHouse(new BusinessHouse(houseBusiness.getStartBusinessHouse()));
 
             if (isUseMapInfo()) {
                 result.getAfterBusinessHouse().modifyFormMapHouse(getMapHouse());

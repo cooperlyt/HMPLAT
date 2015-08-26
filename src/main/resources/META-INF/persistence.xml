@@ -125,6 +125,11 @@
         <class>com.dgsoft.house.owner.model.ProcessMessage</class>
         <class>com.dgsoft.house.owner.model.FactMoneyInfo</class>
         <class>com.dgsoft.house.owner.model.ContractOwner</class>
+        <class>com.dgsoft.house.owner.model.HouseContract</class>
+        <class>com.dgsoft.house.owner.model.HouseCommerciContract</class>
+        <class>com.dgsoft.house.owner.model.ContractMortgage</class>
+        <class>com.dgsoft.house.owner.model.NewHouseContractPresale</class>
+        <class>com.dgsoft.house.owner.model.NewHouseContractSale</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

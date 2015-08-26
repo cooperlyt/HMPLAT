@@ -21,13 +21,18 @@ public class ProjectBusinessCreateComponent extends OwnerBusinessCreateComponent
     private static final String PROJECT_BUSINESS_START_PAGE = "/business/houseOwner/ProjectBusinessStart.xhtml";
     private static final String PROJECT_BUSINESS_PATCH_PAGE = "";
 
+    @In(create = true)
+    private ProjectBusinessStart projectBusinessStart;
+
     @Override
     protected String getNormalBusinessPage() {
+        projectBusinessStart.setForProject(true);
         return PROJECT_BUSINESS_START_PAGE;
     }
 
     @Override
     protected String getPatchBusinessPage() {
+        projectBusinessStart.setForProject(true);
         return PROJECT_BUSINESS_PATCH_PAGE;
     }
 
