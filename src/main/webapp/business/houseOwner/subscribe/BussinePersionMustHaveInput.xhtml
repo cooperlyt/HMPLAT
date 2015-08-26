@@ -34,11 +34,13 @@
                                     #{messages.Tel}
                                 </ui:define>
                                 <ui:param name="for" value="persionPhoneInput"/>
+                                <ui:param name="showLabel" value="true"/>
 
                                 <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
                                              styleClass="form-control"
                                              validatorMessage="#{messages.requiredPhoneValidator}"
-                                             value="#{persion.instance.phone}" required="true"
+                                             value="#{persion.instance.phone}"
+                                             required="true"
                                              id="persionPhoneInput">
                                     <f:validateRegex
                                             pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>

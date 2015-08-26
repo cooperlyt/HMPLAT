@@ -89,13 +89,7 @@
                                             <p:paragraph>共有情况</p:paragraph>
                                         </p:cell>
                                         <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" noWrap="false">
-
-                                            <p:paragraph>#{messages[_houseBusiness.startBusinessHouse.poolType.name()]}</p:paragraph>
-                                            <p:paragraph>#{_houseBusiness.startBusinessHouse.poolType}</p:paragraph>
-                                            <p:paragraph>#{_houseBusiness.startBusinessHouse.businessPools.size}</p:paragraph>
-                                            <p:paragraph><c:forEach var="_businessPools" items="#{_houseBusiness.startBusinessHouse.businessPools}">姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}、</c:forEach></p:paragraph>
-                                            <p:paragraph><a:repeat var="_businessPools" value="#{_houseBusiness.startBusinessHouse.businessPools}">#{_businessPools.personName}、</a:repeat></p:paragraph>
-
+                                            <a:repeat var="_businessPools" value="#{_houseBusiness.startBusinessHouse.businessPools}"><p:paragraph>姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}、</p:paragraph></a:repeat>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" fixedHeight="30">
                                             <p:paragraph>代理人姓名</p:paragraph>
@@ -163,7 +157,7 @@
                                     <p:paragraph>共有情况</p:paragraph>
                                 </p:cell>
                                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0">
-                                    <p:paragraph>共有情况1</p:paragraph>
+                                    <a:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPools}"><p:paragraph>姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}、</p:paragraph></a:repeat>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="30">
                                     <p:paragraph>代理人姓名</p:paragraph>

@@ -7,13 +7,9 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}">
-
-        <ui:include src="/layout/house/HouseOwnerView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.Mortgager_view}"/>
-            <ui:param name="businessHouse"
-                      value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}"/>
-        </ui:include>
-    </a:outputPanel>
-
+    <ui:include src="BussinePersionInput.xhtml">
+        <ui:param name="label" value="#{messages.MORTGAGE}"/>
+        <ui:param name="persion" value="#{persionMortgageSubscribe}" />
+        <ui:param name="personStatus" value="persionMortgage_personCredentiaslNumberStatus"/>
+    </ui:include>
 </ui:composition>
