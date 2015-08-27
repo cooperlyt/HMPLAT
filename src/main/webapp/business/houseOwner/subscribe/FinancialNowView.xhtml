@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}">
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial)}">
         <ui:include src="FinancialView.xhtml">
             <ui:param name="label" value="#{messages.Financial_Now}"/>
             <ui:param name="financia" value="#{ownerBusinessHome.instance.mortgaegeRegiste.financial}"/>
