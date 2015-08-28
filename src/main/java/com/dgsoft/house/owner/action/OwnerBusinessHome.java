@@ -238,6 +238,21 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
 
     }
+    /**
+     * 房屋所有权证号
+     */
+    public String getOwnerRshipNo(){
+        String str=null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
+            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
+                if (makeCard.isEnable() && makeCard.equals(MakeCard.CardType.OWNER_RSHIP)){
+                    str = makeCard.getNumber();
+
+                }
+            }
+        }
+        return str;
+    }
 
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {

@@ -735,7 +735,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.contractOwner = contractOwner;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
     public Set<MakeCard> getOtherPowerCards() {
         return otherPowerCards;
