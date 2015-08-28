@@ -239,15 +239,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
     /**
-     * 房屋所有权证号
+     * 转移前所有权证号
      */
-    public String getOwnerRshipNo(){
+    public String getStarHouseOwnerRshipNo(){
         String str=null;
         if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
             for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
-                if (makeCard.isEnable() && makeCard.equals(MakeCard.CardType.OWNER_RSHIP)){
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
                     str = makeCard.getNumber();
-
                 }
             }
         }

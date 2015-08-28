@@ -35,7 +35,7 @@
                         #{messages.MakeCard_type}
                     </f:facet>
                     <h:outputText styleClass="#{_MarkCards.enable ? '' : 'delete-data'}"
-                                  value="#{_MarkCards.type}">
+                                  value="#{messages[_MarkCards.type.name()]}">
                     </h:outputText>
                 </h:column>
 
