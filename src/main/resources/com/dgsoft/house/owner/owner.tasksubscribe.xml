@@ -778,6 +778,27 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="markOwnerRshipCardStateEnd" component="markOwnerRshipCardState">
+        <description>
+            作废以前的房屋所有权证
+        </description>
+    </end-subscribe>
+    <end-subscribe name="markNoticeCardStateEnd" component="markNoticeCardState">
+        <description>
+            作废以前的预告登记证
+        </description>
+    </end-subscribe>
+    <end-subscribe name="markMortgageCardStateEnd" component="markMortgageCardState">
+        <description>
+            作废以前的抵押权证
+        </description>
+    </end-subscribe>
+    <end-subscribe name="markProjectMortgageStateEnd" component="markProjectMortgageState">
+        <description>
+            作废以前的在建抵押登记证明
+        </description>
+    </end-subscribe>
+
 
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
