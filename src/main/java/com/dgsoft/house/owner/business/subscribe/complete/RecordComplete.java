@@ -88,6 +88,8 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
 
         for (MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
             makeCard.setEnable(true);
+
+
         }
 
 

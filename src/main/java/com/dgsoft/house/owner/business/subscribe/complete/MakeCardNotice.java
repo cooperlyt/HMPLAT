@@ -4,6 +4,7 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerNumberBuilder;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -23,20 +24,6 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
     @In(create = true)
     private OwnerNumberBuilder ownerNumberBuilder;
 
-    private MakeCard makeCard;
-
-
-    public MakeCard getMakeCard() {
-        return makeCard;
-    }
-
-    public void setMakeCard(MakeCard makeCard) {
-        this.makeCard = makeCard;
-    }
-
-
-
-
 
     @Override
     public void valid() {
@@ -49,18 +36,20 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        if (!ownerBusinessHome.getInstance().getMakeCards().isEmpty()){
-            for (MakeCard m:ownerBusinessHome.getInstance().getMakeCards()){
-                if(m.getType().equals(MakeCard.CardType.NOTICE)){
-                    this.makeCard = m;
-                    return;
-                }
+        for (MakeCard m:ownerBusinessHome.getInstance().getMakeCards()){
+            if(m.getType().equals(MakeCard.CardType.NOTICE)){
+                return;
             }
-
-        }else{
-            makeCard = new MakeCard(MakeCard.CardType.NOTICE,ownerNumberBuilder.useDayNumber(MakeCard.CardType.NOTICE.name()));
         }
+
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.NOTICE,ownerNumberBuilder.useDayNumber(MakeCard.CardType.NOTICE.name()));
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
+
+
+        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+            houseBusiness.getAfterBusinessHouse().getOtherPowerCards().add(makeCard);
+            makeCard.getBusinessHouses().add(houseBusiness.getAfterBusinessHouse());
+        }
     }
 }

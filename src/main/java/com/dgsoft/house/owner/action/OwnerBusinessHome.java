@@ -1,17 +1,12 @@
 package com.dgsoft.house.owner.action;
 
-import com.dgsoft.common.system.AuthenticationInfo;
-import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.common.system.model.Person;
-import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
-import sun.util.logging.resources.logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -200,6 +195,73 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    /**
+     * 抵押权人代理人
+     */
+    public BusinessPersion getMortgageObligee(){
+        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 抵押人代理人
+     */
+    public BusinessPersion getMortgage(){
+        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 债务人
+     */
+    public BusinessPersion getMortgageObligor(){
+        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+    /**
+     * 转移前所有权证号
+     */
+    public String getStarHouseOwnerRshipNo(){
+        String str=null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
+            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+
+    /**
+     * 上一手预告登记号
+     */
+    public String getStarHouseNoticeNo(){
+        String str=null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
+            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
 
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {
@@ -261,6 +323,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return false;
 
     }
+
+
 
     public boolean isCanCancel(){
         return isCanModify();

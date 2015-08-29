@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.BigMoneyUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -176,4 +177,9 @@ public class MortgaegeRegiste implements java.io.Serializable {
     public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
         this.businessHouses = businessHouses;
     }
+    @Transient
+    public String getBigHighestMountMoney(){
+        return BigMoneyUtil.getBigMoney(getHighestMountMoney().doubleValue());
+    }
+
 }
