@@ -233,35 +233,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
 
     }
-    /**
-     * 转移前所有权证号
-     */
-    public String getStarHouseOwnerRshipNo(){
-        String str=null;
-        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
-            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
-                    str = makeCard.getNumber();
-                }
-            }
-        }
-        return str;
-    }
-
-    /**
-     * 上一手预告登记号
-     */
-    public String getStarHouseNoticeNo(){
-        String str=null;
-        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
-            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
-                    str = makeCard.getNumber();
-                }
-            }
-        }
-        return str;
-    }
 
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {

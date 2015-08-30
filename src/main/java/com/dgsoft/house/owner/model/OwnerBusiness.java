@@ -527,4 +527,55 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         return result;
     }
 
+    @Transient
+    public HouseBusiness getSingleHoues() {
+        Set<HouseBusiness> houseBusinesses = getHouseBusinesses();
+        if (houseBusinesses.size() > 1) {
+            throw new IllegalArgumentException("HouseBusiness count > 1");
+        } else if (houseBusinesses.size() == 1) {
+            return houseBusinesses.iterator().next();
+        } else
+            return null;
+
+    }
+
+
+    @Transient
+    public String getStarHouseOwnerRshipNo(){
+        String str=null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
+            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+    @Transient
+    public String getStarHouseNoticeNo(){
+        String str=null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
+            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+
+    @Transient
+    public String getStarHouseMortgageNo(){
+        String str=null;
+        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()){
+            for(MakeCard makeCard:getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()){
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)){
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+
 }
