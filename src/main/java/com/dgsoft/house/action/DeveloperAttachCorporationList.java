@@ -12,7 +12,7 @@ import java.util.Arrays;
 @Name("developerAttachCorporationList")
 public class DeveloperAttachCorporationList extends HouseEntityQuery<AttachCorporation>{
 
-    private static final String EJBQL = "select aCorp from AttachCorporation aCorp left join fetch aCorp.developer developer";
+    private static final String EJBQL = "select aCorp from AttachCorporation aCorp left join fetch aCorp.developer developer where aCorp.type = 'DEVELOPER'";
 
     private static final String[] RESTRICTIONS = {
             "lower(developer.name) like lower(concat('%',#{attachCorpMgr.searchKey},'%'))"

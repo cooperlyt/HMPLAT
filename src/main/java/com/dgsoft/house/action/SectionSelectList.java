@@ -27,6 +27,7 @@ public class SectionSelectList extends MultiOperatorEntityQuery<Section> {
     };
 
     private static final String[] RESTRICTIONS2 ={
+            "lower(section.id) = lower(#{sectionSelectList.searchKey}) " ,
             "lower(section.pyCode) like lower(concat('%',#{sectionSelectList.searchKey},'%')) " ,
             " (lower(section.name) like lower(concat('%',#{sectionSelectList.searchKey},'%')))"
     };
@@ -80,7 +81,6 @@ public class SectionSelectList extends MultiOperatorEntityQuery<Section> {
 
     public void setSearchKey(String searchKey) {
         this.searchKey = searchKey;
-
     }
 
     @Override

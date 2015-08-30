@@ -6,12 +6,16 @@
 
     <param name="projectId" value="#{projectHome.id}"/>
     <param name="sectionId" value="#{sectionHome.id}"/>
+
+    <param name="districtId" value="#{sectionSelectList.districtId}"/>
+    <param name="sectionSearchName" value="#{sectionSelectList.searchKey}"/>
+    <param name="sectionListResultCount" value="#{sectionSelectList.maxResults}"/>
+    <param name="newSectionName" value="#{projectEdit.newSectionName}"/>
+
     <param name="developerId" value="#{developerHome.id}"/>
-    <param name="districtId" value="#{districtHome.id}"/>
-    <param name="sectionSearchName" value="#{sectionSearch.searchName}"/>
-    <param name="newSectionName" value="#{sectionSearch.newSectionName}"/>
-    <param name="developerSearchName" value="#{developerHome.searchName}"/>
-    <param name="newDeveloperName" value="#{developerHome.newDeveloperName}"/>
+    <param name="developerSearchName" value="#{developerSearchList.searchKey}"/>
+    <param name="developerListResultCount" value="#{developerSearchList.maxResults}"/>
+    <param name="newDeveloperName" value="#{projectEdit.newDeveloperName}"/>
 
     <navigation from-action="#{projectEdit.saveProject}">
         <rule if-outcome="persisted">

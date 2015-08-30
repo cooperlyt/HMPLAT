@@ -25,53 +25,6 @@ public class DeveloperHome extends HouseEntityHome<Developer> {
 
     private static final String NUMBER_KEY = "DEVELOPER_ID";
 
-    private String searchName;
-
-    private String newDeveloperName;
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getNewDeveloperName() {
-        return newDeveloperName;
-    }
-
-    public void setNewDeveloperName(String newDeveloperName) {
-        this.newDeveloperName = newDeveloperName;
-    }
-
-    public List<Developer> getSearchResult() {
-        if ((searchName == null) || (searchName.trim().equals(""))) {
-            TypedQuery<Developer> query = getEntityManager().createQuery("select developer from Developer developer where developer.destroyed = false order by developer.createTime desc", Developer.class);
-            query.setMaxResults(5);
-            return query.getResultList();
-        } else {
-            List<Developer> result = getEntityManager().createQuery("select developer from Developer developer where developer.destroyed = false and  ((developer.id = :prefix ) or (lower(developer.pyCode) like lower(concat('%',:prefix,'%'))) or (lower(developer.name) like lower(concat('%',:prefix,'%')))) ", Developer.class).
-                    setParameter("prefix", searchName).getResultList();
-            return result;
-        }
-    }
-
-    public void createBySearchName() {
-        if (isIdDefined()) {
-            clearInstance();
-        }
-        Logging.getLog(getClass()).debug("create developer by searchName:" + searchName);
-        newDeveloperName = searchName;
-        getInstance().setName(searchName);
-        nameInputedListener();
-    }
-
-    public void clearSearchName(){
-        searchName = null;
-    }
-
-
     @In
     private FacesMessages facesMessages;
 
@@ -83,6 +36,11 @@ public class DeveloperHome extends HouseEntityHome<Developer> {
             return false;
         }
         return true;
+    }
+
+    public void setNameAndPy(String name){
+        getInstance().setName(name);
+        nameInputedListener();
     }
 
     public void nameInputedListener() {

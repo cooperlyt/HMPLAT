@@ -7,6 +7,7 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 template="/layout/template-edit.xhtml">
     <div class="setup-header">
@@ -16,15 +17,27 @@
 
     <rich:messages globalOnly="true" ajaxRendered="true"/>
 
+    <h:outputScript>
+        var scrollTopValue = 0;
+
+        function moreBefor(){
+        var div = #{r:element('SectionSelectItemList')};
+        scrollTopValue = div.scrollTop;
+
+        }
+
+        function scrollToBefor(){
+        var div = #{r:element('SectionSelectItemList')};
+
+        div.scrollTop = scrollTopValue;
+        }
+
+    </h:outputScript>
+
 
     <h:form>
 
 
-        <a:jsFunction name="showSectionSelectMenu" action="#{sectionSearch.showSectionList}"
-                      execute="districtInput,sectionNameField" render="sectionSelectPanel">
-
-            <a:attachQueue requestDelay="0"/>
-        </a:jsFunction>
 
 
         <s:decorate id="IdField" styleClass="form-group" template="/layout/edit-big.xhtml">
@@ -51,7 +64,8 @@
             </ui:define>
             <ui:param name="for" value="districtInput"/>
             <h:selectOneMenu id="districtInput" data-size="10"
-                             value="#{districtHome.id}" data-width="100px"
+                             value="#{sectionSelectList.districtId}"
+                             p:data-header="#{messages.districtSelect}" data-width="100px"
                              styleClass="selectpicker edit-select"
                              label="#{messages.District}" required="true">
                 <s:selectItems value="#{allDistrict.resultList}" var="_district"
@@ -59,6 +73,18 @@
             </h:selectOneMenu>
         </s:decorate>
 
+
+        <a:jsFunction name="showSectionSelectMenu" action="#{sectionSelectList.reset}"
+                      execute="districtInput,sectionNameField" render="sectionSelectPanel">
+            <f:param name="sectionSearchName" value=""/>
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
+
+        <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
+                      oncomplete="scrollToBefor(); "
+                      render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
 
         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
@@ -71,7 +97,7 @@
                         data-toggle="dropdown" aria-expanded="false">
 
                     <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
-                                  value="#{(sectionHome.idDefined) ?  sectionHome.instance.name : ((empty sectionSearch.newSectionName) ? messages.noSelectLabel : sectionSearch.newSectionName)}">
+                                  value="#{(sectionHome.idDefined) ?  sectionHome.instance.name : ((empty projectEdit.newSectionName) ? messages.noSelectLabel : projectEdit.newSectionName)}">
                     </h:outputText>
                     <span class="caret"></span>
                 </button>
@@ -88,7 +114,7 @@
                         <a:outputPanel layout="block" id="sectionSelectPanel">
                             <div class="select-menu-filters">
                                 <div class="select-menu-text-filter">
-                                    <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSearch.searchName}">
+                                    <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSelectList.searchKey}">
                                         <a:ajax event="keyup" immediate="true" execute="@this"
                                                 render="SectionSelectItemList">
                                             <a:attachQueue requestDelay="500"/>
@@ -100,7 +126,7 @@
                             <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
 
 
-                                <a:repeat value="#{sectionSearch.searchResult}" var="_item">
+                                <a:repeat value="#{sectionSelectList.resultList}" var="_item">
 
                                     <a:commandLink execute="@this" immediate="true"
                                                    render="sectionSelectBtnCaption,createSectionPanel,districtField"
@@ -111,15 +137,26 @@
                                         <f:param name="newSectionName" value=""/>
                                         <span class="select-menu-item-icon octicon octicon-check"></span>
                                         <span class="select-menu-item-text">#{_item.name}</span>
+                                        <a:attachQueue requestDelay="0"/>
                                     </a:commandLink>
                                 </a:repeat>
 
-                                <a:commandLink action="#{sectionSearch.createBySearchName}"
+                                <a:commandLink onclick="moreBefor(); moreResult(); event.stopPropagation(); return false;"
+                                               styleClass="select-menu-item last-visible"
+                                               rendered="#{sectionSelectList.nextExists}">
+
+
+                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                    <span class="select-menu-item-text">#{messages.More}</span>
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandLink>
+
+                                <a:commandLink action="#{projectEdit.createSectionBySearchName}"
 
                                                render="sectionSelectBtnCaption,createSectionPanel" execute="sectionSearchName"
                                                immediate="true"
                                                styleClass="select-menu-item last-visible navigation-focus"
-                                               rendered="#{(empty sectionSearch.searchResult) and (not empty sectionSearch.searchName)}">
+                                               rendered="#{(empty sectionSelectList.resultList) and (not empty sectionSelectList.searchKey)}">
                                     <a:attachQueue requestDelay="0"/>
                                     <span class="select-menu-item-icon oction oction-check">
                                     </span>
@@ -127,7 +164,7 @@
                                     <div class="select-menu-item-text">
                                         <h4>
                                             #{messages.CreateNewSection}:
-                                            <span>#{sectionSearch.searchName}</span>
+                                            <span>#{sectionSelectList.searchKey}</span>
 
                                         </h4>
                                         <span class="description">#{messages.SectionSearchCreateDescript}</span>
@@ -147,10 +184,9 @@
 
 
         <a:outputPanel layout="block" styleClass="upgrade-upsell" id="createSectionPanel">
-
-                <a:outputPanel rendered="#{not sectionHome.idDefined and (not empty sectionSearch.newSectionName)}">
+                <a:outputPanel rendered="#{not sectionHome.idDefined and (not empty projectEdit.newSectionName)}">
                     <h:inputHidden id="sectionNameField" value="#{sectionHome.instance.name}"/>
-
+                    nn:#{sectionHome.instance.name}
                     <div class="form-inline">
 
                         <s:decorate id="sectionIdField" styleClass="form-group" template="/layout/edit-big.xhtml">
@@ -195,125 +231,8 @@
 
         </a:outputPanel>
 
-        <a:jsFunction name="clearDeveloperSearchName" action="#{developerHome.clearSearchName}"
-                      render="developerSelectPanel"/>
 
-
-        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-            <ui:define name="label">
-                #{messages.Developer}<span class="required">*</span>
-            </ui:define>
-
-            <div class="btn-group bootstrap-select edit-select">
-                <button type="button" class=" btn dropdown-toggle btn-default"
-                        onclick="clearDeveloperSearchName()"
-                        data-toggle="dropdown" aria-expanded="false">
-
-                    <h:outputText id="developerSelectBtnCaption" styleClass="filter-option pull-left"
-                                  value="#{(developerHome.idDefined) ? developerHome.instance.name : (( empty developerHome.newDeveloperName) ? messages.noSelectLabel : developerHome.newDeveloperName ) }">
-                    </h:outputText>
-                    <span class="caret"></span>
-                </button>
-
-
-                <div class="dropdown-menu select-menu-modal-holder">
-                    <div class="select-menu-modal">
-                        <div class="select-menu-header">
-                            <span class="select-menu-title">#{messages.Developer}#{messages.Select}</span>
-                                            <span class="octicon octicon-x js-menu-close"
-                                                  aria-label="#{messages.close}"></span>
-                        </div>
-
-                        <a:outputPanel layout="block" id="developerSelectPanel">
-                            <div class="select-menu-filters">
-                                <div class="select-menu-text-filter">
-                                    <h:inputText id="developerSearchNameInput" value="#{developerHome.searchName}" autocomplete="off">
-                                        <a:ajax event="keyup" immediate="true" execute="@this"
-                                                render="selectItemList">
-                                            <a:attachQueue requestDelay="0"/>
-                                        </a:ajax>
-                                    </h:inputText>
-                                </div>
-                            </div>
-                            <a:outputPanel layout="block" styleClass="select-menu-list" id="selectItemList">
-
-
-                                <a:repeat value="#{developerHome.searchResult}" var="_item">
-                                    <a:commandLink execute="@this" immediate="true"
-                                                   render="developerSelectBtnCaption,createDeveloperPanel"
-                                                   styleClass="select-menu-item #{(developerHome.idDefined and (developerHome.id eq _item.id)) ? 'selected': ''}">
-
-                                        <f:param name="newDeveloperName" value=""/>
-                                        <f:param name="developerId" value="#{_item.id}"/>
-                                        <a:attachQueue requestDelay="0"/>
-                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                        <span class="select-menu-item-text">#{_item.name}</span>
-                                    </a:commandLink>
-                                </a:repeat>
-
-                                <a:commandLink action="#{developerHome.createBySearchName}"
-
-                                               render="developerSelectBtnCaption,createDeveloperPanel" execute="@this" immediate="true"
-                                               styleClass="select-menu-item last-visible navigation-focus"
-                                               rendered="#{(empty developerHome.searchResult) and (not empty developerHome.searchName)}">
-                                    <a:attachQueue requestDelay="0"/>
-                                    <span class="select-menu-item-icon oction oction-check">
-                                    </span>
-
-                                    <div class="select-menu-item-text">
-                                        <h4>
-                                            #{messages.CreateNewDeveloper}:
-                                            <span>#{developerHome.searchName}</span>
-
-                                        </h4>
-                                        <span class="description">#{messages.DeveloperSearchCreateDescript}</span>
-                                    </div>
-
-                                </a:commandLink>
-                            </a:outputPanel>
-
-                        </a:outputPanel>
-
-                    </div>
-                </div>
-            </div>
-        </s:decorate>
-
-
-        <a:outputPanel layout="block" styleClass="upgrade-upsell" id="createDeveloperPanel">
-
-
-            <a:outputPanel rendered="#{not developerHome.idDefined and (not empty developerHome.newDeveloperName)}">
-                <h:inputHidden id="developerName" value="#{developerHome.instance.name}"/>
-                <div class="form-inline">
-                    <s:decorate id="developerIdField" styleClass="form-group " template="/layout/edit-big.xhtml">
-                        <ui:define name="label">
-                            #{messages.Developer_id}
-                        </ui:define>
-                        <ui:param name="for" value="developerIdInput"/>
-                        <ui:param name="status" value="developerIdStatus"/>
-                        <h:inputText id="developerIdInput" required="true" styleClass="form-control" maxlength="32"
-                                     label="#{messages.Developer_id}" size="32"
-                                     value="#{developerHome.instance.id}" disabled="#{developerHome.managed}"
-                                     valueChangeListener="#{developerHome.verifyIdAvailable}">
-                            <f:validateRequired/>
-                            <a:ajax event="change" render="developerIdField" status="developerIdStatus"/>
-                        </h:inputText>
-
-                        <ui:define name="note">
-                            <p class="note">#{messages.PyCodeGen1}#{' '} <strong> <rich:inplaceInput
-                                    id="developerPyCodeField"
-                                    value="#{developerHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
-                            </p>
-                        </ui:define>
-                    </s:decorate>
-                </div>
-
-
-            </a:outputPanel>
-
-
-        </a:outputPanel>
+        <ui:include src="DeveloperSelectAndCreate.xhtml"/>
 
 
         <s:decorate id="nameField" styleClass="form-group" template="/layout/edit-big.xhtml">

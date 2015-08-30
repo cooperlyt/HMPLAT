@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"  >
+
+    <h:outputScript>
+        var developerScrollTopValue = 0;
+
+        function developerMoreBefor(){
+        var div = #{rich:element('selectItemList')};
+        developerScrollTopValue = div.scrollTop;
+
+        }
+
+        function developerScrollToBefor(){
+        var div = #{rich:element('selectItemList')};
+
+        div.scrollTop = developerScrollTopValue;
+        }
+
+    </h:outputScript>
+
+
+    <a:jsFunction name="moreDeveloperResult" execute="@this" immediate="true" action="#{developerSearchList.moreResult}"
+                  oncomplete="developerScrollToBefor(); "
+                  render="developerSelectBtnCaption,selectItemList,developerSearchNameInput">
+        <a:attachQueue requestDelay="0"/>
+    </a:jsFunction>
+
+
+    <a:jsFunction name="clearDeveloperSearchName" action="#{developerSearchList.reset}"
+                  render="developerSelectPanel">
+        <a:attachQueue requestDelay="0"/>
+    </a:jsFunction>
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.Developer}<span class="required">*</span>
+        </ui:define>
+
+        <div class="btn-group bootstrap-select edit-select">
+            <button type="button" class=" btn dropdown-toggle btn-default"
+                    onclick="clearDeveloperSearchName()"
+                    data-toggle="dropdown" aria-expanded="false">
+
+                <h:outputText id="developerSelectBtnCaption" styleClass="filter-option pull-left"
+                              value="#{(developerHome.idDefined) ? developerHome.instance.name : (( empty projectEdit.newDeveloperName) ? messages.noSelectLabel : projectEdit.newDeveloperName ) }">
+                </h:outputText>
+                <span class="caret"></span>
+            </button>
+
+
+            <div class="dropdown-menu select-menu-modal-holder">
+                <div class="select-menu-modal">
+                    <div class="select-menu-header">
+                        <span class="select-menu-title">#{messages.Developer}#{messages.Select}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                    </div>
+
+                    <a:outputPanel layout="block" id="developerSelectPanel">
+                        <div class="select-menu-filters">
+                            <div class="select-menu-text-filter">
+                                <h:inputText id="developerSearchNameInput" value="#{developerSearchList.searchKey}" autocomplete="off">
+                                    <a:ajax event="keyup" immediate="true" execute="@this"
+                                            render="selectItemList">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:ajax>
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <a:outputPanel layout="block" styleClass="select-menu-list" id="selectItemList">
+
+
+                            <a:repeat value="#{developerSearchList.resultList}" var="_item">
+                                <a:commandLink execute="@this" immediate="true"
+                                               render="developerSelectBtnCaption,createDeveloperPanel"
+                                               styleClass="select-menu-item #{(developerHome.idDefined and (developerHome.id eq _item.id)) ? 'selected': ''}">
+
+                                    <f:param name="newDeveloperName" value=""/>
+                                    <f:param name="developerId" value="#{_item.id}"/>
+                                    <a:attachQueue requestDelay="0"/>
+                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                    <span class="select-menu-item-text">#{_item.name}</span>
+                                </a:commandLink>
+                            </a:repeat>
+
+
+                            <a:commandLink onclick="developerMoreBefor(); moreDeveloperResult(); event.stopPropagation(); return false;"
+                                           styleClass="select-menu-item last-visible"
+                                           rendered="#{developerSearchList.nextExists}">
+
+
+                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                <span class="select-menu-item-text">#{messages.More}</span>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+
+                            <a:commandLink action="#{projectEdit.createDeveloperBySearchName}"
+
+                                           render="developerSelectBtnCaption,createDeveloperPanel" execute="@this" immediate="true"
+                                           styleClass="select-menu-item last-visible navigation-focus"
+                                           rendered="#{(empty developerSearchList.resultList) and (not empty developerSearchList.searchKey)}">
+                                <a:attachQueue requestDelay="0"/>
+                                    <span class="select-menu-item-icon oction oction-check">
+                                    </span>
+
+                                <div class="select-menu-item-text">
+                                    <h4>
+                                        #{messages.CreateNewDeveloper}:
+                                        <span>#{developerSearchList.searchKey}</span>
+
+                                    </h4>
+                                    <span class="description">#{messages.DeveloperSearchCreateDescript}</span>
+                                </div>
+
+                            </a:commandLink>
+                        </a:outputPanel>
+
+                    </a:outputPanel>
+
+                </div>
+            </div>
+        </div>
+    </s:decorate>
+
+
+    <a:outputPanel layout="block" styleClass="upgrade-upsell" id="createDeveloperPanel">
+
+
+        <a:outputPanel rendered="#{not developerHome.idDefined and (not empty projectEdit.newDeveloperName)}">
+            <h:inputHidden id="developerName" value="#{developerHome.instance.name}"/>
+            <div class="form-inline">
+                <s:decorate id="developerIdField" styleClass="form-group " template="/layout/edit-big.xhtml">
+                    <ui:define name="label">
+                        #{messages.Developer_id}
+                    </ui:define>
+                    <ui:param name="for" value="developerIdInput"/>
+                    <ui:param name="status" value="developerIdStatus"/>
+                    <h:inputText id="developerIdInput" required="true" styleClass="form-control" maxlength="32"
+                                 label="#{messages.Developer_id}" size="32"
+                                 value="#{developerHome.instance.id}" disabled="#{developerHome.managed}"
+                                 valueChangeListener="#{developerHome.verifyIdAvailable}">
+                        <f:validateRequired/>
+                        <a:ajax event="change" render="developerIdField" status="developerIdStatus"/>
+                    </h:inputText>
+
+                    <ui:define name="note">
+                        <p class="note">#{messages.PyCodeGen1}#{' '} <strong> <rich:inplaceInput
+                                id="developerPyCodeField"
+                                value="#{developerHome.instance.pyCode}"/></strong>#{' '} #{messages.PyCodeGen2}
+                        </p>
+                    </ui:define>
+                </s:decorate>
+            </div>
+
+
+        </a:outputPanel>
+
+
+    </a:outputPanel>
+
+</ui:composition>
