@@ -18,6 +18,12 @@ import java.util.Set;
 @Table(name = "ATTACH_CORPORATION", catalog = "HOUSE_INFO")
 public class AttachCorporation implements java.io.Serializable {
 
+
+	public enum AttachCorpType{
+		//开发商 ， 物业， 评估， 测绘
+		DEVELOPER, MCOMPANY, EVALUATE, MAPPING
+	}
+
 	private String id;
 	private Date recordDate;
 	private String address;
@@ -38,6 +44,7 @@ public class AttachCorporation implements java.io.Serializable {
 	private String level;
 	private Date dateTo;
 	private String manager;
+	private AttachCorpType type;
 	private Set<OrgAttachAction> orgAttachActions = new HashSet<OrgAttachAction>(
 			0);
     private Developer developer;
@@ -47,21 +54,25 @@ public class AttachCorporation implements java.io.Serializable {
     private EvaluateCorporation evaluateCorporation;
 
 
+	public AttachCorporation(String id,AttachCorpType type,boolean enable) {
+		this.enable = enable;
+		this.id = id;
+		this.type = type;
+	}
 
-
-    public AttachCorporation() {
+	public AttachCorporation() {
 	}
 
     public AttachCorporation(boolean enable){
         this.enable = enable;
     }
 
+
+
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -296,5 +307,16 @@ public class AttachCorporation implements java.io.Serializable {
 
 	public void setOrgAttachActions(Set<OrgAttachAction> orgAttachActions) {
 		this.orgAttachActions = orgAttachActions;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TYPE",nullable = false, length = 20)
+	@NotNull
+	public AttachCorpType getType() {
+		return type;
+	}
+
+	public void setType(AttachCorpType type) {
+		this.type = type;
 	}
 }

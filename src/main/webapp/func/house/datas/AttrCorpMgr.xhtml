@@ -1,0 +1,160 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="/layout/template-data.xhtml">
+
+    <ui:param name="funcName" value="#{messages.AttachCorporation}"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+
+                        <h:inputText styleClass="form-control" value="#{baseMapDataMgr.oneCondition}"/>
+
+
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandButton styleClass="button" action="#{baseMapDataMgr.searchByOne}"
+                                     value="#{messages.Search}">
+                    </h:commandButton>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+
+    <a:outputPanel layout="block" styleClass="columns">
+        <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
+            <nav class="menu">
+                <s:link styleClass="menu-item selected"
+                        propagation="none">
+                    #{messages.Developer}
+                    <h:outputText styleClass="counter" value="#{developerAttachCorporationList.resultCount}">
+                        <f:convertNumber type="number" groupingUsed="true"/>
+                    </h:outputText>
+
+                </s:link>
+            </nav>
+        </a:outputPanel>
+
+
+    <h:form>
+        <a:outputPanel id="dataResult" layout="block" styleClass="column three-fourths codesearch-results">
+            <s:div styleClass="blankslate" rendered="#{empty developerAttachCorporationList.resultList}">
+                <span class="mega-octicon octicon-search"></span>
+
+                <h3>#{messages.EmptyResult}</h3>
+
+
+                <p>  #{messages.YouCan}#{' '}
+
+
+
+                    <s:link  view="/func/house/datas/DeveloperAttachEdit.xhtml">
+
+                        <span class="octicon octicon-plus"/>
+                        #{messages.create}
+
+                    </s:link>
+                    #{' '} #{messages.Or}  #{messages.Try} #{' '}
+                    <s:link value="#{messages.AvancedSearch}"/></p>
+            </s:div>
+
+
+            <a:outputPanel rendered="#{not (empty developerAttachCorporationList.resultList)}">
+                <div class="repo-list">
+                    <h:dataTable value="#{developerAttachCorporationList.resultList}" var="_item"
+                                 styleClass="table table-striped table-hover table-floatThead result-data-table"
+                                 headerClass="table-tools-header">
+                        <f:facet name="header">
+
+                            <div class="select-menu">
+                                <div class="btn-group btn-group-sm">
+
+
+
+                                    <s:link styleClass="btn btn-success" view="/func/house/datas/ProjectEdit.xhtml">
+                                        <span class="octicon octicon-plus"/>
+
+
+                                    </s:link>
+
+                                </div>
+                            </div>
+
+
+                            <h3>
+                                #{messages.SerachResultCount}#{' '}
+                                <h:outputText value="#{projectList.resultCount}">
+                                    <f:convertNumber type="number" groupingUsed="true"/>
+                                </h:outputText>
+                                #{''}#{messages.SerachResultCountPrefx}
+                            </h3>
+                        </f:facet>
+
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                #{messages.Project_id}
+                            </f:facet>
+                            <s:link value="#{_item.id}" view="/func/house/datas/ProjectView.xhtml">
+                                <f:param name="projectId" value="#{_item.id}"/>
+                            </s:link>
+                        </h:column>
+
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                #{messages.Project_id}
+                            </f:facet>
+                            #{_item.developer.name}
+
+                        </h:column>
+
+                        <h:column>
+                            <div class="table-actions right">
+                                <s:link styleClass="table-action"
+                                        view="/func/house/datas/SectionEdit.xhtml"
+                                        aria-label="#{messages.edit}#{messages.Section}">
+                                    <span class="octicon octicon-pencil"/>
+                                    #{messages.edit}
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="sectionId" value="#{_item.id}"/>
+                                </s:link>
+
+
+                                <a:commandLink styleClass="table-action" title="#{messages.delete}"
+                                               execute="@this" immediate="true"
+                                               render="sectionDeleteConfirmPanel_form,sectionDeleteConfirmPanel_title"
+                                               oncomplete="$('#sectionDeleteConfirmPanel').modal('show')">
+                                    <span class="glyphicon glyphicon-remove"/>
+                                    #{messages.delete}
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="sectionId" value="#{_item.id}"/>
+                                </a:commandLink>
+
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+
+                </div>
+            </a:outputPanel>
+
+
+        </a:outputPanel>
+
+
+
+    </h:form>
+
+    </a:outputPanel>
+
+
+</ui:composition>
+
