@@ -23,12 +23,13 @@ public class HouseRegInfoFill implements BusinessDataFill {
     @Override
     public void fillData() {
 
+      if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
 
-
-       for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAfterBusinessHouse().setHouseRegInfo(houseBusiness.getStartBusinessHouse().getHouseRegInfo());
-           // Logging.getLog(getClass()).debug("houseBusiness.getAfterBusinessHouse().setHouseRegInfo: " +houseBusiness.getAfterBusinessHouse().getHouseRegInfo());
-       }
+          for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+              houseBusiness.getAfterBusinessHouse().setHouseRegInfo(houseBusiness.getStartBusinessHouse().getHouseRegInfo());
+              // Logging.getLog(getClass()).debug("houseBusiness.getAfterBusinessHouse().setHouseRegInfo: " +houseBusiness.getAfterBusinessHouse().getHouseRegInfo());
+          }
+      }
 
 
 

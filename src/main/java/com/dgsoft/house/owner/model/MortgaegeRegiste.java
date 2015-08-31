@@ -58,6 +58,21 @@ public class MortgaegeRegiste implements java.io.Serializable {
         }
 
     }
+    public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste,Financial oldFinancial) {
+        this.ownerBusiness = ownerBusiness;
+        highestMountMoney = mortgaegeRegiste.getHighestMountMoney();
+        warrantScope = mortgaegeRegiste.getWarrantScope();
+        interestType = mortgaegeRegiste.getInterestType();
+        mortgageDueTimeS = mortgaegeRegiste.getMortgageDueTimeS();
+        mortgageTime = mortgaegeRegiste.getMortgageTime();
+        mortgageArea = mortgaegeRegiste.getMortgageArea();
+        oldFinancial = mortgaegeRegiste.getOldFinancial();
+        financial = mortgaegeRegiste.getFinancial();
+        oldFinancial = oldFinancial;
+
+
+
+    }
 
     @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)

@@ -1079,9 +1079,14 @@
 
 
 
-    <create-component type="DATA_FILL" component="financialFill">
+    <create-component type="DATA_FILL" component="financialModerfyFill">
         <description>
-            抵押权人，抵押信息提取
+            抵押权人，抵押信息提取（正常抵押，房屋所有权抵押）
+        </description>
+    </create-component>
+    <create-component type="DATA_FILL" component="financialChangeFill">
+        <description>
+            抵押权人，抵押信息提取（变更抵押，抵押权变更）
         </description>
     </create-component>
 

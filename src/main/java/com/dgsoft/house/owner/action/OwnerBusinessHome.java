@@ -93,12 +93,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getMakeCardByType(MakeCard.CardType.valueOf(typeName));
     }
 
-    public MappingCorp getMappingCorp(){
-        if(!getInstance().getMappingCorps().isEmpty()){
-            return getInstance().getMappingCorps().iterator().next();
-        }
-        return null;
-    }
+
     public BusinessPersion getBusinessPersionByType(String typeName){
         for (BusinessPersion businessPersion:getInstance().getBusinessPersions()){
             if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class,typeName))){
@@ -183,56 +178,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getBusinessPersionByType("OWNER_ENTRUST");
     }
 
+
+
     public Reason getReceive(){
         return getReasonByType("RECEIVE");
     }
-    public BusinessPersion getApplyPersion(){
-       for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-           if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)){
-               return persion;
-           }
-       }
-        return null;
-    }
 
-    /**
-     * 抵押权人代理人
-     */
-    public BusinessPersion getMortgageObligee(){
-        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)){
-                return persion;
-            }
-        }
-        return null;
-
-    }
-
-    /**
-     * 抵押人代理人
-     */
-    public BusinessPersion getMortgage(){
-        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)){
-                return persion;
-            }
-        }
-        return null;
-
-    }
-
-    /**
-     * 债务人
-     */
-    public BusinessPersion getMortgageObligor(){
-        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
-                return persion;
-            }
-        }
-        return null;
-
-    }
 
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {

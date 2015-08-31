@@ -23,10 +23,11 @@ public class BusinessHouseOwnerFill implements BusinessDataFill {
 
     @Override
     public void fillData() {
-
-       for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+      if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
+          for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
               houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(houseBusiness.getStartBusinessHouse().getBusinessHouseOwner());
-       }
+          }
+      }
 
     }
 }

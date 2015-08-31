@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.log.Logging;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,6 +40,7 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 	}
 
     public BusinessPersion(OwnerBusiness ownerBusiness, BusinessPersion businessPersion) {
+        Logging.getLog(getClass()).debug(ownerBusiness.getId());
         this.ownerBusiness = ownerBusiness;
         this.credentialsNumber = businessPersion.getCredentialsNumber();
         this.credentialsType = businessPersion.getCredentialsType();
