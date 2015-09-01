@@ -118,7 +118,11 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
             if (mortgaegeRegiste.getFinancial() == null){
                 mortgaegeRegiste.setFinancial(getInstance());
             }else{
-                setId(mortgaegeRegiste.getFinancial().getId());
+                if (mortgaegeRegiste.getFinancial().getId()==null){
+                    setInstance(mortgaegeRegiste.getFinancial());
+                }else {
+                    setId(mortgaegeRegiste.getFinancial().getId());
+                }
             }
         }
     }

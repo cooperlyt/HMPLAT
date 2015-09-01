@@ -1,10 +1,7 @@
 package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.house.owner.model.BusinessPersion;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.MortgaegeRegiste;
-import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -31,16 +28,11 @@ public class FinancialChangeFill extends  FinancialModerfyFill {
                     houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(ownerBusinessHome.getInstance().getMortgaegeRegiste());
                 }
                 BusinessPersion businessPersion = selectBiz.getMortgageObligor();
-//                Logging.getLog(getClass()).debug(businessPersion.getPersonName());
-//                Logging.getLog(getClass()).debug(businessPersion.getCredentialsType());
-//                Logging.getLog(getClass()).debug(businessPersion.getCredentialsNumber());
-//                Logging.getLog(getClass()).debug(businessPersion.getType());
                 ownerBusinessHome.getInstance().getBusinessPersions().add(new BusinessPersion(ownerBusinessHome.getInstance(),businessPersion));
-                ownerBusinessHome.getInstance().getMortgageObligor();
-//                Logging.getLog(getClass()).debug(ownerBusinessHome.getInstance().getMortgageObligor().getPersonName());
-//                Logging.getLog(getClass()).debug(ownerBusinessHome.getInstance().getMortgageObligor().getType());
-//                Logging.getLog(getClass()).debug(ownerBusinessHome.getInstance().getMortgageObligor().getOwnerBusiness().getId());
-               // ownerBusinessHome.getInstance().getMappingCorps().add(selectBiz.getMappingCorp());
+                Evaluate evaluate = selectBiz.getEvaluate();
+                ownerBusinessHome.getInstance().getEvaluates().add(new Evaluate(ownerBusinessHome.getInstance(),evaluate));
+
+
             }
 
         }

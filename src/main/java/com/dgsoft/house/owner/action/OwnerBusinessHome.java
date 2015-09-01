@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -55,12 +56,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
-    public Evaluate getEvaluate(){
-        if (!getInstance().getEvaluates().isEmpty()){
-            return getInstance().getEvaluates().iterator().next();
-        }
-        return null;
-    }
 
     public MakeCard getCardByType(String typeName){
         for (MakeCard makeCard:getInstance().getMakeCards()){
@@ -246,6 +241,73 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+
+
+    public String getStarHouseOwnerRshipNo(){
+
+        return getInstance().getStarHouseOwnerRshipNo();
+    }
+
+    public String getStarHouseNoticeNo(){
+
+        return getInstance().getStarHouseNoticeNo();
+    }
+
+
+    public String getStarHouseMortgageNo(){
+
+        return getInstance().getStarHouseMortgageNo();
+    }
+    /**
+     * 申请人
+     */
+
+    public BusinessPersion getApplyPersion(){
+
+        return getInstance().getApplyPersion();
+    }
+
+    /**
+     * 抵押权人代理人
+     */
+
+    public BusinessPersion getMortgageObligee(){
+        return getInstance().getMortgageObligee();
+    }
+
+    /**
+     * 抵押人代理人
+     */
+
+    public BusinessPersion getMortgage(){
+
+        return getInstance().getMortgage();
+
+    }
+
+    /**
+     * 债务人
+     */
+
+    public BusinessPersion getMortgageObligor(){
+        return getInstance().getMortgageObligor();
+    }
+
+    /**
+     * 测绘公司
+     */
+
+    public MappingCorp getMappingCorp(){
+        return getInstance().getMappingCorp();
+    }
+
+    /**
+     * 评估公司
+     */
+
+    public Evaluate getEvaluate(){
+        return getInstance().getEvaluate();
+    }
 
 
     public boolean isCanCancel(){

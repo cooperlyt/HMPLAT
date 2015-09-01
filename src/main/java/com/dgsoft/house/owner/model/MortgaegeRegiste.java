@@ -66,12 +66,8 @@ public class MortgaegeRegiste implements java.io.Serializable {
         mortgageDueTimeS = mortgaegeRegiste.getMortgageDueTimeS();
         mortgageTime = mortgaegeRegiste.getMortgageTime();
         mortgageArea = mortgaegeRegiste.getMortgageArea();
-        oldFinancial = mortgaegeRegiste.getOldFinancial();
-        financial = mortgaegeRegiste.getFinancial();
-        oldFinancial = oldFinancial;
-
-
-
+        this.oldFinancial = oldFinancial;
+        financial = new Financial(mortgaegeRegiste.getFinancial());
     }
 
     @Id
@@ -164,7 +160,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageArea = mortgageArea;
 	}
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OLD_FIN", nullable = true)
     public Financial getOldFinancial() {
         return oldFinancial;

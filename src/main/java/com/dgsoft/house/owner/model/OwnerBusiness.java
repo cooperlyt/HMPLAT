@@ -633,7 +633,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     /**
-     * 评估公司
+     * 测绘公司
      */
     @Transient
     public MappingCorp getMappingCorp(){
@@ -642,6 +642,18 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         }
         return null;
     }
+
+    /**
+     * 评估公司
+     */
+    @Transient
+    public Evaluate getEvaluate(){
+        if (!getEvaluates().isEmpty()){
+            return getEvaluates().iterator().next();
+        }
+        return null;
+    }
+
 
 
 }

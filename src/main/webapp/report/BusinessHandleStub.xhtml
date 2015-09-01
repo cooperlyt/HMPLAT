@@ -69,7 +69,7 @@
 
     <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
         <p:paragraph
-                rendered="#{not empty ownerBusinessHome.applyPersion}">#{ownerBusinessHome.applyPersion.personName}</p:paragraph>
+                rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
     </p:cell>
 
     <p:cell>
@@ -235,7 +235,7 @@
 
             <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
                 <p:paragraph
-                        rendered="#{not empty ownerBusinessHome.applyPersion}">#{ownerBusinessHome.applyPersion.personName}</p:paragraph>
+                        rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
             </p:cell>
 
             <p:cell>
