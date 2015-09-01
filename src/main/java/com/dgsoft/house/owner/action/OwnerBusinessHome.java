@@ -178,8 +178,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     public Reason getReceive(){
         return getReasonByType("RECEIVE");
     }
-
-
+    public Reason getModifyBeforReason(){
+        return getReasonByType("MODIFY_BEFOR_RENSON");
+    }
+    public Reason getModifyAfterReason(){
+        return getReasonByType("MODIFY_AFTER_RENSON");
+    }
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {
             BusinessMoney result = new BusinessMoney();

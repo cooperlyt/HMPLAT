@@ -60,7 +60,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('4A','房地产抵押权设�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('5','房屋所有权变更登记申请书','房屋所有权变更登记申请书','/report/ApplyChangeReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('6','房地产登记撤回申请书','房地产登记撤回申请书','/report/ApplyBackReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('7','房地产抵押权设立登记申请书','房地产抵押权设立登记申请书','/report/ApplyHouseMortgageReisterBook.xhtml');
-INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('8','房地产抵押权变更登记和注销登记申请书','房地产抵押权变更登记和注销登记申请书','/report/ApplyHouseMortgageChangeAndLogoutReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('8','房地产抵押权变更登记和注销登记申请书(抵押权变更)','房地产抵押权变更登记和注销登记申请书(抵押权变更)','/report/ApplyHouseMortgageChangeReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('9','房地产最高额抵押权确定登记申请书','房地产最高额抵押权确定登记申请书','/report/ApplyHouseMortgageHighReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('10','询问笔录（抵押登记）','询问笔录（抵押登记）','/report/MortgageAskRecord.xhtml');
 
