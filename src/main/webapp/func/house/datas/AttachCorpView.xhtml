@@ -17,6 +17,7 @@
             <ui:include src="/layout/function-nav.xhtml">
                 <ui:param name="functions" value="#{authInfo.dataFunctions}"/>
             </ui:include>
+
             <h1>
                 <s:link view="/func/house/datas/AttrCorpMgr.xhtml" value="#{messages.AttachCorporation}"/>
 
@@ -35,5 +36,95 @@
     </ui:define>
 
 
+    <dh:entryGrid styleClass="detailsTable table table-bordered ">
+        <dh:entryGridBlock columns="4" rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}">
+            <h:outputText value="#{messages.Name}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{attachCorporationHome.instance.developer.name}"/>
+            </dh:entryGridColumn>
 
-    </ui:composition>
+        </dh:entryGridBlock>
+
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.AttachCorp_id}"/>
+            <h:outputText value="#{attachCorporationHome.instance.id}"/>
+            <h:outputText value="#{messages.AttachCorp_dateTo}"/>
+            <h:outputText value="#{attachCorporationHome.instance.dateTo}">
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            </h:outputText>
+
+            <h:outputText value="#{messages.AttachCorp_owner}"/>
+            <h:outputText value="#{attachCorporationHome.instance.ownerName}"/>
+
+            <h:outputText value="#{messages.Tel}"/>
+            <h:outputText value="#{attachCorporationHome.instance.ownerTel}"/>
+            <h:outputText value="#{messages.AttachCorp_licenseCode}"/>
+            <h:outputText value="#{attachCorporationHome.instance.licenseNumber}"/>
+
+            <h:outputText value="#{messages.AttachCorp_cerCode}"/>
+            <h:outputText value="#{attachCorporationHome.instance.cerCode}"/>
+            <h:outputText value="#{messages.AttachCorp_cerCode}"/>
+            <h:outputText value="#{attachCorporationHome.instance.cerCode}"/>
+
+            <h:outputText value="#{messages.AttachCorp_postCode}"/>
+            <h:outputText value="#{attachCorporationHome.instance.postCode}"/>
+
+            <h:outputText value="#{messages.AttachCorp_address}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{attachCorporationHome.instance.address}"/>
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
+
+
+    </dh:entryGrid>
+
+
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="empEditPanel"/>
+        <ui:param name="panelTitle" value="#{messages.AttachEmployee}"/>
+
+    </ui:decorate>
+
+
+    <h:form id="attachEmpDatas">
+        <a:outputPanel rendered="#{not empty attachCorporationHome.instance.attachEmployees}">
+
+            <div class="sort-bar" style="margin-bottom: 0;">
+                <a:outputPanel layout="block" class="right">
+                    <s:link styleClass=" minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
+                        <span class="octicon octicon-plus"/>
+                        <f:param name="buildId" value=""/>
+                        #{messages.create} #{messages.Build}
+                    </s:link>
+                </a:outputPanel>
+
+                <h3>#{messages.ProjectBuildCount} #{' '} #{projectHome.instance.builds.size}</h3>
+            </div>
+
+
+            <h:dataTable value="#{attachCorporationHome.instance.attachEmployeeList}" var="_emp">
+
+            </h:dataTable>
+        </a:outputPanel>
+
+        <s:div styleClass="blankslate" rendered="#{empty attachCorporationHome.instance.attachEmployees}">
+            <span class="mega-octicon octicon-search"></span>
+
+            <h3>#{messages.AttachCorpEmptyEmployee}</h3>
+
+
+            <p>  #{messages.YouCan}#{' '}
+
+
+                <s:link  view="/func/house/datas/DeveloperAttachEdit.xhtml">
+
+                    <span class="octicon octicon-plus"/>
+                    #{messages.AddAttachCorpEmployee}
+
+                </s:link></p>
+        </s:div>
+    </h:form>
+
+
+</ui:composition>
