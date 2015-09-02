@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/template.xhtml">
+
+
+    <ui:define name="body">
+
+
+        <h:outputStylesheet library="bootstrap-sco" name="/css/scojs.css"/>
+        <h:outputStylesheet library="bootstrap-sco" name="/css/sco.message.css"/>
+
+
+        <div class="pagehead">
+
+            <div class="container">
+
+                <ui:insert name="function-tile">
+
+                </ui:insert>
+
+            </div>
+
+
+
+
+        </div>
+        <div class="container">
+            <ui:insert/>
+        </div>
+        <ui:insert name="body-after"/>
+
+        <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>
+
+        <a:outputPanel ajaxRendered="true">
+            <ui:insert name="pageMessages">
+
+                <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
+                    <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
+
+                        <h:outputScript>
+                            if (#{_msg.severity.ordinal == 2}){
+                            $.scojs_message.options.delay = 4000;
+                            $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_ERROR);
+
+
+                            }else if(#{_msg.severity.ordinal == 0}){
+                            $.scojs_message.options.delay = 1000;
+                            $.scojs_message('#{_msg.summary}', $.scojs_message.TYPE_OK );
+
+                            }
+
+
+                        </h:outputScript>
+
+                    </a:repeat>
+                </a:outputPanel>
+
+            </ui:insert>
+        </a:outputPanel>
+    </ui:define>
+</ui:composition>

@@ -42,13 +42,13 @@
             #{messages.Developer}<span class="required">*</span>
         </ui:define>
 
-        <div class="btn-group bootstrap-select edit-select">
+        <div class="btn-group bootstrap-select edit-select" style="width: 300px">
             <button type="button" class=" btn dropdown-toggle btn-default"
                     onclick="clearDeveloperSearchName()"
                     data-toggle="dropdown" aria-expanded="false">
 
                 <h:outputText id="developerSelectBtnCaption" styleClass="filter-option pull-left"
-                              value="#{(developerHome.idDefined) ? developerHome.instance.name : (( empty projectEdit.newDeveloperName) ? messages.noSelectLabel : projectEdit.newDeveloperName ) }">
+                              value="#{(developerHome.idDefined) ? developerHome.instance.name : (( empty developerSearchList.newDeveloperName) ? messages.noSelectLabel : developerSearchList.newDeveloperName ) }">
                 </h:outputText>
                 <span class="caret"></span>
             </button>
@@ -77,6 +77,8 @@
 
 
                             <a:repeat value="#{developerSearchList.resultList}" var="_item">
+
+                                <ui:insert name="selectAction">
                                 <a:commandLink execute="@this" immediate="true"
                                                render="developerSelectBtnCaption,createDeveloperPanel"
                                                styleClass="select-menu-item #{(developerHome.idDefined and (developerHome.id eq _item.id)) ? 'selected': ''}">
@@ -87,6 +89,7 @@
                                     <span class="select-menu-item-icon octicon octicon-check"></span>
                                     <span class="select-menu-item-text">#{_item.name}</span>
                                 </a:commandLink>
+                                </ui:insert>
                             </a:repeat>
 
 
@@ -100,9 +103,9 @@
                                 <a:attachQueue requestDelay="0"/>
                             </a:commandLink>
 
-                            <a:commandLink action="#{projectEdit.createDeveloperBySearchName}"
+                            <a:commandLink action="#{developerSearchList.createDeveloperBySearchName}"
 
-                                           render="developerSelectBtnCaption,createDeveloperPanel" execute="@this" immediate="true"
+                                           render="developerSelectBtnCaption,createDeveloperPanel,#{render}" execute="@this" immediate="true"
                                            styleClass="select-menu-item last-visible navigation-focus"
                                            rendered="#{(empty developerSearchList.resultList) and (not empty developerSearchList.searchKey)}">
                                 <a:attachQueue requestDelay="0"/>
@@ -132,7 +135,7 @@
     <a:outputPanel layout="block" styleClass="upgrade-upsell" id="createDeveloperPanel">
 
 
-        <a:outputPanel rendered="#{not developerHome.idDefined and (not empty projectEdit.newDeveloperName)}">
+        <a:outputPanel rendered="#{not developerHome.idDefined and (not empty developerSearchList.newDeveloperName)}">
             <h:inputHidden id="developerName" value="#{developerHome.instance.name}"/>
             <div class="form-inline">
                 <s:decorate id="developerIdField" styleClass="form-group " template="/layout/edit-big.xhtml">

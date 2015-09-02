@@ -28,15 +28,16 @@ public class AttachCorporation implements java.io.Serializable {
 	private Date recordDate;
 	private String address;
 	private String phone;
+    private String ownerTel;
 	private String ownerName;
 	private String ownerCard;
 	private String fax;
 	private String email;
 	private String memo;
-	private String password;
 	private String postCode;
 	private boolean enable;
 	private String licenseNumber;
+	private String cerCode;
 	private String taxLicense;
 	private String companyCode;
 	private String companyType;
@@ -54,10 +55,11 @@ public class AttachCorporation implements java.io.Serializable {
     private EvaluateCorporation evaluateCorporation;
 
 
-	public AttachCorporation(String id,AttachCorpType type,boolean enable) {
+	public AttachCorporation(String id,AttachCorpType type,boolean enable, Date recordDate) {
 		this.enable = enable;
 		this.id = id;
 		this.type = type;
+		this.recordDate = recordDate;
 	}
 
 	public AttachCorporation() {
@@ -162,16 +164,6 @@ public class AttachCorporation implements java.io.Serializable {
 		this.memo = memo;
 	}
 
-	@Column(name = "PASSWORD", length = 50)
-	@Size(max = 50)
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Column(name = "POST_CODE", length = 50)
 	@Size(max = 50)
 	public String getPostCode() {
@@ -201,7 +193,27 @@ public class AttachCorporation implements java.io.Serializable {
 		this.licenseNumber = licenseNumber;
 	}
 
-	@Column(name = "TAX_LICENSE", length = 100)
+	@Column(name = "COMPANY_CER_CODE", length = 100)
+	@Size(max = 100)
+	public String getCerCode() {
+		return cerCode;
+	}
+
+	public void setCerCode(String cerCode) {
+		this.cerCode = cerCode;
+	}
+
+    @Column(name="OWNER_TEL", length = 100)
+    @Size(max = 100)
+    public String getOwnerTel() {
+        return ownerTel;
+    }
+
+    public void setOwnerTel(String ownerTel) {
+        this.ownerTel = ownerTel;
+    }
+
+    @Column(name = "TAX_LICENSE", length = 100)
 	@Size(max = 100)
 	public String getTaxLicense() {
 		return this.taxLicense;
@@ -272,7 +284,7 @@ public class AttachCorporation implements java.io.Serializable {
 		this.manager = manager;
 	}
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation", cascade = CascadeType.ALL)
     public Developer getDeveloper() {
         return developer;
     }
@@ -318,5 +330,10 @@ public class AttachCorporation implements java.io.Serializable {
 
 	public void setType(AttachCorpType type) {
 		this.type = type;
+	}
+
+	@Transient
+	public boolean isOutTime(){
+		return getDateTo().compareTo(new Date()) < 0;
 	}
 }

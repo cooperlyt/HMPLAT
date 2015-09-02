@@ -30,6 +30,11 @@
         </h:form>
     </ui:define>
 
+    <h:outputStylesheet>
+        .out-time{
+            color: #fcf8e3;
+        }
+    </h:outputStylesheet>
 
     <a:outputPanel layout="block" styleClass="columns">
         <a:outputPanel id="dataNav" layout="block" styleClass="column one-fourth codesearch-aside">
@@ -59,7 +64,8 @@
 
 
                     <s:link  view="/func/house/datas/DeveloperAttachEdit.xhtml">
-
+                        <f:param name="attachCorpId" value=""/>
+                        <f:param name="changeDeveloper" value="#{true}"/>
                         <span class="octicon octicon-plus"/>
                         #{messages.create}
 
@@ -81,10 +87,10 @@
 
 
 
-                                    <s:link styleClass="btn btn-success" view="/func/house/datas/ProjectEdit.xhtml">
+                                    <s:link styleClass="btn btn-success" view="/func/house/datas/DeveloperAttachEdit.xhtml">
                                         <span class="octicon octicon-plus"/>
-
-
+                                        <f:param name="attachCorpId" value=""/>
+                                        <f:param name="changeDeveloper" value="#{true}"/>
                                     </s:link>
 
                                 </div>
@@ -104,8 +110,10 @@
                             <f:facet name="header">
                                 #{messages.Project_id}
                             </f:facet>
-                            <s:link value="#{_item.id}" view="/func/house/datas/ProjectView.xhtml">
-                                <f:param name="projectId" value="#{_item.id}"/>
+                            <s:link value="#{_item.id}" styleClass=" #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
+
+                                    view="/func/house/datas/AttachCorpView.xhtml">
+                                <f:param name="attachCorpId" value="#{_item.id}"/>
                             </s:link>
                         </h:column>
 
@@ -113,35 +121,36 @@
                             <f:facet name="header">
                                 #{messages.Project_id}
                             </f:facet>
-                            #{_item.developer.name}
+                            <h:outputText styleClass="  #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
+                            value="#{_item.developer.name}"/>
 
                         </h:column>
 
                         <h:column>
                             <div class="table-actions right">
                                 <s:link styleClass="table-action"
-                                        view="/func/house/datas/SectionEdit.xhtml"
-                                        aria-label="#{messages.edit}#{messages.Section}">
+                                        view="/func/house/datas/DeveloperAttachEdit.xhtml"
+                                        aria-label="#{messages.edit}">
                                     <span class="octicon octicon-pencil"/>
                                     #{messages.edit}
                                     <a:attachQueue requestDelay="0"/>
-                                    <f:param name="sectionId" value="#{_item.id}"/>
+                                    <f:param name="attachCorpId" value="#{_item.id}"/>
+                                    <f:param name="developerId" value="#{_item.developer.id}"/>
+                                    <f:param name="changeDeveloper" value="#{false}"/>
                                 </s:link>
-
-
-                                <a:commandLink styleClass="table-action" title="#{messages.delete}"
-                                               execute="@this" immediate="true"
-                                               render="sectionDeleteConfirmPanel_form,sectionDeleteConfirmPanel_title"
-                                               oncomplete="$('#sectionDeleteConfirmPanel').modal('show')">
-                                    <span class="glyphicon glyphicon-remove"/>
-                                    #{messages.delete}
-                                    <a:attachQueue requestDelay="0"/>
-                                    <f:param name="sectionId" value="#{_item.id}"/>
-                                </a:commandLink>
 
                             </div>
                         </h:column>
                     </h:dataTable>
+
+                </div>
+
+                <div class="paginate-container">
+                <a:outputPanel>
+                    <ui:include src="/layout/pages.xhtml">
+                        <ui:param name="entityList" value="#{developerAttachCorporationList}"/>
+                    </ui:include>
+                </a:outputPanel>
 
                 </div>
             </a:outputPanel>
