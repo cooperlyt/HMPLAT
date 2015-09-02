@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -55,12 +56,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
-    public Evaluate getEvaluate(){
-        if (!getInstance().getEvaluates().isEmpty()){
-            return getInstance().getEvaluates().iterator().next();
-        }
-        return null;
-    }
 
     public MakeCard getCardByType(String typeName){
         for (MakeCard makeCard:getInstance().getMakeCards()){
@@ -93,12 +88,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getMakeCardByType(MakeCard.CardType.valueOf(typeName));
     }
 
-    public MappingCorp getMappingCorp(){
-        if(!getInstance().getMappingCorps().isEmpty()){
-            return getInstance().getMappingCorps().iterator().next();
-        }
-        return null;
-    }
+
     public BusinessPersion getBusinessPersionByType(String typeName){
         for (BusinessPersion businessPersion:getInstance().getBusinessPersions()){
             if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class,typeName))){
@@ -183,57 +173,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getBusinessPersionByType("OWNER_ENTRUST");
     }
 
+
+
     public Reason getReceive(){
         return getReasonByType("RECEIVE");
     }
-    public BusinessPersion getApplyPersion(){
-       for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-           if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)){
-               return persion;
-           }
-       }
-        return null;
+    public Reason getModifyBeforReason(){
+        return getReasonByType("MODIFY_BEFOR_RENSON");
     }
-
-    /**
-     * 抵押权人代理人
-     */
-    public BusinessPersion getMortgageObligee(){
-        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)){
-                return persion;
-            }
-        }
-        return null;
-
+    public Reason getModifyAfterReason(){
+        return getReasonByType("MODIFY_AFTER_RENSON");
     }
-
-    /**
-     * 抵押人代理人
-     */
-    public BusinessPersion getMortgage(){
-        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)){
-                return persion;
-            }
-        }
-        return null;
-
-    }
-
-    /**
-     * 债务人
-     */
-    public BusinessPersion getMortgageObligor(){
-        for(BusinessPersion persion:getInstance().getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
-                return persion;
-            }
-        }
-        return null;
-
-    }
-
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {
             BusinessMoney result = new BusinessMoney();
@@ -295,6 +245,73 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+
+
+    public String getStarHouseOwnerRshipNo(){
+
+        return getInstance().getStarHouseOwnerRshipNo();
+    }
+
+    public String getStarHouseNoticeNo(){
+
+        return getInstance().getStarHouseNoticeNo();
+    }
+
+
+    public String getStarHouseMortgageNo(){
+
+        return getInstance().getStarHouseMortgageNo();
+    }
+    /**
+     * 申请人
+     */
+
+    public BusinessPersion getApplyPersion(){
+
+        return getInstance().getApplyPersion();
+    }
+
+    /**
+     * 抵押权人代理人
+     */
+
+    public BusinessPersion getMortgageObligee(){
+        return getInstance().getMortgageObligee();
+    }
+
+    /**
+     * 抵押人代理人
+     */
+
+    public BusinessPersion getMortgage(){
+
+        return getInstance().getMortgage();
+
+    }
+
+    /**
+     * 债务人
+     */
+
+    public BusinessPersion getMortgageObligor(){
+        return getInstance().getMortgageObligor();
+    }
+
+    /**
+     * 测绘公司
+     */
+
+    public MappingCorp getMappingCorp(){
+        return getInstance().getMappingCorp();
+    }
+
+    /**
+     * 评估公司
+     */
+
+    public Evaluate getEvaluate(){
+        return getInstance().getEvaluate();
+    }
 
 
     public boolean isCanCancel(){

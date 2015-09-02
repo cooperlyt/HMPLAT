@@ -9,26 +9,22 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by nistrator on 15-7-20.
- * 金融机构填充 每个可以走的业务都配
+ * 金融机构填充 抵押登记更正用，每个抵押正常业务都配
  */
-@Name("financialFill")
+@Name("financialModerfyFill")
 @Scope(ScopeType.STATELESS)
 
-public class FinancialFill implements BusinessDataFill {
+public class FinancialModerfyFill implements BusinessDataFill {
     @In
-    private OwnerBusinessHome ownerBusinessHome;
+    protected OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public void fillData() {
 
-        for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            for(MortgaegeRegiste mortgaegeRegiste:houseBusiness.getStartBusinessHouse().getMortgaegeRegistes()){
-                houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
-            }
-        }
         if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
             MortgaegeRegiste mr = ownerBusinessHome.getInstance().getSelectBusiness().getMortgaegeRegiste();
             if (mr != null){
@@ -37,7 +33,6 @@ public class FinancialFill implements BusinessDataFill {
                 }
             }
         }
-
 
 
     }

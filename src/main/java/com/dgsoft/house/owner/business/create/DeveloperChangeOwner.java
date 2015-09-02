@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.business.BusinessDataFill;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.BusinessPool;
@@ -23,18 +24,21 @@ public class DeveloperChangeOwner implements BusinessDataFill {
 
     @Override
     public void fillData() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
 
-            BusinessHouseOwner businessHouseOwner =new BusinessHouseOwner();
-            businessHouseOwner.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
-            businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
-            if (houseBusiness.getStartBusinessHouse().getDeveloperCode() !=null
-                    && !houseBusiness.getStartBusinessHouse().getDeveloperCode().equals("")){
-                businessHouseOwner.setCredentialsNumber(houseBusiness.getStartBusinessHouse().getDeveloperCode());
+        if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+
+                BusinessHouseOwner businessHouseOwner = new BusinessHouseOwner();
+                businessHouseOwner.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
+                businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                if (houseBusiness.getStartBusinessHouse().getDeveloperCode() != null
+                        && !houseBusiness.getStartBusinessHouse().getDeveloperCode().equals("")) {
+                    businessHouseOwner.setCredentialsNumber(houseBusiness.getStartBusinessHouse().getDeveloperCode());
+                }
+                businessHouseOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
+                houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(businessHouseOwner);
+
             }
-            businessHouseOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
-            houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(businessHouseOwner);
-
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessDataFill;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -32,12 +33,14 @@ public class HouseInfoFill implements BusinessDataFill {
 
     @Override
     public void fillData() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            House house = houseEntityLoader.getEntityManager().find(House.class,houseBusiness.getHouseCode());
-            if (house!=null && house.getHouseArea()!=null && (house.getHouseArea().compareTo(new BigDecimal(0))>0)) {
-                houseBusiness.getAfterBusinessHouse().setHouseArea(house.getHouseArea());
-                facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "house_info_fill");
-            }
-        }
+      if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+          for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+              House house = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
+              if (house != null && house.getHouseArea() != null && (house.getHouseArea().compareTo(new BigDecimal(0)) > 0)) {
+                  houseBusiness.getAfterBusinessHouse().setHouseArea(house.getHouseArea());
+                  facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "house_info_fill");
+              }
+          }
+      }
     }
 }

@@ -577,5 +577,83 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         }
         return str;
     }
+    /**
+     * 申请人
+     */
+    @Transient
+    public BusinessPersion getApplyPersion(){
+        for(BusinessPersion persion:getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)){
+                return persion;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 抵押权人代理人
+     */
+    @Transient
+    public BusinessPersion getMortgageObligee(){
+        for(BusinessPersion persion:getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 抵押人代理人
+     */
+    @Transient
+    public BusinessPersion getMortgage(){
+        for(BusinessPersion persion:getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 债务人
+     */
+    @Transient
+    public BusinessPersion getMortgageObligor(){
+        for(BusinessPersion persion:getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 测绘公司
+     */
+    @Transient
+    public MappingCorp getMappingCorp(){
+        if(!getMappingCorps().isEmpty()){
+            return getMappingCorps().iterator().next();
+        }
+        return null;
+    }
+
+    /**
+     * 评估公司
+     */
+    @Transient
+    public Evaluate getEvaluate(){
+        if (!getEvaluates().isEmpty()){
+            return getEvaluates().iterator().next();
+        }
+        return null;
+    }
+
+
 
 }

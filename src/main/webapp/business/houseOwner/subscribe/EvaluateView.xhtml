@@ -8,13 +8,12 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getEvaluate()}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.instance.evaluate}">
         <dh:entryGridBlock columns="4" >
-
-            <h:outputText value="#{messages.Evaluate_assessmentPrice}"/>
-            <h:outputText value="#{ownerBusinessHome.getEvaluate().assessmentPrice}"/>
             <h:outputText value="#{messages.Evaluate_evaluateCorpName}"/>
-            <h:outputText value="#{ownerBusinessHome.getEvaluate().evaluateCorpName}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.evaluate.evaluateCorpName}"/>
+            <h:outputText value="#{messages.Evaluate_assessmentPrice}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.evaluate.assessmentPrice}"/>
         </dh:entryGridBlock>
     </a:outputPanel>
 </ui:composition>
