@@ -628,6 +628,11 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="selectBizCompleteCancelEnd" component="selectBizCompleteCancel">
+        <description>
+            登记薄阶段将选中的业务状态改成已解除
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="houseRecordCompleteEnd" component="recordComplete">
         <description>
@@ -640,6 +645,8 @@
             业务完成设置业务状态(归档阶段配置)
         </description>
     </end-subscribe>
+
+
 
     <end-subscribe name="MakeCardOwnerRshipEnd" component="makeCardOwnerRship">
         <description>
@@ -798,6 +805,12 @@
     <end-subscribe name="markProjectMortgageStateEnd" component="markProjectMortgageState">
         <description>
             作废以前的在建抵押登记证明
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="markSelectMortgageCardStateEnd" component="markSelectMortgageCardState">
+        <description>
+            作废所选中业务的抵押证
         </description>
     </end-subscribe>
 
