@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "ATTACH_EMPLOYEE", catalog = "HOUSE_INFO")
-public class AttachEmployee implements java.io.Serializable {
+public class AttachEmployee implements java.io.Serializable,PersonEntity {
 
     private String id;
     private String licenseLeve;
@@ -36,6 +36,14 @@ public class AttachEmployee implements java.io.Serializable {
 
     public AttachEmployee(AttachCorporation attachCorporation) {
         this.attachCorporation = attachCorporation;
+    }
+
+    public AttachEmployee(String id, Boolean enable, Date createTime) {
+        this.id = id;
+        this.enable = enable;
+        this.createTime = createTime;
+
+
     }
 
     @Id
@@ -101,18 +109,19 @@ public class AttachEmployee implements java.io.Serializable {
         this.deucation = deucation;
     }
 
+    @Override
     @Column(name = "NAME", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
-    public String getName() {
+    public String getPersonName() {
         return this.name;
     }
 
-    public void setName(String name) {
+    public void setPersonName(String name) {
         this.name = name;
     }
 
-
+    @Override
     @Enumerated(EnumType.STRING)
     @Column(name = "CREDENTIALS_TYPE", length = 32)
     public PersonEntity.CredentialsType getCredentialsType() {
@@ -123,6 +132,7 @@ public class AttachEmployee implements java.io.Serializable {
         this.credentialsType = credentialsType;
     }
 
+    @Override
     @Column(name = "CREDENTIALS_NUMBER", length = 100)
     @Size(max = 100)
     public String getCredentialsNumber() {

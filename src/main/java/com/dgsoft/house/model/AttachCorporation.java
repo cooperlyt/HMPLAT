@@ -1,6 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.DataFormat;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

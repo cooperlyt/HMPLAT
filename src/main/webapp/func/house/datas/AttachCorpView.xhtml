@@ -11,6 +11,8 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template-view.xhtml">
 
+
+
     <ui:define name="function-tile">
         <div>
 
@@ -84,28 +86,131 @@
         <ui:param name="panelId" value="empEditPanel"/>
         <ui:param name="panelTitle" value="#{messages.AttachEmployee}"/>
 
+        <ui:decorate template="/layout/system/PersonInput.xhtml">
+            <ui:param name="showLabel" value="false"/>
+            <ui:param name="personEntityHelper" value="#{attachEmployeeHome.personInstance}"/>
+
+            <s:decorate id="employeeIdField" template="/layout/edit-big.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    #{messages.AttachEmployee_id}
+                </ui:define>
+                <ui:param name="for" value="employeeIdInput"/>
+                <ui:param name="showLabel" value="true"/>
+                <ui:param name="status" value="idStatus"/>
+
+                <h:inputText label="#{messages.AttachEmployee_id}" maxlength="32"
+                             styleClass="form-control"
+                             value="#{attachEmployeeHome.instance.id}"
+                             disabled="#{attachEmployeeHome.managed}"
+                             valueChangeListener="#{attachEmployeeHome.verifyIdAvailable}"
+                             required="true"
+                             id="employeeIdInput">
+                    <f:validateRequired/>
+                    <a:ajax event="change" render="employeeIdField" status="idStatus"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+                <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+                    <ui:define name="label">
+                        #{messages.Tel}
+                    </ui:define>
+                    <ui:param name="for" value="persionPhoneInput"/>
+                    <ui:param name="showLabel" value="true"/>
+
+                    <h:inputText label="#{messages.Tel}" maxlength="15"
+                                 styleClass="form-control"
+                                 validatorMessage="#{messages.requiredPhoneValidator}"
+                                 value="#{attachEmployeeHome.instance.phone}"
+                                 required="true"
+                                 id="persionPhoneInput">
+                        <f:validateRegex
+                                pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                        <r:validator event="blur"/>
+                    </h:inputText>
+                </s:decorate>
+
+
+
+
+        </ui:decorate>
+
+        <ui:define name="actionButtons">
+            <button type="button" class="button default" data-dismiss="modal">
+                <span class="glyphicon glyphicon-floppy-remove"/>
+                #{messages.abort}</button>
+            <a:commandLink styleClass="button submit primary" render="empEditPanel_inputs,attachEmpDatas"
+                           rendered="#{not attachEmployeeHome.managed}" execute="@form"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#empEditPanel').modal('hide')}"
+                           action="#{attachEmployeeHome.persist}">
+                <span class="glyphicon glyphicon-floppy-disk"/>
+                <a:attachQueue requestDelay="0"/>
+                #{messages.saveCreate}
+            </a:commandLink>
+            <a:commandLink styleClass="button submit primary" render="empEditPanel_inputs,attachEmpDatas"
+                           execute="@form" rendered="#{attachEmployeeHome.managed}"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#empEditPanel').modal('hide')}"
+                           action="#{attachEmployeeHome.update}">
+
+                <span class="glyphicon glyphicon-floppy-disk"/>
+                <a:attachQueue requestDelay="0"/>
+                #{messages.saveUpdate}
+            </a:commandLink>
+        </ui:define>
     </ui:decorate>
 
+    <h:outputStylesheet>
+        .alert.push .title {
+            border: 0;
+            font-size: inherit;
+        }
+    </h:outputStylesheet>
 
     <h:form id="attachEmpDatas">
         <a:outputPanel rendered="#{not empty attachCorporationHome.instance.attachEmployees}">
 
             <div class="sort-bar" style="margin-bottom: 0;">
                 <a:outputPanel layout="block" class="right">
-                    <s:link styleClass=" minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
+
+                    <a:commandLink styleClass=" minibutton primary" render="empEditPanel_form" execute="@this" immediate="true"
+                                   oncomplete="$('#empEditPanel').modal({backdrop: 'static'})">
+                        <a:attachQueue requestDelay="0"/>
                         <span class="octicon octicon-plus"/>
-                        <f:param name="buildId" value=""/>
-                        #{messages.create} #{messages.Build}
-                    </s:link>
+                        #{messages.AddAttachCorpEmployee}
+
+                    </a:commandLink>
                 </a:outputPanel>
 
-                <h3>#{messages.ProjectBuildCount} #{' '} #{projectHome.instance.builds.size}</h3>
+                <h3>#{messages.AttachEmployeeCount} #{' '} #{attachCorporationHome.instance.attachEmployeeList.size}</h3>
             </div>
 
+            <a:outputPanel styleClass="news">
+            <ui:repeat value="#{attachCorporationHome.instance.attachEmployeeList}" var="_emp">
 
-            <h:dataTable value="#{attachCorporationHome.instance.attachEmployeeList}" var="_emp">
+                <div class="alert push">
+                    <div class="body">
+                        <span class="mega-octicon octicon-person"/>
+                    </div>
 
-            </h:dataTable>
+                    <div class="title">
+                        <strong>#{_emp.id} #{_emp.personName}</strong>
+                    </div>
+
+                    <div class="details">
+                        <div class="commits pusher-is-only-committer">
+                            <ul>
+                                <li>
+                                    <span class="type-icon octicon octicon-key"/>
+                                    <span style="font-size: 12px;font-weight: bold">受理业务</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </ui:repeat>
+            </a:outputPanel>
         </a:outputPanel>
 
         <s:div styleClass="blankslate" rendered="#{empty attachCorporationHome.instance.attachEmployees}">
@@ -117,12 +222,13 @@
             <p>  #{messages.YouCan}#{' '}
 
 
-                <s:link  view="/func/house/datas/DeveloperAttachEdit.xhtml">
-
+                <a:commandLink render="empEditPanel_form" execute="@this" immediate="true"
+                               oncomplete="$('#empEditPanel').modal({backdrop: 'static'})">
+                    <a:attachQueue requestDelay="0"/>
                     <span class="octicon octicon-plus"/>
                     #{messages.AddAttachCorpEmployee}
 
-                </s:link></p>
+                </a:commandLink></p>
         </s:div>
     </h:form>
 
