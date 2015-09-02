@@ -109,6 +109,7 @@
                            action="#{developerHome.persist}">
                 <f:param name="developerId" value=""/>
                 <span class="glyphicon glyphicon-floppy-disk"/>
+                <a:attachQueue requestDelay="0"/>
                 #{messages.saveCreate}
             </a:commandLink>
             <a:commandLink styleClass="button submit primary" render="developerEditPanel_inputs,dataNav,dataResult"
@@ -117,7 +118,7 @@
                            action="#{developerHome.update}">
 
                 <span class="glyphicon glyphicon-floppy-disk"/>
-
+                <a:attachQueue requestDelay="0"/>
                 <f:param name="developerId" value="#{developerHome.instance.id}"/>
                 #{messages.saveUpdate}
             </a:commandLink>
@@ -228,7 +229,7 @@
                            rendered="#{not districtHome.managed}" execute="@form"
                            oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#districtEditPanel').modal('hide')}"
                            action="#{districtHome.persist}">
-
+                <a:attachQueue requestDelay="0"/>
                 <span class="glyphicon glyphicon-floppy-disk"/>
                 #{messages.saveCreate}
             </a:commandLink>
@@ -238,7 +239,7 @@
                            action="#{districtHome.update}">
 
                 <span class="glyphicon glyphicon-floppy-disk"/>
-
+                <a:attachQueue requestDelay="0"/>
                 <f:param name="districtId" value="#{districtHome.instance.id}"/>
                 #{messages.saveUpdate}
             </a:commandLink>

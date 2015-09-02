@@ -27,15 +27,10 @@ public class HouseSellCompany implements java.io.Serializable {
 	private AttachCorporation attachCorporation;
 	private String name;
     private boolean destroyed;
-	private Set<SellEmployee> sellEmployees = new HashSet<SellEmployee>(0);
+
 
 	public HouseSellCompany() {
         destroyed= false;
-	}
-
-	public HouseSellCompany(AttachCorporation attachCorporation) {
-        destroyed= false;
-		this.attachCorporation = attachCorporation;
 	}
 
 
@@ -81,15 +76,6 @@ public class HouseSellCompany implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "houseSellCompany")
-	public Set<SellEmployee> getSellEmployees() {
-		return this.sellEmployees;
-	}
-
-	public void setSellEmployees(Set<SellEmployee> sellEmployees) {
-		this.sellEmployees = sellEmployees;
 	}
 
     @Column(name = "DESTROYED",nullable = false)
