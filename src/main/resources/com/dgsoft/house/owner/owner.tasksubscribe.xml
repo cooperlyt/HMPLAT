@@ -768,6 +768,14 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="movePledgeEnd" component="movePledge">
+        <description>
+            删除抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
+
 
 
     <end-subscribe name="addMoneyEmpEnd" component="addMoneyEmp">
