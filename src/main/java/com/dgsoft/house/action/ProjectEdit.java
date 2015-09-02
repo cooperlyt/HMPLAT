@@ -57,27 +57,6 @@ public class ProjectEdit {
     }
 
 
-    private String newDeveloperName;
-
-    public String getNewDeveloperName() {
-        return newDeveloperName;
-    }
-
-    public void setNewDeveloperName(String newDeveloperName) {
-        this.newDeveloperName = newDeveloperName;
-    }
-
-
-    public void createDeveloperBySearchName() {
-        if (developerHome.isIdDefined()) {
-            developerHome.clearInstance();
-        }
-
-        newDeveloperName = developerSearchList.getSearchKey();
-        developerHome.setNameAndPy(newDeveloperName);
-        Logging.getLog(getClass()).debug("create developer by searchName:" + newDeveloperName);
-    }
-
 
     @Transactional
     public String saveProject(){

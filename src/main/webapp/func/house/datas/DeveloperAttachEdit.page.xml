@@ -4,31 +4,26 @@
       login-required="true"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-
-    <param name="projectId" value="#{projectHome.id}"/>
-    <param name="sectionId" value="#{sectionHome.id}"/>
-
-    <param name="districtId" value="#{sectionSelectList.districtId}"/>
-    <param name="sectionSearchName" value="#{sectionSelectList.searchKey}"/>
-    <param name="sectionListResultCount" value="#{sectionSelectList.maxResults}"/>
-    <param name="newSectionName" value="#{projectEdit.newSectionName}"/>
-
     <param name="developerId" value="#{developerHome.id}"/>
     <param name="developerSearchName" value="#{developerSearchList.searchKey}"/>
     <param name="developerListResultCount" value="#{developerSearchList.maxResults}"/>
     <param name="newDeveloperName" value="#{developerSearchList.newDeveloperName}"/>
 
-    <navigation from-action="#{projectEdit.saveProject}">
+    <param name="attachCorpId" value="#{developerAttachCorpHome.id}"/>
+    <param name="changeDeveloper"/>
+
+
+    <navigation from-action="#{developerAttachCorpHome.save}">
         <rule if-outcome="persisted">
 
-            <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
-                <param name="dataTypeName" value="PROJECT_MGR"/>
+            <redirect view-id="/func/house/datas/AttrCorpMgr.xhtml">
+
             </redirect>
         </rule>
         <rule if-outcome="updated">
 
-            <redirect view-id="/func/house/datas/BaseDataMgr.xhtml">
-                <param name="dataTypeName" value="PROJECT_MGR"/>
+            <redirect view-id="/func/house/datas/AttrCorpMgr.xhtml">
+
             </redirect>
         </rule>
     </navigation>
