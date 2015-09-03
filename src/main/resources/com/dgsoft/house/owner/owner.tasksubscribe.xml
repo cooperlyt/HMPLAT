@@ -328,6 +328,14 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="ReasonHighDebtorView" page="/business/houseOwner/subscribe/ReasonHighDebtorView.xhtml">
+        <description>
+            最高债权确定事实查看
+        </description>
+    </view-subscribe>
+
+
+
     <!--
     <subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml" component=""  ><description>
         预告登记证明号编辑
@@ -615,6 +623,13 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="ReasonHighDebtorEdit" page="/business/houseOwner/subscribe/ReasonHighDebtorEdit.xhtml"
+                    component="">
+        <description>
+            最高债权确定事实
+        </description>
+    </edit-subscribe>
+
 
 
 
@@ -630,7 +645,13 @@
 
     <end-subscribe name="selectBizCompleteCancelEnd" component="selectBizCompleteCancel">
         <description>
-            登记薄阶段将选中的业务状态改成已解除
+            登记薄阶段将选中的业务状态改成已解除(CompleteCancel)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="selectBizModifyingEnd" component="selectBizModifying">
+        <description>
+            建立阶段将选中的业务状态改成业务中(Modifying)
         </description>
     </end-subscribe>
 

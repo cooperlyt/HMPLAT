@@ -118,7 +118,7 @@ public class OwnerBusinessView {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.ABORT);
             if (ownerBusinessHome.getInstance().getSelectBusiness() != null &&
                     BusinessInstance.BusinessStatus.MODIFYING.equals(ownerBusinessHome.getInstance().getSelectBusiness().getStatus())){
-                ownerBusinessHome.createInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+                ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
             }
             ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
                     authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
