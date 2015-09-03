@@ -19,7 +19,7 @@ public interface BusinessInstance {
 
     //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改中,已解除
     public enum BusinessStatus {
-        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFYING,COMPLETE_CANCEL;
+        RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFYING, COMPLETE_CANCEL;
 
         public static EnumSet<BusinessStatus> runningStatus(){
             return EnumSet.of(RUNNING,SUSPEND,MODIFYING);
