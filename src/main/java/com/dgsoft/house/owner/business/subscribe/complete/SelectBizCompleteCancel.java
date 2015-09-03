@@ -8,7 +8,7 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2015-09-02.
- * 将选中的业务，业务状态改成已解除（不参与统计）
+ * 将选中的业务，业务状态改成已解除
  */
 
 @Name("selectBizCompleteCancel")
