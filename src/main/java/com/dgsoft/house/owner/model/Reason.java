@@ -16,7 +16,7 @@ public class Reason implements java.io.Serializable {
 
     public enum ReasonType {
         MODIFY_BEFOR_RENSON, MODIFY_AFTER_RENSON,
-        CHANG_BEFOR_RESON, CHANG_AFTER_RESON, FILL_CHANGE, LOGOUT,RECEIVE
+        CHANG_BEFOR_RESON, CHANG_AFTER_RESON, FILL_CHANGE, LOGOUT,RECEIVE,High_DEBTOR
     }
     private String id;
     private OwnerBusiness ownerBusiness;
