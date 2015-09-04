@@ -4,6 +4,7 @@ import com.dgsoft.common.system.model.Person;
 import com.dgsoft.common.system.model.PersonId;
 import org.jboss.seam.Component;
 import org.jboss.seam.log.Logging;
+import sun.rmi.runtime.Log;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.ParameterizedType;
@@ -40,10 +41,12 @@ public class PersonHelper<E extends PersonEntity>  {
     }
 
     public String getCredentialsNumber() {
+        Logging.getLog(getClass()).debug("getCredentialsNumber" + getPersonEntity().getCredentialsNumber());
         return getPersonEntity().getCredentialsNumber();
     }
 
     public void setCredentialsNumber(String credentialsNumber) {
+        Logging.getLog(getClass()).debug("setCredentialsNumber" + credentialsNumber);
         getPersonEntity().setCredentialsNumber(credentialsNumber);
     }
 
@@ -79,6 +82,7 @@ public class PersonHelper<E extends PersonEntity>  {
     }
 
     public void typeChange() {
+
         isManager = false;
         if ((getCredentialsType() != null) &&  getCredentialsType().equals(PersonEntity.CredentialsType.OTHER)) {
             setCredentialsNumber(NumberBuilder.instance().getSampleNumber("OTHER_PERSON_CARD_NO"));

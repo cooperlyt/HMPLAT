@@ -36,7 +36,8 @@
                 <span class="octicon octicon-file-media" />
             </a:commandLink>
         </a:outputPanel>
-        <h:inputText id="credentialsNumber" disabled="#{(_person.credentialsType.name() eq 'OTHER')}"
+
+        <h:inputText id="credentialsNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
                      label="#{messages.person_field_credentialsNO}"
                      styleClass="form-control"
                      required="true"

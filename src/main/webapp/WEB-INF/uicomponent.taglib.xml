@@ -7,6 +7,16 @@
     <namespace>http://www.dgsoft.com/jsf/html</namespace>
     <tag>
         <description>
+            outPut a object
+        </description>
+        <tag-name>objectOut</tag-name>
+        <component>
+            <component-type>com.dgsoft.faces.ObjectOut</component-type>
+            <renderer-type>com.dgsoft.faces.render.ObjectOut</renderer-type>
+        </component>
+    </tag>
+    <tag>
+        <description>
             outPut a table
         </description>
         <tag-name>entryGrid</tag-name>

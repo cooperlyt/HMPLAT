@@ -4,12 +4,11 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template-view.xhtml">
-
 
 
     <ui:define name="function-tile">
@@ -37,11 +36,30 @@
     </ui:define>
 
 
-    <dh:entryGrid styleClass="detailsTable table table-bordered ">
+
+
+
+    <h:outputStylesheet>
+        .out-time {
+            color: #fcf8e3;
+        }
+
+        .mega-octicon.emp-enable {
+            color: #4078c0 !important;
+        }
+    </h:outputStylesheet>
+
+
+    <dh:entryGrid styleClass="detailsTable table table-bordered " keyWidth="150">
         <dh:entryGridBlock columns="4" rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}">
             <h:outputText value="#{messages.Name}"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{attachCorporationHome.instance.developer.name}"/>
+                <h:outputText value="#{attachCorporationHome.instance.developer.name}" style="padding-right: 10px"
+                              styleClass="#{attachCorporationHome.instance.outTime ? 'out-time' : ''} #{attachCorporationHome.instance.enable ? '' : 'delete-data'} "/>
+                <a:outputPanel styleClass="label label-danger"
+                               rendered="#{not attachCorporationHome.instance.enable}">#{messages.AttachDisable}</a:outputPanel>
+                <a:outputPanel styleClass="label label-warning"
+                               rendered="#{attachCorporationHome.instance.outTime}">#{messages.AttachOutTime}</a:outputPanel>
             </dh:entryGridColumn>
 
         </dh:entryGridBlock>
@@ -80,6 +98,20 @@
 
     </dh:entryGrid>
 
+    <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+        <ui:param name="panelId" value="keyDeleteConfirmPanel"/>
+        <ui:param name="entityTitle" value="#{messages.AttachCorpLogonKey}"/>
+        <ui:define name="deleteNote">
+            <p>#{messages.deleteKeyNote}</p>
+        </ui:define>
+        <a:commandButton styleClass="button button-block danger" action="#{attachEmployeeHome.deleteDeveloperKey}"
+                         value="#{messages.confirmDelete}" oncomplete="$('#keyDeleteConfirmPanel').modal('hide')"
+                         render="attachEmpDatas" immediate="true" execute="@this">
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+    </ui:decorate>
+
+
 
     <ui:decorate template="/layout/edit-modalpanel.xhtml">
         <ui:param name="panelId" value="empEditPanel"/>
@@ -97,40 +129,42 @@
                 <ui:param name="showLabel" value="true"/>
                 <ui:param name="status" value="idStatus"/>
 
-                <h:inputText label="#{messages.AttachEmployee_id}" maxlength="32"
-                             styleClass="form-control"
-                             value="#{attachEmployeeHome.instance.id}"
-                             disabled="#{attachEmployeeHome.managed}"
-                             valueChangeListener="#{attachEmployeeHome.verifyIdAvailable}"
-                             required="true"
-                             id="employeeIdInput">
-                    <f:validateRequired/>
-                    <a:ajax event="change" render="employeeIdField" status="idStatus"/>
-                </h:inputText>
+                <div class="input-group">
+                 <span class="input-group-addon">
+        <h:selectBooleanCheckbox style="width: auto" value="#{attachEmployeeHome.instance.enable}"/>
+      </span>
+                    <h:inputText label="#{messages.AttachEmployee_id}" maxlength="32"
+                                 styleClass="form-control"
+                                 value="#{attachEmployeeHome.instance.id}"
+                                 disabled="#{attachEmployeeHome.managed}"
+                                 valueChangeListener="#{attachEmployeeHome.verifyIdAvailable}"
+                                 required="true"
+                                 id="employeeIdInput">
+                        <f:validateRequired/>
+                        <a:ajax event="change" render="employeeIdField" status="idStatus"/>
+                    </h:inputText>
+                </div>
             </s:decorate>
 
 
+            <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    #{messages.Tel}
+                </ui:define>
+                <ui:param name="for" value="persionPhoneInput"/>
+                <ui:param name="showLabel" value="true"/>
 
-                <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
-                    <ui:define name="label">
-                        #{messages.Tel}
-                    </ui:define>
-                    <ui:param name="for" value="persionPhoneInput"/>
-                    <ui:param name="showLabel" value="true"/>
-
-                    <h:inputText label="#{messages.Tel}" maxlength="15"
-                                 styleClass="form-control"
-                                 validatorMessage="#{messages.requiredPhoneValidator}"
-                                 value="#{attachEmployeeHome.instance.phone}"
-                                 required="true"
-                                 id="persionPhoneInput">
-                        <f:validateRegex
-                                pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
-                        <r:validator event="blur"/>
-                    </h:inputText>
-                </s:decorate>
-
-
+                <h:inputText label="#{messages.Tel}" maxlength="15"
+                             styleClass="form-control"
+                             validatorMessage="#{messages.requiredPhoneValidator}"
+                             value="#{attachEmployeeHome.instance.phone}"
+                             required="true"
+                             id="persionPhoneInput">
+                    <f:validateRegex
+                            pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                    <r:validator event="blur"/>
+                </h:inputText>
+            </s:decorate>
 
 
         </ui:decorate>
@@ -159,58 +193,88 @@
         </ui:define>
     </ui:decorate>
 
-    <h:outputStylesheet>
-        .alert.push .title {
-            border: 0;
-            font-size: inherit;
-        }
-    </h:outputStylesheet>
 
     <h:form id="attachEmpDatas">
+
         <a:outputPanel rendered="#{not empty attachCorporationHome.instance.attachEmployees}">
 
             <div class="sort-bar" style="margin-bottom: 0;">
                 <a:outputPanel layout="block" class="right">
 
-                    <a:commandLink styleClass=" minibutton primary" render="empEditPanel_form" execute="@this" immediate="true"
+                    <a:commandLink styleClass=" minibutton primary" render="empEditPanel_form" execute="@this"
+                                   immediate="true"
                                    oncomplete="$('#empEditPanel').modal({backdrop: 'static'})">
                         <a:attachQueue requestDelay="0"/>
                         <span class="octicon octicon-plus"/>
                         #{messages.AddAttachCorpEmployee}
-
+                        <f:param value="" name="attachEmpId"/>
                     </a:commandLink>
                 </a:outputPanel>
 
                 <h3>#{messages.AttachEmployeeCount} #{' '} #{attachCorporationHome.instance.attachEmployeeList.size}</h3>
             </div>
 
-            <a:outputPanel styleClass="news">
-            <ui:repeat value="#{attachCorporationHome.instance.attachEmployeeList}" var="_emp">
 
-                <div class="alert push">
-                    <div class="body">
-                        <span class="mega-octicon octicon-person"/>
-                    </div>
+            <a:repeat value="#{attachCorporationHome.instance.attachEmployeeList}" var="_emp">
 
-                    <div class="title">
-                        <strong>#{_emp.id} #{_emp.personName}</strong>
-                    </div>
+                <div class="sub-list-item">
+                    <div class="item-body">
+                        <span class="mega-octicon octicon-person #{_emp.enable ? 'emp-enable' : 'emp-disabled'}"/>
 
-                    <div class="details">
-                        <div class="commits pusher-is-only-committer">
-                            <ul>
-                                <li>
-                                    <span class="type-icon octicon octicon-key"/>
-                                    <span style="font-size: 12px;font-weight: bold">受理业务</span>
-                                </li>
-                            </ul>
+
+                        <div class="item-title">
+                            <span style="float: left;"> <s:link value="#{_emp.id}" style="min-width:100px"/> <strong
+                                    class="#{_emp.enable ? '' : 'delete-data'}">  #{_emp.personName}</strong> </span>
+                            <span class="table-actions" style="float: right;">
+                            <a:commandLink styleClass="table-action"
+                                           render="empEditPanel_form" execute="@this"
+                                           immediate="true"
+                                           oncomplete="$('#empEditPanel').modal({backdrop: 'static'})"
+                                           aria-label="#{messages.edit}">
+                                <span class="octicon octicon-pencil"/>
+                                #{messages.edit}
+                                <a:attachQueue requestDelay="0"/>
+                                <f:param value="#{_emp.id}" name="attachEmpId"/>
+                            </a:commandLink>
+
+
+
+                            <s:link styleClass="table-action" title="#{messages.AttachEmpAddKey}"
+                                    view="/func/house/datas/AttachEmpKeyBinding.xhtml">
+                                <span class="octicon octicon-plus"/>
+                                #{messages.AttachEmpAddKey}
+                                <f:param name="attachEmpId" value="#{_emp.id}"/>
+                                <a:attachQueue requestDelay="0"/>
+                            </s:link>
+
+                            </span>
+                        </div>
+
+                        <div class="details" style="clear: both;">
+                            <div class="commits pusher-is-only-committer">
+                                <ul>
+                                    <a:repeat value="#{_emp.developerLogonKeyList}" var="_key">
+                                    <li>
+                                        <span class="type-icon octicon octicon-key" style="color: #60b044;"/>
+                                        <span style="font-size: 12px;font-weight: bold">#{_key.project.name}</span>
+                                        <a:commandLink style="color:#a94442 " execute="@this" immediate="true"
+                                                       render="keyDeleteConfirmPanel_form"
+                                                       oncomplete="$('#keyDeleteConfirmPanel').modal('show')">
+                                            <a:attachQueue requestDelay="0"/>
+                                            <span class="octicon octicon-trashcan"/>
+                                            <f:param name="attachEmpId" value="#{_emp.id}"/>
+                                            <f:param name="keyId" value="#{_key.id}"/>
+                                        </a:commandLink>
+                                    </li>
+                                    </a:repeat>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-            </ui:repeat>
-            </a:outputPanel>
+            </a:repeat>
         </a:outputPanel>
+
 
         <s:div styleClass="blankslate" rendered="#{empty attachCorporationHome.instance.attachEmployees}">
             <span class="mega-octicon octicon-search"></span>
@@ -226,10 +290,12 @@
                     <a:attachQueue requestDelay="0"/>
                     <span class="octicon octicon-plus"/>
                     #{messages.AddAttachCorpEmployee}
+                    <f:param value="" name="attachEmpId"/>
 
                 </a:commandLink></p>
         </s:div>
     </h:form>
+
 
 
 </ui:composition>

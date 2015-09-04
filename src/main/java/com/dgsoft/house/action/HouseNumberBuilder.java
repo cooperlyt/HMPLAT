@@ -22,6 +22,16 @@ public class HouseNumberBuilder {
     private HouseEntityLoader houseEntityLoader;
 
     @Transactional
+    public String useNumber(String type, int length){
+        long number = useNumber(type);
+        StringBuffer result =  new StringBuffer(String.valueOf(number));
+        while (result.length() < length){
+            result.insert(0,'0');
+        }
+        return result.toString();
+    }
+
+    @Transactional
     public long useNumber(String type){
         HouseNumberPool op =  houseEntityLoader.getEntityManager().find(HouseNumberPool.class,type);
         if (op == null){

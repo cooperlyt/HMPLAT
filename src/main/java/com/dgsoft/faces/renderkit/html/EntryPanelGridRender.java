@@ -32,6 +32,8 @@ public class EntryPanelGridRender extends Renderer {
             writer.writeAttribute("style", gridComponent.getStyle(), null);
         }
 
+        int firstColIndex = 0;
+        boolean keyCol = true;
         if (gridComponent.isHaveGroup()) {
 
             writer.startElement("colgroup", component);
@@ -55,19 +57,20 @@ public class EntryPanelGridRender extends Renderer {
             writer.endElement("col");
 
             writer.endElement("colgroup");
-
+            firstColIndex ++;
+            keyCol = false;
         }
 
         writer.startElement("colgroup", component);
 
         int col = gridComponent.getMaxColumn();
-        boolean keyCol = false;
-        for (int i = 1; i < col; i++) {
+
+        for (;firstColIndex < col; firstColIndex++) {
 
 
             writer.startElement("col", component);
 
-            if (!gridComponent.isAutoLastWidth() || (i != (col - 1))) {
+            if (!gridComponent.isAutoLastWidth() || (firstColIndex != (col - 1))) {
 
                 if (keyCol && gridComponent.getKeyWidth() != null)
                     writer.writeAttribute("width",  gridComponent.getKeyWidth() + "px", null);

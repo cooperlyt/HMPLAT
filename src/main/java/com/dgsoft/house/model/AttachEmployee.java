@@ -3,9 +3,7 @@ package com.dgsoft.house.model;
 
 import com.dgsoft.common.system.PersonEntity;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +28,7 @@ public class AttachEmployee implements java.io.Serializable,PersonEntity {
     private Date createTime;
     private Set<EmployeeAttachAction> employeeAttachActions = new HashSet<EmployeeAttachAction>(0);
     private AttachCorporation attachCorporation;
+    private Set<DeveloperLogonKey> developerLogonKeys = new HashSet<DeveloperLogonKey>(0);
 
     public AttachEmployee() {
     }
@@ -185,4 +184,24 @@ public class AttachEmployee implements java.io.Serializable,PersonEntity {
         this.employeeAttachActions = employeeAttachActions;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attachEmployee" , cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<DeveloperLogonKey> getDeveloperLogonKeys() {
+        return developerLogonKeys;
+    }
+
+    public void setDeveloperLogonKeys(Set<DeveloperLogonKey> developerLogonKeys) {
+        this.developerLogonKeys = developerLogonKeys;
+    }
+
+    @Transient
+    public List<DeveloperLogonKey> getDeveloperLogonKeyList(){
+        List<DeveloperLogonKey> result = new ArrayList<DeveloperLogonKey>(getDeveloperLogonKeys());
+        Collections.sort(result, new Comparator<DeveloperLogonKey>() {
+            @Override
+            public int compare(DeveloperLogonKey o1, DeveloperLogonKey o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+        return result;
+    }
 }

@@ -371,6 +371,7 @@
         <param-name>org.atmosphere.cpr.CometSupport.maxInactiveActivity</param-name>
         <param-value>35000</param-value>
     </context-param>
+
     <!--
    <listener>
        <listener-class>com.dgsoft.common.persistence.HibImportEncodeListener</listener-class>
@@ -433,6 +434,11 @@
     </context-param>
 
     <!-- JSF -->
+
+    <context-param>
+        <param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+        <param-value>url</param-value>
+    </context-param>
 
     <context-param>
         <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>

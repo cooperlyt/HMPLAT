@@ -4,9 +4,16 @@
       login-required="true"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="attachCorpId" value="#{attachCorporationHome.id}"/>
     <param name="attachEmpId" value="#{attachEmployeeHome.id}"/>
 
-    <param name="keyId" value="#{attachEmployeeHome.selectKeyId}"/>
+    <navigation from-action="#{attachEmployeeHome.addKey}">
+
+        <rule if-outcome="updated">
+
+            <redirect view-id="/func/house/datas/AttachCorpView.xhtml">
+                <param name="attachCorpId" value="#{attachEmployeeHome.instance.attachCorporation.id}"/>
+            </redirect>
+        </rule>
+    </navigation>
 
 </page>

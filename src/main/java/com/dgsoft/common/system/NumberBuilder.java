@@ -92,6 +92,17 @@ public class NumberBuilder {
     private RunParam runParam;
 
     @Transactional
+    public String getNumber(String type, int length){
+        long number = getNumber(type);
+        StringBuffer result =  new StringBuffer(String.valueOf(number));
+        while (result.length() < length){
+            result.insert(0,'0');
+        }
+        return result.toString();
+    }
+
+
+    @Transactional
     public long getNumber(String type) {
 
         Numbers result = numbers.get(type);
