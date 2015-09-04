@@ -332,6 +332,13 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         Collections.sort(result, new Comparator<HouseBusiness>() {
             @Override
             public int compare(HouseBusiness o1, HouseBusiness o2) {
+                if(o1.getId()==null || o2.getId()==null){
+                    if(o1.getHouseCode()==null || o2.getHouseCode()==null){
+                        return 0;
+                    }else{
+                        return o1.getHouseCode().compareTo(o2.getHouseCode());
+                    }
+                }
                 return o1.getId().compareTo(o2.getId());
             }
         });

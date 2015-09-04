@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich">
+    <ul class="repo-list js-repo-list" id="user-links">
+        <a:repeat var="_houseBusinessList" value="#{ownerBusinessHome.instance.houseBusinessList}">
+
+            <li class="repo-list-item public source">
+                <h3 class="repo-list-name" >
+                   #{messages.House_Id}:#{_houseBusinessList.afterBusinessHouse.houseCode}
+                </h3>
+                <p class="repo-list-description">
+                    <strong>#{messages.Build_Name}:</strong>#{_houseBusinessList.afterBusinessHouse.buildName}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.Developer_id}:</strong>#{_houseBusinessList.afterBusinessHouse.developerCode}   <strong>#{messages.Developer_name}:</strong>#{_houseBusinessList.afterBusinessHouse.developerName}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.House_Code}:</strong>#{_houseBusinessList.afterBusinessHouse.displayHouseCode}   <strong>#{messages.House_Order}:</strong>#{_houseBusinessList.afterBusinessHouse.houseOrder}  <strong>#{messages.House_UseType}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.useType)}  <strong>#{messages.House_Area}:</strong>#{_houseBusinessList.afterBusinessHouse.houseArea}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.House_Address}:</strong>#{_houseBusinessList.afterBusinessHouse.address}
+                </p>
+            </li>
+        </a:repeat>
+    </ul>
+
+</ui:composition>
