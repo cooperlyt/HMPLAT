@@ -404,6 +404,7 @@ public class House implements java.io.Serializable, HouseInfo {
         return getBuild().getMapTime();
     }
 
+    @Override
     @Column(name = "STRUCTURE", length = 32, nullable = false)
     @Size(max = 32)
     @NotNull

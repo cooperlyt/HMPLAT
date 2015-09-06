@@ -24,7 +24,7 @@ public class AttachEmployee implements java.io.Serializable,PersonEntity {
     private String name;
     private PersonEntity.CredentialsType credentialsType;
     private String credentialsNumber;
-    private Boolean enable;
+    private boolean enable;
     private Date createTime;
     private Set<EmployeeAttachAction> employeeAttachActions = new HashSet<EmployeeAttachAction>(0);
     private AttachCorporation attachCorporation;
@@ -144,11 +144,11 @@ public class AttachEmployee implements java.io.Serializable,PersonEntity {
 
 
     @Column(name = "ENABLE")
-    public Boolean getEnable() {
+    public boolean isEnable() {
         return this.enable;
     }
 
-    public void setEnable(Boolean enable) {
+    public void setEnable(boolean enable) {
         this.enable = enable;
     }
 

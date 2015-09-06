@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.AddHouseStatus;
@@ -36,11 +37,11 @@ public class AddDifficulty implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.DIFFICULTY,houseBusiness));
-            List<HouseInfo.HouseStatus> houseStatusList = new ArrayList<HouseInfo.HouseStatus>();
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIFFICULTY,houseBusiness));
+            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
             houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-            houseStatusList.add(HouseInfo.HouseStatus.DIFFICULTY);
-            Collections.sort(houseStatusList, new HouseInfo.StatusComparator());
+            houseStatusList.add(HouseStatus.DIFFICULTY);
+            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
         }

@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.validation;
 import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -20,7 +21,7 @@ public class HouseStatusHaveContactsRecord extends BusinessHouseValid {
     //ValidResultLevel.
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.CONTRACTS_RECORD)){
+        if (businessHouse.getAllStatusList().contains(HouseStatus.CONTRACTS_RECORD)){
             return new ValidResult(ValidResultLevel.SUCCESS);
         }
         return new ValidResult("business_house_status_have_ContactsRecord",ValidResultLevel.ERROR);

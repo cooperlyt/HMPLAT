@@ -2,6 +2,7 @@ package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -357,7 +358,7 @@ public class GridBlock implements java.io.Serializable {
     private String OwnerName;
 
     @Transient
-    private HouseInfo.HouseStatus houseStatus;
+    private HouseStatus houseStatus;
 
     @Transient
     public String getOwnerName() {
@@ -368,11 +369,11 @@ public class GridBlock implements java.io.Serializable {
         OwnerName = ownerName;
     }
     @Transient
-    public HouseInfo.HouseStatus getHouseStatus() {
+    public HouseStatus getHouseStatus() {
         return houseStatus;
     }
     @Transient
-    public void setHouseStatus(HouseInfo.HouseStatus houseStatus) {
+    public void setHouseStatus(HouseStatus houseStatus) {
         this.houseStatus = houseStatus;
     }
 

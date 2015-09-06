@@ -7,6 +7,7 @@ import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.OrderComparator;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseRecord;
@@ -463,7 +464,7 @@ public class BuildHome extends HouseEntityHome<Build> {
                 Collections.sort(unitEntry.getValue(), new Comparator<GridBlock>() {
                     @Override
                     public int compare(GridBlock o1, GridBlock o2) {
-                        return HouseInfo.OrderComparator.getInstance().compare(o1.getHouse().getHouseOrder(), o2.getHouse().getHouseOrder());
+                        return OrderComparator.getInstance().compare(o1.getHouse().getHouseOrder(), o2.getHouse().getHouseOrder());
                     }
                 });
 
@@ -488,7 +489,7 @@ public class BuildHome extends HouseEntityHome<Build> {
         Collections.sort(titles, new Comparator<HouseGridTitle>() {
             @Override
             public int compare(HouseGridTitle o1, HouseGridTitle o2) {
-                return HouseInfo.OrderComparator.getInstance().compare(o1.getTitle(), o2.getTitle());
+                return OrderComparator.getInstance().compare(o1.getTitle(), o2.getTitle());
             }
         });
         result.getHouseGridTitles().add(new HouseGridTitle(result, 0, "", 1));
