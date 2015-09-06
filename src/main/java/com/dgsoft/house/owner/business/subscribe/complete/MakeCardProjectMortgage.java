@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -41,7 +42,7 @@ public class MakeCardProjectMortgage implements TaskCompleteSubscribeComponent {
 
 
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_MORTGAGE,ownerNumberBuilder.useDayNumber(MakeCard.CardType.PROJECT_MORTGAGE.name()));
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_MORTGAGE,NumberBuilder.instance().getDayNumber(MakeCard.CardType.PROJECT_MORTGAGE.name()));
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 

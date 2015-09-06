@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.OwnerEntityHome;
@@ -44,9 +45,9 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
            }
         }
 
+        ;
 
-
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,ownerNumberBuilder.useDayNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,NumberBuilder.instance().getDayNumber(MakeCard.CardType.OWNER_RSHIP.name()));
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 
