@@ -5,8 +5,7 @@ import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import com.dgsoft.developersale.ProjectSellType;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,9 +20,6 @@ import javax.validation.constraints.Size;
 @Table(name = "PROJECT_SELL_INFO", catalog = "HOUSE_OWNER_RECORD")
 public class ProjectSellInfo implements java.io.Serializable {
 
-    public enum ProjectSellType{
-        NOW_SELL, MAP_SELL
-    }
 
 	private String id;
 	private BusinessProject businessProject;
@@ -37,16 +33,23 @@ public class ProjectSellInfo implements java.io.Serializable {
 	private ProjectSellType type;
 
     private String landCardNo;
+    private String landCardType;
+
     private String number;
     private String landProperty;
+
     private Date beginUseTime;
     private Date endUseTime;
     private BigDecimal landArea;
     private String landGetMode;
+    private String landUseType;
 
     private String buildSize;
 
     private ProjectCard projectCard;
+
+    private String createCardNumber;
+    private String createPrepareCardNumber;
 
 
 
@@ -143,6 +146,49 @@ public class ProjectSellInfo implements java.io.Serializable {
 	}
 
 
+    @Column(name = "LAND_CARD_TYPE", nullable = false, length = 32)
+    @Size(max = 32)
+    @NotNull
+    public String getLandCardType() {
+        return landCardType;
+    }
+
+    public void setLandCardType(String landCardType) {
+        this.landCardType = landCardType;
+    }
+
+    @Column(name = "LAND_USE_TYPE",nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    public String getLandUseType() {
+        return landUseType;
+    }
+
+    public void setLandUseType(String landUseType) {
+        this.landUseType = landUseType;
+    }
+
+    @Column(name = "CREATE_CARD_CODE", nullable = false, length = 50)
+    @Size(max = 50)
+    @NotNull
+    public String getCreateCardNumber() {
+        return createCardNumber;
+    }
+
+    public void setCreateCardNumber(String createCardNumber) {
+        this.createCardNumber = createCardNumber;
+    }
+
+    @Column(name = "CREATE_PREPARE_CARD_CODE", nullable = false, length = 50)
+    @Size(max = 50)
+    @NotNull
+    public String getCreatePrepareCardNumber() {
+        return createPrepareCardNumber;
+    }
+
+    public void setCreatePrepareCardNumber(String createPrepareCardNumber) {
+        this.createPrepareCardNumber = createPrepareCardNumber;
+    }
 
     @Column(name = "LAND_CARD_NO", length = 50)
     @Size(max = 50)
