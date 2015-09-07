@@ -42,7 +42,6 @@ public class AddProjectPledge implements TaskCompleteSubscribeComponent {
             houseStatusList.add(HouseStatus.PROJECT_PLEDGE);
             Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-
         }
 
 

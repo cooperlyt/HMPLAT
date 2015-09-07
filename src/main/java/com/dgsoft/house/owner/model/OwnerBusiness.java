@@ -640,6 +640,20 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     /**
+     * 在建工程抵押人
+     */
+    @Transient
+    public BusinessPersion getMortgageProject(){
+        for(BusinessPersion persion:getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_PROJECT)){
+                return persion;
+            }
+        }
+        return null;
+
+    }
+
+    /**
      * 测绘公司
      */
     @Transient

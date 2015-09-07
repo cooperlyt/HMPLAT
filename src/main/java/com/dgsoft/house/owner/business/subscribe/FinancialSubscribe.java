@@ -5,6 +5,7 @@ import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -112,7 +113,10 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
             mortgaegeRegiste = new MortgaegeRegiste(ownerBusinessHome.getInstance());
             mortgaegeRegiste.setFinancial(getInstance());
             ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
+            for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+                houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
+            }
+           // ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
         }else{
             mortgaegeRegiste = ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next();
             if (mortgaegeRegiste.getFinancial() == null){

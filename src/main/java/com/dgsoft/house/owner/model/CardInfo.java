@@ -23,7 +23,7 @@ public class CardInfo  implements Serializable  {
     private String makeEmpCode;
     private String makeEmpName;
     private Date printTime;
-    private BusinessHouseOwner businessHouseOwner;
+
     private MakeCard makeCard;
 
 
@@ -120,13 +120,5 @@ public class CardInfo  implements Serializable  {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OWNER", nullable = false)
-    public BusinessHouseOwner getBusinessHouseOwner() {
-        return businessHouseOwner;
-    }
-
-    public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
-        this.businessHouseOwner = businessHouseOwner;
-    }
+    
 }
