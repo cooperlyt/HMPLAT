@@ -4,6 +4,7 @@ package com.dgsoft.house.owner.model;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import org.apache.batik.gvt.flow.RegionInfo;

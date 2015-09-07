@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.AddHouseStatus;
@@ -39,11 +40,10 @@ public class AddSaleRegister implements TaskCompleteSubscribeComponent {
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
            // houseBusiness.getAfterBusinessHouse().addStatus(HouseInfo.HouseStatus.SALE_REGISTER);
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.SALE_REGISTER, houseBusiness));
-            List<HouseInfo.HouseStatus> houseStatusList = new ArrayList<HouseInfo.HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-            houseStatusList.add(HouseInfo.HouseStatus.SALE_REGISTER);
-            Collections.sort(houseStatusList, new HouseInfo.StatusComparator());
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_REGISTER, houseBusiness));
+            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+            houseStatusList.add(HouseStatus.SALE_REGISTER);
+            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
         }

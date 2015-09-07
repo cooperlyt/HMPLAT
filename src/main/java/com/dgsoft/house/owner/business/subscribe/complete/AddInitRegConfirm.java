@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.AddHouseStatus;
@@ -53,11 +54,10 @@ public class AddInitRegConfirm implements TaskCompleteSubscribeComponent {
 
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseInfo.HouseStatus.INIT_REG_CONFIRM,houseBusiness));
-            List<HouseInfo.HouseStatus> houseStatusList = new ArrayList<HouseInfo.HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-            houseStatusList.add(HouseInfo.HouseStatus.INIT_REG_CONFIRM);
-            Collections.sort(houseStatusList, new HouseInfo.StatusComparator());
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.INIT_REG_CONFIRM,houseBusiness));
+            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+            houseStatusList.add(HouseStatus.INIT_REG_CONFIRM);
+            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
         }
 

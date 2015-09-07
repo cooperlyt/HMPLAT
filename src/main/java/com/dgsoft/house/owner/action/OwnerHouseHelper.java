@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.AddHouseStatus;
 import org.jboss.seam.Component;
@@ -27,8 +28,8 @@ public class OwnerHouseHelper {
     private OwnerEntityLoader ownerEntityLoader;
 
 
-    public List<HouseInfo.HouseStatus> getHouseAllStatus(String houseCode) {
-        List<HouseInfo.HouseStatus> result = new ArrayList<HouseInfo.HouseStatus>();
+    public List<HouseStatus> getHouseAllStatus(String houseCode) {
+        List<HouseStatus> result = new ArrayList<HouseStatus>();
 
 
          for(AddHouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or addHouseStatus.houseBusiness.ownerBusiness.status = 'MODIFYING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL' or (addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) order by remove", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
@@ -43,12 +44,12 @@ public class OwnerHouseHelper {
          }
 
 
-        Collections.sort(result, new HouseInfo.StatusComparator());
+        Collections.sort(result, new HouseStatus.StatusComparator());
         return result;
     }
 
-    public HouseInfo.HouseStatus getMasterStatus(String houseCode){
-        List<HouseInfo.HouseStatus> statuses = getHouseAllStatus(houseCode);
+    public HouseStatus getMasterStatus(String houseCode){
+        List<HouseStatus> statuses = getHouseAllStatus(houseCode);
         if (statuses.isEmpty()){
            return null;
         }else

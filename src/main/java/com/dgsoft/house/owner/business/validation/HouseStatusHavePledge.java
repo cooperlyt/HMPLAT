@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.validation;
 
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import org.jboss.seam.ScopeType;
@@ -34,7 +35,7 @@ public class HouseStatusHavePledge extends BusinessHouseValid {
        // defineIdNames.add("WP11");
     //    ownerEntityLoader.getEntityManager().createQuery("select count(houseBusiness) from HouseBusiness houseBusiness where houseBusiness.houseCode=:houseCode and houuseBusiness.ownerBusiness.status='COMPLETE' and houseBusiness.ownerBusiness.defineId in(:defineIds)",Long.class).setParameter("houseCode",businessHouse.getHouseCode()).setParameter("defineIds",defineIdNames).getSingleResult().compareTo(Long.valueOf(0))>0;
 
-        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.PLEDGE)){
+        if (businessHouse.getAllStatusList().contains(HouseStatus.PLEDGE)){
 
 
             return new ValidResult(ValidResultLevel.SUCCESS);

@@ -1,4 +1,4 @@
-package com.dgsoft.common.system.ws;
+package com.dgsoft.house.owner.ws;
 
 import com.dgsoft.house.model.AttachCorporation;
 import com.dgsoft.house.model.DeveloperLogonKey;
@@ -36,11 +36,18 @@ public class DeveloperService {
                 jsonObject.put("logonStatus", "PASSWORD_ERROR");
             }else if (!AttachCorporation.AttachCorpType.DEVELOPER.equals(key.getAttachEmployee().getAttachCorporation().getType())){
                 jsonObject.put("logonStatus", "TYPE_ERROR");
-            }else {
-                jsonObject.put("logonStatus", "LOGON");
-                jsonObject.put("employeeName", key.getAttachEmployee().getPersonName());
+            }else if (!key.getAttachEmployee().isEnable()) {
+                jsonObject.put("logonStatus", "EMP_DISABLE");
+            }else if (!key.getAttachEmployee().getAttachCorporation().isEnable()) {
+                jsonObject.put("logonStatus", "CORP_DISABLE");
+            }else if (key.getAttachEmployee().getAttachCorporation().isOutTime()) {
+                jsonObject.put("logonStatus", "CORP_OUT_TIME");
+            }else{
+                    jsonObject.put("logonStatus", "LOGON");
+                    jsonObject.put("employeeName", key.getAttachEmployee().getPersonName());
 
-              //  jsonObject.put("corp",)
+                    //  jsonObject.put("corp",)
+
 
             }
 

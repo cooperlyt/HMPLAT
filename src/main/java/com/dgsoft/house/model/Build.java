@@ -376,6 +376,7 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
         this.downFloorCount = downFloorCount;
     }
 
+    @Override
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MAP_TIME", nullable = false, length = 19)
     @NotNull

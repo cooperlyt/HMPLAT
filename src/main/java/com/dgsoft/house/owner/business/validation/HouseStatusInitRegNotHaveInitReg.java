@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.validation;
 import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -20,7 +21,7 @@ public class HouseStatusInitRegNotHaveInitReg extends BusinessHouseValid {
 
     @Override
     public BusinessDataValid.ValidResult valid(BusinessHouse businessHouse) {
-        if (businessHouse.getAllStatusList().contains(HouseInfo.HouseStatus.INIT_REG)){
+        if (businessHouse.getAllStatusList().contains(HouseStatus.INIT_REG)){
             return new BusinessDataValid.ValidResult("business_house_InitReg_status_No_have_InitReg", ValidResultLevel.ERROR);
         }
         return new BusinessDataValid.ValidResult(ValidResultLevel.SUCCESS);

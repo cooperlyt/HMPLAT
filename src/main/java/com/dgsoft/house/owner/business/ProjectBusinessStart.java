@@ -5,6 +5,7 @@ import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.UseTypeWordAdapter;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.action.ProjectHome;
@@ -169,17 +170,17 @@ public class ProjectBusinessStart {
                 lockedHouseCode = new ArrayList<String>(0);
             }
 
-            Map<String,HouseInfo.HouseStatus> houseStatusMap;
+            Map<String,HouseStatus> houseStatusMap;
 
             if (!houseMap.isEmpty()){
-                houseStatusMap = new HashMap<String, HouseInfo.HouseStatus>();
+                houseStatusMap = new HashMap<String, HouseStatus>();
                 for(HouseRecord hr: ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord  houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                         .setParameter("houseCodes",houseMap.keySet()).getResultList()){
                     if (hr.getBusinessHouse().getMasterStatus() != null)
                         houseStatusMap.put(hr.getHouseCode(),hr.getBusinessHouse().getMasterStatus());
                 }
             }else{
-                houseStatusMap = new HashMap<String, HouseInfo.HouseStatus>(0);
+                houseStatusMap = new HashMap<String, HouseStatus>(0);
             }
 
 

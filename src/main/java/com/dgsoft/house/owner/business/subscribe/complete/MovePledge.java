@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.AddHouseStatus;
@@ -38,12 +39,12 @@ public class MovePledge implements TaskCompleteSubscribeComponent {
     public void complete() {
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().remove(new AddHouseStatus(HouseInfo.HouseStatus.PLEDGE,houseBusiness));
+            houseBusiness.getAddHouseStatuses().remove(new AddHouseStatus(HouseStatus.PLEDGE,houseBusiness));
 
-            List<HouseInfo.HouseStatus> houseStatusList = new ArrayList<HouseInfo.HouseStatus>();
+            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
             houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
-            Collections.sort(houseStatusList, new HouseInfo.StatusComparator());
+            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
         }
