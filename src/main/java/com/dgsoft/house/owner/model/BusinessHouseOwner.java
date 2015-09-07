@@ -26,7 +26,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     private String rootAddress;
     private String address;
     private String legalPerson;
-    private Set<CardInfo> cardInfos = new HashSet<CardInfo>(0);
+
 
     //由产权人得房屋没意义，因为有startHouse 和 afterHouse 可以使用 houseBusiness left join afterHouse left join BusinessHouseOwner
     //private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
@@ -135,14 +135,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
         this.address = address;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouseOwner", cascade = CascadeType.ALL)
-    public Set<CardInfo> getCardInfos() {
-        return cardInfos;
-    }
 
-    public void setCardInfos(Set<CardInfo> cardInfos) {
-        this.cardInfos = cardInfos;
-    }
 
     @Column(name = "LEGAL_PERSON", nullable = true, length = 50)
     @Size(max = 50)
