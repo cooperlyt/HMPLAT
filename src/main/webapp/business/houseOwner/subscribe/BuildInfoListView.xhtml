@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich">
+    <ul class="repo-list js-repo-list" id="user-links">
+        <a:repeat var="_businessBuilds" value="#{ownerBusinessHome.instance.businessProject.businessBuilds}">
+
+            <li class="repo-list-item public source">
+                <h3 class="repo-list-name" >
+                    <strong>#{messages.House_BuildCode}:</strong>#{_businessBuilds.buildCode}     <strong>#{messages.Build_Name}:</strong>#{_businessBuilds.name}
+                </h3>
+                <p class="repo-list-description">
+                    <strong>#{messages.Developer_id}:</strong>#{_businessBuilds.developerCode}   <strong>#{messages.Developer_name}:</strong>#{_businessBuilds.developerName}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.House_MapNumber}:</strong>#{_businessBuilds.mapNumber}   <strong>#{messages.House_BlockNo}:</strong>#{_businessBuilds.blockNo} <strong>#{messages.Build_BuildNO}:</strong>#{_businessBuilds.buildNo}  <strong>#{messages.Build_BuildNO}:</strong>#{_businessBuilds.buildNo}   <strong>#{messages.Build_StreetCode}:</strong>#{_businessBuilds.streetCode}  <strong>#{messages.House_DoorNumber}:</strong>#{_businessBuilds.doorNo}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.Build_HouseCount}:</strong>#{_businessBuilds.houseCount}   <strong>#{messages.Build_FloorCount}:</strong>#{_businessBuilds.floorCount} <strong>#{messages.Build_UpFloorCount}:</strong>#{_businessBuilds.upFloorCount}  <strong>#{messages.Build_DownFloorCount}:</strong>#{_businessBuilds.downFloorCount}  <strong>#{messages.Build_UnitCount}:</strong>#{_businessBuilds.unintCount}   <strong>#{messages.House_BuildDevNumber}:</strong>#{_businessBuilds.buildDevNumber}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.House_HouseArea}:</strong>#{_businessBuilds.area}   <strong>#{messages.Build_Type}:</strong>#{dictionary.getWordValue(_businessBuilds.buildType)} <strong>#{messages.Build_Structure}:</strong>#{dictionary.getWordValue(_businessBuilds.structure)} <strong>#{messages.Build_CompleteYear}:</strong>#{_businessBuilds.completeYear} <strong>#{messages.House_MapTime}:</strong>#{_businessBuilds.mapTime}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.Build_HomeArea}:</strong>#{_businessBuilds.homeArea} <strong>#{messages.Build_HomeCount}:</strong>#{_businessBuilds.homeCount}  <strong>#{messages.Build_ShopArea}:</strong>#{_businessBuilds.shopArea}  <strong>#{messages.Build_ShopCount}:</strong>#{_businessBuilds.shopCount}  <strong>#{messages.Build_UnHomeArea}:</strong>#{_businessBuilds.unhomeArea} <strong>#{messages.Build_UnHomeCount}:</strong>#{_businessBuilds.unhomeCount}
+                </p>
+            </li>
+        </a:repeat>
+    </ul>
+
+</ui:composition>
