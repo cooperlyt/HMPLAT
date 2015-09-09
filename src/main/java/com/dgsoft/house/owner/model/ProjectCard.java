@@ -66,8 +66,7 @@ public class ProjectCard implements java.io.Serializable{
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "PRINT_TIME", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "PRINT_TIME", nullable = true, length = 19)
     public Date getPrintTime() {
         return this.printTime;
     }

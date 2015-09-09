@@ -127,7 +127,15 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    public ProjectCard getProjectCardInfo(){
+        if (!getInstance().getMakeCards().isEmpty() &&
+                getInstance().getMakeCards().iterator().next().getProjectCard()!=null){
 
+            return  getInstance().getMakeCards().iterator().next().getProjectCard();
+        }
+        return null;
+
+    }
 
 
     public HouseBusiness getSingleHoues() {

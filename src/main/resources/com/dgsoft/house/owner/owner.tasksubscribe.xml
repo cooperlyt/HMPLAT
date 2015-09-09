@@ -349,7 +349,11 @@
         </description>
     </view-subscribe>
 
-
+    <view-subscribe name="CardInfoProjectView" page="/business/houseOwner/subscribe/CardInfoProjectView.xhtml">
+        <description>
+            预售许可证年号、第号、附记编辑，缮证人信息查看
+        </description>
+    </view-subscribe>
 
     <view-subscribe name="PeopleApplyView" page="/business/houseOwner/subscribe/PeopleApplyView.xhtml">
         <description>
@@ -434,9 +438,19 @@
 
     <edit-subscribe name="persionCorrectProjectEdit" page="/business/houseOwner/subscribe/PersionCorrectProjectEdit.xhtml" component="">
         <description>
-            申请人编辑(在建抵押)
+            申请人编辑(抵押人转成申请人)在建抵押
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="PersionCorrectProjectRshipEdit" page="/business/houseOwner/subscribe/PersionCorrectProjectRshipEdit.xhtml" component="">
+        <description>
+            申请人编辑(开发商转成申请人)预售许可证
+        </description>
+    </edit-subscribe>
+
+
+
+
 
 
     <edit-subscribe name="PersionOwnerEntrustEdit" page="/business/houseOwner/subscribe/PersionOwnerEntrustEdit.xhtml"
@@ -598,7 +612,11 @@
         权证编号、附记编辑，缮证人
     </description>
   </edit-subscribe>
-
+   <edit-subscribe name="cardInfoProjectEdit"  page="/business/houseOwner/subscribe/CardInfoProjectEdit.xhtml" component="">
+        <description>
+            预售许可证年号、第号、附记编辑，缮证人
+        </description>
+    </edit-subscribe>
 
 
 
