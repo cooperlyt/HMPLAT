@@ -44,6 +44,9 @@ public class ProjectSellInfo implements java.io.Serializable {
     private String landGetMode;
     private String landUseType;
 
+
+    private String landAddress;
+
     private String buildSize;
 
     private ProjectCard projectCard;
@@ -136,7 +139,6 @@ public class ProjectSellInfo implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	@Size(max = 20)
 	public ProjectSellType getType() {
 		return this.type;
 	}
@@ -285,4 +287,19 @@ public class ProjectSellInfo implements java.io.Serializable {
     public void setProjectCard(ProjectCard projectCard) {
         this.projectCard = projectCard;
     }
+    @Transient
+    public ProjectSellType[] getProjectSellType(){
+        return ProjectSellType.values();
+    }
+
+    @Column(name = "LAND_ADDRESS", length = 255)
+    @Size(max = 255)
+    public String getLandAddress() {
+        return landAddress;
+    }
+
+    public void setLandAddress(String landAddress) {
+        this.landAddress = landAddress;
+    }
+
 }

@@ -280,6 +280,12 @@ INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALU
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('buildSize.big','big','大','house.project.buildSize','','2',b'1');
 
 
+INSERT INTO WORD_CATEGORY(ID, NAME, MEMO, SYSTEM) VALUES ('project.landCardType','土地权证类型','',b'1');
+
+INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('landCardType.stateOwned','stateOwned','国有土地使用证号','project.landCardType','','1',b'1');
+INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('landCardType.collective','collective','集体土地使用证号','project.landCardType','','2',b'1');
+
+
 INSERT INTO WORD_CATEGORY(ID, NAME, MEMO, SYSTEM) VALUES ('system.empJob','职位','',b'1');
 
 INSERT INTO WORD(ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE) VALUES ('system.empJob.manager','manager','科长','system.empJob','','3',b'1');

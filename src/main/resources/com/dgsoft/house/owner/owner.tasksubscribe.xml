@@ -22,6 +22,22 @@
         </description>
     </view-subscribe>
 
+
+    <view-subscribe name="buildInfoListView" page="/business/houseOwner/subscribe/BuildInfoListView.xhtml">
+        <description>
+           多楼幢信息(预售)查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="projectSellInfoView" page="/business/houseOwner/subscribe/ProjectSellInfoView.xhtml">
+        <description>
+            预售许可证受理信息查看(projectSellInfoView)
+        </description>
+    </view-subscribe>
+
+
+
+
     <!--
       <view-subscribe name="nowOwnerView" page="/business/houseOwner/subscribe/NowHouseOwnerView.xhtml">
           <description>
@@ -316,6 +332,16 @@
             保存生成的单房屋在建工程抵押登记号查看
         </description>
     </view-subscribe>
+
+
+    <view-subscribe name="MakeCardProjectRshipView" page="/business/houseOwner/subscribe/MakeCardProjectRshipView.xhtml">
+        <description>
+            保存生成的预售许可证号查看
+        </description>
+    </view-subscribe>
+
+
+
 
     <view-subscribe name="CardInfoView" page="/business/houseOwner/subscribe/CardInfoView.xhtml">
         <description>
@@ -660,6 +686,16 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="ProjectSellInfoEdit" page="/business/houseOwner/subscribe/ProjectSellInfoEdit.xhtml"
+                    component="">
+        <description>
+            预售许可证受理信息编辑(ProjectSellInfoEdit)
+        </description>
+    </edit-subscribe>
+
+
+
+
 
 
 
@@ -720,6 +756,13 @@
             生成单房屋在建工程许可证号
         </description>
     </end-subscribe>
+
+    <end-subscribe name="makeCardProjectRshipEnd" component="makeCardProjectRship">
+        <description>
+            生成预售许可证号
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="otherPowerCardSingleCompleteEnd" component="otherPowerCardSingleComplete">
         <description>
            单抵押权证，抵押权人，电话，等信息保存
