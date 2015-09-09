@@ -104,6 +104,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private String southWall;
     private String northWall;
     private String direction;
+    private boolean deleted;
 
 
     private boolean haveDownRoom;
@@ -509,6 +510,15 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    @Column(name="DELETED",nullable = false)
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

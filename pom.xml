@@ -261,7 +261,7 @@
         <dependency>
             <groupId>local.house</groupId>
             <artifactId>houseInterface</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.4-SNAPSHOT</version>
         </dependency>
 
 
@@ -609,7 +609,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <classifier>jbas71</classifier>
+
                     <webResources>
                         <resource>
                             <directory>src/main/webapp</directory>
