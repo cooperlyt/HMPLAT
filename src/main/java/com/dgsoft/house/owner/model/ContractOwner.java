@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.model.Person;
+import com.dgsoft.developersale.ProjectSellType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -28,6 +29,12 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private String postCode;
     private Person.Sex sex;
     private HouseContract houseContract;
+
+    private String contractCode;
+    private ProjectSellType type;
+    private Date contractDate;
+    private String houseCode;
+
 
 
     //由备案人得房屋没意义，因为有startHouse 和 afterHouse 可以使用 houseBusiness left join afterHouse left join ContractOwner
@@ -189,5 +196,50 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
 
     public void setHouseContract(HouseContract houseContract) {
         this.houseContract = houseContract;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false, length = 32)
+    @NotNull
+    public ProjectSellType getType() {
+        return this.type;
+    }
+
+    public void setType(ProjectSellType type) {
+        this.type = type;
+    }
+
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CONTRACT_DATE", nullable = false, length = 19)
+    @NotNull
+    public Date getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    @Column(name = "HOUSE_CODE", length = 32, nullable = false)
+    @NotNull
+    @Size(max = 32)
+    public String getHouseCode() {
+        return houseCode;
+    }
+
+    public void setHouseCode(String houseCode) {
+        this.houseCode = houseCode;
+    }
+
+    @Column(name = "CONTRACT_CODE",length = 32,nullable = false)
+    @NotNull
+    @Size(max = 32)
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
     }
 }

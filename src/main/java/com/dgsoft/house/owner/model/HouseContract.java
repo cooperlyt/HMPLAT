@@ -1,6 +1,9 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 24, 2015 1:17:35 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.developersale.ProjectSellType;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
@@ -14,39 +17,16 @@ import javax.validation.constraints.Size;
 @Table(name = "HOUSE_CONTRACT", catalog = "HOUSE_OWNER_RECORD")
 public class HouseContract implements java.io.Serializable {
 
+
 	private String id;
-	private String type;
-	private String password;
-	private BigDecimal price;
-	private Date recordTime;
-	private int partCount;
-	private String payType;
-	private String memo;
-	private String idType;
-	private String idNo;
-	private Date createTime;
-	private String status;
-	private String sellCorporation;
-	private String sellCorporationAddress;
-	private String sellCorporationPost;
-	private String sellCorporationCode;
-	private String sellCorporationNumber;
-	private String sellCorporationLegal;
-	private String sellCorporationCall;
-	private String phone;
-	private Date birthday;
-	private Boolean sex;
-	private String rootAddress;
-	private String address;
-	private String legalPerson;
-	private String postCode;
-	private String businessHouse;
-	private String developerName;
-	private String developerId;
-	private String developerEmployee;
-	private String developerPersonId;
+
+	private String attachEmpId;
+	private String attachEmpName;
+	private String contractText;
+	private int contractVersion;
+
+
 	private ContractOwner contractOwner;
-	private HouseCommerciContract houseCommerciContract;
 
 	public HouseContract() {
 	}
@@ -56,6 +36,8 @@ public class HouseContract implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
@@ -64,315 +46,55 @@ public class HouseContract implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "TYPE", length = 32)
-	@Size(max = 32)
-	public String getType() {
-		return this.type;
-	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
 
-	@Column(name = "PASSWORD", length = 50)
-	@Size(max = 50)
-	public String getPassword() {
-		return this.password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
-	@Column(name = "PRICE", precision = 18, scale = 3)
-	public BigDecimal getPrice() {
-		return this.price;
-	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "RECORD_TIME", nullable = false, length = 19)
-	@NotNull
-	public Date getRecordTime() {
-		return this.recordTime;
-	}
-
-	public void setRecordTime(Date recordTime) {
-		this.recordTime = recordTime;
-	}
-
-	@Column(name = "PART_COUNT", nullable = false)
-	public int getPartCount() {
-		return this.partCount;
-	}
-
-	public void setPartCount(int partCount) {
-		this.partCount = partCount;
-	}
-
-	@Column(name = "PAY_TYPE", length = 32)
-	@Size(max = 32)
-	public String getPayType() {
-		return this.payType;
-	}
-
-	public void setPayType(String payType) {
-		this.payType = payType;
-	}
-
-	@Column(name = "MEMO", length = 200)
-	@Size(max = 200)
-	public String getMemo() {
-		return this.memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
-	@Column(name = "ID_TYPE", nullable = false, length = 32)
+	@Column(name = "ATTACH_EMP_ID", nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-	public String getIdType() {
-		return this.idType;
+	public String getAttachEmpId() {
+		return attachEmpId;
 	}
 
-	public void setIdType(String idType) {
-		this.idType = idType;
+	public void setAttachEmpId(String attachEmpId) {
+		this.attachEmpId = attachEmpId;
 	}
 
-	@Column(name = "ID_NO", nullable = false, length = 100)
+
+	@Column(name = "ATTACH_EMP_NAME", nullable = false, length = 50)
 	@NotNull
-	@Size(max = 100)
-	public String getIdNo() {
-		return this.idNo;
-	}
-
-	public void setIdNo(String idNo) {
-		this.idNo = idNo;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME", nullable = false, length = 19)
-	@NotNull
-	public Date getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	@Column(name = "STATUS", nullable = false, length = 20)
-	@NotNull
-	@Size(max = 20)
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	@Column(name = "SELL_CORPORATION", length = 50)
 	@Size(max = 50)
-	public String getSellCorporation() {
-		return this.sellCorporation;
+	public String getAttachEmpName() {
+		return attachEmpName;
 	}
 
-	public void setSellCorporation(String sellCorporation) {
-		this.sellCorporation = sellCorporation;
+	public void setAttachEmpName(String attachEmpName) {
+		this.attachEmpName = attachEmpName;
 	}
 
-	@Column(name = "SELL_CORPORATION_ADDRESS", length = 50)
-	@Size(max = 50)
-	public String getSellCorporationAddress() {
-		return this.sellCorporationAddress;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "CONTRACT", columnDefinition = "LONGTEXT")
+	public String getContractText() {
+		return contractText;
 	}
 
-	public void setSellCorporationAddress(String sellCorporationAddress) {
-		this.sellCorporationAddress = sellCorporationAddress;
+	public void setContractText(String contractText) {
+		this.contractText = contractText;
 	}
 
-	@Column(name = "SELL_CORPORATION_POST", length = 50)
-	@Size(max = 50)
-	public String getSellCorporationPost() {
-		return this.sellCorporationPost;
+	@Column(name = "CONTRACT_VERSION",nullable = false)
+	public int getContractVersion() {
+		return contractVersion;
 	}
 
-	public void setSellCorporationPost(String sellCorporationPost) {
-		this.sellCorporationPost = sellCorporationPost;
+	public void setContractVersion(int contractVersion) {
+		this.contractVersion = contractVersion;
 	}
 
-	@Column(name = "SELL_CORPORATION_CODE", length = 50)
-	@Size(max = 50)
-	public String getSellCorporationCode() {
-		return this.sellCorporationCode;
-	}
-
-	public void setSellCorporationCode(String sellCorporationCode) {
-		this.sellCorporationCode = sellCorporationCode;
-	}
-
-	@Column(name = "SELL_CORPORATION_NUMBER", length = 50)
-	@Size(max = 50)
-	public String getSellCorporationNumber() {
-		return this.sellCorporationNumber;
-	}
-
-	public void setSellCorporationNumber(String sellCorporationNumber) {
-		this.sellCorporationNumber = sellCorporationNumber;
-	}
-
-	@Column(name = "SELL_CORPORATION_LEGAL", length = 50)
-	@Size(max = 50)
-	public String getSellCorporationLegal() {
-		return this.sellCorporationLegal;
-	}
-
-	public void setSellCorporationLegal(String sellCorporationLegal) {
-		this.sellCorporationLegal = sellCorporationLegal;
-	}
-
-	@Column(name = "SELL_CORPORATION_CALL", length = 15)
-	@Size(max = 15)
-	public String getSellCorporationCall() {
-		return this.sellCorporationCall;
-	}
-
-	public void setSellCorporationCall(String sellCorporationCall) {
-		this.sellCorporationCall = sellCorporationCall;
-	}
-
-	@Column(name = "PHONE", length = 15)
-	@Size(max = 15)
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "BIRTHDAY", nullable = false, length = 19)
-	@NotNull
-	public Date getBirthday() {
-		return this.birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	@Column(name = "SEX")
-	public Boolean getSex() {
-		return this.sex;
-	}
-
-	public void setSex(Boolean sex) {
-		this.sex = sex;
-	}
-
-	@Column(name = "ROOT_ADDRESS", length = 50)
-	@Size(max = 50)
-	public String getRootAddress() {
-		return this.rootAddress;
-	}
-
-	public void setRootAddress(String rootAddress) {
-		this.rootAddress = rootAddress;
-	}
-
-	@Column(name = "ADDRESS", length = 100)
-	@Size(max = 100)
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	@Column(name = "LEGAL_PERSON", length = 50)
-	@Size(max = 50)
-	public String getLegalPerson() {
-		return this.legalPerson;
-	}
-
-	public void setLegalPerson(String legalPerson) {
-		this.legalPerson = legalPerson;
-	}
-
-	@Column(name = "POST_CODE", length = 50)
-	@Size(max = 50)
-	public String getPostCode() {
-		return this.postCode;
-	}
-
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-
-	@Column(name = "BUSINESS_HOUSE", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getBusinessHouse() {
-		return this.businessHouse;
-	}
-
-	public void setBusinessHouse(String businessHouse) {
-		this.businessHouse = businessHouse;
-	}
-
-	@Column(name = "DEVELOPER_NAME", nullable = false, length = 100)
-	@NotNull
-	@Size(max = 100)
-	public String getDeveloperName() {
-		return this.developerName;
-	}
-
-	public void setDeveloperName(String developerName) {
-		this.developerName = developerName;
-	}
-
-	@Column(name = "DEVELOPER_ID", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getDeveloperId() {
-		return this.developerId;
-	}
-
-	public void setDeveloperId(String developerId) {
-		this.developerId = developerId;
-	}
-
-	@Column(name = "DEVELOPER_EMPLOYEE", nullable = false, length = 10)
-	@NotNull
-	@Size(max = 10)
-	public String getDeveloperEmployee() {
-		return this.developerEmployee;
-	}
-
-	public void setDeveloperEmployee(String developerEmployee) {
-		this.developerEmployee = developerEmployee;
-	}
-
-	@Column(name = "DEVELOPER_PERSON_ID", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getDeveloperPersonId() {
-		return this.developerPersonId;
-	}
-
-	public void setDeveloperPersonId(String developerPersonId) {
-		this.developerPersonId = developerPersonId;
-	}
-
-	@OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER",nullable = false)
 	@NotNull
 	public ContractOwner getContractOwner() {
