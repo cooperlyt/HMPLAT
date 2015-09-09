@@ -117,7 +117,7 @@ public class MakeCard implements java.io.Serializable {
         this.businessHouses = businessHouses;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public ProjectCard getProjectCard() {
         return projectCard;

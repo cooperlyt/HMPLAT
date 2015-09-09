@@ -20,6 +20,10 @@ public class ProjectCard implements java.io.Serializable{
     private Date printTime;
     private String memo;
     private MakeCard makeCard;
+    private String makeEmpCode;
+    private String makeEmpName;
+
+
     private ProjectSellInfo projectSellInfo;
 
     public ProjectCard() {
@@ -101,5 +105,28 @@ public class ProjectCard implements java.io.Serializable{
 
     public void setProjectSellInfo(ProjectSellInfo projectSellInfo) {
         this.projectSellInfo = projectSellInfo;
+    }
+
+
+    @Column(name = "MAKE_EMP_CODE", nullable = false, length = 32)
+    @NotNull
+    @Size(max = 32)
+    public String getMakeEmpCode() {
+        return this.makeEmpCode;
+    }
+
+    public void setMakeEmpCode(String makeEmpCode) {
+        this.makeEmpCode = makeEmpCode;
+    }
+
+    @Column(name = "MAKE_EMP_NAME", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getMakeEmpName() {
+        return this.makeEmpName;
+    }
+
+    public void setMakeEmpName(String makeEmpName) {
+        this.makeEmpName = makeEmpName;
     }
 }
