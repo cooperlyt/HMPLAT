@@ -190,6 +190,23 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getReasonByType("High_DEBTOR");
     }
 
+    public Reason getFillChange(){
+
+        return getReasonByType("FILL_CHANGE");
+
+    }
+
+
+
+    public Reason getChangBeforReason(){
+        return getReasonByType("CHANG_BEFOR_RESON");
+    }
+
+    public Reason getChangAfterReason(){
+        return getReasonByType("CHANG_AFTER_RESON");
+    }
+
+
     public Reason getModifyBeforReason(){
         return getReasonByType("MODIFY_BEFOR_RENSON");
     }

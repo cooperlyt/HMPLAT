@@ -12,6 +12,7 @@ import org.jboss.seam.annotations.Name;
  * Date: 14-9-23
  * Time: 上午9:52
  * To change this template use File | Settings | File Templates.
+ * 换证或补证事由
  */
 @Name("resonFillChangeSubscribe")
 public class ResonFillChangeSubscribe extends OwnerEntityHome<Reason> {
