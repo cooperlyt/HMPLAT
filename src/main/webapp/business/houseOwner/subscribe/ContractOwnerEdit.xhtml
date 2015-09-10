@@ -7,6 +7,61 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+
+
+    <div class="form-inline">
+    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+        <ui:define name="label">
+            #{messages.Card_MerchandiseContrao}
+        </ui:define>
+        <ui:param name="for" value="MerchandiseContrao"/>
+        <h:inputText label="#{messages.Card_MerchandiseContrao}"
+                     id="MerchandiseContrao"
+                     value="#{contractOwnerSubscribe.instance.contractCode}"
+                     styleClass="form-control"
+                     maxlength="32"
+                     required="true"/>
+    </s:decorate>
+   </div>
+
+    <div class="form-inline">
+        <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.ContractOwner_contractDate}
+            </ui:define>
+            <ui:param name="for" value="MerchandiseContrao"/>
+            <h:inputText id="contractDate"
+                         styleClass="js-datepicker form-control"
+                         label="#{messages.ContractOwner_contractDate}"
+                         value="#{contractOwnerSubscribe.instance.contractDate}"
+                         autocomplete="off"
+                         required="true">
+                <s:convertDateTime pattern="#{messages.datePattern}"/>
+            </h:inputText>
+        </s:decorate>
+    </div>
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.ContractOwner_type}
+        </ui:define>
+        <ui:param name="for" value="ContractOwner_type"/>
+        <h:selectOneMenu id="ContractOwner_type"
+                         value="#{contractOwnerSubscribe.instance.type}"
+                         styleClass="selectpicker select-menu-btn input-group-first"
+                         label="#{messages.ContractOwner_type}"
+                         required="true">
+            <s:selectItems value="#{contractOwnerSubscribe.instance.projectSellType}"
+                           var="_type" label="#{messages[_type.name()]}"
+                           noSelectionLabel="#{messages.noSelectLabel}"/>
+            <s:convertEnum/>
+
+        </h:selectOneMenu>
+    </s:decorate>
+
+
+
     <ui:param name="label" value="#{messages.RecordOwner}"/>
 
     <ui:decorate template="/layout/system/PersonInput.xhtml">
@@ -150,6 +205,22 @@
                                         </r:select>
 
                                     </s:decorate>
+
+
+
+                                    <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                                        <ui:define name="label">
+                                            #{messages.ContractOwner_legalPerson}
+                                        </ui:define>
+                                        <ui:param name="for" value="legalPerson"/>
+                                        <h:inputText label="#{messages.ContractOwner_legalPerson}"
+                                                     id="legalPerson"
+                                                     value="#{contractOwnerSubscribe.instance.legalPerson}"
+                                                     styleClass="form-control"
+                                                     maxlength="50"/>
+                                    </s:decorate>
+
+
 
 
                                 </div>

@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "OWNER_BUSINESS", catalog = "HOUSE_OWNER_RECORD")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
+public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
 
     private String id;
@@ -46,7 +46,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     private Set<MappingCorp> mappingCorps = new HashSet<MappingCorp>(0);
     private Set<BusinessEmp> businessEmps = new HashSet<BusinessEmp>(0);
     private Set<Card> cards = new HashSet<Card>(0);
-    private Set<MakeCard> makeCards= new HashSet<MakeCard>(0);
+    private Set<MakeCard> makeCards = new HashSet<MakeCard>(0);
     private Set<BusinessPersion> businessPersions = new HashSet<BusinessPersion>(0);
 
     private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
@@ -56,7 +56,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
 
-    private Set<HouseRegInfo>HouseRegInfos= new HashSet<HouseRegInfo>(0);
+    private Set<HouseRegInfo> HouseRegInfos = new HashSet<HouseRegInfo>(0);
 
     private Set<TaskOper> taskOpers = new HashSet<TaskOper>(0);
     private OwnerBusiness selectBusiness;
@@ -121,7 +121,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @Transient
-    public List<ProcessMessage> getProcessMessageList(){
+    public List<ProcessMessage> getProcessMessageList() {
         List<ProcessMessage> result = new ArrayList<ProcessMessage>(getProcessMessages());
         Collections.sort(result, new Comparator<ProcessMessage>() {
             @Override
@@ -154,7 +154,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.defineId = defineId;
     }
 
-    @Column(name ="DEFINE_VERSION", nullable = true)
+    @Column(name = "DEFINE_VERSION", nullable = true)
     public Integer getDefineVersion() {
         return defineVersion;
     }
@@ -185,7 +185,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name="TYPE", nullable = false, length = 20)
+    @Column(name = "TYPE", nullable = false, length = 20)
     @NotNull
     public BusinessType getType() {
         return type;
@@ -249,7 +249,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.cards = cards;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ownerBusiness",cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL})
     public Set<MakeCard> getMakeCards() {
         return makeCards;
     }
@@ -316,7 +316,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
 
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<HouseBusiness> getHouseBusinesses() {
         return this.houseBusinesses;
@@ -327,15 +326,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @Transient
-    public List<HouseBusiness> getHouseBusinessList(){
+    public List<HouseBusiness> getHouseBusinessList() {
         List<HouseBusiness> result = new ArrayList<HouseBusiness>(getHouseBusinesses());
         Collections.sort(result, new Comparator<HouseBusiness>() {
             @Override
             public int compare(HouseBusiness o1, HouseBusiness o2) {
-                if(o1.getId()==null || o2.getId()==null){
-                    if(o1.getHouseCode()==null || o2.getHouseCode()==null){
+                if (o1.getId() == null || o2.getId() == null) {
+                    if (o1.getHouseCode() == null || o2.getHouseCode() == null) {
                         return 0;
-                    }else{
+                    } else {
                         return o1.getHouseCode().compareTo(o2.getHouseCode());
                     }
                 }
@@ -364,7 +363,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.taskOpers = taskOpers;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "SELECT_BUSINESS", nullable = true)
     public OwnerBusiness getSelectBusiness() {
         return selectBusiness;
@@ -374,7 +373,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.selectBusiness = selectBusiness;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", orphanRemoval = true, cascade = CascadeType.ALL)
     public Set<BusinessProject> getBusinessProjects() {
         return businessProjects;
     }
@@ -383,7 +382,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.businessProjects = businessProjects;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness",orphanRemoval = true,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", orphanRemoval = true, cascade = CascadeType.ALL)
     public Set<FactMoneyInfo> getFactMoneyInfos() {
         return factMoneyInfos;
     }
@@ -392,7 +391,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
         this.factMoneyInfos = factMoneyInfos;
     }
 
-    @Column(name = "RECORDED" ,nullable = false)
+    @Column(name = "RECORDED", nullable = false)
     public boolean isRecorded() {
         return recorded;
     }
@@ -473,63 +472,65 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @Transient
-    public BusinessProject getBusinessProject(){
-        if (getBusinessProjects().isEmpty()){
+    public BusinessProject getBusinessProject() {
+        if (getBusinessProjects().isEmpty()) {
             return null;
-        }else{
+        } else {
             return getBusinessProjects().iterator().next();
         }
     }
 
     @Transient
-    public void setBusinessProject(BusinessProject businessProject){
+    public void setBusinessProject(BusinessProject businessProject) {
         getBusinessProjects().clear();
-        if (businessProject != null){
+        if (businessProject != null) {
             getBusinessProjects().add(businessProject);
         }
     }
+
     @Transient
-    public HouseRegInfo getHouseRegInfo(){
-        if (getHouseRegInfos().isEmpty()){
+    public HouseRegInfo getHouseRegInfo() {
+        if (getHouseRegInfos().isEmpty()) {
             return null;
-        }else{
+        } else {
             return getHouseRegInfos().iterator().next();
         }
     }
+
     @Transient
-    public void setHouseRegInfo(HouseRegInfo houseRegInfo){
+    public void setHouseRegInfo(HouseRegInfo houseRegInfo) {
         getHouseRegInfos().clear();
-        if(houseRegInfo !=null){
+        if (houseRegInfo != null) {
             getHouseRegInfos().add(houseRegInfo);
 
         }
     }
 
     @Transient
-    public MortgaegeRegiste getMortgaegeRegiste(){
-        if (getMortgaegeRegistes().isEmpty()){
+    public MortgaegeRegiste getMortgaegeRegiste() {
+        if (getMortgaegeRegistes().isEmpty()) {
             return null;
-        }else{
+        } else {
             return getMortgaegeRegistes().iterator().next();
         }
     }
 
     @Transient
-    public void setMortgaegeRegiste(MortgaegeRegiste mortgaegeRegiste){
+    public void setMortgaegeRegiste(MortgaegeRegiste mortgaegeRegiste) {
         getMortgaegeRegistes().clear();
         getMortgaegeRegistes().add(mortgaegeRegiste);
     }
 
 
     @Transient
-    public List<BusinessMoney> getBusinessMoneyList(){
+    public List<BusinessMoney> getBusinessMoneyList() {
         List<BusinessMoney> result = new ArrayList<BusinessMoney>(getBusinessMoneys());
         Collections.sort(result, OrderBeanComparator.getInstance());
         return result;
     }
 
     @Transient
-    public List<MakeCard> getMakeCardList(){
+    public List<MakeCard> getMakeCardList() {
         List<MakeCard> result = new ArrayList<MakeCard>(getMakeCards());
         return result;
     }
@@ -548,23 +549,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
 
 
     @Transient
-    public String getStarHouseOwnerRshipNo(){
-        String str=null;
-        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
-            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
-                    str = makeCard.getNumber();
-                }
-            }
-        }
-        return str;
-    }
-    @Transient
-    public String getStarHouseNoticeNo(){
-        String str=null;
-        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()){
-            for(MakeCard makeCard:getSingleHoues().getStartBusinessHouse().getOtherPowerCards()){
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
+    public String getStarHouseOwnerRshipNo() {
+        String str = null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()) {
+            for (MakeCard makeCard : getSingleHoues().getStartBusinessHouse().getOtherPowerCards()) {
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)) {
                     str = makeCard.getNumber();
                 }
             }
@@ -573,24 +562,38 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
     }
 
     @Transient
-    public String getStarHouseMortgageNo(){
-        String str=null;
-        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()){
-            for(MakeCard makeCard:getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()){
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)){
+    public String getStarHouseNoticeNo() {
+        String str = null;
+        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()) {
+            for (MakeCard makeCard : getSingleHoues().getStartBusinessHouse().getOtherPowerCards()) {
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
                     str = makeCard.getNumber();
                 }
             }
         }
         return str;
     }
+
+    @Transient
+    public String getStarHouseMortgageNo() {
+        String str = null;
+        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {
+            for (MakeCard makeCard : getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()) {
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)) {
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+
     /**
      * 申请人
      */
     @Transient
-    public BusinessPersion getApplyPersion(){
-        for(BusinessPersion persion:getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)){
+    public BusinessPersion getApplyPersion() {
+        for (BusinessPersion persion : getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)) {
                 return persion;
             }
         }
@@ -601,9 +604,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
      * 抵押权人代理人
      */
     @Transient
-    public BusinessPersion getMortgageObligee(){
-        for(BusinessPersion persion:getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)){
+    public BusinessPersion getMortgageObligee() {
+        for (BusinessPersion persion : getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)) {
                 return persion;
             }
         }
@@ -615,9 +618,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
      * 抵押人代理人
      */
     @Transient
-    public BusinessPersion getMortgage(){
-        for(BusinessPersion persion:getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)){
+    public BusinessPersion getMortgage() {
+        for (BusinessPersion persion : getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)) {
                 return persion;
             }
         }
@@ -629,9 +632,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
      * 债务人
      */
     @Transient
-    public BusinessPersion getMortgageObligor(){
-        for(BusinessPersion persion:getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
+    public BusinessPersion getMortgageObligor() {
+        for (BusinessPersion persion : getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)) {
                 return persion;
             }
         }
@@ -643,9 +646,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
      * 在建工程抵押人
      */
     @Transient
-    public BusinessPersion getMortgageProject(){
-        for(BusinessPersion persion:getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_PROJECT)){
+    public BusinessPersion getMortgageProject() {
+        for (BusinessPersion persion : getBusinessPersions()) {
+            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_PROJECT)) {
                 return persion;
             }
         }
@@ -657,8 +660,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
      * 测绘公司
      */
     @Transient
-    public MappingCorp getMappingCorp(){
-        if(!getMappingCorps().isEmpty()){
+    public MappingCorp getMappingCorp() {
+        if (!getMappingCorps().isEmpty()) {
             return getMappingCorps().iterator().next();
         }
         return null;
@@ -668,13 +671,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance{
      * 评估公司
      */
     @Transient
-    public Evaluate getEvaluate(){
-        if (!getEvaluates().isEmpty()){
+    public Evaluate getEvaluate() {
+        if (!getEvaluates().isEmpty()) {
             return getEvaluates().iterator().next();
         }
         return null;
     }
-
-
 
 }

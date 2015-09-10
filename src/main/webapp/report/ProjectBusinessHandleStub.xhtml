@@ -1,0 +1,343 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="业务受理单（存根联）">
+
+
+
+<p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">业务受理单（存根联）
+    </p:paragraph>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+<p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+    <f:facet name="defaultCell">
+        <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
+                horizontalAlignment="center" verticalAlignment="middle"/>
+    </f:facet>
+
+    <p:cell>
+        <p:paragraph>受理编号</p:paragraph>
+    </p:cell>
+
+    <p:cell horizontalAlignment="left">
+        <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>受理日期</p:paragraph>
+    </p:cell>
+
+    <p:cell horizontalAlignment="left">
+        <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+    </p:cell>
+</p:table>
+
+<p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+    <f:facet name="defaultCell">
+        <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true"
+                horizontalAlignment="center" verticalAlignment="middle"/>
+    </f:facet>
+
+    <p:cell>
+        <p:paragraph>项目编号</p:paragraph>
+    </p:cell>
+    <p:cell>
+        <p:paragraph>#{ownerBusinessHome.instance.businessProject.projectCode}</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>项目名称</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>#{ownerBusinessHome.instance.businessProject.name}</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>申请人</p:paragraph>
+    </p:cell>
+
+    <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+        <p:paragraph
+                rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>项目坐落</p:paragraph>
+    </p:cell>
+
+    <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+        <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
+    </p:cell>
+
+
+    <p:cell>
+        <p:paragraph>受理人</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph
+                rendered="#{not empty ownerBusinessHome.applyEmp}">#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>登记类别</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+    </p:cell>
+
+    <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="center" noWrap="false">
+        <p:paragraph>提供要件</p:paragraph>
+    </p:cell>
+
+    <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+        <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
+            <p:cell borderWidth="0" noWrap="false" fixedHeight="120" verticalAlignment="top" horizontalAlignment="left">
+                <p:paragraph><c:forEach var="_filesesNames" items="#{ownerBusinessHome.instance.uploadFileses}">#{_filesesNames.name}、</c:forEach></p:paragraph>
+            </p:cell>
+        </p:table>
+    </p:cell>
+
+
+    <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="center" noWrap="false">
+        <p:paragraph>收费合计</p:paragraph>
+    </p:cell>
+
+    <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+
+
+        <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
+            <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
+                <p:paragraph><c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
+                #{_businessMoneys.typeName}
+                </c:forEach>
+                合计：#{ownerBusinessHome.total.factMoney}
+                </p:paragraph>
+            </p:cell>
+
+        </p:table>
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>申请人签字：</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>代理人签字：</p:paragraph>
+    </p:cell>
+    <p:cell>
+
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>取证时间：</p:paragraph>
+    </p:cell>
+
+    <p:cell>
+
+    </p:cell>
+
+    <p:cell>
+        <p:paragraph>领证人：</p:paragraph>
+    </p:cell>
+
+
+    <p:cell>
+
+    </p:cell>
+    <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false" border="0">
+        <p:paragraph>
+            备注：1、申请人请按业务受理单规定的领证时间，产权人或共有人携业务受理单、缴款收据、身份证到房地产交易中心二楼发证办领取房屋所有权证。
+            2、委托取证的需受托人持经公证的授权委托书、业务受理单、缴款收据及受托人身份证领取房屋所有权证。
+        </p:paragraph>
+    </p:cell>
+
+</p:table>
+
+</p:font>
+<p:newPage/>
+
+<p:newPage>
+
+    <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:paragraph alignment="center">业务受理单（领证联）
+        </p:paragraph>
+    </p:font>
+
+
+    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+        <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
+                        horizontalAlignment="center" verticalAlignment="middle"/>
+            </f:facet>
+
+            <p:cell>
+                <p:paragraph>受理编号</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>受理日期</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                        pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+            </p:cell>
+        </p:table>
+
+        <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+            <f:facet name="defaultCell">
+                <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true"
+                        horizontalAlignment="center" verticalAlignment="middle"/>
+            </f:facet>
+
+            <p:cell>
+                <p:paragraph>项目编号</p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>#{ownerBusinessHome.instance.businessProject.developerCode}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>项目名称</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>#{ownerBusinessHome.instance.businessProject.name}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>申请人</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                <p:paragraph
+                        rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>房屋坐落</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
+            </p:cell>
+
+
+            <p:cell>
+                <p:paragraph>受理人</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph
+                        rendered="#{not empty ownerBusinessHome.applyEmp}">#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>登记类别</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="center" noWrap="false">
+                <p:paragraph>提供要件</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
+                    <p:cell borderWidth="0" noWrap="false" fixedHeight="120" verticalAlignment="top" horizontalAlignment="left">
+                        <p:paragraph><c:forEach var="_filesesNames" items="#{ownerBusinessHome.instance.uploadFileses}">#{_filesesNames.name}、</c:forEach></p:paragraph>
+                    </p:cell>
+                </p:table>
+            </p:cell>
+
+
+            <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="center" noWrap="false">
+                <p:paragraph>收费合计</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+
+
+                <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
+                    <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
+                        <p:paragraph><c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
+                            #{_businessMoneys.typeName}
+                        </c:forEach>
+                            合计：#{ownerBusinessHome.total.factMoney}
+                        </p:paragraph>
+                    </p:cell>
+
+                </p:table>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>申请人签字：</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>代理人签字：</p:paragraph>
+            </p:cell>
+            <p:cell>
+
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>取证时间：</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>领证人：</p:paragraph>
+            </p:cell>
+
+
+            <p:cell>
+
+            </p:cell>
+            <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false" border="0">
+                <p:paragraph>
+                    备注：1、申请人请按业务受理单规定的领证时间，产权人或共有人携业务受理单、缴款收据、身份证到房地产交易中心二楼发证办领取房屋所有权证。
+                    2、委托取证的需受托人持经公证的授权委托书、业务受理单、缴款收据及受托人身份证领取房屋所有权证。
+                </p:paragraph>
+            </p:cell>
+
+        </p:table>
+
+    </p:font>
+
+</p:newPage>
+
+
+</p:document>
