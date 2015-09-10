@@ -68,6 +68,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('12','房地产抵押权设�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('13','在建工程抵押登记房屋明细表','在建工程抵押登记房屋明细表','/report/ApplyProjectMortgageHouseList.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('14','业务受理单（项目）','业务受理单（项目）','/report/ProjectBusinessHandleStub.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('15','房地产登记受理审核业务书（项目）','房地产登记受理审核业务书（项目）','/report/ReisterApplyProjectCheckTable.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('16','房屋所有权初始登记申请书','房屋所有权初始登记申请书','/report/ApplyInitReisterBook.xhtml');
 
 
 -- 收费种类
