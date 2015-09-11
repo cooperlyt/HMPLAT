@@ -70,6 +70,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('14','业务受理单（项�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('15','房地产登记受理审核业务书（项目）','房地产登记受理审核业务书（项目）','/report/ReisterApplyProjectCheckTable.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('16','房屋所有权初始登记申请书','房屋所有权初始登记申请书','/report/ApplyInitReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('17','房地产更正登记登记、异议登记、换证、补证申请书','房地产更正登记登记、异议登记、换证、补证申请书','/report/ApplyCorrectObjectionChangeFillReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('18','预购商品房预告登记设立申请书','预购商品房预告登记设立申请书','/report/ApplyCommodityNoticeReisterBook.xhtml');
 
 
 -- 收费种类
