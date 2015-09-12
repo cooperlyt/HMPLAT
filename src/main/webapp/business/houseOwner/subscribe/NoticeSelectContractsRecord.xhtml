@@ -11,17 +11,18 @@
 
     <ui:define name="itemDescription">
         <p class="repo-list-description">
-            #{messages.House_Id}:#{_item.singleHoues.houseCode}  #{messages.HOUSE_MBBH}:#{_item.singleHoues.afterBusinessHouse.displayHouseCode}     #{messages.House_MapNumber}:#{_item.singleHoues.afterBusinessHouse.mapNumber}     #{messages.House_BlockNo}:#{_item.singleHoues.afterBusinessHouse.blockNo}   #{messages.Build_BuildNO}:#{_item.singleHoues.afterBusinessHouse.buildNo}   #{messages.House_Order}:#{_item.singleHoues.afterBusinessHouse.houseOrder}
+            <strong>#{messages.House_Id}:</strong>#{_item.singleHoues.houseCode}  <strong>#{messages.HOUSE_MBBH}:</strong>#{_item.singleHoues.afterBusinessHouse.displayHouseCode}     <strong>#{messages.House_MapNumber}:</strong>#{_item.singleHoues.afterBusinessHouse.mapNumber}     <strong>#{messages.House_BlockNo}:</strong>#{_item.singleHoues.afterBusinessHouse.blockNo}   <strong>#{messages.Build_BuildNO}:</strong>#{_item.singleHoues.afterBusinessHouse.buildNo}   <strong>#{messages.House_Order}:</strong>#{_item.singleHoues.afterBusinessHouse.houseOrder}
         </p>
         <p class="repo-list-description">
-            #{messages.Financial}:#{_item.mortgaegeRegiste.financial.name}    #{messages.Mortgager}:#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.personName}   #{messages.Mortgager}#{messages.person_field_credentialsNO}:#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.credentialsNumber}
+        </p>
+
+        <p class="repo-list-description">
+
         </p>
         <p class="repo-list-description">
-            #{messages.MORTGAGE_OBLIGOR}：#{_item.mortgageObligor.personName}
         </p>
-        <p class="repo-list-description">
-            #{messages.OWNER_RSHIP}:#{_item.starHouseOwnerRshipNo}   #{messages.MORTGAGE_CARD}:#{_item.starHouseMortgageNo}
-        </p>
+
 
 
     </ui:define>
+</ui:composition>

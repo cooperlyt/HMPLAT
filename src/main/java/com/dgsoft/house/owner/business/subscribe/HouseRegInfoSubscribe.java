@@ -6,6 +6,7 @@ import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseRegInfo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by Administrator on 15-7-23.
@@ -22,16 +23,21 @@ public class HouseRegInfoSubscribe extends OwnerEntityHome<HouseRegInfo> {
     public void create(){
 
         super.create();
-        if(!ownerBusinessHome.getInstance().getHouseRegInfos().isEmpty()){
-            setId(ownerBusinessHome.getInstance().getHouseRegInfos().iterator().next().getId());
-        }else {
-            getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-            ownerBusinessHome.getInstance().getHouseRegInfos().add(getInstance());
-            for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-                houseBusiness.getAfterBusinessHouse().setHouseRegInfo(getInstance());
+        if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo()!=null){
+            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId()==null){
+                setInstance(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo());
+
+            }else {
+                setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId());
             }
 
+
+        }else{
+            clearInstance();
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setHouseRegInfo(getInstance());
+
         }
+
 
 
 

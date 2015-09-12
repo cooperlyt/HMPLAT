@@ -10,7 +10,7 @@
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}">
 
         <ui:include src="/layout/house/HouseOwnerView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.DeclareOwner}"/>
+            <ui:param name="nameLabel" value="#{messages.DeclareOwner_view}"/>
             <ui:param name="businessHouse"
                       value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner}"/>
         </ui:include>

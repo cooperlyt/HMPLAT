@@ -880,6 +880,14 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addMasterStatusEnd" component="addMasterStatus">
+        <description>
+           根据房屋子状态生成主状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
+
 
     <end-subscribe name="moveContractsRecordEnd" component="moveContractsRecord">
         <description>
@@ -892,7 +900,11 @@
             删除抵押状态(单，多房屋)
         </description>
     </end-subscribe>
-
+    <end-subscribe name="MoveSaleRegisterEnd" component="MoveSaleRegister">
+        <description>
+            删除预购商品房预告登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
 
 
 
@@ -944,6 +956,12 @@
     <end-subscribe name="markSelectMortgageProjectCardStateEnd" component="markSelectMortgageProjectCardState">
         <description>
             作废所选中业务的在建工程抵押证明
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="markSelectNoticeCardStateEnd" component="markSelectNoticeCardState">
+        <description>
+            作废所选中业务的预告登记证明号
         </description>
     </end-subscribe>
 
@@ -1189,28 +1207,36 @@
 
     <create-component type="DATA_FILL" component="businessHouseOwnerFill">
         <description>
-            产权人信息提取
+            产权人信息提取(连接)
         </description>
     </create-component>
 
 
     <create-component type="DATA_FILL" component="businessPoolFill">
         <description>
-            共有权人信息提取
+            共有权人信息提取(连接)
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="businessHouseOwnerInput">
+        <description>
+            产权人信息提取(新建)
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="businessPoolInput">
+        <description>
+            共有权人信息提取(新建)
         </description>
     </create-component>
 
     <create-component type="DATA_FILL" component="houseRegInfoFill">
         <description>
-            产别,产权来源提取(连接提取)
+            产别,产权来源提取(新建)
         </description>
     </create-component>
 
-    <create-component type="DATA_FILL" component="houseRegInfoInput">
-        <description>
-            产别,产权来源提取(新建,编辑提取,更正登记)
-        </description>
-    </create-component>
+
 
     <create-component type="DATA_FILL" component="houseInfoFill">
         <description>

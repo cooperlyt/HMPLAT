@@ -27,8 +27,10 @@ public class BusinessPoolFill implements BusinessDataFill {
       if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
           for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
               houseBusiness.getAfterBusinessHouse().setPoolType(houseBusiness.getStartBusinessHouse().getPoolType());
-              for (BusinessPool businessPool : houseBusiness.getStartBusinessHouse().getBusinessPools()) {
-                  houseBusiness.getAfterBusinessHouse().getBusinessPools().add(businessPool);
+              if(!houseBusiness.getStartBusinessHouse().getBusinessPools().isEmpty()) {
+                  for (BusinessPool businessPool : houseBusiness.getStartBusinessHouse().getBusinessPools()) {
+                      houseBusiness.getAfterBusinessHouse().getBusinessPools().add(businessPool);
+                  }
               }
           }
       }
