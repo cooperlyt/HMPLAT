@@ -9,6 +9,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import org.apache.batik.gvt.flow.RegionInfo;
 import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -143,6 +144,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.districtName = houseInfo.getDistrictName();
     }
 
+
+
     public BusinessHouse(HouseInfo houseInfo) {
         modifyFormMapHouse(houseInfo);
     }
@@ -150,8 +153,11 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     public BusinessHouse(BusinessHouse houseInfo) {
 
         this((HouseInfo)houseInfo);
+        if (houseInfo.getHouseRegInfo() != null){
 
 
+            this.houseRegInfo = new HouseRegInfo(houseInfo.getHouseRegInfo());
+        }
 
         if (houseInfo.getLandInfo() != null){
             this.landInfo = new LandInfo(houseInfo.getLandInfo());
@@ -160,6 +166,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         otherPowerCards.addAll(houseInfo.getOtherPowerCards());
 
     }
+
+
 
 
     @Id

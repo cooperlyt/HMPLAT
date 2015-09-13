@@ -66,9 +66,12 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('10','询问笔录（抵押�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('11','房地产抵押权变更登记和注销登记申请书(抵押注销)','房地产抵押权变更登记和注销登记申请书(抵押注销)','/report/ApplyHouseMortgageLogoutReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('12','房地产抵押权设立登记申请书(在建)','房地产抵押权设立登记申请书(在建)','/report/ApplyProjectMortgageReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('13','在建工程抵押登记房屋明细表','在建工程抵押登记房屋明细表','/report/ApplyProjectMortgageHouseList.xhtml');
-
-
-
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('14','业务受理单（项目）','业务受理单（项目）','/report/ProjectBusinessHandleStub.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('15','房地产登记受理审核业务书（项目）','房地产登记受理审核业务书（项目）','/report/ReisterApplyProjectCheckTable.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('16','房屋所有权初始登记申请书','房屋所有权初始登记申请书','/report/ApplyInitReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('17','房地产更正登记登记、异议登记、换证、补证申请书','房地产更正登记登记、异议登记、换证、补证申请书','/report/ApplyCorrectObjectionChangeFillReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('18','预购商品房预告登记设立申请书','预购商品房预告登记设立申请书','/report/ApplyCommodityNoticeReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('19','预购商品房预告变更登记设立申请书','预购商品房预告变更登记设立申请书','/report/ApplyCommodityNoticeChangeReisterBook.xhtml');
 
 
 -- 收费种类

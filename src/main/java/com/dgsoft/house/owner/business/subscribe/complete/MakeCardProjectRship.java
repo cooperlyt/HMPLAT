@@ -7,6 +7,9 @@ import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by wxy on 2015-09-09.
  * 预售许可证编号
@@ -20,6 +23,8 @@ public class MakeCardProjectRship implements TaskCompleteSubscribeComponent {
     public void valid() {
 
     }
+    @In(create = true)
+    private NumberBuilder numberBuilder;
 
     @Override
     public boolean isPass() {
@@ -34,8 +39,13 @@ public class MakeCardProjectRship implements TaskCompleteSubscribeComponent {
                 return;
             }
         }
+        SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+        String datePart = numberDateformat.format(new Date());
+        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.PROJECT_RSHIP.name()));
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_RSHIP, NumberBuilder.instance().getDayNumber(MakeCard.CardType.PROJECT_RSHIP.name()));
+
+
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_RSHIP, no);
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
     }

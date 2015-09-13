@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋所有权变更登记申请书">
+            title="预购商品房预告登记设立申请书">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">房屋所有权变更登记申请书
+    <p:paragraph alignment="center">预购商品房预告登记设立申请书
     </p:paragraph>
 </p:font>
 
@@ -37,7 +37,7 @@
 <f:facet name="defaultCell">
     <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
 </f:facet>
-<p:cell fixedHeight="240">
+<p:cell fixedHeight="300">
     <p:paragraph>申
         请
         人
@@ -51,7 +51,32 @@
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
         </f:facet>
         <p:cell fixedHeight="40">
-            <p:paragraph>姓名(名称)</p:paragraph>
+            <p:paragraph>预售人(名称)</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthLeft="0">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.developerName}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph>联系电话</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" borderWidthRight="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="40">
+            <p:paragraph>证件类型</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph>证件号码</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthLeft="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+
+        <p:cell fixedHeight="40">
+            <p:paragraph>预购人姓名(名称)</p:paragraph>
         </p:cell>
         <p:cell colspan="3" borderWidthLeft="0">
             <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
@@ -110,7 +135,7 @@
     </p:table>
 </p:cell>
 
-<p:cell fixedHeight="156">
+<p:cell fixedHeight="180">
     <p:paragraph>申
         请
         内
@@ -120,43 +145,55 @@
 
 
 <p:cell>
-    <p:table columns="2" widths="1 4.5" headerRows="0" footerRows="0" widthPercentage="100">
+    <p:table columns="4" widths="0.5 1 0.5 1" headerRows="0" footerRows="0" widthPercentage="100">
         <f:facet name="defaultCell">
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
         </f:facet>
         <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
             <p:paragraph>房屋坐落</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" borderWidthTop="0">
+        <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
             <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
         </p:cell>
+
         <p:cell borderWidthLeft="0" fixedHeight="30">
-            <p:paragraph>房屋所有权证号</p:paragraph>
+            <p:paragraph>建筑面积</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
-            <p:paragraph>#{ownerBusinessHome.instance.starHouseOwnerRshipNo}</p:paragraph>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
         </p:cell>
-        <p:cell colspan="2" borderWidthLeft="0" horizontalAlignment="top" verticalAlignment="left" fixedHeight="40" >
-            <p:paragraph>        因 □ 所有权人的姓名或者名称   □房屋坐落的街道、门牌号、□ 房屋面积的增加或者减少、同一所有权人的分割或合并  □其他法定情形,申请#{ownerBusinessHome.instance.defineName}。</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更前</p:paragraph>
+
+        <p:cell borderWidthLeft="0" fixedHeight="30">
+            <p:paragraph>规划用途</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
-            <p:paragraph>#{ownerBusinessHome.modifyBeforReason.reason}</p:paragraph>
+            <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.useType)}</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更后</p:paragraph>
+
+        <p:cell borderWidthLeft="0" fixedHeight="30">
+            <p:paragraph>房号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
-            <p:paragraph>#{ownerBusinessHome.modifyAfterReason.reason}</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.houseOrder}</p:paragraph>
         </p:cell>
-        <p:cell colspan="2" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="80">
+
+        <p:cell borderWidthLeft="0" fixedHeight="30">
+            <p:paragraph>合同备案号</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.contractOwner.contractCode}</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="4" borderWidthLeft="0" horizontalAlignment="center" verticalAlignment="middle" fixedHeight="50" >
+            <p:paragraph>    因□预购预售人所售商品房□其他法定情形，申请#{ownerBusinessHome.instance.defineName}。</p:paragraph>
+        </p:cell>
+        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
+
     </p:table>
 </p:cell>
-<p:cell colspan="2" fixedHeight="150">
+<p:cell colspan="2" fixedHeight="130">
     <p:table columns="5" widths="0.5 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
         <f:facet name="defaultCell">
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" border="0" noWrap="false" borderWidthTop="0"/>

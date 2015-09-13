@@ -10,6 +10,9 @@ import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Administrator on 15-5-28.
  */
@@ -20,7 +23,8 @@ public class MakeCardProjectMortgage implements TaskCompleteSubscribeComponent {
 
 
     @In(create = true)
-    private OwnerNumberBuilder ownerNumberBuilder;
+    private NumberBuilder numberBuilder;
+
 
 
     @Override
@@ -39,10 +43,14 @@ public class MakeCardProjectMortgage implements TaskCompleteSubscribeComponent {
                 return;
             }
         }
+        SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+        String datePart = numberDateformat.format(new Date());
+        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.PROJECT_MORTGAGE.name()));
 
 
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_MORTGAGE,NumberBuilder.instance().getDayNumber(MakeCard.CardType.PROJECT_MORTGAGE.name()));
+
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_MORTGAGE,no);
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 

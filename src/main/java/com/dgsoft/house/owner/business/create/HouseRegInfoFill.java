@@ -12,7 +12,7 @@ import org.jboss.seam.log.Logging;
 
 /**
  * Created by Administrator on 15-8-1.
- * 产别，产权来源 每个可以走的业务都配，eg抵押的时候是连接，交易的时候编辑
+ * 产别，产权来源 新建填充
  */
 @Name("houseRegInfoFill")
 public class HouseRegInfoFill implements BusinessDataFill {
@@ -26,8 +26,10 @@ public class HouseRegInfoFill implements BusinessDataFill {
       if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
 
           for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-              houseBusiness.getAfterBusinessHouse().setHouseRegInfo(houseBusiness.getStartBusinessHouse().getHouseRegInfo());
-              // Logging.getLog(getClass()).debug("houseBusiness.getAfterBusinessHouse().setHouseRegInfo: " +houseBusiness.getAfterBusinessHouse().getHouseRegInfo());
+              HouseRegInfo houseRegInfo = houseBusiness.getStartBusinessHouse().getHouseRegInfo();
+              if(houseRegInfo!=null) {
+                  houseBusiness.getAfterBusinessHouse().setHouseRegInfo(new HouseRegInfo(houseRegInfo));
+              }
           }
       }
 

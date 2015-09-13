@@ -12,6 +12,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 import sun.util.logging.resources.logging;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Administrator on 15-5-28.
  */
@@ -24,7 +27,8 @@ public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
 
 
     @In(create = true)
-    private OwnerNumberBuilder ownerNumberBuilder;
+    private NumberBuilder numberBuilder;
+
 
 
     @Override
@@ -46,9 +50,13 @@ public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
             }
         }
 
+        SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+        String datePart = numberDateformat.format(new Date());
+        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
 
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.MORTGAGE_CARD, NumberBuilder.instance().getDayNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
+
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.MORTGAGE_CARD,no);
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 

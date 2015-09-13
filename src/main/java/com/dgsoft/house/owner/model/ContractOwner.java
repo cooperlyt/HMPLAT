@@ -242,4 +242,10 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     public void setContractCode(String contractCode) {
         this.contractCode = contractCode;
     }
+
+
+    @Transient
+    public ProjectSellType[] getProjectSellType(){
+        return ProjectSellType.values();
+    }
 }

@@ -12,6 +12,10 @@ import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
+import sun.rmi.runtime.Log;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 15-5-27.
@@ -22,9 +26,9 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
    @In
    private OwnerBusinessHome ownerBusinessHome;
 
-
    @In(create = true)
-   private OwnerNumberBuilder ownerNumberBuilder;
+   private NumberBuilder numberBuilder;
+
 
     @Override
     public void valid() {
@@ -44,10 +48,12 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
              return;
            }
         }
+        SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+        String datePart = numberDateformat.format(new Date());
+        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
 
-        ;
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,NumberBuilder.instance().getDayNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,no);
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 

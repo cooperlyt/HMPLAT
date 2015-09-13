@@ -9,6 +9,7 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2015-08-14.
+ * 备案人
  */
 @Name("contractOwnerSubscribe")
 public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
@@ -39,6 +40,7 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
     public  ContractOwner createInstance(){
         ContractOwner result = new ContractOwner();
         result.setOwnerBusiness(ownerBusinessHome.getInstance());
+        result.setHouseCode(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseCode());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(result);
         return result;
 
@@ -53,6 +55,7 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
         }else{
             clearInstance();
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(getInstance());
+            getInstance().setHouseCode(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseCode());
         }
     }
 

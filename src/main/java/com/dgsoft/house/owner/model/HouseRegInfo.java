@@ -17,17 +17,13 @@ public class HouseRegInfo implements java.io.Serializable {
     private String id;
     private String houseFrom;
     private String houseProperty;
-    private OwnerBusiness ownerBusiness;
 
     public HouseRegInfo() {
     }
 
-    public HouseRegInfo(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
-    }
 
-    public HouseRegInfo(OwnerBusiness ownerBusiness, HouseRegInfo houseRegInfo) {
-        this.ownerBusiness = ownerBusiness;
+
+    public HouseRegInfo(HouseRegInfo houseRegInfo) {
         this.houseFrom = houseRegInfo.getHouseFrom();
         this.houseProperty = houseRegInfo.getHouseProperty();
     }
@@ -70,14 +66,5 @@ public class HouseRegInfo implements java.io.Serializable {
         this.houseProperty = houseProperty;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS",nullable = false)
-    @NotNull
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
-    }
 
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
-    }
 }
