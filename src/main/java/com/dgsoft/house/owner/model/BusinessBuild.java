@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "BUILD", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessBuild implements java.io.Serializable, BuildInfo {
+public class BusinessBuild implements java.io.Serializable, BuildInfo{
 
 	private String id;
 	private BusinessProject businessProject;
@@ -398,4 +398,5 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo {
     public String getSectionCode() {
         return getBusinessProject().getSectionCode();
     }
+
 }

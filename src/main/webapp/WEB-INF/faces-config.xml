@@ -4,6 +4,11 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
+    <converter>
+        <converter-id>dgsoft.faces.BigMoneyConverter</converter-id>
+        <converter-class>com.dgsoft.faces.convert.BigMoneyConverter</converter-class>
+    </converter>
+
     <component>
         <component-type>com.dgsoft.faces.EntryColumn</component-type>
         <component-class>com.dgsoft.faces.component.UIEntryColumn</component-class>

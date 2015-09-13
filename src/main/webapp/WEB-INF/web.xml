@@ -482,5 +482,16 @@
         <url-pattern>/DictrictWS</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DeveloperService</servlet-name>
+        <servlet-class>com.dgsoft.house.owner.ws.DeveloperService</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DeveloperService</servlet-name>
+        <url-pattern>/DeveloperService</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

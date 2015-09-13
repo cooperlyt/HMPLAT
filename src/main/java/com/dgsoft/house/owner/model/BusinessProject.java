@@ -7,9 +7,7 @@ import com.dgsoft.house.model.Project;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -220,6 +218,25 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
 
     public void setBusinessBuilds(Set<BusinessBuild> businessBuilds) {
         this.businessBuilds = businessBuilds;
+    }
+
+    @Transient
+    public List<BusinessBuild> getBusinessBuildList(){
+        List<BusinessBuild> result = new ArrayList<BusinessBuild>(getBusinessBuilds());
+        Collections.sort(result, new Comparator<BusinessBuild>() {
+            @Override
+            public int compare(BusinessBuild o1, BusinessBuild o2) {
+                if (o1.getId() == null && o2.getId() == null){
+                    return 0;
+                }else if (o1.getId() == null){
+                    return -1;
+                }else if (o2.getId() == null){
+                    return 1;
+                }else
+                    return o1.getId().compareTo(o2.getId());
+            }
+        });
+        return result;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
