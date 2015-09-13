@@ -550,6 +550,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     @Transient
+    public String getAfterHouseNoticeNo() {
+        String str = null;
+        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {
+            for (MakeCard makeCard : getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()) {
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+
+    @Transient
     public String getStarHouseMortgageNo() {
         String str = null;
         if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {

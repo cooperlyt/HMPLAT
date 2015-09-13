@@ -300,6 +300,14 @@
         </description>
     </view-subscribe>
 
+
+    <view-subscribe name="DeclareOwnerStartView" page="/business/houseOwner/subscribe/DeclareOwnerStartView.xhtml">
+        <description>
+            （启动） 预告人信息
+        </description>
+    </view-subscribe>
+
+
     <view-subscribe name="PoolTypeStartView" page="/business/houseOwner/subscribe/PoolTypeStartView.xhtml">
         <description>
             (启动)共有情况
@@ -814,9 +822,21 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addSaleRegisterSelectEnd" component="addSaleRegisterSelect">
+        <description>
+            添加商品房预告登记变更，转移状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="addDivertRegisterCompleteEnd" component="addDivertRegister">
         <description>
             添加房屋转移预告登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addDivertRegisterSelectEnd" component="addDivertRegisterSelect">
+        <description>
+            添加房屋转移预告变更，转移登记状态(单，多房屋)
         </description>
     </end-subscribe>
 
@@ -826,15 +846,36 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addSaleMortgageRegisterSelectEnd" component="addSaleMortgageRegisterSelect">
+        <description>
+            添加商品房预告抵押变更，转移状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="addDivrtMortgageRegisterCompleteEnd" component="addDivrtMortgageRegister">
         <description>
             添加屋屋转移预告抵押状态(单，多房屋)
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addDivrtMortgageRegisterSelectEnd" component="addDivrtMortgageRegisterSelect">
+        <description>
+            添加屋屋转移预告抵押变更，转移状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="adPledgeCompleteEnd" component="adPledge">
         <description>
             添加抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="addPledgeSelectEnd" component="addPledgeSelect">
+        <description>
+            添加抵押变更，转移状态(单，多房屋)
         </description>
     </end-subscribe>
 
@@ -843,6 +884,14 @@
             添加在建工程抵押状态(单，多房屋)
         </description>
     </end-subscribe>
+
+    <end-subscribe name="addProjectPledgeSelectEnd" component="addProjectPledgeSelect">
+        <description>
+            添加在建工程抵押变更，转移状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
 
     <end-subscribe name="addDifficultyCompleteEnd" component="addDifficulty">
         <description>
@@ -900,9 +949,15 @@
             删除抵押状态(单，多房屋)
         </description>
     </end-subscribe>
-    <end-subscribe name="MoveSaleRegisterEnd" component="MoveSaleRegister">
+    <end-subscribe name="moveSaleRegisterEnd" component="moveSaleRegister">
         <description>
             删除预购商品房预告登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="moveSaleMortgageRegisterEnd" component="moveSaleMortgageRegister">
+        <description>
+            删除预购商品房抵押权预告登记状态(单，多房屋)
         </description>
     </end-subscribe>
 

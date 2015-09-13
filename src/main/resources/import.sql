@@ -72,6 +72,9 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('16','房屋所有权初始�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('17','房地产更正登记登记、异议登记、换证、补证申请书','房地产更正登记登记、异议登记、换证、补证申请书','/report/ApplyCorrectObjectionChangeFillReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('18','预购商品房预告登记设立申请书','预购商品房预告登记设立申请书','/report/ApplyCommodityNoticeReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('19','预购商品房预告变更登记设立申请书','预购商品房预告变更登记设立申请书','/report/ApplyCommodityNoticeChangeReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('20','预购商品房预告注销登记设立申请书','预购商品房预告注销登记设立申请书','/report/ApplyCommodityNoticeLogoutReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('21','房地产抵押权变更登记和注销登记申请书(预告登记)','房地产抵押权变更登记和注销登记申请书(预告登记)','/report/ApplyHouseMortgageChangeNoticeReisterBook.xhtml');
+
 
 
 -- 收费种类
