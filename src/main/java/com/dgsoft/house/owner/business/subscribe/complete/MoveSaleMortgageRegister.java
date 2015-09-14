@@ -37,10 +37,8 @@ public class MoveSaleMortgageRegister implements TaskCompleteSubscribeComponent 
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().remove(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER,houseBusiness));
-
-            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness,true));
+            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
             Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));

@@ -74,6 +74,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('18','预购商品房预告�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('19','预购商品房预告变更登记设立申请书','预购商品房预告变更登记设立申请书','/report/ApplyCommodityNoticeChangeReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('20','预购商品房预告注销登记设立申请书','预购商品房预告注销登记设立申请书','/report/ApplyCommodityNoticeLogoutReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('21','房地产抵押权变更登记和注销登记申请书(预告登记)','房地产抵押权变更登记和注销登记申请书(预告登记)','/report/ApplyHouseMortgageChangeNoticeReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('22','房地产抵押权变更登记和注销登记申请书(预告注销)','房地产抵押权变更登记和注销登记申请书(预告注销)','/report/ApplyHouseMortgageChangeNoticeLogOutReisterBook.xhtml');
 
 
 

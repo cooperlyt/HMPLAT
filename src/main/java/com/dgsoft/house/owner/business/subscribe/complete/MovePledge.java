@@ -39,7 +39,7 @@ public class MovePledge implements TaskCompleteSubscribeComponent {
     public void complete() {
 
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().remove(new AddHouseStatus(HouseStatus.PLEDGE,houseBusiness));
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE,houseBusiness,true));
 
             List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
             houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
