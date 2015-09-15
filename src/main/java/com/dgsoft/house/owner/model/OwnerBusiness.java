@@ -4,6 +4,7 @@ package com.dgsoft.house.owner.model;
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.model.House;
+import org.jboss.seam.log.Logging;
 
 import java.util.*;
 import javax.persistence.*;
@@ -662,6 +663,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public Evaluate getEvaluate() {
         if (!getEvaluates().isEmpty()) {
             return getEvaluates().iterator().next();
+        }
+        return null;
+    }
+
+    /**
+     * 查封机构
+     */
+    @Transient
+    public CloseHouse getCloseHouse() {
+        Logging.getLog(getClass()).debug("bbbb");
+        if (!getCloseHouses().isEmpty()) {
+            Logging.getLog(getClass()).debug("aaaaa");
+            return getCloseHouses().iterator().next();
         }
         return null;
     }

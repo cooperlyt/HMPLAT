@@ -28,6 +28,10 @@ public class CloseHouse implements java.io.Serializable {
     private String executCardNo;
     private String workCardNo;
 
+    private String HouseCardNo;
+    private String ContractCode;
+    private String ProjectRship;
+
 
 
 	public CloseHouse() {
@@ -173,6 +177,32 @@ public class CloseHouse implements java.io.Serializable {
         this.workCardNo = workCardNo;
     }
 
+    @Column(name = "HOUSECARDNO", length = 30)
+    @Size(max = 30)
+    public String getHouseCardNo() {
+        return HouseCardNo;
+    }
 
+    public void setHouseCardNo(String houseCardNo) {
+        HouseCardNo = houseCardNo;
+    }
+    @Column(name = "CONTRACTCODE", length = 30)
+    @Size(max = 30)
+    public String getContractCode() {
+        return ContractCode;
+    }
 
+    public void setContractCode(String contractCode) {
+        ContractCode = contractCode;
+    }
+
+    @Column(name = "PROJECTRSIHP", length = 30)
+    @Size(max = 30)
+    public String getProjectRship() {
+        return ProjectRship;
+    }
+
+    public void setProjectRship(String projectRship) {
+        ProjectRship = projectRship;
+    }
 }
