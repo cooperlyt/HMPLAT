@@ -184,6 +184,14 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="ReasonDifficultyView" page="/business/houseOwner/subscribe/ReasonDifficultyView.xhtml">
+        <description>
+           异议事项查看
+        </description>
+    </view-subscribe>
+
+
+
 
 
 
@@ -387,6 +395,9 @@
             最高债权确定事实查看
         </description>
     </view-subscribe>
+
+
+
 
 
 
@@ -681,6 +692,14 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="reasonDifficultyEdit" page="/business/houseOwner/subscribe/ReasonDifficultyEdit.xhtml"
+                    component="">
+        <description>
+            异议事项编辑
+        </description>
+    </edit-subscribe>
+
+
 
 
 
@@ -962,6 +981,24 @@
     </end-subscribe>
 
 
+    <end-subscribe name="moveDifficultySelectEnd" component="moveDifficultySelect">
+        <description>
+            删除选中业务的异议登记状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="moveDivertRegisterEnd" component="moveDivertRegister">
+        <description>
+            删除房屋所有权转移预告状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="moveDivrtMortgageRegisterEnd" component="moveDivrtMortgageRegister">
+        <description>
+            删除房屋所有权转移预告抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
 
 
     <end-subscribe name="addMoneyEmpEnd" component="addMoneyEmp">

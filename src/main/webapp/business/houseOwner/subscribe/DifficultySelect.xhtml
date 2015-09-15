@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                template="/business/houseOwner/BusinessSelectListItem.xhtml">
+
+
+    <ui:define name="itemDescription">
+        <p class="repo-list-description">
+            <strong>#{messages.House_Id}:</strong>#{_item.singleHoues.houseCode}  <strong>#{messages.HOUSE_MBBH}:</strong>#{_item.singleHoues.afterBusinessHouse.displayHouseCode}     <strong>#{messages.House_MapNumber}:</strong>#{_item.singleHoues.afterBusinessHouse.mapNumber}     <strong>#{messages.House_BlockNo}:</strong>#{_item.singleHoues.afterBusinessHouse.blockNo}   <strong>#{messages.Build_BuildNO}:</strong>#{_item.singleHoues.afterBusinessHouse.buildNo}   <strong>#{messages.House_Order}:</strong>#{_item.singleHoues.afterBusinessHouse.houseOrder}
+        </p>
+        <p class="repo-list-description">
+        </p>
+        <strong>#{messages.House_Owner}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.personName} <strong>#{messages.House_Owner}#{messages.person_field_credentialsNO}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.credentialsNumber}  <strong>#{messages.House_DeveloperName}：</strong>#{_item.singleHoues.afterBusinessHouse.developerName}
+        <p class="repo-list-description">
+            <strong>#{messages.RegisterProperty_PoolMemo}:</strong>#{messages[_item.singleHoues.afterBusinessHouse.poolType.name()]}
+            <a:outputPanel rendered="#{_item.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><a:repeat var="_businessPools" value="#{_item.singleHoues.afterBusinessHouse.businessPoolList}"><strong>姓名：</strong>#{_businessPools.personName},<strong>证件类型：</strong>#{messages[_businessPools.credentialsType.name()]},<strong>证件号：</strong>#{_businessPools.credentialsNumber}，<strong>共有份额：</strong>#{_businessPools.perc}。</a:repeat></a:outputPanel>
+            <a:outputPanel rendered="#{_item.singleHoues.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><a:repeat var="_businessPools" value="#{_item.singleHoues.afterBusinessHouse.businessPoolList}"><strong>姓名：</strong>#{_businessPools.personName},<strong>证件类型</strong>：#{messages[_businessPools.credentialsType.name()]},<strong>证件号：</strong>#{_businessPools.credentialsNumber}。</a:repeat></a:outputPanel>
+        </p>
+        <p class="repo-list-description">
+            <strong>#{messages.House_Area}:</strong>#{_item.singleHoues.afterBusinessHouse.houseArea} <strong>#{messages.House_Structure}:</strong>#{dictionary.getWordValue(_item.singleHoues.afterBusinessHouse.structure)}
+        </p>
+        <p class="repo-list-description">
+            <strong>#{messages.House_Address}:</strong>#{_item.singleHoues.afterBusinessHouse.address}
+        </p>
+
+
+    </ui:define>
+</ui:composition>
