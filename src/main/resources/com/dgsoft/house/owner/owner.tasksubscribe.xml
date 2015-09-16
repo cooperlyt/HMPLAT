@@ -190,7 +190,11 @@
         </description>
     </view-subscribe>
 
-
+    <view-subscribe name="ReasonDestroyView" page="/business/houseOwner/subscribe/ReasonDestroyView.xhtml">
+        <description>
+            灭籍事由查看
+        </description>
+    </view-subscribe>
 
 
 
@@ -220,6 +224,13 @@
             查封信息查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="CloseHouseCanceView" page="/business/houseOwner/subscribe/CloseHouseCanceView.xhtml">
+        <description>
+            解封信息查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="FinancialNowView" page="/business/houseOwner/subscribe/FinancialNowView.xhtml">
         <description>
             现抵押权人信息查看
@@ -700,6 +711,15 @@
     </edit-subscribe>
 
 
+    <edit-subscribe name="ReasonDestroyEdit" page="/business/houseOwner/subscribe/ReasonDestroyEdit.xhtml"
+                    component="">
+        <description>
+           灭籍事由编辑
+        </description>
+    </edit-subscribe>
+
+
+
 
 
 
@@ -744,6 +764,14 @@
             预售许可证受理信息编辑(ProjectSellInfoEdit)
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="RecordStoreHouseEdit" page="/business/houseOwner/subscribe/RecordStoreHouseEdit.xhtml"
+                    component="">
+        <description>
+            房屋归档编辑
+        </description>
+    </edit-subscribe>
+
 
 
 
