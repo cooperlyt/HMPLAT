@@ -987,6 +987,12 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="moveCourtCloseSelectEnd" component="moveCourtCloseSelect">
+        <description>
+            删除选中业务的查封状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
 
     <end-subscribe name="moveDivertRegisterEnd" component="moveDivertRegister">
         <description>
@@ -999,6 +1005,14 @@
             删除房屋所有权转移预告抵押状态(单，多房屋)
         </description>
     </end-subscribe>
+
+
+
+
+
+
+
+
 
 
     <end-subscribe name="addMoneyEmpEnd" component="addMoneyEmp">

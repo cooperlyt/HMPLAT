@@ -668,16 +668,25 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     /**
-     * 查封机构
+     * 查封信息
      */
     @Transient
     public CloseHouse getCloseHouse() {
-        Logging.getLog(getClass()).debug("bbbb");
+
         if (!getCloseHouses().isEmpty()) {
-            Logging.getLog(getClass()).debug("aaaaa");
+
             return getCloseHouses().iterator().next();
         }
         return null;
     }
-
+    /**
+     * 解封封信息
+     */
+    @Transient
+    public HouseCloseCancel getHouseCloseCancel() {
+        if (!getHouseCloseCancels().isEmpty()) {
+            return getHouseCloseCancels().iterator().next();
+        }
+        return null;
+    }
 }

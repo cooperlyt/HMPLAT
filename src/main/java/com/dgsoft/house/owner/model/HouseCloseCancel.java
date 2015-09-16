@@ -27,8 +27,13 @@ public class HouseCloseCancel implements java.io.Serializable {
     private String executionCardNumber;
     private String workCardNumber;
 
+    private String houseCardNo;
+    private String contractCode;
+    private String projectRship;
 
-	public HouseCloseCancel() {
+
+
+    public HouseCloseCancel() {
 	}
 
     public HouseCloseCancel(OwnerBusiness ownerBusiness,HouseCloseCancel other) {
@@ -159,5 +164,38 @@ public class HouseCloseCancel implements java.io.Serializable {
 
     public void setWorkCardNumber(String workCardNumber) {
         this.workCardNumber = workCardNumber;
+    }
+
+
+
+
+    @Column(name = "HOUSECARDNO", length = 30)
+    @Size(max = 30)
+    public String getHouseCardNo() {
+        return houseCardNo;
+    }
+
+    public void setHouseCardNo(String houseCardNo) {
+        this.houseCardNo = houseCardNo;
+    }
+
+    @Column(name = "CONTRACTCODE", length = 30)
+    @Size(max = 30)
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
+    }
+
+    @Column(name = "PROJECTRSIHP", length = 30)
+    @Size(max = 30)
+    public String getProjectRship() {
+        return projectRship;
+    }
+
+    public void setProjectRship(String projectRship) {
+        this.projectRship = projectRship;
     }
 }

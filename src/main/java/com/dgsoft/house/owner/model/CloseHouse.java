@@ -28,9 +28,11 @@ public class CloseHouse implements java.io.Serializable {
     private String executCardNo;
     private String workCardNo;
 
-    private String HouseCardNo;
-    private String ContractCode;
-    private String ProjectRship;
+
+
+    private String houseCardNo;
+    private String contractCode;
+    private String projectRship;
 
 
 
@@ -49,6 +51,9 @@ public class CloseHouse implements java.io.Serializable {
         this.phone = other.getPhone();
         this.executCardNo = other.getExecutCardNo();
         this.workCardNo = other.getWorkCardNo();
+        this.houseCardNo = other.getHouseCardNo();
+        this.contractCode = other.getContractCode();
+        this.projectRship = other.getProjectRship();
     }
 
     @Id
@@ -177,32 +182,44 @@ public class CloseHouse implements java.io.Serializable {
         this.workCardNo = workCardNo;
     }
 
+
+
+
+
+
+
+
     @Column(name = "HOUSECARDNO", length = 30)
     @Size(max = 30)
     public String getHouseCardNo() {
-        return HouseCardNo;
+        return houseCardNo;
     }
 
     public void setHouseCardNo(String houseCardNo) {
-        HouseCardNo = houseCardNo;
+        this.houseCardNo = houseCardNo;
     }
+
     @Column(name = "CONTRACTCODE", length = 30)
     @Size(max = 30)
     public String getContractCode() {
-        return ContractCode;
+        return contractCode;
     }
 
     public void setContractCode(String contractCode) {
-        ContractCode = contractCode;
+        this.contractCode = contractCode;
     }
 
     @Column(name = "PROJECTRSIHP", length = 30)
     @Size(max = 30)
     public String getProjectRship() {
-        return ProjectRship;
+        return projectRship;
     }
 
     public void setProjectRship(String projectRship) {
-        ProjectRship = projectRship;
+        this.projectRship = projectRship;
     }
+
+
+
+
 }

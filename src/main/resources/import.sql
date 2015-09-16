@@ -78,7 +78,8 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('22','房地产抵押权变�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('23','房地产异议销登记申请书','房地产异议销登记申请书','/report/ApplyHouseDifficultyLogOutReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('24','接收执行法律文书类业务书','接收执行法律文书类业务书','/report/ApplyCloseHouseReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('25','协助执行审查建议书','协助执行审查建议书','/report/ApplyCloseHouseExecutiveReisterBook.xhtml');
-
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('26','解封接收执行法律文书类业务书','解封接收执行法律文书类业务书','/report/ApplyOpenHouseReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('27','解封协助执行审查建议书','解封协助执行审查建议书','/report/ApplyOpenHouseExecutiveReisterBook.xhtml');
 
 
 -- 收费种类
