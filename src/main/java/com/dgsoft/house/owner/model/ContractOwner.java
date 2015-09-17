@@ -2,7 +2,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.model.Person;
-import com.dgsoft.developersale.ProjectSellType;
+import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -31,7 +31,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private HouseContract houseContract;
 
     private String contractCode;
-    private ProjectSellType type;
+    private SaleType type;
     private Date contractDate;
     private String houseCode;
 
@@ -201,11 +201,11 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false, length = 32)
     @NotNull
-    public ProjectSellType getType() {
+    public SaleType getType() {
         return this.type;
     }
 
-    public void setType(ProjectSellType type) {
+    public void setType(SaleType type) {
         this.type = type;
     }
 
@@ -243,9 +243,4 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.contractCode = contractCode;
     }
 
-
-    @Transient
-    public ProjectSellType[] getProjectSellType(){
-        return ProjectSellType.values();
-    }
 }

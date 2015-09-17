@@ -1,11 +1,11 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import com.dgsoft.developersale.ProjectSellType;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class ProjectSellInfo implements java.io.Serializable {
 	private String useType;
 	private String sellObject;
 
-	private ProjectSellType type;
+	private SaleType type;
 
     private String landCardNo;
     private String landCardType;
@@ -139,11 +139,11 @@ public class ProjectSellInfo implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 20)
 	@NotNull
-	public ProjectSellType getType() {
+	public SaleType getType() {
 		return this.type;
 	}
 
-	public void setType(ProjectSellType type) {
+	public void setType(SaleType type) {
 		this.type = type;
 	}
 
@@ -286,10 +286,6 @@ public class ProjectSellInfo implements java.io.Serializable {
 
     public void setProjectCard(ProjectCard projectCard) {
         this.projectCard = projectCard;
-    }
-    @Transient
-    public ProjectSellType[] getProjectSellType(){
-        return ProjectSellType.values();
     }
 
     @Column(name = "LAND_ADDRESS", length = 255)
