@@ -309,7 +309,8 @@ public class BuildGridMapHouseSelect {
                         block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
                         BusinessHouse businessHouse =  businessHouseMap.get(house.getHouseCode());
                         if (businessHouse != null) {
-                            block.setOwnerName(businessHouse.getBusinessHouseOwner().getPersonName());
+                            if (businessHouse.getBusinessHouseOwner()!=null)
+                                block.setOwnerName(businessHouse.getBusinessHouseOwner().getPersonName());
                             block.setHouseStatus(businessHouse.getMasterStatus());
                         }
                         houseMap.remove(house.getHouseCode());
