@@ -46,12 +46,22 @@ public class DeveloperService{
 
     @WebMethod
     public String logon(String userId, String password, String random) {
-        return DeveloperServiceComponent.instance().logon(userId,password,random);
+        return DeveloperServiceComponent.instance().logon(userId, password, random);
     }
 
     @WebMethod
     public String getBuildGridMap(String buildCode){
         return DeveloperServiceComponent.instance().getBuildGridMap(buildCode);
+    }
+
+    @WebMethod
+    public String getHouseInfoBySale(String userId, String houseCode){
+        return DeveloperServiceComponent.instance().getHouseInfoBySale(userId,houseCode);
+    }
+
+    @WebMethod
+    public String applyContractNumber(String userId, int count , String typeName){
+        return DeveloperServiceComponent.instance().applyContractNumber(userId,count,typeName);
     }
 
     @WebMethod

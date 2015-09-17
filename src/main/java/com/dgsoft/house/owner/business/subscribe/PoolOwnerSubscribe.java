@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
+import com.dgsoft.house.PoolType;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessPool;
@@ -84,7 +85,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType() == null){
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolNotInput");
         }
-        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
+        if (!PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
         }
     }
@@ -94,7 +95,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType() == null){
             return false;
         }
-        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
+        if (!PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
             return false;
         }
         return true;
@@ -103,14 +104,14 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public boolean saveSubscribe() {
-        if (!BusinessHouse.PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
+        if (!PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
             return false;
         }
-        if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType().equals(BusinessHouse.PoolType.SINGLE_OWNER)) {
+        if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType().equals(PoolType.SINGLE_OWNER)) {
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().clear();
             poolOwners.clear();
-        } else if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType().equals(BusinessHouse.PoolType.TOGETHER_OWNER)) {
+        } else if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType().equals(PoolType.TOGETHER_OWNER)) {
             for (BusinessPool pool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
                 pool.setPerc(null);
                 pool.setPoolArea(null);

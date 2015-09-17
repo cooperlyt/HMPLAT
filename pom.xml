@@ -11,6 +11,12 @@
 
     <repositories>
         <repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/lib/</url>
+        </repository>
+
+        <repository>
             <id>repository.jboss.org</id>
             <name>JBoss Public Maven Repository Group</name>
             <layout>default</layout>
@@ -62,11 +68,7 @@
         </repository>
 
 
-        <repository>
-            <id>in-project</id>
-            <name>In Project Repo</name>
-            <url>file://${project.basedir}/lib/</url>
-        </repository>
+
     </repositories>
 
     <developers>
@@ -261,7 +263,7 @@
         <dependency>
             <groupId>local.house</groupId>
             <artifactId>houseInterface</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.26-SNAPSHOT</version>
         </dependency>
 
 

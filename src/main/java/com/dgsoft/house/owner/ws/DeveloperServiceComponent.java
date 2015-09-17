@@ -6,23 +6,22 @@ import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.developersale.LogonStatus;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseStatus;
+import com.dgsoft.house.SaleType;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
-import com.dgsoft.house.owner.model.BusinessBuild;
-import com.dgsoft.house.owner.model.HouseRecord;
-import com.dgsoft.house.owner.model.ProjectCard;
+import com.dgsoft.house.owner.model.*;
 import com.longmai.uitl.Base64;
 import org.jboss.seam.Component;
-import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
-import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.log.Logging;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.tuckey.web.filters.urlrewrite.Run;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -155,15 +154,16 @@ public class DeveloperServiceComponent {
             try {
                 return DESUtil.encrypt(jsonObject.toString(), key.getId());
             } catch (Exception e) {
-                return null;
+                Logging.getLog(getClass()).error(e.getMessage(), e);
+                throw new IllegalArgumentException(e.getMessage(),e);
             }
 
         } catch (JSONException e) {
             Logging.getLog(getClass()).error(e.getMessage(), e);
-            return null;
+            throw new IllegalArgumentException(e.getMessage(),e);
         } catch (NoSuchAlgorithmException e2) {
             Logging.getLog(getClass()).error(e2.getMessage(), e2);
-            return null;
+            throw new IllegalArgumentException(e2.getMessage(),e2);
         }
 
     }
@@ -182,6 +182,140 @@ public class DeveloperServiceComponent {
 
     }
 
+    @Transactional
+    public String applyContractNumber(String userId, int count , String typeName){
+        EntityManager houseEntityManager = (EntityManager) Component.getInstance("houseEntityManager", true, true);
+        DeveloperLogonKey key = houseEntityManager.find(DeveloperLogonKey.class, userId);
+        if (key == null){
+            throw new IllegalArgumentException("user fail");
+        }
+        int genCount = RunParam.instance().getIntParamValue("ContractNOCount");
+        if (genCount <= 0){
+            throw new IllegalArgumentException("ContractNOCount param is zero");
+        }
+
+        SaleType type = SaleType.valueOf(typeName);
+
+        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
+
+
+        List<ContractNumber> contractNumbers = ownerEntityManager.createQuery("select n from ContractNumber n where n.type = :contractType and n.status = 'FREE'", ContractNumber.class)
+                .setParameter("contractType", type).setMaxResults(count).getResultList();
+        if (contractNumbers.size() < count){
+            String setupCode = RunParam.instance().getStringParamValue("SetupCode");
+            Long max =  ownerEntityManager.createQuery("select max(n.number) from ContractNumber n where n.type =:contractType", Long.class)
+                    .setParameter("contractType", type).getSingleResult();
+            if (max == null){
+                max = new Long(0);
+            }
+
+            int to = Math.max(count,genCount);
+            for(int i = 0 ; i < to ; i++){
+                long number =  max + i + 1;
+                ContractNumber contractNumber =  new ContractNumber(type, number, type.getNumberPrefx() + setupCode + "-" + number, ContractNumber.ContractNumberStatus.FREE, new Date());
+                if (contractNumbers.size() < count){
+                    contractNumbers.add(contractNumber);
+                }
+                ownerEntityManager.persist(contractNumber);
+            }
+        }
+
+        JSONArray jsonArray = new JSONArray();
+        for(ContractNumber contractNumber: contractNumbers){
+            contractNumber.setStatus(ContractNumber.ContractNumberStatus.OUT);
+            contractNumber.setApplyTime(new Date());
+            jsonArray.put(contractNumber.getContractNumber());
+        }
+
+        try {
+            String result = DESUtil.encrypt(jsonArray.toString(),key.getSessionKey());
+            ownerEntityManager.flush();
+            return result;
+        } catch (Exception e) {
+            Logging.getLog(getClass()).error(e.getMessage(), e);
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
+
+
+    }
+
+    @Transactional
+    public String getHouseInfoBySale(String userId, String houseCode){
+        EntityManager houseEntityManager = (EntityManager) Component.getInstance("houseEntityManager", true, true);
+        DeveloperLogonKey key = houseEntityManager.find(DeveloperLogonKey.class, userId);
+        if (key == null){
+            throw new IllegalArgumentException("user fail");
+        }
+        House house = houseEntityManager.find(House.class, houseCode);
+        if (house == null || house.isDeleted()){
+            throw new IllegalArgumentException("house not exists:" + houseCode);
+        }
+        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
+        HouseRecord houseRecord = ownerEntityManager.find(HouseRecord.class, houseCode);
+
+        boolean locked = ownerEntityManager.createQuery("select count(l.id) from LockedHouse l where l.houseCode = :houseCode", Long.class)
+        .setParameter("houseCode",houseCode).getSingleResult().compareTo(new Long(0)) > 0;
+
+        boolean sale = ownerEntityManager.createQuery("select count(c.id) from ContractOwner c where c.houseCode = :houseCode and c.ownerBusiness.type = 'RUNNING'", Long.class)
+                .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
+
+        boolean inBiz = ownerEntityManager.createQuery("select count(b.id) from HouseBusiness b where b.houseCode = :houseCode and b.ownerBusiness.type = 'RUNNING'", Long.class)
+                .setParameter("houseCode",houseCode).getSingleResult().compareTo(new Long(0)) > 0;
+        HouseStatus houseStatus = null;
+
+        if (houseRecord != null){
+            houseStatus = houseRecord.getBusinessHouse().getMasterStatus();
+           //   may be sub status
+        }
+
+        try {
+            JSONObject houseJsonObj = getHouseJsonObj(house, houseStatus,locked, sale,inBiz);
+            houseJsonObj.put("pledge", searchHousePledgeInfo(houseCode));
+            houseJsonObj.put("buildCode",house.getBuildCode());
+            try {
+                return DESUtil.encrypt(houseJsonObj.toString(),key.getSessionKey());
+            } catch (Exception e) {
+                Logging.getLog(getClass()).error(e.getMessage(), e);
+                throw new IllegalArgumentException(e.getMessage(),e);
+            }
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e.getMessage(), e);
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
+    }
+
+    private JSONArray searchHousePledgeInfo(String houseCode) throws JSONException {
+
+        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
+        try {
+            HouseRecord houseRecord = ownerEntityManager.createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class)
+                    .setParameter("houseCode", houseCode).getSingleResult();
+            JSONArray jsonArray = new JSONArray();
+            for(MortgaegeRegiste mortgaegeRegiste: houseRecord.getBusinessHouse().getMortgaegeRegistes()){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("type", mortgaegeRegiste.getOwnerBusiness().getDefineName());
+
+                jsonObject.put("ownerPersonName",mortgaegeRegiste.getBusinessHouseOwner().getPersonName());
+
+                jsonObject.put("pledgePersonName", mortgaegeRegiste.getFinancial().getName());
+
+                jsonObject.put("pledgeCorpName", mortgaegeRegiste.getOrgName());
+
+                jsonObject.put("beginTime", mortgaegeRegiste.getMortgageDueTimeS().getTime());
+
+                jsonObject.put("endTime",mortgaegeRegiste.getMortgageTime());
+
+                jsonArray.put(jsonObject);
+            }
+            return jsonArray;
+
+        }catch (NoResultException e) {
+            return new JSONArray();
+        }
+
+    }
+
+    @Transactional
     public String getBuildGridMap(String buildCode) {
         EntityManager houseEntityManager = (EntityManager) Component.getInstance("houseEntityManager", true, true);
         Map<String, House> houseMap = new HashMap<String, House>();
@@ -198,6 +332,9 @@ public class DeveloperServiceComponent {
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
         Map<String,HouseStatus> houseStatusMap = new HashMap<String, HouseStatus>();
+
+        List<String> lockedHouse = ownerEntityManager.createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)",String.class)
+                .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
         for (HouseRecord houseRecord: recordHouse){
             if (houseRecord.getBusinessHouse().getMasterStatus() != null){
@@ -217,12 +354,12 @@ public class DeveloperServiceComponent {
                     .setParameter("buildId", buildCode).getResultList()) {
 
 
-                buildGridMapJsonArray.put(getBuildMapJsonObject(houseMap, houseStatusMap, contractHouseIds, gridMap));
+                buildGridMapJsonArray.put(getBuildMapJsonObject(houseMap, houseStatusMap, contractHouseIds,lockedHouse, gridMap));
             }
 
             if (!houseMap.isEmpty()){
 
-                buildGridMapJsonArray.put(getBuildMapJsonObject(houseMap, houseStatusMap, contractHouseIds, BuildHome.genIdleHouseGridMap(houseMap.values())));
+                buildGridMapJsonArray.put(getBuildMapJsonObject(houseMap, houseStatusMap, contractHouseIds, lockedHouse, BuildHome.genIdleHouseGridMap(houseMap.values())));
 
 
             }
@@ -236,7 +373,7 @@ public class DeveloperServiceComponent {
 
     }
 
-    private JSONObject getBuildMapJsonObject(Map<String, House> houseMap, Map<String, HouseStatus> houseStatusMap, List<String> contractHouseIds, BuildGridMap gridMap) throws JSONException {
+    private JSONObject getBuildMapJsonObject(Map<String, House> houseMap, Map<String, HouseStatus> houseStatusMap, List<String> contractHouseIds, List<String> lockedHouses, BuildGridMap gridMap) throws JSONException {
         JSONObject result = new JSONObject();
         result.put("name", gridMap.getName());
         JSONArray titleJsonArray = new JSONArray();
@@ -253,7 +390,7 @@ public class DeveloperServiceComponent {
             rowJsonObj.put("title", gridRow.getTitle());
             JSONArray bolckJsonArray = new JSONArray();
             for (GridBlock block : gridRow.getGridBlockList()) {
-                bolckJsonArray.put(genBlockJsonObj(block, houseMap,houseStatusMap,contractHouseIds));
+                bolckJsonArray.put(genBlockJsonObj(block, houseMap,houseStatusMap,contractHouseIds,lockedHouses));
             }
             rowJsonObj.put("blocks", bolckJsonArray);
             rowJsonArray.put(rowJsonObj);
@@ -262,9 +399,57 @@ public class DeveloperServiceComponent {
         return result;
     }
 
+    private JSONObject getHouseJsonObj(House house, HouseStatus status, boolean locked , boolean saled, boolean inBiz) throws JSONException{
+        JSONObject houseJsonObj = getHouseJsonObj(house,status,locked,saled);
+        houseJsonObj.put("inBiz", inBiz);
+        return houseJsonObj;
+    }
+
+    private JSONObject getHouseJsonObj(House house, HouseStatus status, boolean locked , boolean saled) throws JSONException {
+        JSONObject houseJsonObj = new JSONObject();
+
+
+        if (status != null){
+            houseJsonObj.put("status", status.name());
+        }
+
+        houseJsonObj.put("locked",locked);
+        houseJsonObj.put("saled",saled);
+
+        houseJsonObj.put("houseCode",house.getHouseCode());
+        houseJsonObj.put("displayHouseCode",house.getDisplayHouseCode());
+        houseJsonObj.put("houseOrder", house.getHouseOrder());
+        houseJsonObj.put("houseUnitName",house.getHouseUnitName());
+        houseJsonObj.put("inFloorName",house.getInFloorName());
+        if (house.getHouseArea() != null)
+            houseJsonObj.put("houseArea",house.getHouseArea().doubleValue());
+        if (house.getUseArea() != null)
+            houseJsonObj.put("useArea",house.getUseArea().doubleValue());
+        if (house.getCommArea() != null)
+            houseJsonObj.put("commArea",house.getCommArea().doubleValue());
+        if (house.getShineArea() != null)
+            houseJsonObj.put("shineArea",house.getShineArea().doubleValue());
+        if (house.getLoftArea() != null)
+            houseJsonObj.put("loftArea",house.getLoftArea().doubleValue());
+        if (house.getCommParam() != null)
+            houseJsonObj.put("commParam",house.getCommParam().doubleValue());
+        houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
+        houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
+        houseJsonObj.put("structure", DictionaryWord.instance().getWordValue(house.getStructure()));
+        houseJsonObj.put("knotSize", DictionaryWord.instance().getWordValue(house.getKnotSize()));
+        houseJsonObj.put("address", house.getAddress());
+        houseJsonObj.put("eastWall",DictionaryWord.instance().getWordValue(house.getEastWall()));
+        houseJsonObj.put("westWall", DictionaryWord.instance().getWordValue(house.getWestWall()));
+        houseJsonObj.put("southWall", DictionaryWord.instance().getWordValue(house.getSouthWall()));
+        houseJsonObj.put("northWall", DictionaryWord.instance().getWordValue(house.getNorthWall()));
+        houseJsonObj.put("direction", DictionaryWord.instance().getWordValue(house.getDirection()));
+        return houseJsonObj;
+
+    }
+
     private JSONObject genBlockJsonObj(GridBlock block,
                                        Map<String, House> houseMap,
-                                       Map<String,HouseStatus> statusMap, List<String> contractHouses) {
+                                       Map<String,HouseStatus> statusMap, List<String> contractHouses,List<String> lockedHouses) {
         JSONObject blockJsonObj = new JSONObject();
         try {
             blockJsonObj.put("colspan", block.getColspan());
@@ -274,47 +459,11 @@ public class DeveloperServiceComponent {
             if ( block.getHouseCode() != null && !block.getHouseCode().trim().equals("") ){
                 House house = houseMap.get(block.getHouseCode());
                 if (house != null){
-                    if (contractHouses.contains(block.getHouseCode())){
-                        blockJsonObj.put("status", "CONTRACTING");
-                    }else {
+                    HouseStatus status = statusMap.get(block.getHouseCode());
 
-                        HouseStatus status = statusMap.get(block.getHouseCode());
-                        if (status != null) {
-                            blockJsonObj.put("status", status.name());
-                        }
-                    }
-                    JSONObject houseJsonObj = new JSONObject();
-
-
-                    houseJsonObj.put("houseCode",house.getHouseCode());
-                    houseJsonObj.put("displayHouseCode",house.getDisplayHouseCode());
-                    houseJsonObj.put("houseOrder", house.getHouseOrder());
-                    houseJsonObj.put("houseUnitName",house.getHouseUnitName());
-                    houseJsonObj.put("inFloorName",house.getInFloorName());
-                    if (house.getHouseArea() != null)
-                        houseJsonObj.put("houseArea",house.getHouseArea().doubleValue());
-                    if (house.getUseArea() != null)
-                        houseJsonObj.put("useArea",house.getUseArea().doubleValue());
-                    if (house.getCommArea() != null)
-                        houseJsonObj.put("commArea",house.getCommArea().doubleValue());
-                    if (house.getShineArea() != null)
-                        houseJsonObj.put("shineArea",house.getShineArea().doubleValue());
-                    if (house.getLoftArea() != null)
-                        houseJsonObj.put("loftArea",house.getLoftArea().doubleValue());
-                    if (house.getCommParam() != null)
-                        houseJsonObj.put("commParam",house.getCommParam().doubleValue());
-                    houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
-                    houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
-                    houseJsonObj.put("structure", DictionaryWord.instance().getWordValue(house.getStructure()));
-                    houseJsonObj.put("knotSize", DictionaryWord.instance().getWordValue(house.getKnotSize()));
-                    houseJsonObj.put("address", house.getAddress());
-                    houseJsonObj.put("eastWall",DictionaryWord.instance().getWordValue(house.getEastWall()));
-                    houseJsonObj.put("westWall", DictionaryWord.instance().getWordValue(house.getWestWall()));
-                    houseJsonObj.put("southWall", DictionaryWord.instance().getWordValue(house.getSouthWall()));
-                    houseJsonObj.put("northWall", DictionaryWord.instance().getWordValue(house.getNorthWall()));
-                    houseJsonObj.put("direction", DictionaryWord.instance().getWordValue(house.getDirection()));
-
-                    blockJsonObj.put("house",houseJsonObj);
+                    blockJsonObj.put("house",getHouseJsonObj(house,status,
+                            lockedHouses.contains(block.getHouseCode()),
+                            contractHouses.contains(block.getHouseCode())));
                 }
                 houseMap.remove(block.getHouseCode());
             }

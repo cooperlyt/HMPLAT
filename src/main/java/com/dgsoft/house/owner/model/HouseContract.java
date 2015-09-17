@@ -1,11 +1,10 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 24, 2015 1:17:35 PM by Hibernate Tools 4.0.0
 
-import com.dgsoft.developersale.ProjectSellType;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +26,7 @@ public class HouseContract implements java.io.Serializable {
 
 
 	private ContractOwner contractOwner;
+	private Set<ContractNumber> contractNumbers = new HashSet<ContractNumber>(0);
 
 	public HouseContract() {
 	}
@@ -103,5 +103,14 @@ public class HouseContract implements java.io.Serializable {
 
 	public void setContractOwner(ContractOwner contractOwner) {
 		this.contractOwner = contractOwner;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "houseContract",cascade = CascadeType.ALL)
+	public Set<ContractNumber> getContractNumbers() {
+		return contractNumbers;
+	}
+
+	public void setContractNumbers(Set<ContractNumber> contractNumbers) {
+		this.contractNumbers = contractNumbers;
 	}
 }

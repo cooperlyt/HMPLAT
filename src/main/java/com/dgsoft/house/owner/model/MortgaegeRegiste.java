@@ -29,6 +29,8 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	private BigDecimal mortgageArea;
     private Financial oldFinancial;
     private Financial financial;
+	private String orgName;
+	private BusinessHouseOwner businessHouseOwner;
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
 
@@ -193,4 +195,26 @@ public class MortgaegeRegiste implements java.io.Serializable {
         return BigMoneyUtil.getBigMoney(getHighestMountMoney().doubleValue());
     }
 
+
+	@Column(name = "ORG_NAME",nullable = false, length = 100)
+	@NotNull
+	@Size(max = 100)
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "OWNER",nullable = false)
+	@NotNull
+	public BusinessHouseOwner getBusinessHouseOwner() {
+		return businessHouseOwner;
+	}
+
+	public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
+		this.businessHouseOwner = businessHouseOwner;
+	}
 }

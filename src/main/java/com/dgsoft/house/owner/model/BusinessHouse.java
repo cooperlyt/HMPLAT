@@ -5,6 +5,7 @@ import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
+import com.dgsoft.house.PoolType;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import org.apache.batik.gvt.flow.RegionInfo;
@@ -23,12 +24,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "HOUSE", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessHouse implements java.io.Serializable, HouseInfo {
-
-    private BusinessHouse houseInfo;
-
-    public enum PoolType{
-        SINGLE_OWNER,TOGETHER_OWNER,SHARE_OWNER
-    }
 
     private String id;
     private String houseOrder;
@@ -52,7 +47,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private Date mapTime;
     private String direction;
     private String houseCode;
-    private BusinessHouse.PoolType poolType;
+    private PoolType poolType;
 
     private boolean haveDownRoom;
     private String buildCode;
@@ -273,11 +268,11 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "POOL_MEMO", nullable = true, length = 32)
-    public BusinessHouse.PoolType getPoolType() {
+    public PoolType getPoolType() {
         return this.poolType;
     }
 
-    public void setPoolType(BusinessHouse.PoolType poolType) {
+    public void setPoolType(PoolType poolType) {
         this.poolType = poolType;
     }
 
