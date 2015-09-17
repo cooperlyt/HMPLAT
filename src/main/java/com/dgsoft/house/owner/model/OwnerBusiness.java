@@ -689,4 +689,17 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return null;
     }
+    /**
+     * 档案位置信息
+     */
+    @Transient
+    public RecordStore getRecordStore(){
+        if(!getRecordStores().isEmpty()){
+            return getRecordStores().iterator().next();
+
+        }
+        return null;
+    }
+
+
 }
