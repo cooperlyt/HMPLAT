@@ -196,6 +196,24 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+    /**
+     * 异议事项
+     */
+
+    public Reason getDifficulty(){
+
+        return getReasonByType("DIFFICULTY");
+
+    }
+
+    /**
+     * 注销原因
+     */
+    public Reason getLogout(){
+
+        return getReasonByType("LOGOUT");
+
+    }
 
 
     public Reason getChangBeforReason(){

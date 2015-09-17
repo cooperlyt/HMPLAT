@@ -29,6 +29,13 @@ public class AddHouseStatus implements java.io.Serializable {
 
     }
 
+    public AddHouseStatus(HouseStatus status,HouseBusiness houseBusiness,boolean remove){
+        this.status = status;
+        this.houseBusiness = houseBusiness;
+        this.remove = remove;
+
+    }
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false, length = 32)
     @NotNull

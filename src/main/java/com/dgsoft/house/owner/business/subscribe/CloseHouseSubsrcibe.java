@@ -31,4 +31,6 @@ public class CloseHouseSubsrcibe extends OwnerEntityHome<CloseHouse> {
             ownerBusinessHome.getInstance().getCloseHouses().add(getInstance());
         }
     }
+
+
 }

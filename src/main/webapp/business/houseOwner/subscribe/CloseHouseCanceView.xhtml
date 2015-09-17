@@ -1,0 +1,74 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.instance.houseCloseCancel}">
+
+
+        <dh:entryGridBlock columns="4" >
+            <h:outputText value="#{messages.HouseCloseCancel_clour}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.clour}"/>
+
+            <h:outputText value="#{messages.HouseCloseCancel_action}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.action}"/>
+
+
+
+
+
+            <h:outputText value="#{messages.HouseCloseCancel_CancelDate}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.cancelDate}"/>
+
+            <h:outputText></h:outputText>
+            <h:outputText></h:outputText>
+
+
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.CloseHouse_LegalDocuments}"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.legalDocuments}"/>
+
+            <h:outputText value="#{messages.CloseHouse_ExecutionNotice}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.executionNotice}"/>
+
+
+
+
+
+
+            <h:outputText value="#{messages.CloseHouse_SendPeople}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.sendPerson}"/>
+
+            <h:outputText value="#{messages.CloseHouse_Phone}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.phone}"/>
+
+
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.CloseHouse_ExecutCardNo}"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.executionCardNumber}"/>
+
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="#{messages.CloseHouse_WorkCardNo}"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.workCardNumber}"/>
+
+
+        </dh:entryGridBlock>
+    </a:outputPanel>
+</ui:composition>

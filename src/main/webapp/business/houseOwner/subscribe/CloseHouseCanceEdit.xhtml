@@ -7,18 +7,191 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-     <s:decorate id="cancelDateField" template="/layout/edit.xhtml">
-        <ui:define name="label">#{messages.HouseCloseCancel_CancelDate}</ui:define>
-        <r:calendar id="cancelDate"
-                    label="#{messages.HouseCloseCancel_CancelDate}"
-                    enableManualInput="true"
-                    inputSize="20"
-                    required="true"
-                    timeZone="#{calendarBean.timeZone}" locale="#{calendarBean.locale}"
-                    value="#{closeHouseCancelSubsrcibe.instance.cancelDate}"
-                    datePattern="#{messages.datePattern}"/>
-        <ui:define name="tail">
-            <r:message for="cancelDate" />
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.HouseCloseCancel_clour}
         </ui:define>
+        <ui:param name="for" value="clour"/>
+        <h:inputText label="#{messages.HouseCloseCancel_clour}"
+                     required="true"
+                     value="#{closeHouseCancelSubsrcibe.instance.clour}"
+                     id="clour"
+                     styleClass="form-control">
+        </h:inputText>
     </s:decorate>
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.HouseCloseCancel_action}
+        </ui:define>
+        <ui:param name="for" value="action"/>
+        <h:inputText label="#{messages.HouseCloseCancel_action}"
+                     required="true"
+                     value="#{closeHouseCancelSubsrcibe.instance.action}"
+                     id="action"
+                     styleClass="form-control">
+
+        </h:inputText>
+    </s:decorate>
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.HouseCloseCancel_legalDocuments}
+        </ui:define>
+        <ui:param name="for" value="legalDocuments"/>
+        <h:inputText label="#{messages.HouseCloseCancel_legalDocuments}"
+                     id="legalDocuments"
+                     maxlength="100"
+                     value="#{closeHouseCancelSubsrcibe.instance.legalDocuments}"
+                     styleClass="form-control"
+                     required="true">
+        </h:inputText>
+    </s:decorate>
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.HouseCloseCancel_executionNotice}
+        </ui:define>
+        <ui:param name="for" value="ExecutionNotice"/>
+        <h:inputText label="#{messages.HouseCloseCancel_executionNotice}"
+                     maxlength="100"
+                     id="ExecutionNotice"
+                     value="#{closeHouseCancelSubsrcibe.instance.executionNotice}"
+                     styleClass="form-control"
+                     required="true">
+        </h:inputText>
+    </s:decorate>
+
+
+    <div class="form-inline">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.HouseCloseCancel_CancelDate}
+            </ui:define>
+            <ui:param name="for" value="closeDate"/>
+
+            <div class="input-group">
+                <h:inputText id="closeDate"
+                             required="true"
+                             styleClass="js-datepicker form-control"
+                             label="#{messages.HouseCloseCancel_CancelDate}"
+                             value="#{closeHouseCancelSubsrcibe.instance.cancelDate}">
+                    <s:convertDateTime pattern="#{messages.datePattern}"/>
+                </h:inputText>
+            </div>
+            <ui:define name="message">
+                <r:message for="closeDate" styleClass="edit-below-msg"/>
+            </ui:define>
+        </s:decorate>
+    </div>
+
+
+    <div class="form-inline">
+
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.HouseCloseCancel_sendPerson}
+            </ui:define>
+
+            <ui:param name="for" value="SendPeople"/>
+            <h:inputText label="#{messages.HouseCloseCancel_sendPerson}"
+                         maxlength="100"
+                         id="sendPerson"
+                         value="#{closeHouseCancelSubsrcibe.instance.sendPerson}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.HouseCloseCancel_phone}
+            </ui:define>
+            <ui:param name="for" value="OpenHousePhone"/>
+            <h:inputText label="#{messages.HouseCloseCancel_phone}"
+                         maxlength="100"
+                         id="OpenHousePhone"
+                         value="#{closeHouseCancelSubsrcibe.instance.phone}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.HouseCloseCancel_executionCardNumber}
+            </ui:define>
+            <ui:param name="for" value="executionCardNumber"/>
+            <h:inputText label="#{messages.HouseCloseCancel_executionCardNumber}"
+                         maxlength="100"
+                         id="executionCardNumber"
+                         value="#{closeHouseCancelSubsrcibe.instance.executionCardNumber}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.HouseCloseCancel_workCardNumber}
+            </ui:define>
+            <ui:param name="for" value="workCardNumber"/>
+            <h:inputText label="#{messages.HouseCloseCancel_workCardNumber}"
+                         maxlength="100"
+                         id="workCardNumber"
+                         value="#{closeHouseCancelSubsrcibe.instance.workCardNumber}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_contractCode}
+            </ui:define>
+            <ui:param name="for" value="contractCode"/>
+            <h:inputText label="#{messages.CloseHouse_contractCode}"
+                         maxlength="30"
+                         id="contractCode"
+                         value="#{closeHouseCancelSubsrcibe.instance.contractCode}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_projectRship}
+            </ui:define>
+            <ui:param name="for" value="WorkCardNo"/>
+            <h:inputText label="#{messages.CloseHouse_projectRship}"
+                         maxlength="30"
+                         id="projectRship"
+                         value="#{closeHouseCancelSubsrcibe.instance.projectRship}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_houseCardNo}
+            </ui:define>
+            <ui:param name="for" value="houseCardNo"/>
+            <h:inputText label="#{messages.CloseHouse_houseCardNo}"
+                         maxlength="30"
+                         id="houseCardNo"
+                         value="#{closeHouseCancelSubsrcibe.instance.houseCardNo}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+
+
+
+
+    </div>
 </ui:composition>

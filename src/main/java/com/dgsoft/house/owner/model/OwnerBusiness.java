@@ -4,6 +4,7 @@ package com.dgsoft.house.owner.model;
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.model.House;
+import org.jboss.seam.log.Logging;
 
 import java.util.*;
 import javax.persistence.*;
@@ -550,6 +551,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     @Transient
+    public String getAfterHouseNoticeNo() {
+        String str = null;
+        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {
+            for (MakeCard makeCard : getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()) {
+                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
+                    str = makeCard.getNumber();
+                }
+            }
+        }
+        return str;
+    }
+
+    @Transient
     public String getStarHouseMortgageNo() {
         String str = null;
         if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {
@@ -652,5 +666,40 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return null;
     }
+
+    /**
+     * 查封信息
+     */
+    @Transient
+    public CloseHouse getCloseHouse() {
+
+        if (!getCloseHouses().isEmpty()) {
+
+            return getCloseHouses().iterator().next();
+        }
+        return null;
+    }
+    /**
+     * 解封封信息
+     */
+    @Transient
+    public HouseCloseCancel getHouseCloseCancel() {
+        if (!getHouseCloseCancels().isEmpty()) {
+            return getHouseCloseCancels().iterator().next();
+        }
+        return null;
+    }
+    /**
+     * 档案位置信息
+     */
+    @Transient
+    public RecordStore getRecordStore(){
+        if(!getRecordStores().isEmpty()){
+            return getRecordStores().iterator().next();
+
+        }
+        return null;
+    }
+
 
 }

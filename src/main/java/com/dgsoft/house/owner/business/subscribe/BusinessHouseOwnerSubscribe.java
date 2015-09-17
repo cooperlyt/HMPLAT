@@ -33,7 +33,12 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
         super.create();
 
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner() != null) {
+
+            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getId() == null) {
+                setInstance(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
+            } else{
                 setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getId());
+            }
         }else{
             clearInstance();
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setBusinessHouseOwner(getInstance());

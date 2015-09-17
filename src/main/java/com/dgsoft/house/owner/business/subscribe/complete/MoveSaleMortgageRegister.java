@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by wxy on 2015-09-11.
- * 去掉一个预购商品预告登记状态
+ * Created by wxy on 2015-09-13.
+ * 去掉一个商品房预告抵押
  */
-@Name("moveSaleRegister")
-public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
+@Name("moveSaleMortgageRegister")
+public class MoveSaleMortgageRegister implements TaskCompleteSubscribeComponent {
 
 
     @In
@@ -37,12 +37,12 @@ public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_REGISTER,houseBusiness,true));
-            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness,true));
+            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
             Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+
         }
 
     }

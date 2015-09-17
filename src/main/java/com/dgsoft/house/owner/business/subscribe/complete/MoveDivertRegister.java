@@ -14,15 +14,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by wxy on 2015-09-11.
- * 去掉一个预购商品预告登记状态
+ * Created by wxy on 2015-09-14.
+ * 去掉一个房屋所有权转移预告登记状态
  */
-@Name("moveSaleRegister")
-public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
-
+@Name("moveDivertRegister")
+public class MoveDivertRegister implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
 
     @Override
     public void valid() {
@@ -36,14 +36,16 @@ public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
+
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_REGISTER,houseBusiness,true));
+            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER,houseBusiness,true));
+
             List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
             houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
             Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-        }
 
+        }
     }
 }

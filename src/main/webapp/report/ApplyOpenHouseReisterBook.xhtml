@@ -1,0 +1,288 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="接收执行法律文书类业务书">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">接收执行法律文书类业务书
+    </p:paragraph>
+</p:font>
+
+
+<p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+    <p:table columns="3" widths="2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+        <p:cell colspan="3" alignment="left" border="0" horizontalAlignment="justify"
+                verticalAlignment="bottom">
+            <p:paragraph>受理编号(#{ownerBusinessHome.instance.id})</p:paragraph>
+        </p:cell>
+
+
+        <p:cell colspan="3" border="0" fixedHeight="3">
+        </p:cell>
+    </p:table>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+<p:table columns="4" widths="1 0.8 0.8 1" headerRows="0" footerRows="0" widthPercentage="100">
+    <f:facet name="defaultCell">
+        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+    </f:facet>
+    <p:cell fixedHeight="30">
+        <p:paragraph>执行单位</p:paragraph>
+    </p:cell>
+    <p:cell colspan="3">
+        <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.clour}</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="140">
+        <p:table columns="2" widths="1 6" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+            </f:facet>
+            <p:cell fixedHeight="140" borderWidthTop="0" borderWidthRight="0">
+                <p:paragraph>接收执行材料</p:paragraph>
+            </p:cell>
+            <p:cell borderWidthTop="0" borderWidthRight="0">
+                <p:table columns="1" headerRows="0" footerRows="0" widthPercentage="100">
+                    <f:facet name="defaultCell">
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                    </f:facet>
+                    <p:cell fixedHeight="80">
+                        <p:paragraph>裁定书、判决书或其它生效法律文件</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="60">
+                        <p:paragraph>协助执行通知书</p:paragraph>
+                    </p:cell>
+
+                </p:table>
+            </p:cell>
+
+        </p:table>
+    </p:cell>
+    <p:cell colspan="3">
+        <p:table columns="1" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+            </f:facet>
+            <p:cell fixedHeight="80">
+                <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.legalDocuments}</p:paragraph>
+            </p:cell>
+            <p:cell fixedHeight="60">
+                <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.executionNotice}</p:paragraph>
+            </p:cell>
+
+        </p:table>
+
+    </p:cell>
+
+    <p:cell fixedHeight="25">
+        <p:paragraph>送达人姓名</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.sendPerson}</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>联系电话</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.phone}</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>执行公务证件号</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.executionCardNumber}</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>工作证件号</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.workCardNumber}</p:paragraph>
+    </p:cell>
+
+    <p:cell fixedHeight="400">
+        <p:table columns="2" widths="1 6" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+            </f:facet>
+            <p:cell fixedHeight="400">
+                <p:paragraph>被
+                    执
+                    行
+                    房
+                    地
+                    产
+                    状
+                    况
+                </p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:table columns="1" headerRows="0" footerRows="0" widthPercentage="100">
+                    <f:facet name="defaultCell">
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                    </f:facet>
+                    <p:cell fixedHeight="32">
+                        <p:paragraph>权利人姓名（名称）</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="32">
+                        <p:paragraph>证件类型</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="60">
+                        <p:paragraph>执行事项</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="32">
+                        <p:paragraph>商品房预售合同备案号</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="32">
+                        <p:paragraph>商品房预售许可证号</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="32">
+                        <p:paragraph>房地产权属证书号（登记证明号）</p:paragraph>
+                    </p:cell>
+                    <p:cell fixedHeight="180">
+                        <p:table columns="2" widths="1 6" headerRows="0" footerRows="0" widthPercentage="100">
+                            <f:facet name="defaultCell">
+                                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                            </f:facet>
+                            <p:cell fixedHeight="180">
+                                <p:paragraph>房地产坐落</p:paragraph>
+                            </p:cell>
+                            <p:cell>
+                                <p:table columns="1" headerRows="0" footerRows="0" widthPercentage="100">
+                                    <f:facet name="defaultCell">
+                                        <p:cell horizontalAlignment="center" verticalAlignment="middle"
+                                                padding="0"/>
+                                    </f:facet>
+                                    <p:cell fixedHeight="30"><p:paragraph>所在区</p:paragraph></p:cell>
+                                    <p:cell fixedHeight="30"><p:paragraph>#{_houseBusiness.afterBusinessHouse.districtName}</p:paragraph></p:cell>
+                                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                                </p:table>
+
+                            </p:cell>
+                        </p:table>
+                    </p:cell>
+
+                </p:table>
+
+
+            </p:cell>
+        </p:table>
+    </p:cell>
+
+    <p:cell colspan="3">
+        <p:table columns="3" widths="1 0.7 1" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+            </f:facet>
+            <p:cell colspan="3" fixedHeight="32">
+                <p:paragraph>#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+            </p:cell>
+            <p:cell fixedHeight="32">
+                <p:paragraph>#{messages[ownerBusinessHome.instance.applyPersion.credentialsType.name()]}</p:paragraph>
+            </p:cell>
+            <p:cell fixedHeight="32">
+                <p:paragraph>证件号</p:paragraph>
+            </p:cell>
+            <p:cell fixedHeight="32">
+                <p:paragraph>#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
+            </p:cell>
+            <p:cell colspan="3" fixedHeight="60">
+                <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.action}</p:paragraph>
+            </p:cell>
+            <p:cell colspan="3" fixedHeight="32">
+                <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.contractCode}</p:paragraph>
+            </p:cell>
+            <p:cell colspan="3" fixedHeight="32">
+                <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.projectRship}</p:paragraph>
+            </p:cell>
+            <p:cell colspan="3" fixedHeight="32">
+                <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.houseCardNo}</p:paragraph>
+            </p:cell>
+            <p:cell colspan="3" fixedHeight="180">
+                <p:table columns="5" widths="1 0.15 0.15 0.15 0.15" headerRows="0" footerRows="0" widthPercentage="100">
+                    <f:facet name="defaultCell">
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                    </f:facet>
+                    <p:cell fixedHeight="30"><p:paragraph>房屋坐落</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>幢号</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>单元</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>楼层</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>房号</p:paragraph></p:cell>
+
+                    <p:cell fixedHeight="30"><p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>#{_houseBusiness.afterBusinessHouse.buildNo}</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>#{_houseBusiness.afterBusinessHouse.houseUnitName}</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>#{_houseBusiness.afterBusinessHouse.inFloorName}</p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph>#{_houseBusiness.afterBusinessHouse.houseOrder}</p:paragraph></p:cell>
+
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+                    <p:cell fixedHeight="30"><p:paragraph></p:paragraph></p:cell>
+
+                </p:table>
+
+            </p:cell>
+
+        </p:table>
+
+    </p:cell>
+
+</p:table>
+<p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+    <f:facet name="defaultCell">
+        <p:cell padding="0" border="0"/>
+    </f:facet>
+    <p:cell>
+        <p:paragraph>房屋编号:</p:paragraph>
+    </p:cell>
+    <p:cell verticalAlignment="left">
+        <p:paragraph>#{_houseBusiness.houseCode}</p:paragraph>
+    </p:cell>
+    <p:cell>
+        <p:paragraph></p:paragraph>
+    </p:cell>
+    <p:cell horizontalAlignment="left">
+        <p:paragraph></p:paragraph>
+    </p:cell>
+
+</p:table>
+</p:font>
+<p:newPage/>
+</a:repeat>
+</p:document>

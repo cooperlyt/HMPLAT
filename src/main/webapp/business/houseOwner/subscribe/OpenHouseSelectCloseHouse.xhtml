@@ -1,0 +1,31 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                template="/business/houseOwner/BusinessSelectListItem.xhtml">
+
+
+    <ui:define name="itemDescription">
+        <p class="repo-list-description">
+            <strong>#{messages.House_Id}:</strong>#{_item.singleHoues.houseCode} <strong>#{messages.HOUSE_MBBH}:</strong>#{_item.singleHoues.afterBusinessHouse.displayHouseCode} <strong>#{messages.House_MapNumber}:</strong>#{_item.singleHoues.afterBusinessHouse.mapNumber} <strong>#{messages.House_BlockNo}:</strong>#{_item.singleHoues.afterBusinessHouse.blockNo}   <strong>#{messages.Build_BuildNO}:</strong>#{_item.singleHoues.afterBusinessHouse.buildNo}  <strong>#{messages.House_Order}:</strong>#{_item.singleHoues.afterBusinessHouse.houseOrder}
+        </p>
+        <p class="repo-list-description">
+        <strong>#{messages.CloseHouse_CloseDownClour}:</strong>#{_item.closeHouse.sendPeople} <strong>#{messages.CloseHouse_CloseDate}</strong>#{_item.closeHouse.closeDate}至#{_item.closeHouse.toDate} <strong>#{messages.CloseHouse_SendPeople}：</strong>#{_item.closeHouse.sendPeople}
+        </p>
+        <p class="repo-list-description">
+            <strong>#{messages.CORRECT}:</strong>#{_item.applyPersion.personName} <strong>#{messages.person_field_credentialsType}:</strong>#{messages[_item.applyPersion.credentialsType.name()]} <strong>#{messages.person_field_credentialsNO}:</strong>#{_item.applyPersion.credentialsNumber}
+        </p>
+        <p class="repo-list-description">
+            <strong>#{messages.House_Area}:</strong>#{_item.singleHoues.afterBusinessHouse.houseArea}
+            <strong>#{messages.House_Structure}:</strong>#{dictionary.getWordValue(_item.singleHoues.afterBusinessHouse.structure)}
+        </p>
+        <p class="repo-list-description">
+            <strong>#{messages.House_Address}:</strong>#{_item.singleHoues.afterBusinessHouse.address}
+        </p>
+    </ui:define>
+
+</ui:composition>
