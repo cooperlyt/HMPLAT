@@ -3,6 +3,9 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.common.system.RunParam;
+import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.Developer;
+import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.*;
@@ -15,131 +18,50 @@ import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by wxy on 2015-09-18.
  * 在建工程抵押权人添加抵押人，将开发商转成抵押人
  */
 @Name("FinancialProjectSubscribe")
-public class FinancialProjectSubscribe extends OwnerEntityHome<Financial> {
-
-    @In
-    private OwnerBusinessHome ownerBusinessHome;
-
-    private MortgaegeRegiste mortgaegeRegiste;
-
-    public Financial.FinancialType[] getFinancialTypes() {
-        return Financial.FinancialType.values();
-    }
-
-    public MortgaegeRegiste getMortgaegeRegiste() {
-        return mortgaegeRegiste;
-    }
-
-    public void setMortgaegeRegiste(MortgaegeRegiste mortgaegeRegiste) {
-        this.mortgaegeRegiste = mortgaegeRegiste;
-    }
-
-    private boolean selected;
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public String getSelectName() {
-        return getInstance().getName();
-    }
-
-    public void setSelectName(String name) {
-        selected = (name != null) && (!name.trim().equals(""));
-        getInstance().setName(name);
-
-        if (selected) {
-            try {
-                Date maxDate = getEntityManager().createQuery("select max(f.createTime) from Financial f where f.phone != null and f.name = :name and not (f.mortgaegeForNew.ownerBusiness.status in ('MODIFY', 'MODIFYING','ABORT', 'SUSPEND'))", Date.class).setParameter("name", name).getSingleResult();
-
-                getInstance().setPhone(getEntityManager().createQuery("select max(f.phone) from Financial f where f.createTime >= :maxDate and f.phone != null and f.name = :name and not (f.mortgaegeForNew.ownerBusiness.status in ('MODIFY', 'MODIFYING','ABORT', 'SUSPEND'))", String.class).setParameter("name", name).setParameter("maxDate", maxDate).getSingleResult());
-
-
-            } catch (NoResultException e1) {
-                getInstance().setPhone(null);
-            }
-        } else {
-            getInstance().setPhone(null);
-        }
-    }
-
-    public List<String> getFinancialCorpNames() {
-        if ((getFilterBank() != null) && (!getFilterBank().trim().equals(""))) {
-            return new ArrayList<String>(getEntityManager().
-                    createQuery("select distinct f.name from Financial f where f.bank = :bank and not (f.mortgaegeForNew.ownerBusiness.status in ('MODIFY', 'MODIFYING','ABORT', 'SUSPEND'))", String.class).setParameter("bank", getFilterBank()).getResultList());
-        }
-        return new ArrayList<String>(0);
-    }
-
-    public void setFilterBank(String bankId) {
-        getInstance().setBank(bankId);
-        getInstance().setName(null);
-        getInstance().setCode(null);
-        getInstance().setPhone(null);
-        selected = false;
-    }
-
-    public String getFilterBank() {
-        return getInstance().getBank();
-    }
+public class FinancialProjectSubscribe extends FinancialBaseSubscribe {
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
 
     @Override
-    public Class<Financial> getEntityClass() {
-        return Financial.class;
-    }
+    protected void addMortgage() {
+        if(mortgaegeRegiste.getBusinessHouseOwner()==null){
+            BusinessHouseOwner businessHouseOwner = new BusinessHouseOwner();
+            if (!ownerBusinessHome.getInstance().getHouseBusinesses().isEmpty()){
+               HouseBusiness houseBusiness = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next();
+               String developerCode = houseBusiness.getStartBusinessHouse().getDeveloperCode();
+               if(developerCode==null || developerCode.trim().equals("")){
+                   throw new IllegalArgumentException("developerCode = null");
+               }
+               Developer developer = houseEntityLoader.getEntityManager().find(Developer.class,developerCode);
+               if (developer==null || developer.getAttachCorporation()==null){
+                   businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.OTHER);
+                   businessHouseOwner.setCredentialsNumber(UUID.randomUUID().toString());
+                   businessHouseOwner.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
+               }else {
+                   businessHouseOwner.setPersonName(developer.getName());
 
-    @Override
-    public Financial createInstance() {
-        return new Financial(new Date(), Financial.FinancialType.FINANCE_CORP);
-    }
+                   if (developer.getAttachCorporation().getLicenseNumber()==null || developer.getAttachCorporation().getLicenseNumber().trim().equals("")){
+                       businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.OTHER);
+                       businessHouseOwner.setCredentialsNumber(UUID.randomUUID().toString());
 
-    @Override
-    public void create() {
-        super.create();
+                   }else{
+                       businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                       businessHouseOwner.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
+                       businessHouseOwner.setLegalPerson(developer.getAttachCorporation().getOwnerName());
+                       businessHouseOwner.setPhone(developer.getAttachCorporation().getPhone());
+                   }
+               }
 
-        if (ownerBusinessHome.getInstance().getMortgaegeRegistes().isEmpty()) {
-            mortgaegeRegiste = new MortgaegeRegiste(ownerBusinessHome.getInstance());
-            //发证机关
-            mortgaegeRegiste.setOrgName(RunParam.instance().getStringParamValue("SetupName"));
-
-            mortgaegeRegiste.setFinancial(getInstance());
-            ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
-            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
             }
-
-        } else {
-            mortgaegeRegiste = ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next();
-            if (mortgaegeRegiste.getFinancial() == null) {
-                mortgaegeRegiste.setFinancial(getInstance());
-            } else {
-                if (mortgaegeRegiste.getFinancial().getId() == null) {
-                    setInstance(mortgaegeRegiste.getFinancial());
-                } else {
-                    setId(mortgaegeRegiste.getFinancial().getId());
-                }
-            }
+            businessHouseOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
+            mortgaegeRegiste.setBusinessHouseOwner(businessHouseOwner);
         }
     }
-
-    public void typeChangeListener(ValueChangeEvent e) {
-        if (Financial.FinancialType.FINANCE_CORP.equals(e.getNewValue())) {
-            Logging.getLog(getClass()).debug("type is finance corp");
-            getInstance().setCredentialsType(PersonEntity.CredentialsType.OTHER);
-        } else {
-            Logging.getLog(getClass()).debug("type is  Person");
-            getInstance().setCredentialsType(PersonEntity.CredentialsType.MASTER_ID);
-        }
-    }
-
-    public PersonHelper<Financial> getPersonInstance() {
-        return new PersonHelper<Financial>(getInstance());
-    }
-
 }

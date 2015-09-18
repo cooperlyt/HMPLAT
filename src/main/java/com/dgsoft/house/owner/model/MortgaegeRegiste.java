@@ -207,7 +207,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.orgName = orgName;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "OWNER",nullable = false)
 	@NotNull
 	public BusinessHouseOwner getBusinessHouseOwner() {

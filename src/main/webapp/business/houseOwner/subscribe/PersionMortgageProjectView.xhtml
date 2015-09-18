@@ -7,17 +7,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getBusinessPersionByType('MORTGAGE_PROJECT')}">
-        <ui:include src="BussinePersionView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.MORTGAGE_PROJECT}"/>
-            <ui:param name="businessPersion" value="#{ownerBusinessHome.getBusinessPersionByType('MORTGAGE_PROJECT')}"/>
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.businessHouseOwner)}">
+
+        <ui:include src="/layout/house/HouseOwnerView.xhtml">
+            <ui:param name="nameLabel" value="#{messages.Mortgager_view}"/>
+            <ui:param name="businessHouse"
+                      value="#{ownerBusinessHome.instance.mortgaegeRegiste.businessHouseOwner}"/>
         </ui:include>
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.getBusinessPersionByType('MORTGAGE_PROJECT')}">
-        <ui:include src="/layout/emptyViewGrid.xhtml">
-            <ui:param name="title" value="#{messages.MORTGAGE_PROJECT}" />
-            <ui:param name="noDataLabel" value="#{messages.MORTGAGE_PROJECT_not}"/>
-        </ui:include>
-    </a:outputPanel>
 </ui:composition>
