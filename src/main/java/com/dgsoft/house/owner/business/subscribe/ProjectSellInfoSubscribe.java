@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.house.SaleType;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.ProjectSellInfo;
@@ -18,6 +19,17 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
 
 
 
+
+    private boolean isType=true;
+
+    public boolean isType() {
+        return isType;
+    }
+
+    public void setType(boolean isType) {
+        this.isType = isType;
+    }
+
     @Override
     public void create(){
         super.create();
@@ -29,6 +41,11 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
             }
 
         }else{
+            if(isType){
+                getInstance().setType(SaleType.MAP_SELL);
+            }else {
+                getInstance().setType(SaleType.NOW_SELL);
+            }
             getInstance().setBusinessProject(ownerBusinessHome.getInstance().getBusinessProject());
             ownerBusinessHome.getInstance().getBusinessProject().setProjectSellInfo(getInstance());
 

@@ -566,11 +566,22 @@
         </description>
     </edit-subscribe>
 
+
+
+
     <edit-subscribe name="FinancialEdit" page="/business/houseOwner/subscribe/FinancialEdit.xhtml" component="">
         <description>
             抵押权人编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="FinancialProjectEdit" page="/business/houseOwner/subscribe/FinancialProjectEdit.xhtml" component="">
+        <description>
+            在建工程抵押权人编辑
+        </description>
+    </edit-subscribe>
+
+
 
     <edit-subscribe name="PersionObligeeEdit" page="/business/houseOwner/subscribe/PersionObligeeEdit.xhtml" component="">
         <description>

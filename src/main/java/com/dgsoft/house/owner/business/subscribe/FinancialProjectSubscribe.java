@@ -17,16 +17,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Administrator
- * Date: 14-10-14
- * Time: 下午4:55
- * To change this template use File | Settings | File Templates.
+ * Created by wxy on 2015-09-18.
+ * 在建工程抵押权人添加抵押人，将开发商转成抵押人
  */
-
-//TODO remove this
-@Name("financialSubscribe")
-public class FinancialSubscribe extends OwnerEntityHome<Financial> {
+@Name("FinancialProjectSubscribe")
+public class FinancialProjectSubscribe extends OwnerEntityHome<Financial> {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -117,18 +112,8 @@ public class FinancialSubscribe extends OwnerEntityHome<Financial> {
             ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                 houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
-
             }
 
-            //单房屋抵押人添加到抵押登记信息
-            if (ownerBusinessHome.getInstance().getHouseBusinesses().size() == 1) {
-                if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner() != null) {
-                    mortgaegeRegiste.setBusinessHouseOwner(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
-                }
-            }
-
-
-            // ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
         } else {
             mortgaegeRegiste = ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next();
             if (mortgaegeRegiste.getFinancial() == null) {

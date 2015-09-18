@@ -9,23 +9,16 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
-    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-            #{messages.ProjectSellInfo_type}
-        </ui:define>
-        <ui:param name="for" value="ProjectSellInfoType"/>
-        <h:selectOneMenu id="ProjectSellInfoType"
-                         value="#{projectSellInfoSubscribe.instance.type}"
-                         styleClass="selectpicker select-menu-btn input-group-first"
-                         label="#{messages.ProjectSellInfo_type}"
-                         required="true">
-            <s:selectItems value="#{projectSellInfoSubscribe.instance.projectSellType}"
-                           var="_type" label="#{messages[_type.name()]}"
-                           noSelectionLabel="#{messages.noSelectLabel}"/>
-            <s:convertEnum/>
 
-        </h:selectOneMenu>
+
+    <s:decorate template="/layout/edit.xhtml">
+        <ui:define name="label">#{messages.ProjectSellInfo_isType}</ui:define>
+        <h:selectBooleanCheckbox label="#{messages.ProjectSellInfo_isType}"
+                                 value="#{projectSellInfoSubscribe.type}"/>
     </s:decorate>
+
+
+
 
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">

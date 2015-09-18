@@ -1,0 +1,261 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+<h:outputStylesheet>
+    .financial-title-inputs .input-group-first button {
+        border-radius: 0 !important;
+
+    }
+
+    .financial-type-select {
+        width: 100px;
+    }
+
+    .financial-title-inputs .financial-type-select button {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+
+    }
+</h:outputStylesheet>
+
+
+<ui:decorate template="/layout/system/PersonInput.xhtml">
+
+    <ui:param name="personEntityHelper" value="#{FinancialProjectSubscribe.instance.mortgaegeForNew}"/>
+    <ui:param name="personStatus" value="mainOwner_personCredentiaslNumberStatus"/>
+
+    <div class="form-inline">
+
+        <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.BusinessOwner_Phone}
+            </ui:define>
+            <ui:param name="for" value="persionPhoneInput"/>
+            <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
+                         styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                         value="#{businessHouseOwnerSubscribe.instance.phone}" required="true" id="persionPhoneInput">
+                <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                <r:validator event="blur" />
+            </h:inputText>
+
+        </s:decorate>
+    </div>
+    <div class="form-inline">
+        <s:decorate template="/layout/edit-big.xhtml">
+            <ui:param name="for" value="persionRootAddressInput"/>
+
+            <ui:define name="label">
+                #{messages.BusinessOwner_RootAddress}
+            </ui:define>
+            <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="55" maxlength="50"
+                         value="#{businessHouseOwnerSubscribe.instance.rootAddress}" id="persionRootAddressInput">
+                <r:validator event="blur"/>
+            </h:inputText>
+
+        </s:decorate>
+    </div>
+</ui:decorate>
+
+
+
+
+<ui:decorate template="/layout/edit-multi.xhtml">
+    <ui:param name="req" value="true"/>
+
+
+    <ui:define name="topValue">
+
+
+        <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+            <ui:param name="for" value="credentialsNumber"/>
+
+            <ui:param name="status" value="final_personCredentiaslNumberStatus"/>
+            <ui:define name="label">
+                #{label}
+            </ui:define>
+
+            <ui:define name="message">
+                <r:message for="credentialsNumber" styleClass="edit-below-msg" ajaxRendered="false"/>
+                <r:message for="cerdentialsName" styleClass="edit-below-msg" ajaxRendered="false"/>
+                <r:message for="financeNameInput" styleClass="edit-below-msg" ajaxRendered="false"/>
+            </ui:define>
+
+            <div class="input-group financial-title-inputs" style="width: 100%">
+                <a:region>
+                    <h:selectOneMenu value="#{FinancialProjectSubscribe.instance.financialType}"
+                                     id="typeSelectInput"
+                                     label="#{label}#{messages.FinancialType}"
+                                     required="true"
+                                     styleClass="selectpicker select-menu-btn financial-type-select"
+                                     valueChangeListener="#{FinancialProjectSubscribe.typeChangeListener}">
+                        <s:selectItems value="#{FinancialProjectSubscribe.financialTypes}"
+                                       var="_type"
+                                       itemValue="#{_type}"
+                                       label="#{messages[_type.name()]}"/>
+                        <a:ajax event="valueChange" execute="@region"
+                                render="personInputFields">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+
+                    </h:selectOneMenu>
+                </a:region>
+
+                <a:outputPanel rendered="#{FinancialProjectSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                    <ui:include src="/layout/system/PersonCardInput.xhtml">
+                        <ui:param name="_person" value="#{FinancialProjectSubscribe.personInstance}"/>
+                        <ui:param name="personStatus" value="final_personCredentiaslNumberStatus"/>
+                        <ui:param name="render" value="personInputFields,financeAttrField"/>
+                    </ui:include>
+                </a:outputPanel>
+
+
+                <h:inputText id="financeNameInput"
+                             required="true"
+                             p:pplaceholder="#{messages.Financial_name}"
+                             rendered="#{FinancialProjectSubscribe.instance.financialType eq 'FINANCE_CORP'}"
+                             label="#{messages.Financial_name}"
+                             value="#{FinancialProjectSubscribe.instance.name}"
+                             disabled="#{FinancialProjectSubscribe.selected}"
+                             styleClass="form-control"/>
+
+            </div>
+
+        </s:decorate>
+
+    </ui:define>
+
+
+    <a:outputPanel layout="block" styleClass="form-inline" id="financeAttrField">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.Tel}
+            </ui:define>
+
+
+            <h:inputText label="#{messages.Tel}"
+                         value="#{FinancialProjectSubscribe.instance.phone}"
+                         styleClass="form-control"/>
+        </s:decorate>
+
+    </a:outputPanel>
+
+</ui:decorate>
+
+<s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+    <ui:define name="label">
+        #{messages.MortgaegeRegiste_InterestType}
+    </ui:define>
+    <ui:param name="for" value="highestMountMoneyInput"/>
+
+
+    <div style="display: block;">
+        <div class="input-group">
+
+            <a:outputPanel styleClass="input-group-btn">
+
+                <h:selectOneMenu required="true"
+                                 id="interestTypenput"
+                                 value="#{FinancialProjectSubscribe.mortgaegeRegiste.interestType}"
+                                 styleClass="selectpicker select-menu-btn input-group-first"
+                                 label="#{messages.MortgaegeRegiste_InterestType}">
+                    <s:selectItems value="#{dictionary.getWordList('42')}" var="_word"
+                                   itemValue="#{_word.id}" label="#{_word.value}"/>
+                </h:selectOneMenu>
+
+            </a:outputPanel>
+            <h:inputText value="#{FinancialProjectSubscribe.mortgaegeRegiste.highestMountMoney}"
+                         size="20"
+                         id="highestMountMoneyInput"
+                         label="#{messages.MortgaegeRegiste_HighestMountMoney}"
+                         p:placeholder="#{messages.MortgaegeRegiste_HighestMountMoney}"
+                         styleClass="form-control"
+                         required="true">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
+
+            </h:inputText>
+        </div>
+    </div>
+
+</s:decorate>
+
+
+<div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.MortgaegeRegiste_MortgageDueTimeS}
+        </ui:define>
+        <ui:param name="for" value="MortgageDueTimeS"/>
+
+        <h:inputText id="MortgageDueTimeS"
+                     required="true"
+                     styleClass="js-datepicker form-control"
+                     label="#{messages.MortgaegeRegiste_MortgageDueTimeS}"
+                     value="#{FinancialProjectSubscribe.mortgaegeRegiste.mortgageDueTimeS}">
+            <s:convertDateTime pattern="#{messages.datePattern}"/>
+        </h:inputText>
+    </s:decorate>
+</div>
+
+<div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.MortgaegeRegiste_MortgageTime}
+        </ui:define>
+
+        <ui:param name="for" value="mortgageTimeInput"/>
+        <h:inputText label="#{messages.MortgaegeRegiste_MortgageTime}"
+                     value="#{FinancialProjectSubscribe.mortgaegeRegiste.mortgageTime}"
+                     required="true"
+                     id="mortgageTimeInput"
+                     styleClass="form-control">
+
+        </h:inputText>
+    </s:decorate>
+</div>
+
+<div class="form-inline">
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.MortgaegeRegiste_MortgageArea}
+        </ui:define>
+        <ui:param name="for" value="mortgageAreaInput"/>
+        <h:inputText value="#{FinancialProjectSubscribe.mortgaegeRegiste.mortgageArea}"
+                     id="mortgageAreaInput"
+                     required="true"
+                     label="#{messages.MortgaegeRegiste_MortgageArea}"
+                     styleClass="form-control">
+            <r:validator event="blur"/>
+            <f:validateDoubleRange minimum="0"/>
+            <f:convertNumber pattern="#0.000"/>
+        </h:inputText>
+    </s:decorate>
+</div>
+
+
+<s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+    <ui:define name="label">
+        #{messages.MortgaegeRegiste_WarrantScope}
+    </ui:define>
+
+    <h:inputTextarea label="#{messages.MortgaegeRegiste_WarrantScope}"
+                     cols="50"
+                     rows="3"
+                     value="#{FinancialProjectSubscribe.mortgaegeRegiste.warrantScope}"
+                     id="warrantScopeInput"
+                     styleClass="form-control">
+
+    </h:inputTextarea>
+</s:decorate>
+
+
+</ui:composition>
