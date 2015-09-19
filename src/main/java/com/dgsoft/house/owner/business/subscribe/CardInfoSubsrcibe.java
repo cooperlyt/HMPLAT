@@ -21,8 +21,7 @@ public class CardInfoSubsrcibe extends OwnerEntityHome<CardInfo> {
     @Override
     public void create(){
         super.create();
-        if(!ownerBusinessHome.getInstance().getMakeCards().isEmpty() &&
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo()!=null){
+        if(!ownerBusinessHome.getInstance().getMakeCards().isEmpty() && ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo()!=null){
             setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().getId());
         }else{
 
