@@ -36,6 +36,11 @@ public class MakeCard implements java.io.Serializable {
     }
 
 
+    public MakeCard(CardType type,boolean enable) {
+        this.type = type;
+        this.enable=enable;
+    }
+
     public MakeCard(CardType type ,String number) {
         this.type = type;
         this.number = number;

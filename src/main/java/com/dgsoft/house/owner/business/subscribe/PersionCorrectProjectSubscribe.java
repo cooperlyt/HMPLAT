@@ -25,7 +25,7 @@ public class PersionCorrectProjectSubscribe extends BaseBusinessPersionSubscribe
         if (!isHave()) {
             clearInstance();
 
-                BusinessPersion businessPersion=ownerBusinessHome.getInstance().getMortgageProject();
+                BusinessHouseOwner businessPersion=ownerBusinessHome.getInstance().getMortgaegeRegiste().getBusinessHouseOwner();
                 if (businessPersion != null) {
                     getInstance().setCredentialsType(businessPersion.getCredentialsType());
                     getInstance().setCredentialsNumber(businessPersion.getCredentialsNumber());

@@ -7,13 +7,10 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.businessHouseOwner)}">
 
-        <ui:include src="/layout/house/HouseOwnerView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.Mortgager_view}"/>
-            <ui:param name="businessHouse"
-                      value="#{ownerBusinessHome.instance.mortgaegeRegiste.businessHouseOwner}"/>
-        </ui:include>
-    </a:outputPanel>
 
+
+    <ui:include src="/business/houseOwner/subscribe/FinancialProjectInput.xhtml">
+        <ui:param name="label" value="#{messages.Financial}"/>
+    </ui:include>
 </ui:composition>
