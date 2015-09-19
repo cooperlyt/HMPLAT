@@ -472,14 +472,14 @@
 
 
     <servlet>
-        <servlet-name>DictrictWS</servlet-name>
-        <servlet-class>com.dgsoft.common.system.ws.WordDictrict</servlet-class>
+        <servlet-name>DictionaryWS</servlet-name>
+        <servlet-class>com.dgsoft.common.system.ws.WordDictionaryService</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>DictrictWS</servlet-name>
-        <url-pattern>/DictrictWS</url-pattern>
+        <servlet-name>DictionaryWS</servlet-name>
+        <url-pattern>/DictionaryWS</url-pattern>
     </servlet-mapping>
 
     <servlet>

@@ -72,7 +72,18 @@ public class DeveloperServiceComponent {
                 jsonObject.put("sessionKey", rndData);
 
                 jsonObject.put("employeeName", key.getAttachEmployee().getPersonName());
-                jsonObject.put("corpName", key.getAttachEmployee().getAttachCorporation().getDeveloper().getName());
+
+                JSONObject attachCorpJsonObj = new JSONObject();
+                attachCorpJsonObj.put("name", key.getAttachEmployee().getAttachCorporation().getDeveloper().getName());
+                attachCorpJsonObj.put("address", key.getAttachEmployee().getAttachCorporation().getAddress());
+                attachCorpJsonObj.put("postCode", key.getAttachEmployee().getAttachCorporation().getPostCode());
+                attachCorpJsonObj.put("licenseNumber", key.getAttachEmployee().getAttachCorporation().getLicenseNumber());
+                attachCorpJsonObj.put("cerCode", key.getAttachEmployee().getAttachCorporation().getCerCode());
+                attachCorpJsonObj.put("ownerPerson", key.getAttachEmployee().getAttachCorporation().getOwnerName());
+                attachCorpJsonObj.put("ownerTel",key.getAttachEmployee().getPhone());
+
+                jsonObject.put("attachCorpInfo",attachCorpJsonObj);
+
 
                 jsonObject.put("orgName", RunParam.instance().getStringParamValue("SetupName"));
 
@@ -103,7 +114,7 @@ public class DeveloperServiceComponent {
                     cardJsonObj.put("cardType", card.getProjectSellInfo().getType().name());
                     cardJsonObj.put("cardNumber", card.getMakeCard().getNumber());
                     cardJsonObj.put("address", card.getProjectSellInfo().getBusinessProject().getAddress());
-
+                    cardJsonObj.put("developerName", card.getProjectSellInfo().getBusinessProject().getDeveloperName());
 
                     cardJsonObj.put("landCardType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandCardType()));
                     cardJsonObj.put("landCardNumber", card.getProjectSellInfo().getLandCardNo());
