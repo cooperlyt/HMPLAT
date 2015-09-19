@@ -8,6 +8,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 
+import java.util.UUID;
+
 /**
  * Created by wxy on 2015-09-16.
  * 多房屋档案位置
@@ -26,14 +28,11 @@ public class RecordStoreHouseSubscribe extends OwnerEntityHome<RecordStore> {
         if(!ownerBusinessHome.getInstance().getRecordStores().isEmpty()){
             setId(ownerBusinessHome.getInstance().getReasons().iterator().next().getId());
         }else{
-            Logging.getLog(getClass()).debug("aaa--"+ownerBusinessHome.getInstance().getId());
+            getInstance().setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getRecordStores().add(getInstance());
-
-
-
             for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-                Logging.getLog(getClass()).debug("bbb--"+houseBusiness.getHouseCode());
+
                 houseBusiness.setRecordStore(getInstance());
                 getInstance().getHouseBusiness().add(houseBusiness);
             }
