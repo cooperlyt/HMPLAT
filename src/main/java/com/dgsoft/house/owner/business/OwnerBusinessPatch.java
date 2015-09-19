@@ -224,8 +224,12 @@ public class OwnerBusinessPatch {
         if (getMaxDateTime().compareTo(ownerBusinessHome.getInstance().getApplyTime()) < 0){
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"PatchDateTimeError",getLocalMaxDateTime());
             return null;
-
         }
+        if (!businessDefineHome.isCompletePass()){
+            throw new IllegalArgumentException("component action fail");
+        }
+
+        businessDefineHome.completeTask();
 
         ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_AFTER_SAVE);
         ownerBusinessHome.getInstance().setRecorded(true);
