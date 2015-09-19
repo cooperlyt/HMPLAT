@@ -86,8 +86,7 @@ public class CardInfo  implements Serializable  {
         this.memo = memo;
     }
 
-    @Column(name = "MAKE_EMP_CODE", nullable = false, length = 32)
-    @NotNull
+    @Column(name = "MAKE_EMP_CODE", nullable = true, length = 32)
     @Size(max = 32)
     public String getMakeEmpCode() {
         return this.makeEmpCode;
@@ -97,8 +96,7 @@ public class CardInfo  implements Serializable  {
         this.makeEmpCode = makeEmpCode;
     }
 
-    @Column(name = "MAKE_EMP_NAME", nullable = false, length = 50)
-    @NotNull
+    @Column(name = "MAKE_EMP_NAME", nullable = true, length = 50)
     @Size(max = 50)
     public String getMakeEmpName() {
         return this.makeEmpName;
