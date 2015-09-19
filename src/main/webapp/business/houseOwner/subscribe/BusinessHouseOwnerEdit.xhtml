@@ -14,6 +14,15 @@
         <ui:param name="personEntityHelper" value="#{businessHouseOwnerSubscribe.personInstance}"/>
         <ui:param name="personStatus" value="mainOwner_personCredentiaslNumberStatus"/>
 
+        <s:decorate rendered="#{(businessHouseOwnerSubscribe.instance.credentialsType.name() eq 'COMPANY_CODE')}"
+                    id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.ContractOwner_legalPerson}
+            </ui:define>
+            <h:inputText value="#{businessHouseOwnerSubscribe.instance.legalPerson}" maxlength="50"
+                         styleClass="form-control"/>
+        </s:decorate>
+
         <div class="form-inline">
 
             <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">

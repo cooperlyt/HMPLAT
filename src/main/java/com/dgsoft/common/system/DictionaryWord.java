@@ -115,7 +115,7 @@ public class DictionaryWord {
         if (word != null) {
             return word.getValue();
         } else
-            return "";
+            return wordId;
 
     }
 
