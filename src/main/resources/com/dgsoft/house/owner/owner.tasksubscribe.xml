@@ -796,7 +796,15 @@
     <edit-subscribe name="MakeCardOwnerRsipRecordEdit" page="/business/houseOwner/subscribe/MakeCardOwnerRsipRecordEdit.xhtml"
                     component="">
         <description>
-            档案补录所有权证信息
+            档案补录所有权证信息编辑
+        </description>
+    </edit-subscribe>
+
+
+    <edit-subscribe name="CheckEmpRecordEdit" page="/business/houseOwner/subscribe/CheckEmpRecordEdit.xhtml"
+                    component="">
+        <description>
+            档案补录证审核人编辑
         </description>
     </edit-subscribe>
 

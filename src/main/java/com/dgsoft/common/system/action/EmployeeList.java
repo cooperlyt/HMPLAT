@@ -17,7 +17,7 @@ public class EmployeeList extends SystemEntityQuery<Employee> {
 
     private static final String EJBQL = "select employee from Employee employee";
 
-    private static final String[] RESTRICTIONS = {
+    private static final String[] RESTRICTIONS ={
             "lower(employee.id) like lower(concat('%',concat(#{employeeList.searchKey},'%')))",
             "lower(employee.personName) like lower(concat('%',concat(#{employeeList.searchKey},'%')))",
             "lower(employee.pyCode) like lower(concat('%',concat(#{employeeList.searchKey},'%')))"};
