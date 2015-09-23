@@ -413,6 +413,17 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="HouseOwnerOldView" page="/business/houseOwner/subscribe/HouseOwnerOldView.xhtml">
+        <description>
+            原产权人档案补录查看
+        </description>
+    </view-subscribe>
+
+
+
+
+
+
 
 
 
@@ -807,6 +818,18 @@
             档案补录证审核人编辑
         </description>
     </edit-subscribe>
+
+
+    <edit-subscribe name="HouseOwnerOldEdit" page="/business/houseOwner/subscribe/HouseOwnerOldEdit.xhtml"
+                    component="">
+        <description>
+           原产权人档案补录编辑
+        </description>
+    </edit-subscribe>
+
+
+
+
 
 
 
