@@ -1,0 +1,81 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+
+    <ui:decorate template="/layout/system/PersonInput.xhtml">
+
+        <ui:param name="personEntityHelper" value="#{businessHouseOwnerOldSubscribe.personInstance}"/>
+        <ui:param name="personStatus" value="mainOwner_personCredentiaslNumberStatus"/>
+
+        <s:decorate rendered="#{(businessHouseOwnerOldSubscribe.instance.credentialsType.name() eq 'COMPANY_CODE')}"
+                    id="legalPersonFieldOld" styleClass="form-group" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.ContractOwner_legalPerson}
+            </ui:define>
+            <h:inputText value="#{businessHouseOwnerOldSubscribe.instance.legalPerson}" maxlength="50"
+                         styleClass="form-control"/>
+        </s:decorate>
+
+        <div class="form-inline">
+
+            <s:decorate id="businessPersonPhoneFieldOld" styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.BusinessOwner_Phone}
+                </ui:define>
+                <ui:param name="for" value="persionPhoneInputOld"/>
+                <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
+                             styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                             value="#{businessHouseOwnerOldSubscribe.instance.phone}" required="true" id="persionPhoneInputOld">
+                    <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                    <r:validator event="blur" />
+                </h:inputText>
+
+            </s:decorate>
+        </div>
+        <div class="form-inline">
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:param name="for" value="persionRootAddressInputOld"/>
+
+                <ui:define name="label">
+                    #{messages.BusinessOwner_RootAddress}
+                </ui:define>
+                <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="55" maxlength="50"
+                             value="#{businessHouseOwnerOldSubscribe.instance.rootAddress}" id="persionRootAddressInputOld">
+                    <r:validator event="blur"/>
+                </h:inputText>
+
+            </s:decorate>
+        </div>
+
+
+        <div class="form-inline">
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:param name="for" value="addressInputOld"/>
+
+                <ui:define name="label">
+                    #{messages.BusinessOwner_Address}
+                </ui:define>
+                <h:inputTextarea
+                        label="#{messages.BusinessOwner_Address}"
+                        cols="50"
+                        rows="3"
+                        value="#{businessHouseOwnerSubscribe.instance.address}"
+                        styleClass="form-control"
+                        id="addressInputOld">
+                </h:inputTextarea>
+
+            </s:decorate>
+        </div>
+
+
+
+    </ui:decorate>
+
+</ui:composition>

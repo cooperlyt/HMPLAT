@@ -1,0 +1,177 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <s:decorate template="/layout/edit-multi.xhtml">
+
+
+        <ui:define name="topValue">
+            <div class="form-checkbox">
+                <label>
+                    #{messages.CHECK_EMP}
+                </label>
+
+                <h:selectBooleanCheckbox value="#{checkEmpRecordSubscribe.have}">
+                    <a:ajax event="click"
+                            render="EMPPanel"
+                            execute="@this"
+                            listener="#{checkEmpRecordSubscribe.checkHave}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:selectBooleanCheckbox>
+
+            </div>
+        </ui:define>
+
+
+        <ui:define name="values">
+            <a:outputPanel id="EMPPanel">
+                <a:outputPanel rendered="#{checkEmpRecordSubscribe.have}">
+                    <hr/>
+                    <div style="display: block;">
+
+                        <a:outputPanel layout="block" styleClass="upgrade-upsell">
+
+
+                            <a:region>
+
+                                <div >
+                                    <f:subview>
+
+                                        <h:outputScript>
+                                            var scrollTopValue2 = 0;
+
+                                            function moreBefor(){
+                                            var div = #{r:element('SectionSelectItemList')};
+                                            scrollTopValue2 = div.scrollTop;
+
+                                            }
+
+                                            function scrollToBefor(){
+                                            var div = #{r:element('SectionSelectItemList')};
+
+                                            div.scrollTop = scrollTopValue2;
+                                            }
+
+                                        </h:outputScript>
+
+                                        <a:jsFunction name="showSubEmpMenu" action="#{employeeList.resetResultCount}"
+                                                      render="sectionSelectPanel" execute="@this" immediate="true"/>
+
+                                        <a:jsFunction name="moreSubResult" execute="@this" immediate="true" action="#{employeeList.moreResult}"
+                                                      oncomplete="scrollToBefor() "
+                                                      render="SectionSelectItemList">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:jsFunction>
+
+
+
+
+                                        <button onclick="showSubEmpMenu();" type="button" class=" btn dropdown-toggle btn-default"
+                                                data-toggle="dropdown" aria-expanded="false">
+
+                                            <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
+                                                          value="#{(empty checkEmpRecordSubscribe.employee) ? messages.noSelectLabel : checkEmpRecordSubscribe.employee.personName}">
+                                            </h:outputText>
+                                            <span class="caret"></span>
+                                        </button>
+
+                                        <div class="dropdown-menu select-menu-modal-holder">
+                                            <div class="select-menu-modal">
+                                                <div class="select-menu-header">
+                                                    <span class="select-menu-title">#{messages.assign_title}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                                </div>
+
+                                                <a:outputPanel layout="block" id="sectionSelectPanel">
+                                                    <div class="select-menu-filters">
+                                                        <div class="select-menu-text-filter">
+                                                            <h:inputText id="sectionSearchName" autocomplete="off" value="#{employeeList.searchKey}">
+                                                                <a:ajax event="keyup" immediate="true" execute="@this"
+                                                                        render="SectionSelectItemList">
+                                                                    <a:attachQueue requestDelay="500"/>
+                                                                </a:ajax>
+
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
+                                                    <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+
+
+                                                        <a:repeat value="#{employeeList.resultList}" var="_emp">
+
+                                                            <a:commandLink execute="@this" immediate="true"
+                                                                           render="assignConfirmPanel_form,assignConfirmPanel_title"
+                                                                           disabled="#{(checkEmpRecordSubscribe.employeeId eq _emp.id)}"
+                                                                           styleClass="select-menu-item #{(checkEmpRecordSubscribe.employeeId eq _emp.id) ? 'selected disabled': ''}">
+                                                                <a:attachQueue requestDelay="0"/>
+                                                                <a:param assignTo="#{checkEmpRecordSubscribe.employeeId}" value="#{_emp.id}"/>
+                                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                <span class="select-menu-item-text">#{_emp.personName}</span>
+                                                            </a:commandLink>
+                                                        </a:repeat>
+
+
+
+
+
+                                                        <a:commandLink onclick="moreBefor();moreSubResult(); event.stopPropagation(); return false;"
+                                                                       styleClass="select-menu-item last-visible"
+                                                                       rendered="#{employeeList.nextExists}">
+
+
+                                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                            <span class="select-menu-item-text">#{messages.More}</span>
+                                                            <a:attachQueue requestDelay="0"/>
+                                                        </a:commandLink>
+                                                    </a:outputPanel>
+
+                                                </a:outputPanel>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </f:subview>
+                                </div>
+
+                            </a:region>
+
+
+
+
+
+                            <div class="form-inline">
+                                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        #{messages.CHECK_operDate}
+                                    </ui:define>
+                                    <ui:param name="for" value="operDate"/>
+
+                                    <h:inputText id="operDate"
+                                                 required="true"
+                                                 styleClass="js-datepicker form-control"
+                                                 label="#{messages.CHECK_operDate}"
+                                                 value="#{checkEmpRecordSubscribe.instance.operDate}">
+                                        <s:convertDateTime pattern="#{messages.datePattern}"/>
+                                    </h:inputText>
+                                </s:decorate>
+                            </div>
+                        </a:outputPanel>
+                    </div>
+                    <hr/>
+                </a:outputPanel>
+            </a:outputPanel>
+        </ui:define>
+    </s:decorate>
+
+
+</ui:composition>

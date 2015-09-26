@@ -413,6 +413,17 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="HouseOwnerOldView" page="/business/houseOwner/subscribe/HouseOwnerOldView.xhtml">
+        <description>
+            原产权人档案补录查看
+        </description>
+    </view-subscribe>
+
+
+
+
+
+
 
 
 
@@ -796,9 +807,29 @@
     <edit-subscribe name="MakeCardOwnerRsipRecordEdit" page="/business/houseOwner/subscribe/MakeCardOwnerRsipRecordEdit.xhtml"
                     component="">
         <description>
-            档案补录所有权证信息
+            档案补录所有权证信息编辑
         </description>
     </edit-subscribe>
+
+
+    <edit-subscribe name="CheckEmpRecordEdit" page="/business/houseOwner/subscribe/CheckEmpRecordEdit.xhtml"
+                    component="">
+        <description>
+            档案补录证审核人编辑
+        </description>
+    </edit-subscribe>
+
+
+    <edit-subscribe name="HouseOwnerOldEdit" page="/business/houseOwner/subscribe/HouseOwnerOldEdit.xhtml"
+                    component="">
+        <description>
+           原产权人档案补录编辑
+        </description>
+    </edit-subscribe>
+
+
+
+
 
 
 

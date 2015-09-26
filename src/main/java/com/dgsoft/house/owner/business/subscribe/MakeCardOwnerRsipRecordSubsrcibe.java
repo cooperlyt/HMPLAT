@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.CardInfo;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MakeCard;
 import com.dgsoft.house.owner.model.Reason;
 import org.jboss.seam.annotations.In;
@@ -38,6 +39,12 @@ public class MakeCardOwnerRsipRecordSubsrcibe extends OwnerEntityHome<MakeCard> 
         CardInfo cardInfo = new CardInfo();
         getInstance().setCardInfo(cardInfo);
         cardInfo.setMakeCard(getInstance());
+
+
+        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+            houseBusiness.getAfterBusinessHouse().getOtherPowerCards().add(getInstance());
+            getInstance().getBusinessHouses().add(houseBusiness.getAfterBusinessHouse());
+        }
 
 
     }
