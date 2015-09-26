@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.ws;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.LogonStatus;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseStatus;
@@ -122,6 +123,11 @@ public class DeveloperServiceComponent {
                     cardJsonObj.put("landUseType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandUseType()));
 
                     cardJsonObj.put("landEndUseTime", card.getProjectSellInfo().getEndUseTime().getTime());
+                    cardJsonObj.put("landGetMode", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandGetMode()));
+                    cardJsonObj.put("landAddress", card.getProjectSellInfo().getLandAddress());
+                    if (card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp() != null)
+                        cardJsonObj.put("mappingCropName", card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp().getName());
+
                     cardJsonObj.put("createCardNumber", card.getProjectSellInfo().getCreateCardNumber());
                     cardJsonObj.put("createPrepareCardNumber", card.getProjectSellInfo().getCreatePrepareCardNumber());
                     cardJsonObj.put("name", card.getProjectSellInfo().getBusinessProject().getProjectName());
@@ -162,15 +168,17 @@ public class DeveloperServiceComponent {
                 key.setSessionKey(rndData);
                 houseEntityManager.flush();
             }
+            Logging.getLog(getClass()).debug("logon 1");
             try {
                 return DESUtil.encrypt(jsonObject.toString(), key.getId());
             } catch (Exception e) {
-                Logging.getLog(getClass()).error(e.getMessage(), e);
+
+                Logging.getLog(getClass()).error("encrpt error", e);
                 throw new IllegalArgumentException(e.getMessage(),e);
             }
 
         } catch (JSONException e) {
-            Logging.getLog(getClass()).error(e.getMessage(), e);
+            Logging.getLog(getClass()).error("json exception", e);
             throw new IllegalArgumentException(e.getMessage(),e);
         } catch (NoSuchAlgorithmException e2) {
             Logging.getLog(getClass()).error(e2.getMessage(), e2);
@@ -239,7 +247,7 @@ public class DeveloperServiceComponent {
         }
 
         try {
-            String result = DESUtil.encrypt(jsonArray.toString(),key.getSessionKey());
+            String result = DESUtil.encrypt(jsonArray.toString(), key.getSessionKey());
             ownerEntityManager.flush();
             return result;
         } catch (Exception e) {
@@ -479,7 +487,7 @@ public class DeveloperServiceComponent {
                 houseMap.remove(block.getHouseCode());
             }
         } catch (JSONException e) {
-            Logging.getLog(getClass()).error(e.getMessage(),e);
+            Logging.getLog(getClass()).error(e.getMessage(), e);
 
         }
 
@@ -487,6 +495,38 @@ public class DeveloperServiceComponent {
 
     }
 
+    @Transactional
+    public DeveloperSaleService.CommitResult submitContract(String contract, String userId){
+        EntityManager houseEntityManager = (EntityManager) Component.getInstance("houseEntityManager", true, true);
+        DeveloperLogonKey key = houseEntityManager.find(DeveloperLogonKey.class, userId);
+        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
+
+        try {
+            JSONObject contractObj = new JSONObject(DESUtil.decrypt(contract, key.getSessionKey()));
+            String houseCode = contractObj.getString("houseCode");
+
+            ownerEntityManager
+
+            JSONArray numberArray = contractObj.getJSONArray("contractNumber");
+            if (numberArray.length() <= 0){
+                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
+                for(int i = 0; i < numberArray.length(); i++){
+                    ContractNumber contractNumber = ownerEntityManager.find(ContractNumber.class, numberArray.get(i));
+                    if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
+
+                        return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
+                    }else{
+                        contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
+                    }
+                }
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static DeveloperServiceComponent instance()
     {

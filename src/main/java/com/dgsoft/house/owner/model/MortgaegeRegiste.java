@@ -31,7 +31,6 @@ public class MortgaegeRegiste implements java.io.Serializable {
     private Financial financial;
 	private String orgName;
 	private BusinessHouseOwner businessHouseOwner;
-    private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
 
 	public MortgaegeRegiste() {
@@ -182,15 +181,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
         this.financial = financial;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "mortgaegeRegistes")
-    public Set<BusinessHouse> getBusinessHouses() {
-        return businessHouses;
-    }
-
-    public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
-        this.businessHouses = businessHouses;
-    }
-    @Transient
+	@Transient
     public String getBigHighestMountMoney(){
         return BigMoneyUtil.getBigMoney(getHighestMountMoney().doubleValue());
     }

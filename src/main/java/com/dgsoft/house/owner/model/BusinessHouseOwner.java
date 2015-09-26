@@ -26,6 +26,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
     private String rootAddress;
     private String address;
     private String legalPerson;
+    private MakeCard makeCard;
 
 
     //由产权人得房屋没意义，因为有startHouse 和 afterHouse 可以使用 houseBusiness left join afterHouse left join BusinessHouseOwner
@@ -159,4 +160,13 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
         this.ownerBusiness = ownerBusiness;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "OWNER_CARD", nullable = true)
+    public MakeCard getMakeCard() {
+        return makeCard;
+    }
+
+    public void setMakeCard(MakeCard makeCard) {
+        this.makeCard = makeCard;
+    }
 }
