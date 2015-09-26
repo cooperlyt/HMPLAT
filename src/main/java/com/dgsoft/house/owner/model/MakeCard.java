@@ -36,7 +36,7 @@ public class MakeCard implements java.io.Serializable {
     }
 
 
-    public MakeCard(CardType type,boolean enable) {
+    public MakeCard(CardType type) {
         this.type = type;
         this.enable=enable;
     }
