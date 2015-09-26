@@ -109,10 +109,6 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
 
             mortgaegeRegiste.setFinancial(getInstance());
             ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
-            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
-
-            }
 
 
             addMortgage();

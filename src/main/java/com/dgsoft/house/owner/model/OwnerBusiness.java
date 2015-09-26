@@ -527,11 +527,10 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public String getStarHouseOwnerRshipNo() {
         String str = null;
-        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()) {
-            for (MakeCard makeCard : getSingleHoues().getStartBusinessHouse().getOtherPowerCards()) {
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)) {
-                    str = makeCard.getNumber();
-                }
+        if(getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
+            MakeCard makeCard =getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getMakeCard();
+            if(makeCard!=null && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
+                str = makeCard.getNumber();
             }
         }
         return str;
@@ -540,11 +539,10 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public String getStarHouseNoticeNo() {
         String str = null;
-        if (!getSingleHoues().getStartBusinessHouse().getOtherPowerCards().isEmpty()) {
-            for (MakeCard makeCard : getSingleHoues().getStartBusinessHouse().getOtherPowerCards()) {
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
-                    str = makeCard.getNumber();
-                }
+        if(getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
+            MakeCard makeCard =getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getMakeCard();
+            if(makeCard!=null && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
+                str = makeCard.getNumber();
             }
         }
         return str;
@@ -553,11 +551,10 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public String getAfterHouseNoticeNo() {
         String str = null;
-        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {
-            for (MakeCard makeCard : getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()) {
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
-                    str = makeCard.getNumber();
-                }
+        if(getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
+            MakeCard makeCard =getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getMakeCard();
+            if(makeCard!=null && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
+                str = makeCard.getNumber();
             }
         }
         return str;
@@ -566,12 +563,13 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public String getStarHouseMortgageNo() {
         String str = null;
-        if (!getSingleHoues().getAfterBusinessHouse().getOtherPowerCards().isEmpty()) {
-            for (MakeCard makeCard : getSingleHoues().getAfterBusinessHouse().getOtherPowerCards()) {
-                if (makeCard.isEnable() && makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)) {
-                    str = makeCard.getNumber();
-                }
-            }
+        if(getSelectBusiness()!=null && !getSelectBusiness().getMakeCards().isEmpty()){
+           for(MakeCard makeCard:getSelectBusiness().getMakeCards()){
+               if (makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)){
+                   str = makeCard.getNumber();
+                   break;
+               }
+           }
         }
         return str;
     }
