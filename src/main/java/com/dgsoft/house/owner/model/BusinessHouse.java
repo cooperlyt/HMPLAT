@@ -75,11 +75,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private LandInfo landInfo;
     private BusinessHouseOwner businessHouseOwner;
     private ContractOwner contractOwner;
-    private Set<MakeCard> otherPowerCards = new HashSet<MakeCard>(0);
     private HouseRegInfo houseRegInfo;
     private String buildDevNumber;
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
-    private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
     private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
 
 
@@ -149,16 +147,12 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
         this((HouseInfo)houseInfo);
         if (houseInfo.getHouseRegInfo() != null){
-
-
             this.houseRegInfo = new HouseRegInfo(houseInfo.getHouseRegInfo());
         }
 
         if (houseInfo.getLandInfo() != null){
             this.landInfo = new LandInfo(houseInfo.getLandInfo());
         }
-
-        otherPowerCards.addAll(houseInfo.getOtherPowerCards());
 
     }
 
@@ -739,25 +733,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.contractOwner = contractOwner;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "OTHER_POWER_CARD_AND_HOUSE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "CARD"))
-    public Set<MakeCard> getOtherPowerCards() {
-        return otherPowerCards;
-    }
-
-    public void setOtherPowerCards(Set<MakeCard> otherPowerCards) {
-        this.otherPowerCards = otherPowerCards;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="HOUSE_AND_MOR",joinColumns = @JoinColumn(name="HOUSE"),inverseJoinColumns = @JoinColumn(name="MOR"))
-    public Set<MortgaegeRegiste> getMortgaegeRegistes() {
-        return mortgaegeRegistes;
-    }
-
-    public void setMortgaegeRegistes(Set<MortgaegeRegiste> mortgaegeRegistes) {
-        this.mortgaegeRegistes = mortgaegeRegistes;
-    }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "HOUSE_POOL", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL"))
@@ -790,17 +765,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         return result;
     }
 
-    @Transient
-    public List<MakeCard> getOtherPowerCardList(){
-        List<MakeCard> result = new ArrayList<MakeCard>(getOtherPowerCards());
-        Collections.sort(result,new Comparator<MakeCard>() {
-            @Override
-            public int compare(MakeCard o1, MakeCard o2) {
-                return o1.getId().compareTo(o2.getId());
-            }
-        });
-        return result;
-    }
 
     @Transient
     @Deprecated
