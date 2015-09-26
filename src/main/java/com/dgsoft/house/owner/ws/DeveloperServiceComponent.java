@@ -307,26 +307,26 @@ public class DeveloperServiceComponent {
 
         EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
         try {
-            HouseRecord houseRecord = ownerEntityManager.createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class)
-                    .setParameter("houseCode", houseCode).getSingleResult();
-            JSONArray jsonArray = new JSONArray();
-            for(MortgaegeRegiste mortgaegeRegiste: houseRecord.getBusinessHouse().getMortgaegeRegistes()){
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("type", mortgaegeRegiste.getOwnerBusiness().getDefineName());
-
-                jsonObject.put("ownerPersonName",mortgaegeRegiste.getBusinessHouseOwner().getPersonName());
-
-                jsonObject.put("pledgePersonName", mortgaegeRegiste.getFinancial().getName());
-
-                jsonObject.put("pledgeCorpName", mortgaegeRegiste.getOrgName());
-
-                jsonObject.put("beginTime", mortgaegeRegiste.getMortgageDueTimeS().getTime());
-
-                jsonObject.put("endTime",mortgaegeRegiste.getMortgageTime());
-
-                jsonArray.put(jsonObject);
-            }
-            return jsonArray;
+//            HouseRecord houseRecord = ownerEntityManager.createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode = :houseCode", HouseRecord.class)
+//                    .setParameter("houseCode", houseCode).getSingleResult();
+//            JSONArray jsonArray = new JSONArray();
+//            for(MortgaegeRegiste mortgaegeRegiste: houseRecord.getBusinessHouse().getMortgaegeRegistes()){
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("type", mortgaegeRegiste.getOwnerBusiness().getDefineName());
+//
+//                jsonObject.put("ownerPersonName",mortgaegeRegiste.getBusinessHouseOwner().getPersonName());
+//
+//                jsonObject.put("pledgePersonName", mortgaegeRegiste.getFinancial().getName());
+//
+//                jsonObject.put("pledgeCorpName", mortgaegeRegiste.getOrgName());
+//
+//                jsonObject.put("beginTime", mortgaegeRegiste.getMortgageDueTimeS().getTime());
+//
+//                jsonObject.put("endTime",mortgaegeRegiste.getMortgageTime());
+//
+//                jsonArray.put(jsonObject);
+//            }
+            return null;
 
         }catch (NoResultException e) {
             return new JSONArray();
@@ -505,27 +505,28 @@ public class DeveloperServiceComponent {
             JSONObject contractObj = new JSONObject(DESUtil.decrypt(contract, key.getSessionKey()));
             String houseCode = contractObj.getString("houseCode");
 
-            ownerEntityManager
+           // ownerEntityManager
 
             JSONArray numberArray = contractObj.getJSONArray("contractNumber");
-            if (numberArray.length() <= 0){
-                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
-                for(int i = 0; i < numberArray.length(); i++){
-                    ContractNumber contractNumber = ownerEntityManager.find(ContractNumber.class, numberArray.get(i));
-                    if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
-
-                        return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
-                    }else{
-                        contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
-                    }
-                }
-            }
+//            if (numberArray.length() <= 0){
+//                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
+//                for(int i = 0; i < numberArray.length(); i++){
+//                    ContractNumber contractNumber = ownerEntityManager.find(ContractNumber.class, numberArray.get(i));
+//                    if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
+//
+//                        return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
+//                    }else{
+//                        contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
+//                    }
+//                }
+//            }
 
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static DeveloperServiceComponent instance()
