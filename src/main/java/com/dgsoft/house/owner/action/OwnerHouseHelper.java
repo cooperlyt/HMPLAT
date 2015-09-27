@@ -61,7 +61,9 @@ public class OwnerHouseHelper {
 
 
     public List<MortgaegeRegiste> getMortgaeges(String houseCode){
-       List<HouseBusiness> ownerBusinesses = ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb left join fetch hb.ownerBusiness ob  where hb.houseCode =:houseCode and (ob.status = 'COMPLETE' or ob.status = 'MODIFYING' or ((ob.status = 'RUNNING' or ob.status = 'ABORT') and ob.recorded = true))", HouseBusiness.class).getResultList();
+       List<HouseBusiness> ownerBusinesses = ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb left join fetch hb.ownerBusiness ob  where hb.houseCode =:houseCode and (ob.status = 'COMPLETE' or ob.status = 'MODIFYING' or ((ob.status = 'RUNNING' or ob.status = 'ABORT') and ob.recorded = true))", HouseBusiness.class)
+               .setParameter("houseCode",houseCode)
+               .getResultList();
 
         List<MortgaegeRegiste> result = new ArrayList<MortgaegeRegiste>();
         for (HouseBusiness houseBusiness: ownerBusinesses){
