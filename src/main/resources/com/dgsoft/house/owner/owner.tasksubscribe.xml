@@ -1130,44 +1130,13 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="markOwnerRshipCardStateEnd" component="markOwnerRshipCardState">
-        <description>
-            作废以前的房屋所有权证
-        </description>
-    </end-subscribe>
-    <end-subscribe name="markNoticeCardStateEnd" component="markNoticeCardState">
-        <description>
-            作废以前的预告登记证
-        </description>
-    </end-subscribe>
-    <end-subscribe name="markMortgageCardStateEnd" component="markMortgageCardState">
-        <description>
-            作废以前的抵押权证
-        </description>
-    </end-subscribe>
-    <end-subscribe name="markProjectMortgageStateEnd" component="markProjectMortgageState">
-        <description>
-            作废以前的在建抵押登记证明
-        </description>
-    </end-subscribe>
 
-    <end-subscribe name="markSelectMortgageCardStateEnd" component="markSelectMortgageCardState">
-        <description>
-            作废所选中业务的抵押证
-        </description>
-    </end-subscribe>
 
-    <end-subscribe name="markSelectMortgageProjectCardStateEnd" component="markSelectMortgageProjectCardState">
-        <description>
-            作废所选中业务的在建工程抵押证明
-        </description>
-    </end-subscribe>
 
-    <end-subscribe name="markSelectNoticeCardStateEnd" component="markSelectNoticeCardState">
-        <description>
-            作废所选中业务的预告登记证明号
-        </description>
-    </end-subscribe>
+
+
+
+
 
 
 

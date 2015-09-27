@@ -112,16 +112,6 @@ public class MakeCard implements java.io.Serializable {
 		this.number = number;
 	}
 
-
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "otherPowerCards")
-    public Set<BusinessHouse> getBusinessHouses() {
-        return businessHouses;
-    }
-
-    public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
-        this.businessHouses = businessHouses;
-    }
-
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public ProjectCard getProjectCard() {

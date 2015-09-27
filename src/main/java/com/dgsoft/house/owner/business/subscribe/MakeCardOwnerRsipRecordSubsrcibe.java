@@ -41,10 +41,7 @@ public class MakeCardOwnerRsipRecordSubsrcibe extends OwnerEntityHome<MakeCard> 
         cardInfo.setMakeCard(getInstance());
 
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAfterBusinessHouse().getOtherPowerCards().add(getInstance());
-            getInstance().getBusinessHouses().add(houseBusiness.getAfterBusinessHouse());
-        }
+
 
 
     }

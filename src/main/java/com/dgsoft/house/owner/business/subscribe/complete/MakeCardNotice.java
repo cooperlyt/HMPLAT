@@ -51,14 +51,18 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
         String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.NOTICE.name()));
 
 
+
+
         MakeCard makeCard = new MakeCard(MakeCard.CardType.NOTICE, no);
+
+        if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
+
+        }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAfterBusinessHouse().getOtherPowerCards().add(makeCard);
-            makeCard.getBusinessHouses().add(houseBusiness.getAfterBusinessHouse());
-        }
+
     }
 }

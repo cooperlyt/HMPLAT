@@ -25,16 +25,7 @@ public class MakeCardMortgageRecordSubsrcibe extends OwnerEntityHome<MakeCard> {
 
 
 
-    private boolean enable;
 
-
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     @Override
     public void create() {
@@ -47,16 +38,13 @@ public class MakeCardMortgageRecordSubsrcibe extends OwnerEntityHome<MakeCard> {
         }
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(getInstance());
-        getInstance().setEnable(isEnable());
+
         CardInfo cardInfo = new CardInfo();
         getInstance().setCardInfo(cardInfo);
         cardInfo.setMakeCard(getInstance());
 
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAfterBusinessHouse().getOtherPowerCards().add(getInstance());
-            getInstance().getBusinessHouses().add(houseBusiness.getAfterBusinessHouse());
-        }
+
 
 
     }

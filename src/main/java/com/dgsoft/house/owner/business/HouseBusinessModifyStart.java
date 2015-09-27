@@ -335,7 +335,6 @@ public class HouseBusinessModifyStart {
                 result.getAfterBusinessHouse().setLandInfo(null);
             }
 
-            result.getAfterBusinessHouse().getOtherPowerCards().addAll(houseBusiness.getAfterBusinessHouse().getOtherPowerCards());
 
             for (BusinessPool pool : houseBusiness.getAfterBusinessHouse().getBusinessPools()) {
                 if (pool.getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {

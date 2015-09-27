@@ -54,13 +54,15 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
 
 
         MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,no);
+
+        if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
+
+        }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-          houseBusiness.getAfterBusinessHouse().getOtherPowerCards().add(makeCard);
-          makeCard.getBusinessHouses().add(houseBusiness.getAfterBusinessHouse());
-        }
+
     }
 }

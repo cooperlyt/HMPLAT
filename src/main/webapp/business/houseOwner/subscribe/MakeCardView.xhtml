@@ -12,7 +12,7 @@
             rendered="#{not empty ownerBusinessHome.instance.makeCardList}">
 
         <ui:include src="/layout/house/owner/MarkCardTable.xhtml">
-            <ui:param name="MarkCards" value="#{ownerBusinessHome.singleHoues.startBusinessHouse.otherPowerCardList}"/>
+            <ui:param name="MarkCards" value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard}"/>
             <ui:param name="title" value="#{messages.MakeCard_Info}"/>
         </ui:include>
     </a:outputPanel>

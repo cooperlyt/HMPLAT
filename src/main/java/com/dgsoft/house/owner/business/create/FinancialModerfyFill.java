@@ -25,15 +25,13 @@ public class FinancialModerfyFill implements BusinessDataFill {
     @Override
     public void fillData() {
 
-        if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
+        if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
             MortgaegeRegiste mr = ownerBusinessHome.getInstance().getSelectBusiness().getMortgaegeRegiste();
-            if (mr != null){
-                for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
-                    houseBusiness.getAfterBusinessHouse().getMortgaegeRegistes().add(new MortgaegeRegiste(ownerBusinessHome.getInstance(),mr));
-                }
+            if (mr != null) {
+                ownerBusinessHome.getInstance().getMortgaegeRegistes().add(new MortgaegeRegiste(ownerBusinessHome.getInstance(), mr));
             }
+
+
         }
-
-
     }
 }
