@@ -1,18 +1,22 @@
 package com.dgsoft.house.owner.ws;
 
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.NumberBuilder;
+import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.LogonStatus;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseStatus;
+import com.dgsoft.house.PoolType;
 import com.dgsoft.house.SaleType;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import com.longmai.uitl.Base64;
+import org.eclipse.emf.common.util.Pool;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
@@ -24,6 +28,7 @@ import org.tuckey.web.filters.urlrewrite.Run;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -493,39 +498,7 @@ public class DeveloperServiceComponent {
 
     }
 
-    @Transactional
-    public DeveloperSaleService.CommitResult submitContract(String contract, String userId){
-        EntityManager houseEntityManager = (EntityManager) Component.getInstance("houseEntityManager", true, true);
-        DeveloperLogonKey key = houseEntityManager.find(DeveloperLogonKey.class, userId);
-        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
 
-        try {
-            JSONObject contractObj = new JSONObject(DESUtil.decrypt(contract, key.getSessionKey()));
-            String houseCode = contractObj.getString("houseCode");
-
-           // ownerEntityManager
-
-            JSONArray numberArray = contractObj.getJSONArray("contractNumber");
-            if (numberArray.length() <= 0){
-                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
-            }
-            for(int i = 0; i < numberArray.length(); i++){
-                ContractNumber contractNumber = ownerEntityManager.find(ContractNumber.class, numberArray.get(i));
-                if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
-
-                    return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR;
-                }else{
-                    contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
-                }
-            }
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public static DeveloperServiceComponent instance()
     {

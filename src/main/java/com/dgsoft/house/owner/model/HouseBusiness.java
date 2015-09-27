@@ -23,6 +23,7 @@ public class HouseBusiness implements java.io.Serializable {
     private String houseCode;
     private RecordStore recordStore;
     private Set<AddHouseStatus> addHouseStatuses = new HashSet<AddHouseStatus>(0);
+    private boolean canceled;
 
 
     public HouseBusiness() {
@@ -116,5 +117,12 @@ public class HouseBusiness implements java.io.Serializable {
         this.addHouseStatuses = addHouseStatuses;
     }
 
+    @Column(name = "CANCELED", nullable = false)
+    public boolean isCanceled() {
+        return canceled;
+    }
 
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
 }

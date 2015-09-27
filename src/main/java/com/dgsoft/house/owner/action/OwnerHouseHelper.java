@@ -4,6 +4,7 @@ import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.AddHouseStatus;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.Component;
@@ -34,7 +35,7 @@ public class OwnerHouseHelper {
         List<HouseStatus> result = new ArrayList<HouseStatus>();
 
 
-         for(AddHouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or addHouseStatus.houseBusiness.ownerBusiness.status = 'MODIFYING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL' or ((addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'SUSPEND') and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) order by remove", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
+         for(AddHouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or addHouseStatus.houseBusiness.ownerBusiness.status = 'MODIFYING' or ((addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'SUSPEND') and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) order by remove", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
             if(status.isRemove()){
 
                 if (!result.remove(status.getStatus())){
@@ -60,12 +61,14 @@ public class OwnerHouseHelper {
 
 
     public List<MortgaegeRegiste> getMortgaeges(String houseCode){
-       List<OwnerBusiness> ownerBusinesses = ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb left join fetch hb.ownerBusiness ob  where hb.houseCode =:houseCode and (ob.status = 'COMPLETE' or ob.status = 'MODIFYING' or ((ob.status = 'RUNNING' or ob.status = 'ABORT') and ob.recorded = true))", OwnerBusiness.class).getResultList();
+       List<HouseBusiness> ownerBusinesses = ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb left join fetch hb.ownerBusiness ob  where hb.houseCode =:houseCode and (ob.status = 'COMPLETE' or ob.status = 'MODIFYING' or ((ob.status = 'RUNNING' or ob.status = 'ABORT') and ob.recorded = true))", HouseBusiness.class)
+               .setParameter("houseCode",houseCode)
+               .getResultList();
 
         List<MortgaegeRegiste> result = new ArrayList<MortgaegeRegiste>();
-        for (OwnerBusiness ownerBusiness: ownerBusinesses){
-            if (ownerBusiness.getMortgaegeRegiste() != null){
-                result.add(ownerBusiness.getMortgaegeRegiste());
+        for (HouseBusiness houseBusiness: ownerBusinesses){
+            if (houseBusiness.getOwnerBusiness().getMortgaegeRegiste() != null){
+                result.add(houseBusiness.getOwnerBusiness().getMortgaegeRegiste());
             }
         }
         return result;

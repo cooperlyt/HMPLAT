@@ -52,7 +52,7 @@ public class HouseBusinessStart {
     }
 
     private boolean validSelectHouseResult(){
-        boolean sucess = true;
+        boolean success = true;
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
             BusinessDataValid.ValidResult result;
             try {
@@ -68,11 +68,11 @@ public class HouseBusinessStart {
                 facesMessages.addFromResourceBundle(result.getResult().getSeverity(),result.getMsgKey(),result.getParams());
             }
 
-            if (sucess && Integer.valueOf(result.getResult().getPri()).compareTo(BusinessDataValid.ValidResultLevel.WARN.getPri()) > 0){
-                sucess = false;
+            if (success && Integer.valueOf(result.getResult().getPri()).compareTo(BusinessDataValid.ValidResultLevel.WARN.getPri()) > 0){
+                success = false;
             }
         }
-        return sucess;
+        return success;
     }
 
 

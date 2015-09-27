@@ -1,11 +1,14 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 24, 2015 1:17:35 PM by Hibernate Tools 4.0.0
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,13 +34,21 @@ public class HouseContract implements java.io.Serializable {
 	public HouseContract() {
 	}
 
+	public HouseContract(String attachEmpId, String attachEmpName, String contractText, int contractVersion) {
+		this.attachEmpId = attachEmpId;
+		this.attachEmpName = attachEmpName;
+		this.contractText = contractText;
+		this.contractVersion = contractVersion;
+	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+	@GenericGenerator(name = "pkGenerator",
+			strategy = "foreign",
+			parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "contractOwner") })
+	@GeneratedValue(generator = "pkGenerator")
 	public String getId() {
 		return this.id;
 	}
@@ -94,9 +105,8 @@ public class HouseContract implements java.io.Serializable {
 		this.contractVersion = contractVersion;
 	}
 
-    @OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER",nullable = false)
-	@NotNull
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
 	public ContractOwner getContractOwner() {
 		return contractOwner;
 	}

@@ -1,7 +1,9 @@
 package com.dgsoft.common.system;
 
+import com.dgsoft.common.CalendarBean;
 import com.dgsoft.common.DataFormat;
 import com.dgsoft.common.system.model.NumberPool;
+import com.dgsoft.common.system.model.SystemParam;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -68,6 +70,7 @@ public class NumberBuilder {
 
     private Map<String,Long> dayNumbers = new HashMap<String, Long>();
 
+    @Deprecated
     public String getDayNumber(String type){
 
         if (dayNumberDate.getTime() != DataFormat.halfTime(new Date()).getTime()){
@@ -100,7 +103,6 @@ public class NumberBuilder {
         }
         return result.toString();
     }
-
 
     @Transactional
     public long getNumber(String type) {
@@ -145,18 +147,46 @@ public class NumberBuilder {
         return resultNumber;
     }
 
+    @Deprecated
     public synchronized String getSampleNumber(String type) {
         return runParam.getRunCount() + "-" + getNumber(type);
     }
 
+    private Map<String,Long> dayNumberMap = new HashMap<String, Long>();
 
+    @Transactional
     public synchronized String getDateNumber(String type) {
-        long result = getNumber(type);
+
+        if(!CalendarBean.isSameDayDate(new Date(),runParam.getDayStartTime())){
+            dayNumberMap.clear();
+            runParam.setDayStartTime(new Date());
+            runParam.setDayRunCount(1);
+            EntityManager entityManager = getSystemEntityManger();
+            SystemParam timeParam = entityManager.find(SystemParam.class, RunParam.PARAM_SERVER_START_TIME_ID);
+            timeParam.setValue(String.valueOf(new Date().getTime()));
+            entityManager.flush();
+        }
+
+
+
+        Long result = dayNumberMap.get(type);
+        if (result == null){
+            result = Long.valueOf(1);
+        }else{
+            result = result + 1;
+        }
+        dayNumberMap.put(type,result);
         SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
         String datePart = numberDateformat.format(new Date());
-        return datePart + "-" + result;
-    }
+        String runCountParam;
+        if (runParam.getDayRunCount() < 10){
+            runCountParam = "0" + runParam.getDayRunCount();
+        }else{
+            runCountParam = String.valueOf(runParam.getDayRunCount());
+        }
 
+        return datePart+runCountParam+result;
+    }
 
     public static NumberBuilder instance()
     {
