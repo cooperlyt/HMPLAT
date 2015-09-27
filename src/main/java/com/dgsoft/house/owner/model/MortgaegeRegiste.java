@@ -50,6 +50,7 @@ public class MortgaegeRegiste implements java.io.Serializable {
         mortgageArea = mortgaegeRegiste.getMortgageArea();
         oldFinancial = mortgaegeRegiste.getOldFinancial();
         financial = mortgaegeRegiste.getFinancial();
+
         if (mortgaegeRegiste.getOldFinancial() != null){
             oldFinancial = mortgaegeRegiste.getOldFinancial();
         }
@@ -57,6 +58,8 @@ public class MortgaegeRegiste implements java.io.Serializable {
             financial = new Financial(mortgaegeRegiste.getFinancial());
             financial.setMortgaegeForNew(this);
         }
+        orgName = mortgaegeRegiste.getOrgName();
+        businessHouseOwner = mortgaegeRegiste.getBusinessHouseOwner();
 
     }
     public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste,Financial oldFinancial) {
@@ -69,6 +72,8 @@ public class MortgaegeRegiste implements java.io.Serializable {
         mortgageArea = mortgaegeRegiste.getMortgageArea();
         this.oldFinancial = oldFinancial;
         financial = new Financial(mortgaegeRegiste.getFinancial());
+        orgName = mortgaegeRegiste.getOrgName();
+        businessHouseOwner = mortgaegeRegiste.getBusinessHouseOwner();
     }
 
     @Id
@@ -208,4 +213,6 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
 		this.businessHouseOwner = businessHouseOwner;
 	}
+
+
 }
