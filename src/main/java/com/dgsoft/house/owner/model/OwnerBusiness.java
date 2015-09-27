@@ -5,6 +5,7 @@ import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.model.House;
 import org.jboss.seam.log.Logging;
+import sun.rmi.runtime.Log;
 
 import java.util.*;
 import javax.persistence.*;
@@ -279,7 +280,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.evaluates = evaluates;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "ownerBusiness")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "ownerBusiness",cascade = {CascadeType.ALL})
     public Set<MortgaegeRegiste> getMortgaegeRegistes() {
         return this.mortgaegeRegistes;
     }
@@ -524,55 +525,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
 
-    @Transient
-    public String getStarHouseOwnerRshipNo() {
-        String str = null;
-        if(getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
-            MakeCard makeCard =getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getMakeCard();
-            if(makeCard!=null && makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)){
-                str = makeCard.getNumber();
-            }
-        }
-        return str;
-    }
 
-    @Transient
-    public String getStarHouseNoticeNo() {
-        String str = null;
-        if(getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
-            MakeCard makeCard =getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getMakeCard();
-            if(makeCard!=null && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
-                str = makeCard.getNumber();
-            }
-        }
-        return str;
-    }
 
-    @Transient
-    public String getAfterHouseNoticeNo() {
-        String str = null;
-        if(getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
-            MakeCard makeCard =getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getMakeCard();
-            if(makeCard!=null && makeCard.getType().equals(MakeCard.CardType.NOTICE)){
-                str = makeCard.getNumber();
-            }
-        }
-        return str;
-    }
 
-    @Transient
-    public String getStarHouseMortgageNo() {
-        String str = null;
-        if(getSelectBusiness()!=null && !getSelectBusiness().getMakeCards().isEmpty()){
-           for(MakeCard makeCard:getSelectBusiness().getMakeCards()){
-               if (makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)){
-                   str = makeCard.getNumber();
-                   break;
-               }
-           }
-        }
-        return str;
-    }
+
+
 
     /**
      * 申请人

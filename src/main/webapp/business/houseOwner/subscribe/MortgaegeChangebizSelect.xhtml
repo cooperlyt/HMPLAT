@@ -20,14 +20,8 @@
             <strong>#{messages.MORTGAGE_OBLIGOR}：</strong>#{_item.mortgageObligor.personName}
             </p>
             <p class="repo-list-description">
-                <strong> #{messages.OWNER_RSHIP}:</strong>#{_item.starHouseOwnerRshipNo}   <strong>#{messages.MORTGAGE_CARD}:</strong>#{_item.starHouseMortgageNo}
+                <strong> #{messages.OWNER_RSHIP}:</strong>#{_item.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber()}   <strong>#{messages.MORTGAGE_CARD}:</strong>#{_item.getMortgaegeRegiste().getFinancial().getMakeCard().getNumber()}
             </p>
         </ui:define>
-
-
-
-
-
-
 
 </ui:composition>

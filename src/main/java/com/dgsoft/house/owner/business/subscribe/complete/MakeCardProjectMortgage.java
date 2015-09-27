@@ -54,12 +54,10 @@ public class MakeCardProjectMortgage implements TaskCompleteSubscribeComponent {
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
 
-
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()!=null){
-                houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
-
-            }
+        if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial()!=null){
+            ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().setMakeCard(makeCard);
+            makeCard.setFinancial(ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial());
         }
+
     }
 }

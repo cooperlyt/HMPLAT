@@ -17,7 +17,8 @@
                 <h:selectOneMenu id="housePorperInput"
                                  value="#{houseRegInfoSubscribe.instance.houseProperty}"
                                  label="#{messages.HOUSE_PORPERTY}"
-                                 styleClass="selectpicker edit-select">
+                                 styleClass="selectpicker edit-select"
+                                 required="true">
                     <s:selectItems value="#{dictionary.getWordList('26')}"
                                    var="_word"
                                    itemValue="#{_word.id}"
@@ -36,7 +37,8 @@
             <h:selectOneMenu id="houseFromInput"
                              value="#{houseRegInfoSubscribe.instance.houseFrom}"
                              label="#{messages.HOUSE_FROM}"
-                             styleClass="selectpicker edit-select">
+                             styleClass="selectpicker edit-select"
+                             required="true">
                 <s:selectItems value="#{dictionary.getWordList('28')}"
                                var="_word"
                                itemValue="#{_word.id}"

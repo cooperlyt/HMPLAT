@@ -116,6 +116,8 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
             // ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
         } else {
             mortgaegeRegiste = ownerBusinessHome.getInstance().getMortgaegeRegistes().iterator().next();
+           // mortgaegeRegiste.setOrgName(RunParam.instance().getStringParamValue("SetupName"));
+
             if (mortgaegeRegiste.getFinancial() == null) {
                 mortgaegeRegiste.setFinancial(getInstance());
             } else {
@@ -126,6 +128,7 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
                 }
             }
         }
+
     }
 
     public void typeChangeListener(ValueChangeEvent e) {

@@ -294,21 +294,11 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
 
-    public String getStarHouseOwnerRshipNo(){
-
-        return getInstance().getStarHouseOwnerRshipNo();
-    }
-
-    public String getStarHouseNoticeNo(){
-
-        return getInstance().getStarHouseNoticeNo();
-    }
 
 
-    public String getStarHouseMortgageNo(){
 
-        return getInstance().getStarHouseMortgageNo();
-    }
+
+
     /**
      * 申请人
      */
@@ -331,6 +321,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
      */
 
     public BusinessPersion getMortgage(){
+
 
         return getInstance().getMortgage();
 
