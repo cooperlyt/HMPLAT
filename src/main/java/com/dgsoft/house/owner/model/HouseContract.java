@@ -47,7 +47,7 @@ public class HouseContract implements java.io.Serializable {
 	@Size(max = 32)
 	@GenericGenerator(name = "pkGenerator",
 			strategy = "foreign",
-			parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "makeCard") })
+			parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "contractOwner") })
 	@GeneratedValue(generator = "pkGenerator")
 	public String getId() {
 		return this.id;

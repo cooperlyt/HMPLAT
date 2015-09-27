@@ -9,7 +9,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
 
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.*;
 

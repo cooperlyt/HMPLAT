@@ -66,7 +66,7 @@ public class DeveloperService{
 
     @WebMethod
     public String submitContract(String contract, String userId) {
-        return DeveloperServiceComponent.instance().submitContract(contract,userId);
+        return OutsideBusinessCreate.instance().submitContract(contract,userId);
     }
 
 }

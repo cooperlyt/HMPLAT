@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.ws;
 
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
@@ -15,6 +16,7 @@ import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import com.longmai.uitl.Base64;
+import org.eclipse.emf.common.util.Pool;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
@@ -496,79 +498,7 @@ public class DeveloperServiceComponent {
 
     }
 
-    @Transactional
-    public String submitContract(String contract, String userId){
-        EntityManager houseEntityManager = (EntityManager) Component.getInstance("houseEntityManager", true, true);
-        DeveloperLogonKey key = houseEntityManager.find(DeveloperLogonKey.class, userId);
-        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
 
-        try {
-            JSONObject contractObj = new JSONObject(DESUtil.decrypt(contract, key.getSessionKey()));
-            String houseCode = contractObj.getString("houseCode");
-            //String personName, CredentialsType credentialsType,
-            // String credentialsNumber, String phone, String rootAddress,
-            // String address, String legalPerson, HouseContract houseContract, String contractCode,
-            // SaleType type, Date contractDate, String houseCode) {
-
-
-            ContractOwner contractOwner = new ContractOwner(contractObj.getString("name"),
-                        PersonEntity.CredentialsType.valueOf(contractObj.getString("credentialsType")),
-                        contractObj.getString("credentialsNumber"),contractObj.getString("tel"),
-                        contractObj.getString("rootAddress"),contractObj.getString("address"),
-                        contractObj.getString("legalPerson"),contractObj.getString("id"),
-                        SaleType.valueOf(contractObj.getString("type")),new Date(contractObj.getLong("createTime")),houseCode);
-           // ownerEntityManager
-
-            HouseContract houseContract = new HouseContract(contractObj.getString("attachEmpId"),
-                    contractObj.getString("attachEmpName"),
-                    contractObj.getJSONObject("contract").toString(),contractObj.getInt("contractVersion"));
-
-            contractOwner.setHouseContract(houseContract);
-            houseContract.setContractOwner(contractOwner);
-
-
-            JSONArray numberArray = contractObj.getJSONArray("contractNumber");
-            if (numberArray.length() <= 0){
-                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR.name();
-            }
-            for(int i = 0; i < numberArray.length(); i++){
-                ContractNumber contractNumber = ownerEntityManager.find(ContractNumber.class, numberArray.get(i));
-                if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
-
-                    return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR.name();
-                }else{
-                    contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
-                    contractNumber.setHouseContract(houseContract);
-                    houseContract.getContractNumbers().add(contractNumber);
-                }
-            }
-
-            List<BusinessPool> businessPools = new ArrayList<BusinessPool>();
-            JSONArray poolArray = contractObj.getJSONArray("pool");
-
-//            String personName, CredentialsType credentialsType,
-//                    String credentialsNumber, String relation, BigDecimal poolArea,
-//                    String perc, String phone, Date createTime, String legalPerson
-            for(int i = 0 ; i < poolArray.length(); i++){
-                JSONObject poolObj = poolArray.getJSONObject(i);
-                BusinessPool businessPool = new BusinessPool(poolObj.getString("name"),
-                        PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
-                        poolObj.getString("credentialsNumber"),
-                        poolObj.getString("relation"),BigDecimal.valueOf(poolObj.getDouble("poolArea")),
-                        poolObj.getString("perc"),poolObj.getString("tel"),new Date(),poolObj.getString("legalPerson"));
-                businessPools.add(businessPool);
-            }
-
-
-
-
-
-            OutsideBusinessCreate bizComponent = (OutsideBusinessCreate)Component.getInstance(OutsideBusinessCreate.class,true);
-            return bizComponent.createNewHouseContrict(houseCode,contractOwner, PoolType.valueOf(contractObj.getString("poolType")),businessPools).name();
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
 
     public static DeveloperServiceComponent instance()
     {
