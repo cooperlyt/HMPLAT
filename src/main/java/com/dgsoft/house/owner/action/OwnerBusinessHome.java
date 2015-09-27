@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.OwnerEntityHome;
@@ -31,7 +32,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         result.setDefineName(businessDefineHome.getInstance().getName());
 
 
-        result.setId(businessDefineHome.getInstance().getId() + "-" + OwnerNumberBuilder.instance().useDayNumber("businessId"));
+        result.setId(businessDefineHome.getInstance().getId() + "-" + NumberBuilder.instance().getDateNumber("businessId"));
         Logging.getLog(getClass()).debug("businessID:" + result.getId());
 
         return result;

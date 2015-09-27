@@ -58,6 +58,19 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
+    public BusinessPool(String personName, CredentialsType credentialsType,
+                        String credentialsNumber, String relation, BigDecimal poolArea,
+                        String perc, String phone, Date createTime, String legalPerson) {
+        this.personName = personName;
+        this.credentialsType = credentialsType;
+        this.credentialsNumber = credentialsNumber;
+        this.relation = relation;
+        this.poolArea = poolArea;
+        this.perc = perc;
+        this.phone = phone;
+        this.createTime = createTime;
+        this.legalPerson = legalPerson;
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)

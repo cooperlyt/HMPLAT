@@ -25,12 +25,9 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private String rootAddress;
     private String address;
     private String legalPerson;
-    private Date birthday;
-    private String postCode;
-    private Person.Sex sex;
+
     private HouseContract houseContract;
 
-    private String contractCode;
     private SaleType type;
     private Date contractDate;
     private String houseCode;
@@ -55,12 +52,24 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.ownerBusiness = ownerBusiness;
     }
 
+    public ContractOwner(String personName, CredentialsType credentialsType, String credentialsNumber, String phone, String rootAddress, String address, String legalPerson, String contractCode, SaleType type, Date contractDate, String houseCode) {
+        this.personName = personName;
+        this.credentialsType = credentialsType;
+        this.credentialsNumber = credentialsNumber;
+        this.phone = phone;
+        this.rootAddress = rootAddress;
+        this.address = address;
+        this.legalPerson = legalPerson;
+        this.id = contractCode;
+        this.type = type;
+        this.contractDate = contractDate;
+        this.houseCode = houseCode;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return id;
     }
@@ -157,39 +166,9 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @Column(name = "SEX", nullable = true, length =20)
-    @Enumerated(EnumType.STRING)
-    public Person.Sex getSex() {
-        return sex;
-    }
 
-    public void setSex(Person.Sex sex) {
-        this.sex = sex;
-    }
-
-
-    @Column(name = "POST_CODE", nullable = true, length =50)
-    @Size(max = 50)
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "BIRTHDAY", nullable = true,length = 19)
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contractOwner", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     public HouseContract getHouseContract() {
         return houseContract;
     }
@@ -232,15 +211,5 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.houseCode = houseCode;
     }
 
-    @Column(name = "CONTRACT_CODE",length = 32,nullable = false)
-    @NotNull
-    @Size(max = 32)
-    public String getContractCode() {
-        return contractCode;
-    }
-
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
-    }
 
 }
