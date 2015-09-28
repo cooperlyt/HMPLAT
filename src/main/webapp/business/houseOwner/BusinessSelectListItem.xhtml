@@ -12,7 +12,7 @@
         <div class="repo-list-stats">
             <h:commandButton styleClass="btn btn-sm btn-success" value="#{messages.Select}" action="#{houseBusinessStart.businessSelected}"
                     onclick="#{r:component('wait')}.show()">
-
+                <f:param name="selectBusinessId" value="#{_item.id}"/>
             </h:commandButton>
         </div>
         <h3 class="repo-list-name">

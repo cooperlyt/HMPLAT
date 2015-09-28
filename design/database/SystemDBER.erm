@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-27 07:50:11</creation_date>
-			<updated_date>2015-09-28 11:13:11</updated_date>
+			<updated_date>2015-09-28 19:21:59</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -1654,7 +1654,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>28</word_id>
+					<word_id>34</word_id>
 					<id>0</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1852,7 +1852,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>44</word_id>
+					<word_id>42</word_id>
 					<id>6</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2268,28 +2268,6 @@
 			<connections>
 				<relation>
 					<id>1</id>
-					<source>6</source>
-					<target>2</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>1..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name>FK_DGROLEBI_REFERENCE_DGROLE</name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>2</id>
 					<source>27</source>
 					<target>2</target>
 						<source_xp>-1</source_xp>
@@ -2310,6 +2288,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>2</id>
+					<source>6</source>
+					<target>2</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name>FK_DGROLEBI_REFERENCE_DGROLE</name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>ROLE_BIZ</physical_name>
 			<logical_name>ROLE_BIZ</logical_name>
@@ -2321,7 +2321,7 @@
 				<normal_column>
 					<id>16</id>
 					<referenced_column>26</referenced_column>
-					<relation>1</relation>
+					<relation>2</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>ROLE_ID</logical_name>
@@ -2355,7 +2355,7 @@
 				<normal_column>
 					<id>17</id>
 					<referenced_column>138</referenced_column>
-					<relation>2</relation>
+					<relation>1</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>BIZ_ID</logical_name>
@@ -2591,7 +2591,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>68</word_id>
+					<word_id>67</word_id>
 					<id>20</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2624,7 +2624,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>55</word_id>
+					<word_id>53</word_id>
 					<id>21</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2657,7 +2657,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>78</word_id>
+					<word_id>77</word_id>
 					<id>22</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2752,28 +2752,6 @@
 			<connections>
 				<relation>
 					<id>6</id>
-					<source>6</source>
-					<target>5</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>1..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>7</id>
 					<source>0</source>
 					<target>5</target>
 						<source_xp>-1</source_xp>
@@ -2794,6 +2772,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>7</id>
+					<source>6</source>
+					<target>5</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>ROLE_FUNCTION</physical_name>
 			<logical_name>ROLE_FUNCTION</logical_name>
@@ -2805,7 +2805,7 @@
 				<normal_column>
 					<id>24</id>
 					<referenced_column>0</referenced_column>
-					<relation>7</relation>
+					<relation>6</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>FUN_ID</logical_name>
@@ -2839,7 +2839,7 @@
 				<normal_column>
 					<id>25</id>
 					<referenced_column>26</referenced_column>
-					<relation>6</relation>
+					<relation>7</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>ROL_ID</logical_name>
@@ -2906,7 +2906,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>28</word_id>
+					<word_id>34</word_id>
 					<id>26</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3073,7 +3073,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>67</word_id>
+					<word_id>68</word_id>
 					<id>30</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3106,7 +3106,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>52</word_id>
+					<word_id>56</word_id>
 					<id>31</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3139,7 +3139,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>77</word_id>
+					<word_id>78</word_id>
 					<id>32</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3240,7 +3240,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>53</word_id>
+					<word_id>57</word_id>
 					<id>34</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3273,7 +3273,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>42</word_id>
+					<word_id>44</word_id>
 					<id>35</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3676,7 +3676,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>28</word_id>
+					<word_id>34</word_id>
 					<id>44</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4010,7 +4010,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>55</word_id>
+					<word_id>53</word_id>
 					<id>52</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4364,7 +4364,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>28</word_id>
+					<word_id>34</word_id>
 					<id>61</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4631,7 +4631,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>51</word_id>
+					<word_id>54</word_id>
 					<id>68</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -4754,7 +4754,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>35</word_id>
+					<word_id>37</word_id>
 					<id>70</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5332,7 +5332,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>31</word_id>
+					<word_id>32</word_id>
 					<id>84</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5538,28 +5538,6 @@
 			<connections>
 				<relation>
 					<id>13</id>
-					<source>27</source>
-					<target>18</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>1..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>14</id>
 					<source>18</source>
 					<target>18</target>
 						<source_xp>100</source_xp>
@@ -5585,6 +5563,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>14</id>
+					<source>27</source>
+					<target>18</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>BUSINESS_NEED_FILE</physical_name>
 			<logical_name>BUSINESS_NEED_FILE</logical_name>
@@ -5596,7 +5596,7 @@
 				<normal_column>
 					<id>89</id>
 					<referenced_column>138</referenced_column>
-					<relation>13</relation>
+					<relation>14</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>BUSINESS</logical_name>
@@ -5628,7 +5628,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>36</word_id>
+					<word_id>31</word_id>
 					<id>90</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5729,7 +5729,7 @@
 				<normal_column>
 					<id>93</id>
 					<referenced_column>90</referenced_column>
-					<relation>14</relation>
+					<relation>13</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>PARENT_ID</logical_name>
@@ -5794,7 +5794,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>54</word_id>
+					<word_id>52</word_id>
 					<id>95</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -5928,7 +5928,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>28</word_id>
+					<word_id>34</word_id>
 					<id>98</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6126,7 +6126,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>58</word_id>
+					<word_id>59</word_id>
 					<id>104</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6227,7 +6227,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>32</word_id>
+					<word_id>30</word_id>
 					<id>106</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6260,7 +6260,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>56</word_id>
+					<word_id>50</word_id>
 					<id>107</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6416,7 +6416,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>34</word_id>
+					<word_id>35</word_id>
 					<id>110</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -6483,7 +6483,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>50</word_id>
+					<word_id>51</word_id>
 					<id>112</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7145,7 +7145,7 @@
 			<connections>
 				<relation>
 					<id>19</id>
-					<source>27</source>
+					<source>6</source>
 					<target>24</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -7167,7 +7167,7 @@
 				</relation>
 				<relation>
 					<id>20</id>
-					<source>6</source>
+					<source>27</source>
 					<target>24</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -7198,7 +7198,7 @@
 				<normal_column>
 					<id>127</id>
 					<referenced_column>26</referenced_column>
-					<relation>20</relation>
+					<relation>19</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>ROL</logical_name>
@@ -7232,7 +7232,7 @@
 				<normal_column>
 					<id>128</id>
 					<referenced_column>138</referenced_column>
-					<relation>19</relation>
+					<relation>20</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>BIZ</logical_name>
@@ -7299,7 +7299,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>30</word_id>
+					<word_id>36</word_id>
 					<id>129</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7332,7 +7332,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>59</word_id>
+					<word_id>58</word_id>
 					<id>130</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7459,7 +7459,7 @@
 			<connections>
 				<relation>
 					<id>21</id>
-					<source>25</source>
+					<source>27</source>
 					<target>26</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -7481,7 +7481,7 @@
 				</relation>
 				<relation>
 					<id>22</id>
-					<source>27</source>
+					<source>25</source>
 					<target>26</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -7512,7 +7512,7 @@
 				<normal_column>
 					<id>133</id>
 					<referenced_column>138</referenced_column>
-					<relation>22</relation>
+					<relation>21</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>BUSINESS</logical_name>
@@ -7546,7 +7546,7 @@
 				<normal_column>
 					<id>134</id>
 					<referenced_column>129</referenced_column>
-					<relation>21</relation>
+					<relation>22</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>REPORT</logical_name>
@@ -7611,7 +7611,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>37</word_id>
+					<word_id>28</word_id>
 					<id>136</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7749,7 +7749,7 @@
 			<option></option>
 			<columns>
 				<normal_column>
-					<word_id>28</word_id>
+					<word_id>34</word_id>
 					<id>138</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -7782,7 +7782,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>57</word_id>
+					<word_id>55</word_id>
 					<id>139</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
