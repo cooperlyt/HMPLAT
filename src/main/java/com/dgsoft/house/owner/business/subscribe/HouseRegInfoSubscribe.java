@@ -24,17 +24,17 @@ public class HouseRegInfoSubscribe extends OwnerEntityHome<HouseRegInfo> {
 
         super.create();
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo()!=null){
-//            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId()==null){
-//                setInstance(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo());
-//
-//            }else {
-//                setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId());
-//            }
+            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId()==null){
+                setInstance(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo());
 
-            setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId());
+            }else {
+                setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId());
+            }
+
+           // setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getId());
 
         }else{
-            clearInstance();
+            //clearInstance();
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setHouseRegInfo(getInstance());
 
         }
