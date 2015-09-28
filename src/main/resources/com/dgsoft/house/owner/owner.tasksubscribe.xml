@@ -990,11 +990,7 @@
     </end-subscribe>
 
 
-    <end-subscribe name="addPledgeSelectEnd" component="addPledgeSelect">
-        <description>
-            添加抵押变更，转移状态(单，多房屋)
-        </description>
-    </end-subscribe>
+
 
     <end-subscribe name="addProjectPledgeCompleteEnd" component="addProjectPledge">
         <description>
@@ -1002,11 +998,7 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="addProjectPledgeSelectEnd" component="addProjectPledgeSelect">
-        <description>
-            添加在建工程抵押变更，转移状态(单，多房屋)
-        </description>
-    </end-subscribe>
+
 
 
 
