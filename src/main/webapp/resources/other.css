@@ -960,3 +960,7 @@ a:focus, a:hover{
     list-style-type: none;
 }
 
+
+.input-group .input-group-addon input[type="checkbox"]{
+    width: auto;
+}

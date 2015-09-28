@@ -34,6 +34,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private boolean enable;
     private String pickBusinessDefineId;
     private String pickBusinessViewPage;
+    private boolean requiredBiz;
 
 
     private Set<Fee> fees = new HashSet<Fee>(0);
@@ -270,5 +271,14 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setBusinessReports(Set<BusinessReport> businessReports) {
         this.businessReports = businessReports;
+    }
+
+    @Column(name = "REQUIRED_BIZ", nullable = false)
+    public boolean isRequiredBiz() {
+        return requiredBiz;
+    }
+
+    public void setRequiredBiz(boolean requiredBiz) {
+        this.requiredBiz = requiredBiz;
     }
 }

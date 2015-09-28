@@ -144,6 +144,12 @@
         <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">
             <ui:define name="label">#{messages.businessDefine_field_pickBizId}</ui:define>
             <ui:param name="for" value="pickBizId"/>
+
+            <div class="input-group">
+                <span class="input-group-addon">
+                <h:selectBooleanCheckbox value="#{businessDefineHome.instance.requiredBiz}"/>
+                </span>
+
             <h:inputText id="pickBizId"
                          name="#{messages.businessDefine_field_pickBizId}"
                          styleClass="form-control"
@@ -151,7 +157,7 @@
                          value="#{businessDefineHome.instance.pickBusinessDefineId}">
 
             </h:inputText>
-
+            </div>
         </s:decorate>
 
 

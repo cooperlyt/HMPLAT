@@ -1,12 +1,41 @@
-﻿function mTokenMgr(obj){
+﻿/*******************************************************
+ *
+ * 使用此JS脚本之前请先仔细阅读mToKen K1帮助文档!
+ * 
+ * @version	4.0
+ * @date	2015/9/22
+ * @explanation	mToKen K1 v3.0支持谷歌45版本及其他浏览器
+ *
+**********************************************************/
+function isIe()
+{
+	return ("ActiveXObject" in window);
+}
+
+function mTokenMgr(obj){
 	this.obj = obj;	
 	
 	var g_mTokenPlugin = null;
 
 	this.LoadLibrary = function()
 	{
-		g_mTokenPlugin = document.getElementById(obj);
-
+		//浏览器判断
+		if(isIe() ){	//IE
+				if(!-[1,]){	//IE678
+					g_mTokenPlugin = document.getElementById(obj);
+				}else{	//IE9+
+					if(!!window.ActiveXObject){
+						g_mTokenPlugin = document.getElementById(obj);
+						g_mTokenPlugin.setAttribute("type", "application/x-npmplugin");
+					}else {
+						g_mTokenPlugin = new K1AdminPlugin();
+					}
+					
+				}
+			}else {
+				g_mTokenPlugin = new K1AdminPlugin();
+			}
+		
 		if(g_mTokenPlugin == null)
 		{
 			return -1;
@@ -177,4 +206,248 @@
 	};
 
 }
+
+
+
+
+function K1AdminPlugin()
+{
+	
+	var url = "http://127.0.0.1:51111/K1_Admin";
+	
+	var xmlhttp ;
+	function AjaxIO(json) {
+		if(xmlhttp == null) {
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		}
+
+		xmlhttp.open("POST", url, false);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send("json=" + json);
+	}
+
+	this.mTokenGetVersion = function()
+	{
+		var json = '{"function":"mTokenGetVersion"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.outData;
+		}else{
+			return "";
+		}
+	};
+
+	this.mTokenFindDevice = function()
+	{
+		var json = '{"function":"mTokenFindDevice"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.devCount;
+		}else{
+			return -2;
+		}
+	};
+
+	this.mTokenGetLastError = function()
+	{
+		var json = '{"function":"mTokenGetLastError"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.errorCode;
+		}else{
+			return -2;
+		}
+	};
+
+	this.mTokenGetUID = function(keyIndex)
+	{
+		var json = '{"function":"mTokenGetUID", "keyIndex":' + keyIndex + '}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.outData;
+		}else{
+			return "";
+		}
+	};
+
+	this.mTokenOpen = function(keyUID, keyPassword, type)
+	{
+		var json = '{"function":"mTokenOpen", "keyUID":"' + keyUID + '", "passWd":"' + keyPassword + '", "passWdType":' + type + '}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+
+	this.mTokenClose = function()
+	{
+		var json = '{"function":"mTokenClose"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+
+	this.mTokenChangePwd = function(keyUID, type, oldPassword, newPassword)
+	{
+		var json = '{"function":"mTokenChangePwd", "keyUID":"' + keyUID + '", "oldUpin":"' + oldPassword + '", "newUpin":"' + newPassword + '", "passWdType":' + type + '}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+
+	this.mTokenSetSeedKey = function(keyUID, seedKey)
+	{
+		var json = '{"function":"mTokenSetSeedKey", "keyUID":"' + keyUID + '", "seedKey":"' + seedKey + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+
+	this.mTokenSetMainKey = function(keyUID, mainKey)
+	{
+		var json = '{"function":"mTokenSetMainKey", "keyUID":"' + keyUID + '", "mainKey":"' + mainKey + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+	
+	this.mTokenGenResetpwdResponse = function(mainKey, clientRequest, adminPwd, newUserPwd)
+	{
+		var json = '{"function":"mTokenGenResetpwdResponse", "mainKey":"' + mainKey + '", "request":"' + clientRequest + '", "SuperPin":"' + adminPwd + '", "newUpin":"' + newUserPwd + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.outData;
+		}else{
+			return "";
+		}
+	};
+
+	this.mTokenSetUserInfo = function(keyUID, openType, label, url, companyName, remarks, Tip)
+	{
+		var json = '{"function":"mTokenSetUserInfo", "keyUID":"' + keyUID + '", "openType":' + openType + ', "label":"' + label + '", "Url":"' + url + '", "companyName":"' + companyName + '", "remarks":"' + remarks + '", "Tip":"' + Tip + '"}'; 
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return -1;
+		}
+	};
+	
+	this.mTokenUnlockPwd = function(keyUID, adminPwd, userPwd)
+	{
+		var json = '{"function":"mTokenUnlockPwd", "keyUID":"' + keyUID + '", "UserPin":"' + userPwd + '", "SuperPin":"' + adminPwd + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return -1;
+		}
+	};
+	
+	this.mTokenReadSecureStorage = function(keyUID, offset, dataLength)
+	{
+		var json = '{"function":"mTokenReadSecureStorage", "keyUID":"' + keyUID + '", "offset":' + offset + ', "inDataLen":' + dataLength + '}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.outData;
+		}else{
+			return "";
+		}
+	};
+
+	this.mTokenWriteSecureStorage = function(keyUID, offset, writeData)
+	{
+		var json = '{"function":"mTokenWriteSecureStorage", "keyUID":"' + keyUID + '", "offset":' + offset + ', "inData":"' + writeData + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+
+	this.mTokenReadUserStorage = function(keyUID, offset, dataLength)
+	{
+		var json = '{"function":"mTokenReadUserStorage", "keyUID":"' + keyUID + '", "offset":' + offset + ', "inDataLen":' + dataLength + '}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.outData;
+		}else{
+			return "";
+		}
+	};
+
+	this.mTokenWriteUserStorage = function(keyUID, offset, writeData)
+	{
+		var json = '{"function":"mTokenWriteUserStorage", "keyUID":"' + keyUID + '", "offset":' + offset + ', "inData":"' + writeData + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+	
+	this.mTokenReadSecureStorageByAdmin = function(keyUID, offset, readLength)
+	{
+		var json = '{"function":"mTokenReadSecureStorageByAdmin", "keyUID":"' + keyUID + '", "offset":' + offset + ', "inDataLen":' + readLength + '}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.outData;
+		}else{
+			return "";
+		}
+	};
+	
+	this.mTokenWriteSecureStorageByAdmin = function(keyUID, offset, writeData)
+	{
+		var json = '{"function":"mTokenWriteSecureStorageByAdmin", "keyUID":"' + keyUID + '", "offset":' + offset + ', "inData":"' + writeData + '"}';
+		AjaxIO(json);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var obj = eval("(" + xmlhttp.responseText + ")");
+			return obj.rtn;
+		}else{
+			return 1;
+		}
+	};
+
+}
+
+
+
 
