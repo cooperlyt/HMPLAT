@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
+import com.dgsoft.house.SalePayType;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
@@ -9,6 +10,7 @@ import com.dgsoft.house.owner.model.MortgaegeRegiste;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -79,6 +81,12 @@ public class OwnerHouseHelper {
         return (OwnerHouseHelper) Component.getInstance(OwnerHouseHelper.class, true);
     }
 
+
+
+
+    public SalePayType[] getSalePayType(){
+        return SalePayType.values();
+    }
 
 
 }

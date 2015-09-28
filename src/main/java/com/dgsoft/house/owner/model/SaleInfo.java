@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.SalePayType;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ public class SaleInfo implements java.io.Serializable {
 
 	private String id;
 	private OwnerBusiness ownerBusiness;
-	private String payType;
+	private SalePayType payType;
 	private BigDecimal sumPrice;
 
 	public SaleInfo() {
@@ -56,12 +57,12 @@ public class SaleInfo implements java.io.Serializable {
 	}
 
 	@Column(name = "PAY_TYPE", length = 32)
-	@Size(max = 32)
-	public String getPayType() {
+    @Enumerated(EnumType.STRING)
+	public SalePayType getPayType() {
 		return this.payType;
 	}
 
-	public void setPayType(String payType) {
+	public void setPayType(SalePayType payType) {
 		this.payType = payType;
 	}
 

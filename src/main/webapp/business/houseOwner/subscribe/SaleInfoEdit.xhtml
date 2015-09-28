@@ -27,11 +27,12 @@
                                  value="#{saleInfoSubscribe.instance.payType}"
                                  label="#{messages.SaleInfo_PayType}"
                                  styleClass="selectpicker select-menu-btn input-group-first">
-                    <s:selectItems value="#{dictionary.getWordList('54')}"
+                    <s:selectItems value="#{ownerHouseHelper.salePayType}"
                                    var="_word"
-                                   itemValue="#{_word.id}"
-                                   label="#{_word.value}"
+                                   itemValue="#{_word}"
+                                   label="#{messages[_word.name()]}"
                                    noSelectionLabel="#{messages.noSelectLabel}"/>
+                    <s:convertEnum></s:convertEnum>
                 </h:selectOneMenu>
 
             </a:outputPanel>
