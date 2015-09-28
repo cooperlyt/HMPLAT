@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -36,16 +37,18 @@ public class MoveDivertRegister implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
+        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER,houseBusiness,true));
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER, houseBusiness, true));
 
-            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
+                houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                houseStatusList.remove(HouseStatus.DIVERT_REGISTER);
+                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
+                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-
+            }
         }
     }
 }

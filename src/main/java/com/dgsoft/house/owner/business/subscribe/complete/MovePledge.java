@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
@@ -9,6 +10,7 @@ import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,16 +39,17 @@ public class MovePledge implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
+        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness, true));
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE,houseBusiness,true));
+                List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                houseStatusList.remove(HouseStatus.PLEDGE);
 
-            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
+                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-
+            }
         }
 
     }

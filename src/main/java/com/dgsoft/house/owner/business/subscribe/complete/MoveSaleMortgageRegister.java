@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -36,13 +37,16 @@ public class MoveSaleMortgageRegister implements TaskCompleteSubscribeComponent 
 
     @Override
     public void complete() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness,true));
-            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness, true));
+                List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+                houseStatusList.remove(HouseStatus.SALE_MORTGAGE_REGISTER);
+                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
+                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
+            }
         }
 
     }

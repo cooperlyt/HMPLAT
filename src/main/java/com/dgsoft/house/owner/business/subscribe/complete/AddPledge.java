@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
@@ -37,13 +38,18 @@ public class AddPledge implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness));
-            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-            houseStatusList.add(HouseStatus.PLEDGE);
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
+        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness));
+
+
+                List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                houseStatusList.add(HouseStatus.PLEDGE);
+                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
+                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+
+            }
         }
 
 

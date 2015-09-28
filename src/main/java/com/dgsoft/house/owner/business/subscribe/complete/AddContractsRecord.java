@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
@@ -53,14 +54,18 @@ public class AddContractsRecord implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
+        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
 
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.CONTRACTS_RECORD,houseBusiness));
+            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.CONTRACTS_RECORD, houseBusiness));
 
-            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-            houseStatusList.add(HouseStatus.CONTRACTS_RECORD);
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+                List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                houseStatusList.add(HouseStatus.CONTRACTS_RECORD);
+                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
+                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+
+
+            }
 
 
         }
