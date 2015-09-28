@@ -51,11 +51,12 @@ public class AddCourtClose implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
+
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.COURT_CLOSE, houseBusiness));
-
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
+                  houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.COURT_CLOSE, houseBusiness));
+                }
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 houseStatusList.add(HouseStatus.COURT_CLOSE);
                 Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
@@ -66,7 +67,7 @@ public class AddCourtClose implements TaskCompleteSubscribeComponent {
 
 
 
-    }
+
 
 
 }

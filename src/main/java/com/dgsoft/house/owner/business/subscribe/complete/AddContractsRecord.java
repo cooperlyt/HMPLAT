@@ -54,11 +54,12 @@ public class AddContractsRecord implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.CONTRACTS_RECORD, houseBusiness));
-
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                  houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.CONTRACTS_RECORD, houseBusiness));
+                }
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 houseStatusList.add(HouseStatus.CONTRACTS_RECORD);
                 Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
@@ -68,7 +69,7 @@ public class AddContractsRecord implements TaskCompleteSubscribeComponent {
             }
 
 
-        }
+
 
 
 

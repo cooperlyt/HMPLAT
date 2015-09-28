@@ -35,10 +35,13 @@ public class AddSaleMortgageRegisterSelect implements TaskCompleteSubscribeCompo
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             if (ownerBusinessHome.getInstance().getSelectBusiness() != null) {
                 for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness));
+
+                    if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                        houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness));
+                    }
                     List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                     houseStatusList.add(HouseStatus.SALE_MORTGAGE_REGISTER);
                     Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
@@ -46,7 +49,7 @@ public class AddSaleMortgageRegisterSelect implements TaskCompleteSubscribeCompo
 
                 }
             }
-        }
+
 
 
     }

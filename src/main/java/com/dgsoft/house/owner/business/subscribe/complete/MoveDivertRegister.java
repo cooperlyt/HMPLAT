@@ -37,10 +37,12 @@ public class MoveDivertRegister implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER, houseBusiness, true));
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER, houseBusiness, true));
+                }
 
                 List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
                 houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
@@ -49,6 +51,6 @@ public class MoveDivertRegister implements TaskCompleteSubscribeComponent {
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
-        }
+
     }
 }

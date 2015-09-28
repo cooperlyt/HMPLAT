@@ -37,10 +37,12 @@ public class AddDivrtMortgageRegisterSelect implements TaskCompleteSubscribeComp
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             if (ownerBusinessHome.getInstance().getSelectBusiness() != null) {
                 for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_MORTGAGE_REGISTER, houseBusiness));
+                    if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                        houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_MORTGAGE_REGISTER, houseBusiness));
+                    }
                     List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
                     houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                     houseStatusList.add(HouseStatus.DIVERT_MORTGAGE_REGISTER);
@@ -50,8 +52,5 @@ public class AddDivrtMortgageRegisterSelect implements TaskCompleteSubscribeComp
 
                 }
             }
-        }
-
-
     }
 }

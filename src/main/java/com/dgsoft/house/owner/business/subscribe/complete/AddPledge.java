@@ -39,9 +39,12 @@ public class AddPledge implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness));
+
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness));
+                }
 
 
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
@@ -50,7 +53,7 @@ public class AddPledge implements TaskCompleteSubscribeComponent {
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
-        }
+
 
 
     }

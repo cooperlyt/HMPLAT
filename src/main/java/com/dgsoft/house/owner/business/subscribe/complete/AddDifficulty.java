@@ -37,9 +37,12 @@ public class AddDifficulty implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIFFICULTY, houseBusiness));
+
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIFFICULTY, houseBusiness));
+                }
                 List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
                 houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 houseStatusList.add(HouseStatus.DIFFICULTY);
@@ -47,7 +50,7 @@ public class AddDifficulty implements TaskCompleteSubscribeComponent {
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
-        }
+
 
 
     }

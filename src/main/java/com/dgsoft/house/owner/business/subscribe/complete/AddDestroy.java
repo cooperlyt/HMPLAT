@@ -50,9 +50,11 @@ public class AddDestroy implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DESTROY, houseBusiness));
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DESTROY, houseBusiness));
+                }
                 List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
                 houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 houseStatusList.add(HouseStatus.DESTROY);
@@ -60,7 +62,7 @@ public class AddDestroy implements TaskCompleteSubscribeComponent {
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
-        }
+
 
 
 

@@ -53,10 +53,12 @@ public class AddInitRegConfirm implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.INIT_REG_CONFIRM, houseBusiness));
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.INIT_REG_CONFIRM, houseBusiness));
+                }
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 houseStatusList.add(HouseStatus.INIT_REG_CONFIRM);
                 Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
@@ -67,5 +69,5 @@ public class AddInitRegConfirm implements TaskCompleteSubscribeComponent {
 
 
 
-    }
+
 }

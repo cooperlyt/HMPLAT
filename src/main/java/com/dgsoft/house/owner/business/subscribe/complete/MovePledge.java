@@ -39,9 +39,11 @@ public class MovePledge implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness, true));
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness, true));
+                }
 
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 houseStatusList.remove(HouseStatus.PLEDGE);
@@ -50,7 +52,7 @@ public class MovePledge implements TaskCompleteSubscribeComponent {
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
-        }
+
 
     }
 }

@@ -37,9 +37,11 @@ public class MoveSaleMortgageRegister implements TaskCompleteSubscribeComponent 
 
     @Override
     public void complete() {
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness, true));
+                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_MORTGAGE_REGISTER, houseBusiness, true));
+                }
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
                 houseStatusList.remove(HouseStatus.SALE_MORTGAGE_REGISTER);
@@ -47,7 +49,7 @@ public class MoveSaleMortgageRegister implements TaskCompleteSubscribeComponent 
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
-        }
+
 
     }
 }

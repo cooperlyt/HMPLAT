@@ -38,10 +38,13 @@ public class MoveDifficultySelect implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             if (ownerBusinessHome.getInstance().getSelectBusiness() != null) {
                 for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIFFICULTY, houseBusiness, true));
+
+                    if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                        houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIFFICULTY, houseBusiness, true));
+                    }
 
                     List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
                     houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
@@ -51,6 +54,6 @@ public class MoveDifficultySelect implements TaskCompleteSubscribeComponent {
 
                 }
             }
-        }
+
     }
 }
