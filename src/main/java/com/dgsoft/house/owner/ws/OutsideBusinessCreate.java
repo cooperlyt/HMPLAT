@@ -12,6 +12,7 @@ import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.PoolType;
+import com.dgsoft.house.SalePayType;
 import com.dgsoft.house.SaleType;
 import com.dgsoft.house.model.DeveloperLogonKey;
 import com.dgsoft.house.model.House;
@@ -72,6 +73,7 @@ public class OutsideBusinessCreate {
         String houseCode;
         ContractOwner contractOwner;
         PoolType poolType;
+        SaleInfo saleInfo;
         List<BusinessPool> businessPools = null;
         try {
             houseCode = contractObj.getString("houseCode");
@@ -108,6 +110,9 @@ public class OutsideBusinessCreate {
                 }
 
             }
+
+            saleInfo = new SaleInfo(SalePayType.valueOf(contractObj.getString("salePayType")),BigDecimal.valueOf(contractObj.getDouble("contractPrice")));
+
 
 
             contractOwner = new ContractOwner(contractObj.getString("name"),
@@ -188,6 +193,9 @@ public class OutsideBusinessCreate {
         ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
         contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+
+        saleInfo.setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getSaleInfos().add(saleInfo);
 
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(contractOwner);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
