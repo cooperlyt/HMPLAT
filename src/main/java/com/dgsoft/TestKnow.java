@@ -118,15 +118,16 @@ public class TestKnow {
 
 
     public static void main(String[] args) {
-        //System.out.println(GBT.getGB17710("1101010102006050001090001") );
-        // System.out.println(GBT.getGB17710("11010800000001") );
-//        System.out.println(GBT.formatCode("123456789", 4) );
-//        System.out.println(GBT.formatCode("3", 4) );
-//        System.out.println(GBT.formatCode("1234", 4) );
+        String a = "wp1";
+        for(String s: a.split(",")) {
+            System.out.println(s);
+        }
 
-//        javax.faces.component.html.HtmlPanelGrid
-//        javax.faces.component.html.
-        System.out.println("1234567890".substring(0, 5));
+        String b = "wp2,wp3";
+        for(String s: b.split(",")) {
+            System.out.println(s);
+        }
+
 
     }
 

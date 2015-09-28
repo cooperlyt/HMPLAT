@@ -19,28 +19,24 @@
 
                 <h1 class="entry-title public">
                     <span class="mega-octicon octicon-repo"></span>
-                    <strong>           <s:link value="#{messages.BusinessPatch}" view="/func/house/owner/PatchOwnerBusiness.xhtml" propagation="end"/>
+                    <strong>
+
+                        #{messages.createBusiness}
+
                     </strong>
 
-
                     <span class="path-divider">/</span>
+
 
                     #{ownerBusinessHome.instance.defineName}
-                    <span class="path-divider">/</span>
-                    <s:link action="#{ownerBusinessPatch.beginEdit}">
-                        #{messages.Business_Start_Subscribe}
-                    </s:link>
-                    <span class="path-divider">/</span>
-                    <s:link view="/business/houseOwner/BusinessPatchFileUpload.xhtml">
-                        #{messages.Business_Start_File_Upload}
 
-                    </s:link>
                     <span class="path-divider">/</span>
-                    #{messages.Business_patch_confirm}
+                    业务选择
+
                 </h1>
 
                 <div class="right">
-                    <s:button styleClass="btn btn-primary"
+                    <s:button styleClass="btn btn-primary" rendered="#{not businessDefineHome.instance.requiredBiz}"
                                      action="#{ownerBusinessStart.dataSelected}" value="#{messages.skipStep}"
                                      p:data-loading-text="#{messages.skipStep}" onclick="#{r:component('wait')}.show()">
                     </s:button>
@@ -55,11 +51,12 @@
         <div class="container">
             <h:form>
             <ul class="repo-list js-repo-list">
-                <a:repeat value="#{houseStartAllowBusiness}" var="_item">
-                    <ui:include src="#{(empty businessDefineHome.instance.pickBusinessViewPage) ? '/business/houseOwner/BusinessSelectListItem.xhtml' : businessDefineHome.instance.pickBusinessViewPage}">
+                <c:forEach items="#{houseBusinessStart.allowSelectBizs}" var="_item">
+                     <ui:include src="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
 
                     </ui:include>
-                </a:repeat>
+
+                </c:forEach>
             </ul>
 
             </h:form>

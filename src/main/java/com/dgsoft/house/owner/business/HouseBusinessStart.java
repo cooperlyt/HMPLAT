@@ -13,12 +13,10 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -76,11 +74,29 @@ public class HouseBusinessStart {
     }
 
 
-    @DataModel("houseStartAllowBusiness")
+    //@DataModel("houseStartAllowBusiness")
     private List<OwnerBusiness> allowSelectBizs;
 
-    @DataModelSelection
-    private OwnerBusiness selectedBusiness;
+    private String selectBizId;
+
+    public String getSelectBizId() {
+        return selectBizId;
+    }
+
+    public void setSelectBizId(String selectBizId) {
+        this.selectBizId = selectBizId;
+    }
+
+    public List<OwnerBusiness> getAllowSelectBizs() {
+        return allowSelectBizs;
+    }
+
+    public void setAllowSelectBizs(List<OwnerBusiness> allowSelectBizs) {
+        this.allowSelectBizs = allowSelectBizs;
+    }
+
+    //    @DataModelSelection
+//    private OwnerBusiness selectedBusiness;
 
     public String singleHouseSelected() {
 
@@ -90,9 +106,16 @@ public class HouseBusinessStart {
                 allowSelectBizs.add((OwnerBusiness)bizInstance);
         }
         if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) &&  !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
-            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE' and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.defineId =:defineId",OwnerBusiness.class)
+
+            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE' and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.defineId in (:defineIds)", OwnerBusiness.class)
                     .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
-                    .setParameter("defineId", businessDefineHome.getInstance().getPickBusinessDefineId().trim()).getResultList());
+                    .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","))).getResultList());
+        }
+
+        if (businessDefineHome.getInstance().isRequiredBiz() && allowSelectBizs.isEmpty()){
+
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"SelectBusinessIsRequired");
+            return null;
         }
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
@@ -113,8 +136,13 @@ public class HouseBusinessStart {
     }
 
     public String businessSelected(){
-        ownerBusinessHome.getInstance().setSelectBusiness(selectedBusiness);
-        return ownerBusinessStart.dataSelected();
+        for(OwnerBusiness ob: allowSelectBizs){
+            if (ob.getId().equals(selectBizId)){
+                ownerBusinessHome.getInstance().setSelectBusiness(ob);
+                return ownerBusinessStart.dataSelected();
+            }
+        }
+        throw new IllegalArgumentException("business id not found");
     }
 
 
