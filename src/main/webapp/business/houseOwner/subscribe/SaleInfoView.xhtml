@@ -11,7 +11,7 @@
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getSaleInfo()}">
         <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.SaleInfo_PayType}"/>
-            <h:outputText value="#{messages[ownerBusinessHome.getSaleInfo().payType]}"/>
+            <h:outputText value="#{messages[ownerBusinessHome.getSaleInfo().payType.name()]}"/>
 
             <h:outputText value="#{messages.SaleInfo_SUM_PRICE}"/>
             <h:outputText value="#{ownerBusinessHome.getSaleInfo().sumPrice}"/>
