@@ -22,7 +22,7 @@
          <a:outputPanel rendered="#{_item.singleHoues.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><a:repeat var="_businessPools" value="#{_item.singleHoues.afterBusinessHouse.businessPoolList}"><strong>姓名：</strong>#{_businessPools.personName},<strong>证件类型</strong>：#{messages[_businessPools.credentialsType.name()]},<strong>证件号：</strong>#{_businessPools.credentialsNumber}。</a:repeat></a:outputPanel>
         </p>
         <p class="repo-list-description">
-          <strong>#{messages.House_Area}:</strong>#{_item.singleHoues.afterBusinessHouse.houseArea} <strong>#{messages.House_Structure}:</strong>#{dictionary.getWordValue(_item.singleHoues.afterBusinessHouse.structure)}
+            <strong>#{messages.NOTICE}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.makeCard.number} <strong>#{messages.House_Area}:</strong>#{_item.singleHoues.afterBusinessHouse.houseArea} <strong>#{messages.House_Structure}:</strong>#{dictionary.getWordValue(_item.singleHoues.afterBusinessHouse.structure)}
         </p>
         <p class="repo-list-description">
             <strong>#{messages.House_Address}:</strong>#{_item.singleHoues.afterBusinessHouse.address}

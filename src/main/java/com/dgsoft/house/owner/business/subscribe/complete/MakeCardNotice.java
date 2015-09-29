@@ -49,7 +49,6 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
 
 
 
-
         MakeCard makeCard = new MakeCard(MakeCard.CardType.NOTICE, no);
 
         if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
