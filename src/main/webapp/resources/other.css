@@ -968,3 +968,12 @@ a:focus, a:hover{
 .full-width.repo-list .repo-list-description{
     max-width: 965px;
 }
+
+
+.panel .repo-list.full-width{
+    max-width: 900px;
+}
+
+.panel .repo-list.full-width .repo-list-item{
+    padding: 20px 30px;
+}
