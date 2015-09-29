@@ -1,12 +1,54 @@
-.house-info .OWNERED h2{
-    color: #5cb85c;
+.house-info .OWNERED h2 , .house-info .INIT_REG h2 , .house-info .INIT_REG_CONFIRM h2{
+    color: #3c763d;
 
 }
 
-.house-info .OWNERED .label{
+.house-info .OWNERED .label , .house-info .INIT_REG .label{
     background-color: #5cb85c;
 }
 
+.house-info .CONTRACTS_RECORD h2 , .house-info .SALE_REGISTER h2{
+    color: #31708f;
+}
+
+.house-info .CONTRACTS_RECORD .label , .house-info .SALE_REGISTER .label{
+    background-color: #5bc0de;
+}
+
+
+.house-info .DIVERT_REGISTER h2{
+    color: #337ab7;
+}
+
+.house-info .DIVERT_REGISTER .label{
+    background-color: #337ab7;
+}
+
+.house-info .SALE_MORTGAGE_REGISTER h2 , .house-info .DIVERT_MORTGAGE_REGISTER h2 , .house-info .DECLARE_CANCEL h2{
+    color: #8a6d3b;
+}
+
+.house-info .SALE_MORTGAGE_REGISTER .label , .house-info .DIVERT_MORTGAGE_REGISTER .label , .house-info .DECLARE_CANCEL .label{
+    background-color: #f0ad4e;
+}
+
+
+.house-info .PLEDGE h2 , .house-info .PROJECT_PLEDGE h2 , .house-info .DIFFICULTY h2 , .house-info .COURT_CLOSE h2{
+    color: #a94442;
+}
+
+.house-info .PLEDGE .label , .house-info .PROJECT_PLEDGE .label , .house-info .DIFFICULTY .label , .house-info .COURT_CLOSE .label{
+    background-color: #d9534f;
+}
+
+.house-info .DESTROY h2{
+    color: #777;
+    text-decoration: line-through;
+}
+
+.house-info .DESTROY .label{
+    background-color: #777;
+}
 
 
 .task-type.BACK{
