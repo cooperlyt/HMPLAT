@@ -20,7 +20,8 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
             "left join houseRecord.businessHouse businessHouse " +
             "left join businessHouse.businessHouseOwner owner " +
             "left join businessHouse.businessPools pool " +
-            "left join businessHouse.otherPowerCards card " +
+            "left join owner.makeCard ownerCard " +
+            "left join pool.makeCard poolCard " +
             "left join businessHouse.houseBusinessesForAfter houseBusiness " +
             "left join houseBusiness.recordStore store";
 
@@ -29,7 +30,8 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
             "lower(businessHouse.buildName) like lower(concat('%',concat(#{houseRecordList.searchKey},'%')))",
             "lower(owner.personName) = lower(#{houseRecordList.searchKey})",
             "lower(owner.credentialsNumber) = lower(#{houseRecordList.searchKey})",
-            "lower(card.number) = lower(#{houseRecordList.searchKey})",
+            "lower(ownerCard.number) = lower(#{houseRecordList.searchKey})",
+            "lower(poolCard.number) = lower(#{houseRecordList.searchKey})",
             "lower(pool.personName) = lower(#{houseRecordList.searchKey})",
             "lower(pool.credentialsNumber) = lower(#{houseRecordList.searchKey})",
             "lower(store.recordCode) = lower(#{houseRecordList.searchKey})"

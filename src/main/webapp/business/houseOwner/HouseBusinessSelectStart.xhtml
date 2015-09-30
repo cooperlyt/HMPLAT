@@ -1,0 +1,117 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/layout/template.xhtml">
+
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:define name="body">
+
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+
+                <h1 style="width: 250px; max-width: 250px;" class="entry-title public css-truncate css-truncate-target">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>
+                        #{businessDefineHome.instance.name}
+
+                    </strong>
+
+                </h1>
+
+
+                <div>
+                    <ui:include src="/func/house/owner/HouseBusinessCondition.xhtml">
+                        <ui:param name="conditionBean" value="#{houseBusinessCondition}"/>
+                    </ui:include>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <a:outputPanel layout="block" styleClass="container" id="resultDatas">
+
+            <a:outputPanel rendered="#{not empty businessStartSelectList.searchResult}">
+                <div class="right" >
+                    <div class="select-menu">
+                        <div class="btn-group btn-group-sm">
+                            <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                <ui:define name="caption">
+                                    <i>#{messages.SortBy}:</i>
+
+                                    <span style="">#{messages[businessStartSelectList.sortCol.name()]}</span>
+                                </ui:define>
+                                <ui:param name="menuTitle" value="#{messages.SortOption}"/>
+
+                                <a:repeat value="#{businessStartSelectList.allSortCol}" var="_col">
+                                    <s:link styleClass="select-menu-item #{(businessStartSelectList.sortCol eq _col) ? 'selected': ''}">
+                                        <f:param name="sort" value="#{_col.colPath}"/>
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">#{messages[_col.name()]}</span>
+                                    </s:link>
+                                </a:repeat>
+                            </ui:decorate>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 style="margin: 0">
+                    #{messages.SerachResultCount}#{' '}
+                    <h:outputText value="#{businessStartSelectList.resultCount}">
+                        <f:convertNumber type="number" groupingUsed="true"/>
+                    </h:outputText>
+                    条符合条件的业务
+                </h3>
+
+            </a:outputPanel>
+
+            <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty businessStartSelectList.searchResult}">
+                <span class="mega-octicon octicon-search"></span>
+
+                <h3>#{messages.EmptyResult}</h3>
+
+                <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{businessStartSelectList.resetCondition}"/>
+                    #{' '}#{messages.orOther} #{messages.Try} #{' '}
+                    <s:link value="#{messages.AvancedSearch}"/></p>
+            </a:outputPanel>
+
+            <ui:decorate template="/func/house/owner/HouseBusinessResultList.xhtml">
+
+                <ui:param name="listBean" value="#{businessStartSelectList}"/>
+
+                <ui:define name="itemAction">
+                    <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
+                              action="#{houseInBusinessStart.businessAllHouseSelected}"
+                              onclick="#{r:component('wait')}.show()">
+                        <f:param name="selectBusinessId" value="#{_item.id}"/>
+                    </s:button>
+                </ui:define>
+
+
+            </ui:decorate>
+
+        </a:outputPanel>
+
+
+    </ui:define>
+
+
+</ui:composition>

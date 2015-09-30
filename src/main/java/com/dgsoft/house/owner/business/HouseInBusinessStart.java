@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.BatchOperData;
+import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseBusiness;
@@ -77,8 +78,10 @@ public class HouseInBusinessStart {
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBizId));
         houseBusinessList = new ArrayList<BatchOperData<BusinessHouse>>();
         for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()){
-            HouseRecord houseRecord =  ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseBusiness.getHouseCode());
-            houseBusinessList.add(new BatchOperData<BusinessHouse>(houseRecord.getBusinessHouse(),true));
+            if (!houseBusiness.isCanceled()) {
+                HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
+                houseBusinessList.add(new BatchOperData<BusinessHouse>(houseRecord.getBusinessHouse(), true));
+            }
         }
         if (houseBusinessList.size() == 1){
             return houseSelected();
@@ -98,6 +101,18 @@ public class HouseInBusinessStart {
             return null;
         }
         return ownerBusinessStart.dataSelected();
+    }
+
+    public String businessAllHouseSelected(){
+
+        ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBizId));
+        ownerBusinessHome.getInstance().getHouseBusinesses().clear();
+        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()){
+            if (!houseBusiness.isCanceled())
+                ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode()).getBusinessHouse()));
+        }
+        return ownerBusinessStart.dataSelected();
+
     }
 
 }
