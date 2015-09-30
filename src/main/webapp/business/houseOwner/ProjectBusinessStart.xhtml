@@ -217,7 +217,8 @@
 
          <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds)}">
 
-             <h:dataTable styleClass="boxed-group-table setup-plans" value="#{projectBusinessStart.builds}" var="_build">
+             <h:dataTable styleClass="boxed-group-table setup-plans" rendered="#{not empty projectBusinessStart.builds}"
+                          value="#{projectBusinessStart.builds}" var="_build">
 
                  <h:column headerClass="checkHeader" >
                      <f:facet name="header">
@@ -247,6 +248,20 @@
                      #{_build.data.buildName}
                  </h:column>
 
+                 <h:column>
+                        <f:facet name="header">
+                            #{messages.Build_MapNO}
+                        </f:facet>
+                     #{_build.data.mapNumber}
+                 </h:column>
+
+                 <h:column>
+                     <f:facet name="header">
+                            #{messages.House_BlockNo}
+                     </f:facet>
+
+                     #{_build.data.blockNo}
+                 </h:column>
 
                  <h:column>
                      <f:facet name="header">
@@ -267,7 +282,56 @@
                      #{_build.data.doorNo}
                  </h:column>
              </h:dataTable>
+             <h:outputStylesheet>
 
+             </h:outputStylesheet>
+
+
+             <a:repeat value="#{projectBusinessStart.projects}" var="_businessProject">
+
+                 <h:dataTable headerClass="project-card-header" value="#{_businessProject.businessBuildList}" styleClass="boxed-group-table setup-plans" var="_businessBuild">
+                     <f:facet name="header">
+                         ddd
+                     </f:facet>
+
+                     <h:column>
+                         <f:facet name="header">
+                             #{messages.Build_Id}
+                         </f:facet>
+                         #{_businessBuild.buildCode}
+
+                     </h:column>
+                     <h:column>
+
+                         #{_businessBuild.buildName}
+                     </h:column>
+
+                     <h:column>
+
+                         #{_businessBuild.mapNumber}
+                     </h:column>
+                     <h:column>
+
+                         #{_businessBuild.blockNo}
+                     </h:column>
+                     <h:column>
+
+                         #{_businessBuild.buildNo}
+                     </h:column>
+
+                     <h:column>
+
+                         #{_businessBuild.buildDevNumber}
+                     </h:column>
+
+                     <h:column>
+
+                         #{_businessBuild.doorNo}
+                     </h:column>
+
+                 </h:dataTable>
+
+             </a:repeat>
          </a:outputPanel>
 
         </h:form>

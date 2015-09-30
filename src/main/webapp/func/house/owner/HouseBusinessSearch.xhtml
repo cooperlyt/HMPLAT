@@ -123,9 +123,21 @@
                             <s:link value="#{messages.AvancedSearch}"/></p>
                     </a:outputPanel>
 
-                    <ui:include src="HouseBusinessResultList.xhtml">
+                    <ui:decorate template="HouseBusinessResultList.xhtml">
                         <ui:param name="listBean" value="#{houseBusinessList}"/>
-                    </ui:include>
+                        <ui:define name="itemTitle">
+                            <s:link view="/func/house/owner/BusinessView.xhtml">
+                                <f:param value="#{_item.id}" name="businessId"/>
+                                #{_item.defineName}
+                                <h:outputText value="#{messages[_item.type]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/>
+                                / #{_item.id}
+                            </s:link>
+
+                                        <span class="label label-biz-status #{_item.status}">
+                                            #{messages[_item.status.name()]}
+                                        </span>
+                        </ui:define>
+                    </ui:decorate>
                 </a:outputPanel>
 
             </a:outputPanel>

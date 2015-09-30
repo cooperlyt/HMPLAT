@@ -50,10 +50,16 @@ public class ProjectBusinessStart {
 
     private List<BatchOperData<Build>> builds = new ArrayList<BatchOperData<Build>>(0);
 
+    private List<BusinessProject> projects = new ArrayList<BusinessProject>(0);
+
     private Map<Build,List<BuildGridMap>> buildGridMaps;
 
     public List<BatchOperData<Build>> getBuilds() {
         return builds;
+    }
+
+    public List<BusinessProject> getProjects() {
+        return projects;
     }
 
     public boolean isForProject() {
@@ -94,9 +100,29 @@ public class ProjectBusinessStart {
     }
 
     public void projectSelectedListener(){
+
+
+        projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode",BusinessProject.class)
+                .setParameter("projectCode",projectHome.getInstance().getProjectCode()).getResultList();
+
         builds = new ArrayList<BatchOperData<Build>>(projectHome.getInstance().getBuilds().size());
+
         for(Build build: projectHome.getInstance().getBuildList()){
-            builds.add(new BatchOperData<Build>(build,true));
+            boolean found = false;
+            for(BusinessProject project: projects){
+                for(BusinessBuild businessBuild: project.getBusinessBuilds()){
+                    if (businessBuild.getBuildCode().equals(build.getBuildCode())){
+                        found = true;
+                        break;
+                    }
+                }
+                if (found){
+                    break;
+                }
+            }
+            if (!found){
+                builds.add(new BatchOperData<Build>(build,true));
+            }
         }
     }
 
