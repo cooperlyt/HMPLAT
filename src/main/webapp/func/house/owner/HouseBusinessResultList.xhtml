@@ -5,14 +5,20 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
 
 
 
     <a:outputPanel rendered="#{not empty listBean.searchResult}">
-        <ul class="repo-list js-repo-list">
-            <a:repeat value="#{listBean.searchResult}" var="_item">
+        <ul class="repo-list js-repo-list full-width">
+            <c:forEach items="#{listBean.searchResult}" var="_item">
+            
+                <ui:include src="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}"/>
+
+                <ui:remove>
+                
                 <li class="repo-list-item public source">
                     <div class="repo-list-stats">
 
@@ -55,7 +61,8 @@
                         </h:outputText>
                     </p>
                 </li>
-            </a:repeat>
+                </ui:remove>
+            </c:forEach>
         </ul>
     </a:outputPanel>
     <a:outputPanel layout="block" rendered="#{not empty listBean.searchResult}" class="paginate-container">

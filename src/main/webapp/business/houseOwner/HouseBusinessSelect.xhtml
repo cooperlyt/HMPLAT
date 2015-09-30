@@ -52,9 +52,14 @@
             <h:form>
             <ul class="repo-list js-repo-list full-width">
                 <c:forEach items="#{houseBusinessStart.allowSelectBizs}" var="_item">
-                     <ui:include src="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
-
-                    </ui:include>
+                     <ui:decorate template="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
+                        <ui:define name="itemAction">
+                            <s:button styleClass="btn btn-sm btn-success" value="#{messages.Select}" action="#{houseBusinessStart.businessSelected}"
+                                             onclick="#{r:component('wait')}.show()">
+                                <f:param name="selectBusinessId" value="#{_item.id}"/>
+                            </s:button>
+                        </ui:define>
+                    </ui:decorate>
 
                 </c:forEach>
             </ul>

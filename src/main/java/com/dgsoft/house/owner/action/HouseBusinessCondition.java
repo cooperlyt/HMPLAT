@@ -17,12 +17,9 @@ import java.util.List;
 @Name("houseBusinessCondition")
 public class HouseBusinessCondition{
 
+    public static final String EJBQL = "select distinct biz from OwnerBusiness biz left join biz.houseBusinesses houseBusiness left join biz.makeCards cards left join houseBusiness.afterBusinessHouse house left join house.businessHouseOwner owner left join owner.makeCard ownerCard left join house.businessPools pool left join pool.makeCard poolCard" ;
 
-    public static final String EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool left join fetch house.otherPowerCards cards ";
-
-    public static final String SHORT_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner ";
-
-    public static final String PERSON_EJBQL = "select houseBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join fetch houseBusiness.afterBusinessHouse house left join fetch house.businessHouseOwner owner left join fetch house.businessPools pool " ;
+    public static final String SHORT_EJBQL = "select biz from OwnerBusiness biz ";
 
 
 
@@ -40,6 +37,16 @@ public class HouseBusinessCondition{
     public static final String[] RESTRICTIONS_HOUSE_CARD = {
             "lower(cards.number) = lower(#{houseBusinessCondition.searchCardNumber})",
             "cards.type = #{houseBusinessCondition.searchCardType}"
+    };
+
+    public static final String[] ORESTRICTIONS_OWNER_CARD = {
+            "lower(ownerCard.number) = lower(#{houseBusinessCondition.searchCardNumber})",
+            "ownerCard.type = #{houseBusinessCondition.searchCardType}"
+    };
+
+    public static final String[] ORESTRICTIONS_POOL_CARD = {
+            "lower(poolCard.number) = lower(#{houseBusinessCondition.searchCardNumber})",
+            "poolCard.type = #{houseBusinessCondition.searchCardType}"
     };
 
 
@@ -60,7 +67,9 @@ public class HouseBusinessCondition{
             "lower(house.buildName) like lower(concat('%',concat(#{houseBusinessCondition.searchProjectName},'%')))",
             "lower(biz.id) = lower(#{houseBusinessCondition.searchBizId})",
             "lower(houseBusiness.houseCode) = lower(#{houseBusinessCondition.searchHouseCode})",
-            "lower(cards.number) = lower(#{houseBusinessCondition.searchCardNumber})"
+            "lower(cards.number) = lower(#{houseBusinessCondition.searchCardNumber})",
+            "lower(ownerCard.number) = lower(#{houseBusinessCondition.searchCardNumber})",
+            "lower(poolCard.number) = lower(#{houseBusinessCondition.searchCardNumber})"
     };
 
     public static List<String> getAllConditionList(){
@@ -331,22 +340,24 @@ public class HouseBusinessCondition{
     public String getEjbql(){
         if (getSearchKey() == null || getSearchKey().trim().equals("")){
             return HouseBusinessCondition.SHORT_EJBQL;
-        }
-        if (getSearchType() == null){
-            return HouseBusinessCondition.EJBQL;
-        }
-        if (HouseBusinessCondition.SearchType.PERSON.equals(getSearchType())) {
-            return HouseBusinessCondition.PERSON_EJBQL;
-        }
-
-        if (EnumSet.of(HouseBusinessCondition.SearchType.OWNER_BIZ_ID,
-                HouseBusinessCondition.SearchType.HOUSE_CODE,
-                HouseBusinessCondition.SearchType.PROJECT_NAME,
-                HouseBusinessCondition.SearchType.HOUSE_MBBH).contains(getSearchType())){
-            return HouseBusinessCondition.SHORT_EJBQL;
         }else{
             return HouseBusinessCondition.EJBQL;
         }
+//        if (getSearchType() == null){
+//            return HouseBusinessCondition.EJBQL;
+//        }
+//        if (HouseBusinessCondition.SearchType.PERSON.equals(getSearchType())) {
+//            return HouseBusinessCondition.EJBQL;
+//        }
+//
+//        if (EnumSet.of(HouseBusinessCondition.SearchType.OWNER_BIZ_ID,
+//                HouseBusinessCondition.SearchType.HOUSE_CODE,
+//                HouseBusinessCondition.SearchType.PROJECT_NAME,
+//                HouseBusinessCondition.SearchType.HOUSE_MBBH).contains(getSearchType())){
+//            return HouseBusinessCondition.EJBQL;
+//        }else{
+//            return HouseBusinessCondition.EJBQL;
+//        }
     }
 
     public RestrictionGroup getRestrictionGroup() {
@@ -368,8 +379,15 @@ public class HouseBusinessCondition{
 
 
             } else if (HouseBusinessCondition.SearchType.HOUSE_CARD.equals(getSearchType())) {
+                if ( MakeCard.CardType.OWNER_RSHIP.equals(cardType) || MakeCard.CardType.NOTICE.equals(cardType)){
 
-                return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_HOUSE_CARD));
+                    return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_OWNER_CARD));
+
+                }else if (MakeCard.CardType.POOL_RSHIP.equals(cardType) ){
+                    return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_POOL_CARD));
+                }else{
+                    return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_HOUSE_CARD));
+                }
 
             }
         }

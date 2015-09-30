@@ -5,16 +5,16 @@ import org.jboss.seam.annotations.Name;
 /**
  * Created by cooper on 9/29/15.
  */
-@Name("businessSelectCreate")
-public class BusinessSelectCreate extends OwnerBusinessCreateComponent{
+@Name("houseInBusinessCreate")
+public class HouseInBusinessCreate extends OwnerBusinessCreateComponent{
 
-    private static final String NORMAL_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseStart.xhtml";
+    private static final String NORMAL_BIZ_BEGIN_PAGE = "/business/houseOwner/HouseInBusinessPick.xhtml";
     private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseBusinessPatch.xthml";
 
 
     @Override
     protected String getNormalBusinessPage() {
-        return null;
+        return NORMAL_BIZ_BEGIN_PAGE;
     }
 
     @Override

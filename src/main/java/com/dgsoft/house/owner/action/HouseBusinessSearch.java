@@ -3,13 +3,14 @@ package com.dgsoft.house.owner.action;
 import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.owner.model.HouseBusiness;
+import com.dgsoft.house.owner.model.OwnerBusiness;
 
 import java.util.List;
 
 /**
  * Created by cooper on 7/31/15.
  */
-public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<HouseBusiness> {
+public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<OwnerBusiness> {
 
 
     protected abstract RestrictionGroup getUseRestrictionGroup();
@@ -36,7 +37,7 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
     }
 
 
-    public List<HouseBusiness> getSearchResult(){
+    public List<OwnerBusiness> getSearchResult(){
         resetEjbql(getUseEjbql());
         setRestrictionGroup(getUseRestrictionGroup());
         return getResultList();
@@ -49,12 +50,9 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
     }
 
     public enum SortCol{
-        ORDER_BY_CREATE_TIME("houseBusiness.ownerBusiness.createTime"),
-        ORDER_BY_BUSINESS_NAME("houseBusiness.ownerBusiness.defineName"),
-        ORDER_BY_PROJECT_NAME("houseBusiness.afterBusinessHouse.projectCode"),
-        ORDER_BY_BUILD_NUMBER("houseBusiness.afterBusinessHouse.buildCode"),
-        ORDER_BY_HOUSE_ORDER("houseBusiness.afterBusinessHouse.houseOrder"),
-        ORDER_BY_MAIN_OWNER("houseBusiness.afterBusinessHouse.businessHouseOwner.personName");
+        ORDER_BY_CREATE_TIME("biz.createTime"),
+        ORDER_BY_BUSINESS_NAME("biz.defineName");
+
 
         private String colPath;
 
@@ -87,6 +85,6 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
 
         setOrderColumn(SortCol.ORDER_BY_CREATE_TIME.colPath);
         setOrderDirection("desc");
-        setMaxResults(25);
+        setMaxResults(20);
     }
 }

@@ -10,15 +10,15 @@
 
     <li class="repo-list-item public source">
         <div class="repo-list-stats">
-            <h:commandButton styleClass="btn btn-sm btn-success" value="#{messages.Select}" action="#{houseBusinessStart.businessSelected}"
-                    onclick="#{r:component('wait')}.show()">
-                <f:param name="selectBusinessId" value="#{_item.id}"/>
-            </h:commandButton>
+            <ui:insert name="itemAction">
+
+            </ui:insert>
+
         </div>
         <h3 class="repo-list-name">
             <ui:insert name="itemTitle">
 
-                    <f:param value="#{_item.id}" name="businessId"/>
+
                     #{_item.defineName} / #{_item.id}
 
 
