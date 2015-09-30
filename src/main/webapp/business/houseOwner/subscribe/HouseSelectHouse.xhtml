@@ -14,20 +14,13 @@
             <strong>#{messages.House_Id}:</strong>#{_item.singleHoues.houseCode}  <strong>#{messages.HOUSE_MBBH}:</strong>#{_item.singleHoues.afterBusinessHouse.displayHouseCode}     <strong>#{messages.House_MapNumber}:</strong>#{_item.singleHoues.afterBusinessHouse.mapNumber}     <strong>#{messages.House_BlockNo}:</strong>#{_item.singleHoues.afterBusinessHouse.blockNo}   <strong>#{messages.Build_BuildNO}:</strong>#{_item.singleHoues.afterBusinessHouse.buildNo}   <strong>#{messages.House_Order}:</strong>#{_item.singleHoues.afterBusinessHouse.houseOrder}
         </p>
         <p class="repo-list-description">
-            <strong>#{messages.Financial}:</strong>#{_item.mortgaegeRegiste.financial.name}    <strong>#{messages.Mortgager}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.personName}   <strong>#{messages.Mortgager}#{messages.person_field_credentialsNO}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.credentialsNumber}
+            <strong>#{messages.House_Owner}：</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.personName} <strong>#{messages.House_Owner}#{messages.person_field_credentialsNO}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.credentialsNumber}
         </p>
         <p class="repo-list-description">
-            <strong>#{messages.MORTGAGE_OBLIGOR}：</strong>#{_item.mortgageObligor.personName}
+            <strong> #{messages.OWNER_RSHIP}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.makeCard.number}  <strong>#{messages.House_Address}:</strong>#{_item.singleHoues.afterBusinessHouse.address}
         </p>
-        <p class="repo-list-description">
-            <strong> #{messages.NOTICE}:</strong>#{_item.singleHoues.afterBusinessHouse.businessHouseOwner.makeCard.number}
-        </p>
+
+
     </ui:define>
-
-
-
-
-
-
 
 </ui:composition>
