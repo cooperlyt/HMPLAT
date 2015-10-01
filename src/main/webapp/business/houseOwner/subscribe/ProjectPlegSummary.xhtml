@@ -12,7 +12,7 @@
     <ui:define name="itemDescription">
         <p class="repo-list-description">
             <strong>#{messages.House_Order}:</strong>
-            <a:repeat var="_house" value="#{_item.houseBusinesses}">  [#{_house.afterBusinessHouse.houseOrder}]</a:repeat>
+            <a:repeat var="_house" value="#{_item.houseBusinesses}"> <span class="#{_house.canceled ? '': 'delete-data'}"> [#{_house.afterBusinessHouse.houseOrder}]</span></a:repeat>
         </p>
 
 
