@@ -35,7 +35,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审核结果" x="438" y="267" width="132" height="36">
+  <node name="审核结果" x="244" y="266" width="132" height="36">
     <edge>
       <label x="-15" y="-10"/>
     </edge>
@@ -64,6 +64,10 @@
       <label x="-18" y="-11"/>
     </edge>
   </node>
-  <node name="结束" x="629" y="268" width="132" height="36"/>
-  <node name="业务完成" x="497" y="361" width="132" height="36"/>
+  <node name="结束" x="632" y="266" width="132" height="36"/>
+  <node name="业务完成" x="446" y="267" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>

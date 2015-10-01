@@ -50,7 +50,7 @@
 	</decision>
 
 	<decision name="审核结果">
-		<transition to="结束" name="通过"></transition>
+		<transition to="业务完成" name="通过"></transition>
 		<transition to="网签回退判断" name="驳回"></transition>
 	</decision>
 
@@ -84,6 +84,7 @@
 
 	<node name="业务完成">
 		<action expression="#{businessDefineHome.doNodeAction('业务完成')}" name="业务完成"></action>
+		<transition to="结束"></transition>
 	</node>
 
 
