@@ -90,6 +90,14 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('25','协助执行审查建�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('26','解封接收执行法律文书类业务书','解封接收执行法律文书类业务书','/report/ApplyOpenHouseReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('27','解封协助执行审查建议书','解封协助执行审查建议书','/report/ApplyOpenHouseExecutiveReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('28','房地产抵押权变更登记和注销登记申请书(在建注销)','房地产抵押权变更登记和注销登记申请书(在建注销)','/report/ApplyProjectMortgageLogoutReisterBook.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('29','业务受理单（在建）','业务受理单（在建）','/report/ProjectMortgageBusinessHandleStub.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('30','房地产登记受理审核业务书（在建）','房地产登记受理审核业务书（在建）','/report/ReisterApplyProjectMortgageCheckTable.xhtml');
+
+
+
+
+
+
 
 -- 收费种类
 INSERT INTO FEE_CATEGORY(ID, NAME, PRIORITY,DESCRIPTION) VALUES('REGISTER','登记费',1,null);
