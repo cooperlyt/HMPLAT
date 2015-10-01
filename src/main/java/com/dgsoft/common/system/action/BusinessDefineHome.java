@@ -14,6 +14,8 @@ import org.jboss.seam.core.Expressions;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
+import org.jbpm.graph.def.Action;
+import org.jbpm.graph.def.Node;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.richfaces.model.SortMode;
 
@@ -82,7 +84,31 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
+    public void doNodeAction(String name){
 
+        List<TaskSubscribe> nodeActions = new ArrayList<TaskSubscribe>();
+        for (TaskSubscribe subscribe : getInstance().getTaskSubscribes()) {
+            if (subscribe.getTaskName().equals(name) && Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())) {
+                nodeActions.add(subscribe);
+            }
+        }
+        Collections.sort(nodeActions, new Comparator<TaskSubscribe>() {
+            @Override
+            public int compare(TaskSubscribe o1, TaskSubscribe o2) {
+                return new Integer(o1.getPriority()).compareTo(o2.getPriority());
+            }
+        });
+
+        //List<TaskSubscribeReg.CompleteSubscribeDefine> result = new ArrayList<TaskSubscribeReg.CompleteSubscribeDefine>();
+        for (TaskSubscribe subscribe : nodeActions) {
+            TaskCompleteSubscribeComponent component = taskSubscribeReg.getCompleteDefineByName(subscribe.getRegName()).getComponents();
+            if (!component.isPass())
+                throw new IllegalStateException("component is not pass:" + subscribe.getRegName());
+            component.complete();
+        }
+
+
+    }
 
     public void validComplete() {
         for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
@@ -123,12 +149,21 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
 
+    public List<String> getNodeNames(){
+        ProcessDefinition lasterPD = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(getInstance().getWfName());
+        List<String> result = new ArrayList<String>();
+        for(Object nodeObj: lasterPD.getNodes()) {
+            Node node = (Node)nodeObj;
+            Action action = node.getAction();
+            if ((action != null) && (action.getName() != null) && !action.getName().trim().equals(""))
+                result.add(action.getName());
+        }
+        return result;
+    }
+
 
     public List<String> getWfTaskNames() {
-
-
         ProcessDefinition lasterPD = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(getInstance().getWfName());
-
         return new ArrayList<String>(lasterPD.getTaskMgmtDefinition().getTasks().keySet());
     }
 
@@ -418,6 +453,8 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         }
         return result;
     }
+
+
 
     public List<TaskSubscribeReg.SubscribeDefine> getOperSubscribeDefines() {
         List<TaskSubscribeReg.SubscribeDefine> result = new ArrayList<TaskSubscribeReg.SubscribeDefine>();

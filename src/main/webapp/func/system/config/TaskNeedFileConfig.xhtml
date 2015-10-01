@@ -28,13 +28,16 @@
     <ui:define name="head-tab">
 
 
-        <s:link styleClass="pagehead-nav-item" view="/func/system/config/TaskSubscribeConfig.xhtml">
+        <s:link styleClass="pagehead-nav-item" view="/func/system/config/TaskSubscribeGroupConfig.xhtml">
             <span class="octicon octicon-rss"/>
+            <f:param name="businessDefineId" value="#{businessDefineHome.instance.id}"/>
+            <f:param name="groupType" value="TASK_INFO"/>
             #{messages.TaskSubscribeComponent}
         </s:link>
 
         <s:link styleClass="selected pagehead-nav-item">
             <span class="octicon octicon-repo-force-push"></span>
+            <f:param name="businessDefineId" value="#{businessDefineHome.instance.id}"/>
             #{messages.TaskSubscribeFile}
         </s:link>
 

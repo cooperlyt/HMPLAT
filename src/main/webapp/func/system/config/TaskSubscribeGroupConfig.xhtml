@@ -13,13 +13,13 @@
     <ui:define name="subscribeBody">
 
         <div class="tabnav">
-            <div class="right">
+            <a:outputPanel rendered="#{not (nodeType eq 'ACTION')}" layout="block" styleClass="right">
                 <a onclick="if(jQuery(#{r:element('groupEditForm')}).is(':visible')){jQuery(#{r:element('groupEditForm')}).hide();}else{jQuery(#{r:element('groupEditForm')}).show();}; return false;"
                         class="minibutton primary">
                     <span class="octicon octicon-plus"></span>
                     #{messages.create}#{messages.ViewSubscribeGroup}
                 </a>
-            </div>
+            </a:outputPanel>
 
             <nav class="tabnav-tabs">
                 <s:link view="/func/system/config/TaskSubscribeGroupConfig.xhtml" class="tabnav-tab #{(businessSubscribeConfig.groupTypeName eq 'TASK_INFO') ? 'selected' : ''} ">

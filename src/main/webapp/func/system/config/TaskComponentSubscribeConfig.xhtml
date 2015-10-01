@@ -249,7 +249,7 @@
 
         <!-- complete Operation -->
 
-        <a:outputPanel layout="block" rendered="#{not (businessDefineHome.taskName eq '_CREATE')}" styleClass="js-curd-table-box">
+        <a:outputPanel layout="block" rendered="#{ (nodeType eq 'TASK')}" styleClass="js-curd-table-box">
             <div class="table-list-header" style="margin-right: 1px;">
                 <a:outputPanel layout="block" ajaxRendered="true" styleClass="table-list-filters">
                     <div class="table-list-header-toggle left">

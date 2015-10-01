@@ -7,5 +7,6 @@
     <param name="businessDefineId" value="#{businessDefineHome.id}"/>
     <param name="taskName" value="#{businessDefineHome.taskName}"/>
     <param name="groupType" value="#{businessSubscribeConfig.groupTypeName}"/>
+    <param name="nodeType"/>
 
 </page>

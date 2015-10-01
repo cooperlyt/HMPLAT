@@ -201,27 +201,34 @@ public class ProjectBusinessStart {
 
     public void projectSelectedListener() {
 
+        if (forProject) {
 
-        projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode", BusinessProject.class)
-                .setParameter("projectCode", projectHome.getInstance().getProjectCode()).getResultList();
+            projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode", BusinessProject.class)
+                    .setParameter("projectCode", projectHome.getInstance().getProjectCode()).getResultList();
 
-        builds = new ArrayList<BatchOperData<Build>>(projectHome.getInstance().getBuilds().size());
+            builds = new ArrayList<BatchOperData<Build>>();
 
-        for (Build build : projectHome.getInstance().getBuildList()) {
-            boolean found = false;
-            for (BusinessProject project : projects) {
-                for (BusinessBuild businessBuild : project.getBusinessBuilds()) {
-                    if (businessBuild.getBuildCode().equals(build.getBuildCode())) {
-                        found = true;
+            for (Build build : projectHome.getInstance().getBuildList()) {
+                boolean found = false;
+                for (BusinessProject project : projects) {
+                    for (BusinessBuild businessBuild : project.getBusinessBuilds()) {
+                        if (businessBuild.getBuildCode().equals(build.getBuildCode())) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
                         break;
                     }
                 }
-                if (found) {
-                    break;
+                if (!found) {
+                    builds.add(new BatchOperData<Build>(build, true));
                 }
             }
-            if (!found) {
-                builds.add(new BatchOperData<Build>(build, true));
+        }else{
+            builds = new ArrayList<BatchOperData<Build>>(projectHome.getInstance().getBuilds().size());
+            for(Build build: projectHome.getInstance().getBuildList()){
+                builds.add(new BatchOperData<Build>(build,true));
             }
         }
     }
@@ -288,7 +295,7 @@ public class ProjectBusinessStart {
             }
 
             List<String> lockedHouseCode;
-            if (!houseMap.isEmpty()) {
+            if (!houseMap.isEmpty() && forProject) {
 
                 lockedHouseCode = ownerBusinessHome.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.type = 'CANT_SALE' and lockedHouse.houseCode in (:houseCodes)", String.class)
                         .setParameter("houseCodes", houseMap.keySet()).getResultList();

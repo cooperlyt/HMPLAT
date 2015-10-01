@@ -47,7 +47,7 @@
 
 
 
-        <div class="js-curd-table-box">
+        <a:outputPanel rendered="#{not (nodeType eq 'ACTION')}" layout="block" styleClass="js-curd-table-box">
             <div class="table-list-header" style="margin-right: 1px;">
 
 
@@ -232,7 +232,7 @@
                 </a:outputPanel>
 
             </h:form>
-        </div>
+        </a:outputPanel>
 
     </ui:define>
 
