@@ -30,20 +30,31 @@ public class SelectBizProjectMortgageCompleteCancel implements TaskCompleteSubsc
 
     @Override
     public void complete() {
-        if (ownerBusinessHome.getInstance().getSelectBusiness()!=null){
-            int selectBusinessHouse=0,nowBusinessHouse=0;
-            if (!ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().isEmpty()){
+        if (ownerBusinessHome.getInstance().getSelectBusiness() != null) {
+            int selectBusinessHouse = 0, nowBusinessHouse = 0;
+            if (!ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().isEmpty()) {
                 selectBusinessHouse = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size();
             }
-            if (!ownerBusinessHome.getInstance().getHouseBusinesses().isEmpty()){
+
+            if (!ownerBusinessHome.getInstance().getHouseBusinesses().isEmpty()) {
                 nowBusinessHouse = ownerBusinessHome.getInstance().getHouseBusinesses().size();
             }
 
-            if (nowBusinessHouse>0 && nowBusinessHouse>0 && nowBusinessHouse>=selectBusinessHouse){
+
+            if (nowBusinessHouse > 0 && nowBusinessHouse > 0 && nowBusinessHouse >= selectBusinessHouse) {
                 ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE_CANCEL);
+            } else {
+                ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
             }
-            if(nowBusinessHouse>0){
-                for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+
+
+            if (nowBusinessHouse > 0) {
+                for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+                    for (HouseBusiness selecthouseBusiness : ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()) {
+                        if (selecthouseBusiness.getHouseCode().equals(houseBusiness.getHouseCode())) {
+                            selecthouseBusiness.setCanceled(true);
+                        }
+                    }
                     houseBusiness.setCanceled(true);
                 }
             }
