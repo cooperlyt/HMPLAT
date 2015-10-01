@@ -9,21 +9,21 @@ import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by wxy on 2015-09-11.
- * 去掉一个预购商品预告登记状态
+ * Created by wxy on 2015-09-30.
+ * 去掉在建工程抵押登记状态
  */
-@Name("moveSaleRegister")
-public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
-
+@Name("moveProjectPledge")
+public class MoveProjectPledge implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
 
     @Override
     public void valid() {
@@ -37,21 +37,22 @@ public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_REGISTER, houseBusiness, true));
-            }
-            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
-            houseStatusList.remove(HouseStatus.SALE_REGISTER);
+        for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
+            if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PROJECT_PLEDGE, houseBusiness, true));
+            }
+
+            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+            houseStatusList.remove(HouseStatus.PROJECT_PLEDGE);
+
             Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
             if (houseStatusList!=null && !houseStatusList.isEmpty()) {
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
             }else{
                 houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
             }
-        }
 
+        }
     }
 }

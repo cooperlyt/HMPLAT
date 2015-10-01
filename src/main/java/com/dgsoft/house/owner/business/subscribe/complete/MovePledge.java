@@ -49,7 +49,11 @@ public class MovePledge implements TaskCompleteSubscribeComponent {
                 houseStatusList.remove(HouseStatus.PLEDGE);
 
                 Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+                if (houseStatusList!=null && !houseStatusList.isEmpty()) {
+                    houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+                }else{
+                    houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
+                }
 
             }
 

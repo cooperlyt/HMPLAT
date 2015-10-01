@@ -864,6 +864,13 @@
             登记薄阶段将选中的业务状态改成已解除(CompleteCancel)
         </description>
     </end-subscribe>
+    <end-subscribe name="selectBizProjectMortgageCompleteCancelEnd" component="selectBizProjectMortgageCompleteCancel">
+        <description>
+            登记薄阶段将选中的业务状态改成已解除在(在建工程抵押注销CompleteCancel)
+        </description>
+    </end-subscribe>
+
+
 
     <end-subscribe name="selectBizModifyingEnd" component="selectBizModifying">
         <description>
@@ -1095,6 +1102,13 @@
             删除房屋所有权转移预告抵押状态(单，多房屋)
         </description>
     </end-subscribe>
+
+    <end-subscribe name="moveProjectPledgeEnd" component="moveProjectPledge">
+        <description>
+            删除在建工程抵押状态(单，多房屋)
+        </description>
+    </end-subscribe>
+
 
 
 
