@@ -30,7 +30,7 @@ public class DeveloperChangeOwner implements BusinessDataFill {
 
                 BusinessHouseOwner businessHouseOwner = new BusinessHouseOwner();
                 businessHouseOwner.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
-                businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.OTHER);
                 if (houseBusiness.getStartBusinessHouse().getDeveloperCode() != null
                         && !houseBusiness.getStartBusinessHouse().getDeveloperCode().equals("")) {
                     businessHouseOwner.setCredentialsNumber(houseBusiness.getStartBusinessHouse().getDeveloperCode());

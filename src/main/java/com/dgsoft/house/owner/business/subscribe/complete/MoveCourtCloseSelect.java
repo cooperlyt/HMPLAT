@@ -49,7 +49,11 @@ public class MoveCourtCloseSelect implements TaskCompleteSubscribeComponent {
                     houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                     houseStatusList.remove(HouseStatus.COURT_CLOSE);
                     Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+                    if (houseStatusList!=null && !houseStatusList.isEmpty()) {
+                        houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+                    }else{
+                        houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
+                    }
 
                 }
             }
