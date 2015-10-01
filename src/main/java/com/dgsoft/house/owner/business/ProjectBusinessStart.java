@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business;
 import com.dgsoft.common.BatchOperData;
 import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
@@ -30,6 +31,8 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class ProjectBusinessStart {
 
+    private static final String PROJECT_HOUSE_GRID_MAP_SELECT_PAGE = "/business/houseOwner/ProjectBusinessHouseSelect.xhtml";
+
 
     @In(create = true)
     private ProjectHome projectHome;
@@ -52,7 +55,7 @@ public class ProjectBusinessStart {
 
     private List<BusinessProject> projects = new ArrayList<BusinessProject>(0);
 
-    private Map<Build,List<BuildGridMap>> buildGridMaps;
+    private Map<Build, List<BuildGridMap>> buildGridMaps;
 
     public List<BatchOperData<Build>> getBuilds() {
         return builds;
@@ -76,21 +79,21 @@ public class ProjectBusinessStart {
         return selectHouse;
     }
 
-    public String getSelectHouseCode(){
-        if (selectHouse == null){
+    public String getSelectHouseCode() {
+        if (selectHouse == null) {
             return null;
         }
         return selectHouse.getHouseCode();
     }
 
-    public void setSelectHouseCode(String code){
-        if (code == null || code.trim().equals("")){
+    public void setSelectHouseCode(String code) {
+        if (code == null || code.trim().equals("")) {
             selectHouse = null;
             return;
         }
-        for(Build build: buildGridMaps.keySet()){
-            for(House house: build.getHouses()){
-                if (house.getHouseCode().equals(code)){
+        for (Build build : buildGridMaps.keySet()) {
+            for (House house : build.getHouses()) {
+                if (house.getHouseCode().equals(code)) {
                     selectHouse = house;
                     return;
                 }
@@ -99,37 +102,134 @@ public class ProjectBusinessStart {
         throw new IllegalArgumentException("invalid house code:" + code);
     }
 
-    public void projectSelectedListener(){
+
+    private String selectBusinessId;
+
+    private List<BatchOperData<BusinessBuild>> businessModifyBuilds = new ArrayList<BatchOperData<BusinessBuild>>(0);
+
+    public void setModifyBuildSelectAll(boolean value) {
+        for (BatchOperData<BusinessBuild> build : businessModifyBuilds) {
+            build.setSelected(value);
+        }
+    }
+
+    public boolean isModifyBuildSelectAll() {
+        for (BatchOperData<BusinessBuild> build : businessModifyBuilds) {
+            if (!build.isSelected()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isHaveModifyBuildSelect() {
+        for (BatchOperData<BusinessBuild> build : businessModifyBuilds) {
+            if (build.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
-        projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode",BusinessProject.class)
-                .setParameter("projectCode",projectHome.getInstance().getProjectCode()).getResultList();
+    public List<BatchOperData<BusinessBuild>> getBusinessModifyBuilds() {
+        return businessModifyBuilds;
+    }
+
+    public String getSelectBusinessId() {
+        return selectBusinessId;
+    }
+
+    public void setSelectBusinessId(String selectBusinessId) {
+        this.selectBusinessId = selectBusinessId;
+    }
+
+    public String modifyProjectCard() {
+        businessModifyBuilds = new ArrayList<BatchOperData<BusinessBuild>>();
+
+        ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBusinessId));
+        ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+
+        ownerBusinessHome.getInstance().setBusinessProject(new BusinessProject(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject()));
+
+        ownerBusinessHome.getInstance().getMappingCorps().clear();
+        ownerBusinessHome.getInstance().getMappingCorps().add(new MappingCorp(ownerBusinessHome.getInstance(),ownerBusinessHome.getInstance().getSelectBusiness().getMappingCorp()));
+
+        for (BusinessBuild businessBuild : ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject().getBusinessBuilds()) {
+            businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), businessBuild), true));
+        }
+        for (BatchOperData<Build> build : builds) {
+            businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build.getData()), false));
+        }
+
+        return "modifyBuild";
+    }
+
+    public String modifyBuildComplete() {
+        for (BatchOperData<BusinessBuild> build : businessModifyBuilds) {
+            if (build.isSelected()) {
+                ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds().add(build.getData());
+            } else {
+
+                for (BusinessBuild businessBuild : ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject().getBusinessBuilds()) {
+                    if (businessBuild.getBuildCode().equals(build.getData().getBuildCode())) {
+
+                        List<String> lockedHouseCode = new ArrayList<String>(businessBuild.getProjectExceptHouses().size());
+
+                        for(ProjectExceptHouse exceptHouse: businessBuild.getProjectExceptHouses()){
+                            lockedHouseCode.add(exceptHouse.getHouseCode());
+                        }
+                        if (!lockedHouseCode.isEmpty()) {
+
+                           for(LockedHouse lockedHouse: ownerBusinessHome.getEntityManager().createQuery("select lockHouse from LockedHouse lockHouse where lockHouse.houseCode in (:houseCodes) and lockHouse.type = 'CANT_SALE'", LockedHouse.class)
+                                    .setParameter("houseCodes", lockedHouseCode).getResultList()){
+                               ownerBusinessHome.getEntityManager().remove(lockedHouse);
+                           }
+
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        initBuildGridMap();
+        return PROJECT_HOUSE_GRID_MAP_SELECT_PAGE;
+    }
+
+    public void projectSelectedListener() {
+
+
+        projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode", BusinessProject.class)
+                .setParameter("projectCode", projectHome.getInstance().getProjectCode()).getResultList();
 
         builds = new ArrayList<BatchOperData<Build>>(projectHome.getInstance().getBuilds().size());
 
-        for(Build build: projectHome.getInstance().getBuildList()){
+        for (Build build : projectHome.getInstance().getBuildList()) {
             boolean found = false;
-            for(BusinessProject project: projects){
-                for(BusinessBuild businessBuild: project.getBusinessBuilds()){
-                    if (businessBuild.getBuildCode().equals(build.getBuildCode())){
+            for (BusinessProject project : projects) {
+                for (BusinessBuild businessBuild : project.getBusinessBuilds()) {
+                    if (businessBuild.getBuildCode().equals(build.getBuildCode())) {
                         found = true;
                         break;
                     }
                 }
-                if (found){
+                if (found) {
                     break;
                 }
             }
-            if (!found){
-                builds.add(new BatchOperData<Build>(build,true));
+            if (!found) {
+                builds.add(new BatchOperData<Build>(build, true));
             }
         }
     }
 
-    public boolean isSelectBuild(){
-        if(projectHome.isIdDefined()){
-            for(BatchOperData<Build> bb: builds){
-                if (bb.isSelected()){
+    public boolean isSelectBuild() {
+        if (projectHome.isIdDefined()) {
+            for (BatchOperData<Build> bb : builds) {
+                if (bb.isSelected()) {
                     return true;
                 }
             }
@@ -137,75 +237,75 @@ public class ProjectBusinessStart {
         return false;
     }
 
-    public boolean isSelectAll(){
-        if (builds.isEmpty()){
+    public boolean isSelectAll() {
+        if (builds.isEmpty()) {
             return false;
         }
-        for(BatchOperData<Build> bb: builds){
-            if (!bb.isSelected()){
+        for (BatchOperData<Build> bb : builds) {
+            if (!bb.isSelected()) {
                 return false;
             }
         }
         return true;
     }
 
-    public void setSelectAll(boolean selected){
-        for(BatchOperData<Build> bb: builds){
+    public void setSelectAll(boolean selected) {
+        for (BatchOperData<Build> bb : builds) {
             bb.setSelected(selected);
         }
     }
 
-    public String buildComplete(){
+    public String buildComplete() {
         ownerBusinessHome.createInstance();
         ownerBusinessHome.getInstance().setBusinessProject(new BusinessProject(ownerBusinessHome.getInstance(), projectHome.getInstance()));
 
-        for(BatchOperData<Build> build: builds){
-            if (build.isSelected()){
+        for (BatchOperData<Build> build : builds) {
+            if (build.isSelected()) {
                 ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds().add(
                         new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build.getData()));
             }
         }
         initBuildGridMap();
-        return "BUILD_COMPLETE";
+        return PROJECT_HOUSE_GRID_MAP_SELECT_PAGE;
 
     }
 
 
-    public void initBuildGridMap(){
+    public void initBuildGridMap() {
         buildGridMaps = new HashMap<Build, List<BuildGridMap>>();
 
         Set<String> buildIds = new HashSet<String>(ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds().size());
-        for(BusinessBuild build: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()){
+        for (BusinessBuild build : ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()) {
             buildIds.add(build.getBuildCode());
         }
 
-        for(Build build: houseEntityLoader.getEntityManager().createQuery("select build from Build build where build.id in (:buildIds)", Build.class)
-                .setParameter("buildIds", buildIds).getResultList()){
+        for (Build build : houseEntityLoader.getEntityManager().createQuery("select build from Build build where build.id in (:buildIds)", Build.class)
+                .setParameter("buildIds", buildIds).getResultList()) {
 
-            Map<String,House> houseMap = new HashMap<String, House>();
-            for (House house: build.getHouses()){
-                houseMap.put(house.getHouseCode(),house);
+            Map<String, House> houseMap = new HashMap<String, House>();
+            for (House house : build.getHouses()) {
+                houseMap.put(house.getHouseCode(), house);
             }
 
             List<String> lockedHouseCode;
-            if (!houseMap.isEmpty()){
+            if (!houseMap.isEmpty()) {
 
                 lockedHouseCode = ownerBusinessHome.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.type = 'CANT_SALE' and lockedHouse.houseCode in (:houseCodes)", String.class)
                         .setParameter("houseCodes", houseMap.keySet()).getResultList();
-            }else{
+            } else {
                 lockedHouseCode = new ArrayList<String>(0);
             }
 
-            Map<String,HouseStatus> houseStatusMap;
+            Map<String, HouseStatus> houseStatusMap;
 
-            if (!houseMap.isEmpty()){
+            if (!houseMap.isEmpty()) {
                 houseStatusMap = new HashMap<String, HouseStatus>();
-                for(HouseRecord hr: ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord  houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
-                        .setParameter("houseCodes",houseMap.keySet()).getResultList()){
+                for (HouseRecord hr : ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord  houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
+                        .setParameter("houseCodes", houseMap.keySet()).getResultList()) {
                     if (hr.getBusinessHouse().getMasterStatus() != null)
-                        houseStatusMap.put(hr.getHouseCode(),hr.getBusinessHouse().getMasterStatus());
+                        houseStatusMap.put(hr.getHouseCode(), hr.getBusinessHouse().getMasterStatus());
                 }
-            }else{
+            } else {
                 houseStatusMap = new HashMap<String, HouseStatus>(0);
             }
 
@@ -218,13 +318,13 @@ public class ProjectBusinessStart {
                 }
             });
 
-            for(BuildGridMap map: gridMaps){
-                for(GridRow row: map.getGridRows()){
-                    for(GridBlock block: row.getGridBlocks()){
+            for (BuildGridMap map : gridMaps) {
+                for (GridRow row : map.getGridRows()) {
+                    for (GridBlock block : row.getGridBlocks()) {
                         House house = null;
                         if ((block.getHouseCode() != null) && !block.getHouseCode().trim().equals(""))
                             house = houseMap.get(block.getHouseCode());
-                        if (house != null){
+                        if (house != null) {
                             block.setHouse(house);
                             block.setHouseStatus(houseStatusMap.get(house.getHouseCode()));
                             block.setLocked(!lockedHouseCode.contains(house.getHouseCode()));
@@ -234,18 +334,18 @@ public class ProjectBusinessStart {
                 }
             }
 
-            if (! houseMap.isEmpty()){
+            if (!houseMap.isEmpty()) {
                 List<House> idleHouses = new ArrayList<House>(houseMap.size());
 
-                for (House house: houseMap.values()){
+                for (House house : houseMap.values()) {
                     House businessHouse = houseMap.get(house.getHouseCode());
                     idleHouses.add(businessHouse);
                 }
 
                 BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses);
-                for (GridRow gridRow: idleMap.getGridRows()){
-                    for(GridBlock block: gridRow.getGridBlocks()){
-                        if (block.getHouse()!= null){
+                for (GridRow gridRow : idleMap.getGridRows()) {
+                    for (GridBlock block : gridRow.getGridBlocks()) {
+                        if (block.getHouse() != null) {
                             block.setLocked(!lockedHouseCode.contains(block.getHouse().getHouseCode()));
                             block.setHouseStatus(houseStatusMap.get(block.getHouse().getHouseCode()));
                         }
@@ -263,8 +363,8 @@ public class ProjectBusinessStart {
     }
 
 
-    public List<Map.Entry<Build,List<BuildGridMap>>> getBuildGridMaps(){
-        List<Map.Entry<Build,List<BuildGridMap>>> result = new ArrayList<Map.Entry<Build, List<BuildGridMap>>>(buildGridMaps.entrySet());
+    public List<Map.Entry<Build, List<BuildGridMap>>> getBuildGridMaps() {
+        List<Map.Entry<Build, List<BuildGridMap>>> result = new ArrayList<Map.Entry<Build, List<BuildGridMap>>>(buildGridMaps.entrySet());
         Collections.sort(result, new Comparator<Map.Entry<Build, List<BuildGridMap>>>() {
             @Override
             public int compare(Map.Entry<Build, List<BuildGridMap>> o1, Map.Entry<Build, List<BuildGridMap>> o2) {
@@ -278,25 +378,25 @@ public class ProjectBusinessStart {
 
     private BuildGridMap curMap;
 
-    public void setId(String mapId){
-        if ((mapId == null) || mapId.trim().equals("")){
+    public void setId(String mapId) {
+        if ((mapId == null) || mapId.trim().equals("")) {
             curMap = null;
         }
 
-        for(List<BuildGridMap> bGridMaps : buildGridMaps.values()){
-            for(BuildGridMap gridMap: bGridMaps){
-                if(gridMap.getId().equals(mapId)){
+        for (List<BuildGridMap> bGridMaps : buildGridMaps.values()) {
+            for (BuildGridMap gridMap : bGridMaps) {
+                if (gridMap.getId().equals(mapId)) {
                     curMap = gridMap;
                     return;
                 }
             }
         }
-        throw  new IllegalArgumentException("map id not found");
+        throw new IllegalArgumentException("map id not found");
 
     }
 
-    public String getId(){
-        if (curMap == null){
+    public String getId() {
+        if (curMap == null) {
             return null;
         }
         return curMap.getId();
@@ -307,45 +407,45 @@ public class ProjectBusinessStart {
         return curMap;
     }
 
-    private Entry<Integer,Integer> getGridMapHouseCount(BuildGridMap gridMap){
+    private Entry<Integer, Integer> getGridMapHouseCount(BuildGridMap gridMap) {
         int totalCount = 0;
         int count = 0;
-        for(GridRow row: gridMap.getGridRows()) {
+        for (GridRow row : gridMap.getGridRows()) {
             for (GridBlock block : row.getGridBlocks()) {
-                if (block.getHouse() != null){
-                    totalCount ++;
-                    if (block.isLocked()){
+                if (block.getHouse() != null) {
+                    totalCount++;
+                    if (block.isLocked()) {
                         count++;
                     }
                 }
             }
 
         }
-        return new Entry<Integer, Integer>(totalCount,count);
+        return new Entry<Integer, Integer>(totalCount, count);
     }
 
 
-    public Entry<Integer,Integer> getCountByBuild(String buildId){
+    public Entry<Integer, Integer> getCountByBuild(String buildId) {
         int totalCount = 0;
         int count = 0;
-        for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()){
-            if (entry.getKey().getId().equals(buildId)){
-                for(BuildGridMap gridMap: entry.getValue()){
-                    Entry<Integer,Integer> mapCount = getGridMapHouseCount(gridMap);
+        for (Map.Entry<Build, List<BuildGridMap>> entry : buildGridMaps.entrySet()) {
+            if (entry.getKey().getId().equals(buildId)) {
+                for (BuildGridMap gridMap : entry.getValue()) {
+                    Entry<Integer, Integer> mapCount = getGridMapHouseCount(gridMap);
                     totalCount += mapCount.getKey();
                     count += mapCount.getValue();
                 }
             }
         }
-        return new Entry<Integer, Integer>(totalCount,count);
+        return new Entry<Integer, Integer>(totalCount, count);
 
 
     }
 
-    public Entry<Integer,Integer> getCountByMap(String mapId){
-        for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()){
-            for(BuildGridMap gridMap: entry.getValue()){
-                if (gridMap.getId().equals(mapId)){
+    public Entry<Integer, Integer> getCountByMap(String mapId) {
+        for (Map.Entry<Build, List<BuildGridMap>> entry : buildGridMaps.entrySet()) {
+            for (BuildGridMap gridMap : entry.getValue()) {
+                if (gridMap.getId().equals(mapId)) {
                     return getGridMapHouseCount(gridMap);
                 }
             }
@@ -353,9 +453,9 @@ public class ProjectBusinessStart {
         throw new IllegalArgumentException("invail gridMap id:" + mapId);
     }
 
-    private BusinessBuild getBusinessBuild(String buildCode){
-        for(BusinessBuild businessBuild: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()){
-            if(businessBuild.getBuildCode().equals(buildCode)){
+    private BusinessBuild getBusinessBuild(String buildCode) {
+        for (BusinessBuild businessBuild : ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()) {
+            if (businessBuild.getBuildCode().equals(buildCode)) {
                 return businessBuild;
                 //businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(houseCode,businessBuild));
             }
@@ -364,12 +464,12 @@ public class ProjectBusinessStart {
     }
 
 
-    public void dataCompleteForHouse(){
+    public void dataCompleteForHouse() {
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
 
-        Map<String,HouseInfo> houseMap = new HashMap<String, HouseInfo>();
+        Map<String, HouseInfo> houseMap = new HashMap<String, HouseInfo>();
 
-        for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()) {
+        for (Map.Entry<Build, List<BuildGridMap>> entry : buildGridMaps.entrySet()) {
             for (BuildGridMap gridMap : entry.getValue()) {
                 for (GridRow row : gridMap.getGridRows()) {
                     for (GridBlock block : row.getGridBlocks()) {
@@ -384,32 +484,38 @@ public class ProjectBusinessStart {
             }
         }
 
-        List<HouseRecord> houseRecords = ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)",HouseRecord.class)
+        List<HouseRecord> houseRecords = ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
         List<BusinessHouse> businessHouses = new ArrayList<BusinessHouse>();
-        for(HouseInfo houseInfo: houseMap.values()){
+        for (HouseInfo houseInfo : houseMap.values()) {
             boolean recordExists = false;
-            for(HouseRecord houseRecord: houseRecords){
-                if (houseRecord.getHouseCode().equals(houseInfo.getHouseCode())){
+            for (HouseRecord houseRecord : houseRecords) {
+                if (houseRecord.getHouseCode().equals(houseInfo.getHouseCode())) {
                     recordExists = true;
                     businessHouses.add(houseRecord.getBusinessHouse());
                 }
             }
-            if(!recordExists){
+            if (!recordExists) {
                 businessHouses.add(new BusinessHouse(houseInfo));
             }
         }
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
 
-        for(BusinessHouse businessHouse: businessHouses)
+        for (BusinessHouse businessHouse : businessHouses)
             ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
     }
 
-    public void dataCompleteForProject(){
+    public void dataCompleteForProject() {
 
-        for(Map.Entry<Build,List<BuildGridMap>> entry: buildGridMaps.entrySet()){
+        ProjectSellInfo projectSellInfo = ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo();
+        projectSellInfo.setArea(BigDecimal.ZERO);
+        projectSellInfo.setHouseCount(0);
+        projectSellInfo.setBuildCount(0);
+
+        for (Map.Entry<Build, List<BuildGridMap>> entry : buildGridMaps.entrySet()) {
             BusinessBuild businessBuild = getBusinessBuild(entry.getKey().getBuildCode());
+            businessBuild.getProjectExceptHouses().clear();
             businessBuild.setHouseCount(0);
             businessBuild.setArea(BigDecimal.ZERO);
             businessBuild.setHomeCount(0);
@@ -420,25 +526,27 @@ public class ProjectBusinessStart {
             businessBuild.setShopArea(BigDecimal.ZERO);
 
             Set<String> exceptHouseCode = new HashSet<String>();
-            for(BuildGridMap gridMap: entry.getValue()){
-                for(GridRow row: gridMap.getGridRows()){
-                    for(GridBlock block: row.getGridBlocks()){
+            for (BuildGridMap gridMap : entry.getValue()) {
+                for (GridRow row : gridMap.getGridRows()) {
+                    for (GridBlock block : row.getGridBlocks()) {
 
                         if (block.getHouse() != null) {
-                            if (block.isLocked()){
-                                UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
-                                businessBuild.setHouseCount(businessBuild.getHomeCount() + 1);
-                                businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
+                            if (block.isLocked()) {
+                                if ((block.getHouse().getHouseType() == null)) {
+                                    UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
+                                    businessBuild.setHouseCount(businessBuild.getHomeCount() + 1);
+                                    businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
 
-                                if (useType.isDwelling()){
-                                    businessBuild.setHomeCount(businessBuild.getHomeCount() + 1);
-                                    businessBuild.setHomeArea(businessBuild.getHomeArea().add(block.getHouse().getHouseArea()));
-                                }else if (useType.isShopHouse()){
-                                    businessBuild.setShopCount(businessBuild.getShopCount() + 1);
-                                    businessBuild.setShopArea(businessBuild.getShopArea().add(block.getHouse().getHouseArea()));
-                                }else{
-                                    businessBuild.setUnhomeCount(businessBuild.getUnhomeCount() + 1);
-                                    businessBuild.setUnhomeArea(businessBuild.getUnhomeArea().add(block.getHouse().getHouseArea()));
+                                    if (useType.isDwelling()) {
+                                        businessBuild.setHomeCount(businessBuild.getHomeCount() + 1);
+                                        businessBuild.setHomeArea(businessBuild.getHomeArea().add(block.getHouse().getHouseArea()));
+                                    } else if (useType.isShopHouse()) {
+                                        businessBuild.setShopCount(businessBuild.getShopCount() + 1);
+                                        businessBuild.setShopArea(businessBuild.getShopArea().add(block.getHouse().getHouseArea()));
+                                    } else {
+                                        businessBuild.setUnhomeCount(businessBuild.getUnhomeCount() + 1);
+                                        businessBuild.setUnhomeArea(businessBuild.getUnhomeArea().add(block.getHouse().getHouseArea()));
+                                    }
                                 }
                             } else {
                                 businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(block.getHouseCode(), businessBuild));
@@ -450,8 +558,12 @@ public class ProjectBusinessStart {
                 }
             }
 
+            projectSellInfo.setArea(projectSellInfo.getArea().add(businessBuild.getArea()));
+            projectSellInfo.setHouseCount(projectSellInfo.getHouseCount() + businessBuild.getHomeCount());
+            projectSellInfo.setBuildCount(projectSellInfo.getBuildCount() + 1);
+
             Set<String> houseCodes = new HashSet<String>();
-            for (House house: entry.getKey().getHouses()){
+            for (House house : entry.getKey().getHouses()) {
                 houseCodes.add(house.getHouseCode());
             }
 
@@ -459,15 +571,15 @@ public class ProjectBusinessStart {
                 List<LockedHouse> lockedHouse = ownerBusinessHome.getEntityManager().createQuery("select lockedHouse from LockedHouse lockedHouse where lockedHouse.type = 'CANT_SALE' and lockedHouse.houseCode in (:houseCodes)", LockedHouse.class)
                         .setParameter("houseCodes", houseCodes).getResultList();
 
-                for(LockedHouse lh : lockedHouse){
+                for (LockedHouse lh : lockedHouse) {
                     ownerBusinessHome.getEntityManager().remove(lh);
                 }
-                for(String houseCode: exceptHouseCode){
+                for (String houseCode : exceptHouseCode) {
                     ownerBusinessHome.getEntityManager().persist(
                             new LockedHouse(houseCode,
                                     LockedHouse.LockType.CANT_SALE,
                                     authInfo.getLoginEmployee().getId(),
-                                    authInfo.getLoginEmployee().getPersonName(),new Date()));
+                                    authInfo.getLoginEmployee().getPersonName(), new Date()));
                 }
             }
 
@@ -475,10 +587,10 @@ public class ProjectBusinessStart {
 
     }
 
-    public String dataComplete(){
-        if(isForProject()){
+    public String dataComplete() {
+        if (isForProject()) {
             dataCompleteForProject();
-        }else{
+        } else {
             dataCompleteForHouse();
         }
 

@@ -129,7 +129,7 @@
                             <s:link view="/func/house/owner/BusinessView.xhtml">
                                 <f:param value="#{_item.id}" name="businessId"/>
                                 #{_item.defineName}
-                                <h:outputText value="#{messages[_item.type]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/>
+                                <h:outputText value="#{messages[_item.type.name()]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/>
                                 / #{_item.id}
                             </s:link>
 

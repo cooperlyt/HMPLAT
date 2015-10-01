@@ -23,9 +23,8 @@ public class ProjectSellInfo implements java.io.Serializable {
 
 	private String id;
 	private BusinessProject businessProject;
-	private Integer houseCount;
-	private Integer buildCount;
-	private BigDecimal area;
+
+
 
 	private String useType;
 	private String sellObject;
@@ -54,12 +53,37 @@ public class ProjectSellInfo implements java.io.Serializable {
     private String createCardNumber;
     private String createPrepareCardNumber;
 
+    private Integer houseCount;
+    private Integer buildCount;
+    private BigDecimal area;
+
 
 
 	public ProjectSellInfo() {
 	}
 
-	@Id
+    public ProjectSellInfo(BusinessProject businessProject, ProjectSellInfo other) {
+        this.businessProject = businessProject;
+
+        this.useType = other.getUseType();
+        this.sellObject = other.getSellObject();
+        this.type = other.getType();
+        this.landCardNo = other.getLandCardNo();
+        this.landCardType = other.getLandCardType();
+        this.number = other.getNumber();
+        this.landProperty = other.getLandProperty();
+        this.beginUseTime = other.getBeginUseTime();
+        this.endUseTime = other.getEndUseTime();
+        this.landArea = other.getLandArea();
+        this.landGetMode = other.getLandGetMode();
+        this.landUseType = other.getLandUseType();
+        this.landAddress = other.getLandAddress();
+        this.buildSize = other.getBuildSize();
+        this.createCardNumber = other.getCreateCardNumber();
+        this.createPrepareCardNumber = other.getCreatePrepareCardNumber();
+    }
+
+    @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

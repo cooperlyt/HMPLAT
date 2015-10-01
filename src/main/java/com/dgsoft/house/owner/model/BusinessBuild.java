@@ -33,22 +33,46 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 	private int floorCount;
 	private int upFloorCount;
 	private int downFloorCount;
-	private Integer houseCount;
-	private BigDecimal area;
 	private String buildType;
 	private String structure;
+	private String completeYear;
+	private String buildDevNumber;
+	private Date mapTime;
+	private Set<ProjectExceptHouse> projectExceptHouses = new HashSet<ProjectExceptHouse>(0);
+
+	private Integer houseCount;
+	private BigDecimal area;
 	private Integer homeCount;
 	private BigDecimal homeArea;
 	private Integer unhomeCount;
 	private BigDecimal unhomeArea;
 	private Integer shopCount;
 	private BigDecimal shopArea;
-	private String completeYear;
-    private String buildDevNumber;
-	private Date mapTime;
-    private Set<ProjectExceptHouse> projectExceptHouses = new HashSet<ProjectExceptHouse>(0);
 
 	public BusinessBuild() {
+	}
+
+	public BusinessBuild(BusinessProject businessProject,BusinessBuild businessBuild){
+		this.businessProject = businessProject;
+		this.mapNumber = businessBuild.getMapNumber();
+		this.blockNo = businessBuild.getBlockNo();
+		this.buildNo = businessBuild.getBuildNo();
+		this.buildCode = businessBuild.getBuildCode();
+		this.streetCode = businessBuild.getStreetCode();
+		this.name = businessBuild.getBuildName();
+		this.doorNo = businessBuild.getDoorNo();
+		this.unintCount = businessBuild.getUnintCount();
+		this.floorCount = businessBuild.getFloorCount();
+		this.upFloorCount = businessBuild.getUpFloorCount();
+		this.downFloorCount = businessBuild.getDownFloorCount();
+
+		this.buildType = businessBuild.getBuildType();
+		this.structure = businessBuild.getStructure();
+
+		this.completeYear = businessBuild.getCompleteYear();
+		this.buildDevNumber = businessBuild.getBuildDevNumber();
+		this.mapTime = businessBuild.getMapTime();
+
 	}
 
 	public BusinessBuild(BusinessProject businessProject, Build build) {
@@ -65,10 +89,8 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 		this.upFloorCount = build.getUpFloorCount();
 		this.downFloorCount = build.getDownFloorCount();
 
-		this.area = build.getArea();
 		this.buildType = build.getBuildType();
 		this.structure = build.getStructure();
-		this.homeCount = build.getHouseCount();
 
 		this.completeYear = build.getCompleteYear();
 		this.buildDevNumber = build.getBuildDevNumber();
