@@ -227,20 +227,21 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 	}
 
 
+    @Deprecated
 	@Column(name = "HOUSE_COUNT")
 	public Integer getHouseCount() {
 		return this.houseCount;
 	}
-
+    @Deprecated
 	public void setHouseCount(Integer houseCount) {
 		this.houseCount = houseCount;
 	}
-
+    @Deprecated
 	@Column(name = "AREA", precision = 18, scale = 3)
 	public BigDecimal getArea() {
 		return this.area;
 	}
-
+    @Deprecated
 	public void setArea(BigDecimal area) {
 		this.area = area;
 	}

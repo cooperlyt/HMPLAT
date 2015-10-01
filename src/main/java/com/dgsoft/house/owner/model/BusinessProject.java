@@ -63,6 +63,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.districtCode = other.getDistrictCode();
         this.districtName = other.getDistrictName();
         this.projectCode = other.getProjectCode();
+        this.projectSellInfo = new ProjectSellInfo(this,other.getProjectSellInfo());
     }
 
     @Id

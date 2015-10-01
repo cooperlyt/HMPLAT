@@ -12,330 +12,387 @@
                 xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
                 template="/layout/template.xhtml">
 
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
 
     <ui:define name="body">
 
 
-    <div class="pagehead repohead instapaper_ignore readability-menu">
+        <div class="pagehead repohead instapaper_ignore readability-menu">
 
-        <div class="container">
+            <div class="container">
 
-            <h1 class="entry-title public">
-                <span class="mega-octicon octicon-repo"></span>
-                <strong>#{messages.createBusiness}</strong>
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>#{messages.createBusiness}</strong>
 
 
-                <span class="path-divider">/</span>
+                    <span class="path-divider">/</span>
 
-                #{ownerBusinessHome.instance.defineName}
+                    #{ownerBusinessHome.instance.defineName}
 
-                <span class="path-divider">/</span>
-                #{messages.Business_Start_ProjectSelect}
+                    <span class="path-divider">/</span>
+                    #{messages.Business_Start_ProjectSelect}
 
-            </h1>
+                </h1>
+
+            </div>
+
 
         </div>
 
 
-    </div>
+        <div class="container">
+
+            <h:outputStylesheet>
+                .checkHeader {
+                    width: 15px;
+                }
+            </h:outputStylesheet>
+
+            <h:outputScript>
+                var scrollTopValue = 0;
+
+                function moreBefor(){
+                var div = #{r:element('SectionSelectItemList')};
+                scrollTopValue = div.scrollTop;
+
+                }
+
+                function scrollToBefor(){
+                var div = #{r:element('SectionSelectItemList')};
+
+                div.scrollTop = scrollTopValue;
+                }
+
+            </h:outputScript>
+
+            <h:form styleClass="form-inline">
+
+                <div class="setup-form " style="width: 100%">
 
 
+                    <div class="form-group" style="width: 21%">
+                        <h:selectOneMenu value="#{sectionSelectList.districtId}"
+                                         p:data-header="#{messages.districtSelect}"
+                                         styleClass="selectpicker edit-select form-control">
+                            <s:selectItems value="#{allDistrict.resultList}" var="_district"
+                                           itemValue="#{_district.id}" label="#{_district.name}"
+                                           noSelectionLabel="#{messages.districtSelect}"/>
+
+                            <a:ajax event="valueChange" execute="@this" listener="#{houseStepSelect.resetSection}"
+                                    render="sectionSelectInputs">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:ajax>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <a:outputPanel id="sectionSelectInputs">
+
+                        <a:jsFunction name="moreResult" execute="@this" immediate="true"
+                                      action="#{sectionSelectList.moreResult}"
+                                      oncomplete="scrollToBefor(); "
+                                      render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:jsFunction>
+
+                        <div class="btn-group bootstrap-select edit-select form-group" style="width: 31%">
+                            <button type="button" class=" btn dropdown-toggle btn-default"
+                                    data-toggle="dropdown" aria-expanded="false">
+
+                                <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
+                                              value="#{(empty houseStepSelect.selectSection) ?  messages.sectionSelect : houseStepSelect.selectSection.name}">
+                                </h:outputText>
+                                <span class="caret"></span>
+                            </button>
 
 
-    <div class="container">
-
-        <h:outputStylesheet>
-            .checkHeader{
-                width: 15px;
-            }
-        </h:outputStylesheet>
-
-        <h:outputScript>
-            var scrollTopValue = 0;
-
-            function moreBefor(){
-            var div = #{r:element('SectionSelectItemList')};
-            scrollTopValue = div.scrollTop;
-
-            }
-
-            function scrollToBefor(){
-            var div = #{r:element('SectionSelectItemList')};
-
-            div.scrollTop = scrollTopValue;
-            }
-
-        </h:outputScript>
-
-        <h:form styleClass="form-inline">
-
-            <div class="setup-form " style="width: 100%">
-                <s:link styleClass="right btn btn-primary" action="#{projectBusinessStart.buildComplete}">
-                    #{messages.complete}
-                </s:link>
-
-            <div class="form-group" style="width: 20%">
-        <h:selectOneMenu value="#{sectionSelectList.districtId}"
-                         p:data-header="#{messages.districtSelect}"
-                         styleClass="selectpicker edit-select form-control">
-            <s:selectItems value="#{allDistrict.resultList}" var="_district"
-                           itemValue="#{_district.id}" label="#{_district.name}"
-                           noSelectionLabel="#{messages.districtSelect}"/>
-
-            <a:ajax event="valueChange" execute="@this" listener="#{houseStepSelect.resetSection}" render="sectionSelectInputs">
-                <a:attachQueue requestDelay="0"/>
-            </a:ajax>
-        </h:selectOneMenu>
-                </div>
-        <a:outputPanel id="sectionSelectInputs" >
-
-            <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
-                          oncomplete="scrollToBefor(); "
-                          render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
-                <a:attachQueue requestDelay="0"/>
-            </a:jsFunction>
-
-            <div class="btn-group bootstrap-select edit-select form-group"  style="width: 30%">
-                <button type="button" class=" btn dropdown-toggle btn-default"
-                        data-toggle="dropdown" aria-expanded="false">
-
-                    <h:outputText id="sectionSelectBtnCaption" styleClass="filter-option pull-left"
-                                  value="#{(empty houseStepSelect.selectSection) ?  messages.sectionSelect : houseStepSelect.selectSection.name}">
-                    </h:outputText>
-                    <span class="caret"></span>
-                </button>
-
-
-                <div class="dropdown-menu select-menu-modal-holder" >
-                    <div class="select-menu-modal" >
-                        <div class="select-menu-header">
-                            <span class="select-menu-title">#{messages.SectionSelect}</span>
+                            <div class="dropdown-menu select-menu-modal-holder">
+                                <div class="select-menu-modal">
+                                    <div class="select-menu-header">
+                                        <span class="select-menu-title">#{messages.SectionSelect}</span>
                                             <span class="octicon octicon-x js-menu-close"
                                                   aria-label="#{messages.close}"></span>
-                        </div>
+                                    </div>
 
-                        <a:outputPanel layout="block" id="sectionSelectPanel">
-                            <div class="select-menu-filters">
-                                <div class="select-menu-text-filter">
-                                    <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSelectList.searchKey}">
-                                        <a:ajax event="keyup" immediate="true" execute="@this"
-                                                render="SectionSelectItemList">
-                                            <a:attachQueue requestDelay="500"/>
-                                        </a:ajax>
+                                    <a:outputPanel layout="block" id="sectionSelectPanel">
+                                        <div class="select-menu-filters">
+                                            <div class="select-menu-text-filter">
+                                                <h:inputText id="sectionSearchName" autocomplete="off"
+                                                             value="#{sectionSelectList.searchKey}">
+                                                    <a:ajax event="keyup" immediate="true" execute="@this"
+                                                            render="SectionSelectItemList">
+                                                        <a:attachQueue requestDelay="500"/>
+                                                    </a:ajax>
 
-                                    </h:inputText>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <a:outputPanel layout="block" styleClass="select-menu-list"
+                                                       id="SectionSelectItemList">
+
+                                            <a:commandLink execute="@this" immediate="true"
+                                                           action="#{houseStepSelect.resetSection}"
+                                                           render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs"
+                                                           styleClass="select-menu-item #{(empty houseStepSelect.selectSection) ? 'selected': ''}">
+
+                                                <a:param value="" assignTo="#{houseStepSelect.selectSectionId}"/>
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">#{messages.sectionSelect}</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+                                            <a:repeat value="#{sectionSelectList.resultList}" var="_item">
+
+                                                <a:commandLink execute="@this" immediate="true"
+                                                               render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs"
+                                                               action="#{houseStepSelect.resetPorject}"
+                                                               styleClass="select-menu-item #{(houseStepSelect.selectSectionId eq _item.id) ? 'selected': ''}">
+
+                                                    <a:param value="#{_item.id}"
+                                                             assignTo="#{houseStepSelect.selectSectionId}"/>
+
+                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                    <span class="select-menu-item-text">#{_item.name}</span>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+                                            </a:repeat>
+
+
+                                            <a:commandLink
+                                                    onclick="moreBefor(); moreResult(); event.stopPropagation(); return false;"
+                                                    styleClass="select-menu-item last-visible"
+                                                    rendered="#{sectionSelectList.nextExists}">
+
+
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">#{messages.More}</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
                                 </div>
                             </div>
-                            <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+                        </div>
 
-                                <a:commandLink execute="@this" immediate="true" action="#{houseStepSelect.resetSection}"
-                                               render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs"
-                                               styleClass="select-menu-item #{(empty houseStepSelect.selectSection) ? 'selected': ''}">
 
-                                    <a:param value="" assignTo="#{houseStepSelect.selectSectionId}"/>
-                                    <span class="select-menu-item-icon octicon octicon-check"></span>
-                                    <span class="select-menu-item-text">#{messages.sectionSelect}</span>
-                                    <a:attachQueue requestDelay="0"/>
-                                </a:commandLink>
+                        <a:outputPanel layout="block" styleClass="form-group right" style="width: 46%"
+                                       id="projectSelectInputs">
 
-                                <a:repeat value="#{sectionSelectList.resultList}" var="_item">
 
-                                    <a:commandLink execute="@this" immediate="true"
-                                                   render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs" action="#{houseStepSelect.resetPorject}"
-                                                   styleClass="select-menu-item #{(houseStepSelect.selectSectionId eq _item.id) ? 'selected': ''}">
+                            <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
 
-                                        <a:param value="#{_item.id}" assignTo="#{houseStepSelect.selectSectionId}"/>
 
-                                        <span class="select-menu-item-icon octicon octicon-check"></span>
-                                        <span class="select-menu-item-text">#{_item.name}</span>
+                                <h:selectOneMenu value="#{projectHome.id}"
+                                                 p:data-header="#{messages.projectSelect}"
+                                                 styleClass="selectpicker edit-select form-control">
+                                    <s:selectItems value="#{houseStepSelect.selectSection.projectList}"
+                                                   var="_project" itemValue="#{_project.id}"
+                                                   label="#{_project.name}"
+                                                   noSelectionLabel="#{messages.projectSelect}"/>
+
+                                    <a:ajax event="valueChange"
+                                            listener="#{projectBusinessStart.projectSelectedListener}" execute="@this"
+                                            render="buildSelectForm">
                                         <a:attachQueue requestDelay="0"/>
-                                    </a:commandLink>
-                                </a:repeat>
+                                    </a:ajax>
+                                </h:selectOneMenu>
 
-
-
-
-
-
-                                <a:commandLink onclick="moreBefor(); moreResult(); event.stopPropagation(); return false;"
-                                               styleClass="select-menu-item last-visible"
-                                               rendered="#{sectionSelectList.nextExists}">
-
-
-                                    <span class="select-menu-item-icon octicon octicon-check"></span>
-                                    <span class="select-menu-item-text">#{messages.More}</span>
-                                    <a:attachQueue requestDelay="0"/>
-                                </a:commandLink>
 
                             </a:outputPanel>
-
                         </a:outputPanel>
 
-                    </div>
+
+                    </a:outputPanel>
                 </div>
-            </div>
+            </h:form>
+
+            <h:outputStylesheet>
+                .boxed-group-table th {
+                    background-color: #f5f5f5;
+                }
+
+                .boxed-group-table th .btn {
+                    margin: 0;
+                }
+
+                .boxed-group-table tr:first-child th {
+                    font-size: 19px;
+                }
+
+                .boxed-group-table tr:not(:first-child) th {
+                    background-color: #fafafa;
+                }
 
 
-            <a:outputPanel layout="block" styleClass="form-group" style="width: 40%" id="projectSelectInputs">
+            </h:outputStylesheet>
 
+            <h:form id="buildSelectForm" styleClass="setup-form">
+                <a:outputPanel layout="block"
+                               rendered="#{not projectHome.idDefined or (empty projectHome.instance.builds)}"
+                               styleClass="blankslate spacious large-format">
+                    <span class="mega-octicon octicon-inbox"></span>
 
+                    <h3>#{projectHome.idDefined ? messages.projectBusinessBuildEmpty : messages.projectBusinessBuildNoSelect}</h3>
 
-                <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
-
-
-                    <h:selectOneMenu value="#{projectHome.id}"
-                                     p:data-header="#{messages.projectSelect}"
-                                     styleClass="selectpicker edit-select form-control">
-                        <s:selectItems value="#{houseStepSelect.selectSection.projectList}"
-                                       var="_project" itemValue="#{_project.id}"
-                                       label="#{_project.name}"
-                                       noSelectionLabel="#{messages.projectSelect}"/>
-
-                        <a:ajax event="valueChange" listener="#{projectBusinessStart.projectSelectedListener}" execute="@this" render="buildSelectForm">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-                    </h:selectOneMenu>
-
-
-
+                    <p>#{projectHome.idDefined ? messages.projectBusinessBuildEmptyDescript : messages.projectBusinessBuildNoSelectDescript}</p>
                 </a:outputPanel>
-            </a:outputPanel>
+
+                <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds)}">
 
 
-        </a:outputPanel>
-            </div>
-        </h:form>
+                    <h:dataTable styleClass="boxed-group-table setup-plans"
+                                 rendered="#{not empty projectBusinessStart.builds}"
+                                 value="#{projectBusinessStart.builds}" var="_build">
 
-
-        <h:form id="buildSelectForm" styleClass="setup-form">
-        <a:outputPanel layout="block" rendered="#{not projectHome.idDefined or (empty projectHome.instance.builds)}" styleClass="blankslate spacious large-format">
-            <span class="mega-octicon octicon-inbox"></span>
-
-            <h3>#{projectHome.idDefined ? messages.projectBusinessBuildEmpty : messages.projectBusinessBuildNoSelect}</h3>
-            <p>#{projectHome.idDefined ? messages.projectBusinessBuildEmptyDescript : messages.projectBusinessBuildNoSelectDescript}</p>
-        </a:outputPanel>
-
-         <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds)}">
-
-             <h:dataTable styleClass="boxed-group-table setup-plans" rendered="#{not empty projectBusinessStart.builds}"
-                          value="#{projectBusinessStart.builds}" var="_build">
-
-                 <h:column headerClass="checkHeader" >
-                     <f:facet name="header">
-                         <h:selectBooleanCheckbox value="#{projectBusinessStart.selectAll}">
-                             <a:ajax render="buildSelectForm" event="click" execute="@this" immediate="true">
-                                 <a:attachQueue requestDelay="0"/>
-                             </a:ajax>
-                         </h:selectBooleanCheckbox>
-                     </f:facet>
-                     <h:selectBooleanCheckbox value="#{_build.selected}">
-                         <a:ajax render="buildSelectForm" event="click" execute="@this">
-                             <a:attachQueue requestDelay="0"/>
-                         </a:ajax>
-                     </h:selectBooleanCheckbox>
-                 </h:column>
-
-                 <h:column>
-                     <f:facet name="header">
-                        #{messages.Build_Id}
-                     </f:facet>
-                     #{_build.data.id}
-                 </h:column>
-                 <h:column>
-                     <f:facet name="header">
-                         #{messages.Build_Name}
-                     </f:facet>
-                     #{_build.data.buildName}
-                 </h:column>
-
-                 <h:column>
                         <f:facet name="header">
-                            #{messages.Build_MapNO}
+                            未发证楼幢
+
+
+                            <s:link styleClass="btn btn-sm btn-primary boxed-group-action"
+                                    action="#{projectBusinessStart.buildComplete}">
+                                颁发预售（销售）许可证
+                            </s:link>
+
                         </f:facet>
-                     #{_build.data.mapNumber}
-                 </h:column>
 
-                 <h:column>
-                     <f:facet name="header">
-                            #{messages.House_BlockNo}
-                     </f:facet>
+                        <h:column headerClass="checkHeader">
+                            <f:facet name="header">
+                                <h:selectBooleanCheckbox value="#{projectBusinessStart.selectAll}">
+                                    <a:ajax render="buildSelectForm" event="click" execute="@this" immediate="true">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:ajax>
+                                </h:selectBooleanCheckbox>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{_build.selected}">
+                                <a:ajax render="buildSelectForm" event="click" execute="@this">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:ajax>
+                            </h:selectBooleanCheckbox>
+                        </h:column>
 
-                     #{_build.data.blockNo}
-                 </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.Build_Id}
+                            </f:facet>
+                            #{_build.data.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.Build_Name}
+                            </f:facet>
+                            #{_build.data.buildName}
+                        </h:column>
 
-                 <h:column>
-                     <f:facet name="header">
-                         #{messages.Build_BuildNO}
-                     </f:facet>
-                     #{_build.data.buildNo}
-                 </h:column>
-                 <h:column>
-                     <f:facet name="header">
-                         #{messages.Build_devBuildNumber}
-                     </f:facet>
-                     #{_build.data.buildDevNumber}
-                 </h:column>
-                 <h:column>
-                     <f:facet name="header">
-                         #{messages.Build_DoorNO}
-                     </f:facet>
-                     #{_build.data.doorNo}
-                 </h:column>
-             </h:dataTable>
-             <h:outputStylesheet>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.Build_MapNO}
+                            </f:facet>
+                            #{_build.data.mapNumber}
+                        </h:column>
 
-             </h:outputStylesheet>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.House_BlockNo}
+                            </f:facet>
+
+                            #{_build.data.blockNo}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.Build_BuildNO}
+                            </f:facet>
+                            #{_build.data.buildNo}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.Build_devBuildNumber}
+                            </f:facet>
+                            #{_build.data.buildDevNumber}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                #{messages.Build_DoorNO}
+                            </f:facet>
+                            #{_build.data.doorNo}
+                        </h:column>
+                    </h:dataTable>
 
 
-             <a:repeat value="#{projectBusinessStart.projects}" var="_businessProject">
+                    <a:repeat value="#{projectBusinessStart.projects}" var="_businessProject">
 
-                 <h:dataTable headerClass="project-card-header" value="#{_businessProject.businessBuildList}" styleClass="boxed-group-table setup-plans" var="_businessBuild">
-                     <f:facet name="header">
-                         ddd
-                     </f:facet>
+                        <h:dataTable headerClass="project-card-header" value="#{_businessProject.businessBuildList}"
+                                     styleClass="boxed-group-table setup-plans" var="_businessBuild">
+                            <f:facet name="header">
+                                <strong> #{messages[_businessProject.projectSellInfo.projectCard.makeCard.type.name()]}</strong>  #{_businessProject.projectSellInfo.projectCard.makeCard.number}
 
-                     <h:column>
-                         <f:facet name="header">
-                             #{messages.Build_Id}
-                         </f:facet>
-                         #{_businessBuild.buildCode}
+                                <s:link styleClass="btn btn-sm btn-primary boxed-group-action" action="#{projectBusinessStart.modifyProjectCard}">
+                                    变更#{messages[_businessProject.projectSellInfo.projectCard.makeCard.type.name()]}
+                                    <f:param name="selectBusinessId" value="#{_businessProject.ownerBusiness.id}"/>
+                                </s:link>
+                            </f:facet>
 
-                     </h:column>
-                     <h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.Build_Id}
+                                </f:facet>
+                                #{_businessBuild.buildCode}
 
-                         #{_businessBuild.buildName}
-                     </h:column>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.Build_Name}
+                                </f:facet>
 
-                     <h:column>
+                                #{_businessBuild.buildName}
+                            </h:column>
 
-                         #{_businessBuild.mapNumber}
-                     </h:column>
-                     <h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.Build_MapNO}
+                                </f:facet>
+                                #{_businessBuild.mapNumber}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.House_BlockNo}
+                                </f:facet>
+                                #{_businessBuild.blockNo}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.Build_BuildNO}
+                                </f:facet>
+                                #{_businessBuild.buildNo}
+                            </h:column>
 
-                         #{_businessBuild.blockNo}
-                     </h:column>
-                     <h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.Build_devBuildNumber}
+                                </f:facet>
+                                #{_businessBuild.buildDevNumber}
+                            </h:column>
 
-                         #{_businessBuild.buildNo}
-                     </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.Build_DoorNO}
+                                </f:facet>
+                                #{_businessBuild.doorNo}
+                            </h:column>
 
-                     <h:column>
+                        </h:dataTable>
 
-                         #{_businessBuild.buildDevNumber}
-                     </h:column>
+                    </a:repeat>
+                </a:outputPanel>
 
-                     <h:column>
-
-                         #{_businessBuild.doorNo}
-                     </h:column>
-
-                 </h:dataTable>
-
-             </a:repeat>
-         </a:outputPanel>
-
-        </h:form>
-    </div>
+            </h:form>
+        </div>
 
     </ui:define>
 
