@@ -291,7 +291,8 @@ public class ProjectBusinessStart {
 
             Map<String, House> houseMap = new HashMap<String, House>();
             for (House house : build.getHouses()) {
-                houseMap.put(house.getHouseCode(), house);
+                if (!house.isDeleted())
+                    houseMap.put(house.getHouseCode(), house);
             }
 
             List<String> lockedHouseCode;

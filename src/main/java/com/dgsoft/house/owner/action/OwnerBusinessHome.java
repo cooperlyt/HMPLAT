@@ -22,6 +22,11 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     private BusinessDefineHome businessDefineHome;
 
 
+    public void doNodeAction(String name){
+        businessDefineHome.doNodeAction(name);
+        update();
+    }
+
     @Override
     public OwnerBusiness createInstance(){
         OwnerBusiness result = new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
