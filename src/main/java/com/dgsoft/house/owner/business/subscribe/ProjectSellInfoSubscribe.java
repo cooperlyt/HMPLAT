@@ -6,6 +6,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.ProjectSellInfo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2015-09-07.
@@ -40,6 +41,12 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
                 setId(ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo().getId());
             }
 
+            if(isType){
+                getInstance().setType(SaleType.MAP_SELL);
+            }else {
+                getInstance().setType(SaleType.NOW_SELL);
+            }
+
         }else{
             if(isType){
                 getInstance().setType(SaleType.MAP_SELL);
@@ -48,7 +55,6 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
             }
             getInstance().setBusinessProject(ownerBusinessHome.getInstance().getBusinessProject());
             ownerBusinessHome.getInstance().getBusinessProject().setProjectSellInfo(getInstance());
-
         }
 
     }

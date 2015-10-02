@@ -62,6 +62,10 @@ public class ProjectSellInfo implements java.io.Serializable {
 	public ProjectSellInfo() {
 	}
 
+    public ProjectSellInfo(BusinessProject businessProject) {
+        this.businessProject = businessProject;
+    }
+
     public ProjectSellInfo(BusinessProject businessProject, ProjectSellInfo other) {
         this.businessProject = businessProject;
 
