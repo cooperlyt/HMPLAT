@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.owner.model.MakeCard;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by cooper on 10/2/15.
  */
-public class BusinessHouseCondition {
+public abstract class BusinessHouseCondition {
 
 
     private String searchKey;
@@ -23,10 +24,18 @@ public class BusinessHouseCondition {
 
     private String houseNumber;
 
+
     private MakeCard.CardType cardType;
 
     private PersonEntity.CredentialsType credentialsType;
 
+    public abstract List<SearchType> getAllSearchTypes();
+
+    public abstract List<MakeCard.CardType> getAllCardTypes();
+
+    public abstract String getEjbql();
+
+    public abstract RestrictionGroup getRestrictionGroup();
 
     private SearchType searchType;
 
@@ -239,7 +248,10 @@ public class BusinessHouseCondition {
         PROJECT_NAME,
         HOUSE_CARD,
         PERSON,
-        HOUSE_MBBH;
+        HOUSE_MBBH,
+        RECORD_NUMBER,
+        RECORD_LOCATION;
+
 
         public boolean isSearchByOne(){
             return EnumSet.of(OWNER_BIZ_ID, HOUSE_CODE, HOUSE_OWNER, PROJECT_NAME).contains(this);

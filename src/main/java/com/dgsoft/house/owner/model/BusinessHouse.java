@@ -70,7 +70,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String sectionName;
     private String districtCode;
     private String districtName;
-    private Set<HouseBusiness> housesForAfterBusiness;
+    //private Set<HouseBusiness> housesForAfterBusiness;
 
     private LandInfo landInfo;
     private BusinessHouseOwner businessHouseOwner;
@@ -78,7 +78,10 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private HouseRegInfo houseRegInfo;
     private String buildDevNumber;
     private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
-    private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
+
+    private HouseBusiness houseBusinessForAfter;
+    private HouseBusiness houseBusinessForStart;
+    //private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
 
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
@@ -683,14 +686,22 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 //    }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
-    public Set<HouseBusiness> getHousesForAfterBusiness() {
-        return this.housesForAfterBusiness;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
+    public HouseBusiness getHouseBusinessForAfter() {
+        return houseBusinessForAfter;
     }
 
-    public void setHousesForAfterBusiness(
-            Set<HouseBusiness> housesForAfterBusiness) {
-        this.housesForAfterBusiness = housesForAfterBusiness;
+    public void setHouseBusinessForAfter(HouseBusiness houseBusinessForAfter) {
+        this.houseBusinessForAfter = houseBusinessForAfter;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "startBusinessHouse")
+    public HouseBusiness getHouseBusinessForStart() {
+        return houseBusinessForStart;
+    }
+
+    public void setHouseBusinessForStart(HouseBusiness houseBusinessForStart) {
+        this.houseBusinessForStart = houseBusinessForStart;
     }
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "businessHouse")
@@ -744,14 +755,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessPools = businessPools;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "afterBusinessHouse")
-    public Set<HouseBusiness> getHouseBusinessesForAfter() {
-        return houseBusinessesForAfter;
-    }
-
-    public void setHouseBusinessesForAfter(Set<HouseBusiness> houseBusinessesForAfter) {
-        this.houseBusinessesForAfter = houseBusinessesForAfter;
-    }
 
     @Transient
     public List<BusinessPool> getBusinessPoolList() {

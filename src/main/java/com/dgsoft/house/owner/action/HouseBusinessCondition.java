@@ -78,12 +78,22 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
         return result;
     }
 
-    public SearchType[] getAllSearchTypes(){
-        return SearchType.values();
+    @Override
+    public List<SearchType> getAllSearchTypes(){
+        return new ArrayList<SearchType>(EnumSet.of( SearchType.OWNER_BIZ_ID,
+                SearchType.HOUSE_CODE,
+                SearchType.HOUSE_OWNER,
+                SearchType.PROJECT_NAME,
+                SearchType.HOUSE_CARD,
+                SearchType.PERSON,
+                SearchType.HOUSE_MBBH));
     }
 
+    @Override
     public List<MakeCard.CardType> getAllCardTypes(){
-        return new ArrayList<MakeCard.CardType>( EnumSet.of(MakeCard.CardType.NOTICE, MakeCard.CardType.OWNER_RSHIP, MakeCard.CardType.MORTGAGE_CARD, MakeCard.CardType.PROJECT_MORTGAGE, MakeCard.CardType.POOL_RSHIP));
+        return new ArrayList<MakeCard.CardType>( EnumSet.of(MakeCard.CardType.NOTICE,
+                MakeCard.CardType.OWNER_RSHIP, MakeCard.CardType.MORTGAGE_CARD,
+                MakeCard.CardType.PROJECT_MORTGAGE, MakeCard.CardType.POOL_RSHIP));
     }
 
 
@@ -98,7 +108,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
         this.searchDateArea = searchDateArea;
     }
 
-
+    @Override
     public String getEjbql(){
         if (getSearchKey() == null || getSearchKey().trim().equals("")){
             return HouseBusinessCondition.SHORT_EJBQL;
@@ -122,6 +132,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 //        }
     }
 
+    @Override
     public RestrictionGroup getRestrictionGroup() {
         if (getSearchKey() == null || getSearchKey().trim().equals("")){
             return null;
@@ -141,7 +152,8 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 
 
             } else if (BusinessHouseCondition.SearchType.HOUSE_CARD.equals(getSearchType())) {
-                if ( MakeCard.CardType.OWNER_RSHIP.equals(getCardType()) || MakeCard.CardType.NOTICE.equals(getCardType())){
+                if ( MakeCard.CardType.OWNER_RSHIP.equals(getCardType()) || MakeCard.CardType.NOTICE.equals(getCardType()) ||
+                        MakeCard.CardType.PROJECT_MORTGAGE.equals(getCardType())){
 
                     return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_OWNER_CARD));
 
@@ -150,7 +162,6 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
                 }else{
                     return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_HOUSE_CARD));
                 }
-
             }
         }
 
