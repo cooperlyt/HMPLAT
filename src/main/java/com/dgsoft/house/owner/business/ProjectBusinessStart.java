@@ -516,6 +516,10 @@ public class ProjectBusinessStart {
     public void dataCompleteForProject() {
 
         ProjectSellInfo projectSellInfo = ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo();
+        if (projectSellInfo == null){
+            projectSellInfo = new ProjectSellInfo(ownerBusinessHome.getInstance().getBusinessProject());
+            ownerBusinessHome.getInstance().getBusinessProject().setProjectSellInfo(projectSellInfo);
+        }
         projectSellInfo.setArea(BigDecimal.ZERO);
         projectSellInfo.setHouseCount(0);
         projectSellInfo.setBuildCount(0);
