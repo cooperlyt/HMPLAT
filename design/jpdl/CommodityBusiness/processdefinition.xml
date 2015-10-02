@@ -83,7 +83,7 @@
 	</decision>
 
 	<node name="业务完成">
-		<action expression="#{businessDefineHome.doNodeAction('业务完成')}" name="业务完成"></action>
+		<action expression='#{ownerBusinessHome.doNodeAction("业务完成")}' name="业务完成"></action>
 		<transition to="结束"></transition>
 	</node>
 

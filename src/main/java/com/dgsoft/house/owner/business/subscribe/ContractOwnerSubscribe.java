@@ -1,24 +1,28 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonHelper;
+import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.SaleType;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.ContractOwner;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 
 /**
  * Created by wxy on 2015-08-14.
  * 备案人
  */
 @Name("contractOwnerSubscribe")
-public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
+public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> implements TaskSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
-
+    @In
+    private FacesMessages facesMessages;
 
     private boolean have;
 
@@ -72,6 +76,7 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
             }else {
                 getInstance().setType(SaleType.NOW_SELL);
             }
+
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(getInstance());
             getInstance().setHouseCode(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseCode());
         }
@@ -88,7 +93,31 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> {
     }
 
 
+    @Override
+    public void initSubscribe() {
 
+    }
 
+    @Override
+    public void validSubscribe() {
+       if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
+           facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
+       }
+    }
 
+    @Override
+    public boolean isPass() {
+
+        if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    @Override
+    public boolean saveSubscribe() {
+        return false;
+    }
 }

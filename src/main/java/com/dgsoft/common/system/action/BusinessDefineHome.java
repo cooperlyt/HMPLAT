@@ -85,7 +85,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
 
     public void doNodeAction(String name){
-
+        Logging.getLog(getClass()).debug("doNodeActionname---"+name);
         List<TaskSubscribe> nodeActions = new ArrayList<TaskSubscribe>();
         for (TaskSubscribe subscribe : getInstance().getTaskSubscribes()) {
             if (subscribe.getTaskName().equals(name) && Subscribe.SubscribeType.TASK_COMPLETE.equals(subscribe.getType())) {
@@ -98,13 +98,14 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
                 return new Integer(o1.getPriority()).compareTo(o2.getPriority());
             }
         });
-
+        Logging.getLog(getClass()).debug("doNodeAction count---"+nodeActions.size());
         //List<TaskSubscribeReg.CompleteSubscribeDefine> result = new ArrayList<TaskSubscribeReg.CompleteSubscribeDefine>();
         for (TaskSubscribe subscribe : nodeActions) {
             TaskCompleteSubscribeComponent component = taskSubscribeReg.getCompleteDefineByName(subscribe.getRegName()).getComponents();
             if (!component.isPass())
                 throw new IllegalStateException("component is not pass:" + subscribe.getRegName());
             component.complete();
+            Logging.getLog(getClass()).debug("doNodeAction :"+subscribe.getRegName());
         }
 
 

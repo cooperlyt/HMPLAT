@@ -174,6 +174,7 @@ public class EntityHomeAdapter<E> extends EntityHome<E> {
     }
 
     public void verifyIdAvailable(ValueChangeEvent e) {
+        log.debug("verifyIdAvailable:" + e.getNewValue());
         if (getEntityManager().find(getEntityClass(), e.getNewValue()) != null) {
             getStatusMessages().addToControlFromResourceBundleOrDefault(e.getComponent().getId(),
                     StatusMessage.Severity.ERROR, getConflictMessageKey(),

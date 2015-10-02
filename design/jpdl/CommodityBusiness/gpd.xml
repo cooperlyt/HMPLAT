@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="CommodityBusiness" width="867" height="499">
+<root-container name="CommodityBusiness" width="845" height="557">
   <node name="业务受理" x="42" y="16" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -64,10 +64,10 @@
       <label x="-18" y="-11"/>
     </edge>
   </node>
-  <node name="结束" x="632" y="266" width="132" height="36"/>
   <node name="业务完成" x="446" y="267" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="结束" x="632" y="266" width="132" height="36"/>
 </root-container>

@@ -17,20 +17,28 @@
 
 
     <div class="form-inline">
-    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+    <s:decorate id="IdField" template="/layout/edit-big.xhtml" styleClass="form-group">
         <ui:define name="label">
             #{messages.Card_MerchandiseContrao}
         </ui:define>
         <ui:param name="for" value="MerchandiseContrao"/>
+        <ui:param name="status" value="idStatus"/>
         <h:inputText label="#{messages.Card_MerchandiseContrao}"
                      id="MerchandiseContrao"
                      value="#{contractOwnerSubscribe.instance.id}"
                      styleClass="form-control"
                      maxlength="32"
                      required="true"
-                     size="50"/>
+                     valueChangeListener="#{contractOwnerSubscribe.verifyIdAvailable}"
+                     size="50">
+
+                     <a:ajax event="blur" execute="MerchandiseContrao" render="IdField" status="idStatus"/>
+                </h:inputText>
     </s:decorate>
    </div>
+
+
+
 
     <div class="form-inline">
         <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
