@@ -22,7 +22,7 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
             "left join businessHouse.businessPools pool " +
             "left join owner.makeCard ownerCard " +
             "left join pool.makeCard poolCard " +
-            "left join businessHouse.houseBusinessesForAfter houseBusiness " +
+            "left join businessHouse.houseBusinessForAfter houseBusiness " +
             "left join houseBusiness.recordStore store";
 
     private static final String[] RESTRICTIONS = {
