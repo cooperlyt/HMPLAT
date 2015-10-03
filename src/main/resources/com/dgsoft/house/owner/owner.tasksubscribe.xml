@@ -810,6 +810,14 @@
             档案补录所有权证信息编辑
         </description>
     </edit-subscribe>
+    <edit-subscribe name="MakeCardMortgageRecordEdit" page="/business/houseOwner/subscribe/MakeCardMortgageRecordEdit.xhtml"
+                    component="">
+        <description>
+            档案补录他项权证信息编辑
+        </description>
+    </edit-subscribe>
+
+
 
 
     <edit-subscribe name="CheckEmpRecordEdit" page="/business/houseOwner/subscribe/CheckEmpRecordEdit.xhtml"

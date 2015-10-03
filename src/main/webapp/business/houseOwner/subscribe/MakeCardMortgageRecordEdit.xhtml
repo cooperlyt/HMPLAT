@@ -12,16 +12,16 @@
     <div class="form-inline">
         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
-                #{messages.OWNER_RSHIP}
+                #{messages.MORTGAGE_CARD}
             </ui:define>
             <ui:param name="for" value="MakeNumber"/>
-            <h:inputText label="#{messages.OWNER_RSHIP}"
+            <h:inputText label="#{messages.MORTGAGE_CARD}"
                          id="MakeNumber"
                          size="30"
                          required="true"
                          styleClass="form-control"
                          maxlength="100"
-                         value="#{makeCardOwnerRsipRecordSubsrcibe.instance.number}">
+                         value="#{makeCardMortgageRecordSubsrcibe.instance.number}">
             </h:inputText>
         </s:decorate>
     </div>
@@ -38,8 +38,9 @@
                          required="true"
                          styleClass="form-control"
                          maxlength="100"
-                         value="#{makeCardOwnerRsipRecordSubsrcibe.instance.cardInfo.code}">
+                         value="#{makeCardMortgageRecordSubsrcibe.instance.cardInfo.code}">
             </h:inputText>
         </s:decorate>
     </div>
+
 </ui:composition>

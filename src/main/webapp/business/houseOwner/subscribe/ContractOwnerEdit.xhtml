@@ -10,8 +10,9 @@
 
 
 <s:decorate template="/layout/edit.xhtml">
+    <ui:param name="for" value="SellInfo_isType"/>
     <ui:define name="label">#{messages.ProjectSellInfo_isType}</ui:define>
-    <h:selectBooleanCheckbox label="#{messages.ProjectSellInfo_isType}"
+    <h:selectBooleanCheckbox id="SellInfo_isType" label="#{messages.ProjectSellInfo_isType}"
                              value="#{contractOwnerSubscribe.type}"/>
 </s:decorate>
 
