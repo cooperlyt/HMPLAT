@@ -66,7 +66,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "START_HOUSE", nullable = false)
     public BusinessHouse getStartBusinessHouse() {
         return startBusinessHouse;

@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+        template="HouseBusinessCondition.xhtml">
+
+    <ui:define name="conditionCss">
+        <h:outputStylesheet>
+            .search_repos .search-location-input{
+                display: none;
+            }
+
+
+            .search_repos.RECORD_LOCATION .search-location-input{
+                display: table-cell;
+            }
+
+            .search_repos.RECORD_LOCATION .search-key-input{
+                display: none;
+            }
+        </h:outputStylesheet>
+    </ui:define>
+
+    <ui:define name="inputCondition">
+
+        <h:outputText styleClass="input-group-addon search-location-input" value="#{messages.RecordStore_FRAME}"/>
+
+        <h:inputText styleClass="form-control search-location-input" value="#{conditionBean.frameNumber}"/>
+
+        <h:outputText styleClass="input-group-addon search-location-input" value="#{messages.RecrodStore_CABINET}"/>
+
+        <h:inputText styleClass="form-control search-location-input" value="#{conditionBean.cabinetNumber}"/>
+        <h:outputText styleClass="input-group-addon search-location-input" value="#{messages.RecordStore_Box}"/>
+
+        <h:inputText styleClass="form-control search-location-input" value="#{conditionBean.boxNumber}"/>
+
+    </ui:define>
+
+</ui:composition>

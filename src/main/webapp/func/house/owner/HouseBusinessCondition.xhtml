@@ -60,6 +60,8 @@
 
     </h:outputStylesheet>
 
+    <ui:insert name="conditionCss"/>
+
     <h:outputScript>
         function searchTypeChange(){
 
@@ -85,6 +87,9 @@
 
 
                     </div>
+
+                    <ui:insert name="inputCondition"/>
+
                     <h:inputText styleClass="form-control search-key-input" value="#{conditionBean.searchKey}"/>
 
                     <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_map}"/>
