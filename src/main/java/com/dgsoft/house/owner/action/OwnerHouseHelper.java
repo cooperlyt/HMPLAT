@@ -34,20 +34,26 @@ public class OwnerHouseHelper {
 
 
     public List<HouseStatus> getHouseAllStatus(String houseCode) {
-        List<HouseStatus> result = new ArrayList<HouseStatus>();
+        List<HouseStatus> statuses = new ArrayList<HouseStatus>();
 
         //包含 COMPLETE_CANCEL 不再讨论
          for(AddHouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL' or addHouseStatus.houseBusiness.ownerBusiness.status = 'MODIFYING' or ((addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'SUSPEND') and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) order by remove", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
             if(status.isRemove()){
 
-                if (!result.remove(status.getStatus())){
+                if (!statuses.remove(status.getStatus())){
                     Logging.getLog(getClass()).warn("calc all house status remove fail.");
                 }
-            }else if (status.getStatus().isAllowRepeat() || !result.contains(status.getStatus())){
-                result.add(status.getStatus());
+            }else {
+                statuses.add(status.getStatus());
             }
          }
 
+        List<HouseStatus> result = new ArrayList<HouseStatus>();
+        for(HouseStatus status: statuses){
+            if (!result.contains(status) || status.isAllowRepeat()){
+                result.add(status);
+            }
+        }
 
         Collections.sort(result, new HouseStatus.StatusComparator());
         return result;
