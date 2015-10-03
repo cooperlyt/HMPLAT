@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+
+    <div class="form-inline">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.PROJECT_MORTGAGE}
+            </ui:define>
+            <ui:param name="for" value="MakeNumber"/>
+            <h:inputText label="#{messages.PROJECT_MORTGAGE}"
+                         id="MakeNumber"
+                         size="30"
+                         required="true"
+                         styleClass="form-control"
+                         maxlength="100"
+                         value="#{makeCardProjectMortgageRecordSubsrcibe.instance.number}">
+            </h:inputText>
+        </s:decorate>
+    </div>
+
+    <div class="form-inline">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.CardInfo_Code}
+            </ui:define>
+            <ui:param name="for" value="CardInfo_Code"/>
+            <h:inputText label="#{messages.CardInfo_Code}"
+                         id="CardInfo_Code"
+                         size="30"
+                         required="true"
+                         styleClass="form-control"
+                         maxlength="100"
+                         value="#{makeCardProjectMortgageRecordSubsrcibe.instance.cardInfo.code}">
+            </h:inputText>
+        </s:decorate>
+    </div>
+</ui:composition>
