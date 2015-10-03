@@ -42,7 +42,19 @@
                 <h:outputText value="#{_item.applyTime}">
                     <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
                 </h:outputText>
+
+                <a:outputPanel rendered="#{_item.recorded}">
+                #{messages['ownerBusiness.regTime']}
+                <h:outputText value="#{_item.regTime}">
+                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                </h:outputText>
+                </a:outputPanel>
+                #{messages['ownerBusiness.recordTime']}
+                <h:outputText value="#{_item.recordTime}">
+                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                </h:outputText>
             </ui:insert>
+
         </p>
     </li>
 

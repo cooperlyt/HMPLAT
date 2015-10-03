@@ -2,9 +2,12 @@ package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.HouseRecord;
+import com.dgsoft.house.owner.model.MortgaegeRegiste;
+import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.Name;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  * Created by cooper on 10/3/15.
@@ -12,6 +15,7 @@ import javax.persistence.NoResultException;
 @Name("houseRecordHome")
 public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
+    private List<OwnerBusiness> ownerBusinessList;
 
     @Override
     protected HouseRecord loadInstance(){
@@ -29,6 +33,24 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         }catch (NoResultException e){
             return null;
         }
+    }
+
+    @Override
+    protected void initInstance(){
+        super.initInstance();
+        ownerBusinessList = null;
+    }
+
+    public List<MortgaegeRegiste> getMortgaegeList(){
+        return OwnerHouseHelper.instance().getMortgaeges(getInstance().getHouseCode());
+    }
+
+    public List<OwnerBusiness> getOwnerBusinessList(){
+        if (ownerBusinessList == null) {
+            ownerBusinessList = getEntityManager().createQuery("select houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.houseCode =:houseCode", OwnerBusiness.class)
+                    .setParameter("houseCode", getInstance().getHouseCode()).getResultList();
+        }
+        return ownerBusinessList;
     }
 
 }

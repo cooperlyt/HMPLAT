@@ -527,7 +527,16 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
 
 
-
+    @Transient
+    public HouseBusiness getHouseBusiness(String houseCode){
+        Set<HouseBusiness> houseBusinesses = getHouseBusinesses();
+        for (HouseBusiness houseBusiness: houseBusinesses){
+            if (houseBusiness.getHouseCode().equals(houseCode)){
+                return houseBusiness;
+            }
+        }
+        return null;
+    }
 
 
 
