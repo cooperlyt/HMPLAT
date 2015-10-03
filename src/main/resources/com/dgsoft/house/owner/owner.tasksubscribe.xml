@@ -968,11 +968,7 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="addSaleRegisterSelectEnd" component="addSaleRegisterSelect">
-        <description>
-            添加商品房预告登记变更，转移状态(单，多房屋)
-        </description>
-    </end-subscribe>
+
 
     <end-subscribe name="addDivertRegisterCompleteEnd" component="addDivertRegister">
         <description>
@@ -980,11 +976,6 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="addDivertRegisterSelectEnd" component="addDivertRegisterSelect">
-        <description>
-            添加房屋转移预告变更，转移登记状态(单，多房屋)
-        </description>
-    </end-subscribe>
 
     <end-subscribe name="addSaleMortgageRegisterCompleteEnd" component="addSaleMortgageRegister">
         <description>
@@ -992,22 +983,12 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="addSaleMortgageRegisterSelectEnd" component="addSaleMortgageRegisterSelect">
-        <description>
-            添加商品房预告抵押变更，转移状态(单，多房屋)
-        </description>
-    </end-subscribe>
+
 
 
     <end-subscribe name="addDivrtMortgageRegisterCompleteEnd" component="addDivrtMortgageRegister">
         <description>
             添加屋屋转移预告抵押状态(单，多房屋)
-        </description>
-    </end-subscribe>
-
-    <end-subscribe name="addDivrtMortgageRegisterSelectEnd" component="addDivrtMortgageRegisterSelect">
-        <description>
-            添加屋屋转移预告抵押变更，转移状态(单，多房屋)
         </description>
     </end-subscribe>
 
