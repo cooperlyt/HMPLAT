@@ -602,7 +602,7 @@
     </edit-subscribe>
 
 
-    <edit-subscribe name="ContractOwnerEdit" page="/business/houseOwner/subscribe/ContractOwnerEdit.xhtml" component="">
+    <edit-subscribe name="ContractOwnerEdit" page="/business/houseOwner/subscribe/ContractOwnerEdit.xhtml" component="contractOwnerSubscribe">
         <description>
             备案人编辑
         </description>
