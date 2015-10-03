@@ -118,6 +118,10 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> imple
 
     @Override
     public boolean saveSubscribe() {
-        return false;
+        if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
+            return false;
+        }
+        return true;
     }
 }
