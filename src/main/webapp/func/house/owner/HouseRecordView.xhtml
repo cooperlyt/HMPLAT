@@ -8,6 +8,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template.xhtml">
 
     <ui:define name="outcss">
@@ -27,11 +29,13 @@
                     <ul class="pagehead-actions">
 
                         <li>
-                            <a href="#fork-destination-box" class="btn btn-sm " title="Fork your own copy of cooper-lyt/HMPLAT to your account" aria-label="Fork your own copy of cooper-lyt/HMPLAT to your account" rel="facebox" data-ga-click="Repository, show fork modal, action:issues#show; text:Fork">
+                            <a href="#fork-destination-box" class="btn btn-sm "
+                               title="Fork your own copy of cooper-lyt/HMPLAT to your account"
+                               aria-label="Fork your own copy of cooper-lyt/HMPLAT to your account" rel="facebox"
+                               data-ga-click="Repository, show fork modal, action:issues#show; text:Fork">
                                 <span class="glyphicon glyphicon-print"></span>
                                 登记簿
                             </a>
-
 
 
                         </li>
@@ -51,14 +55,148 @@
 
         <div class="container">
 
+
             <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
-                          groupWidth="50"  >
+                          groupWidth="50">
                 <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
                     <ui:param name="houseInfo" value="#{houseRecordHome.instance.businessHouse}"/>
 
                 </ui:include>
 
             </dh:entryGrid>
+
+            <a:repeat value="#{houseRecordHome.mortgaegeList}" var="_mortgaege">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"
+                         style="font-weight: bold;font-size: 14px;">抵押信息 - #{messages[_mortgaege.financial.financialType.name()]}</div>
+
+                    <div class="panel-body" style="font-size: 14px">
+
+                        <p>
+                            <h:outputText value="#{_mortgaege.financial.name}"/> &nbsp;&nbsp;
+
+                            <a:outputPanel rendered="#{_mortgaege.financial.financialType eq 'FINANCE_PERSON'}">
+                                <h:outputText value="#{messages[_mortgaege.financial.credentialsType.name()]}"
+                                              style="font-weight: bold"/>
+                                <h:outputText value="#{_mortgaege.financial.credentialsNumber}"/>
+                            </a:outputPanel>
+                        </p>
+
+                        <p>
+                            <strong>#{messages.Tel}</strong> <h:outputText value="#{_mortgaege.financial.phone}"/>
+                        </p>
+
+                    </div>
+                    <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true"
+                                  style="margin-top: 5px"
+                                  groupWidth="50">
+
+                        <dh:entryGridBlock columns="6">
+                            <h:outputText value="#{messages.MakeCard_number}"/>
+                            <dh:entryGridColumn expandTarget="financialCard" colspan="5">
+                                <h:outputText value="#{_mortgaege.financial.makeCard.number}"/>
+                            </dh:entryGridColumn>
+                        </dh:entryGridBlock>
+
+                        <dh:entryGridBlock columns="6" expandId="financialCard">
+                            <h:outputText value="#{messages.CardInfo_makeEmpName}"/>
+
+                            <h:outputText value="#{_mortgaege.financial.makeCard.cardInfo.makeEmpName}"/>
+
+                            <h:outputText value="#{messages.CardInfo_code}"/>
+                            <h:outputText value="#{_mortgaege.financial.makeCard.cardInfo.code}"/>
+
+                            <h:outputText value="#{messages.CardInfo_printTime}"/>
+                            <h:outputText value="#{_mortgaege.financial.makeCard.cardInfo.printTime}">
+                                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                            </h:outputText>
+
+
+                        </dh:entryGridBlock>
+
+                        <dh:entryGridBlock columns="6">
+                            <h:outputText value="#{messages.MortgaegeRegiste_HighestMountMoney}"/>
+                            <h:outputText value="#{_mortgaege.bigHighestMountMoney}">
+                                <f:convertNumber type="currency"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{messages.MortgaegeRegiste_WarrantScope}"/>
+                            <h:outputText value="#{_mortgaege.warrantScope}"/>
+
+                            <h:outputText value="#{messages.MortgaegeRegiste_InterestType}"/>
+                            <h:outputText value="#{dictionary.getWordValue(_mortgaege.interestType)}"/>
+
+                            <h:outputText value="#{messages.MortgaegeRegiste_MortgageArea}"/>
+                            <h:outputText value="#{_mortgaege.mortgageArea}">
+                                <f:convertNumber pattern="#0.000"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{messages.MortgaegeRegiste_MortgageTime}"/>
+                            <dh:entryGridColumn colspan="3">
+                                <h:outputText value="#{_mortgaege.mortgageDueTimeS}">
+                                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                </h:outputText>
+                                -
+                                <h:outputText value="#{_mortgaege.mortgageTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                </h:outputText>
+                            </dh:entryGridColumn>
+
+
+                        </dh:entryGridBlock>
+
+                    </dh:entryGrid>
+                </div>
+            </a:repeat>
+
+            <div class="panel panel-default">
+                <div class="panel-heading"
+                     style="font-weight: bold;font-size: 14px;">业务档案</div>
+
+                <div class="panel-body" style="font-size: 14px">
+                    <ul class="repo-list js-repo-list full-width">
+                        <c:forEach items="#{houseRecordHome.ownerBusinessList}" var="_item">
+
+                            <ui:decorate template="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
+                                <ui:define name="itemAction">
+                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="架">
+                                        <span class="octicon octicon-versions"/>
+                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.frame}
+                                    </s:link>
+                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="柜">
+                                        <span class="glyphicon glyphicon-compressed"/>
+                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.cabinet}
+                                    </s:link>
+                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="盒">
+                                        <span class="octicon octicon-inbox"/>
+                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.box}
+                                    </s:link>
+                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="档案编号">
+                                        <span class="octicon octicon-repo"/>
+                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.recordCode}
+                                    </s:link>
+                                </ui:define>
+                                <ui:define name="itemTitle">
+                                    <s:link view="/func/house/owner/BusinessView.xhtml">
+                                        <f:param name="businessId" value="#{_item.id}"/>
+                                        #{_item.defineName}<h:outputText value="#{messages[_item.type.name()]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/> / #{_item.id}
+                                    </s:link>
+                                                   <span class="label label-biz-status #{_item.status}">
+                                            #{messages[_item.status.name()]}
+                                        </span>
+                                </ui:define>
+
+
+                            </ui:decorate>
+
+
+                        </c:forEach>
+                    </ul>
+                </div>
+
+            </div>
+
 
         </div>
 
