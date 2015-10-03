@@ -639,7 +639,7 @@ a:focus, a:hover{
     table-layout: fixed;
 }
 
-.detailsTable th{
+.detailsTable th , .detailsTable .details-sub-table.details-list-table .detailsTable th{
     white-space: nowrap;
     text-align: center;
     background-color: #f9f9f9;
@@ -976,4 +976,18 @@ a:focus, a:hover{
 
 .panel .repo-list.full-width .repo-list-item{
     padding: 20px 30px;
+}
+
+.detailsTable .details-sub-table {
+    margin-bottom: 0;
+
+}
+
+.detailsTable .details-sub-table.details-list-table th{
+    white-space: nowrap;
+    text-align: left;
+    background-color: #fff;
+    min-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -40,4 +40,10 @@
 
     </ui:define>
 
+    <ui:define name="conditionSearchButton">
+        <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseRecordSearch.resetPage}"
+                       value="#{messages.Search}">
+        </h:commandLink>
+    </ui:define>
+
 </ui:composition>

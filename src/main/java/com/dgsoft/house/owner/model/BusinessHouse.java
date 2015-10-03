@@ -695,6 +695,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseBusinessForAfter = houseBusinessForAfter;
     }
 
+
+//   有中止的业务时 StartHouse 可能有多个 不可以@OneToOne
 //    @OneToOne(fetch = FetchType.LAZY, mappedBy = "startBusinessHouse")
 //    public HouseBusiness getHouseBusinessForStart() {
 //        return houseBusinessForStart;

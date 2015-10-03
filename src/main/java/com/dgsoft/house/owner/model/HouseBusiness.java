@@ -1,7 +1,6 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
-import com.dgsoft.house.HouseInfo;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.*;
@@ -66,6 +65,12 @@ public class HouseBusiness implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
+
+    /*
+     * 有中止的业务时 StartHouse 可能有多个 不可以@OneToOne
+     *
+     * @return
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "START_HOUSE", nullable = false)
     public BusinessHouse getStartBusinessHouse() {

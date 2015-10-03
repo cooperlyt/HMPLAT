@@ -6,6 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:r="http://richfaces.org/rich"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
@@ -33,9 +34,9 @@
 
 
 
-    <a:outputPanel layout="block" styleClass="container" id="resultDatas">
+    <a:outputPanel layout="block" styleClass="new-repo-container" id="resultDatas">
 
-        <a:outputPanel rendered="#{not empty businessStartSelectList.searchResult}">
+        <a:outputPanel rendered="#{not empty houseRecordSearch.searchResult}">
             <div class="right" >
                 <div class="select-menu">
                     <div class="btn-group btn-group-sm">
@@ -43,12 +44,12 @@
                             <ui:define name="caption">
                                 <i>#{messages.SortBy}:</i>
 
-                                <span style="">#{messages[businessStartSelectList.sortCol.name()]}</span>
+                                <span style="">#{messages[houseRecordSearch.sortCol.name()]}</span>
                             </ui:define>
                             <ui:param name="menuTitle" value="#{messages.SortOption}"/>
 
-                            <a:repeat value="#{businessStartSelectList.allSortCol}" var="_col">
-                                <s:link styleClass="select-menu-item #{(businessStartSelectList.sortCol eq _col) ? 'selected': ''}">
+                            <a:repeat value="#{houseRecordSearch.allSortCol}" var="_col">
+                                <s:link styleClass="select-menu-item #{(houseRecordSearch.sortCol eq _col) ? 'selected': ''}">
                                     <f:param name="sort" value="#{_col.colPath}"/>
                                     <span class="select-menu-item-icon octicon octicon-check"></span>
                                     <span class="select-menu-item-text">#{messages[_col.name()]}</span>
@@ -62,38 +63,98 @@
 
             <h3 style="margin: 0">
                 #{messages.SerachResultCount}#{' '}
-                <h:outputText value="#{businessStartSelectList.resultCount}">
+                <h:outputText value="#{houseRecordSearch.resultCount}">
                     <f:convertNumber type="number" groupingUsed="true"/>
                 </h:outputText>
-                条符合条件的业务
+                条符合条件的房屋档案
             </h3>
 
         </a:outputPanel>
 
-        <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty businessStartSelectList.searchResult}">
+        <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseRecordSearch.searchResult}">
             <span class="mega-octicon octicon-search"></span>
 
             <h3>#{messages.EmptyResult}</h3>
 
-            <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{businessStartSelectList.resetCondition}"/>
+            <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " includePageParams="false"/>
                 #{' '}#{messages.orOther} #{messages.Try} #{' '}
                 <s:link value="#{messages.AvancedSearch}"/></p>
         </a:outputPanel>
 
-        <ui:decorate template="/func/house/owner/HouseBusinessResultList.xhtml">
 
-            <ui:param name="listBean" value="#{businessStartSelectList}"/>
+        <a:outputPanel rendered="#{not empty houseRecordSearch.searchResult}">
+            <ul class="repo-list js-repo-list full-width">
+                <c:forEach items="#{houseRecordSearch.searchResult}" var="_item">
 
-            <ui:define name="itemAction">
-                <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
-                          action="#{houseInBusinessStart.businessAllHouseSelected}"
-                          onclick="#{r:component('wait')}.show()">
-                    <f:param name="selectBusinessId" value="#{_item.id}"/>
-                </s:button>
-            </ui:define>
+                        <li class="repo-list-item public source house-info">
+                            <div class="repo-list-stats">
 
 
-        </ui:decorate>
+                                <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="架">
+                                    <span class="octicon octicon-versions"/>
+                                    #{_item.businessHouse.houseBusinessForAfter.recordStore.frame}
+                                </s:link>
+                                <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="柜">
+                                    <span class="glyphicon glyphicon-compressed"/>
+                                    #{_item.businessHouse.houseBusinessForAfter.recordStore.cabinet}
+                                </s:link>
+                                <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="盒">
+                                    <span class="octicon octicon-inbox"/>
+                                    #{_item.businessHouse.houseBusinessForAfter.recordStore.box}
+                                </s:link>
+                                <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="档案编号">
+                                    <span class="octicon octicon-repo"/>
+                                    #{_item.businessHouse.houseBusinessForAfter.recordStore.recordCode}
+                                </s:link>
+                            </div>
+                            <h3 class="repo-list-name #{_item.businessHouse.masterStatus}">
+
+                                <s:link view="/func/house/owner/HouseRecordView.xhtml">
+                                    <f:param name="houseCode" value="#{_item.houseCode}"/>
+                                    #{_item.businessHouse.houseCode}  / #{_item.businessHouse.displayHouseCode}
+                                </s:link>
+
+                                        <span class="label">
+                                            #{messages[_item.businessHouse.masterStatus.name()]}
+                                        </span>
+                            </h3>
+
+                            <p class="repo-list-description tooltipped tooltipped-w" aria-label="产权人，共有权人">
+
+                                <strong>#{_item.businessHouse.businessHouseOwner.personName}</strong>
+                                <a:repeat value="#{_item.businessHouse.businessPoolList}" var="_pool">
+                                    &nbsp;&nbsp; #{_pool.personName}
+                                </a:repeat>
+                            </p>
+                            <p class="repo-list-description">
+                                #{_item.businessHouse.buildName} #{_item.businessHouse.mapNumber}图#{_item.businessHouse.blockNo}丘#{_item.businessHouse.buildNo}幢<strong>#{_item.businessHouse.houseOrder}</strong>
+                            </p>
+
+                            <p class="repo-list-description tooltipped tooltipped-w" aria-label="房屋坐落">
+                                #{_item.businessHouse.address}
+                            </p>
+
+                            <p class="repo-list-meta">
+                                <strong>#{messages['OwnerBusiness_recordTime_sort']}</strong> &nbsp;
+                                <h:outputText value="#{_item.businessHouse.houseBusinessForAfter.ownerBusiness.recordTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+                            </p>
+                        </li>
+
+                </c:forEach>
+            </ul>
+        </a:outputPanel>
+        <a:outputPanel layout="block" rendered="#{not empty houseRecordSearch.searchResult}" class="paginate-container">
+
+            <a:outputPanel>
+                <ui:include src="/layout/pages.xhtml">
+                    <ui:param name="entityList" value="#{houseRecordSearch}"/>
+                </ui:include>
+            </a:outputPanel>
+
+        </a:outputPanel>
+
 
     </a:outputPanel>
 

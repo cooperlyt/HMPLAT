@@ -24,7 +24,7 @@ public class MakeCard implements java.io.Serializable {
 	private CardType type;
 	private String number;
     private boolean enable;
-    private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+    //private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
     private CardInfo cardInfo;
     private ProjectCard projectCard;
@@ -38,7 +38,7 @@ public class MakeCard implements java.io.Serializable {
 
     public MakeCard(CardType type) {
         this.type = type;
-        this.enable=enable;
+        //this.enable=enable;
     }
 
     public MakeCard(CardType type ,String number) {
