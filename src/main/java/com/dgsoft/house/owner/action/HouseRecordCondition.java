@@ -16,13 +16,20 @@ import java.util.List;
 @Name("houseRecordCondition")
 public class HouseRecordCondition extends BusinessHouseCondition {
 
-    private static final String SHORT_EJBQL = "select hr from HouseRecord hr left join fetch hr.businessHouse bh left join fetch bh.businessHouseOwner ho left join ho.makeCard";
+    public static final String SHORT_EJBQL = "select hr from HouseRecord hr " +
+            "left join fetch hr.businessHouse house " +
+            "left join fetch house.houseBusinessForAfter houseBusiness  " +
+            "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
+            "left join fetch houseBusiness.recordStore rs " +
+            "left join fetch house.businessHouseOwner owner " +
+            "left join fetch owner.makeCard";
 
     private static final String EJBQL = "select hr from HouseRecord hr " +
             "left join fetch hr.businessHouse house " +
             "left join fetch house.businessHouseOwner owner " +
-            "left join owner.makeCard ownerCard " +
-            "left join house.houseBusinessForAfter houseBusiness " +
+            "left join fetch owner.makeCard ownerCard " +
+            "left join fetch house.houseBusinessForAfter houseBusiness " +
+            "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
             "left join fetch houseBusiness.recordStore rs " +
             "left join fetch house.businessPools pool " +
             "left join fetch pool.makeCard poolCard ";
@@ -83,8 +90,6 @@ public class HouseRecordCondition extends BusinessHouseCondition {
 
     private String boxNumber;
 
-    private String recordNumber;
-
     public String getFrameNumber() {
         return frameNumber;
     }
@@ -109,13 +114,6 @@ public class HouseRecordCondition extends BusinessHouseCondition {
         this.boxNumber = boxNumber;
     }
 
-    public String getRecordNumber() {
-        return recordNumber;
-    }
-
-    public void setRecordNumber(String recordNumber) {
-        this.recordNumber = recordNumber;
-    }
 
     public String getSearchFrameNumber(){
         if ((getSearchType() == null) || getSearchType().equals(SearchType.RECORD_LOCATION)){

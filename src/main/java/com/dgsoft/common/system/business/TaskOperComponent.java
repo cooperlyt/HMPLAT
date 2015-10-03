@@ -7,6 +7,6 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
  */
 public interface TaskOperComponent {
 
-    public abstract String beginTask(TaskInstance taskInstance);
+    String beginTask(TaskInstance taskInstance);
 
 }

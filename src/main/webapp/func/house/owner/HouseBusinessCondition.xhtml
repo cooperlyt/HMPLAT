@@ -135,9 +135,11 @@
             </div>
 
             <div class="flex-table-item">
+                <ui:insert name="conditionSearchButton">
                 <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseBusinessList.resetPage}"
                                value="#{messages.Search}">
                 </h:commandLink>
+                </ui:insert>
             </div>
         </div>
     </h:form>

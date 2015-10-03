@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.house.owner.model.HouseRecord;
-import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -15,8 +14,10 @@ import java.util.List;
 public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
     public enum SortCol{
-        HouseRecord_CREATE("biz.createTime"),
-        ORDER_BY_BUSINESS_NAME("biz.defineName");
+        OwnerBusiness_recordTime_sort("ownerBusiness.recordTime"),
+        Record_location_sort("rs.frame,rs.cabinet,rs.box"),
+        House_sort("hr.houseCode"),
+        MainHouseOwner_sort("owner.credentialsType,owner.credentialsNumber");
 
 
         private String colPath;
@@ -36,7 +37,7 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
     public SortCol getSortCol(){
         for(SortCol col: SortCol.values()){
-            if (getOrderColumn().equals(col.colPath)){
+            if (getOrderExpress().equals(col.getColPath())){
                 return col;
             }
         }
@@ -46,12 +47,20 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
     public HouseRecordSearch() {
         setRestrictionLogicOperator("and");
 
-        setOrderColumn(SortCol.HouseRecord_CREATE.colPath);
+        setOrderColumn(null);
+        setEjbql(HouseRecordCondition.SHORT_EJBQL);
+        setOrderExpress(SortCol.OwnerBusiness_recordTime_sort.colPath);
         setOrderDirection("desc");
         setMaxResults(20);
     }
 
-    @In
+
+    public void resetPage(){
+        setFirstResult(0);
+    }
+
+
+    @In(create = true)
     private HouseRecordCondition houseRecordCondition;
 
     @Override
@@ -68,13 +77,13 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
     public List<HouseRecord> getSearchResult(){
         resetEjbql(houseRecordCondition.getEjbql());
-        setRestrictionGroup(getRestrictionGroup());
+        setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
         return getResultList();
     }
 
     public Long getResultCount(){
         resetEjbql(houseRecordCondition.getEjbql());
-        setRestrictionGroup(getRestrictionGroup());
+        setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
         return super.getResultCount();
     }
 

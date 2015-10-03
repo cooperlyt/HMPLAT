@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="/layout/template.xhtml">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+
+    <ui:define name="func-body">
+
+
+        <div class="container">
+            <div class="setup-header setup-org">
+                <h1>房屋档案 / #{houseRecordHome.instance.businessHouse.displayHouseCode}</h1>
+
+
+            </div>
+
+            <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
+                          groupWidth="50"  >
+                <ui:include src="/layout/house/HouseInfoView.xhtml">
+                    <ui:param name="houseInfo" value="#{houseRecordHome.instance.businessHouse}"/>
+                    <ui:param name="showStatus" value="#{true}"/>
+                </ui:include>
+
+            </dh:entryGrid>
+
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>
