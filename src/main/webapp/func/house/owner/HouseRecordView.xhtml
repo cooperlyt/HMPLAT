@@ -18,19 +18,44 @@
 
     <ui:define name="func-body">
 
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <div class="clearfix">
+
+                    <ul class="pagehead-actions">
+
+                        <li>
+                            <a href="#fork-destination-box" class="btn btn-sm " title="Fork your own copy of cooper-lyt/HMPLAT to your account" aria-label="Fork your own copy of cooper-lyt/HMPLAT to your account" rel="facebox" data-ga-click="Repository, show fork modal, action:issues#show; text:Fork">
+                                <span class="glyphicon glyphicon-print"></span>
+                                登记簿
+                            </a>
+
+
+
+                        </li>
+                    </ul>
+
+                    <h1 class="entry-title public ">
+                        <span class="mega-octicon octicon-repo"></span>
+                        房屋档案 / #{houseRecordHome.instance.businessHouse.displayHouseCode}
+
+
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+
 
         <div class="container">
-            <div class="setup-header setup-org">
-                <h1>房屋档案 / #{houseRecordHome.instance.businessHouse.displayHouseCode}</h1>
-
-
-            </div>
 
             <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
                           groupWidth="50"  >
-                <ui:include src="/layout/house/HouseInfoView.xhtml">
+                <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
                     <ui:param name="houseInfo" value="#{houseRecordHome.instance.businessHouse}"/>
-                    <ui:param name="showStatus" value="#{true}"/>
+
                 </ui:include>
 
             </dh:entryGrid>

@@ -5,14 +5,214 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich">
+
+    <h:outputStylesheet>
+        .js-sub-details-table-row td{
+            display: none;
+        }
+
+        .js-sub-details-table-row.expand td{
+            display: inherit;
+        }
+
+        .js-master-table-row td:last-child{
+            background-size: 16px;
+            background-position-x: 98%;
+            background-position-y: 50%;
+            background-repeat: no-repeat;
+
+            background-image: url("#{resource['org.richfaces:up_icon.gif']}");
+
+        }
+
+
+        .js-master-table-row.expand td:last-child{
+            background-size: 16px;
+            background-position-x: 98%;
+            background-position-y: 50%;
+            background-repeat: no-repeat;
+            background-image: url("#{resource['org.richfaces:down_icon.gif']}");
+
+        }
+    </h:outputStylesheet>
+
+    <h:outputScript>
+
+        $(document).ready(
+                function () {
+
+                    $('.js-master-table-row').click(
+                            function(){
+                                if ($(this).hasClass("expand")){
+                                    $(this).removeClass("expand");
+                                    $("#" + $(this).attr("data-targetId")).removeClass("expand");
+                                }else{
+                                    $(this).addClass("expand");
+                                    $("#" + $(this).attr("data-targetId")).addClass("expand");
+                                }
+                            }
+                    )
+
+                });
+
+    </h:outputScript>
 
     <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
                   groupWidth="50"  >
         <ui:include src="/layout/house/HouseInfoView.xhtml">
-
+            <ui:param name="showStatus" value="#{true}"/>
         </ui:include>
+
+    <dh:entryGridBlock columns="8" rendered="#{not empty houseInfo.businessHouseOwner and (houseInfo.businessHouseOwner.makeCard.type eq 'NOTICE' or houseInfo.businessHouseOwner.makeCard.type eq 'OWNER_RSHIP')}">
+        <h:outputText value="#{houseInfo.businessHouseOwner.makeCard.type eq 'OWNER_RSHIP' ? '产权人' : '预告人'}"/>
+        <dh:entryGridColumn expandTarget="ownerCardInfo" colspan="7">
+        <h:outputText value="#{houseInfo.businessHouseOwner.personName}"/>
+        </dh:entryGridColumn>
+    </dh:entryGridBlock>
+
+
+        <dh:entryGridBlock rendered="#{not empty houseInfo.businessHouseOwner and (houseInfo.businessHouseOwner.makeCard.type eq 'NOTICE' or houseInfo.businessHouseOwner.makeCard.type eq 'OWNER_RSHIP')}"
+                           expandId="ownerCardInfo" columns="8" group="#{messages.OwnerInfoGroupTitle}">
+            <h:outputText value="#{messages.person_field_credentialsType}"/>
+            <dh:entryGridColumn colspan="2">
+            <h:outputText value="#{messages[houseInfo.businessHouseOwner.credentialsType.name()]}"/>
+            </dh:entryGridColumn>
+            <h:outputText value="#{messages.person_field_credentialsNO}"/>
+            <dh:entryGridColumn colspan="4">
+                <h:outputText value="#{houseInfo.businessHouseOwner.credentialsNumber}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.Tel}"/>
+            <dh:entryGridColumn colspan="2">
+                <h:outputText value="#{houseInfo.businessHouseOwner.phone}"/>
+            </dh:entryGridColumn>
+            <h:outputText value="#{messages.person_field_city}"/>
+            <dh:entryGridColumn colspan="4">
+                <h:outputText value="#{houseInfo.businessHouseOwner.rootAddress}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="法人"/>
+            <dh:entryGridColumn colspan="2">
+                <h:outputText value="#{houseInfo.businessHouseOwner.legalPerson}"/>
+            </dh:entryGridColumn>
+            <h:outputText value="#{messages.person_field_address}"/>
+            <dh:entryGridColumn colspan="4">
+                <h:outputText value="#{houseInfo.businessHouseOwner.address}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.MakeCard_type}"/>
+            <dh:entryGridColumn  colspan="2">
+                <h:outputText value="#{messages[houseInfo.businessHouseOwner.makeCard.type.name()]}"/>
+            </dh:entryGridColumn>
+            <h:outputText value="#{messages.MakeCard_number}"/>
+            <dh:entryGridColumn colspan="4">
+            <h:outputText value="#{houseInfo.businessHouseOwner.makeCard.number}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.CardInfo_printTime}"/>
+            <dh:entryGridColumn  colspan="2">
+                <h:outputText value="#{houseInfo.businessHouseOwner.makeCard.cardInfo.printTime}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.CardInfo_code}"/>
+            <dh:entryGridColumn colspan="4">
+            <h:outputText value="#{houseInfo.businessHouseOwner.makeCard.cardInfo.code}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.CardInfo_makeEmpName}"/>
+            <dh:entryGridColumn colspan="2">
+                <h:outputText value="#{houseInfo.businessHouseOwner.makeCard.cardInfo.makeEmpName}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.CardInfo_memo}"/>
+            <dh:entryGridColumn colspan="4">
+                <h:outputText value="#{houseInfo.businessHouseOwner.makeCard.cardInfo.memo}"/>
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
+
+        <dh:entryGridBlock columns="8" >
+            <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
+            <dh:entryGridColumn expandTarget="poolOwnerList" colspan="7">
+                <h:outputText value="#{messages[houseInfo.poolType.name()]}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+
+        <dh:entryGridBlock expandId="poolOwnerList" columns="8" group="#{messages.PoolOwner_Start}">
+            <dh:entryGridColumn  colspan="8">
+
+                <table class="table details-sub-table details-list-table">
+                    <thead>
+                    <tr>
+                        <th>共有人</th>
+                        <th>证件类型</th>
+                        <th>证件号</th>
+                        <th>联系电话</th>
+                        <th>权证号</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="#{houseInfo.businessPoolList}" var="_pool">
+                            <tr class="js-master-table-row" data-targetId="#{_pool.id}">
+                                <td>#{_pool.personName}</td>
+                                <td>#{messages[_pool.credentialsType.name()]}</td>
+                                <td>#{_pool.credentialsNumber}</td>
+                                <td>#{_pool.phone}</td>
+                                <td>#{_pool.makeCard.number}</td>
+                            </tr>
+                            <tr id="#{_pool.id}" class="js-sub-details-table-row"><td colspan="5" style="padding: 0">
+                                <dh:entryGrid styleClass="detailsTable table table-bordered details-sub-table">
+                                    <dh:entryGridBlock rendered="#{houseInfo.poolType eq 'SHARE_OWNER'}" columns="6">
+                                        <h:outputText value="#{messages.BusinessPool_relation}"/>
+                                        <h:outputText value="#{_pool.relation}"/>
+
+                                        <h:outputText value="#{messages.BusinessPool_area}"/>
+                                        <h:outputText value="#{_pool.poolArea}"/>
+
+                                        <h:outputText value="#{messages.BusinessPool_perc}"/>
+                                        <h:outputText value="#{_pool.perc}"/>
+                                    </dh:entryGridBlock>
+
+                                    <dh:entryGridBlock columns="6">
+                                        
+                                        <h:outputText value="法人"/>
+                                        <h:outputText value="#{_pool.legalPerson}"/>
+
+                                        <h:outputText value="#{messages.CardInfo_code}"/>
+                                        <h:outputText value="#{_pool.makeCard.cardInfo.code}" rendered="#{not empty _pool.makeCard}"/>
+
+                                        <h:outputText value="#{messages.CardInfo_makeEmpName}" />
+                                        <h:outputText value="#{_pool.makeCard.cardInfo.makeEmpName}" rendered="#{not empty _pool.makeCard}"/>
+
+                                        <h:outputText value="#{messages.CardInfo_printTime}"/>
+                                        <h:outputText value="#{_pool.makeCard.cardInfo.printTime}" rendered="#{not empty _pool.makeCard}">
+                                            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                                        </h:outputText>
+
+                                        <h:outputText value="#{messages.CardInfo_memo}"/>
+                                        <dh:entryGridColumn colspan="3">
+                                            <h:outputText value="#{_pool.makeCard.cardInfo.memo}" rendered="#{not empty _pool.makeCard}"/>
+                                        </dh:entryGridColumn>
+
+                                    </dh:entryGridBlock>
+                                </dh:entryGrid>
+
+                            </td></tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+
+
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
+
 
     </dh:entryGrid>
 
