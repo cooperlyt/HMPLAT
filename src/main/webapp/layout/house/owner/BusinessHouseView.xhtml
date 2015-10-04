@@ -149,14 +149,14 @@
 
         </dh:entryGridBlock>
 
-        <dh:entryGridBlock columns="8" >
+        <dh:entryGridBlock columns="8" rendered="#{not empty houseInfo.poolType}">
             <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
             <dh:entryGridColumn expandTarget="poolOwnerList" colspan="7">
                 <h:outputText value="#{messages[houseInfo.poolType.name()]}"/>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
 
-        <dh:entryGridBlock expandId="poolOwnerList" columns="8" group="#{messages.PoolOwner_Start}">
+        <dh:entryGridBlock rendered="#{not empty houseInfo.businessPoolList}" expandId="poolOwnerList" columns="8" group="#{messages.PoolOwner_Start}">
             <dh:entryGridColumn  colspan="8">
 
                 <table class="table details-sub-table details-list-table">

@@ -4,6 +4,7 @@ import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.house.owner.model.HouseRecord;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
     public List<HouseRecord> getSearchResult(){
         resetEjbql(houseRecordCondition.getEjbql());
+
         setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
         return getResultList();
     }

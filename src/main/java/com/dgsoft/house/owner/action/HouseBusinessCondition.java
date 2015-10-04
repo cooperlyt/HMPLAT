@@ -110,7 +110,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 
     @Override
     public String getEjbql(){
-        if (getSearchKey() == null || getSearchKey().trim().equals("")){
+        if (!isHaveCondition()){
             return HouseBusinessCondition.SHORT_EJBQL;
         }else{
             return HouseBusinessCondition.EJBQL;
@@ -134,7 +134,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 
     @Override
     public RestrictionGroup getRestrictionGroup() {
-        if (getSearchKey() == null || getSearchKey().trim().equals("")){
+        if (!isHaveCondition()){
             return null;
         }
 

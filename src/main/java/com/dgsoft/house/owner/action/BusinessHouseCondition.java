@@ -256,6 +256,17 @@ public abstract class BusinessHouseCondition {
         public boolean isSearchByOne(){
             return EnumSet.of(OWNER_BIZ_ID, HOUSE_CODE, HOUSE_OWNER, PROJECT_NAME).contains(this);
         }
+    }
+
+    protected boolean isHaveCondition(){
+        if (SearchType.HOUSE_MBBH.equals(searchType)) {
+            return (mapNumber != null && !mapNumber.trim().equals("")) ||
+                    (blockNumber != null && !blockNumber.trim().equals("")) ||
+                    (buildNumber != null && !buildNumber.trim().equals("")) ||
+                    (houseNumber != null && !houseNumber.trim().equals(""));
+        }else {
+            return (searchKey != null) && (!searchKey.trim().equals(""));
+        }
 
     }
 }
