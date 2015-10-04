@@ -3,32 +3,35 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.CardInfo;
-import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MakeCard;
-import com.dgsoft.house.owner.model.Reason;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by wxy on 2015-09-18.
- * 档案补录所有权证 缮证信息
+ * Created by wxy on 2015-10-03.
+ * 预告登记权证信息补录
+ *
  */
-@Name("makeCardOwnerRsipRecordSubsrcibe")
-public class MakeCardOwnerRsipRecordSubsrcibe extends OwnerEntityHome<MakeCard> {
+@Name("makeCardNoticeMortgageRecordSubsrcibe")
+public class MakeCardNoticeMortgageRecordSubsrcibe extends OwnerEntityHome<MakeCard> {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
     @Override
     public MakeCard createInstance() {
-        return new MakeCard(MakeCard.CardType.OWNER_RSHIP);
+        return new MakeCard(MakeCard.CardType.NOTICE);
     }
+
+
+
+
 
     @Override
     public void create() {
         super.create();
         for (MakeCard makeCard : ownerBusinessHome.getInstance().getMakeCards()) {
-            if (makeCard.getType().equals(MakeCard.CardType.OWNER_RSHIP)) {
+            if (makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
                 setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getId());
                 return;
             }
@@ -36,9 +39,9 @@ public class MakeCardOwnerRsipRecordSubsrcibe extends OwnerEntityHome<MakeCard> 
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(getInstance());
 
-        if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(getInstance());
-
+        if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial()!=null){
+            ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().setMakeCard(getInstance());
+            getInstance().setFinancial(ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial());
         }
 
         CardInfo cardInfo = new CardInfo();

@@ -593,14 +593,6 @@
         </description>
     </edit-subscribe>
 
-    <edit-subscribe name="FinancialRecordEdit" page="/business/houseOwner/subscribe/FinancialRecordEdit.xhtml" component="">
-        <description>
-            档案补录所有权抵押权人编辑
-        </description>
-    </edit-subscribe>
-
-
-
     <edit-subscribe name="PersionObligeeEdit" page="/business/houseOwner/subscribe/PersionObligeeEdit.xhtml" component="">
         <description>
             抵押权人代理人编辑
@@ -829,7 +821,19 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="MakeCardNoticeRecordEdit" page="/business/houseOwner/subscribe/MakeCardNoticeRecordEdit.xhtml"
+                    component="">
+        <description>
+            档案补录预告登记证明编辑
+        </description>
+    </edit-subscribe>
 
+    <edit-subscribe name="MakeCardNoticeMortgageRecordEdit" page="/business/houseOwner/subscribe/MakeCardNoticeMortgageRecordEdit.xhtml"
+                    component="">
+        <description>
+            档案补录预告抵押登记证明编辑
+        </description>
+    </edit-subscribe>
 
 
 
@@ -849,12 +853,15 @@
         </description>
     </edit-subscribe>
 
-    <edit-subscribe name="MortgagerEdit" page="/business/houseOwner/subscribe/MortgagerEdit.xhtml"
-                    component="">
+
+    <edit-subscribe name="FinancialRecordEdit" page="/business/houseOwner/subscribe/FinancialRecordEdit.xhtml" component="">
         <description>
-            抵押人档案补录编辑
+            档案补录所有权抵押权人编辑
         </description>
     </edit-subscribe>
+
+
+
 
 
 
