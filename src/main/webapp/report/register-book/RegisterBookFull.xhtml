@@ -1,0 +1,21 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            margins="50 30 30 30 "
+            title="中华人民共和国房屋登记簿">
+
+
+    <p:footer borderWidth="0" alignment="center">
+        <p:font size="11" name="STSong-Light" encoding="UniGB-UCS2-H">
+            第 <p:pageNumber/> 页
+        </p:font>
+    </p:footer>
+
+<ui:include src="RegisterInfoPage.xhtml"/>
+
+
+
+</p:document>

@@ -1,31 +1,51 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
-
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-                template="/layout/template-data.xhtml">
+                template="/layout/template.xhtml">
 
-    <ui:define name="head-right">
-        <h1>
-            #{projectHome.instance.districtName}
 
-            <span class="path-divider">/</span>
+    <ui:define name="func-body">
 
-            #{projectHome.instance.sectionName}
 
-            <span class="path-divider">/</span>
-            <strong>
-                #{projectHome.instance.projectName}
-            </strong>
+        <div class="pagehead repohead instapaper_ignore readability-menu">
 
-        </h1>
-    </ui:define>
+            <div class="container">
+
+                <div class="clearfix">
+
+                    <h1 style="padding-left: 0">
+                        <s:link view="/func/house/datas/BaseDataMgr.xhtml">
+                            测绘基础数据管理
+                        </s:link>
+                        <span class="path-divider">/</span>
+
+                        #{projectHome.instance.districtName}
+
+                        <span class="path-divider">/</span>
+
+                        #{projectHome.instance.sectionName}
+
+                        <span class="path-divider">/</span>
+                        <strong>
+                            #{projectHome.instance.projectName}
+                        </strong>
+
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
 
     <dh:entryGrid styleClass="detailsTable table table-bordered ">
         <ui:include src="/layout/house/ProjectInfoView.xhtml">
@@ -66,10 +86,8 @@
                     <f:facet name="header">
                         #{messages.Build_Id}
                     </f:facet>
-                    <s:link value="#{_build.id}" view="/func/house/datas/BuildView.xhtml" styleClass="tooltipped tooltipped-s">
-                        <f:passThroughAttribute name="aria-label" value="#{_build.name}"/>
-                        <f:param name="buildId" value="#{_build.id}"/>
-                    </s:link>
+
+                    <h:outputText value="#{_build.id}" p:aria-label="#{_build.name}"/>
 
                 </h:column>
 
@@ -169,8 +187,8 @@
                 <p>#{messages.BuildDeleteNote}</p>
             </ui:define>
         </ui:decorate>
+</div>
 
-
-
+</ui:define>
 
 </ui:composition>

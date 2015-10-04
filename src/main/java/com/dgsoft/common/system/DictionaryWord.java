@@ -1,7 +1,7 @@
 package com.dgsoft.common.system;
 
-import com.dgsoft.common.system.model.City;
 import com.dgsoft.common.system.model.Employee;
+import com.dgsoft.common.system.model.ProvinceCode;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.common.system.model.WordCategory;
 import org.jboss.seam.Component;
@@ -35,7 +35,7 @@ public class DictionaryWord {
 
     private Map<String, Employee> employeeMap;
 
-    private Map<Integer, City> cityMap;
+   private Map<String, ProvinceCode> provinceMap;
 
     @Create
     @Transactional
@@ -47,10 +47,10 @@ public class DictionaryWord {
 
 
     public void loadCity() {
-        cityMap = new HashMap<Integer, City>();
-        List<City> citys = systemEntityLoader.getPersistenceContext().createQuery("select city from City city left join fetch city.province", City.class).getResultList();
-        for (City city : citys) {
-            cityMap.put(city.getId(), city);
+        provinceMap = new HashMap<String, ProvinceCode>();
+        List<ProvinceCode> citys = systemEntityLoader.getPersistenceContext().createQuery("select city from ProvinceCode city", ProvinceCode.class).getResultList();
+        for (ProvinceCode city : citys) {
+            provinceMap.put(city.getId(), city);
         }
     }
 
@@ -137,19 +137,42 @@ public class DictionaryWord {
         return wordCategory;
     }
 
-    public City getCity(Integer code) {
-        return cityMap.get(code);
-    }
 
-    public String getCityName(Integer code) {
-        City city = getCity(code);
-        if (city == null) {
-            return "";
-        } else {
-            return city.getProvince().getName() + city.getName();
+    public String getProvinceName(String value){
+        if (value == null || value.trim().length() < 2){
+            return null;
+        }
+        ProvinceCode provinceCode = provinceMap.get(value.trim().substring(0,2));
+        if (provinceCode == null){
+            return null;
+        }else{
+            return provinceCode.getName();
         }
     }
 
+    public String getCityName(String value){
+        if (value == null || value.trim().length() < 4) {
+            return null;
+        }
+        ProvinceCode provinceCode = provinceMap.get(value.trim().substring(0,4));
+        if (provinceCode == null){
+            return null;
+        }else{
+            return provinceCode.getName();
+        }
+    }
+
+    public String getDistrictName(String value){
+        if (value == null || value.trim().length() < 6) {
+            return null;
+        }
+        ProvinceCode provinceCode = provinceMap.get(value.trim().substring(0,6));
+        if (provinceCode == null){
+            return null;
+        }else{
+            return provinceCode.getName();
+        }
+    }
 
     public static DictionaryWord instance()
     {

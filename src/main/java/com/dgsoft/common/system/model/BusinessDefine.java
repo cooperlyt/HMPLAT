@@ -40,7 +40,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<Fee> fees = new HashSet<Fee>(0);
     private Set<BusinessReport> businessReports = new HashSet<BusinessReport>(0);
     private String modifyPage;
-
+    private String registerBookPage;
 
 
 
@@ -280,5 +280,15 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setRequiredBiz(boolean requiredBiz) {
         this.requiredBiz = requiredBiz;
+    }
+
+
+    @Column(name = "REGISTER_BOOK_PAGE",nullable = false,length = 256)
+    public String getRegisterBookPage() {
+        return registerBookPage;
+    }
+
+    public void setRegisterBookPage(String registerBookPage) {
+        this.registerBookPage = registerBookPage;
     }
 }

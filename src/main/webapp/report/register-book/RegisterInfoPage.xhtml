@@ -1,0 +1,183 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://jboss.org/schema/seam/pdf"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+    <p:font size="14" name="STSong-Light" encoding="UniGB-UCS2-H">
+
+    <p:table columns="2" widths="3 5" widthPercentage="63" horizontalAlignment="left">
+        <f:facet name="defaultCell"><p:cell borderWidth="0" padding="2"/></f:facet>
+        <p:cell><p:paragraph>丘                        号：</p:paragraph></p:cell>
+        <p:cell borderWidthBottom="1"><p:paragraph>#{houseRecordHome.instance.businessHouse.blockNo}</p:paragraph></p:cell>
+        <p:cell><p:paragraph>房屋登记簿编号：</p:paragraph></p:cell>
+        <p:cell borderWidthBottom="1"><p:paragraph>#{houseRecordHome.instance.businessHouse.houseCode}</p:paragraph></p:cell>
+        <p:cell colspan="2" paddingBottom="200"><p:paragraph>本号共_______本         第_______本</p:paragraph></p:cell>
+    </p:table>
+
+   </p:font>
+
+    <p:font alignment="center" size="18" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:paragraph alignment="center">中华人民共和国房屋登记簿
+
+
+
+
+
+
+
+        </p:paragraph>
+    </p:font>
+
+    <p:font alignment="center" size="14" name="STSong-Light" encoding="UniGB-UCS2-H">
+        <p:paragraph><p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">  #{dictionary.getProvinceName(houseRecordHome.instance.businessHouse.districtCode)}  </p:font>省（自治区、直辖市）<p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">  #{dictionary.getCityName(houseRecordHome.instance.businessHouse.districtCode)}   </p:font>市<p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">  #{dictionary.getDistrictName(houseRecordHome.instance.businessHouse.districtCode)}   </p:font>区（县、市）<p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">   #{houseRecordHome.instance.businessHouse.districtName}   </p:font>街（路）<p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">   #{houseRecordHome.instance.businessHouse.doorNo}   </p:font>号<p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">  #{houseRecordHome.instance.businessHouse.houseOrder}   </p:font></p:paragraph>
+
+
+
+    <p:paragraph alignment="center">
+
+
+
+        登记机构:<p:font alignment="center" size="14" name="STSong-Light" style="underline" encoding="UniGB-UCS2-H">    #{runParam.getStringParamValue("SetupName")}    </p:font></p:paragraph>
+    </p:font>
+
+    <p:newPage/>
+    <p:font size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:paragraph alignment="center">房    屋    登    记    簿
+        </p:paragraph>
+    </p:font>
+
+        <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:table columns="2" widthPercentage="100" widths="2 1">
+                <f:facet name="defaultCell"><p:cell borderWidth="0" padding="2" paddingBottom="10"/></f:facet>
+                <p:cell><p:paragraph >房屋编号：#{houseRecordHome.instance.businessHouse.houseCode}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="right"><p:paragraph alignment="right">基本状况</p:paragraph></p:cell>
+            </p:table>
+        </p:font>
+
+
+    <p:font size="11" name="STSong-Light" encoding="UniGB-UCS2-H">
+    <p:table columns="1" widthPercentage="100">
+        <f:facet name="defaultCell"><p:cell borderWidth="0" padding="0"/></f:facet>
+        <p:cell>
+            <p:table columns="6" widths="1 1 1 1 1 1" widthPercentage="100">
+                <f:facet name="defaultCell"><p:cell verticalAlignment="middle" borderWidth="1" paddingTop="8" paddingBottom="10" paddingRight="5" paddingLeft="5"/></f:facet>
+                <p:cell horizontalAlignment="center"><p:paragraph alignment="center">房屋坐落</p:paragraph></p:cell>
+                <p:cell colspan="5"><p:paragraph >#{houseRecordHome.instance.businessHouse.address}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>地号</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text rendered="#{not empty houseRecordHome.instance.businessHouse.landInfo}" value="#{houseRecordHome.instance.businessHouse.landInfo.number}"></p:text> </p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>业务宗号</p:paragraph></p:cell>
+                <p:cell><p:paragraph></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>建筑物总层数</p:paragraph></p:cell>
+                <p:cell><p:paragraph>#{houseRecordHome.instance.businessHouse.floorCount}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>土地性质</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text rendered="#{not empty houseRecordHome.instance.businessHouse.landInfo}" value="#{dictionary.getWordValue(houseRecordHome.instance.businessHouse.landInfo.landProperty)}"></p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>建筑面积</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text value="#{houseRecordHome.instance.businessHouse.houseArea}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>规划用途</p:paragraph></p:cell>
+                <p:cell><p:paragraph>#{dictionary.getWordValue(houseRecordHome.instance.businessHouse.useType)}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>国有土地</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text rendered="#{not empty houseRecordHome.instance.businessHouse.landInfo}" value="#{dictionary.getWordValue(houseRecordHome.instance.businessHouse.landInfo.landGetMode)}"></p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>套内建筑面积</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text value="#{houseRecordHome.instance.businessHouse.useArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>房屋结构</p:paragraph></p:cell>
+                <p:cell><p:paragraph>#{dictionary.getWordValue(houseRecordHome.instance.businessHouse.structure)}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>土地使用年限</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text rendered="#{not empty houseRecordHome.instance.businessHouse.landInfo}" value="#{houseRecordHome.instance.businessHouse.landInfo.endUseTime}"><s:convertDateTime pattern="#{messages.datePattern}"></s:convertDateTime></p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>分摊共有面积</p:paragraph></p:cell>
+                <p:cell ><p:paragraph><p:text value="#{houseRecordHome.instance.businessHouse.commArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
+                <p:cell><p:paragraph></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>土地证号</p:paragraph></p:cell>
+                <p:cell><p:paragraph><p:text rendered="#{not empty houseRecordHome.instance.businessHouse.landInfo}" value="#{houseRecordHome.instance.businessHouse.landInfo.landCardNo}"></p:text></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>专有部分面积</p:paragraph></p:cell>
+                <p:cell><p:paragraph></p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center"><p:paragraph>终审人/登簿人</p:paragraph></p:cell>
+                <p:cell><p:paragraph></p:paragraph></p:cell>
+            </p:table>
+        </p:cell>
+        <p:cell>
+            <p:table widthPercentage="100" columns="2" widths="1 3">
+                <p:cell  verticalAlignment="middle" horizontalAlignment="center"><p:paragraph>基本状况登记已用纸页数</p:paragraph></p:cell>
+                <p:cell padding="0"><p:table columns="9" widthPercentage="100">
+                    <f:facet name="defaultCell"><p:cell padding="10" /></f:facet>
+                    <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                </p:table></p:cell>
+
+                <p:cell paddingLeft="5" paddingRight="5" verticalAlignment="middle" horizontalAlignment="center"><p:paragraph>房屋所有权登记已用纸页数</p:paragraph></p:cell>
+                <p:cell padding="0">
+                    <p:table columns="9" widthPercentage="100">
+                        <f:facet name="defaultCell"><p:cell padding="10" /></f:facet>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                    </p:table>
+                </p:cell>
+                <p:cell paddingLeft="5" paddingRight="5" verticalAlignment="middle" horizontalAlignment="center"><p:paragraph>房屋他项权利登记已用纸页数</p:paragraph></p:cell>
+                <p:cell padding="0">
+                    <p:table columns="9" widthPercentage="100">
+                        <f:facet name="defaultCell"><p:cell padding="10" /></f:facet>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                    </p:table>
+                </p:cell>
+                <p:cell paddingLeft="5" paddingRight="5" verticalAlignment="middle" horizontalAlignment="center"><p:paragraph>其它状况部分登记已用纸页数</p:paragraph></p:cell>
+                <p:cell padding="0">
+                    <p:table columns="9" widthPercentage="100">
+                        <f:facet name="defaultCell"><p:cell padding="10" /></f:facet>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                        <p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell><p:cell></p:cell>
+                    </p:table>
+                </p:cell>
+
+
+            </p:table>
+        </p:cell>
+        <p:cell>
+            <p:table columns="2" widths="1 20" widthPercentage="100">
+                <p:cell verticalAlignment="middle" horizontalAlignment="center"><p:paragraph>附                记</p:paragraph></p:cell>
+                <p:cell padding="130">
+
+                </p:cell>
+            </p:table>
+
+        </p:cell>
+    </p:table>
+    </p:font>
+
+    <p:newPage/>
+
+    <p:font size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:paragraph alignment="center">房  地  产  平  面  图
+        </p:paragraph>
+    </p:font>
+
+    <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+        <p:table columns="2" widthPercentage="100" widths="2 1">
+            <f:facet name="defaultCell"><p:cell borderWidth="0" padding="2" paddingBottom="10"/></f:facet>
+            <p:cell><p:paragraph >房屋编号：#{houseRecordHome.instance.businessHouse.houseCode}</p:paragraph></p:cell>
+            <p:cell horizontalAlignment="right"><p:paragraph alignment="right">图幅号：#{houseRecordHome.instance.businessHouse.mapNumber}</p:paragraph></p:cell>
+        </p:table>
+    </p:font>
+
+    <p:font size="13" name="STSong-Light" encoding="UniGB-UCS2-H">
+        <p:table columns="1" widthPercentage="100">
+            <p:cell verticalAlignment="bottom" horizontalAlignment="left" paddingTop="610" paddingBottom="0" paddingLeft="0">
+
+                <p:table horizontalAlignment="left" widthPercentage="30" columns="2" widths="5 9">
+                    <p:cell padding="5"><p:paragraph>比例尺</p:paragraph> </p:cell>
+                    <p:cell padding="5"><p:paragraph>1:</p:paragraph> </p:cell>
+                </p:table>
+            </p:cell>
+        </p:table>
+
+
+    </p:font>
+
+
+</ui:composition>
