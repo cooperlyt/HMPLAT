@@ -16,6 +16,96 @@ import java.util.Set;
 @Table(name = "BUSINESS_DEFINE",catalog = "DB_PLAT_SYSTEM")
 public class BusinessDefine implements java.io.Serializable,OrderModel {
 
+    public enum RegBookIndexPart{
+
+        BASIC_INFO(1), //基本状况登记
+        HOUSE_OWNER(2), //房屋所有权登记
+        HOUSE_MORTGAGE(3), //房屋它项权利登记
+        OTHER_REG(4);//其它状况部分登记
+
+        private int pri;
+
+        public int getPri() {
+            return pri;
+        }
+
+        RegBookIndexPart(int pri) {
+            this.pri = pri;
+        }
+    }
+
+    public enum RegBookPagePart{
+
+        OWNER_CHANGE(RegBookIndexPart.HOUSE_OWNER), //所有权部分 (改变基本状况页,不改变基本状况)
+
+        PROJECT_MORTGAGE_PART(RegBookIndexPart.HOUSE_MORTGAGE),//在建工程抵押部分
+
+        OWNER_HOUSE_MORTGAGE(RegBookIndexPart.HOUSE_MORTGAGE), //现房抵押部分
+
+        COURT_CLOSE_PART(RegBookIndexPart.OTHER_REG),//查封部分
+
+        DISSIDENCE(RegBookIndexPart.OTHER_REG),//异议部分（异议）
+
+        PREPARE_OWNER(RegBookIndexPart.OTHER_REG);//预告登记部分
+
+        private RegBookIndexPart regBookIndexPart;
+
+        public RegBookIndexPart getRegBookIndexPart() {
+            return regBookIndexPart;
+        }
+
+        RegBookPagePart(RegBookIndexPart regBookIndexPart){
+            this.regBookIndexPart = regBookIndexPart;
+        }
+    }
+
+    public enum RegBookBizType{
+
+
+        OWNER_HOUSE_CHANGE(true,RegBookPagePart.OWNER_CHANGE), OWNER_CHANGE(true,RegBookPagePart.OWNER_CHANGE), //所有权部分 (改变基本状况页,不改变基本状况)
+
+        PROJECT_MORTGAGE_PART(true,RegBookPagePart.PROJECT_MORTGAGE_PART),//在建工程抵押部分
+
+        OWNER_HOUSE_MORTGAGE(true,RegBookPagePart.OWNER_HOUSE_MORTGAGE), //现房抵押部分
+
+        COURT_CLOSE_PART(true,RegBookPagePart.COURT_CLOSE_PART), COURT_CLOSE_CANCEL_PART(false,RegBookPagePart.COURT_CLOSE_PART), //查封部分(查封,查封解除)
+
+        DISSIDENCE(true,RegBookPagePart.DISSIDENCE),//异议部分（异议）
+
+        PREPARE_OWNER(true,RegBookPagePart.PREPARE_OWNER),//预告登记部分
+
+        HIGHEST_MORTGAGE_CONFIRM(false,RegBookPagePart.OWNER_HOUSE_MORTGAGE), //现房抵押最高额确定登记
+
+        PROJECT_HIGHEST_MORTGAGE_CONFIRM(false,RegBookPagePart.PROJECT_MORTGAGE_PART),//在建工程抵押最高额确定登记
+
+        PROJECT_MORTGAGE_CANCEL(false,null),//在建工程抵押注销（包括各种抵押类型的注销）
+
+        DISSIDENCE_CANCEL(false,RegBookPagePart.DISSIDENCE), //异议解除
+
+        MORTGAGE_CANCEL(false,RegBookPagePart.OWNER_HOUSE_MORTGAGE), //现房抵押注销
+
+        PREPARE_CANCEL(false,RegBookPagePart.PREPARE_OWNER); //预告登记解除
+
+
+
+        private boolean master;
+
+        private RegBookPagePart part;
+
+        public boolean isMaster() {
+            return master;
+        }
+
+        public RegBookPagePart getPart() {
+            return part;
+        }
+
+        RegBookBizType(boolean master, RegBookPagePart part) {
+            this.master = master;
+            this.part = part;
+        }
+    }
+
     private String id;
     private BusinessCategory businessCategory;
     private String name;
@@ -40,7 +130,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<Fee> fees = new HashSet<Fee>(0);
     private Set<BusinessReport> businessReports = new HashSet<BusinessReport>(0);
     private String modifyPage;
-    private String registerBookPage;
+    private String registerBookPart;
 
 
 
@@ -283,12 +373,26 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     }
 
 
-    @Column(name = "REGISTER_BOOK_PAGE",nullable = false,length = 256)
-    public String getRegisterBookPage() {
-        return registerBookPage;
+    @Column(name = "REGISTER_BOOK_PART",nullable = true,length = 256)
+    public String getRegisterBookPart() {
+        return registerBookPart;
     }
 
-    public void setRegisterBookPage(String registerBookPage) {
-        this.registerBookPage = registerBookPage;
+    public void setRegisterBookPart(String registerBookPage) {
+        this.registerBookPart = registerBookPage;
+    }
+
+    @Transient
+    public Set<RegBookBizType> getRegisterBookParts(){
+        if (getRegisterBookPart() == null || getRegisterBookPart().trim().equals("")){
+            return new HashSet<RegBookBizType>(0);
+        }
+        Set<RegBookBizType> result = new HashSet<RegBookBizType>();
+        for(String type: getRegisterBookPart().split(",")){
+            if (!type.trim().equals("")){
+                result.add(RegBookBizType.valueOf(type));
+            }
+        }
+        return result;
     }
 }

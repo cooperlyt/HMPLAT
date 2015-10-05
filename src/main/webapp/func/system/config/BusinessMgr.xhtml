@@ -7,7 +7,9 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/layout/template-data.xhtml">
 
 
@@ -107,6 +109,32 @@
                                noSelectionLabel="#{messages.noSelectLabel}" label="#{_category.name}"/>
                 <f:converter converterId="systemEntityConverter"/>
             </h:selectOneMenu>
+        </s:decorate>
+
+        <s:decorate id="regPartField"  styleClass="form-group " template="/layout/edit-big.xhtml">
+            <ui:define name="label">#{messages.businessDefine_regPart}</ui:define>
+            <ui:param name="for" value="regPartInput"/>
+
+            <h:inputHidden id="regPartInput" value="#{businessDefineHome.instance.registerBookPart}"/>
+
+            <select id="regPartSelect" class=" edit-select form-control" multiple="" onchange="#{r:jQuery('regPartInput')}.val($('#regPartSelect').val()); ">
+
+                <c:forEach items="#{businessDefineHome.allRegPart}" var="_item">
+                    <option value="#{_item}">#{messages[_item.name()]}</option>
+                </c:forEach>
+            </select>
+
+            <h:outputScript>
+                $(document).ready(
+                function(){
+                $('#regPartSelect').selectpicker();
+                var value = '#{businessDefineHome.instance.registerBookPart}';
+                $('#regPartSelect').selectpicker('val',value.split(','));
+
+                });
+
+            </h:outputScript>
+
         </s:decorate>
 
 

@@ -41,6 +41,10 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     @In
     private FacesMessages facesMessages;
 
+    public BusinessDefine.RegBookBizType[] getAllRegPart(){
+        return BusinessDefine.RegBookBizType.values();
+    }
+
 
     public String getDescription() {
         String val = getInstance().getDescription();
