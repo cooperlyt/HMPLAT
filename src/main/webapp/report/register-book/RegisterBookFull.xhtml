@@ -374,7 +374,107 @@
         <p:newPage/>
     </a:repeat>
 
-    <!-- TODO 现房抵押 -->
+    <a:repeat rowKeyVar="_rowKey" rendered="#{not empty houseRecordHome.ownerHouseMortgagePages}" value="#{houseRecordHome.ownerHouseMortgagePages}" var="_page">
+
+        <p:font size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">房    屋    登    记    簿
+            </p:paragraph>
+        </p:font>
+
+        <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:table columns="2" widthPercentage="100" widths="1 1">
+                <f:facet name="defaultCell"><p:cell borderWidth="0" padding="2" paddingBottom="10"/></f:facet>
+                <p:cell><p:paragraph >房屋编号：#{houseRecordHome.instance.businessHouse.houseCode}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="right"><p:paragraph alignment="right">他项权部分（现房抵押）第  #{_page.pageNumber}  页</p:paragraph></p:cell>
+            </p:table>
+        </p:font>
+
+        <p:font size="11" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:table columns="3" widthPercentage="100" widths="4 7 7">
+                <f:facet name="defaultCell"><p:cell verticalAlignment="middle" borderWidth="1" paddingTop="8" paddingBottom="10" paddingRight="5" paddingLeft="5"/></f:facet>
+                <p:cell horizontalAlignment="center"><p:paragraph>内容\序号</p:paragraph></p:cell>
+                <p:cell><p:paragraph>#{_rowKey * 2 + 1}. #{_page.firstItem.mainBusiness.ownerBusiness.defineName}<p:text value="#{messages[_page.firstItem.mainBusiness.ownerBusiness.type.name()]}" rendered="#{not (_page.firstItem.mainBusiness.ownerBusiness.type eq 'NORMAL_BIZ')}" /></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{not empty _page.secondItem}">#{_rowKey * 2 + 2}.#{_page.secondItem.mainBusiness.ownerBusiness.defineName}<p:text value="#{messages[_page.secondItem.mainBusiness.ownerBusiness.type.name()]}" rendered="#{not (_page.secondItem.mainBusiness.ownerBusiness.type eq 'NORMAL_BIZ')}" /></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>业务宗号</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>一般抵押/最高额抵押</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>抵押权人</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>抵押人/债务人</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center" paddingRight="5" paddingLeft="5" paddingTop="0" paddingBottom="5"><p:paragraph alignment="center">被担保主债权数额</p:paragraph><p:paragraph alignment="center">（最高债权数额）</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>担保范围</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center" paddingRight="5" paddingLeft="5" paddingTop="0" paddingBottom="5"><p:paragraph alignment="center">债务履行期限</p:paragraph><p:paragraph alignment="center">（债权确定期间）</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>他项权证号</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>终审人/登簿人</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center" borderWidthTop="2"><p:paragraph>业务宗号</p:paragraph></p:cell>
+                <p:cell borderWidthTop="2"><p:paragraph rendered="#{(not empty _page.firstItem.confirmBusiness)}"></p:paragraph></p:cell>
+                <p:cell borderWidthTop="2"><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.confirmBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>最高债权确定事实和数额</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.confirmBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.confirmBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.confirmBusiness)}"> </p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.confirmBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>终审人/登簿人</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.confirmBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.confirmBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center" borderWidthTop="2"><p:paragraph>抵押权注销业务宗号</p:paragraph></p:cell>
+                <p:cell borderWidthTop="2"><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"></p:paragraph></p:cell>
+                <p:cell borderWidthTop="2"><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center"><p:paragraph>终审人/登簿人</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"></p:paragraph></p:cell>
+
+                <p:cell horizontalAlignment="center" minimumHeight="70"><p:paragraph>附记</p:paragraph></p:cell>
+                <p:cell><p:paragraph></p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{(not empty _page.secondItem)}"></p:paragraph></p:cell>
+
+            </p:table>
+
+        </p:font>
+
+
+        <p:newPage/>
+    </a:repeat>
 
 
     <a:repeat rowKeyVar="_rowKey" rendered="#{not empty houseRecordHome.prepareOwnerPages}" value="#{houseRecordHome.prepareOwnerPages}" var="_page">
