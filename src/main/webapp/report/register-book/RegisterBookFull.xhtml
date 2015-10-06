@@ -190,9 +190,9 @@
     </ui:repeat>
 
 
-    <c:forEach items="#{houseRecordHome.regBookParts}" var="_regBookPart">
+    <c:forEach items="#{houseRecordHome.regBookPages}" var="_pages">
 
-        <c:forEach items="#{_regBookPart.value}" var="_page">
+        <c:forEach items="#{_pages.value}" var="_page">
 
             <p:font size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
                 <p:paragraph alignment="center">房    屋    登    记    簿
@@ -203,8 +203,16 @@
 
             </ui:include>
 
-#{_page.firstItem.mainBusiness.ownerBusiness.difficulty.reason}
-            #{_page.firstItem.mainBusiness.ownerBusiness.closeHouse.executionNotice}
+
+
+            #{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.credentialsType eq 'OTHER'}
+            #{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.financial.makeCard.number}
+
+
+
+            #{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}
+            #{_page.firstItem.mainBusiness.startBusinessHouse.businessHouseOwner.personName}
+
             <p:newPage/>
             
         </c:forEach>

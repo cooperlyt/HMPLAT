@@ -36,17 +36,19 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public enum RegBookPage {
 
-        OWNER_CHANGE_PAGE(RegBookIndexPart.HOUSE_OWNER,"/report/register-book/OwnerChange.xhtml"), //所有权部分 (改变基本状况页,不改变基本状况)
+        OWNER_CHANGE_PAGE(1, RegBookIndexPart.HOUSE_OWNER,"/report/register-book/OwnerChange.xhtml"), //所有权部分 (改变基本状况页,不改变基本状况)
 
-        PROJECT_MORTGAGE_PAGE(RegBookIndexPart.HOUSE_MORTGAGE, "/report/register-book/ProjectMortgage.xhtml"),//在建工程抵押部分
+        PROJECT_MORTGAGE_PAGE(2, RegBookIndexPart.HOUSE_MORTGAGE, "/report/register-book/ProjectMortgage.xhtml"),//在建工程抵押部分
 
-        OWNER_HOUSE_MORTGAGE_PAGE(RegBookIndexPart.HOUSE_MORTGAGE,"/report/register-book/HouseMortgage.xhtml"), //现房抵押部分
+        OWNER_HOUSE_MORTGAGE_PAGE(3,RegBookIndexPart.HOUSE_MORTGAGE,"/report/register-book/HouseMortgage.xhtml"), //现房抵押部分
 
-        COURT_CLOSE_PAGE(RegBookIndexPart.OTHER_REG,"/report/register-book/CourtClose.xhtml"),//查封部分
+        COURT_CLOSE_PAGE(4, RegBookIndexPart.OTHER_REG,"/report/register-book/CourtClose.xhtml"),//查封部分
 
-        DISSIDENCE_PAGE(RegBookIndexPart.OTHER_REG,"/report/register-book/Dissidence.xhtml"),//异议部分（异议）
+        DISSIDENCE_PAGE(5, RegBookIndexPart.OTHER_REG,"/report/register-book/Dissidence.xhtml"),//异议部分（异议）
 
-        PREPARE_OWNER_PAGE(RegBookIndexPart.OTHER_REG,"/report/register-book/PrepareOwner.xhtml");//预告登记部分
+        PREPARE_OWNER_PAGE(6, RegBookIndexPart.OTHER_REG,"/report/register-book/PrepareOwner.xhtml");//预告登记部分
+
+        private int pri;
 
         private String location;
 
@@ -60,9 +62,14 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
             return location;
         }
 
-        RegBookPage(RegBookIndexPart part, String location){
+        public int getPri() {
+            return pri;
+        }
+
+        RegBookPage(int pri, RegBookIndexPart part, String location){
             this.part = part;
             this.location = location;
+            this.pri = pri;
         }
     }
 
@@ -80,6 +87,10 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         DISSIDENCE(true, RegBookPage.DISSIDENCE_PAGE),//异议部分（异议）
 
         PREPARE_OWNER(true, RegBookPage.PREPARE_OWNER_PAGE),//预告登记部分
+
+        PREPARE_MORTGAGE(true, RegBookPage.PREPARE_OWNER_PAGE), //预告抵押
+
+        PREPARE_CHANGE(true, RegBookPage.PREPARE_OWNER_PAGE), //预告转移
 
         HIGHEST_MORTGAGE_CONFIRM(false, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押最高额确定登记
 
