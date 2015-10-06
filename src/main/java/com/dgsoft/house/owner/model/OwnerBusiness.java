@@ -476,6 +476,20 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.projectMortgages = projectMortgages;
     }
 
+    @Transient
+    public ProjectMortgage getProjectMortgage(){
+        if (getProjectMortgages().isEmpty()){
+            return null;
+        }
+        return getProjectMortgages().iterator().next();
+    }
+
+    @Transient
+    public void setProjectMortgage(ProjectMortgage projectMortgage){
+        getProjectMortgages().clear();
+        getProjectMortgages().add(projectMortgage);
+    }
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "HOUSE_CARD_PATCH",joinColumns = @JoinColumn(name = "BUSINESS"), inverseJoinColumns = @JoinColumn(name = "CARD"))
     public Set<MakeCard> getPatchCards() {
@@ -616,19 +630,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     }
 
-    /**
-     * 在建工程抵押人
-     */
-    @Transient
-    public BusinessPersion getMortgageProject() {
-        for (BusinessPersion persion : getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_PROJECT)) {
-                return persion;
-            }
-        }
-        return null;
-
-    }
 
     /**
      * 测绘公司
