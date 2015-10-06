@@ -27,24 +27,24 @@
             <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}">#{_page.secondItem.mainBusiness.ownerBusiness.id}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>查封机关</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}">#{_page.firstItem.mainBusiness.ownerBusiness.closeHouse.closeDownClour}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}">#{_page.secondItem.mainBusiness.ownerBusiness.closeHouse.closeDownClour}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>查封文件</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}">#{_page.firstItem.mainBusiness.ownerBusiness.closeHouse.legalDocuments}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}">#{_page.secondItem.mainBusiness.ownerBusiness.closeHouse.legalDocuments}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>查封文号</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}">#{_page.firstItem.mainBusiness.ownerBusiness.closeHouse.executionNotice}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}">#{_page.secondItem.mainBusiness.ownerBusiness.closeHouse.executionNotice}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>查封时间</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.closeHouse.closeDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"><p:text value="#{_page.secondItem.mainBusiness.ownerBusiness.closeHouse.closeDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>查封期限</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.closeHouse.toDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}"><p:text value="#{_page.secondItem.mainBusiness.ownerBusiness.closeHouse.toDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph></p:cell>
 
 
             <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
@@ -60,16 +60,16 @@
             <p:cell borderWidthTop="2"><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}">#{_page.secondItem.cancelBusiness.ownerBusiness.id}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>解除查封文件</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}">#{_page.firstItem.cancelBusiness.ownerBusiness.houseCloseCancel.legalDocuments}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}">#{_page.secondItem.cancelBusiness.ownerBusiness.houseCloseCancel.legalDocuments}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>解除查封文号</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}">#{_page.firstItem.cancelBusiness.ownerBusiness.houseCloseCancel.executionNotice}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}">#{_page.secondItem.cancelBusiness.ownerBusiness.houseCloseCancel.executionNotice}</p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>解除查封时间</p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"></p:paragraph></p:cell>
-            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"><p:text value="#{_page.firstItem.cancelBusiness.ownerBusiness.houseCloseCancel.cancelDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.cancelBusiness)}"><p:text value="#{_page.secondItem.cancelBusiness.ownerBusiness.houseCloseCancel.cancelDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph></p:cell>
 
             <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
             <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.cancelBusiness)}"><p:text value="#{_page.firstItem.cancelBusiness.ownerBusiness.regTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text></p:paragraph></p:cell>

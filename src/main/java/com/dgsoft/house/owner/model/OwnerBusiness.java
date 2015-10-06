@@ -580,12 +580,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public BusinessPersion getApplyPersion() {
-        for (BusinessPersion persion : getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.CORRECT)) {
-                return persion;
-            }
-        }
-        return null;
+        return getBusinessPersion(BusinessPersion.PersionType.CORRECT);
     }
 
     /**
@@ -593,12 +588,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public BusinessPersion getMortgageObligee() {
-        for (BusinessPersion persion : getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGEE)) {
-                return persion;
-            }
-        }
-        return null;
+        return getBusinessPersion(BusinessPersion.PersionType.MORTGAGE_OBLIGEE);
 
     }
 
@@ -607,12 +597,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public BusinessPersion getMortgage() {
-        for (BusinessPersion persion : getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE)) {
-                return persion;
-            }
-        }
-        return null;
+        return getBusinessPersion(BusinessPersion.PersionType.MORTGAGE);
 
     }
 
@@ -621,13 +606,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public BusinessPersion getMortgageObligor() {
-        for (BusinessPersion persion : getBusinessPersions()) {
-            if (persion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)) {
-                return persion;
-            }
-        }
-        return null;
-
+        return getBusinessPersion(BusinessPersion.PersionType.MORTGAGE_OBLIGOR);
     }
 
 
@@ -740,6 +719,85 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public BusinessEmp getApplyEmp(){
         return getOperEmp(BusinessEmp.EmpType.APPLY_EMP);
+    }
+
+
+    @Transient
+    public Reason getReason(Reason.ReasonType type){
+        for(Reason reason: getReasons()){
+            if (reason.getType().equals(type)){
+                return reason;
+            }
+        }
+        return null;
+    }
+
+    @Transient
+    public BusinessPersion getBusinessPersion(BusinessPersion.PersionType type){
+        for (BusinessPersion businessPersion: getBusinessPersions()){
+            if(businessPersion.getType().equals(type)){
+                return businessPersion;
+            }
+        }
+        return null;
+    }
+
+    @Transient
+    public BusinessPersion getSellEntrust(){
+        return getBusinessPersion(BusinessPersion.PersionType.SELL_ENTRUST);
+    }
+
+    @Transient
+    public BusinessPersion getOwnerEntrust(){
+        return getBusinessPersion(BusinessPersion.PersionType.OWNER_ENTRUST);
+    }
+
+    @Transient
+    public Reason getReceive(){
+        return getReason(Reason.ReasonType.RECEIVE);
+    }
+    @Transient
+    public Reason getHighDebtor(){
+        return getReason(Reason.ReasonType.High_DEBTOR);
+    }
+    @Transient
+    public Reason getFillChange(){
+        return getReason(Reason.ReasonType.FILL_CHANGE);
+    }
+
+    /**
+     * 异议事项
+     */
+    @Transient
+    public Reason getDifficulty(){
+        return getReason(Reason.ReasonType.DIFFICULTY);
+    }
+
+    /**
+     * 注销原因
+     */
+    @Transient
+    public Reason getLogout(){
+        return getReason(Reason.ReasonType.LOGOUT);
+    }
+
+    @Transient
+    public Reason getChangBeforReason(){
+        return getReason(Reason.ReasonType.CHANG_BEFOR_RESON);
+    }
+
+    @Transient
+    public Reason getChangAfterReason(){
+        return getReason(Reason.ReasonType.CHANG_AFTER_RESON);
+    }
+
+    @Transient
+    public Reason getModifyBeforReason(){
+        return getReason(Reason.ReasonType.MODIFY_BEFOR_RENSON);
+    }
+    @Transient
+    public Reason getModifyAfterReason(){
+        return getReason(Reason.ReasonType.MODIFY_AFTER_RENSON);
     }
 
 }

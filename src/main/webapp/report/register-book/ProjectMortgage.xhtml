@@ -50,8 +50,8 @@
 
             <p:cell horizontalAlignment="center" paddingRight="5" paddingLeft="5" paddingTop="0" paddingBottom="5"><p:paragraph alignment="center">债务履行期限</p:paragraph><p:paragraph alignment="center">（债权确定期间）</p:paragraph></p:cell>
             <p:cell verticalAlignment="center" horizontalAlignment="center">
-                <p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}" alignment="center"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> </p:paragraph>
-                <p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}" alignment="center"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> #{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}</p:paragraph>
+                <p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}" alignment="center"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> 至 </p:text> </p:paragraph>
+                <p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}" alignment="center"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text> #{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}</p:paragraph>
             </p:cell>
             <p:cell verticalAlignment="center" horizontalAlignment="center">
                 <p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}" alignment="center"><p:text value="#{_page.secondItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> </p:paragraph>

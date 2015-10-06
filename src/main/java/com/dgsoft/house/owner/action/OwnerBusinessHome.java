@@ -44,26 +44,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return result;
     }
 
-    public Reason getReasonByType(String typeName){
-           for(Reason reason:getInstance().getReasons()){
-               if (reason.getType().equals(Reason.ReasonType.valueOf(Reason.ReasonType.class,typeName))){
-                   return reason;
-               }
-           }
-           return null;
-    }
-
-    public BusinessEmp getBusinessEmpByType(String typeName){
-        for(BusinessEmp businessEmp:getInstance().getBusinessEmps()){
-            if (businessEmp.getType().equals(BusinessEmp.EmpType.valueOf(BusinessEmp.EmpType.class,typeName))){
-                return businessEmp;
-            }
-        }
-        return null;
-
-    }
-
-
     public MakeCard getCardByType(String typeName){
         for (MakeCard makeCard:getInstance().getMakeCards()){
               if (makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,typeName))){
@@ -91,19 +71,10 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
     public List<MakeCard> getMakeCardByType(String typeName){
-
         return getMakeCardByType(MakeCard.CardType.valueOf(typeName));
     }
 
 
-    public BusinessPersion getBusinessPersionByType(String typeName){
-        for (BusinessPersion businessPersion:getInstance().getBusinessPersions()){
-            if(businessPersion.getType().equals(BusinessPersion.PersionType.valueOf(BusinessPersion.PersionType.class,typeName))){
-                return businessPersion;
-            }
-        }
-        return null;
-    }
     public CloseHouse getCloseHouse(){
         if(!getInstance().getCloseHouses().isEmpty()){
             return getInstance().getCloseHouses().iterator().next();
@@ -157,87 +128,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
-
-
-
-    public BusinessEmp getApplyEmp(){
-        return getInstance().getApplyEmp();
-    }
-
-    public BusinessEmp getCheckEmp(){
-        return getInstance().getCheckEmp();
-    }
-
-    public BusinessEmp getRegisterEmp(){
-        return getInstance().getRegisterEmp();
-    }
-
-    public BusinessEmp getCardPrinterEmp(){
-        return getInstance().getCardPrinterEmp();
-    }
-
-    public BusinessEmp getCreateEmp(){
-        return getInstance().getCreateEmp();
-    }
-
-    public BusinessPersion getSellEntrust(){
-        return getBusinessPersionByType("SELL_ENTRUST");
-    }
-
-    public BusinessPersion getOwnerEntrust(){
-        return getBusinessPersionByType("OWNER_ENTRUST");
-    }
-
-
-
-    public Reason getReceive(){
-        return getReasonByType("RECEIVE");
-    }
-    public Reason getHighDebtor(){
-        return getReasonByType("High_DEBTOR");
-    }
-
-    public Reason getFillChange(){
-
-        return getReasonByType("FILL_CHANGE");
-
-    }
-
-    /**
-     * 异议事项
-     */
-
-    public Reason getDifficulty(){
-
-        return getReasonByType("DIFFICULTY");
-
-    }
-
-    /**
-     * 注销原因
-     */
-    public Reason getLogout(){
-
-        return getReasonByType("LOGOUT");
-
-    }
-
-
-    public Reason getChangBeforReason(){
-        return getReasonByType("CHANG_BEFOR_RESON");
-    }
-
-    public Reason getChangAfterReason(){
-        return getReasonByType("CHANG_AFTER_RESON");
-    }
-
-
-    public Reason getModifyBeforReason(){
-        return getReasonByType("MODIFY_BEFOR_RENSON");
-    }
-    public Reason getModifyAfterReason(){
-        return getReasonByType("MODIFY_AFTER_RENSON");
-    }
     public BusinessMoney getTotal(){
         if (!getInstance().getBusinessMoneys().isEmpty()) {
             BusinessMoney result = new BusinessMoney();
@@ -290,20 +180,35 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+    public boolean isCanCancel(){
+        return isCanModify();
+    }
+
+
+    public Reason getReasonByType(String typeName){
+        return getInstance().getReason(Reason.ReasonType.valueOf(typeName));
+    }
+
+    public BusinessPersion getBusinessPersionByType(String typeName){
+        return getInstance().getBusinessPersion(BusinessPersion.PersionType.valueOf(typeName));
+    }
+
+    public BusinessEmp getBusinessEmpByType(String typeName){
+        return getInstance().getOperEmp(BusinessEmp.EmpType.valueOf(typeName));
+    }
 
     /**
      * 申请人
      */
-
+    @Deprecated
     public BusinessPersion getApplyPersion(){
-
         return getInstance().getApplyPersion();
     }
 
     /**
      * 抵押权人代理人
      */
-
+    @Deprecated
     public BusinessPersion getMortgageObligee(){
         return getInstance().getMortgageObligee();
     }
@@ -311,18 +216,15 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     /**
      * 抵押人代理人
      */
-
+    @Deprecated
     public BusinessPersion getMortgage(){
-
-
         return getInstance().getMortgage();
-
     }
 
     /**
      * 债务人
      */
-
+    @Deprecated
     public BusinessPersion getMortgageObligor(){
         return getInstance().getMortgageObligor();
     }
@@ -330,7 +232,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     /**
      * 测绘公司
      */
-
+    @Deprecated
     public MappingCorp getMappingCorp(){
         return getInstance().getMappingCorp();
     }
@@ -338,14 +240,89 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     /**
      * 评估公司
      */
-
+    @Deprecated
     public Evaluate getEvaluate(){
         return getInstance().getEvaluate();
     }
 
-
-    public boolean isCanCancel(){
-        return isCanModify();
+    @Deprecated
+    public BusinessPersion getSellEntrust(){
+        return getInstance().getSellEntrust();
     }
+
+    @Deprecated
+    public BusinessPersion getOwnerEntrust(){
+        return getInstance().getOwnerEntrust();
+    }
+
+    @Deprecated
+    public Reason getReceive(){
+        return getInstance().getReceive();
+    }
+
+    @Deprecated
+    public Reason getHighDebtor(){
+        return getInstance().getHighDebtor();
+    }
+
+    @Deprecated
+    public Reason getFillChange(){
+        return getInstance().getFillChange();
+    }
+
+    /**
+     * 异议事项
+     */
+    @Deprecated
+    public Reason getDifficulty(){
+        return getInstance().getDifficulty();
+    }
+
+    /**
+     * 注销原因
+     */
+    @Deprecated
+    public Reason getLogout(){
+        return getInstance().getLogout();
+    }
+
+    @Deprecated
+    public Reason getChangBeforReason(){
+        return getInstance().getChangBeforReason();
+    }
+    @Deprecated
+    public Reason getChangAfterReason(){
+        return getInstance().getChangAfterReason();
+    }
+    @Deprecated
+    public Reason getModifyBeforReason(){
+        return getInstance().getModifyBeforReason();
+    }
+    @Deprecated
+    public Reason getModifyAfterReason(){
+        return getInstance().getModifyAfterReason();
+    }
+
+    @Deprecated
+    public BusinessEmp getCreateEmp(){
+        return getInstance().getCreateEmp();
+    }
+    @Deprecated
+    public BusinessEmp getApplyEmp(){
+        return getInstance().getApplyEmp();
+    }
+    @Deprecated
+    public BusinessEmp getCheckEmp(){
+        return getInstance().getCheckEmp();
+    }
+    @Deprecated
+    public BusinessEmp getRegisterEmp(){
+        return getInstance().getRegisterEmp();
+    }
+    @Deprecated
+    public BusinessEmp getCardPrinterEmp(){
+        return getInstance().getCardPrinterEmp();
+    }
+
 
 }
