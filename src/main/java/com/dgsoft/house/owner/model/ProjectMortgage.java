@@ -35,7 +35,7 @@ public class ProjectMortgage {
         this.id = id;
     }
 
-    @Column(name = "ADDRESS", length = 512)
+    @Column(name = "ADDRESS", length = 512 )
     @Size(max = 512)
     public String getAddress() {
         return address;
@@ -45,7 +45,7 @@ public class ProjectMortgage {
         this.address = address;
     }
 
-    @Column(name = "ADDRESS", length = 32)
+    @Column(name = "LAND_NUMBER", length = 32)
     @Size(max = 32)
     public String getLandNumber() {
         return landNumber;
