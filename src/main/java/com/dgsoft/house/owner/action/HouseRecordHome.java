@@ -183,7 +183,9 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
                 "where houseBusiness.ownerBusiness.recorded = true and houseBusiness.houseCode =:houseCode order by houseBusiness.ownerBusiness.regTime", HouseBusiness.class)
                 .setParameter("houseCode", getInstance().getHouseCode()).getResultList();
         regBookInfoPages = new ArrayList<RegBookInfoPage>();
-        Map<String, RegBookItem> masterBookItems = new HashMap<String, RegBookItem>();
+
+        List<RegBookItem> regBookItemList = new ArrayList<RegBookItem>();
+        Map<String, RegBookItem> masterBookItemMap = new HashMap<String, RegBookItem>();
 
         int pri = 1;
         for(HouseBusiness houseBusiness: houseBusinessList){
@@ -195,22 +197,25 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
             }
 
             for(BusinessDefine.RegBookItemType regBookItemType : businessBookBizTypes){
+                RegBookItem item = null;
                 if (BusinessDefine.RegBookItemTypeLocation.MASTER.equals(regBookItemType.getLocation())){
-                    masterBookItems.put(houseBusiness.getOwnerBusiness().getId(),new RegBookItem(regBookItemType,houseBusiness,pri++));
+                    item = new RegBookItem(regBookItemType,houseBusiness,pri++);
+                    regBookItemList.add(item);
                 }else{
-                    RegBookItem item = null;
                     if (houseBusiness.getOwnerBusiness().getSelectBusiness() != null){
-                        item = masterBookItems.get(houseBusiness.getOwnerBusiness().getSelectBusiness().getId());
+                        item = masterBookItemMap.get(houseBusiness.getOwnerBusiness().getSelectBusiness().getId());
                     }
-
 
                     if (item == null){
                         Logging.getLog(getClass()).warn("select Business not fount businessId:" + houseBusiness.getOwnerBusiness().getId());
-                        masterBookItems.put(houseBusiness.getOwnerBusiness().getId(),new RegBookItem(regBookItemType,houseBusiness,pri++));
+                        item = new RegBookItem(regBookItemType,houseBusiness,pri++);
+                        regBookItemList.add(item);
                     }else{
                         item.putBusiness(regBookItemType,houseBusiness);
                     }
                 }
+                if (!BusinessDefine.RegBookItemTypeLocation.LAST.equals(item.getRegBookItemType().getLocation()))
+                    masterBookItemMap.put(houseBusiness.getOwnerBusiness().getId(),item);
 
             }
         }
@@ -218,10 +223,10 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
         regBookPageMap = new HashMap<BusinessDefine.RegBookPage, List<RegBookPage>>();
 
-        List<RegBookItem> items = new ArrayList<RegBookItem>(masterBookItems.values());
-        Collections.sort(items);
+        //List<RegBookItem> items = new ArrayList<RegBookItem>(masterBookItems.values());
+        //Collections.sort(items);
 
-        for(RegBookItem item : items){
+        for(RegBookItem item : regBookItemList){
             List<RegBookPage> pages = regBookPageMap.get(item.getRegBookItemType().getPage());
             if (pages == null){
                 pages = new ArrayList<RegBookPage>();
