@@ -53,7 +53,7 @@
                 <p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}" alignment="center"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> </p:paragraph>
                 <p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness)}" alignment="center"><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> #{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}</p:paragraph>
             </p:cell>
-            <p:cell>
+            <p:cell verticalAlignment="center" horizontalAlignment="center">
                 <p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}" alignment="center"><p:text value="#{_page.secondItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> </p:paragraph>
                 <p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness)}" alignment="center"><p:text value="#{_page.secondItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> #{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.mortgageTime}</p:paragraph>
             </p:cell>
