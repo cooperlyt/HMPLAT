@@ -19,7 +19,7 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
     public static class RegBookItem implements Comparable<RegBookItem>{
 
-        private BusinessDefine.RegBookBizType regBookBizType;
+        private BusinessDefine.RegBookItemType regBookItemType;
 
         private HouseBusiness mainBusiness;
 
@@ -29,29 +29,25 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
         private int pri;
 
-        public RegBookItem(BusinessDefine.RegBookBizType regBookBizType, HouseBusiness mainBusiness, int pri) {
-            putBusiness(regBookBizType,mainBusiness);
+        public RegBookItem(BusinessDefine.RegBookItemType regBookItemType, HouseBusiness mainBusiness, int pri) {
+            putBusiness(regBookItemType,mainBusiness);
             this.pri = pri;
         }
 
-        public void putBusiness(BusinessDefine.RegBookBizType regBookBizType, HouseBusiness houseBusiness){
-            this.regBookBizType = regBookBizType;
-            if (regBookBizType.isMaster()){
-                this.mainBusiness = houseBusiness;
-            }else{
-                switch (regBookBizType){
-                    case COURT_CLOSE_CANCEL_PART:
-                        this.cancelBusiness = houseBusiness;
-                        break;
-                    case HIGHEST_MORTGAGE_CONFIRM:
-                        this.confirmBusiness = houseBusiness;
-                        break;
-                    case MORTGAGE_CANCEL:
-                        this.cancelBusiness = houseBusiness;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("type not define:" + regBookBizType);
-                }
+        public void putBusiness(BusinessDefine.RegBookItemType regBookItemType, HouseBusiness houseBusiness){
+            this.regBookItemType = regBookItemType;
+            switch (regBookItemType.getLocation()){
+                case MASTER:
+                    this.mainBusiness = houseBusiness;
+                    break;
+                case MIDDLE:
+                    this.confirmBusiness = houseBusiness;
+                    break;
+                case LAST:
+                    this.cancelBusiness = houseBusiness;
+                    break;
+                default:
+                    new IllegalArgumentException("local not defing");
             }
         }
 
@@ -59,8 +55,8 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
             return pri;
         }
 
-        public BusinessDefine.RegBookBizType getRegBookBizType() {
-            return regBookBizType;
+        public BusinessDefine.RegBookItemType getRegBookItemType() {
+            return regBookItemType;
         }
 
         public HouseBusiness getMainBusiness() {
@@ -181,25 +177,26 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
 
     protected void initRegBook(){
-        regBookInfoPages = new ArrayList<RegBookInfoPage>();
+
 
         List<HouseBusiness> houseBusinessList = getEntityManager().createQuery("select houseBusiness from HouseBusiness houseBusiness " +
                 "where houseBusiness.ownerBusiness.recorded = true and houseBusiness.houseCode =:houseCode order by houseBusiness.ownerBusiness.regTime", HouseBusiness.class)
                 .setParameter("houseCode", getInstance().getHouseCode()).getResultList();
-
+        regBookInfoPages = new ArrayList<RegBookInfoPage>();
         Map<String, RegBookItem> masterBookItems = new HashMap<String, RegBookItem>();
 
         int pri = 1;
         for(HouseBusiness houseBusiness: houseBusinessList){
 
-            Set<BusinessDefine.RegBookBizType> businessBookBizTypes = BusinessDefineCache.instance().getDefine(houseBusiness.getOwnerBusiness().getDefineId()).getRegisterBookParts();
-            if (regBookInfoPages.isEmpty() || businessBookBizTypes.contains(BusinessDefine.RegBookBizType.OWNER_HOUSE_CHANGE)){
+            Set<BusinessDefine.RegBookItemType> businessBookBizTypes = BusinessDefineCache.instance().getDefine(houseBusiness.getOwnerBusiness().getDefineId()).getRegisterBookParts();
+
+            if (regBookInfoPages.isEmpty() || businessBookBizTypes.contains(BusinessDefine.RegBookItemType.OWNER_HOUSE_CHANGE)){
                 regBookInfoPages.add(new RegBookInfoPage(regBookInfoPages.size() + 1,houseBusiness.getAfterBusinessHouse()));
             }
 
-            for(BusinessDefine.RegBookBizType regBookBizType: businessBookBizTypes){
-                if (regBookBizType.isMaster()){
-                    masterBookItems.put(houseBusiness.getOwnerBusiness().getId(),new RegBookItem(regBookBizType,houseBusiness,pri++));
+            for(BusinessDefine.RegBookItemType regBookItemType : businessBookBizTypes){
+                if (BusinessDefine.RegBookItemTypeLocation.MASTER.equals(regBookItemType.getLocation())){
+                    masterBookItems.put(houseBusiness.getOwnerBusiness().getId(),new RegBookItem(regBookItemType,houseBusiness,pri++));
                 }else{
                     RegBookItem item = null;
                     if (houseBusiness.getOwnerBusiness().getSelectBusiness() != null){
@@ -209,9 +206,9 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
                     if (item == null){
                         Logging.getLog(getClass()).warn("select Business not fount businessId:" + houseBusiness.getOwnerBusiness().getId());
-                        masterBookItems.put(houseBusiness.getOwnerBusiness().getId(),new RegBookItem(regBookBizType,houseBusiness,pri++));
+                        masterBookItems.put(houseBusiness.getOwnerBusiness().getId(),new RegBookItem(regBookItemType,houseBusiness,pri++));
                     }else{
-                        item.putBusiness(regBookBizType,houseBusiness);
+                        item.putBusiness(regBookItemType,houseBusiness);
                     }
                 }
 
@@ -225,13 +222,13 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         Collections.sort(items);
 
         for(RegBookItem item : items){
-            List<RegBookPage> pages = regBookPageMap.get(item.getRegBookBizType().getPage());
+            List<RegBookPage> pages = regBookPageMap.get(item.getRegBookItemType().getPage());
             if (pages == null){
                 pages = new ArrayList<RegBookPage>();
-                regBookPageMap.put(item.getRegBookBizType().getPage(), pages);
+                regBookPageMap.put(item.getRegBookItemType().getPage(), pages);
             }
             if (pages.isEmpty() || (pages.get(pages.size() - 1).getSecondItem() != null)){
-                RegBookPage page = new RegBookPage(item.getRegBookBizType().getPage(), pages.size() + 1,item);
+                RegBookPage page = new RegBookPage(item.getRegBookItemType().getPage(), pages.size() + 1,item);
                 pages.add(page);
             }else{
                 pages.get(pages.size() - 1).setSecondItem(item);

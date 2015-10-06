@@ -86,24 +86,27 @@
                         <p:cell><p:paragraph><p:text value="#{_infoPage.businessHouse.houseArea}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>规划用途</p:paragraph></p:cell>
                         <p:cell><p:paragraph>#{dictionary.getWordValue(_infoPage.businessHouse.useType)}</p:paragraph></p:cell>
-                        <p:cell horizontalAlignment="center"><p:paragraph>国有土地</p:paragraph></p:cell>
+                        <p:cell horizontalAlignment="center" padding="2"><p:font size="7" name="STSong-Light" encoding="UniGB-UCS2-H"><p:paragraph>国有土地使用权取得方式 (集资土地使用权类型)</p:paragraph></p:font></p:cell>
                         <p:cell><p:paragraph><p:text rendered="#{not empty _infoPage.businessHouse.landInfo}" value="#{dictionary.getWordValue(_infoPage.businessHouse.landInfo.landGetMode)}"></p:text></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>套内建筑面积</p:paragraph></p:cell>
                         <p:cell><p:paragraph><p:text value="#{_infoPage.businessHouse.useArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>房屋结构</p:paragraph></p:cell>
                         <p:cell><p:paragraph>#{dictionary.getWordValue(_infoPage.businessHouse.structure)}</p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>土地使用年限</p:paragraph></p:cell>
-                        <p:cell><p:paragraph><p:text rendered="#{not empty _infoPage.businessHouse.landInfo}" value="#{_infoPage.businessHouse.landInfo.endUseTime}"><s:convertDateTime pattern="#{messages.datePattern}"></s:convertDateTime></p:text></p:paragraph></p:cell>
+                        <p:cell>
+                            <p:paragraph rendered="#{not empty _infoPage.businessHouse.landInfo}"><p:text value="#{_infoPage.businessHouse.landInfo.beginUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"></s:convertDateTime></p:text></p:paragraph>
+                            <p:paragraph rendered="#{not empty _infoPage.businessHouse.landInfo}"><p:text value="#{_infoPage.businessHouse.landInfo.endUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"></s:convertDateTime></p:text></p:paragraph>
+                        </p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>分摊共有面积</p:paragraph></p:cell>
                         <p:cell ><p:paragraph><p:text value="#{_infoPage.businessHouse.commArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
-                        <p:cell><p:paragraph></p:paragraph></p:cell>
+                        <p:cell><p:paragraph><p:text value="#{_infoPage.businessHouse.houseBusinessForAfter.ownerBusiness.regTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>土地证号</p:paragraph></p:cell>
                         <p:cell><p:paragraph><p:text rendered="#{not empty _infoPage.businessHouse.landInfo}" value="#{_infoPage.businessHouse.landInfo.landCardNo}"></p:text></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>专有部分面积</p:paragraph></p:cell>
                         <p:cell><p:paragraph></p:paragraph></p:cell>
                         <p:cell horizontalAlignment="center"><p:paragraph>终审人/登簿人</p:paragraph></p:cell>
-                        <p:cell><p:paragraph></p:paragraph></p:cell>
+                        <p:cell horizontalAlignment="center"><p:paragraph>#{_infoPage.businessHouse.houseBusinessForAfter.ownerBusiness.checkEmp.empName}/#{_infoPage.businessHouse.houseBusinessForAfter.ownerBusiness.registerEmp.empName}</p:paragraph></p:cell>
                     </p:table>
                 </p:cell>
                 <p:cell>
@@ -202,16 +205,6 @@
             <ui:include src="#{_page.pageType.location}">
 
             </ui:include>
-
-
-
-            #{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.credentialsType eq 'OTHER'}
-            #{_page.firstItem.mainBusiness.ownerBusiness.mortgaegeRegiste.financial.makeCard.number}
-
-
-
-            #{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}
-            #{_page.firstItem.mainBusiness.startBusinessHouse.businessHouseOwner.personName}
 
             <p:newPage/>
             

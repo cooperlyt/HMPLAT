@@ -73,51 +73,55 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         }
     }
 
-    public enum RegBookBizType{
+    public enum RegBookItemTypeLocation{
+        MASTER,MIDDLE,LAST
+    }
+
+    public enum RegBookItemType {
 
 
-        OWNER_HOUSE_CHANGE(true, RegBookPage.OWNER_CHANGE_PAGE), OWNER_CHANGE(true, RegBookPage.OWNER_CHANGE_PAGE), //所有权部分 (改变基本状况页,不改变基本状况)
+        OWNER_HOUSE_CHANGE(RegBookItemTypeLocation.MASTER, RegBookPage.OWNER_CHANGE_PAGE), OWNER_CHANGE(RegBookItemTypeLocation.MASTER, RegBookPage.OWNER_CHANGE_PAGE), //所有权部分 (改变基本状况页,不改变基本状况)
 
-        PROJECT_MORTGAGE_PART(true, RegBookPage.PROJECT_MORTGAGE_PAGE),//在建工程抵押部分
+        PROJECT_MORTGAGE_PART(RegBookItemTypeLocation.MASTER, RegBookPage.PROJECT_MORTGAGE_PAGE),//在建工程抵押部分
 
-        OWNER_HOUSE_MORTGAGE(true, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押部分
+        OWNER_HOUSE_MORTGAGE(RegBookItemTypeLocation.MASTER, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押部分
 
-        COURT_CLOSE_PART(true, RegBookPage.COURT_CLOSE_PAGE), COURT_CLOSE_CANCEL_PART(false, RegBookPage.COURT_CLOSE_PAGE), //查封部分(查封,查封解除)
+        COURT_CLOSE_PART(RegBookItemTypeLocation.MASTER, RegBookPage.COURT_CLOSE_PAGE), COURT_CLOSE_CANCEL_PART(RegBookItemTypeLocation.LAST, RegBookPage.COURT_CLOSE_PAGE), //查封部分(查封,查封解除)
 
-        DISSIDENCE(true, RegBookPage.DISSIDENCE_PAGE),//异议部分（异议）
+        DISSIDENCE(RegBookItemTypeLocation.MASTER, RegBookPage.DISSIDENCE_PAGE),//异议部分（异议）
 
-        PREPARE_OWNER(true, RegBookPage.PREPARE_OWNER_PAGE),//预告登记部分
+        PREPARE_OWNER(RegBookItemTypeLocation.MASTER, RegBookPage.PREPARE_OWNER_PAGE),//预告登记部分
 
-        PREPARE_MORTGAGE(true, RegBookPage.PREPARE_OWNER_PAGE), //预告抵押
+        PREPARE_MORTGAGE(RegBookItemTypeLocation.MASTER, RegBookPage.PREPARE_OWNER_PAGE), //预告抵押
 
-        PREPARE_CHANGE(true, RegBookPage.PREPARE_OWNER_PAGE), //预告转移
+        PREPARE_CHANGE(RegBookItemTypeLocation.MASTER, RegBookPage.PREPARE_OWNER_PAGE), //预告转移
 
-        HIGHEST_MORTGAGE_CONFIRM(false, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押最高额确定登记
+        HIGHEST_MORTGAGE_CONFIRM(RegBookItemTypeLocation.MIDDLE, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押最高额确定登记
 
-        PROJECT_HIGHEST_MORTGAGE_CONFIRM(false, RegBookPage.PROJECT_MORTGAGE_PAGE),//在建工程抵押最高额确定登记
+        PROJECT_HIGHEST_MORTGAGE_CONFIRM(RegBookItemTypeLocation.MIDDLE, RegBookPage.PROJECT_MORTGAGE_PAGE),//在建工程抵押最高额确定登记
 
-        PROJECT_MORTGAGE_CANCEL(false,null),//在建工程抵押注销（包括各种抵押类型的注销）
+        PROJECT_MORTGAGE_CANCEL(RegBookItemTypeLocation.LAST,RegBookPage.PROJECT_MORTGAGE_PAGE),//在建工程抵押注销（包括各种抵押类型的注销）
 
-        DISSIDENCE_CANCEL(false, RegBookPage.DISSIDENCE_PAGE), //异议解除
+        DISSIDENCE_CANCEL(RegBookItemTypeLocation.LAST, RegBookPage.DISSIDENCE_PAGE), //异议解除
 
-        MORTGAGE_CANCEL(false, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押注销
+        MORTGAGE_CANCEL(RegBookItemTypeLocation.LAST, RegBookPage.OWNER_HOUSE_MORTGAGE_PAGE), //现房抵押注销
 
-        PREPARE_CANCEL(false, RegBookPage.PREPARE_OWNER_PAGE); //预告登记解除
+        PREPARE_CANCEL(RegBookItemTypeLocation.LAST, RegBookPage.PREPARE_OWNER_PAGE); //预告登记解除
 
-        private boolean master;
+        private RegBookItemTypeLocation location;
 
         private RegBookPage page;
 
-        public boolean isMaster() {
-            return master;
+        public RegBookItemTypeLocation getLocation() {
+            return location;
         }
 
         public RegBookPage getPage() {
             return page;
         }
 
-        RegBookBizType(boolean master, RegBookPage page) {
-            this.master = master;
+        RegBookItemType(RegBookItemTypeLocation location, RegBookPage page) {
+            this.location = location;
             this.page = page;
         }
     }
@@ -399,14 +403,14 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     }
 
     @Transient
-    public Set<RegBookBizType> getRegisterBookParts(){
+    public Set<RegBookItemType> getRegisterBookParts(){
         if (getRegisterBookPart() == null || getRegisterBookPart().trim().equals("")){
-            return new HashSet<RegBookBizType>(0);
+            return new HashSet<RegBookItemType>(0);
         }
-        Set<RegBookBizType> result = new HashSet<RegBookBizType>();
+        Set<RegBookItemType> result = new HashSet<RegBookItemType>();
         for(String type: getRegisterBookPart().split(",")){
             if (!type.trim().equals("")){
-                result.add(RegBookBizType.valueOf(type));
+                result.add(RegBookItemType.valueOf(type));
             }
         }
         return result;

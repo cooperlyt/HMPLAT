@@ -17,10 +17,8 @@ import org.jboss.seam.log.Logging;
 import org.jbpm.graph.def.Action;
 import org.jbpm.graph.def.Node;
 import org.jbpm.graph.def.ProcessDefinition;
-import org.richfaces.model.SortMode;
 
 import javax.faces.event.ValueChangeEvent;
-import javax.persistence.criteria.Order;
 import javax.swing.tree.TreeNode;
 import java.util.*;
 
@@ -41,8 +39,8 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     @In
     private FacesMessages facesMessages;
 
-    public BusinessDefine.RegBookBizType[] getAllRegPart(){
-        return BusinessDefine.RegBookBizType.values();
+    public BusinessDefine.RegBookItemType[] getAllRegPart(){
+        return BusinessDefine.RegBookItemType.values();
     }
 
 
