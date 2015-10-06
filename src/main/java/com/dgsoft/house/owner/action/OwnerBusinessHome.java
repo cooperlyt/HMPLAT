@@ -161,23 +161,23 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
     public BusinessEmp getApplyEmp(){
-        return getOperEmp(BusinessEmp.EmpType.APPLY_EMP);
+        return getInstance().getApplyEmp();
     }
 
     public BusinessEmp getCheckEmp(){
-        return getOperEmp(BusinessEmp.EmpType.CHECK_EMP);
+        return getInstance().getCheckEmp();
     }
 
     public BusinessEmp getRegisterEmp(){
-        return getOperEmp(BusinessEmp.EmpType.REG_EMP);
+        return getInstance().getRegisterEmp();
     }
 
     public BusinessEmp getCardPrinterEmp(){
-        return getOperEmp(BusinessEmp.EmpType.CARD_PRINTER);
+        return getInstance().getCardPrinterEmp();
     }
 
     public BusinessEmp getCreateEmp(){
-        return getOperEmp(BusinessEmp.EmpType.CREATE_EMP);
+        return getInstance().getCreateEmp();
     }
 
     public BusinessPersion getSellEntrust(){
@@ -252,15 +252,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
-    private BusinessEmp getOperEmp(BusinessEmp.EmpType empType){
-        for(BusinessEmp emp: getInstance().getBusinessEmps()){
-            if(emp.getType().equals(empType)){
-                return emp;
-            }
-        }
-        return null;
-    }
-
     public List<TaskOper> getTaskOperList(){
         List<TaskOper> result = new ArrayList<TaskOper>(getInstance().getTaskOpers());
         Collections.sort(result, new Comparator<TaskOper>() {
@@ -298,12 +289,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return false;
 
     }
-
-
-
-
-
-
 
 
     /**

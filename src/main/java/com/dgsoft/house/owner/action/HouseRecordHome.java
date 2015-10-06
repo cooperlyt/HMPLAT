@@ -75,6 +75,16 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
             return cancelBusiness;
         }
 
+        public HouseBusiness getTopBusiness(){
+            if (mainBusiness != null){
+                return mainBusiness;
+            }
+            if (confirmBusiness != null){
+                return confirmBusiness;
+            }
+            return cancelBusiness;
+        }
+
         @Override
         public int compareTo(RegBookItem o) {
             return Integer.valueOf(pri).compareTo(o.getPri());
@@ -83,15 +93,22 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
     public static class RegBookPage{
 
+        private BusinessDefine.RegBookPage pageType;
+
         private int pageNumber;
 
         private RegBookItem firstItem;
 
         private RegBookItem secondItem;
 
-        public RegBookPage(int pageNumber, RegBookItem firstItem) {
+        public RegBookPage(BusinessDefine.RegBookPage pageType, int pageNumber, RegBookItem firstItem) {
+            this.pageType = pageType;
             this.pageNumber = pageNumber;
             this.firstItem = firstItem;
+        }
+
+        public BusinessDefine.RegBookPage getPageType() {
+            return pageType;
         }
 
         public int getPageNumber() {
@@ -133,52 +150,37 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         }
     }
 
-    private Map<BusinessDefine.RegBookPagePart,List<RegBookPage>> regBookPages;
+    private Map<BusinessDefine.RegBookIndexPart,List<RegBookPage>> regBookPartMap;
 
     private List<RegBookInfoPage> regBookInfoPages;
 
-    //private Map<BusinessDefine.RegBookPart, Integer> pages;
-
-
-    public List<RegBookPage> getRegBookPages(BusinessDefine.RegBookPagePart type){
-        if (regBookPages == null){
-            initRegBook();
-        }
-        return regBookPages.get(type);
-    }
-
-    public List<RegBookPage> getRegOwnerPages(){
-        return getRegBookPages(BusinessDefine.RegBookPagePart.OWNER_CHANGE);
-    }
-
-    public List<RegBookPage> getRegProjectMortgagePages(){
-        return getRegBookPages(BusinessDefine.RegBookPagePart.PROJECT_MORTGAGE_PART);
-    }
-
-    public List<RegBookPage> getOwnerHouseMortgagePages(){
-        return getRegBookPages(BusinessDefine.RegBookPagePart.OWNER_HOUSE_MORTGAGE);
-    }
-
-    public List<RegBookPage> getCourtClosePages(){
-        return getRegBookPages(BusinessDefine.RegBookPagePart.COURT_CLOSE_PART);
-    }
-
-    public List<RegBookPage> getDissidencePages(){
-        return getRegBookPages(BusinessDefine.RegBookPagePart.DISSIDENCE);
-    }
-
-    public List<RegBookPage> getPrepareOwnerPages(){
-        return getRegBookPages(BusinessDefine.RegBookPagePart.PREPARE_OWNER);
-    }
-
-    public List<RegBookInfoPage> getRegBookInfoPages(){
+    public List<RegBookInfoPage> getRegBookInfoPart(){
         if (regBookInfoPages == null){
             initRegBook();
         }
         return regBookInfoPages;
     }
 
-    public void initRegBook(){
+    public Map<BusinessDefine.RegBookIndexPart,List<RegBookPage>> getRegBookPartMap(){
+        if (regBookPartMap == null){
+            initRegBook();
+        }
+        return regBookPartMap;
+    }
+
+    public List<Map.Entry<BusinessDefine.RegBookIndexPart,List<RegBookPage>>> getRegBookParts(){
+        List<Map.Entry<BusinessDefine.RegBookIndexPart,List<RegBookPage>>> result = new ArrayList<Map.Entry<BusinessDefine.RegBookIndexPart,List<RegBookPage>>>(getRegBookPartMap().entrySet());
+        Collections.sort(result, new Comparator<Map.Entry<BusinessDefine.RegBookIndexPart, List<RegBookPage>>>() {
+            @Override
+            public int compare(Map.Entry<BusinessDefine.RegBookIndexPart, List<RegBookPage>> o1, Map.Entry<BusinessDefine.RegBookIndexPart, List<RegBookPage>> o2) {
+                return Integer.valueOf(o1.getKey().getPri()).compareTo(o2.getKey().getPri());
+            }
+        });
+        return result;
+    }
+
+
+    protected void initRegBook(){
         regBookInfoPages = new ArrayList<RegBookInfoPage>();
 
         List<HouseBusiness> houseBusinessList = getEntityManager().createQuery("select houseBusiness from HouseBusiness houseBusiness " +
@@ -217,19 +219,19 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         }
 
 
-        regBookPages = new HashMap<BusinessDefine.RegBookPagePart, List<RegBookPage>>();
+        regBookPartMap = new HashMap<BusinessDefine.RegBookIndexPart, List<RegBookPage>>();
 
         List<RegBookItem> items = new ArrayList<RegBookItem>(masterBookItems.values());
         Collections.sort(items);
 
         for(RegBookItem item : items){
-            List<RegBookPage> pages = regBookPages.get(item.getRegBookBizType().getPart());
+            List<RegBookPage> pages = regBookPartMap.get(item.getRegBookBizType().getPage().getPart());
             if (pages == null){
                 pages = new ArrayList<RegBookPage>();
-                regBookPages.put(item.getRegBookBizType().getPart(),pages);
+                regBookPartMap.put(item.getRegBookBizType().getPage().getPart(), pages);
             }
             if (pages.isEmpty() || (pages.get(pages.size() - 1).getSecondItem() != null)){
-                RegBookPage page = new RegBookPage(pages.size() + 1,item);
+                RegBookPage page = new RegBookPage(item.getRegBookBizType().getPage(), pages.size() + 1,item);
                 pages.add(page);
             }else{
                 pages.get(pages.size() - 1).setSecondItem(item);
@@ -259,7 +261,7 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
     @Override
     protected void initInstance(){
         super.initInstance();
-        regBookPages = null;
+        regBookPartMap = null;
         regBookInfoPages = null;
         ownerBusinessList = null;
     }

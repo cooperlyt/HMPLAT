@@ -1,0 +1,81 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:p="http://jboss.org/schema/seam/pdf"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+        <p:table columns="2" widthPercentage="100" widths="2 1">
+            <f:facet name="defaultCell"><p:cell borderWidth="0" padding="2" paddingBottom="10"/></f:facet>
+            <p:cell><p:paragraph >房屋编号：#{houseRecordHome.instance.businessHouse.houseCode}</p:paragraph></p:cell>
+            <p:cell horizontalAlignment="right"><p:paragraph alignment="right">所有权部分第  #{_page.pageNumber}  页</p:paragraph></p:cell>
+        </p:table>
+    </p:font>
+
+    <p:font size="11" name="STSong-Light" encoding="UniGB-UCS2-H">
+        <p:table columns="3" widthPercentage="100" widths="2 5 5">
+            <f:facet name="defaultCell"><p:cell verticalAlignment="middle" borderWidth="1" paddingTop="8" paddingBottom="10" paddingRight="5" paddingLeft="5"/></f:facet>
+            <p:cell horizontalAlignment="center"><p:paragraph>内容\序号</p:paragraph></p:cell>
+            <p:cell><p:paragraph>#{(_page.pageNumber - 1) * 2 + 1}. #{_page.firstItem.topBusiness.ownerBusiness.defineName}<p:text value="#{messages[_page.firstItem.topBusiness.ownerBusiness.type.name()]}" rendered="#{not (_page.firstItem.topBusiness.ownerBusiness.type eq 'NORMAL_BIZ')}" /></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{not empty _page.secondItem}">#{(_page.pageNumber - 1) * 2 + 2}. #{_page.secondItem.topBusiness.ownerBusiness.defineName}<p:text value="#{messages[_page.secondItem.topBusiness.ownerBusiness.type.name()]}" rendered="#{not (_page.secondItem.topBusiness.ownerBusiness.type eq 'NORMAL_BIZ')}" /></p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>业务宗号</p:paragraph></p:cell>
+            <p:cell><p:paragraph>#{_page.firstItem.mainBusiness.ownerBusiness.id}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{not empty _page.secondItem}">#{_page.secondItem.mainBusiness.ownerBusiness.id}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>所有权人</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{not empty _page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner}">#{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner)}">#{_page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>身份证明号</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner) and not (_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.credentialsType eq 'OTHER')}">#{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner) and not (_page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.credentialsType eq 'OTHER')}">#{_page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>户籍所在地</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner)}">#{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.rootAddress}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner)}">#{_page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.rootAddress}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>共有情况</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness.afterBusinessHouse.poolType)}">#{messages[_page.firstItem.mainBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.poolType)}">#{messages[_page.secondItem.mainBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>房屋取得方式</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness.afterBusinessHouse.houseRegInfo)}">#{dictionary.getWordValue(_page.firstItem.mainBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.houseRegInfo)}">#{dictionary.getWordValue(_page.secondItem.mainBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>房屋性质</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness.afterBusinessHouse.houseType)}">#{dictionary.getWordValue(_page.firstItem.mainBusiness.afterBusinessHouse.houseType)}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.houseType)}">#{dictionary.getWordValue(_page.secondItem.mainBusiness.afterBusinessHouse.houseType)}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>所有权证号</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard.type eq 'OWNER_RSHIP')}">#{_page.firstItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{(not empty _page.secondItem) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (_page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard.type eq 'OWNER_RSHIP')}">#{_page.secondItem.mainBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>登记时间</p:paragraph></p:cell>
+            <p:cell><p:paragraph><p:text value="#{_page.firstItem.mainBusiness.ownerBusiness.regTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text> </p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{not empty _page.secondItem}"><p:text value="#{_page.secondItem.mainBusiness.ownerBusiness.regTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/> </p:text></p:paragraph></p:cell>
+
+            <p:cell horizontalAlignment="center"><p:paragraph>终审人/登簿人</p:paragraph></p:cell>
+            <p:cell><p:paragraph></p:paragraph></p:cell>
+            <p:cell><p:paragraph rendered="#{not empty _page.secondItem}"></p:paragraph></p:cell>
+
+
+            <p:cell minimumHeight="340" paddingLeft="30" paddingRight="30" verticalAlignment="middle" horizontalAlignment="center"><p:paragraph>附     记</p:paragraph></p:cell>
+            <p:cell verticalAlignment="top">
+                <a:repeat rendered="#{not (_page.firstItem.mainBusiness.afterBusinessHouse.poolType eq 'SINGLE_OWNER')}" value="#{_page.firstItem.mainBusiness.afterBusinessHouse.businessPoolList}" var="_pool">
+                    <p:paragraph> 共有人： #{_pool.personName} 身份证明号： <p:text rendered="#{not (_pool.credentialsType eq 'OTHER')}" value="#{_pool.credentialsNumber}"/> 共有权证号： <p:text rendered="#{not empty _pool.makeCard}" value="#{_pool.makeCard.number}"/> <p:text value="共有关系： #{dictionary.getWordValue(_pool.relation)} 共有面积：" rendered="#{_page.firstItem.mainBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"/> <p:text rendered="#{_page.firstItem.mainBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}" value="#{_pool.poolArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </a:repeat>
+            </p:cell>
+            <p:cell verticalAlignment="top">
+                <a:repeat rendered="#{(not empty _page.secondItem) and not (_page.secondItem.mainBusiness.afterBusinessHouse.poolType eq 'SINGLE_OWNER')}" value="#{_page.secondItem.mainBusiness.afterBusinessHouse.businessPoolList}" var="_pool">
+                    <p:paragraph> 共有人： #{_pool.personName} 身份证明号： <p:text rendered="#{not (_pool.credentialsType eq 'OTHER')}" value="#{_pool.credentialsNumber}"/> 共有权证号： <p:text rendered="#{not empty _pool.makeCard}" value="#{_pool.makeCard.number}"/> <p:text value="共有关系： #{dictionary.getWordValue(_pool.relation)} 共有面积：" rendered="#{_page.secondItem.mainBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"/> <p:text rendered="#{_page.firstItem.mainBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}" value="#{_pool.poolArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </a:repeat>
+            </p:cell>
+        </p:table>
+    </p:font>
+
+</ui:composition>

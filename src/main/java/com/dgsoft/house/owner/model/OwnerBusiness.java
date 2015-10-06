@@ -686,5 +686,59 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
 
+    @Transient
+    public BusinessEmp getOperEmp(BusinessEmp.EmpType empType){
+        for(BusinessEmp emp: getBusinessEmps()){
+            if(emp.getType().equals(empType)){
+                return emp;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return 审核人
+     */
+    @Transient
+    public BusinessEmp getCheckEmp(){
+        return getOperEmp(BusinessEmp.EmpType.CHECK_EMP);
+    }
+
+    /**
+     *
+     * @return 登簿人
+     */
+    @Transient
+    public BusinessEmp getRegisterEmp(){
+        return getOperEmp(BusinessEmp.EmpType.REG_EMP);
+    }
+
+    /**
+     *
+     * @return 制证人
+     */
+    @Transient
+    public BusinessEmp getCardPrinterEmp(){
+        return getOperEmp(BusinessEmp.EmpType.CARD_PRINTER);
+    }
+
+    /**
+     *
+     * @return 建立业务人
+     */
+    @Transient
+    public BusinessEmp getCreateEmp(){
+        return getOperEmp(BusinessEmp.EmpType.CREATE_EMP);
+    }
+
+    /**
+     *
+     * @return 受理人
+     */
+    @Transient
+    public BusinessEmp getApplyEmp(){
+        return getOperEmp(BusinessEmp.EmpType.APPLY_EMP);
+    }
 
 }
