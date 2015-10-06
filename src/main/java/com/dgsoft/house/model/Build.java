@@ -379,8 +379,7 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 
     @Override
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "MAP_TIME", nullable = false, length = 19)
-    @NotNull
+    @Column(name = "MAP_TIME", length = 19)
     public Date getMapTime() {
         return this.mapTime;
     }
