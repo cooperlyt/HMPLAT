@@ -18,11 +18,11 @@ public class FeeTimeArea implements java.io.Serializable {
     private Fee fee;
     private Date beginTime;
     private Date endTime;
-    private String conditionEl;
     private String feeEl;
     private String detailsEl;
     private String description;
-
+    private String forEachValues;
+    private String forEachVar;
 
     public FeeTimeArea(){
 
@@ -77,20 +77,9 @@ public class FeeTimeArea implements java.io.Serializable {
         this.endTime = endTime;
     }
 
-    @Column(name = "CONDITION_EL",nullable = true,length = 500)
-    @Size(max=500)
-    public String getConditionEl() {
-        return conditionEl;
-    }
 
-
-
-    public void setConditionEl(String conditionEl) {
-        this.conditionEl = conditionEl;
-    }
-
-
-    @Column(name = "FEE_EL",nullable = true,length = 500)
+    @Column(name = "FEE_EL",nullable = false,length = 512)
+    @NotNull
     @Size(max=500)
     public String getFeeEl() {
         return feeEl;
@@ -100,7 +89,7 @@ public class FeeTimeArea implements java.io.Serializable {
         this.feeEl = feeEl;
     }
 
-    @Column(name = "DETAILS_EL",nullable = true,length = 500)
+    @Column(name = "DETAILS_EL",nullable = true,length = 512)
     @Size(max=500)
     public String getDetailsEl() {
         return detailsEl;
@@ -108,6 +97,26 @@ public class FeeTimeArea implements java.io.Serializable {
 
     public void setDetailsEl(String detailsEl) {
         this.detailsEl = detailsEl;
+    }
+
+    @Column(name = "FOR_EACH_VALUES",length = 512)
+    @Size(max = 512)
+    public String getForEachValues() {
+        return forEachValues;
+    }
+
+    public void setForEachValues(String forEachValues) {
+        this.forEachValues = forEachValues;
+    }
+
+    @Column(name="FOR_EACH_VAR", length = 32)
+    @Size(max = 32)
+    public String getForEachVar() {
+        return forEachVar;
+    }
+
+    public void setForEachVar(String forEachVar) {
+        this.forEachVar = forEachVar;
     }
 
     @Column(name = "DESCRIPTION", nullable = true, length = 400)

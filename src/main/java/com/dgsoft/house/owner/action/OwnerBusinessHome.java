@@ -129,17 +129,18 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     public BusinessMoney getTotal(){
+        BusinessMoney result = new BusinessMoney();
+        result.setCheckMoney(BigDecimal.ZERO);
+        result.setShouldMoney(BigDecimal.ZERO);
+        result.setFactMoney(BigDecimal.ZERO);
         if (!getInstance().getBusinessMoneys().isEmpty()) {
-            BusinessMoney result = new BusinessMoney();
-            result.setShouldMoney(BigDecimal.ZERO);
-            result.setFactMoney(BigDecimal.ZERO);
             for (BusinessMoney money : getInstance().getBusinessMoneys()) {
+                result.setCheckMoney(result.getShouldMoney().add(money.getCheckMoney()));
                 result.setShouldMoney(result.getShouldMoney().add(money.getShouldMoney()));
                 result.setFactMoney(result.getFactMoney().add(money.getFactMoney()));
             }
-            return result;
         }
-        return null;
+        return result;
     }
 
     public List<TaskOper> getTaskOperList(){

@@ -83,6 +83,7 @@ public class DataFormat {
 
     }
 
+    @Deprecated
     public static Date halfTime(Date value){
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(value);
@@ -91,6 +92,20 @@ public class DataFormat {
         gc.set(Calendar.SECOND, 0);
         gc.set(Calendar.MILLISECOND, 0);
         return gc.getTime();
+    }
+
+    public static Date getDayBeginTime(Date value){
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(value);
+        gc.set(Calendar.HOUR_OF_DAY, 0);
+        gc.set(Calendar.MINUTE, 0);
+        gc.set(Calendar.SECOND, 0);
+        gc.set(Calendar.MILLISECOND, 0);
+        return gc.getTime();
+    }
+
+    public static Date getDayEndTime(Date value){
+        return new Date(getDayBeginTime(value).getTime() + 24 * 60 * 60 * 1000 - 1);
     }
 
     public static boolean isEmpty(String value){

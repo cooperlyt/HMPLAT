@@ -47,6 +47,8 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('ContractNOCount','INTEGER',
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('NewHouseContractBizId','STRING','WP42','商品房网上备案业务编号');
 
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AutoCalcMoney','BOOLEAN','true','自动核费');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('ShouldMoneyCalcType','INTEGER','3','1:手动；2：等于核费金额 3：四舍五入到元;4 四舍五入到角；5 四舍五入到分 6: 抹掉小数取整 7：进位取整');
 
 
 

@@ -6,8 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Administrator on 15-7-25.
@@ -23,6 +22,8 @@ public class Fee implements java.io.Serializable {
     private String feeEl;
     private String detailsEl;
     private int priority;
+    private String forEachValues;
+    private String forEachVar;
     private Set<FeeTimeArea> feeTimeAreas = new HashSet<FeeTimeArea>(0);
 
 
@@ -78,8 +79,9 @@ public class Fee implements java.io.Serializable {
         this.description = description;
     }
 
-    @Column(name = "FEE_EL",nullable = true)
-    @Size(max =500)
+    @Column(name = "FEE_EL",nullable = false, length = 512)
+    @NotNull
+    @Size(max =512)
     public String getFeeEl() {
         return feeEl;
     }
@@ -88,8 +90,8 @@ public class Fee implements java.io.Serializable {
         this.feeEl = feeEl;
     }
 
-    @Column(name = "DETAILS_EL",nullable = true)
-    @Size(max = 500)
+    @Column(name = "DETAILS_EL",nullable = true, length = 512)
+    @Size(max = 512)
     public String getDetailsEl() {
         return detailsEl;
     }
@@ -109,7 +111,6 @@ public class Fee implements java.io.Serializable {
 
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = {CascadeType.ALL},mappedBy = "fee")
-
     public Set<FeeTimeArea> getFeeTimeAreas() {
         return feeTimeAreas;
     }
@@ -117,4 +118,38 @@ public class Fee implements java.io.Serializable {
     public void setFeeTimeAreas(Set<FeeTimeArea> feeTimeAreas) {
         this.feeTimeAreas = feeTimeAreas;
     }
+
+    @Column(name = "FOR_EACH_VALUES",length = 512)
+    @Size(max = 512)
+    public String getForEachValues() {
+        return forEachValues;
+    }
+
+    public void setForEachValues(String forEachValues) {
+        this.forEachValues = forEachValues;
+    }
+
+    @Column(name="FOR_EACH_VAR", length = 32)
+    @Size(max = 32)
+    public String getForEachVar() {
+        return forEachVar;
+    }
+
+    public void setForEachVar(String forEachVar) {
+        this.forEachVar = forEachVar;
+    }
+
+    @Transient
+    public List<FeeTimeArea> getFeeTimeAreaList(){
+        List<FeeTimeArea> result = new ArrayList<FeeTimeArea>(getFeeTimeAreas());
+        Collections.sort(result, new Comparator<FeeTimeArea>() {
+            @Override
+            public int compare(FeeTimeArea o1, FeeTimeArea o2) {
+                return o1.getBeginTime().compareTo(o2.getBeginTime());
+            }
+        });
+        return result;
+    }
+
+
 }

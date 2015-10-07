@@ -26,6 +26,7 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
     private String typeName;
 	private OwnerBusiness ownerBusiness;
 	private String moneyTypeId;
+	private BigDecimal checkMoney;
 	private BigDecimal shouldMoney;
 	private BigDecimal factMoney;
 	private String chargeDetails;
@@ -40,13 +41,15 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
 
 
 	public BusinessMoney(OwnerBusiness ownerBusiness,
-                         String moneyTypeId,String typeName, BigDecimal shouldMoney,String chargeDetails,int pri) {
+                         String moneyTypeId,String typeName,
+						 String chargeDetails,int pri) {
         this.typeName = typeName;
 		this.ownerBusiness = ownerBusiness;
 		this.moneyTypeId = moneyTypeId;
-		this.shouldMoney = shouldMoney;
-        this.factMoney = shouldMoney;
 		this.chargeDetails = chargeDetails;
+		this.checkMoney = new BigDecimal(0);
+		this.factMoney = new BigDecimal(0);
+		this.shouldMoney = new BigDecimal(0);
         this.pri = pri;
 	}
 
@@ -103,7 +106,18 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
 		this.moneyTypeId = moneyTypeId;
 	}
 
-	@Column(name = "SHOULD_MONEY", precision = 18, scale = 3)
+	@Column(name="CHECK_MONEY", nullable = false, precision = 19, scale = 4)
+	@NotNull
+	public BigDecimal getCheckMoney() {
+		return checkMoney;
+	}
+
+	public void setCheckMoney(BigDecimal checkMoney) {
+		this.checkMoney = checkMoney;
+	}
+
+	@Column(name = "SHOULD_MONEY", nullable = false, precision = 19, scale = 4)
+	@NotNull
 	public BigDecimal getShouldMoney() {
 		return this.shouldMoney;
 	}
@@ -112,7 +126,8 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
 		this.shouldMoney = shouldMoney;
 	}
 
-	@Column(name = "FACT_MONEY", precision = 18, scale = 3)
+	@Column(name = "FACT_MONEY", nullable = false, precision = 19, scale = 4)
+	@NotNull
 	public BigDecimal getFactMoney() {
 		return this.factMoney;
 	}
