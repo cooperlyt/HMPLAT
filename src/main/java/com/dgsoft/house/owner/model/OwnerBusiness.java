@@ -387,6 +387,20 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.factMoneyInfos = factMoneyInfos;
     }
 
+    @Transient
+    public FactMoneyInfo getFactMoneyInfo(){
+        if (getFactMoneyInfos().isEmpty()){
+            return null;
+        }
+        return getFactMoneyInfos().iterator().next();
+    }
+
+    @Transient
+    public void setFactMoneyInfo(FactMoneyInfo info){
+        getFactMoneyInfos().clear();
+        getFactMoneyInfos().add(info);
+    }
+
     @Column(name = "RECORDED", nullable = false)
     public boolean isRecorded() {
         return recorded;

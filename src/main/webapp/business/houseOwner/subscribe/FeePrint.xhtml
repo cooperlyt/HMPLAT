@@ -9,17 +9,35 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
 
+    <iframe style="display:none;" class="qq_iframe" src=""/>
+
+    <h:outputScript>
+        function extPrint(printUrl){
+            $('.qq_iframe').attr('src',printUrl);
+        }
+    </h:outputScript>
+
     <a:repeat value="#{ownerBusinessHome.instance.factMoneyInfos}" var="_feePrint">
 
         <div class="panel panel-default">
 
             <div class="panel-body">
+                <h:form>
+                <p class="text-primary">请放入编号为<strong>#{ownerBusinessHome.instance.factMoneyInfo.paymentNo}</strong>收据，然后点打印。
+                <a class=" " onclick="" >
 
-                #{messages.FactMoneyInfo_factTime}
+                </a>
 
-                #{messages.FactMoneyInfo_paymentNo}
+                    <a:commandLink styleClass="btn minibutton right" render="@none" action="#{feePrint.preparePrintOwnerFee}" immediate="true"
+                                   data="#{feePrint.printUrl}"
+                                   execute="@this" oncomplete="extPrint(event.data);">
+                        <span class="glyphicon glyphicon-print"/>
+                        <a:attachQueue requestDelay="0"/>
+                        打印
+                    </a:commandLink>
 
-                #{messages.FactMoneyInfo_memo}
+                </p>
+                </h:form>
             </div>
             <h:dataTable value="#{_feePrint.businessMoneyList}" var="_feeItem" styleClass="table">
                 <h:column>
@@ -33,21 +51,13 @@
 
                 <h:column>
                     <f:facet name="header">
-                        #{messages.BusinessMoney_ShouldMoney}
+                        金额
                     </f:facet>
                     <h:outputText value="#{_feeItem.shouldMoney}">
-                        <f:convertNumber locale="#{calendarBean.locale}" groupingUsed="true"/>
+                        <f:convertNumber locale="#{calendarBean.locale}" type="currency" groupingUsed="true"/>
                     </h:outputText>
                 </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.BusinessMoney_FactMoney}
-                    </f:facet>
-                    <h:outputText value="#{_feeItem.factMoney}">
-                        <f:convertNumber locale="#{calendarBean.locale}" groupingUsed="true"/>
-                    </h:outputText>
-                </h:column>
 
                 <h:column>
                     <f:facet name="header">
@@ -57,30 +67,26 @@
 
                 </h:column>
 
-                <h:column>
-
-                </h:column>
-
             </h:dataTable>
 
             <div class="panel-footer">
-                #{messages.recordTotal}
+                <strong>#{messages.recordTotal}</strong>
                 <a:outputPanel id="calcMoneyTotal" layout="block" class="right">
 
-                    <div style="display: table-cell;">
+                    <div style="display: table-cell;font-weight: bold;">
                         #{messages.shouldMoney}
                     </div>
-                    <div style="display: table-cell;">
+                    <div style="display: table-cell;min-width: 80px;">
                         <h:outputText value="#{_feePrint.shouldMoney}">
                             <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
                                              type="currency"/>
                         </h:outputText>
 
                     </div>
-                    <div style="display: table-cell;">
+                    <div style="display: table-cell;font-weight: bold;">
                         #{messages.factMoney}
                     </div>
-                    <div style="display: table-cell;">
+                    <div style="display: table-cell;min-width: 80px;">
                         <h:outputText value="#{_feePrint.factMoney}">
                             <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
                                              type="currency"/>
