@@ -235,7 +235,7 @@ public class BuildGridMapHome implements DropListener {
         Element root = doc.getRootElement();
         Logging.getLog(getClass()).debug("replaceGridMap:" + replaceGridMap);
         int order;
-        String gridMapName = buildHome.getInstance().getName();
+        String gridMapName = "新建分户图";
         if (replaceGridMap) {
             order = getInstance().getOrder();
             gridMapName = getInstance().getName();
@@ -257,7 +257,7 @@ public class BuildGridMapHome implements DropListener {
             }
             order = order + 1;
             if (order != 1) {
-                gridMapName = gridMapName + "-" + order;
+                gridMapName = "新建分户图-" + order;
             }
 
         }
