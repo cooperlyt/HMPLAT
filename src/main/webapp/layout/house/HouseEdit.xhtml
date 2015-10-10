@@ -18,7 +18,7 @@
         <div class="input-group">
             <span class="input-group-addon">#{messages.House_Order}<s:span styleClass="required">*</s:span></span>
 
-            <h:inputText value="#{house.houseOrder}" styleClass="form-control" size="20" maxlength="20"
+            <h:inputText value="#{house.houseOrder}" disabled="#{houseOrderDisable}" styleClass="form-control" size="20" maxlength="20"
                          id="houseOrderInput" required="true" label="#{messages.House_Order}">
                 <rich:validator event="blur"/>
             </h:inputText>

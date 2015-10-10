@@ -57,6 +57,17 @@ public class BuildGridMapHome implements DropListener {
     private boolean replaceGridMap;
 
     public String saveGridMap() {
+        List<House> removeHouse = new ArrayList<House>();
+        for(House house : idleHouses){
+            if (buildHome.getEntityManager().contains(house)){
+                house.setDeleted(true);
+            }else{
+                buildHome.getInstance().getHouses().remove(house);
+                removeHouse.add(house);
+            }
+        }
+        idleHouses.removeAll(removeHouse);
+
         for (House house : buildHome.getInstance().getHouses()) {
             if (!house.isValidator()) {
                 if (!house.getOrderValid()) {
@@ -68,6 +79,7 @@ public class BuildGridMapHome implements DropListener {
                 return null;
             }
         }
+
 
         return buildHome.update();
 
@@ -154,8 +166,10 @@ public class BuildGridMapHome implements DropListener {
                 for (GridBlock block: row.getGridBlocks()){
                     for(House house: houses){
                         if (house.getHouseCode().equals(block.getHouseCode())){
-                            block.setHouse(house);
-                            houses.remove(house);
+                            if (!house.isDeleted()) {
+                                block.setHouse(house);
+                                houses.remove(house);
+                            }
                             break;
                         }
                     }
@@ -198,6 +212,7 @@ public class BuildGridMapHome implements DropListener {
                         if (house.getHouseOrder().equals(gridBlock.getHouseOrder())) {
 
                             gridBlock.setHouse(house);
+                            house.setDeleted(false);
                             idleHouses.remove(house);
 
                             break;
@@ -379,42 +394,24 @@ public class BuildGridMapHome implements DropListener {
         return selectHouse;
     }
 
-
-
-    public void idleBlockHouse() {
-        GridBlock block = getSelectBlock();
-        if (block != null) {
-            if (block.getHouse() != null) {
-                House house = (House)block.getHouse();
-                idleHouses.add(house);
-                block.setHouse(null);
-            }
-        }
-    }
-
-    private boolean deleteHouse(House house) {
-
-        buildHome.getInstance().getHouses().remove(house);
-
-        return false;
-    }
-
     public void deleteBlockHouse() {
         GridBlock block = getSelectBlock();
         if (block != null) {
             if (block.getHouse() != null) {
-                if (deleteHouse((House)block.getHouse())) {
-                    block.setHouse(null);
-                }
+                House house = (House)block.getHouse();
+                block.setHouse(null);
+                house.setDeleted(true);
+                idleHouses.add(house);
             }
         }
     }
 
-    public void deleteIdleHouse() {
-            if (deleteHouse(selectIdleHouse)) {
-                idleHouses.remove(selectIdleHouse);
-            }
+    public boolean isSelectHouseManaged(){
+        if (selectHouse == null)
+            return false;
+        return buildHome.getEntityManager().contains(selectHouse);
     }
+
 
     @Override
     public void processDrop(DropEvent dropEvent) {
@@ -431,10 +428,12 @@ public class BuildGridMapHome implements DropListener {
             House tempHouse = (House) dropEvent.getDragValue();
             if (targetBlock.getHouse() != null) {
                 House house = (House)targetBlock.getHouse();
+                house.setDeleted(true);
                 idleHouses.add(house);
                 targetBlock.setHouseCode(null);
             }
             targetBlock.setHouse(tempHouse);
+            tempHouse.setDeleted(false);
             idleHouses.remove(tempHouse);
 
         } else {
@@ -507,6 +506,7 @@ public class BuildGridMapHome implements DropListener {
     private void removeThisPage() {
         int oldOrder = getInstance().getOrder();
         buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+        gridMaps.remove(getInstance());
         List<BuildGridMap> gms = getBuildGridPages();
 
         if (gms.isEmpty()) {
@@ -526,28 +526,12 @@ public class BuildGridMapHome implements DropListener {
 
     }
 
-    public void deleteGridMapAndHouse() {
-        for (GridRow row : getInstance().getGridRowList()) {
-            for (GridBlock block : row.getGridBlockList()) {
-                if ((block.getHouse() != null)) {
-                    //block.getHouse().getGridBlock().clear();
-                    House house = (House)block.getHouse();
-
-                        buildHome.getInstance().getHouses().remove(house);
-
-
-                    block.setHouse(null);
-                }
-            }
-        }
-        removeThisPage();
-    }
-
     public void deleteGridMapIdleHouse() {
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() != null) {
                     House house = (House) block.getHouse();
+                    house.setDeleted(true);
                     idleHouses.add(house);
                     block.setHouse(null);
                 }
