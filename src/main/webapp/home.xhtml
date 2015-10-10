@@ -58,7 +58,7 @@
 
                     <div class="dashboard-notice" style="padding-left: 15px;padding-bottom: 0">
 
-
+                       <ui:remove>
                         <r:chart title="#{messages.cur_emp_oper_chart_y_label}" styleClass="graf">
                             <a:repeat value="#{employeeTaskTotal.curEmpChartData}" var="_type" >
                                 <r:chartSeries label="#{messages[_type.key.name()]}" type="line">
@@ -70,7 +70,7 @@
                             <r:chartXAxis  label=""/>
                             <r:chartYAxis label=""/>
                         </r:chart>
-
+                       </ui:remove>
 
 
 
@@ -208,7 +208,7 @@
         <a:outputPanel layout="block" style="padding: 10px" rendered="#{not identity.loggedIn}">
 
 
-
+<ui:remove>
             <r:chart id="bar" >
                 <r:chartLegend sorting="ascending"/>
 
@@ -220,6 +220,7 @@
                     </r:chartSeries>
 
             </r:chart>
+</ui:remove>
 
         </a:outputPanel>
 
