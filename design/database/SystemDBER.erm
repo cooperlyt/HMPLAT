@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>401</x>
-	<y>329</y>
+	<y>364</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-27 07:50:11</creation_date>
-			<updated_date>2015-10-11 19:41:38</updated_date>
+			<updated_date>2015-10-11 20:27:07</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -1295,7 +1295,7 @@
 			<description></description>
 			<logical_name>登记部分</logical_name>
 			<physical_name>REGISTER_BOOK_PART</physical_name>
-			<type>varbinary(n)</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>75</id>
@@ -8026,7 +8026,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>varbinary(n)</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
