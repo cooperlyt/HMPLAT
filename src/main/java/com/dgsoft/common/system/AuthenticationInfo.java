@@ -104,6 +104,43 @@ public class AuthenticationInfo implements java.io.Serializable {
         return result;
     }
 
+    private List<Function> getAllFunctionsByCategory(Function.FunctionCategory category) {
+        Set<Function> result = new HashSet<Function>();
+        for(Role role: functionRoleList){
+            for (Function function : role.getFunctions()) {
+                if (function.getFuncCategory().equals(category)) {
+                    result.add(function);
+                }
+            }
+        }
+        List<Function> resultList = new ArrayList<Function>(result);
+        Collections.sort(resultList, new Comparator<Function>() {
+            @Override
+            public int compare(Function o1, Function o2) {
+                return Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
+            }
+        });
+        return resultList;
+    }
+
+
+    public List<Function> getDataAllFunctions(){
+        return getAllFunctionsByCategory(Function.FunctionCategory.DATA_MGR);
+    }
+
+    public List<Function> getTotalAllFunctions(){
+        return getAllFunctionsByCategory(Function.FunctionCategory.TOTAL_REPORT);
+    }
+
+    public List<Function> getWorkAllFunctions(){
+        return getAllFunctionsByCategory(Function.FunctionCategory.DAY_WORK);
+    }
+
+    public int getAllFunctionCount(){
+        return getDataAllFunctions().size() + getTotalAllFunctions().size() + getWorkAllFunctions().size();
+    }
+
+
     public List<Function> getDataFunctions(){
         return getFunctionsByCategory(Function.FunctionCategory.DATA_MGR);
     }

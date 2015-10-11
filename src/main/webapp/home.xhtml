@@ -58,7 +58,7 @@
 
                     <div class="dashboard-notice" style="padding-left: 15px;padding-bottom: 0">
 
-                       <ui:remove>
+
                         <r:chart title="#{messages.cur_emp_oper_chart_y_label}" styleClass="graf">
                             <a:repeat value="#{employeeTaskTotal.curEmpChartData}" var="_type" >
                                 <r:chartSeries label="#{messages[_type.key.name()]}" type="line">
@@ -70,7 +70,7 @@
                             <r:chartXAxis  label=""/>
                             <r:chartYAxis label=""/>
                         </r:chart>
-                       </ui:remove>
+
 
 
 
@@ -170,10 +170,38 @@
                         </div>
                     </a:outputPanel>
 
+                    <h:outputStylesheet>
+                        .user-repos .mini-repo-list{
+                            display: none;
+                        }
+
+
+                        .user-repos .mini-repo-list.category-selected{
+                            display: inherit;
+                        }
+
+                    </h:outputStylesheet>
+
+                    <h:outputScript>
+                        $(document).ready(
+                                function(){
+                                    $('.js-repo-filter-tab').click(function(){
+                                        $('.js-repo-filter-tab').removeClass('filter-selected');
+                                        $(this).addClass('filter-selected');
+
+                                        $('.mini-repo-list').removeClass('category-selected');
+
+                                        $('#' + $(this).data("target")).addClass("category-selected");
+                                        return false;
+                                    })
+
+                                });
+                    </h:outputScript>
+
                     <div class="boxed-group flush repos user-repos">
                         <h3>
                             #{messages.AllFunction}
-                            <span class="counter"></span>
+                            <span class="counter">#{authInfo.allFunctionCount}</span>
                         </h3>
                         <div class="boxed-group-inner">
                             <div class="filter-repos filter-bar" role="search">
@@ -182,20 +210,58 @@
                                 </h:inputText>
                                 <ul class="repo-filterer">
                                     <li>
-                                        <s:link value="1" styleClass="repo-filter js-repo-filter-tab filter-selected"/>
+                                        <a class="repo-filter js-repo-filter-tab filter-selected" data-target="js-data-mgr">
+                                            #{messages.DATA_MGR}
+                                        </a>
+
                                     </li>
                                     <li>
-                                        <s:link styleClass="repo-filter js-repo-filter-tab" value="2"/>
+                                        <a class="repo-filter js-repo-filter-tab" data-target="js-total-report">
+                                            #{messages.TOTAL_REPORT}
+                                        </a>
                                     </li>
                                     <li>
-                                        <s:link styleClass="repo-filter js-repo-filter-tab" value="3"/>
+                                        <a class="repo-filter js-repo-filter-tab" data-target="js-day-work">
+                                            #{messages.DAY_WORK}
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
-                            <ul class="mini-repo-list">
-                                <li class="public source">
-                                    <s:link styleClass="mini-repo-list-item css-truncate" value="func"/>
-                                </li>
+                            <ul id="js-data-mgr" class="mini-repo-list  category-selected ">
+                                <c:forEach items="#{authInfo.dataAllFunctions}" var="_func">
+                                    <li class="public source">
+                                        <s:link propagation="#{_func.needConversations ? 'endRoot' : 'end'}"
+                                                styleClass="mini-repo-list-item css-truncate"
+                                                view="#{_func.location}" includePageParams="false">
+                                            <span class="repo-icon octicon octicon-three-bars"></span>
+                                            #{_func.name}
+                                        </s:link>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                            <ul id="js-total-report" class="mini-repo-list">
+                                <c:forEach items="#{authInfo.totalAllFunctions}" var="_func">
+                                    <li class="public source">
+                                        <s:link propagation="#{_func.needConversations ? 'endRoot' : 'end'}"
+                                                styleClass="mini-repo-list-item css-truncate"
+                                                view="#{_func.location}" includePageParams="false">
+                                            <span class="repo-icon octicon octicon-three-bars"></span>
+                                            #{_func.name}
+                                        </s:link>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                            <ul id="js-day-work" class="mini-repo-list">
+                                <c:forEach items="#{authInfo.workAllFunctions}" var="_func">
+                                    <li class="public source">
+                                        <s:link propagation="#{_func.needConversations ? 'endRoot' : 'end'}"
+                                                styleClass="mini-repo-list-item css-truncate"
+                                                view="#{_func.location}" includePageParams="false">
+                                            <span class="repo-icon octicon octicon-three-bars"></span>
+                                            #{_func.name}
+                                        </s:link>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>
@@ -208,7 +274,7 @@
         <a:outputPanel layout="block" style="padding: 10px" rendered="#{not identity.loggedIn}">
 
 
-<ui:remove>
+
             <r:chart id="bar" >
                 <r:chartLegend sorting="ascending"/>
 
@@ -220,7 +286,7 @@
                     </r:chartSeries>
 
             </r:chart>
-</ui:remove>
+
 
         </a:outputPanel>
 
