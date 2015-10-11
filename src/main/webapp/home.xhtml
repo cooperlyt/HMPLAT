@@ -56,7 +56,7 @@
                         #{messages.Wellcome}: #{authInfo.loginEmployee.personName}
                     </div>
 
-                    <div class="dashboard-notice" style="padding-left: 15px;padding-bottom: 0">
+                    <a:outputPanel layout="block" styleClass="dashboard-notice" style="padding-left: 15px;padding-bottom: 0">
 
 
                         <r:chart title="#{messages.cur_emp_oper_chart_y_label}" styleClass="graf">
@@ -74,7 +74,7 @@
 
 
 
-                    </div>
+                    </a:outputPanel>
 
                      <a:outputPanel id="operList">
                     <a:repeat value="#{employeeBusinessOperList.resultList}" var="_item">
@@ -271,7 +271,7 @@
 
         </a:outputPanel>
 
-        <a:outputPanel layout="block" style="padding: 10px" rendered="#{not identity.loggedIn}">
+        <a:outputPanel layout="block" style="padding: 10px" rendered="#{not identity.loggedIn and (not empty ownerBusinessTotal.resultData)}">
 
 
 
