@@ -11,7 +11,11 @@
 
     <ui:param name="funcName" value="#{messages.MapBaseDataFunc}"/>
 
-
+<h:outputStylesheet>
+    .table-id-header{
+        max-width: 20px;
+    }
+</h:outputStylesheet>
 
     <ui:define name="head-right">
         <h:form styleClass="search_repos">
@@ -286,6 +290,8 @@
                 </s:link>
             </nav>
         </a:outputPanel>
+
+
         <h:form>
             <a:outputPanel id="dataResult" layout="block" styleClass="column three-fourths codesearch-results">
 
@@ -396,13 +402,15 @@
                                 </h3>
                             </f:facet>
 
-                            <h:column headerClass="table-header">
+                            <h:column headerClass="table-header ">
                                 <f:facet name="header">
                                     #{messages.Project_id}
                                 </f:facet>
-                                <s:link value="#{_item.id}" view="/func/house/datas/ProjectView.xhtml">
+
+                                <s:link value="#{_item.id}" styleClass="css-truncate css-truncate-target" view="/func/house/datas/ProjectView.xhtml">
                                     <f:param name="projectId" value="#{_item.id}"/>
                                 </s:link>
+
                             </h:column>
 
                             <h:column headerClass="table-header">
@@ -525,9 +533,10 @@
                             </f:facet>
                             <h:column headerClass="table-header">
                                 <f:facet name="header">
+
                                     #{messages.Id}
                                 </f:facet>
-                                #{_item.id}
+                                <span class="css-truncate css-truncate-target">#{_item.id}</span>
                             </h:column>
                             <h:column headerClass="table-header">
                                 <f:facet name="header">
@@ -537,16 +546,13 @@
                             </h:column>
                             <h:column headerClass="table-header">
                                 <f:facet name="header">
+
                                     #{messages.Name}
+
                                 </f:facet>
                                 #{_item.name}
                             </h:column>
-                            <h:column headerClass="table-header">
-                                <f:facet name="header">
-                                    #{messages.Section_address}
-                                </f:facet>
-                                #{_item.address}
-                            </h:column>
+
                             <h:column headerClass="table-header">
                                 <f:facet name="header">
                                     <div class="right">
@@ -660,9 +666,10 @@
                             </f:facet>
                             <h:column headerClass="table-header">
                                 <f:facet name="header">
+
                                     #{messages.Id}
                                 </f:facet>
-                                <h:outputText styleClass="#{_item.destroyed ? 'delete-data' : ''}" value="#{_item.id}">
+                                <h:outputText styleClass="css-truncate css-truncate-target #{_item.destroyed ? 'delete-data' : ''}" value="#{_item.id}">
                                 </h:outputText>
                             </h:column>
                             <h:column headerClass="table-header">
@@ -730,7 +737,7 @@
                             }
 
                             .district-short-name-column {
-                                width: 60px;
+                                width: 80px;
                             }
 
                             .disistrict-action-column {
