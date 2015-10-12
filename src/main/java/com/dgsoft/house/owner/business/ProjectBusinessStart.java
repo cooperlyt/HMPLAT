@@ -492,8 +492,14 @@ public class ProjectBusinessStart {
             }
         }
 
-        List<HouseRecord> houseRecords = ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
-                .setParameter("houseCodes", houseMap.keySet()).getResultList();
+        List<HouseRecord> houseRecords;
+        if (houseMap != null){
+            houseRecords = ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
+                    .setParameter("houseCodes", houseMap.keySet()).getResultList();
+
+        }else{
+            houseRecords = new ArrayList<HouseRecord>(0);
+        }
 
         List<BusinessHouse> businessHouses = new ArrayList<BusinessHouse>();
         for (HouseInfo houseInfo : houseMap.values()) {

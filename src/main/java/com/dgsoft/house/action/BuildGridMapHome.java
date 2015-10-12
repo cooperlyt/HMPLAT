@@ -497,7 +497,15 @@ public class BuildGridMapHome implements DropListener {
         Collections.sort(result, new Comparator<Map.Entry<Word, BuildHome.CountAreaEntry>>() {
             @Override
             public int compare(Map.Entry<Word, BuildHome.CountAreaEntry> o1, Map.Entry<Word, BuildHome.CountAreaEntry> o2) {
-                return new Integer(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
+                if((o1.getKey() != null) && (o2.getKey() != null)) {
+                    return new Integer(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
+                }else {
+                    if (o1.getKey() == null){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                }
             }
         });
         return result;
