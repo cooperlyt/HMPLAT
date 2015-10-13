@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template.xhtml">
+
+    <ui:define name="func-body">
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>
+
+                       档案补录
+
+                    </strong>
+
+                    <span class="path-divider">/</span>
+
+
+                    #{ownerBusinessHome.instance.defineName}
+
+                    <span class="path-divider">/</span>
+                    业务选择
+
+                </h1>
+
+                <div class="right">
+                    <s:button styleClass="btn btn-primary" rendered="#{not businessDefineHome.instance.requiredBiz}"
+                              action="#{ownerBusinessPatch.beginEdit}" value="#{messages.skipStep}"
+                              p:data-loading-text="#{messages.skipStep}" onclick="#{r:component('wait')}.show()">
+                    </s:button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="container">
+            <h:form>
+                <ul class="repo-list js-repo-list full-width">
+                    <c:forEach items="#{ownerBusinessPatch.allowSelectBizs}" var="_item">
+
+                        <ui:decorate template="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
+                            <ui:define name="itemAction">
+                                <s:button styleClass="btn btn-sm btn-success" value="#{messages.Select}" action="#{ownerBusinessPatch.businessSelected}"
+                                          onclick="#{r:component('wait')}.show()">
+                                    <f:param name="selectBusinessId" value="#{_item.id}"/>
+                                </s:button>
+                            </ui:define>
+                        </ui:decorate>
+
+                    </c:forEach>
+                </ul>
+
+            </h:form>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -2,7 +2,9 @@ package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.*;
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.common.system.business.BusinessPickSelect;
 import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.common.system.model.Employee;
@@ -27,12 +29,14 @@ import java.util.*;
  * Created by cooper on 8/10/15.
  */
 @Name("ownerBusinessPatch")
+@Scope(ScopeType.CONVERSATION)
 public class OwnerBusinessPatch {
 
     private static final String BUSINESS_PATCH_EDIT_PAGE = "/business/houseOwner/BusinessPatchSubscribe.xhtml";
     private static final String PATCH_BUSINESS_FILE_PAGE = "/business/houseOwner/BusinessPatchFileUpload.xhtml";
     private static final String PATCH_BUSINESS_CONFIRM_PAGE = "/business/houseOwner/BusinessPatchConfirm.xhtml";
 
+    private static final String BUSINESS_PICK_BIZ_PAGE = "/business/houseOwner/HousePatchBusinessSelect.xhtml";
 
     @In
     private Credentials credentials;
@@ -63,6 +67,22 @@ public class OwnerBusinessPatch {
     private String selectCategoryId;
 
     private RecordStore recordStore = new RecordStore();
+
+    private List<OwnerBusiness> allowSelectBizs;
+
+    private String selectBizId;
+
+    public List<OwnerBusiness> getAllowSelectBizs() {
+        return allowSelectBizs;
+    }
+
+    public String getSelectBizId() {
+        return selectBizId;
+    }
+
+    public void setSelectBizId(String selectBizId) {
+        this.selectBizId = selectBizId;
+    }
 
     public String getSelectCategoryId() {
         return selectCategoryId;
@@ -150,14 +170,57 @@ public class OwnerBusinessPatch {
 
     public String singleHouseSelected() {
 
+
+        allowSelectBizs = new ArrayList<OwnerBusiness>();
+        for(BusinessPickSelect component: businessDefineHome.getCreateBizSelectComponents()){
+            for(BusinessInstance bizInstance: component.getAllowSelectBusiness(buildGridMapHouseSelect.getSelectBizHouse()))
+                allowSelectBizs.add((OwnerBusiness)bizInstance);
+        }
+        if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) &&  !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
+
+            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE' and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.defineId in (:defineIds)", OwnerBusiness.class)
+                    .setParameter("houseCode", buildGridMapHouseSelect.getSelectBizHouse().getHouseCode())
+                    .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","))).getResultList());
+        }
+
+        if (businessDefineHome.getInstance().isRequiredBiz() && allowSelectBizs.isEmpty()){
+
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"SelectBusinessIsRequired");
+            return null;
+        }
+
+
+
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         ownerBusinessHome.getInstance().setApplyTime(null);
         BusinessHouse startHouse = new BusinessHouse(buildGridMapHouseSelect.getSelectBizHouse());
 
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), startHouse));
 
-        return beginEdit();
+        if (allowSelectBizs.isEmpty()){
+            return beginEdit();
+        }else{
+            Collections.sort(allowSelectBizs, new Comparator<OwnerBusiness>() {
+                @Override
+                public int compare(OwnerBusiness o1, OwnerBusiness o2) {
+                    return o2.getApplyTime().compareTo(o1.getApplyTime());
+                }
+            });
+            return BUSINESS_PICK_BIZ_PAGE;
+        }
+    }
 
+    public String businessSelected(){
+        for(OwnerBusiness ob: allowSelectBizs){
+            if (ob.getId().equals(selectBizId)){
+                ownerBusinessHome.getInstance().setSelectBusiness(ob);
+                for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
+                    component.fillData();
+                }
+                return beginEdit();
+            }
+        }
+        throw new IllegalArgumentException("business id not found");
     }
 
     private String getInfoCompletePath() {
