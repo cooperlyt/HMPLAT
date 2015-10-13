@@ -102,10 +102,10 @@ public class ProcessInstanceHome {
     public void initInstance() {
         if (instance == null) {
             if (key != null) {
-                ProcessDefinition definition;
+                ProcessDefinition definition = null;
                 if (key.getProcessKey() == null) {
                     definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(key.getProcessDefineName());
-                }else{
+                }else if ((key.getProcessDefineName() != null) && (key.getProcessVersion() != null)) {
                     definition = ManagedJbpmContext.instance().getGraphSession().findProcessDefinition(key.getProcessDefineName(),key.getProcessVersion());
                 }
                 instance = definition == null ?

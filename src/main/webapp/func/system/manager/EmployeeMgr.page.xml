@@ -5,6 +5,7 @@
 
     <param name="firstResult" value="#{employeeList.firstResult}"/>
     <param name="searchKey" value="#{employeeList.searchKey}"/>
+    <param name="maxResult" value="#{employeeList.maxResults}"/>
 
     <param name="employeeId" value="#{employeeHome.id}"/>
     <param name="sort" value="#{employeeList.orderColumn}"/>
