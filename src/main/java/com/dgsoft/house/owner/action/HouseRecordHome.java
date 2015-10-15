@@ -30,12 +30,14 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         private int pri;
 
         public RegBookItem(BusinessDefine.RegBookItemType regBookItemType, HouseBusiness mainBusiness, int pri) {
+            this.regBookItemType = regBookItemType;
             putBusiness(regBookItemType,mainBusiness);
             this.pri = pri;
         }
 
         public void putBusiness(BusinessDefine.RegBookItemType regBookItemType, HouseBusiness houseBusiness){
-            this.regBookItemType = regBookItemType;
+
+
             switch (regBookItemType.getLocation()){
                 case MASTER:
                     this.mainBusiness = houseBusiness;
