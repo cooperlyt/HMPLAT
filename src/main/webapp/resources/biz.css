@@ -154,7 +154,7 @@
 .label-biz-status.SUSPEND{
     background-color: #f0ad4e;
 }
-.label-biz-status.CANCEL{
+.label-biz-status.CANCEL, .label-biz-status.COMPLETE_CANCEL {
     background-color: #d9534f;
 }
 
