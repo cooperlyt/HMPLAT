@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseStatus;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -21,6 +22,7 @@ public class HouseRecord implements java.io.Serializable {
 
 	private BusinessHouse businessHouse;
 	private String houseCode;
+	private HouseStatus houseStatus;
 
 	public HouseRecord() {
 	}
@@ -29,6 +31,15 @@ public class HouseRecord implements java.io.Serializable {
        this.houseCode = businessHouse.getHouseCode();
     }
 
+	@Enumerated(EnumType.STRING)
+	@Column(name ="HOUSE_STATUS",nullable = true,length = 32)
+	public HouseStatus getHouseStatus() {
+		return houseStatus;
+	}
+
+	public void setHouseStatus(HouseStatus houseStatus) {
+		this.houseStatus = houseStatus;
+	}
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HOUSE", unique = true, nullable = false)

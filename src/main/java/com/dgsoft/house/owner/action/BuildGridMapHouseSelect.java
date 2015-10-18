@@ -9,6 +9,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseRecord;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -273,13 +274,13 @@ public class BuildGridMapHouseSelect {
             houseMap.put(house.getHouseCode(),house);
         }
 
-        List<BusinessHouse> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord left join fetch houseRecord.businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", BusinessHouse.class)
+        List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                 .setParameter("houseCodes", houseMap.keySet())
                 .getResultList();
 
 
-        Map<String,BusinessHouse> businessHouseMap = new HashMap<String, BusinessHouse>();
-        for (BusinessHouse house: houseRecords){
+        Map<String,HouseRecord> businessHouseMap = new HashMap<String, HouseRecord>();
+        for (HouseRecord house: houseRecords){
             businessHouseMap.put(house.getHouseCode(),house);
         }
 
@@ -307,11 +308,11 @@ public class BuildGridMapHouseSelect {
                     if (house != null){
                         block.setHouse(house);
                         block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
-                        BusinessHouse businessHouse =  businessHouseMap.get(house.getHouseCode());
-                        if (businessHouse != null) {
-                            if (businessHouse.getBusinessHouseOwner()!=null)
-                                block.setOwnerName(businessHouse.getBusinessHouseOwner().getPersonName());
-                            block.setHouseStatus(businessHouse.getMasterStatus());
+                        HouseRecord houseRecord =  businessHouseMap.get(house.getHouseCode());
+                        if (houseRecord != null) {
+                            if (houseRecord.getBusinessHouse().getBusinessHouseOwner()!=null)
+                                block.setOwnerName(houseRecord.getBusinessHouse().getBusinessHouseOwner().getPersonName());
+                            block.setHouseStatus(houseRecord.getHouseStatus());
                         }
                         houseMap.remove(house.getHouseCode());
                     }
@@ -332,10 +333,11 @@ public class BuildGridMapHouseSelect {
                 for(GridBlock block: gridRow.getGridBlocks()){
                     if (block.getHouse()!= null){
                         block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
-                        BusinessHouse businessHouse =  businessHouseMap.get(block.getHouseCode());
-                        if (businessHouse != null) {
-                            block.setOwnerName(businessHouse.getBusinessHouseOwner().getPersonName());
-                            block.setHouseStatus(businessHouse.getMasterStatus());
+                        HouseRecord houseRecord =  businessHouseMap.get(block.getHouseCode());
+                        if (houseRecord != null) {
+                            if (houseRecord.getBusinessHouse().getBusinessHouseOwner() != null)
+                                block.setOwnerName(houseRecord.getBusinessHouse().getBusinessHouseOwner().getPersonName());
+                            block.setHouseStatus(houseRecord.getHouseStatus());
                         }
                     }
                 }

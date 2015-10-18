@@ -39,19 +39,11 @@ public class MoveProjectPledge implements TaskCompleteSubscribeComponent {
     public void complete() {
 
         for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
                 houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PROJECT_PLEDGE, houseBusiness, true));
-            }
 
-            List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-            houseStatusList.remove(HouseStatus.PROJECT_PLEDGE);
 
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            if (houseStatusList!=null && !houseStatusList.isEmpty()) {
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-            }else{
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
-            }
+
 
         }
     }

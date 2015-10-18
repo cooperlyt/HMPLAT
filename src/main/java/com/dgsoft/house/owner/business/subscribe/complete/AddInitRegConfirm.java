@@ -30,12 +30,6 @@ public class AddInitRegConfirm implements TaskCompleteSubscribeComponent {
     private OwnerBusinessHome ownerBusinessHome;
 
 
-
-
-
-    @In
-    private FacesMessages facesMessages;
-
     @Override
     public void valid() {
 
@@ -56,13 +50,8 @@ public class AddInitRegConfirm implements TaskCompleteSubscribeComponent {
 
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
                     houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.INIT_REG_CONFIRM, houseBusiness));
-                }
-                List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-                houseStatusList.add(HouseStatus.INIT_REG_CONFIRM);
-                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+
             }
         }
 

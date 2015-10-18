@@ -86,7 +86,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
     private HouseRecord houseRecord;
-    private HouseStatus masterStatus;
+
 
     public BusinessHouse() {
     }
@@ -273,15 +273,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.poolType = poolType;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name ="HOUSE_STATUS",nullable = true,length = 32)
-    public HouseStatus getMasterStatus() {
-        return masterStatus;
-    }
-
-    public void setMasterStatus(HouseStatus masterStatus) {
-        this.masterStatus = masterStatus;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "REG_INFO",nullable = true)

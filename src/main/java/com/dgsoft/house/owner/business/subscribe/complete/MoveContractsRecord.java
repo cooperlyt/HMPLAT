@@ -36,26 +36,10 @@ public class MoveContractsRecord  implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-
-
-        if (ownerBusinessHome.getInstance().getSelectBusiness() != null) {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
-                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.CONTRACTS_RECORD, houseBusiness, true));
-                }
-
-                List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-                houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-                houseStatusList.remove(HouseStatus.CONTRACTS_RECORD);
-                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                if (houseStatusList!=null && !houseStatusList.isEmpty()) {
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-                }else{
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
-                }
-
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.CONTRACTS_RECORD, houseBusiness, true));
             }
-        }
+
 
     }
 }

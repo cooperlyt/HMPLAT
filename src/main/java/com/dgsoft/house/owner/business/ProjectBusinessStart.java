@@ -310,8 +310,8 @@ public class ProjectBusinessStart {
                 houseStatusMap = new HashMap<String, HouseStatus>();
                 for (HouseRecord hr : ownerBusinessHome.getEntityManager().createQuery("select houseRecord from HouseRecord  houseRecord left join fetch houseRecord.businessHouse where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                         .setParameter("houseCodes", houseMap.keySet()).getResultList()) {
-                    if (hr.getBusinessHouse().getMasterStatus() != null)
-                        houseStatusMap.put(hr.getHouseCode(), hr.getBusinessHouse().getMasterStatus());
+                    if (hr.getHouseStatus() != null)
+                        houseStatusMap.put(hr.getHouseCode(), hr.getHouseStatus());
                 }
             } else {
                 houseStatusMap = new HashMap<String, HouseStatus>(0);

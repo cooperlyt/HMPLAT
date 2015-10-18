@@ -40,19 +40,10 @@ public class MoveDivertRegister implements TaskCompleteSubscribeComponent {
 
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
-                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER, houseBusiness, true));
-                }
 
-                List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-                houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-                houseStatusList.remove(HouseStatus.DIVERT_REGISTER);
-                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                if (houseStatusList!=null && !houseStatusList.isEmpty()) {
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-                }else{
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
-                }
+                    houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.DIVERT_REGISTER, houseBusiness, true));
+
+
 
             }
 

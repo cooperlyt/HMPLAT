@@ -289,7 +289,7 @@ public class DeveloperServiceComponent {
         HouseStatus houseStatus = null;
 
         if (houseRecord != null){
-            houseStatus = houseRecord.getBusinessHouse().getMasterStatus();
+            houseStatus = houseRecord.getHouseStatus();
            //   may be sub status
         }
 
@@ -359,8 +359,8 @@ public class DeveloperServiceComponent {
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
         for (HouseRecord houseRecord: recordHouse){
-            if (houseRecord.getBusinessHouse().getMasterStatus() != null){
-                houseStatusMap.put(houseRecord.getHouseCode(),houseRecord.getBusinessHouse().getMasterStatus());
+            if (houseRecord.getHouseStatus() != null){
+                houseStatusMap.put(houseRecord.getHouseCode(),houseRecord.getHouseStatus());
             }
         }
 

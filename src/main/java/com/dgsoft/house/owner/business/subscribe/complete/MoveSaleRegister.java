@@ -38,19 +38,9 @@ public class MoveSaleRegister implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
-                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_REGISTER, houseBusiness, true));
-            }
-            List<HouseStatus> houseStatusList = new ArrayList<HouseStatus>();
-            houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
 
-            houseStatusList.remove(HouseStatus.SALE_REGISTER);
-            Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-            if (houseStatusList!=null && !houseStatusList.isEmpty()) {
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-            }else{
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
-            }
+                houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.SALE_REGISTER, houseBusiness, true));
+
         }
 
     }

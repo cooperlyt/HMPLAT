@@ -39,11 +39,11 @@ public class AddMasterStatus  implements TaskCompleteSubscribeComponent {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                 List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
                 Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                if (houseStatusList!=null && !houseStatusList.isEmpty()) {
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
-                }else{
-                    houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
-                }
+//                if (houseStatusList!=null && !houseStatusList.isEmpty()) {
+//                    houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
+//                }else{
+//                    houseBusiness.getAfterBusinessHouse().setMasterStatus(null);
+//                }
             }
 
 

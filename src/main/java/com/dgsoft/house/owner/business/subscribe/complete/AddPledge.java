@@ -42,15 +42,8 @@ public class AddPledge implements TaskCompleteSubscribeComponent {
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
 
-                if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
                     houseBusiness.getAddHouseStatuses().add(new AddHouseStatus(HouseStatus.PLEDGE, houseBusiness));
-                }
 
-
-                List<HouseStatus> houseStatusList = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-                houseStatusList.add(HouseStatus.PLEDGE);
-                Collections.sort(houseStatusList, new HouseStatus.StatusComparator());
-                houseBusiness.getAfterBusinessHouse().setMasterStatus(houseStatusList.get(0));
 
             }
 
