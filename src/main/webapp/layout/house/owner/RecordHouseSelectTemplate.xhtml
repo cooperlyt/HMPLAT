@@ -225,8 +225,8 @@
                                     <ui:insert name="houseDataTitle">
                                         #{_house.businessHouse.houseCode}</ui:insert>
                                                   <span class="house-info">
-                                                    <span class="#{_house.businessHouse.masterStatus}">
-                                                        <h:outputText styleClass="label" value="#{messages[_house.businessHouse.masterStatus.name()]}"/>
+                                                    <span class="#{_house.houseStatus}">
+                                                        <h:outputText styleClass="label" value="#{messages[_house.houseStatus.name()]}"/>
                                                     </span>
                                                 </span>
                                 </td>
@@ -292,11 +292,11 @@
                                 <td>
                                     <ui:insert name="houseMapDataTitle">
                                         #{_house.houseCode}</ui:insert>
-                                                  <span class="house-info">
-                                                    <span class="#{_house.masterStatus}">
-                                                        <h:outputText styleClass="label" value="#{messages[_house.masterStatus.name()]}"/>
+                                                  <a:outputPanel rendered="#{not empty _house.houseRecord}" styleClass="house-info">
+                                                    <span class="#{_house.houseRecord.houseStatus}">
+                                                        <h:outputText styleClass="label" value="#{messages[_house.houseRecord.houseStatus.name()]}"/>
                                                     </span>
-                                                </span>
+                                                </a:outputPanel>
                                 </td>
                                 <td>
                                     #{_house.displayHouseCode}
@@ -377,7 +377,7 @@
                                         rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
 
                                         <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" ondblclick="houseClick('#{_cell.house.houseCode}')">
-                                            <div class="#{_cell.house.masterStatus}" >
+                                            <div class="#{_cell.houseStatus}" >
                                                 <div class="house-info-context">
                                                     <ul >
                                                         <li><ui:insert name="houseTitle"><h2>#{_cell.house.houseOrder}  </h2> </ui:insert> </li>
@@ -391,8 +391,8 @@
                                                     </a:outputPanel>
                                                 </div>
                                                 <div class="house-status" >
-                                                    <a:outputPanel styleClass="label" rendered="#{not empty _cell.house.masterStatus}">
-                                                        #{messages[_cell.house.masterStatus.name()]}
+                                                    <a:outputPanel styleClass="label" rendered="#{not empty _cell.houseStatus}">
+                                                        #{messages[_cell.houseStatus.name()]}
                                                     </a:outputPanel>
                                                 </div>
                                             </div>

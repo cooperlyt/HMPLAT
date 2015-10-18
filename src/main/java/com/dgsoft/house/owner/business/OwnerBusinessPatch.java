@@ -312,7 +312,7 @@ public class OwnerBusinessPatch {
 
                 HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
                 if (houseRecord == null) {
-                    houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse()));
+                   // houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse()));
                 } else {
                     try {
                         Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status in ('COMPLETE', 'MODIFYING' , 'COMPLETE_CANCEL')  and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();

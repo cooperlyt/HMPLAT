@@ -26,9 +26,11 @@ public class HouseRecord implements java.io.Serializable {
 
 	public HouseRecord() {
 	}
-    public HouseRecord(BusinessHouse businessHouse){
+
+    public HouseRecord(BusinessHouse businessHouse,HouseStatus houseStatus){
        this.businessHouse = businessHouse;
        this.houseCode = businessHouse.getHouseCode();
+		this.houseStatus = houseStatus;
     }
 
 	@Enumerated(EnumType.STRING)

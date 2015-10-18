@@ -107,7 +107,7 @@
                                     #{_item.businessHouse.houseBusinessForAfter.recordStore.recordCode}
                                 </s:link>
                             </div>
-                            <h3 class="repo-list-name #{_item.businessHouse.masterStatus}">
+                            <h3 class="repo-list-name #{_item.houseStatus}">
 
                                 <s:link view="/func/house/owner/HouseRecordView.xhtml">
                                     <f:param name="houseCode" value="#{_item.houseCode}"/>
@@ -115,7 +115,7 @@
                                 </s:link>
 
                                         <span class="label">
-                                            #{messages[_item.businessHouse.masterStatus.name()]}
+                                            #{messages[_item.houseStatus.name()]}
                                         </span>
                             </h3>
 

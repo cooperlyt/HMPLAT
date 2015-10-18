@@ -366,6 +366,9 @@ public class OwnerBuildGridMap {
                     if (house != null){
                         block.setHouse(house);
                         block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
+                        if (house.getHouseRecord() != null){
+                            block.setHouseStatus(house.getHouseRecord().getHouseStatus());
+                        }
                         houseMap.remove(house.getHouseCode());
                     }
                 }

@@ -2,17 +2,19 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessHouse;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseRecord;
-import com.dgsoft.house.owner.model.MakeCard;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,21 +41,18 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
         return true;
     }
 
-    private void recordHouse(BusinessHouse house){
-        HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
-        if (houseRecord == null) {
-            houseRecord = new HouseRecord(house);
-            ownerEntityLoader.getEntityManager().persist(houseRecord);
-        } else {
-            houseRecord.setBusinessHouse(house);
-            ownerEntityLoader.getEntityManager().merge(houseRecord);
-        }
-    }
-
     @Override
     public void complete() {
+        for (MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
+            makeCard.setEnable(true);
+        }
 
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)) {
+            if (ownerBusinessHome.getInstance().getSelectBusiness() == null){
+                throw new IllegalArgumentException("Modify or Cancel Business not have selectBiz");
+            }
+
+            ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
 
             Set<MakeCard> cancelCards = new HashSet<MakeCard>(ownerBusinessHome.getInstance().getSelectBusiness().getMakeCards());
 
@@ -64,6 +63,12 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
                     for (HouseBusiness now : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                         if (old.getHouseCode().equals(now.getHouseCode())) {
                             cancelHouse.remove(old);
+                            HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, now.getHouseCode());
+                            if (houseRecord != null){
+                                houseRecord.setBusinessHouse(now.getAfterBusinessHouse());
+                            }else{
+                                Logging.getLog(getClass()).warn("MODIFY_BIZ select biz not have houseRecord. ");
+                            }
                         }
                     }
                 }
@@ -81,21 +86,75 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
             }
 
             for (HouseBusiness houseBusiness : cancelHouse) {
-                recordHouse(houseBusiness.getStartBusinessHouse());
+
+
+                List<HouseStatus> oldStatus = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+                for (HouseBusiness old : ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()) {
+                    if (old.getHouseCode().equals(houseBusiness.getHouseCode())){
+                        for(AddHouseStatus addHouseStatus: old.getAddHouseStatuses()){
+                            if (addHouseStatus.isRemove()){
+                                oldStatus.add(addHouseStatus.getStatus());
+                            }else{
+                                oldStatus.remove(addHouseStatus.getStatus());
+                            }
+                        }
+                    }
+                }
+
+                HouseStatus lastStatus;
+                if (oldStatus.isEmpty()){
+                    lastStatus = null;
+                }else{
+                    Collections.sort(oldStatus, HouseStatus.StatusComparator.getInstance());
+                    lastStatus = oldStatus.get(0);
+                }
+
+                HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
+                if (houseRecord != null){
+                    houseRecord.setBusinessHouse(houseBusiness.getStartBusinessHouse());
+                    houseRecord.setHouseStatus(lastStatus);
+                }else{
+                    Logging.getLog(getClass()).warn("MODIFY_BIZ select biz not have houseRecord. ");
+                }
             }
-        }
 
 
-        for (MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
-            makeCard.setEnable(true);
-
-
-        }
-
-
-        if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.CANCEL_BIZ)) {
+        } else {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                recordHouse(houseBusiness.getAfterBusinessHouse());
+
+                List<HouseStatus> oldStatus = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+
+
+                for (AddHouseStatus addHouseStatus: houseBusiness.getAddHouseStatuses()){
+                    if (addHouseStatus.isRemove()){
+                        oldStatus.remove(addHouseStatus.getStatus());
+                    }else{
+                        oldStatus.add(addHouseStatus.getStatus());
+                    }
+                }
+
+
+
+                HouseStatus lastStatus;
+                if (oldStatus.isEmpty()){
+                    lastStatus = null;
+                }else{
+                    Collections.sort(oldStatus, HouseStatus.StatusComparator.getInstance());
+                    lastStatus = oldStatus.get(0);
+                }
+
+                BusinessHouse house = houseBusiness.getAfterBusinessHouse();
+                HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
+                if (houseRecord == null) {
+                    houseRecord = new HouseRecord(house,lastStatus);
+                    //ownerEntityLoader.getEntityManager().persist(houseRecord);
+                } else {
+                    houseRecord.setBusinessHouse(house);
+                    houseRecord.setHouseStatus(lastStatus);
+                    //ownerEntityLoader.getEntityManager().merge(houseRecord);
+                }
+                house.setHouseRecord(houseRecord);
+
             }
         }
 
