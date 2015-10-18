@@ -11,6 +11,32 @@
     <!-- param: personEntityHelper  , render-->
 
 
+    <a:jsFunction name="showReadPanel" action="#{_person.beginReading}" render="card_read_push"/>
+
+
+
+    <a:jsFunction name="hideReadPanel" action="#{_person.endReading}" render="card_read_push"/>
+
+
+    <r:popupPanel styleClass="cer-card-popup" onshow="showReadPanel();" onhide="hideReadPanel();" id="popup" modal="true" autosized="true" width="400" height="200" resizeable="false" onmaskclick="#{r:component('popup')}.hide();">
+
+       <a:outputPanel id="card_read_push" binding="block" style="width: 400px; height: 200px;">
+           <a:outputPanel rendered="#{_person.reading}">
+
+               <a:jsFunction name="personCerRead" action="#{_person.numberChange}">
+
+                   <a:param assignTo="#{_person.credentialsNumber}" name="cerNumber"/>
+               </a:jsFunction>
+
+               <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="alert(event.rf.data);personCerRead();" >
+
+               </a:push>
+
+           </a:outputPanel>
+
+       </a:outputPanel>
+    </r:popupPanel>
+
         <a:outputPanel id="personCardInput" layout="block" class="input-group">
 
         <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
@@ -31,9 +57,10 @@
 
             <a:commandLink styleClass="btn btn-default #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
                            id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                           execute="@this" immediate="true" style="height: 34px;"
+                           execute="@this" immediate="true" style="height: 34px;" oncomplete="#{r:component('popup')}.show();"
                            render="credentialsNumber,cerdentialsName">
                 <span class="octicon octicon-file-media" />
+                <a:attachQueue requestDelay="0"/>
             </a:commandLink>
         </a:outputPanel>
 

@@ -4,9 +4,13 @@ import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.common.system.model.WordCategory;
 import org.jboss.seam.Component;
+import org.jboss.seam.log.Logging;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.richfaces.application.push.MessageException;
+import org.richfaces.application.push.TopicKey;
+import org.richfaces.application.push.TopicsContext;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -96,6 +100,8 @@ public class WordDictionaryService {
             throw new IllegalArgumentException(e);
         }
     }
+
+
 
 
 }

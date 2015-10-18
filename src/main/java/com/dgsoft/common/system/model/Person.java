@@ -32,9 +32,12 @@ public class Person implements java.io.Serializable, PersonIDCard {
 	public Person() {
 	}
 
+	public Person(String number) {
+		this.number = number;
+	}
 
 
-//	@EmbeddedId
+	//	@EmbeddedId
 //	@AttributeOverrides({
 //			@AttributeOverride(name = "credentialsType", column = @Column(name = "CREDENTIALS_TYPE", nullable = false, length = 32)),
 //			@AttributeOverride(name = "credentialsNumber", column = @Column(name = "CREDENTIALS_NUMBER", nullable = false, length = 100))})

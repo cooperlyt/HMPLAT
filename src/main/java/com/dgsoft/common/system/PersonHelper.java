@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 public class PersonHelper<E extends PersonEntity> extends PersonHelperBase<E>  {
 
 
+
     public PersonHelper(E entity) {
         super(entity);
     }

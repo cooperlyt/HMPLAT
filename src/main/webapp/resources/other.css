@@ -995,3 +995,13 @@ a:focus, a:hover{
 .panel-body{
     font-size: 14px;
 }
+
+
+.cer-card-popup {
+    background: url('#{facesContext.externalContext.requestContextPath}/img/cer.png');
+    filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size:100% 100%;
+    background-size:100% 100%;;
+
+
+}
