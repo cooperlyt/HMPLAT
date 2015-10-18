@@ -17,7 +17,7 @@ import java.util.Date;
 public class LockedHouse {
 
     public enum LockType{
-        CANT_SALE,PREPARE_CLOSE
+        CANT_SALE,PREPARE_CLOSE,TEMP_CANT_SALE
     }
 
     private String id;
