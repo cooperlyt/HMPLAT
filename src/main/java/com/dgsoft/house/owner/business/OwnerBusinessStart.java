@@ -72,8 +72,6 @@ public class OwnerBusinessStart {
         for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
             component.fillData();
         }
-
-
         return beginEdit();
 
     }

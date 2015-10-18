@@ -9,7 +9,7 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: personEntityHelper  , render-->
-
+<ui:remove>
 
     <a:jsFunction name="showReadPanel" action="#{_person.beginReading}" render="card_read_push"/>
 
@@ -36,6 +36,7 @@
 
        </a:outputPanel>
     </r:popupPanel>
+</ui:remove>
 
         <a:outputPanel id="personCardInput" layout="block" class="input-group">
 
@@ -83,7 +84,7 @@
         <div class="input-group-addon">
 @
         </div>
-        <h:inputText id="cerdentialsName" disabled="#{_person.manager}" value="#{_person.personName}"
+        <h:inputText id="cerdentialsName" value="#{_person.personName}"
                      p:placeholder="#{messages.person_field_name}"
                      required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
 
