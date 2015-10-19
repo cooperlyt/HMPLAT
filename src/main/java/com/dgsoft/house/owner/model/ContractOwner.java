@@ -18,6 +18,7 @@ import java.util.Date;
 public class ContractOwner implements java.io.Serializable,PersonEntity {
 
     private String id;
+    private String contractNumber;
     private String personName;
     private CredentialsType credentialsType;
     private String credentialsNumber;
@@ -70,12 +71,25 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Column(name="CONTRACT_NUMBER", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.common.system.model.Employee;
 import com.dgsoft.common.system.model.Role;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.BuildGridMapHouseSelect;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
@@ -308,15 +309,33 @@ public class OwnerBusinessPatch {
 
         for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
             houseBusiness.setRecordStore(recordStore);
-            if (ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source <> 'BIZ_AFTER_SAVE' and houseBusiness.houseCode = :houseCode", Long.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
 
-                HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
-                if (houseRecord == null) {
-                   // houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse()));
-                } else {
+            List<HouseStatus> houseStatuses = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
+            for(AddHouseStatus addHouseStatus: houseBusiness.getAddHouseStatuses()){
+                if (addHouseStatus.isRemove()){
+                    houseStatuses.remove(addHouseStatus.getStatus());
+                }else{
+                    houseStatuses.add(addHouseStatus.getStatus());
+                }
+            }
+
+            HouseStatus masterStatus;
+            if (houseStatuses.isEmpty()){
+                masterStatus = null;
+            }else{
+                Collections.sort(houseStatuses,HouseStatus.StatusComparator.getInstance());
+                masterStatus = houseStatuses.get(0);
+            }
+
+            HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
+            if (houseRecord == null){
+                houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus));
+            }else{
+                if (ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source <> 'BIZ_AFTER_SAVE' and houseBusiness.houseCode = :houseCode", Long.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
+
                     try {
-                        Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.applyTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status in ('COMPLETE', 'MODIFYING' , 'COMPLETE_CANCEL')  and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
-                        if (maxPatchDate != null &&  (maxPatchDate.compareTo(ownerBusinessHome.getInstance().getApplyTime()) > 0)) {
+                        Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.regTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status in ('COMPLETE', 'MODIFYING' , 'COMPLETE_CANCEL')  and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
+                        if (maxPatchDate == null ||  (maxPatchDate.compareTo(ownerBusinessHome.getInstance().getRegTime()) < 0)) {
                             houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
                             houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
                         }
@@ -324,8 +343,12 @@ public class OwnerBusinessPatch {
 
                     }
                 }
+                houseRecord.setHouseStatus(masterStatus);
+
+
 
             }
+
 
         }
 
