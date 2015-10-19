@@ -26,14 +26,13 @@
         <ui:param name="status" value="idStatus"/>
         <h:inputText label="#{messages.Card_MerchandiseContrao}"
                      id="MerchandiseContrao"
-                     value="#{contractOwnerSubscribe.instance.id}"
+                     value="#{contractOwnerSubscribe.instance.contractNumber}"
                      styleClass="form-control"
                      maxlength="32"
                      required="true"
-                     valueChangeListener="#{contractOwnerSubscribe.verifyIdAvailable}"
                      size="50">
 
-                     <a:ajax event="blur" execute="MerchandiseContrao" render="IdField" status="idStatus"/>
+
                 </h:inputText>
     </s:decorate>
    </div>

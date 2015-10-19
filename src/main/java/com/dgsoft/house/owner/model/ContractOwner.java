@@ -73,6 +73,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     @Size(max = 32)
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+
     public String getId() {
         return id;
     }

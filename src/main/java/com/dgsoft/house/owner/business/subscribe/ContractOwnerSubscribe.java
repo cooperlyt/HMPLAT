@@ -100,28 +100,28 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> imple
 
     @Override
     public void validSubscribe() {
-       if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
-           facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
-       }
+//       if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
+//           facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
+//       }
     }
 
     @Override
     public boolean isPass() {
 
-        if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
-            return false;
-        }else{
+//        if (getEntityManager().find(ContractOwner.class,getInstance().getContractNumber())!=null){
+//            return false;
+//        }else{
             return true;
-        }
+//        }
 
     }
 
     @Override
     public boolean saveSubscribe() {
-        if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
-            return false;
-        }
+//        if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
+//            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
+//            return false;
+//        }
         return true;
     }
 }
