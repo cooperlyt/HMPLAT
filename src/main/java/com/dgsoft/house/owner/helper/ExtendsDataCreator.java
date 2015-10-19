@@ -2,8 +2,8 @@ package com.dgsoft.house.owner.helper;
 
 import com.dgsoft.common.helper.JsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
-import com.dgsoft.house.owner.model.BusinessMoney;
-import com.dgsoft.house.owner.model.FactMoneyInfo;
+import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -17,13 +17,17 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cooper on 10/9/15.
+ *
  */
 @Name("extendsDataCreator")
 @AutoCreate
 public class ExtendsDataCreator {
+    @In
+    private Map<String,String> messages;
 
     @In
     private JsonDataProvider jsonDataProvider;
@@ -63,6 +67,66 @@ public class ExtendsDataCreator {
         jsonArray.put(JsonFieldType.DOUBLE.getId());
         jsonArray.put(value.doubleValue());
         return jsonArray;
+    }
+
+
+    private JSONArray jsonField(int value) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(JsonFieldType.INTEGER.getId());
+        jsonArray.put(value);
+        return jsonArray;
+    }
+    private JSONObject ownerRsipJson(BusinessHouse businessHouse,
+                                 MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo) throws JSONException{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Report", "产权证.fr3");
+        jsonObject.put("字",jsonField(businessHouse.getDistrictName()));
+        jsonObject.put("产权证号",jsonField(markCard.getNumber()));
+        jsonObject.put("房屋所有权人", jsonField(businessHouse.getBusinessHouseOwner().getPersonName()));
+        jsonObject.put("共有情况", jsonField(messages.get(businessHouse.getPoolType().name())));
+        jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
+        jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
+        jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
+        jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
+        jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
+        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        jsonObject.put("房屋性质", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseType())));
+        jsonObject.put("规划用途", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getUseType())));
+        jsonObject.put("总层数", jsonField(businessHouse.getFloorCount()));
+        jsonObject.put("建筑面积", jsonField(businessHouse.getHouseArea()));
+        if (businessHouse.getUseArea().compareTo(BigDecimal.ZERO)>0) {
+            jsonObject.put("套内建筑面积", jsonField(businessHouse.getUseArea()));
+        }
+        if (businessHouse.getLandInfo()!=null) {
+            jsonObject.put("地号", jsonField(businessHouse.getLandInfo().getNumber()));
+            jsonObject.put("土地获得方式", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getLandInfo().getLandGetMode())));
+            jsonObject.put("土地使用年始", jsonField(businessHouse.getLandInfo().getBeginUseTime().toString()));
+            jsonObject.put("土地使用年止", jsonField(businessHouse.getLandInfo().getEndUseTime().toString()));
+        }
+        jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
+        jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
+        jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
+        jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+        jsonObject.put("结构", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getStructure())));
+        jsonObject.put("所在层", jsonField(businessHouse.getInFloorName()));
+        jsonObject.put("共有信息", jsonField(poolInfo));
+        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        return jsonObject;
+
+    }
+    public String extendsPrintOwnerRsip(BusinessHouse businessHouse,MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo){
+
+        try {
+            Long putId = jsonDataProvider.putData(ownerRsipJson(businessHouse, markCard, ownerBusiness, poolInfo).toString());
+            return EXTENDS_PRINT_PROTOCOL + URLEncoder.encode(facesContext.getExternalContext().getRequestContextPath() + "/JsonDataProvider.seam?id=" + putId,"UTF-8");
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        }
     }
 
     private JSONObject createFeeJson(String id, String payPerson, String orgName , FactMoneyInfo factMoneyInfo) throws JSONException {
