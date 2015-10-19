@@ -4,6 +4,7 @@ import com.dgsoft.common.system.PersonIDCard;
 import com.dgsoft.common.system.model.Person;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,10 +23,11 @@ import java.util.Date;
 @Name("extendsServiceComponent")
 public class ExtendsServiceComponent {
 
+    @Transactional
     public boolean personCerRead(String key, String data){
         EntityManager systemEntityManager = (EntityManager) Component.getInstance("systemEntityManager", true, true);
 
-
+        Logging.getLog("recive data:" + data);
 
         String number;
         try {

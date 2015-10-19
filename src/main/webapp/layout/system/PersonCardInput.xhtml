@@ -9,40 +9,117 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: personEntityHelper  , render-->
-<ui:remove>
 
-    <a:jsFunction name="showReadPanel" action="#{_person.beginReading}" render="card_read_push"/>
+    <h:outputStylesheet>
+        .reading-bli.reading .btn{
+            color: #8a6d3b;
+        }
+
+    </h:outputStylesheet>
+
+    <h:outputScript>
+
+
+        $(document).ready( function(){
+
+        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+            var key = setInterval(reading, 500);
+            #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
+             extendsCall('ExtendsCer://#{_person.uuid}');
+        }
+
+        });
+
+
+        function readBtnClick(){
+        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+        endRead();
+
+        }else{
+        beginRead();
+
+        }
+        }
+
+
+          function reading(){
+
+
+            if ( #{r:jQuery('personCardInput')}.hasClass("reading-bli")){
+
+        #{r:jQuery('personCardInput')}.removeClass("reading-bli");
+
+            }else{
+        #{r:jQuery('personCardInput')}.addClass("reading-bli");
+            }
+          }
+
+        function stopbil(){
+            clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
+        }
+
+          function readStateCheck(){
+                if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+                        var key = setInterval(reading, 500);
+                     #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
+                }else{
+                    clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
+                }
+
+          }
 
 
 
-    <a:jsFunction name="hideReadPanel" action="#{_person.endReading}" render="card_read_push"/>
+    </h:outputScript>
 
 
-    <r:popupPanel styleClass="cer-card-popup" onshow="showReadPanel();" onhide="hideReadPanel();" id="popup" modal="true" autosized="true" width="400" height="200" resizeable="false" onmaskclick="#{r:component('popup')}.hide();">
 
-       <a:outputPanel id="card_read_push" binding="block" style="width: 400px; height: 200px;">
-           <a:outputPanel rendered="#{_person.reading}">
+    <a:jsFunction name="endRead" execute="@this" immediate="true" oncomplete="readStateCheck();"
+                  action="#{_person.endReading}" render="personCardInput,card_read_push">
+        <a:attachQueue requestDelay="0"/>
+    </a:jsFunction>
+    <a:jsFunction name="beginRead" execute="@this" immediate="true" oncomplete="extendsCall('ExtendsCer://#{_person.uuid}');readStateCheck();"
+                  action="#{_person.beginReading}"  render="personCardInput,card_read_push">
+        <a:attachQueue requestDelay="0"/>
+    </a:jsFunction>
 
-               <a:jsFunction name="personCerRead" action="#{_person.numberChange}">
 
-                   <a:param assignTo="#{_person.credentialsNumber}" name="cerNumber"/>
-               </a:jsFunction>
+    <ui:remove>
+    <r:popupPanel styleClass="cer-card-popup"  id="popup"  onhide="hideReadPanel();"
+                  modal="true" autosized="true" width="400" height="200" resizeable="false"
+                  onmaskclick="#{r:component('popup')}.hide();">
 
-               <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="alert(event.rf.data);personCerRead();" >
 
-               </a:push>
-
-           </a:outputPanel>
-
-       </a:outputPanel>
     </r:popupPanel>
-</ui:remove>
+    </ui:remove>
 
-        <a:outputPanel id="personCardInput" layout="block" class="input-group">
+        <a:outputPanel id="intervalKey"/>
+
+    <a:outputPanel id="card_read_push" style="width: 400px; height: 200px;">
+
+        <a:outputPanel rendered="#{_person.reading}">
+
+            <a:jsFunction name="personCerRead" render="personCardInput card_read_push #{render} " execute="@this"
+                          immediate="true" action="#{_person.numberChange}" oncomplete="stopbil()">
+                <a:attachQueue requestDelay="0"/>
+                <a:param assignTo="#{_person.credentialsNumber}" name="cerNumber"/>
+            </a:jsFunction>
+
+            <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="personCerRead(event.rf.data);" >
+
+            </a:push>
+
+        </a:outputPanel>
+
+    </a:outputPanel>
+
+
+        <a:outputPanel id="personCardInput" layout="block" styleClass="input-group #{_person.reading ? 'reading' : ''}">
 
         <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
 
             <h:selectOneMenu  label="#{messages.person_field_credentialsType}" id="personCredentialsTypeInput"
+                              disabled="#{_person.reading}"
                               styleClass="selectpicker select-menu-btn input-group-first"
                               value="#{_person.credentialsType}" required="true">
                 <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
@@ -56,13 +133,13 @@
 
             </h:selectOneMenu>
 
-            <a:commandLink styleClass="btn btn-default #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
+            <h:outputLink styleClass="btn btn-default  #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
                            id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                           execute="@this" immediate="true" style="height: 34px;" oncomplete="#{r:component('popup')}.show();"
-                           render="credentialsNumber,cerdentialsName">
+                            onclick="readBtnClick();return false;"
+                           style="height: 34px;" >
                 <span class="octicon octicon-file-media" />
                 <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
+            </h:outputLink>
         </a:outputPanel>
 
         <h:inputText id="credentialsNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
@@ -71,6 +148,7 @@
                      required="true"
                      size="25"
                      maxlength="100"
+                     disabled="#{_person.reading}"
                      p:placeholder="#{messages.person_field_credentialsNO}"
                      value="#{_person.credentialsNumber}">
             <a:ajax event="blur" render="cerdentialsName #{render}"
@@ -86,6 +164,7 @@
         </div>
         <h:inputText id="cerdentialsName" value="#{_person.personName}"
                      p:placeholder="#{messages.person_field_name}"
+                     disabled="#{_person.reading or (not empty _person.idCard)}"
                      required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
 
         </h:inputText>

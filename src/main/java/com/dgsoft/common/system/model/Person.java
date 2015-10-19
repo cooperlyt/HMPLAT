@@ -109,7 +109,6 @@ public class Person implements java.io.Serializable, PersonIDCard {
 
 	@Column(name = "SEX", length = 32)
     @Enumerated(EnumType.STRING)
-	@Size(max = 32)
 	public Sex getSex() {
 		return this.sex;
 	}

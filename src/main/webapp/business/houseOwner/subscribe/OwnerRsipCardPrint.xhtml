@@ -9,13 +9,6 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
 
-    <iframe style="display:none;" class="qq_iframe" src=""/>
-
-    <h:outputScript>
-        function extPrint(printUrl){
-            $('.qq_iframe').attr('src',printUrl);
-        }
-    </h:outputScript>
 
     <div class="panel-body">
         <h:form>
@@ -28,7 +21,7 @@
 
                 <a:commandLink styleClass="btn minibutton right" render="@none" action="#{ownerRsipCardPrint.preparePrintOwnerFee}" immediate="true"
                                data="#{ownerRsipCardPrint.printUrl}"
-                               execute="@this" oncomplete="extPrint(event.data);">
+                               execute="@this" oncomplete="extendsCall(event.data);">
                     <span class="glyphicon glyphicon-print"/>
                     <a:attachQueue requestDelay="0"/>
                     打印
