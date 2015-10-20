@@ -77,11 +77,145 @@ public class ExtendsDataCreator {
         return jsonArray;
     }
 
+    private JSONObject projectRshipJson(OwnerBusiness ownerBusiness,MakeCard markCard)throws JSONException{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Report", "商品房预售许可证.fr3");
+        jsonObject.put("预售证号",jsonField(markCard.getNumber()));
+        jsonObject.put("开发商",jsonField(ownerBusiness.getBusinessProject().getDeveloperName()));
+        jsonObject.put("房屋坐落地点",jsonField(ownerBusiness.getBusinessProject().getAddress()));
+        jsonObject.put("项目名称",jsonField(ownerBusiness.getBusinessProject().getProjectName()));
+        jsonObject.put("建筑面积",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getArea()));
+        jsonObject.put("栋",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getBuildCount()));
+        jsonObject.put("套数",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
+        if (!ownerBusiness.getBusinessProject().getBusinessBuilds().isEmpty()) {
+            for (int i=0;i<ownerBusiness.getBusinessProject().getBusinessBuilds().size();i++){
+                jsonObject.put("楼号"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getBuildNo()));
+                jsonObject.put("层数"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getFloorCount()));
+                jsonObject.put("总套数"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getHouseCount()));
+                jsonObject.put("建筑面积"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getArea()));
+                jsonObject.put("住宅面积"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getHomeArea()));
+                jsonObject.put("住宅套数"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getHomeCount()));
+                jsonObject.put("非住宅面积"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getUnhomeArea()));
+                jsonObject.put("非住宅套数"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getUnhomeCount()));
+                jsonObject.put("网点面积"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getShopArea()));
+                jsonObject.put("网点套数"+(i+1),jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getShopCount()));
+            }
+
+        }
+
+
+        return jsonObject;
+    }
+    public String extendsPrintprojectRship(OwnerBusiness ownerBusiness,MakeCard markCard) {
+
+        try {
+            Long putId = jsonDataProvider.putData(projectRshipJson(ownerBusiness,markCard).toString());
+            return EXTENDS_PRINT_PROTOCOL + URLEncoder.encode(facesContext.getExternalContext().getRequestContextPath() + "/JsonDataProvider.seam?id=" + putId, "UTF-8");
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        }
+    }
+
+
+
+    private JSONObject projectRshipStubJson(OwnerBusiness ownerBusiness,MakeCard markCard)throws JSONException{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Report", "商品房预售许可证存根.fr3");
+        jsonObject.put("预售证号",jsonField(markCard.getNumber()));
+        jsonObject.put("开发商",jsonField(ownerBusiness.getBusinessProject().getDeveloperName()));
+        jsonObject.put("项目名称",jsonField(ownerBusiness.getBusinessProject().getProjectName()));
+        jsonObject.put("房屋坐落地点",jsonField(ownerBusiness.getBusinessProject().getAddress()));
+        jsonObject.put("房屋用途性质",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getUseType()));
+        jsonObject.put("销预售对象",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getSellObject()));
+        jsonObject.put("建筑面积",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getArea()));
+
+        BigDecimal homeArea = BigDecimal.ZERO;
+        BigDecimal unhomeArea=BigDecimal.ZERO;
+        int homeCount=0,unhomeCount=0;
+
+        if (!ownerBusiness.getBusinessProject().getBusinessBuilds().isEmpty()){
+            for (BusinessBuild businessBuild:ownerBusiness.getBusinessProject().getBusinessBuilds()){
+                homeArea = homeArea.add(businessBuild.getHomeArea());
+                unhomeArea = unhomeArea.add(businessBuild.getShopArea());//商业
+                unhomeArea = unhomeArea.add(businessBuild.getUnhomeArea());//其它
+
+                homeCount = homeCount+businessBuild.getHomeCount();
+                unhomeCount= unhomeCount+businessBuild.getUnhomeCount()+businessBuild.getShopCount();;
+            }
+        }
+        jsonObject.put("住宅面积",jsonField(homeArea));
+        jsonObject.put("住宅套数",jsonField(homeCount));
+        jsonObject.put("非住宅面积",jsonField(unhomeArea));
+        jsonObject.put("非住宅套数",jsonField(unhomeCount));
+        jsonObject.put("建设用地规划许可证号",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getCreateCardNumber()));
+        jsonObject.put("土地使用权证号",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getLandCardNo()));
+        jsonObject.put("建设工程规划许可证号",jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getCreatePrepareCardNumber()));
+        return jsonObject;
+    }
+    public String extendsPrintProjectRshipStub(OwnerBusiness ownerBusiness,MakeCard markCard) {
+
+        try {
+            Long putId = jsonDataProvider.putData(projectRshipStubJson(ownerBusiness,markCard).toString());
+            return EXTENDS_PRINT_PROTOCOL + URLEncoder.encode(facesContext.getExternalContext().getRequestContextPath() + "/JsonDataProvider.seam?id=" + putId, "UTF-8");
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        }
+    }
+
+    private JSONObject noticeMortgageJson(BusinessHouse businessHouse,MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo)throws JSONException{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Report", "预告抵押登记.fr3");
+        jsonObject.put("字",jsonField(businessHouse.getDistrictName()));
+        jsonObject.put("预告登记证明号",jsonField(markCard.getNumber()));
+        jsonObject.put("权利人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
+        jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
+        jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
+        jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
+        jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
+        jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
+        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
+        jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
+        jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
+        jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+        jsonObject.put("共有信息", jsonField(poolInfo));
+        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
+        jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+        jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
+        return jsonObject;
+    }
+
+
+    public String extendsPrintNoticeMortgage(BusinessHouse businessHouse,MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo) {
+
+        try {
+            Long putId = jsonDataProvider.putData(noticeMortgageJson(businessHouse, markCard, ownerBusiness, poolInfo).toString());
+            return EXTENDS_PRINT_PROTOCOL + URLEncoder.encode(facesContext.getExternalContext().getRequestContextPath() + "/JsonDataProvider.seam?id=" + putId, "UTF-8");
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        }
+    }
 
     private JSONObject noticeJson(BusinessHouse businessHouse,MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo)throws JSONException{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Report", "预告登记.fr3");
-        jsonObject.put("字",jsonField(""));
+        jsonObject.put("字",jsonField(businessHouse.getDistrictName()));
         jsonObject.put("预告登记证明号",jsonField(markCard.getNumber()));
         jsonObject.put("权利人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
         jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getPersonName()));

@@ -8,11 +8,10 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2015-10-20.
- * 预告登记证明打印 非抵押
+ * 预告抵押打印
  */
-@Name("noticePrint")
-public class NoticePrint {
-
+@Name("noticeMortgagePrint")
+public class NoticeMortgagePrint {
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
@@ -39,7 +38,7 @@ public class NoticePrint {
     }
 
     public void preparePrintOwnerFee(){
-        printUrl = extendsDataCreator.extendsPrintNotice(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
+        printUrl = extendsDataCreator.extendsPrintNoticeMortgage(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
                 ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance(),getPoolInfo());
     }
 }

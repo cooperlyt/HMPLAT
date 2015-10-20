@@ -249,6 +249,8 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     public void setProjectSellInfo(ProjectSellInfo projectSellInfo) {
         this.projectSellInfo = projectSellInfo;
     }
+
+
 }
 
 

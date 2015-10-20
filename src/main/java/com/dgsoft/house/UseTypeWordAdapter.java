@@ -17,9 +17,10 @@ import java.util.Set;
 public class UseTypeWordAdapter {
 
     private static final String CATEGORY_ID = "house.useType";
-    private static final String DWELLING_KEY= "1";
-    private static final String SHOP_HOUSE_KEY = "2";
-
+    private static final String DWELLING_KEY= "1";//住宅
+    private static final String SHOP_HOUSE_KEY = "2";//商业 网点
+    private static final String OFFICE_KEY = "3";//办公
+    private static final String OHTER_KEY = "0";//其它
     @In
     private DictionaryWord dictionary;
 

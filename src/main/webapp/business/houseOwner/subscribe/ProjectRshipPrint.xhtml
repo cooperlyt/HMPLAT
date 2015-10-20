@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+
+    <iframe style="display:none;" class="qq_iframe" src=""/>
+
+    <h:outputScript>
+        function extPrint(printUrl){
+        $('.qq_iframe').attr('src',printUrl);
+        }
+    </h:outputScript>
+
+    <div class="panel-body">
+        <h:form>
+            <p class="text-primary">开发商：<strong>#{ownerBusinessHome.instance.businessProject.developerName}</strong>
+                业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
+                <strong>请点击打印，打印预售许可证</strong>
+                <a class=" " onclick="" >
+
+                </a>
+
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{projectRshipPrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{projectRshipPrint.printUrl}"
+                               execute="@this" oncomplete="extPrint(event.data);">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    打印
+                </a:commandLink>
+
+            </p>
+        </h:form>
+    </div>
+
+
+
+</ui:composition>

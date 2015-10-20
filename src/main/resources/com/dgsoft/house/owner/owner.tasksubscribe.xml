@@ -1178,6 +1178,23 @@
         </description>
     </oper-subscribe>
 
+    <oper-subscribe name="NoticeMortgagePrint" page="/business/houseOwner/subscribe/NoticeMortgagePrint.xhtml">
+        <description>
+            预告抵押登记打印
+        </description>
+    </oper-subscribe>
+
+    <oper-subscribe name="ProjectRshipPrint" page="/business/houseOwner/subscribe/ProjectRshipPrint.xhtml">
+        <description>
+            预售许可证打印
+        </description>
+    </oper-subscribe>
+
+    <oper-subscribe name="ProjectRshipStubPrint" page="/business/houseOwner/subscribe/ProjectRshipStubPrint.xhtml">
+        <description>
+            预售许可证存根打印
+        </description>
+    </oper-subscribe>
 
 
 
