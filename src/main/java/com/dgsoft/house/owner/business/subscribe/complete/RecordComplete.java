@@ -128,8 +128,10 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
                 for (AddHouseStatus addHouseStatus: houseBusiness.getAddHouseStatuses()){
                     if (addHouseStatus.isRemove()){
                         oldStatus.remove(addHouseStatus.getStatus());
+                        Logging.getLog(getClass()).debug("remove status" + addHouseStatus.getStatus());
                     }else{
                         oldStatus.add(addHouseStatus.getStatus());
+                        Logging.getLog(getClass()).debug("add status" + addHouseStatus.getStatus());
                     }
                 }
 
@@ -143,10 +145,12 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
                     lastStatus = oldStatus.get(0);
                 }
 
+                Logging.getLog(getClass()).debug("last status" + lastStatus);
                 BusinessHouse house = houseBusiness.getAfterBusinessHouse();
                 HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
                 if (houseRecord == null) {
                     houseRecord = new HouseRecord(house,lastStatus);
+
                     //ownerEntityLoader.getEntityManager().persist(houseRecord);
                 } else {
                     houseRecord.setBusinessHouse(house);

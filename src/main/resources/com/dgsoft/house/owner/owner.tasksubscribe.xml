@@ -1159,8 +1159,23 @@
         <description>
             所有权证打印
         </description>
-
     </oper-subscribe>
+    <oper-subscribe name="mortgageCardPrint" page="/business/houseOwner/subscribe/mortgageCardPrint.xhtml">
+        <description>
+           他项权证打印
+        </description>
+    </oper-subscribe>
+
+    <oper-subscribe name="ProjectMortgagePrint" page="/business/houseOwner/subscribe/ProjectMortgagePrint.xhtml">
+        <description>
+            在建工程证证打印
+        </description>
+    </oper-subscribe>
+
+
+
+
+
 
 
 
