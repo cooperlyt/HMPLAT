@@ -18,6 +18,7 @@ import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -37,7 +38,17 @@ public class OwnerHouseHelper {
         List<HouseStatus> statuses = new ArrayList<HouseStatus>();
 
         //包含 COMPLETE_CANCEL 不再讨论
-         for(AddHouseStatus status: ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL' or addHouseStatus.houseBusiness.ownerBusiness.status = 'MODIFYING' or ((addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'SUSPEND') and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) order by remove", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList()){
+
+        List<AddHouseStatus> addHouseStatusList = ownerEntityLoader.getEntityManager().createQuery("select addHouseStatus from AddHouseStatus  addHouseStatus where addHouseStatus.houseBusiness.houseCode = :houseCode and (addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE' or addHouseStatus.houseBusiness.ownerBusiness.status = 'COMPLETE_CANCEL' or addHouseStatus.houseBusiness.ownerBusiness.status = 'MODIFYING' or ((addHouseStatus.houseBusiness.ownerBusiness.status = 'RUNNING' or addHouseStatus.houseBusiness.ownerBusiness.status = 'SUSPEND') and addHouseStatus.houseBusiness.ownerBusiness.recorded = true)) ", AddHouseStatus.class).setParameter("houseCode",houseCode).getResultList();
+
+        Collections.sort(addHouseStatusList, new Comparator<AddHouseStatus>() {
+            @Override
+            public int compare(AddHouseStatus o1, AddHouseStatus o2) {
+                return Boolean.valueOf(o1.isRemove()).compareTo(o2.isRemove());
+            }
+        });
+
+         for(AddHouseStatus status: addHouseStatusList){
             if(status.isRemove()){
 
                 if (!statuses.remove(status.getStatus())){

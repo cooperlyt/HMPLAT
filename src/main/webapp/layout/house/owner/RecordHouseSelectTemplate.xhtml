@@ -49,6 +49,7 @@
 
         <a:jsFunction execute="@form" name="findBuildBySection" action="#{ownerBuildGridMap.findBuildBySection}" status="processWaiting" render="houseOrderInput">
             <f:param name="searchBykey" value="#{false}"/>
+            <a:attachQueue requestDelay="0"/>
         </a:jsFunction>
 
         <a:outputPanel id="houseOrderInput">
@@ -131,6 +132,7 @@
             <a:commandLink status="processWaiting" styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}" >
                 #{messages.RecordHouse}
                 <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
+                <a:attachQueue requestDelay="0"/>
             </a:commandLink>
         </a:outputPanel>
     </ui:define>
@@ -154,6 +156,7 @@
 
             <a:jsFunction name="searchByKey" action="#{houseRecordList.refresh}"  execute="@form" status="processWaiting">
                 <f:param name="searchBykey" value="#{true}"/>
+                <a:attachQueue requestDelay="0"/>
             </a:jsFunction>
 
 

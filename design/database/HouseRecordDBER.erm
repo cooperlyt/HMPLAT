@@ -41,11 +41,11 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path></output_path>
-				<encoding></encoding>
-				<line_feed></line_feed>
+				<output_path>design/database/HouseRecordDBER.sql</output_path>
+				<encoding>UTF-8</encoding>
+				<line_feed>LF</line_feed>
 				<is_open_after_saved>true</is_open_after_saved>
-				<environment_id>null</environment_id>
+				<environment_id>0</environment_id>
 				<category_id>null</category_id>
 				<ddl_target>
 					<create_comment>true</create_comment>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2014-06-09 15:05:35</creation_date>
-			<updated_date>2015-10-18 20:58:10</updated_date>
+			<updated_date>2015-10-18 23:48:01</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>

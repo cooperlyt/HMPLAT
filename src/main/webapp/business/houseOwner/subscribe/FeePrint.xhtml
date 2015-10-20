@@ -9,14 +9,6 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
 
-    <iframe style="display:none;" class="qq_iframe" src=""/>
-
-    <h:outputScript>
-        function extPrint(printUrl){
-            $('.qq_iframe').attr('src',printUrl);
-        }
-    </h:outputScript>
-
     <a:repeat value="#{ownerBusinessHome.instance.factMoneyInfos}" var="_feePrint">
 
         <div class="panel panel-default">
@@ -30,7 +22,7 @@
 
                     <a:commandLink styleClass="btn minibutton right" render="@none" action="#{feePrint.preparePrintOwnerFee}" immediate="true"
                                    data="#{feePrint.printUrl}"
-                                   execute="@this" oncomplete="extPrint(event.data);">
+                                   execute="@this" oncomplete="extendsCall(event.data);">
                         <span class="glyphicon glyphicon-print"/>
                         <a:attachQueue requestDelay="0"/>
                         打印

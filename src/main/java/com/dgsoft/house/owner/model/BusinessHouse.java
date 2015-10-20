@@ -763,10 +763,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
 
     @Transient
-    @Deprecated
-    public List<HouseStatus> getAllStatusList() {
+    private List<HouseStatus> allStatusList;
 
-        return OwnerHouseHelper.instance().getHouseAllStatus(getHouseCode());
+    @Transient
+    public List<HouseStatus> getAllStatusList() {
+        if (allStatusList == null){
+            allStatusList = OwnerHouseHelper.instance().getHouseAllStatus(getHouseCode());
+        }
+
+        return allStatusList;
     }
 
 

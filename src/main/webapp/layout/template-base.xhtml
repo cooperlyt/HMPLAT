@@ -44,6 +44,18 @@
         <h:outputStylesheet name="biz.css"/>
 
 
+        <ui:insert name="extends">
+
+
+            <iframe style="display:none;" class="extends-call-iframe" src=""/>
+
+            <h:outputScript>
+                function extendsCall(printUrl){
+                $('.extends-call-iframe').attr('src',printUrl);
+                }
+            </h:outputScript>
+        </ui:insert>
+
 
         <a:queue requestDelay="1000" ignoreDupResponses="true"/>
 
