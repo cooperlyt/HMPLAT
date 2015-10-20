@@ -17,12 +17,12 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
 
 
     private static final String EJBQL = "select distinct houseRecord from HouseRecord houseRecord " +
-            "left join houseRecord.businessHouse businessHouse " +
-            "left join businessHouse.businessHouseOwner owner " +
+            "left join fetch houseRecord.businessHouse businessHouse " +
+            "left join fetch businessHouse.businessHouseOwner owner " +
             "left join businessHouse.businessPools pool " +
             "left join owner.makeCard ownerCard " +
             "left join pool.makeCard poolCard " +
-            "left join businessHouse.houseBusinessForAfter houseBusiness " +
+            "left join fetch businessHouse.houseBusinessForAfter houseBusiness " +
             "left join houseBusiness.recordStore store";
 
     private static final String[] RESTRICTIONS = {

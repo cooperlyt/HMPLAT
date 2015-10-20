@@ -388,6 +388,9 @@ public class OwnerBuildGridMap {
             for (GridRow gridRow: idleMap.getGridRows()){
                 for(GridBlock block: gridRow.getGridBlocks()){
                     if (block.getHouse()!= null){
+                        if (((BusinessHouse)block.getHouse()).getHouseRecord() != null){
+                            block.setHouseStatus(((BusinessHouse)block.getHouse()).getHouseRecord().getHouseStatus());
+                        }
                         block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
                     }
                 }

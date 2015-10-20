@@ -216,6 +216,15 @@ public class HouseRecordCondition extends BusinessHouseCondition {
         return result;
     }
 
+    private RestrictionGroup restrictionDefault;
+    private RestrictionGroup restrictionLocation;
+    private RestrictionGroup restrictionOwnerCard;
+    private RestrictionGroup restrictionPoolCard;
+    private RestrictionGroup restrictionMBBH;
+    private RestrictionGroup personRestriction;
+
+
+
     @Override
     public RestrictionGroup getRestrictionGroup() {
         if (!isHaveCondition()){
@@ -230,30 +239,49 @@ public class HouseRecordCondition extends BusinessHouseCondition {
 
             if (BusinessHouseCondition.SearchType.PERSON.equals(getSearchType())) {
 
-                RestrictionGroup personRestriction = new RestrictionGroup("or");
-                personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_POOL)));
-                personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_OWNER)));
+                if(personRestriction == null) {
+                    personRestriction = new RestrictionGroup("or");
+                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_POOL)));
+                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_OWNER)));
+                }
 
 
                 return personRestriction;
             } else if (BusinessHouseCondition.SearchType.HOUSE_MBBH.equals(getSearchType())) {
-                return new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_MBBH));
+                if (restrictionMBBH == null){
+                    restrictionMBBH = new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_MBBH));
+                }
+
+                return restrictionMBBH;
 
 
             } else if (BusinessHouseCondition.SearchType.HOUSE_CARD.equals(getSearchType())) {
                 if (MakeCard.CardType.POOL_RSHIP.equals(getCardType()) ){
-                    return new RestrictionGroup("and", Arrays.asList(ORESTRICTIONS_POOL_CARD));
+                    if (restrictionPoolCard == null){
+                        restrictionPoolCard = new RestrictionGroup("and", Arrays.asList(ORESTRICTIONS_POOL_CARD));
+                    }
+                    return restrictionPoolCard;
                 }else{
-                    return new RestrictionGroup("and", Arrays.asList(ORESTRICTIONS_OWNER_CARD));
+                    if (restrictionOwnerCard == null){
+                        restrictionOwnerCard = new RestrictionGroup("and", Arrays.asList(ORESTRICTIONS_OWNER_CARD));
+                    }
+                    return restrictionOwnerCard;
                 }
             } else if (BusinessHouseCondition.SearchType.RECORD_LOCATION.equals(getSearchType())){
-                return new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_LOCATION));
+                if (restrictionLocation == null){
+                    restrictionLocation = new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_LOCATION));
+                }
+                return restrictionLocation;
             }
         }
 
-        List<String> allCondition = new ArrayList<String>(Arrays.asList(RESTRICTIONS));
-        allCondition.addAll(Arrays.asList(RESTRICTIONS_MBBH));
+        if (restrictionDefault == null){
+            List<String> allCondition = new ArrayList<String>(Arrays.asList(RESTRICTIONS));
+            allCondition.addAll(Arrays.asList(RESTRICTIONS_MBBH));
+            restrictionDefault = new RestrictionGroup("or",allCondition);
+        }
 
-        return new RestrictionGroup("or",allCondition);
+
+        return restrictionDefault;
     }
 }

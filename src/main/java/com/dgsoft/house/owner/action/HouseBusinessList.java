@@ -26,10 +26,11 @@ import java.util.List;
 @Name("houseBusinessList")
 public class HouseBusinessList extends HouseBusinessSearch {
 
-
     private static final String[] RESTRICTIONS_BIZ = {
             "biz.defineId in (#{houseBusinessList.filterBizDefineId})"
     };
+
+
 
     public HouseBusinessList(){
         super();
@@ -97,17 +98,12 @@ public class HouseBusinessList extends HouseBusinessSearch {
     @In(create = true)
     private HouseBusinessCondition houseBusinessCondition;
 
+
+
     @Override
     protected RestrictionGroup getUseRestrictionGroup() {
 
-
-        RestrictionGroup result = new RestrictionGroup("and" ,Arrays.asList(RESTRICTIONS_BIZ));
-        RestrictionGroup conditionRestriction = houseBusinessCondition.getRestrictionGroup();
-        if (conditionRestriction != null){
-            result.getChildren().add(conditionRestriction);
-        }
-
-        return result;
+        return houseBusinessCondition.getRestrictionGroup(RESTRICTIONS_BIZ);
     }
 
     @Override

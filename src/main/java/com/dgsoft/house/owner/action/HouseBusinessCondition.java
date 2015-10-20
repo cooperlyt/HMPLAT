@@ -72,11 +72,6 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
             "lower(poolCard.number) = lower(#{houseBusinessCondition.searchCardNumber})"
     };
 
-    public static List<String> getAllConditionList(){
-        List<String> result = new ArrayList<String>(Arrays.asList(RESTRICTIONS));
-        result.addAll(Arrays.asList(RESTRICTIONS_MBBH));
-        return result;
-    }
 
     @Override
     public List<SearchType> getAllSearchTypes(){
@@ -132,8 +127,30 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 //        }
     }
 
+    private RestrictionGroup personRestriction;
+
+    private RestrictionGroup restrictionGroupMMBH;
+
+    private RestrictionGroup restrictionGroupHouseCard;
+
+    private RestrictionGroup restrictionGroupPoolCard;
+
+    private RestrictionGroup restrictionGroupOwnerCard;
+
+
+    private RestrictionGroup restrictionGroupDefault;
+
+
+
+
+
     @Override
     public RestrictionGroup getRestrictionGroup() {
+        return getRestrictionGroup(null);
+    }
+
+
+    public RestrictionGroup getRestrictionGroup(String[] rootRestriction) {
         if (!isHaveCondition()){
             return null;
         }
@@ -141,31 +158,83 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
         if (getSearchType() != null) {
             if (BusinessHouseCondition.SearchType.PERSON.equals(getSearchType())) {
 
-                RestrictionGroup personRestriction = new RestrictionGroup("or");
-                personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_PERSON_POOL)));
-                personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_PERSON_OWNER)));
-
+                if (personRestriction == null) {
+                    personRestriction = new RestrictionGroup("or");
+                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_PERSON_POOL)));
+                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_PERSON_OWNER)));
+                    if (rootRestriction != null){
+                        RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
+                        last.getChildren().add(personRestriction);
+                        personRestriction = last;
+                    }
+                }
 
                 return personRestriction;
             } else if (BusinessHouseCondition.SearchType.HOUSE_MBBH.equals(getSearchType())) {
-                return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_MBBH));
+                if (restrictionGroupMMBH == null){
+
+                    restrictionGroupMMBH = new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_MBBH));
+
+                    if (rootRestriction != null){
+                        RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
+                        last.getChildren().add(restrictionGroupMMBH);
+                        restrictionGroupMMBH = last;
+                    }
+                }
+                return restrictionGroupMMBH;
 
 
             } else if (BusinessHouseCondition.SearchType.HOUSE_CARD.equals(getSearchType())) {
                 if ( MakeCard.CardType.OWNER_RSHIP.equals(getCardType()) || MakeCard.CardType.NOTICE.equals(getCardType()) ||
                         MakeCard.CardType.PROJECT_MORTGAGE.equals(getCardType())){
+                    if (restrictionGroupOwnerCard == null){
+                        restrictionGroupOwnerCard = new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_OWNER_CARD));
+                        if (rootRestriction != null){
+                            RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
+                            last.getChildren().add(restrictionGroupOwnerCard);
+                            restrictionGroupOwnerCard = last;
+                        }
+                    }
 
-                    return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_OWNER_CARD));
+                    return restrictionGroupOwnerCard;
 
                 }else if (MakeCard.CardType.POOL_RSHIP.equals(getCardType()) ){
-                    return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_POOL_CARD));
+                    if (restrictionGroupPoolCard == null){
+                        restrictionGroupPoolCard = new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.ORESTRICTIONS_POOL_CARD));
+                        if (rootRestriction != null){
+                            RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
+                            last.getChildren().add(restrictionGroupPoolCard);
+                            restrictionGroupPoolCard = last;
+                        }
+                    }
+                    return restrictionGroupPoolCard;
                 }else{
-                    return new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_HOUSE_CARD));
+                    if (restrictionGroupHouseCard == null){
+                        restrictionGroupHouseCard = new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_HOUSE_CARD));
+                        if (rootRestriction != null){
+                            RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
+                            last.getChildren().add(restrictionGroupHouseCard);
+                            restrictionGroupHouseCard = last;
+                        }
+                    }
+                    return restrictionGroupHouseCard;
                 }
             }
         }
 
-        return new RestrictionGroup("or",getAllConditionList());
+        if (restrictionGroupDefault == null) {
+            List<String> allConditionList = new ArrayList<String>(Arrays.asList(RESTRICTIONS));
+            allConditionList.addAll(Arrays.asList(RESTRICTIONS_MBBH));
+
+            restrictionGroupDefault = new RestrictionGroup("or", allConditionList);
+            if (rootRestriction != null){
+                RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
+                last.getChildren().add(restrictionGroupDefault);
+                restrictionGroupDefault = last;
+            }
+        }
+
+        return restrictionGroupDefault;
     }
 
 }
