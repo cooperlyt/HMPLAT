@@ -17,68 +17,15 @@
 
     </h:outputStylesheet>
 
-    <h:outputScript>
 
 
-        $(document).ready( function(){
-
-        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-            var key = setInterval(reading, 500);
-            #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
-             extendsCall('ExtendsCer://#{_person.uuid}');
-        }
-
-        });
-
-
-        function readBtnClick(){
-        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-        endRead();
-
-        }else{
-        beginRead();
-
-        }
-        }
-
-
-          function reading(){
-
-
-            if ( #{r:jQuery('personCardInput')}.hasClass("reading-bli")){
-
-        #{r:jQuery('personCardInput')}.removeClass("reading-bli");
-
-            }else{
-        #{r:jQuery('personCardInput')}.addClass("reading-bli");
-            }
-          }
-
-        function stopbil(){
-            clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
-        }
-
-          function readStateCheck(){
-                if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-                        var key = setInterval(reading, 500);
-                     #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
-                }else{
-                    clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
-                }
-
-          }
-
-
-
-    </h:outputScript>
-
-
-
-    <a:jsFunction name="endRead" execute="@this" immediate="true" oncomplete="readStateCheck();"
+    <a:jsFunction name="endRead" execute="@this" immediate="true"
+                  oncomplete="extendsCall('ExtendsCer://');readStateCheck();"
                   action="#{_person.endReading}" render="personCardInput,card_read_push">
         <a:attachQueue requestDelay="0"/>
     </a:jsFunction>
-    <a:jsFunction name="beginRead" execute="@this" immediate="true" oncomplete="extendsCall('ExtendsCer://#{_person.uuid}');readStateCheck();"
+    <a:jsFunction name="beginRead" execute="@this" immediate="true"
+                  oncomplete="extendsCall('ExtendsCer://#{_person.uuid}');readStateCheck();"
                   action="#{_person.beginReading}"  render="personCardInput,card_read_push">
         <a:attachQueue requestDelay="0"/>
     </a:jsFunction>
@@ -135,7 +82,7 @@
 
             <h:outputLink styleClass="btn btn-default  #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
                            id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                            onclick="readBtnClick();return false;"
+                            onclick="        alert('1');readBtnClick();alert('2');return false;"
                            style="height: 34px;" >
                 <span class="octicon octicon-file-media" />
                 <a:attachQueue requestDelay="0"/>
@@ -172,6 +119,77 @@
             <ui:insert name="after"/>
 
   </a:outputPanel>
+
+
+    <h:outputScript>
+
+
+        $(document).ready( function(){
+
+        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+        var key = setInterval(reading, 500);
+        #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
+        extendsCall('ExtendsCer://#{_person.uuid}');
+        }
+
+        });
+
+
+        function readBtnClick(){
+        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+        endRead();
+        alert('d');
+        }else{
+        beginRead();
+
+        }
+
+
+        }
+
+
+        function reading(){
+
+        var count = 1;
+        count = count  +  parseInt(#{r:jQuery('intervalKey')}.attr("data-interval-count" ));
+        if (count > 40){
+
+        endRead();
+
+        }
+
+
+        #{r:jQuery('intervalKey')}.attr("data-interval-count" , count);
+
+
+        if ( #{r:jQuery('personCardInput')}.hasClass("reading-bli")){
+
+        #{r:jQuery('personCardInput')}.removeClass("reading-bli");
+
+        }else{
+        #{r:jQuery('personCardInput')}.addClass("reading-bli");
+        }
+        }
+
+        function stopbil(){
+        clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
+        }
+
+        function readStateCheck(){
+        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+        var key = setInterval(reading, 500);
+        #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
+        #{r:jQuery('intervalKey')}.attr("data-interval-count" , 0);
+        }else{
+        clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
+        }
+
+        }
+
+
+
+    </h:outputScript>
+
 
 
 </ui:composition>

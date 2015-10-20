@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonHelper;
 
+import com.dgsoft.house.owner.HouseOwnerPersonHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
@@ -45,11 +46,11 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
         }
     }
 
-    private PersonHelper<BusinessHouseOwner> personHelper;
+    private HouseOwnerPersonHelper personHelper;
 
-    public PersonHelper<BusinessHouseOwner> getPersonInstance() {
+    public HouseOwnerPersonHelper getPersonInstance() {
         if ((personHelper == null) || (personHelper.getPersonEntity() != getInstance())) {
-            personHelper = new PersonHelper<BusinessHouseOwner>(getInstance());
+            personHelper = new HouseOwnerPersonHelper(getInstance());
         }
         return personHelper;
     }
