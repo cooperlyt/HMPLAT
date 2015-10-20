@@ -7,7 +7,7 @@ public interface TaskSubscribeComponent {
 
 
     /** 初始化
-     * 在开始加载所有订阅者时执行，执行时本订阅可能还没显示
+     * 在开始加载所有订阅者页时执行，可能执行多次
      */
     void initSubscribe();
 

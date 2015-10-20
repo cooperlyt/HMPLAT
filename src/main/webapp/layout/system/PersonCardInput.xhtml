@@ -20,7 +20,7 @@
 
 
     <a:jsFunction name="endRead_#{_person.uuid}" execute="@this" immediate="true"
-                  oncomplete="extendsCall('ExtendsCer://');readStateCheck_#{_person.uuid}();"
+                  oncomplete="extendsCall('ExtendsCer://');clearInterval(#{r:jQuery('intervalKey')}.attr('data-interval-key'));"
                   action="#{_person.endReading}" render="personCardInput,card_read_push">
         <a:attachQueue requestDelay="0"/>
     </a:jsFunction>
@@ -139,6 +139,7 @@
 
         function readBtnClick_#{_person.uuid}(){
         if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
+
         endRead_#{_person.uuid}();
         }else{
         beginRead_#{_person.uuid}();
@@ -174,6 +175,8 @@
 
 
         function readStateCheck_#{_person.uuid}(){
+
+
         if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
         var key = setInterval(reading_#{_person.uuid}, 500);
         #{r:jQuery('intervalKey')}.attr("data-interval-key", key );

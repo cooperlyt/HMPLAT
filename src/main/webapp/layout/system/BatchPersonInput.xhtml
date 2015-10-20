@@ -24,11 +24,10 @@
                 <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
                 <ui:param name="showLabel" value="false"/>
 
-
                 <ui:decorate template="/layout/system/PersonCardInput.xhtml">
                     <ui:param name="_person" value="#{_person}"/>
                     <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
-                    <ui:param name="render" value="singPersonCardInput"/>
+                    <ui:param name="render" value="attFields"/>
                     <ui:define name="after">
                         <div class="input-group-btn">
                             <ui:insert name="removeAction"/>

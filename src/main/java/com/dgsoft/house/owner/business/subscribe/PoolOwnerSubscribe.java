@@ -7,6 +7,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessPool;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -36,7 +37,8 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     @In
     private FacesMessages facesMessages;
 
-    protected void initPoolOwners() {
+    @Create
+    public void initPoolOwners() {
 
 
         poolOwners = new ArrayList<PersonHelper<BusinessPool>>();
@@ -77,7 +79,6 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public void initSubscribe() {
-        initPoolOwners();
     }
 
     @Override
