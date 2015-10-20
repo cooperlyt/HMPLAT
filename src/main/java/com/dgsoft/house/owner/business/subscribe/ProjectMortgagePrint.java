@@ -1,4 +1,4 @@
-package com.dgsoft.house.owner.business.subscribe.complete;
+package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;

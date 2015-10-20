@@ -78,6 +78,46 @@ public class ExtendsDataCreator {
     }
 
 
+    private JSONObject noticeJson(BusinessHouse businessHouse,MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo)throws JSONException{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Report", "预告登记.fr3");
+        jsonObject.put("字",jsonField(""));
+        jsonObject.put("预告登记证明号",jsonField(markCard.getNumber()));
+        jsonObject.put("权利人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
+        jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
+        jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
+        jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
+        jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
+        jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
+        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
+        jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
+        jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
+        jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+        jsonObject.put("共有信息", jsonField(poolInfo));
+        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        return jsonObject;
+    }
+
+    public String extendsPrintNotice(BusinessHouse businessHouse,MakeCard markCard,OwnerBusiness ownerBusiness,String poolInfo) {
+
+        try {
+            Long putId = jsonDataProvider.putData(noticeJson(businessHouse, markCard, ownerBusiness,poolInfo).toString());
+            return EXTENDS_PRINT_PROTOCOL + URLEncoder.encode(facesContext.getExternalContext().getRequestContextPath() + "/JsonDataProvider.seam?id=" + putId, "UTF-8");
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        }
+    }
+
+
+
 
     private JSONObject projectMortgageJson(MakeCard markCard,OwnerBusiness ownerBusiness)throws JSONException{
         JSONObject jsonObject = new JSONObject();
