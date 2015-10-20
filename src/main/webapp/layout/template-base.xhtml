@@ -47,11 +47,12 @@
         <ui:insert name="extends">
 
 
-            <iframe style="display:none;" class="extends-call-iframe" src=""/>
 
             <h:outputScript>
                 function extendsCall(printUrl){
-                $('.extends-call-iframe').attr('src',printUrl);
+
+                    window.location.href=printUrl;
+
                 }
             </h:outputScript>
         </ui:insert>

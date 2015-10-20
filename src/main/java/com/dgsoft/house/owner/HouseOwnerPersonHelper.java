@@ -27,5 +27,12 @@ public class HouseOwnerPersonHelper extends PersonHelper<BusinessHouseOwner> {
 
     }
 
+    @Override
+    protected void clearInfo(){
+        super.clearInfo();
+        getPersonEntity().setRootAddress(null);
+        getPersonEntity().setAddress(null);
+    }
+
 
 }

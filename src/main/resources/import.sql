@@ -49,6 +49,9 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AutoCalcMoney','BOOLEAN','t
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('ShouldMoneyCalcType','INTEGER','3','1:手动；2：等于核费金额 3：四舍五入到元;4 四舍五入到角；5 四舍五入到分 6: 抹掉小数取整 7：进位取整');
 
 
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('IdCardImgPath','STRING','ftp://192.168.1.6/person/','身份证照片地址');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFilePath','STRING','ftp://192.168.1.6/business/','业务要件附件存储地址');
+
 
 -- 业务类别
 INSERT INTO BUSINESS_CATEGORY(ID, NAME, PRIORITY) VALUES('house.owner.initReg','初始登记',1);
