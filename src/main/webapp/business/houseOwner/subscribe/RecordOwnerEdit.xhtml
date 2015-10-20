@@ -8,10 +8,12 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
 
+    <ui:include src="/layout/house/owner/HouseOwnerEdit.xhtml">
+        <ui:param name="personInstance" value="#{businessHouseOwnerSubscribe.personInstance}"/>
+        <ui:param name="label" value="#{messages.RecordOwner}"/>
+        <ui:param name="personStatus" value="recordOwner_recordOwnerInputStatus"/>
+    </ui:include>
 
-        <ui:include src="BusinessHouseOwnerEdit.xhtml">
-            <ui:param name="label" value="#{messages.RecordOwner}"/>
-        </ui:include>
 
 
 

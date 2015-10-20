@@ -11,53 +11,51 @@
 
     <ui:decorate template="/layout/system/PersonInput.xhtml">
 
-        <ui:param name="personEntityHelper" value="#{businessHouseOwnerOldSubscribe.personInstance}"/>
-        <ui:param name="personStatus" value="mainOwner_personCredentiaslNumberStatus"/>
+        <ui:param name="personEntityHelper" value="#{personInstance}"/>
 
-        <s:decorate rendered="#{(businessHouseOwnerOldSubscribe.instance.credentialsType.name() eq 'COMPANY_CODE')}"
-                    id="legalPersonFieldOld" styleClass="form-group" template="/layout/edit.xhtml">
+
+        <s:decorate rendered="#{(personInstance.credentialsType.name() eq 'COMPANY_CODE')}"
+                    id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
             <ui:define name="label">
                 #{messages.ContractOwner_legalPerson}
             </ui:define>
-            <h:inputText value="#{businessHouseOwnerOldSubscribe.instance.legalPerson}" maxlength="50"
+            <ui:param name="for" value="legalPersonInput"/>
+            <h:inputText id="legalPersonInput" value="#{personInstance.personEntity.legalPerson}" maxlength="50"
                          styleClass="form-control"/>
         </s:decorate>
 
-        <div class="form-inline">
 
-            <s:decorate id="businessPersonPhoneFieldOld" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+            <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
                 <ui:define name="label">
                     #{messages.BusinessOwner_Phone}
                 </ui:define>
-                <ui:param name="for" value="persionPhoneInputOld"/>
+                <ui:param name="for" value="persionPhoneInput"/>
                 <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
                              styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
-                             value="#{businessHouseOwnerOldSubscribe.instance.phone}" required="true" id="persionPhoneInputOld">
+                             value="#{personInstance.personEntity.phone}" required="true" id="persionPhoneInput">
                     <f:validateRegex pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
                     <r:validator event="blur" />
                 </h:inputText>
 
             </s:decorate>
-        </div>
-        <div class="form-inline">
+
             <s:decorate template="/layout/edit-big.xhtml">
-                <ui:param name="for" value="persionRootAddressInputOld"/>
+                <ui:param name="for" value="persionRootAddressInput"/>
 
                 <ui:define name="label">
                     #{messages.BusinessOwner_RootAddress}
                 </ui:define>
-                <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="55" maxlength="50"
-                             value="#{businessHouseOwnerOldSubscribe.instance.rootAddress}" id="persionRootAddressInputOld">
+                <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="55" maxlength="50" styleClass="form-control"
+                             value="#{personInstance.personEntity.rootAddress}" id="persionRootAddressInput">
                     <r:validator event="blur"/>
                 </h:inputText>
 
             </s:decorate>
-        </div>
 
 
-        <div class="form-inline">
             <s:decorate template="/layout/edit-big.xhtml">
-                <ui:param name="for" value="addressInputOld"/>
+                <ui:param name="for" value="addressInput"/>
 
                 <ui:define name="label">
                     #{messages.BusinessOwner_Address}
@@ -66,13 +64,13 @@
                         label="#{messages.BusinessOwner_Address}"
                         cols="50"
                         rows="3"
-                        value="#{businessHouseOwnerSubscribe.instance.address}"
+                        value="#{personInstance.personEntity.address}"
                         styleClass="form-control"
-                        id="addressInputOld">
+                        id="addressInput">
                 </h:inputTextarea>
 
             </s:decorate>
-        </div>
+
 
 
 
