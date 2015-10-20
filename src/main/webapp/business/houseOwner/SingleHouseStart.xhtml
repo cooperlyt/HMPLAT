@@ -29,7 +29,8 @@
 
     <ui:define name="header">
         <h:form>
-            <a:jsFunction name="houseValid" action="#{houseBusinessStart.validSelectHouse}" oncomplete="restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+            <a:jsFunction name="houseValid" action="#{houseBusinessStart.validSelectHouse}" status="processWaiting"
+                          oncomplete="restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
                 <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
                 <a:attachQueue requestDelay="0"/>
             </a:jsFunction>
