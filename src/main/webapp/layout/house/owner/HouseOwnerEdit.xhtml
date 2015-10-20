@@ -14,19 +14,16 @@
         <ui:param name="personEntityHelper" value="#{personInstance}"/>
 
 
-        <s:decorate rendered="#{(personInstance.credentialsType.name() eq 'COMPANY_CODE')}"
-                    id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
-            <ui:define name="label">
-                #{messages.ContractOwner_legalPerson}
-            </ui:define>
-            <ui:param name="for" value="legalPersonInput"/>
-            <h:inputText id="legalPersonInput" value="#{personInstance.personEntity.legalPerson}" maxlength="50"
-                         styleClass="form-control"/>
-        </s:decorate>
 
 
 
-            <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <div >
+                <div style="width: 470px; float: left;font-size: 12px">
+                    <a:outputPanel style="width: 100%; text-align: right;"  layout="block" rendered="#{not empty personInstance.idCard}" >
+                        性别 <strong>#{messages[personInstance.idCard.sex.name()]}</strong> 民族 <strong>#{personInstance.idCard.ethnic}</strong> 出生 <strong><h:outputText value="#{personInstance.idCard.dateOfBirth}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></h:outputText></strong>
+                    </a:outputPanel>
+
+                    <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
                 <ui:define name="label">
                     #{messages.BusinessOwner_Phone}
                 </ui:define>
@@ -40,7 +37,17 @@
 
             </s:decorate>
 
-            <s:decorate template="/layout/edit-big.xhtml">
+                    <s:decorate rendered="#{(personInstance.credentialsType.name() eq 'COMPANY_CODE')}"
+                                id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
+                        <ui:define name="label">
+                            #{messages.ContractOwner_legalPerson}
+                        </ui:define>
+                        <ui:param name="for" value="legalPersonInput"/>
+                        <h:inputText id="legalPersonInput" value="#{personInstance.personEntity.legalPerson}" maxlength="50"
+                                     styleClass="form-control"/>
+                    </s:decorate>
+
+            <s:decorate template="/layout/edit-big.xhtml" style="clear: both;">
                 <ui:param name="for" value="persionRootAddressInput"/>
 
                 <ui:define name="label">
@@ -52,8 +59,23 @@
                 </h:inputText>
 
             </s:decorate>
+                </div>
+
+                <a:outputPanel layout="block" rendered="#{not empty personInstance.idCard}" style="width: 140px; float: right;">
+                    <div class="thumbnail" style="margin-bottom: 0">
+                        <h:graphicImage  alt="身份证照片" value="#{runParam.getStringParamValue('IdCardImgPath')}C#{personInstance.credentialsNumber}.bmp" width="120px" height="126px"/>
+                    </div>
+
+                    <div class="caption">
+                        <p></p>
+                    </div>
+
+                </a:outputPanel>
 
 
+            </div>
+
+        <div style="clear: both"/>
             <s:decorate template="/layout/edit-big.xhtml">
                 <ui:param name="for" value="addressInput"/>
 

@@ -19,13 +19,13 @@
 
 
 
-    <a:jsFunction name="endRead" execute="@this" immediate="true"
-                  oncomplete="extendsCall('ExtendsCer://');readStateCheck();"
+    <a:jsFunction name="endRead_#{_person.uuid}" execute="@this" immediate="true"
+                  oncomplete="extendsCall('ExtendsCer://');readStateCheck_#{_person.uuid}();"
                   action="#{_person.endReading}" render="personCardInput,card_read_push">
         <a:attachQueue requestDelay="0"/>
     </a:jsFunction>
-    <a:jsFunction name="beginRead" execute="@this" immediate="true"
-                  oncomplete="extendsCall('ExtendsCer://#{_person.uuid}');readStateCheck();"
+    <a:jsFunction name="beginRead_#{_person.uuid}" execute="@this" immediate="true"
+                  oncomplete="extendsCall('ExtendsCer://#{_person.uuid}');readStateCheck_#{_person.uuid}();"
                   action="#{_person.beginReading}"  render="personCardInput,card_read_push">
         <a:attachQueue requestDelay="0"/>
     </a:jsFunction>
@@ -46,13 +46,13 @@
 
         <a:outputPanel rendered="#{_person.reading}">
 
-            <a:jsFunction name="personCerRead" render="personCardInput card_read_push #{render} " execute="@this"
-                          immediate="true" action="#{_person.numberChange}" oncomplete="stopbil()">
+            <a:jsFunction name="personCerRead_#{_person.uuid}" render="personCardInput card_read_push #{render} " execute="@this"
+                          immediate="true" action="#{_person.numberChange}" oncomplete="clearInterval(#{r:jQuery('intervalKey')}.attr('data-interval-key'));">
                 <a:attachQueue requestDelay="0"/>
                 <a:param assignTo="#{_person.credentialsNumber}" name="cerNumber"/>
             </a:jsFunction>
 
-            <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="personCerRead(event.rf.data);" >
+            <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="personCerRead_#{_person.uuid}(event.rf.data);" >
 
             </a:push>
 
@@ -82,8 +82,7 @@
 
             <h:outputLink styleClass="btn btn-default  #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
                            id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                            onclick="        alert('1');readBtnClick();alert('2');return false;"
-                           style="height: 34px;" >
+                           style="height: 34px;" onclick="readBtnClick_#{_person.uuid}();return false;">
                 <span class="octicon octicon-file-media" />
                 <a:attachQueue requestDelay="0"/>
             </h:outputLink>
@@ -98,7 +97,7 @@
                      disabled="#{_person.reading}"
                      p:placeholder="#{messages.person_field_credentialsNO}"
                      value="#{_person.credentialsNumber}">
-            <a:ajax event="blur" render="cerdentialsName #{render}"
+            <a:ajax event="blur" render="cerdentialsName #{render}" listener="#{_person.numberChange}"
                     status="#{personStatus}" execute="personCredentialsTypeInput,credentialsNumber">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>
@@ -127,20 +126,22 @@
         $(document).ready( function(){
 
         if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-        var key = setInterval(reading, 500);
+        var key = setInterval(reading_#{_person.uuid}, 500);
         #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
-        extendsCall('ExtendsCer://#{_person.uuid}');
+
+
         }
+
+
 
         });
 
 
-        function readBtnClick(){
+        function readBtnClick_#{_person.uuid}(){
         if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-        endRead();
-        alert('d');
+        endRead_#{_person.uuid}();
         }else{
-        beginRead();
+        beginRead_#{_person.uuid}();
 
         }
 
@@ -148,13 +149,13 @@
         }
 
 
-        function reading(){
+        function reading_#{_person.uuid}(){
 
         var count = 1;
         count = count  +  parseInt(#{r:jQuery('intervalKey')}.attr("data-interval-count" ));
         if (count > 40){
 
-        endRead();
+        endRead_#{_person.uuid}();
 
         }
 
@@ -171,13 +172,10 @@
         }
         }
 
-        function stopbil(){
-        clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
-        }
 
-        function readStateCheck(){
+        function readStateCheck_#{_person.uuid}(){
         if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-        var key = setInterval(reading, 500);
+        var key = setInterval(reading_#{_person.uuid}, 500);
         #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
         #{r:jQuery('intervalKey')}.attr("data-interval-count" , 0);
         }else{
