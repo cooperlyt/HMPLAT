@@ -11,6 +11,7 @@ import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.core.Expressions;
 import org.jboss.seam.el.EL;
 import org.jboss.seam.el.SeamExpressionFactory;
+import org.jboss.seam.log.Logging;
 
 import javax.el.*;
 import java.beans.FeatureDescriptor;
@@ -77,6 +78,56 @@ public class ExpressionsUtils {
         return result;
     }
 
+    private class LocalElResolver extends ELResolver{
+
+
+        private String varName;
+
+        private Object varValue;
+
+        public LocalElResolver(String varName, Object varValue) {
+            this.varName = varName;
+            this.varValue = varValue;
+        }
+
+        @Override
+        public Object getValue(ELContext context, Object base, Object property) {
+            if (base == null && property.equals(varName)){
+                context.setPropertyResolved(true);
+                return varValue;
+            }
+            return null;
+        }
+
+        @Override
+        public Class<?> getType(ELContext context, Object base, Object property) {
+            if (base == null && property.equals(varName)){
+                return varValue.getClass();
+            }
+            return null;
+        }
+
+        @Override
+        public void setValue(ELContext context, Object base, Object property, Object value) {
+
+        }
+
+        @Override
+        public boolean isReadOnly(ELContext context, Object base, Object property) {
+            return false;
+        }
+
+        @Override
+        public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
+            return null;
+        }
+
+        @Override
+        public Class<?> getCommonPropertyType(ELContext context, Object base) {
+            return null;
+        }
+    };
+
 
     public <T> Expressions.ValueExpression<T> createLocalValueExpression(final String expression, final Class<T> type,final String varName,  final Object varValue)
     {
@@ -84,41 +135,7 @@ public class ExpressionsUtils {
         return new Expressions.ValueExpression<T>()
         {
 
-                private ELResolver localVarResolver = new ELResolver(){
-
-                @Override
-                public Object getValue(ELContext context, Object base, Object property) {
-                    if (base == null && property.equals(varName)){
-                        return varValue;
-                    }
-                    return null;
-                }
-
-                @Override
-                public Class<?> getType(ELContext context, Object base, Object property) {
-                    return null;
-                }
-
-                @Override
-                public void setValue(ELContext context, Object base, Object property, Object value) {
-
-                }
-
-                @Override
-                public boolean isReadOnly(ELContext context, Object base, Object property) {
-                    return false;
-                }
-
-                @Override
-                public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-                    return null;
-                }
-
-                @Override
-                public Class<?> getCommonPropertyType(ELContext context, Object base) {
-                    return null;
-                }
-            };
+            private ELResolver localVarResolver = new LocalElResolver(varName,varValue);
 
 
             private javax.el.ValueExpression seamValueExpression;
