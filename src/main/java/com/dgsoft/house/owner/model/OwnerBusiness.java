@@ -647,6 +647,17 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     /**
+     * 交易信息
+     */
+    @Transient
+    public SaleInfo getSaleInfo() {
+        if (!getSaleInfos().isEmpty()) {
+            return getSaleInfos().iterator().next();
+        }
+        return null;
+    }
+
+    /**
      * 查封信息
      */
     @Transient

@@ -175,8 +175,8 @@ public class ExtendsDataCreator {
         jsonObject.put("Report", "预告抵押登记.fr3");
         jsonObject.put("字",jsonField(businessHouse.getDistrictName()));
         jsonObject.put("预告登记证明号",jsonField(markCard.getNumber()));
-        jsonObject.put("权利人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
-        jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        jsonObject.put("权利人",jsonField(ownerBusiness.getMortgaegeRegiste().getFinancial().getName()));
+        jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
         jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
         jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
         jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
@@ -218,7 +218,11 @@ public class ExtendsDataCreator {
         jsonObject.put("字",jsonField(businessHouse.getDistrictName()));
         jsonObject.put("预告登记证明号",jsonField(markCard.getNumber()));
         jsonObject.put("权利人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
-        jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        if (ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner()!=null){
+
+            jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getStartBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        }
+        jsonObject.put("义务人",jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getDeveloperName()));
         jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
         jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
         jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
