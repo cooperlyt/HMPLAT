@@ -10,6 +10,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.core.Expressions;
 import org.jboss.seam.el.EL;
+import org.jboss.seam.el.SeamELResolver;
 import org.jboss.seam.el.SeamExpressionFactory;
 import org.jboss.seam.log.Logging;
 
@@ -56,8 +57,14 @@ public class ExpressionsUtils {
     }
 
     public static ELContext getELContext(ELResolver localResolver) {
-        ELResolver resolver = EL.EL_RESOLVER;
-        ((CompositeELResolver)resolver).add(localResolver);
+        CompositeELResolver resolver = new CompositeELResolver();
+        resolver.add( new SeamELResolver() );
+        resolver.add( new MapELResolver() );
+        resolver.add( new ListELResolver() );
+        resolver.add( new ArrayELResolver() );
+        resolver.add( new ResourceBundleELResolver() );
+        resolver.add( new BeanELResolver() );
+        resolver.add(localResolver);
 
         return createELContext( resolver, new FunctionMapperImpl() );
     }
