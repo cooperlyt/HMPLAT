@@ -69,6 +69,14 @@ public class ExpressionsUtils {
         return result;
     }
 
+    public String foreachLink(Expressions.ValueExpression<Collection> items, String var, String itemEl){
+        String result = "";
+        for(Object item: items.getValue()){
+            result += createLocalValueExpression(itemEl, String.class, var, item).getValue();
+        }
+        return result;
+    }
+
 
     public <T> Expressions.ValueExpression<T> createLocalValueExpression(final String expression, final Class<T> type,final String varName,  final Object varValue)
     {

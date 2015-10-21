@@ -17,7 +17,14 @@ import java.util.List;
 @Name("houseBusinessCondition")
 public class HouseBusinessCondition extends BusinessHouseCondition {
 
-    public static final String EJBQL = "select distinct biz from OwnerBusiness biz left join biz.houseBusinesses houseBusiness left join biz.makeCards cards left join houseBusiness.afterBusinessHouse house left join house.businessHouseOwner owner left join owner.makeCard ownerCard left join house.businessPools pool left join pool.makeCard poolCard" ;
+    public static final String EJBQL = "select distinct biz from OwnerBusiness biz " +
+            "left join biz.houseBusinesses houseBusiness " +
+            "left join biz.makeCards cards " +
+            "left join fetch houseBusiness.afterBusinessHouse house " +
+            "left join house.businessHouseOwner owner " +
+            "left join owner.makeCard ownerCard " +
+            "left join house.businessPools pool " +
+            "left join pool.makeCard poolCard" ;
 
     public static final String SHORT_EJBQL = "select biz from OwnerBusiness biz ";
 

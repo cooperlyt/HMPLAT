@@ -100,14 +100,17 @@ public class MoneySubscribe implements TaskSubscribeComponent {
 
                 if (forEachValueEl != null && !forEachValueEl.trim().equals("")){
                     businessMoney.setCheckMoney(ExpressionsUtils.instance().foreachSum(Expressions.instance().createValueExpression(forEachValueEl,Collection.class),forEachVarName,feeEL));
+                    if (detailsEL != null && !detailsEL.trim().equals(""))
+                        businessMoney.setChargeDetails(ExpressionsUtils.instance().foreachLink( Expressions.instance().createValueExpression(forEachValueEl, Collection.class),forEachVarName,detailsEL));
                 }else{
                     businessMoney.setCheckMoney(new BigDecimal(Expressions.instance().createValueExpression(feeEL, Double.class).getValue()).setScale(3, RoundingMode.HALF_UP));
+                    if (detailsEL != null && !detailsEL.trim().equals(""))
+                        businessMoney.setChargeDetails(Expressions.instance().createValueExpression(detailsEL, String.class).getValue());
                 }
 
                 calcShouldMoney(businessMoney);
 
-                if (detailsEL != null && !detailsEL.trim().equals(""))
-                    businessMoney.setChargeDetails(Expressions.instance().createValueExpression(detailsEL, String.class).getValue());
+
 
             }
         }
