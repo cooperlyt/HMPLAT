@@ -254,7 +254,6 @@ public abstract class MultiOperatorQuery<T, E>
                 } else {
                     builder.append(" where ");
                 }
-        Logging.getLog(getClass()).debug(restrictionEjbql);
                 builder.append(restrictionEjbql);
 
             }
