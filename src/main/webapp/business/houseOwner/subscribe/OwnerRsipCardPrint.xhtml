@@ -32,6 +32,10 @@
         </h:form>
     </div>
 
-
+    <c:forEach items="#{ownerBusinessHome.instance.houseBusinesses}" var="_houses">
+          #{(_makeCard.type eq 'POOL_RSHIP') ? 10.0 :0.0}
+          #{(_makeCard.type eq 'POOL_RSHIP') ? 10.0 :0.0}
+        #{_houses.afterBusinessHouse.useType=='80'? ownerBusinessHome.instance.saleInfo.giftArea * 6 :ownerBusinessHome.instance.evaluate.assessmentPrice * 0.1}
+           </c:forEach>
 
 </ui:composition>

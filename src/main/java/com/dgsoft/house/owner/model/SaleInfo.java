@@ -21,6 +21,11 @@ public class SaleInfo implements java.io.Serializable {
 	private SalePayType payType;
 	private BigDecimal sumPrice;
 
+
+
+    private BigDecimal giftArea;
+
+
 	public SaleInfo() {
 	}
 
@@ -28,13 +33,20 @@ public class SaleInfo implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
         this.payType = saleInfo.getPayType();
         this.sumPrice = saleInfo.getSumPrice();
+        this.giftArea= saleInfo.getGiftArea();
     }
 
 	public SaleInfo(SalePayType payType, BigDecimal sumPrice) {
 		this.payType = payType;
 		this.sumPrice = sumPrice;
-	}
 
+	}
+    public SaleInfo(SalePayType payType, BigDecimal sumPrice,BigDecimal giftArea) {
+        this.payType = payType;
+        this.sumPrice = sumPrice;
+        this.giftArea=giftArea;
+
+    }
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
@@ -79,5 +91,15 @@ public class SaleInfo implements java.io.Serializable {
 	public void setSumPrice(BigDecimal sumPrice) {
 		this.sumPrice = sumPrice;
 	}
+
+
+    @Column(name = "GIFTAREA", nullable = true, scale = 4)
+    public BigDecimal getGiftArea() {
+        return giftArea;
+    }
+
+    public void setGiftArea(BigDecimal giftArea) {
+        this.giftArea = giftArea;
+    }
 
 }

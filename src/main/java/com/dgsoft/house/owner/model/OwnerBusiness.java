@@ -700,6 +700,20 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return null;
     }
+    /**
+     *
+     * @return 共有权证数量
+     */
+    @Transient
+    public List<MakeCard> getPoolRship(){
+        List<MakeCard> poolMarkCards = new ArrayList<MakeCard>();
+        for(MakeCard makeCard:getMakeCards()){
+            if (makeCard.getType().equals(MakeCard.CardType.POOL_RSHIP)){
+                poolMarkCards.add(makeCard);
+            }
+        }
+        return poolMarkCards;
+    }
 
     /**
      *

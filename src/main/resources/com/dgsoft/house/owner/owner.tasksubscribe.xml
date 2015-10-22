@@ -287,6 +287,13 @@
             房屋交易信息,付款方式,购房款查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="SaleInfoGiftView" page="/business/houseOwner/subscribe/SaleInfoGiftView.xhtml">
+        <description>
+            房屋交易信息,赠与面积,付款方式,购房款查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="FactMoneyInfoView" page="/business/houseOwner/subscribe/FactMoneyInfoView.xhtml">
         <description>
            缴费信息查看（缴款书编号，备注）
@@ -647,6 +654,11 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="SaleInfoGiftEdit" page="/business/houseOwner/subscribe/SaleInfoGiftEdit.xhtml" component="">
+        <description>
+            房屋交易信息,赠与面积,付款方式,购房款编辑
+        </description>
+    </edit-subscribe>
 
     <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
                     component="">
