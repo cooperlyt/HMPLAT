@@ -35,6 +35,10 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
 
 
 
+    private String projectRshipNumber;
+
+
+
     //由备案人得房屋没意义，因为有startHouse 和 afterHouse 可以使用 houseBusiness left join afterHouse left join ContractOwner
     //private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
     private OwnerBusiness ownerBusiness;
@@ -51,6 +55,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.address = contractOwner.getAddress();
         this.legalPerson = contractOwner.getLegalPerson();
         this.ownerBusiness = ownerBusiness;
+        this.projectRshipNumber =contractOwner.getProjectRshipNumber();
     }
 
     public ContractOwner(String personName, CredentialsType credentialsType, String credentialsNumber, String phone, String rootAddress, String address, String legalPerson, String contractCode, SaleType type, Date contractDate, String houseCode) {
@@ -65,6 +70,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.type = type;
         this.contractDate = contractDate;
         this.houseCode = houseCode;
+
     }
 
     @Id
@@ -226,5 +232,15 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.houseCode = houseCode;
     }
 
+
+    @Column(name = "PROJECT_RSHIP_NUMBER", length = 32, nullable = true)
+    @Size(max = 50)
+    public String getProjectRshipNumber() {
+        return projectRshipNumber;
+    }
+
+    public void setProjectRshipNumber(String projectRshipNumber) {
+        this.projectRshipNumber = projectRshipNumber;
+    }
 
 }

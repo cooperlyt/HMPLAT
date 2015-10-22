@@ -68,7 +68,11 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> imple
         super.create();
 
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getContractOwner() != null) {
-            setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getContractOwner().getId());
+            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getContractOwner().getId()!=null) {
+                setId(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getContractOwner().getId());
+            }else{
+                setInstance(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getContractOwner());
+            }
         }else{
             clearInstance();
             if(type){
@@ -100,28 +104,20 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> imple
 
     @Override
     public void validSubscribe() {
-//       if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
-//           facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
-//       }
+
     }
 
     @Override
     public boolean isPass() {
 
-//        if (getEntityManager().find(ContractOwner.class,getInstance().getContractNumber())!=null){
-//            return false;
-//        }else{
             return true;
-//        }
+
 
     }
 
     @Override
     public boolean saveSubscribe() {
-//        if (getEntityManager().find(ContractOwner.class,getInstance().getId())!=null){
-//            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ContractOwner_conflict");
-//            return false;
-//        }
+
         return true;
     }
 }

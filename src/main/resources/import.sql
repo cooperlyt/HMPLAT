@@ -105,6 +105,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('27','解封协助执行审�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('28','房地产抵押权变更登记和注销登记申请书(在建注销)','房地产抵押权变更登记和注销登记申请书(在建注销)','/report/ApplyProjectMortgageLogoutReisterBook.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('29','业务受理单（在建）','业务受理单（在建）','/report/ProjectMortgageBusinessHandleStub.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('30','房地产登记受理审核业务书（在建）','房地产登记受理审核业务书（在建）','/report/ReisterApplyProjectMortgageCheckTable.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('31','商品房备案登记申请书','商品房备案登记申请书','/report/ApplyContractReisterBook.xhtml');
 
 
 
