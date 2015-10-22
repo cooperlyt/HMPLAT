@@ -35,6 +35,7 @@ public class HouseBusinessList extends HouseBusinessSearch {
     public HouseBusinessList(){
         super();
         setEjbql(houseBusinessCondition.SHORT_EJBQL);
+        setMaxResults(10);
     }
 
     @In(create = true)
