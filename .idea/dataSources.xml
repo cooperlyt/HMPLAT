@@ -1,32 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="18809904">
-    <data-source source="LOCAL" name="MySQL - @localhost" uuid="e409d9dd-e13b-4ad5-912d-266593510419">
+  <component name="DataSourceManagerImpl" format="xml" hash="1996495038">
+    <data-source source="LOCAL" name="MySQL - HOUSE_OWNER_RECORD@localhost" uuid="c05fdf47-b1e8-40dd-9d69-050d7e263036">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
-      <user-name>root</user-name>
-      <user-password>dfcedfcddfd9dfc5dfccdfde</user-password>
+      <jdbc-url>jdbc:mysql://localhost:3306/HOUSE_OWNER_RECORD</jdbc-url>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />
-      </driver-properties>
-      <libraries />
-    </data-source>
-    <data-source source="LOCAL" name="MySQL - @192.168.0.6" uuid="fca9f490-7033-4dd2-9a39-9f6f590947cf">
-      <driver-ref>mysql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://192.168.0.6:3306</jdbc-url>
-      <user-name>root</user-name>
-      <user-password>dfc3dfd9dfe4dfdfdfc6dfc6</user-password>
-      <driver-properties>
-        <property name="zeroDateTimeBehavior" value="convertToNull" />
-        <property name="tinyInt1isBit" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="yearIsDateType" value="false" />
       </driver-properties>
       <libraries />
     </data-source>
   </component>
 </project>
-

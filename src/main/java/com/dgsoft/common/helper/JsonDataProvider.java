@@ -18,6 +18,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -28,6 +29,8 @@ import java.util.Map;
 @AutoCreate
 public class JsonDataProvider {
 
+    private final static int QUEUE_SIZE = 100;
+
     @RequestParameter
     private Long id;
 
@@ -37,7 +40,11 @@ public class JsonDataProvider {
 
     private Long index = new Long(0);
 
-    private Map<Long,String> dataPool = new HashMap<Long, String>();
+    private Map<Long,String> dataPool = new LinkedHashMap(){
+        protected boolean removeEldestEntry(Map.Entry eldest) {
+            return size() > QUEUE_SIZE;
+        }
+    };
 
     public Long putData(String data){
         index ++;

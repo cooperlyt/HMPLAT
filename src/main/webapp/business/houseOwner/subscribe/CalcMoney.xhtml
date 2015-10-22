@@ -21,7 +21,6 @@
                         <ui:define name="label">
                             #{_moneyItem.typeName}
                         </ui:define>
-                        <ui:param name="for" value="shouldMoneyInput"/>
 
                         <div class="input-group">
                             <span class="input-group-addon">核费</span>
@@ -32,9 +31,24 @@
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
                                                  type="currency"/>
                                 <f:validateDoubleRange minimum="0"/>
-                                <a:ajax event="change" listener="#{calcBusinessMoney.checkMoneyChangeListener}" render="moneyCalcInput,calcMoneyTotal" execute="@region"/>
+                                <a:ajax event="change" listener="#{calcBusinessMoney.checkMoneyChangeListener}" render="moneyCalcInput,calcMoneyTotal" execute="@region">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:ajax>
                             </h:inputText>
+
                             <span class="input-group-addon">#{messages.shouldMoney}</span>
+                            <span class="input-group-btn">
+                                <h:selectOneMenu value="#{_moneyItem.preferential}" styleClass="selectpicker select-menu-btn input-group-mid">
+                                    <s:selectItems value="#{calcBusinessMoney.preferentialTypes}" var="_type" itemValue="#{_type}"
+                                                   label="#{messages[_type.name()]}" noSelectionLabel="无减免">
+
+                                    </s:selectItems>
+                                    <a:ajax event="valueChange" execute="@this" render="moneyCalcInput" listener="#{calcBusinessMoney.checkMoneyChangeListener}">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:ajax>
+                                    <s:convertEnum/>
+                                </h:selectOneMenu>
+                            </span>
                             <h:inputText id="factMoneyInput" value="#{_moneyItem.shouldMoney}" required="true"
                                          readonly="#{not ( not (runParam.getBooleanParamValue('AutoCalcMoney')) and (runParam.getIntParamValue('ShouldMoneyCalcType') eq 1))}"
                                          class="form-control" label="#{_moneyItem.typeName} #{messages.factMoney}"
@@ -42,12 +56,17 @@
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
                                                  type="currency"/>
                                 <f:validateDoubleRange minimum="0"/>
-                                <a:ajax event="change" render="moneyCalcInput,calcMoneyTotal" execute="@region"/>
+                                <a:ajax event="change" render="moneyCalcInput,calcMoneyTotal" execute="@region">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:ajax>
                             </h:inputText>
                         </div>
 
                         <ui:define name="note">
-                            #{_moneyItem.chargeDetails}
+                            <div style="color: #767676;padding: 5px 0 0 5px; font-size: 13px">
+                                <strong>计算方式:</strong>
+                                #{_moneyItem.chargeDetails}
+                            </div>
                         </ui:define>
                     </s:decorate>
 

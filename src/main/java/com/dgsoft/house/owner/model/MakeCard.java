@@ -46,13 +46,10 @@ public class MakeCard implements java.io.Serializable {
         this.number = number;
 	}
 
-    public MakeCard(String id,OwnerBusiness ownerBusiness,CardType type,String number){
-        this.id = id;
+    public MakeCard(OwnerBusiness ownerBusiness,CardType type,String number){
         this.ownerBusiness = ownerBusiness;
         this.type = type;
         this.number = number;
-
-
     }
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

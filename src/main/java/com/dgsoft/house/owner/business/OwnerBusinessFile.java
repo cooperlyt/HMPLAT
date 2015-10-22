@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.helper.JsonDataProvider;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.model.BusinessNeedFile;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -11,6 +12,10 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Expressions;
+import org.jboss.seam.log.Logging;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.richfaces.component.UITree;
 import org.richfaces.event.TreeSelectionChangeEvent;
 
@@ -29,6 +34,9 @@ public class OwnerBusinessFile {
 
     @In
     private BusinessDefineHome businessDefineHome;
+
+    @In
+    private JsonDataProvider jsonDataProvider;
 
     private List<TreeNode> tree;
 
@@ -142,6 +150,17 @@ public class OwnerBusinessFile {
             tree.add(importantNode);
 
             fillTree(importantNode);
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("BUSINESS", ownerBusinessHome.getInstance().getId());
+
+                jsonObject.put("IMPORT", importantNode.getJson());
+                jsonData = jsonObject.toString();
+            } catch (JSONException e) {
+                Logging.getLog(getClass()).debug(e.getMessage(),e);
+                jsonData = null;
+            }
         }
 
 
@@ -153,17 +172,25 @@ public class OwnerBusinessFile {
 
     private void fillTree(BusinessFileTreeNode node) {
         for (BusinessFileTreeNode child : node.getChild()) {
-            if (BusinessNeedFile.NeedFileNodeFile.CHILDREN.equals(child.getBusinessNeedFile().getType())) {
-                for (BusinessFile file : getAllImportantFile()) {
-                    if ((file.getImportantCode() != null) && (file.getImportantCode().trim().equals(child.getBusinessNeedFile().getId()))) {
-                        child.setBusinessFile(file);
-                        break;
-                    }
-                }
-            }
+
             fillTree(child);
         }
 
+    }
+
+    private String jsonData;
+
+
+    private final static String EXTENDS_PRINT_PROTOCOL = "ExtendsUpload://";
+
+    private String extendsAddress;
+
+    public String getExtendsAddress() {
+        return extendsAddress;
+    }
+
+    public void extendsUpload(){
+        extendsAddress = EXTENDS_PRINT_PROTOCOL + jsonDataProvider.putData(EXTENDS_PRINT_PROTOCOL + jsonData);
     }
 
     public enum FileStatus{
@@ -283,6 +310,18 @@ public class OwnerBusinessFile {
         public String getType() {
 
             return (businessNeedFile == null) ?   "I_ROOT" : businessNeedFile.getType().name();
+        }
+
+        public JSONObject getJson() throws JSONException {
+            JSONObject result = new JSONObject();
+            result.put("TYPE", getType());
+            result.put("NAME", (businessNeedFile == null) ?   "" : businessNeedFile.getType().name());
+            JSONArray childArray = new JSONArray();
+            for(TreeNode treeNode: getChild()){
+                childArray.put(((BusinessFileTreeNode) treeNode).getJson());
+            }
+            result.put("CHILD", childArray);
+            return result;
         }
     }
 

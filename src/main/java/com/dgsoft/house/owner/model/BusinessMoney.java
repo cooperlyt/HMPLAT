@@ -17,10 +17,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "BUSINESS_MONEY", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessMoney implements java.io.Serializable , OrderModel {
-    // 登记费,变更登记费（半价登记费）,工本费,继承赠与手续费,交易手续费,回迁手续费,商品房交易手续费,备案手续费,测绘费
-//    public enum  MoneyType{
-//       REGISTER,REGISTER_CHANGE,CARD,DEAL_INHERIT_GIFT,DEAL,DEAL_BACK,DEAL_COMMERCIAL,DEAL_RECORD,MAPPING
-//    }
+
+	public enum PreferentialType{
+        HALF_RECEIVE, FREE_MONEY
+    }
+
+
 
 	private String id;
     private String typeName;
@@ -32,6 +34,7 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
 	private String chargeDetails;
     private FactMoneyInfo factMoneyInfo;
     private int pri;
+    private PreferentialType preferential;
 
 
 
@@ -62,9 +65,6 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
 	public String getId() {
 		return this.id;
 	}
-
-
-
 
 
 	public void setId(String id) {
@@ -166,5 +166,16 @@ public class BusinessMoney implements java.io.Serializable , OrderModel {
     @Override
     public void setPriority(int priority) {
         this.pri = priority;
+    }
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PREFERENTIAL", nullable = true, length = 21)
+    public PreferentialType getPreferential() {
+        return preferential;
+    }
+
+    public void setPreferential(PreferentialType preferential) {
+        this.preferential = preferential;
     }
 }

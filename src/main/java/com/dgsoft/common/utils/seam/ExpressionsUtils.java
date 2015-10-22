@@ -77,10 +77,10 @@ public class ExpressionsUtils {
         return result;
     }
 
-    public String foreachLink(Expressions.ValueExpression<Collection> items, String var, String itemEl){
+    public String foreachTop(Expressions.ValueExpression<Collection> items, String var, String itemEl){
         String result = "";
         for(Object item: items.getValue()){
-            result += createLocalValueExpression(itemEl, String.class, var, item).getValue();
+            return createLocalValueExpression(itemEl, String.class, var, item).getValue();
         }
         return result;
     }

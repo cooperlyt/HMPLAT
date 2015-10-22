@@ -152,6 +152,17 @@
                 </r:tree>
             </h:form>
 
+            <p>
+
+                <a:commandLink render="@none" action="#{businessFileEntity.extendsUpload}" immediate="true"
+                               data="#{businessFileEntity.extendsAddress}"
+                               execute="@this" oncomplete="extendsCall(event.data);">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    使用外部程序上传
+                </a:commandLink>
+
+            </p>
         </div>
 
         <h:form>

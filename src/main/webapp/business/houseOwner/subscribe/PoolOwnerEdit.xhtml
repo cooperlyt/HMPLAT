@@ -91,10 +91,6 @@
                         <div >
                         <div style="width: 470px; float: left;font-size: 12px">
 
-                            <a:outputPanel style="width: 100%; text-align: right;"  layout="block" rendered="#{not empty _person.idCard}" >
-                                性别 <strong>#{messages[_person.idCard.sex.name()]}</strong> 民族 <strong>#{_person.idCard.ethnic}</strong> 出生 <strong><h:outputText value="#{_person.idCard.dateOfBirth}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></h:outputText></strong>
-                            </a:outputPanel>
-
                             <s:decorate rendered="#{(_person.credentialsType.name() eq 'COMPANY_CODE')}"
                                         id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
                                 <ui:define name="label">
@@ -104,6 +100,8 @@
                                 <h:inputText id="legalPersonInput" value="#{_person.personEntity.legalPerson}" maxlength="50"
                                              styleClass="form-control"/>
                             </s:decorate>
+
+
 
                         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
                             <ui:define name="label">
@@ -151,6 +149,25 @@
 
                         </s:decorate>
 
+                            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                   共有权证
+                                </ui:define>
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <h:selectBooleanCheckbox value="#{_person.printCard}">
+                                            <a:ajax event="click" execute="@this" render="poolCardNumber">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:selectBooleanCheckbox>
+                                    </span>
+                                    <h:inputText id="poolCardNumber" disabled="true" p:placeholder="共有权证号" styleClass="form-control" value="#{_person.cardNumber}" />
+                                </div>
+
+
+                            </s:decorate>
+
 
                         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
                             <ui:define name="label">
@@ -169,14 +186,16 @@
 
 
                         </div>
-                            <a:outputPanel layout="block" rendered="#{not empty _person.idCard}" style="width: 140px; float: right;">
+                            <a:outputPanel layout="block" rendered="#{not empty _person.idCard}" style="width: 140px; float: right; min-height: 126px;">
                                 <div class="thumbnail" style="margin-bottom: 0">
-                                    <h:graphicImage  alt="身份证照片" value="#{runParam.getStringParamValue('IdCardImgPath')}C#{_person.credentialsNumber}.bmp" width="120px" height="126px"/>
+                                    <h:graphicImage style="min-height: 126px;" alt="身份证照片" value="#{runParam.getStringParamValue('IdCardImgPath')}C#{_person.credentialsNumber}.bmp" width="120px" height="126px"/>
+
+                                    <div style="text-align: center;color: #767676; font-size: 12px" class="caption">
+                                        <p style="margin-bottom: 5px">性别: <strong>#{messages[_person.idCard.sex.name()] } </strong> 民族:<strong>#{ _person.idCard.ethnic}</strong></p>
+                                        <p style="margin-bottom: 0"><strong><h:outputText value="#{_person.idCard.dateOfBirth}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></h:outputText></strong></p>
+                                    </div>
                                 </div>
 
-                                <div class="caption">
-                                    <p></p>
-                                </div>
 
                             </a:outputPanel>
 

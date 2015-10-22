@@ -1,11 +1,14 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.PoolType;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessPool;
+import com.dgsoft.house.owner.model.MakeCard;
+import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
@@ -25,7 +28,49 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
-    private List<PersonHelper<BusinessPool>> poolOwners;
+    public class PoolOwnerAdapert extends PersonHelper<BusinessPool> {
+
+        private OwnerBusiness ownerBusiness;
+
+
+        public PoolOwnerAdapert(OwnerBusiness ownerBusiness, BusinessPool entity) {
+            super(entity);
+            this.ownerBusiness = ownerBusiness;
+        }
+
+        public boolean isPrintCard() {
+            return getPersonEntity().getMakeCard() != null;
+        }
+
+        public void setPrintCard(boolean printCard) {
+            if (printCard){
+                getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP, NumberBuilder.instance().getDateNumber("POOL_CARD_NUMBER")));
+            }else{
+                getPersonEntity().setMakeCard(null);
+            }
+        }
+
+        public String getCardNumber(){
+            if (getPersonEntity().getMakeCard() == null){
+                return null;
+            }else{
+                return getPersonEntity().getMakeCard().getNumber();
+            }
+
+        }
+
+        public void setCardNumber(String value){
+
+            if (getPersonEntity().getMakeCard() != null){
+
+                getPersonEntity().getMakeCard().setNumber(value);
+            }
+        }
+
+
+    }
+
+    private List<PoolOwnerAdapert> poolOwners;
 
     @DataModelSelection
     private PersonHelper<BusinessPool> selectPoolOwner;
@@ -41,9 +86,9 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     public void initPoolOwners() {
 
 
-        poolOwners = new ArrayList<PersonHelper<BusinessPool>>();
+        poolOwners = new ArrayList<PoolOwnerAdapert>();
         for (BusinessPool pool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
-            poolOwners.add(new PersonHelper<BusinessPool>(pool));
+            poolOwners.add(new PoolOwnerAdapert(ownerBusinessHome.getInstance(),pool));
         }
         Collections.sort(poolOwners, new Comparator<PersonHelper<BusinessPool>>() {
             @Override
@@ -54,7 +99,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     }
 
     @DataModel(value = "newEditPoolOwners")
-    public List<PersonHelper<BusinessPool>> getPoolOwners() {
+    public List<PoolOwnerAdapert> getPoolOwners() {
         return poolOwners;
     }
 
@@ -69,7 +114,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         BusinessPool newOwner = new BusinessPool(new Date());
         newOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().add(newOwner);
-        poolOwners.add(0,new PersonHelper<BusinessPool>(newOwner));
+        poolOwners.add(0,new PoolOwnerAdapert(ownerBusinessHome.getInstance(),newOwner));
     }
 
     public void clearOwner(){
