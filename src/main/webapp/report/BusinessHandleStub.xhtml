@@ -4,7 +4,7 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="业务受理单（存根联）">
+            title="业务受理单">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
@@ -170,6 +170,9 @@
     </p:cell>
 
 </p:table>
+
+    <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+
 
 </p:font>
 <p:newPage/>
@@ -338,7 +341,7 @@
         </p:table>
 
     </p:font>
-
+    <p:barCode  code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
 </p:newPage>
 
 </a:repeat>
