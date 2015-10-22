@@ -144,7 +144,6 @@
             <h:inputText styleClass="chromeless-input" value="#{houseRecordList.searchKey}"
                          p:placeholder="#{messages.search_record_list_tip}" style="margin-left: 10px"
                          autocomplete="off">
-                <r:placeholder value="#{messages.HouseDisplayCode}"/>
             </h:inputText>
 
             <input style="display: none"/>
@@ -226,7 +225,7 @@
                             <tr ondblclick="houseClick('#{_house.businessHouse.houseCode}')">
                                 <td>
                                     <ui:insert name="houseDataTitle">
-                                        #{_house.businessHouse.houseCode}</ui:insert>
+                                        #{_house.houseCode}</ui:insert>
                                                   <span class="house-info">
                                                     <span class="#{_house.houseStatus}">
                                                         <h:outputText styleClass="label" value="#{messages[_house.houseStatus.name()]}"/>

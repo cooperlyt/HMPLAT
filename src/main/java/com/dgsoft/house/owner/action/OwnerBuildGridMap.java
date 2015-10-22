@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.HouseInfoCompare;
@@ -329,12 +330,20 @@ public class OwnerBuildGridMap {
             houseMap.put(house.getHouseCode(),house);
         }
 
-        List<BusinessHouse> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord.businessHouse from HouseRecord houseRecord left join fetch houseRecord.businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", BusinessHouse.class)
+        Map<String,HouseStatus> houseMasterStatus = new HashMap<String, HouseStatus>();
+        List<BusinessHouse> businessHouses = new ArrayList<BusinessHouse>();
+
+        for(HouseRecord houseRecord: ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                 .setParameter("houseCodes", houseMap.keySet())
-                .getResultList();
+                .getResultList()){
+            businessHouses.add(houseRecord.getBusinessHouse());
+            houseMasterStatus.put(houseRecord.getHouseCode(),houseRecord.getHouseStatus());
+        }
 
 
-        resultBusinessHouse = unionHouse(buildHome.getInstance().getHouses(),houseRecords);
+
+
+        resultBusinessHouse = unionHouse(buildHome.getInstance().getHouses(),businessHouses);
 
         Map<String,BusinessHouse> businessHouseMap = new HashMap<String, BusinessHouse>();
         for (BusinessHouse house: resultBusinessHouse){
@@ -366,9 +375,9 @@ public class OwnerBuildGridMap {
                     if (house != null){
                         block.setHouse(house);
                         block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
-                        if (house.getHouseRecord() != null){
-                            block.setHouseStatus(house.getHouseRecord().getHouseStatus());
-                        }
+
+                        block.setHouseStatus(houseMasterStatus.get(house.getHouseCode()));
+
                         houseMap.remove(house.getHouseCode());
                     }
                 }
@@ -388,9 +397,9 @@ public class OwnerBuildGridMap {
             for (GridRow gridRow: idleMap.getGridRows()){
                 for(GridBlock block: gridRow.getGridBlocks()){
                     if (block.getHouse()!= null){
-                        if (((BusinessHouse)block.getHouse()).getHouseRecord() != null){
-                            block.setHouseStatus(((BusinessHouse)block.getHouse()).getHouseRecord().getHouseStatus());
-                        }
+
+                        block.setHouseStatus(houseMasterStatus.get(block.getHouse().getHouseCode()));
+
                         block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
                     }
                 }

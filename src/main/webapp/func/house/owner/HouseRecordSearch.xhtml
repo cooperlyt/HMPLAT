@@ -119,15 +119,13 @@
                                         </span>
                             </h3>
 
-                            <p class="repo-list-description tooltipped tooltipped-w" aria-label="产权人，共有权人">
+                            <p class="repo-list-description tooltipped tooltipped-w">
 
                                 <strong>#{_item.businessHouse.businessHouseOwner.personName}</strong>
-                                <a:repeat value="#{_item.businessHouse.businessPoolList}" var="_pool">
-                                    &nbsp;&nbsp; #{_pool.personName}
-                                </a:repeat>
+                                #{_item.businessHouse.mapNumber}图#{_item.businessHouse.blockNo}丘#{_item.businessHouse.buildNo}幢<strong>#{_item.businessHouse.houseOrder}</strong>
                             </p>
                             <p class="repo-list-description">
-                                #{_item.businessHouse.buildName} #{_item.businessHouse.mapNumber}图#{_item.businessHouse.blockNo}丘#{_item.businessHouse.buildNo}幢<strong>#{_item.businessHouse.houseOrder}</strong>
+                                #{_item.businessHouse.buildName} <strong>#{_item.businessHouse.houseOrder}</strong>
                             </p>
 
                             <p class="repo-list-description tooltipped tooltipped-w" aria-label="房屋坐落">

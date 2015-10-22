@@ -5,6 +5,8 @@ import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,7 +35,8 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Owne
     }
 
     public void resetCondition(){
-        resetPage();
+        if ((getFirstResult() == null) || getFirstResult().intValue() ==0)
+            resetPage();
     }
 
 
@@ -82,7 +85,6 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Owne
     public HouseBusinessSearch() {
         //setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setRestrictionLogicOperator("and");
-
         setOrderColumn(SortCol.ORDER_BY_CREATE_TIME.colPath);
         setOrderDirection("desc");
         setMaxResults(20);

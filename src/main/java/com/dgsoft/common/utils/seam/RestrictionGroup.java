@@ -193,9 +193,9 @@ public class RestrictionGroup {
                     builder.append(" ").append(getItemLogicOperator()).append(" ");
 
 
-                builder.append(" (");
+
                 builder.append(child.getRenderedEjbql());
-                builder.append(") ");
+
                 added = true;
 
             }
@@ -203,7 +203,7 @@ public class RestrictionGroup {
         }
 
         if(added){
-            return builder.toString();
+            return " (" + builder.toString() + ") ";
         }else {
             return null;
         }

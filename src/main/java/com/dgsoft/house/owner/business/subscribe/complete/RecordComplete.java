@@ -149,15 +149,12 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
                 BusinessHouse house = houseBusiness.getAfterBusinessHouse();
                 HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
                 if (houseRecord == null) {
-                    houseRecord = new HouseRecord(house,lastStatus);
-
-                    //ownerEntityLoader.getEntityManager().persist(houseRecord);
+                    ownerEntityLoader.getEntityManager().persist(new HouseRecord(house,lastStatus));
                 } else {
                     houseRecord.setBusinessHouse(house);
                     houseRecord.setHouseStatus(lastStatus);
                     //ownerEntityLoader.getEntityManager().merge(houseRecord);
                 }
-                house.setHouseRecord(houseRecord);
 
             }
         }
