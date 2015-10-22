@@ -84,9 +84,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     //private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
 
 
-    //private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>(0);
-    private HouseRecord houseRecord;
-
 
     public BusinessHouse() {
     }
@@ -697,14 +694,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 //        this.houseBusinessForStart = houseBusinessForStart;
 //    }
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "businessHouse")
-    public HouseRecord getHouseRecord() {
-        return houseRecord;
-    }
-
-    public void setHouseRecord(HouseRecord houseRecord) {
-        this.houseRecord = houseRecord;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "LAND_INFO",nullable = true)

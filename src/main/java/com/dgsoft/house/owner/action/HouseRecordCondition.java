@@ -22,7 +22,7 @@ public class HouseRecordCondition extends BusinessHouseCondition {
             "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
             "left join fetch houseBusiness.recordStore rs " +
             "left join fetch house.businessHouseOwner owner " +
-            "left join fetch owner.makeCard";
+            "left join owner.makeCard";
 
     private static final String EJBQL = "select hr from HouseRecord hr " +
             "left join fetch hr.businessHouse house " +

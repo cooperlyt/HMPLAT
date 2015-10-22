@@ -329,7 +329,10 @@ public class OwnerBusinessPatch {
 
             HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
             if (houseRecord == null){
-                houseBusiness.getAfterBusinessHouse().setHouseRecord(new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus));
+
+
+                ownerBusinessHome.getEntityManager().persist(new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus));
+
             }else{
                 if (ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source <> 'BIZ_AFTER_SAVE' and houseBusiness.houseCode = :houseCode", Long.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
 
@@ -337,7 +340,7 @@ public class OwnerBusinessPatch {
                         Date maxPatchDate = ownerBusinessHome.getEntityManager().createQuery("select max(houseBusiness.ownerBusiness.regTime) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status in ('COMPLETE', 'MODIFYING' , 'COMPLETE_CANCEL')  and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.source = 'BIZ_AFTER_SAVE' ", Date.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult();
                         if (maxPatchDate == null ||  (maxPatchDate.compareTo(ownerBusinessHome.getInstance().getRegTime()) < 0)) {
                             houseRecord.setBusinessHouse(houseBusiness.getAfterBusinessHouse());
-                            houseBusiness.getAfterBusinessHouse().setHouseRecord(houseRecord);
+
                         }
                     } catch (NoResultException e) {
 
