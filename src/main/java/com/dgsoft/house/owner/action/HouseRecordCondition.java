@@ -16,23 +16,6 @@ import java.util.List;
 @Name("houseRecordCondition")
 public class HouseRecordCondition extends BusinessHouseCondition {
 
-    public static final String SHORT_EJBQL = "select hr from HouseRecord hr " +
-            "left join fetch hr.businessHouse house " +
-            "left join fetch house.houseBusinessForAfter houseBusiness  " +
-            "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
-            "left join fetch houseBusiness.recordStore rs " +
-            "left join fetch house.businessHouseOwner owner " +
-            "left join owner.makeCard";
-
-    private static final String EJBQL = "select hr from HouseRecord hr " +
-            "left join fetch hr.businessHouse house " +
-            "left join fetch house.businessHouseOwner owner " +
-            "left join fetch owner.makeCard ownerCard " +
-            "left join fetch house.houseBusinessForAfter houseBusiness " +
-            "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
-            "left join fetch houseBusiness.recordStore rs " +
-            "left join fetch house.businessPools pool " +
-            "left join fetch pool.makeCard poolCard ";
 
     public static final String[] RESTRICTIONS_PERSON_POOL = {
             "pool.credentialsType = #{houseRecordCondition.searchCredentialsType}",
@@ -157,50 +140,7 @@ public class HouseRecordCondition extends BusinessHouseCondition {
 
     @Override
     public String getEjbql() {
-        if (!isHaveCondition()){
-            return SHORT_EJBQL;
-        }else if (SearchType.RECORD_NUMBER.equals(getSearchType())) {
-            return "select hr from HouseRecord hr left join fetch hr.businessHouse house " +
-                    "left join fetch house.houseBusinessForAfter houseBusiness  " +
-                    "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
-                    "left join fetch houseBusiness.recordStore rs " +
-                    "left join fetch house.businessHouseOwner owner " +
-                    "left join fetch owner.makeCard where hr.houseCode in " +
-                    "(select houseBusiness.houseCode from HouseBusiness houseBusiness where houseBusiness.recordStore.recordCode = #{houseRecordCondition.searchKey} )" ;
-
-        }else if (SearchType.RECORD_LOCATION.equals(getSearchType())){
-
-            String conditionSQL = "";
-            if (getSearchFrameNumber() != null && !getSearchFrameNumber().trim().equals("")){
-                conditionSQL = " houseBusiness.recordStore.frame = #{houseRecordCondition.searchFrameNumber} ";
-            }
-
-            if (getSearchCabinetNumber() != null && !getSearchFrameNumber().trim().equals("")){
-                if (!conditionSQL.trim().equals("")){
-                    conditionSQL = conditionSQL + " and ";
-                }
-                conditionSQL += " houseBusiness.recordStore.cabinet = #{houseRecordCondition.searchCabinetNumber} ";
-            }
-
-            if (getSearchBoxNumber() != null && !getSearchBoxNumber().trim().equals("")) {
-                if (!conditionSQL.trim().equals("")) {
-                    conditionSQL = conditionSQL + " and ";
-                }
-                conditionSQL += " houseBusiness.recordStore.box = #{houseRecordCondition.searchBoxNumber} ";
-            }
-            if (conditionSQL.trim().equals("")){
-                return SHORT_EJBQL;
-            }
-            return "select hr from HouseRecord hr left join fetch hr.businessHouse house " +
-                    "left join fetch house.houseBusinessForAfter houseBusiness  " +
-                    "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
-                    "left join fetch houseBusiness.recordStore rs " +
-                    "left join fetch house.businessHouseOwner owner " +
-                    "left join fetch owner.makeCard where hr.houseCode in (select houseBusiness.houseCode from HouseBusiness houseBusiness where "
-                    + conditionSQL + " )" ;
-        }else{
-            return EJBQL;
-        }
+        return null;
     }
 
     @Override
