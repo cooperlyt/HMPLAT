@@ -1,0 +1,50 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="预购商品房预告登记预定书">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">预购商品房预告登记预定书
+    </p:paragraph>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="16">
+    <p:paragraph>甲方(出卖人)：#{_houseBusiness.afterBusinessHouse.developerName}</p:paragraph>
+    <p:paragraph>乙方(买受人)：#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+    <p:paragraph>依据《物权法》、房屋登记办法《相关规定》，为保障房屋相关权利人将来实现物权，双方当事人特签署本约定书，以便遵照并执行。</p:paragraph>
+    <p:paragraph>一、甲、乙双方经过协商同意将坐落于开原市#{_houseBusiness.afterBusinessHouse.address}房产神器鞥预购商品房预告登记。</p:paragraph>
+
+    <p:paragraph>二、甲乙双方承诺办理预购商品房预告登记时是真实意思表示，并且申请登记房屋符合预售条件。</p:paragraph>
+
+    <p:paragraph>三、甲乙双方保证向房屋登记机构提供办理预告登记所需的材料、真实、合法、有效、完备，否则由甲方或乙方承担法律责任。</p:paragraph>
+
+    <p:paragraph>四、本协议签订后，双方同意由甲方代为乙方向房屋登记机构提交设立预购商品房预告登记申请材料及领取预告登记证明。</p:paragraph>
+
+    <p:paragraph>五、甲方仅代乙方缴纳规定的预告登记费用，不收取其他任何费用。</p:paragraph>
+
+    <p:paragraph>六、预告登记后，未经预告登记的权利人同意，处分该不动产，不发生物权效力。</p:paragraph>
+
+    <p:paragraph>七、甲乙双方应当严格履行本协议及商品预告登记相关规定。如一方未履行相关约定，由其承担所产生的法律后果。</p:paragraph>
+    <p:paragraph>八、甲方保证在签订本协议后___个工作日内向房屋登记机构申请预购登记。如甲方未在上述期限内申请预告登记，乙方可单方申请。</p:paragraph>
+    <p:paragraph>九、预告登记后，如甲乙双方需要注销或变更原预告登记的内容，需甲乙双方共同申请办理，不能由甲方代为办理。</p:paragraph>
+    <p:paragraph>十、本合同未尽事宜按《物权法》及《房屋登记办法》相关规定处理。
+    </p:paragraph>
+
+
+
+    <p:paragraph>甲方(公章、法定代表人)：                                              乙方：
+    </p:paragraph>
+
+    <p:paragraph>           年     月      日                                                                 年      月     日</p:paragraph>
+
+
+</p:font>
+</a:repeat>
+</p:document>
