@@ -190,7 +190,7 @@ public class OwnerBusinessFile {
     }
 
     public void extendsUpload(){
-        extendsAddress = EXTENDS_PRINT_PROTOCOL + jsonDataProvider.putData(EXTENDS_PRINT_PROTOCOL + jsonData);
+        extendsAddress = EXTENDS_PRINT_PROTOCOL + jsonDataProvider.putData(jsonData);
     }
 
     public enum FileStatus{
@@ -316,6 +316,7 @@ public class OwnerBusinessFile {
             JSONObject result = new JSONObject();
             result.put("TYPE", getType());
             result.put("NAME", (businessNeedFile == null) ?   "" : businessNeedFile.getType().name());
+            result.put("ID", (businessNeedFile == null) ?   "" : businessNeedFile.getType().name());
             JSONArray childArray = new JSONArray();
             for(TreeNode treeNode: getChild()){
                 childArray.put(((BusinessFileTreeNode) treeNode).getJson());
@@ -324,6 +325,8 @@ public class OwnerBusinessFile {
             return result;
         }
     }
+
+
 
     public static class OtherBusinessFileTreeNode implements TreeNode{
         private BusinessFile businessFile;
