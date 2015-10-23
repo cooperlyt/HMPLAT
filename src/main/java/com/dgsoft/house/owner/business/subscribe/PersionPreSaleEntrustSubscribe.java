@@ -9,6 +9,7 @@ import org.jboss.seam.annotations.Name;
  * Date: 14-10-9
  * Time: 下午3:39
  * To change this template use File | Settings | File Templates.
+ * 预售代理人
  */
 @Name("persionPreSaleEntrustSubscribe")
 public class PersionPreSaleEntrustSubscribe extends BaseBusinessPersionSubscribe {

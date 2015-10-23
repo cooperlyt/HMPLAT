@@ -110,6 +110,11 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PersionPreSaleEntrustView" page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml">
+        <description>
+            预售代理人查看
+        </description>
+    </view-subscribe>
 
 
 
@@ -562,6 +567,12 @@
          </description>
      </edit-subscribe>
 
+    <edit-subscribe name="PersionPreSaleEntrustEdit" page="/business/houseOwner/subscribe/PersionPreSaleEntrustEdit.xhtml"
+                    component="">
+        <description>
+            预售代理人编辑
+        </description>
+    </edit-subscribe>
 
 
     <edit-subscribe name="DeclareOwnerEdit" page="/business/houseOwner/subscribe/DeclareOwnerEdit.xhtml"
