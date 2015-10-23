@@ -106,7 +106,7 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('28','房地产抵押权变�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('29','业务受理单（在建）','业务受理单（在建）','/report/ProjectMortgageBusinessHandleStub.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('30','房地产登记受理审核业务书（在建）','房地产登记受理审核业务书（在建）','/report/ReisterApplyProjectMortgageCheckTable.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('31','商品房备案登记申请书','商品房备案登记申请书','/report/ApplyContractReisterBook.xhtml');
-
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('32','商品房撤销备案登记申请书','商品房撤销备案登记申请书','/report/ApplyContractReisterBookCancel.xhtml');
 
 
 
