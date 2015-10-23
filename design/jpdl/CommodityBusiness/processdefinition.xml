@@ -15,7 +15,7 @@
 			</description>
 			<assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
 		</task>
-		<transition to="撤消备案判断"></transition>
+		<transition to="是否收费"></transition>
 		<transition to="结束" name="_END"></transition>
 	</task-node>
 
@@ -44,14 +44,18 @@
 		<transition to="网签受理" name="是">
 			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
 		</transition>
-		<transition to="撤消备案判断" name="否">
+		<transition to="是否收费" name="否">
 			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
 	</decision>
 
 	<decision name="审核结果">
-		<transition to="业务完成" name="通过"></transition>
-		<transition to="网签回退判断" name="驳回"></transition>
+		<transition to="业务完成" name="通过">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="网签回退判断" name="驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
 	</decision>
 
 	<task-node name="网签受理">
@@ -61,7 +65,7 @@
 			</description>
 			<assignment pooled-actors="contractApply"></assignment>
 		</task>
-		<transition to="撤消备案判断"></transition>
+		<transition to="是否收费"></transition>
 	</task-node>
 
 	<decision name="网签回退判断">
@@ -73,12 +77,12 @@
 		</transition>
 	</decision>
 
-	<decision name="撤消备案判断">
-		<transition to="收费" name="否">
-			<condition expression="#{not ((ownerBusinessHome.instance.defineId eq 'WP116') or (ownerBusinessHome.instance.defineId eq 'WP43'))}"></condition>
+	<decision name="是否收费">
+		<transition to="收费" name="是">
+			<condition expression="#{(ownerBusinessHome.instance.defineId eq 'WP50') or (ownerBusinessHome.instance.defineId eq 'WP43')}"></condition>
 		</transition>
-		<transition to="审核" name="撤消备案">
-			<condition expression="#{(ownerBusinessHome.instance.defineId eq 'WP116') or (ownerBusinessHome.instance.defineId eq 'WP43')}"></condition>
+		<transition to="审核" name="否">
+			<condition expression="#{not (ownerBusinessHome.instance.defineId eq 'WP50') and not (ownerBusinessHome.instance.defineId eq 'WP43')}"></condition>
 		</transition>
 	</decision>
 
