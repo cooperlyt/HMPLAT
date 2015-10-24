@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.helper;
 
+import com.dgsoft.common.BigMoneyUtil;
 import com.dgsoft.common.helper.JsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
@@ -356,32 +357,41 @@ public class ExtendsDataCreator {
     }
 
 
-    private JSONObject createFeeJson(String id, String payPerson, String orgName, FactMoneyInfo factMoneyInfo) throws JSONException {
+    private JSONObject createFeeJson(String id, String payPerson, String orgName, FactMoneyInfo factMoneyInfo,OwnerBusiness ownerBusiness) throws JSONException {
 
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("Report", "辽宁省非税收入统一收据.fr3");
         jsonObject.put("缴款凭证号码", jsonField(id));
+        jsonObject.put("业务名称", jsonField(ownerBusiness.getDefineName()));
         jsonObject.put("缴款人", jsonField(payPerson));
+        if (ownerBusiness.getMortgaegeRegiste()!=null && ownerBusiness.getMortgaegeRegiste().getFinancial()!=null){
+            jsonObject.put("抵押权人", jsonField(ownerBusiness.getMortgaegeRegiste().getFinancial().getName()));
+        }
         jsonObject.put("执收单位名称", jsonField(orgName));
 
         List<BusinessMoney> businessMoneyList = factMoneyInfo.getBusinessMoneyList();
 
         for (int i = 0; i < businessMoneyList.size(); i++) {
-            jsonObject.put("收费项目" + (i + 1), jsonField(businessMoneyList.get(i).getTypeName()));
-            jsonObject.put("收费金额" + (i + 1), jsonField(businessMoneyList.get(i).getShouldMoney()));
+            if(businessMoneyList.get(i).getShouldMoney().compareTo(BigDecimal.ZERO)>0){
+                jsonObject.put("收费项目" + (i + 1), jsonField(businessMoneyList.get(i).getTypeName()));
+                jsonObject.put("收费金额" + (i + 1), jsonField(businessMoneyList.get(i).getShouldMoney()));
+            }
         }
+        jsonObject.put("合计小写", jsonField(ownerBusiness.getFactMoneyInfo().getShouldMoney()));
+        jsonObject.put("合计大写", jsonField(BigMoneyUtil.getBigMoney(ownerBusiness.getFactMoneyInfo().getShouldMoney().doubleValue())));
+
 
         jsonObject.put("收款人", jsonField(authInfo.getLoginEmployee().getPersonName()));
 
         return jsonObject;
     }
 
-    public String extendsPrintFee(String id, String payPerson, String orgName, FactMoneyInfo factMoneyInfo) {
+    public String extendsPrintFee(String id, String payPerson, String orgName, FactMoneyInfo factMoneyInfo,OwnerBusiness ownerBusiness) {
 
 
         try {
-            return genPrintUrl(createFeeJson(id, payPerson, orgName, factMoneyInfo).toString());
+            return genPrintUrl(createFeeJson(id, payPerson, orgName, factMoneyInfo,ownerBusiness).toString());
         } catch (JSONException e) {
             Logging.getLog(getClass()).error(e);
             return null;

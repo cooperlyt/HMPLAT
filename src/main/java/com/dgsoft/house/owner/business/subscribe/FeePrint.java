@@ -27,7 +27,8 @@ public class FeePrint {
     public void preparePrintOwnerFee(){
         printUrl = extendsDataCreator.extendsPrintFee(ownerBusinessHome.getInstance().getId(),
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName(),
-                ownerBusinessHome.getInstance().getDefineName(),ownerBusinessHome.getInstance().getFactMoneyInfo());
+                ownerBusinessHome.getInstance().getDefineName(),ownerBusinessHome.getInstance().getFactMoneyInfo(),
+                ownerBusinessHome.getInstance());
 
     }
 
