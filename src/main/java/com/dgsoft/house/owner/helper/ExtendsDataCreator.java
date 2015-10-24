@@ -175,8 +175,13 @@ public class ExtendsDataCreator {
         jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
-        jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
-        jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+//        if (ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo()!=null && ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo().getHouseProperty()!=null){
+//            jsonObject.put("产别", jsonField("产别 : "+DictionaryWord.instance().getWordValue(ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo().getHouseProperty())));
+//        }
+//        if (ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo()!=null && ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo().getHouseFrom()!=null){
+//            jsonObject.put("房屋来源", jsonField("产权来源 : "+DictionaryWord.instance().getWordValue(ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo().getHouseFrom())));
+//        }
+
         jsonObject.put("共有信息", jsonField(poolInfo));
         jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
