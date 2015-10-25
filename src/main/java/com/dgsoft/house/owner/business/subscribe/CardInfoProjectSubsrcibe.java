@@ -24,7 +24,7 @@ public class CardInfoProjectSubsrcibe extends OwnerEntityHome<ProjectCard> {
         super.create();
         if(!ownerBusinessHome.getInstance().getMakeCards().isEmpty() &&
                 ownerBusinessHome.getInstance().getMakeCards().iterator().next().getProjectCard()!=null){
-            setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getCardInfo().getId());
+            setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getProjectCard().getId());
         }else{
 
             getInstance().setMakeEmpCode(authInfo.getLoginEmployee().getId());
