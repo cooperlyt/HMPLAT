@@ -150,4 +150,17 @@ public class BuildGridMap implements java.io.Serializable {
         return result;
     }
 
+    @Transient
+    public int getHouseCount(){
+        int result = 0;
+        for (GridRow gridRow: getGridRows()){
+            for(GridBlock block: gridRow.getGridBlocks()){
+                if (block.getHouse() != null){
+                    result ++;
+                }
+            }
+        }
+        return result;
+    }
+
 }

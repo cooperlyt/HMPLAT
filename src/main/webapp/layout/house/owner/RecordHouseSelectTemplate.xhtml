@@ -11,7 +11,6 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="HouseSelectTemplete.xhtml">
 
-
     <ui:define name="h-house-modal-info">
         <a:outputPanel layout="block" styleClass="modal-content" rendered="#{not empty ownerBuildGridMap.selectBizHouse}">
 
@@ -117,23 +116,32 @@
 
     <ui:define name="h-build-map-list">
 
-        <a:outputPanel layout="block" styleClass="list-group list-condensed" rendered="#{not searchBykey and  buildHome.idDefined}">
-            <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
+        <a:outputPanel styleClass="codesearch-aside"  rendered="#{not searchBykey and  buildHome.idDefined}">
+            <ul class="filter-list small">
 
+                <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
+                    <li>
 
-                <a:commandLink status="processWaiting" styleClass="list-group-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'active' : '' ): '' } ">
-                    #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
-                    <a:attachQueue requestDelay="0"/>
-                    <f:param value="#{_gridMap.id}" name="selectMapId"/>
-                    <f:param value="#{false}" name="dataTableList"/>
-                </a:commandLink>
-            </a:repeat>
+                        <a:commandLink status="processWaiting" styleClass="filter-item #{(not ownerBuildGridMap.dataTableList) ? ((_gridMap.id eq ownerBuildGridMap.id) ? 'selected' : '' ): '' } ">
+                            #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
+                            <a:attachQueue requestDelay="0"/>
+                            <span class="count"><h:outputText value="#{_gridMap.houseCount}"><f:convertNumber type="number" integerOnly="true" groupingUsed="true"/></h:outputText></span>
+                            <f:param value="#{_gridMap.id}" name="selectMapId"/>
+                            <f:param value="#{false}" name="dataTableList"/>
+                        </a:commandLink>
+                    </li>
 
-            <a:commandLink status="processWaiting" styleClass="list-group-item #{ownerBuildGridMap.dataTableList ? 'active' : ''}" >
-                #{messages.RecordHouse}
-                <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
-                <a:attachQueue requestDelay="0"/>
-            </a:commandLink>
+                    <li>
+                        <a:commandLink status="processWaiting" styleClass="filter-item #{ownerBuildGridMap.dataTableList ? 'selected' : ''}" >
+                            #{messages.RecordHouse}
+                            <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
+                            <a:attachQueue requestDelay="0"/>
+                            <span class="count"><h:outputText value="#{ownerBuildGridMap.outHouseRecords.size}"><f:convertNumber type="number" integerOnly="true" groupingUsed="true"/></h:outputText></span>
+                        </a:commandLink>
+                    </li>
+
+                </a:repeat>
+            </ul>
         </a:outputPanel>
     </ui:define>
 
@@ -289,33 +297,34 @@
                         </thead>
 
                         <tbody>
-                        <a:repeat  value="#{ownerBuildGridMap.resultBusinessHouse}" var="_house">
-                            <tr ondblclick="houseClick('#{_house.houseCode}')">
+                        <a:repeat  value="#{ownerBuildGridMap.outHouseRecords}" var="_ohr">
+                            <tr ondblclick="houseClick('#{_ohr.houseCode}')">
                                 <td>
                                     <ui:insert name="houseMapDataTitle">
-                                        #{_house.houseCode}</ui:insert>
-                                                  <a:outputPanel rendered="#{not empty _house.houseRecord}" styleClass="house-info">
-                                                    <span class="#{_house.houseRecord.houseStatus}">
-                                                        <h:outputText styleClass="label" value="#{messages[_house.houseRecord.houseStatus.name()]}"/>
+                                        #{_ohr.houseCode}</ui:insert>
+
+                                                  <a:outputPanel rendered="#{not empty _ohr.houseStatus}" styleClass="house-info">
+                                                    <span class="#{_ohr.houseStatus}">
+                                                        <h:outputText styleClass="label" value="#{messages[_ohr.houseStatus.name()]}"/>
                                                     </span>
                                                 </a:outputPanel>
                                 </td>
                                 <td>
-                                    #{_house.displayHouseCode}
+                                    #{_ohr.businessHouse.displayHouseCode}
                                 </td>
                                 <td>
-                                    #{_house.buildName}
+                                    #{_ohr.businessHouse.buildName}
                                 </td>
                                 <td>
-                                    #{_house.houseOrder}
+                                    #{_ohr.businessHouse.houseOrder}
                                 </td>
                                 <td>
-                                    <h:outputText value="#{_house.businessHouseOwner.personName}"
+                                    <h:outputText value="#{_ohr.businessHouse.businessHouseOwner.personName}"
                                                   rendered="#{not empty _house.businessHouseOwner}"/>
 
                                 </td>
                                 <td>
-                                    #{_house.address}
+                                    #{_ohr.businessHouse.address}
                                 </td>
                             </tr>
                         </a:repeat>

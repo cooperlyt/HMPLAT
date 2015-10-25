@@ -254,7 +254,7 @@
                             未发证楼幢
 
 
-                            <s:link styleClass="btn btn-sm btn-primary boxed-group-action"
+                            <s:link styleClass="btn btn-sm btn-primary boxed-group-action #{projectBusinessStart.selectBuild ? '' : 'disabled'}" disabled="#{not projectBusinessStart.selectBuild}"
                                     action="#{projectBusinessStart.buildComplete}">
                                 颁发预售（销售）许可证
                             </s:link>
