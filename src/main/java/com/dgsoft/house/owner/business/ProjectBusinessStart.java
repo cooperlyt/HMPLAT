@@ -351,6 +351,7 @@ public class ProjectBusinessStart {
                 }
 
                 BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses);
+                idleMap.setId(UUID.randomUUID().toString());
                 for (GridRow gridRow : idleMap.getGridRows()) {
                     for (GridBlock block : gridRow.getGridBlocks()) {
                         if (block.getHouse() != null) {
@@ -360,7 +361,7 @@ public class ProjectBusinessStart {
                     }
                 }
 
-                idleMap.setId("idleHouse");
+                idleMap.setId(UUID.randomUUID().toString());
                 gridMaps.add(idleMap);
 
             }

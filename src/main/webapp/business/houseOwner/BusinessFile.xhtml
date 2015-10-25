@@ -5,6 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
 
@@ -155,14 +156,34 @@
             <p>
 
                 <a:commandLink render="@none" action="#{businessFileEntity.extendsUpload}" immediate="true"
-                               data="#{businessFileEntity.extendsAddress}"
+                               data="#{businessFileEntity.extendsAddress}" p:data-backdrop="static"
+                               p:data-toggle="modal" p:data-target=".bs-example-modal-sm"
                                execute="@this" oncomplete="extendsCall(event.data);">
-                    <span class="glyphicon glyphicon-print"/>
                     <a:attachQueue requestDelay="0"/>
                     使用外部程序上传
                 </a:commandLink>
 
+                <s:link styleClass="right"> 刷新 <span class="octicon octicon-sync"></span></s:link>
+
             </p>
+            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">文件上传</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>请在启动的文件上传程序中上传要件和附件，上传完成后就会看到您上传的文件,如果没有显示新上传的文件，您可以手动刷新。</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <s:button value="完成"  data-dismiss="modal" styleClass="btn btn-primary"></s:button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <h:form>

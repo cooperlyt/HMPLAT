@@ -342,7 +342,7 @@ public class BuildGridMapHouseSelect {
                     }
                 }
             }
-            idleMap.setId("idleHouse");
+            idleMap.setId(UUID.randomUUID().toString());
             buildGridMaps.add(idleMap);
 
         }
