@@ -20,36 +20,7 @@
 
 
 
-    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-            #{messages.ProjectSellInfo_LandCardType}
-        </ui:define>
-        <ui:param name="for" value="LandCardType"/>
-        <h:selectOneMenu id="LandCardType"
-                         value="#{projectSellInfoSubscribe.instance.landCardType}"
-                         styleClass="selectpicker select-menu-btn input-group-first"
-                         label="#{messages.ProjectSellInfo_LandCardType}"
-                         required="true">
-            <s:selectItems value="#{dictionary.getWordList('project.landCardType')}" var="_word"
-                           itemValue="#{_word.id}" label="#{_word.value}"
-                           noSelectionLabel="#{messages.noSelectLabel}"/>
-        </h:selectOneMenu>
-    </s:decorate>
-    <div class="form-inline">
-        <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
-            <ui:define name="label">
-                #{messages.ProjectSellInfo_landUseType}
-            </ui:define>
-            <ui:param name="for" value="landUseType"/>
-            <h:inputText label="#{messages.ProjectSellInfo_landUseType}"
-                         id="landUseType"
-                         value="#{projectSellInfoSubscribe.instance.landUseType}"
-                         styleClass="form-control"
-                         maxlength="32"
-                         required="true">
-            </h:inputText>
-        </s:decorate>
-    </div>
+
 
 
 
@@ -132,6 +103,34 @@
     </div>
 
 
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.ProjectSellInfo_LandCardType}
+        </ui:define>
+        <ui:param name="for" value="LandCardType"/>
+        <div class="input-group">
+            <a:outputPanel styleClass="input-group-btn">
+        <h:selectOneMenu id="LandCardType" p:data-width="170px"
+                         value="#{projectSellInfoSubscribe.instance.landCardType}"
+                         styleClass="selectpicker select-menu-btn input-group-first"
+                         label="#{messages.ProjectSellInfo_LandCardType}"
+                         required="true">
+            <s:selectItems value="#{dictionary.getWordList('project.landCardType')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}"
+                           noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+            </a:outputPanel>
+
+                <h:inputText label="#{messages.Land_LandCardNo}"
+                             id="landCardNo" p:placeholder="#{messages.Land_LandCardNo}"
+                             value="#{projectSellInfoSubscribe.instance.landCardNo}"
+                             styleClass="form-control"
+                             maxlength="50" />
+
+        </div>
+    </s:decorate>
+
+
 
 
 
@@ -148,7 +147,7 @@
                     <h:selectOneMenu id="landGetMode"
                                      label="#{messages.Land_LandGetMode}"
                                      value="#{projectSellInfoSubscribe.instance.landGetMode}"
-                                     p:data-width="140px"
+                                     p:data-width="170px"
                                      rendered="true"
                                      styleClass="selectpicker select-menu-btn input-group-first">
                         <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
@@ -170,7 +169,19 @@
 
         </s:decorate>
 
-
+    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+        <ui:define name="label">
+            #{messages.ProjectSellInfo_landUseType}
+        </ui:define>
+        <ui:param name="for" value="landUseType"/>
+        <h:inputText label="#{messages.ProjectSellInfo_landUseType}"
+                     id="landUseType"
+                     value="#{projectSellInfoSubscribe.instance.landUseType}"
+                     styleClass="form-control"
+                     maxlength="32"
+                     required="true">
+        </h:inputText>
+    </s:decorate>
 
 
     <div class="form-inline">
@@ -211,17 +222,7 @@
 
 
     <div class="form-inline">
-        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
-            <ui:define name="label">
-                #{messages.Land_LandCardNo}
-            </ui:define>
-            <ui:param name="for" value="landCardNo"/>
-            <h:inputText label="#{messages.Land_LandCardNo}"
-                         id="landCardNo"
-                         value="#{projectSellInfoSubscribe.instance.landCardNo}"
-                         styleClass="form-control"
-                         maxlength="50" />
-        </s:decorate>
+
 
 
 

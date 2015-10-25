@@ -369,7 +369,7 @@
                         <a:repeat value="#{_build.value}" var="_gridMap">
                             <a:commandLink render="buildListView,mapContext" class="list-group-item #{projectBusinessStart.id eq _gridMap.id ? 'selected' : ''} css-truncate-target">
                                 #{(empty _gridMap.name) ? messages.noname : _gridMap.name}
-                                <strong>s
+                                <strong>
                                 #{projectBusinessStart.getCountByMap(_gridMap.id).key}/#{projectBusinessStart.getCountByMap(_gridMap.id).value}</strong>
                                 <a:attachQueue requestDelay="0"/>
                                 <a:param value="#{_gridMap.id}" assignTo="#{projectBusinessStart.id}"/>
