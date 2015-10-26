@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="预购商品房预告登记预定书">
+            title="预购商品房预告登记约定书">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">预购商品房预告登记预定书
+    <p:paragraph alignment="center">预购商品房预告登记约定书
     </p:paragraph>
 </p:font>
 
@@ -19,7 +19,7 @@
     <p:paragraph>甲方(出卖人)：#{_houseBusiness.afterBusinessHouse.developerName}</p:paragraph>
     <p:paragraph>乙方(买受人)：#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
     <p:paragraph>依据《物权法》、房屋登记办法《相关规定》，为保障房屋相关权利人将来实现物权，双方当事人特签署本约定书，以便遵照并执行。</p:paragraph>
-    <p:paragraph>一、甲、乙双方经过协商同意将坐落于开原市#{_houseBusiness.afterBusinessHouse.address}房产神器鞥预购商品房预告登记。</p:paragraph>
+    <p:paragraph>一、甲、乙双方经过协商同意将坐落于开原市#{_houseBusiness.afterBusinessHouse.address}房产申请预购商品房预告登记。</p:paragraph>
 
     <p:paragraph>二、甲乙双方承诺办理预购商品房预告登记时是真实意思表示，并且申请登记房屋符合预售条件。</p:paragraph>
 
