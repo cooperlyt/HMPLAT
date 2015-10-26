@@ -58,8 +58,9 @@
         </ui:insert>
 
 
+        <ui:insert name="ajax-param">
         <a:queue requestDelay="1000" ignoreDupResponses="true"/>
-
+        </ui:insert>
         <a:status id="processWaiting" name="processWaiting"
                   onstart="#{rich:component('wait')}.show()"
                   onstop="#{rich:component('wait')}.hide()"/>

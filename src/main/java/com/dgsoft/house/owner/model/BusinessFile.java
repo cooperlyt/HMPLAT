@@ -30,8 +30,8 @@ public class BusinessFile implements java.io.Serializable {
 	public BusinessFile() {
 	}
 
-    public BusinessFile(OwnerBusiness ownerBusiness, String name, String importantCode, boolean noFile, boolean important) {
-        this.ownerBusiness = ownerBusiness;
+    public BusinessFile(String id, String name, String importantCode, boolean noFile, boolean important) {
+        this.id = id;
         this.name = name;
         this.importantCode = importantCode;
         this.noFile = noFile;
@@ -42,8 +42,6 @@ public class BusinessFile implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}
