@@ -63,6 +63,8 @@ public class OwnerBuildGridMap {
 
     private List<BusinessHouse> resultBusinessHouse = new ArrayList<BusinessHouse>();
 
+    private List<HouseRecord> outHouseRecords = new ArrayList<HouseRecord>();
+
     public String getMapNumber() {
         return mapNumber;
     }
@@ -310,6 +312,9 @@ public class OwnerBuildGridMap {
 
     }
 
+    public List<HouseRecord> getOutHouseRecords() {
+        return outHouseRecords;
+    }
 
     public void initBuildMap(){
 
@@ -332,6 +337,12 @@ public class OwnerBuildGridMap {
 
         Map<String,HouseStatus> houseMasterStatus = new HashMap<String, HouseStatus>();
         List<BusinessHouse> businessHouses = new ArrayList<BusinessHouse>();
+
+
+        outHouseRecords = ownerEntityLoader.getEntityManager().createQuery("select hr from HouseRecord hr where hr.houseCode not in (:houseCodes) and hr.businessHouse.buildCode =:buildCode")
+                .setParameter("houseCodes", houseMap.keySet())
+                .setParameter("buildCode", buildHome.getInstance().getId()).getResultList();
+
 
         for(HouseRecord houseRecord: ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                 .setParameter("houseCodes", houseMap.keySet())
