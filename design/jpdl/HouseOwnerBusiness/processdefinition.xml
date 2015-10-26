@@ -79,10 +79,10 @@
     </decision>
 
 	<decision name="审核结果">
-		<transition to="是否登薄" name="审核通过">
+		<transition to="是否审批" name="审核通过">
 			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
-		<transition to="受理" name="审核不通过">
+		<transition to="受理" name="审核驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
 	</decision>
@@ -93,6 +93,34 @@
 		</transition>
 		<transition to="繕证判断" name="不登薄">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="审批">
+		<task name="审批">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+			</description>
+			<assignment pooled-actors="last_check"></assignment>
+		</task>
+		<transition to="审批结果"></transition>
+	</task-node>
+
+	<decision name="是否审批">
+		<transition to="是否登薄">
+			<condition expression="#{not (businessDefineHome.id eq 'WP50')}"></condition>
+		</transition>
+		<transition to="审批" name="to 审批">
+			<condition expression="#{businessDefineHome.id eq 'WP50'}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="审批结果">
+		<transition to="缮证">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="受理" name="审批驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
 	</decision>
 
