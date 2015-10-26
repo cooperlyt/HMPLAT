@@ -145,8 +145,8 @@ public class MortgaegeRegiste implements java.io.Serializable {
 		this.mortgageDueTimeS = mortgageDueTimeS;
 	}
 
-
-	@Column(name = "MORTGAGE_TIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MORTGAGE_TIME", nullable = false,length = 19)
 	@NotNull
 	public Date getMortgageTime() {
 		return this.mortgageTime;

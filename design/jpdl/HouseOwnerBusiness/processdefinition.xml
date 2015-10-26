@@ -28,7 +28,7 @@
     <task-node name="登薄">
         <task name="登薄">
             <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
-            <assignment pooled-actors="RecordFile"></assignment>
+            <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}RecordFile"></assignment>
         </task>
         <transition to="繕证判断"></transition>
 		<transition to="受理" name="退回受理"></transition>
