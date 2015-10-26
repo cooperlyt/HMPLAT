@@ -8,7 +8,7 @@
 
         <dl>
         <dt class="input-label">
-            <s:label for="#{for}" styleClass="control-label #{invalid?'errors':''}" rendered="#{(empty showLabel) or showLabel}">
+            <s:label for="#{for}" styleClass="control-label #{((not empty for) and invalid)?'errors':''}" rendered="#{(empty showLabel) or showLabel}">
                 <ui:insert name="label"/>
                 <s:span styleClass="required" rendered="#{required}">*</s:span>
             </s:label>

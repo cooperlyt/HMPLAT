@@ -339,7 +339,7 @@ public class OwnerBuildGridMap {
         List<BusinessHouse> businessHouses = new ArrayList<BusinessHouse>();
 
 
-        outHouseRecords = ownerEntityLoader.getEntityManager().createQuery("select hr from HouseRecord hr where hr.houseCode not in (:houseCodes) and hr.businessHouse.buildCode =:buildCode")
+        outHouseRecords = ownerEntityLoader.getEntityManager().createQuery("select hr from HouseRecord hr left join fetch hr.businessHouse where hr.houseCode not in (:houseCodes) and hr.businessHouse.buildCode =:buildCode")
                 .setParameter("houseCodes", houseMap.keySet())
                 .setParameter("buildCode", buildHome.getInstance().getId()).getResultList();
 

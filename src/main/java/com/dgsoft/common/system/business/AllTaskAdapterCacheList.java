@@ -26,7 +26,17 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
 
         List<TaskInstance> taskInstanceList = (List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.taskInstanceList");
 
-        taskInstanceList.addAll((List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.pooledTaskInstanceList"));
+        if (taskInstanceList == null){
+            taskInstanceList = (List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.pooledTaskInstanceList");
+        }else{
+            taskInstanceList.addAll((List<TaskInstance>) Component.getInstance("org.jboss.seam.bpm.pooledTaskInstanceList"));
+        }
+
+        if (taskInstanceList == null){
+            taskInstanceList = new ArrayList<TaskInstance>(0);
+        }
+
+
 
         Set<TaskInstanceAdapter> result = new HashSet<TaskInstanceAdapter>();
         for (TaskInstance taskInstance : taskInstanceList) {
