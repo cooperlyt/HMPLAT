@@ -1,0 +1,63 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="其它登记询问笔录">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">其它登记询问笔录
+    </p:paragraph>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14">
+    <p:paragraph>受理编号：#{ownerBusinessHome.instance.id}   询问人：#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+
+    <p:paragraph>被询问人：#{ownerBusinessHome.applyPersion.personName}  询问机构：#{runParam.getStringParamValue('SetupName')}</p:paragraph>
+    <p:paragraph>询问日期：<p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14" style="bold">
+    <p:paragraph>
+        告知：开原市房地产交易权属登记中心房屋登记工作人员，根据《物权法》第十二条第二项和《房屋登记办法》第十八条的规定，就您(单位)申请房屋登记的相关情况对您进行询问，请您如实回答我们提出的问题，您应当对自己回答问题的真实性负责，不得隐瞒真实情况或做虚假陈述，否则由被询问人承担法律责任。根据《物权法》第十二条确定该笔录是办理相应登记的一部分材料。请在所选项目后的"□"内画"√"。
+    </p:paragraph>
+    </p:font>
+
+
+
+    <p:paragraph>询问事项：</p:paragraph>
+    <p:paragraph>1、申请人(被询问人)名称（姓名）：#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName} </p:paragraph>
+    <p:paragraph>2、您申请登记房屋坐落为：#{_houseBusiness.afterBusinessHouse.businessHouseOwner.address} </p:paragraph>
+
+
+    <p:paragraph>3、您申请办理的理由是: </p:paragraph>
+    <p:paragraph>   补、换证 -□</p:paragraph>
+    <p:paragraph>   异议登记 -□</p:paragraph>
+    <p:paragraph>   更正登记 -□</p:paragraph>
+    <p:paragraph>   注销登记 -□</p:paragraph>
+
+
+    <p:paragraph>4、您申请此项登记是否是真实意思表达</p:paragraph>
+    <p:paragraph> 是□        否□</p:paragraph>
+    <p:paragraph>5、您是否对所提交资料的合法性、真实性负责并对其承担相应的法律责任</p:paragraph>
+    <p:paragraph> 是□        否□</p:paragraph>
+
+
+
+    <p:paragraph>6、其它需要补充的情况________________________________________________________</p:paragraph>
+    <p:paragraph>上述内容如由代理人回答，应提供书面委托。</p:paragraph>
+    <p:paragraph>以上笔录为已看过(或已向我宣读过)，与我讲的一致。
+    </p:paragraph>
+
+    <p:paragraph>被询问人签字：                                            被询问人(预购人)签字：
+    </p:paragraph>
+
+    <p:paragraph> 代理人签字:                                                                    代理人签字：</p:paragraph>
+
+
+</p:font>
+</a:repeat>
+</p:document>

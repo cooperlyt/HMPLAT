@@ -74,7 +74,7 @@ INSERT INTO `business_define` (`ID`, `NAME`, `WF_NAME`, `START_PAGE`, `CATEGORY`
 
 -- 报表
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('owner.apply.check','房地产登记受理审核业务书','房地产登记受理审核业务书','/report/ReisterApplyCheckTable.xhtml');
-INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('1','业务受理单（存根联）','业务受理单（存根联）','/report/BusinessHandleStub.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('1','业务受理单','业务受理单','/report/BusinessHandleStub.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('2','询问笔录（初始登记）','询问笔录（初始登记）','/report/InitRegAskRecord.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('3','询问笔录（转移登记）','询问笔录（转移登记）','/report/ShiftAskRecord.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('4','房屋所有权转移登记申请书','房屋所有权转移登记申请书','/report/ApplyShifReisterBook.xhtml');
@@ -110,6 +110,9 @@ INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('32','商品房撤销备案�
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('32','商品房撤销备案登记申请书','商品房撤销备案登记申请书','/report/ApplyContractReisterBookCancel.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('33','预购商品房预告登记询问笔录','预购商品房预告登记询问笔录','/report/NoticeRegAskRecord.xhtml');
 INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('34','预购商品房预告登记约定书','预购商品房预告登记约定书','/report/NoticeConvention.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('34','预购商品房预告登记约定书','预购商品房预告登记约定书','/report/NoticeConvention.xhtml');
+INSERT INTO REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES('35','其它登记询问笔录','其它登记询问笔录','/report/OtherRegAskRecord.xhtml');
+
 
 
 
