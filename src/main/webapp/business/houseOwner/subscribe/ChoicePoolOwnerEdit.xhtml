@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <div class="form-inline">
+    <s:decorate id="poolTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_PoolMemo}
+        </ui:define>
+        <ui:param name="for" value="#{poolOwnerSubscribe.choice ? 'poolTypeInput' : ''}"/>
+
+        <div class="input-group">
+      <span class="input-group-addon">
+
+                <h:selectBooleanCheckbox value="#{poolOwnerSubscribe.choice}">
+                    <a:ajax event="click" execute="@this" render="poolTypeField,poolOwnerTable">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:selectBooleanCheckbox>
+      </span>
+            <h:selectOneMenu id="poolTypeInput" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType}"
+                             styleClass="selectpicker edit-select form-control" p:data-width="185px"
+                             disabled="#{not poolOwnerSubscribe.choice}"
+                             label="#{messages.RegisterProperty_PoolMemo}" required="#{poolOwnerSubscribe.choice}">
+                <s:selectItems value="#{poolTypes}" var="_type" label="#{messages[_type.name()]}"
+                               noSelectionLabel="#{messages.noSelectLabel}"/>
+                <s:convertEnum/>
+                <a:ajax event="valueChange" render="poolOwnerTable,poolTypeField"
+                        oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
+            </h:selectOneMenu>
+        </div>
+
+    </s:decorate>
+    </div>
+
+    <ui:include src="PoolOwnerInput.xhtml"/>
+
+</ui:composition>

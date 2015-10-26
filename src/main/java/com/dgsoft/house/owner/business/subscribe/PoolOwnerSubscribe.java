@@ -70,6 +70,20 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     }
 
+    private boolean choice = true;
+
+
+    public boolean isChoice() {
+        return choice;
+    }
+
+    public void setChoice(boolean choice) {
+        this.choice = choice;
+        if (!choice){
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(null);
+        }
+    }
+
     private List<PoolOwnerAdapert> poolOwners;
 
     @DataModelSelection
@@ -128,6 +142,8 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public void validSubscribe() {
+        if (!choice)
+            return;
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType() == null){
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolNotInput");
         }
@@ -138,6 +154,9 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public boolean isPass() {
+        if(!choice){
+            return true;
+        }
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType() == null){
             return false;
         }
@@ -150,6 +169,11 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
     @Override
     public boolean saveSubscribe() {
+        if(!choice){
+            poolOwners.clear();
+            return true;
+        }
+
         if (!PoolType.SINGLE_OWNER.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType()) && poolOwners.isEmpty()) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "PoolIsEmptyError");
             return false;
