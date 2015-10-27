@@ -168,9 +168,9 @@ public class Build implements java.io.Serializable,TreeNode, BuildInfo {
 		this.blockNo = blockNo;
 	}
 
-	@Column(name = "BUILD_NO", nullable = false, length = 4)
+	@Column(name = "BUILD_NO", nullable = false, length = 10)
 	@NotNull
-	@Size(max = 4)
+	@Size(max = 10)
 	public String getBuildNo() {
 		return this.buildNo;
 	}

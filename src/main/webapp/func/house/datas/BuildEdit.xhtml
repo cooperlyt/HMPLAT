@@ -67,7 +67,6 @@
                                 event="blur" render="buildNameInput">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
-                        <f:validateRegex pattern="^\d*$"/>
                     </h:inputText>
                     <span class="input-group-addon">#{messages.MapIdentification_dbuild}</span>
                     <h:inputText id="devNoInput" value="#{buildHome.instance.buildDevNumber}"
