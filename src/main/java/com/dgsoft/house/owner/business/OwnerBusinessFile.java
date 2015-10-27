@@ -1,6 +1,10 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.exception.FileOperException;
 import com.dgsoft.common.helper.JsonDataProvider;
+import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.BusinessFileOperation;
+import com.dgsoft.common.system.BusinessFtpFile;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.model.BusinessNeedFile;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -12,6 +16,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Expressions;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +44,10 @@ public class OwnerBusinessFile {
     @In
     private JsonDataProvider jsonDataProvider;
 
-    private List<TreeNode> tree;
+    @In
+    private FacesMessages facesMessages;
+
+    private List<BusinessFileNode> tree;
 
     private BusinessFileTreeNode selectNode;
 
@@ -48,6 +57,53 @@ public class OwnerBusinessFile {
 
     public void setSelectNode(BusinessFileTreeNode selectNode) {
         this.selectNode = selectNode;
+    }
+
+    public String save(){
+        ownerBusinessHome.getInstance().getUploadFileses().clear();
+        saveImportNodeFile(getTree());
+        return "saved";
+    }
+
+    public void saveImportNodeFile(List<BusinessFileNode> nodes){
+        for(BusinessFileNode node: nodes){
+            if (node.getBusinessFile() != null) {
+                node.getBusinessFile().setOwnerBusiness(ownerBusinessHome.getInstance());
+                ownerBusinessHome.getInstance().getUploadFileses().add(node.getBusinessFile());
+            }
+            if (node.getChildFileNode() != null && !node.getChildFileNode().isEmpty()){
+                saveImportNodeFile(node.getChildFileNode());
+            }
+        }
+    }
+
+    public void loadFromFtp(){
+        try {
+            BusinessFileOperation fileOperation = new BusinessFtpFile();
+            try {
+                loadFromFtp(getTree(), fileOperation);
+            }finally {
+                fileOperation.close();
+            }
+        } catch (FileOperException e) {
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"FILE_SERVER_FIAIL");
+        }
+    }
+
+    @In
+    private AuthenticationInfo authInfo;
+
+    private void loadFromFtp(List<BusinessFileNode> nodes, BusinessFileOperation fileOperation){
+        for (BusinessFileNode node: nodes){
+            if (BusinessNeedFile.NeedFileNodeFile.CHILDREN.name().equals(node.getType()) || "OTHER_FILE".equals(node.getType())){
+                try {
+                    node.putFile(fileOperation.listFiles(node.getDirName()),
+                            authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),"0");//TODO: calcmd5
+                } catch (FileOperException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private List<BusinessFile> getAllImportantFile() {
@@ -71,35 +127,11 @@ public class OwnerBusinessFile {
         return result;
     }
 
-    public void setNoFile(boolean value){
-        if (selectNode != null){
-            if (selectNode.getBusinessFile() == null){
-                if (value) {
-                    BusinessFile newBizFile = new BusinessFile(ownerBusinessHome.getInstance(), selectNode.getBusinessNeedFile().getName(), selectNode.getBusinessNeedFile().getId(), true, true);
-                    selectNode.setBusinessFile(newBizFile);
-                    ownerBusinessHome.getInstance().getUploadFileses().add(newBizFile);
-                }
-            }else{
-                selectNode.getBusinessFile().setNoFile(value);
-            }
-        }
-    }
-
-    public boolean isNoFile(){
-        if (selectNode == null){
-            return false;
-        }
-        if (selectNode.getBusinessFile() == null){
-            return false;
-        }
-        return selectNode.getBusinessFile().isNoFile();
-    }
-
 
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
         // considering only single selection
         List<Object> selection = new ArrayList<Object>(selectionChangeEvent.getNewSelection());
-        if (selection.size() == 0){
+        if (selection.size() == 0) {
             selectNode = null;
             return;
         }
@@ -110,7 +142,7 @@ public class OwnerBusinessFile {
         tree.setRowKey(currentSelectionKey);
         if (tree.getRowData() instanceof BusinessFileTreeNode) {
             selectNode = (BusinessFileTreeNode) tree.getRowData();
-        }else{
+        } else {
             selectNode = null;
             //TODO select OtherFile
         }
@@ -118,38 +150,36 @@ public class OwnerBusinessFile {
     }
 
 
-    public List<TreeNode> getTree() {
-        if (tree == null){
+    public List<BusinessFileNode> getTree() {
+        if (tree == null) {
             initBusinessNeedFiles();
         }
         return tree;
     }
 
-    public FileStatus getImportantStatus(){
-        if(getTree().size() < 2){
+    public FileStatus getImportantStatus() {
+        if (getTree().size() < 2) {
             return FileStatus.OK;
         }
-        return ((BusinessFileTreeNode)getTree().get(0)).getStatus(businessDefineHome.getTaskName());
+        return ((BusinessFileTreeNode) getTree().get(0)).getStatus(businessDefineHome.getTaskName());
     }
 
-    public boolean isPass(){
-        if(getTree().size() < 2){
+    public boolean isPass() {
+        if (getTree().size() < 2) {
             return true;
         }
-       return ! FileStatus.NO_UPLOAD.equals(((BusinessFileTreeNode)getTree().get(0)).getStatus(businessDefineHome.getTaskName()));
+        return !FileStatus.NO_UPLOAD.equals(((BusinessFileTreeNode) getTree().get(0)).getStatus(businessDefineHome.getTaskName()));
     }
 
     private void initBusinessNeedFiles() {
 
-        tree = new ArrayList<TreeNode>(2);
+        tree = new ArrayList<BusinessFileNode>(2);
 
         List<BusinessNeedFile> rootNeedFile = businessDefineHome.getNeedFileRootList();
-        if (!rootNeedFile.isEmpty()){
+        if (!rootNeedFile.isEmpty()) {
             BusinessFileTreeNode importantNode = new BusinessFileTreeNode(rootNeedFile);
 
             tree.add(importantNode);
-
-            fillTree(importantNode);
 
             try {
                 JSONObject jsonObject = new JSONObject();
@@ -158,7 +188,7 @@ public class OwnerBusinessFile {
                 jsonObject.put("IMPORT", importantNode.getJson());
                 jsonData = jsonObject.toString();
             } catch (JSONException e) {
-                Logging.getLog(getClass()).debug(e.getMessage(),e);
+                Logging.getLog(getClass()).debug(e.getMessage(), e);
                 jsonData = null;
             }
         }
@@ -170,13 +200,6 @@ public class OwnerBusinessFile {
 
 
 
-    private void fillTree(BusinessFileTreeNode node) {
-        for (BusinessFileTreeNode child : node.getChild()) {
-
-            fillTree(child);
-        }
-
-    }
 
     private String jsonData;
 
@@ -189,12 +212,12 @@ public class OwnerBusinessFile {
         return extendsAddress;
     }
 
-    public void extendsUpload(){
+    public void extendsUpload() {
         extendsAddress = EXTENDS_PRINT_PROTOCOL + jsonDataProvider.putData(jsonData);
     }
 
-    public enum FileStatus{
-         OK(1), OTHER_UPLOAD(2), NO_FILE(3),NO_UPLOAD(4),;
+    public enum FileStatus {
+        OK(1), OTHER_UPLOAD(2), NO_FILE(3), NO_UPLOAD(4),;
 
         private int order;
 
@@ -207,8 +230,20 @@ public class OwnerBusinessFile {
         }
     }
 
+    public interface BusinessFileNode extends TreeNode{
 
-    public static class BusinessFileTreeNode extends BusinessDefineHome.NeedFileTreeNode<BusinessFileTreeNode> {
+         BusinessFile getBusinessFile();
+
+        List<BusinessFileNode> getChildFileNode();
+
+        String getType();
+
+        String getDirName();
+
+        void putFile(List<String> fileNames, String empCode, String empName, String md5);
+    }
+
+    public class BusinessFileTreeNode extends BusinessDefineHome.NeedFileTreeNode<BusinessFileTreeNode> implements BusinessFileNode {
 
 
         private BusinessFileTreeNode(BusinessNeedFile businessNeedFile, BusinessFileTreeNode parent) {
@@ -220,9 +255,9 @@ public class OwnerBusinessFile {
 
             if (businessNeedFile.getCondition() == null ||
                     businessNeedFile.getCondition().trim().equals("") ||
-                    Expressions.instance().createValueExpression(businessNeedFile.getCondition(),Boolean.class).getValue()) {
+                    Expressions.instance().createValueExpression(businessNeedFile.getCondition(), Boolean.class).getValue()) {
                 return new BusinessFileTreeNode(businessNeedFile, this);
-            }else{
+            } else {
                 return null;
             }
         }
@@ -234,69 +269,100 @@ public class OwnerBusinessFile {
 
         private BusinessFile businessFile;
 
+        public boolean isNoFile() {
+            if ((businessNeedFile == null) || ! getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+                return false;
+            }
+            return getBusinessFile() != null && getBusinessFile().isNoFile();
+        }
+
+        public void setNoFile(boolean value) {
+            if ((businessNeedFile == null) || ! getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+                return;
+            }
+            if (value) {
+                if (getBusinessFile() == null) {
+                    if (value) {
+                        BusinessFile newBizFile = new BusinessFile(UUID.randomUUID().toString().replace("-",""), getBusinessNeedFile().getName(), getBusinessNeedFile().getId(), true, true);
+                        setBusinessFile(newBizFile);
+                    }
+                } else {
+                    getBusinessFile().setNoFile(value);
+                }
+            }else{
+                if (getBusinessFile() != null){
+                    getBusinessFile().setNoFile(value);
+                }
+            }
+
+
+        }
+
         public BusinessFile getBusinessFile() {
             return businessFile;
+        }
+
+        @Override
+        public List<BusinessFileNode> getChildFileNode() {
+            return new ArrayList<BusinessFileNode>(getChild());
         }
 
         public void setBusinessFile(BusinessFile businessFile) {
             this.businessFile = businessFile;
         }
 
-        public int getFileCount(){
-            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+        public int getFileCount() {
+            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)) {
                 return (getBusinessFile() == null) ? 0 : getBusinessFile().getUploadFiles().size();
-            }else{
+            } else {
                 int result = 0;
-                for (BusinessFileTreeNode child: getChild()){
+                for (BusinessFileTreeNode child : getChild()) {
                     result += child.getFileCount();
                 }
                 return result;
             }
         }
 
-        public boolean isEmptyFile(){
+        public boolean isEmptyFile() {
             return getFileCount() == 0;
         }
 
-        public FileStatus getStatus(String taskName){
-            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+        public FileStatus getStatus(String taskName) {
+            if ((getBusinessNeedFile() != null) && getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)) {
 
 
+                FileStatus result;
+
+                if (getBusinessFile() == null) {
+                    result = FileStatus.NO_UPLOAD;
+                } else if (getBusinessFile().isNoFile()) {
+                    result = FileStatus.NO_FILE;
+
+                } else if (!getBusinessFile().getUploadFiles().isEmpty()) {
+                    result = FileStatus.OK;
+                } else {
+                    result = FileStatus.NO_UPLOAD;
+                }
+
+                if (FileStatus.NO_UPLOAD.equals(result) && !getBusinessNeedFile().getTaskName().equals(taskName)) {
+                    return FileStatus.OTHER_UPLOAD;
+                } else {
+                    return result;
+                }
 
 
-                    FileStatus result;
-
-                    if (getBusinessFile() == null) {
-                        result = FileStatus.NO_UPLOAD;
-                    }else if (getBusinessFile().isNoFile()){
-                        result = FileStatus.NO_FILE;
-
-                    }else if (!getBusinessFile().getUploadFiles().isEmpty()) {
-                        result = FileStatus.OK;
-                    }else{
-                        result = FileStatus.NO_UPLOAD;
-                    }
-
-                    if (FileStatus.NO_UPLOAD.equals(result) && !getBusinessNeedFile().getTaskName().equals(taskName)){
-                        return FileStatus.OTHER_UPLOAD;
-                    }else{
-                        return result;
-                    }
-
-
-
-            }else if ((getBusinessNeedFile() == null) || getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.ALL)){
+            } else if ((getBusinessNeedFile() == null) || getBusinessNeedFile().getType().equals(BusinessNeedFile.NeedFileNodeFile.ALL)) {
                 FileStatus result = FileStatus.OK;
-                for (BusinessFileTreeNode child: getChild()){
-                    if (result.getOrder() < child.getStatus(taskName).getOrder()){
+                for (BusinessFileTreeNode child : getChild()) {
+                    if (result.getOrder() < child.getStatus(taskName).getOrder()) {
                         result = child.getStatus(taskName);
                     }
                 }
                 return result;
-            }else {
+            } else {
                 FileStatus result = FileStatus.NO_UPLOAD;
-                for (BusinessFileTreeNode child: getChild()){
-                    if (result.getOrder() > child.getStatus(taskName).getOrder()){
+                for (BusinessFileTreeNode child : getChild()) {
+                    if (result.getOrder() > child.getStatus(taskName).getOrder()) {
                         return child.getStatus(taskName);
                     }
                 }
@@ -309,140 +375,194 @@ public class OwnerBusinessFile {
         @Override
         public String getType() {
 
-            return (businessNeedFile == null) ?   "I_ROOT" : businessNeedFile.getType().name();
+            return (businessNeedFile == null) ? "I_ROOT" : businessNeedFile.getType().name();
+        }
+
+        @Override
+        public String getDirName() {
+            if (!businessNeedFile.getType().equals(BusinessNeedFile.NeedFileNodeFile.CHILDREN)){
+                return null;
+            }
+            return businessNeedFile.getId();
+        }
+
+        @Override
+        public void putFile(List<String> fileNames, String empCode, String empName, String md5) {
+            if(!BusinessNeedFile.NeedFileNodeFile.CHILDREN.equals(businessNeedFile.getType())){
+                throw new IllegalArgumentException("noe Children node");
+            }
+            if (businessFile == null){
+                businessFile = new BusinessFile(UUID.randomUUID().toString().replace("-",""), getBusinessNeedFile().getName(), getBusinessNeedFile().getId(), true, true);
+            }
+            List<UploadFile> existsFiles = new ArrayList<UploadFile>(businessFile.getUploadFiles());
+            for(String name: fileNames){
+                boolean exists = false;
+                for(UploadFile file: businessFile.getUploadFiles()){
+                    if (file.getFileName().equals(name)){
+                        exists = true;
+                        existsFiles.remove(file);
+                        break;
+                    }
+                }
+                if(!exists){
+                    businessFile.getUploadFiles().add(new UploadFile(empName,empCode,md5, name,businessFile));
+                }
+            }
+            businessFile.getUploadFiles().removeAll(existsFiles);
         }
 
         public JSONObject getJson() throws JSONException {
             JSONObject result = new JSONObject();
             result.put("TYPE", getType());
-            result.put("NAME", (businessNeedFile == null) ?   "" : businessNeedFile.getType().name());
-            result.put("ID", (businessNeedFile == null) ?   "" : businessNeedFile.getType().name());
+            result.put("NAME", (businessNeedFile == null) ? "" : businessNeedFile.getType().name());
+            result.put("ID", (businessNeedFile == null) ? "" : businessNeedFile.getType().name());
             JSONArray childArray = new JSONArray();
-            for(TreeNode treeNode: getChild()){
+            for (TreeNode treeNode : getChild()) {
                 childArray.put(((BusinessFileTreeNode) treeNode).getJson());
             }
             result.put("CHILD", childArray);
             return result;
         }
+
+
     }
 
 
+    public static class OtherFileTreeNode implements BusinessFileNode {
 
-    public static class OtherBusinessFileTreeNode implements TreeNode{
-        private BusinessFile businessFile;
+        private List<OtherFileTreeNode> businessFiles;
 
-        private TreeNode parent;
+        public OtherFileTreeNode(List<BusinessFile> businessFiles) {
 
-        public OtherBusinessFileTreeNode(BusinessFile businessFile, TreeNode parent) {
+            this.businessFiles = new ArrayList<OtherFileTreeNode>(businessFiles.size());
+            for (BusinessFile businessFile : businessFiles) {
+                this.businessFiles.add(new OtherFileTreeNode(businessFile, this));
+            }
+        }
+
+        public OtherFileTreeNode(BusinessFile businessFile, TreeNode parent) {
             this.businessFile = businessFile;
             this.parent = parent;
         }
+
+        private BusinessFile businessFile;
+
+        private TreeNode parent;
 
         public BusinessFile getBusinessFile() {
             return businessFile;
         }
 
         @Override
-        public TreeNode getChildAt(int childIndex) {
-            return null;
-        }
-
-        @Override
-        public int getChildCount() {
-            return 0;
-        }
-
-        @Override
-        public TreeNode getParent() {
-            return parent;
-        }
-
-        @Override
-        public int getIndex(TreeNode node) {
-            return 0;
-        }
-
-        @Override
-        public boolean getAllowsChildren() {
-            return false;
-        }
-
-        @Override
-        public boolean isLeaf() {
-            return true;
-        }
-
-        @Override
-        public Enumeration children() {
-            return null;
-        }
-
-        public String getType() {
-            return "OTHER_FILE";
-        }
-
-        public int getFileCount(){
-            return businessFile.getUploadFiles().size();
-        }
-    }
-
-    public static class OtherFileTreeNode implements TreeNode{
-
-        private List<OtherBusinessFileTreeNode> businessFiles;
-
-        public OtherFileTreeNode(List<BusinessFile> businessFiles) {
-
-            this.businessFiles = new ArrayList<OtherBusinessFileTreeNode>(businessFiles.size());
-            for (BusinessFile businessFile: businessFiles){
-                this.businessFiles.add(new OtherBusinessFileTreeNode(businessFile,this));
+        public List<BusinessFileNode> getChildFileNode() {
+            if (businessFiles == null){
+                return new ArrayList<BusinessFileNode>(0);
             }
+            return new ArrayList<BusinessFileNode>(businessFiles);
         }
 
         @Override
         public TreeNode getChildAt(int childIndex) {
+            if (businessFile == null){
+                return null;
+            }
             return businessFiles.get(childIndex);
         }
 
         @Override
         public int getChildCount() {
+            if (businessFile != null){
+                return 0;
+            }
             return businessFiles.size();
         }
 
         @Override
         public TreeNode getParent() {
-            return null;
+            if (businessFile != null){
+                return parent;
+            }else{
+                return null;
+            }
         }
 
         @Override
         public int getIndex(TreeNode node) {
-            return businessFiles.indexOf(node);
+            if (businessFile == null) {
+                return businessFiles.indexOf(node);
+            }else{
+                return 0;
+            }
+
         }
 
         @Override
         public boolean getAllowsChildren() {
-            return true;
+            return businessFile == null;
         }
 
         @Override
         public boolean isLeaf() {
-            return false;
+            return businessFile != null;
         }
 
         @Override
         public Enumeration children() {
-            return Iterators.asEnumeration(businessFiles.iterator());
+            if (businessFile == null) {
+                return Iterators.asEnumeration(businessFiles.iterator());
+            }else{
+                return null;
+            }
         }
 
         public String getType() {
-            return "ROOT";
+            if (businessFile == null) {
+
+                return "ROOT";
+            }else{
+                return "OTHER_FILE";
+            }
         }
 
-        public int getFileCount(){
-            int result = 0;
-            for(OtherBusinessFileTreeNode node: businessFiles){
-                result += node.getFileCount();
+        @Override
+        public String getDirName() {
+            if (businessFile == null){
+                return null;
             }
-            return result;
+            return businessFile.getId();
+        }
+
+        public int getFileCount() {
+            if (businessFile == null) {
+                int result = 0;
+                for (OtherFileTreeNode node : businessFiles) {
+                    result += node.getFileCount();
+                }
+                return result;
+            }else
+                return businessFile.getUploadFiles().size();
+        }
+
+        @Override
+        public void putFile(List<String> fileNames, String empCode, String empName, String md5) {
+            if(businessFile == null){
+                throw new IllegalArgumentException("noe Children node");
+            }
+            List<UploadFile> existsFiles = new ArrayList<UploadFile>(businessFile.getUploadFiles());
+            for(String name: fileNames){
+                boolean exists = false;
+                for(UploadFile file: businessFile.getUploadFiles()){
+                    if (file.getFileName().equals(name)){
+                        exists = true;
+                        existsFiles.remove(file);
+                        break;
+                    }
+                }
+                if(!exists){
+                    businessFile.getUploadFiles().add(new UploadFile(empName,empCode,md5, name,businessFile));
+                }
+            }
+            businessFile.getUploadFiles().removeAll(existsFiles);
         }
     }
 }

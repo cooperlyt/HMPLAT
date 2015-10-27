@@ -24,6 +24,14 @@ public class UploadFile implements java.io.Serializable{
         this.businessFile = businessFile;
     }
 
+    public UploadFile(String empName, String empCode, String md5, String fileName, BusinessFile businessFile) {
+        this.empName = empName;
+        this.empCode = empCode;
+        this.md5 = md5;
+        this.fileName = fileName;
+        this.businessFile = businessFile;
+    }
+
     @Id
     @Column(name = "FILE_NAME", unique = true, nullable = false, length = 255)
     @NotNull

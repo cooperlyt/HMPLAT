@@ -9,15 +9,5 @@ import org.jboss.seam.annotations.Transactional;
 @Name("taskOwnerBusinessFile")
 public class TaskOwnerBusinessFile extends OwnerBusinessFile {
 
-    @Transactional
-    public void setNoFile(boolean value){
-        super.setNoFile(value);
-        if (getSelectNode() != null){
-            ownerBusinessHome.update();
-        }
-    }
-
-
-
 
 }

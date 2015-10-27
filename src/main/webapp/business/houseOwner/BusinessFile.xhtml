@@ -99,7 +99,7 @@
     <div class="columns">
         <h:outputStylesheet name="treeview.css"/>
 
-        <div class="column codesearch-aside" style="width: 30%">
+        <div class="column codesearch-aside" style="width: 50%">
             <h:form >
                 <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="ajax"
                         render="resultDatas" onselectionchange="treeNodeSelectChange();"
@@ -128,7 +128,14 @@
 
                     <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-file-text">
-                        <h:outputText value="#{_node.businessNeedFile.name}"
+                        <h:selectBooleanCheckbox value="#{_node.noFile}"
+                                                 rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')}">
+                            <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas"
+                                    oncomplete="treeStatusRefresh();">
+                            </a:ajax>
+                        </h:selectBooleanCheckbox>
+
+                        <h:outputText value="#{_node.businessNeedFile.name}" style="padding-left: 5px"
                                       styleClass="file-status"/>
                         <span class="counter right">#{_node.fileCount}</span>
                     </r:treeNode>
@@ -187,7 +194,7 @@
         </div>
 
         <h:form>
-            <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 70%">
+            <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 50%">
 
                 <a:outputPanel
                         rendered="#{(empty businessFileEntity.selectNode) or businessFileEntity.selectNode.emptyFile}"
@@ -235,7 +242,7 @@
                                           rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}"/>
 
                             <h:selectBooleanCheckbox style="margin: 0 4px 0 8px"
-                                                     value="#{businessFileEntity.noFile}"
+                                                     value="#{businessFileEntity.selectNode.noFile}"
                                                      rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}">
                                 <a:ajax execute="@this" event="click" render="fileTree,passBtn"
                                         oncomplete="treeStatusRefresh();">
