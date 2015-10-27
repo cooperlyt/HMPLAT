@@ -15,30 +15,30 @@ public class PersionObligorSubscribe extends BaseBusinessPersionSubscribe {
     protected BusinessPersion.PersionType getType() {
         return BusinessPersion.PersionType.MORTGAGE_OBLIGOR;
     }
-    @Override
-    public void create(){
-        super.create();
-        if (!isHave()){
-            clearInstance();
-
-            for(BusinessPersion businessPersion:ownerBusinessHome.getInstance().getBusinessPersions()){
-                if (businessPersion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
-                    if (businessPersion.getId()==null){
-                        setInstance(businessPersion);
-                    }else {
-                        setId(businessPersion.getId());
-                    }
-                    setHave(true);
-                    return;
-
-                }
-
-            }
-
-            getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-            ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
-            setHave(true);
-        }
-
-    }
+//    @Override
+//    public void create(){
+//        super.create();
+//        if (!isHave()){
+//            clearInstance();
+//
+//            for(BusinessPersion businessPersion:ownerBusinessHome.getInstance().getBusinessPersions()){
+//                if (businessPersion.getType().equals(BusinessPersion.PersionType.MORTGAGE_OBLIGOR)){
+//                    if (businessPersion.getId()==null){
+//                        setInstance(businessPersion);
+//                    }else {
+//                        setId(businessPersion.getId());
+//                    }
+//                    setHave(true);
+//                    return;
+//
+//                }
+//
+//            }
+//
+//            getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+//            ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
+//            setHave(true);
+//        }
+//
+//    }
 }

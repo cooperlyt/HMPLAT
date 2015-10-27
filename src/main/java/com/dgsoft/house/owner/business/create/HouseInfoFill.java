@@ -38,6 +38,7 @@ public class HouseInfoFill implements BusinessDataFill {
               House house = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
               if (house != null && house.getHouseArea() != null && (house.getHouseArea().compareTo(new BigDecimal(0)) > 0)) {
                   houseBusiness.getAfterBusinessHouse().setHouseArea(house.getHouseArea());
+                  houseBusiness.getAfterBusinessHouse().setAddress(house.getAddress());
                   facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "house_info_fill");
               }
           }
