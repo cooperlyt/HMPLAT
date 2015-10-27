@@ -1,77 +1,67 @@
 package com.dgsoft.common.system;
 
-
-import com.dgsoft.common.exception.FileOperException;
-import org.jboss.seam.log.Logging;
-import sun.net.ftp.FtpClient;
-import sun.net.ftp.FtpDirEntry;
-import sun.net.ftp.FtpProtocolException;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPFileFilter;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * Created by cooper on 10/26/15.
  */
 public class BusinessFtpFile implements BusinessFileOperation{
 
-    private FtpClient ftpClient;
+    private FTPClient ftpClient;
 
-    public BusinessFtpFile() throws FileOperException {
+    private String path;
 
-        SocketAddress addr = new InetSocketAddress(RunParam.instance().getStringParamValue("businessFile.address"), RunParam.instance().getIntParamValue("businessFile.port"));
-        ftpClient = FtpClient.create();
-        try {
+    public BusinessFtpFile(String businessId) throws IOException {
+        //InetAddress.
+        //InetAddress addr = new InetAddress(RunParam.instance().getStringParamValue("businessFile.address"),);
+        ftpClient = new FTPClient();
 
-            ftpClient.connect(addr);
-            ftpClient.login(RunParam.instance().getStringParamValue("businessFile.userName"), RunParam.instance().getStringParamValue("businessFile.password").toCharArray());
-            ftpClient.setBinaryType();
-            ftpClient.enablePassiveMode(true);
-            ftpClient.changeDirectory(RunParam.instance().getStringParamValue("businessFile.rootDir"));
-        } catch (FtpProtocolException e) {
-            Logging.getLog(getClass()).error(e.getMessage(), e);
-            throw new FileOperException(e);
-        } catch (IOException e) {
-            Logging.getLog(getClass()).error(e.getMessage(), e);
-            throw new FileOperException(e);
-        }
+
+        ftpClient.connect(RunParam.instance().getStringParamValue("businessFile.address"), RunParam.instance().getIntParamValue("businessFile.port"));
+        ftpClient.login(RunParam.instance().getStringParamValue("businessFile.userName"), RunParam.instance().getStringParamValue("businessFile.password"));
+        ftpClient.setControlEncoding("UTF-8");
+            //ftpClient.setBinaryType();
+        ftpClient.enterLocalPassiveMode();
+        ftpClient.changeWorkingDirectory(RunParam.instance().getStringParamValue("businessFile.rootDir"));
+        ftpClient.changeWorkingDirectory(businessId);
+
+        path = RunParam.instance().getStringParamValue("businessFile.rootDir") + "/" + businessId + "/";
     }
 
 
-    public void close() throws FileOperException {
-        try {
-            ftpClient.close();
-        } catch (IOException e) {
-            Logging.getLog(getClass()).error(e.getMessage(), e);
-            throw new FileOperException(e);
-        }
+    public void close() throws IOException {
+        ftpClient.logout();
+        ftpClient.disconnect();
     }
 
-    public List<String> listFiles(String dir) throws FileOperException {
-        try {
+    public List<String> listFiles(String dir) throws  IOException {
+
+
 
             List<String> result = new ArrayList<String>();
-            Iterator<FtpDirEntry> it = ftpClient.listFiles(dir);
-            while (it.hasNext()){
-                FtpDirEntry entry = it.next();
-                if (FtpDirEntry.Type.FILE.equals(entry.getType()) && !entry.getName().endsWith(".thumb.jpg")){
-                    result.add(entry.getName());
+
+            for (FTPFile enty : ftpClient.listFiles(dir,new FTPFileFilter() {
+                @Override
+                public boolean accept(FTPFile file) {
+                    return file.getType() == FTPFile.FILE_TYPE && !file.getName().endsWith(".thumb.jpg");
                 }
+            })) {
+
+                result.add(path + dir + "/" + enty.getName());
             }
+
             return result;
 
-        } catch (FtpProtocolException e) {
-            Logging.getLog(getClass()).error(e.getMessage(), e);
-            throw new FileOperException(e);
-        } catch (IOException e) {
-            Logging.getLog(getClass()).error(e.getMessage(), e);
-            throw new FileOperException(e);
-        }
+
     }
+
 
 
 }

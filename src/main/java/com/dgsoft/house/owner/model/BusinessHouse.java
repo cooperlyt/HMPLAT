@@ -82,6 +82,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private HouseBusiness houseBusinessForAfter;
     //private HouseBusiness houseBusinessForStart;
     //private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
+    private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>();
 
 
 
@@ -281,6 +282,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseRegInfo = houseRegInfo;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "businessHouse")
+    public Set<HouseRecord> getHouseRecords() {
+        return houseRecords;
+    }
+
+    public void setHouseRecords(Set<HouseRecord> houseRecords) {
+        this.houseRecords = houseRecords;
+    }
+
     @Override
     @Transient
     public String getDisplayHouseCode() {
@@ -298,6 +308,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         }
         return getHouseCode();
     }
+
+
 
     @Column(name = "HOUSE_TYPE", length = 32)
     @Size(max = 32)
@@ -738,6 +750,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
 
+
+
     @Transient
     public List<BusinessPool> getBusinessPoolList() {
         List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
@@ -762,6 +776,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
         return allStatusList;
     }
+
 
 
 

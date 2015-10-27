@@ -536,6 +536,9 @@
                                     #{messages.businessFile}
                                 </f:facet>
 
+                                <ui:include src="/business/houseOwner/BusinessFile.xhtml">
+                                    <ui:param name="businessFileEntity" value="#{taskOwnerBusinessFile}"/>
+                                </ui:include>
 
 
                             </r:tab>

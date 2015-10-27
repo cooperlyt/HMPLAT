@@ -128,7 +128,7 @@
 
                     <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-file-text">
-                        <h:selectBooleanCheckbox value="#{_node.noFile}"
+                        <h:selectBooleanCheckbox value="#{_node.noFile}" disabled="#{not _node.emptyFile}"
                                                  rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')}">
                             <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas"
                                     oncomplete="treeStatusRefresh();">
@@ -170,7 +170,7 @@
                     使用外部程序上传
                 </a:commandLink>
 
-                <s:link styleClass="right"> 刷新 <span class="octicon octicon-sync"></span></s:link>
+                <s:link styleClass="right" action="#{ownerBusinessFile.loadFromFile}"> 刷新 <span class="octicon octicon-sync"></span></s:link>
 
             </p>
             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -185,7 +185,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <s:button value="完成"  data-dismiss="modal" styleClass="btn btn-primary"></s:button>
+                            <s:button value="完成" action="#{ownerBusinessFile.loadFromFile}" data-dismiss="modal" styleClass="btn btn-primary"></s:button>
                         </div>
                     </div>
                 </div>
@@ -195,6 +195,29 @@
 
         <h:form>
             <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 50%">
+
+
+                <a:outputPanel layout="block" styleClass="panel panel-default" rendered="#{(not empty businessFileEntity.selectNode) and not businessFileEntity.selectNode.emptyFile}">
+                    <div class="panel-heading">#{businessFileEntity.selectNode.import ? '要件' : '附件'}/#{businessFileEntity.selectNode.fullPath}</div>
+
+                        <div class="panel-body">
+                            <div class="row">
+
+                            <a:repeat value="#{businessFileEntity.selectNode.businessFile.uploadFileList}" var="_image">
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                <a:commandLink styleClass="thumbnail">
+                                    <h:graphicImage  value="#{runParam.getStringParamValue('businessFilePath')}#{_image.fileName}.thumb.#{_image.ext}"/>
+                                </a:commandLink>
+                                </div>
+                            </a:repeat>
+                            </div>
+
+                        </div>
+
+
+
+
+                </a:outputPanel>
 
                 <a:outputPanel
                         rendered="#{(empty businessFileEntity.selectNode) or businessFileEntity.selectNode.emptyFile}"

@@ -43,7 +43,7 @@ public class HouseRecord implements java.io.Serializable {
 		this.houseStatus = houseStatus;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HOUSE", unique = true, nullable = false)
 	@NotNull
 	public BusinessHouse getBusinessHouse() {

@@ -329,9 +329,9 @@ public class OwnerBusinessPatch {
 
             HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
             if (houseRecord == null){
+                Logging.getLog(getClass()).debug(houseBusiness.getAfterBusinessHouse());
 
-
-                ownerBusinessHome.getEntityManager().persist(new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus));
+                houseBusiness.getAfterBusinessHouse().getHouseRecords().add(new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus));
 
             }else{
                 if (ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source <> 'BIZ_AFTER_SAVE' and houseBusiness.houseCode = :houseCode", Long.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {

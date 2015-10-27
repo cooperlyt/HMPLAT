@@ -1,7 +1,6 @@
 package com.dgsoft.common.system;
 
-import com.dgsoft.common.exception.FileOperException;
-
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,10 +9,9 @@ import java.util.List;
 public interface BusinessFileOperation {
 
 
-     void close() throws FileOperException;
+     void close() throws IOException;
 
-    List<String> listFiles(String dir) throws FileOperException;
-
+    List<String> listFiles(String dir) throws IOException;
 
 
 }
