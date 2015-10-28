@@ -12,10 +12,10 @@ import java.util.Date;
 
 /**
  * Created by wxy on 2015-08-17.
- * 添加审核人
+ * 添加审核人,开原审核人是登薄人
  */
-@Name("addCheckEmp")
-public class AddCheckEmp implements TaskCompleteSubscribeComponent {
+@Name("addKyCheckEmp")
+public class AddKyCheckEmp implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -39,14 +39,14 @@ public class AddCheckEmp implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (BusinessEmp businessEmp:ownerBusinessHome.getInstance().getBusinessEmps()){
-            if (businessEmp.getType().equals(BusinessEmp.EmpType.CHECK_EMP)){
+            if (businessEmp.getType().equals(BusinessEmp.EmpType.REG_EMP)){
                 ownerBusinessHome.getInstance().getBusinessEmps().remove(businessEmp);
                 break;
             }
 
 
         }
-        BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.CHECK_EMP);
+        BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.REG_EMP);
         businessEmp.setEmpName(authInfo.getLoginEmployee().getPersonName());
         businessEmp.setEmpCode(authInfo.getLoginEmployee().getId());
         businessEmp.setOperDate(new Date());

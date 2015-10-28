@@ -25,15 +25,14 @@
 		<transition to="审核结果"></transition>
     </task-node>
 
-    <task-node name="审批/登薄">
-        <task name="审批/登薄">
+    <task-node name="审批-登薄">
+        <task name="审批-登薄">
             <description>
 				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}RecordFile"></assignment>
         </task>
-        <transition to="繕证判断"></transition>
-		<transition to="受理" name="退回受理"></transition>
+        <transition to="审批-登薄结果"></transition>
 
     </task-node>
 
@@ -90,11 +89,11 @@
 	</decision>
 
 	<decision name="是否登薄">
-		<transition to="审批/登薄" name="需要登薄">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
-		</transition>
 		<transition to="繕证判断" name="不登薄">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
+		</transition>
+		<transition to="审批-登薄" name="需要登薄">
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
 		</transition>
 	</decision>
 
@@ -122,6 +121,15 @@
 			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
 		<transition to="受理" name="审批驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="审批-登薄结果">
+		<transition to="繕证判断">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="受理" name="审批-登薄驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
 	</decision>
