@@ -66,7 +66,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.rootAddress = rootAddress;
         this.address = address;
         this.legalPerson = legalPerson;
-        this.id = contractCode;
+        this.contractNumber = contractCode;
         this.type = type;
         this.contractDate = contractDate;
         this.houseCode = houseCode;
@@ -79,7 +79,6 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     @Size(max = 32)
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
-
     public String getId() {
         return id;
     }
