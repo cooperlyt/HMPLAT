@@ -472,7 +472,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.recordStores = recordStores;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
     public Set<ContractOwner> getContractOwners() {
         return contractOwners;
     }
