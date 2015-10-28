@@ -60,6 +60,90 @@
 
     </h:outputScript>
 
+    <h:outputScript>
+        $(document).on('click', 'a.controls', function(){
+
+
+            var index = $(this).attr('href');
+            var src = $('ul.row li:nth-child('+ index +') img').attr('data-image');
+
+            $('.modal-body img').attr('src', src);
+
+            var newPrevIndex = parseInt(index) - 1;
+            var newNextIndex = parseInt(newPrevIndex) + 2;
+
+            if($(this).hasClass('previous')){
+                $(this).attr('href', newPrevIndex);
+                $('a.next').attr('href', newNextIndex);
+            }else{
+                $(this).attr('href', newNextIndex);
+                $('a.previous').attr('href', newPrevIndex);
+            }
+
+            var total = $('ul.row li').length + 1;
+            //hide next button
+            if(total === newNextIndex){
+                $('a.next').hide();
+            }else{
+                $('a.next').show()
+            }
+            //hide previous button
+            if(newPrevIndex === 0){
+                $('a.previous').hide();
+            }else{
+                $('a.previous').show()
+            }
+
+
+            return false;
+        });
+    </h:outputScript>
+
+
+    <h:outputStylesheet>
+        li .img-responsive {
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding:5px !important;
+        }
+        .modal-content {
+            border-radius:0;
+        }
+        .modal-dialog img {
+            text-align:center;
+            margin:0 auto;
+        }
+        .controls{
+            width:50px;
+            display:block;
+            font-size:11px;
+            padding-top:8px;
+            font-weight:bold;
+        }
+        .next {
+            float:right;
+            text-align:right;
+        }
+        /*override modal for demo only*/
+        .modal-dialog {
+            max-width:500px;
+            padding-top: 90px;
+        }
+        @media screen and (min-width: 768px){
+            .modal-dialog {
+                width:500px;
+                padding-top: 90px;
+            }
+        }
+        @media screen and (max-width:1500px){
+            #ads {
+                display:none;
+            }
+        }
+    </h:outputStylesheet>
+
 
     <h:outputStylesheet>
         .rf-trn-select .file-status {
@@ -128,8 +212,8 @@
 
                     <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectNode.businessNeedFile.id eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
                                 iconClass="octicon octicon-file-text">
-                        <h:selectBooleanCheckbox value="#{_node.noFile}" disabled="#{not _node.emptyFile}"
-                                                 rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')}">
+                        <h:selectBooleanCheckbox value="#{_node.noFile}"
+                                                 rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')  and (_node.emptyFile) and not (_node.getStatus(businessDefineHome.taskName) eq 'OTHER_UPLOAD')}">
                             <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas"
                                     oncomplete="treeStatusRefresh();">
                             </a:ajax>
@@ -200,22 +284,35 @@
                 <a:outputPanel layout="block" styleClass="panel panel-default" rendered="#{(not empty businessFileEntity.selectNode) and not businessFileEntity.selectNode.emptyFile}">
                     <div class="panel-heading">#{businessFileEntity.selectNode.import ? '要件' : '附件'}/#{businessFileEntity.selectNode.fullPath}</div>
 
+
+
                         <div class="panel-body">
-                            <div class="row">
+                            <ul class="row">
 
                             <a:repeat value="#{businessFileEntity.selectNode.businessFile.uploadFileList}" var="_image">
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                <a:commandLink styleClass="thumbnail">
-                                    <h:graphicImage  value="#{runParam.getStringParamValue('businessFilePath')}#{_image.fileName}.thumb.#{_image.ext}"/>
-                                </a:commandLink>
-                                </div>
+                                <li class="col-xs-4 col-sm-4 col-md-4">
+                                    <span class="thumbnail">
+                                    <h:graphicImage p:data-image="#{runParam.getStringParamValue('businessFilePath')}#{_image.fileName}.#{_image.ext}" styleClass="img-responsive" value="#{runParam.getStringParamValue('businessFilePath')}#{_image.fileName}.thumb.#{_image.ext}"/>
+                                    </span>
+                                </li>
                             </a:repeat>
-                            </div>
+                            </ul>
 
                         </div>
 
 
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
 
+
+
+                    <h:outputScript library="bootstrap-photo-gallery" name="/js/photo-gallery.js"/>
 
                 </a:outputPanel>
 
@@ -300,6 +397,7 @@
             </a:outputPanel>
         </h:form>
     </div>
+
 
 
 </ui:composition>
