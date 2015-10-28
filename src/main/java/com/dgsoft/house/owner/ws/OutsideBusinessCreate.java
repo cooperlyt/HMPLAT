@@ -20,10 +20,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.*;
 import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.core.Events;
@@ -53,6 +50,9 @@ public class OutsideBusinessCreate {
 
     @In(create = true)
     private HouseEntityLoader houseEntityLoader;
+
+    @Out(scope = ScopeType.BUSINESS_PROCESS)
+    private String businessDefineId;
 
     @In
     private Events events;
@@ -188,7 +188,9 @@ public class OutsideBusinessCreate {
             }
         }
 
-        businessDefineHome.setId(RunParam.instance().getStringParamValue("NewHouseContractBizId"));
+        businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
+        businessDefineHome.setId(businessDefineId);
+
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
         contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
