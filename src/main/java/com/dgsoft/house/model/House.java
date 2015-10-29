@@ -151,7 +151,7 @@ public class House implements java.io.Serializable, HouseInfo {
         }
 
         if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
-            this.address = build.getProject().getAddress() + " " + block.getHouseOrder();
+            this.address = build.getProject().getAddress() + build.getBuildNo() + build.getDoorNo() + " " + block.getHouseOrder();
         } else {
             this.address = build.getName() + " " + block.getHouseOrder();
         }

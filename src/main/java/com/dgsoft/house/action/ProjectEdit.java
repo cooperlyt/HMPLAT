@@ -1,6 +1,7 @@
 package com.dgsoft.house.action;
 
 import com.dgsoft.house.model.District;
+import com.dgsoft.house.model.Section;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -53,6 +54,25 @@ public class ProjectEdit {
 
         sectionHome.setNameAndPy(newSectionName);
         Logging.getLog(getClass()).debug("create section by searchName:" + newSectionName);
+        genAddress();
+    }
+
+
+    public void genAddress(){
+        String result = "";
+
+        if (sectionHome.isIdDefined()){
+            projectHome.getInstance().setAddress(sectionHome.getInstance().getDistrict().getName() + sectionHome.getInstance().getName());
+        }else {
+            if (sectionSelectList.getDistrictId() != null) {
+                District district = sectionHome.getEntityManager().find(District.class, sectionSelectList.getDistrictId());
+                if (district != null) {
+                    result = district.getName();
+                }
+            }
+            result += sectionHome.getInstance().getName();
+            projectHome.getInstance().setAddress(result);
+        }
 
     }
 
