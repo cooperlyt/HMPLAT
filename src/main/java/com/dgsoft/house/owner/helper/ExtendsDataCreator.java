@@ -172,7 +172,13 @@ public class ExtendsDataCreator {
         jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
         jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
-        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+
+
+        if(ownerBusiness.getRegTime()!=null){
+            jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        }
+
+
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
 //        if (ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo()!=null && ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo().getHouseProperty()!=null){
@@ -218,7 +224,11 @@ public class ExtendsDataCreator {
         jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
         jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
-        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+
+        if(ownerBusiness.getRegTime()!=null){
+            jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        }
+
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
         jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
@@ -253,7 +263,9 @@ public class ExtendsDataCreator {
 //        jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
 //        jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
         jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
-        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        if(ownerBusiness.getRegTime()!=null){
+            jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        }
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
         jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
         jsonObject.put("评估价格", jsonField(ownerBusiness.getEvaluate().getAssessmentPrice()));
@@ -290,7 +302,13 @@ public class ExtendsDataCreator {
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
         jsonObject.put("他项权利种类", jsonField(DictionaryWord.instance().getWordValue(ownerBusiness.getMortgaegeRegiste().getInterestType())));
         jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
-        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+
+        if(ownerBusiness.getRegTime()!=null){
+            jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        }
+
+
+
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
         jsonObject.put("业务名称", jsonField(ownerBusiness.getDefineName()));
@@ -319,14 +337,23 @@ public class ExtendsDataCreator {
         jsonObject.put("字", jsonField(businessHouse.getDistrictName()));
         jsonObject.put("产权证号", jsonField(markCard.getNumber()));
         jsonObject.put("房屋所有权人", jsonField(businessHouse.getBusinessHouseOwner().getPersonName()));
-        jsonObject.put("共有情况", jsonField(messages.get(businessHouse.getPoolType().name())));
+        if (businessHouse.getPoolType()!=null) {
+            jsonObject.put("共有情况", jsonField(messages.get(businessHouse.getPoolType().name())));
+        }
         jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
         jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
         jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
         jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
-        jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
-        jsonObject.put("房屋性质", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseType())));
+        if(ownerBusiness.getRegTime()!=null){
+            jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
+        }
+        if(businessHouse.getHouseType()!=null){
+            jsonObject.put("房屋性质", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseType())));
+        }
+
+
+
         jsonObject.put("规划用途", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getUseType())));
         jsonObject.put("总层数", jsonField(businessHouse.getFloorCount()));
         jsonObject.put("建筑面积", jsonField(businessHouse.getHouseArea()));

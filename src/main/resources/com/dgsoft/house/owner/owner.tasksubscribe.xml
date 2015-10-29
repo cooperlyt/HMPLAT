@@ -1164,6 +1164,13 @@
             审核人(审核人、时间、意见)
         </description>
     </end-subscribe>
+
+    <end-subscribe name="addKyRegerEmpEnd" component="addKyRegerEmp">
+        <description>
+            登薄人(登薄人、时间、意见)
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="addRecordEmpEnd" component="addRecordEmp">
         <description>
             归档人(归档人、时间、意见)

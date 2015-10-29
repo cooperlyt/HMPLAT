@@ -11,11 +11,12 @@ import org.jboss.seam.annotations.Name;
 import java.util.Date;
 
 /**
- * Created by wxy on 2015-08-17.
- * 添加审核人,开原审核人是登薄人
+ * Created by wxy on 2015-10-29.
+ * 添加开原登薄审批人,登薄人是审核人
+ *
  */
-@Name("addKyCheckEmp")
-public class AddKyCheckEmp implements TaskCompleteSubscribeComponent {
+@Name("addKyRegerEmp")
+public class AddKyRegerEmp implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -26,6 +27,7 @@ public class AddKyCheckEmp implements TaskCompleteSubscribeComponent {
     @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
     private String transitionComments;
 
+
     @Override
     public void valid() {
 
@@ -33,35 +35,27 @@ public class AddKyCheckEmp implements TaskCompleteSubscribeComponent {
 
     @Override
     public boolean isPass() {
-        return true;
+        return false;
     }
 
     @Override
     public void complete() {
         for (BusinessEmp businessEmp:ownerBusinessHome.getInstance().getBusinessEmps()){
-            if (businessEmp.getType().equals(BusinessEmp.EmpType.REG_EMP)){
+            if (businessEmp.getType().equals(BusinessEmp.EmpType.CHECK_EMP)){
                 ownerBusinessHome.getInstance().getBusinessEmps().remove(businessEmp);
                 break;
             }
 
 
         }
-        BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.REG_EMP);
+        BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.CHECK_EMP);
         businessEmp.setEmpName(authInfo.getLoginEmployee().getPersonName());
         businessEmp.setEmpCode(authInfo.getLoginEmployee().getId());
         businessEmp.setOperDate(new Date());
         businessEmp.setComments(transitionComments);
         businessEmp.setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().setRegTime(businessEmp.getOperDate());
+        ownerBusinessHome.getInstance().setCheckTime(businessEmp.getOperDate());
         ownerBusinessHome.getInstance().getBusinessEmps().add(businessEmp);
-
-
-
-
-
     }
-
-
-
 
 }
