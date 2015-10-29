@@ -134,7 +134,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.structure = block.getStructure();
         this.houseType = block.getHouseType();
         this.houseUnitName = block.getUnitName();
-        this.inFloorName = block.getGridRow().getTitle();
+
         this.houseOrder = block.getHouseOrder();
         this.knotSize = block.getKnotSize();
         this.direction = block.getDirection();
@@ -144,9 +144,14 @@ public class House implements java.io.Serializable, HouseInfo {
         this.eastWall = block.getEastWall();
         this.haveDownRoom = block.isHaveDownRoom();
         dataSource = HouseDataSource.MAPPING;
+        if (block.getFloorName() != null && !"".equals(block.getFloorName().trim())){
+            this.inFloorName = block.getFloorName();
+        }else{
+            this.inFloorName = block.getGridRow().getTitle();
+        }
 
         if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
-            this.address = build.getProject().getAddress() + " " + block.getHouseOrder();
+            this.address = build.getProject().getAddress() + build.getBuildNo() + build.getDoorNo() + " " + block.getHouseOrder();
         } else {
             this.address = build.getName() + " " + block.getHouseOrder();
         }

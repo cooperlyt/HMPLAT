@@ -70,6 +70,7 @@
                              label="#{messages.District}" required="true">
                 <s:selectItems value="#{allDistrict.resultList}" var="_district"
                                itemValue="#{_district.id}" label="#{_district.name}"/>
+                <a:ajax event="valueChange" render="projectAddressField" execute="@this" listener="#{projectEdit.genAddress}"/>
             </h:selectOneMenu>
         </s:decorate>
 
@@ -128,8 +129,8 @@
 
                                 <a:repeat value="#{sectionSelectList.resultList}" var="_item">
 
-                                    <a:commandLink execute="@this" immediate="true"
-                                                   render="sectionSelectBtnCaption,createSectionPanel,districtField"
+                                    <a:commandLink execute="@this" immediate="true" action="#{projectEdit.genAddress}"
+                                                   render="sectionSelectBtnCaption,createSectionPanel,districtField,projectAddressField"
                                                    styleClass="select-menu-item #{(sectionHome.idDefined and (sectionHome.id eq _item.id)) ? 'selected': ''}">
 
                                         <f:param name="sectionId" value="#{_item.id}"/>
@@ -153,7 +154,7 @@
 
                                 <a:commandLink action="#{projectEdit.createSectionBySearchName}"
 
-                                               render="sectionSelectBtnCaption,createSectionPanel" execute="sectionSearchName"
+                                               render="sectionSelectBtnCaption,createSectionPanel,projectAddressField" execute="sectionSearchName"
                                                immediate="true"
                                                styleClass="select-menu-item last-visible navigation-focus"
                                                rendered="#{(empty sectionSelectList.resultList) and (not empty sectionSelectList.searchKey)}">
@@ -252,7 +253,7 @@
 
         </s:decorate>
 
-        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+        <s:decorate id="projectAddressField" styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
                 #{messages.Project_address}
             </ui:define>
