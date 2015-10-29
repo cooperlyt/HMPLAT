@@ -33,7 +33,8 @@
         <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
         <h:outputStylesheet name="other.css"/>
         <h:outputStylesheet library="github" name="/css/octicons.css"/>
-
+        <h:outputStylesheet library="bootstrap-sco" name="/css/scojs.css"/>
+        <h:outputStylesheet library="bootstrap-sco" name="/css/sco.message.css"/>
 
 
 
@@ -214,7 +215,7 @@
                         padding: 10px;
                         border-radius: 5px;
 
-
+                        z-index: 1041;
                         color: #333;
                         outline: none;
 
@@ -361,6 +362,7 @@
                             <a:outputPanel layout="block" styleClass="rf-ind-drag"
                                            rendered="#{not empty _house.house}">
                                 <r:dragSource id="grid_source" type="block" dragIndicator="indicator"
+
                                               dragValue="#{_house}"/>
                                 <a:outputPanel>
                                     <h:outputText value="#{_house.house.houseOrder}"
@@ -519,14 +521,18 @@
                         </f:facet>
                         <f:facet name="controls">
                             <a:commandLink styleClass="table-action" status="processWaiting"
-                                           title="#{messages.GridFillNew}"
-                                           action="#{buildGridMapHome.generateHouse}"
+                                           title="清除回收站中未保存的房屋"
+                                           action="#{buildGridMapHome.emptyIdle}"
                                            execute="@this"
-                                           immediate="true" render="grid_map">
-                                <span class="icon-plus"/>
-                                #{messages.create}
+                                           immediate="true" render="idle">
+                                <span class="icon-trash"/>
+                                清除
                                 <a:attachQueue requestDelay="0"/>
                             </a:commandLink>
+                            <a:jsFunction name="fillNewHouseToGrid" status="processWaiting" action="#{buildGridMapHome.generateHouse}" execute="@this"
+                                          immediate="true" render="grid_map">
+                                <a:attachQueue requestDelay="0"/>
+                            </a:jsFunction>
 
                             <a:commandLink styleClass="table-action" action="#{buildGridMapHome.matchIdle}"
                                            status="processWaiting" title="#{messages.GridFillIdle}" execute="@this"
@@ -538,9 +544,20 @@
                             </a:commandLink>
 
                         </f:facet>
+                        <a:outputPanel layout="block" style="width: 100%; height: 100%" >                    <r:dropTarget id="idle_target"
+                                                                                         acceptedTypes="block"
+                                                                                         dropValue="idle"
+                                                                                         execute="@this"
+                                                                                         status="processWaiting"
+
+                                                                                         dropListener="#{buildGridMapHome.processDrop}"
+                                                                                         render="grid_map,idle"/>
 
 
                         <a:outputPanel layout="block" id="idle">
+
+
+
                             <r:jQuery selector=".idle-house-con" event="mouseover"
                                       query="jQuery(this).find('.idle-house-act').stop().fadeIn(10);"/>
                             <r:jQuery selector=".idle-house-con" event="mouseout"
@@ -548,7 +565,7 @@
 
                             <ul class="idle-list">
 
-                                <li>
+                                <li ondblclick="fillNewHouseToGrid();">
                                     <a:outputPanel layout="block" styleClass="rf-ind-drag house-block" style="padding: 12px">
                                         <span class="mega-octicon more-mega octicon-home"/>
                                         <r:dragSource type="newHouse" dragValue="newHouse" dragIndicator="indicator"/>
@@ -615,6 +632,7 @@
                             </ul>
 
 
+                        </a:outputPanel>
                         </a:outputPanel>
                     </r:popupPanel>
 
@@ -715,6 +733,33 @@
             </div>
         </s:div>
 
+        <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>
+
+        <a:outputPanel ajaxRendered="true">
+
+            <a:outputPanel rendered="#{facesContext.maximumSeverity!=null}">
+                <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
+
+                    <h:outputScript>
+                        if (#{_msg.severity.ordinal == 2}){
+                        $.scojs_message.options.delay = 4000;
+                        $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_ERROR);
+
+
+                        }else if(#{_msg.severity.ordinal == 0}){
+                        $.scojs_message.options.delay = 1000;
+                        $.scojs_message('#{_msg.summary}', $.scojs_message.TYPE_OK );
+
+                        }
+
+
+                    </h:outputScript>
+
+                </a:repeat>
+            </a:outputPanel>
+
+
+        </a:outputPanel>
 
         <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
         <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.js"/>

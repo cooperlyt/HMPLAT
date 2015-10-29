@@ -56,17 +56,22 @@ public class BuildGridMapHome implements DropListener {
 
     private boolean replaceGridMap;
 
-    public String saveGridMap() {
+    public void emptyIdle(){
         List<House> removeHouse = new ArrayList<House>();
-        for(House house : idleHouses){
-            if (buildHome.getEntityManager().contains(house)){
+        for(House house : idleHouses) {
+            if (buildHome.getEntityManager().contains(house)) {
                 house.setDeleted(true);
-            }else{
+            } else {
                 buildHome.getInstance().getHouses().remove(house);
                 removeHouse.add(house);
             }
         }
         idleHouses.removeAll(removeHouse);
+
+    }
+
+    public String saveGridMap() {
+        emptyIdle();
 
         for (House house : buildHome.getInstance().getHouses()) {
             if (!house.isValidator()) {
@@ -209,7 +214,7 @@ public class BuildGridMapHome implements DropListener {
             for (GridBlock gridBlock : gridRow.getGridBlocks()) {
                 if (gridBlock.getHouse() == null) {
                     for (House house : idleHouses) {
-                        if (house.getHouseOrder().equals(gridBlock.getHouseOrder())) {
+                        if (house.getHouseOrder() != null && gridBlock.getHouseOrder() != null && house.getHouseOrder().equals(gridBlock.getHouseOrder())) {
 
                             gridBlock.setHouse(house);
                             house.setDeleted(false);
@@ -312,14 +317,15 @@ public class BuildGridMapHome implements DropListener {
                         houseElement.attributeValue("UseType", ""),
                         houseElement.attributeValue("Structure", ""),
                         houseElement.attributeValue("HouseType", ""),
-                        houseElement.attributeValue("Order", ""),
+                        Boolean.parseBoolean(houseElement.attributeValue("IsDeleted", "false")) ? null :houseElement.attributeValue("Order", ""),
                         houseElement.attributeValue("Direction", ""),
                         houseElement.attributeValue("EastWall", ""),
                         houseElement.attributeValue("WestWall", ""),
                         houseElement.attributeValue("SouthWall", ""),
                         houseElement.attributeValue("NorthWall", ""),
                         houseElement.attributeValue("KnotSize", ""),
-                        Boolean.parseBoolean(houseElement.attributeValue("HalfDownRoom", "false"))
+                        Boolean.parseBoolean(houseElement.attributeValue("HalfDownRoom", "false")),
+                        houseElement.attributeValue("InFloorName", "")
                 ));
 
                 j++;
@@ -345,9 +351,12 @@ public class BuildGridMapHome implements DropListener {
     }
 
     public void generateHouse() {
+        if (getInstance() == null){
+            return;
+        }
         for (GridRow row : getInstance().getGridRowList()) {
             for (GridBlock block : row.getGridBlockList()) {
-                if (block.getHouse() == null) {
+                if (block.getHouse() == null && block.getHouseOrder() != null && !"".equals(block.getHouseOrder().trim())) {
 
                     House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), block);
                     block.setHouseCode(newHouse.getHouseCode());
@@ -395,7 +404,10 @@ public class BuildGridMapHome implements DropListener {
     }
 
     public void deleteBlockHouse() {
-        GridBlock block = getSelectBlock();
+        deleteBlockHouse(getSelectBlock());
+    }
+
+    private void deleteBlockHouse(GridBlock block){
         if (block != null) {
             if (block.getHouse() != null) {
                 House house = (House)block.getHouse();
@@ -416,30 +428,36 @@ public class BuildGridMapHome implements DropListener {
     @Override
     public void processDrop(DropEvent dropEvent) {
 
+        if (! (dropEvent.getDropValue() instanceof  GridBlock)) {//拖到分户图
+            deleteBlockHouse((GridBlock) dropEvent.getDragValue());
 
-        GridBlock targetBlock = (GridBlock) dropEvent.getDropValue();
-        if (dropEvent.getDragValue() instanceof GridBlock) {
+        }else{//拖到回收站
 
-            House tempHouse = (House)targetBlock.getHouse();
-            targetBlock.setHouse(((GridBlock) dropEvent.getDragValue()).getHouse());
-            ((GridBlock) dropEvent.getDragValue()).setHouse(tempHouse);
-            targetBlock.setHouseCode(tempHouse.getHouseCode());
-        } else if (dropEvent.getDragValue() instanceof House) {
-            House tempHouse = (House) dropEvent.getDragValue();
-            if (targetBlock.getHouse() != null) {
-                House house = (House)targetBlock.getHouse();
-                house.setDeleted(true);
-                idleHouses.add(house);
-                targetBlock.setHouseCode(null);
+            GridBlock targetBlock = (GridBlock) dropEvent.getDropValue();
+            if (dropEvent.getDragValue() instanceof GridBlock) {
+
+                House tempHouse = (House) targetBlock.getHouse();
+                targetBlock.setHouse(((GridBlock) dropEvent.getDragValue()).getHouse());
+                ((GridBlock) dropEvent.getDragValue()).setHouse(tempHouse);
+                targetBlock.setHouseCode(tempHouse.getHouseCode());
+            } else if (dropEvent.getDragValue() instanceof House) {
+                House tempHouse = (House) dropEvent.getDragValue();
+                if (targetBlock.getHouse() != null) {
+                    House house = (House) targetBlock.getHouse();
+                    house.setDeleted(true);
+                    idleHouses.add(house);
+                    targetBlock.setHouseCode(null);
+                }
+                targetBlock.setHouse(tempHouse);
+                tempHouse.setDeleted(false);
+                idleHouses.remove(tempHouse);
+
+            } else {
+                House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock);
+                targetBlock.setHouse(newHouse);
+                buildHome.getInstance().getHouses().add(newHouse);
             }
-            targetBlock.setHouse(tempHouse);
-            tempHouse.setDeleted(false);
-            idleHouses.remove(tempHouse);
 
-        } else {
-            House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock);
-            targetBlock.setHouse(newHouse);
-            buildHome.getInstance().getHouses().add(newHouse);
         }
     }
 
