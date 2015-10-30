@@ -8,12 +8,38 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <f:subview>
-        <a:commandLink value="#{number}" execute="@this">
+        <a:commandLink value="#{number}" execute="@this" oncomplete="#{r:component('popup')}.show()"
+                       render="personCardView">
             <a:attachQueue requestDelay="0"/>
-            <ui:remove>
-                <a:param value="#{type}" assignTo=""/>
-            </ui:remove>
+
+            <a:param value="#{number}" assignTo="#{personHome.id}"/>
+
         </a:commandLink>
+
+
+            <r:popupPanel rendered="#{type eq 'MASTER_ID'}" styleClass="cer-card-popup"  id="popup"
+                          modal="true" autosized="false" width="360" height="200" resizeable="false"
+                          onmaskclick="#{r:component('popup')}.hide();">
+                <a:outputPanel id="personCardView">
+                    <a:outputPanel rendered="#{personHome.idDefined}">
+
+                        <table class="person-table">
+
+                            <tbody>
+                            <tr> <td class="p-title">姓 名</td> <td colspan="3">#{personHome.instance.name}</td> <td rowspan="4"><h:graphicImage width="100" height="120" value="#{runParam.getStringParamValue('IdCardImgPath')}C#{number}.bmp"/></td></tr>
+                            <tr> <td class="p-title">性 别</td><td>#{messages[personHome.instance.sex.name()]}</td><td class="p-title">民 族</td><td>#{personHome.instance.ethnic}</td> </tr>
+                            <tr><td class="p-title">出 生</td> <td colspan="3"><h:outputText value="#{personHome.instance.dateOfBirth}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </h:outputText> </td></tr>
+                            <tr><td class="p-title">住 址</td> <td colspan="3" style="font-size: 14px">#{personHome.instance.address}</td></tr>
+                            <tr ><td class="p-title" colspan="2" style="width: 100px;padding-top:10px;">公民身份号码</td> <td colspan="3" style="padding-top:10px;">#{personHome.instance.number}</td></tr>
+                            </tbody>
+
+                        </table>
+
+                    </a:outputPanel>
+                </a:outputPanel>
+
+            </r:popupPanel>
+
     </f:subview>
 
 
