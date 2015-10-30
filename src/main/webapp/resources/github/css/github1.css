@@ -483,10 +483,6 @@ dl.form {
     margin: 15px 0
 }
 
-dl.form input[type="text"], dl.form input[type="password"], dl.form input[type="email"], dl.form input[type="url"], dl.form textarea {
-    background-color: #fafafa
-}
-
 dl.form input[type="text"]:focus, dl.form .focused .drag-and-drop, .focused dl.form .drag-and-drop, dl.form input[type="password"]:focus, dl.form input[type="email"]:focus, dl.form input[type="url"]:focus, dl.form textarea:focus {
     background-color: #fff
 }
@@ -509,12 +505,6 @@ dl.form.flattened > dd {
     line-height: 32px
 }
 
-dl.form > dd input[type="text"], dl.form > dd input[type="password"], dl.form > dd input[type="email"], dl.form > dd input[type="url"] {
-    width: 440px;
-    max-width: 100%;
-    margin-right: 5px;
-    background-position-x: 98%
-}
 
 dl.form > dd input.shorter {
     width: 130px

@@ -270,12 +270,6 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.attrCorpMgr','从业机构管理','DATA_MGR','','/func/house/datas/AttrCorpMgr.xhtml','',3,'',b'0');
 
 
-INSERT INTO ROLE_FUNCTION(ROL_ID,FUN_ID) VALUES('jyscheck','house.businessSearch');
-INSERT INTO ROLE_FUNCTION(ROL_ID,FUN_ID) VALUES('cqcheck','house.businessSearch');
-INSERT INTO ROLE_FUNCTION(ROL_ID,FUN_ID) VALUES('commodity_last_check ','house.businessSearch');
-
-INSERT INTO ROLE_FUNCTION(ROL_ID,FUN_ID) VALUES('commodity_check','house.businessSearch');
-
 
 
 
@@ -283,6 +277,7 @@ INSERT INTO ROLE_FUNCTION(ROL_ID,FUN_ID) VALUES('commodity_check','house.busines
 
 -- 角色
 
+INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.fee','收费数据统计','收费数据统计',1);
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
