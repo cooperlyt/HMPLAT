@@ -39,4 +39,101 @@
         </h:inputTextarea>
     </s:decorate>
 
+
+    <a:repeat value="#{ownerBusinessHome.instance.factMoneyInfos}" var="_feePrint">
+
+        <a:outputPanel styleClass="panel panel-default" layout="block" id="mneyPanel">
+
+            <div class="panel-body">
+                <h:form>
+                    <p class="text-primary">请放入收据，然后点打印。
+                        <a class=" " onclick="" >
+
+                        </a>
+
+                        <a:commandLink styleClass="btn minibutton right" render="moneyTbale,factMoney" action="#{factMoneyInfoSubsrcibe.preparePrintOwnerFee}" immediate="true"
+                                       data="#{factMoneyInfoSubsrcibe.printUrl}"
+                                       execute="@this" oncomplete="extendsCall(event.data);">
+                            <span class="glyphicon glyphicon-print"/>
+                            <a:attachQueue requestDelay="0"/>
+                            打印
+                        </a:commandLink>
+
+                    </p>
+                </h:form>
+            </div>
+
+            <h:dataTable value="#{_feePrint.businessMoneyList}" var="_feeItem" styleClass="table" id="moneyTbale">
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessMoney_typeName}
+                    </f:facet>
+                    #{_feeItem.typeName}
+
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+                        应收金额
+                    </f:facet>
+                    <h:outputText value="#{_feeItem.shouldMoney}">
+                        <f:convertNumber locale="#{calendarBean.locale}" type="currency" groupingUsed="true"/>
+                    </h:outputText>
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+                        实收金额
+                    </f:facet>
+                    <h:outputText value="#{_feeItem.factMoney}">
+                        <f:convertNumber locale="#{calendarBean.locale}" type="currency" groupingUsed="true"/>
+                    </h:outputText>
+                </h:column>
+
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.BusinessMoney_ChargeDetails}
+                    </f:facet>
+                    #{_feeItem.chargeDetails}
+
+                </h:column>
+
+            </h:dataTable>
+
+            <a:outputPanel class="panel-footer" id="factMoney">
+                <strong>#{messages.recordTotal}</strong>
+                <a:outputPanel id="calcMoneyTotal" layout="block" class="right">
+
+                    <div style="display: table-cell;font-weight: bold;">
+                        #{messages.shouldMoney}
+                    </div>
+                    <div style="display: table-cell;min-width: 80px;">
+                        <h:outputText value="#{_feePrint.shouldMoney}">
+                            <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
+                                             type="currency"/>
+                        </h:outputText>
+
+                    </div>
+
+                    <div style="display: table-cell;font-weight: bold;">
+                        #{messages.factMoney}
+                    </div>
+                    <div style="display: table-cell;min-width: 80px;">
+                        <h:outputText value="#{_feePrint.factMoney}">
+                            <f:convertNumber groupingUsed="true" locale="#{calendarBean.locale}"
+                                             type="currency"/>
+                        </h:outputText>
+                    </div>
+
+                </a:outputPanel>
+
+            </a:outputPanel>
+        </a:outputPanel>
+
+
+    </a:repeat>
+
 </ui:composition>
