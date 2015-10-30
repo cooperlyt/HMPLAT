@@ -35,7 +35,7 @@ public class AddKyRegerEmp implements TaskCompleteSubscribeComponent {
 
     @Override
     public boolean isPass() {
-        return false;
+        return true;
     }
 
     @Override
