@@ -1,5 +1,6 @@
 package com.dgsoft.common.system.model;
 
+import com.dgsoft.common.OrderModel;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,7 +14,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "FEE",catalog = "DB_PLAT_SYSTEM")
-public class Fee implements java.io.Serializable {
+public class Fee implements java.io.Serializable, OrderModel {
 
     private String id;
     private FeeCategory category;

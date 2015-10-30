@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template.xhtml">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+
+    <ui:define name="func-body">
+        <a:outputPanel id="func-navigation" layout="block" styleClass="pagehead codesearch-head">
+            <div class="container">
+                <div style=" float: left; width: 250px; ">
+
+                    <ui:include src="/layout/function-nav.xhtml">
+                        <ui:param name="functions" value="#{authInfo.totalFunctions}"/>
+                    </ui:include>
+
+                    <span class="funcTitle">数据统计</span>
+
+
+                </div>
+            </div>
+        </a:outputPanel>
+
+        <div class="container">
+            <h:form rendered="#{s:hasRole('total.export.fee')}">
+                <div class="container advanced-search-form">
+                    <fieldset>
+                        <h3>收费数据统计</h3>
+                        <dl class="form flattened">
+                            <dt><s:label for="feetotalInput">收费数据统计区间</s:label></dt>
+                            <dd style="margin-left: 0">
+                                <s:decorate template="/layout/edit-big.xhtml">
+                                    <ui:param name="showLabel" value="false"/>
+                                <div class="input-group">
+
+                                    <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="起始时间" required="true" value="#{totalDataExport.fromDateTime}"/>
+                                    <span class="input-group-addon">至</span>
+                                    <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="终到时间" required="true" style="border-radius: 0; " value="#{totalDataExport.toDateTime}"/>
+
+    <span class="input-group-btn">
+        <h:commandButton action="#{totalDataExport.totalFeeData}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
+
+      </span>
+                                </div>
+                                </s:decorate>
+
+                            </dd>
+                        </dl>
+
+                    </fieldset>
+                </div>
+            </h:form>
+
+
+        </div>
+
+
+
+
+        <h:outputScript rendered="#{(facesContext.maximumSeverity==null) or (facesContext.maximumSeverity.ordinal lt 2)}">
+            $(document).ready(
+            function(){
+            initEditInput();
+            });
+
+        </h:outputScript>
+    </ui:define>
+
+</ui:composition>

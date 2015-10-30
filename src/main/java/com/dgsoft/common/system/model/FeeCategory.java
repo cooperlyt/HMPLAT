@@ -1,19 +1,20 @@
 package com.dgsoft.common.system.model;
 
+import com.dgsoft.common.OrderBeanComparator;
+import com.dgsoft.common.OrderModel;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Administrator on 15-7-25.
  */
 @Entity
 @Table(name = "FEE_CATEGORY",catalog = "DB_PLAT_SYSTEM")
-public class FeeCategory implements java.io.Serializable{
+public class FeeCategory implements java.io.Serializable, OrderModel {
 
 
     private String id;
@@ -86,6 +87,13 @@ public class FeeCategory implements java.io.Serializable{
 
     public void setFees(Set<Fee> fees) {
         this.fees = fees;
+    }
+
+    @Transient
+    public List<Fee> getFeeList(){
+        List<Fee> result = new ArrayList<Fee>(getFees());
+        Collections.sort(result, OrderBeanComparator.getInstance());
+        return result;
     }
 
 

@@ -141,6 +141,16 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return result;
     }
 
+    public boolean isFeeComplete(){
+        for(BusinessMoney money: getInstance().getBusinessMoneys()){
+
+            if ( !money.getShouldMoney().equals(money.getFactMoney())){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public List<TaskOper> getTaskOperList(){
         List<TaskOper> result = new ArrayList<TaskOper>(getInstance().getTaskOpers());
         Collections.sort(result, new Comparator<TaskOper>() {
