@@ -46,9 +46,9 @@
                                     <ui:param name="showLabel" value="false"/>
                                 <div class="input-group">
 
-                                    <h:inputText styleClass="js-datepicker form-control" p:placeholder="起始时间" required="true" value="#{totalDataExport.searchDateArea.dateFrom}"/>
+                                    <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="起始时间" required="true" value="#{totalDataExport.fromDateTime}"/>
                                     <span class="input-group-addon">至</span>
-                                    <h:inputText styleClass="js-datepicker form-control" p:placeholder="终到时间" required="true" style="border-radius: 0; " value="#{totalDataExport.searchDateArea.dateFrom}"/>
+                                    <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="终到时间" required="true" style="border-radius: 0; " value="#{totalDataExport.toDateTime}"/>
 
     <span class="input-group-btn">
         <h:commandButton action="#{totalDataExport.totalFeeData}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>

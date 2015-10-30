@@ -56,6 +56,27 @@ public class TotalDataExport {
     }
 
 
+    private Date fromDateTime;
+
+    private Date toDateTime;
+
+
+    public Date getFromDateTime() {
+        return fromDateTime;
+    }
+
+    public void setFromDateTime(Date fromDateTime) {
+        this.fromDateTime = fromDateTime;
+    }
+
+    public Date getToDateTime() {
+        return toDateTime;
+    }
+
+    public void setToDateTime(Date toDateTime) {
+        this.toDateTime = toDateTime;
+    }
+
     public void totalFeeData(){
 
         Map<String,FeeCategory> feeCategoryMap = new HashMap<String, FeeCategory>();
@@ -72,8 +93,8 @@ public class TotalDataExport {
 
 
         List<FeeTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.FeeTotalData(bm.ownerBusiness.defineId,sum(bm.factMoney),count(bm.id),bm.moneyTypeId) from BusinessMoney bm where bm.factMoneyInfo.factTime >= :beginDate and bm.factMoneyInfo.factTime <= :endDate group by bm.ownerBusiness.defineId , bm.moneyTypeId",FeeTotalData.class)
-                .setParameter("beginDate",searchDateArea.getDateFrom())
-                .setParameter("endDate", searchDateArea.getSearchDateTo()).getResultList();
+                .setParameter("beginDate",fromDateTime)
+                .setParameter("endDate", toDateTime).getResultList();
 
         Map<String, Map<String,FeeTotalData>> format = new HashMap<String,  Map<String, FeeTotalData>>();
 
