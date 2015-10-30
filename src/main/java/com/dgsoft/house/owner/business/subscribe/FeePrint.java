@@ -25,10 +25,19 @@ public class FeePrint {
     }
 
     public void preparePrintOwnerFee(){
-        printUrl = extendsDataCreator.extendsPrintFee(ownerBusinessHome.getInstance().getId(),
-                ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName(),
-                ownerBusinessHome.getInstance().getDefineName(),ownerBusinessHome.getInstance().getFactMoneyInfo(),
-                ownerBusinessHome.getInstance());
+        if (ownerBusinessHome.getInstance().getHouseBusinesses()!=null && ownerBusinessHome.getInstance().getHouseBusinesses().size()>1){
+            printUrl = extendsDataCreator.extendsPrintFee(ownerBusinessHome.getInstance().getId(),
+                    ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperName(),
+                    ownerBusinessHome.getInstance().getDefineName(),ownerBusinessHome.getInstance().getFactMoneyInfo(),
+                    ownerBusinessHome.getInstance());
+        }else {
+
+
+            printUrl = extendsDataCreator.extendsPrintFee(ownerBusinessHome.getInstance().getId(),
+                    ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName(),
+                    ownerBusinessHome.getInstance().getDefineName(), ownerBusinessHome.getInstance().getFactMoneyInfo(),
+                    ownerBusinessHome.getInstance());
+        }
 
     }
 

@@ -4,6 +4,9 @@ import com.dgsoft.common.BigMoneyUtil;
 import com.dgsoft.common.helper.JsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.House;
+import com.dgsoft.house.model.Project;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.In;
@@ -36,6 +39,10 @@ public class ExtendsDataCreator {
     private AuthenticationInfo authInfo;
 
     public final static String EXTENDS_PRINT_PROTOCOL = "ExtendsPrint://";
+
+
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
 
 
     public enum JsonFieldType {
@@ -250,13 +257,21 @@ public class ExtendsDataCreator {
 
 
     private JSONObject projectMortgageJson(MakeCard markCard, OwnerBusiness ownerBusiness) throws JSONException {
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Report", "在建工程抵押.fr3");
-        jsonObject.put("字", jsonField(""));
+        if (ownerBusiness.getHouseBusinesses()!=null && ownerBusiness.getHouseBusinesses().size()>=1){
+            jsonObject.put("字", jsonField(ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDistrictName()));
+            Project project = houseEntityLoader.getEntityManager().find(Project.class, ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getProjectCode());
+            if(project!=null){
+                jsonObject.put("在建工程坐落", jsonField(project.getAddress()));
+            }
+        }
+
         jsonObject.put("在建工程抵押证号", jsonField(markCard.getNumber()));
         jsonObject.put("抵押权人", jsonField(ownerBusiness.getMortgaegeRegiste().getFinancial().getName()));
         jsonObject.put("抵押人", jsonField(ownerBusiness.getMortgaegeRegiste().getBusinessHouseOwner().getPersonName()));
-        jsonObject.put("在建工程坐落", jsonField(""));
+
         jsonObject.put("抵押面积", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageArea()));
 //        jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
 //        jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));

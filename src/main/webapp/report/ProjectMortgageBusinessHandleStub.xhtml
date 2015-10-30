@@ -122,7 +122,7 @@
                 <p:paragraph><c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
                 #{_businessMoneys.typeName}
                 </c:forEach>
-                合计：#{ownerBusinessHome.total.factMoney}
+                 合计：<p:text value="#{ownerBusinessHome.total.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text>
                 </p:paragraph>
             </p:cell>
 
@@ -289,7 +289,7 @@
                         <p:paragraph><c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
                             #{_businessMoneys.typeName}
                         </c:forEach>
-                            合计：#{ownerBusinessHome.total.factMoney}
+                            合计：<p:text value="#{ownerBusinessHome.total.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text>
                         </p:paragraph>
                     </p:cell>
 
