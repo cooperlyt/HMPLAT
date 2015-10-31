@@ -186,9 +186,9 @@ public class TotalDataExport {
                     cell.setCellValue(totalData.getCount());
                 }
                 if (countFormula == null){
-                    countFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 1);
+                    countFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
                 }else{
-                    countFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 1);
+                    countFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
                 }
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
@@ -200,14 +200,13 @@ public class TotalDataExport {
 
                 if (moneyFormula == null){
 
-                    moneyFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 1);
+                    moneyFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
                 }else{
-                    moneyFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 1);
+                    moneyFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
                 }
 
             }
 
-            Logging.getLog(getClass()).debug(countFormula);
             cell = row.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
             cell.setCellFormula(countFormula);
             cell = row.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
@@ -222,10 +221,10 @@ public class TotalDataExport {
             cell.setCellValue("合计");
             for (int i = 0 ; i < (feeCategories.size() + 2) ; i++) {
                 cell = row.createCell(cellIndex++, Cell.CELL_TYPE_FORMULA);
-                cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "3:" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex + 1) + ")");
+                cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "3:" + CellReference.convertNumToColString(cellIndex - 1) + rowIndex + ")");
                 //cell.setCellValue();
                 cell = row.createCell(cellIndex++, Cell.CELL_TYPE_FORMULA);
-                cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "3:" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex + 1) + ")");
+                cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "3:" + CellReference.convertNumToColString(cellIndex - 1) + rowIndex  + ")");
 
             }
         }
