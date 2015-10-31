@@ -243,9 +243,14 @@ INSERT INTO BUSINESS_AND_FEE(BUSINESS,FEE) VALUES ('WP43','DEAL.RECORD.CANCEL');
 -- 测试业务
 -- INSERT INTO BUSINESS_DEFINE(ID, NAME, WF_NAME, START_PAGE, START_DATA_VALIDATOR, TASK_SERVICE, CATEGORY, MEMO, VERSION) VALUES('system.business.test','测试流程','processTest','','','','erp.sale','测试流程',0);
 
+
+
+DELETE FROM ROLE_FUNCTION WHERE FUN_ID = 'system.role' and ROL_ID='system.manager';
+
+
 -- 功能
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.param', '系统参数管理', 'DATA_MGR', '', '/func/system/config/SystemParams.xhtml', '', '2', '系统运行方式设置',b'0');
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.person', '人员维护', 'DATA_MGR', '', '/func/system/manager/PersonMgr.xhtml', '', '3', '管理自然人',b'0');
+
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.businessConfig','业务配置','DAY_WORK','','/func/system/config/BusinessMgr.xhtml','','3','业务处理配置',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.employee','员工管理','DATA_MGR', '', '/func/system/manager/EmployeeMgr.xhtml','','4','员工和组织机构管理',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.role','角色管理','DATA_MGR','','/func/system/config/RoleMgr.xhtml','','4','角色管理和角色分配启动业务',b'0');
@@ -272,8 +277,6 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.totalDataExport','数据统计','TOTAL_REPORT','','/func/house/owner/TotalDataExport.xhtml','',1,'',b'0');
 
-
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('Money', 'owner.totalDataExport');
 
 
 
@@ -307,7 +310,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.role
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config','system.jbpmProcessDeployment');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.word');
 
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.role');
+
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.employee');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.person');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.word');

@@ -178,7 +178,13 @@ public class TotalDataExport {
             cell.setCellValue(businessDefineCache.getDefine(entry.getKey()).getName());
             for(FeeCategory category: feeCategories){
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(entry.getValue().get(category.getId()).getCount());
+
+                FeeTotalData totalData = entry.getValue().get(category.getId());
+                if (totalData == null){
+                    cell.setCellValue(0);
+                }else {
+                    cell.setCellValue(totalData.getCount());
+                }
                 if (countFormula == null){
                     countFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 1);
                 }else{
@@ -186,7 +192,12 @@ public class TotalDataExport {
                 }
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(entry.getValue().get(category.getId()).getFactMoney().doubleValue());
+                if (totalData == null){
+                    cell.setCellValue(0.0);
+                }else{
+                    cell.setCellValue(totalData.getFactMoney().doubleValue());
+                }
+
                 if (moneyFormula == null){
 
                     moneyFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 1);

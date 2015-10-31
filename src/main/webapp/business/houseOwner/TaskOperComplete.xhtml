@@ -6,7 +6,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="template-task-oper.xhtml">
 
@@ -71,8 +70,7 @@
         </p>
 
         <p>
-        <strong>#{messages.TaskVariableSaved}</strong>
-            #{messages.completeDescription}
+        <strong>#{ownerBusinessHome.instance.id} #{messages.TaskVariableSaved}!  </strong>#{messages.completeDescription}
         </p>
    </a:outputPanel>
         <c:forEach items="#{businessDefineHome.operSubscribeDefines}" var="_operSubscribe">
