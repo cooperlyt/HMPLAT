@@ -1,0 +1,226 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template.xhtml">
+
+    <ui:define name="func-body">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+    <a:outputPanel id="func-navigation" layout="block" styleClass="pagehead codesearch-head">
+        <div class="container">
+            <div style=" float: left; width: 250px; ">
+
+                <ui:include src="/layout/function-nav.xhtml">
+                    <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+                </ui:include>
+
+                <span class="funcTitle">房屋预警</span>
+
+
+            </div>
+
+            <h:form styleClass="search_repos">
+                <div class="flex-table search-form-fluid">
+                    <div class="flex-table-item flex-table-item-primary">
+                        <div class="input-block">
+                            <h:inputText styleClass="form-control" value="#{lockedHouseMgr.houseCode}"
+                                         p:placeholder="房屋编号"/>
+
+
+                            <!-- /btn-group -->
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                    <div class="flex-table-item">
+                        <h:commandLink styleClass="button">
+                            #{messages.Search}
+                        </h:commandLink>
+                    </div>
+                </div>
+            </h:form>
+
+        </div>
+    </a:outputPanel>
+
+
+        <div class="container">
+            <a:outputPanel layout="block" styleClass="blankslate" rendered="#{not lockedHouseMgr.codeDefined}">
+
+                <span class="mega-octicon octicon-search"></span>
+
+                <h3>请输入房屋编号</h3>
+
+                <p> 请输入要查询的房屋编号后查询和操作房屋预警情况
+
+                </p>
+
+
+            </a:outputPanel>
+
+            <a:outputPanel layout="block" styleClass="blankslate" rendered="#{lockedHouseMgr.codeDefined and empty lockedHouseMgr.houseInfo}">
+
+                <span class="mega-octicon octicon-search"></span>
+
+                <h3>#{messages.EmptyResult}</h3>
+
+                <p>  请检查输入的房屋编号是否正确，因为在系统中无法找到编号为<strong>#{lockedHouseMgr.houseCode}</strong>的房屋
+
+                </p>
+
+
+            </a:outputPanel>
+
+            <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                <ui:param name="panelId" value="lockedPanel"/>
+                <ui:param name="panelTitle" value="预警房屋，请输入预警的原因"/>
+
+                <s:decorate template="/layout/edit-big.xhtml">
+                    <ui:param name="showLabel" value="false"/>
+                    <ui:param name="for" value="regionInput"/>
+                    <h:inputTextarea id="regionInput" label="预警原因" value="#{lockedHouseMgr.lockedReason}" required="true" p:placeholder="预警原因" rows="4" styleClass="form-control">
+
+                    </h:inputTextarea>
+                </s:decorate>
+
+                <ui:define name="actionButtons">
+                    <button type="button" class="button default" data-dismiss="modal">
+                        取消</button>
+
+
+                    <a:commandLink styleClass="button submit primary" render="lockedPanel_inputs,resultDatas"
+                                   execute="@form"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#lockedPanel').modal('hide')}"
+                                   action="#{lockedHouseMgr.lockHouse}">
+
+                        <a:attachQueue requestDelay="0"/>
+                        建立预警
+                    </a:commandLink>
+
+
+                </ui:define>
+            </ui:decorate>
+
+            <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                <ui:param name="panelId" value="allLockedCancelConfirm"/>
+                <ui:param name="panelTitle" value="所有预警解除确认"/>
+                <ui:param name="styleClass" value="modal-sm"/>
+
+                <ui:define name="panelBody">
+                    <p>您确定要解除房屋 <strong><h:outputText value="#{lockedHouseMgr.houseInfo.displayHouseCode}" rendered="#{not empty lockedHouseMgr.houseInfo}"></h:outputText></strong>  的所有预警？ </p>
+
+                    <p>由系统设定的预警，和预售许可证设置的 不可售 将不会被解除</p>
+
+                </ui:define>
+
+
+                <ui:define name="actionButtons">
+                    <a:commandButton styleClass="button button-block danger" action="#{lockedHouseMgr.unLockAll}"
+                                     value="解除此房屋的所有预警" oncomplete="$('#allLockedCancelConfirm').modal('hide')"
+                                     render="resultDatas" immediate="true" execute="@this">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
+                </ui:define>
+
+
+            </ui:decorate>
+
+            <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                <ui:param name="panelId" value="lockedCancelConfirm"/>
+                <ui:param name="panelTitle" value="预警解除确认"/>
+                <ui:param name="styleClass" value="modal-sm"/>
+
+
+                <ui:define name="panelBody">
+                    <p>您确定要解除房屋 <strong><h:outputText value="#{lockedHouseMgr.houseInfo.displayHouseCode}" rendered="#{not empty lockedHouseMgr.houseInfo}"></h:outputText></strong>
+
+
+                        预警？ </p>
+
+                    <p>必须解除房屋的所有预警，房屋才能回到正常状态</p>
+
+                </ui:define>
+
+
+                <ui:define name="actionButtons">
+                    <a:commandButton styleClass="button button-block danger" action="#{lockedHouseMgr.unLock}"
+                                     value="解除此项预警" oncomplete="$('#lockedCancelConfirm').modal('hide')"
+                                     render="resultDatas" immediate="true" execute="@this">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandButton>
+                </ui:define>
+
+
+            </ui:decorate>
+
+            <a:outputPanel id="resultDatas">
+
+            <a:outputPanel layout="block" styleClass="panel panel-default" rendered="#{lockedHouseMgr.codeDefined and not empty lockedHouseMgr.houseInfo}" >
+
+                    <div class="panel-heading"><h3 style="margin: 0;">#{lockedHouseMgr.houseInfo.displayHouseCode}  <span class="label #{empty lockedHouseMgr.lockedHouses ? 'label-success' : 'label-danger'}">#{empty lockedHouseMgr.lockedHouses ? '未预警' : '已预警'}</span></h3></div>
+                    <div class="panel-body #{empty lockedHouseMgr.lockedHouses ? '' : 'house-locked'}">
+                        <p>此房屋 <strong><h:outputText value="#{empty lockedHouseMgr.lockedHouses ? '未预警' : '已预警'}"/></strong>，
+                            您可以 <s:link  onclick="$('#lockedPanel').modal({backdrop: 'static'});return false;">
+                                <span class="icon-lock"/>
+                                #{empty lockedHouseMgr.lockedHouses ? '预警': '再次预警'}
+                            </s:link> 此房屋
+                            <a:outputPanel rendered="#{not empty lockedHouseMgr.lockedHouses}">
+                                或 <s:link onclick="$('#allLockedCancelConfirm').modal('show');return false;">
+                                <span class="icon-unlock"/>
+                                解除所有预警
+                            </s:link>
+
+                            </a:outputPanel>
+                        </p>
+
+                        <a:repeat rendered="#{not empty lockedHouseMgr.lockedHouses}"
+                                  value="#{lockedHouseMgr.lockedHouses}" var="_lockedHouse">
+                            <p class="#{_lockedHouse.type}"><strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
+                            </strong> 由 <strong><h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}"/></strong>
+                                建立，因: <strong>#{_lockedHouse.description}</strong>  预警此房屋,您可以
+                                <a:commandLink rendered="#{_lockedHouse.type eq 'HOUSE_LOCKED'}"
+                                               oncomplete="$('#lockedCancelConfirm').modal('show')"
+                                               render="lockedCancelConfirm_form" execute="@this" immediate="true">
+                                    <span class="icon-unlock"/>
+                                    <a:attachQueue requestDelay="0"/>
+                                    <f:param name="selectLockedId" value="#{_lockedHouse.id}"/>
+                                    解除此预警
+                                </a:commandLink>
+
+
+                            </p>
+                        </a:repeat>
+
+
+
+                    </div>
+
+                    <!-- Table -->
+                <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
+                              groupWidth="50"  >
+                <ui:include src="/layout/house/HouseInfoView.xhtml">
+                    <ui:param name="showStatus" value="#{false}"/>
+                    <ui:param name="houseInfo" value="#{lockedHouseMgr.houseInfo}"/>
+                </ui:include>
+                </dh:entryGrid>
+
+            </a:outputPanel>
+
+            </a:outputPanel>
+        </div>
+
+    </ui:define>
+
+
+</ui:composition>

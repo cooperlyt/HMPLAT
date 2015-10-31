@@ -153,7 +153,6 @@ public class TotalDataExport {
             cell.setCellValue("金额");
             cell.setCellStyle(headCellStyle);
             cellIndex += 2;
-
         }
 
         cell = row1.createCell(cellIndex);

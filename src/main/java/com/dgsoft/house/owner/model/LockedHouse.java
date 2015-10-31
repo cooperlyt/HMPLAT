@@ -17,7 +17,7 @@ import java.util.Date;
 public class LockedHouse {
 
     public enum LockType{
-        CANT_SALE,PREPARE_CLOSE,TEMP_CANT_SALE
+        CANT_SALE,SYSTEM_LOCKED,HOUSE_LOCKED
     }
 
     private String id;
@@ -34,6 +34,15 @@ public class LockedHouse {
     public LockedHouse(String houseCode, LockType type, String empCode, String empName, Date lockedTime) {
         this.houseCode = houseCode;
         this.type = type;
+        this.empCode = empCode;
+        this.empName = empName;
+        this.lockedTime = lockedTime;
+    }
+
+    public LockedHouse(String houseCode, LockType type, String description, String empCode, String empName, Date lockedTime) {
+        this.houseCode = houseCode;
+        this.type = type;
+        this.description = description;
         this.empCode = empCode;
         this.empName = empName;
         this.lockedTime = lockedTime;
