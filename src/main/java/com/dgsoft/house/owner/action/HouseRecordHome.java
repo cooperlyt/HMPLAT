@@ -243,10 +243,33 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         }
     }
 
+    private String inBusinessName;
+
+    private List<LockedHouse> lockedHouseList;
+
+    public String getInBusinessName() {
+        return inBusinessName;
+    }
+
+    public List<LockedHouse> getLockedHouseList() {
+        return lockedHouseList;
+    }
 
     @Override
     protected HouseRecord loadInstance(){
         try {
+           List<String> inBusinesses = getEntityManager().createQuery("select houseBusiness.ownerBusiness.defineName from HouseBusiness houseBusiness " +
+                    "where houseBusiness.ownerBusiness.status in ('SUSPEND','RUNNING') and  houseBusiness.houseCode =:houseCode", String.class)
+                    .setParameter("houseCode",getId()).getResultList();
+            if( !inBusinesses.isEmpty()){
+                inBusinessName = inBusinesses.get(0);
+            }else{
+                inBusinessName = null;
+            }
+
+            lockedHouseList = getEntityManager().createQuery("select lh from LockedHouse lh where lh.houseCode = :houseCode",LockedHouse.class)
+                    .setParameter("houseCode",getId()).getResultList();
+
             return getEntityManager().createQuery("select hr from HouseRecord hr " +
                     "left join fetch hr.businessHouse house " +
                     "left join fetch house.businessHouseOwner owner " +

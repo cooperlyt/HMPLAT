@@ -53,10 +53,38 @@
 
         <div class="container">
 
-            <div class="alert alert-warning" role="alert">
+            <a:outputPanel rendered="#{(not empty houseRecordHome.inBusinessName) or (not empty houseRecordHome.lockedHouseList)}" layout="block" styleClass="alert alert-warning" role="alert">
 
-            </div>
+                <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
+                        view="/func/house/owner/LockedHouseMgr.xhtml"
+                        styleClass="btn btn-sm btn-primary right" style="margin-top: -4px">
+                    <f:param name="houseCode" value="#{houseRecordHome.instance.houseCode}"/>
+                    管理房屋预警
+                </s:link>
+                <a:outputPanel rendered="#{not empty houseRecordHome.inBusinessName}">
+                    <p>
+                    房屋正在办理业务 <strong>#{houseRecordHome.inBusinessName}</strong></p>
+                </a:outputPanel>
+                <a:repeat value="#{houseRecordHome.lockedHouseList}" var="_lockedHouse">
+                    <p class="#{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
+                </strong> 由 <strong><h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}"/></strong>
+                    建立，因: <strong>#{_lockedHouse.description}</strong>  预警此房屋 </p>
+                </a:repeat>
 
+
+
+            </a:outputPanel>
+
+            <a:outputPanel rendered="#{empty houseRecordHome.inBusinessName and empty houseRecordHome.lockedHouseList and s:hasRole('system.runBusinessMgr')}" layout="block" styleClass="alert alert-success" role="alert">
+                <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
+                        view="/func/house/owner/LockedHouseMgr.xhtml"
+                        styleClass="btn btn-sm btn-primary right" style="margin-top: -4px">
+                    管理房屋预警
+                    <f:param name="houseCode" value="#{houseRecordHome.instance.houseCode}"/>
+                </s:link>
+                此房屋没有任务预警信息
+
+            </a:outputPanel>
 
             <dh:entryGrid styleClass="detailsTable table table-bordered " autoLastWidth="true" style="margin-top: 5px"
                           groupWidth="50">

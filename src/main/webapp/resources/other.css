@@ -1021,3 +1021,8 @@ a:focus, a:hover{
     padding-left: 0;
 
 }
+
+.alert-warning,  .alert-success, .alert-info, .alert-danger{
+    background-image: inherit;
+    border-radius: 3px;
+}
