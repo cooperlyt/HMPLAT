@@ -278,7 +278,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.totalDataExport','数据统计','TOTAL_REPORT','','/func/house/owner/TotalDataExport.xhtml','',1,'',b'0');
 
 
-
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.lockHouseMgr','房屋预警','DATA_MGR','','/func/house/owner/LockedHouseMgr.xhtml','',10,'',b'0');
 
 
 -- 角色
@@ -309,6 +309,13 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.pers
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.role');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config','system.jbpmProcessDeployment');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.word');
+
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.lockHouseMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'house.businessSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.houseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'house.businessMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.totalDataExport');
+
 
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.employee');

@@ -15,7 +15,7 @@ import java.util.Date;
         , catalog = "HOUSE_OWNER_RECORD",uniqueConstraints = {@UniqueConstraint(columnNames = {"HOUSE_CODE","TYPE"})}
 )
 public class LockedHouse {
-
+        //不可售， 系统锁定(无论什么业务都不可以运行)， 预警
     public enum LockType{
         CANT_SALE,SYSTEM_LOCKED,HOUSE_LOCKED
     }

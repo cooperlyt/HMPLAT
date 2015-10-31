@@ -36,19 +36,24 @@ public class OwnerBusinessCreate extends BusinessCreate {
     @In
     private AuthenticationInfo authInfo;
 
+    @In
+    private Date businessCreateTime;
+
     @Override
     protected boolean verifyCreate() {
         boolean verify;
         if (businessDefineHome.isSubscribesPass() && businessDefineHome.isCompletePass()){
             businessDefineHome.completeTask();
 
+            ownerBusinessHome.getInstance().setCreateTime(new Date());
+            ownerBusinessHome.getInstance().setApplyTime(businessCreateTime);
             ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(),
                     BusinessEmp.EmpType.CREATE_EMP, authInfo.getLoginEmployee().getId(),
-                    authInfo.getLoginEmployee().getPersonName(), new Date()));
+                    authInfo.getLoginEmployee().getPersonName(), businessCreateTime));
             ownerBusinessHome.getInstance().getTaskOpers().add(
                     new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,
                             RunParam.instance().getStringParamValue("CreateBizTaskName"),
-                            authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), businessDefineHome.getDescription()));
+                            authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), businessDefineHome.getDescription(),businessCreateTime));
 
 
             ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());

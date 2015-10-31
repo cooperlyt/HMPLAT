@@ -53,7 +53,10 @@
 
         <div class="container">
 
-            <a:outputPanel rendered="#{(not empty houseRecordHome.inBusinessName) or (not empty houseRecordHome.lockedHouseList)}" layout="block" styleClass="alert alert-warning" role="alert">
+            <a:outputPanel rendered="#{(not empty houseRecordHome.inBusinessName) or (not empty houseRecordHome.lockedHouseList)}"
+                           style="padding-left: 40px"
+                           layout="block" styleClass="alert alert-warning" role="alert">
+                <span class="octicon octicon-alert left" style="margin-left: -25px; "></span>
 
                 <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
                         view="/func/house/owner/LockedHouseMgr.xhtml"
@@ -66,9 +69,22 @@
                     房屋正在办理业务 <strong>#{houseRecordHome.inBusinessName}</strong></p>
                 </a:outputPanel>
                 <a:repeat value="#{houseRecordHome.lockedHouseList}" var="_lockedHouse">
+
                     <p class="#{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
-                </strong> 由 <strong><h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}"/></strong>
-                    建立，因: <strong>#{_lockedHouse.description}</strong>  预警此房屋 </p>
+                </strong> 由 <strong>
+                        <h:outputText value="系统" rendered="#{_lockedHouse.type eq 'SYSTEM_LOCKED'}"/>
+                        <h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}" rendered="#{not (_lockedHouse.type eq 'SYSTEM_LOCKED')}"/></strong>
+                    ，因:
+
+
+                        <a:outputPanel rendered="#{not (_lockedHouse.type eq 'CANT_SALE')}"><strong>#{_lockedHouse.description}</strong> 建立预警。 </a:outputPanel>
+                        <a:outputPanel rendered="#{_lockedHouse.type eq 'CANT_SALE'}">办理（预）销售许可证 设置为不可售。 </a:outputPanel>
+
+
+
+                    </p>
+
+
                 </a:repeat>
 
 
