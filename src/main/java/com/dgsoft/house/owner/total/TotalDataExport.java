@@ -186,9 +186,9 @@ public class TotalDataExport {
                     cell.setCellValue(totalData.getCount());
                 }
                 if (countFormula == null){
-                    countFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
+                    countFormula = CellReference.convertNumToColString(cellIndex - 1) + rowIndex;
                 }else{
-                    countFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
+                    countFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + rowIndex ;
                 }
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
@@ -200,9 +200,9 @@ public class TotalDataExport {
 
                 if (moneyFormula == null){
 
-                    moneyFormula = CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
+                    moneyFormula = CellReference.convertNumToColString(cellIndex - 1) + rowIndex ;
                 }else{
-                    moneyFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + (rowIndex - 2);
+                    moneyFormula += "+" + CellReference.convertNumToColString(cellIndex - 1) + rowIndex;
                 }
 
             }
