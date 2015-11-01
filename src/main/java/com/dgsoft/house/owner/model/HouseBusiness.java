@@ -81,7 +81,7 @@ public class HouseBusiness implements java.io.Serializable {
         this.startBusinessHouse = startBusinessHouse;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "AFTER_HOUSE", nullable = true)
     public BusinessHouse getAfterBusinessHouse() {
         return afterBusinessHouse;

@@ -304,6 +304,8 @@ public class OwnerBusinessPatch {
 
         ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
 
+        ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,"档案补录",authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),null));
+
         recordStore.setOwnerBusiness(ownerBusinessHome.getInstance());
         recordStore.setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
 

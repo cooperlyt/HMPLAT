@@ -254,21 +254,35 @@
                         </div>
 
 
+                        <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+                            <ui:param name="panelId" value="businessDeleteConfirmPanel"/>
+                            <ui:param name="entityTitle" value="#{ownerBusinessHome.id}"/>
+                            <ui:define name="panelBody">
+                                <p>确认要撤回业务 <h:outputText value="中止后将无法还原" style="color: #900"/> </p>
+                                <p>
+                                    <h:outputText value="此业务为补录业务，将会直接被中止！" rendered="#{ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE'}"/>
+                                    <h:outputText value="将启动撤回业务流程！" rendered="#{not (ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE')}"/>
+                                </p>
+                            </ui:define>
+
+                            <s:button styleClass="button button-block danger" action="#{businessCancel.cancelBusiness}"
+                                             value="#{(ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE') ? '我确认要中止此业务' : '启动撤回业务流程'}"/>
+
+                        </ui:decorate>
+
 
                         <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}" style="margin-top: 5px">
 
-                            <a:outputPanel layout="block" styleClass="right" >
+                            <a:outputPanel layout="block" styleClass="right" rendered="#{not (ownerBusinessHome.instance.status eq 'ABORT')}">
 
                                 <div class="btn-group" role="group" >
 
-                                    <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
-                                            p:aria-label="#{messages.cancelBusiness}"
+                                    <h:outputLink rendered="#{ownerBusinessView.hasCreateRole}"
+                                            p:aria-label="#{messages.cancelBusiness}" onclick="$('#businessDeleteConfirmPanel').modal('show');return false;"
                                             styleClass="btn btn-default #{ownerBusinessHome.canCancel ? '' : 'disabled'} tooltipped tooltipped-s"
                                             disabled="#{not ownerBusinessHome.canCancel}">
-
-                                        <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
                                         <span class="btn-icon octicon octicon-x"></span>
-                                    </s:link>
+                                    </h:outputLink>
 
 
                                     <s:link rendered="#{ownerBusinessView.hasCreateRole}" propagation="begin"
@@ -278,6 +292,7 @@
                                             disabled="#{not ownerBusinessHome.canModify}">
 
                                         <span class="btn-icon octicon octicon-pencil"></span>
+                                        <f:param name="normalBiz" value="false"/>
                                         <f:param name="selectBusinessId" value="#{ownerBusinessHome.instance.id}"/>
                                     </s:link>
 
