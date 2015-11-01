@@ -139,6 +139,7 @@ public class HouseBusinessStart {
         for(OwnerBusiness ob: allowSelectBizs){
             if (ob.getId().equals(selectBizId)){
                 ownerBusinessHome.getInstance().setSelectBusiness(ob);
+
                 return ownerBusinessStart.dataSelected();
             }
         }

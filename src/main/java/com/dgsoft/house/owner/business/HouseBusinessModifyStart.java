@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessCreateComponent;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
@@ -11,15 +12,18 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.log.Logging;
 
 import java.security.acl.Owner;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -107,6 +111,8 @@ public class HouseBusinessModifyStart {
         throw new IllegalArgumentException("old house not found");
     }
 
+    @Out(value = "businessCreateTime", scope = ScopeType.CONVERSATION, required = false)
+    private Date businessCreateTime;
 
 
     public String startModify() {
@@ -123,6 +129,8 @@ public class HouseBusinessModifyStart {
 
         //TODO PROJECT
         initModifyHouse();
+
+        businessCreateTime = new Date();
 
         return businessDefineHome.getInstance().getModifyPage();
     }

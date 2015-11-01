@@ -9,6 +9,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Logging;
+import org.jboss.seam.security.Identity;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -21,6 +22,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     @In(required = false)
     private BusinessDefineHome businessDefineHome;
+
+    @In
+    private Identity identity;
 
 
     @Transactional
@@ -172,25 +176,39 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     public boolean isCanModify(){
-//        if (isIdDefined()){
-//            for(HouseBusiness business: getInstance().getHouseBusinesses()){
-//                if (business.getAfterBusinessHouse().getHouseRecord() == null){
-//                    return false;
-//                }
-//            }
-//            if (getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)){
-//                return false;
-//            }
-//            return getInstance().getStatus().equals(BusinessInstance.BusinessStatus.COMPLETE) &&
-//                    (getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ) ||
-//                    getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ));
-//        }
-        return false;
+        if (!isIdDefined()) {
+            return false;
+        }
+            if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource())){
+                return false;
+            }
+
+        if (getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)){
+            return false;
+        }
+
+            for(HouseBusiness business: getInstance().getHouseBusinesses()){
+                HouseRecord houseRecord = getEntityManager().find(HouseRecord.class, business.getHouseCode());
+                if (houseRecord != null && !houseRecord.getBusinessHouse().getId().equals(business.getAfterBusinessHouse().getId())){
+                    return false;
+                }
+            }
+
+
+            return getInstance().getStatus().equals(BusinessInstance.BusinessStatus.COMPLETE) &&
+                    (getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ) ||
+                    getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ));
 
     }
 
     public boolean isCanCancel(){
-        return isCanModify();
+        if (!isIdDefined()){
+            return false;
+        }
+        if (identity.hasRole("system.runBusinessMgr") && BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource())){
+            return true;
+        }else
+            return false;//TODO other
     }
 
 

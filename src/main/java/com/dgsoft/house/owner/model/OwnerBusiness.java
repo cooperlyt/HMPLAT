@@ -359,7 +359,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.taskOpers = taskOpers;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH}, optional = true)
     @JoinColumn(name = "SELECT_BUSINESS", nullable = true)
     public OwnerBusiness getSelectBusiness() {
         return selectBusiness;

@@ -181,7 +181,7 @@ public class OwnerBusinessView {
 
 
     public boolean isHasViewRole(){
-        if (identity.hasRole("owner.businessView")) {
+        if (identity.hasRole("owner.businessView") || identity.hasRole("system.runBusinessMgr")) {
             return true;
         }
         if (businessDefineHome.isIdDefined()){

@@ -6,8 +6,9 @@
 
     <restrict>#{s:hasRole('system.manager')}</restrict>
 
-    <param name="firstResult" value="#{developerAttachCorporationList.firstResult}"/>
+    <param name="firstResult" value="#{attachCorporationList.firstResult}"/>
 
-    <param name="oneCondition" value="#{attachCorpMgr.searchKey}"/>
+    <param name="oneCondition" value="#{attachCorporationList.searchKey}"/>
+    <param name="type" value="#{attachCorporationList.typeName}"/>
 
 </page>

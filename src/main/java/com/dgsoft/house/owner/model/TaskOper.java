@@ -46,6 +46,15 @@ public class TaskOper implements java.io.Serializable {
     public TaskOper() {
     }
 
+    public TaskOper(OwnerBusiness ownerBusiness,OperType operType, String operName, String empCode, String empName, String taskDescription,Date operTime) {
+        this.ownerBusiness = ownerBusiness;
+        this.operTime = operTime;
+        this.empCode = empCode;
+        this.empName = empName;
+        this.taskName = operName;
+        this.operType = operType;
+        this.taskDescription = taskDescription;
+    }
 
     public TaskOper(OwnerBusiness ownerBusiness,OperType operType, String operName, String empCode, String empName, String taskDescription) {
         this.ownerBusiness = ownerBusiness;

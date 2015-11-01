@@ -4,7 +4,7 @@
 
 
     <start-state name="业务受理">
-		<transition to="收费判断"></transition>
+		<transition to="类型判断"></transition>
 	</start-state>
 
 
@@ -131,6 +131,15 @@
 		</transition>
 		<transition to="受理" name="审批-登薄驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="类型判断">
+		<transition to="受理" name="更正业务">
+			<condition expression="#{ownerBusinessHome.instance.type eq 'MODIFY_BIZ'}"></condition>
+		</transition>
+		<transition to="收费判断" name="正常业务">
+			<condition expression="#{ownerBusinessHome.instance.type eq 'NORMAL_BIZ'}"></condition>
 		</transition>
 	</decision>
 

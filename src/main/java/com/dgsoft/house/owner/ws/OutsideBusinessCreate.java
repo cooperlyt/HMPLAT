@@ -95,17 +95,31 @@ public class OutsideBusinessCreate {
                 for (int i = 0; i < poolArray.length(); i++) {
                     JSONObject poolObj = poolArray.getJSONObject(i);
                     String poolLegalPerson;
-                    try{
+                    try {
                         poolLegalPerson = poolObj.getString("legalPerson");
-                    }catch (JSONException e){
+                    } catch (JSONException e) {
                         poolLegalPerson = null;
                     }
+
+                    String perc = null;
+                    BigDecimal poolArea = null;
+                    if (PoolType.SHARE_OWNER.equals(poolType)){
+                        try{
+                            perc = poolObj.getString("perc");
+                        }catch (JSONException e){
+                        }
+                        try{
+                            poolArea = BigDecimal.valueOf(poolObj.getDouble("poolArea"));
+                        }catch (JSONException e){
+                        }
+                    }
+
 
                     BusinessPool businessPool = new BusinessPool(poolObj.getString("name"),
                             PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
                             poolObj.getString("credentialsNumber"),
-                            poolObj.getString("relation"), BigDecimal.valueOf(poolObj.getDouble("poolArea")),
-                            poolObj.getString("perc"), poolObj.getString("tel"), new Date(), poolLegalPerson);
+                            poolObj.getString("relation"), poolArea,
+                            perc, poolObj.getString("tel"), new Date(), poolLegalPerson);
                     businessPools.add(businessPool);
                 }
 
