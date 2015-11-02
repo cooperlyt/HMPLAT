@@ -10,11 +10,15 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/layout/house/owner/SingleMapHouseHouseSelect.xhtml">
 
-    <ui:define name="header-title">
-        <h2 style="margin : 5px 5px 0 5px">
-        <strong>   #{businessDefineHome.instance.name} </strong> #{messages.BusinessPatch}
+    <ui:define name="function-title">
 
-        </h2>
+
+            <div class="left" style="max-width: 350px;   text-overflow: ellipsis;
+  white-space: nowrap;overflow: hidden;display: inline-block;">
+                <h3 style="margin: 5px; font-weight: bold">
+                    #{messages.BusinessPatch} / <strong>   #{businessDefineHome.instance.name} </strong></h3>
+            </div>
+
     </ui:define>
 
     <ui:define name="houseSelectAction">

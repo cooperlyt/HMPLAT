@@ -33,7 +33,6 @@ public class HouseStepSelect {
 
     private String selectProjectId;
 
-
     public Section getSelectSection() {
         return selectSection;
     }

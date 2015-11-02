@@ -141,9 +141,10 @@
 
         <div class="header">
             <div class="container-fluid clearfix" style="white-space: nowrap;">
-                <s:div styleClass="logo-icon">
+                 <s:link propagation="end" view="/home.xhtml" styleClass="logo-icon">
+
                     <h:graphicImage value="/img/logo-icon.png" alt="#{messages.mainTitle}"/>
-                </s:div>
+        </s:link>
 
                 <div class="site-search">
                     <ui:insert name="header-title"/>
