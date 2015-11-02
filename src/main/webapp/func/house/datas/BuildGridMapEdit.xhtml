@@ -413,7 +413,7 @@
                                                 action="#{actionExecuteState.clearState}"
                                                 icon="/img/icons/info-blue.png"
                                                 oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
-                                                render="editPanel_form">
+                                                render="editPanel_form,editPanel_title">
                                         <a:param name="blockId" value="#{_house.id}"
                                                  assignTo="#{buildGridMapHome.selectBlockId}"/>
                                     </r:menuItem>
@@ -441,7 +441,7 @@
                                                  rendered="#{not empty _house.house}"
                                                  title="#{messages.BuildMapAction_edit}"
                                                  oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
-                                                 immediate="true" execute="@this" render="editPanel_form">
+                                                 immediate="true" execute="@this" render="editPanel_form,editPanel_title">
                                     <a:param name="blockId" value="#{_house.id}"
                                              assignTo="#{buildGridMapHome.selectBlockId}"/>
                                     <a:attachQueue requestDelay="0"/>
@@ -619,7 +619,7 @@
                                                              action="#{buildGridMapHome.selectedIdleHouse}"
                                                              title="#{messages.BuildMapAction_edit}"
                                                              oncomplete="$('#editPanel').modal({show: true, backdrop: 'static'});"
-                                                             immediate="true" execute="@this" render="editPanel_form">
+                                                             immediate="true" execute="@this" render="editPanel_form,editPanel_title">
                                                 <a:attachQueue requestDelay="0"/>
                                             </a:commandButton>
 
@@ -694,7 +694,7 @@
 
                 <ui:decorate template="/layout/edit-modalpanel.xhtml">
                     <ui:param name="panelId" value="editPanel"/>
-                    <ui:param name="panelTitle" value="#{messages.House}#{messages.edit}"/>
+                    <ui:param name="panelTitle" value="#{buildGridMapHome.selectHouse.id}"/>
 
                     <ui:define name="actionButtons">
 
