@@ -175,6 +175,15 @@ public class BuildGridMapHouseSelect {
         return curMap;
     }
 
+    public void findBuildBySearch(){
+        mapNumber = buildHome.getInstance().getMapNumber();
+        blockNumber = buildHome.getInstance().getBlockNo();
+        buildNumber = buildHome.getInstance().getBuildNo();
+        System.out.println(buildHome.getId());
+
+        initBuildMap();
+    }
+
 
     public void findBuildBySection(){
 
@@ -284,10 +293,6 @@ public class BuildGridMapHouseSelect {
             List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                     .setParameter("houseCodes", houseMap.keySet())
                     .getResultList();
-
-            for (HouseRecord house: houseRecords){
-                businessHouseMap.put(house.getHouseCode(),house);
-            }
 
 
             lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
