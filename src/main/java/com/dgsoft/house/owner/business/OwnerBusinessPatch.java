@@ -330,6 +330,7 @@ public class OwnerBusinessPatch {
             }
 
             HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
+            Logging.getLog(getClass()).debug("patch business recrod search: " + houseRecord);
             if (houseRecord == null){
                 Logging.getLog(getClass()).debug(houseBusiness.getAfterBusinessHouse());
 

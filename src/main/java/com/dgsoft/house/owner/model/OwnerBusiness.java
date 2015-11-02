@@ -588,7 +588,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
 
-
     /**
      * 申请人
      */
