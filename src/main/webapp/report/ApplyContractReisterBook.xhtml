@@ -154,8 +154,8 @@
 
                                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
                                     <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
-                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}，共有份额：#{_businessPools.perc}。  " /></ui:repeat></p:paragraph>
-                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}。  " /></ui:repeat></p:paragraph>
+                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}，共有份额：#{_businessPools.perc},共有关系：#{dictionary.getWordValue(_businessPools.relation)}。  " /></ui:repeat></p:paragraph>
+                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber},共有关系：#{dictionary.getWordValue(_businessPools.relation)}。  " /></ui:repeat></p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="20">
                                     <p:paragraph>代理人姓名</p:paragraph>
@@ -268,11 +268,21 @@
                         <p:cell borderWidthLeft="0" fixedHeight="20">
                             <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.contractOwner.contractDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
                         </p:cell>
+                        <p:cell borderWidthLeft="0" fixedHeight="20">
+                            <p:paragraph>产权来源</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidthLeft="0" fixedHeight="20">
+                            <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidthLeft="0" fixedHeight="20">
+                            <p:paragraph>付款方式</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidthLeft="0" fixedHeight="20">
+                            <p:paragraph>#{messages[ownerBusinessHome.instance.saleInfo.payType.name()]}</p:paragraph>
+                        </p:cell>
 
 
-
-
-                        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="80">
+                        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
                             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
                         </p:cell>
                     </p:table>
