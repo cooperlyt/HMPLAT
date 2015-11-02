@@ -89,70 +89,81 @@
                     <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
                 </p:cell>
 
-                <p:cell fixedHeight="150">
+                <p:cell fixedHeight="90">
                     <p:paragraph>受理意见</p:paragraph>
                 </p:cell>
 
                 <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
 
-
-
-                    <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
                             <p:paragraph rendered="#{not empty ownerBusinessHome.applyEmp}"> #{ownerBusinessHome.applyEmp.comments}</p:paragraph>
                         </p:cell>
-                        <p:cell borderWidth="0" paddingLeft="200" horizontalAlignment="left" verticalAlignment="middle">
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
                             <p:paragraph>受理人签名:</p:paragraph>
                         </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+
+                        </p:cell>
+
                     </p:table>
 
                 </p:cell>
 
-                <p:cell>
-                    <p:paragraph>审核登记官</p:paragraph>
-                </p:cell>
 
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.empName}</p:paragraph>
-                </p:cell>
 
-                <p:cell>
-                    <p:paragraph>审核日期</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">
-                        <p:text value="#{ownerBusinessHome.checkEmp.operDate}">
-                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                        </p:text>
-                    </p:paragraph>
-                </p:cell>
-
-                <p:cell fixedHeight="150">
+                <p:cell fixedHeight="90">
                     <p:paragraph>审核意见</p:paragraph>
                 </p:cell>
 
                 <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-                    <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
                             <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.comments}</p:paragraph>
                         </p:cell>
-                        <p:cell borderWidth="0" paddingLeft="200" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>登记官签名:</p:paragraph>
+
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph> 登记官签名:</p:paragraph>
+                        </p:cell>
+
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph> 审核时间:</p:paragraph>
                         </p:cell>
                     </p:table>
                 </p:cell>
 
-                <p:cell noWrap="false" fixedHeight="150">
+                <p:cell fixedHeight="90">
+                    <p:paragraph>终审意见</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell  colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
+                            <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.comments}</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph>终审人签名:</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph>终审时间:</p:paragraph>
+                        </p:cell>
+                    </p:table>
+                </p:cell>
+
+                <p:cell noWrap="false" fixedHeight="90">
                     <p:paragraph>审核委员会会审意见</p:paragraph>
                 </p:cell>
 
                 <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
 
-                    <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
                             <p:paragraph></p:paragraph>
                         </p:cell>
-                        <p:cell borderWidth="0" paddingLeft="200" horizontalAlignment="left" verticalAlignment="middle">
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph>审核委员签字:</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
                             <p:paragraph>会审日期:</p:paragraph>
                         </p:cell>
                     </p:table>
