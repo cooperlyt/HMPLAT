@@ -274,18 +274,22 @@ public class BuildGridMapHouseSelect {
             houseMap.put(house.getHouseCode(),house);
         }
 
-        List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
-                .setParameter("houseCodes", houseMap.keySet())
-                .getResultList();
+
 
 
         Map<String,HouseRecord> businessHouseMap = new HashMap<String, HouseRecord>();
-        for (HouseRecord house: houseRecords){
-            businessHouseMap.put(house.getHouseCode(),house);
-        }
 
         List<String> lockedHouseCode;
         if (!houseMap.isEmpty()){
+            List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
+                    .setParameter("houseCodes", houseMap.keySet())
+                    .getResultList();
+
+            for (HouseRecord house: houseRecords){
+                businessHouseMap.put(house.getHouseCode(),house);
+            }
+
+
             lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
                     .setParameter("houseCodes", houseMap.keySet()).getResultList();
             List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")

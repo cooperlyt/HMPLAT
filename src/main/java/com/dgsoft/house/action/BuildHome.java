@@ -391,7 +391,9 @@ public class BuildHome extends HouseEntityHome<Build> {
 
         public void addArea(BigDecimal area, BigDecimal useArea) {
             count++;
+            if (area != null)
             this.area = this.area.add(area);
+            if(useArea != null)
             this.useArea = this.useArea.add(useArea);
         }
 

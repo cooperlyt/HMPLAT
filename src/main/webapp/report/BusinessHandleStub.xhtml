@@ -105,7 +105,7 @@
     <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
         <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
             <p:cell borderWidth="0" noWrap="false" fixedHeight="120" verticalAlignment="top" horizontalAlignment="left">
-                <p:paragraph><c:forEach var="_filesesNames" items="#{ownerBusinessHome.instance.uploadFileses}">#{_filesesNames.name}、</c:forEach></p:paragraph>
+                <p:paragraph><c:forEach var="_filesesNames" items="#{ownerBusinessHome.uploadedFiles}">#{_filesesNames.name}、</c:forEach></p:paragraph>
             </p:cell>
         </p:table>
     </p:cell>

@@ -224,6 +224,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getInstance().getOperEmp(BusinessEmp.EmpType.valueOf(typeName));
     }
 
+
+    public List<BusinessFile> getUploadedFiles(){
+        List<BusinessFile> businessFiles = new ArrayList<BusinessFile>();
+        for(BusinessFile file: getInstance().getUploadFileses()){
+            if (file.isNoFile() || !file.getUploadFiles().isEmpty()){
+                businessFiles.add(file);
+            }
+        }
+        return businessFiles;
+    }
+
     /**
      * 申请人
      */

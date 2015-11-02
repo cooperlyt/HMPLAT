@@ -466,7 +466,7 @@ public class BuildGridMapHome implements DropListener {
         BigDecimal result = BigDecimal.ZERO;
         for (GridRow row : getInstance().getGridRows()) {
             for (GridBlock block : row.getGridBlocks())
-                if (block.getHouse() != null)
+                if (block.getHouse() != null && block.getHouse().getHouseArea() != null)
                     result = result.add(block.getHouse().getHouseArea());
         }
         return result;
@@ -476,7 +476,7 @@ public class BuildGridMapHome implements DropListener {
         BigDecimal result = BigDecimal.ZERO;
         for (GridRow row : getInstance().getGridRows()) {
             for (GridBlock block : row.getGridBlocks())
-                if (block.getHouse() != null)
+                if (block.getHouse() != null && block.getHouse().getUseArea() != null)
                     result = result.add(block.getHouse().getUseArea());
         }
         return result;
