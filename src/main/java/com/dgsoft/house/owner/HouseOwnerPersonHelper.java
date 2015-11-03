@@ -19,11 +19,14 @@ public class HouseOwnerPersonHelper extends PersonHelper<BusinessHouseOwner> {
     @Override
     protected void fillPerson(PersonIDCard person) {
         super.fillPerson(person);
-        int flagIndex = person.getCredentialsOrgan().indexOf(ROOT_ADDRESS_FLAGE);
-        if(flagIndex > 0){
-            getPersonEntity().setRootAddress(person.getCredentialsOrgan().substring(0,flagIndex));
+        if (person.getCredentialsOrgan() != null) {
+            int flagIndex = person.getCredentialsOrgan().indexOf(ROOT_ADDRESS_FLAGE);
+            if (flagIndex > 0) {
+                getPersonEntity().setRootAddress(person.getCredentialsOrgan().substring(0, flagIndex));
+            }
         }
         getPersonEntity().setAddress(person.getAddress());
+
 
     }
 

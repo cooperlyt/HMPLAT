@@ -18,16 +18,23 @@ public class BuildList extends HouseEntityQuery<Build>{
 
     private static final String EJBQL = "select build from Build build " +
             "left join fetch build.project project " +
-            "left join fetch project.developer";
+            "left join fetch project.section section " +
+            "left join fetch project.developer developer ";
 
 
     private static final String[] RESTRICTIONS = {
             "lower(build.name) like lower(concat('%',#{buildList.searchKey},'%'))",
             "lower(build.doorNo) like lower(concat('%',#{buildList.searchKey},'%'))",
             "lower(project.address) like lower(concat('%',#{buildList.searchKey},'%'))",
-            "lower(project.developer.name) like lower(concat('%',#{buildList.searchKey},'%'))",
+            "lower(developer.name) like lower(concat('%',#{buildList.searchKey},'%'))",
+            "lower(section.id) = lower(#{buildList.searchKey})",
+            "lower(section.name) like lower(concat('%',#{buildList.searchKey},'%'))",
+            "lower(section.address) like lower(concat('%',#{buildList.searchKey},'%'))",
+            "lower(section.pyCode) like lower(concat('%',#{buildList.searchKey},'%'))",
             "lower(build.id) = lower(#{buildList.searchKey})",
-            "lower(project.address) = lower(#{buildList.searchKey})",
+            "lower(project.id) = lower(#{buildList.searchKey})",
+            "lower(developer.id) = lower(#{buildList.searchKey})",
+            "lower(project.address) = lower(concat('%',#{buildList.searchKey},'%'))",
 
     };
 

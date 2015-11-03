@@ -17,12 +17,13 @@ import java.util.List;
 @Name("sectionList")
 public class SectionList extends HouseEntityQuery<Section> {
 
-    private static final String EJBQL = "select section from Section section left join fetch section.district";
+    private static final String EJBQL = "select section from Section section " +
+            "left join fetch section.district district";
 
     private static final String[] RESTRICTIONS = {
-            "lower(section.district.name) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
-            "lower(section.district.id) like lower(concat('%',#{baseMapDataMgr.districtId},'%'))",
-            "lower(section.district.shortName) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
+            "lower(district.name) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
+            "lower(district.id) like lower(concat('%',#{baseMapDataMgr.districtId},'%'))",
+            "lower(district.shortName) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
 
             "lower(section.id) like lower(concat('%',#{baseMapDataMgr.sectionId},'%'))",
             "lower(section.name) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
@@ -30,7 +31,7 @@ public class SectionList extends HouseEntityQuery<Section> {
             "lower(section.pyCode) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
 
             "lower(section.name) like lower(concat('%',#{sectionSearchCondition.sectionName},'%'))",
-            "section.district.id = #{sectionSearchCondition.districtId}"};
+            "district.id = #{sectionSearchCondition.districtId}"};
 
 
     private static final String[] SORT_COLUMNS = {
