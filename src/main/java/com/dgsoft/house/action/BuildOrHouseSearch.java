@@ -2,6 +2,7 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.action.BuildGridMapHouseSelect;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.model.HouseRecord;
 import org.jboss.seam.ScopeType;
@@ -18,13 +19,10 @@ public class BuildOrHouseSearch {
 
 
     @In(create = true)
-    private OwnerEntityLoader ownerEntityLoader;
-
-    @In(create = true)
     private BuildList buildList;
 
     @In(create = true)
-    private OwnerBuildGridMap ownerBuildGridMap;
+    private BuildGridMapHouseSelect buildGridMapHouseSelect;
 
     private boolean returnHouse;
 
@@ -34,9 +32,8 @@ public class BuildOrHouseSearch {
 
 
     public void search(){
-        if (buildList.getEntityManager().find(House.class,buildList.getSearchKey()) != null ||
-                ownerEntityLoader.getEntityManager().find(HouseRecord.class,buildList.getSearchKey()) != null){
-            ownerBuildGridMap.setSelectBizHouseId(buildList.getSearchKey());
+        if (buildList.getEntityManager().find(House.class,buildList.getSearchKey()) != null){
+            buildGridMapHouseSelect.setSelectBizHouseId(buildList.getSearchKey());
             returnHouse = true;
         }else{
             returnHouse = false;

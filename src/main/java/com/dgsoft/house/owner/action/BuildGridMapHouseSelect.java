@@ -149,6 +149,11 @@ public class BuildGridMapHouseSelect {
             }
         }
 
+        House house = houseEntityLoader.getEntityManager().find(House.class,id);
+        if (house != null){
+            setSelectBizHouse(house);
+            return;
+        }
 
     }
 
