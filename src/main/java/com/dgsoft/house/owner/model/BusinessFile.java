@@ -25,6 +25,10 @@ public class BusinessFile implements java.io.Serializable {
     private boolean important;
     private Set<UploadFile> uploadFiles = new HashSet<UploadFile>(0);
 
+
+
+    private int priority;
+
 	public BusinessFile() {
 	}
 
@@ -114,6 +118,16 @@ public class BusinessFile implements java.io.Serializable {
 
     public void setUploadFiles(Set<UploadFile> uploadFiles) {
         this.uploadFiles = uploadFiles;
+    }
+
+
+    @Column(name = "PRIORITY", nullable = false)
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
 	@Transient
