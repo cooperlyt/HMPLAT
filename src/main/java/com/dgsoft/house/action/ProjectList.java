@@ -14,33 +14,34 @@ import java.util.List;
 public class ProjectList extends HouseEntityQuery<Project>{
 
     private static final String EJBQL = "select project from Project project " +
-            "left join fetch project.section section left join fetch section.district " +
-            "left join fetch project.developer";
+            "left join fetch project.section section " +
+            "left join fetch section.district district " +
+            "left join fetch project.developer developer ";
 
 
     private static final String[] RESTRICTIONS = {
-            "lower(project.section.district.name) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
-            "lower(project.section.district.id) like lower(concat('%',#{baseMapDataMgr.districtId},'%'))",
-            "lower(project.section.district.shortName) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
+            "lower(district.name) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
+            "lower(district.id) = lower(#{baseMapDataMgr.districtId})",
+            "lower(district.shortName) like lower(concat('%',#{baseMapDataMgr.districtName},'%'))",
 
-            "lower(project.section.id) like lower(concat('%',#{baseMapDataMgr.sectionId},'%'))",
-            "lower(project.section.name) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
-            "lower(project.section.address) like lower(concat('%',#{baseMapDataMgr.sectionAddress},'%'))",
-            "lower(project.section.pyCode) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
+            "lower(section.id) = lower(#{baseMapDataMgr.sectionId})",
+            "lower(section.name) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
+            "lower(section.address) like lower(concat('%',#{baseMapDataMgr.sectionAddress},'%'))",
+            "lower(section.pyCode) like lower(concat('%',#{baseMapDataMgr.sectionName},'%'))",
 
-            "lower(project.id) like lower(concat('%',#{baseMapDataMgr.projectId},'%'))",
+            "lower(project.id) = lower(#{baseMapDataMgr.projectId})",
             "lower(project.name) like lower(concat('%',#{baseMapDataMgr.projectName},'%'))",
             "lower(project.address) like lower(concat('%',#{baseMapDataMgr.projectAddress},'%'))",
 
-            "lower(project.developer.name) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
-            "lower(project.developer.id) like lower(concat('%',#{baseMapDataMgr.developerId},'%'))",
-            "lower(project.developer.pyCode) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
+            "lower(developer.name) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
+            "lower(developer.id) = lower(#{baseMapDataMgr.developerId})",
+            "lower(developer.pyCode) like lower(concat('%',#{baseMapDataMgr.developerName},'%'))",
 
-            "lower(project.section.name) like lower(concat('%',#{baseMapDataCondition.sectionName},'%'))",
-            "project.section.district.id = #{baseMapDataCondition.districtId}",
+            "lower(section.name) like lower(concat('%',#{baseMapDataCondition.sectionName},'%'))",
+            "district.id = #{baseMapDataCondition.districtId}",
             "project.id = #{baseMapDataCondition.projectId}",
-            "lower(project.developer.name) like lower(concat('%',#{baseMapDataCondition.developerName},'%'))",
-            "project.developer.id = #{baseMapDataCondition.developerId}",
+            "lower(developer.name) like lower(concat('%',#{baseMapDataCondition.developerName},'%'))",
+            "developer.id = #{baseMapDataCondition.developerId}",
             "lower(project.name) like lower(concat('%',#{baseMapDataCondition.projectName},'%'))"};
 
     private static final String[] SORT_COLUMNS = {

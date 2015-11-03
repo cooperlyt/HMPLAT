@@ -48,10 +48,21 @@ public class GBT {
 
 
     public enum HouseIdGenType {
-        JDJT246_3,// 竣工时间法
-        JDJT246_4, //坐标法
-        JDJT246_5, //分宗法
-        JDJT246_6;// 分幅法
+        JDJT246_3(true),// 竣工时间法
+        JDJT246_4(true), //坐标法
+        JDJT246_5(true), //分宗法
+        JDJT246_6(true),// 分幅法
+        SHORT(false);
+
+        private boolean mark;
+
+        public boolean isMark() {
+            return mark;
+        }
+
+        HouseIdGenType(boolean mark) {
+            this.mark = mark;
+        }
     }
 
     public enum HouseIdBuildCodePath {

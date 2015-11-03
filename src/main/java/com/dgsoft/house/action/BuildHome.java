@@ -152,17 +152,13 @@ public class BuildHome extends HouseEntityHome<Build> {
         getInstance().setName(result);
     }
 
-    private String getBuildCode() {
-        if (isManaged()) {
-            return getInstance().getId().substring(0, 21);
-        } else {
+    public String genHouseOrder() {
+        if (!isManaged()) {
             throw new IllegalArgumentException("build not manager!");
         }
-    }
 
-
-    public String genHouseOrder() {
-        String result = GBT.getJDJT246(getBuildCode(), getInstance().getNextHouseOrder());
+        String result = houseCodeHelper.genHouseCode(getInstance().getId(), getInstance().getNextHouseOrder());
+        //String result = GBT.getJDJT246(getBuildCode(), getInstance().getNextHouseOrder());
         getInstance().setNextHouseOrder(getInstance().getNextHouseOrder() + 1);
         return result;
     }

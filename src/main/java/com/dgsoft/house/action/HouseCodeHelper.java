@@ -38,10 +38,21 @@ public class HouseCodeHelper {
         return GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype")).equals(GBT.HouseIdGenType.JDJT246_4);
     }
 
+    public String genHouseCode(String buildCode, int nextId){
+        GBT.HouseIdGenType genType = GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype"));
+        if (genType.isMark()){
+            return GBT.getJDJT246(buildCode.substring(0, 21),nextId);
+        }else{
+            return buildCode + "-" + nextId;
+        }
+
+    }
+
     public void genBuildCode(Build build) {
         String result = GBT.formatCode(build.getProject().getSection().getDistrict().getId(), 9);
 
-        switch (GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype"))) {
+        GBT.HouseIdGenType genType = GBT.HouseIdGenType.valueOf(runParam.getStringParamValue("house.id.gentype"));
+        switch (genType) {
 
             case JDJT246_4:
                 DecimalFormat df = new DecimalFormat("#0");
@@ -70,8 +81,17 @@ public class HouseCodeHelper {
                 result += GBT.formatCode(build.getMapNumber() + build.getBlockNo(), 8);
                 result = result + GBT.formatCode(String.valueOf(numberBuilder.getNumber("BUILDCODE_" + result)), 4);
                 break;
+            case SHORT:
+                result = NumberBuilder.instance().getNumber("BUILD_CODE_SHORT",4);
+                break;
         }
-        build.setId(GBT.getJDJT246(result, 0));
+        if (genType.isMark()){
+            build.setId(GBT.getJDJT246(result, 0));
+        }else{
+            build.setId(result);
+        }
+
+
     }
 
 
