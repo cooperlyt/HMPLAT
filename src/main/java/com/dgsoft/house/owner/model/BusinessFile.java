@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.OrderModel;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "BUSINESS_FILE", catalog = "HOUSE_OWNER_RECORD")
-public class BusinessFile implements java.io.Serializable {
+public class BusinessFile implements java.io.Serializable, OrderModel {
 
 	private String id;
 	private OwnerBusiness ownerBusiness;
@@ -32,12 +33,13 @@ public class BusinessFile implements java.io.Serializable {
 	public BusinessFile() {
 	}
 
-    public BusinessFile(String id, String name, String importantCode, boolean noFile, boolean important) {
+    public BusinessFile(String id, String name, String importantCode, boolean noFile, boolean important,int priority) {
         this.id = id;
         this.name = name;
         this.importantCode = importantCode;
         this.noFile = noFile;
         this.important = important;
+		this.priority = priority;
     }
 
     @Id
@@ -121,6 +123,7 @@ public class BusinessFile implements java.io.Serializable {
     }
 
 
+	@Override
     @Column(name = "PRIORITY", nullable = false)
     public int getPriority() {
         return priority;

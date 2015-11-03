@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
@@ -232,6 +233,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
                 businessFiles.add(file);
             }
         }
+        Collections.sort(businessFiles, OrderBeanComparator.getInstance());
         return businessFiles;
     }
 

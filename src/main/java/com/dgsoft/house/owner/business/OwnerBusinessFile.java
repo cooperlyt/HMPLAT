@@ -304,7 +304,7 @@ public class OwnerBusinessFile {
             if (value) {
                 if (getBusinessFile() == null) {
                     if (value) {
-                        BusinessFile newBizFile = new BusinessFile(UUID.randomUUID().toString().replace("-", ""), getBusinessNeedFile().getName(), getBusinessNeedFile().getId(), true, true);
+                        BusinessFile newBizFile = new BusinessFile(UUID.randomUUID().toString().replace("-", ""), getBusinessNeedFile().getName(), getBusinessNeedFile().getId(), true, true,getBusinessNeedFile().getPriority());
                         setBusinessFile(newBizFile);
                     }
                 } else {
@@ -430,7 +430,7 @@ public class OwnerBusinessFile {
                 throw new IllegalArgumentException("noe Children node");
             }
             if (businessFile == null) {
-                businessFile = new BusinessFile(UUID.randomUUID().toString().replace("-", ""), getBusinessNeedFile().getName(), getBusinessNeedFile().getId(), false, true);
+                businessFile = new BusinessFile(UUID.randomUUID().toString().replace("-", ""), getBusinessNeedFile().getName(), getBusinessNeedFile().getId(), false, true,getBusinessNeedFile().getPriority());
             }
             List<UploadFile> existsFiles = new ArrayList<UploadFile>(businessFile.getUploadFiles());
             for (String name : fileNames) {
