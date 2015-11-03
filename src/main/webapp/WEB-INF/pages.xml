@@ -31,7 +31,7 @@
     </page>
 
     <page view-id="/func/system/manager/*" login-required="true">
-        <restrict>#{s:hasRole('system.manager')}</restrict>
+        <restrict>#{s:hasRole('system.runBusinessMgr')}</restrict>
     </page>
 
 

@@ -4,7 +4,7 @@
       login-required="true"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <restrict>#{s:hasRole('system.manager')}</restrict>
+    <restrict>#{s:hasRole('system.runBusinessMgr')}</restrict>
 
     <param name="firstResult" value="#{attachCorporationList.firstResult}"/>
 
