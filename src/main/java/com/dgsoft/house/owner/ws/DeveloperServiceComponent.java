@@ -214,43 +214,42 @@ public class DeveloperServiceComponent {
         if (key == null){
             throw new IllegalArgumentException("user fail");
         }
-        int genCount = RunParam.instance().getIntParamValue("ContractNOCount");
-        if (genCount <= 0){
-            throw new IllegalArgumentException("ContractNOCount param is zero");
-        }
+       // int genCount = RunParam.instance().getIntParamValue("ContractNOCount");
+        //if (genCount <= 0){
+        //    throw new IllegalArgumentException("ContractNOCount param is zero");
+        //}
 
         SaleType type = SaleType.valueOf(typeName);
 
         EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
 
 
-        List<ContractNumber> contractNumbers = ownerEntityManager.createQuery("select n from ContractNumber n where n.type = :contractType and n.status = 'FREE'", ContractNumber.class)
-                .setParameter("contractType", type).setMaxResults(count).getResultList();
-        if (contractNumbers.size() < count){
-            String setupCode = RunParam.instance().getStringParamValue("SetupCode");
-            Long max =  ownerEntityManager.createQuery("select max(n.number) from ContractNumber n where n.type =:contractType", Long.class)
-                    .setParameter("contractType", type).getSingleResult();
-            if (max == null){
+        //List<ContractNumber> contractNumbers = ownerEntityManager.createQuery("select n from ContractNumber n where n.type = :contractType and n.status = 'FREE'", ContractNumber.class)
+        //        .setParameter("contractType", type).setMaxResults(count).getResultList();
+        //if (contractNumbers.size() < count){
+        String setupCode = RunParam.instance().getStringParamValue("SetupCode");
+        Long max;
+            try {
+                max = ownerEntityManager.createQuery("select max(n.number) from ContractNumber n where n.type =:contractType", Long.class)
+                        .setParameter("contractType", type).getSingleResult();
+                if (max == null){
+                    max = new Long(0);
+                }
+            }catch (NoResultException e){
                 max = new Long(0);
             }
 
-            int to = Math.max(count,genCount);
-            for(int i = 0 ; i < to ; i++){
-                long number =  max + i + 1;
-                ContractNumber contractNumber =  new ContractNumber(type, number, type.getNumberPrefx() + setupCode + "-" + number, ContractNumber.ContractNumberStatus.FREE, new Date());
-                if (contractNumbers.size() < count){
-                    contractNumbers.add(contractNumber);
-                }
-                ownerEntityManager.persist(contractNumber);
-            }
-        }
-
+        max++;
         JSONArray jsonArray = new JSONArray();
-        for(ContractNumber contractNumber: contractNumbers){
-            contractNumber.setStatus(ContractNumber.ContractNumberStatus.OUT);
-            contractNumber.setApplyTime(new Date());
-            jsonArray.put(contractNumber.getContractNumber());
-        }
+            for(int i = 0 ; i < count ; i++){
+                long number =  max + i ;
+                ContractNumber contractNumber =  new ContractNumber(type, number, type.getNumberPrefx() + setupCode + "-" + number, ContractNumber.ContractNumberStatus.OUT, new Date());
+                contractNumber.setApplyTime(new Date());
+                ownerEntityManager.persist(contractNumber);
+                jsonArray.put(contractNumber.getContractNumber());
+            }
+        //}
+
 
         try {
             String result = DESUtil.encrypt(jsonArray.toString(), key.getSessionKey());
