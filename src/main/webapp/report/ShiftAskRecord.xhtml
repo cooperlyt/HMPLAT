@@ -18,9 +18,9 @@
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14">
             <p:paragraph>受理编号：#{ownerBusinessHome.instance.id}   询问人：#{ownerBusinessHome.applyEmp.empName}
             </p:paragraph>
-
-            <p:paragraph>被询问人：转让人：#{_houseBusiness.startBusinessHouse.businessHouseOwner.personName}
+            <p:paragraph>被询问人：转让人：#{_houseBusiness.startBusinessHouse.businessHouseOwner.personName} <ui:repeat var="_businessPools" value="#{_houseBusiness.startBusinessHouse.businessPoolList}"><p:text value="  #{_businessPools.personName}"/></ui:repeat>
             </p:paragraph>
+
             <p:paragraph>受让人：#{ownerBusinessHome.applyPersion.personName}
             </p:paragraph>
 
