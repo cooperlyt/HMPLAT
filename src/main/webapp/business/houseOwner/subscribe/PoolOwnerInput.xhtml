@@ -74,7 +74,7 @@
                         <div >
                             <div style="width: 470px; float: left;font-size: 12px">
 
-                                <s:decorate rendered="#{(_person.credentialsType.name() eq 'COMPANY_CODE')}"
+                                <s:decorate rendered="#{_person.credentialsType.corp}"
                                             id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
                                     <ui:define name="label">
                                         #{messages.ContractOwner_legalPerson}
