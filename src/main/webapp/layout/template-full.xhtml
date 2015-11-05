@@ -126,7 +126,9 @@
 
         </ui:insert>
 
+        <ui:insert name="ajax-param">
         <a:queue requestDelay="1000" ignoreDupResponses="true"/>
+        </ui:insert>
         <a:status id="processWaiting" name="processWaiting"
                   onstart="#{r:component('wait')}.show()"
                   onstop="#{r:component('wait')}.hide()"/>

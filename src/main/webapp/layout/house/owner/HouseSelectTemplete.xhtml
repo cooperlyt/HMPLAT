@@ -12,7 +12,9 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/layout/template-full.xhtml">
 
-
+    <ui:define name="ajax-param">
+        <a:queue requestDelay="0" ignoreDupResponses="true"/>
+    </ui:define>
 
     <ui:define name="body">
 
