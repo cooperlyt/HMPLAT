@@ -1,13 +1,14 @@
 package com.dgsoft.house.action;
 
 import com.dgsoft.common.system.DictionaryWord;
-import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
-import org.jboss.seam.Component;
+import org.dom4j.io.XMLWriter;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
@@ -23,7 +24,16 @@ import org.richfaces.event.DropListener;
 import org.richfaces.event.FileUploadEvent;
 
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -578,6 +588,127 @@ public class BuildGridMapHome implements DropListener {
             }
         }
         removeThisPage();
+    }
+
+    private String formatAreaForXml(BigDecimal value){
+
+            if (value == null)
+                return "0";
+
+            DecimalFormat df = new DecimalFormat("#0.000");
+            df.setGroupingUsed(false);
+            df.setRoundingMode(RoundingMode.HALF_UP);
+            return df.format(value);
+    }
+
+
+    @In(create = true)
+    private FacesContext facesContext;
+
+    public void exportMap(){
+        if (curBuildGridMap == null)
+            return;
+
+
+        Document document = DocumentHelper.createDocument();
+        document.setXMLEncoding("UTF-8");
+
+        Element root = document.addElement("DATA");
+
+        int colCount = 0;
+        for (HouseGridTitle title: curBuildGridMap.getHouseGridTitles()){
+            colCount += title.getColspan();
+        }
+
+        root.addAttribute("RowCount",String.valueOf(curBuildGridMap.getGridRows().size() + 1));
+        root.addAttribute("ColCount",String.valueOf(colCount));
+
+        Element headNode = root.addElement("HEAD");
+        for (HouseGridTitle title: curBuildGridMap.getHouseGridTitleList()){
+            Element node = headNode.addElement("TD");
+            node.addAttribute("rowSpan","1");
+            node.addAttribute("colSpan",String.valueOf(title.getColspan()));
+            if (title.getTitle() != null)
+                node.addAttribute("title",title.getTitle());
+            node.addAttribute("number",String.valueOf(title.getOrder()));
+
+        }
+        int upFloorCount = 0;
+        for(GridRow row: curBuildGridMap.getGridRows()){
+            if (row.getFloorIndex() > 0){
+                upFloorCount ++;
+            }
+        }
+        Element bodyNode = root.addElement("BODY");
+        bodyNode.addAttribute("FloorCount",String.valueOf(curBuildGridMap.getGridRows().size()));
+        bodyNode.addAttribute("GroundFloorCount",String.valueOf(upFloorCount));
+
+        for(GridRow row: curBuildGridMap.getGridRowList()){
+            Element node = bodyNode.addElement("FLOOR");
+            node.addAttribute("title",row.getTitle());
+            node.addAttribute("floor",String.valueOf(row.getFloorIndex()));
+            node.addAttribute("number",String.valueOf(row.getOrder()));
+            for(GridBlock block: row.getGridBlockList()){
+                Element blockNode = node.addElement("HOUSE");
+                blockNode.addAttribute("RowSpan",String.valueOf(block.getRowspan()));
+                blockNode.addAttribute("colSpan",String.valueOf(block.getColspan()));
+                blockNode.addAttribute("UnitIndex",String.valueOf(block.getUnitIndex()));
+                blockNode.addAttribute("UnitName",block.getUnitName());
+                blockNode.addAttribute("Floor",String.valueOf(row.getFloorIndex()));
+                if(block.getHouse() == null){
+                    blockNode.addAttribute("IsDeleted","true");
+                }else{
+                    blockNode.addAttribute("IsDeleted","false");
+                    if((block.getHouse().getInFloorName() == null) || block.getHouse().getInFloorName().equals(row.getTitle())){
+                        blockNode.addAttribute("InFloorName","");
+                    }else{
+                        blockNode.addAttribute("InFloorName",block.getHouse().getInFloorName());
+                    }
+
+
+
+
+                    blockNode.addAttribute("Area",formatAreaForXml(block.getHouse().getHouseArea()));
+                    blockNode.addAttribute("UseArea", formatAreaForXml(block.getHouse().getUseArea()));
+                    blockNode.addAttribute("CommArea", formatAreaForXml(block.getHouse().getCommArea()));
+                    blockNode.addAttribute("LoftArea", formatAreaForXml(block.getHouse().getLoftArea()));
+                    blockNode.addAttribute("ShineArea", formatAreaForXml(block.getHouse().getShineArea()));
+                    blockNode.addAttribute("CommParam", formatAreaForXml(block.getHouse().getCommParam()));
+                    blockNode.addAttribute("Structure",(block.getHouse().getStructure() == null) ? "" : block.getHouse().getStructure());
+                    blockNode.addAttribute("UseType",(block.getHouse().getUseType() == null) ? "" : block.getHouse().getUseType());
+                    blockNode.addAttribute("HouseType",(block.getHouse().getHouseType() == null) ? "" : block.getHouse().getHouseType());
+                    blockNode.addAttribute("Order",block.getHouse().getHouseOrder());
+                    blockNode.addAttribute("KnotSize",(block.getHouse().getKnotSize() == null) ? "" : block.getHouse().getKnotSize());
+                    blockNode.addAttribute("Direction",(block.getHouse().getDirection() == null) ? "" : block.getHouse().getDirection());
+                    blockNode.addAttribute("EastWall",(block.getHouse().getEastWall() == null) ? "" : block.getHouse().getEastWall());
+                    blockNode.addAttribute("SouthWall",(block.getHouse().getSouthWall() == null) ? "" : block.getHouse().getSouthWall());
+                    blockNode.addAttribute("WestWall",(block.getHouse().getWestWall() == null) ? "" : block.getHouse().getWestWall());
+                    blockNode.addAttribute("NorthWall",(block.getHouse().getNorthWall() == null) ? "" : block.getHouse().getNorthWall());
+                    blockNode.addAttribute("HalfDownRoom",block.getHouse().isHaveDownRoom() ? "true" : "false");
+                }
+
+            }
+
+        }
+
+
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext.responseReset();
+        externalContext.setResponseContentType("application/xml");
+        externalContext.setResponseHeader("Content-Disposition", "attachment;filename=gridMap.xml");
+        try {
+            OutputFormat format = OutputFormat.createPrettyPrint();
+            format.setEncoding("UTF-8");
+            XMLWriter xmlWriter =new XMLWriter(externalContext.getResponseOutputStream(), format);
+            xmlWriter.write(document);
+
+            facesContext.responseComplete();
+        } catch (IOException e) {
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ExportIOError");
+            Logging.getLog(getClass()).error("export error", e);
+        }
+
+
     }
 
 }
