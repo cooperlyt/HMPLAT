@@ -1,6 +1,20 @@
 -- If you are using Hibernate as the JPA provider, you can use this file to load seed data into the database using SQL statements
 -- The portable approach is to use a startup component (such as the @PostConstruct method of a @Startup @Singleton) or observe a lifecycle event fired by Seam Servlet
 
+ALTER TABLE HOUSE_INFO.BUILD_GRID_MAP DROP FOREIGN KEY BUILD_GRID_MAP_ibfk_1;
+DROP INDEX BUILD_GRID_PAGE ON HOUSE_INFO.BUILD_GRID_MAP;
+
+
+ALTER TABLE HOUSE_INFO.BUILD_GRID_MAP
+ADD FOREIGN KEY (BUILD_ID)
+REFERENCES HOUSE_INFO.BUILD (ID)
+  ON UPDATE RESTRICT
+  ON DELETE RESTRICT
+;
+
+
+
+
 
 INSERT INTO HOUSE_INFO.DISTRICT(ID, NAME, SHORT_NAME, VERSION) VALUES ('211282001000','新城街道','开原市',1);
 INSERT INTO HOUSE_INFO.DISTRICT(ID, NAME, SHORT_NAME, VERSION) VALUES ('211282003000','兴开街道','开原市',1);

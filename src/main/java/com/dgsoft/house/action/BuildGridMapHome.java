@@ -232,7 +232,8 @@ public class BuildGridMapHome implements DropListener {
     public void templeteFileUploadListener(FileUploadEvent event) throws Exception {
 
         if (curBuildGridMap != null) {
-            buildHome.getInstance().getBuildGridMaps().remove(getInstance());
+
+            buildHome.getInstance().getBuildGridMaps().remove(curBuildGridMap);
 
         }
         SAXReader reader = new SAXReader();
