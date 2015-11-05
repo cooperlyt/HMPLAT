@@ -21,7 +21,7 @@
             <p:paragraph>被询问人：转让人：#{_houseBusiness.startBusinessHouse.businessHouseOwner.personName} <ui:repeat var="_businessPools" value="#{_houseBusiness.startBusinessHouse.businessPoolList}"><p:text value="  #{_businessPools.personName}"/></ui:repeat>
             </p:paragraph>
 
-            <p:paragraph>受让人：#{ownerBusinessHome.applyPersion.personName}
+            <p:paragraph>受让人：#{ownerBusinessHome.applyPersion.personName} <ui:repeat var="_abusinessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="  #{_abusinessPools.personName}"/></ui:repeat>
             </p:paragraph>
 
 
