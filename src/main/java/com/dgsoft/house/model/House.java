@@ -124,6 +124,21 @@ public class House implements java.io.Serializable, HouseInfo {
     public House(String id, Build build, GridBlock block) {
         this.id = id;
         this.build = build;
+        this.houseOrder = block.getHouseOrder();
+
+        dataSource = HouseDataSource.MAPPING;
+        assginInfo(block);
+
+
+        if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
+            this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
+        } else {
+            this.address = build.getName() + " " + block.getHouseOrder();
+        }
+    }
+
+    @Transient
+    public void assginInfo(GridBlock block){
         this.houseArea = block.getArea();
         this.useArea = block.getUseArea();
         this.commArea = block.getCommArea();
@@ -135,7 +150,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.houseType = block.getHouseType();
         this.houseUnitName = block.getUnitName();
 
-        this.houseOrder = block.getHouseOrder();
+
         this.knotSize = block.getKnotSize();
         this.direction = block.getDirection();
         this.westWall = block.getWestWall();
@@ -143,17 +158,10 @@ public class House implements java.io.Serializable, HouseInfo {
         this.northWall = block.getNorthWall();
         this.eastWall = block.getEastWall();
         this.haveDownRoom = block.isHaveDownRoom();
-        dataSource = HouseDataSource.MAPPING;
         if (block.getFloorName() != null && !"".equals(block.getFloorName().trim())){
             this.inFloorName = block.getFloorName();
         }else{
             this.inFloorName = block.getGridRow().getTitle();
-        }
-
-        if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
-            this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
-        } else {
-            this.address = build.getName() + " " + block.getHouseOrder();
         }
     }
 

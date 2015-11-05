@@ -36,7 +36,6 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class BuildGridMapHome implements DropListener {
 
-
     @In
     private BuildHome buildHome;
 
@@ -209,6 +208,10 @@ public class BuildGridMapHome implements DropListener {
         buildHome.getInstance().getBuildGridMaps().remove(getInstance());
     }
 
+    private void matchIdle(boolean changeInfo){
+
+    }
+
     public void matchIdle() {
         for (GridRow gridRow : getInstance().getGridRows()) {
             for (GridBlock gridBlock : gridRow.getGridBlocks()) {
@@ -223,6 +226,16 @@ public class BuildGridMapHome implements DropListener {
                             break;
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public void assginHouseInfo(){
+        for (GridRow gridRow : getInstance().getGridRows()) {
+            for (GridBlock gridBlock : gridRow.getGridBlocks()) {
+                if (gridBlock.getHouse() != null) {
+                    ((House)gridBlock.getHouse()).assginInfo(gridBlock);
                 }
             }
         }
@@ -272,7 +285,7 @@ public class BuildGridMapHome implements DropListener {
 
         analyzeTemplete(root);
 
-        if (!idleHouses.isEmpty()) {
+        if (replaceGridMap || !idleHouses.isEmpty()) {
             matchIdle();
         } else {
             generateHouse();

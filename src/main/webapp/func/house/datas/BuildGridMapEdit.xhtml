@@ -85,7 +85,7 @@
                             <li>
 
                                 <a:commandLink
-                                        immediate="true" execute="@this"
+                                        immediate="true" execute="@this" render="uploadForm"
                                         oncomplete="#{r:component('updateFilePopup')}.show();">
                                     <span class="icon-folder-open icon-large"/>
                                     #{(empty buildGridMapHome.buildGridPages) ? messages.UploadGridXML : messages.AddGridXML}
@@ -96,7 +96,7 @@
 
                             </li>
                             <li>
-                                <a:commandLink immediate="true" execute="@this"
+                                <a:commandLink immediate="true" execute="@this" render="uploadForm"
                                                oncomplete="#{r:component('updateFilePopup')}.show();">
                                     <span class="icon-folder-open-alt icon-large"/>
                                     #{messages.UpdateGridXML}
@@ -663,7 +663,7 @@
                               autosized="true" resizeable="false" styleClass="context-modal-panel">
 
 
-                    <h:form enctype="multipart/form-data">
+                    <h:form id="uploadForm" enctype="multipart/form-data">
 
 
                         <r:fileUpload maxFilesQuantity="5" title="#{messages.Upload_Build_XML}"
@@ -681,7 +681,7 @@
                                       stopControlLabel="#{messages.fileUpload_stopControlLabel}"
                                       fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
                                       ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
-                                      onuploadcomplete="#{r:component('updateFilePopup')}.hide();renderMap();"
+                                      onuploadcomplete="#{r:component('updateFilePopup')}.hide();if(#{buildGridMapHome.replaceGridMap}){$('#replactHouseInfoConfirmPanel').modal({show: true, backdrop: 'static'});}else{renderMap();}"
                                       acceptedTypes="xml">
 
                         </r:fileUpload>
@@ -690,6 +690,30 @@
 
                     </h:form>
                 </r:popupPanel>
+
+                <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelTitle" value="重新读取房屋信息"/>
+                    <ui:param name="styleClass" value="modal-sm"/>
+                    <ui:param name="panelId" value="replactHouseInfoConfirmPanel"/>
+
+                    <ui:define name="panelBody">
+                        <p>选“是”将会根据图中信息改变房屋信息，选“否”房屋信息将不会改变</p>
+
+                    </ui:define>
+
+
+                    <ui:define name="actionButtons">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                        <a:commandButton execute="@this" immediate="true" action="#{buildGridMapHome.assginHouseInfo}"
+                                         oncomplete="$('#replactHouseInfoConfirmPanel').modal('hide');"
+                                         value="是" styleClass="btn btn-primary" render="grid_map,idle,toolbar">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandButton>
+                    </ui:define>
+
+
+                </ui:decorate>
 
 
                 <ui:decorate template="/layout/edit-modalpanel.xhtml">
