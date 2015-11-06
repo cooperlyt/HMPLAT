@@ -204,16 +204,16 @@
                 <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
             </f:facet>
             <p:cell colspan="3" fixedHeight="32">
-                <p:paragraph>#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
             </p:cell>
             <p:cell fixedHeight="32">
-                <p:paragraph>#{messages[ownerBusinessHome.instance.applyPersion.credentialsType.name()]}</p:paragraph>
+                <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsType.name()]}</p:paragraph>
             </p:cell>
             <p:cell fixedHeight="32">
                 <p:paragraph>证件号</p:paragraph>
             </p:cell>
             <p:cell fixedHeight="32">
-                <p:paragraph>#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
             </p:cell>
             <p:cell colspan="3" fixedHeight="60">
                 <p:paragraph>#{ownerBusinessHome.instance.closeHouse.action}</p:paragraph>

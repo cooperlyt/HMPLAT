@@ -96,7 +96,7 @@
                 <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
 
                     <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
+                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
                             <p:paragraph rendered="#{not empty ownerBusinessHome.applyEmp}"> #{ownerBusinessHome.applyEmp.comments}</p:paragraph>
                         </p:cell>
                         <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
@@ -204,6 +204,7 @@
 
             </p:table>
         </p:font>
+        <p:barCode  code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
         <p:newPage/>
 
 </p:document>
