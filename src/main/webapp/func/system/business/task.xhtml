@@ -238,6 +238,7 @@
                                                    label="#{_category.category.name}" itemValue="#{_category.category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
                                     <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.resetCondition}" render="myBizDefineFilter,taskListDatas">
                                         <a:attachQueue requestDelay="0"/>
+
                                     </a:ajax>
                                 </h:selectOneMenu>
 

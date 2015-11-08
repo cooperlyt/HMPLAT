@@ -3,12 +3,14 @@ package com.dgsoft.common.system.business;
 import com.dgsoft.common.jbpm.TaskInstanceListCache;
 import com.dgsoft.common.system.FilterBusinessCategory;
 import com.dgsoft.common.system.model.BusinessCategory;
+import com.dgsoft.common.system.model.BusinessDefine;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.bpm.ManagedJbpmContext;
+import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
 import java.util.*;
@@ -48,6 +50,9 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
     @Override
     public List<TaskInstanceAdapter> initResultTask() {
 
+        Logging.getLog(getClass()).debug("call AllTaskList initResultTask: categoryId:" + getSelectCategoryId() + "|defineId:" + selectDefineId);
+
+        Logging.getLog("curTypeTasksCount:" + getCurTypeTasks().size());
 
         Map<String, FilterBusinessCategory> categoryMap = new HashMap<String, FilterBusinessCategory>();
 
@@ -72,6 +77,21 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         });
 
         //--------------
+
+        if((selectCategory != null) && selectDefineId != null && !selectDefineId.trim().equals("")){
+            boolean find = false;
+
+                for (BusinessDefine d:  selectCategory.getDefineList()){
+                    if (selectDefineId.equals(d.getId())){
+                        find = true;
+                        break;
+                    }
+                }
+
+            if(!find){
+                selectDefineId = null;
+            }
+        }
 
         List<TaskInstanceAdapter> resultList = new ArrayList<TaskInstanceAdapter>(getCurTypeTasks());
         List<TaskInstanceAdapter> filterList = new ArrayList<TaskInstanceAdapter>();
