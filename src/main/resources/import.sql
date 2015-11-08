@@ -147,6 +147,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 -- 角色
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.fee','收费数据统计','收费数据统计',1);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.transfer','业务移交单','业务移交单',2);
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
