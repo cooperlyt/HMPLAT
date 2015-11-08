@@ -17,11 +17,17 @@
 
 <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
     <p:table columns="3" widths="2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
-        <p:cell colspan="3" alignment="left" border="0" horizontalAlignment="justify"
+        <p:cell alignment="left" border="0" horizontalAlignment="justify"
                 verticalAlignment="bottom">
             <p:paragraph>受理编号(#{ownerBusinessHome.instance.id})</p:paragraph>
         </p:cell>
 
+        <p:cell border="0"></p:cell>
+
+        <p:cell alignment="right" border="0" horizontalAlignment="right"
+                verticalAlignment="bottom">
+            <p:paragraph>房屋编号(#{_houseBusiness.houseCode})</p:paragraph>
+        </p:cell>
 
         <p:cell colspan="3" border="0" fixedHeight="3">
         </p:cell>
@@ -105,6 +111,18 @@
     <p:cell fixedHeight="25">
         <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.workCardNumber}</p:paragraph>
     </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>法院工作人员签字</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph></p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph>签字时间</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25">
+        <p:paragraph></p:paragraph>
+    </p:cell>
 
     <p:cell fixedHeight="400">
         <p:table columns="2" widths="1 6" headerRows="0" footerRows="0" widthPercentage="100">
@@ -185,16 +203,16 @@
                 <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
             </f:facet>
             <p:cell colspan="3" fixedHeight="32">
-                <p:paragraph>#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
             </p:cell>
             <p:cell fixedHeight="32">
-                <p:paragraph>#{messages[ownerBusinessHome.instance.applyPersion.credentialsType.name()]}</p:paragraph>
+                <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsType.name()]}</p:paragraph>
             </p:cell>
             <p:cell fixedHeight="32">
                 <p:paragraph>证件号</p:paragraph>
             </p:cell>
             <p:cell fixedHeight="32">
-                <p:paragraph>#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
             </p:cell>
             <p:cell colspan="3" fixedHeight="60">
                 <p:paragraph>#{ownerBusinessHome.instance.houseCloseCancel.action}</p:paragraph>
@@ -264,24 +282,9 @@
     </p:cell>
 
 </p:table>
-<p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
-    <f:facet name="defaultCell">
-        <p:cell padding="0" border="0"/>
-    </f:facet>
-    <p:cell>
-        <p:paragraph>房屋编号:</p:paragraph>
-    </p:cell>
-    <p:cell verticalAlignment="left">
-        <p:paragraph>#{_houseBusiness.houseCode}</p:paragraph>
-    </p:cell>
-    <p:cell>
-        <p:paragraph></p:paragraph>
-    </p:cell>
-    <p:cell horizontalAlignment="left">
-        <p:paragraph></p:paragraph>
-    </p:cell>
 
-</p:table>
+
+
 </p:font>
 <p:newPage/>
 </a:repeat>
