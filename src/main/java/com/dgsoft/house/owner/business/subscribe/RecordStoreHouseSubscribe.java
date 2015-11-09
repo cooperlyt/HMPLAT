@@ -31,8 +31,6 @@ public class RecordStoreHouseSubscribe extends OwnerEntityHome<RecordStore> {
             getInstance().setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getRecordStores().add(getInstance());
-
-            Logging.getLog(getClass()).debug("eeeeee");
             for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
 
                 houseBusiness.setRecordStore(getInstance());
