@@ -463,7 +463,10 @@ public class BuildGridMapHome implements DropListener {
                 House tempHouse = (House) targetBlock.getHouse();
                 targetBlock.setHouse(((GridBlock) dropEvent.getDragValue()).getHouse());
                 ((GridBlock) dropEvent.getDragValue()).setHouse(tempHouse);
-                targetBlock.setHouseCode(tempHouse.getHouseCode());
+                if(tempHouse == null){
+                    targetBlock.setHouseCode(null);
+                }else
+                    targetBlock.setHouseCode(tempHouse.getHouseCode());
             } else if (dropEvent.getDragValue() instanceof House) {
                 House tempHouse = (House) dropEvent.getDragValue();
                 if (targetBlock.getHouse() != null) {
@@ -695,7 +698,7 @@ public class BuildGridMapHome implements DropListener {
         ExternalContext externalContext = facesContext.getExternalContext();
         externalContext.responseReset();
         externalContext.setResponseContentType("application/xml");
-        externalContext.setResponseHeader("Content-Disposition", "attachment;filename=gridMap.xml");
+        externalContext.setResponseHeader("Content-Disposition", "attachment;filename=gridMap.xhg");
         try {
             OutputFormat format = OutputFormat.createPrettyPrint();
             format.setEncoding("UTF-8");
