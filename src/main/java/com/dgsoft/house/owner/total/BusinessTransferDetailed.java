@@ -86,7 +86,7 @@ public class BusinessTransferDetailed {
 
 
         List<OwnerBusiness> ownerBusinessList = ownerEntityLoader.getEntityManager().createQuery
-                ("select ob from OwnerBusiness ob left join ob.businessEmps be where ob.applyTime >= :beginDate and ob.applyTime <= :endDate and ob.recorded=:record and ob.source= :source and be.type=:businessEmptype order by ob.defineId,ob.applyTime", OwnerBusiness.class)
+                ("select ob from OwnerBusiness ob left join ob.businessEmps be where ob.status in ('RUNNING') and ob.applyTime >= :beginDate and ob.applyTime <= :endDate and ob.recorded=:record and ob.source= :source and be.type=:businessEmptype order by ob.defineId,ob.applyTime", OwnerBusiness.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate",toDateTime)
                 .setParameter("record",false)
@@ -193,16 +193,6 @@ public class BusinessTransferDetailed {
         }
 
 
-
-
-
-
-
-
-
-
-
-
         sheet.setForceFormulaRecalculation(true);
         ExternalContext externalContext = facesContext.getExternalContext();
         externalContext.responseReset();
@@ -215,16 +205,6 @@ public class BusinessTransferDetailed {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ExportIOError");
             Logging.getLog(getClass()).error("export error", e);
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 
