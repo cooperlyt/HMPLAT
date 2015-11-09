@@ -8,11 +8,12 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <f:subview>
-        <a:commandLink value="#{number}" execute="@this" oncomplete="#{r:component('popup')}.show()"
+        <a:commandLink value="#{number}" execute="@form" oncomplete="#{r:component('popup')}.show()"
                        render="personCardView">
             <a:attachQueue requestDelay="0"/>
 
             <a:param value="#{number}" assignTo="#{personHome.id}"/>
+            <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
 
         </a:commandLink>
 

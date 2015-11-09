@@ -192,7 +192,8 @@
 
             </a:outputPanel>
 
-            <h:form>
+
+            <h:form >
 
                 <a:outputPanel layout="block" id="context" styleClass="container">
 
@@ -521,15 +522,20 @@
 
                         </div>
 
-
+                        <h:inputHidden value="#{ownerBusinessView.id}"/>
                         <r:tabPanel switchType="client">
-                            <c:forEach items="#{businessDefineHome.viewSubscribeDefineGroups}" var="_group">
+
+
+                            <c:forEach   items="#{ownerBusinessView.viewSubscribeDefineGroups}"
+
+                                        var="_group">
 
                                 <r:tab>
 
                                     <f:facet name="header">
                                         <span class="#{_group.group.iconCss}"/>
                                         #{_group.group.name}
+
                                     </f:facet>
 
                                     <dh:entryGrid styleClass="detailsTable table table-bordered "

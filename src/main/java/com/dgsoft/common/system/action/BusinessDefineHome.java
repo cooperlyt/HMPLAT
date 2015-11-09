@@ -469,7 +469,6 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     public List<TaskSubscribeReg.SubscribeDefineGroup> getViewSubscribeDefineGroups() {
         List<TaskSubscribeReg.SubscribeDefineGroup> result = new ArrayList<TaskSubscribeReg.SubscribeDefineGroup>();
-
         for (SubscribeGroup group : getViewSubscribeGroups()) {
             TaskSubscribeReg.SubscribeDefineGroup defineGroup = new TaskSubscribeReg.SubscribeDefineGroup(group);
 
