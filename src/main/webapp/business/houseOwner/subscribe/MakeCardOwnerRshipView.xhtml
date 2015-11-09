@@ -14,6 +14,15 @@
             <h:outputText value="#{messages.Card_OwnerRship}"/>
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.getCardByType('OWNER_RSHIP').number}"/>
+
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{ownerRsipCardPrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{ownerRsipCardPrint.printUrl}"
+                               execute="@this" oncomplete="extendsCall(event.data);">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
+                    打印
+                </a:commandLink>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>

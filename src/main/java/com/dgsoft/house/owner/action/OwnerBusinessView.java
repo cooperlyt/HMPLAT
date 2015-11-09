@@ -6,15 +6,22 @@ import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.Subscribe;
+import com.dgsoft.common.system.business.TaskSubscribeReg;
+import com.dgsoft.common.system.model.SubscribeGroup;
+import com.dgsoft.common.system.model.ViewSubscribe;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.framework.EntityNotFoundException;
+import org.jboss.seam.log.Logging;
 import org.jboss.seam.security.Identity;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -40,6 +47,7 @@ public class OwnerBusinessView {
     private Identity identity;
 
     public void setId(String id){
+        Logging.getLog(getClass()).debug("call ownerBusinessView setId:" + id);
         if ((id == null) || id.trim().equals("")){
             ownerBusinessHome.createInstance();
             businessDefineHome.clearInstance();
@@ -65,9 +73,19 @@ public class OwnerBusinessView {
         }
     }
 
+
+
     public String getId(){
        return (String)ownerBusinessHome.getId();
     }
+
+    public List<TaskSubscribeReg.SubscribeDefineGroup> getViewSubscribeDefineGroups() {
+        if (!ownerBusinessHome.isIdDefined()){
+            setId(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("businessId"));
+        }
+        return businessDefineHome.getViewSubscribeDefineGroups();
+    }
+
 
     public boolean isCanSuspend(){
        return  identity.hasRole("system.runBusinessMgr") && OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) &&
