@@ -26,7 +26,7 @@ public class RecordStoreHouseSubscribe extends OwnerEntityHome<RecordStore> {
     public void create(){
         super.create();
         if(!ownerBusinessHome.getInstance().getRecordStores().isEmpty()){
-            setId(ownerBusinessHome.getInstance().getReasons().iterator().next().getId());
+            setId(ownerBusinessHome.getInstance().getRecordStores().iterator().next().getId());
         }else{
             getInstance().setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
