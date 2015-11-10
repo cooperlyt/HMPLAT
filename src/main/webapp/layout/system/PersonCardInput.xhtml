@@ -103,7 +103,7 @@
         </div>
         <h:inputText id="cerdentialsName" value="#{_person.personName}"
                      p:placeholder="#{messages.person_field_name}"
-                     disabled="#{_person.reading or (not empty _person.idCard)}"
+                     readonly="#{_person.reading or (not empty _person.idCard)}"
                      required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
 
         </h:inputText>
