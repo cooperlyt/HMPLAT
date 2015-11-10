@@ -215,7 +215,8 @@ public class OutsideBusinessCreate {
 
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(contractOwner);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
-
+        ownerBusinessHome.getInstance().getContractOwners().clear();
+        ownerBusinessHome.getInstance().getContractOwners().add(contractOwner);
         if (businessPools != null){
             for (BusinessPool bp : businessPools) {
                 bp.setOwnerBusiness(ownerBusinessHome.getInstance());
