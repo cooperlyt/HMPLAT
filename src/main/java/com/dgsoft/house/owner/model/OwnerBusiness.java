@@ -639,7 +639,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public ContractOwner getContractOwner() {
-        if (!getEvaluates().isEmpty()) {
+        if (!getContractOwners().isEmpty()) {
             return getContractOwners().iterator().next();
         }
         return null;

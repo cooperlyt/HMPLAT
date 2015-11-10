@@ -57,6 +57,7 @@ public class ContractOwnerSubscribe extends OwnerEntityHome<ContractOwner> imple
     public  ContractOwner createInstance(){
         ContractOwner result = new ContractOwner();
         result.setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getContractOwners().add(result);
         result.setHouseCode(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseCode());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(result);
         return result;
