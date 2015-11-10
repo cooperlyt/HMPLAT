@@ -635,6 +635,17 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     /**
+     * 备案人
+     */
+    @Transient
+    public ContractOwner getContractOwner() {
+        if (!getEvaluates().isEmpty()) {
+            return getContractOwners().iterator().next();
+        }
+        return null;
+    }
+
+    /**
      * 评估公司
      */
     @Transient

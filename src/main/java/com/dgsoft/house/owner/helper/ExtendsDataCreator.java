@@ -196,8 +196,12 @@ public class ExtendsDataCreator {
 //        }
 
         jsonObject.put("共有信息", jsonField(poolInfo));
-        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
-        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
+            jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        }
+        if(markCard.getCardInfo().getMemo() !=null){
+            jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        }
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
         jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
         jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
@@ -241,8 +245,12 @@ public class ExtendsDataCreator {
         jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
         jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
         jsonObject.put("共有信息", jsonField(poolInfo));
-        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
-        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
+            jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        }
+        if(markCard.getCardInfo().getMemo() !=null){
+            jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        }
         return jsonObject;
     }
 
@@ -284,9 +292,12 @@ public class ExtendsDataCreator {
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
         jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
         jsonObject.put("评估价格", jsonField(ownerBusiness.getEvaluate().getAssessmentPrice()));
-        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
-        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
-
+        if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
+            jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        }
+        if(markCard.getCardInfo().getMemo() !=null){
+            jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        }
 
         return jsonObject;
     }
@@ -329,8 +340,12 @@ public class ExtendsDataCreator {
         jsonObject.put("业务名称", jsonField(ownerBusiness.getDefineName()));
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
         jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
-        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
-        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
+            jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        }
+        if(markCard.getCardInfo().getMemo() !=null){
+            jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        }
         return jsonObject;
     }
 
@@ -388,8 +403,13 @@ public class ExtendsDataCreator {
         jsonObject.put("结构", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getStructure())));
         jsonObject.put("所在层", jsonField(businessHouse.getInFloorName()));
         jsonObject.put("共有信息", jsonField(poolInfo));
-        jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
-        jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
+            jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
+        }
+        if(markCard.getCardInfo().getMemo() !=null){
+            jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
+        }
+
         return jsonObject;
 
     }
