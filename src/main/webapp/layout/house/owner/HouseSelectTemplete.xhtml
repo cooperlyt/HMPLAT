@@ -179,7 +179,7 @@
                                                  value="#{buildHome.id}">
                                     <s:selectItems value="#{houseStepSelect.buildList}"
                                                    var="_build" itemValue="#{_build.id}"
-                                                   label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}"
+                                                   label="#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}#{_build.doorNo}"
                                                    noSelectionLabel="#{messages.buildSelect}"/>
 
                                 </h:selectOneMenu>
