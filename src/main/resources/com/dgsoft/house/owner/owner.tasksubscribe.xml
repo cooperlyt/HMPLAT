@@ -359,6 +359,14 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="MakeCardNoticeMortgageView" page="/business/houseOwner/subscribe/MakeCardNoticeMortgageView.xhtml">
+        <description>
+            保存生成的单房屋预告抵押登记证明号查看
+        </description>
+    </view-subscribe>
+
+
+
 
     <view-subscribe name="MakeCardMortgageView" page="/business/houseOwner/subscribe/MakeCardMortgageView.xhtml">
         <description>
@@ -1177,7 +1185,11 @@
         </description>
     </end-subscribe>
 
-
+    <end-subscribe name="makeCardEnableEnd" component="makeCardEnable">
+        <description>
+           缮证完成后将权证设置有效
+        </description>
+    </end-subscribe>
 
 
 

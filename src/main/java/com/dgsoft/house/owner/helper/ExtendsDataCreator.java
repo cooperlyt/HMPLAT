@@ -295,7 +295,7 @@ public class ExtendsDataCreator {
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo().getMemo() !=null){
+        if(markCard.getCardInfo() !=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
 
@@ -343,7 +343,7 @@ public class ExtendsDataCreator {
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo().getMemo() !=null){
+        if(markCard.getCardInfo() !=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
         return jsonObject;
@@ -406,7 +406,7 @@ public class ExtendsDataCreator {
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo().getMemo() !=null){
+        if(markCard.getCardInfo() !=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
 

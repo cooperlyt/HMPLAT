@@ -17,7 +17,7 @@
 
                 <a:commandLink styleClass="btn minibutton right" render="@none" action="#{ownerRsipCardPrint.preparePrintOwnerFee}" immediate="true"
                                data="#{ownerRsipCardPrint.printUrl}"
-                               execute="@this" oncomplete="extendsCall(event.data);">
+                               execute="@this" oncomplete="extendsCall(event.data);" rendered="#{ownerBusinessHome.getCardByType('OWNER_RSHIP').enable}">
                     <span class="glyphicon glyphicon-print"/>
                     <a:attachQueue requestDelay="0"/>
                     <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>

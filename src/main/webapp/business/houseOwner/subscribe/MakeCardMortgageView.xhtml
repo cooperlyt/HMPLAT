@@ -13,6 +13,16 @@
             <h:outputText value="#{messages.Card_MORTGAGE}"/>
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.number}"/>
+
+
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{mortgagePrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{mortgagePrint.printUrl}"
+                               execute="@this" oncomplete="extendsCall(event.data);" rendered="#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.enable}">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
+                    打印
+                </a:commandLink>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>

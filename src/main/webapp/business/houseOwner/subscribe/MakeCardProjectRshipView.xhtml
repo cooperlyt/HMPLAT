@@ -13,6 +13,26 @@
             <h:outputText value="#{messages.Card_SaleLicense}"/>
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.getCardByType('PROJECT_RSHIP').number}"/>
+
+
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{projectRshipPrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{projectRshipPrint.printUrl}" rendered="#{ownerBusinessHome.getCardByType('PROJECT_RSHIP').enable}"
+                               execute="@this" oncomplete="extendsCall(event.data);">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
+                    许可证打印
+                </a:commandLink>
+
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{projectRshipStubPrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{projectRshipStubPrint.printUrl}" rendered="#{ownerBusinessHome.getCardByType('PROJECT_RSHIP').enable}"
+                               execute="@this" oncomplete="extendsCall(event.data);">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
+                    存根打印
+                </a:commandLink>
+
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>

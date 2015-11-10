@@ -14,8 +14,8 @@
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.getCardByType('NOTICE').number}"/>
 
-                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{noticePrint.preparePrintOwnerFee}" immediate="true"
-                               data="#{noticePrint.printUrl}"
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{noticeMortgagePrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{noticeMortgagePrint.printUrl}"
                                execute="@this" oncomplete="extendsCall(event.data);" rendered="#{ownerBusinessHome.getCardByType('NOTICE').enable}">
                     <span class="glyphicon glyphicon-print"/>
                     <a:attachQueue requestDelay="0"/>

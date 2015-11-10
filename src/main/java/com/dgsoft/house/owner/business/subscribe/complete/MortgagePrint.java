@@ -27,6 +27,7 @@ public class MortgagePrint {
 
 
     public void preparePrintOwnerFee(){
+
         printUrl = extendsDataCreator.extendsPrintMortgageCard(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
                 ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance());
     }

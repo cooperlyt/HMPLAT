@@ -38,7 +38,9 @@ public class NoticeMortgagePrint {
     }
 
     public void preparePrintOwnerFee(){
-        printUrl = extendsDataCreator.extendsPrintNoticeMortgage(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance(),getPoolInfo());
+
+            printUrl = extendsDataCreator.extendsPrintNoticeMortgage(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
+                    ownerBusinessHome.getInstance().getMakeCards().iterator().next(), ownerBusinessHome.getInstance(), getPoolInfo());
+        
     }
 }
