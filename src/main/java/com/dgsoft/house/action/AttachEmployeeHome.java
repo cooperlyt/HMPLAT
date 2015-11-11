@@ -58,7 +58,10 @@ public class AttachEmployeeHome extends HouseEntityHome<AttachEmployee> {
 
     private String keyDesKey;
 
-    private Project project;
+    //private Project project;
+    private List<Project> srcProjects;
+
+    private List<Project> desProjects;
 
     private String selectKeyId;
 
@@ -86,12 +89,32 @@ public class AttachEmployeeHome extends HouseEntityHome<AttachEmployee> {
         this.keyDesKey = keyDesKey;
     }
 
-    public Project getProject() {
-        return project;
+    public List<Project> getSrcProjects() {
+        if (srcProjects == null){
+            if (!isIdDefined() || !getInstance().getAttachCorporation().getType().equals(AttachCorporation.AttachCorpType.DEVELOPER)) {
+                srcProjects = new ArrayList<Project>(0);
+            }else {
+                List<Project> result = new ArrayList<Project>(getInstance().getAttachCorporation().getDeveloper().getProjects());
+                Collections.sort(result, new Comparator<Project>() {
+                    @Override
+                    public int compare(Project o1, Project o2) {
+                        return o1.getCreateTime().compareTo(o2.getCreateTime());
+                    }
+                });
+                srcProjects = result;
+            }
+
+        }
+
+        return srcProjects;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public List<Project> getDesProjects() {
+        return desProjects;
+    }
+
+    public void setDesProjects(List<Project> desProjects) {
+        this.desProjects = desProjects;
     }
 
     public String getSelectKeyId() {
@@ -100,6 +123,41 @@ public class AttachEmployeeHome extends HouseEntityHome<AttachEmployee> {
 
     public void setSelectKeyId(String selectKeyId) {
         this.selectKeyId = selectKeyId;
+    }
+
+    public void initKeyProject(){
+
+
+        if (desProjects == null){
+            for(DeveloperLogonKey key: getInstance().getDeveloperLogonKeys()) {
+                if (key.getId().equals(selectKeyId)) {
+                    desProjects = new ArrayList<Project>(key.getProjects());
+                    Collections.sort(desProjects, new Comparator<Project>() {
+                        @Override
+                        public int compare(Project o1, Project o2) {
+                            return o1.getId().compareTo(o2.getId());
+                        }
+                    });
+                    break;
+                }
+            }
+            if (desProjects == null){
+                desProjects = new ArrayList<Project>(0);
+            }
+        }
+
+    }
+
+    public void saveKeyProject(){
+        Logging.getLog(getClass()).debug("selectKey:" + selectKeyId);
+        for(DeveloperLogonKey key: getInstance().getDeveloperLogonKeys()) {
+            if (key.getId().equals(selectKeyId)) {
+                key.getProjects().clear();
+                key.getProjects().addAll(desProjects);
+                update();
+                break;
+            }
+        }
     }
 
     public void deleteDeveloperKey(){
@@ -116,8 +174,9 @@ public class AttachEmployeeHome extends HouseEntityHome<AttachEmployee> {
     public String addKey(){
         if (getEntityManager().createQuery("select count(logonKey.id) from DeveloperLogonKey logonKey where logonKey.id = :keyId",Long.class)
                 .setParameter("keyId",keyUid).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
-            getInstance().getDeveloperLogonKeys().add(new DeveloperLogonKey(keyUid, keySeed, keyDesKey, getInstance(), project));
-            Logging.getLog(getClass()).debug("bindKey:" + keyUid + "," + keySeed + "," + keyDesKey + "," + project.getId() ) ;
+            getInstance().getDeveloperLogonKeys().add(new DeveloperLogonKey(keyUid, keySeed, keyDesKey, getInstance()));
+
+            Logging.getLog(getClass()).debug("bindKey:" + keyUid + "," + keySeed + "," + keyDesKey  ) ;
             return update();
 
         }else{
@@ -128,23 +187,4 @@ public class AttachEmployeeHome extends HouseEntityHome<AttachEmployee> {
     }
 
 
-
-
-    public List<Project> getProjectList(){
-
-            if (!isIdDefined() || !getInstance().getAttachCorporation().getType().equals(AttachCorporation.AttachCorpType.DEVELOPER)) {
-               return new ArrayList<Project>(0);
-            }else {
-                List<Project> result = new ArrayList<Project>(getInstance().getAttachCorporation().getDeveloper().getProjects());
-                Collections.sort(result, new Comparator<Project>() {
-                    @Override
-                    public int compare(Project o1, Project o2) {
-                        return o1.getCreateTime().compareTo(o2.getCreateTime());
-                    }
-                });
-                return result;
-            }
-
-
-    }
 }

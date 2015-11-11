@@ -126,7 +126,7 @@
                             <f:facet name="header">
                                 开发商编号
                             </f:facet>
-                            <s:link value="#{_item.id}" styleClass=" #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
+                            <s:link value="#{_item.id}" styleClass="css-truncate css-truncate-target #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
                                     view="/func/house/datas/AttachCorpView.xhtml">
                                 <f:param name="attachCorpId" value="#{_item.id}"/>
                             </s:link>
@@ -138,6 +138,15 @@
                             </f:facet>
                             <h:outputText styleClass="  #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
                             value="#{_item.developer.name}"/>
+
+                        </h:column>
+
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                描述
+                            </f:facet>
+                            <h:outputText styleClass="css-truncate css-truncate-target  #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
+                                          value="#{_item.developer.description}"/>
 
                         </h:column>
 

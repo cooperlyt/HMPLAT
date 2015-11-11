@@ -3,6 +3,9 @@ package com.dgsoft.house.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by cooper on 9/3/15.
@@ -15,18 +18,18 @@ public class DeveloperLogonKey implements java.io.Serializable{
     private String password;
     private String sessionKey;
     private String userKey;
-    private Project project;
+    //private Project project;
+    private Set<Project> projects = new HashSet<Project>(0);
     private AttachEmployee attachEmployee;
 
     public DeveloperLogonKey() {
     }
 
-    public DeveloperLogonKey(String id, String password, String userKey, AttachEmployee attachEmployee, Project project) {
+    public DeveloperLogonKey(String id, String password, String userKey, AttachEmployee attachEmployee) {
         this.id = id;
         this.password = password;
         this.userKey = userKey;
         this.attachEmployee = attachEmployee;
-        this.project = project;
     }
 
     @Id
@@ -73,15 +76,15 @@ public class DeveloperLogonKey implements java.io.Serializable{
         this.userKey = userKey;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PROJECT", nullable = false)
-    @NotNull
-    public Project getProject() {
-        return project;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "KEY_AND_PROJECT",joinColumns=@JoinColumn(name="DEVELOPER_KEY"),inverseJoinColumns = @JoinColumn(name = "PROJECT"))
+    public Set<Project> getProjects() {
+        return projects;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
