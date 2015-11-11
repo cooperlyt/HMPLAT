@@ -53,7 +53,7 @@
     <dh:entryGrid styleClass="detailsTable table table-bordered " keyWidth="150">
         <dh:entryGridBlock columns="4" rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}">
             <h:outputText value="#{messages.Name}"/>
-            <dh:entryGridColumn colspan="3">
+            <dh:entryGridColumn colspan="1">
                 <h:outputText value="#{attachCorporationHome.instance.developer.name}" style="padding-right: 10px"
                               styleClass="#{attachCorporationHome.instance.outTime ? 'out-time' : ''} #{attachCorporationHome.instance.enable ? '' : 'delete-data'} "/>
                 <a:outputPanel styleClass="label label-danger"
@@ -62,6 +62,8 @@
                                rendered="#{attachCorporationHome.instance.outTime}">#{messages.AttachOutTime}</a:outputPanel>
             </dh:entryGridColumn>
 
+            <h:outputText value="#{messages.description}"/>
+            <h:outputText value="#{attachCorporationHome.instance.developer.description}"/>
         </dh:entryGridBlock>
 
         <dh:entryGridBlock columns="4">
@@ -109,6 +111,35 @@
                          render="attachEmpDatas" immediate="true" execute="@this">
             <a:attachQueue requestDelay="0"/>
         </a:commandButton>
+    </ui:decorate>
+
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="keyProjectPickPanel"/>
+
+        <ui:param name="panelTitle" value="项目选择"/>
+
+        <r:pickList value="#{attachEmployeeHome.desProjects}" listHeight="300px" listWidth="242px"
+                    addText=""
+                    removeAllText=""
+                    addAllText="" removeText="">
+
+            <s:selectItems value="#{attachEmployeeHome.srcProjects}" var="_project"
+                           label="#{_project.name}"/>
+            <f:converter converterId="houseEntityConverter"/>
+        </r:pickList>
+
+        <ui:define name="actionButtons">
+            <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
+            <a:commandLink action="#{attachEmployeeHome.saveKeyProject}"
+                           styleClass="btn btn-primary"
+                           execute="@form" render="@none"
+                           oncomplete="$('#keyProjectPickPanel').modal('hide')">
+                #{messages.update}
+
+                <a:attachQueue requestDelay="0"/>
+            </a:commandLink>
+        </ui:define>
+
     </ui:decorate>
 
 
@@ -256,7 +287,15 @@
                                     <a:repeat value="#{_emp.developerLogonKeyList}" var="_key">
                                     <li>
                                         <span class="type-icon octicon octicon-key" style="color: #60b044;"/>
-                                        <span style="font-size: 12px;font-weight: bold">#{_key.project.name}</span>
+
+                                        <a:commandLink style="font-size: 12px;font-weight: bold" immediate="true" render="keyProjectPickPanel_form"
+                                                       execute="@this" oncomplete="$('#keyProjectPickPanel').modal({backdrop: 'static'})"
+                                                       action="#{attachEmployeeHome.initKeyProject}" >
+                                            <a:attachQueue requestDelay="0"/>#{_key.id}
+                                            <f:param name="attachEmpId" value="#{_emp.id}"/>
+                                            <f:param name="keyId" value="#{_key.id}"/>
+                                        </a:commandLink>
+
                                         <a:commandLink style="color:#a94442 " execute="@this" immediate="true"
                                                        render="keyDeleteConfirmPanel_form"
                                                        oncomplete="$('#keyDeleteConfirmPanel').modal('show')">

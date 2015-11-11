@@ -104,6 +104,17 @@
             </ui:define>
         </s:decorate>
 
+        <s:decorate id="developerDescriptionField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.description}
+            </ui:define>
+
+            <h:inputTextarea value="#{developerHome.instance.description}" styleClass="form-control"/>
+
+
+        </s:decorate>
+
+
 
         <ui:define name="actionButtons">
             <button type="button" class="button default" data-dismiss="modal">

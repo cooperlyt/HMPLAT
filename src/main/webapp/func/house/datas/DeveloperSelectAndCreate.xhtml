@@ -159,7 +159,18 @@
                         </p>
                     </ui:define>
                 </s:decorate>
+
+
+
             </div>
+
+            <s:decorate id="developerDescription" styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.description}
+                </ui:define>
+
+                <h:inputTextarea styleClass="form-control" value="#{developerHome.instance.description}" rows="3"/>
+            </s:decorate>
 
 
         </a:outputPanel>

@@ -23,7 +23,7 @@ import java.util.List;
 @AutoCreate
 @Scope(ScopeType.APPLICATION)
 @Install(precedence = Install.APPLICATION, dependencies = "org.jboss.seam.bpm.jbpm")
-@Synchronized
+@Synchronized(timeout = 5000)
 @Startup(depends = "org.jboss.seam.bpm.jbpm")
 public class BpmTaskChangePublish {
 

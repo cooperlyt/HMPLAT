@@ -102,23 +102,7 @@
                 <h1>#{messages.MakeEmployeeKey}</h1>
             </div>
             <div class="auth-form-body">
-            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
-                <ui:define name="label">
-                    #{messages.Project}
-                </ui:define>
-                <ui:param name="showTip" value="false"/>
-                <h:selectOneMenu value="#{attachEmployeeHome.project}" id="projectInput"
-                                 label=""
-                                 p:data-header="#{messages.AttachEmpKeyProject}" required="true"
-                                 styleClass="selectpicker edit-select form-control">
-                    <s:selectItems value="#{attachEmployeeHome.projectList}" var="_project"
-                                   label="#{_project.name}" itemValue="#{_project}"
-                                   noSelectionLabel="#{messages.noSelectLabel}"/>
-                    <f:converter converterId="houseEntityConverter"/>
 
-
-                </h:selectOneMenu>
-            </s:decorate>
 
             <h:inputHidden id="keyUid" value="#{attachEmployeeHome.keyUid}"/>
             <h:inputHidden id="keySeed" value="#{attachEmployeeHome.keySeed}"/>

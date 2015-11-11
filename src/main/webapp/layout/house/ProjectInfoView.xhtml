@@ -29,9 +29,15 @@
 
 
         <h:outputText value="#{messages.Developer}"/>
-        <dh:entryGridColumn colspan="5">
+        <dh:entryGridColumn colspan="3">
         <h:outputText value="#{project.developer.name}"/>
         </dh:entryGridColumn>
+
+
+
+        <h:outputText value="#{messages.description}"/>
+
+            <h:outputText value="#{project.developer.description}"/>
 
 
 
