@@ -235,7 +235,8 @@
             <h:inputText label="#{messages.Land_Area}"
                          id="landArea"
                          value="#{projectSellInfoSubscribe.instance.landArea}"
-                         styleClass="form-control">
+                         styleClass="form-control"
+                         required="true">
                 <r:validator event="blur"/>
                 <f:validateDoubleRange minimum="0"/>
                 <f:convertNumber pattern="#0.000"/>
@@ -251,7 +252,8 @@
             <h:selectOneMenu id="landProperty"
                              label="#{message.Land_LandProperty}"
                              value="#{projectSellInfoSubscribe.instance.landProperty}"
-                             styleClass="selectpicker edit-select">
+                             styleClass="selectpicker edit-select"
+                             required="true">
                 <s:selectItems value="#{dictionary.getWordList('32')}" var="_word"
                                itemValue="#{_word.id}" label="#{_word.value}"
                                noSelectionLabel="#{messages.noSelectLabel}"/>
@@ -271,7 +273,8 @@
                      id="landAddress"
                      value="#{projectSellInfoSubscribe.instance.landAddress}"
                      styleClass="form-control"
-                     size="255">
+                     size="255"
+                     required="true">
         </h:inputText>
     </s:decorate>
 
@@ -291,8 +294,6 @@
 
 
         </h:selectOneMenu>
-
-
 
     </s:decorate>
 
