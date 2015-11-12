@@ -214,12 +214,27 @@
                         <p:cell borderWidthLeft="0" borderWidthTop="0">
                             <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
                         </p:cell>
-                        <p:cell borderWidthLeft="0" fixedHeight="20">
-                            <p:paragraph>房屋所有权证号</p:paragraph>
+                        <p:cell colspan="2">
+                            <p:table columns="4" widths="1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100" >
+                                <f:facet name="defaultCell">
+                                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0"/>
+                                </f:facet>
+                                <p:cell borderWidthLeft="0" fixedHeight="20">
+                                    <p:paragraph>房屋所有权证号</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="20">
+                                    <p:paragraph>建筑面积</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.houseArea}</p:paragraph>
+                                </p:cell>
+                            </p:table>
+
                         </p:cell>
-                        <p:cell borderWidthLeft="0">
-                            <p:paragraph>#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
-                        </p:cell>
+
                         <p:cell colspan="2" borderWidthLeft="0" horizontalAlignment="top" verticalAlignment="left" fixedHeight="40" >
                             <p:paragraph>申请#{ownerBusinessHome.instance.defineName}</p:paragraph>
                         </p:cell>
