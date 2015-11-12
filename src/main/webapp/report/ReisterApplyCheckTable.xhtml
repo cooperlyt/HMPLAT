@@ -203,6 +203,22 @@
             <p:paragraph rendered="#{not empty ownerBusinessHome.cardPrinterEmp}"><p:text value="#{ownerBusinessHome.cardPrinterEmp.operDate}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
         </p:cell>
 
+        <p:cell>
+            <p:paragraph>权证编号</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph></p:paragraph>
+        </p:cell>
+
+        <p:cell>
+
+        </p:cell>
+
     </p:table>
 </p:font>
         <p:barCode  code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
