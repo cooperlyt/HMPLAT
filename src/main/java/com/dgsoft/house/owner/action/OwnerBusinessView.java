@@ -98,7 +98,8 @@ public class OwnerBusinessView {
     }
 
     public boolean isCanStop(){
-        return  !ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE) && identity.hasRole("system.runBusinessMgr") && (OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) || OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus())) &&
+        //!ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)
+        return   identity.hasRole("system.runBusinessMgr") && (OwnerBusiness.BusinessStatus.RUNNING.equals(ownerBusinessHome.getInstance().getStatus()) || OwnerBusiness.BusinessStatus.SUSPEND.equals(ownerBusinessHome.getInstance().getStatus())) &&
                 (processInstanceHome.getInstance() != null) && !ownerBusinessHome.getInstance().isRecorded();
     }
 

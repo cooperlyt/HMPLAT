@@ -13,6 +13,7 @@ import com.dgsoft.house.PoolType;
 import com.dgsoft.house.SaleType;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
+import com.dgsoft.house.owner.HouseOwnerHelper;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import com.longmai.uitl.Base64;
@@ -306,6 +307,7 @@ public class DeveloperServiceComponent {
 
         try {
             JSONObject houseJsonObj = getHouseJsonObj(house, houseStatus, locked, sale, inBiz);
+
             houseJsonObj.put("pledge", searchHousePledgeInfo(houseCode));
             houseJsonObj.put("buildCode", house.getBuildCode());
             try {
@@ -434,6 +436,9 @@ public class DeveloperServiceComponent {
     private JSONObject getHouseJsonObj(House house, HouseStatus status, boolean locked, boolean saled, boolean inBiz) throws JSONException {
         JSONObject houseJsonObj = getHouseJsonObj(house, status, locked, saled);
         houseJsonObj.put("inBiz", inBiz);
+        List<HouseStatus> allStatus = OwnerHouseHelper.instance().getHouseAllStatus(house.getHouseCode());
+
+        houseJsonObj.put("saleType", (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL.name() : SaleType.MAP_SELL );
         return houseJsonObj;
     }
 
@@ -466,7 +471,7 @@ public class DeveloperServiceComponent {
         if (house.getCommParam() != null)
             houseJsonObj.put("commParam", house.getCommParam().doubleValue());
         houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
-        houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
+        houseJsonObj.put("useType", DictionaryWord.instance().getWordValue(house.getUseType()));
         houseJsonObj.put("structure", DictionaryWord.instance().getWordValue(house.getStructure()));
         houseJsonObj.put("knotSize", DictionaryWord.instance().getWordValue(house.getKnotSize()));
         houseJsonObj.put("address", house.getAddress());
