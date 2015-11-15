@@ -69,11 +69,7 @@ public class TotalProjectCard {
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate",toDateTime)
                 .getResultList();
-        if (ownerBusinessList!=null){
-            Logging.getLog(getClass()).debug("aaaaa");
-        }else {
-            Logging.getLog(getClass()).debug("bbbbb");
-        }
+
         if (ownerBusinessList!=null){
 
             XSSFWorkbook workbook = new XSSFWorkbook();
