@@ -686,9 +686,9 @@
                                       clearLabel="#{messages.fileUpload_clearControlLabel}"
                                       stopControlLabel="#{messages.fileUpload_stopControlLabel}"
                                       fileUploadListener="#{buildGridMapHome.templeteFileUploadListener}"
-                                      ontyperejected="alert('#{messages.unsupportedProcessDefFile}');"
+                                      ontyperejected="alert('不支持的文件类型');"
                                       onuploadcomplete="#{r:component('updateFilePopup')}.hide();if(#{buildGridMapHome.replaceGridMap}){$('#replactHouseInfoConfirmPanel').modal({show: true, backdrop: 'static'});}else{renderMap();}"
-                                      acceptedTypes="xml">
+                                      acceptedTypes="xhg,xml">
 
                         </r:fileUpload>
 

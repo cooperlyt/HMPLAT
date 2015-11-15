@@ -74,6 +74,7 @@ public class OutsideBusinessCreate {
         ContractOwner contractOwner;
         PoolType poolType;
         SaleInfo saleInfo;
+        BusinessPersion businessPersion;
         List<BusinessPool> businessPools = null;
         try {
             houseCode = contractObj.getString("houseCode");
@@ -125,6 +126,13 @@ public class OutsideBusinessCreate {
 
             }
 
+
+            businessPersion = new BusinessPersion(BusinessPersion.PersionType.PRE_SALE_ENTRUST);
+            businessPersion.setPersonName(contractObj.getString("proxyPerson"));
+            businessPersion.setCredentialsType(PersonEntity.CredentialsType.valueOf(contractObj.getString("proxyCredentialsType")));
+            businessPersion.setCredentialsNumber(contractObj.getString("proxyCredentialsNumber"));
+            businessPersion.setPhone(contractObj.getString("proxyTel"));
+
             saleInfo = new SaleInfo(SalePayType.valueOf(contractObj.getString("salePayType")),BigDecimal.valueOf(contractObj.getDouble("contractPrice")));
 
 
@@ -136,6 +144,7 @@ public class OutsideBusinessCreate {
                     legalPerson,contractObj.getString("id"),
                     SaleType.valueOf(contractObj.getString("type")),new Date(contractObj.getLong("createTime")),houseCode);
 
+            contractOwner.setProjectRshipNumber(contractObj.getString("projectCerNumber"));
 
             HouseContract houseContract = new HouseContract(contractObj.getString("attachEmpId"),
                     contractObj.getString("attachEmpName"),
@@ -212,6 +221,9 @@ public class OutsideBusinessCreate {
 
         saleInfo.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getSaleInfos().add(saleInfo);
+
+        businessPersion.setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getBusinessPersions().add(businessPersion);
 
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(contractOwner);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
