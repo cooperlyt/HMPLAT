@@ -551,7 +551,7 @@ public class ProjectBusinessStart {
 
                         if (block.getHouse() != null) {
                             if (block.isLocked()) {
-                                if ((block.getHouse().getHouseType() == null)) {
+                                if ((block.getHouse().getHouseType() == null) || "".equals(block.getHouse().getHouseType().trim())) {
                                     UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
                                     businessBuild.setHouseCount(businessBuild.getHomeCount() + 1);
                                     businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
