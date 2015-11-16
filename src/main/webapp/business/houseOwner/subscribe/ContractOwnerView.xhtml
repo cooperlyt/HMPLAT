@@ -5,13 +5,22 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner}">
         <ui:include src="/layout/house/ContractOwnerView.xhtml">
             <ui:param name="nameLabel" value="#{messages.RecordOwner_view}"/>
             <ui:param name="businessHouse" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner}"/>
         </ui:include>
+        <dh:entryGridBlock columns="4">
+           <h:outputText value="#{messages.Card_MerchandiseContrao}"/>
+           <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner.contractNumber}"/>
+           <h:outputText value="#{messages.ContractOwner_contractDate}"/>
+           <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner.contractDate}"/>
+        </dh:entryGridBlock>
+
+
     </a:outputPanel>
 
     <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.afterBusinessHouse.contractOwner}">
