@@ -88,7 +88,7 @@ public class DeveloperServiceComponent {
                 attachCorpJsonObj.put("licenseNumber", key.getAttachEmployee().getAttachCorporation().getLicenseNumber());
                 attachCorpJsonObj.put("cerCode", key.getAttachEmployee().getAttachCorporation().getCerCode());
                 attachCorpJsonObj.put("ownerPerson", key.getAttachEmployee().getAttachCorporation().getOwnerName());
-                attachCorpJsonObj.put("ownerTel", key.getAttachEmployee().getPhone());
+                attachCorpJsonObj.put("ownerTel", key.getAttachEmployee().getAttachCorporation().getPhone());
 
 
 
@@ -298,15 +298,10 @@ public class DeveloperServiceComponent {
 
         boolean inBiz = ownerEntityManager.createQuery("select count(b.id) from HouseBusiness b where b.houseCode = :houseCode and b.ownerBusiness.type = 'RUNNING'", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
-        HouseStatus houseStatus = null;
 
-        if (houseRecord != null) {
-            houseStatus = houseRecord.getHouseStatus();
-            //   may be sub status
-        }
 
         try {
-            JSONObject houseJsonObj = getHouseJsonObj(house, houseStatus, locked, sale, inBiz);
+            JSONObject houseJsonObj = getHouseJsonObj(house, houseRecord, locked, sale, inBiz);
 
             houseJsonObj.put("pledge", searchHousePledgeInfo(houseCode));
             houseJsonObj.put("buildCode", house.getBuildCode());
@@ -433,12 +428,17 @@ public class DeveloperServiceComponent {
         return result;
     }
 
-    private JSONObject getHouseJsonObj(House house, HouseStatus status, boolean locked, boolean saled, boolean inBiz) throws JSONException {
-        JSONObject houseJsonObj = getHouseJsonObj(house, status, locked, saled);
+    private JSONObject getHouseJsonObj(House house, HouseRecord houseRecord, boolean locked, boolean saled, boolean inBiz) throws JSONException {
+        JSONObject houseJsonObj = getHouseJsonObj(house, (houseRecord == null) ? null : houseRecord.getHouseStatus(), locked, saled);
         houseJsonObj.put("inBiz", inBiz);
         List<HouseStatus> allStatus = OwnerHouseHelper.instance().getHouseAllStatus(house.getHouseCode());
 
-        houseJsonObj.put("saleType", (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL.name() : SaleType.MAP_SELL );
+        SaleType saleType = (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL : SaleType.MAP_SELL;
+        if (!saleType.equals( SaleType.MAP_SELL)){
+            houseJsonObj.put("ownerCardNumber",houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber());
+        }
+
+        houseJsonObj.put("saleType", saleType.name() );
         return houseJsonObj;
     }
 
