@@ -553,7 +553,7 @@ public class ProjectBusinessStart {
                             if (block.isLocked()) {
                                 if ((block.getHouse().getHouseType() == null) || "".equals(block.getHouse().getHouseType().trim())) {
                                     UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
-                                    businessBuild.setHouseCount(businessBuild.getHomeCount() + 1);
+                                    businessBuild.setHouseCount(businessBuild.getHouseCount() + 1);
                                     businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
 
                                     if (useType.isDwelling()) {
@@ -578,7 +578,7 @@ public class ProjectBusinessStart {
             }
 
             projectSellInfo.setArea(projectSellInfo.getArea().add(businessBuild.getArea()));
-            projectSellInfo.setHouseCount(projectSellInfo.getHouseCount() + businessBuild.getHomeCount());
+            projectSellInfo.setHouseCount(projectSellInfo.getHouseCount() + businessBuild.getHouseCount());
             projectSellInfo.setBuildCount(projectSellInfo.getBuildCount() + 1);
 
             Set<String> houseCodes = new HashSet<String>();

@@ -19,6 +19,7 @@ public class UseTypeWordAdapter {
     private static final String CATEGORY_ID = "house.useType";
     private static final String DWELLING_KEY= "1";//住宅
     private static final String SHOP_HOUSE_KEY = "2";//商业 网点
+    private static final String STORE_HOUSE="4";//工业仓储
     private static final String OFFICE_KEY = "3";//办公
     private static final String OHTER_KEY = "0";//其它
     @In
