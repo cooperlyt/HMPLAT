@@ -231,14 +231,26 @@
                                 <p:cell borderWidthLeft="0">
                                     <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.houseArea}</p:paragraph>
                                 </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="20">
+                                    <p:paragraph>产别</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseProperty)}</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0" fixedHeight="20">
+                                    <p:paragraph>建筑面积</p:paragraph>
+                                </p:cell>
+                                <p:cell borderWidthLeft="0">
+                                    <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.houseArea}</p:paragraph>
+                                </p:cell>
                             </p:table>
 
                         </p:cell>
 
-                        <p:cell colspan="2" borderWidthLeft="0" horizontalAlignment="top" verticalAlignment="left" fixedHeight="40" >
+                        <p:cell colspan="2" borderWidthLeft="0" horizontalAlignment="top" verticalAlignment="left" fixedHeight="30" >
                             <p:paragraph>申请#{ownerBusinessHome.instance.defineName}</p:paragraph>
                         </p:cell>
-                        <p:cell colspan="2" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
+                        <p:cell colspan="2" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="50">
                             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
                         </p:cell>
                     </p:table>

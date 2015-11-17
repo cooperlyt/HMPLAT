@@ -65,7 +65,7 @@ public class TotalContract {
     public void totalContractInfo() {
 
         List<OwnerBusiness> ownerBusinessList = ownerEntityLoader.getEntityManager().createQuery
-                ("select ob from OwnerBusiness ob left join ob.contractOwners ContractOwners left join ob.saleInfos left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse" +
+                ("select ob from OwnerBusiness ob left join fetch ob.contractOwners ContractOwners left join fetch ob.saleInfos left join fetch ob.houseBusinesses HouseBusinesses left join fetch HouseBusinesses.afterBusinessHouse AfterBusinessHouse" +
                         " where ob.defineId=:defineId and  ob.createTime >= :beginDate and ob.createTime <= :endDate order by AfterBusinessHouse.sectionName,ob.createTime", OwnerBusiness.class)
                 .setParameter("beginDate", fromDateTime)
                 .setParameter("endDate", toDateTime)
