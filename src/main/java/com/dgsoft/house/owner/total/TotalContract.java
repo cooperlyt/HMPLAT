@@ -74,7 +74,7 @@ public class TotalContract {
 
         List<ContractOwner> contractOwnerList =ownerEntityLoader.getEntityManager().createQuery("select contractOwner from ContractOwner contractOwner left join fetch contractOwner.ownerBusiness OwnerBusiness left join fetch contractOwner.houseContract " +
                 "left join fetch contractOwner.businessHouse HOUSE left join fetch OwnerBusiness.saleInfos left join fetch House.houseBusinessForAfter" +
-                " where OwnerBusiness.defineId=:defineId and OwnerBusiness.createTime >= :beginDate and OwnerBusiness.createTime <= :endDate order by HOUSE.sectionName")
+                " where OwnerBusiness.status in ('RUNNING','COMPLETE','MODIFYING') and OwnerBusiness.defineId=:defineId and OwnerBusiness.createTime >= :beginDate and OwnerBusiness.createTime <= :endDate order by HOUSE.sectionName")
                 .setParameter("beginDate", fromDateTime)
                 .setParameter("endDate", toDateTime)
                 .setParameter("defineId", "WP42").getResultList();
@@ -172,7 +172,9 @@ public class TotalContract {
 
 
                 cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(contractOwner.getBusinessHouse().getSectionName());
+                if (contractOwner.getBusinessHouse()!=null) {
+                    cell8.setCellValue(contractOwner.getBusinessHouse().getSectionName());
+                }
                 cell8.setCellStyle(headCellStyle);
             }
 
