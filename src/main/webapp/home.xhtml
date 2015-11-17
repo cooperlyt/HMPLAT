@@ -40,9 +40,12 @@
 
     </h:outputStylesheet>
 
+        <ui:remove>
+        <h:form>
+            <a:commandButton value="ccccc" immediate="true" action="#{outsideBusinessCreate.createOldContract}"/>
 
-
-
+        </h:form>
+        </ui:remove>
 
         <a:outputPanel layout="block" styleClass="container" rendered="#{identity.loggedIn}">
 

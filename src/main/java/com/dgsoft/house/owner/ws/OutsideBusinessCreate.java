@@ -271,4 +271,43 @@ public class OutsideBusinessCreate {
         return (OutsideBusinessCreate) Component.getInstance(OutsideBusinessCreate.class,true);
     }
 
+
+    //建立旧的网签业务
+    public void createOldContract(){
+        for(LockedHouse lh:  ownerBusinessHome.getEntityManager().createQuery("select lh from LockedHouse lh where lh.description like '%网签%'",LockedHouse.class).setMaxResults(50).getResultList()){
+
+            House house = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.id = :hid",House.class).setParameter("hid",lh.getHouseCode()).getSingleResult();
+
+
+            businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
+            businessDefineHome.setId(businessDefineId);
+
+            ownerBusinessHome.clearInstance();
+            ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
+
+
+            BusinessHouse businessHouse = new BusinessHouse(house);
+
+            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+
+
+
+            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
+
+
+
+            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
+            String ownerBusinessId = ownerBusinessHome.getInstance().getId();
+            ownerBusinessHome.getEntityManager().remove(lh);
+            if (!"persisted".equals(ownerBusinessHome.persist())){
+                throw new IllegalArgumentException("persited ownerBusiness fail");
+            }
+            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(),ownerBusinessId);
+            Logging.getLog(getClass()).debug("crete business:" + ownerBusinessHome.getInstance().getId() + "by:" + lh.getId());
+
+
+        }
+        Logging.getLog(getClass()).debug("complete:");
+    }
+
 }
