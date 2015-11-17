@@ -133,7 +133,7 @@ public class OwnerBuildGridMap {
                 if (mapHouse == null) {
                     selectHouseChangeData = new ArrayList<HouseInfoCompare.ChangeData>(0);
                 } else {
-                    selectHouseChangeData = HouseInfoCompare.compare(selectBizHouse, mapHouse, false);
+                    selectHouseChangeData = HouseInfoCompare.compare(selectBizHouse, mapHouse, true);
                 }
 
             }
