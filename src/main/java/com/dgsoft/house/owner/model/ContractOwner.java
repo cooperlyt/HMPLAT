@@ -33,6 +33,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private Date contractDate;
     private String houseCode;
 
+    private BusinessHouse businessHouse;
 
 
     private String projectRshipNumber;
@@ -231,6 +232,14 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.houseCode = houseCode;
     }
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contractOwner")
+    public BusinessHouse getBusinessHouse() {
+        return businessHouse;
+    }
+
+    public void setBusinessHouse(BusinessHouse businessHouse) {
+        this.businessHouse = businessHouse;
+    }
 
     @Column(name = "PROJECT_RSHIP_NUMBER", length = 32, nullable = true)
     @Size(max = 50)

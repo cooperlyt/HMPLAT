@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.total;
 import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessEmp;
+import com.dgsoft.house.owner.model.ContractOwner;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -64,12 +65,19 @@ public class TotalContract {
 
     public void totalContractInfo() {
 
-        List<OwnerBusiness> ownerBusinessList = ownerEntityLoader.getEntityManager().createQuery
-                ("select ob from OwnerBusiness ob left join fetch ob.contractOwners ContractOwners left join fetch ob.saleInfos left join fetch ob.houseBusinesses HouseBusinesses left join fetch HouseBusinesses.afterBusinessHouse AfterBusinessHouse" +
-                        " where ob.defineId=:defineId and  ob.createTime >= :beginDate and ob.createTime <= :endDate order by AfterBusinessHouse.sectionName,ob.createTime", OwnerBusiness.class)
+//        List<OwnerBusiness> ownerBusinessList = ownerEntityLoader.getEntityManager().createQuery
+//                ("select ob from OwnerBusiness ob left join fetch ob.contractOwners ContractOwners left join fetch ContractOwners.houseContract left join fetch ob.saleInfo" +
+//                        " where ob.defineId=:defineId and  ob.createTime >= :beginDate and ob.createTime <= :endDate order by ContractOwners AfterBusinessHouse.sectionName,ob.createTime", OwnerBusiness.class)
+//                .setParameter("beginDate", fromDateTime)
+//                .setParameter("endDate", toDateTime)
+//                .setParameter("defineId","WP42").getResultList();
+
+        List<ContractOwner> contractOwnerList =ownerEntityLoader.getEntityManager().createQuery("select contractOwner from ContractOwner contractOwner left join fetch contractOwner.ownerBusiness OwnerBusiness left join fetch contractOwner.houseContract " +
+                "left join fetch contractOwner.businessHouse HOUSE left join fetch OwnerBusiness.saleInfos left join fetch House.houseBusinessForAfter" +
+                " where OwnerBusiness.defineId=:defineId and OwnerBusiness.createTime >= :beginDate and OwnerBusiness.createTime <= :endDate order by HOUSE.sectionName")
                 .setParameter("beginDate", fromDateTime)
                 .setParameter("endDate", toDateTime)
-                .setParameter("defineId","WP42").getResultList();
+                .setParameter("defineId", "WP42").getResultList();
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle headCellStyle  = workbook.createCellStyle();
@@ -123,51 +131,48 @@ public class TotalContract {
         cell6.setCellValue("小区名称");
         cell6.setCellStyle(headCellStyle);
 
-        if (ownerBusinessList!=null && ownerBusinessList.size()>0){
-            for(OwnerBusiness ownerBusiness:ownerBusinessList) {
+        if (contractOwnerList!=null && contractOwnerList.size()>0){
+            for(ContractOwner contractOwner:contractOwnerList) {
+
                 cellIndex = 0;
                 Row row1 = sheet.createRow(rowIndex++);
 
                 Cell cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(ownerBusiness.getDefineName());
+                cell8.setCellValue(contractOwner.getOwnerBusiness().getDefineName());
                 cell8.setCellStyle(headCellStyle);
 
                 cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(ownerBusiness.getId());
+                cell8.setCellValue(contractOwner.getOwnerBusiness().getId());
                 cell8.setCellStyle(headCellStyle);
 
                 cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(ownerBusiness.getCreateTime().toString());
+                cell8.setCellValue(contractOwner.getOwnerBusiness().getCreateTime().toString());
                 cell8.setCellStyle(headCellStyle);
 
                 cell8 = row1.createCell(cellIndex++);
-                if (ownerBusiness.getContractOwner()!=null) {
-                    cell8.setCellValue(ownerBusiness.getContractOwner().getPersonName());
+                cell8.setCellValue(contractOwner.getPersonName());
+                cell8.setCellStyle(headCellStyle);
+
+
+                cell8 = row1.createCell(cellIndex++);
+                cell8.setCellValue(contractOwner.getCredentialsNumber());
+                cell8.setCellStyle(headCellStyle);
+
+
+                cell8 = row1.createCell(cellIndex++);
+                if (contractOwner.getOwnerBusiness().getSaleInfo()!=null) {
+                    cell8.setCellValue(contractOwner.getOwnerBusiness().getSaleInfo().getSumPrice().doubleValue());
                 }
                 cell8.setCellStyle(headCellStyle);
 
 
                 cell8 = row1.createCell(cellIndex++);
-                if (ownerBusiness.getContractOwner()!=null) {
-                    cell8.setCellValue(ownerBusiness.getContractOwner().getCredentialsNumber());
-                }
+                cell8.setCellValue(contractOwner.getHouseCode());
                 cell8.setCellStyle(headCellStyle);
 
 
                 cell8 = row1.createCell(cellIndex++);
-                if (ownerBusiness.getSaleInfo()!=null) {
-                    cell8.setCellValue(ownerBusiness.getSaleInfo().getSumPrice().doubleValue());
-                }
-                cell8.setCellStyle(headCellStyle);
-
-
-                cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(ownerBusiness.getSingleHoues().getHouseCode());
-                cell8.setCellStyle(headCellStyle);
-
-
-                cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getSectionName());
+                cell8.setCellValue(contractOwner.getBusinessHouse().getSectionName());
                 cell8.setCellStyle(headCellStyle);
             }
 
