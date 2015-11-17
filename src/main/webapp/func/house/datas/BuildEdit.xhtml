@@ -62,7 +62,7 @@
                     <span class="input-group-addon">#{messages.MapIdentification_build}<s:span styleClass="required">*</s:span></span>
                     <h:inputText id="buildNoInput" value="#{buildHome.instance.buildNo}"
                                  styleClass="form-control" validatorMessage="#{messages.BuildNumberValidatorMessage}"
-                                 label="#{messages.Build_BuildNO}" maxlength="4" size="10" required="true" autocomplete="off">
+                                 label="#{messages.Build_BuildNO}" maxlength="10" size="10" required="true" autocomplete="off">
                         <a:ajax execute="@this,devNoInput" listener="#{buildHome.genBuildName}"
                                 event="blur" render="buildNameInput">
                             <a:attachQueue requestDelay="0"/>
@@ -161,8 +161,8 @@
                 <ui:define name="label">
                     #{messages.Build_DoorNO}
                 </ui:define>
-                <h:inputText id="doorNoInput" styleClass="form-control" value="#{buildHome.instance.doorNo}" size="10"
-                             maxlength="10" autocomplete="off"/>
+                <h:inputText id="doorNoInput" styleClass="form-control" value="#{buildHome.instance.doorNo}" size="20"
+                             maxlength="50" autocomplete="off"/>
             </s:decorate>
 
 

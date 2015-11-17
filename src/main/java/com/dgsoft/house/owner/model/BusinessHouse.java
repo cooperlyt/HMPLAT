@@ -479,9 +479,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.blockNo = blockNo;
     }
 
-    @Column(name = "BUILD_NO", nullable = false, length = 4)
+    @Column(name = "BUILD_NO", nullable = false, length = 24)
     @NotNull
-    @Size(max = 4)
+    @Size(max = 24)
     public String getBuildNo() {
         return this.buildNo;
     }
@@ -512,8 +512,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.buildName = buildName;
     }
 
-    @Column(name = "DOOR_NO", length = 32)
-    @Size(max = 32)
+    @Column(name = "DOOR_NO", length = 50)
+    @Size(max = 50)
     public String getDoorNo() {
         return this.doorNo;
     }
