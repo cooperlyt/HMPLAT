@@ -155,7 +155,7 @@ public class DeveloperServiceComponent {
                             buildJsonObj.put("buildCode", build.getBuildCode());
                             buildJsonObj.put("mapNumber", build.getMapNumber());
                             buildJsonObj.put("blockNo", build.getBlockNo());
-                            buildJsonObj.put("buildNo", build.getBlockNo());
+                            buildJsonObj.put("buildNo", build.getBuildNo());
                             buildJsonObj.put("completeYear", build.getCompleteYear());
                             buildJsonObj.put("streetCode", build.getSectionCode());
                             buildJsonObj.put("doorNo", build.getDoorNo());
