@@ -39,6 +39,11 @@ public class HouseInfoFill implements BusinessDataFill {
               if (house != null && house.getHouseArea() != null && (house.getHouseArea().compareTo(new BigDecimal(0)) > 0)) {
                   houseBusiness.getAfterBusinessHouse().setHouseArea(house.getHouseArea());
                   houseBusiness.getAfterBusinessHouse().setAddress(house.getAddress());
+                  if (house.getBuild()!=null) {
+                      houseBusiness.getAfterBusinessHouse().setFloorCount(house.getBuild().getFloorCount());
+                      houseBusiness.getAfterBusinessHouse().setUpFloorCount(house.getBuild().getUpFloorCount());
+                      houseBusiness.getAfterBusinessHouse().setDownFloorCount(house.getBuild().getDownFloorCount());
+                  }
                   facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "house_info_fill");
               }
           }
