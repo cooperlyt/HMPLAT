@@ -29,8 +29,10 @@
                     #{messages.HouseInfoCompareCreateWarning}
                 </ui:decorate>
 
+
                 <a:outputPanel style="margin-bottom: 0; margin-top: 2px;padding-left: 40px" rendered="#{not empty ownerBuildGridMap.lockedHouseList}" layout="block" styleClass="alert alert-warning" role="alert">
                     <span class="octicon octicon-alert left" style="margin-left: -25px; "></span>
+
                     <a:repeat value="#{ownerBuildGridMap.lockedHouseList}" var="_lockedHouse">
 
                         <p class="#{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>

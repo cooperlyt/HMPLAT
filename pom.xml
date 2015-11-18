@@ -295,6 +295,10 @@
                     <artifactId>org.apache.poi</artifactId>
                     <groupId>org.eclipse.birt.runtime</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-schemas</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -303,6 +307,12 @@
             <version>3.9</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>ooxml-schemas</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.birt.runtime</groupId>
             <artifactId>viewservlets</artifactId>
@@ -316,6 +326,7 @@
                     <groupId>org.eclipse.birt.runtime</groupId>
                     <artifactId>org.eclipse.birt.runtime</artifactId>
                 </exclusion>
+
             </exclusions>
         </dependency>
 

@@ -93,6 +93,7 @@ public class OwnerBuildGridMap {
     public void setSelectBizHouse(BusinessHouse selectBizHouse) {
         this.selectBizHouse = selectBizHouse;
         selectHouseChangeData = null;
+        lockedHouseList = null;
     }
 
     public List<BusinessHouse> getSelectBizHouses() {
@@ -168,6 +169,11 @@ public class OwnerBuildGridMap {
     private List<LockedHouse> lockedHouseList = new ArrayList<LockedHouse>();
 
     public List<LockedHouse> getLockedHouseList() {
+        if (lockedHouseList == null && selectBizHouse != null){
+            Logging.getLog(getClass()).debug("search local house");
+            lockedHouseList = ownerEntityLoader.getEntityManager().createQuery("select lh from LockedHouse lh where lh.houseCode =:houseCode",LockedHouse.class)
+                    .setParameter("houseCode", selectBizHouse.getHouseCode()).getResultList();
+        }
         return lockedHouseList;
     }
 
@@ -192,11 +198,6 @@ public class OwnerBuildGridMap {
         } catch (NoResultException e) {
             setSelectBizHouse(null);
             Logging.getLog(getClass()).warn("houseCode not found in record");
-        }
-
-        if (selectBizHouse != null){
-            lockedHouseList = ownerEntityLoader.getEntityManager().createQuery("select lh from LockedHouse lh where lh.houseCode =:houseCode",LockedHouse.class)
-                    .setParameter("houseCode", selectBizHouse.getHouseCode()).getResultList();
         }
 
     }
