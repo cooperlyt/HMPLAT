@@ -46,12 +46,18 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
         return result;
     }
 
+
+    public void resetConditionByCategory(){
+        selectDefineId = null;
+        super.resetCondition();
+    }
+
     @Override
     public List<TaskInstanceAdapter> initResultTask() {
 
         Logging.getLog(getClass()).debug("call AllTaskList initResultTask: categoryId:" + getSelectCategoryId() + "|defineId:" + selectDefineId);
 
-        Logging.getLog("curTypeTasksCount:" + getCurTypeTasks().size());
+        Logging.getLog(getClass()).debug("curTypeTasksCount:" + getCurTypeTasks().size());
 
         Map<String, FilterBusinessCategory> categoryMap = new HashMap<String, FilterBusinessCategory>();
 
@@ -115,8 +121,11 @@ public class AllTaskAdapterCacheList extends TaskInstanceListCache {
             filterList.clear();
         }
 
+        Logging.getLog(getClass()).debug("businessFilter count:" + resultList.size());
 
         resultList = TaskFilter.instance().filter(resultList);
+
+        Logging.getLog(getClass()).debug("result count:" + resultList.size());
 
         return resultList;
     }
