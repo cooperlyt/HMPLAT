@@ -143,9 +143,9 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 		this.blockNo = blockNo;
 	}
 
-	@Column(name = "BUILD_NO", nullable = false, length = 4)
+	@Column(name = "BUILD_NO", nullable = false, length = 24)
 	@NotNull
-	@Size(max = 4)
+	@Size(max = 24)
 	public String getBuildNo() {
 		return this.buildNo;
 	}
@@ -192,8 +192,8 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 		this.name = name;
 	}
 
-	@Column(name = "DOOR_NO", length = 10)
-	@Size(max = 10)
+	@Column(name = "DOOR_NO", length = 50)
+	@Size(max = 50)
 	public String getDoorNo() {
 		return this.doorNo;
 	}

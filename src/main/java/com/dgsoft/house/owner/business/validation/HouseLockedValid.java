@@ -12,6 +12,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cooper on 6/25/15.
@@ -24,12 +25,16 @@ public class HouseLockedValid extends BusinessHouseValid {
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
 
+    @In(create = true)
+    private Map<String,String> messages;
+
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         List<LockedHouse.LockType> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.type from LockedHouse lockedHouse where lockedHouse.houseCode =:houseCode", LockedHouse.LockType.class)
                 .setParameter("houseCode", businessHouse.getHouseCode()).getResultList();
         if (lockedHouseCode.size() > 0) {
-            return new ValidResult("business_house_locked", ValidResultLevel.ERROR, DictionaryWord.instance().getWordValue(lockedHouseCode.get(0).name()));
+
+            return new ValidResult("business_house_locked", ValidResultLevel.ERROR, messages.get(lockedHouseCode.get(0).name()));
         }
         return new ValidResult(ValidResultLevel.SUCCESS);
 

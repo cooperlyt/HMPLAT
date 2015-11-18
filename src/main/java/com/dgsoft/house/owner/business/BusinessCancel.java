@@ -52,6 +52,7 @@ public class BusinessCancel {
         if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(ownerBusinessHome.getInstance().getSource())){
 
             ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
+            ownerBusinessHome.getInstance().setRecorded(false);
             resetHouseRecord();
             if ("updated".equals(ownerBusinessHome.update())){
 
