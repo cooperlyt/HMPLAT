@@ -14,54 +14,10 @@
     <a:outputPanel rendered="#{not empty listBean.searchResult}">
         <ul class="repo-list js-repo-list full-width">
             <c:forEach items="#{listBean.searchResult}" var="_item">
-            
+                <f:subview id="details_#{_item.id}">
                 <ui:include src="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}"/>
-
-                <ui:remove>
-                
-                <li class="repo-list-item public source">
-                    <div class="repo-list-stats">
-
-                    </div>
-                    <h3 class="repo-list-name">
-
-                        <s:link view="/func/house/owner/BusinessView.xhtml">
-                            <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
-                            #{_item.ownerBusiness.defineName}
-                            <h:outputText value="#{messages[_item.ownerBusiness.type]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
-                            /#{_item.ownerBusiness.id}
-                        </s:link>
-
-                                        <span class="label label-biz-status #{_item.ownerBusiness.status}">
-                                            #{messages[_item.ownerBusiness.status.name()]}
-                                        </span>
-                    </h3>
-
-                    <p class="repo-list-description">
-                        <s:link value="#{_item.afterBusinessHouse.displayHouseCode}">
-
-                        </s:link>
-
-                        #{_item.afterBusinessHouse.buildName}
-                        #{_item.afterBusinessHouse.houseOrder}
-                        <strong>
-                            <h:outputText value="#{_item.afterBusinessHouse.businessHouseOwner.personName}"
-                                          rendered="#{not empty _item.afterBusinessHouse.businessHouseOwner}"/>
-                        </strong>
-
-                    </p>
-                    <p class="repo-list-description">
-                        #{_item.afterBusinessHouse.address}
-                    </p>
-
-                    <p class="repo-list-meta">
-                        #{messages['ownerBusiness.applyTime']}
-                        <h:outputText value="#{_item.ownerBusiness.applyTime}">
-                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
-                        </h:outputText>
-                    </p>
-                </li>
-                </ui:remove>
+                    <ui:param name="_item" value="#{_item}"/>
+                </f:subview>
             </c:forEach>
         </ul>
     </a:outputPanel>

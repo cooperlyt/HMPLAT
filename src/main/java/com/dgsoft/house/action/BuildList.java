@@ -43,6 +43,37 @@ public class BuildList extends HouseEntityQuery<Build>{
         super.refresh();
     }
 
+    public enum SortCol{
+        SORT_ID("build.id")
+        ,SORT_MBB("build.mapNumber,build.blockNo,build.buildNo"),
+        SORT_NAME("build.name,build.id"),SORT_DOOR_NO("build.doorNo,build.id"),
+        SORT_SECTION("section.id,project.id,build.buildNo");
+
+        private String orderStr;
+
+        public String getOrderStr() {
+            return orderStr;
+        }
+
+        SortCol(String orderStr) {
+            this.orderStr = orderStr;
+        }
+    }
+
+    public SortCol[] getSortCols(){
+        return SortCol.values();
+    }
+
+    public SortCol getSortCol(){
+
+
+        for(SortCol sortCol: SortCol.values()){
+            if (sortCol.getOrderStr().equals(getOrderExpress())){
+                return sortCol;
+            }
+        }
+        return null;
+    }
 
 
     private String searchKey;

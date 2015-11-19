@@ -224,8 +224,6 @@
 
                                 <div class="btn-group btn-group-sm">
                                     <ui:decorate template="/layout/dropdown-actions.xhtml">
-                                        <ui:param name="caption"
-                                                  value="#{messages[employeeList.orderColumn]}"/>
                                         <ui:define name="caption">
                                             <i>#{messages.SortBy}:</i>
                                             <span style="">#{messages[employeeList.orderColumn]}</span>
