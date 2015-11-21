@@ -2,15 +2,16 @@
 <page xmlns="http://jboss.org/schema/seam/pages"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
-
+    <restrict>#{s:hasRole('house.data.manager')}</restrict>
     <param value="#{projectHome.id}" name="projectId"/>
     <param value="#{buildHome.id}" name="buildId"/>
 
+    <param name="from"/>
 
     <navigation from-action="#{buildHome.persist}">
         <rule if-outcome="persisted">
 
-            <redirect view-id="/func/house/datas/ProjectView.xhtml">
+            <redirect view-id="#{from}">
 
             </redirect>
         </rule>
@@ -20,7 +21,7 @@
     <navigation from-action="#{buildHome.update}">
     <rule if-outcome="updated">
 
-        <redirect view-id="/func/house/datas/ProjectView.xhtml">
+        <redirect view-id="#{from}">
 
         </redirect>
     </rule>

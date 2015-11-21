@@ -189,6 +189,59 @@
 
                     <a:outputPanel id="taskListForm">
 
+
+
+                        <a:outputPanel rendered="#{not allTaskAdapterCacheList.emptyTask}" layout="block" styleClass="file-navigation in-mid-page" style="margin-top: 0">
+                            <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button "
+                                           immediate="true" execute="@this" status="processWaiting"
+                                           action="#{allTaskAdapterCacheList.refreshResult}" render="taskFilterForm,taskListDatas">
+                                <span class="octicon octicon-sync"/>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+                            <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
+                                             value="#{allTaskAdapterCacheList.selectCategoryId}">
+                                <s:selectItems value="#{allTaskAdapterCacheList.filterCategorys}" var="_category"
+                                               label="#{_category.category.name}" itemValue="#{_category.category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
+                                <a:ajax event="valueChange" execute="@this" status="taskChangeWaiting"
+                                        listener="#{allTaskAdapterCacheList.resetConditionByCategory}"  render="myBizDefineFilter,taskListDatas">
+                                    <a:attachQueue requestDelay="0"/>
+
+                                </a:ajax>
+                            </h:selectOneMenu>
+
+                            <a:outputPanel id="myBizDefineFilter">
+                                <a:outputPanel rendered="#{not empty allTaskAdapterCacheList.selectCategory}">
+                                    <span class="i-separator">/</span>
+                                    <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
+                                                     styleClass="selectpicker mini-select"  value="#{allTaskAdapterCacheList.selectDefineId}">
+                                        <s:selectItems value="#{allTaskAdapterCacheList.selectCategory.defineList}" var="_define"
+                                                       label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
+                                        <a:ajax event="valueChange" status="taskChangeWaiting" listener="#{allTaskAdapterCacheList.resetCondition}" execute="@this" render="taskListDatas">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:selectOneMenu>
+                                </a:outputPanel>
+                            </a:outputPanel>
+
+                            <div class="right" >
+                                <a:region>
+
+                                    <dh:switch value="#{taskFilter.desc}" data-on-color="primary" onchange="sortOption()"
+                                               data-off-color="info"
+                                               data-in-link="true"
+                                               onText="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
+                                               offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
+                                               data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
+                                               data-size="mini" styleClass="js-switch"/>
+                                    <a:jsFunction name="sortOption" status="processWaiting" render="taskListDatas"
+                                                  execute="@region" action="#{allTaskAdapterCacheList.resetCondition}">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:jsFunction>
+                                </a:region>
+                            </div>
+                        </a:outputPanel>
+                        <a:outputPanel id="taskListDatas">
+
                         <a:outputPanel layout="block" styleClass="blankslate"
                                        rendered="#{(empty allTaskAdapterCacheList.resultTask) and allTaskAdapterCacheList.emptyTask}">
                             <a:outputPanel styleClass="mega-octicon octicon-inbox"></a:outputPanel>
@@ -198,10 +251,10 @@
                             <h3>#{messages.emptyTask}#{messages[allTaskAdapterCacheList.filterType.messageKey]}</h3>
                             <p>#{messages.emptyTaskDescription}
                                 <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm"
-                                                                               status="processWaiting"
-                                                                  value="#{messages.manualRefresh}" action="#{allTaskAdapterCacheList.refreshResult}">
-                                <a:attachQueue requestDelay="0"/>
-                            </a:commandLink></p>
+                                               status="processWaiting"
+                                               value="#{messages.manualRefresh}" action="#{allTaskAdapterCacheList.refreshResult}">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandLink></p>
                         </a:outputPanel>
 
                         <a:outputPanel layout="block" styleClass="blankslate"
@@ -213,66 +266,22 @@
                             <h3>#{messages.emptySearchTask}#{messages[allTaskAdapterCacheList.filterType.messageKey]}</h3>
                             <p>#{messages.emptySearchTaskDescription}
                                 <a:commandLink immediate="true" execute="@this" status="processWaiting"
-                                                                                     value="#{messages.clearCondition}"
-                                                                                     render="dataAreaForm,keySearchForm,taskListForm"
-                                                                                     action="#{allTaskAdapterCacheList.clearCondition}">
-                                <a:attachQueue requestDelay="0"/>
+                                               value="#{messages.clearCondition}"
+                                               render="dataAreaForm,keySearchForm,taskListForm"
+                                               action="#{allTaskAdapterCacheList.clearCondition}">
+                                    <a:attachQueue requestDelay="0"/>
                                 </a:commandLink> #{messages.orOther}
                                 <a:commandLink immediate="true" execute="@this" render="taskFilterForm,taskListForm" status="processWaiting"
-                                                                  value="#{messages.refresh}" action="#{allTaskAdapterCacheList.refreshResult}">
-                                <a:attachQueue requestDelay="0"/>
-                            </a:commandLink></p>
+                                               value="#{messages.refresh}" action="#{allTaskAdapterCacheList.refreshResult}">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandLink></p>
                         </a:outputPanel>
 
+
+
+
                         <a:outputPanel layout="block" styleClass="setup-form" rendered="#{not empty allTaskAdapterCacheList.resultTask}">
-                            <div class="file-navigation in-mid-page" style="margin-top: 0">
-                                <a:commandLink styleClass="btn btn-sm btn-sm-icon btn-primary left compare-button "
-                                               immediate="true" execute="@this" status="processWaiting"
-                                               action="#{allTaskAdapterCacheList.refreshResult}" render="taskFilterForm,taskListDatas">
-                                    <span class="octicon octicon-sync"/>
-                                    <a:attachQueue requestDelay="0"/>
-                                </a:commandLink>
-                                <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
-                                                 value="#{allTaskAdapterCacheList.selectCategoryId}">
-                                    <s:selectItems value="#{allTaskAdapterCacheList.filterCategorys}" var="_category"
-                                                   label="#{_category.category.name}" itemValue="#{_category.category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                                    <a:ajax event="valueChange" execute="@this" listener="#{allTaskAdapterCacheList.resetCondition}" render="myBizDefineFilter,taskListDatas">
-                                        <a:attachQueue requestDelay="0"/>
 
-                                    </a:ajax>
-                                </h:selectOneMenu>
-
-                                <a:outputPanel id="myBizDefineFilter">
-                                    <a:outputPanel rendered="#{not empty allTaskAdapterCacheList.selectCategory}">
-                                        <span class="i-separator">/</span>
-                                        <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
-                                                         styleClass="selectpicker mini-select"  value="#{allTaskAdapterCacheList.selectDefineId}">
-                                            <s:selectItems value="#{allTaskAdapterCacheList.selectCategory.defineList}" var="_define"
-                                                           label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                                            <a:ajax event="valueChange" listener="#{allTaskAdapterCacheList.resetCondition}" execute="@this" render="taskListDatas">
-                                                <a:attachQueue requestDelay="0"/>
-                                            </a:ajax>
-                                        </h:selectOneMenu>
-                                    </a:outputPanel>
-                                </a:outputPanel>
-
-                                <div class="right" >
-                                    <a:region>
-
-                                        <dh:switch value="#{taskFilter.desc}" data-on-color="primary" onchange="sortOption()"
-                                                   data-off-color="info"
-                                                   data-in-link="true"
-                                                   onText="&lt;span class='glyphicon glyphicon-sort-by-attributes'/&gt;"
-                                                   offText="&lt;span class='glyphicon glyphicon-sort-by-attributes-alt'/&gt;"
-                                                   data-label-text="&lt;span class='glyphicon'&gt;&nbsp;&lt;/span&gt;"
-                                                   data-size="mini" styleClass="js-switch"/>
-                                        <a:jsFunction name="sortOption" status="processWaiting" render="taskListDatas"
-                                                      execute="@region" action="#{allTaskAdapterCacheList.resetCondition}">
-                                            <a:attachQueue requestDelay="0"/>
-                                        </a:jsFunction>
-                                    </a:region>
-                                </div>
-                            </div>
 
 
 
@@ -284,7 +293,7 @@
 
                             </h:outputStylesheet>
 
-                            <a:outputPanel layout="block" styleClass="notifications-list" id="taskListDatas">
+                            <a:outputPanel layout="block" styleClass="notifications-list" >
 
                                 <div class="boxed-group flush">
 
@@ -430,7 +439,7 @@
                             </a:outputPanel>
                         </a:outputPanel>
 
-
+                        </a:outputPanel>
                         <h:outputScript>
                             clearComeTask();
                         </h:outputScript>

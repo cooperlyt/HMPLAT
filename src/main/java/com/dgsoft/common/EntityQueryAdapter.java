@@ -79,6 +79,7 @@ public class EntityQueryAdapter<E> extends EntityQuery<E> {
 
         if (column == null) {
             column = getOrderExpress();
+            Logging.getLog(getClass()).debug("use OrderExpress" + column);
         }
 
         if (column == null) {
