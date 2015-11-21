@@ -60,6 +60,16 @@ public class BuildHome extends HouseEntityHome<Build> {
         facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ConfilicPB");
     }
 
+    public String getShortName(){
+        if (isIdDefined()){
+            return getInstance().getBuildNo() + "幢" +  ((getInstance().getBuildDevNumber() == null || getInstance().getBuildDevNumber().trim().equals("")) ? "" : getInstance().getBuildDevNumber() + "号楼")
+                    + getInstance().getDoorNo();
+
+        }else{
+            return null;
+        }
+    }
+
     @Override
     protected boolean verifyUpdateAvailable() {
 

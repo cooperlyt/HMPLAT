@@ -3,10 +3,13 @@ package com.dgsoft.house.model;
 
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
+import com.dgsoft.house.owner.model.LockedHouse;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -373,6 +376,46 @@ public class GridBlock implements java.io.Serializable {
     private HouseStatus houseStatus;
 
     @Transient
+    private List<LockedHouse> lockedHouseList = new ArrayList<LockedHouse>(0);
+
+    @Transient
+    private boolean selected;
+
+    @Transient
+    private String inBizName;
+
+    @Transient
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Transient
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Transient
+    public List<LockedHouse> getLockedHouseList() {
+        return lockedHouseList;
+    }
+
+    @Transient
+    public void setLockedHouseList(List<LockedHouse> lockedHouseList) {
+        if (lockedHouseList == null){
+            this.lockedHouseList = new ArrayList<LockedHouse>(0);
+        }else
+            this.lockedHouseList = lockedHouseList;
+    }
+    @Transient
+    public String getInBizName() {
+        return inBizName;
+    }
+    @Transient
+    public void setInBizName(String inBizName) {
+        this.inBizName = inBizName;
+    }
+
+    @Transient
     public String getOwnerName() {
         return OwnerName;
     }
@@ -390,13 +433,16 @@ public class GridBlock implements java.io.Serializable {
     }
 
     @Transient
+    @Deprecated
     private boolean locked = false;
 
     @Transient
+    @Deprecated
     public boolean isLocked() {
         return locked;
     }
     @Transient
+    @Deprecated
     public void setLocked(boolean locked) {
         this.locked = locked;
     }

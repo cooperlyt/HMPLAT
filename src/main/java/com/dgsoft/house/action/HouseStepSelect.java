@@ -3,6 +3,7 @@ package com.dgsoft.house.action;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.BuildGridMap;
+import com.dgsoft.house.model.Project;
 import com.dgsoft.house.model.Section;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -58,6 +59,14 @@ public class HouseStepSelect {
 
     public void setSelectProjectId(String selectProjectId) {
         this.selectProjectId = selectProjectId;
+    }
+
+    public Project getSelectProject(){
+        if (selectProjectId == null || selectProjectId.trim().equals("")){
+            return null;
+        }
+
+        return  houseEntityLoader.getEntityManager().find(Project.class,selectProjectId);
     }
 
 

@@ -1,0 +1,772 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:s="http://jboss.org/schema/seam/taglib">
+<f:view
+        contentType="text/html">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <title>#{messages.mainTitle}</title>
+
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+
+
+        <ui:insert name="head"/>
+    </h:head>
+    <h:body styleClass="env-production page-dashboard">
+
+
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="bootstrap-select" name="/css/bootstrap-select.css"/>
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="bootstrap-switch" name="/css/bootstrap3/bootstrap-switch.min.css"/>
+        <h:outputStylesheet library="bootstrap-datepicker" name="/css/bootstrap-datetimepicker.min.css"/>
+
+        <h:outputStylesheet library="github" name="/css/octicons.css"/>
+        <h:outputStylesheet library="fontawesome" name="font-awesome.min.css"/>
+        <h:outputStylesheet name="theme.css"/>
+
+        <h:outputStylesheet name="biz.css"/>
+
+        <h:outputStylesheet>
+
+
+            .house-info .house-status{
+                float: right;
+                min-height: 17px;
+                max-height: 17px;
+                height: 17px;
+                margin-bottom: 4px;
+            }
+
+
+
+
+            .map-thead{
+                position: absolute;  overflow: hidden;
+            }
+
+
+
+            .map-col-thead{
+                top: 0; left: 50px; right: 0; height: 50px;
+            }
+
+            .map-row-thead{
+                top:50px; left: 0; bottom: 0; width: 50px;
+            }
+
+            .map-row-thead th{
+                border-left: 0 !important;
+                border-right: 2px solid #e5e5e5;
+                height: 90px;
+                width: 49px;
+            }
+
+            .map-col-thead th{
+                border-top: 0 !important;
+                border-bottom: 2px solid #e5e5e5 !important;
+
+                height: 49px;
+                width: 90px;
+            }
+
+            .grid-map table{
+                table-layout: fixed;
+            }
+
+            .grid-map col{
+                width: 90px;
+            }
+
+            .grid-map td, .grid-map th{
+                border: 1px solid #ddd;
+                vertical-align: middle;
+                text-align: center;
+                white-space:nowrap;
+                overflow:hidden;text-overflow:ellipsis;
+            }
+
+            .grid-map td:hover{
+                background-color: #f5f9fc;
+                cursor: pointer;
+            }
+
+            .map-context{
+                position: absolute; top:50px; left: 50px;bottom: 0; right: 0; overflow: auto;
+            }
+
+            .house-info-context{
+                min-height: 63px;
+                max-height: 63px;
+                height: 63px;
+            }
+
+            .house-info{
+                padding: 2px;
+                width: 100%;
+                height: 100%;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+            .house-info ul{
+                list-style: none;
+                padding: 0;
+            }
+
+            .house-info li{
+                min-height: 20px;
+                white-space:nowrap;
+
+            }
+
+            .house-info li h2{
+                margin: 3px 0;
+                font-size: 16px;
+                font-weight: bold;
+                /*color: #337ab7;*/
+            }
+
+            .icon-warning-sign.house-locked{
+                font-size: 14px;
+                color: #a94442;
+            }
+
+
+
+        </h:outputStylesheet>
+
+        <a:queue requestDelay="0" ignoreDupResponses="true"/>
+
+
+        <a:status id="processWaiting" name="processWaiting"
+                  onstart="#{rich:component('wait')}.show()"
+                  onstop="#{rich:component('wait')}.hide()"/>
+        <rich:popupPanel id="wait" modal="true" autosized="true" styleClass="transparent-popup"
+                         moveable="false" resizeable="false" shadowDepth="0" shadowOpacity="0"  >
+            <p>      <h:graphicImage value="/img/wait-128.gif" width="64" height="64"/></p>
+            <p>#{messages.ContextLoader}...</p>
+
+
+        </rich:popupPanel>
+
+        <h:form>
+        <nav class="navbar navbar-static-top nav-header">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <s:link class="navbar-brand" view="/home.xhtml">
+                        <h:graphicImage  value="/img/logo-icon.png"/>
+                    </s:link>
+                </div>
+                <a:outputPanel layout="block" styleClass="collapse navbar-collapse" id="buildPathPanel">
+                    <ul class="nav navbar-nav">
+
+                        <li class="dropdown">
+                            <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                             #{(empty sectionSelectList.district) ? "全部行政区" : sectionSelectList.district.name}<span class="caret"></span></a>
+
+
+                            <div class="dropdown-menu select-menu-modal-holder" >
+                                <div class="select-menu-modal" >
+                                    <div class="select-menu-header">
+                                        <span class="select-menu-title">行政区选择</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                    </div>
+
+                                    <a:outputPanel layout="block">
+
+                                        <a:outputPanel layout="block" styleClass="select-menu-list" id="districtSelectItemList">
+
+                                            <a:commandLink execute="@this" immediate="true"
+                                                           render="buildPathPanel"
+                                                           styleClass="select-menu-item #{(empty sectionSelectList.districtId) ? 'selected': ''}">
+
+                                                <f:param name="selectDistrictId" value=""/>
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">全部行政区</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+
+                                            <a:repeat value="#{allDistrict.resultList}" var="_district">
+
+                                                <a:commandLink execute="@this" immediate="true"
+                                                               render="buildPathPanel"
+                                                               styleClass="select-menu-item #{(sectionSelectList.districtId eq _district.id) ? 'selected': ''}">
+
+                                                    <f:param name="selectDistrictId" value="#{_district.id}"/>
+
+                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                    <span class="select-menu-item-text">#{_district.name}</span>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+                                            </a:repeat>
+
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                #{(empty houseStepSelect.selectSection) ? "请选择小区" : houseStepSelect.selectSection.name}<span class="caret"></span></a>
+                            <div class="dropdown-menu select-menu-modal-holder" >
+                                <div class="select-menu-modal" >
+                                    <div class="select-menu-header">
+                                        <span class="select-menu-title">#{messages.SectionSelect}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                    </div>
+
+                                    <a:outputPanel layout="block" id="sectionSelectPanel">
+                                        <div class="select-menu-filters">
+                                            <div class="select-menu-text-filter">
+                                                <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSelectList.searchKey}">
+                                                    <a:ajax event="keyup" immediate="true" execute="@this"
+                                                            render="SectionSelectItemList">
+                                                        <a:attachQueue requestDelay="500"/>
+                                                    </a:ajax>
+
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
+
+                                            <a:commandLink execute="@this" immediate="true" action="#{houseStepSelect.resetSection}"
+                                                           render="buildPathPanel"
+                                                           styleClass="select-menu-item #{(empty houseStepSelect.selectSection) ? 'selected': ''}">
+
+                                                <a:param value="" assignTo="#{houseStepSelect.selectSectionId}"/>
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">#{messages.sectionSelect}</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+                                            <a:repeat value="#{sectionSelectList.resultList}" var="_item">
+
+                                                <a:commandLink execute="@this" immediate="true"
+                                                               render="buildPathPanel" action="#{houseStepSelect.resetPorject}"
+                                                               styleClass="select-menu-item #{(houseStepSelect.selectSectionId eq _item.id) ? 'selected': ''}">
+
+                                                    <a:param value="#{_item.id}" assignTo="#{houseStepSelect.selectSectionId}"/>
+
+                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                    <span class="select-menu-item-text">#{_item.name}</span>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+                                            </a:repeat>
+
+
+
+
+
+
+                                            <a:commandLink onclick="moreBefor(); moreResult(); event.stopPropagation(); return false;"
+                                                           styleClass="select-menu-item last-visible"
+                                                           rendered="#{sectionSelectList.nextExists}">
+
+
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">#{messages.More}</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <c:if test="#{not empty houseStepSelect.selectSection}">
+                        <li class="dropdown">
+                            <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                #{(empty houseStepSelect.selectProject) ? "请选择项目" : houseStepSelect.selectProject.name}<span class="caret"></span></a>
+
+
+                            <div class="dropdown-menu select-menu-modal-holder" >
+                                <div class="select-menu-modal" >
+                                    <div class="select-menu-header">
+                                        <span class="select-menu-title">项目选择</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                    </div>
+
+                                    <a:outputPanel layout="block">
+
+                                        <a:outputPanel layout="block" styleClass="select-menu-list" id="projectItemList">
+
+                                            <a:commandLink execute="@this" immediate="true"
+                                                           render="buildPathPanel"
+                                                           styleClass="select-menu-item #{(empty houseStepSelect.selectProjectId ) ? 'selected': ''}">
+
+                                                <f:param name="selectProjectId" value=""/>
+                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                <span class="select-menu-item-text">项目未选择</span>
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:commandLink>
+
+
+                                            <a:repeat value="#{houseStepSelect.selectSection.projectList}" var="_project">
+
+                                                <a:commandLink execute="@this" immediate="true"
+                                                               render="buildPathPanel"
+                                                               styleClass="select-menu-item #{(houseStepSelect.selectProjectId eq _project.id) ? 'selected': ''}">
+
+                                                    <f:param name="selectProjectId" value="#{_project.id}"/>
+
+                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                    <span class="select-menu-item-text">#{_project.name}</span>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+                                            </a:repeat>
+
+                                        </a:outputPanel>
+
+                                    </a:outputPanel>
+
+                                </div>
+                            </div>
+                        </li>
+
+
+                            <c:if test="#{not empty houseStepSelect.selectProjectId}">
+
+
+                                <li class="dropdown">
+                                    <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        #{(buildHome.idDefined) ? buildHome.shortName : "请选择楼幢"}<span class="caret"></span></a>
+
+
+                                    <div class="dropdown-menu select-menu-modal-holder" >
+                                        <div class="select-menu-modal" >
+                                            <div class="select-menu-header">
+                                                <span class="select-menu-title">楼幢选择</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                            </div>
+
+                                            <a:outputPanel layout="block">
+
+                                                <a:outputPanel layout="block" styleClass="select-menu-list" id="buildItemList">
+
+                                                    <a:commandLink execute="@this" immediate="true"
+                                                                   render="buildPathPanel"
+                                                                   styleClass="select-menu-item #{(not buildHome.idDefined) ? 'selected': ''}">
+
+                                                        <f:param name="selectBuildId" value=""/>
+                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                        <span class="select-menu-item-text">楼幢未选择</span>
+                                                        <a:attachQueue requestDelay="0"/>
+                                                    </a:commandLink>
+
+
+                                                    <a:repeat value="#{houseStepSelect.buildList}" var="_build">
+
+                                                        <s:link onclick="#{rich:component('wait')}.show()" styleClass="select-menu-item #{(buildHome.id eq _build.id) ? 'selected': ''}">
+
+                                                            <f:param name="selectBuildId" value="#{_build.id}"/>
+
+
+
+                                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                            <span class="select-menu-item-text">#{_build.buildNo}#{messages.MapIdentification_build}#{_build.buildDevNumber}#{(empty _build.buildDevNumber) ? '' : messages.BuildBuildNameSuffix}#{_build.doorNo}</span>
+
+                                                       </s:link>
+                                                </a:repeat>
+
+                                                </a:outputPanel>
+
+                                            </a:outputPanel>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <c:if test="#{buildHome.idDefined}">
+
+
+
+                                    <li class="dropdown">
+                                        <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            #{ownerBuildGridMap.curMap.name}<span class="caret"></span></a>
+
+
+                                        <div class="dropdown-menu select-menu-modal-holder" >
+                                            <div class="select-menu-modal" >
+                                                <div class="select-menu-header">
+                                                    <span class="select-menu-title">分户图页选择</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                                </div>
+
+                                                <a:outputPanel layout="block">
+
+                                                    <a:outputPanel layout="block" styleClass="select-menu-list" id="buildPageItemList">
+
+
+
+                                                        <a:repeat value="#{ownerBuildGridMap.buildGridMaps}" var="_gridMap">
+
+                                                            <s:link onclick="#{rich:component('wait')}.show()" styleClass="select-menu-item #{ (_gridMap.id eq ownerBuildGridMap.id) ? 'selected' : '' } ">
+                                                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                                <span class="select-menu-item-text">#{(empty _gridMap.name) ? messages.noname : _gridMap.name} </span>
+                                                                <f:param value="#{_gridMap.id}" name="selectMapId"/>
+                                                            </s:link>
+
+                                                        </a:repeat>
+
+                                                    </a:outputPanel>
+
+                                                </a:outputPanel>
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+
+
+                                </c:if>
+
+                            </c:if>
+
+                        </c:if>
+
+
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <ui:remove> 批量选取
+                        <li class="header-nav-item">
+
+
+                            <s:link styleClass="header-nav-link tooltipped tooltipped-s"
+                                    propagation="end"
+                                    view="/developer/Setting.xhtml" p:aria-label="设置">
+                                <span class="octicon octicon-gear"></span>
+                            </s:link>
+                        </li>
+                        </ui:remove>
+                        <li class="header-nav-item">
+                            <s:link id="menuLogoutId"
+                                    styleClass="header-nav-link sign-out-button tooltipped tooltipped-s"
+                                    view="/logout.xhtml" data-ga-click="Header, sign out, icon:logout"
+                                    p:aria-label="#{messages.logout}"
+                                    propagation="none">
+
+                                <span class="octicon octicon-sign-out"></span>
+                            </s:link>
+
+                        </li>
+
+
+                    </ul>
+                </a:outputPanel>
+
+
+            </div>
+        </nav>
+        </h:form>
+
+
+        <a:outputPanel rendered="#{ not empty ownerBuildGridMap.curMap}"
+                       layout="block" style="position: absolute; top:51px; bottom: 0; left: 0; right: 0; background-color: #FFFFFF;"
+                       p:onselectstart="return false;">
+            <div style="position: absolute; left: 0; top: 0; width: 50px; height: 50px; border-bottom: 2px solid #ddd;"/>
+
+
+
+            <div class="grid-map map-thead map-col-thead" >
+                <table class="map-col-thead-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px ">
+                    <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
+                        <col/>
+                    </a:repeat>
+
+                    <tr>
+                        <a:repeat value="#{ownerBuildGridMap.curMap.houseGridUnitList}" var="_unit">
+                            <th colspan="#{_unit.colspan}">
+                                #{_unit.title}
+                            </th>
+                        </a:repeat>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="grid-map map-thead map-row-thead" >
+                <table class="map-row-thead-table" >
+                    <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
+                        <tr>
+
+                            <th>
+                                #{_floor.title}
+                            </th>
+
+                        </tr>
+
+                    </a:repeat>
+                </table>
+            </div>
+
+            <div class="grid-map map-context">
+
+                <table class="map-context-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px">
+                    <thead>
+                    <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
+                        <col/>
+                    </a:repeat>
+                    </thead>
+                    <tbody>
+
+                    <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
+                        <tr>
+                            <a:repeat value="#{_floor.gridBlockList}" var="_cell">
+                                <td colspan="#{_cell.colspan}"
+                                    rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
+
+                                    <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" ondblclick="showHouseInfo('#{_cell.house.houseCode}')">
+                                        <div class="#{_cell.houseStatus}" >
+                                            <div class="house-info-context">
+                                                <ul >
+                                                    <li><h2><a:outputPanel rendered="#{not empty _cell.lockedHouseList}" class="icon-warning-sign house-locked"/>#{_cell.house.houseOrder}</h2></li>
+                                                    <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
+                                                    <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.personName}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
+                                                </ul>
+                                            </div>
+                                            <div style="float: left" >
+                                                <a:outputPanel styleClass="icon-lock" p:aria-label="正在办理【#{_cell.inBizName}】业务" rendered="#{not empty _cell.inBizName}">
+
+                                                </a:outputPanel>
+                                            </div>
+                                            <div class="house-status" >
+                                                <a:outputPanel styleClass="label" rendered="#{not empty _cell.houseStatus}">
+                                                    #{messages[_cell.houseStatus.name()]}
+                                                </a:outputPanel>
+                                            </div>
+                                        </div>
+
+
+                                    </a:outputPanel>
+
+                                </td>
+                            </a:repeat>
+                        </tr>
+                    </a:repeat>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </a:outputPanel>
+
+        <div class="tooltip bottom lock-tooltip" style="opacity: 1;display: none;"  role="tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-inner lock-tooltip-text">
+
+            </div>
+        </div>
+
+        <h:outputScript>
+            $(document).ready(
+                    function () {
+                        $(".map-context").scroll(function() {
+
+                            $(".map-col-thead").scrollTo(this.scrollLeft,0);
+                            $(".map-row-thead").scrollTo(this.scrollTop,0);
+
+                        });
+
+
+
+                        $('.icon-lock').hover(function(){
+
+                            $(".lock-tooltip-text").text($(this).attr("aria-label"));
+                            $(".lock-tooltip").show();
+
+
+                            $(".lock-tooltip").css({top:$(this).offset().top + $(this).height(),left:$(this).offset().left - $(".lock-tooltip").width() / 2 + $(this).width() / 2})
+
+
+
+                        },function(){
+                            $(".lock-tooltip").hide();
+
+                        });
+
+
+
+                    }
+
+
+
+            );
+        </h:outputScript>
+
+
+
+        <a:jsFunction name="moreResult" execute="@this" immediate="true" action="#{sectionSelectList.moreResult}"
+                      oncomplete="scrollToBefor(); "
+                      render="sectionSelectBtnCaption,SectionSelectItemList,projectSelectInputs">
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
+
+
+        <a:jsFunction name="showHouseInfo" status="processWaiting"
+                      oncomplete="$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+            <a:param name="selectHouseCode" assignTo="#{houseView.houseCode}"/>
+            <a:attachQueue requestDelay="0"/>
+        </a:jsFunction>
+
+        <h:outputScript>
+            var scrollTopValue = 0;
+
+            function moreBefor(){
+            var div = #{rich:element('SectionSelectItemList')};
+            scrollTopValue = div.scrollTop;
+
+            }
+
+            function scrollToBefor(){
+            var div = #{rich:element('SectionSelectItemList')};
+
+            div.scrollTop = scrollTopValue;
+            }
+
+        </h:outputScript>
+
+        <div class="modal fade info-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <a:outputPanel id="houseInfoContent" layout="block"  styleClass="modal-dialog modal-lg" >
+
+
+
+            <a:outputPanel layout="block" styleClass="modal-content" rendered="#{houseView.codeDefined}">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <h2 class="modal-title">#{houseView.businessHouse.houseCode}</h2>
+                </div>
+                <a:outputPanel  ajaxRendered="false" layout="block" styleClass="modal-body">
+
+                    <a:outputPanel layout="block" styleClass="alert alert-warning" role="alert"
+                                   style="margin-bottom: 0; margin-top: 2px;padding-left: 40px" rendered="#{houseView.inBusiness}">
+                        <span class="octicon octicon-alert left" style="margin-left: -25px; "></span>
+
+                        <strong>房屋正在办理业务</strong>【#{houseView.inBusinessName}】  编号：
+
+                        <s:link view="/func/house/owner/BusinessView.xhtml" rendered="#{s:hasRole('owner.businessView')}" value="#{houseView.inBusinessCode}">
+                            <f:param name="businessId" value="#{houseView.inBusinessCode}"/>
+                        </s:link>
+
+                        <h:outputText value="#{houseView.inBusinessCode}" rendered="#{not s:hasRole('owner.businessView')}"/>
+
+                    </a:outputPanel>
+
+                    <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
+                        <ui:param name="changeDatas" value="#{houseView.selectHouseChangeData}"/>
+                        【档案房屋信息】与【测绘房屋信息】数据不同
+                    </ui:decorate>
+
+
+                    <a:outputPanel style="margin-bottom: 0; margin-top: 2px;padding-left: 40px" rendered="#{not empty houseView.lockedHouseList}"
+                                   layout="block" styleClass="alert alert-warning" role="alert">
+                        <span class="octicon octicon-alert" style="margin-left: -25px; float: left"></span>
+
+                        <a:repeat value="#{houseView.lockedHouseList}" var="_lockedHouse">
+
+                            <p class="#{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
+                            </strong> 由 <strong>
+                                <h:outputText value="系统" rendered="#{_lockedHouse.type eq 'SYSTEM_LOCKED'}"/>
+                                <h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}" rendered="#{not (_lockedHouse.type eq 'SYSTEM_LOCKED')}"/></strong>
+                                ，因:
+
+
+                                <a:outputPanel rendered="#{not (_lockedHouse.type eq 'CANT_SALE')}"><strong>#{_lockedHouse.description}</strong> 建立预警。 </a:outputPanel>
+                                <a:outputPanel rendered="#{_lockedHouse.type eq 'CANT_SALE'}">办理（预）销售许可证 设置为不可售。 </a:outputPanel>
+
+
+
+                            </p>
+
+
+                        </a:repeat>
+
+                    </a:outputPanel>
+
+
+
+                    <ui:include src="/layout/house/owner/BusinessHouseView.xhtml">
+                        <ui:param name="houseInfo" value="#{houseView.businessHouse}"/>
+                    </ui:include>
+
+                </a:outputPanel>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
+
+
+                        <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
+                                view="/func/house/owner/LockedHouseMgr.xhtml"
+                                styleClass="btn btn-default"  p:aria-label="房屋预警设置">
+                            <f:param name="houseCode" value="#{_item.houseCode}"/>
+                            房屋预警
+                        </s:link>
+
+
+                    <s:link value="查看档案" styleClass="btn btn-primary #{(houseView.haveRecord) ? '' : 'disabled'}"
+                            disabled="#{not houseView.haveRecord}" view="/func/house/owner/HouseRecordView.xhtml">
+                        <f:param name="houseCode" value="#{houseView.houseCode}"/>
+                    </s:link>
+                </div>
+            </a:outputPanel>
+
+            </a:outputPanel>
+        </div>
+
+        <h:outputScript library="bootstrap" name="/js/bootstrap.min.js"/>
+        <h:outputScript library="bootstrap-select" name="/js/bootstrap-select.js"/>
+        <h:outputScript library="bootstrap-switch" name="/js/bootstrap-switch.js"/>
+        <h:outputScript library="floatThead" name="jquery.floatThead.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/bootstrap-datetimepicker.min.js"/>
+        <h:outputScript library="bootstrap-datepicker" name="/js/locales/bootstrap-datetimepicker.zh-CN.js"/>
+        <h:outputScript library="fuelux" name="/js/fuelux.min.js"/>
+        <h:outputScript library="jquery-scrollTo" name="/js/jquery.scrollTo.min.js"/>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="init.js"/>
+        </a:outputPanel>
+
+    </h:body>
+
+
+    </f:view>
+
+</html>

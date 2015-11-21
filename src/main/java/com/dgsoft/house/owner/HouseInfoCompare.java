@@ -117,6 +117,9 @@ public class HouseInfoCompare {
 
 
     public static List<ChangeData> compare(HouseInfo srcHouseInfo, HouseInfo descHouseInfo,boolean compareArea) {
+        if (descHouseInfo == null || descHouseInfo == null){
+            return new ArrayList<ChangeData>(0);
+        }
         List<ChangeData> result = new ArrayList<ChangeData>();
         for (Method m : HouseInfo.class.getMethods()) {
             if (!"getMapTime".equals(m.getName()) && (compareArea || !Arrays.asList(AREA_METHOD_NAME).contains(m.getName()) ))

@@ -158,16 +158,17 @@
                         </a:commandLink>
                     </li>
 
-                    <li>
-                        <a:commandLink status="processWaiting" styleClass="filter-item #{ownerBuildGridMap.dataTableList ? 'selected' : ''}" >
-                            #{messages.RecordHouse}
-                            <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
-                            <a:attachQueue requestDelay="0"/>
-                            <span class="count"><h:outputText value="#{ownerBuildGridMap.outHouseRecords.size}"><f:convertNumber type="number" integerOnly="true" groupingUsed="true"/></h:outputText></span>
-                        </a:commandLink>
-                    </li>
 
                 </a:repeat>
+
+                <li>
+                    <a:commandLink status="processWaiting" styleClass="filter-item #{ownerBuildGridMap.dataTableList ? 'selected' : ''}" >
+                        #{messages.RecordHouse}
+                        <f:param name="dataTableList" value="#{not ownerBuildGridMap.dataTableList}"/>
+                        <a:attachQueue requestDelay="0"/>
+                        <span class="count"><h:outputText value="#{ownerBuildGridMap.outHouseRecords.size}"><f:convertNumber type="number" integerOnly="true" groupingUsed="true"/></h:outputText></span>
+                    </a:commandLink>
+                </li>
             </ul>
         </a:outputPanel>
     </ui:define>

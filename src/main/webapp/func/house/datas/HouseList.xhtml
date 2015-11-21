@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="房屋管理"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-block">
+                        <h:inputText styleClass="form-control" value="#{buildList.searchKey}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandButton styleClass="button" action="#{buildList.first}" value="#{messages.Search}">
+
+                    </h:commandButton>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+
+    <h:form id="buildListResult">
+
+    <s:div styleClass="blankslate" rendered="#{empty buildList.resultList}">
+        <span class="mega-octicon octicon-search"></span>
+
+        <h3>#{messages.EmptyResult}</h3>
+
+        <p>  #{messages.YouCan}#{' '}
+
+            <s:link includePageParams="false" value="重置条件"/>
+
+
+            #{' '} #{messages.Or}  #{messages.Try} #{' '}
+            <s:link value="#{messages.AvancedSearch}"/></p>
+    </s:div>
+
+    </h:form>
+
+
+
+</ui:composition>
