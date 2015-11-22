@@ -138,19 +138,28 @@ public abstract class TaskInstanceListCache {
 
     public void reset(){
         List<TaskInstanceAdapter> newTasks = initResultTask();
+
         if (!resultTaskListChange && resultTask != null){
-            Set<TaskInstanceAdapter> temp = new HashSet<TaskInstanceAdapter>(newTasks);
-            for(TaskInstanceAdapter task: newTasks){
-                if (resultTask.contains(task)){
-                    temp.remove(task);
-                    resultTask.remove(task);
-                }
-            }
-            if (!temp.isEmpty() || !resultTask.isEmpty()){
+
+
+//            Set<TaskInstanceAdapter> temp = new HashSet<TaskInstanceAdapter>(newTasks);
+//            for(TaskInstanceAdapter task: newTasks){
+//
+//                if (resultTask.contains(task)){
+//                    temp.remove(task);
+//                    resultTask.remove(task);
+//
+//                }
+//            }
+//            if (!temp.isEmpty() || !resultTask.isEmpty()){
+//                resultTaskListChange = true;
+//            }
+
+            if (resultTask.size() != newTasks.size()){
                 resultTaskListChange = true;
             }
-        }
 
+        }
 
         resultTask = newTasks;
     }

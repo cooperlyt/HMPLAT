@@ -34,7 +34,7 @@ public class BuildList extends HouseEntityQuery<Build>{
             "lower(build.id) = lower(#{buildList.searchKey})",
             "lower(project.id) = lower(#{buildList.searchKey})",
             "lower(developer.id) = lower(#{buildList.searchKey})",
-            "lower(project.address) = lower(concat('%',#{buildList.searchKey},'%'))",
+            "lower(project.address) = lower(concat('%',#{buildList.searchKey},'%'))"
 
     };
 

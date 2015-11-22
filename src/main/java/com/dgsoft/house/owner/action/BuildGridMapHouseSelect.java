@@ -293,20 +293,16 @@ public class BuildGridMapHouseSelect {
 
         Map<String,HouseRecord> businessHouseMap = new HashMap<String, HouseRecord>();
 
-        List<String> lockedHouseCode;
+
         if (!houseMap.isEmpty()){
             List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                     .setParameter("houseCodes", houseMap.keySet())
                     .getResultList();
+            for(HouseRecord hr: houseRecords){
+                businessHouseMap.put(hr.getHouseCode(),hr);
+            }
 
 
-            lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
-                    .setParameter("houseCodes", houseMap.keySet()).getResultList();
-            List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
-                    .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
-            lockedHouseCode.addAll(inBusinessHouseCode);
-        }else{
-            lockedHouseCode = new ArrayList<String>(0);
         }
 
 
@@ -321,7 +317,7 @@ public class BuildGridMapHouseSelect {
                         house = houseMap.get(block.getHouseCode());
                     if (house != null){
                         block.setHouse(house);
-                        block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
+                        //block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
                         HouseRecord houseRecord =  businessHouseMap.get(house.getHouseCode());
                         if (houseRecord != null) {
                             if (houseRecord.getBusinessHouse().getBusinessHouseOwner()!=null)
@@ -346,7 +342,7 @@ public class BuildGridMapHouseSelect {
             for (GridRow gridRow: idleMap.getGridRows()){
                 for(GridBlock block: gridRow.getGridBlocks()){
                     if (block.getHouse()!= null){
-                        block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
+
                         HouseRecord houseRecord =  businessHouseMap.get(block.getHouseCode());
                         if (houseRecord != null) {
                             if (houseRecord.getBusinessHouse().getBusinessHouseOwner() != null)

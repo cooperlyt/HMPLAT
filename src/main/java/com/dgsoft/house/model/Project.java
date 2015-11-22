@@ -236,17 +236,10 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         Collections.sort(result, new Comparator<Build>() {
             @Override
             public int compare(Build o1, Build o2) {
-                if ((o1.getBuildDevNumber() == null) && (o2.getBuildDevNumber() == null)){
-                    return o1.getBuildNo().compareTo(o2.getBuildNo());
-                } else if ((o1.getBuildDevNumber() != null) && (o2.getBuildDevNumber() != null)){
-                    return o1.getBuildDevNumber().compareTo(o2.getBuildDevNumber());
-                }else{
-                    if (o1.getBuildDevNumber() == null){
-                        return -1;
-                    }else{
-                        return 1;
-                    }
+                if (o1.getBuildNo() == null){
+                    return 0;
                 }
+                return o1.getBuildNo().compareTo(o2.getBuildNo());
             }
         });
         return result;
