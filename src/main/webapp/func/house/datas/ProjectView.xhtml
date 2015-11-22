@@ -61,33 +61,186 @@
         .buildActionColumn {
             width: 150px;
         }
+
+        .selectActionColumn{
+            width: 10px;
+        }
     </h:outputStylesheet>
-    <h:form>
+
+            <h:outputScript>
+                $(document).ready(
+                        function(){
+                            $("#selectAllCheckBox").click(function(){
+
+                                if ($(this).is(':checked')){
+                                    $(".js-select-item").prop("checked","true");
+                                }else{
+                                    $(".js-select-item").removeAttr("checked");
+                                }
+
+                            })
+
+                        });
+
+            </h:outputScript>
+
+
+
+
+    <h:form id="buldList">
+
+
+
+        <div class="modal fade data-dialog " id="moveBuildPanel" tabindex="-1" role="dialog"
+             aria-labelledby="moveBuildPanel_ModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <a:outputPanel id="moveBuildPanel_controls">
+
+                                <button type="button" class="close" aria-label="#{messages.close}"
+                                        data-dismiss="modal">
+                                    <span class="octicon octicon-remove-close" aria-hidden="true"></span>
+                                    <span class="sr-only">#{messages.close}</span></button>
+
+                        </a:outputPanel>
+                        <a:outputPanel id="moveBuildPanel_title">
+                            <h2 class="facebox-header">楼幢迁移</h2>
+                        </a:outputPanel>
+                    </div>
+                    <a:region id="moveBuildPanel_form" role="form">
+                        <s:div styleClass="modal-body">
+
+
+                            <a:outputPanel id="moveBuildPanel_inputs">
+                                <s:decorate template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        目标项目
+                                    </ui:define>
+                                    <ui:param name="for" value="targetProjectInput"/>
+                                    <h:selectOneMenu id="targetProjectInputtargetProjectInput" value="#{targetProjectHome.id}"
+                                                     styleClass="selectpicker edit-select form-control" required="true">
+                                        <s:selectItems value="#{projectHome.instance.section.projectList}" var="_item"
+                                                       itemValue="#{_item.id}" label="#{_item.name}" />
+                                        <a:ajax event="valueChange" execute="@region" listener="#{targetProjectHome.moveOptionChaangeListener}"
+                                                render="moveBuildNameOptionField,moveHouseAddressOptionField">
+                                            <a:attachQueue requestDelay="0"/>
+                                        </a:ajax>
+                                    </h:selectOneMenu>
+                                </s:decorate>
+
+                                <s:decorate id="moveBuildNameOptionField" template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        更改楼幢名称
+                                    </ui:define>
+                                    <ui:param name="for" value="targetProjectInput"/>
+                                    <div class="input-group">
+                        <span class="input-group-addon">
+                                        <h:selectBooleanCheckbox value="#{targetProjectHome.moveChangeBuildName}">
+                                            <a:ajax event="click" listener="#{targetProjectHome.moveOptionChaangeListener}"
+                                                    execute="@region"  render="moveBuildNameOptionField">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:selectBooleanCheckbox>
+                      </span>
+                                        <h:inputText id="moveBuildNameInput"
+                                                     value="#{targetProjectHome.moveBuildName}" styleClass="form-control"/>
+                                        <span class="input-group-addon">幢号</span>
+                                    </div>
+                                </s:decorate>
+                                <s:decorate id="moveHouseAddressOptionField" template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        更改房屋坐落名称
+                                    </ui:define>
+                                    <ui:param name="for" value="targetProjectInput"/>
+                                    <div class="input-group">
+                        <span class="input-group-addon">
+                                        <h:selectBooleanCheckbox  value="#{targetProjectHome.moveChangeHouseAddress}">
+                                            <a:ajax event="click" listener="#{targetProjectHome.moveOptionChaangeListener}"
+                                                    execute="@region"  render="moveHouseAddressOptionField">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:selectBooleanCheckbox>
+                      </span>
+                                        <h:inputText value="#{targetProjectHome.moveHouseAddress}" styleClass="form-control"/>
+                                        <span class="input-group-addon">幢号 房号</span>
+                                    </div>
+                                </s:decorate>
+
+                            </a:outputPanel>
+                        </s:div>
+                        <a:outputPanel layout="block" styleClass="modal-footer" id="moveBuildPanel_buttons">
+                            <button type="button" class="button default" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-floppy-remove"/>
+                                #{messages.abort}</button>
+
+                            <a:commandLink styleClass="button submit primary" render="buildDatas"
+                                           execute="@form"
+                                           oncomplete="$('#moveBuildPanel').modal('hide')"
+                                           action="#{targetProjectHome.moveBuild}">
+
+                                <span class="glyphicon glyphicon-floppy-disk"/>
+                                <a:attachQueue requestDelay="0"/>
+                                迁移
+                            </a:commandLink>
+                        </a:outputPanel>
+                    </a:region>
+                </div>
+            </div>
+        </div>
+
+
         <a:outputPanel id="buildDatas">
 
             <div class="sort-bar" style="margin-bottom: 0;">
                 <a:outputPanel layout="block" class="right">
-                    <s:link styleClass=" minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
+
+                    <div class="btn-group right" role="group" >
+
+                        <h:outputLink styleClass="btn minibutton " onclick=" $('#moveBuildPanel').modal({backdrop: 'static'}); return false;">
+                            迁移
+                        </h:outputLink>
+
+                    <s:link styleClass="btn minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
                         <span class="octicon octicon-plus"/>
                         <f:param name="buildId" value=""/>
-                        #{messages.create} #{messages.Build}
+                        #{messages.create}
                     </s:link>
+
+
+
+                    </div>
                 </a:outputPanel>
 
                 <h3>#{messages.ProjectBuildCount} #{' '} #{projectHome.instance.builds.size}</h3>
             </div>
 
 
-            <h:dataTable value="#{projectHome.instance.buildList}" var="_build" style="margin-top: 0"
-                         columnClasses="buildIdColumn,,,,,,,buildActionColumn"
+            <h:dataTable value="#{projectHome.batchOperBuild}" var="_build" style="margin-top: 0"
+                         columnClasses="selectActionColumn,buildIdColumn,,,,,,,buildActionColumn"
                          styleClass="table table-striped table-hover table-floatThead result-data-table">
+
+
+                <h:column>
+                    <f:facet name="header">
+                        <input type="checkbox" id="selectAllCheckBox" />
+
+                    </f:facet>
+                    <h:selectBooleanCheckbox styleClass="js-select-item" value="#{_build.selected}">
+
+                    </h:selectBooleanCheckbox>
+                </h:column>
 
                 <h:column>
                     <f:facet name="header">
                         #{messages.Build_Id}
                     </f:facet>
 
-                    <h:outputText value="#{_build.id}" p:aria-label="#{_build.name}"/>
+
+
+                    <h:outputText value="#{_build.data.id}" p:aria-label="#{_build.data.name}"/>
 
                 </h:column>
 
@@ -95,38 +248,38 @@
                     <f:facet name="header">
                         #{messages.Build_MapNO}
                     </f:facet>
-                    #{_build.mapNumber}
+                    #{_build.data.mapNumber}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         #{runParam.getStringParamValue('HouseBlockCodeLabel')}
                     </f:facet>
-                    #{_build.blockNo}
+                    #{_build.data.blockNo}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         #{messages.Build_BuildNO}
                     </f:facet>
-                    #{_build.buildNo}
+                    #{_build.data.buildNo}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         #{messages.Build_devBuildNumber}
                     </f:facet>
-                    #{_build.buildDevNumber}
+                    #{_build.data.buildDevNumber}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         #{messages.Build_DoorNO}
                     </f:facet>
-                    #{_build.doorNo}
+                    #{_build.data.doorNo}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">
                         #{runParam.getStringParamValue('HouseStreetCodeLabel')}
                     </f:facet>
-                    #{_build.streetCode}
+                    #{_build.data.streetCode}
                 </h:column>
 
 
@@ -142,7 +295,7 @@
                                        execute="@this" immediate="true"
                                        render="buildDeleteConfirmPanel_form"
                                        oncomplete="$('#buildDeleteConfirmPanel').modal('show')">
-                            <a:param value="#{_build.id}" assignTo="#{buildHome.id}"/>
+                            <a:param value="#{_build.data.id}" assignTo="#{buildHome.id}"/>
                             <span class="glyphicon glyphicon-remove"/>
                             <a:attachQueue requestDelay="0"/>
 
@@ -152,14 +305,14 @@
                         <s:link styleClass="table-action"
                                 view="/func/house/datas/BuildEdit.xhtml">
                             <span class="glyphicon glyphicon-pencil"/>
-                            <f:param name="buildId" value="#{_build.id}"/>
+                            <f:param name="buildId" value="#{_build.data.id}"/>
                             <f:param name="from" value="/func/house/datas/ProjectView.xhtml"/>
                         </s:link>
 
 
                         <s:link styleClass="table-action" propagation="begin"
                                 view="/func/house/datas/BuildGridMapEdit.xhtml">
-                            <f:param name="buildId" value="#{_build.id}"/>
+                            <f:param name="buildId" value="#{_build.data.id}"/>
 
                             <span class="glyphicon glyphicon-th"/>
                         </s:link>

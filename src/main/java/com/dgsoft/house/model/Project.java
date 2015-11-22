@@ -1,6 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.BatchOperData;
 import com.dgsoft.house.ProjectInfo;
 import com.google.common.collect.Iterators;
 import org.jboss.seam.international.StatusMessage;
@@ -244,6 +245,7 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         });
         return result;
     }
+
 
     @Override
     @Transient
