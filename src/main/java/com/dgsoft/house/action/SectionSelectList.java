@@ -2,6 +2,7 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
+import com.dgsoft.house.model.District;
 import com.dgsoft.house.model.Section;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -72,7 +73,14 @@ public class SectionSelectList extends MultiOperatorEntityQuery<Section> {
 
     public void setDistrictId(String districtId) {
         this.districtId = districtId;
+    }
 
+    public District getDistrict(){
+        if (districtId == null || districtId.trim().equals("")){
+            return null;
+        }
+
+        return getEntityManager().find(District.class,districtId);
     }
 
     public String getSearchKey() {

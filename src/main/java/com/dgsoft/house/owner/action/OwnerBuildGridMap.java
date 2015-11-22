@@ -28,7 +28,7 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class OwnerBuildGridMap {
 
-    @In(required = false)
+    @In(create = true)
     private BuildHome buildHome;
 
 
@@ -233,12 +233,31 @@ public class OwnerBuildGridMap {
         return buildGridMaps;
     }
 
+
+    public void setSelectBuildId(String id){
+        buildHome.setId(id);
+        findBuildBySection();
+    }
+
+    public String getSelectBuildId(){
+        return (String) buildHome.getId();
+    }
+
     public void findBuildBySection() {
 
-        mapNumber = buildHome.getInstance().getMapNumber();
-        blockNumber = buildHome.getInstance().getBlockNo();
-        buildNumber = buildHome.getInstance().getBuildNo();
-        initBuildMap();
+        Logging.getLog(getClass()).debug("findBuildBySection buildHouse id:" + buildHome.getId());
+
+        if (buildHome.isIdDefined()) {
+            mapNumber = buildHome.getInstance().getMapNumber();
+            blockNumber = buildHome.getInstance().getBlockNo();
+            buildNumber = buildHome.getInstance().getBuildNo();
+            initBuildMap();
+        }else{
+            mapNumber=null;
+            blockNumber=null;
+            buildNumber=null;
+            curMap = null;
+        }
     }
 
     public void findBuildByNumber() {
@@ -342,6 +361,8 @@ public class OwnerBuildGridMap {
 
         resultBusinessHouse.clear();
         buildGridMaps = new ArrayList<BuildGridMap>(buildHome.getInstance().getBuildGridMaps());
+
+        Logging.getLog(getClass()).debug("init build map page size:" + buildGridMaps.size());
         Collections.sort(buildGridMaps, new Comparator<BuildGridMap>() {
             @Override
             public int compare(BuildGridMap o1, BuildGridMap o2) {
@@ -389,15 +410,26 @@ public class OwnerBuildGridMap {
             houseCodes.add(house.getHouseCode());
         }
 
-        List<String> lockedHouseCode;
+        Map<String,List<LockedHouse>> lockedHouseMap = new HashMap<String, List<LockedHouse>>();
+        Map<String,String> inBusinessHouseCode = new HashMap<String, String>();
+        //List<String> lockedHouseCode;
         if (!houseMap.isEmpty()) {
-            lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.houseCode from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", String.class)
-                    .setParameter("houseCodes", houseMap.keySet()).getResultList();
-            List<String> inBusinessHouseCode = ownerEntityLoader.getEntityManager().createQuery("select houseBusiness.houseCode from HouseBusiness houseBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)")
-                    .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList();
-            lockedHouseCode.addAll(inBusinessHouseCode);
-        } else {
-            lockedHouseCode = new ArrayList<String>(0);
+            for(LockedHouse lockedHouse : ownerEntityLoader.getEntityManager().createQuery("select lockedHouse from LockedHouse lockedHouse where lockedHouse.houseCode in (:houseCodes)", LockedHouse.class)
+                    .setParameter("houseCodes", houseMap.keySet()).getResultList()){
+                List<LockedHouse> houseLockList = lockedHouseMap.get(lockedHouse.getHouseCode());
+                if (houseLockList == null){
+                    houseLockList = new ArrayList<LockedHouse>();
+                    lockedHouseMap.put(lockedHouse.getHouseCode(),houseLockList);
+                }
+                houseLockList.add(lockedHouse);
+            }
+
+
+             for(HouseBusiness houseBusiness : ownerEntityLoader.getEntityManager().createQuery("select houseBusiness from HouseBusiness houseBusiness left join fetch houseBusiness.ownerBusiness where (houseBusiness.ownerBusiness.status in (:runingStatus)) and houseBusiness.startBusinessHouse.houseCode in (:houseCodes)",HouseBusiness.class)
+                    .setParameter("houseCodes", houseMap.keySet()).setParameter("runingStatus", OwnerBusiness.BusinessStatus.runningStatus()).getResultList()){
+                 inBusinessHouseCode.put(houseBusiness.getHouseCode(),houseBusiness.getOwnerBusiness().getDefineName());
+             }
+
         }
 
         for (BuildGridMap map : buildGridMaps) {
@@ -408,8 +440,9 @@ public class OwnerBuildGridMap {
                         house = businessHouseMap.get(block.getHouseCode());
                     if (house != null) {
                         block.setHouse(house);
-                        block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
-
+                        block.setInBizName(inBusinessHouseCode.get(house.getHouseCode()));
+                        block.setLockedHouseList(lockedHouseMap.get(house.getHouseCode()));
+                        block.setLocked(inBusinessHouseCode.keySet().contains(house.getHouseCode()) || lockedHouseMap.keySet().contains(house.getHouseCode()));
                         block.setHouseStatus(houseMasterStatus.get(house.getHouseCode()));
 
                         houseMap.remove(house.getHouseCode());
@@ -434,7 +467,9 @@ public class OwnerBuildGridMap {
 
                         block.setHouseStatus(houseMasterStatus.get(block.getHouse().getHouseCode()));
 
-                        block.setLocked(lockedHouseCode.contains(block.getHouse().getHouseCode()));
+                        block.setLocked(inBusinessHouseCode.keySet().contains(block.getHouse().getHouseCode()) || lockedHouseMap.keySet().contains(block.getHouse().getHouseCode()));
+                        block.setInBizName(inBusinessHouseCode.get(block.getHouse().getHouseCode()));
+                        block.setLockedHouseList(lockedHouseMap.get(block.getHouse().getHouseCode()));
                     }
                 }
             }
