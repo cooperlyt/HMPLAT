@@ -112,7 +112,7 @@
         <p:paragraph>#{ownerBusinessHome.instance.closeHouse.workCardNo}</p:paragraph>
     </p:cell>
     <p:cell fixedHeight="25">
-        <p:paragraph>法院工作人员签字</p:paragraph>
+        <p:paragraph>送达人员签字</p:paragraph>
     </p:cell>
     <p:cell fixedHeight="25">
         <p:paragraph></p:paragraph>
@@ -122,6 +122,13 @@
     </p:cell>
     <p:cell fixedHeight="25">
         <p:paragraph></p:paragraph>
+    </p:cell>
+
+    <p:cell fixedHeight="25">
+        <p:paragraph>查封时间</p:paragraph>
+    </p:cell>
+    <p:cell fixedHeight="25" colspan="3">
+        <p:paragraph><p:text value="#{ownerBusinessHome.instance.closeHouse.closeDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text> 至 <p:text value="#{ownerBusinessHome.instance.closeHouse.toDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
     </p:cell>
 
 
