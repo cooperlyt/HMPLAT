@@ -565,7 +565,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public HouseBusiness getSingleHoues() {
         Set<HouseBusiness> houseBusinesses = getHouseBusinesses();
         if (houseBusinesses.size() > 1) {
-            throw new IllegalArgumentException("HouseBusiness count > 1");
+            throw new IllegalArgumentException("HouseBusiness count > 1 :" + getId());
         } else if (houseBusinesses.size() == 1) {
             return houseBusinesses.iterator().next();
         } else

@@ -9,5 +9,9 @@ import org.jboss.seam.annotations.Transactional;
 @Name("taskOwnerBusinessFile")
 public class TaskOwnerBusinessFile extends OwnerBusinessFile {
 
-
+    @Override
+    @Transactional
+    public void changeListener(){
+        ownerBusinessHome.update();
+    }
 }

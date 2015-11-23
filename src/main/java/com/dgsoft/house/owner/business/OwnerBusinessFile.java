@@ -82,12 +82,16 @@ public class OwnerBusinessFile {
             BusinessFileOperation fileOperation = new BusinessFtpFile(ownerBusinessHome.getInstance().getId());
             try {
                 loadFromFile(getTree(), fileOperation);
+                changeListener();
             } finally {
                 fileOperation.close();
             }
         } catch (IOException e) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "FILE_SERVER_FIAIL");
         }
+    }
+
+    public void changeListener(){
     }
 
     @In

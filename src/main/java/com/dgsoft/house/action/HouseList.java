@@ -57,7 +57,7 @@ public class HouseList extends MultiOperatorEntityQuery<House> {
         setRestrictionGroup(new RestrictionGroup("or",Arrays.asList(RESTRICTIONS)));
         setOrderExpress("build.id,house.houseOrder,house.id");
 
-        setMaxResults(25);
+        setMaxResults(70);
 
     }
 

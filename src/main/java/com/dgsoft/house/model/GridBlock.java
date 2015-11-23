@@ -395,8 +395,34 @@ public class GridBlock implements java.io.Serializable {
     }
 
     @Transient
-    public List<LockedHouse> getLockedHouseList() {
+    public List<LockedHouse>  getLockedHouseList(){
         return lockedHouseList;
+    }
+
+    @Transient
+    public String getLockedTip(){
+        String result = "";
+        if (getLockedHouseList() != null ){
+            for(LockedHouse lockedHouse: getLockedHouseList()){
+                if (!"".equals(result)){
+                    result += "<br/>";
+                }
+                switch (lockedHouse.getType()){
+
+                    case CANT_SALE:
+                        result += "【不可售预警】";
+                        break;
+                    case SYSTEM_LOCKED:
+                        result += "【系统预警】";
+                        break;
+                    case HOUSE_LOCKED:
+                        result += "【房屋预警】";
+                        break;
+                }
+                result += lockedHouse.getDescription();
+            }
+        }
+        return result;
     }
 
     @Transient
