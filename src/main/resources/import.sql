@@ -158,6 +158,7 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.busines
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.runBusinessMgr', '业务运行维护', '中止，挂起，分发正在运行的业务', 5);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档，预警', 9);
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.businessView', '业务档案查看', '查看档案', 6);
 
@@ -228,6 +229,15 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave', 'owner.MapHouseRecordSearch');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.MapHouseRecordSearch');
 
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档，预警', 21);
+
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.houseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.MapHouseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.lockHouseMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.totalDataExport');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'house.businessMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'house.businessSearch');
 
 -- ADMIN INSERY
 -- INSERT INTO PERSON (ID,NAME,CREDENTIALS_TYPE,_FOREIGN,CREDENTIALS_NUMBER,DATE_OF_BIRTH) VALUES ('admin','admin','OTHER',1,'1','2013-07-15 10:27:08');
