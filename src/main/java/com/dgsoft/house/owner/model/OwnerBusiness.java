@@ -53,7 +53,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     private Set<Evaluate> evaluates = new HashSet<Evaluate>(0);
     private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
-    private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
     private Set<HouseCloseCancel> houseCloseCancels = new HashSet<HouseCloseCancel>(0);
     private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
     private Set<CloseHouse> closeHouses = new HashSet<CloseHouse>(0);
@@ -291,15 +290,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.mortgaegeRegistes = mortgaegeRegistes;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    public Set<SaleInfo> getSaleInfos() {
-        return this.saleInfos;
-    }
-
-
-    public void setSaleInfos(Set<SaleInfo> saleInfos) {
-        this.saleInfos = saleInfos;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<HouseCloseCancel> getHouseCloseCancels() {
@@ -661,8 +651,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public SaleInfo getSaleInfo() {
-        if (!getSaleInfos().isEmpty()) {
-            return getSaleInfos().iterator().next();
+        if (!getSingleHoues().getAfterBusinessHouse().getSaleInfos().isEmpty()) {
+            return getSingleHoues().getAfterBusinessHouse().getSaleInfos().iterator().next();
         }
         return null;
     }

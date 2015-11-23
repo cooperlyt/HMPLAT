@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class SaleInfo implements java.io.Serializable {
 
 	private String id;
-	private OwnerBusiness ownerBusiness;
+	private BusinessHouse  businessHouse;
 	private SalePayType payType;
 	private BigDecimal sumPrice;
 
@@ -29,8 +29,8 @@ public class SaleInfo implements java.io.Serializable {
 	public SaleInfo() {
 	}
 
-    public SaleInfo(SaleInfo saleInfo,OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
+    public SaleInfo(SaleInfo saleInfo,BusinessHouse  businessHouse) {
+        this.businessHouse = businessHouse;
         this.payType = saleInfo.getPayType();
         this.sumPrice = saleInfo.getSumPrice();
         this.giftArea= saleInfo.getGiftArea();
@@ -61,16 +61,7 @@ public class SaleInfo implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_ID", nullable = false)
-	@NotNull
-	public OwnerBusiness getOwnerBusiness() {
-		return this.ownerBusiness;
-	}
 
-	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-		this.ownerBusiness = ownerBusiness;
-	}
 
 	@Column(name = "PAY_TYPE", length = 32)
     @Enumerated(EnumType.STRING)
@@ -102,4 +93,15 @@ public class SaleInfo implements java.io.Serializable {
         this.giftArea = giftArea;
     }
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "HOUSEID", nullable = false)
+    @NotNull
+    public BusinessHouse getBusinessHouse() {
+        return businessHouse;
+    }
+
+    public void setBusinessHouse(BusinessHouse businessHouse) {
+        this.businessHouse = businessHouse;
+    }
 }

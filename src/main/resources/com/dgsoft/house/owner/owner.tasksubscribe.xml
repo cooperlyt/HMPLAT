@@ -439,6 +439,11 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="InitRegInfoView" page="/business/houseOwner/subscribe/InitRegInfoView.xhtml">
+        <description>
+            开发商初始登记信息
+        </description>
+    </view-subscribe>
 
 
 
@@ -1567,6 +1572,12 @@
     <create-component type="DATA_FILL" component="projectRshipCardFill">
         <description>
             预售许可证号提取
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="noticeAndCommercialFill">
+        <description>
+            特殊记录预告人,商品房初始登记开发商，房屋转移预告登记上一手的产权人
         </description>
     </create-component>
 

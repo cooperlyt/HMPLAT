@@ -172,10 +172,11 @@ public class HouseBusinessModifyStart {
         for(Reason reason: ownerBusiness.getReasons()) {
             ownerBusinessHome.getInstance().getReasons().add(new Reason(ownerBusinessHome.getInstance(), reason));
         }
+        //todo 购房款，付款方式信息调整，你自己看着改
 
-        for(SaleInfo saleInfo: ownerBusiness.getSaleInfos()) {
-            ownerBusinessHome.getInstance().getSaleInfos().add(new SaleInfo(saleInfo,ownerBusinessHome.getInstance()));
-        }
+//        for(SaleInfo saleInfo: ownerBusiness.getSaleInfos()) {
+//            ownerBusinessHome.getInstance().getSaleInfos().add(new SaleInfo(saleInfo,ownerBusinessHome.getInstance()));
+//        }
 
         for(CloseHouse closeHouse: ownerBusiness.getCloseHouses()) {
             ownerBusinessHome.getInstance().getCloseHouses().add(new CloseHouse(ownerBusinessHome.getInstance(),closeHouse));

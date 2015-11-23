@@ -219,8 +219,8 @@ public class OutsideBusinessCreate {
         contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
 
-        saleInfo.setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().getSaleInfos().add(saleInfo);
+        saleInfo.setBusinessHouse(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse());
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getSaleInfos().add(saleInfo);
 
         businessPersion.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getBusinessPersions().add(businessPersion);

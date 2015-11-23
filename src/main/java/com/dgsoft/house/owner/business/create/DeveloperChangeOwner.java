@@ -37,7 +37,7 @@ public class DeveloperChangeOwner implements BusinessDataFill {
                 }
                 businessHouseOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
                 houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(businessHouseOwner);
-
+                houseBusiness.getAfterBusinessHouse().setOldOwner(businessHouseOwner);
             }
         }
     }

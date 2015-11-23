@@ -9,6 +9,7 @@ import com.dgsoft.house.owner.model.BusinessHouseOwner;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by cooper on 10/15/14.
@@ -17,7 +18,7 @@ import org.jboss.seam.annotations.Name;
 public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOwner> {
 
     @In
-    private OwnerBusinessHome ownerBusinessHome;
+    protected OwnerBusinessHome ownerBusinessHome;
 
 
     @Override
@@ -26,15 +27,12 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
         result.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setBusinessHouseOwner(result);
         return result;
-
     }
 
     @Override
     public void create() {
         super.create();
-
         if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner() != null) {
-
             if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getId() == null) {
                 setInstance(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
             } else{

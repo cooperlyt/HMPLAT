@@ -83,7 +83,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     //private HouseBusiness houseBusinessForStart;
     //private Set<HouseBusiness> houseBusinessesForAfter = new HashSet<HouseBusiness>(0);
     private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>();
-
+    private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
+    private BusinessHouseOwner oldOwner;
+    private BusinessHouseOwner noticeOwner;
 
 
     public BusinessHouse() {
@@ -778,6 +780,33 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "businessHouse", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<SaleInfo> getSaleInfos() {
+        return this.saleInfos;
+    }
+    public void setSaleInfos(Set<SaleInfo> saleInfos) {
+        this.saleInfos = saleInfos;
+    }
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "NOITCE_OWNER",nullable = true)
+
+    public BusinessHouseOwner getNoticeOwner() {
+        return noticeOwner;
+    }
+
+    public void setNoticeOwner(BusinessHouseOwner noticeOwner) {
+        this.noticeOwner = noticeOwner;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "OLD_OWNER",nullable = true)
+    public BusinessHouseOwner getOldOwner() {
+        return oldOwner;
+    }
+
+    public void setOldOwner(BusinessHouseOwner oldOwner) {
+        this.oldOwner = oldOwner;
+    }
 
 }

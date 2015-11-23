@@ -36,6 +36,7 @@ public class ContractChangeOwnerFill implements BusinessDataFill {
                     businessHouseOwner.setRootAddress(contractOwner.getRootAddress());
                     businessHouseOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
                     houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(businessHouseOwner);
+                    houseBusiness.getAfterBusinessHouse().setNoticeOwner(businessHouseOwner);
                 }
 
 

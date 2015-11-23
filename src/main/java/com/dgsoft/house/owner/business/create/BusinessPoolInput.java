@@ -20,6 +20,7 @@ public class BusinessPoolInput implements BusinessDataFill {
     private OwnerBusinessHome ownerBusinessHome;
 
 
+
     @Override
     public void fillData() {
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
@@ -27,7 +28,9 @@ public class BusinessPoolInput implements BusinessDataFill {
                 houseBusiness.getAfterBusinessHouse().setPoolType(houseBusiness.getStartBusinessHouse().getPoolType());
                 if(!houseBusiness.getStartBusinessHouse().getBusinessPools().isEmpty()) {
                     for (BusinessPool businessPool : houseBusiness.getStartBusinessHouse().getBusinessPools()) {
-                        houseBusiness.getAfterBusinessHouse().getBusinessPools().add(new BusinessPool(ownerBusinessHome.getInstance(), businessPool));
+                        BusinessPool newBusinessPool =  new BusinessPool(ownerBusinessHome.getInstance(),businessPool);
+
+                        houseBusiness.getAfterBusinessHouse().getBusinessPools().add(newBusinessPool);
                     }
                 }
             }
