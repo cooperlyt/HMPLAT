@@ -122,8 +122,6 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('system.processInstanceMgr', '流程管理', 'DAY_WORK', '', '/func/system/jbpm/ProcessInstanceMgr.xhtml', '', '6', '',b'0');
 
-INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.houseMgr', '房屋管理', 'DATA_MGR', '', '/func/house/datas/HouseMgr.xhtml', '', '2', '',b'0');
-
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.map.baseData', '测绘成果数据', 'DATA_MGR', '', '/func/house/datas/BaseDataMgr.xhtml', '', '1', '',b'0');
 
 
@@ -135,6 +133,8 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.businessMgr','业务管理','DAY_WORK','','/func/house/owner/BusinessView.xhtml','',1,'',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.patchBusiness','档案补录','DAY_WORK','','/func/house/owner/PatchOwnerBusiness.xhtml','',3,'',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.houseRecordSearch','房屋档案查询','DATA_MGR','','/func/house/owner/HouseRecordSearch.xhtml','',4,'',b'0');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.MapHouseRecordSearch','分户图档案查询','DATA_MGR','','/func/house/owner/BuildOwnerRecord.xhtml','',5,'',b'0');
+
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.attrCorpMgr','从业机构管理','DATA_MGR','','/func/house/datas/AttrCorpMgr.xhtml','',3,'',b'0');
 
 
@@ -145,6 +145,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.buildMgr','楼幢管理','DATA_MGR','','/func/house/datas/BuildList.xhtml','',11,'',b'0');
 
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.houseMgr','房屋管理','DATA_MGR','','/func/house/datas/HouseList.xhtml','',12,'',b'0');
 
 
 -- 角色
@@ -218,6 +219,14 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('apply', 'house.businessSearc
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('apply', 'house.businessSearch');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner.buildMgr');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner.houseMgr');
+
+
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('cqRecordFile', 'owner.MapHouseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('jysRecordFile', 'owner.MapHouseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner.MapHouseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave', 'owner.MapHouseRecordSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.MapHouseRecordSearch');
 
 
 -- ADMIN INSERY

@@ -130,6 +130,33 @@
 
                     <h:outputText value="#{_house.houseOrder}"/>
                 </h:column>
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        所在层
+                    </f:facet>
+
+                    <h:outputText value="#{_house.inFloorName}"/>
+                </h:column>
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        建筑面积
+                    </f:facet>
+
+                    <h:outputText value="#{_house.houseArea}">
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        设计用途
+                    </f:facet>
+
+                    <h:outputText value="#{dictionary.getWordValue(_house.useType)}"/>
+                </h:column>
+
+
+
 
 
             </h:dataTable>

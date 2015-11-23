@@ -214,7 +214,7 @@
                                 iconClass="octicon octicon-file-text">
                         <h:selectBooleanCheckbox value="#{_node.noFile}"
                                                  rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')  and (_node.emptyFile) and not (_node.getStatus(businessDefineHome.taskName) eq 'OTHER_UPLOAD')}">
-                            <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas"
+                            <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas" listener="#{businessFileEntity.changeListener}"
                                     oncomplete="treeStatusRefresh();">
                             </a:ajax>
                         </h:selectBooleanCheckbox>
@@ -254,7 +254,7 @@
                     使用外部程序上传
                 </a:commandLink>
 
-                <s:link styleClass="right" action="#{ownerBusinessFile.loadFromFile}"> 刷新 <span class="octicon octicon-sync"></span></s:link>
+                <s:link styleClass="right" action="#{businessFileEntity.loadFromFile}"> 刷新 <span class="octicon octicon-sync"></span></s:link>
 
             </p>
             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -364,7 +364,7 @@
                             <h:selectBooleanCheckbox style="margin: 0 4px 0 8px"
                                                      value="#{businessFileEntity.selectNode.noFile}"
                                                      rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and (businessFileEntity.selectNode.businessNeedFile.type eq 'CHILDREN')}">
-                                <a:ajax execute="@this" event="click" render="fileTree,passBtn"
+                                <a:ajax execute="@this" event="click" render="fileTree,passBtn" listener="#{businessFileEntity.changeListener}"
                                         oncomplete="treeStatusRefresh();">
                                     <a:attachQueue requestDelay="0"/>
                                 </a:ajax>

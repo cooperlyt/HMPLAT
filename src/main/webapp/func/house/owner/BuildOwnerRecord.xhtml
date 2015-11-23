@@ -557,13 +557,13 @@
                                         <div class="#{_cell.houseStatus}" >
                                             <div class="house-info-context">
                                                 <ul >
-                                                    <li><h2><a:outputPanel rendered="#{not empty _cell.lockedHouseList}" class="icon-warning-sign house-locked"/>#{_cell.house.houseOrder}</h2></li>
+                                                    <li><h2><a:outputPanel rendered="#{not empty _cell.lockedHouseList}" p:aria-label="#{_cell.lockedTip}"  class="icon-warning-sign house-locked js-grid-tip"/>#{_cell.house.houseOrder}</h2></li>
                                                     <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
                                                     <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.personName}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
                                                 </ul>
                                             </div>
                                             <div style="float: left" >
-                                                <a:outputPanel styleClass="icon-lock" p:aria-label="正在办理【#{_cell.inBizName}】业务" rendered="#{not empty _cell.inBizName}">
+                                                <a:outputPanel styleClass="icon-lock js-grid-tip" p:aria-label="正在办理【#{_cell.inBizName}】业务" rendered="#{not empty _cell.inBizName}">
 
                                                 </a:outputPanel>
                                             </div>
@@ -607,9 +607,9 @@
 
 
 
-                        $('.icon-lock').hover(function(){
+                        $('.js-grid-tip').hover(function(){
 
-                            $(".lock-tooltip-text").text($(this).attr("aria-label"));
+                            $(".lock-tooltip-text").html($(this).attr("aria-label"));
                             $(".lock-tooltip").show();
 
 
@@ -737,7 +737,7 @@
                         <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
                                 view="/func/house/owner/LockedHouseMgr.xhtml"
                                 styleClass="btn btn-default"  p:aria-label="房屋预警设置">
-                            <f:param name="houseCode" value="#{_item.houseCode}"/>
+                            <f:param name="houseCode" value="#{houseView.houseCode}"/>
                             房屋预警
                         </s:link>
 
