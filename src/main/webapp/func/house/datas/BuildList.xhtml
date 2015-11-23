@@ -58,7 +58,7 @@
             <h:dataTable value="#{buildList.resultList}"
                          styleClass="table table-striped table-hover table-floatThead"
                          headerClass="table-tools-header"
-                         columnClasses=",,,,action-col"
+                         columnClasses=",,,,,action-col"
                          var="_build" rendered="#{not empty buildList.resultList}">
 
                 <f:facet name="header">
@@ -143,6 +143,13 @@
                     </f:facet>
 
                     <h:outputText value="#{_build.buildNo}"/>
+                </h:column>
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        层
+                    </f:facet>
+
+                    <h:outputText value="#{_build.floorCount}"/>
                 </h:column>
 
 
