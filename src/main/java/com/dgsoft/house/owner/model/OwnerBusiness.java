@@ -67,7 +67,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private Set<ContractOwner> contractOwners = new HashSet<ContractOwner>(0);
     private Set<ProjectMortgage> projectMortgages = new HashSet<ProjectMortgage>(0);
-    private Set<MakeCard> patchCards = new HashSet<MakeCard>(0);
 
     public OwnerBusiness() {
     }
@@ -492,16 +491,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public void setProjectMortgage(ProjectMortgage projectMortgage){
         getProjectMortgages().clear();
         getProjectMortgages().add(projectMortgage);
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "HOUSE_CARD_PATCH",joinColumns = @JoinColumn(name = "BUSINESS"), inverseJoinColumns = @JoinColumn(name = "CARD"))
-    public Set<MakeCard> getPatchCards() {
-        return patchCards;
-    }
-
-    public void setPatchCards(Set<MakeCard> patchCards) {
-        this.patchCards = patchCards;
     }
 
     @Transient
