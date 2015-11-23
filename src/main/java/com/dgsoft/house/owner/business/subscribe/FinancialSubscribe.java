@@ -31,20 +31,13 @@ public class FinancialSubscribe extends FinancialBaseSubscribe {
     @Override
     protected void addMortgage() {
         //单房屋抵押人添加到抵押登记信息
-//        if (ownerBusinessHome.getInstance().getHouseBusinesses().size() == 1) {
-//            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner() != null) {
-//                mortgaegeRegiste.setBusinessHouseOwner(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
-//                mortgaegeRegiste.getBusinessHouseOwner();
-//            }
-//        }
-//        if (ownerBusinessHome.getInstance().getHouseBusinesses().size()>1){
-//            for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-//                if (houseBusiness.getAfterBusinessHouse()!=null){
-//
-//                }
-//
-//            }
-//        }
+        if (ownerBusinessHome.getInstance().getHouseBusinesses().size() == 1) {
+            if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner() != null) {
+                mortgaegeRegiste.setBusinessHouseOwner(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner());
+                mortgaegeRegiste.getBusinessHouseOwner();
+            }
+
+      }
 
 
     }
