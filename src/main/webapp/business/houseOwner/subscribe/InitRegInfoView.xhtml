@@ -9,15 +9,23 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner}">
-        <ui:include src="/layout/house/ContractOwnerView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.House_DeveloperName_view}"/>
-            <ui:param name="businessHouse" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner}"/>
-        </ui:include>
+
+
         <dh:entryGridBlock columns="4">
-            <h:outputText value="#{messages.Card_OwnerRship}"/>
-            <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner.makeCard.number}"/>
+
+            <dh:entryGridColumn colspan="4">
+                <h:outputText value="#{messages.House_DeveloperName_view}"/>
+            </dh:entryGridColumn>
+
+                <h:outputText value="#{messages.House_DeveloperName}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner.personName}"/>
+            </dh:entryGridColumn>
             <h:outputText value="#{messages.CardInfo_Code}"/>
             <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner.makeCard.cardInfo.code}"/>
+            <h:outputText value="#{messages.Card_OwnerRship}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner.makeCard.number}"/>
+
         </dh:entryGridBlock>
 
 
