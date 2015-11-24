@@ -33,7 +33,7 @@ public class BusinessInfoCompare {
         for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
             House house = houseEntityLoader.getEntityManager().find(House.class,houseBusiness.getHouseCode());
             if (house != null){
-                List<HouseInfoCompare.ChangeData> changeDataList = HouseInfoCompare.compare(houseBusiness.getAfterBusinessHouse(),house, true);
+                List<HouseInfoCompare.ChangeData> changeDataList = HouseInfoCompare.compare(houseBusiness.getStartBusinessHouse(),house, true);
                 if ((changeDataList != null) && !changeDataList.isEmpty())
                     result.put(houseBusiness.getHouseCode(), changeDataList);
             }
