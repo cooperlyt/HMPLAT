@@ -103,7 +103,7 @@ public class TotalContract {
                 .setParameter("defineId", "WP42")
                 .setParameter("usetype", "80").getResultList();
 
-        Logging.getLog(getClass()).debug("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle headCellStyle = workbook.createCellStyle();
         XSSFCellStyle cellStyle = workbook.createCellStyle();
