@@ -218,6 +218,9 @@ public class OutsideBusinessCreate {
         ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
         contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+        if (businessHouse.getOldOwner() != null){
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setOldOwner(businessHouse.getOldOwner());
+        }
 
         saleInfo.setBusinessHouse(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getSaleInfos().add(saleInfo);
