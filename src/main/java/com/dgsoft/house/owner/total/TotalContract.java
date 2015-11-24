@@ -97,7 +97,7 @@ public class TotalContract {
 
         List<TotalContractData> otherTotalContractDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(AfterBusinessHouse.developerName,AfterBusinessHouse.sectionName,count(ob.id),sum(SaleInfos.sumPrice),sum(AfterBusinessHouse.houseArea)) " +
                 "from OwnerBusiness ob left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfos SaleInfos" +
-                " where ob.defineId<>:defineId and ob.status in ('COMPLETE','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by AfterBusinessHouse.sectionName,AfterBusinessHouse.developerName", TotalContractData.class)
+                " where ob.defineId=:defineId and ob.status in ('COMPLETE','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType <> (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by AfterBusinessHouse.sectionName,AfterBusinessHouse.developerName", TotalContractData.class)
                 .setParameter("beginDate", fromDateTime)
                 .setParameter("endDate", toDateTime)
                 .setParameter("defineId", "WP42")
