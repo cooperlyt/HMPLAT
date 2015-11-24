@@ -209,26 +209,25 @@ public class TotalContract {
              }
 
 
+            cellIndex=0;
+            row1 = sheet.createRow(hjrow);
+            Cell zzhjcell = row1.createCell(cellIndex++);
+            zzhjcell.setCellValue("合计");
+            zzhjcell.setCellStyle(headCellStyle);
 
+            Cell zzhjtscell = row1.createCell(2,Cell.CELL_TYPE_FORMULA);
+            zzhjtscell.setCellFormula("SUM(" + CellReference.convertNumToColString(1+cellIndex) + "3:" + CellReference.convertNumToColString(1+cellIndex)+hjrow+")");
+            zzhjtscell.setCellStyle(headCellStyle);
+
+            Cell zzhmjscell = row1.createCell(3,Cell.CELL_TYPE_FORMULA);
+            zzhmjscell.setCellFormula("SUM(" + CellReference.convertNumToColString(2+cellIndex) + "3:" + CellReference.convertNumToColString(2+cellIndex)+hjrow+")");
+            zzhmjscell.setCellStyle(headCellStyle);
+
+            Cell zzhjescell = row1.createCell(4,Cell.CELL_TYPE_FORMULA);
+            zzhjescell.setCellFormula("SUM(" + CellReference.convertNumToColString(3+cellIndex) + "3:" + CellReference.convertNumToColString(3+cellIndex)+hjrow+")");
+            zzhjescell.setCellStyle(headCellStyle);
 
         }
-        cellIndex=0;
-        row1 = sheet.createRow(hjrow);
-        Cell zzhjcell = row1.createCell(cellIndex++);
-        zzhjcell.setCellValue("合计");
-        zzhjcell.setCellStyle(headCellStyle);
-
-       Cell zzhjtscell = row1.createCell(2,Cell.CELL_TYPE_FORMULA);
-       zzhjtscell.setCellFormula("SUM(" + CellReference.convertNumToColString(1+cellIndex) + "3:" + CellReference.convertNumToColString(1+cellIndex)+hjrow+")");
-       zzhjtscell.setCellStyle(headCellStyle);
-
-       Cell zzhmjscell = row1.createCell(3,Cell.CELL_TYPE_FORMULA);
-       zzhmjscell.setCellFormula("SUM(" + CellReference.convertNumToColString(2+cellIndex) + "3:" + CellReference.convertNumToColString(2+cellIndex)+hjrow+")");
-       zzhmjscell.setCellStyle(headCellStyle);
-
-        Cell zzhjescell = row1.createCell(4,Cell.CELL_TYPE_FORMULA);
-        zzhjescell.setCellFormula("SUM(" + CellReference.convertNumToColString(3+cellIndex) + "3:" + CellReference.convertNumToColString(3+cellIndex)+hjrow+")");
-        zzhjescell.setCellStyle(headCellStyle);
 
 
 
@@ -267,24 +266,25 @@ public class TotalContract {
 
                 fzhjrow = fzrowIndex;
             }
+            fzcellIndex=0;
+            row1 = sheet1.createRow(fzhjrow);
+            Cell fzhjcell = row1.createCell(fzcellIndex++);
+            fzhjcell.setCellValue("合计");
+            fzhjcell.setCellStyle(headCellStyle);
+
+            Cell fzhjtscell = row1.createCell(2,Cell.CELL_TYPE_FORMULA);
+            fzhjtscell.setCellFormula("SUM(" + CellReference.convertNumToColString(1+fzcellIndex) + "3:" + CellReference.convertNumToColString(1+fzcellIndex)+fzhjrow+")");
+            fzhjtscell.setCellStyle(headCellStyle);
+
+            Cell fzhmjscell = row1.createCell(3,Cell.CELL_TYPE_FORMULA);
+            fzhmjscell.setCellFormula("SUM(" + CellReference.convertNumToColString(2+fzcellIndex) + "3:" + CellReference.convertNumToColString(2+fzcellIndex)+fzhjrow+")");
+            fzhmjscell.setCellStyle(headCellStyle);
+
+            Cell fzhjescell = row1.createCell(4,Cell.CELL_TYPE_FORMULA);
+            fzhjescell.setCellFormula("SUM(" + CellReference.convertNumToColString(3+fzcellIndex) + "3:" + CellReference.convertNumToColString(3+fzcellIndex)+fzhjrow+")");
+            fzhjescell.setCellStyle(headCellStyle);
         }
-        fzcellIndex=0;
-        row1 = sheet1.createRow(fzhjrow);
-        Cell fzhjcell = row1.createCell(fzcellIndex++);
-        fzhjcell.setCellValue("合计");
-        fzhjcell.setCellStyle(headCellStyle);
 
-        Cell fzhjtscell = row1.createCell(2,Cell.CELL_TYPE_FORMULA);
-        fzhjtscell.setCellFormula("SUM(" + CellReference.convertNumToColString(1+fzcellIndex) + "3:" + CellReference.convertNumToColString(1+fzcellIndex)+fzhjrow+")");
-        fzhjtscell.setCellStyle(headCellStyle);
-
-        Cell fzhmjscell = row1.createCell(3,Cell.CELL_TYPE_FORMULA);
-        fzhmjscell.setCellFormula("SUM(" + CellReference.convertNumToColString(2+fzcellIndex) + "3:" + CellReference.convertNumToColString(2+fzcellIndex)+fzhjrow+")");
-        fzhmjscell.setCellStyle(headCellStyle);
-
-        Cell fzhjescell = row1.createCell(4,Cell.CELL_TYPE_FORMULA);
-        fzhjescell.setCellFormula("SUM(" + CellReference.convertNumToColString(3+fzcellIndex) + "3:" + CellReference.convertNumToColString(3+fzcellIndex)+fzhjrow+")");
-        fzhjescell.setCellStyle(headCellStyle);
 
 
         sheet.setForceFormulaRecalculation(true);
