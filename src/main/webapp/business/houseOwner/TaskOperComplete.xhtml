@@ -56,6 +56,18 @@
 
     <div class="new-repo-container">
 
+        <c:forEach items="#{businessDefineHome.operSubscribeDefines}" var="_operSubscribe">
+
+
+            <div style="margin: 10px 0">
+                <f:subview>
+
+                    <ui:include src="#{_operSubscribe.page}"/>
+
+                </f:subview>
+            </div>
+
+        </c:forEach>
 
     <a:outputPanel layout="block" styleClass="new-user-avatar-cta" rendered="#{not taskDescription.checkTask}">
 
@@ -73,18 +85,7 @@
         <strong>#{ownerBusinessHome.instance.id} #{messages.TaskVariableSaved}!  </strong>#{messages.completeDescription}
         </p>
    </a:outputPanel>
-        <c:forEach items="#{businessDefineHome.operSubscribeDefines}" var="_operSubscribe">
 
-
-            <div style="margin: 10px 0">
-            <f:subview>
-
-                <ui:include src="#{_operSubscribe.page}"/>
-
-            </f:subview>
-            </div>
-
-        </c:forEach>
 
         <h:form rendered="#{taskDescription.checkTask}">
 

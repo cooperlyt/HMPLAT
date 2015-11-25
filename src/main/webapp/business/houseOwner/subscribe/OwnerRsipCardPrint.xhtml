@@ -10,28 +10,27 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
-
+    <div class="panel panel-primary">
     <div class="panel-body">
         <h:form>
+            <p>                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{ownerRsipCardPrint.preparePrintOwnerFee}" immediate="true"
+                                              data="#{ownerRsipCardPrint.printUrl}"
+                                              execute="@this" oncomplete="extendsCall(event.data);">
+                <span class="glyphicon glyphicon-print"/>
+                <a:attachQueue requestDelay="0"/>
+                打印
+            </a:commandLink></p>
             <p class="text-primary">产权人：<strong>#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner.personName}</strong>
                 业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
                 <strong>请点击打印，打印相关权证</strong>
-                <a class=" " onclick="" >
 
-                </a>
 
-                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{ownerRsipCardPrint.preparePrintOwnerFee}" immediate="true"
-                               data="#{ownerRsipCardPrint.printUrl}"
-                               execute="@this" oncomplete="extendsCall(event.data);">
-                    <span class="glyphicon glyphicon-print"/>
-                    <a:attachQueue requestDelay="0"/>
-                    打印
-                </a:commandLink>
+
 
             </p>
         </h:form>
     </div>
 
-
+</div>
 
 </ui:composition>

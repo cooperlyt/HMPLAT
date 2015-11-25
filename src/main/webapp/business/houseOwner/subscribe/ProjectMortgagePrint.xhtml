@@ -16,16 +16,10 @@
         $('.qq_iframe').attr('src',printUrl);
         }
     </h:outputScript>
-
+    <div class="panel panel-primary">
     <div class="panel-body">
         <h:form>
-            <p class="text-primary">
-                业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
-                <strong>请点击打印，打印相关权证</strong>
-                <a class=" " onclick="" >
-
-                </a>
-
+            <p>
                 <a:commandLink styleClass="btn minibutton right" render="@none" action="#{projectMortgagePrint.preparePrintOwnerFee}" immediate="true"
                                data="#{projectMortgagePrint.printUrl}"
                                execute="@this" oncomplete="extPrint(event.data);">
@@ -33,9 +27,19 @@
                     <a:attachQueue requestDelay="0"/>
                     打印
                 </a:commandLink>
+            </p>
+            <p class="text-primary">
+                业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
+                <strong>请点击打印，打印相关权证</strong>
+                <a class=" " onclick="" >
+
+                </a>
+
+
 
             </p>
         </h:form>
+    </div>
     </div>
 
 

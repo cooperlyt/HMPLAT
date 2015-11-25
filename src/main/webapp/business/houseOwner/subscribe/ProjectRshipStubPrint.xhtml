@@ -16,15 +16,10 @@
         $('.qq_iframe').attr('src',printUrl);
         }
     </h:outputScript>
-
+    <div class="panel panel-primary">
     <div class="panel-body">
         <h:form>
-            <p class="text-primary">开发商：<strong>#{ownerBusinessHome.instance.businessProject.developerName}</strong>
-                业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
-                <strong>请点击打印，打印预售许可证存根</strong>
-                <a class=" " onclick="" >
-
-                </a>
+            <p>
 
                 <a:commandLink styleClass="btn minibutton right" render="@none" action="#{projectRshipStubPrint.preparePrintOwnerFee}" immediate="true"
                                data="#{projectRshipStubPrint.printUrl}"
@@ -33,9 +28,18 @@
                     <a:attachQueue requestDelay="0"/>
                     打印
                 </a:commandLink>
+            </p>
+            <p class="text-primary">开发商：<strong>#{ownerBusinessHome.instance.businessProject.developerName}</strong>
+                业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
+                <strong>请点击打印，打印预售许可证存根</strong>
+                <a class=" " onclick="" >
+
+                </a>
+
 
             </p>
         </h:form>
+    </div>
     </div>
 
 
