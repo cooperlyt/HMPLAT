@@ -223,7 +223,7 @@ public class OutsideBusinessCreate {
         }
 
         saleInfo.setBusinessHouse(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse());
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getSaleInfos().add(saleInfo);
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleInfo(saleInfo);
 
         businessPersion.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getBusinessPersions().add(businessPersion);

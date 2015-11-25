@@ -94,7 +94,7 @@ public class SaleInfo implements java.io.Serializable {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "HOUSEID", nullable = false)
     @NotNull
     public BusinessHouse getBusinessHouse() {

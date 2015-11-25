@@ -35,14 +35,6 @@
 
 
 
-    <event type="org.jboss.seam.createProcess">
-        <action execute="#{allTaskAdapterCacheList.refresh}"/>
-    </event>
-
-    <event type="org.jboss.seam.endTask">
-        <action execute="#{allTaskAdapterCacheList.refresh}"/>
-    </event>
-
 
 
 </components>

@@ -27,15 +27,15 @@ public class SaleInfoSubscribe extends OwnerEntityHome<SaleInfo> {
     {
         super.create();
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            if (!houseBusiness.getAfterBusinessHouse().getSaleInfos().isEmpty()){
-                if (houseBusiness.getAfterBusinessHouse().getSaleInfos().iterator().next().getId()!=null){
-                    setId(houseBusiness.getAfterBusinessHouse().getSaleInfos().iterator().next().getId());
+            if (houseBusiness.getAfterBusinessHouse().getSaleInfo() != null){
+                if (houseBusiness.getAfterBusinessHouse().getSaleInfo().getId()!=null){
+                    setId(houseBusiness.getAfterBusinessHouse().getSaleInfo().getId());
                 }else{
-                    setInstance(houseBusiness.getAfterBusinessHouse().getSaleInfos().iterator().next());
+                    setInstance(houseBusiness.getAfterBusinessHouse().getSaleInfo());
                 }
             }else{
                 getInstance().setBusinessHouse(houseBusiness.getAfterBusinessHouse());
-                houseBusiness.getAfterBusinessHouse().getSaleInfos().add(getInstance());
+                houseBusiness.getAfterBusinessHouse().setSaleInfo(getInstance());
             }
 
         }

@@ -640,10 +640,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
      */
     @Transient
     public SaleInfo getSaleInfo() {
-        if (!getSingleHoues().getAfterBusinessHouse().getSaleInfos().isEmpty()) {
-            return getSingleHoues().getAfterBusinessHouse().getSaleInfos().iterator().next();
-        }
-        return null;
+        return getSingleHoues().getAfterBusinessHouse().getSaleInfo();
     }
 
     /**

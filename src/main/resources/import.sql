@@ -102,6 +102,8 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('FTP_USER_NAME','STRING','hm
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('FTP_PASSWORD','STRING','hmplat','FTP密码');
 
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('newHouseSaleBizDefineId','STRING','WP42','商品房交易明细导出业务号');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('oldHouseSaleBizDefineId','STRING','WP52','存量房交易明细导出业务号');
 
 -- 测试业务
 -- INSERT INTO BUSINESS_DEFINE(ID, NAME, WF_NAME, START_PAGE, START_DATA_VALIDATOR, TASK_SERVICE, CATEGORY, MEMO, VERSION) VALUES('system.business.test','测试流程','processTest','','','','erp.sale','测试流程',0);
@@ -155,6 +157,10 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.transfe
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.projectCard','预售许可证统计','预售许可证统计',3);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.business','业务统计','业务统计',4);
 
+INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.mapHouse','测绘数据统计','基于测绘数据的房屋统计',5);
+INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.houseSale','房屋效果明细导出','每日房屋效果明细导出',6);
+
+
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.runBusinessMgr', '业务运行维护', '中止，挂起，分发正在运行的业务', 5);
@@ -170,6 +176,10 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness',
 
 
 INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
+
+
+
+
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave','house.businessSearch');
 
