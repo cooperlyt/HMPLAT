@@ -252,6 +252,34 @@
 
                 </div>
             </a:outputPanel>
+
+
+            <h:form rendered="#{s:hasRole('total.export.tempSql')}">
+                <div class="container advanced-search-form">
+                    <fieldset>
+                        <h3>临时数据统计</h3>
+                        <dl class="form flattened">
+                            <dt><s:label for="feetotalInput">统计脚本</s:label></dt>
+                            <dd style="margin-left: 0">
+                                <s:decorate template="/layout/edit-big.xhtml">
+                                    <ui:param name="showLabel" value="false"/>
+                                    <h:inputTextarea rows="5" value="#{totalTemp.nativeSql}" styleClass="form-control">
+
+                                    </h:inputTextarea>
+                                </s:decorate>
+
+                            </dd>
+                            <dd>
+                                <h:commandButton action="#{totalTemp.runNativeSql}" value="统计"
+                                                 style="border-top-right-radius: 3px; border-bottom-right-radius: 3px; margin-top: 10px" styleClass="btn btn-primary"/>
+
+                            </dd>
+                        </dl>
+
+                    </fieldset>
+
+                </div>
+            </h:form>
         </div>
 
 
