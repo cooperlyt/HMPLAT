@@ -138,7 +138,7 @@ public class TotalBusinessInfoData {
 
        //住宅
         List<BusinessTotalData> zcbusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfos SaleInfos" +
+                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
                 " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
@@ -147,7 +147,7 @@ public class TotalBusinessInfoData {
         Logging.getLog(getClass()).debug("zcbusinessTotalDataList---"+zcbusinessTotalDataList.size());
         //商业营业
         List<BusinessTotalData> sybusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfos SaleInfos" +
+                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
                 " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
@@ -157,7 +157,7 @@ public class TotalBusinessInfoData {
         Logging.getLog(getClass()).debug("sybusinessTotalDataList---"+sybusinessTotalDataList.size());
         //办公
         List<BusinessTotalData> bgbusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfos SaleInfos" +
+                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
                 " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
@@ -167,7 +167,7 @@ public class TotalBusinessInfoData {
 
         //工也仓储
         List<BusinessTotalData> gybusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfos SaleInfos" +
+                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
                 " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
@@ -175,7 +175,7 @@ public class TotalBusinessInfoData {
         Logging.getLog(getClass()).debug("gybusinessTotalDataList---"+gybusinessTotalDataList.size());
         //其它
         List<BusinessTotalData> qtbusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfos SaleInfos" +
+                "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
                 " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
