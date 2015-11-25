@@ -35,7 +35,7 @@ public class MakeCardOwnerRsipRecordSubsrcibe extends OwnerEntityHome<MakeCard> 
         }
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(getInstance());
-
+        getInstance().setEnable(true);
         if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(getInstance());
 

@@ -9,10 +9,7 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner}">
-
-
         <dh:entryGridBlock columns="4">
-
             <dh:entryGridColumn colspan="4">
                 <h:outputText value="#{messages.House_DeveloperName_view}"/>
             </dh:entryGridColumn>
@@ -25,13 +22,28 @@
             <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner.makeCard.cardInfo.code}"/>
             <h:outputText value="#{messages.Card_OwnerRship}"/>
             <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner.makeCard.number}"/>
-
         </dh:entryGridBlock>
-
-
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner}">
+    <a:outputPanel rendered="#{(empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner) and (not empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner)}">
+        <dh:entryGridBlock columns="4">
+            <dh:entryGridColumn colspan="4">
+                <h:outputText value="#{messages.House_DeveloperName_view}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.House_DeveloperName}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.personName}"/>
+            </dh:entryGridColumn>
+            <h:outputText value="#{messages.CardInfo_Code}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.cardInfo.code}"/>
+            <h:outputText value="#{messages.Card_OwnerRship}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}"/>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+
+    <a:outputPanel rendered="#{(empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldOwner) and (empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner)}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
 
             <ui:param name="title" value="#{messages.House_DeveloperName}" />

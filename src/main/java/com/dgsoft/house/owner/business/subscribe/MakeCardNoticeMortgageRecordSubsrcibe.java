@@ -38,7 +38,7 @@ public class MakeCardNoticeMortgageRecordSubsrcibe extends OwnerEntityHome<MakeC
         }
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(getInstance());
-
+        getInstance().setEnable(true);
         if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial()!=null){
             ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().setMakeCard(getInstance());
             getInstance().setFinancial(ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial());
