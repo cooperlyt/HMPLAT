@@ -93,9 +93,30 @@
                     <s:link value="#{messages.AvancedSearch}"/></p>
             </a:outputPanel>
 
-            <ui:include src="/func/house/owner/HouseBusinessResultList.xhtml">
+            <ui:decorate template="/func/house/owner/HouseBusinessResultList.xhtml">
                 <ui:param name="listBean" value="#{houseBusinessModifyList}"/>
-            </ui:include>
+                <ui:define name="itemTitle">
+                    <s:link view="/func/house/owner/BusinessView.xhtml">
+                        <f:param value="#{_item.id}" name="businessId"/>
+                        #{_item.defineName}
+                        <h:outputText value="#{messages[_item.type.name()]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/>
+                        / #{_item.id}
+                    </s:link>
+
+                                        <span class="label label-biz-status #{_item.status}">
+                                            #{messages[_item.status.name()]}
+                                        </span>
+                </ui:define>
+                <ui:remove>
+                <ui:define name="itemAction">
+                    <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
+                              action="#{houseInBusinessStart.businessAllHouseSelected}"
+                              onclick="#{r:component('wait')}.show()">
+                        <f:param name="selectBusinessId" value="#{_item.id}"/>
+                    </s:button>
+                </ui:define>
+                </ui:remove>
+            </ui:decorate>
         </a:outputPanel>
 
 

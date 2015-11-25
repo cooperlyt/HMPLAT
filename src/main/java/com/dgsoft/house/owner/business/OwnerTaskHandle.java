@@ -120,7 +120,12 @@ public class OwnerTaskHandle {
     @EndTask(transition = END_TRANSITION_NAME)
     public String endBusiness(){
         ownerBusinessHome.refresh();
+
         ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
+        if (ownerBusinessHome.getInstance().getSelectBusiness() != null &&
+                BusinessInstance.BusinessStatus.MODIFYING.equals(ownerBusinessHome.getInstance().getSelectBusiness().getStatus())){
+            ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+        }
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(taskInstance.getId(),
                 TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),

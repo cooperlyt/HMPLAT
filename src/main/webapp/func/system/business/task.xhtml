@@ -82,7 +82,7 @@
                       action="#{allTaskAdapterCacheList.refresh}"
                       data="#{allTaskAdapterCacheList.resultTaskListChange}"
                       oncomplete="if(event.data){;renderTaskList();};">
-            <a:attachQueue requestDelay="0"/>
+            <a:attachQueue requestDelay="500"/>
         </a:jsFunction>
 
         <a:jsFunction name="renderTaskList" status="taskChangeWaiting"
