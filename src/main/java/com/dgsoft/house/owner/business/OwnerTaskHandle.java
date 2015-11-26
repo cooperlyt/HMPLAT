@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.exception.TaskOutException;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
@@ -10,8 +11,11 @@ import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.annotations.bpm.EndTask;
+import org.jboss.seam.bpm.Actor;
 import org.jboss.seam.bpm.BusinessProcess;
 import org.jboss.seam.bpm.ManagedJbpmContext;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
@@ -34,6 +38,11 @@ public class OwnerTaskHandle {
     @In
     private BusinessProcess businessProcess;
 
+    @In(create = true)
+    private FacesMessages facesMessages;
+
+
+
     @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
     @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
     private String transitionType;
@@ -48,6 +57,9 @@ public class OwnerTaskHandle {
 
     @In
     private AuthenticationInfo authInfo;
+
+    @In
+    private Actor actor;
 
     @In
     private TaskInstance taskInstance;
@@ -161,6 +173,10 @@ public class OwnerTaskHandle {
     @Transactional
     @EndTask
     public String complete() {
+        if (taskInstance.getActorId() == null || !actor.getId().equals(taskInstance.getActorId())){
+            throw new TaskOutException();
+        }
+
         if (taskDescription.isCheckTask()) {
             transitionType = TaskOper.OperType.CHECK_ACCEPT.name();
         }else if (taskInstance.getName().equals(backTaskName)){
@@ -188,7 +204,13 @@ public class OwnerTaskHandle {
     private OwnerBusinessHome ownerBusinessHome;
 
     public String saveTask() {
-        //TODO needFile
+
+
+        if (taskInstance.getActorId() == null || !actor.getId().equals(taskInstance.getActorId())){
+            throw new TaskOutException();
+        }
+
+
         if (businessDefineHome.isHaveNextEditGroup()){
             if(businessDefineHome.nextEditGroup())
                 ownerBusinessHome.update();
@@ -233,6 +255,15 @@ public class OwnerTaskHandle {
     }
 
     public String operationTask(){
+        if (taskInstance.getActorId() == null){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"taskAcceptFirst");
+            return "FAIL";
+        }
+
+        if (!actor.getId().equals(taskInstance.getActorId())){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"TaskAcceptFail");
+            return "FAIL";
+        }
 
         if (businessDefineHome.isHaveEditSubscribe()){
             businessDefineHome.firstEditGroup();

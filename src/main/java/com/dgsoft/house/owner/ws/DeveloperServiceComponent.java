@@ -293,10 +293,10 @@ public class DeveloperServiceComponent {
         boolean locked = ownerEntityManager.createQuery("select count(l.id) from LockedHouse l where l.houseCode = :houseCode", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
-        boolean sale = ownerEntityManager.createQuery("select count(c.id) from ContractOwner c where c.houseCode = :houseCode and c.ownerBusiness.type = 'RUNNING'", Long.class)
+        boolean sale = ownerEntityManager.createQuery("select count(c.id) from ContractOwner c where c.houseCode = :houseCode and (c.ownerBusiness.status = 'RUNNING' or c.ownerBusiness.status = 'SUSPEND')", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
-        boolean inBiz = ownerEntityManager.createQuery("select count(b.id) from HouseBusiness b where b.houseCode = :houseCode and b.ownerBusiness.type = 'RUNNING'", Long.class)
+        boolean inBiz = ownerEntityManager.createQuery("select count(b.id) from HouseBusiness b where b.houseCode = :houseCode and (b.ownerBusiness.status = 'RUNNING' or b.ownerBusiness.status = 'SUSPEND')", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
 
@@ -429,7 +429,9 @@ public class DeveloperServiceComponent {
     }
 
     private JSONObject getHouseJsonObj(House house, HouseRecord houseRecord, boolean locked, boolean saled, boolean inBiz) throws JSONException {
+        Logging.getLog(getClass()).debug("getHouseJsonObj code:" + house.getHouseCode()  + " saled:" + saled + " inBiz:" +  inBiz + "locked:" + locked);
         JSONObject houseJsonObj = getHouseJsonObj(house, (houseRecord == null) ? null : houseRecord.getHouseStatus(), locked, saled);
+
         houseJsonObj.put("inBiz", inBiz);
         List<HouseStatus> allStatus = OwnerHouseHelper.instance().getHouseAllStatus(house.getHouseCode());
 

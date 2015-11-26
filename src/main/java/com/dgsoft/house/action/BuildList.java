@@ -92,7 +92,7 @@ public class BuildList extends HouseEntityQuery<Build>{
         setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setOrderColumn("build.id");
         setOrderDirection("desc");
-        setMaxResults(25);
+        setMaxResults(50);
     }
 
 

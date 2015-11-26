@@ -25,6 +25,9 @@ public class TaskPrepare {
     @In(create = true)
     private BusinessDefineHome businessDefineHome;
 
+    @In(create = true)
+    private FacesMessages facesMessages;
+
 
     @BeginTask(flushMode = FlushModeType.MANUAL)
     public String beginTask() {
@@ -49,7 +52,11 @@ public class TaskPrepare {
     @BeginTask(flushMode = FlushModeType.MANUAL)
     public String operTask(){
 
-        if (!actor.getId().equals(taskInstance.getActorId())){
+        if (taskInstance.getActorId() != null && !actor.getId().equals(taskInstance.getActorId())){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"TaskAcceptFail");
+            return null;
+        }
+        if ( !actor.getId().equals(taskInstance.getActorId())) {
             if (!"taskAssignedToActor".equals(pooledTask.assignToCurrentActor())){
                 return null;
             }

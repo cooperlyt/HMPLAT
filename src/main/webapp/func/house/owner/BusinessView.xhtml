@@ -12,6 +12,15 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template.xhtml">
 
+    <ui:insert name="ajax-param">
+
+    </ui:insert>
+
+    <ui:define name="ajax-param">
+        <a:queue requestDelay="0"/>
+    </ui:define>
+
+
 
     <ui:define name="func-body">
 
@@ -558,7 +567,7 @@
                                 </f:facet>
 
                                 <ui:include src="/business/houseOwner/BusinessFile.xhtml">
-                                    <ui:param name="businessFileEntity" value="#{taskOwnerBusinessFile}"/>
+                                    <ui:param name="businessFileEntity" value="#{ownerBusinessFile}"/>
                                 </ui:include>
 
 

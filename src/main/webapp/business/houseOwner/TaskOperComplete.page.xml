@@ -65,6 +65,9 @@
         <rule if-outcome="COMPLETE">
             <redirect view-id="/business/houseOwner/TaskOperComplete.xhtml"/>
         </rule>
+        <rule if-outcome="FAIL">
+            <redirect view-id="/func/system/business/task.xhtml"/>
+        </rule>
 
     </navigation>
 

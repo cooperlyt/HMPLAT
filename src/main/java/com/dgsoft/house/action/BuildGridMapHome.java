@@ -218,11 +218,10 @@ public class BuildGridMapHome implements DropListener {
         buildHome.getInstance().getBuildGridMaps().remove(getInstance());
     }
 
-    private void matchIdle(boolean changeInfo){
-
-    }
-
     public void matchIdle() {
+        if (getInstance() == null){
+            return;
+        }
         for (GridRow gridRow : getInstance().getGridRows()) {
             for (GridBlock gridBlock : gridRow.getGridBlocks()) {
                 if (gridBlock.getHouse() == null) {

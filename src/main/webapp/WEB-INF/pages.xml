@@ -170,4 +170,11 @@
             <message severity="error">#{messages['com.dgsoft.common.exception.ProcessDefineException']}</message>
         </redirect>
     </exception>
+
+
+    <exception class="com.dgsoft.common.exception.TaskOutException">
+        <redirect view-id="/func/system/business/task.xhtml">
+            <message severity="error">#{messages['com.dgsoft.common.exception.TaskOutException']}</message>
+        </redirect>
+    </exception>
 </pages>
