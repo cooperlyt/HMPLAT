@@ -6,16 +6,16 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.startBusinessHouse.noticeOwner}">
 
         <ui:include src="/layout/house/HouseOwnerView.xhtml">
             <ui:param name="nameLabel" value="#{messages.DeclareOwner_view}"/>
             <ui:param name="businessHouse"
-                      value="#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}"/>
+                      value="#{ownerBusinessHome.singleHoues.startBusinessHouse.noticeOwner}"/>
         </ui:include>
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner}">
+    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.startBusinessHouse.noticeOwner}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
             <ui:param name="title" value="#{messages.DeclareOwner}" />
             <ui:param name="noDataLabel" value="#{messages.DeclareOwner_not}"/>
