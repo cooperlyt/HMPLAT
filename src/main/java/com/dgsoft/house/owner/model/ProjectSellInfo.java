@@ -198,8 +198,8 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.landUseType = landUseType;
     }
 
-    @Column(name = "CREATE_CARD_CODE", nullable = false, length = 50)
-    @Size(max = 50)
+    @Column(name = "CREATE_CARD_CODE", nullable = false, length = 100)
+    @Size(max = 100)
     @NotNull
     public String getCreateCardNumber() {
         return createCardNumber;
@@ -209,8 +209,8 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.createCardNumber = createCardNumber;
     }
 
-    @Column(name = "CREATE_PREPARE_CARD_CODE", nullable = false, length = 50)
-    @Size(max = 50)
+    @Column(name = "CREATE_PREPARE_CARD_CODE", nullable = false, length = 100)
+    @Size(max = 100)
     @NotNull
     public String getCreatePrepareCardNumber() {
         return createPrepareCardNumber;
