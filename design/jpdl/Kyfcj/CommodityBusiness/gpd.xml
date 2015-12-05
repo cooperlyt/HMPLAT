@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="CommodityBusiness" width="765" height="521">
+  <node name="业务受理" x="42" y="16" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="受理" x="631" y="74" width="132" height="36">
+    <edge>
+      <label x="152" y="-37"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核" x="43" y="269" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="收费" x="243" y="187" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-29" y="-11"/>
+    </edge>
+  </node>
+  <node name="是否网签" x="45" y="74" width="132" height="36">
+    <edge>
+      <label x="-8" y="-9"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核结果" x="244" y="266" width="132" height="36">
+    <edge>
+      <label x="-15" y="-11"/>
+    </edge>
+    <edge>
+      <label x="-6" y="-2"/>
+    </edge>
+  </node>
+  <node name="网签受理" x="245" y="74" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="网签回退判断" x="439" y="186" width="132" height="36">
+    <edge>
+      <label x="22" y="15"/>
+    </edge>
+    <edge>
+      <label x="-41" y="7"/>
+    </edge>
+  </node>
+  <node name="是否收费" x="44" y="187" width="132" height="36">
+    <edge>
+      <label x="-10" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-18" y="-11"/>
+    </edge>
+  </node>
+  <node name="业务完成" x="631" y="342" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="632" y="266" width="132" height="36"/>
+  <node name="审批" x="244" y="343" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审批结果" x="438" y="343" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+</root-container>
