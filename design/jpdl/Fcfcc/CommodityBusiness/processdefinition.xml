@@ -107,8 +107,8 @@
 			</description>
 			<assignment pooled-actors="Money"></assignment>
 		</task>
-		<transition to="网签回退判断" name="退回受理"></transition>
-		<transition to="业务完成" name="_END"></transition>
+		<transition to="业务完成"></transition>
+		<transition to="网签回退判断" name="回退受理"></transition>
 	</task-node>
 
 
