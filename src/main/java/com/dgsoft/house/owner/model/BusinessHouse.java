@@ -731,7 +731,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.businessHouseOwner = businessHouseOwner;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "CONTRACT_OWNER",nullable = true)
     public ContractOwner getContractOwner() {
         return contractOwner;

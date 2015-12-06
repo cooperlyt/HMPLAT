@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by cooper on 8/14/15.
@@ -33,7 +35,7 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
     private Date contractDate;
     private String houseCode;
 
-    private BusinessHouse businessHouse;
+    private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
 
     private String projectRshipNumber;
@@ -232,13 +234,13 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.houseCode = houseCode;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contractOwner")
-    public BusinessHouse getBusinessHouse() {
-        return businessHouse;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contractOwner")
+    public Set<BusinessHouse> getBusinessHouses() {
+        return businessHouses;
     }
 
-    public void setBusinessHouse(BusinessHouse businessHouse) {
-        this.businessHouse = businessHouse;
+    public void setBusinessHouses(Set<BusinessHouse> businessHouses) {
+        this.businessHouses = businessHouses;
     }
 
     @Column(name = "PROJECT_RSHIP_NUMBER", length = 32, nullable = true)
