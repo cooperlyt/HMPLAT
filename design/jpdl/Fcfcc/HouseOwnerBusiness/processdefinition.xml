@@ -19,10 +19,13 @@
 
     <task-node name="复审">
         <task name="复审">
-            <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}</description>
+            <description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:false}
+			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
         </task>
-		<transition to="复审结果"></transition>
+		<transition to="是否审批"></transition>
+		<transition to="受理" name="复审回退受理"></transition>
     </task-node>
 
     <task-node name="登薄">
@@ -61,16 +64,7 @@
 		</transition>
     </decision>
 
-    <decision name="复审结果">
-		<transition to="是否审批" name="复审通过">
-			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
-		</transition>
-		<transition to="受理" name="复审驳回">
-			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="是否登薄">
+    <decision name="是否登薄">
 		<transition to="繕证判断" name="不登薄">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
 		</transition>
