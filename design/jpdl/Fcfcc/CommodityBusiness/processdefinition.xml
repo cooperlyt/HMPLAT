@@ -15,12 +15,12 @@
 			</description>
 			<assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
 		</task>
-		<transition to="复审"></transition>
+		<transition to="审核"></transition>
 		<transition to="结束" name="_END"></transition>
 	</task-node>
 
-	<task-node name="复审">
-		<task name="复审">
+	<task-node name="审核">
+		<task name="审核">
 			<description>
 				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:false}
 			</description>
@@ -34,7 +34,7 @@
 		<transition to="网签受理" name="是">
 			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
 		</transition>
-		<transition to="复审" name="否">
+		<transition to="审核" name="否">
 			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
 	</decision>
@@ -46,7 +46,7 @@
 			</description>
 			<assignment pooled-actors="contractApply"></assignment>
 		</task>
-		<transition to="复审"></transition>
+		<transition to="审核"></transition>
 	</task-node>
 
 	<decision name="网签回退判断">
