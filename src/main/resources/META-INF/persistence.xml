@@ -123,10 +123,9 @@
         <class>com.dgsoft.house.owner.model.FactMoneyInfo</class>
         <class>com.dgsoft.house.owner.model.ContractOwner</class>
         <class>com.dgsoft.house.owner.model.HouseContract</class>
-
         <class>com.dgsoft.house.owner.model.ContractNumber</class>
-
         <class>com.dgsoft.house.owner.model.ProjectMortgage</class>
+        <class>com.dgsoft.house.owner.model.GiveCard</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

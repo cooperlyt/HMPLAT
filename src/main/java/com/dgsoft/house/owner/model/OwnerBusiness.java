@@ -67,7 +67,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private Set<ContractOwner> contractOwners = new HashSet<ContractOwner>(0);
     private Set<ProjectMortgage> projectMortgages = new HashSet<ProjectMortgage>(0);
-
+    private Set<GiveCard> giveCards = new HashSet<GiveCard>(0);
     public OwnerBusiness() {
     }
 
@@ -240,6 +240,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setBusinessEmps(Set<BusinessEmp> businessEmps) {
         this.businessEmps = businessEmps;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<GiveCard> getGiveCards() {
+        return giveCards;
+    }
+
+    public void setGiveCards(Set<GiveCard> giveCards) {
+        this.giveCards = giveCards;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
@@ -831,4 +840,14 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return getReason(Reason.ReasonType.MODIFY_AFTER_RENSON);
     }
 
+    /**
+     * 发证信息
+     */
+    @Transient
+    public GiveCard getGiveCard(){
+        if (!getGiveCards().isEmpty()){
+            return getGiveCards().iterator().next();
+        }
+        return null;
+    }
 }

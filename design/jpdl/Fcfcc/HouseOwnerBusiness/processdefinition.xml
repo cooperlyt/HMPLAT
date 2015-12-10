@@ -150,10 +150,10 @@
 
 	<decision name="收费判断">
 		<transition to="收费" name="收费">
-			<condition expression="#{not ownerBusinessHome.feeComplete}"></condition>
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP38','WP110','WP12','WP17','WP21','WP46','WP4','WP8','WP70','WP73','WP74','WP42','WP50')}"></condition>
 		</transition>
 		<transition to="是否发证" name="不收费">
-			<condition expression="#{ownerBusinessHome.feeComplete}"></condition>
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP38','WP110','WP12','WP17','WP21','WP46','WP4','WP8','WP70','WP73','WP74','WP42','WP50')}"></condition>
 		</transition>
 	</decision>
 

@@ -16,7 +16,7 @@ import java.util.Date;
 public class BusinessEmp implements java.io.Serializable {
 
     public enum EmpType{
-        CREATE_EMP, APPLY_EMP, CHECK_EMP,REG_EMP, CARD_PRINTER, PATCH_EMP,RECORD_EMP,MONEY_EMP
+        CREATE_EMP, APPLY_EMP, CHECK_EMP,REG_EMP, CARD_PRINTER, PATCH_EMP,RECORD_EMP,MONEY_EMP,GIVE_EMP,LAST_CHECK_EMP,QUALITY_CHECK_EMP
     }
 
 	private String id;

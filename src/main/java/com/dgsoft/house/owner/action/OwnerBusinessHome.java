@@ -238,6 +238,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     /**
+     * 领证人信息
+     */
+
+    public GiveCard getGiveCardInfo(){
+        return getInstance().getGiveCard();
+    }
+
+    /**
      * 申请人
      */
     @Deprecated
@@ -368,4 +376,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     public ContractOwner getContractOwner(){
         return getInstance().getContractOwner();
     }
+
+
 }

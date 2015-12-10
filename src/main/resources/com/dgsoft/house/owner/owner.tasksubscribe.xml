@@ -415,11 +415,24 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PeopleLastCheckEmpView" page="/business/houseOwner/subscribe/PeopleLastCheckEmpView.xhtml">
+        <description>
+            审批意见查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="PeopleRegEmpView" page="/business/houseOwner/subscribe/PeopleRegEmpView.xhtml">
         <description>
             登薄意见查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="PeopleQualityCheckEmpView" page="/business/houseOwner/subscribe/PeopleQualityCheckEmpView.xhtml">
+        <description>
+            质检意见查看
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="ReasonHighDebtorView" page="/business/houseOwner/subscribe/ReasonHighDebtorView.xhtml">
         <description>
@@ -445,6 +458,11 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="GiveCardView" page="/business/houseOwner/subscribe/GiveCardView.xhtml">
+        <description>
+            领证阶段信息
+        </description>
+    </view-subscribe>
 
 
 
@@ -815,6 +833,12 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="PeopleCheckEmpEdit" page="/business/houseOwner/subscribe/PeopleCheckEmpEdit.xhtml"
+                    component="">
+        <description>
+            审核意见编辑（添加审核时间）
+        </description>
+    </edit-subscribe>
 
     <edit-subscribe name="PeopleRegEmpEdit" page="/business/houseOwner/subscribe/PeopleRegEmpEdit.xhtml"
                     component="">
@@ -906,7 +930,11 @@
 
 
 
-
+    <edit-subscribe name="GiveCardEdit" page="/business/houseOwner/subscribe/GiveCardEdit.xhtml" component="">
+        <description>
+           发证阶段信息编辑
+        </description>
+    </edit-subscribe>
 
 
 
@@ -1174,19 +1202,52 @@
 
     <end-subscribe name="addKyCheckEmpEnd" component="addKyCheckEmp">
         <description>
-            审核人(审核人、时间、意见)
+            审核人(审核人、时间、意见-开原)
         </description>
     </end-subscribe>
 
     <end-subscribe name="addKyRegerEmpEnd" component="addKyRegerEmp">
         <description>
-            登薄人(登薄人、时间、意见)
+            登薄人(登薄人、时间、意见-开原)
         </description>
     </end-subscribe>
 
     <end-subscribe name="addRecordEmpEnd" component="addRecordEmp">
         <description>
             归档人(归档人、时间、意见)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addCheckEmpEnd" component="addCheckEmp">
+        <description>
+            审核人(审核人、时间、意见)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addLastCheckEmpEnd" component="addLastCheckEmp">
+        <description>
+            审批人(审批人、时间、意见)
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="addQualityCheckEmpEnd" component="addQualityCheckEmp">
+        <description>
+            质检人(质检人、时间、意见)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addRegerEmpEnd" component="addRegerEmp">
+        <description>
+            登薄人(登薄人、时间、意见)
+        </description>
+    </end-subscribe>
+
+
+
+    <end-subscribe name="addGiveEmpEnd" component="addGiveEmp">
+        <description>
+            发证人(发证人、时间)
         </description>
     </end-subscribe>
 
