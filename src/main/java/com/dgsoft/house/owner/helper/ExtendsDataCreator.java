@@ -4,6 +4,9 @@ import com.dgsoft.common.BigMoneyUtil;
 import com.dgsoft.common.helper.JsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.SystemEntityHome;
+import com.dgsoft.common.system.SystemEntityLoader;
+import com.dgsoft.common.system.model.Fee;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.model.Project;
@@ -37,6 +40,9 @@ public class ExtendsDataCreator {
 
     @In
     private AuthenticationInfo authInfo;
+
+    @In(create = true)
+    private SystemEntityLoader systemEntityLoader;
 
     public final static String EXTENDS_PRINT_PROTOCOL = "ExtendsPrint://";
 
@@ -441,7 +447,10 @@ public class ExtendsDataCreator {
 
         for (int i = 0; i < businessMoneyList.size(); i++) {
             if(businessMoneyList.get(i).getShouldMoney().compareTo(BigDecimal.ZERO)>0){
-                jsonObject.put("收费项目" + (i + 1), jsonField(businessMoneyList.get(i).getTypeName()));
+                Fee fee = systemEntityLoader.getEntityManager().find(Fee.class,businessMoneyList.get(i).getMoneyTypeId());
+                if (fee!=null) {
+                    jsonObject.put("收费项目" + (i + 1), jsonField(fee.getCategory().getName()));
+                }
                 jsonObject.put("收费金额" + (i + 1), jsonField(businessMoneyList.get(i).getShouldMoney()));
             }
         }
