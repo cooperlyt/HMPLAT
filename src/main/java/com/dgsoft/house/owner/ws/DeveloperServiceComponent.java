@@ -134,7 +134,7 @@ public class DeveloperServiceComponent {
 
                         cardJsonObj.put("landCardType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandCardType()));
                         cardJsonObj.put("landCardNumber", card.getProjectSellInfo().getLandCardNo());
-                        cardJsonObj.put("landArea", card.getProjectSellInfo().getLandArea());
+                        cardJsonObj.put("landArea", card.getProjectSellInfo().getLandArea().toString());
                         cardJsonObj.put("landUseType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandUseType()));
 
                         cardJsonObj.put("landEndUseTime", card.getProjectSellInfo().getEndUseTime().getTime());
@@ -461,17 +461,17 @@ public class DeveloperServiceComponent {
         houseJsonObj.put("houseUnitName", house.getHouseUnitName());
         houseJsonObj.put("inFloorName", house.getInFloorName());
         if (house.getHouseArea() != null)
-            houseJsonObj.put("houseArea", house.getHouseArea().doubleValue());
+            houseJsonObj.put("houseArea", house.getHouseArea().toString());
         if (house.getUseArea() != null)
-            houseJsonObj.put("useArea", house.getUseArea().doubleValue());
+            houseJsonObj.put("useArea", house.getUseArea().toString());
         if (house.getCommArea() != null)
-            houseJsonObj.put("commArea", house.getCommArea().doubleValue());
+            houseJsonObj.put("commArea", house.getCommArea().toString());
         if (house.getShineArea() != null)
-            houseJsonObj.put("shineArea", house.getShineArea().doubleValue());
+            houseJsonObj.put("shineArea", house.getShineArea().toString());
         if (house.getLoftArea() != null)
-            houseJsonObj.put("loftArea", house.getLoftArea().doubleValue());
+            houseJsonObj.put("loftArea", house.getLoftArea().toString());
         if (house.getCommParam() != null)
-            houseJsonObj.put("commParam", house.getCommParam().doubleValue());
+            houseJsonObj.put("commParam", house.getCommParam().toString());
         houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
         houseJsonObj.put("useType", DictionaryWord.instance().getWordValue(house.getUseType()));
         houseJsonObj.put("structure", DictionaryWord.instance().getWordValue(house.getStructure()));
