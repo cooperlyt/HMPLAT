@@ -78,12 +78,20 @@ public class BusinessNeedFile implements java.io.Serializable, OrderModel{
 
     @Column(name = "TASK_NAME",nullable = true,length = 200)
     @Size(max = 200)
-    public String getTaskName() {
+    public String getTaskNames() {
         return taskName;
     }
 
-    public void setTaskName(String taskName) {
+    public void setTaskNames(String taskName) {
         this.taskName = taskName;
+    }
+
+    @Transient
+    public List<String> getTaskNameList(){
+        if (getTaskNames() == null){
+            return new ArrayList<String>(0);
+        }
+        return Arrays.asList(getTaskNames().split(","));
     }
 
 
