@@ -383,7 +383,7 @@ public class OwnerBusinessFile {
                     result = FileStatus.NO_UPLOAD;
                 }
 
-                if (FileStatus.NO_UPLOAD.equals(result) && !getBusinessNeedFile().getTaskName().equals(taskName)) {
+                if (FileStatus.NO_UPLOAD.equals(result) && !getBusinessNeedFile().getTaskNameList().contains(taskName)) {
                     return FileStatus.OTHER_UPLOAD;
                 } else {
                     return result;

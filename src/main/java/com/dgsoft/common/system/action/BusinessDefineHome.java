@@ -174,8 +174,8 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     public List<BusinessNeedFile> getFileSubscribe(String taskName) {
         List<BusinessNeedFile> result = new ArrayList<BusinessNeedFile>(0);
         for (BusinessNeedFile businessNeedFile : getInstance().getBusinessNeedFiles()) {
-            if (((taskName == null) && ((businessNeedFile.getTaskName() == null) || (businessNeedFile.getTaskName().equals(""))))
-                    || ((taskName != null) && taskName.equals(businessNeedFile.getTaskName()))) {
+            if (((taskName == null) && ((businessNeedFile.getTaskNames() == null) || (businessNeedFile.getTaskNames().equals(""))))
+                    || ((taskName != null) && businessNeedFile.getTaskNameList().contains(taskName))) {
                 result.add(businessNeedFile);
             }
         }
