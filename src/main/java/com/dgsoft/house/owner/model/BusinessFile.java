@@ -42,7 +42,16 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		this.priority = priority;
     }
 
-    @Id
+	public BusinessFile(String id, String name, int priority) {
+		this.id = id;
+		this.name = name;
+		this.priority = priority;
+		this.noFile = false;
+		this.important = false;
+		this.priority = priority;
+	}
+
+	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)

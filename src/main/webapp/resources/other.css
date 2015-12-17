@@ -1026,3 +1026,9 @@ a:focus, a:hover{
     background-image: inherit;
     border-radius: 3px;
 }
+
+.typeahead.dropdown-menu>.active>a{
+    background-color: #f5f5f5;
+    background-image: none;
+    color: #666;
+}
