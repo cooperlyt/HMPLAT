@@ -7,7 +7,7 @@
             title="业务受理单">
 
 
-<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
 
 <p:font alignment="center" size="20" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
     <p:paragraph alignment="center">房 地 产 登 记 受 理 凭 证 (存根联) </p:paragraph>
@@ -43,23 +43,23 @@
 
 
         <f:facet name="defaultCell">
-            <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="true"
+            <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="false"
                     horizontalAlignment="center" verticalAlignment="middle"/>
         </f:facet>
 
         <p:cell>
-            <p:paragraph>房屋编号</p:paragraph>
+            <p:paragraph>项目编号</p:paragraph>
         </p:cell>
         <p:cell>
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
-        </p:cell>
-
-        <p:cell>
-            <p:paragraph>产权标识</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.instance.businessProject.projectCode}</p:paragraph>
         </p:cell>
 
         <p:cell>
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+            <p:paragraph>项目名称</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.businessProject.name}</p:paragraph>
         </p:cell>
 
         <p:cell>
@@ -69,16 +69,16 @@
         <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
 
             <p:paragraph
-                    rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}     <ui:repeat var="_abusinessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="  #{_abusinessPools.personName}"/></ui:repeat></p:paragraph>
+                    rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
 
         </p:cell>
 
         <p:cell>
-            <p:paragraph>房屋坐落</p:paragraph>
+            <p:paragraph>项目坐落</p:paragraph>
         </p:cell>
 
         <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
         </p:cell>
 
 
@@ -154,18 +154,18 @@
 
 
         <f:facet name="defaultCell">
-            <p:cell padding="1" paddingBottom="1" paddingTop="1" noWrap="true"
+            <p:cell padding="1" paddingBottom="1" paddingTop="1" noWrap="false"
                     horizontalAlignment="center" verticalAlignment="middle"/>
         </f:facet>
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
-            <p:cell fixedHeight="15"><p:paragraph>序号</p:paragraph></p:cell>
+            <p:cell><p:paragraph>序号</p:paragraph></p:cell>
             <p:cell><p:paragraph>材料名称</p:paragraph></p:cell>
             <p:cell><p:paragraph>原件/复印件</p:paragraph></p:cell>
             <p:cell><p:paragraph>页数</p:paragraph></p:cell>
             <c:forEach begin="0" end="17" step="1" var="_filesesNames">
-                <p:cell> <p:paragraph>#{_filesesNames+1}</p:paragraph></p:cell>
+                <p:cell fixedHeight="17"><p:paragraph>#{_filesesNames+1}</p:paragraph></p:cell>
 
-                <p:cell fixedHeight="17"><p:paragraph
+                <p:cell><p:paragraph
                         rendered="#{_filesesNames lt (ownerBusinessHome.uploadedFiles.size)}">#{ownerBusinessHome.uploadedFiles.get(_filesesNames).name}</p:paragraph></p:cell>
                 <p:cell></p:cell>
                 <p:cell></p:cell>
@@ -213,23 +213,23 @@
 
 
             <f:facet name="defaultCell">
-                <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="true"
+                <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="false"
                         horizontalAlignment="center" verticalAlignment="middle"/>
             </f:facet>
 
             <p:cell>
-                <p:paragraph>房屋编号</p:paragraph>
+                <p:paragraph>项目编号</p:paragraph>
             </p:cell>
             <p:cell>
-                <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
-            </p:cell>
-
-            <p:cell>
-                <p:paragraph>产权标识</p:paragraph>
+                <p:paragraph>#{ownerBusinessHome.instance.businessProject.projectCode}</p:paragraph>
             </p:cell>
 
             <p:cell>
-                <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+                <p:paragraph>项目名称</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>#{ownerBusinessHome.instance.businessProject.name}</p:paragraph>
             </p:cell>
 
             <p:cell>
@@ -239,16 +239,16 @@
             <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
 
                 <p:paragraph
-                        rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}     <ui:repeat var="_abusinessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="  #{_abusinessPools.personName}"/></ui:repeat></p:paragraph>
+                        rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName} </p:paragraph>
 
             </p:cell>
 
             <p:cell>
-                <p:paragraph>房屋坐落</p:paragraph>
+                <p:paragraph>项目坐落</p:paragraph>
             </p:cell>
 
             <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-                <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+                <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
             </p:cell>
 
 
@@ -324,7 +324,7 @@
 
 
             <f:facet name="defaultCell">
-                <p:cell padding="1" paddingBottom="1" paddingTop="1" noWrap="true"
+                <p:cell padding="1" paddingBottom="1" paddingTop="1" noWrap="false"
                         horizontalAlignment="center" verticalAlignment="middle"/>
             </f:facet>
             <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
@@ -347,5 +347,5 @@
     </p:font>
 </p:newPage>
 
-</a:repeat>
+
 </p:document>

@@ -745,6 +745,14 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public BusinessEmp getCreateEmp(){
         return getOperEmp(BusinessEmp.EmpType.CREATE_EMP);
     }
+    /**
+     *
+     * @return 归档人
+     */
+    @Transient
+    public BusinessEmp getRecordEmp(){
+        return getOperEmp(BusinessEmp.EmpType.RECORD_EMP);
+    }
 
     /**
      *

@@ -360,6 +360,10 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getInstance().getApplyEmp();
     }
     @Deprecated
+    public BusinessEmp getRecordEmp(){
+        return getInstance().getRecordEmp();
+    }
+    @Deprecated
     public BusinessEmp getCheckEmp(){
         return getInstance().getCheckEmp();
     }
