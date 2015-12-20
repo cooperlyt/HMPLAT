@@ -160,7 +160,7 @@ public class BusinessHouseOwner implements java.io.Serializable, PersonEntity {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     @JoinColumn(name = "OWNER_CARD", nullable = true)
     public MakeCard getMakeCard() {
         return makeCard;

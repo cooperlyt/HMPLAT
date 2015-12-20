@@ -21,8 +21,8 @@ public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
         if (!isHave()){
             clearInstance();
 
-            if (ownerBusinessHome.getInstance().getHouseBusinesses().size()==1){
-                BusinessHouseOwner businessHouseOwner = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner();
+            //if (ownerBusinessHome.getInstance().getHouseBusinesses().size()==1){
+                BusinessHouseOwner businessHouseOwner = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getBusinessHouseOwner();
                 if (businessHouseOwner !=null){
                     getInstance().setCredentialsType(businessHouseOwner.getCredentialsType());
                     getInstance().setCredentialsNumber(businessHouseOwner.getCredentialsNumber());
@@ -30,7 +30,7 @@ public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
                     getInstance().setPhone(businessHouseOwner.getPhone());
                 }
 
-            }
+            //}
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
             setHave(true);

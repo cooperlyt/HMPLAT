@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -48,6 +49,12 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
 
         MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,no);
 
+//        for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
+//            if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()!=null){
+//                houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
+//            }
+//
+//        }
         if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
 

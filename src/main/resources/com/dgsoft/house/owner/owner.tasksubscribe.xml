@@ -58,6 +58,13 @@
             产权人查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="houseDeveloperView" page="/business/houseOwner/subscribe/HouseDeveloperView.xhtml">
+        <description>
+            商品房初始登记产权人开发商查看（多房屋初始登记）
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="PersionOwnerEntrustView" page="/business/houseOwner/subscribe/PersionOwnerEntrustView.xhtml">
         <description>
             产权代理人查看
@@ -696,6 +703,13 @@
             产权来源、产别编辑
         </description>
     </edit-subscribe>
+    <edit-subscribe name="mulitHouseRegInfoEdit"  page="/business/houseOwner/subscribe/MulitHouseRegInfoEdit.xhtml" component="">
+        <description>
+            多房屋产权来源、产别编辑(商品房初始登记)
+        </description>
+    </edit-subscribe>
+
+
 
     <edit-subscribe name="saleInfoEdit" page="/business/houseOwner/subscribe/SaleInfoEdit.xhtml" component="">
         <description>
@@ -715,6 +729,15 @@
             土地信息编辑（每次都新建一个，然后填充）
         </description>
     </edit-subscribe>
+
+
+    <edit-subscribe name="MulitBusinessLandInfoEdit" page="/business/houseOwner/subscribe/MulitBusinessLandInfoEdit.xhtml"
+                    component="">
+        <description>
+            土地信息编辑（初始登记多房屋）
+        </description>
+    </edit-subscribe>
+
 
     <edit-subscribe name="evaluateEditEdit" page="/business/houseOwner/subscribe/EvaluateEdit.xhtml" component="">
         <description>
@@ -997,6 +1020,13 @@
             生成单房屋所有权证号
         </description>
     </end-subscribe>
+
+    <end-subscribe name="mulitMakeCardOwnerRshipEnd" component="mulitMakeCardOwnerRship">
+        <description>
+            生成多房屋所有权证号(商品房初始登记)
+        </description>
+    </end-subscribe>
+
 
     <end-subscribe name="makeCardNoticeEnd" component="makeCardNotice">
         <description>

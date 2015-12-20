@@ -754,6 +754,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return getOperEmp(BusinessEmp.EmpType.RECORD_EMP);
     }
 
+
+
+
+
+    /**
+     *
+     * @return 商品房初始登记多房屋中的其中一个房屋信息
+     */
+    @Transient
+    public BusinessHouse getBusinessHouse(){
+        return getHouseBusinesses().iterator().next().getAfterBusinessHouse();
+    }
+
     /**
      *
      * @return 受理人

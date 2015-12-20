@@ -24,7 +24,13 @@
                     <strong>#{messages.House_Code}:</strong>#{_houseBusinessList.afterBusinessHouse.displayHouseCode}   <strong>#{messages.House_Order}:</strong>#{_houseBusinessList.afterBusinessHouse.houseOrder}  <strong>#{messages.House_UseType}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.useType)}  <strong>#{messages.House_Area}:</strong>#{_houseBusinessList.afterBusinessHouse.houseArea}
                 </p>
                 <p class="repo-list-description">
+                   <strong>#{messages.HOUSE_FROM}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.houseRegInfo.houseFrom)}  <strong>#{messages.HOUSE_PORPERTY}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.houseRegInfo.houseProperty)} <strong>#{messages.Land_Number}:</strong>#{_houseBusinessList.afterBusinessHouse.landInfo.number} <strong>#{messages.Land_LandGetMode}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.landInfo.landGetMode)}
+                </p>
+                <p class="repo-list-description">
                     <strong>#{messages.House_Address}:</strong>#{_houseBusinessList.afterBusinessHouse.address}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.Card_OwnerRship}:</strong>#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.number}
                 </p>
             </li>
         </a:repeat>

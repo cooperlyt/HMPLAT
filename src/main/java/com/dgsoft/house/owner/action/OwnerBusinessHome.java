@@ -381,5 +381,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getInstance().getContractOwner();
     }
 
-
+    @Deprecated
+    public BusinessHouse getBusinessHouse(){
+        return getInstance().getBusinessHouse();
+    }
 }
