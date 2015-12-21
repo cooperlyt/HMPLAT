@@ -20,6 +20,7 @@ import org.jboss.seam.log.Logging;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -175,30 +176,56 @@ public class TotalProjectCard {
                         cell = br.createCell(buildCol++);
                         cell.setCellValue(businessBuild.getDoorNo());
                         cell = br.createCell(buildCol++);
-                        cell.setCellValue(businessBuild.getHomeCount());
+                        if (businessBuild.getHomeCount()>0) {
+                            cell.setCellValue(businessBuild.getHomeCount());
+
+                        }else{
+                            cell.setCellValue(0);
+                        }
                         cell = br.createCell(buildCol++);
-                        cell.setCellValue(businessBuild.getHomeArea().doubleValue());
+                        if (businessBuild.getHomeArea().compareTo(BigDecimal.ZERO)>0){
+                            cell.setCellValue(businessBuild.getHomeArea().doubleValue());
+                        }else {
+                            cell.setCellValue(0);
+                        }
+
 
                         cell = br.createCell(buildCol++);
-                        cell.setCellValue(businessBuild.getShopCount());
-                        cell = br.createCell(buildCol++);
-                        cell.setCellValue(businessBuild.getShopArea().doubleValue());
+                        if (businessBuild.getShopCount()>0) {
+                            cell.setCellValue(businessBuild.getShopCount());
+                        }else{
+                            cell.setCellValue(0);
+                        }
 
                         cell = br.createCell(buildCol++);
-                        cell.setCellValue(businessBuild.getUnhomeCount());
+                        if (businessBuild.getShopArea().compareTo(BigDecimal.ZERO)>0) {
+                            cell.setCellValue(businessBuild.getShopArea().doubleValue());
+                        }else{
+                            cell.setCellValue(0);
+                        }
+                        cell = br.createCell(buildCol++);
+                        if(businessBuild.getUnhomeCount()>0) {
+                            cell.setCellValue(businessBuild.getUnhomeCount());
+                        }else{
+                            cell.setCellValue(0);
+                        }
 
                         cell = br.createCell(buildCol++);
-                        cell.setCellValue(businessBuild.getUnhomeArea().doubleValue());
+                        if (businessBuild.getUnhomeArea().compareTo(BigDecimal.ZERO)>0) {
+                            cell.setCellValue(businessBuild.getUnhomeArea().doubleValue());
+                        }else{
+                            cell.setCellValue(0);
+                        }
 
                     }
                 }
 
 
-                sheet.addMergedRegion(new CellRangeAddress(sr,row-1,0,1));
+                sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 0, 1));
                 sheet.addMergedRegion(new CellRangeAddress(sr,row-1,1,1));
-                sheet.addMergedRegion(new CellRangeAddress(sr,row-1,2,2));
-                sheet.addMergedRegion(new CellRangeAddress(sr,row-1,3,3));
-                sheet.addMergedRegion(new CellRangeAddress(sr,row-1,4,4));
+                sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 2, 2));
+                sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 3, 3));
+                sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 4, 4));
             }
 
 
