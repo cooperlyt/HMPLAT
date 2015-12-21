@@ -84,7 +84,7 @@ public class MulitOwnerRsipCardPrint extends EntityHome<MakeCard>{
         cardInfo.setMakeEmpName(authInfo.getLoginEmployee().getPersonName());
         update();
         printUrl = extendsDataCreator.extendsPrintOwnerRsip(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance(),getPoolInfo());
+                ownerBusinessHome.getInstance().getMakeCards().iterator().next());
     }
 }
 
