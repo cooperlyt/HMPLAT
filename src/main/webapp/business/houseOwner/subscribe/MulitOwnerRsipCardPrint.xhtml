@@ -9,11 +9,52 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="cardPrintPanel"/>
+        <ui:param name="panelTitle" value="#{mulitOwnerRsipCardPrint.instance.number}"/>
+        <a:outputPanel rendered="#{mulitOwnerRsipCardPrint.idDefined}">
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    权证编号
+                </ui:define>
+                <ui:param name="for" value="cardCodeInput"/>
+                <h:inputText id="cardCodeInput" value="#{mulitOwnerRsipCardPrint.cardInfo.code}"
+                             required="true" styleClass="form-control" maxlength="100"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    附记
+                </ui:define>
+                <ui:param name="for" value="cardMemoInput"/>
+                <h:inputTextarea id="cardMemoInput" rows="3" styleClass="form-control" value="#{mulitOwnerRsipCardPrint.cardInfo.memo}"/>
+            </s:decorate>
+        </a:outputPanel>
+
+        <ui:define name="actionButtons">
+            <button type="button" class="button default" data-dismiss="modal">
+
+                #{messages.cancel}</button>
+
+            <a:commandLink styleClass="button submit primary" render=""
+                           execute="@form"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#cardPrintPanel').modal('hide')}"
+                           action="#{districtHome.update}">
+
+                <a:attachQueue requestDelay="0"/>
+                打印
+            </a:commandLink>
+        </ui:define>
+    </ui:decorate>
+
     <a:repeat var="_houseBusinesses" value="#{ownerBusinessHome.instance.houseBusinesses}">
-    <div class="panel panel-primary">
-        <div class="panel-body">
+        <div class="panel panel-primary">
+            <div class="panel-body">
 
                 <p>
+                    <a:commandButton>
+                        <a:attachQueue requestDelay="0"/>
+                </a:commandButton>
 
                 </p>
 
@@ -22,8 +63,11 @@
                     <strong>请点击打印，打印相关权证</strong>
                 </p>
 
-        </div>
 
-    </div>
-  </a:repeat>
+
+
+            </div>
+
+        </div>
+    </a:repeat>
 </ui:composition>
