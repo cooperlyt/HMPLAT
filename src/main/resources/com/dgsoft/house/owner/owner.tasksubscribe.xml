@@ -1307,6 +1307,13 @@
             所有权证打印
         </description>
     </oper-subscribe>
+
+    <oper-subscribe name="MulitOwnerRsipCardPrint" page="/business/houseOwner/subscribe/MulitOwnerRsipCardPrint.xhtml">
+       <description>
+        多房屋所有权证打印（商品房初始登记）
+      </description>
+   </oper-subscribe>
+
     <oper-subscribe name="mortgageCardPrint" page="/business/houseOwner/subscribe/mortgageCardPrint.xhtml">
         <description>
            他项权证打印

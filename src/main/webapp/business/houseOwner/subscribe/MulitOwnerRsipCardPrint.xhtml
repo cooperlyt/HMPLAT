@@ -61,25 +61,25 @@
         <div class="panel panel-primary">
             <div class="panel-body">
 
+
+
+                <p class="text-primary">
+                    房号：<strong>#{_houseBusinesses.afterBusinessHouse.houseOrder}</strong> 单元号：<strong> #{_houseBusinesses.afterBusinessHouse.houseUnitName}</strong> 所在层：<strong>#{_houseBusinesses.afterBusinessHouse.inFloorName}</strong>
+                    权证号：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.makeCard.number}</strong>
+                    产权人：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.personName}</strong>
+                    房屋坐落：<strong>#{_houseBusinesses.afterBusinessHouse.address}</strong>
+                    <strong>请点击打印，打印相关权证</strong>
+                </p>
                 <p>
-                    <a:commandLink oncomplete="$('#cardPrintPanel').modal({backdrop: 'static'})"
+                    <a:commandLink oncomplete="$('#cardPrintPanel').modal({backdrop: 'static'})" styleClass="btn minibutton right"
                                    render="cardPrintPanel_form,cardPrintPanel_title">
                         打印
                         <a:attachQueue requestDelay="0"/>
                         <a:param value="#{_houseBusinesses.afterBusinessHouse.id}" assignTo="#{mulitOwnerRsipCardPrint.businessHouseId}"/>
                         <a:param value="#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.makeCard.id}" assignTo="#{mulitOwnerRsipCardPrint.id}"/>
-                </a:commandLink>
+                    </a:commandLink>
 
                 </p>
-
-                <p class="text-primary">
-                    权证号：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.makeCard.id}</strong>
-                    产权人：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.personName}</strong>
-
-
-                    <strong>请点击打印，打印相关权证</strong>
-                </p>
-
 
 
 

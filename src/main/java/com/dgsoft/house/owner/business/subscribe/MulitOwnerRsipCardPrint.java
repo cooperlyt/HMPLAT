@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;
 import com.dgsoft.house.owner.model.BusinessHouse;
@@ -21,7 +22,7 @@ import java.util.Date;
  */
 @Name("mulitOwnerRsipCardPrint")
 @Scope(ScopeType.CONVERSATION)
-public class MulitOwnerRsipCardPrint extends EntityHome<MakeCard>{
+public class MulitOwnerRsipCardPrint extends OwnerEntityHome<MakeCard>{
 
 
 
