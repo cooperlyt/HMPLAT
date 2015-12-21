@@ -9,6 +9,14 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+    <iframe style="display:none;" class="qq_iframe" src=""/>
+
+    <h:outputScript>
+        function extPrint(printUrl){
+        $('.qq_iframe').attr('src',printUrl);
+        }
+    </h:outputScript>
+
     <ui:decorate template="/layout/edit-modalpanel.xhtml">
         <ui:param name="panelId" value="cardPrintPanel"/>
         <ui:param name="panelTitle" value="#{mulitOwnerRsipCardPrint.instance.number}"/>
@@ -36,10 +44,10 @@
 
                 #{messages.cancel}</button>
 
-            <a:commandLink styleClass="button submit primary" render=""
-                           execute="@form"
-                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#cardPrintPanel').modal('hide')}"
-                           action="#{districtHome.update}">
+            <a:commandLink styleClass="button submit primary" render="cardPrintPanel_inputs,printCardList"
+                           execute="@form" data="#{mulitOwnerRsipCardPrint.printUrl}"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){extPrint(event.data); $('#cardPrintPanel').modal('hide')}"
+                           action="#{mulitOwnerRsipCardPrint.saveAndPrint}">
 
                 <a:attachQueue requestDelay="0"/>
                 打印
@@ -47,19 +55,28 @@
         </ui:define>
     </ui:decorate>
 
+    <h:form>
+    <a:outputPanel id="printCardList">
     <a:repeat var="_houseBusinesses" value="#{ownerBusinessHome.instance.houseBusinesses}">
         <div class="panel panel-primary">
             <div class="panel-body">
 
                 <p>
-                    <a:commandButton>
+                    <a:commandLink oncomplete="$('#cardPrintPanel').modal({backdrop: 'static'})"
+                                   render="cardPrintPanel_form,cardPrintPanel_title">
+                        打印
                         <a:attachQueue requestDelay="0"/>
-                </a:commandButton>
+                        <a:param value="#{_houseBusinesses.afterBusinessHouse.id}" assignTo="#{mulitOwnerRsipCardPrint.businessHouseId}"/>
+                        <a:param value="#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.makeCard.id}" assignTo="#{mulitOwnerRsipCardPrint.id}"/>
+                </a:commandLink>
 
                 </p>
 
-                <p class="text-primary">产权人：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.personName}</strong>
-                    业务编号：<strong>#{ownerBusinessHome.instance.id}</strong>
+                <p class="text-primary">
+                    权证号：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.makeCard.id}</strong>
+                    产权人：<strong>#{_houseBusinesses.afterBusinessHouse.businessHouseOwner.personName}</strong>
+
+
                     <strong>请点击打印，打印相关权证</strong>
                 </p>
 
@@ -70,4 +87,6 @@
 
         </div>
     </a:repeat>
+    </a:outputPanel>
+    </h:form>
 </ui:composition>
