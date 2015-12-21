@@ -26,20 +26,10 @@ public class OwnerRsipCardPrint {
         return printUrl;
     }
 
-    private String getPoolInfo(){
-        String str="";
-        if (!ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().isEmpty()){
-            str="所有权人:"+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName();
-            for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
-                str=str+businessPool.getPersonName()+"身份证明号:"+businessPool.getCredentialsNumber();
-            }
 
-        }
-        return str;
-    }
 
     public void preparePrintOwnerFee(){
         printUrl = extendsDataCreator.extendsPrintOwnerRsip(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance(),getPoolInfo());
+                ownerBusinessHome.getInstance().getMakeCards().iterator().next());
     }
 }

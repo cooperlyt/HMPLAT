@@ -420,9 +420,20 @@ public class ExtendsDataCreator {
 
     }
 
-    public String extendsPrintOwnerRsip(BusinessHouse businessHouse, MakeCard markCard, OwnerBusiness ownerBusiness, String poolInfo) {
+    public String extendsPrintOwnerRsip(BusinessHouse businessHouse, MakeCard markCard) {
+
+            String str="";
+            if (!businessHouse.getBusinessPools().isEmpty()){
+                str="所有权人:"+businessHouse.getBusinessHouseOwner().getPersonName();
+                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    str=str+businessPool.getPersonName()+"身份证明号:"+businessPool.getCredentialsNumber();
+                }
+
+            }
+
+
         try {
-            return genPrintUrl(ownerRsipJson(businessHouse, markCard, ownerBusiness, poolInfo).toString());
+            return genPrintUrl(ownerRsipJson(businessHouse, markCard, businessHouse.getHouseBusinessForAfter().getOwnerBusiness(),str).toString());
         } catch (JSONException e) {
             Logging.getLog(getClass()).error(e);
             return null;
