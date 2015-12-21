@@ -156,7 +156,7 @@ public class TotalProjectCard {
                     cell = r.createCell(col++);
                     cell.setCellValue(ob.getId());
                     cell = r.createCell(col++);
-                    cell.setCellValue(ob.getBusinessProject().getDeveloperCode());
+                    cell.setCellValue(ob.getBusinessProject().getDeveloperName());
                     cell = r.createCell(col++);
                     cell.setCellValue(ob.getMakeCards().iterator().next().getNumber());
 
@@ -176,14 +176,14 @@ public class TotalProjectCard {
                         cell = br.createCell(buildCol++);
                         cell.setCellValue(businessBuild.getDoorNo());
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getHomeCount()>0) {
+                        if (businessBuild.getHomeCount()!=null && businessBuild.getHomeCount()>0) {
                             cell.setCellValue(businessBuild.getHomeCount());
 
                         }else{
                             cell.setCellValue(0);
                         }
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getHomeArea().compareTo(BigDecimal.ZERO)>0){
+                        if (businessBuild.getHomeArea()!=null && businessBuild.getHomeArea().compareTo(BigDecimal.ZERO)>0){
                             cell.setCellValue(businessBuild.getHomeArea().doubleValue());
                         }else {
                             cell.setCellValue(0);
@@ -191,27 +191,27 @@ public class TotalProjectCard {
 
 
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getShopCount()>0) {
+                        if (businessBuild.getShopCount()!=null && businessBuild.getShopCount()>0) {
                             cell.setCellValue(businessBuild.getShopCount());
                         }else{
                             cell.setCellValue(0);
                         }
 
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getShopArea().compareTo(BigDecimal.ZERO)>0) {
+                        if (businessBuild.getShopArea()!=null && businessBuild.getShopArea().compareTo(BigDecimal.ZERO)>0) {
                             cell.setCellValue(businessBuild.getShopArea().doubleValue());
                         }else{
                             cell.setCellValue(0);
                         }
                         cell = br.createCell(buildCol++);
-                        if(businessBuild.getUnhomeCount()>0) {
+                        if(businessBuild.getUnhomeCount()!=null && businessBuild.getUnhomeCount()>0) {
                             cell.setCellValue(businessBuild.getUnhomeCount());
                         }else{
                             cell.setCellValue(0);
                         }
 
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getUnhomeArea().compareTo(BigDecimal.ZERO)>0) {
+                        if (businessBuild.getUnhomeArea()!=null && businessBuild.getUnhomeArea().compareTo(BigDecimal.ZERO)>0) {
                             cell.setCellValue(businessBuild.getUnhomeArea().doubleValue());
                         }else{
                             cell.setCellValue(0);
@@ -221,7 +221,7 @@ public class TotalProjectCard {
                 }
 
 
-                sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 0, 1));
+                sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 0, 0));
                 sheet.addMergedRegion(new CellRangeAddress(sr,row-1,1,1));
                 sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 2, 2));
                 sheet.addMergedRegion(new CellRangeAddress(sr, row - 1, 3, 3));
