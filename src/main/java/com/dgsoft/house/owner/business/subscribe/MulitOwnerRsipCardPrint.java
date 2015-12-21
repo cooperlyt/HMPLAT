@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;
+import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessPool;
 import com.dgsoft.house.owner.model.CardInfo;
 import com.dgsoft.house.owner.model.MakeCard;
@@ -26,9 +27,6 @@ public class MulitOwnerRsipCardPrint extends EntityHome<MakeCard>{
 
 
     @In
-    private OwnerBusinessHome ownerBusinessHome;
-
-    @In
     private ExtendsDataCreator extendsDataCreator;
 
 
@@ -48,6 +46,16 @@ public class MulitOwnerRsipCardPrint extends EntityHome<MakeCard>{
 
     private CardInfo cardInfo;
 
+    private String businessHouseId;
+
+    public String getBusinessHouseId() {
+        return businessHouseId;
+    }
+
+    public void setBusinessHouseId(String businessHouseId) {
+        this.businessHouseId = businessHouseId;
+    }
+
     @In
     private AuthenticationInfo authInfo;
 
@@ -62,17 +70,6 @@ public class MulitOwnerRsipCardPrint extends EntityHome<MakeCard>{
         return cardInfo;
     }
 
-    private String getPoolInfo(){
-        String str="";
-        if (!ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().isEmpty()){
-            str="所有权人:"+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName();
-            for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
-                str=str+businessPool.getPersonName()+"身份证明号:"+businessPool.getCredentialsNumber();
-            }
-
-        }
-        return str;
-    }
 
     public void saveAndPrint(){
 
@@ -83,8 +80,7 @@ public class MulitOwnerRsipCardPrint extends EntityHome<MakeCard>{
         cardInfo.setMakeEmpCode(authInfo.getLoginEmployee().getId());
         cardInfo.setMakeEmpName(authInfo.getLoginEmployee().getPersonName());
         update();
-        printUrl = extendsDataCreator.extendsPrintOwnerRsip(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next());
+        printUrl = extendsDataCreator.extendsPrintOwnerRsip(getEntityManager().find(BusinessHouse.class,businessHouseId),getInstance());
     }
 }
 
