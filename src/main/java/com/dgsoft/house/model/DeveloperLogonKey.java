@@ -78,7 +78,7 @@ public class DeveloperLogonKey implements java.io.Serializable{
 
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "KEY_AND_PROJECT",joinColumns=@JoinColumn(name="DEVELOPER_KEY"),inverseJoinColumns = @JoinColumn(name = "PROJECT"))
+    @JoinTable(name = "KEY_AND_PROJECT",catalog = "HOUSE_INFO",joinColumns=@JoinColumn(name="DEVELOPER_KEY"),inverseJoinColumns = @JoinColumn(name = "PROJECT"))
     public Set<Project> getProjects() {
         return projects;
     }
