@@ -13,7 +13,9 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.framework.EntityHome;
+import org.jboss.seam.log.Logging;
 
+import javax.faces.context.FacesContext;
 import java.util.Date;
 
 /**
@@ -71,6 +73,15 @@ public class MulitOwnerRsipCardPrint extends OwnerEntityHome<MakeCard>{
         return cardInfo;
     }
 
+    public void print(){
+        Logging.getLog(getClass()).debug("bbbbbb--");
+
+        Logging.getLog(getClass()).debug("aaa--"+FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("makeCardId"));
+        setId(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("makeCardId"));
+        Logging.getLog(getClass()).debug("id:" + isIdDefined() + "|" + getId());
+        printUrl = extendsDataCreator.extendsPrintOwnerRsip(getEntityManager().find(BusinessHouse.class,FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("businessHouseId")),getInstance());
+
+    }
 
     public void saveAndPrint(){
 
