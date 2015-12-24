@@ -7,6 +7,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j"
                 xmlns:r="http://richfaces.org/rich">
+
+    <iframe style="display:none;" class="qq_iframe" src=""/>
+
+    <h:outputScript>
+        function extPrint(printUrl){
+        $('.qq_iframe').attr('src',printUrl);
+        }
+    </h:outputScript>
+
     <ul class="repo-list js-repo-list full-width" id="user-links">
         <a:repeat var="_houseBusinessList" value="#{ownerBusinessHome.instance.houseBusinessList}">
 
@@ -29,7 +38,21 @@
                 <p class="repo-list-description">
                     <strong>#{messages.House_Address}:</strong>#{_houseBusinessList.afterBusinessHouse.address}
                 </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.Card_OwnerRship}:</strong>#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.number}
 
+                        <a:commandLink styleClass="btn minibutton right" render="@none" action="#{mulitOwnerRsipCardPrint.print}" immediate="true"
+                                       data="#{mulitOwnerRsipCardPrint.printUrl}"
+                                       execute="@this" oncomplete="extendsCall(event.data);" rendered="#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.enable}">
+                            <span class="glyphicon glyphicon-print"/>
+                            <a:attachQueue requestDelay="0"/>
+                            <f:param name="businessHouseId" value="#{_houseBusinessList.afterBusinessHouse.id}"/>
+                            <f:param name="makeCardId" value="#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.id}"/>
+                            <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
+                            打印产权证
+                        </a:commandLink>
+
+                </p>
             </li>
         </a:repeat>
     </ul>
