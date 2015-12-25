@@ -248,17 +248,6 @@ public class OwnerBusinessFile {
             BusinessFileTreeNode importantNode = new BusinessFileTreeNode(rootNeedFile);
             fillImportNode(importantNode);
             tree.add(importantNode);
-
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("BUSINESS", ownerBusinessHome.getInstance().getId());
-
-                jsonObject.put("IMPORT", importantNode.getJson());
-                jsonData = jsonObject.toString();
-            } catch (JSONException e) {
-                Logging.getLog(getClass()).debug(e.getMessage(), e);
-                jsonData = null;
-            }
         }
 
         List<BusinessFile> otherBusinessFiles = new ArrayList<BusinessFile>();
@@ -289,9 +278,6 @@ public class OwnerBusinessFile {
     }
 
 
-    private String jsonData;
-
-
     private final static String EXTENDS_PRINT_PROTOCOL = "ExtendsUpload://";
 
     private String extendsAddress;
@@ -301,6 +287,27 @@ public class OwnerBusinessFile {
     }
 
     public void extendsUpload() {
+        String jsonData;
+
+        try {
+
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("BUSINESS", ownerBusinessHome.getInstance().getId());
+
+
+
+            jsonObject.put("IMPORT", getTree().get(0).getJson());
+            jsonObject.put("OTHER_FILE",getTree().get(1).getJson());
+
+            //jsonObject.put("OTHER")
+            jsonData = jsonObject.toString();
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).debug(e.getMessage(), e);
+            jsonData = null;
+        }
+
+
         extendsAddress = EXTENDS_PRINT_PROTOCOL + jsonDataProvider.putData(jsonData);
     }
 
@@ -368,6 +375,8 @@ public class OwnerBusinessFile {
         FileStatus getStatus();
 
         void putFile(List<String> fileNames, String empCode, String empName, String md5);
+
+        JSONObject getJson() throws JSONException;
     }
 
     public class BusinessFileTreeNode extends BusinessDefineHome.NeedFileTreeNode<BusinessFileTreeNode> implements BusinessFileNode {
@@ -597,8 +606,6 @@ public class OwnerBusinessFile {
             result.put("CHILD", childArray);
             return result;
         }
-
-
     }
 
 
@@ -790,6 +797,31 @@ public class OwnerBusinessFile {
                 }
                 return result;
             }
+        }
+
+        public JSONObject getJson() throws JSONException {
+
+
+            if (businessFile == null){
+                JSONArray jsonArray = new JSONArray();
+                for(OtherFileTreeNode child: businessFiles){
+                    jsonArray.put(child.getJson());
+                }
+                JSONObject result = new JSONObject();
+                result.put("TYPE", "ROOT");
+                result.put("NAME", "");
+                result.put("ID", "");
+                result.put("CHILD",jsonArray);
+                return  result;
+            }else{
+                JSONObject result = new JSONObject();
+                result.put("TYPE", "CHILDREN");
+                result.put("NAME", businessFile.getName());
+                result.put("ID", businessFile.getId());
+                return result;
+            }
+
+
         }
 
         @Override

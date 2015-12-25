@@ -177,7 +177,7 @@ public class ProjectSaleTopTen implements RestDataProvider {
 
                 jo.put("id", item.getId());
                 jo.put("name",projectNameMap.get(item.getId()));
-                jo.put("area",item.getMoneyOrArea().toString());
+                jo.put("money",item.getMoneyOrArea().toString());
                 moneyJsonArray.put(jo);
             }
 
