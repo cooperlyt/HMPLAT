@@ -426,7 +426,7 @@ public class ExtendsDataCreator {
             if (!businessHouse.getBusinessPools().isEmpty()){
                 str="所有权人:"+businessHouse.getBusinessHouseOwner().getPersonName();
                 for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
-                    str=str+businessPool.getPersonName()+"身份证明号:"+businessPool.getCredentialsNumber();
+                    str=str+" 共有权人："+businessPool.getPersonName()+"身份证明号:"+businessPool.getCredentialsNumber();
                 }
 
             }
