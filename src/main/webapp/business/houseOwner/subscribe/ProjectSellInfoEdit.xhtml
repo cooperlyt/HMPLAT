@@ -331,4 +331,17 @@
                          required="true"/>
         </s:decorate>
 
+
+    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+        <ui:define name="label">
+            #{messages.AttachCorp_licenseCode}
+        </ui:define>
+        <ui:param name="for" value="licenseCode"/>
+        <h:inputText label="#{messages.AttachCorp_licenseCode}"
+                     id="licenseCode"
+                     value="#{projectSellInfoSubscribe.instance.licenseNumber}"
+                     styleClass="form-control"
+                     maxlength="50"/>
+    </s:decorate>
+
 </ui:composition>

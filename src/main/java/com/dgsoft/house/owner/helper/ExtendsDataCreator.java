@@ -97,6 +97,13 @@ public class ExtendsDataCreator {
         jsonObject.put("建筑面积", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getArea()));
         jsonObject.put("栋", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getBuildCount()));
         jsonObject.put("套数", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
+        if (ownerBusiness.getBusinessProject().getProjectSellInfo().getLicenseNumber()!=null){
+            jsonObject.put("营业执照注册号", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
+        }
+        if (markCard.getProjectCard().getOrderNumber()!=null) {
+            jsonObject.put("第号", jsonField(markCard.getProjectCard().getOrderNumber()));
+        }
+        jsonObject.put("房屋用途性质", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getUseType()));
         if (!ownerBusiness.getBusinessProject().getBusinessBuilds().isEmpty()) {
             for (int i = 0; i < ownerBusiness.getBusinessProject().getBusinessBuilds().size(); i++) {
                 jsonObject.put("楼号" + (i + 1), jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getBuildNo()));
@@ -137,7 +144,11 @@ public class ExtendsDataCreator {
         jsonObject.put("房屋用途性质", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getUseType()));
         jsonObject.put("销预售对象", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getSellObject()));
         jsonObject.put("建筑面积", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getArea()));
-
+        jsonObject.put("栋", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getBuildCount()));
+        jsonObject.put("套数", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
+        if (ownerBusiness.getBusinessProject().getProjectSellInfo().getLicenseNumber()!=null){
+            jsonObject.put("营业执照注册号", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
+        }
         BigDecimal homeArea = BigDecimal.ZERO;
         BigDecimal unhomeArea = BigDecimal.ZERO;
         int homeCount = 0, unhomeCount = 0;
@@ -334,7 +345,8 @@ public class ExtendsDataCreator {
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
         jsonObject.put("他项权利种类", jsonField(DictionaryWord.instance().getWordValue(ownerBusiness.getMortgaegeRegiste().getInterestType())));
         jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
-
+        jsonObject.put("债权大写",jsonField(BigMoneyUtil.getBigMoney(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney().doubleValue())));
+        jsonObject.put("抵押面积", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageArea()));
         if(ownerBusiness.getRegTime()!=null){
             jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
         }

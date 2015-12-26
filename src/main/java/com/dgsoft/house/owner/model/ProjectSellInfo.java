@@ -56,6 +56,7 @@ public class ProjectSellInfo implements java.io.Serializable {
     private Integer houseCount;
     private Integer buildCount;
     private BigDecimal area;
+    private String licenseNumber;
 
 
 
@@ -324,6 +325,17 @@ public class ProjectSellInfo implements java.io.Serializable {
 
     public void setLandAddress(String landAddress) {
         this.landAddress = landAddress;
+    }
+
+
+    @Column(name = "LICENSE_NUMBER", length = 50)
+    @Size(max = 50)
+    public String getLicenseNumber() {
+        return this.licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 
 }
