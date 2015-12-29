@@ -6,8 +6,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
+    <a:outputPanel rendered="#{ownerBusinessHome.instance.type eq 'MODIFY_BIZ'}">
     <ui:include src="/layout/house/owner/ReasonInput.xhtml">
         <ui:param name="label" value="#{messages.Reason_ChangAfterRenson}"/>
         <ui:param name="reason" value="#{changAfterRensonSubscribe.instance}" />
     </ui:include>
+    </a:outputPanel>
 </ui:composition>
