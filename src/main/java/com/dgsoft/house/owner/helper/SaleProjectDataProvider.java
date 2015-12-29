@@ -52,6 +52,7 @@ public class SaleProjectDataProvider extends MultiOperatorEntityQuery<SaleProjec
     @RequestParameter
     private String districtCode;
 
+
     public String getSearchKey() {
         return searchKey;
     }
@@ -71,13 +72,15 @@ public class SaleProjectDataProvider extends MultiOperatorEntityQuery<SaleProjec
     public SaleProjectDataProvider() {
         setMaxResults(MAX_RESULT_COUNT);
         setEjbql(EJBQL);
-
+        setUseWildcardAsCountQuerySubject(false);
         setOrder(" max(p.ownerBusiness.regTime) desc");
         setGroupBy("p.projectCode");
         RestrictionGroup mainRestriction = new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_DISTRICT));
         mainRestriction.getChildren().add(new RestrictionGroup("or",Arrays.asList(RESTRICTIONS)));
         setRestrictionGroup(mainRestriction);
     }
+
+
 
 
 
@@ -92,11 +95,7 @@ public class SaleProjectDataProvider extends MultiOperatorEntityQuery<SaleProjec
 
         JSONObject result = new JSONObject();
         try {
-            result.put("pageSize",MAX_RESULT_COUNT);
-            result.put("recordCount",getResultCount());
-            result.put("nextExists",isNextExists());
-            result.put("pageCount",getPageCount());
-            result.put("previousExists",isPreviousExists());
+
 
             Set<String> resultIds = new HashSet<String>(MAX_RESULT_COUNT);
             for(SaleProjectData data: getResultList()){
@@ -132,6 +131,11 @@ public class SaleProjectDataProvider extends MultiOperatorEntityQuery<SaleProjec
             }
 
             result.put("datas",dataArray);
+            result.put("pageSize",MAX_RESULT_COUNT);
+            result.put("recordCount",getResultCount());
+            result.put("nextExists",isNextExists());
+            result.put("pageCount",getPageCount());
+            result.put("previousExists",isPreviousExists());
             return result;
         } catch (JSONException e) {
             Logging.getLog(getClass()).error(e.getMessage(), e);
