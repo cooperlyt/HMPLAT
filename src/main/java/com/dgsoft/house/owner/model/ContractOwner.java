@@ -243,6 +243,16 @@ public class ContractOwner implements java.io.Serializable,PersonEntity {
         this.businessHouses = businessHouses;
     }
 
+
+    @Transient
+    public BusinessHouse getBusinessHouse(){
+        if (getBusinessHouses().isEmpty()){
+            return null;
+        }else{
+            return getBusinessHouses().iterator().next();
+        }
+    }
+
     @Column(name = "PROJECT_RSHIP_NUMBER", length = 32, nullable = true)
     @Size(max = 50)
     public String getProjectRshipNumber() {

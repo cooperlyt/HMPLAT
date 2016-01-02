@@ -63,10 +63,9 @@ public class BusinessInfoProvider implements RestDataProvider{
                 JSONObject operObject = new JSONObject();
                 operObject.put("time",taskOper.getOperTime().getTime());
                 operObject.put("empName",taskOper.getEmpName());
-                if (taskOper.getOperType().isManager()){
+                if (taskOper.getOperType().isManager() ){
                     operObject.put("task",messages.get(taskOper.getOperType().name()));
-                }else if (TaskOper.OperType.CREATE.equals(taskOper.getOperType())){
-                    operObject.put("task", RunParam.instance().getStringParamValue("CreateBizTaskName"));
+
                 }else{
                     operObject.put("task",taskOper.getTaskName());
                 }

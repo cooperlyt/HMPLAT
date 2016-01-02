@@ -251,6 +251,7 @@ public class OutsideBusinessCreate {
             ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
 
             ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,"提交合同","outside",key.getAttachEmployee().getPersonName(),"",new Date()));
             String ownerBusinessId = ownerBusinessHome.getInstance().getId();
             if (!"persisted".equals(ownerBusinessHome.persist())){
                 throw new IllegalArgumentException("persited ownerBusiness fail");
