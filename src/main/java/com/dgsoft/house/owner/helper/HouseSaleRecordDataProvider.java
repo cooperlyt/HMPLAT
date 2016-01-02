@@ -19,7 +19,8 @@ public class HouseSaleRecordDataProvider {
     public enum DataType {
         TOTAL_INFO("newHouseRecordTotalDataProvider"), PROJECT_LIST("saleProjectDataProvider"),
         PROJECT_SALE_TOP_TEN("projectSaleTopTen"), PROJECT_INFO("projectSaleInfoProvider"),
-        BUILD_INFO("buildSaleInfoProvider");
+        BUILD_INFO("buildSaleInfoProvider"),CONTRACT_SEARCH("contractInfoProvider"),
+        HOUSE_STATUS_SEARCH("houseStatusProvider"),BUSINESS_SEARCH("businessInfoProvider");
 
         private String provider;
 

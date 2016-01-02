@@ -142,6 +142,10 @@ public class ProjectSaleTopTen implements RestDataProvider {
 
         Map<String, String> projectNameMap = new HashMap<String, String>();
 
+        if (projectIds.isEmpty()){
+            return null;
+        }
+
         for (Project project : houseEntityLoader.getEntityManager().createQuery("select p from Project p where p.id in (:pids)", Project.class)
                 .setParameter("pids", projectIds).getResultList()) {
             projectNameMap.put(project.getId(), project.getName());
