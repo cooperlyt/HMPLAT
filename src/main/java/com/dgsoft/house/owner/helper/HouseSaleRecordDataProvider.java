@@ -17,8 +17,10 @@ import java.io.IOException;
 public class HouseSaleRecordDataProvider {
 
     public enum DataType {
-        TOTAL_INFO("newHouseRecordTotalDataProvider"),PROJECT_LIST("saleProjectDataProvider"),
-        PROJECT_SALE_TOP_TEN("projectSaleTopTen");
+        TOTAL_INFO("newHouseRecordTotalDataProvider"), PROJECT_LIST("saleProjectDataProvider"),
+        PROJECT_SALE_TOP_TEN("projectSaleTopTen"), PROJECT_INFO("projectSaleInfoProvider"),
+        BUILD_INFO("buildSaleInfoProvider"),CONTRACT_SEARCH("contractInfoProvider"),
+        HOUSE_STATUS_SEARCH("houseStatusProvider"),BUSINESS_SEARCH("businessInfoProvider");
 
         private String provider;
 
@@ -39,19 +41,22 @@ public class HouseSaleRecordDataProvider {
 
 
     public void renderJsonData() throws IOException {
-        JSONObject data = ((RestDataProvider)Component.getInstance(DataType.valueOf(type).getProvider(),true)).getJsonData();
+        JSONObject data = ((RestDataProvider) Component.getInstance(DataType.valueOf(type).getProvider(), true)).getJsonData();
 
         ExternalContext externalContext = facesContext.getExternalContext();
         externalContext.setResponseContentType("application/json");
         externalContext.setResponseCharacterEncoding("UTF-8");
-        String jsonStr = data.toString();
-        if (jsonStr == null){
-            jsonStr = "";
+        if (data != null) {
+            String jsonStr = data.toString();
+            if (jsonStr == null) {
+                jsonStr = "";
+            }
+            externalContext.getResponseOutputWriter().write(jsonStr);
+        } else {
+            externalContext.getResponseOutputWriter().write("{}");
         }
-        externalContext.getResponseOutputWriter().write(jsonStr);
         facesContext.responseComplete();
     }
-
 
 
 }
