@@ -57,6 +57,7 @@ public class ProjectSellInfo implements java.io.Serializable {
     private Integer buildCount;
     private BigDecimal area;
     private String licenseNumber;
+    private String createLandCardNumber;
 
 
 
@@ -86,6 +87,8 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.buildSize = other.getBuildSize();
         this.createCardNumber = other.getCreateCardNumber();
         this.createPrepareCardNumber = other.getCreatePrepareCardNumber();
+        this.licenseNumber = other.getLicenseNumber();
+        this.createLandCardNumber = other.getCreateLandCardNumber();
     }
 
     @Id
@@ -338,4 +341,13 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.licenseNumber = licenseNumber;
     }
 
+    @Column(name = "CREATE_LAND_CARD_CODE", length = 50)
+    @Size(max = 50)
+    public String getCreateLandCardNumber() {
+        return createLandCardNumber;
+    }
+
+    public void setCreateLandCardNumber(String createLandCardNumber) {
+        this.createLandCardNumber = createLandCardNumber;
+    }
 }
