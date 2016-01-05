@@ -26,7 +26,9 @@ public class RecordCoverPrint {
 
         private BusinessFile businessFile;
 
-        private int pageCount;
+        private Integer pageCount;
+
+        private Integer beginPage;
 
         private String memo;
 
@@ -41,14 +43,6 @@ public class RecordCoverPrint {
             return businessFile;
         }
 
-        public int getPageCount() {
-            return pageCount;
-        }
-
-        public void setPageCount(int pageCount) {
-            this.pageCount = pageCount;
-        }
-
         public String getMemo() {
             return memo;
         }
@@ -56,18 +50,28 @@ public class RecordCoverPrint {
         public void setMemo(String memo) {
             this.memo = memo;
         }
+
+        public Integer getPageCount() {
+            return pageCount;
+        }
+
+        public void setPageCount(Integer pageCount) {
+            this.pageCount = pageCount;
+        }
+
+        public Integer getBeginPage() {
+            return beginPage;
+        }
+
+        public void setBeginPage(Integer beginPage) {
+            this.beginPage = beginPage;
+        }
     }
 
     @In()
     private OwnerBusinessHome ownerBusinessHome;
 
     private List<TempStore> fileList;
-
-    private List<TempStore> genPageCover(){
-        List<TempStore> result = new ArrayList<TempStore>();
-
-        return result;
-    }
 
     public void refresh(){
         fileList = null;
@@ -78,29 +82,23 @@ public class RecordCoverPrint {
     private TempStore selected;
 
     public void up(){
+
         int i = fileList.indexOf(selected);
+
         if (i > 0){
-            fileList.remove(selected);
+            fileList.set(i,fileList.get(i-1));
             fileList.set(i - 1, selected);
         }
     }
 
     public void down(){
+
         int i = fileList.indexOf(selected);
-        if (i < (fileList.size() - 1)){
-            fileList.remove(selected);
+
+        if ((i >= 0) && (i < (fileList.size() - 1))) {
+            fileList.set(i, fileList.get(i + 1));
             fileList.set(i + 1, selected);
         }
-    }
-
-    public void top(){
-        fileList.remove(selected);
-        fileList.set(0, selected);
-    }
-
-    public void last(){
-        fileList.remove(selected);
-        fileList.set(fileList.size() - 1, selected);
     }
 
     @DataModel("recordCoverItems")
@@ -117,7 +115,7 @@ public class RecordCoverPrint {
                     if (o1.getBusinessFile().isImportant() == o2.getBusinessFile().isImportant()) {
                         return Integer.valueOf(o1.getBusinessFile().getPriority()).compareTo(o2.getBusinessFile().getPriority());
                     }else{
-                        return Boolean.valueOf(o1.getBusinessFile().isImportant()).compareTo(o2.getBusinessFile().isImportant());
+                        return Boolean.valueOf(o2.getBusinessFile().isImportant()).compareTo(o1.getBusinessFile().isImportant());
                     }
                 }
             });
