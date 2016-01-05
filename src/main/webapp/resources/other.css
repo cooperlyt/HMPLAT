@@ -1032,3 +1032,7 @@ a:focus, a:hover{
     background-image: none;
     color: #666;
 }
+
+.input-group-btn .btn-group.bootstrap-select.open{
+    z-index: 900;
+}

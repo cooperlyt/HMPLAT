@@ -330,7 +330,7 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
     @Column(name = "USE_TYPE", length = 32, nullable = false)
-    @Size(max = 32)
+    @Size(min=1,max = 32)
     @NotNull
     public String getUseType() {
         return this.useType;
@@ -420,7 +420,7 @@ public class House implements java.io.Serializable, HouseInfo {
 
     @Override
     @Column(name = "STRUCTURE", length = 32, nullable = false)
-    @Size(max = 32)
+    @Size(min=1,max = 32)
     @NotNull
     public String getStructure() {
         return this.structure;

@@ -179,6 +179,8 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness',
 
 INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
 
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordBusinessMgr', '补录业务维护', '房屋预警', 7);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('houseOwnerLocked', '房屋预警', '房屋预警', 7);
 
 
 
