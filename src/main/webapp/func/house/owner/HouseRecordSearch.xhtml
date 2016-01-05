@@ -88,7 +88,7 @@
 
                         <li class="repo-list-item public source house-info">
                             <div class="repo-list-stats">
-                                <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
+                                <s:link rendered="#{s:hasRole('system.runBusinessMgr') or s:hasRole('recordRunManager')}"
                                         view="/func/house/owner/LockedHouseMgr.xhtml"
                                         styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="房屋预警设置">
                                     <f:param name="houseCode" value="#{_item.houseCode}"/>

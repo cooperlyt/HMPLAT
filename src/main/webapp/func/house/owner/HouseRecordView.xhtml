@@ -58,7 +58,7 @@
                            layout="block" styleClass="alert alert-warning" role="alert">
                 <span class="octicon octicon-alert left" style="margin-left: -25px; "></span>
 
-                <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
+                <s:link rendered="#{s:hasRole('system.runBusinessMgr') or s:hasRole('recordRunManager')}"
                         view="/func/house/owner/LockedHouseMgr.xhtml"
                         styleClass="btn btn-sm btn-primary right" style="margin-top: -4px">
                     <f:param name="houseCode" value="#{houseRecordHome.instance.houseCode}"/>
@@ -91,9 +91,8 @@
 
             </a:outputPanel>
 
-            <a:outputPanel rendered="#{empty houseRecordHome.inBusinessName and empty houseRecordHome.lockedHouseList and s:hasRole('system.runBusinessMgr')}" layout="block" styleClass="alert alert-success" role="alert">
-                <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
-                        view="/func/house/owner/LockedHouseMgr.xhtml"
+            <a:outputPanel rendered="#{empty houseRecordHome.inBusinessName and empty houseRecordHome.lockedHouseList and (s:hasRole('system.runBusinessMgr') or s:hasRole('recordRunManager'))}" layout="block" styleClass="alert alert-success" role="alert">
+                <s:link view="/func/house/owner/LockedHouseMgr.xhtml"
                         styleClass="btn btn-sm btn-primary right" style="margin-top: -4px">
                     管理房屋预警
                     <f:param name="houseCode" value="#{houseRecordHome.instance.houseCode}"/>

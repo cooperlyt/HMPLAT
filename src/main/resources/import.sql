@@ -166,7 +166,7 @@ INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.tempSql'
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.runBusinessMgr', '业务运行维护', '中止，挂起，分发正在运行的业务', 5);
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档，预警', 9);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档,预警', 9);
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.businessView', '业务档案查看', '查看档案', 6);
 
@@ -179,8 +179,7 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness',
 
 INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
 
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordBusinessMgr', '补录业务维护', '房屋预警', 7);
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('houseOwnerLocked', '房屋预警', '房屋预警', 7);
+
 
 
 
@@ -244,7 +243,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave', 'owner.MapHouse
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.MapHouseRecordSearch');
 
 
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档，预警', 21);
+
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.houseRecordSearch');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.MapHouseRecordSearch');

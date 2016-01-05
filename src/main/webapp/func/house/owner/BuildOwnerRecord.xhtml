@@ -734,7 +734,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">#{messages.cancel}</button>
 
 
-                        <s:link rendered="#{s:hasRole('system.runBusinessMgr')}"
+                        <s:link rendered="#{s:hasRole('system.runBusinessMgr') or s:hasRole('recordRunManager')}"
                                 view="/func/house/owner/LockedHouseMgr.xhtml"
                                 styleClass="btn btn-default"  p:aria-label="房屋预警设置">
                             <f:param name="houseCode" value="#{houseView.houseCode}"/>
