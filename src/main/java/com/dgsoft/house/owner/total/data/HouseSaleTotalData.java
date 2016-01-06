@@ -25,14 +25,23 @@ public class HouseSaleTotalData {
     }
 
     public BigDecimal getMoney() {
+        if (money == null){
+            return BigDecimal.ZERO;
+        }
         return money;
     }
 
     public Long getCount() {
+        if (count == null){
+            return Long.valueOf(0);
+        }
         return count;
     }
 
     public BigDecimal getArea() {
+        if (area == null){
+            return BigDecimal.ZERO;
+        }
         return area;
     }
 }

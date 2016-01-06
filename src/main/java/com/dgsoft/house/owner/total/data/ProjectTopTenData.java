@@ -29,10 +29,16 @@ public class ProjectTopTenData {
     }
 
     public Long getCount() {
+        if (count == null){
+            return Long.valueOf(0);
+        }
         return count;
     }
 
     public BigDecimal getMoneyOrArea() {
+        if (moneyOrArea == null){
+            return BigDecimal.ZERO;
+        }
         return moneyOrArea;
     }
 }

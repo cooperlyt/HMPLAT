@@ -102,6 +102,9 @@ public class SaleProjectDataProvider extends MultiOperatorEntityQuery<SaleProjec
                 resultIds.add(data.getId());
             }
 
+            if (resultIds.isEmpty()){
+                return null;
+            }
             List<Project> projects = houseEntityLoader.getEntityManager().createQuery("select p from Project p left join fetch p.developer where p.id in (:ids)")
                     .setParameter("ids",resultIds).getResultList();
 
