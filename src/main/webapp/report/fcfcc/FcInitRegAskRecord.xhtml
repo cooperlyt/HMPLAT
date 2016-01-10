@@ -7,7 +7,6 @@
             title="询问笔录">
 
 
-<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
     <p:paragraph alignment="center">询问笔录
@@ -70,5 +69,4 @@
 
     <p:paragraph>询问日期：<p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
 </p:font>
-</a:repeat>
 </p:document>

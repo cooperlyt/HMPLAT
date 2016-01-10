@@ -153,7 +153,9 @@ public class ProjectBusinessStart {
         ownerBusinessHome.getInstance().setBusinessProject(new BusinessProject(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject()));
 
         ownerBusinessHome.getInstance().getMappingCorps().clear();
-        ownerBusinessHome.getInstance().getMappingCorps().add(new MappingCorp(ownerBusinessHome.getInstance(),ownerBusinessHome.getInstance().getSelectBusiness().getMappingCorp()));
+        if (ownerBusinessHome.getInstance().getSelectBusiness().getMappingCorp()!=null) {
+            ownerBusinessHome.getInstance().getMappingCorps().add(new MappingCorp(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getMappingCorp()));
+        }
 
         for (BusinessBuild businessBuild : ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject().getBusinessBuilds()) {
             businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), businessBuild), true));
