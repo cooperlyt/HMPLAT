@@ -100,7 +100,7 @@
         <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
             <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
                 <p:paragraph><c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
-                    #{_businessMoneys.typeName}  <p:text value="#{_businessMoneys.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text> <p:text rendered="#{not(_businessMoneys.shouldMoney eq 0)}" value=" = #{_businessMoneys.chargeDetails}"/>
+                    #{_businessMoneys.typeName}  <p:text value="#{_businessMoneys.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text>
                 </c:forEach>
                     合计：<p:text value="#{ownerBusinessHome.total.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text>
                 </p:paragraph>
@@ -231,7 +231,7 @@
             <p:table columns="1" widthPercentage="100" footerRows="0" headerRows="0">
                 <p:cell borderWidth="0" noWrap="false" fixedHeight="100" verticalAlignment="top" horizontalAlignment="left">
                     <p:paragraph><c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
-                        #{_businessMoneys.typeName}  <p:text value="#{_businessMoneys.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text> <p:text rendered="#{not(_businessMoneys.shouldMoney eq 0)}" value=" = #{_businessMoneys.chargeDetails}"/>
+                        #{_businessMoneys.typeName}  <p:text value="#{_businessMoneys.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text>
                     </c:forEach>
                         合计：<p:text value="#{ownerBusinessHome.total.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text>
                     </p:paragraph>
