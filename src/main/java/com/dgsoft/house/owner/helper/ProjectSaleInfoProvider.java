@@ -70,7 +70,7 @@ public class ProjectSaleInfoProvider implements RestDataProvider {
                 projectObj.put("landProperty",project.getProjectSellInfo().getLandProperty());
                 projectObj.put("landBeginTime",project.getProjectSellInfo().getBeginUseTime().getTime());
                 projectObj.put("landEndTime",project.getProjectSellInfo().getEndUseTime().getTime());
-                projectObj.put("landArea",project.getProjectSellInfo().getLandArea().toString());
+                projectObj.put("landArea",(project.getProjectSellInfo().getLandArea() == null) ? null : project.getProjectSellInfo().getLandArea().toString());
                 projectObj.put("landCardType",dictionary.getWordValue(project.getProjectSellInfo().getLandCardType()));
                 projectObj.put("landGetMode",dictionary.getWordValue(project.getProjectSellInfo().getLandGetMode()));
                 projectObj.put("landUseType",project.getProjectSellInfo().getLandUseType());

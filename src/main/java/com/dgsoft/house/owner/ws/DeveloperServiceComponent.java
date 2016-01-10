@@ -134,7 +134,7 @@ public class DeveloperServiceComponent {
 
                         cardJsonObj.put("landCardType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandCardType()));
                         cardJsonObj.put("landCardNumber", card.getProjectSellInfo().getLandCardNo());
-                        cardJsonObj.put("landArea", card.getProjectSellInfo().getLandArea().toString());
+                        cardJsonObj.put("landArea", (card.getProjectSellInfo().getLandArea() == null) ? null : card.getProjectSellInfo().getLandArea().toString());
                         cardJsonObj.put("landUseType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandUseType()));
 
                         cardJsonObj.put("landEndUseTime", card.getProjectSellInfo().getEndUseTime().getTime());
