@@ -201,7 +201,7 @@ public class BuildSaleInfoProvider implements RestDataProvider {
 
     private JSONObject getGridMapJson(BuildGridMap bgm) throws JSONException {
         JSONObject result = new JSONObject();
-        result.put("title",bgm.getName());
+        result.put("title",(bgm.getName() == null) ? "分户图" : bgm.getName());
         result.put("index",bgm.getOrder());
 
         JSONArray title = new JSONArray();
@@ -239,8 +239,8 @@ public class BuildSaleInfoProvider implements RestDataProvider {
                         bo.put("commParam",house.getCommParam().toString());
                         bo.put("houseProperty",dictionary.getWordValue(house.getHouseType()));
                         bo.put("knotSize",dictionary.getWordValue(house.getKnotSize()));
-                        bo.put("shineArea",house.getShineArea().toString());
-                        bo.put("loftArea",house.getLoftArea().toString());
+                        bo.put("shineArea",(house.getShineArea() == null) ? null : house.getShineArea().toString());
+                        bo.put("loftArea",(house.getLoftArea() == null) ? null : house.getLoftArea().toString());
                         bo.put("eastWall",dictionary.getWordValue(house.getEastWall()));
                         bo.put("westWall",dictionary.getWordValue(house.getWestWall()));
                         bo.put("southWall",dictionary.getWordValue(house.getSouthWall()));
