@@ -98,12 +98,13 @@ public class ExtendsDataCreator {
         jsonObject.put("栋", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getBuildCount()));
         jsonObject.put("套数", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
         if (ownerBusiness.getBusinessProject().getProjectSellInfo().getLicenseNumber()!=null){
-            jsonObject.put("营业执照注册号", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
+            jsonObject.put("营业执照注册号", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getLicenseNumber()));
         }
         if (markCard.getProjectCard().getOrderNumber()!=null) {
             jsonObject.put("第号", jsonField(markCard.getProjectCard().getOrderNumber()));
         }
         jsonObject.put("房屋用途性质", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getUseType()));
+        jsonObject.put("销预售对象", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getSellObject()));
         if (!ownerBusiness.getBusinessProject().getBusinessBuilds().isEmpty()) {
             for (int i = 0; i < ownerBusiness.getBusinessProject().getBusinessBuilds().size(); i++) {
                 jsonObject.put("楼号" + (i + 1), jsonField(ownerBusiness.getBusinessProject().getBusinessBuildList().get(i).getBuildNo()));
