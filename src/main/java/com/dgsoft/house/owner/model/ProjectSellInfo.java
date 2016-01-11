@@ -42,6 +42,7 @@ public class ProjectSellInfo implements java.io.Serializable {
     private BigDecimal landArea;
     private String landGetMode;
     private String landUseType;
+    private String proofMaterial;
 
 
     private String landAddress;
@@ -89,6 +90,7 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.createPrepareCardNumber = other.getCreatePrepareCardNumber();
         this.licenseNumber = other.getLicenseNumber();
         this.createLandCardNumber = other.getCreateLandCardNumber();
+        this.proofMaterial = other.getProofMaterial();
     }
 
     @Id
@@ -349,5 +351,15 @@ public class ProjectSellInfo implements java.io.Serializable {
 
     public void setCreateLandCardNumber(String createLandCardNumber) {
         this.createLandCardNumber = createLandCardNumber;
+    }
+
+    @Column(name = "PROOF_MATERIAL", length = 50)
+    @Size(max = 50)
+    public String getProofMaterial() {
+        return proofMaterial;
+    }
+
+    public void setProofMaterial(String proofMaterial) {
+        this.proofMaterial = proofMaterial;
     }
 }

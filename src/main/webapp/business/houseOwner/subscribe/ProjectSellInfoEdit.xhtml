@@ -334,12 +334,12 @@
 
     <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
         <ui:define name="label">
-            #{messages.AttachCorp_licenseCode}
+            #{messages.ProofMaterial}
         </ui:define>
         <ui:param name="for" value="licenseCode"/>
-        <h:inputText label="#{messages.AttachCorp_licenseCode}"
+        <h:inputText label="#{messages.ProofMaterial}"
                      id="licenseCode"
-                     value="#{projectSellInfoSubscribe.instance.licenseNumber}"
+                     value="#{projectSellInfoSubscribe.instance.proofMaterial}"
                      styleClass="form-control"
                      maxlength="50"/>
     </s:decorate>
