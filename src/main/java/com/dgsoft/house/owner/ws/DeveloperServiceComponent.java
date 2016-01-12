@@ -137,7 +137,10 @@ public class DeveloperServiceComponent {
                         cardJsonObj.put("landArea", (card.getProjectSellInfo().getLandArea() == null) ? null : card.getProjectSellInfo().getLandArea().toString());
                         cardJsonObj.put("landUseType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandUseType()));
 
-                        cardJsonObj.put("landEndUseTime", card.getProjectSellInfo().getEndUseTime().getTime());
+                        if (card.getProjectSellInfo().getEndUseTime().getTime() != 0){
+                            cardJsonObj.put("landEndUseTime",  card.getProjectSellInfo().getEndUseTime().getTime());
+                        }
+
                         cardJsonObj.put("landGetMode", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandGetMode()));
                         cardJsonObj.put("landAddress", card.getProjectSellInfo().getLandAddress());
                         if (card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp() != null)
@@ -287,8 +290,21 @@ public class DeveloperServiceComponent {
         if (house == null || house.isDeleted()) {
             throw new IllegalArgumentException("house not exists:" + houseCode);
         }
+
+
         EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
+
+       List<BusinessBuild> businessBuilds = ownerEntityManager.createQuery("select build from BusinessBuild build left join fetch build.businessProject project left join fetch project.projectSellInfo where build.buildCode =:buildCode and build.businessProject.ownerBusiness.status in ('COMPLETE','MODIFYING')", BusinessBuild.class)
+                .setParameter("buildCode",house.getBuildCode()).getResultList();
+
+        if (businessBuilds.isEmpty()){
+            throw new IllegalArgumentException("project card not found:" + houseCode);
+        }
+
+
         HouseRecord houseRecord = ownerEntityManager.find(HouseRecord.class, houseCode);
+
+
 
         boolean locked = ownerEntityManager.createQuery("select count(l.id) from LockedHouse l where l.houseCode = :houseCode", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
@@ -301,7 +317,7 @@ public class DeveloperServiceComponent {
 
 
         try {
-            JSONObject houseJsonObj = getHouseJsonObj(house, houseRecord, locked, sale, inBiz);
+            JSONObject houseJsonObj = getHouseJsonObj(house, houseRecord, locked, sale, inBiz,businessBuilds.get(0));
 
             houseJsonObj.put("pledge", searchHousePledgeInfo(houseCode));
             houseJsonObj.put("buildCode", house.getBuildCode());
@@ -428,15 +444,22 @@ public class DeveloperServiceComponent {
         return result;
     }
 
-    private JSONObject getHouseJsonObj(House house, HouseRecord houseRecord, boolean locked, boolean saled, boolean inBiz) throws JSONException {
+    private JSONObject getHouseJsonObj(House house, HouseRecord houseRecord, boolean locked, boolean saled, boolean inBiz,BusinessBuild businessBuild) throws JSONException {
         Logging.getLog(getClass()).debug("getHouseJsonObj code:" + house.getHouseCode()  + " saled:" + saled + " inBiz:" +  inBiz + "locked:" + locked);
         JSONObject houseJsonObj = getHouseJsonObj(house, (houseRecord == null) ? null : houseRecord.getHouseStatus(), locked, saled);
 
         houseJsonObj.put("inBiz", inBiz);
         List<HouseStatus> allStatus = OwnerHouseHelper.instance().getHouseAllStatus(house.getHouseCode());
 
-        SaleType saleType = (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL : SaleType.MAP_SELL;
-        if (!saleType.equals( SaleType.MAP_SELL)){
+        SaleType saleType;
+        if (businessBuild.getBusinessProject().getProjectSellInfo().getType().equals(SaleType.NOW_SELL)){
+            saleType = SaleType.NOW_SELL;
+        }else{
+             saleType = (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL : SaleType.MAP_SELL;
+
+        }
+
+        if (!saleType.equals( SaleType.MAP_SELL) && houseRecord != null && houseRecord.getBusinessHouse().getBusinessHouseOwner() != null && houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard() != null){
             houseJsonObj.put("ownerCardNumber",houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber());
         }
 
