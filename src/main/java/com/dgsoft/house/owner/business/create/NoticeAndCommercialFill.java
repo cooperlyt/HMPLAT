@@ -31,6 +31,10 @@ public class NoticeAndCommercialFill implements BusinessDataFill {
             if(houseBusiness.getStartBusinessHouse().getNoticeOwner()!=null){
                 houseBusiness.getAfterBusinessHouse().setNoticeOwner(houseBusiness.getStartBusinessHouse().getNoticeOwner());
             }
+            if (houseBusiness.getStartBusinessHouse().getContractOwner()!=null){
+                houseBusiness.getAfterBusinessHouse().setContractOwner(houseBusiness.getStartBusinessHouse().getContractOwner());
+            }
+
 
         }
 
