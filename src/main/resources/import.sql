@@ -187,6 +187,11 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核'
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.houseRecordSearch');
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.totalDataExport');
 
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.task', '业务办理', '', 7);
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','house.businessSearch');
+
+
 -- INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.newHouse', '商品房管理', '商品房科', 4);
 -- INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
 
