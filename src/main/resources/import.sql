@@ -152,6 +152,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 -- 角色
 
+-- 权限角色
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.fee','收费数据统计','收费数据统计',1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.transfer','业务移交单','业务移交单',2);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.projectCard','预售许可证统计','预售许可证统计',3);
@@ -168,16 +169,31 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.runBusinessMgr', '业务运行维护', '中止，挂起，分发正在运行的业务', 5);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档,预警', 9);
 
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.businessView', '业务档案查看', '查看档案', 6);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.businessView', '业务档案查看', '查看业务档案', 6);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.RecordView','档案查看', '查看档案', 10);
 
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('house.data.manager', '测绘成果管理', '空间库房屋相关数据管理', 3);
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.newHouse', '商品房管理', '商品房科', 4);
-
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness', '档案管理', '档案管理', 7);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness', '档案补录', '档案补录', 7);
 
 
-INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
+
+
+-- 功能 角色
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核', '', 7);
+
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','house.businessSearch');
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.MapHouseRecordSearch');
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.houseRecordSearch');
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.totalDataExport');
+
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.task', '业务办理', '', 7);
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','house.businessSearch');
+
+
+-- INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.newHouse', '商品房管理', '商品房科', 4);
+-- INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('contractApply','备案网签受理','备案网签受理,仅针对网签业务',8);
 
 
 
