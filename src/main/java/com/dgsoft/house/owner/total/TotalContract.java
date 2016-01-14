@@ -32,9 +32,7 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by wxy on 2015-11-16.
@@ -42,14 +40,102 @@ import java.util.List;
  */
 @Name("totalContract")
 public class TotalContract {
+
+    public static class  DeveloperGroup{
+
+        private String name;
+
+        private Map<String,SectionItem> sectionMap = new HashMap<String,SectionItem>();
+
+        public void putData(TotalContractData data,boolean home){
+            name = data.getDeveloperName();
+            SectionItem pitem = sectionMap.get(data.getSectionName());
+            if (pitem == null){
+                pitem = new SectionItem();
+                sectionMap.put(data.getSectionName(),pitem);
+            }
+            pitem.putData(data,home);
+
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        Map<String, SectionItem> getSectionMap() {
+            return sectionMap;
+        }
+
+        public List<SectionItem> getSectionItems(){
+            List<SectionItem> result = new ArrayList<SectionItem>(getSectionMap().values());
+            Collections.sort(result, new Comparator<SectionItem>() {
+                @Override
+                public int compare(SectionItem o1, SectionItem o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+            return result;
+        }
+    }
+
+
+    public static class SectionItem{
+
+        private String name;
+
+        private TotalContractData saleHome;
+
+        private TotalContractData saleUnHome;
+
+        private TotalContractData cancelHome;
+
+        private TotalContractData cancelUnHome;
+
+        public void putData(TotalContractData data, boolean home){
+            name = data.getSectionName();
+            if (home){
+                if(data.getBusinessDefineId().equals("WP42")){
+                    saleHome = data;
+                }else{
+                    cancelHome = data;
+                }
+
+            }else{
+                if(data.getBusinessDefineId().equals("WP42")){
+                    saleUnHome = data;
+                }else{
+                    cancelUnHome = data;
+                }
+
+            }
+        }
+
+
+        public String getName() {
+            return name;
+        }
+
+        public TotalContractData getSaleHome() {
+            return saleHome;
+        }
+
+        public TotalContractData getSaleUnHome() {
+            return saleUnHome;
+        }
+
+        public TotalContractData getCancelHome() {
+            return cancelHome;
+        }
+
+        public TotalContractData getCancelUnHome() {
+            return cancelUnHome;
+        }
+    }
+
+
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
 
-    @In(create = true)
-    private HouseEntityLoader houseEntityLoader;
-
-    @In(create = true)
-    private SystemEntityLoader systemEntityLoader;
 
     @In(create = true)
     private FacesContext facesContext;
@@ -81,28 +167,71 @@ public class TotalContract {
 
 
 
-
     public void totalContractInfo() {
 
       //  List<Section> sectionList  = houseEntityLoader.getEntityManager().createQuery("select section from Section section order by section.id",Section.class).getResultList();
 
         //住宅 developerName,sectionName,count,sumPrice,houseArea
-        List<TotalContractData> zcTotalContractDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(AfterBusinessHouse.developerName,AfterBusinessHouse.sectionName,count(ob.id),sum(SaleInfos.sumPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.defineId=:defineId and ob.status in ('COMPLETE','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by AfterBusinessHouse.sectionName,AfterBusinessHouse.developerName", TotalContractData.class)
-                .setParameter("beginDate", fromDateTime)
-                .setParameter("endDate", toDateTime)
-                .setParameter("defineId", "WP42")
-                .setParameter("usetype", "80").getResultList();
+//        List<TotalContractData> zcTotalContractDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(AfterBusinessHouse.developerName,AfterBusinessHouse.sectionName,count(ob.id),sum(SaleInfos.sumPrice),sum(AfterBusinessHouse.houseArea)) " +
+//                "from OwnerBusiness ob left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
+//                " where ob.defineId=:defineId and ob.status in ('COMPLETE','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by AfterBusinessHouse.sectionName,AfterBusinessHouse.developerName", TotalContractData.class)
+//                .setParameter("beginDate", fromDateTime)
+//                .setParameter("endDate", toDateTime)
+//                .setParameter("defineId", "WP42")
+//                .setParameter("usetype", "80").getResultList();
+//
+//        List<TotalContractData> otherTotalContractDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(AfterBusinessHouse.developerName,AfterBusinessHouse.sectionName,count(ob.id),sum(SaleInfos.sumPrice),sum(AfterBusinessHouse.houseArea)) " +
+//                "from OwnerBusiness ob left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
+//                " where ob.defineId=:defineId and ob.status in ('COMPLETE','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType <> (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by AfterBusinessHouse.sectionName,AfterBusinessHouse.developerName", TotalContractData.class)
+//                .setParameter("beginDate", fromDateTime)
+//                .setParameter("endDate", toDateTime)
+//                .setParameter("defineId", "WP42")
+//                .setParameter("usetype", "80").getResultList();
 
-        List<TotalContractData> otherTotalContractDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(AfterBusinessHouse.developerName,AfterBusinessHouse.sectionName,count(ob.id),sum(SaleInfos.sumPrice),sum(AfterBusinessHouse.houseArea)) " +
-                "from OwnerBusiness ob left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.defineId=:defineId and ob.status in ('COMPLETE','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType <> (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by AfterBusinessHouse.sectionName,AfterBusinessHouse.developerName", TotalContractData.class)
+        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','MODIFYING') " +
+                " and hb.afterBusinessHouse.useType = '80'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
+                "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
+                "group by hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
                 .setParameter("beginDate", fromDateTime)
-                .setParameter("endDate", toDateTime)
-                .setParameter("defineId", "WP42")
-                .setParameter("usetype", "80").getResultList();
+                .setParameter("endDate", toDateTime).getResultList();
 
+
+        List<TotalContractData> unhomeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','MODIFYING') " +
+                " and hb.afterBusinessHouse.useType <> '80'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
+                "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
+                "group by hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
+                .setParameter("beginDate", fromDateTime)
+                .setParameter("endDate", toDateTime).getResultList();
+
+
+
+        Map<String,DeveloperGroup> resultData = new HashMap<String, DeveloperGroup>();
+
+        for(TotalContractData data: homeTotalData){
+            DeveloperGroup dg = resultData.get(data.getDeveloperName());
+            if (dg == null){
+                dg = new DeveloperGroup();
+                resultData.put(data.getDeveloperName(),dg);
+            }
+            dg.putData(data,true);
+        }
+
+        for(TotalContractData data: unhomeTotalData){
+            DeveloperGroup dg = resultData.get(data.getDeveloperName());
+            if (dg == null){
+                dg = new DeveloperGroup();
+                resultData.put(data.getDeveloperName(),dg);
+            }
+            dg.putData(data,false);
+        }
+
+        List<DeveloperGroup> resultList = new ArrayList<DeveloperGroup>(resultData.values());
+        Collections.sort(resultList, new Comparator<DeveloperGroup>() {
+            @Override
+            public int compare(DeveloperGroup o1, DeveloperGroup o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle headCellStyle = workbook.createCellStyle();
@@ -116,179 +245,194 @@ public class TotalContract {
         headCellStyle.setFont(font);
 
         int rowIndex = 0;//行
-        int cellIndex = 0;//列
-        int fzrowIndex=0;
-        int fzcellIndex=0;
-        XSSFSheet sheet = workbook.createSheet("住宅备案信息统计");
-        XSSFSheet sheet1 = workbook.createSheet("非住宅备案信息统计");
-        List<String> strings = new ArrayList();
-        strings.add("套数");
-        strings.add("面积");
-        strings.add("购房款");
+
+        XSSFSheet sheet = workbook.createSheet("备案信息统计");
+
         Row row1 = sheet.createRow(rowIndex++);
         Row row2 = sheet.createRow(rowIndex++);
-        Row fzrow = sheet1.createRow(fzrowIndex++);
+        Row row3 = sheet.createRow(rowIndex++);
 
 
-        Cell cell1 = row1.createCell(cellIndex++);
-        sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-        cell1.setCellValue("开发商名称");
-        cell1.setCellStyle(headCellStyle);
-
-        Cell fzcell = fzrow.createCell(fzcellIndex++);
-        sheet1.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-        fzcell.setCellValue("开发商名称");
-        fzcell.setCellStyle(headCellStyle);
-
-        Cell cell2 = row1.createCell(cellIndex++);
-        sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-        cell2.setCellValue("小区名称");
-        cell2.setCellStyle(headCellStyle);
-
-        Cell fzcell2 = fzrow.createCell(fzcellIndex++);
-        sheet1.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-        fzcell2.setCellValue("小区名称");
-        fzcell2.setCellStyle(headCellStyle);
+        Cell cell = row1.createCell(0);
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));
+        cell.setCellValue("开发商名称");
+        cell.setCellStyle(headCellStyle);
 
 
-        Cell cell3 = row1.createCell(cellIndex++);
-        sheet.addMergedRegion(new CellRangeAddress(0,0,2,4));
-        cell3.setCellValue("住宅");
-        cell3.setCellStyle(headCellStyle);
-        for(int i=0;i<strings.size();i++){
-            Cell cell = row2.createCell(i+2);
-            cell.setCellValue(strings.get(i));
+        cell = row1.createCell(1);
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 1, 1));
+        cell.setCellValue("小区名称");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row1.createCell(2);
+        sheet.addMergedRegion(new CellRangeAddress(0,0,2,7));
+        cell.setCellValue("商品房备案");
+        cell.setCellStyle(headCellStyle);
+
+
+        cell = row1.createCell(8);
+        sheet.addMergedRegion(new CellRangeAddress(0,0,8,13));
+        cell.setCellValue("撤消房备案");
+        cell.setCellStyle(headCellStyle);
+
+
+        cell = row2.createCell(2);
+        sheet.addMergedRegion(new CellRangeAddress(1,1,2,4));
+        cell.setCellValue("住宅");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row2.createCell(5);
+        sheet.addMergedRegion(new CellRangeAddress(1,1,5,7));
+        cell.setCellValue("非住宅");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row2.createCell(8);
+        sheet.addMergedRegion(new CellRangeAddress(1,1,8,10));
+        cell.setCellValue("住宅");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row2.createCell(11);
+        sheet.addMergedRegion(new CellRangeAddress(1,1,11,13));
+        cell.setCellValue("非住宅");
+        cell.setCellStyle(headCellStyle);
+
+
+        int cellIndex = 2;
+        for(int i = 0; i< 4; i++){
+            cell = row3.createCell(cellIndex++);
+            cell.setCellValue("套数");
+            cell.setCellStyle(headCellStyle);
+
+            cell = row3.createCell(cellIndex++);
+            cell.setCellValue("面积");
+            cell.setCellStyle(headCellStyle);
+
+            cell = row3.createCell(cellIndex++);
+            cell.setCellValue("购房款");
             cell.setCellStyle(headCellStyle);
         }
 
-        Cell fzcell1 = fzrow.createCell(fzcellIndex++);
-        sheet1.addMergedRegion(new CellRangeAddress(0,0,2,4));
-        fzcell1.setCellValue("非住宅");
-        fzcell1.setCellStyle(headCellStyle);
-        Row fzrow2= sheet1.createRow(fzrowIndex++);
-        for(int i=0;i<strings.size();i++){
-            Cell fzcel1 = fzrow2.createCell(i+2);
-            fzcel1.setCellValue(strings.get(i));
-            fzcel1.setCellStyle(headCellStyle);
+
+        for(DeveloperGroup dg : resultList){
+            int beginRow = rowIndex;
+
+            Row row = null;
+            for(SectionItem item : dg.getSectionItems()){
+                cellIndex = 1;
+                if (row == null){
+                    row = sheet.createRow(rowIndex++);
+                    cell = row.createCell(0);
+                    cell.setCellValue(dg.getName());
+                    cell.setCellStyle(headCellStyle);
+                }else
+                    row = sheet.createRow(rowIndex++);
+
+
+                cell = row.createCell(cellIndex++);
+                cell.setCellValue(item.getName());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getSaleHome() != null)
+                cell.setCellValue(item.getSaleHome().getCount());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getSaleHome() != null)
+                cell.setCellValue(item.getSaleHome().getHouseArea().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getSaleHome() != null)
+                cell.setCellValue(item.getSaleHome().getSumPrice().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getSaleUnHome() != null)
+                cell.setCellValue(item.getSaleUnHome().getCount());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getSaleUnHome() != null)
+                cell.setCellValue(item.getSaleUnHome().getHouseArea().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getSaleUnHome() != null)
+                cell.setCellValue(item.getSaleUnHome().getSumPrice().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelHome() != null)
+                cell.setCellValue(item.getCancelHome().getCount());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelHome() != null)
+                cell.setCellValue(item.getCancelHome().getHouseArea().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelHome() != null)
+                cell.setCellValue(item.getCancelHome().getSumPrice().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelUnHome() != null)
+                cell.setCellValue(item.getCancelUnHome().getCount());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelUnHome() != null)
+                cell.setCellValue(item.getCancelUnHome().getHouseArea().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelUnHome() != null)
+                cell.setCellValue(item.getCancelUnHome().getSumPrice().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+            }
+
+
+            sheet.addMergedRegion(new CellRangeAddress(beginRow, rowIndex - 1, 0, 0));
+
+
         }
 
-        int hjrow=0;
-        if (zcTotalContractDataList!=null && zcTotalContractDataList.size()>0){
-            for(TotalContractData totalContractData:zcTotalContractDataList) {
-
-                cellIndex = 0;
-
-                row1 = sheet.createRow(rowIndex++);
-
-                Cell cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(totalContractData.getDeveloperName());
-                cell8.setCellStyle(headCellStyle);
-
-                cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(totalContractData.getSectionName());
-                cell8.setCellStyle(headCellStyle);
-
-                cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(totalContractData.getCount());
-                cell8.setCellStyle(headCellStyle);
-
-                cell8 = row1.createCell(cellIndex++);
-                cell8.setCellValue(totalContractData.getHouseArea().doubleValue());
-                cell8.setCellStyle(headCellStyle);
 
 
-                cell8 = row1.createCell(cellIndex++);
-                if (totalContractData.getSumPrice()!=null) {
-                    cell8.setCellValue(totalContractData.getSumPrice().doubleValue());
-                }else{
-                    cell8.setCellValue(0.0);
-                }
-                cell8.setCellStyle(headCellStyle);
-
-                hjrow = rowIndex;
-             }
 
 
-            cellIndex=0;
-            row1 = sheet.createRow(hjrow);
-            Cell zzhjcell = row1.createCell(cellIndex++);
+
+            row1 = sheet.createRow(rowIndex);
+            Cell zzhjcell = row1.createCell(0);
             zzhjcell.setCellValue("合计");
             zzhjcell.setCellStyle(headCellStyle);
+        cellIndex = 2;
+        for(int i = 0; i< 4; i++){
 
-            Cell zzhjtscell = row1.createCell(2,Cell.CELL_TYPE_FORMULA);
-            zzhjtscell.setCellFormula("SUM(" + CellReference.convertNumToColString(1+cellIndex) + "3:" + CellReference.convertNumToColString(1+cellIndex)+hjrow+")");
-            zzhjtscell.setCellStyle(headCellStyle);
+            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            cell.setCellStyle(headCellStyle);
 
-            Cell zzhmjscell = row1.createCell(3,Cell.CELL_TYPE_FORMULA);
-            zzhmjscell.setCellFormula("SUM(" + CellReference.convertNumToColString(2+cellIndex) + "3:" + CellReference.convertNumToColString(2+cellIndex)+hjrow+")");
-            zzhmjscell.setCellStyle(headCellStyle);
+            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            cell.setCellStyle(headCellStyle);
 
-            Cell zzhjescell = row1.createCell(4,Cell.CELL_TYPE_FORMULA);
-            zzhjescell.setCellFormula("SUM(" + CellReference.convertNumToColString(3+cellIndex) + "3:" + CellReference.convertNumToColString(3+cellIndex)+hjrow+")");
-            zzhjescell.setCellStyle(headCellStyle);
+            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            cell.setCellStyle(headCellStyle);
 
         }
 
 
 
-        int fzhjrow=0;
-        if (otherTotalContractDataList!=null && otherTotalContractDataList.size()>0){
-            for(TotalContractData totalContractData:otherTotalContractDataList) {
-
-                fzcellIndex = 0;
-
-                row1 = sheet1.createRow(fzrowIndex++);
-
-                Cell cell8 = row1.createCell(fzcellIndex++);
-                cell8.setCellValue(totalContractData.getDeveloperName());
-                cell8.setCellStyle(headCellStyle);
-
-                cell8 = row1.createCell(fzcellIndex++);
-                cell8.setCellValue(totalContractData.getSectionName());
-                cell8.setCellStyle(headCellStyle);
-
-                cell8 = row1.createCell(fzcellIndex++);
-                cell8.setCellValue(totalContractData.getCount());
-                cell8.setCellStyle(headCellStyle);
-
-                cell8 = row1.createCell(fzcellIndex++);
-                cell8.setCellValue(totalContractData.getHouseArea().doubleValue());
-                cell8.setCellStyle(headCellStyle);
-
-
-                cell8 = row1.createCell(fzcellIndex++);
-                if (totalContractData.getSumPrice()!=null) {
-                    cell8.setCellValue(totalContractData.getSumPrice().doubleValue());
-                }else{
-                    cell8.setCellValue(0.0);
-                }
-                cell8.setCellStyle(headCellStyle);
-
-                fzhjrow = fzrowIndex;
-            }
-            fzcellIndex=0;
-            row1 = sheet1.createRow(fzhjrow);
-            Cell fzhjcell = row1.createCell(fzcellIndex++);
-            fzhjcell.setCellValue("合计");
-            fzhjcell.setCellStyle(headCellStyle);
-
-            Cell fzhjtscell = row1.createCell(2,Cell.CELL_TYPE_FORMULA);
-            fzhjtscell.setCellFormula("SUM(" + CellReference.convertNumToColString(1+fzcellIndex) + "3:" + CellReference.convertNumToColString(1+fzcellIndex)+fzhjrow+")");
-            fzhjtscell.setCellStyle(headCellStyle);
-
-            Cell fzhmjscell = row1.createCell(3,Cell.CELL_TYPE_FORMULA);
-            fzhmjscell.setCellFormula("SUM(" + CellReference.convertNumToColString(2+fzcellIndex) + "3:" + CellReference.convertNumToColString(2+fzcellIndex)+fzhjrow+")");
-            fzhmjscell.setCellStyle(headCellStyle);
-
-            Cell fzhjescell = row1.createCell(4,Cell.CELL_TYPE_FORMULA);
-            fzhjescell.setCellFormula("SUM(" + CellReference.convertNumToColString(3+fzcellIndex) + "3:" + CellReference.convertNumToColString(3+fzcellIndex)+fzhjrow+")");
-            fzhjescell.setCellStyle(headCellStyle);
-        }
 
 
 
         sheet.setForceFormulaRecalculation(true);
-        sheet1.setForceFormulaRecalculation(true);
         ExternalContext externalContext = facesContext.getExternalContext();
         externalContext.responseReset();
         externalContext.setResponseContentType("application/vnd.ms-excel");

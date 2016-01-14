@@ -18,13 +18,16 @@ public class TotalContractData {
 
     private Long count;//套数
 
+    private String businessDefineId;
 
-    public TotalContractData(String developerName,String sectionName,Long count,BigDecimal sumPrice,BigDecimal houseArea) {
+
+    public TotalContractData(String businessDefineId,String developerName,String sectionName,Long count,BigDecimal sumPrice,BigDecimal houseArea) {
         this.developerName = developerName;
         this.sectionName=sectionName;
         this.sumPrice = sumPrice;
         this.houseArea = houseArea;
         this.count = count;
+        this.businessDefineId = businessDefineId;
     }
 
     public String getSectionName() {
@@ -65,5 +68,9 @@ public class TotalContractData {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    public String getBusinessDefineId() {
+        return businessDefineId;
     }
 }
