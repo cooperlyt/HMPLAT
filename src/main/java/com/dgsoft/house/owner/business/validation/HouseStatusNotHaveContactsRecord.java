@@ -21,7 +21,7 @@ public class HouseStatusNotHaveContactsRecord extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getAllStatusList().contains(HouseStatus.CONTRACTS_RECORD)){
-            return new ValidResult("business_house_status_not_have_ContactsRecord", ValidResultLevel.ERROR);
+            return new ValidResult("business_house_status_not_do_ContactsRecord", ValidResultLevel.ERROR);
         }
 
         return new ValidResult(ValidResultLevel.SUCCESS);
