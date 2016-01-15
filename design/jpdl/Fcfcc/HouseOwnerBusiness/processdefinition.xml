@@ -20,7 +20,7 @@
     <task-node name="审核">
         <task name="审核">
             <description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:false}
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description} 受理人:#{ownerBusinessHome.instance.applyEmp.empName}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:false}
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
         </task>
