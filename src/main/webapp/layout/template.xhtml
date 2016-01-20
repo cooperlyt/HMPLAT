@@ -120,7 +120,7 @@
 
                     <s:link view="/func/system/business/start.xhtml" propagation="end"
                             styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
-                        <f:passThroughAttribute name="aria-label" value="You have no unread notifications" />
+                        <f:passThroughAttribute name="aria-label" value="建立业务" />
                         <span class="octicon octicon-plus"></span>
                     </s:link>
 
@@ -128,7 +128,7 @@
 
                 <li class="header-nav-item">
                     <s:link view="/func/system/business/task.xhtml" propagation="end"
-                            p:aria-label="You have no unread notifications"
+                            p:aria-label="任务列表"
                             styleClass="header-nav-link notification-indicator tooltipped tooltipped-s">
                         <span class="mail-status unread"/>
                         <span class="octicon octicon-inbox"></span>
@@ -138,9 +138,10 @@
                 </li>
 
                 <li class="header-nav-item">
-                    <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile"
+                    <a class="header-nav-link tooltipped tooltipped-s" href="#"
                        id="account_settings" aria-label="Settings"
-                       data-ga-click="Header, go to settings, icon:settings">
+                       onclick="$('#passwordChangePanel').modal({backdrop: 'static'});return false;"
+                       data-ga-click="用户设置">
                         <span class="octicon octicon-gear"></span>
                     </a>
                 </li>
@@ -162,6 +163,43 @@
 
         </a:outputPanel>
 
+        <ui:decorate template="/layout/edit-modalpanel.xhtml">
+            <ui:param name="panelId" value="passwordChangePanel"/>
+            <ui:param name="styleClass" value="modal-sm"/>
+            <ui:param name="panelTitle" value="密码修改"/>
+
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    原密码
+                </ui:define>
+                <h:inputSecret value="#{passwordChange.oldPassword}" required="true" styleClass="form-control"/>
+            </s:decorate>
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    新密码
+                </ui:define>
+                <h:inputSecret value="#{passwordChange.password1}" required="true" styleClass="form-control"/>
+            </s:decorate>
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    确认新密码
+                </ui:define>
+                <h:inputSecret value="#{passwordChange.password2}" required="true" styleClass="form-control"/>
+            </s:decorate>
+
+            <ui:define name="actionButtons">
+                <button type="button" class="button default" data-dismiss="modal">
+                取消</button>
+                <a:commandLink styleClass="button submit primary" render="passwordChangePanel_inputs"
+                               execute="@form"
+                               oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#passwordChangePanel').modal('hide')}"
+                               action="#{passwordChange.changePassword}">
+                    <a:attachQueue requestDelay="0"/>
+                    确定
+                </a:commandLink>
+            </ui:define>
+        </ui:decorate>
+
         <a:outputPanel rendered="#{not identity.loggedIn}">
             <div class="header-actions">
                 <s:link styleClass="button" value="#{messages.login}" view="/login.xhtml"/>
@@ -180,5 +218,7 @@
         </ui:insert>
         
     </ui:define>
+
+
 
 </ui:composition>

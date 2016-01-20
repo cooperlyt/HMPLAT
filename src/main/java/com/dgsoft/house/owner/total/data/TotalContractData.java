@@ -1,5 +1,7 @@
 package com.dgsoft.house.owner.total.data;
 
+import com.dgsoft.common.system.business.BusinessInstance;
+
 import java.math.BigDecimal;
 
 /**
@@ -20,14 +22,21 @@ public class TotalContractData {
 
     private String businessDefineId;
 
+    private BusinessInstance.BusinessStatus status;
 
-    public TotalContractData(String businessDefineId,String developerName,String sectionName,Long count,BigDecimal sumPrice,BigDecimal houseArea) {
+
+    public TotalContractData(BusinessInstance.BusinessStatus status,String businessDefineId,String developerName,String sectionName,Long count,BigDecimal sumPrice,BigDecimal houseArea) {
         this.developerName = developerName;
         this.sectionName=sectionName;
         this.sumPrice = sumPrice;
         this.houseArea = houseArea;
         this.count = count;
         this.businessDefineId = businessDefineId;
+        this.status = status;
+    }
+
+    public BusinessInstance.BusinessStatus getStatus() {
+        return status;
     }
 
     public String getSectionName() {

@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.total;
 
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.SystemEntityLoader;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.Project;
@@ -91,18 +92,32 @@ public class TotalContract {
 
         private TotalContractData cancelUnHome;
 
+        private TotalContractData abortHome;
+
+        private TotalContractData abortUnHome;
+
         public void putData(TotalContractData data, boolean home){
             name = data.getSectionName();
             if (home){
                 if(data.getBusinessDefineId().equals("WP42")){
-                    saleHome = data;
+                    if (data.getStatus().equals(BusinessInstance.BusinessStatus.ABORT)){
+                        abortHome = data;
+                    }else{
+                        saleHome = data;
+                    }
+
                 }else{
                     cancelHome = data;
                 }
 
             }else{
                 if(data.getBusinessDefineId().equals("WP42")){
-                    saleUnHome = data;
+                    if (data.getStatus().equals(BusinessInstance.BusinessStatus.ABORT)){
+                        abortUnHome = data;
+                    }else{
+                        saleUnHome = data;
+                    }
+
                 }else{
                     cancelUnHome = data;
                 }
@@ -110,6 +125,13 @@ public class TotalContract {
             }
         }
 
+        public TotalContractData getAbortHome() {
+            return abortHome;
+        }
+
+        public TotalContractData getAbortUnHome() {
+            return abortUnHome;
+        }
 
         public String getName() {
             return name;
@@ -188,18 +210,18 @@ public class TotalContract {
 //                .setParameter("defineId", "WP42")
 //                .setParameter("usetype", "80").getResultList();
 
-        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','MODIFYING') " +
+        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
                 " and hb.afterBusinessHouse.useType = '80'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
-                "group by hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
+                "group by hb.ownerBusiness.status, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
                 .setParameter("beginDate", fromDateTime)
                 .setParameter("endDate", toDateTime).getResultList();
 
 
-        List<TotalContractData> unhomeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','MODIFYING') " +
+        List<TotalContractData> unhomeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
                 " and hb.afterBusinessHouse.useType <> '80'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
-                "group by hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
+                "group by hb.ownerBusiness.status, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
                 .setParameter("beginDate", fromDateTime)
                 .setParameter("endDate", toDateTime).getResultList();
 
@@ -275,6 +297,11 @@ public class TotalContract {
         cell.setCellValue("撤消房备案");
         cell.setCellStyle(headCellStyle);
 
+        cell = row1.createCell(14);
+        sheet.addMergedRegion(new CellRangeAddress(0,0,14,19));
+        cell.setCellValue("撤消签约");
+        cell.setCellStyle(headCellStyle);
+
 
         cell = row2.createCell(2);
         sheet.addMergedRegion(new CellRangeAddress(1,1,2,4));
@@ -296,9 +323,19 @@ public class TotalContract {
         cell.setCellValue("非住宅");
         cell.setCellStyle(headCellStyle);
 
+        cell = row2.createCell(14);
+        sheet.addMergedRegion(new CellRangeAddress(1,1,14,16));
+        cell.setCellValue("住宅");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row2.createCell(17);
+        sheet.addMergedRegion(new CellRangeAddress(1,1,17,19));
+        cell.setCellValue("非住宅");
+        cell.setCellStyle(headCellStyle);
+
 
         int cellIndex = 2;
-        for(int i = 0; i< 4; i++){
+        for(int i = 0; i< 6; i++){
             cell = row3.createCell(cellIndex++);
             cell.setCellValue("套数");
             cell.setCellStyle(headCellStyle);
@@ -393,6 +430,38 @@ public class TotalContract {
                 cell.setCellValue(item.getCancelUnHome().getSumPrice().doubleValue());
                 cell.setCellStyle(cellStyle);
 
+                //---
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelHome() != null)
+                    cell.setCellValue(item.getAbortHome().getCount());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelHome() != null)
+                    cell.setCellValue(item.getAbortHome().getHouseArea().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelHome() != null)
+                    cell.setCellValue(item.getAbortHome().getSumPrice().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelUnHome() != null)
+                    cell.setCellValue(item.getAbortUnHome().getCount());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelUnHome() != null)
+                    cell.setCellValue(item.getAbortUnHome().getHouseArea().doubleValue());
+                cell.setCellStyle(cellStyle);
+
+                cell = row.createCell(cellIndex++);
+                if (item.getCancelUnHome() != null)
+                    cell.setCellValue(item.getAbortUnHome().getSumPrice().doubleValue());
+                cell.setCellStyle(cellStyle);
+
             }
 
 
@@ -411,7 +480,7 @@ public class TotalContract {
             zzhjcell.setCellValue("合计");
             zzhjcell.setCellStyle(headCellStyle);
         cellIndex = 2;
-        for(int i = 0; i< 4; i++){
+        for(int i = 0; i< 6; i++){
 
             cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
             cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
