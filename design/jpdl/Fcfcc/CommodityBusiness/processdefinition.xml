@@ -77,7 +77,7 @@
 		<transition to="网签回退判断" name="审批驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
-		<transition to="收费" name="审批通过">
+		<transition to="业务完成" name="审批通过">
 			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
 	</decision>
@@ -90,18 +90,6 @@
 			<condition expression="#{(ownerBusinessHome.instance.defineId eq 'WP42')}"></condition>
 		</transition>
 	</decision>
-
-	<task-node name="收费">
-		<task name="收费">
-			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
-
-			</description>
-			<assignment pooled-actors="Money"></assignment>
-		</task>
-		<transition to="业务完成"></transition>
-		<transition to="网签回退判断" name="回退受理"></transition>
-	</task-node>
 
 
 	<end-state name="结束"></end-state>
