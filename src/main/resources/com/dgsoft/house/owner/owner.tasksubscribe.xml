@@ -7,7 +7,11 @@
         </description>
     </view-subscribe>
 
-
+    <view-subscribe name="houseMappingView" page="/business/houseOwner/subscribe/HouseMappingMemo.xhtml">
+        <description>
+            房屋测绘备注
+        </description>
+    </view-subscribe>
 
 
     <view-subscribe name="MakeCardView" page="/business/houseOwner/subscribe/MakeCardView.xhtml">

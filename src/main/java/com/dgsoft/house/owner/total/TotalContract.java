@@ -433,32 +433,32 @@ public class TotalContract {
                 //---
 
                 cell = row.createCell(cellIndex++);
-                if (item.getCancelHome() != null)
+                if (item.getAbortHome() != null)
                     cell.setCellValue(item.getAbortHome().getCount());
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
-                if (item.getCancelHome() != null)
+                if (item.getAbortHome() != null)
                     cell.setCellValue(item.getAbortHome().getHouseArea().doubleValue());
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
-                if (item.getCancelHome() != null)
+                if (item.getAbortHome() != null)
                     cell.setCellValue(item.getAbortHome().getSumPrice().doubleValue());
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
-                if (item.getCancelUnHome() != null)
+                if (item.getAbortUnHome() != null)
                     cell.setCellValue(item.getAbortUnHome().getCount());
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
-                if (item.getCancelUnHome() != null)
+                if (item.getAbortUnHome() != null)
                     cell.setCellValue(item.getAbortUnHome().getHouseArea().doubleValue());
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
-                if (item.getCancelUnHome() != null)
+                if (item.getAbortUnHome() != null)
                     cell.setCellValue(item.getAbortUnHome().getSumPrice().doubleValue());
                 cell.setCellStyle(cellStyle);
 
