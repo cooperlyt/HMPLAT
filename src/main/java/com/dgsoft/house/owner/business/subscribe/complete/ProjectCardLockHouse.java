@@ -47,6 +47,5 @@ public class ProjectCardLockHouse implements TaskCompleteSubscribeComponent {
             }
         }
 
-        ownerBusinessHome.getEntityManager().flush();
     }
 }
