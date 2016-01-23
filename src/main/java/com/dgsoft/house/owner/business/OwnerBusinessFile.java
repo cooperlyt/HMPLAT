@@ -156,8 +156,9 @@ public class OwnerBusinessFile {
         for (BusinessFileNode node : nodes) {
             if (BusinessNeedFile.NeedFileNodeFile.CHILDREN.name().equals(node.getType()) || "OTHER_FILE".equals(node.getType())) {
                 try {
-                    Logging.getLog(getClass()).debug("check file:" + node.getDirName());
-                    node.putFile(fileOperation.listFiles(node.getDirName()),
+                    List<String> listFile = fileOperation.listFiles(node.getDirName());
+                    Logging.getLog(getClass()).info("check file:" + node.getDirName() + "|size:" + listFile.size());
+                    node.putFile(listFile,
                             authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), "0");//TODO: calcmd5
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -829,6 +830,7 @@ public class OwnerBusinessFile {
             if (businessFile == null) {
                 throw new IllegalArgumentException("noe Children node");
             }
+            Logging.getLog(getClass()).info("call other file put file");
             List<UploadFile> existsFiles = new ArrayList<UploadFile>(businessFile.getUploadFiles());
             for (String name : fileNames) {
 
@@ -851,10 +853,12 @@ public class OwnerBusinessFile {
                     }
                 }
                 if (!exists) {
+                    Logging.getLog(getClass()).info("---put file");
                     businessFile.setNoFile(false);
                     businessFile.getUploadFiles().add(new UploadFile(empName, empCode, md5, fileName, businessFile, extension));
                 }
             }
+            Logging.getLog(getClass()).info("---remove file" + existsFiles.size());
             businessFile.getUploadFiles().removeAll(existsFiles);
 
         }

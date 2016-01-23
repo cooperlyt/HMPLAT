@@ -141,6 +141,7 @@ public class OwnerBusinessView {
             }
             ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
                     authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
+            ownerBusinessHome.getInstance().setRegTime(new Date());
             processInstanceHome.stop();
             ownerBusinessHome.update();
         }

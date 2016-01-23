@@ -49,6 +49,7 @@ public class TotalContract {
         private Map<String,SectionItem> sectionMap = new HashMap<String,SectionItem>();
 
         public void putData(TotalContractData data,boolean home){
+            Logging.getLog(getClass()).debug(data.getBusinessDefineId());
             name = data.getDeveloperName();
             SectionItem pitem = sectionMap.get(data.getSectionName());
             if (pitem == null){

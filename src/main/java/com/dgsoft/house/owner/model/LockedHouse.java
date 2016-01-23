@@ -27,9 +27,20 @@ public class LockedHouse {
     private String empCode;
     private String empName;
     private Date lockedTime;
+    private String buildCode;
 
     public LockedHouse() {
     }
+
+    public LockedHouse(String houseCode, LockType type, String empCode, String empName, Date lockedTime,String buildCode) {
+        this.houseCode = houseCode;
+        this.type = type;
+        this.empCode = empCode;
+        this.empName = empName;
+        this.lockedTime = lockedTime;
+        this.buildCode = buildCode;
+    }
+
 
     public LockedHouse(String houseCode, LockType type, String empCode, String empName, Date lockedTime) {
         this.houseCode = houseCode;
@@ -127,4 +138,13 @@ public class LockedHouse {
         this.lockedTime = lockedTime;
     }
 
+    @Column(name="BUILD_CODE",length = 32)
+    @Size(max = 32)
+    public String getBuildCode() {
+        return buildCode;
+    }
+
+    public void setBuildCode(String buildCode) {
+        this.buildCode = buildCode;
+    }
 }

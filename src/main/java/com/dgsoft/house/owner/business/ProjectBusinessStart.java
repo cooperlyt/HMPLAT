@@ -546,7 +546,7 @@ public class ProjectBusinessStart {
             businessBuild.setShopCount(0);
             businessBuild.setShopArea(BigDecimal.ZERO);
 
-            Set<String> exceptHouseCode = new HashSet<String>();
+           // Set<String> exceptHouseCode = new HashSet<String>();
             for (BuildGridMap gridMap : entry.getValue()) {
                 for (GridRow row : gridMap.getGridRows()) {
                     for (GridBlock block : row.getGridBlocks()) {
@@ -571,7 +571,7 @@ public class ProjectBusinessStart {
                                 }
                             } else {
                                 businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(block.getHouseCode(), businessBuild));
-                                exceptHouseCode.add(block.getHouseCode());
+                          //      exceptHouseCode.add(block.getHouseCode());
                             }
                         }
 
@@ -588,21 +588,21 @@ public class ProjectBusinessStart {
                 houseCodes.add(house.getHouseCode());
             }
 
-            if (!houseCodes.isEmpty()) {
-                List<LockedHouse> lockedHouse = ownerBusinessHome.getEntityManager().createQuery("select lockedHouse from LockedHouse lockedHouse where lockedHouse.type = 'CANT_SALE' and lockedHouse.houseCode in (:houseCodes)", LockedHouse.class)
-                        .setParameter("houseCodes", houseCodes).getResultList();
-
-                for (LockedHouse lh : lockedHouse) {
-                    ownerBusinessHome.getEntityManager().remove(lh);
-                }
-                for (String houseCode : exceptHouseCode) {
-                    ownerBusinessHome.getEntityManager().persist(
-                            new LockedHouse(houseCode,
-                                    LockedHouse.LockType.CANT_SALE,
-                                    authInfo.getLoginEmployee().getId(),
-                                    authInfo.getLoginEmployee().getPersonName(), new Date()));
-                }
-            }
+//            if (!houseCodes.isEmpty()) {
+//                List<LockedHouse> lockedHouse = ownerBusinessHome.getEntityManager().createQuery("select lockedHouse from LockedHouse lockedHouse where lockedHouse.type = 'CANT_SALE' and lockedHouse.houseCode in (:houseCodes)", LockedHouse.class)
+//                        .setParameter("houseCodes", houseCodes).getResultList();
+//
+//                for (LockedHouse lh : lockedHouse) {
+//                    ownerBusinessHome.getEntityManager().remove(lh);
+//                }
+//                for (String houseCode : exceptHouseCode) {
+//                    ownerBusinessHome.getEntityManager().persist(
+//                            new LockedHouse(houseCode,
+//                                    LockedHouse.LockType.CANT_SALE,
+//                                    authInfo.getLoginEmployee().getId(),
+//                                    authInfo.getLoginEmployee().getPersonName(), new Date()));
+//                }
+//            }
 
         }
 
