@@ -8,8 +8,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by cooper on 1/24/16.
