@@ -124,7 +124,7 @@
                 <f:facet name="defaultCell">
                     <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
                 </f:facet>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
                     <p:paragraph>房屋坐落</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
@@ -136,7 +136,7 @@
                 <p:cell borderWidthLeft="0">
 
                     <p:table columns="2" widths="0.5 1" headerRows="0" footerRows="0" widthPercentage="100" >
-                        <p:cell fixedHeight="30" horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0" >
+                        <p:cell fixedHeight="25" horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0" >
                             <p:paragraph>#{_houseBusiness.afterBusinessHouse.floorCount}</p:paragraph>
                         </p:cell>
                         <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0" borderWidthLeft="0" borderWidthRight="0">
@@ -161,21 +161,21 @@
                     </p:table>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>房屋所在层数</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.inFloorName}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>建筑面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>专有面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -183,7 +183,7 @@
                 </p:cell>
 
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>套内建筑面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -191,24 +191,36 @@
                 </p:cell>
 
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>规划用途</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>结构</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>土地所有权证号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="25">
+                    <p:paragraph>所有权证号</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="25">
+                    <p:paragraph>土地性质</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.landInfo.landProperty)}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
                     <p:paragraph>建筑物区分所有情况</p:paragraph>
