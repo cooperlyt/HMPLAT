@@ -24,7 +24,8 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
             "left join biz.makeCards cards " +
             "left join owner.makeCard ownerCard " +
             "left join house.businessPools pool " +
-            "left join pool.makeCard poolCard" ;
+            "left join pool.makeCard poolCard " +
+            "left join house.contractOwner contractOwner";
 
     public static final String SHORT_EJBQL = "select biz from OwnerBusiness biz  " ;
 
@@ -40,6 +41,10 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
             "lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.searchCredentialsNumber})"
     };
 
+    public static final String[] RESTRICTIONS_CONTRACT_OWNER = {
+            "contractOwner.credentialsType = #{houseBusinessCondition.searchCredentialsType}",
+            "lower(contractOwner.credentialsNumber) = lower(#{houseBusinessCondition.searchCredentialsNumber})"
+    };
 
     public static final String[] RESTRICTIONS_HOUSE_CARD = {
             "lower(cards.number) = lower(#{houseBusinessCondition.searchCardNumber})",
@@ -69,6 +74,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
             "biz.applyTime <= #{houseBusinessCondition.searchDateArea.searchDateTo}",
             "lower(pool.personName) like lower(concat('%',concat(#{houseBusinessCondition.searchOwnerName},'%')))",
             "lower(owner.personName) like lower(concat('%',concat(#{houseBusinessCondition.searchOwnerName},'%')))",
+            "lower(contractOwner.personName) like lower(concat('%',concat(#{houseBusinessCondition.searchOwnerName},'%')))",
             "lower(pool.credentialsNumber) = lower(#{houseBusinessCondition.searchCredentialsNumber})",
             "lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.searchCredentialsNumber})",
             "lower(house.buildName) like lower(concat('%',concat(#{houseBusinessCondition.searchProjectName},'%')))",
@@ -169,6 +175,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
                     personRestriction = new RestrictionGroup("or");
                     personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_PERSON_POOL)));
                     personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(HouseBusinessCondition.RESTRICTIONS_PERSON_OWNER)));
+                    personRestriction.getChildren().add(new RestrictionGroup("and" ,Arrays.asList(RESTRICTIONS_CONTRACT_OWNER)));
                     if (rootRestriction != null){
                         RestrictionGroup last = new RestrictionGroup("and" ,Arrays.asList(rootRestriction));
                         last.getChildren().add(personRestriction);

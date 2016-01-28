@@ -22,6 +22,7 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
             "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
             "left join fetch houseBusiness.recordStore rs " +
             "left join house.businessPools pool " +
+            "left join house.contractOwner contractOwner " +
             "left join pool.makeCard poolCard where 1=2 ";
 
 

@@ -27,6 +27,12 @@ public class HouseRecordCondition extends BusinessHouseCondition {
             "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})"
     };
 
+    public static final String[] RESTRICTIONS_CONTRACT_OWNER = {
+            "contractOwner.credentialsType = #{houseRecordCondition.searchCredentialsType}",
+            "lower(contractOwner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})"
+    };
+
+
 
     public static final String[] ORESTRICTIONS_OWNER_CARD = {
             "lower(ownerCard.number) = lower(#{houseRecordCondition.searchCardNumber})",
@@ -56,6 +62,7 @@ public class HouseRecordCondition extends BusinessHouseCondition {
     public static final String[] RESTRICTIONS = {
             "lower(pool.personName) like lower(concat('%',concat(#{houseRecordCondition.searchOwnerName},'%')))",
             "lower(owner.personName) like lower(concat('%',concat(#{houseRecordCondition.searchOwnerName},'%')))",
+            "lower(contractOwner.personName) like lower(concat('%',concat(#{houseRecordCondition.searchOwnerName},'%')))",
             "lower(pool.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})",
             "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})",
             "lower(house.buildName) like lower(concat('%',concat(#{houseRecordCondition.searchProjectName},'%')))",
@@ -183,6 +190,7 @@ public class HouseRecordCondition extends BusinessHouseCondition {
                     personRestriction = new RestrictionGroup("or");
                     personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_POOL)));
                     personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_OWNER)));
+                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_CONTRACT_OWNER)));
                 }
 
 
