@@ -8,11 +8,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{(not empty ownerBusinessHome.getReasonByType('CHANG_BEFOR_RESON')) and (ownerBusinessHome.instance.type eq 'MODIFY_BIZ')}">
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.getReasonByType('CHANG_AFTER_RESON')) and (ownerBusinessHome.instance.type eq 'MODIFY_BIZ')}">
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Reason_ChangAfterRenson}"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{ownerBusinessHome.getReasonByType('CHANG_BEFOR_RESON').reason}"/>
+                <h:outputText value="#{ownerBusinessHome.getReasonByType('CHANG_AFTER_RESON').reason}"/>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
