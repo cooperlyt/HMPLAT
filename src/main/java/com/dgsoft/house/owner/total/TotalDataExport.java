@@ -6,8 +6,10 @@ import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.business.BusinessDefineCache;
 import com.dgsoft.common.system.model.Fee;
 import com.dgsoft.common.system.model.FeeCategory;
+import com.dgsoft.house.model.Developer;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.total.data.FeeTotalData;
+import com.dgsoft.house.owner.total.data.InitCardTotalData;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -251,5 +253,116 @@ public class TotalDataExport {
 
     }
 
+    private static class DeveloperData{
+
+        private String developerName;
+
+        private List<InitCardTotalData> dataList = new ArrayList<InitCardTotalData>();
+
+
+        public DeveloperData(String developerName) {
+            this.developerName = developerName;
+        }
+
+        public String getDeveloperName() {
+            return developerName;
+        }
+
+        public void putData(InitCardTotalData data){
+            dataList.add(data);
+        }
+    }
+
+
+    public void totalHouseInitCard(){
+        List<InitCardTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.InitCardTotalData(hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.code)) from HouseBusiness hb where hb.ownerBusiness.defineId = 'WP40' and hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.code is not null and hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.printTime >= :beginDate and hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.printTime <= :endDate group by hb.afterBusinessHouse.developerName, hb.afterBusinessHouse.sectionName", InitCardTotalData.class)
+                .setParameter("beginDate",fromDateTime)
+                .setParameter("endDate", toDateTime).getResultList();
+
+        Map<String,List<InitCardTotalData>> result = new HashMap<String, List<InitCardTotalData>>();
+        for(InitCardTotalData data: datas){
+            List<InitCardTotalData> sectionData = result.get(data.getDeveloperName());
+            if (sectionData == null){
+                sectionData = new ArrayList<InitCardTotalData>();
+                result.put(data.getDeveloperName(),sectionData);
+            }
+            sectionData.add(data);
+        }
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFCellStyle headCellStyle  = workbook.createCellStyle();
+
+        headCellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        headCellStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+
+        XSSFSheet sheet = workbook.createSheet("初始登记出证统计");
+
+        int rowIndex = 0;
+        int cellIndex = 0;
+        Row row = sheet.createRow(rowIndex++);
+
+
+        Cell cell = row.createCell(cellIndex++);
+        cell.setCellValue("开发商");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row.createCell(cellIndex++);
+        cell.setCellValue("小区");
+        cell.setCellStyle(headCellStyle);
+
+        cell = row.createCell(cellIndex++);
+        cell.setCellValue("出证数量");
+        cell.setCellStyle(headCellStyle);
+
+
+        for(Map.Entry<String,List<InitCardTotalData>> entry: result.entrySet()){
+            int beginRow = rowIndex;
+            for (InitCardTotalData data: entry.getValue()){
+                cellIndex = 1;
+                row = sheet.createRow(rowIndex++);
+
+                cell = row.createCell(cellIndex++);
+                cell.setCellValue(data.getSectionName());
+
+                cell = row.createCell(cellIndex++);
+                cell.setCellValue(data.getCardCount());
+
+            }
+
+            cell = sheet.getRow(beginRow).createCell(0);
+            cell.setCellValue(entry.getKey());
+            sheet.addMergedRegion(new CellRangeAddress(beginRow,rowIndex - 1,0,0));
+
+        }
+
+        if (!result.isEmpty()) {
+            row = sheet.createRow(rowIndex);
+
+            cell = row.createCell(0);
+            cell.setCellValue("合计");
+            sheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 1));
+            cell.setCellStyle(headCellStyle);
+
+
+            cell = row.createCell(2, Cell.CELL_TYPE_FORMULA);
+            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(2) + "1:" + CellReference.convertNumToColString(2) + (rowIndex - 1) + ")");
+            cell.setCellStyle(headCellStyle);
+
+        }
+
+        sheet.setForceFormulaRecalculation(true);
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext.responseReset();
+        externalContext.setResponseContentType("application/vnd.ms-excel");
+        externalContext.setResponseHeader("Content-Disposition", "attachment;filename=export.xlsx");
+        try {
+            workbook.write(externalContext.getResponseOutputStream());
+            facesContext.responseComplete();
+        } catch (IOException e) {
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ExportIOError");
+            Logging.getLog(getClass()).error("export error", e);
+        }
+
+    }
 
 }
