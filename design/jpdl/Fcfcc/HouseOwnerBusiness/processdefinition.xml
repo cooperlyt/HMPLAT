@@ -178,10 +178,10 @@
 
 	<decision name="是否质检">
 		<transition to="质检" name="质检">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP73','WP74','WP50')}"></condition>
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP73','WP74')}"></condition>
 		</transition>
 		<transition to="登薄" name="不质检">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74','WP50')}"></condition>
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74')}"></condition>
 		</transition>
 	</decision>
 
