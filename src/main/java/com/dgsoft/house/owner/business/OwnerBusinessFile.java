@@ -1,9 +1,7 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.helper.JsonDataProvider;
-import com.dgsoft.common.system.AuthenticationInfo;
-import com.dgsoft.common.system.BusinessFileOperation;
-import com.dgsoft.common.system.BusinessFtpFile;
+import com.dgsoft.common.system.*;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.Subscribe;
 import com.dgsoft.common.system.model.BusinessNeedFile;
@@ -134,13 +132,16 @@ public class OwnerBusinessFile {
 
     public void loadFromFile() {
         try {
-            BusinessFileOperation fileOperation = new BusinessFtpFile(ownerBusinessHome.getInstance().getId());
+            BusinessFileOperation fileOperation = BusinessFileCheckFactory.getFileOperation(ownerBusinessHome.getInstance().getId());
             try {
                 loadFromFile(getTree(), fileOperation);
                 changeListener();
             } finally {
                 fileOperation.close();
             }
+
+
+
         } catch (IOException e) {
             facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "FILE_SERVER_FIAIL");
         }
