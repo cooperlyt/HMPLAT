@@ -5,12 +5,14 @@ import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
+import com.dgsoft.common.system.model.Word;
 import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.LogonStatus;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.PoolType;
 import com.dgsoft.house.SaleType;
+import com.dgsoft.house.UseTypeWordAdapter;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.HouseOwnerHelper;
@@ -462,6 +464,21 @@ public class DeveloperServiceComponent {
         if (!saleType.equals( SaleType.MAP_SELL) && houseRecord != null && houseRecord.getBusinessHouse().getBusinessHouseOwner() != null && houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard() != null){
             houseJsonObj.put("ownerCardNumber",houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber());
         }
+
+        Date landEndTime = businessBuild.getBusinessProject().getProjectSellInfo().getEndUseTime();
+        Word useType = DictionaryWord.instance().getWord(house.getUseType());
+
+        if (useType != null){
+            for(ProjectLandEndTime endTime: businessBuild.getBusinessProject().getProjectSellInfo().getProjectLandEndTimes()){
+                if (endTime.getUseTypeCategory().equals(useType.getKey())){
+                    landEndTime = endTime.getEndTime();
+                    break;
+                }
+            }
+
+        }
+        houseJsonObj.put("landEndUseTime",landEndTime.getTime());
+
 
         houseJsonObj.put("saleType", saleType.name() );
         return houseJsonObj;
