@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "EXCEPT_HOUSE", catalog = "HOUSE_OWNER_RECORD",uniqueConstraints = @UniqueConstraint(columnNames = {
         "BUILD", "HOUSE_CODE"}))
-public class ProjectExceptHouse {
+public class ProjectExceptHouse implements java.io.Serializable{
 
     private String id;
     private String houseCode;

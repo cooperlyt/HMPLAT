@@ -6,6 +6,8 @@ import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -60,7 +62,7 @@ public class ProjectSellInfo implements java.io.Serializable {
     private String licenseNumber;
     private String createLandCardNumber;
 
-
+    private Set<ProjectLandEndTime> projectLandEndTimes = new HashSet<ProjectLandEndTime>(0);
 
 	public ProjectSellInfo() {
 	}
@@ -361,5 +363,15 @@ public class ProjectSellInfo implements java.io.Serializable {
 
     public void setProofMaterial(String proofMaterial) {
         this.proofMaterial = proofMaterial;
+    }
+
+
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, cascade = CascadeType.ALL,mappedBy = "projectSellInfo")
+    public Set<ProjectLandEndTime> getProjectLandEndTimes() {
+        return projectLandEndTimes;
+    }
+
+    public void setProjectLandEndTimes(Set<ProjectLandEndTime> projectLandEndTimes) {
+        this.projectLandEndTimes = projectLandEndTimes;
     }
 }

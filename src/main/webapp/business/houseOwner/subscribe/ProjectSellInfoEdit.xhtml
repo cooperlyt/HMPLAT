@@ -187,7 +187,7 @@
     <div class="form-inline">
         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
-                #{messages.Land_BeginUseTime}
+                #{messages.Land_UseTime}
             </ui:define>
             <ui:param name="for" value="LandBeginUseTime"/>
 
@@ -209,6 +209,15 @@
                              value="#{projectSellInfoSubscribe.instance.endUseTime}">
                     <s:convertDateTime pattern="#{messages.datePattern}"/>
                 </h:inputText>
+                <span class="input-group-btn">
+
+                   <a:commandLink styleClass="btn btn-default" execute="@this" immediate="true"
+                                  action="#{projectSellInfoSubscribe.addProjectLandEndTime}"
+                                  render="landUseTimeExceptionField">
+                        <span class="octicon octicon-plus btn-icon"></span>
+                       <a:attachQueue requestDelay="0"/>
+                   </a:commandLink>
+                </span>
             </div>
 
             <ui:define name="message">
@@ -220,6 +229,60 @@
         </s:decorate>
     </div>
 
+    <a:outputPanel id="landUseTimeExceptionField">
+        <a:outputPanel rendered="#{not projectSellInfoSubscribe.emptyLandEndTimes}">
+    <div style="clear: both;"/>
+    <hr/>
+    <div style="display: block;">
+        <div class="upgrade-upsell">
+
+            <a:repeat value="#{projectLandEndTimes}" var="_useTypeTime">
+
+                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                    <ui:param name="showLabel" value="false"/>
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                        <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first" label="设计用途" value="#{_useTypeTime.useTypeCategory}" required="true">
+
+                            <s:selectItems value="#{useTypeCategoryList}" var="_type"
+                                           label="#{_type.value}" itemValue="#{_type.key}" noSelectionLabel="设计用途"/>
+                            <a:ajax execute="@this" event="valueChange" render="@none"/>
+                        </h:selectOneMenu>
+                        </span>
+                        <h:inputText
+                                     rendered="true"
+                                     styleClass="js-datepicker form-control"
+                                     label="#{messages.Land_EndUseTime}"
+                                     value="#{_useTypeTime.endTime}">
+                            <s:convertDateTime pattern="#{messages.datePattern}"/>
+                            <a:ajax execute="@this" event="blur" render="@none"/>
+                        </h:inputText>
+                        <span class="input-group-btn">
+                        <a:commandLink styleClass="btn btn-danger" immediate="true" action="#{projectSellInfoSubscribe.removeProjectLandEndTime}"
+                                       execute="@this" render="landUseTimeExceptionField">
+                            <span class="octicon octicon-trashcan btn-icon"></span>
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandLink>
+                        </span>
+
+                    </div>
+
+
+
+                </s:decorate>
+
+            </a:repeat>
+
+
+
+        </div>
+    </div>
+    <div style="clear: both;"/>
+    <hr />
+        </a:outputPanel>
+    </a:outputPanel>
 
     <div class="form-inline">
 

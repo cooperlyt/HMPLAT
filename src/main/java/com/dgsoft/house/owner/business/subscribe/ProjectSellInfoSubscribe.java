@@ -1,12 +1,20 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.Entry;
+import com.dgsoft.common.SetLinkList;
 import com.dgsoft.house.SaleType;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.ProjectLandEndTime;
 import com.dgsoft.house.owner.model.ProjectSellInfo;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.datamodel.DataModel;
+import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.log.Logging;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wxy on 2015-09-07.
@@ -19,6 +27,11 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
     private OwnerBusinessHome ownerBusinessHome;
 
 
+    @DataModel()
+    private SetLinkList<ProjectLandEndTime> projectLandEndTimes;
+
+    @DataModelSelection
+    private ProjectLandEndTime selectLandEndTime;
 
 
     private boolean isType=true;
@@ -29,6 +42,18 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
 
     public void setType(boolean isType) {
         this.isType = isType;
+    }
+
+    public void addProjectLandEndTime(){
+        projectLandEndTimes.add(new ProjectLandEndTime(getInstance()));
+    }
+
+    public void removeProjectLandEndTime(){
+        projectLandEndTimes.remove(selectLandEndTime);
+    }
+
+    public boolean isEmptyLandEndTimes(){
+        return projectLandEndTimes.isEmpty();
     }
 
     @Override
@@ -56,6 +81,8 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
             getInstance().setBusinessProject(ownerBusinessHome.getInstance().getBusinessProject());
             ownerBusinessHome.getInstance().getBusinessProject().setProjectSellInfo(getInstance());
         }
+
+        projectLandEndTimes = new SetLinkList<ProjectLandEndTime>(getInstance().getProjectLandEndTimes());
 
     }
 
