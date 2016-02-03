@@ -75,4 +75,7 @@ public class ProjectLandEndTime implements java.io.Serializable{
     public void setProjectSellInfo(ProjectSellInfo projectSellInfo) {
         this.projectSellInfo = projectSellInfo;
     }
+
+
+
 }

@@ -39,6 +39,17 @@ public class UseTypeWordAdapter {
         return result;
     }
 
+    public String getUseTypeCategoryName(String id){
+
+        for (int i=0;i< getUseTypeCategoryList().size();i++){
+            if (getUseTypeCategoryList().get(i).getKey().equals(id)){
+                return getUseTypeCategoryList().get(i).getValue();
+            }
+
+        }
+        return null;
+
+    }
     @In
     private DictionaryWord dictionary;
 
