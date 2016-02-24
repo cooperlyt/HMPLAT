@@ -69,6 +69,7 @@
                     </a:region>
 
                         <a:outputPanel rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+
                             <ui:include src="/layout/system/PersonCardInput.xhtml">
                                 <ui:param name="_person" value="#{financialSubscribe.personInstance}"/>
                                 <ui:param name="personStatus" value="final_personCredentiaslNumberStatus"/>
@@ -79,7 +80,7 @@
 
                     <h:inputText id="financeNameInput"
                                  required="true"
-                                 p:pplaceholder="#{messages.Financial_name}"
+                                 p:placeholder="#{messages.Financial_name}"
                                  rendered="#{financialSubscribe.instance.financialType eq 'FINANCE_CORP'}"
                                  label="#{messages.Financial_name}"
                                  value="#{financialSubscribe.instance.name}"
