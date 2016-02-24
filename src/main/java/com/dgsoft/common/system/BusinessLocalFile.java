@@ -33,7 +33,7 @@ public class BusinessLocalFile implements BusinessFileOperation {
         for (File f: file.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(".thumb.jpg");
+                return name.endsWith(".jpg") && !name.endsWith(".thumb.jpg");
             }
         })){
             //Logging.getLog(getClass()).debug(f.getName());
