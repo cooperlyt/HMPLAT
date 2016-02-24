@@ -93,6 +93,7 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.licenseNumber = other.getLicenseNumber();
         this.createLandCardNumber = other.getCreateLandCardNumber();
         this.proofMaterial = other.getProofMaterial();
+        this.projectLandEndTimes = other.getProjectLandEndTimes();
     }
 
     @Id
