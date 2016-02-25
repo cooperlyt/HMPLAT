@@ -923,6 +923,8 @@
             档案补录他项权证信息编辑
         </description>
     </edit-subscribe>
+
+
     <edit-subscribe name="MakeCardProjectMortgageRecordEdit" page="/business/houseOwner/subscribe/MakeCardProjectMortgageRecordEdit.xhtml"
                     component="">
         <description>
@@ -969,7 +971,11 @@
         </description>
     </edit-subscribe>
 
-
+    <edit-subscribe name="FinancialNoitceEdit" page="/business/houseOwner/subscribe/FinancialNoitceEdit.xhtml" component="">
+        <description>
+            档案补录预告抵押权人编辑
+        </description>
+    </edit-subscribe>
 
 
     <edit-subscribe name="GiveCardEdit" page="/business/houseOwner/subscribe/GiveCardEdit.xhtml" component="">

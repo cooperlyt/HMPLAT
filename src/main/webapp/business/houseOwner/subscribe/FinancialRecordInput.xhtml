@@ -31,7 +31,7 @@
 
 <f:subview id="personMortgage">
     <ui:decorate template="/layout/system/PersonInput.xhtml">
-        <ui:param name="personEntityHelper" value="#{financialRecordSubscribe.personMortgageInstance}"/>
+        <ui:param name="personEntityHelper" value="#{financialRecord.personMortgageInstance}"/>
         <ui:param name="personStatus" value="FinancialProject_personCredentiaslNumberStatus"/>
         <ui:param name="label" value="#{messages.MORTGAGE_PROJECT}"/>
         <div class="form-inline">
@@ -43,7 +43,7 @@
                 <ui:param name="for" value="persionMortgagePhoneInput"/>
                 <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
                              styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
-                             value="#{financialRecordSubscribe.mortgaegeRegiste.businessHouseOwner.phone}" id="persionMortgagePhoneInput">
+                             value="#{financialRecord.mortgaegeRegiste.businessHouseOwner.phone}" id="persionMortgagePhoneInput">
 
                 </h:inputText>
 
@@ -78,13 +78,13 @@
 
             <div class="input-group financial-title-inputs" style="width: 100%">
                 <a:region>
-                    <h:selectOneMenu value="#{financialRecordSubscribe.instance.financialType}"
+                    <h:selectOneMenu value="#{financialRecord.instance.financialType}"
                                      id="typeSelectInput"
                                      label="#{label}#{messages.FinancialType}"
                                      required="true"
                                      styleClass="selectpicker select-menu-btn financial-type-select"
-                                     valueChangeListener="#{financialRecordSubscribe.typeChangeListener}">
-                        <s:selectItems value="#{financialRecordSubscribe.financialTypes}"
+                                     valueChangeListener="#{financialRecord.typeChangeListener}">
+                        <s:selectItems value="#{financialRecord.financialTypes}"
                                        var="_type"
                                        itemValue="#{_type}"
                                        label="#{messages[_type.name()]}"/>
@@ -96,9 +96,9 @@
                     </h:selectOneMenu>
                 </a:region>
 
-                <a:outputPanel rendered="#{financialRecordSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                <a:outputPanel rendered="#{financialRecord.instance.financialType eq 'FINANCE_PERSON'}">
                     <ui:include src="/layout/system/PersonCardInput.xhtml">
-                        <ui:param name="_person" value="#{financialRecordSubscribe.personInstance}"/>
+                        <ui:param name="_person" value="#{financialRecord.personInstance}"/>
                         <ui:param name="personStatus" value="final_personCredentiaslNumberStatus"/>
                         <ui:param name="render" value="personInputFields,financeAttrField"/>
                     </ui:include>
@@ -108,10 +108,10 @@
                 <h:inputText id="financeNameInput"
                              required="true"
                              p:pplaceholder="#{messages.Financial_name}"
-                             rendered="#{financialRecordSubscribe.instance.financialType eq 'FINANCE_CORP'}"
+                             rendered="#{financialRecord.instance.financialType eq 'FINANCE_CORP'}"
                              label="#{messages.Financial_name}"
-                             value="#{financialRecordSubscribe.instance.name}"
-                             disabled="#{financialRecordSubscribe.selected}"
+                             value="#{financialRecord.instance.name}"
+                             disabled="#{financialRecord.selected}"
                              styleClass="form-control"/>
 
             </div>
@@ -129,7 +129,7 @@
 
 
             <h:inputText label="#{messages.Tel}"
-                         value="#{financialRecordSubscribe.instance.phone}"
+                         value="#{financialRecord.instance.phone}"
                          styleClass="form-control"/>
         </s:decorate>
 
@@ -151,7 +151,7 @@
 
                 <h:selectOneMenu required="true"
                                  id="interestTypenput"
-                                 value="#{financialRecordSubscribe.mortgaegeRegiste.interestType}"
+                                 value="#{financialRecord.mortgaegeRegiste.interestType}"
                                  styleClass="selectpicker select-menu-btn input-group-first"
                                  label="#{messages.MortgaegeRegiste_InterestType}">
                     <s:selectItems value="#{dictionary.getWordList('42')}" var="_word"
@@ -159,7 +159,7 @@
                 </h:selectOneMenu>
 
             </a:outputPanel>
-            <h:inputText value="#{financialRecordSubscribe.mortgaegeRegiste.highestMountMoney}"
+            <h:inputText value="#{financialRecord.mortgaegeRegiste.highestMountMoney}"
                          size="20"
                          id="highestMountMoneyInput"
                          label="#{messages.MortgaegeRegiste_HighestMountMoney}"
@@ -188,7 +188,7 @@
                      required="true"
                      styleClass="js-datepicker form-control"
                      label="#{messages.MortgaegeRegiste_MortgageDueTimeS}"
-                     value="#{financialRecordSubscribe.mortgaegeRegiste.mortgageDueTimeS}">
+                     value="#{financialRecord.mortgaegeRegiste.mortgageDueTimeS}">
             <s:convertDateTime pattern="#{messages.datePattern}"/>
         </h:inputText>
     </s:decorate>
@@ -202,7 +202,7 @@
 
         <ui:param name="for" value="mortgageTimeInput"/>
         <h:inputText label="#{messages.MortgaegeRegiste_MortgageTime}"
-                     value="#{financialRecordSubscribe.mortgaegeRegiste.mortgageTime}"
+                     value="#{financialRecord.mortgaegeRegiste.mortgageTime}"
                      required="true"
                      id="mortgageTimeInput"
                      styleClass="form-control">
@@ -217,7 +217,7 @@
             #{messages.MortgaegeRegiste_MortgageArea}
         </ui:define>
         <ui:param name="for" value="mortgageAreaInput"/>
-        <h:inputText value="#{financialRecordSubscribe.mortgaegeRegiste.mortgageArea}"
+        <h:inputText value="#{financialRecord.mortgaegeRegiste.mortgageArea}"
                      id="mortgageAreaInput"
                      required="true"
                      label="#{messages.MortgaegeRegiste_MortgageArea}"
@@ -238,7 +238,7 @@
     <h:inputTextarea label="#{messages.MortgaegeRegiste_WarrantScope}"
                      cols="50"
                      rows="3"
-                     value="#{financialRecordSubscribe.mortgaegeRegiste.warrantScope}"
+                     value="#{financialRecord.mortgaegeRegiste.warrantScope}"
                      id="warrantScopeInput"
                      styleClass="form-control">
 

@@ -25,7 +25,7 @@ public class ContractChangeOwnerFill implements BusinessDataFill {
     public void fillData() {
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                if(ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getAfterBusinessHouse().getContractOwner()!=null){
+                if(ownerBusinessHome.getInstance().getSelectBusiness()!=null && ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getAfterBusinessHouse().getContractOwner()!=null){
                     ContractOwner contractOwner = ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getAfterBusinessHouse().getContractOwner();
                     BusinessHouseOwner businessHouseOwner = new BusinessHouseOwner();
                     businessHouseOwner.setPersonName(contractOwner.getPersonName());
