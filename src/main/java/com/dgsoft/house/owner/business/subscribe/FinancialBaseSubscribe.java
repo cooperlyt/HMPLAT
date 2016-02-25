@@ -9,7 +9,9 @@ import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.Financial;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
 import javax.faces.event.ValueChangeEvent;
@@ -21,6 +23,7 @@ import java.util.List;
 /**
  * Created by wxy on 2015-09-18.
  */
+@Scope(ScopeType.CONVERSATION)
 public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
     @In
     protected OwnerBusinessHome ownerBusinessHome;
@@ -141,14 +144,24 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
         }
     }
 
+    private PersonHelper<Financial> personInstance;
+
     public PersonHelper<Financial> getPersonInstance() {
-        return new PersonHelper<Financial>(getInstance());
+        if (personInstance == null){
+            personInstance = new PersonHelper<Financial>(getInstance());
+        }
+        return personInstance;
     }
 
 
 
+    private PersonHelper<BusinessHouseOwner> personMortgageInstance;
+
     public PersonHelper<BusinessHouseOwner> getPersonMortgageInstance() {
-        return new PersonHelper<BusinessHouseOwner>(mortgaegeRegiste.getBusinessHouseOwner());
+        if (personInstance == null){
+            personMortgageInstance = new PersonHelper<BusinessHouseOwner>(mortgaegeRegiste.getBusinessHouseOwner());
+        }
+        return personMortgageInstance;
     }
 
 }
