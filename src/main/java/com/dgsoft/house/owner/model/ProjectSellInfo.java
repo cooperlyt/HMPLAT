@@ -5,9 +5,7 @@ import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -374,5 +372,10 @@ public class ProjectSellInfo implements java.io.Serializable {
 
     public void setProjectLandEndTimes(Set<ProjectLandEndTime> projectLandEndTimes) {
         this.projectLandEndTimes = projectLandEndTimes;
+    }
+    @Transient
+    public List<ProjectLandEndTime> getProjectLandEndTimeList(){
+        List<ProjectLandEndTime> result = new ArrayList<ProjectLandEndTime>(getProjectLandEndTimes());
+        return result;
     }
 }

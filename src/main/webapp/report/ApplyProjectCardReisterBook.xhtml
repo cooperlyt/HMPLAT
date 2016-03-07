@@ -169,25 +169,21 @@
                     <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.beginUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>土地使用年限止</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.endUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
-                </p:cell>
-                <p:cell fixedHeight="23">
                     <p:paragraph>土地坐落</p:paragraph>
                 </p:cell>
                 <p:cell>
                     <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.landAddress}</p:paragraph>
                 </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地使用年限止</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
 
-                <p:cell fixedHeight="23">
-                    <p:paragraph>土地用途</p:paragraph>
+                        <p:paragraph><ui:repeat value="#{_buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}" var="_projectLandEndTimeList"> <p:text value=" #{useTypeWordAdapter.getUseTypeCategoryName(_projectLandEndTimeList.useTypeCategory) }"></p:text> <p:text value="#{_projectLandEndTimeList.endTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></ui:repeat></p:paragraph>
                 </p:cell>
-                <p:cell>
-                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.landUseType}</p:paragraph>
-                </p:cell>
-                <p:cell fixedHeight="23">
+
+
+            <p:cell fixedHeight="23">
                     <p:paragraph>楼幢名称</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
