@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="OwnerBusinessRetract">
+
+
+	<start-state name="业务受理">
+		<transition to="审核"></transition>
+	</start-state>
+
+
+	<task-node name="受理">
+		<task name="受理">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;ownerBusinessModifyTaskOper&quot;}
+			</description>
+			<assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
+		</task>
+		<transition to="审核"></transition>
+		<transition to="结束" name="_END"></transition>
+	</task-node>
+
+	<task-node name="审核">
+		<task name="审核">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+			</description>
+		</task>
+		<transition to="审核结果"></transition>
+	</task-node>
+
+	<task-node name="登薄">
+		<transition to="归档"></transition>
+		<transition to="受理" name="退回受理"></transition>
+	
+	</task-node>
+
+	<task-node name="归档">
+		<transition to="结束"></transition>
+	</task-node>
+
+	<decision name="是否登薄">
+		<transition to="登薄" name="需要登薄">
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76')}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="审核结果">
+		<transition to="是否登薄" name="通过">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="受理" name="驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
+
+
+	<end-state name="结束"></end-state>
+
+
+</process-definition>
