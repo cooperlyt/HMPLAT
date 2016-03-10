@@ -13,7 +13,8 @@
             <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
             <assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
         </task>
-        <transition to="结束" name="_END"></transition>
+        <transition to="审核" name="审核"></transition>
+		<transition to="结束" name="_END"></transition>
     </task-node>
 
     <task-node name="审核">
