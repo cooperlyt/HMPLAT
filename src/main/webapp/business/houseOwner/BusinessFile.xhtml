@@ -8,265 +8,45 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
+    <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
 
+
+    <div class="row">
+
+        <div class="col-md-5">
+    <a:outputPanel id="fileTree">
+    <div id="tree"></div>
 
     <h:outputScript>
 
 
-        function treeNodeSelectChange(){
 
-        $('.rf-trn').removeClass('rf-trn-select');
-        $('.rf-trn-sel').parent().addClass('rf-trn-select');
-        }
-
-
-        function treeStatusRefresh() {
+        $(document).ready(
+                function(){
+                    $('#tree').treeview({data: #{businessFileEntity.tree},showCheckbox: false});
 
 
-        //------
-
-        $('.rf-tr-nd').each(
-        function () {
-        $(this).removeClass('OK');
-        $(this).removeClass('NO_FILE');
-        $(this).removeClass('NO_UPLOAD');
-        $(this).removeClass('OTHER_UPLOAD');
-
-        if ($(this).children(":first").hasClass("OK")) {
-        $(this).addClass("OK");
-        }
-        if ($(this).children(":first").hasClass("NO_FILE")) {
-        $(this).addClass("NO_FILE");
-        }
-        if ($(this).children(":first").hasClass("NO_UPLOAD")) {
-        $(this).addClass("NO_UPLOAD");
-        }
-        if ($(this).children(":first").hasClass("OTHER_UPLOAD")) {
-        $(this).addClass("OTHER_UPLOAD");
-        }
+                    $('#tree').on('nodeSelected', function(event, data) {
+                        alert(data.id)
+                    });
+                });
 
 
-        }
-        );
-
-        }
-
-        $(document).ready(function () {
-
-        treeStatusRefresh();
-        }
-        );
 
 
     </h:outputScript>
 
-    <h:outputScript>
-        $(document).on('click', 'a.controls', function(){
+
+    </a:outputPanel>
+
+    <h:form>
+        <div style="margin-bottom: 15px">
 
 
-            var index = $(this).attr('href');
-            var src = $('ul.row li:nth-child('+ index +') img').attr('data-image');
+            <div class="input-group">
+                <h:inputText id="newOtherFileInput" styleClass="form-control typeahead" autocomplete="off"
 
-            $('.modal-body img').attr('src', src);
-
-            var newPrevIndex = parseInt(index) - 1;
-            var newNextIndex = parseInt(newPrevIndex) + 2;
-
-            if($(this).hasClass('previous')){
-                $(this).attr('href', newPrevIndex);
-                $('a.next').attr('href', newNextIndex);
-            }else{
-                $(this).attr('href', newNextIndex);
-                $('a.previous').attr('href', newPrevIndex);
-            }
-
-            var total = $('ul.row li').length + 1;
-            //hide next button
-            if(total === newNextIndex){
-                $('a.next').hide();
-            }else{
-                $('a.next').show()
-            }
-            //hide previous button
-            if(newPrevIndex === 0){
-                $('a.previous').hide();
-            }else{
-                $('a.previous').show()
-            }
-
-
-            return false;
-        });
-    </h:outputScript>
-
-
-    <h:outputStylesheet>
-        li .img-responsive {
-            cursor: pointer;
-        }
-
-        .picture-modal .modal-body {
-            padding:5px !important;
-        }
-        .picture-modal .modal-content {
-            border-radius:0;
-        }
-        .picture-modal .modal-dialog img {
-            text-align:center;
-            margin:0 auto;
-        }
-        .picture-modal .controls{
-            width:50px;
-            display:block;
-            font-size:11px;
-            padding-top:8px;
-            font-weight:bold;
-        }
-       .picture-modal .next {
-            float:right;
-            text-align:right;
-        }
-        /*override modal for demo only*/
-        .picture-modal .modal-dialog {
-            max-width:500px;
-            padding-top: 90px;
-        }
-        @media screen and (min-width: 768px){
-            .picture-modal .modal-dialog {
-                width:500px;
-                padding-top: 90px;
-            }
-        }
-        @media screen and (max-width:1500px){
-            #ads {
-                display:none;
-            }
-        }
-    </h:outputStylesheet>
-
-
-    <h:outputStylesheet>
-        .rf-trn-select .file-status {
-            color: #FFFFFF !important;
-        }
-
-        .file-status {
-            color: #4183c4;
-        }
-
-        .rf-trn.OK .file-status {
-            color: #5cb85c;
-        }
-
-        .rf-trn.NO_FILE .file-status {
-            color: #f0ad4e;;
-        }
-
-        .rf-trn.NO_UPLOAD .file-status {
-            color: #d9534f;
-        }
-
-        .rf-trn.OTHER_UPLOAD .file-status {
-            color: rgb(170, 170, 170);
-        }
-
-        .rf-tr-nd.NO_FILE .NO_UPLOAD .file-status {
-            color: rgb(170, 170, 170) !important;
-        }
-
-        .rf-tr-nd.OK .NO_UPLOAD .file-status {
-            color: rgb(170, 170, 170) !important;
-        }
-
-
-    </h:outputStylesheet>
-    <div class="columns">
-        <h:outputStylesheet name="treeview.css"/>
-
-        <div class="column codesearch-aside" style="width: 50%">
-            <h:form >
-                <r:tree id="fileTree" nodeType="#{_node.type}" toggleType="client" selectionType="ajax"
-                        style="margin-bottom: 10px"
-                        render="resultDatas" onselectionchange="treeNodeSelectChange();"
-                        value="#{businessFileEntity.tree}" var="_node"
-                        selectionChangeListener="#{businessFileEntity.selectionChanged}">
-                    <r:treeNode type="ALL" expanded="#{_node.expanded}"
-                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectId eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
-                                iconClass="octicon octicon-diff-ignored">
-                        <h:outputText value="#{_node.businessNeedFile.name}"
-                                      styleClass="file-status "/>
-
-                        <span class="counter right">#{_node.fileCount}</span>
-
-                    </r:treeNode>
-
-
-                    <r:treeNode type="ANYONE" expanded="#{_node.expanded}"
-                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectId eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
-                                iconClass="octicon octicon-diff-removed">
-                        <h:outputText value="#{_node.businessNeedFile.name}"
-                                      styleClass="file-status"/>
-
-                        <span class="counter right">#{_node.fileCount}</span>
-                    </r:treeNode>
-
-
-                    <r:treeNode type="CHILDREN" styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectId eq _node.businessNeedFile.id)) ? 'rf-trn-select' : '' }"
-                                iconClass="octicon octicon-file-text">
-                        <h:selectBooleanCheckbox value="#{_node.noFile}"
-                                                 rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')  and (_node.emptyFile) and not _node.readOnly}">
-                            <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas" listener="#{businessFileEntity.changeListener}"
-                                    oncomplete="treeStatusRefresh();">
-                            </a:ajax>
-                        </h:selectBooleanCheckbox>
-
-                        <h:outputText value="#{_node.businessNeedFile.name}" style="padding-left: 5px"
-                                      styleClass="file-status"/>
-                        <span class="counter right">#{_node.fileCount}</span>
-                    </r:treeNode>
-
-
-                    <r:treeNode type="ROOT" expanded="#{true}"
-                                styleClass="#{_node.status} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectId eq 'ROOT')) ? 'rf-trn-select' : '' }"
-                                iconClass="octicon octicon-diff-ignored">
-                        <h:outputText value="#{messages.attachFile}" styleClass="file-status"/>
-                        <span class="counter right">#{_node.fileCount}</span>
-                    </r:treeNode>
-
-                    <r:treeNode type="I_ROOT" expanded="#{true}"
-                                styleClass="#{_node.getStatus(businessDefineHome.taskName)} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectId eq 'I_ROOT') ) ? 'rf-trn-select' : '' }"
-                                iconClass="octicon octicon-diff-ignored">
-                        <h:outputText value="#{messages.NeedFile}"
-                                      styleClass="file-status #{_node.getStatus(businessDefineHome.taskName)}"/>
-                        <span class="counter right">#{_node.fileCount}</span>
-                    </r:treeNode>
-
-
-                    <r:treeNode type="OTHER_FILE" styleClass="#{_node.status} #{((not empty businessFileEntity.selectNode) and (businessFileEntity.selectId eq _node.businessFile.id)) ? 'rf-trn-select' : '' }"
-                                iconClass="octicon octicon-file-text">
-                        <h:selectBooleanCheckbox value="#{_node.noFile}"
-                                                 rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile')  and (_node.emptyFile) and not _node.readOnly}">
-                            <a:ajax execute="@this" event="click" render="fileTree,passBtn,resultDatas" listener="#{businessFileEntity.changeListener}"
-                                    oncomplete="treeStatusRefresh();">
-                            </a:ajax>
-                        </h:selectBooleanCheckbox>
-                        <h:outputText value="#{_node.businessFile.name}" style="padding-left: 5px"
-                                      styleClass="file-status"/>
-                        <span class="counter right">#{_node.fileCount}</span>
-                    </r:treeNode>
-
-                </r:tree>
-            </h:form>
-
-
-            <h:form>
-                <div style="margin-bottom: 15px">
-
-
-                    <div class="input-group">
-                        <h:inputText id="newOtherFileInput" styleClass="form-control typeahead" autocomplete="off"
-
-                                     value="#{businessFileEntity.otherFileName}" required="true"/>
+                             value="#{businessFileEntity.otherFileName}" required="true"/>
                             <span class="input-group-btn">
                                 <a:commandLink styleClass="btn  btn-default"
                                                oncomplete="#{r:jQuery('newOtherFileInput')}.val('');"
@@ -275,192 +55,48 @@
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
                             </span>
+            </div>
+
+        </div>
+        <h:outputScript>
+
+            $(document).ready(
+            function(){
+
+
+
+            // 此操作 耗时 如果是查询耗时 加入业务 和 时间 过滤
+            $('.typeahead').typeahead({source:#{allOtherFileAutoComplete},minLength:0});
+
+            });
+
+
+
+        </h:outputScript>
+    </h:form>
+
+        </div>
+        <div class="col-md-7">
+
+
+            <div class="gh-header">
+                <div class="gh-header-show">
+                    <div class="gh-header-actions">
+                        <a href="/cooper-lyt/HMPLAT/wiki/Home/_edit" class="btn btn-sm ">Edit</a>
+                        <a href="/cooper-lyt/HMPLAT/wiki/_new" class="btn btn-sm btn-primary">New Page</a>
                     </div>
+                    <h1 class="gh-header-title instapaper_title">Home</h1>
+                    <div class="gh-header-meta">
 
-                </div>
-                <h:outputScript>
-
-                    $(document).ready(
-                    function(){
-
-
-                    $('.typeahead').typeahead({source:#{businessFileEntity.otherFileAutoComplete},minLength:0});
-
-                    });
-                </h:outputScript>
-            </h:form>
-
-            <p>
-
-                <a:commandLink render="@none" action="#{businessFileEntity.extendsUpload}" immediate="true"
-                               data="#{businessFileEntity.extendsAddress}" p:data-backdrop="static"
-                               p:data-toggle="modal" p:data-target=".bs-example-modal-sm"
-                               execute="@this" oncomplete="extendsCall(event.data);">
-                    <a:attachQueue requestDelay="0"/>
-                    使用外部程序上传
-                </a:commandLink>
-
-                <s:link styleClass="right" action="#{businessFileEntity.loadFromFile}"> 刷新 <span class="octicon octicon-sync"></span></s:link>
-
-            </p>
-            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">文件上传</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>请在启动的文件上传程序中上传要件和附件，上传完成后就会看到您上传的文件,如果没有显示新上传的文件，您可以手动刷新。</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <s:button value="完成" action="#{ownerBusinessFile.loadFromFile}" data-dismiss="modal" styleClass="btn btn-primary"></s:button>
-                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <h:form>
-            <a:outputPanel id="resultDatas" layout="block" styleClass="column three-fourths" style="width: 50%">
-
-
-
-                <a:outputPanel layout="block" styleClass="panel panel-default" rendered="#{(not empty businessFileEntity.selectNode) and not businessFileEntity.selectNode.emptyFile}">
-
-
-
-
-
-                    <div class="panel-heading">#{businessFileEntity.selectNode.import ? '要件' : '附件'}/#{businessFileEntity.selectNode.fullPath}</div>
-
-
-
-                        <div class="panel-body">
-                            <ul class="row">
-
-                            <a:repeat value="#{businessFileEntity.selectNode.businessFile.uploadFileList}" var="_image">
-                                <li class="col-xs-4 col-sm-4 col-md-4">
-                                    <span class="thumbnail">
-                                    <h:graphicImage p:data-image="#{runParam.getStringParamValue('businessFilePath')}#{_image.fileName}.#{_image.ext}" styleClass="img-responsive" value="#{runParam.getStringParamValue('businessFilePath')}#{_image.fileName}.thumb.#{_image.ext}"/>
-                                    </span>
-                                </li>
-                            </a:repeat>
-                            </ul>
-
-                        </div>
-
-
-                    <div class="modal fade picture-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-
-
-
-                    <h:outputScript library="bootstrap-photo-gallery" name="/js/photo-gallery.js"/>
-
-                </a:outputPanel>
-
-                <a:outputPanel
-                        rendered="#{(empty businessFileEntity.selectNode) or (businessFileEntity.selectNode.emptyFile)}"
-                        layout="block" styleClass="blankslate spacious large-format">
-                    <span class="mega-octicon octicon-file-submodule"></span>
-
-                    <h3>#{empty businessFileEntity.selectNode ? messages.plase_select_file_node :  messages.not_upload_file}</h3>
-
-                    <p>
-                        <a:outputPanel rendered="#{empty businessFileEntity.selectNode}">
-                            <h:outputText value="#{messages.file_ndoe_description}"/>
-                            <a:outputPanel class="octicon octicon-diff-ignored" style="margin: 0 4px"/>
-                            <h:outputText value="#{messages.all_file_node_description}"/>
-                            <a:outputPanel class="octicon octicon-diff-removed" style="margin: 0 4px"/>
-                            <h:outputText value="#{messages.any_file_node_description}"/>
-                            <a:outputPanel class="octicon octicon-file-text" style="margin: 0 4px"/>
-                            <h:outputText value="#{messages.leaf_file_node_description}"/>
-                        </a:outputPanel>
-
-                        <a:outputPanel rendered="#{not empty businessFileEntity.selectNode}">
-                            <a:outputPanel class="octicon octicon-diff-ignored"
-                                           rendered="#{(businessFileEntity.selectType eq 'ALL') or (businessFileEntity.selectId eq 'I_ROOT') or (businessFileEntity.selectId eq 'ROOT') }"
-                                           style="margin: 0 4px"/>
-
-                            <a:outputPanel class="octicon octicon-diff-removed"
-                                           rendered="#{businessFileEntity.selectType eq 'ANYONE'}"
-                                           style="margin: 0 4px"/>
-
-                            <a:outputPanel class="octicon octicon-file-text"
-                                           rendered="#{(businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')}"
-                                           style="margin: 0 4px"/>
-
-
-
-                            <h:outputText value="要件" rendered="#{businessFileEntity.selectId eq 'I_ROOT'}"/>
-                            <h:outputText value="附件" rendered="#{businessFileEntity.selectId eq 'ROOT'}"/>
-                            <h:outputText value="#{businessFileEntity.selectName}"/>
-
-                            <a:outputPanel rendered="#{not businessFileEntity.selectNode.readOnly}">
-
-
-                            ,
-
-                            <h:outputText value="#{messages.YouCan}"
-                                          rendered="#{ ((businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')) and not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}"/>
-
-                            <a:commandLink value="#{messages.uploadFile}" style="margin: 0 4px"
-                                           rendered="#{((businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')) and not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}"/>
-
-                            <h:outputText value="#{messages.Or}"
-                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and ((businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')) and not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}"/>
-
-                            <h:outputText value="#{messages.set}"
-                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and ((businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')) and not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}"/>
-
-                            <h:selectBooleanCheckbox style="margin: 0 4px 0 8px"
-                                                     value="#{businessFileEntity.selectNode.noFile}"
-                                                     rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and ((businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')) and not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}">
-                                <a:ajax execute="@this" event="click" render="fileTree,passBtn" listener="#{businessFileEntity.changeListener}"
-                                        oncomplete="treeStatusRefresh();">
-                                    <a:attachQueue requestDelay="0"/>
-                                </a:ajax>
-                            </h:selectBooleanCheckbox>
-
-                            <h:outputText value="#{messages.temp_upload_file}"
-                                          rendered="#{runParam.getBooleanParamValue('AllowBusinessNoFile') and ((businessFileEntity.selectType eq 'CHILDREN') or (businessFileEntity.selectType eq 'OTHER')) and not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}"/>
-
-
-                            <h:outputText value="#{messages.all_file_node_description}"
-                                          rendered="#{businessFileEntity.selectType eq 'ALL'}"/>
-
-                            <h:outputText value="#{messages.any_file_node_description}"
-                                          rendered="#{businessFileEntity.selectType eq 'ANYONE'}"/>
-
-                            <h:outputText value="#{messages.plase_select_item_node}"
-                                          rendered="#{not (businessFileEntity.selectNode.status eq 'OTHER_UPLOAD') and (empty businessFileEntity.selectType or  (not (businessFileEntity.selectType eq 'CHILDREN') and not (businessFileEntity.selectType eq 'OTHER')))}"/>
-
-                            <h:outputText value="此要件不在本环节中上传或修改" rendered="#{(businessFileEntity.selectNode.status eq 'OTHER_UPLOAD')}"/>
-
-                            <a:outputPanel
-                                    rendered="#{businessFileEntity.selectType eq 'ALL'}"/>
-                            </a:outputPanel>
-
-                        </a:outputPanel>
-
-                    </p>
-                </a:outputPanel>
-
-
-            </a:outputPanel>
-        </h:form>
     </div>
-
+    <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
     <h:outputScript library="bootstrap" name="/js/bootstrap3-typeahead.min.js"/>
 
-
+    <h:outputScript library="weed-fs" name="weedfs.js"/>
 </ui:composition>

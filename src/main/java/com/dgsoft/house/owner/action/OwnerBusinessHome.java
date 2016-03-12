@@ -6,6 +6,8 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
@@ -26,6 +28,19 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     @In
     private Identity identity;
+
+    @Factory(scope = ScopeType.SESSION)
+    public String getAllOtherFileAutoComplete(){
+            String otherFileAutoComplete = "";
+            for(String name:  getEntityManager().createQuery("select distinct f.name from BusinessFile f where f.important = false and f.ownerBusiness.status in ('COMPLETE','COMPLETE_CANCEL')",String.class).getResultList()){
+                if (!"".equals(otherFileAutoComplete)){
+                    otherFileAutoComplete += ",";
+                }
+                otherFileAutoComplete += "'" + name + "'";
+            }
+        return otherFileAutoComplete;
+
+    }
 
 
     @Transactional
