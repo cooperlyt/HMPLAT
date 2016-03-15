@@ -82,7 +82,7 @@
                     <p:paragraph>共同申请人</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
+                    <p:paragraph rendered="#{not empty _houseBusiness.startBusinessHouse.businessPoolList}"><ui:repeat
                             value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
                         <p:text value="#{_businessPoolList.personName} "></p:text> </ui:repeat></p:paragraph>
                 </p:cell>
@@ -90,7 +90,7 @@
                     <p:paragraph>证件号码</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
+                    <p:paragraph rendered="#{not empty _houseBusiness.startBusinessHouse.businessPoolList}"><ui:repeat
                             value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
                         <p:text value="#{_businessPoolList.credentialsNumber} "></p:text> </ui:repeat></p:paragraph>
                 </p:cell>
@@ -126,7 +126,7 @@
                     <p:paragraph>代理人</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.personName}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.mortgage.personName}</p:paragraph>
                 </p:cell>
 
 
@@ -138,7 +138,7 @@
 
 
                 <p:cell>
-                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.credentialsNumber}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.mortgage.credentialsNumber}</p:paragraph>
                 </p:cell>
 
                 <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false" fixedHeight="33">
