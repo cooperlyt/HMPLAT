@@ -3,6 +3,7 @@
             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
             title="房屋转让协议">
 
 
@@ -256,7 +257,6 @@
 
 
 <p:cell>
-
 </p:cell>
 <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
     <p:paragraph>交易资金监管后,甲方应当配合乙方办理房屋的过户手续，将该房屋的产权证办到乙</p:paragraph>
@@ -266,17 +266,135 @@
 </p:cell>
 
 
-<p:cell colspan="7">
-    <p:paragraph><p:paragraph>询问日期：<p:text
-            value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
-            pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph></p:paragraph>
+<p:cell>
+</p:cell>
+<p:cell colspan="6">
+    <p:paragraph>第 四 条    甲方的承诺保证</p:paragraph>
 </p:cell>
 
+<p:cell>
+</p:cell>
+<p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>1、甲方承诺，所转让的房屋产权无其它的权利设定或其它纠纷，乙方买受后，如果</p:paragraph>
+</p:cell>
+<p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>发现该房产产权有纠纷或其他人主张权利，影响乙方权利行使，则由甲方负责解决。并赔</p:paragraph>
+</p:cell>
+<p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>偿乙方实际损失。</p:paragraph>
+</p:cell>
 
 </p:table>
 
 </p:font>
 </p:newPage>
+
+<p:newPage>
+
+    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="13">
+    <p:table columns="7" widths="0.5 1 1.3 1.3 1 1.3 1.3" headerRows="0" footerRows="0" widthPercentage="100">
+
+        <f:facet name="defaultCell">
+            <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="false" border="0"
+                    horizontalAlignment="left" verticalAlignment="left"/>
+        </f:facet>
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>2、监管资金交付后，甲方应全力配合乙方办理房屋过户相关事宜，如因甲方原因延</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>误或无法办理产权过户登记，甲方承担违约责任。</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>第 五 条     争议的解决</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>本协议在履行过程中发生争议，由双方协商解决，协商不成时，甲、乙双方可依法</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>向人民法院起诉。</p:paragraph>
+        </p:cell>
+
+
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>第 六 条     协议生效</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>本协议自甲、乙双方签字之日起生效。</p:paragraph>
+        </p:cell>
+
+
+
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>第 七 条     其它约定</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+        </p:cell>
+        <p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>本协议仅供房屋所有权转移登记使用，未尽事宜，双方可另行协商并签订补充协议</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>，补充协议与本协议具有同等法律效力。</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="7" fixedHeight="90">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>甲方:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>乙方:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" fixedHeight="50">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>电话:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>电话:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" fixedHeight="50">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell>
+
+       </p:cell>
+
+        <p:cell colspan="4">
+
+        </p:cell>
+        <p:cell colspan="2" horizontalAlignment="left" verticalAlignment="left">
+            <p:paragraph>年          月           日</p:paragraph>
+        </p:cell>
+
+
+    </p:table>
+    </p:font>
+</p:newPage>
+
 
 </a:repeat>
 </p:document>

@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+
+
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+        <ui:param name="for" value="sumPriceInput"/>
+
+        <ui:define name="label">
+            #{messages.SaleInfo_PayType}
+        </ui:define>
+
+        <div class="input-group">
+            <a:outputPanel styleClass="input-group-btn">
+
+                <h:selectOneMenu id="payTypeInput"
+                                 value="#{saleInfoSubscribe.instance.payType}"
+                                 label="#{messages.SaleInfo_PayType}"
+                                 styleClass="selectpicker select-menu-btn input-group-first">
+                    <s:selectItems value="#{ownerHouseHelper.salePayType}"
+                                   var="_word"
+                                   itemValue="#{_word}"
+                                   label="#{messages[_word.name()]}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                    <s:convertEnum></s:convertEnum>
+                </h:selectOneMenu>
+
+            </a:outputPanel>
+
+            <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}"
+                         label="#{messages.SaleInfo_SUM_PRICE}"
+                         size="20"
+                         required="true"
+                         id="sumPriceInput"
+                         p:placeholder="#{messages.SaleInfo_SUM_PRICE}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
+            </h:inputText>
+
+
+        </div>
+
+
+        <div class="form-inline">
+            <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    #{messages.SaleInfo_Supervise}
+                </ui:define>
+                <ui:param name="for" value="SuperviseInput"/>
+                <h:inputText label="#{messages.SaleInfo_Supervise}"
+                             id="SuperviseInput"
+                             value="#{saleInfoSubscribe.instance.superviseMoney}"
+                             styleClass="form-control"
+                             required="true">
+                    <r:validator event="blur"/>
+                    <f:validateDoubleRange minimum="0"/>
+                    <f:convertNumber pattern="#0.00"/>
+                </h:inputText>
+            </s:decorate>
+        </div>
+
+
+
+    </s:decorate>
+
+
+</ui:composition>
