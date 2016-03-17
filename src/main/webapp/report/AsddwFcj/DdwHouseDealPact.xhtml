@@ -1,0 +1,282 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            title="房屋转让协议">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+<p:newPage>
+<p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">房屋转让协议
+    </p:paragraph>
+</p:font>
+
+<p:table columns="1" widths="1" headerRows="0" footerRows="0" widthPercentage="100">
+    <f:facet name="defaultCell">
+        <p:cell padding="5" paddingBottom="5" paddingTop="3" noWrap="false" borderWidth="1.5"
+                horizontalAlignment="center" verticalAlignment="middle"/>
+    </f:facet>
+    <p:font size="13" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:cell borderWidthBottom="0">
+            <p:paragraph>重要提示</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthTop="0">
+            <p:paragraph>请房屋转让双方认真阅读协议全文，确认协议无异议后签字</p:paragraph>
+        </p:cell>
+    </p:font>
+</p:table>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="13">
+<p:table columns="7" widths="0.5 1 1.3 1.3 1 1.3 1.3" headerRows="0" footerRows="0" widthPercentage="100">
+
+<f:facet name="defaultCell">
+    <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="false" border="0"
+            horizontalAlignment="left" verticalAlignment="left"/>
+</f:facet>
+<p:cell colspan="7">
+    <p:paragraph>甲方</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>姓名:</p:paragraph>
+</p:cell>
+
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+</p:cell>
+
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>身份证号:</p:paragraph>
+</p:cell>
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph>#{_houseBusiness.startBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>姓名:</p:paragraph>
+</p:cell>
+
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.startBusinessHouse.businessPoolList}"><p:text
+            value="#{_businessPools.personName}   "/></ui:repeat></p:paragraph>
+</p:cell>
+
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>身份证号:</p:paragraph>
+</p:cell>
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.startBusinessHouse.businessPoolList}"><p:text
+            value="#{_businessPools.credentialsNumber}  "/></ui:repeat></p:paragraph>
+</p:cell>
+
+<p:cell colspan="7">
+    <p:paragraph>乙方</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>姓名:</p:paragraph>
+</p:cell>
+
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+</p:cell>
+
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>身份证号:</p:paragraph>
+</p:cell>
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>姓名:</p:paragraph>
+</p:cell>
+
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text
+            value="#{_businessPools.personName}  "/></ui:repeat></p:paragraph>
+</p:cell>
+
+<p:cell horizontalAlignment="center" verticalAlignment="middle">
+    <p:paragraph>身份证号:</p:paragraph>
+</p:cell>
+<p:cell colspan="2" borderWidthBottom="1">
+    <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text
+            value="#{_businessPools.credentialsNumber}  "/></ui:repeat></p:paragraph>
+</p:cell>
+<p:cell colspan="1">
+
+</p:cell>
+<p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>经双方协商，甲方同意将自有产权房屋转让给乙方，现就房屋转让相关事宜达成以</p:paragraph>
+</p:cell>
+<p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>协议。</p:paragraph>
+</p:cell>
+
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+
+<p:cell colspan="6">
+    <p:paragraph>第 一 条 转让房屋的基本情况</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph>房屋坐落:</p:paragraph>
+</p:cell>
+<p:cell colspan="5">
+    <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+</p:cell>
+
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph>产 籍 号：</p:paragraph>
+</p:cell>
+<p:cell colspan="2">
+    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph>楼层：</p:paragraph>
+</p:cell>
+<p:cell colspan="2">
+    <p:paragraph>#{_houseBusiness.afterBusinessHouse.inFloorName}</p:paragraph>
+</p:cell>
+
+
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph>建筑面积:</p:paragraph>
+</p:cell>
+<p:cell colspan="2">
+    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell colspan="2">
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell>
+    <p:paragraph></p:paragraph>
+</p:cell>
+<p:cell colspan="6">
+    <p:paragraph>第 二 条 房屋交易资金及结算方式的约定</p:paragraph>
+</p:cell>
+
+<p:cell>
+</p:cell>
+
+<p:cell colspan="2">
+    <p:paragraph>房屋成交价格为： 人民币 </p:paragraph>
+</p:cell>
+
+<p:cell colspan="4" borderWidthBottom="1">
+    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.sumPrice}</p:paragraph>
+</p:cell>
+
+<p:cell>
+</p:cell>
+
+<p:cell colspan="1" horizontalAlignment="right" verticalAlignment="right">
+    <p:paragraph>小写</p:paragraph>
+</p:cell>
+
+<p:cell colspan="5" borderWidthBottom="1">
+    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.sumPrice}</p:paragraph>
+</p:cell>
+
+
+<p:cell>
+</p:cell>
+
+<p:cell colspan="3">
+    <p:paragraph>存入监管账户的资金额为： 人民币</p:paragraph>
+</p:cell>
+
+<p:cell colspan="3" borderWidthBottom="1" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.superviseMoney}</p:paragraph>
+</p:cell>
+
+<p:cell>
+</p:cell>
+
+<p:cell colspan="1" horizontalAlignment="right" verticalAlignment="right">
+    <p:paragraph>小写</p:paragraph>
+</p:cell>
+
+<p:cell colspan="5" borderWidthBottom="1">
+    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.superviseMoney}</p:paragraph>
+</p:cell>
+
+
+<p:cell>
+
+</p:cell>
+<p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>存入监管账户的款项由鞍山经济开发区房产局监管，并由乙方存入鞍山经济开发区</p:paragraph>
+</p:cell>
+<p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>房产局账户。</p:paragraph>
+</p:cell>
+
+
+<p:cell>
+
+</p:cell>
+<p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>房屋产权转移登记完成后，甲方到鞍山经济开发区房产局领取全部交易资金。交易</p:paragraph>
+</p:cell>
+<p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>终止时，由乙方领取。</p:paragraph>
+</p:cell>
+
+<p:cell>
+</p:cell>
+<p:cell colspan="6">
+    <p:paragraph>第 三 条 房屋过户</p:paragraph>
+</p:cell>
+
+
+<p:cell>
+
+</p:cell>
+<p:cell colspan="6" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>交易资金监管后,甲方应当配合乙方办理房屋的过户手续，将该房屋的产权证办到乙</p:paragraph>
+</p:cell>
+<p:cell colspan="7" horizontalAlignment="left" verticalAlignment="left">
+    <p:paragraph>方名下。</p:paragraph>
+</p:cell>
+
+
+<p:cell colspan="7">
+    <p:paragraph><p:paragraph>询问日期：<p:text
+            value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+            pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph></p:paragraph>
+</p:cell>
+
+
+</p:table>
+
+</p:font>
+</p:newPage>
+
+</a:repeat>
+</p:document>
