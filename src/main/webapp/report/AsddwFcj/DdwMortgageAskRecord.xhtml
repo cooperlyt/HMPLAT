@@ -1,0 +1,168 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="房屋抵押权登记询问笔录">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="10" style="bold">
+    <p:table columns="8" widths="2 2 2 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+
+    <f:facet name="defaultCell">
+        <p:cell padding="2" paddingBottom="2" paddingTop="2" noWrap="false" border="0"
+                horizontalAlignment="left" verticalAlignment="left"/>
+    </f:facet>
+       <p:cell colspan="4">
+
+       </p:cell>
+        <p:cell colspan="1">
+            <p:paragraph>产籍号：</p:paragraph>
+        </p:cell>
+        <p:cell colspan="2" borderWidthBottom="1">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+        </p:cell>
+        <p:cell colspan="1" >
+            <p:paragraph>等几户</p:paragraph>
+        </p:cell>
+
+    </p:table>
+    </p:font>
+
+<p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">房屋抵押权登记询问笔录
+    </p:paragraph>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="13">
+    <p:table columns="7" widths="1 1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+
+        <f:facet name="defaultCell">
+            <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="false" border="0"
+                    horizontalAlignment="left" verticalAlignment="left"/>
+        </f:facet>
+
+
+        <p:cell>
+            <p:paragraph>询问时间:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="6">
+            <p:paragraph><p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph></p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>询问地点:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="4" borderWidthBottom="1">
+            <p:paragraph>鞍山经济开发区房产局产权登记发证中心</p:paragraph>
+        </p:cell>
+        <p:cell colspan="2">
+            <p:paragraph>□</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>其它地点:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="4" borderWidthBottom="1">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell colspan="2">
+            <p:paragraph>□</p:paragraph>
+        </p:cell>
+
+
+        <p:cell>
+            <p:paragraph>询问人:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="6">
+            <p:paragraph>#{ownerBusinessHome.instance.applyEmp.empName}</p:paragraph>
+        </p:cell>
+
+
+        <p:cell colspan="7">
+            <p:paragraph>询问内容：</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="7">
+            <p:paragraph>1、申请登记事项是否为申请人真实意思表示？              回答：	□ 是	  □ 否</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>2、申请的房屋抵押登记的类型为</p:paragraph>
+        </p:cell>
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="10">
+        <p:cell colspan="4">
+            <p:paragraph>□一般抵押权  □最高抵押权	□在建工程抵押权</p:paragraph>
+        </p:cell>
+        </p:font>
+
+        <p:cell colspan="3">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="10">
+            <p:cell colspan="4">
+                <p:paragraph>□抵押权更正	□补他项权利证（抵押登记证明）	□其它</p:paragraph>
+            </p:cell>
+        </p:font>
+
+        <p:cell colspan="4">
+            <p:paragraph>3、申请抵押登记房屋的债权总金额（大写）</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthBottom="1">
+            <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.bigHighestMountMoney}</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3">
+            <p:paragraph>4、申请抵押登记房屋的债务履行期限</p:paragraph>
+        </p:cell>
+        <p:cell colspan="4" borderWidthBottom="1">
+            <p:paragraph><p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text> 至 <p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="7">
+            <p:paragraph>5、需要补充说明的事项：</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" borderWidthBottom="1" fixedHeight="30">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" borderWidthBottom="1" fixedHeight="30">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell colspan="7" borderWidthBottom="1" fixedHeight="30">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14" style="bold">
+        <p:cell colspan="7">
+            <p:paragraph>       被询问人已认真阅读，并承诺上述询问内容真实有效，如有不实，承担一切法律</p:paragraph>
+        </p:cell>
+            <p:cell colspan="7">
+                <p:paragraph>责任。</p:paragraph>
+            </p:cell>
+        </p:font>
+        <p:cell colspan="7" fixedHeight="40"></p:cell>
+        <p:cell colspan="3">
+        </p:cell>
+        <p:cell colspan="4">
+            <p:paragraph>被询问人（抵押权人受托人签字）：</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+        </p:cell>
+        <p:cell colspan="4">
+            <p:paragraph>被询问人（抵押人或代理人签字）:</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3">
+        </p:cell>
+        <p:cell colspan="4">
+            <p:paragraph><p:paragraph>询问日期：<p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph></p:paragraph>
+        </p:cell>
+
+
+    </p:table>
+    </p:font>
+</a:repeat>
+</p:document>
