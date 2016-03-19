@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="抵押权登记变更申请书">
+            title="房屋抵押权登记注销申请书">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">抵押权登记变更申请书
+    <p:paragraph alignment="center">房屋抵押权登记注销申请书
     </p:paragraph>
 </p:font>
 
@@ -264,27 +264,16 @@
             <p:paragraph>抵押面积</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph rendered="false">#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageArea}</p:paragraph>
+            <p:paragraph></p:paragraph>
         </p:cell>
 
 
 
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更前</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph rendered="false">大写：#{ownerBusinessHome.instance.mortgaegeRegiste.bigHighestMountMoney}  ￥：#{ownerBusinessHome.instance.mortgaegeRegiste.highestMountMoney}</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更后</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph rendered="false"><p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  起  至    <p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
-        </p:cell>
 
 
 
-        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="40">
+
+        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="120">
             <p:paragraph rendered="false">备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
