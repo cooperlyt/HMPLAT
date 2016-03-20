@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="在建工程抵押权变更登记申请书">
+            title="在建工程抵押权注销登记申请书">
 
 
 
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">在建工程抵押权变更登记申请书
+    <p:paragraph alignment="center">在建工程抵押权注销登记申请书
     </p:paragraph>
 </p:font>
 
@@ -153,7 +153,7 @@
                     <p:paragraph>共有情况</p:paragraph>
                 </p:cell>
                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-                 </p:cell>
+                </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>代理人姓名</p:paragraph>
                 </p:cell>
@@ -248,22 +248,11 @@
         </p:cell>
 
 
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更前</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph>#{ownerBusinessHome.modifyBeforReason.reason}</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更后</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph>#{ownerBusinessHome.modifyAfterReason.reason}</p:paragraph>
-        </p:cell>
 
 
 
-        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="70">
+
+        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="120">
             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
@@ -348,5 +337,4 @@
 </p:table>
 </p:font>
 <p:newPage/>
-
 </p:document>
