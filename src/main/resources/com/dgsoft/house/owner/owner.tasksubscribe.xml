@@ -283,6 +283,7 @@
            核费信息查看
         </description>
     </view-subscribe>
+
    <!--
     <view-subscribe name="PersionPreBuyEntrustView"
                     page="/business/houseOwner/subscribe/PersionPreBuyEntrustView.xhtml">
@@ -496,7 +497,11 @@
 
 
 
-
+    <view-subscribe name="ReasonContractView" page="/business/houseOwner/subscribe/ReasonContractView.xhtml">
+        <description>
+           合同备案号查看(达道湾Reason)
+        </description>
+    </view-subscribe>
 
 
 
@@ -993,6 +998,12 @@
     <edit-subscribe name="GiveCardEdit" page="/business/houseOwner/subscribe/GiveCardEdit.xhtml" component="">
         <description>
            发证阶段信息编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ReasonContractEdit" page="/business/houseOwner/subscribe/ReasonContractEdit.xhtml" component="">
+        <description>
+            合同备案号编辑(鞍山达道湾Reason)
         </description>
     </edit-subscribe>
 

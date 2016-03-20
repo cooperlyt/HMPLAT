@@ -834,6 +834,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return getReason(Reason.ReasonType.DIFFICULTY);
     }
 
+    @Transient
+    public Reason getContractReason(){
+        return getReason(Reason.ReasonType.CONTRACT);
+    }
+
     /**
      * 注销原因
      */

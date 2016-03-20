@@ -354,6 +354,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     public Reason getModifyAfterReason(){
         return getInstance().getModifyAfterReason();
     }
+    @Deprecated
+    public Reason getContractReason(){
+        return getInstance().getContractReason();
+    }
+
+
 
     @Deprecated
     public BusinessEmp getCreateEmp(){
