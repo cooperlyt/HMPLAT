@@ -84,7 +84,7 @@ public class SaleInfo implements java.io.Serializable {
 		this.sumPrice = sumPrice;
 	}
 
-    @Column(name = "SUPERVISE_MONEY", nullable = false, scale = 4)
+    @Column(name = "SUPERVISE_MONEY", nullable = true, scale = 4)
     @NotNull
     public BigDecimal getSuperviseMoney() {
         return superviseMoney;
