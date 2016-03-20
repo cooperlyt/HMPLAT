@@ -84,15 +84,7 @@ public class SaleInfo implements java.io.Serializable {
 		this.sumPrice = sumPrice;
 	}
 
-    @Column(name = "SUPERVISE_MONEY", nullable = true, scale = 4)
-    @NotNull
-    public BigDecimal getSuperviseMoney() {
-        return superviseMoney;
-    }
 
-    public void setSuperviseMoney(BigDecimal superviseMoney) {
-        this.superviseMoney = superviseMoney;
-    }
 
     @Column(name = "GIFTAREA", nullable = true, scale = 4)
     public BigDecimal getGiftArea() {
@@ -103,6 +95,15 @@ public class SaleInfo implements java.io.Serializable {
         this.giftArea = giftArea;
     }
 
+
+    @Column(name = "SUPERVISE_MONEY", nullable = true, scale = 4)
+    public BigDecimal getSuperviseMoney() {
+        return superviseMoney;
+    }
+
+    public void setSuperviseMoney(BigDecimal superviseMoney) {
+        this.superviseMoney = superviseMoney;
+    }
 
     @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "HOUSEID", nullable = false)
