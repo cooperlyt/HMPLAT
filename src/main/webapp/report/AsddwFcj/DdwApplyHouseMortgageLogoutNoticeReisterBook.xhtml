@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="预购商品房抵押权预告登记变更申请书">
+            title="预购商品房抵押权预告注销登记申请书">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">预购商品房抵押权预告登记变更申请书
+    <p:paragraph alignment="center">预购商品房抵押权预告注销登记申请书
     </p:paragraph>
 </p:font>
 
@@ -268,30 +268,25 @@
         <p:cell borderWidthLeft="0" >
             <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageArea}</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更前</p:paragraph>
+        <p:cell borderWidthLeft="0" fixedHeight="50">
+            <p:paragraph>注销原因</p:paragraph>
         </p:cell>
         <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph>#{ownerBusinessHome.modifyBeforReason.reason}</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="40">
-            <p:paragraph>变更后</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph>#{ownerBusinessHome.modifyAfterReason.reason}</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.instance.logout.reason}</p:paragraph>
         </p:cell>
 
 
 
 
 
-        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="40">
+
+        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="50">
             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
     </p:table>
 </p:cell>
-<p:cell colspan="2" fixedHeight="110">
+<p:cell colspan="2" fixedHeight="130">
     <p:table columns="5" widths="0.5 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
         <f:facet name="defaultCell">
             <p:cell verticalAlignment="top" horizontalAlignment="left" padding="0" border="0" noWrap="false" borderWidthTop="0"/>
