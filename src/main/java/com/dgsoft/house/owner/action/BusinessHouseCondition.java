@@ -233,6 +233,20 @@ public abstract class BusinessHouseCondition {
         return getSearchType().name();
     }
 
+    public String getSearchProjectByName(){
+        if (searchType == null){
+            return searchKey;
+        }
+        return null;
+    }
+
+    public String getSearchProjectByDeveloper(){
+        if (searchType == null){
+            return searchKey;
+        }
+        return null;
+    }
+
     public void resetCondition(){
         searchKey = null;
         mapNumber = null;
