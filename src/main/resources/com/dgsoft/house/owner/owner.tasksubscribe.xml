@@ -160,6 +160,13 @@
             共有权人查看（业务中）
         </description>
     </view-subscribe>
+
+    <view-subscribe name="ProjectCardLockedHouseView" page="/business/houseOwner/subscribe/ProjectCardLockedHouseView.xhtml">
+        <description>
+            销售许可证不可售房屋查看
+        </description>
+    </view-subscribe>
+
   <!--
     <view-subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml">
         <description>

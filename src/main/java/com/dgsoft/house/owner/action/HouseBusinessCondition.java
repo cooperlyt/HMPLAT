@@ -25,6 +25,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
             "left join owner.makeCard ownerCard " +
             "left join house.businessPools pool " +
             "left join pool.makeCard poolCard " +
+            "left join biz.businessProjects project " +
             "left join house.contractOwner contractOwner";
 
     public static final String SHORT_EJBQL = "select biz from OwnerBusiness biz  " ;
@@ -82,7 +83,9 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
             "lower(houseBusiness.houseCode) = lower(#{houseBusinessCondition.searchHouseCode})",
             "lower(cards.number) = lower(#{houseBusinessCondition.searchCardNumber})",
             "lower(ownerCard.number) = lower(#{houseBusinessCondition.searchCardNumber})",
-            "lower(poolCard.number) = lower(#{houseBusinessCondition.searchCardNumber})"
+            "lower(poolCard.number) = lower(#{houseBusinessCondition.searchCardNumber})",
+            "lower(project.developerName) like lower(concat('%',concat(#{houseBusinessCondition.searchProjectByDeveloper},'%')))",
+            "lower(project.name) like lower(concat('%',concat(#{houseBusinessCondition.searchProjectByName},'%')))"
     };
 
 

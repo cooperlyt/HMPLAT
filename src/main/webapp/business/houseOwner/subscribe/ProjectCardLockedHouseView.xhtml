@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <a:outputPanel
+            rendered="#{ empty projectCardLockedHouseView.resultList}">
+        未设置不可售房屋
+            </a:outputPanel>
+
+    <a:outputPanel
+            rendered="#{not empty projectCardLockedHouseView.resultList}">
+
+
+        <h:outputStylesheet>
+            .subTableHeader{
+                text-align: left !important;
+            }
+        </h:outputStylesheet>
+
+        <dh:entryGridBlock columns="1" group="#{messages.ProjectLockedHouse}">
+
+            <dh:entryGridColumn colspan="1">
+                <h:dataTable style="width: 100%;" styleClass="table " headerClass="subTableHeader"
+                             value="#{projectCardLockedHouseView.resultList}" var="_house">
+
+                    <h:column>
+                        <f:facet name="header">
+                            房屋编号
+                        </f:facet>
+
+                        #{_house.id}
+                    </h:column>
+
+
+                    <h:column>
+                        <f:facet name="header">
+                            产籍号
+                        </f:facet>
+
+                        #{_house.displayHouseCode}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            楼幢
+                        </f:facet>
+
+                        #{_house.buildName}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            房号
+                        </f:facet>
+                        #{_house.houseOrder}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            建筑面积
+                        </f:facet>
+                       <h:outputText value="#{_house.houseArea}">
+
+                       </h:outputText>
+                    </h:column>
+
+                </h:dataTable>
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+</ui:composition>
