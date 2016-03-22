@@ -6,97 +6,365 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
 
+    <h:outputStylesheet library="jquery-ad-gallery" name="/css/jquery.ad-gallery.css"/>
+
+    <h:outputStylesheet library="jquery-fancybox" name="jquery.fancybox.css"/>
+
+
+    <h:outputStylesheet>
+        .ad-gallery {
+            width: 98%;
+            margin-top: 10px;
+        }
+
+        .ad-gallery .ad-image-wrapper {
+
+        }
+
+        .gh-header-show.edit-title {
+            display: none;
+        }
+
+        .ad-controls .custome-controls{
+            float: right;
+        }
+
+        .ad-controls .custome-controls a{
+            margin: 0 5px;
+        }
+    </h:outputStylesheet>
+
+    <h:outputScript>
+
+        function editNodeTitle() {
+            $(".edit-title").show();
+            $(".node-title").hide();
+
+        }
+
+    </h:outputScript>
+
+    <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+        <ui:param name="panelId" value="deleteNodeConfirmPanel"/>
+        <ui:param name="entityTitle" value="节点"/>
+        <ui:define name="deleteNote">
+            <p>只能删除没有文件的节点</p>
+        </ui:define>
+        <a:commandButton styleClass="btn btn-block btn-danger" action="#{businessFileEntity.deleteSelectNode}"
+                         value="#{messages.confirmDelete}" oncomplete="$('#deleteNodeConfirmPanel').modal('hide')"
+                         render="fileTree,selectNodePanel" immediate="true" execute="@this">
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+    </ui:decorate>
 
     <div class="row">
 
         <div class="col-md-5">
-    <a:outputPanel id="fileTree">
-    <div id="tree"></div>
+            <a:outputPanel id="fileTree">
+                <div id="tree"></div>
 
-    <h:outputScript>
+                <h:outputScript>
 
 
-
-        $(document).ready(
-                function(){
+                    $(document).ready(
+                    function(){
                     $('#tree').treeview({data: #{businessFileEntity.tree},showCheckbox: false});
 
 
                     $('#tree').on('nodeSelected', function(event, data) {
-                        alert(data.id)
+                    nodeSelected(data.id);
+
                     });
-                });
+
+                    $('#tree').on('nodeUnselected', function(event, data) {
+                    nodeSelected("");
+
+                    });
 
 
+                    });
 
 
-    </h:outputScript>
+                </h:outputScript>
 
 
-    </a:outputPanel>
+            </a:outputPanel>
 
-    <h:form>
-        <div style="margin-bottom: 15px">
+            <h:form>
+                <a:jsFunction name="nodeSelected" execute="@this" render="selectNodePanel">
+                    <a:param name="selectId" assignTo="#{businessFileEntity.selectNodeId}"/>
+
+                </a:jsFunction>
+
+                <a:jsFunction name="receiveFile"
+                              action="#{businessFileEntity.fileUploaded}" execute="@this" render="fileTree,selectNodePanel">
+                    <a:param name="data" assignTo="#{businessFileEntity.fileUploadData}"/>
+                </a:jsFunction>
 
 
-            <div class="input-group">
-                <h:inputText id="newOtherFileInput" styleClass="form-control typeahead" autocomplete="off"
+                <a:jsFunction name="deleteImage" action="#{businessFileEntity.deleteFile}" execute="@this" render="fileTree,selectNodePanel">
+                    <a:param name="fileId" assignTo="#{businessFileEntity.fileId}"/>
+                </a:jsFunction>
+            </h:form>
 
-                             value="#{businessFileEntity.otherFileName}" required="true"/>
+            <h:form>
+                <div style="margin-bottom: 15px">
+
+
+                    <div class="input-group">
+                        <h:inputText id="newOtherFileInput" styleClass="form-control typeahead" autocomplete="off"
+
+                                     value="#{businessFileEntity.otherFileName}" required="true"/>
                             <span class="input-group-btn">
                                 <a:commandLink styleClass="btn  btn-default"
                                                oncomplete="#{r:jQuery('newOtherFileInput')}.val('');"
-                                               execute="@form" render="fileTree,passBtn" action="#{businessFileEntity.addOtherFile}">
+                                               execute="@form" render="fileTree,passBtn"
+                                               action="#{businessFileEntity.addOtherFile}">
                                     添加附件
                                     <a:attachQueue requestDelay="0"/>
                                 </a:commandLink>
                             </span>
-            </div>
+                    </div>
 
-        </div>
-        <h:outputScript>
+                </div>
+                <h:outputScript>
 
-            $(document).ready(
-            function(){
-
-
-
-            // 此操作 耗时 如果是查询耗时 加入业务 和 时间 过滤
-            $('.typeahead').typeahead({source:#{allOtherFileAutoComplete},minLength:0});
-
-            });
+                    $(document).ready(
+                    function(){
 
 
+                    // 此操作 耗时 如果是查询耗时 加入业务 和 时间 过滤
+                    $('.typeahead').typeahead({source:#{allOtherFileAutoComplete},minLength:0});
 
-        </h:outputScript>
-    </h:form>
+                    });
+
+
+                </h:outputScript>
+
+
+            </h:form>
+
 
         </div>
         <div class="col-md-7">
+            <h:form>
+
+                <a:outputPanel id="selectNodePanel">
+
+                    <a:outputPanel layout="block" rendered="#{empty businessFileEntity.selectNodeId}"
+                                   styleClass="blankslate spacious large-format">
+                        <span class="mega-octicon octicon-milestone"></span>
+
+                        <h3>请选择节点</h3>
+
+                        <p>请选择左侧要件/附件节点后，查看或上传要件/附件</p>
+                    </a:outputPanel>
+                    <a:outputPanel rendered="#{not empty businessFileEntity.selectNodeId}">
+
+                        <div class="gh-header">
+
+                            <div class="gh-header-show edit-title">
+                                <a:region>
+                                    <a:outputPanel layout="block" rendered="#{businessFileEntity.selectNode.canEditTitle}"
+                                                   styleClass="input-group">
+                                        <h:inputText value="#{businessFileEntity.selectNode.businessFile.name}"
+                                                     styleClass="form-control"/>
+      <span class="input-group-btn">
+          <a:commandLink execute="@region" styleClass="btn btn-default" value="完成" render="fileTree,selectNodePanel"/>
+
+      </span>
+                                    </a:outputPanel>
+                                </a:region>
+
+                            </div>
+                            <div class="gh-header-show node-title">
+
+                                <a:outputPanel layout="block" styleClass="gh-header-actions"
+                                               rendered="#{businessFileEntity.selectNode.canPutFile}">
 
 
-            <div class="gh-header">
-                <div class="gh-header-show">
-                    <div class="gh-header-actions">
-                        <a href="/cooper-lyt/HMPLAT/wiki/Home/_edit" class="btn btn-sm ">Edit</a>
-                        <a href="/cooper-lyt/HMPLAT/wiki/_new" class="btn btn-sm btn-primary">New Page</a>
-                    </div>
-                    <h1 class="gh-header-title instapaper_title">Home</h1>
-                    <div class="gh-header-meta">
+                                    <h:outputLink rendered="#{businessFileEntity.selectNode.canEditTitle}"
+                                                  onclick="$('#deleteNodeConfirmPanel').modal('show'); return false;"
+                                                  disabled="#{not empty businessFileEntity.selectNode.images}"
+                                                  styleClass="btn btn-sm btn-danger #{empty businessFileEntity.selectNode.images ? '' : 'disabled'}">
+                                        删除
+                                    </h:outputLink>
 
-                    </div>
-                </div>
-            </div>
+                                    <a href="#" class="btn btn-sm "
+                                       onclick="uploadFile(#{businessFileEntity.selectNode.id});return false;">上传</a>
+                                    <a href="#" class="btn btn-sm btn-primary" >拍照</a>
+                                    <a:push id="uploadPush" address="#{businessFileEntity.selectNode.id}"
+                                            ondataavailable="receiveFile(event.rf.data);">
 
+                                    </a:push>
+
+                                </a:outputPanel>
+
+
+                                <h1 class="gh-header-title instapaper_title">
+                                    <a:outputPanel rendered="#{businessFileEntity.selectNode.nodeType eq 'CHILDREN'}"
+                                                   styleClass="glyphicon glyphicon-picture"/>
+
+                                    <a:outputPanel rendered="#{businessFileEntity.selectNode.nodeType eq 'ANYONE'}"
+                                                   styleClass="glyphicon glyphicon-list"/>
+
+                                    <a:outputPanel rendered="#{businessFileEntity.selectNode.nodeType eq 'ALL'}"
+                                                   styleClass="glyphicon glyphicon-align-justify"/>
+                                    #{businessFileEntity.selectNode.name}
+
+                                    <h:outputLink rendered="#{businessFileEntity.selectNode.canEditTitle}"
+                                                  onclick="editNodeTitle();return false;">
+                                        <span class="octicon octicon-pencil"></span>
+                                    </h:outputLink>
+                                </h1>
+
+
+                                <div class="gh-header-meta">
+                                    #{businessFileEntity.selectNode.description} #{businessFileEntity.selectNode.id}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <a:outputPanel id="nodeImages">
+                            <a:outputPanel layout="block" style="margin-top: 10px"
+                                           rendered="#{empty businessFileEntity.selectNode.images}"
+                                           styleClass="blankslate spacious large-format">
+                                <span class="mega-octicon octicon-inbox"></span>
+
+                                <h3>没有文件</h3>
+
+                                <p>此节点下没有任何文件</p>
+                            </a:outputPanel>
+
+                            <h:outputScript>
+                                $(document).ready(
+                                        function(){
+                                            $('.img-delete').click(function (){
+                                                deleteImage($('div.ad-image img').data('file-id'));
+                                                return false;
+                                            });
+                                        });
+                            </h:outputScript>
+
+                            <a:outputPanel id="gallery" layout="block" styleClass="ad-gallery"
+                                           rendered="#{not empty businessFileEntity.selectNode.images}">
+                                <div class="ad-image-wrapper"></div>
+                                <div class="ad-controls"><div class="custome-controls"><a class="img-delete">删除</a><a class="img-print-view" onclick="return false">打印</a>
+                                    <a class="img-orig-view" target="_blank">原图</a></div></div>
+                                <div class="ad-nav">
+                                    <div class="ad-thumbs">
+                                        <ul class="ad-thumb-list">
+                                            <a:repeat var="_img" value="#{businessFileEntity.selectNode.images}">
+                                                <li>
+                                                    <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.fileName}">
+                                                        <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.fileName}"
+                                                             data-file-id="#{_img.fileName}"
+                                                             title="#{_img.businessFile.name}" alt="#{_img.empName}"/>
+                                                    </a>
+                                                </li>
+
+                                            </a:repeat>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </a:outputPanel>
+
+
+                            <h:outputScript>
+                                $(document).ready(
+                                        function () {
+                                            $('.ad-gallery').adGallery({
+                                                //animate_first_image: true,
+                                                slideshow: {
+                                                    enable: false
+                                                },
+                                                callbacks: {
+                                                    afterImageVisible: function() {
+
+                                $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'))
+
+                                                        //$('div.ad-image a').jqzoom({
+                                                        //    zoomType: 'standard',
+                                                        //    //preloadText: locale.gallery.preloadText,
+                                                        //    position: 'left',
+                                                        //    title: true,
+                                                        //    zoomWidth: 300,
+                                                        //    zoomHeight: 300,
+                                                        //    preloadImages: true
+                                                        //});
+                                                        //
+                                                        //$("div.zoomPad").mouseenter(function() {
+                                                        //    var $container = $("div.ad-image");
+                                                        //    $container.css('width', '850px').css('height', '350px');
+                                                        //    $container.parent().css('width', '850px').css('height', '350px');
+                                                        //    $('div.ad-prev').css('width', '25px');
+                                                        //}).mouseleave(function() {
+                                                        //    var $container = $("div.ad-image");
+                                                        //    $container.css('width', '300px').css('height', '300px');
+                                                        //    $container.parent().css('width', '300px').css('height', '300px');
+                                                        //    $('div.ad-prev').css('width', '25px');
+                                                        //});
+                                                    }
+                                                }
+
+                                            });
+
+                                            $(".ad-gallery").on("click", ".ad-image", function () {
+
+                                                       // alert($(this).find("img").data("file-id"));
+                                                //TODO 多个图
+                                                $.fancybox(
+                                                        {
+
+                                                            href: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $(this).find("img").data("file-id") + '.jpg',
+                                                            title: '图片',
+                                                            // closeBtn: false,
+
+                                                            //openEffect : 'elastic',
+                                                            //  openSpeed  : 150,
+                                                            //  closeEffect : 'elastic',
+                                                            //  closeSpeed  : 150,
+
+
+                                                        }
+                                                );
+                                            });
+
+                                        });
+
+
+                            </h:outputScript>
+
+
+                        </a:outputPanel>
+                    </a:outputPanel>
+                </a:outputPanel>
+            </h:form>
         </div>
 
     </div>
+
+    <iframe style="display:none;" class="call_extend_iframe" src=""/>
+
+    <h:outputScript>
+        function uploadFile(typeId) {
+            $('.call_extend_iframe').attr('src', 'ExtendsUpload://' + typeId);
+        }
+
+    </h:outputScript>
+
+    <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
     <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
     <h:outputScript library="bootstrap" name="/js/bootstrap3-typeahead.min.js"/>
+    <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
+    <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+    <h:outputScript library="jqzoom" name="jquery.jqzoom-core.pack.js"/>
 
-    <h:outputScript library="weed-fs" name="weedfs.js"/>
 </ui:composition>
