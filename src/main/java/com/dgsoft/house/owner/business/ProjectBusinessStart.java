@@ -158,7 +158,12 @@ public class ProjectBusinessStart {
         }
 
         for (BusinessBuild businessBuild : ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject().getBusinessBuilds()) {
-            businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), businessBuild), true));
+            Build build = houseEntityLoader.getEntityManager().find(Build.class,businessBuild.getBuildCode());
+            if (build == null) {
+                businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), businessBuild), true));
+            }else{
+                businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build), true));
+            }
         }
         for (BatchOperData<Build> build : builds) {
             businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build.getData()), false));
