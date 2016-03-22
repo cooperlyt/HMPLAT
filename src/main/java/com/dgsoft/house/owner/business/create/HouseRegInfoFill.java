@@ -29,6 +29,8 @@ public class HouseRegInfoFill implements BusinessDataFill {
               HouseRegInfo houseRegInfo = houseBusiness.getStartBusinessHouse().getHouseRegInfo();
               if(houseRegInfo!=null) {
                   houseBusiness.getAfterBusinessHouse().setHouseRegInfo(new HouseRegInfo(houseRegInfo));
+
+
               }
           }
       }
