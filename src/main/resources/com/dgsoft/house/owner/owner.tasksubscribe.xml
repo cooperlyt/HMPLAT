@@ -283,6 +283,7 @@
            核费信息查看
         </description>
     </view-subscribe>
+
    <!--
     <view-subscribe name="PersionPreBuyEntrustView"
                     page="/business/houseOwner/subscribe/PersionPreBuyEntrustView.xhtml">
@@ -320,6 +321,12 @@
     <view-subscribe name="SaleInfoGiftView" page="/business/houseOwner/subscribe/SaleInfoGiftView.xhtml">
         <description>
             房屋交易信息,赠与面积,付款方式,购房款查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="SaleInfoSuperviseView" page="/business/houseOwner/subscribe/SaleInfoSuperviseView.xhtml">
+        <description>
+            房屋交易信息,监管资金,付款方式,购房款查看
         </description>
     </view-subscribe>
 
@@ -490,7 +497,11 @@
 
 
 
-
+    <view-subscribe name="ReasonContractView" page="/business/houseOwner/subscribe/ReasonContractView.xhtml">
+        <description>
+           合同备案号查看(达道湾Reason)
+        </description>
+    </view-subscribe>
 
 
 
@@ -740,6 +751,12 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="SaleInfoSuperviseEdit" page="/business/houseOwner/subscribe/SaleInfoSuperviseEdit.xhtml" component="">
+        <description>
+            房屋交易信息,监管资金,付款方式,购房款编辑
+        </description>
+    </edit-subscribe>
+
     <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
                     component="">
         <description>
@@ -981,6 +998,12 @@
     <edit-subscribe name="GiveCardEdit" page="/business/houseOwner/subscribe/GiveCardEdit.xhtml" component="">
         <description>
            发证阶段信息编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ReasonContractEdit" page="/business/houseOwner/subscribe/ReasonContractEdit.xhtml" component="">
+        <description>
+            合同备案号编辑(鞍山达道湾Reason)
         </description>
     </edit-subscribe>
 

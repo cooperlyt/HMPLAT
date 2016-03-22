@@ -22,9 +22,9 @@ public class SaleInfoFill implements BusinessDataFill {
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                SaleInfo SaleInfo = houseBusiness.getStartBusinessHouse().getSaleInfo();
-                if(SaleInfo!=null) {
-                    houseBusiness.getAfterBusinessHouse().setSaleInfo(new SaleInfo(SaleInfo,houseBusiness.getAfterBusinessHouse()));
+                if (houseBusiness.getStartBusinessHouse().getSaleInfo()!=null){
+                   SaleInfo SaleInfo = houseBusiness.getStartBusinessHouse().getSaleInfo();
+                   houseBusiness.getAfterBusinessHouse().setSaleInfo(new SaleInfo(SaleInfo,houseBusiness.getAfterBusinessHouse()));
                 }
             }
         }

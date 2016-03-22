@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="HouseOwnerBusiness" width="778" height="492">
+  <node name="业务受理" x="36" y="15" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="受理" x="35" y="187" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核" x="447" y="107" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="登薄" x="134" y="307" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="归档" x="193" y="455" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="缮证" x="397" y="378" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="繕证判断" x="193" y="376" width="132" height="36">
+    <edge>
+      <label x="-15" y="-12"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核结果" x="450" y="188" width="132" height="36">
+    <edge>
+      <label x="-21" y="-13"/>
+    </edge>
+    <edge>
+      <label x="10" y="-19"/>
+    </edge>
+  </node>
+  <node name="是否登薄" x="318" y="307" width="132" height="36">
+    <edge>
+      <label x="-1" y="-4"/>
+    </edge>
+    <edge>
+      <label x="-21" y="-18"/>
+    </edge>
+  </node>
+  <node name="登薄结果" x="-67" y="305" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-41" y="-11"/>
+    </edge>
+  </node>
+  <node name="类型判断" x="36" y="90" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-24" y="-18"/>
+    </edge>
+  </node>
+  <node name="要件上传" x="272" y="69" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="33" y="454" width="132" height="36"/>
+</root-container>
