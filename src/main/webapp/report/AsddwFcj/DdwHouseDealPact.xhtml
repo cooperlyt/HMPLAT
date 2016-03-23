@@ -190,7 +190,9 @@
 </p:cell>
 
 <p:cell colspan="4" borderWidthBottom="1">
-    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.sumPrice}</p:paragraph>
+    <p:paragraph><p:text value="#{ownerBusinessHome.instance.saleInfo.sumPrice}">
+        <f:converter converterId="dgsoft.faces.BigMoneyConverter"/>
+    </p:text></p:paragraph>
 </p:cell>
 
 <p:cell>
@@ -201,7 +203,9 @@
 </p:cell>
 
 <p:cell colspan="5" borderWidthBottom="1">
-    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.sumPrice}</p:paragraph>
+    <p:paragraph><p:text value="#{ownerBusinessHome.instance.saleInfo.sumPrice}">
+        <f:convertNumber pattern="#0.00"/>
+    </p:text></p:paragraph>
 </p:cell>
 
 
@@ -213,7 +217,9 @@
 </p:cell>
 
 <p:cell colspan="3" borderWidthBottom="1" horizontalAlignment="left" verticalAlignment="left">
-    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.superviseMoney}</p:paragraph>
+    <p:paragraph><p:text value="#{ownerBusinessHome.instance.saleInfo.superviseMoney}">
+        <f:converter converterId="dgsoft.faces.BigMoneyConverter"/>
+    </p:text></p:paragraph>
 </p:cell>
 
 <p:cell>
@@ -224,7 +230,9 @@
 </p:cell>
 
 <p:cell colspan="5" borderWidthBottom="1">
-    <p:paragraph>#{ownerBusinessHome.instance.saleInfo.superviseMoney}</p:paragraph>
+    <p:paragraph><p:text value="#{ownerBusinessHome.instance.saleInfo.superviseMoney}">
+        <f:convertNumber pattern="#0.00"/>
+    </p:text></p:paragraph>
 </p:cell>
 
 
