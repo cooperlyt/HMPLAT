@@ -195,7 +195,7 @@
                                     </h:outputLink>
 
                                     <a href="#" class="btn btn-sm "
-                                       onclick="uploadFile(#{businessFileEntity.selectNode.id});return false;">上传</a>
+                                       onclick="selectFileUpload('#{businessFileEntity.selectNode.id}');return false;">上传</a>
                                     <a href="#" class="btn btn-sm btn-primary" >拍照</a>
                                     <a:push id="uploadPush" address="#{businessFileEntity.selectNode.id}"
                                             ondataavailable="receiveFile(event.rf.data);">
@@ -261,9 +261,9 @@
                                         <ul class="ad-thumb-list">
                                             <a:repeat var="_img" value="#{businessFileEntity.selectNode.images}">
                                                 <li>
-                                                    <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.fileName}">
-                                                        <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.fileName}"
-                                                             data-file-id="#{_img.fileName}"
+                                                    <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.id}">
+                                                        <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.id}"
+                                                             data-file-id="#{_img.id}"
                                                              title="#{_img.businessFile.name}" alt="#{_img.empName}"/>
                                                     </a>
                                                 </li>
@@ -282,6 +282,8 @@
                                         function () {
                                             $('.ad-gallery').adGallery({
                                                 //animate_first_image: true,
+                                                loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
+
                                                 slideshow: {
                                                     enable: false
                                                 },
@@ -354,8 +356,10 @@
     <iframe style="display:none;" class="call_extend_iframe" src=""/>
 
     <h:outputScript>
-        function uploadFile(typeId) {
-            $('.call_extend_iframe').attr('src', 'ExtendsUpload://' + typeId);
+
+
+        function selectFileUpload(typeId){
+            $('.call_extend_iframe').attr('src', 'ExtendsFileSelect://' + typeId);
         }
 
     </h:outputScript>
@@ -365,6 +369,5 @@
     <h:outputScript library="bootstrap" name="/js/bootstrap3-typeahead.min.js"/>
     <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
     <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
-    <h:outputScript library="jqzoom" name="jquery.jqzoom-core.pack.js"/>
 
 </ui:composition>

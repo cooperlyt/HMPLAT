@@ -39,24 +39,25 @@ public class FileUploadReceive extends HttpServlet {
         try {
             JSONObject jsonObject = new JSONObject(json.toString());
 
+
             //Logging.getLog(getClass()).debug("receive json data:" + jsonObject.toString());
-            Iterator it = jsonObject.keys();
+
             // Logging.getLog(getClass()).debug("receive json data:" );
-            while (it.hasNext()) {
-                String key = (String) it.next();
-                //Logging.getLog(getClass()).debug("push key:" + key);
 
-                TopicKey topicKey = new TopicKey(key);
-                TopicsContext topicsContext = TopicsContext.lookup();
-                try {
-                    topicsContext.publish(topicKey, jsonObject.toString());
+            String key = jsonObject.getString("key");
+            //Logging.getLog(getClass()).debug("push key:" + key);
 
-                } catch (MessageException e) {
-                    topicsContext.removeTopic(topicKey);
+            TopicKey topicKey = new TopicKey(key);
+            TopicsContext topicsContext = TopicsContext.lookup();
+            try {
+                topicsContext.publish(topicKey, jsonObject.toString());
 
-                    Logging.getLog(getClass()).warn(e.getMessage(), e);
-                }
+            } catch (MessageException e) {
+                topicsContext.removeTopic(topicKey);
+
+                Logging.getLog(getClass()).warn(e.getMessage(), e);
             }
+
         } catch (JSONException e) {
             throw new ServletException(e);
         }

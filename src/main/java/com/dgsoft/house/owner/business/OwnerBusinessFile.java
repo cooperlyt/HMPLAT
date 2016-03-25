@@ -213,16 +213,16 @@ public class OwnerBusinessFile {
         return result;
     }
 
-    public List<UploadFile> getAllImportanFile() {
-        List<UploadFile> result = new ArrayList<UploadFile>();
-        for (BusinessFile file : getAllImportantFile()) {
-            result.addAll(file.getUploadFiles());
-            if (file.isNoFile()) {
-                result.add(new UploadFile(file));
-            }
-        }
-        return result;
-    }
+//    public List<UploadFile> getAllImportanFile() {
+//        List<UploadFile> result = new ArrayList<UploadFile>();
+//        for (BusinessFile file : getAllImportantFile()) {
+//            result.addAll(file.getUploadFiles());
+//            if (file.isNoFile()) {
+//                result.add(new UploadFile(file));
+//            }
+//        }
+//        return result;
+//    }
 
 
 
@@ -335,21 +335,22 @@ public class OwnerBusinessFile {
     public void fileUploaded(){
         try {
             JSONObject jsonObject = new JSONObject(fileUploadData);
-            Iterator it = jsonObject.keys();
-            while (it.hasNext()) {
-                String key = (String) it.next();
+
+
+                String key = jsonObject.getString("key");
 
                 BusinessFileNode node = findNode(key);
 
                 if ((node != null) && (node instanceof ChildNode)){
-                    JSONArray fileIdArray = jsonObject.getJSONArray(key);
+                    JSONArray fileIdArray = jsonObject.getJSONArray("files");
                     for (int i = 0; i < fileIdArray.length(); i++) {
+                        JSONObject fileInfo = fileIdArray.getJSONObject(i);
                         BusinessFile businessFile = ((ChildNode) node).getBusinessFile();
-                        businessFile.getUploadFiles().add(new UploadFile(authInfo.getLoginEmployee().getPersonName(),authInfo.getLoginEmployee().getId(),"",fileIdArray.getString(i),businessFile,"jpg"));
+                        businessFile.getUploadFiles().add(new UploadFile(fileInfo.getString("fid"),authInfo.getLoginEmployee().getPersonName(),authInfo.getLoginEmployee().getId(),fileInfo.getString("md5"),fileInfo.getString("name"),businessFile,fileInfo.getLong("size")));
                     }
 
                 }
-            }
+
         } catch (JSONException e) {
             throw new IllegalArgumentException(e);
         }
