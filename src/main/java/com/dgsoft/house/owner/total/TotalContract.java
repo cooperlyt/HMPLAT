@@ -189,7 +189,16 @@ public class TotalContract {
     }
 
 
-
+    public List<String> getHouseUseType(String key){
+        List<Word> words =DictionaryWord.instance().getWordList("house.useType");
+        List<String> xzwords = new ArrayList<String>();
+        for (Word word:words){
+            if (word.getKey().equals(key)){
+                xzwords.add(word.getId());
+            }
+        }
+        return xzwords;
+    }
     public void totalContractInfo() {
 
       //  List<Section> sectionList  = houseEntityLoader.getEntityManager().createQuery("select section from Section section order by section.id",Section.class).getResultList();
@@ -212,19 +221,21 @@ public class TotalContract {
 //                .setParameter("usetype", "80").getResultList();
 
         List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
-                " and hb.afterBusinessHouse.useType = '80'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
+                " and hb.afterBusinessHouse.useType in (:usetype)  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
                 "group by hb.ownerBusiness.status, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
                 .setParameter("beginDate", fromDateTime)
-                .setParameter("endDate", toDateTime).getResultList();
+                .setParameter("endDate", toDateTime)
+                .setParameter("usetype",getHouseUseType("1")).getResultList();
 
 
         List<TotalContractData> unhomeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
-                " and hb.afterBusinessHouse.useType <> '80'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
+                " and hb.afterBusinessHouse.useType not in (:usetype) and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
                 "group by hb.ownerBusiness.status, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
                 .setParameter("beginDate", fromDateTime)
-                .setParameter("endDate", toDateTime).getResultList();
+                .setParameter("endDate", toDateTime)
+                .setParameter("usetype",getHouseUseType("1")).getResultList();
 
 
 
