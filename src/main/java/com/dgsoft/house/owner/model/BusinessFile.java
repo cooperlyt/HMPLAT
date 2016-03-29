@@ -149,7 +149,7 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		Collections.sort(result, new Comparator<UploadFile>() {
 			@Override
 			public int compare(UploadFile o1, UploadFile o2) {
-				return o1.getFileName().compareTo(o2.getFileName());
+				return o1.getUploadTime().compareTo(o2.getUploadTime());
 			}
 		});
 		return result;

@@ -36,6 +36,10 @@
         .ad-controls .custome-controls a{
             margin: 0 5px;
         }
+
+        .ad-image {
+            cursor: pointer;
+        }
     </h:outputStylesheet>
 
     <h:outputScript>
@@ -101,7 +105,8 @@
                 </a:jsFunction>
 
                 <a:jsFunction name="receiveFile"
-                              action="#{businessFileEntity.fileUploaded}" execute="@this" render="fileTree,selectNodePanel">
+                              action="#{businessFileEntity.fileUploaded}" execute="@this" render="fileTree,selectNodePanel"
+                              oncomplete="">
                     <a:param name="data" assignTo="#{businessFileEntity.fileUploadData}"/>
                 </a:jsFunction>
 
@@ -195,8 +200,8 @@
                                     </h:outputLink>
 
                                     <a href="#" class="btn btn-sm "
-                                       onclick="selectFileUpload('#{businessFileEntity.selectNode.id}');return false;">上传</a>
-                                    <a href="#" class="btn btn-sm btn-primary" >拍照</a>
+                                       onclick="selectFileUpload('#{businessFileEntity.selectNode.id}','#{businessFileEntity.selectNode.name}');return false;">上传</a>
+                                    <a href="#" class="btn btn-sm btn-primary" onclick="cameraUpload('#{businessFileEntity.selectNode.id}','#{businessFileEntity.selectNode.name}');return false;">拍照</a>
                                     <a:push id="uploadPush" address="#{businessFileEntity.selectNode.id}"
                                             ondataavailable="receiveFile(event.rf.data);">
 
@@ -264,7 +269,7 @@
                                                     <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.id}">
                                                         <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.id}"
                                                              data-file-id="#{_img.id}"
-                                                             title="#{_img.businessFile.name}" alt="#{_img.empName}"/>
+                                                             title="#{_img.businessFile.name}" alt="由 #{_img.empName} 于 #{calendarBean.displayDateTime(_img.uploadTime)} 上传"/>
                                                     </a>
                                                 </li>
 
@@ -354,12 +359,15 @@
     </div>
 
     <iframe style="display:none;" class="call_extend_iframe" src=""/>
-
     <h:outputScript>
 
 
-        function selectFileUpload(typeId){
-            $('.call_extend_iframe').attr('src', 'ExtendsFileSelect://' + typeId);
+        function selectFileUpload(typeId,title){
+            $('.call_extend_iframe').attr('src', "ExtendsFileSelect:// -key='" + typeId + "' -title='" + title + "'");
+        }
+
+        function cameraUpload(typeId,title){
+            $('.call_extend_iframe').attr('src', "ExtendsCamera://-key='" + typeId + "' -title='" + title + "'");
         }
 
     </h:outputScript>
