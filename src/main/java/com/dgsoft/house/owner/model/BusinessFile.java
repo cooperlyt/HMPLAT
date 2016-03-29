@@ -33,23 +33,25 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 	public BusinessFile() {
 	}
 
-	public BusinessFile(String name, String importantCode, int priority) {
+	public BusinessFile(OwnerBusiness ownerBusiness,String name, String importantCode, int priority) {
 		this.id=UUID.randomUUID().toString().replace("-", "");
 		this.name = name;
 		this.importantCode = importantCode;
 		this.noFile = false;
 		this.important = true;
 		this.priority = priority;
+		this.ownerBusiness = ownerBusiness;
 	}
 
 
 
-	public BusinessFile(String name, int priority) {
+	public BusinessFile(OwnerBusiness ownerBusiness, String name, int priority) {
 		this.id=UUID.randomUUID().toString().replace("-", "");
 		this.name = name;
 		this.noFile = false;
 		this.important = false;
 		this.priority = priority;
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Id

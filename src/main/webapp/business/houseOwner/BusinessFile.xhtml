@@ -65,6 +65,8 @@
         </a:commandButton>
     </ui:decorate>
 
+
+
     <div class="row">
 
         <div class="col-md-5">
@@ -81,6 +83,7 @@
 
                     $('#tree').on('nodeSelected', function(event, data) {
                     nodeSelected(data.id);
+                    window.location.hash = '';
 
                     });
 
@@ -112,8 +115,13 @@
                 </a:jsFunction>
 
 
-                <a:jsFunction name="deleteImage" action="#{businessFileEntity.deleteFile}" execute="@this" render="fileTree,selectNodePanel">
+                <a:jsFunction name="tryDeleteImage" action="#{businessFileEntity.tryDeleteFile}" data="#{businessFileEntity.canDeleteFile}" execute="@this"
+                              render="" oncomplete="if (event.data) {bootbox.confirm('确认删除此文件？',function(result) {if (result) {deleteImage();window.location.hash = '';} })} else {bootbox.alert('无权删除此文件！');}">
                     <a:param name="fileId" assignTo="#{businessFileEntity.fileId}"/>
+                </a:jsFunction>
+
+                <a:jsFunction name="deleteImage" action="#{businessFileEntity.deleteFile}" execute="@this" render="fileTree,selectNodePanel">
+
                 </a:jsFunction>
             </h:form>
 
@@ -251,7 +259,8 @@
                                 $(document).ready(
                                         function(){
                                             $('.img-delete').click(function (){
-                                                deleteImage($('div.ad-image img').data('file-id'));
+
+                                                tryDeleteImage($('div.ad-image img').data('file-id'));
                                                 return false;
                                             });
                                         });
@@ -286,7 +295,7 @@
                             <h:outputScript>
                                 $(document).ready(
                                         function () {
-                                            var galleries =  $('.ad-gallery').adGallery({
+                                              $('.ad-gallery').adGallery({
                                                 //animate_first_image: true,
 
                                                 loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
@@ -382,5 +391,7 @@
     <h:outputScript library="bootstrap" name="/js/bootstrap3-typeahead.min.js"/>
     <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
     <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+    <h:outputScript library="bootbox" name="bootbox.min.js"/>
+
 
 </ui:composition>

@@ -43,7 +43,7 @@
 
                 </h1>
 
-                <a:outputPanel layout="block" id="passBtn" class="right">
+                <a:outputPanel ajaxRendered="true" layout="block" id="passBtn" class="right">
                     <s:link styleClass="btn btn-primary #{ownerBusinessFile.pass ? '' : 'disabled'}" action="#{ownerBusinessFile.save}"
                             disabled="#{not ownerBusinessFile.pass}" >
                         #{messages.complete}

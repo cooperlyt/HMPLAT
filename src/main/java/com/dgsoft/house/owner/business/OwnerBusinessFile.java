@@ -136,11 +136,14 @@ public class OwnerBusinessFile {
 //    }
 //
     public boolean isPass() {
-//        for(BusinessFileNode node : getTree()){
-//            if (FileStatus.NO_UPLOAD.equals(node.getStatus())){
-//                return false;
-//            }
-//        }
+        if (tree == null) {
+            initBusinessNeedFiles();
+        }
+        for(ParentNode node: tree){
+            if (FileStatus.NO_UPLOAD.equals(node.getStatus())){
+                return false;
+            }
+        }
         return true;
     }
 
@@ -189,7 +192,7 @@ public class OwnerBusinessFile {
                         }
                     }
                     if (linkFile == null) {
-                        linkFile = new BusinessFile(defineNode.getName(), defineNode.getId(), defineNode.getPriority());
+                        linkFile = new BusinessFile(ownerBusinessHome.getInstance(),defineNode.getName(), defineNode.getId(), defineNode.getPriority());
                     }
 
                     node.addChild(new FileChildNode(node,linkFile, defineNode.getDescription(), defineNode.getTaskNameList().contains(businessDefineHome.getTaskName())));
@@ -301,7 +304,7 @@ public class OwnerBusinessFile {
 
         ParentNode rootNode = tree.get(tree.size() - 1);
 
-        BusinessFile businessFile = new BusinessFile(otherFileName,1000 + rootNode.getChildFileNode().size() + 1);
+        BusinessFile businessFile = new BusinessFile(ownerBusinessHome.getInstance(),otherFileName,1000 + rootNode.getChildFileNode().size() + 1);
         ownerBusinessHome.getInstance().getUploadFileses().add(businessFile);
         rootNode.addChild(new OtherChildNode(rootNode, businessFile,""));
         attachFileNameCache.putName(otherFileName);
@@ -334,6 +337,30 @@ public class OwnerBusinessFile {
         this.fileId = fileId;
     }
 
+
+    private boolean canDeleteFile;
+
+    public boolean isCanDeleteFile() {
+        return canDeleteFile;
+    }
+
+    public void setCanDeleteFile(boolean canDeleteFile) {
+        this.canDeleteFile = canDeleteFile;
+    }
+
+    public void tryDeleteFile(){
+
+        for (ParentNode node: tree){
+            if (node.canDeleteImg(authInfo.getLoginEmployee().getId(),fileId)){
+                canDeleteFile = true;
+                return;
+            }
+        }
+        canDeleteFile = false;
+
+    }
+
+
     public void deleteFile(){
         if (fileId != null){
             deleteFile(tree,fileId);
@@ -348,7 +375,7 @@ public class OwnerBusinessFile {
                 deleteFile(((ParentNode) node).getChildFileNode(),fileId);
             }else if (node instanceof ChildNode){
                 for(UploadFile uploadFile: ((ChildNode) node).getBusinessFile().getUploadFileList()){
-                    if (fileId.equals(uploadFile.getFileName())){
+                    if (fileId.equals(uploadFile.getId())){
                         ((ChildNode) node).getBusinessFile().getUploadFiles().remove(uploadFile);
                     }
                 }
@@ -379,6 +406,8 @@ public class OwnerBusinessFile {
         public abstract boolean isCanPutFile();
 
         public abstract boolean isCanEditTitle();
+
+        public abstract boolean canDeleteImg(String empId,String id);
 
         private String description;
 
@@ -442,6 +471,15 @@ public class OwnerBusinessFile {
 
         @Override
         public boolean isCanEditTitle(){
+            return false;
+        }
+
+        @Override
+        public boolean canDeleteImg(String empId, String id){
+            for(BusinessFileNode node: childFileNode){
+                if (node.canDeleteImg(empId,id))
+                    return true;
+            }
             return false;
         }
 
@@ -560,6 +598,16 @@ public class OwnerBusinessFile {
         public boolean isCanEditTitle(){
             return true;
         }
+
+        @Override
+        public boolean canDeleteImg(String empId, String id){
+            for (UploadFile file: getBusinessFile().getUploadFiles()){
+                if (file.getId().equals(id)){
+                    return empId.equals(file.getEmpCode());
+                }
+            }
+            return false;
+        }
     }
 
     public static class FileChildNode extends ChildNode {
@@ -579,6 +627,16 @@ public class OwnerBusinessFile {
         @Override
         protected boolean isInTask() {
             return inTask;
+        }
+
+        @Override
+        public boolean canDeleteImg(String empId, String id){
+            for (UploadFile file: getBusinessFile().getUploadFiles()){
+                if (file.getId().equals(id)){
+                    return inTask;
+                }
+            }
+            return false;
         }
     }
 
