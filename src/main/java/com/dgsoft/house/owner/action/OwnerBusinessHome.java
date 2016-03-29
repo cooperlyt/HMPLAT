@@ -29,19 +29,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @In
     private Identity identity;
 
-    @Factory(scope = ScopeType.SESSION)
-    public String getAllOtherFileAutoComplete(){
-            String otherFileAutoComplete = "";
-            for(String name:  getEntityManager().createQuery("select distinct f.name from BusinessFile f where f.important = false and f.ownerBusiness.status in ('COMPLETE','COMPLETE_CANCEL')",String.class).getResultList()){
-                if (!"".equals(otherFileAutoComplete)){
-                    otherFileAutoComplete += ",";
-                }
-                otherFileAutoComplete += "'" + name + "'";
-            }
-        return otherFileAutoComplete;
-
-    }
-
 
     @Transactional
     public void doNodeAction(String name){

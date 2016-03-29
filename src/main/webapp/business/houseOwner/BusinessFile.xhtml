@@ -105,8 +105,9 @@
                 </a:jsFunction>
 
                 <a:jsFunction name="receiveFile"
-                              action="#{businessFileEntity.fileUploaded}" execute="@this" render="fileTree,selectNodePanel"
-                              oncomplete="">
+                              action="#{businessFileEntity.fileUploaded}"
+                              onbegin="window.location.hash = '#ad-image-' + $('.ad-thumb-list li').length;"
+                              execute="@this" render="fileTree,selectNodePanel">
                     <a:param name="data" assignTo="#{businessFileEntity.fileUploadData}"/>
                 </a:jsFunction>
 
@@ -143,7 +144,7 @@
 
 
                     // 此操作 耗时 如果是查询耗时 加入业务 和 时间 过滤
-                    $('.typeahead').typeahead({source:#{allOtherFileAutoComplete},minLength:0});
+                    $('.typeahead').typeahead({source:#{attachFileNameCache.attachFileAutoComplete},minLength:0});
 
                     });
 
@@ -229,7 +230,7 @@
 
 
                                 <div class="gh-header-meta">
-                                    #{businessFileEntity.selectNode.description} #{businessFileEntity.selectNode.id}
+                                    #{businessFileEntity.selectNode.description}
                                 </div>
                             </div>
                         </div>
@@ -285,8 +286,9 @@
                             <h:outputScript>
                                 $(document).ready(
                                         function () {
-                                            $('.ad-gallery').adGallery({
+                                            var galleries =  $('.ad-gallery').adGallery({
                                                 //animate_first_image: true,
+
                                                 loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
 
                                                 slideshow: {
@@ -345,6 +347,9 @@
                                             });
 
                                         });
+
+
+
 
 
                             </h:outputScript>

@@ -5,6 +5,7 @@ import com.dgsoft.common.helper.JsonDataProvider;
 import com.dgsoft.common.system.*;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.model.BusinessNeedFile;
+import com.dgsoft.house.owner.AttachFileNameCache;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessFile;
 import com.dgsoft.house.owner.model.UploadFile;
@@ -38,6 +39,9 @@ public class OwnerBusinessFile {
 
     @In
     private FacesMessages facesMessages;
+
+    @In
+    private AttachFileNameCache attachFileNameCache;
 
     private List<ParentNode> tree;
 
@@ -91,6 +95,7 @@ public class OwnerBusinessFile {
 
     public void changeListener(){
     }
+
 
     @In
     private AuthenticationInfo authInfo;
@@ -223,13 +228,18 @@ public class OwnerBusinessFile {
 
                 if ((node != null) && (node instanceof ChildNode)){
                     JSONArray fileIdArray = jsonObject.getJSONArray("files");
-                    for (int i = 0; i < fileIdArray.length(); i++) {
-                        JSONObject fileInfo = fileIdArray.getJSONObject(i);
-                        BusinessFile businessFile = ((ChildNode) node).getBusinessFile();
-                        businessFile.getUploadFiles().add(new UploadFile(fileInfo.getString("fid"),authInfo.getLoginEmployee().getPersonName(),authInfo.getLoginEmployee().getId(),fileInfo.getString("md5"),fileInfo.getString("name"),businessFile,fileInfo.getLong("size")));
+                    if (fileIdArray.length() > 0) {
+                        selectNodeId = node.getId();
+                        for (int i = 0; i < fileIdArray.length(); i++) {
+                            JSONObject fileInfo = fileIdArray.getJSONObject(i);
+                            BusinessFile businessFile = ((ChildNode) node).getBusinessFile();
+                            businessFile.getUploadFiles().add(new UploadFile(fileInfo.getString("fid"), authInfo.getLoginEmployee().getPersonName(), authInfo.getLoginEmployee().getId(), fileInfo.getString("md5"), fileInfo.getString("name"), businessFile, fileInfo.getLong("size")));
+                        }
                     }
 
+
                 }
+
 
         } catch (JSONException e) {
             throw new IllegalArgumentException(e);
@@ -294,6 +304,7 @@ public class OwnerBusinessFile {
         BusinessFile businessFile = new BusinessFile(otherFileName,1000 + rootNode.getChildFileNode().size() + 1);
         ownerBusinessHome.getInstance().getUploadFileses().add(businessFile);
         rootNode.addChild(new OtherChildNode(rootNode, businessFile,""));
+        attachFileNameCache.putName(otherFileName);
     }
 
     public void deleteSelectNode(){
