@@ -307,6 +307,7 @@
                                                     afterImageVisible: function() {
 
                                 $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'))
+                                $('.img-print-view').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
 
                                                         //$('div.ad-image a').jqzoom({
                                                         //    zoomType: 'standard',

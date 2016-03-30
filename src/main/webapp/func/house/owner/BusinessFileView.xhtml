@@ -91,7 +91,7 @@
             <a:outputPanel id="gallery" layout="block" styleClass="ad-gallery"
                            rendered="#{not empty businessFileView.activeFiles}">
                 <div class="ad-image-wrapper"></div>
-                <div class="ad-controls"><div class="custome-controls"><a class="img-print-view" onclick="return false">打印</a>
+                <div class="ad-controls"><div class="custome-controls"><a class="img-print-view" target="_blank" >打印</a>
                     <a class="img-orig-view" target="_blank">原图</a></div></div>
                 <div class="ad-nav">
                     <div class="ad-thumbs">
@@ -133,7 +133,8 @@
                 callbacks: {
                 afterImageVisible: function() {
 
-                $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'))
+                $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'));
+                $('.img-print-view').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
 
                 //$('div.ad-image a').jqzoom({
                 //    zoomType: 'standard',
