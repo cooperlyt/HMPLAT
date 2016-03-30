@@ -33,8 +33,11 @@ public class HouseLockedValid extends BusinessHouseValid {
         List<LockedHouse.LockType> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.type from LockedHouse lockedHouse where lockedHouse.houseCode =:houseCode", LockedHouse.LockType.class)
                 .setParameter("houseCode", businessHouse.getHouseCode()).getResultList();
         if (lockedHouseCode.size() > 0) {
-
-            return new ValidResult("business_house_locked", ValidResultLevel.ERROR, messages.get(lockedHouseCode.get(0).name()));
+            for (LockedHouse.LockType lockType:lockedHouseCode){
+                if (!lockType.equals(LockedHouse.LockType.CANT_SALE) ){
+                    return new ValidResult("business_house_locked", ValidResultLevel.ERROR, messages.get(lockedHouseCode.get(0).name()));
+                }
+            }
         }
         return new ValidResult(ValidResultLevel.SUCCESS);
 
