@@ -100,6 +100,14 @@ public class OwnerBusinessFile {
     @In
     private AuthenticationInfo authInfo;
 
+    public void checkedItem(){
+        getSelectNode().setCheck(true);
+    }
+
+    public void unCheckedItem(){
+        getSelectNode().setCheck(false);
+    }
+
 
     private List<BusinessFile> getAllImportantFile() {
         List<BusinessFile> result = new ArrayList<BusinessFile>();
@@ -408,6 +416,10 @@ public class OwnerBusinessFile {
 
         public abstract boolean isCanEditTitle();
 
+        public abstract boolean isCheck();
+
+        public abstract void setCheck(boolean value);
+
         public abstract boolean canDeleteImg(String empId,String id);
 
         private String description;
@@ -500,6 +512,24 @@ public class OwnerBusinessFile {
         }
 
         @Override
+        public void setCheck(boolean value){
+            for (BusinessFileNode node: childFileNode){
+                node.setCheck(value);
+
+            }
+        }
+
+        @Override
+        public boolean isCheck(){
+            for (BusinessFileNode node: childFileNode){
+                if (!node.isCheck()){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
         public JSONObject getJsonData() throws JSONException {
             JSONObject result = new JSONObject();
             result.put("text",name );
@@ -512,6 +542,7 @@ public class OwnerBusinessFile {
             JSONObject stateObj = new JSONObject();
 
             stateObj.put("expanded","true");
+            stateObj.put("checked",isCheck());
 
             result.put("state",stateObj);
 
@@ -639,6 +670,7 @@ public class OwnerBusinessFile {
             }
             return false;
         }
+
     }
 
     public static abstract class ChildNode extends BusinessFileNode{
@@ -671,6 +703,10 @@ public class OwnerBusinessFile {
             result.put("id", getId());
             result.put("color", getColor());
             result.put("icon", "glyphicon glyphicon-picture");
+            JSONObject stateObj = new JSONObject();
+            stateObj.put("checked",isCheck());
+            result.put("state",stateObj);
+
             return result;
         }
 
@@ -700,6 +736,18 @@ public class OwnerBusinessFile {
                 return FileStatus.OK;
             }
 
+        }
+
+        @Override
+        public void setCheck(boolean value){
+            if (businessFile.getUploadFiles().isEmpty()){
+                businessFile.setNoFile(value);
+            }
+        }
+
+        @Override
+        public boolean isCheck(){
+           return !businessFile.getUploadFiles().isEmpty() || businessFile.isNoFile();
         }
 
         public BusinessNeedFile.NeedFileNodeFile getNodeType(){

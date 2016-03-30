@@ -72,7 +72,6 @@
         <div class="col-md-5">
             <a:outputPanel id="fileTree">
                 <div id="tree"></div>
-                #{runParam.getBooleanParamValue('AllowBusinessNoFile')}
                 <h:outputScript>
 
 
@@ -88,17 +87,16 @@
                     });
 
                     $('#tree').on('nodeUnselected', function(event, data) {
-                    nodeSelected("");
-
+                        nodeSelected("");
                     });
 
 
                     $('#tree').on('nodeChecked', function(event, data) {
-
+                        checkItem(data.id)
                     });
 
                     $('#tree').on('nodeUnchecked', function(event, data) {
-
+                        uncheckItem(data.id)
                     });
 
 
@@ -131,6 +129,14 @@
 
                 <a:jsFunction name="deleteImage" action="#{businessFileEntity.deleteFile}" execute="@this" render="fileTree,selectNodePanel">
 
+                </a:jsFunction>
+
+                <a:jsFunction name="checkItem" action="#{businessFileEntity.checkedItem}" execute="@this" render="fileTree">
+                    <a:param name="selectId" assignTo="#{businessFileEntity.selectNodeId}"/>
+                </a:jsFunction>
+
+                <a:jsFunction name="uncheckItem" action="#{businessFileEntity.unCheckedItem}" execute="@this" render="fileTree">
+                    <a:param name="selectId" assignTo="#{businessFileEntity.selectNodeId}"/>
                 </a:jsFunction>
             </h:form>
 
