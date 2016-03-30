@@ -72,13 +72,13 @@
         <div class="col-md-5">
             <a:outputPanel id="fileTree">
                 <div id="tree"></div>
-
+                #{runParam.getBooleanParamValue('AllowBusinessNoFile')}
                 <h:outputScript>
 
 
                     $(document).ready(
                     function(){
-                    $('#tree').treeview({data: #{businessFileEntity.tree},showCheckbox: false});
+                    $('#tree').treeview({data: #{businessFileEntity.tree},showCheckbox: #{runParam.getBooleanParamValue('AllowBusinessNoFile')}});
 
 
                     $('#tree').on('nodeSelected', function(event, data) {
@@ -89,6 +89,15 @@
 
                     $('#tree').on('nodeUnselected', function(event, data) {
                     nodeSelected("");
+
+                    });
+
+
+                    $('#tree').on('nodeChecked', function(event, data) {
+
+                    });
+
+                    $('#tree').on('nodeUnchecked', function(event, data) {
 
                     });
 
@@ -297,6 +306,8 @@
                                         function () {
                                               $('.ad-gallery').adGallery({
                                                 //animate_first_image: true,
+
+
 
                                                 loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
 

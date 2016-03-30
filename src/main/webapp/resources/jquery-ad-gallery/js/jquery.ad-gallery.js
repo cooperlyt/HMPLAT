@@ -681,13 +681,16 @@
         if(desc) {
           if(!this.settings.description_wrapper && !this.settings.hooks.displayDescription) {
             img_container.append(desc);
-            var width = size.width - parseInt(desc.css('padding-left'), 10) - parseInt(desc.css('padding-right'), 10);
-            desc.css('width', width +'px');
+            //var width = size.width - parseInt(desc.css('padding-left'), 10) - parseInt(desc.css('padding-right'), 10);
+            desc.css('width', size.width +'px');
+
           } else if(this.settings.hooks.displayDescription) {
             this.settings.hooks.displayDescription.call(this, image);
+
           } else {
             var wrapper = this.settings.description_wrapper;
             wrapper.append(desc);
+
           };
         };
         this.highLightThumb(this.images[index].thumb_link);
