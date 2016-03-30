@@ -193,6 +193,7 @@ public class OwnerBusinessFile {
                     }
                     if (linkFile == null) {
                         linkFile = new BusinessFile(ownerBusinessHome.getInstance(),defineNode.getName(), defineNode.getId(), defineNode.getPriority());
+                        ownerBusinessHome.getInstance().getUploadFileses().add(linkFile);
                     }
 
                     node.addChild(new FileChildNode(node,linkFile, defineNode.getDescription(), defineNode.getTaskNameList().contains(businessDefineHome.getTaskName())));
