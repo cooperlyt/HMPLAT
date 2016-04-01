@@ -52,6 +52,8 @@ USE DB_PLAT_SYSTEM;
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.bankAccount','STRING','1002','银行总帐科目代码');
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.cashAccount','STRING','1001','现金总帐科目代码');
 
+INSERT INTO SYSTEM_PARAM(ID, TYPE, VALUE, MEMO) VALUES('HouseAddressGen','STRING','PA_BN_DO_HO','PA_BN_DO_HO:项目地址 + 幢号 + 门牌号 + 房号 ； PA_UN_HO: 项目地址 + 单元 +  房号');
+
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('house.id.gentype','STRING','JDJT246_3','房屋编码生成方法： JDJT246_3 竣工时间法 JDJT246_4 坐标法 JDJT246_5 分宗法 JDJT246_6 分幅法');
 

@@ -81,6 +81,10 @@ public class House implements java.io.Serializable, HouseInfo {
         MAPPING, IMPORT, RECORD_ADD
     }
 
+    public enum AddressGenType{
+        PA_UN_HO,PA_BN_DO_HO
+    }
+
     private String id;
     private Integer version;
     private Build build;
@@ -121,20 +125,26 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
 
-    public House(String id, Build build, GridBlock block) {
+    public House(String id, Build build, GridBlock block ,AddressGenType addressGenType) {
         this.id = id;
         this.build = build;
         this.houseOrder = block.getHouseOrder();
 
         dataSource = HouseDataSource.MAPPING;
+
         assginInfo(block);
 
 
-        if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
-            this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
-        } else {
-            this.address = build.getName() + " " + block.getHouseOrder();
-        }
+
+
+            if (AddressGenType.PA_BN_DO_HO.equals(addressGenType)) {
+
+                this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
+            }else if (AddressGenType.PA_UN_HO.equals(addressGenType)){
+                this.address = build.getProject().getAddress() + block.getUnitName() + " " + block.getHouseOrder();
+            }else
+                this.address = build.getName() + " " + block.getHouseOrder();
+
     }
 
     @Transient
