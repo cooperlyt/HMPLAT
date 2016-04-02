@@ -564,6 +564,13 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="MulitHouseOwnerEdit" page="/business/houseOwner/subscribe/MulitHouseOwnerEdit.xhtml"
+                    component="businessMulitHouseOwnerSubscribe">
+        <description>
+            产权人编辑(凤城初始登记,多个房屋同一个产权人)
+        </description>
+    </edit-subscribe>
+
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
         <description>
             申请人编辑
@@ -600,6 +607,9 @@
             产权代理人编辑
         </description>
     </edit-subscribe>
+
+
+
     <!--
        <edit-subscribe name="PersionMortgageProjectEdit" page="/business/houseOwner/subscribe/PersionMortgageProjectEdit.xhtml"
                        component="">
