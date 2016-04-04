@@ -15,6 +15,8 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -83,6 +85,24 @@ public class HouseInBusinessStart {
                 houseBusinessList.add(new BatchOperData<BusinessHouse>(houseRecord.getBusinessHouse(), true));
             }
         }
+        Collections.sort(houseBusinessList, new Comparator<BatchOperData<BusinessHouse>>() {
+            @Override
+            public int compare(BatchOperData<BusinessHouse> o1, BatchOperData<BusinessHouse> o2) {
+                String a,b;
+                a = (o1.getData().getInFloorName() == null) ? "" :o1.getData().getInFloorName();
+                b = (o2.getData().getInFloorName() == null) ? "" :o2.getData().getInFloorName();
+                int result = a.compareTo(b);
+                if (result == 0){
+                    a = (o1.getData().getHouseUnitName() == null) ? "" : o1.getData().getHouseUnitName();
+                    b = (o2.getData().getHouseUnitName() == null) ? "" : o2.getData().getHouseUnitName();
+                    result = a.compareTo(b);
+                    if (result == 0){
+                        result = o1.getData().getHouseOrder().compareTo(o2.getData().getHouseOrder());
+                    }
+                }
+                return result;
+            }
+        });
         if (houseBusinessList.size() == 1){
             return houseSelected();
         }
