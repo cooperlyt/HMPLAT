@@ -54,7 +54,7 @@
                         #{messages.BusinessOwner_RootAddress}
                     </ui:define>
                     <h:inputText label="#{messages.BusinessOwner_RootAddress}" size="55" maxlength="50"
-                                 styleClass="form-control"
+                                 styleClass="form-control "
                                  value="#{personInstance.personEntity.rootAddress}" id="persionRootAddressInput">
                         <r:validator event="blur"/>
                     </h:inputText>
@@ -62,11 +62,11 @@
                 </s:decorate>
             </div>
 
-            <a:outputPanel layout="block" rendered="#{not empty personInstance.idCard}"
+            <a:outputPanel layout="block"
                            style="width: 140px; float: right;">
                 <div class="thumbnail" style="margin-bottom: 0">
-                    <h:graphicImage alt="身份证照片"
-                                    value="#{runParam.getStringParamValue('IdCardImgPath')}C#{personInstance.credentialsNumber}.bmp"
+                    <h:graphicImage alt="身份证照片" styleClass="person-img"
+                                    value="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}/key/img/orig/#{_person.credentialsNumber}"
                                     width="120px" height="126px"/>
                 </div>
 
@@ -91,7 +91,7 @@
                     cols="50"
                     rows="3"
                     value="#{personInstance.personEntity.address}"
-                    styleClass="form-control"
+                    styleClass="form-control person-addr"
                     id="addressInput">
             </h:inputTextarea>
 

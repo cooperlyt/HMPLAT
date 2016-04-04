@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
  */
 public class PersonHelper<E extends PersonEntity> extends PersonHelperBase<E>  {
 
-
+    //TODO PersonHelper 存在的意义 uuid 的生成 uuid 为 push 的address 为防止 push 不释放 应重复使用 UUID
 
     public PersonHelper(E entity) {
         super(entity);

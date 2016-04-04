@@ -50,6 +50,7 @@ public class FileUploadReceive extends HttpServlet {
             TopicKey topicKey = new TopicKey(key);
             TopicsContext topicsContext = TopicsContext.lookup();
             try {
+
                 topicsContext.publish(topicKey, jsonObject.toString());
 
             } catch (MessageException e) {

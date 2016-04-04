@@ -10,62 +10,26 @@
 
     <!-- param: personEntityHelper  , render-->
 
-    <h:outputStylesheet>
-        .reading-bli.reading .btn{
-            color: #8a6d3b;
-        }
 
-    </h:outputStylesheet>
-
-
-
-    <a:jsFunction name="endRead_#{_person.uuid}" execute="@this" immediate="true"
-                  oncomplete="extendsCall('ExtendsCer://');clearInterval(#{r:jQuery('intervalKey')}.attr('data-interval-key'));"
-                  action="#{_person.endReading}" render="personCardInput,card_read_push">
-        <a:attachQueue requestDelay="0"/>
-    </a:jsFunction>
-    <a:jsFunction name="beginRead_#{_person.uuid}" execute="@this" immediate="true"
-                  oncomplete="extendsCall('ExtendsCer://#{_person.uuid}');readStateCheck_#{_person.uuid}();"
-                  action="#{_person.beginReading}"  render="personCardInput,card_read_push">
-        <a:attachQueue requestDelay="0"/>
-    </a:jsFunction>
-
-
-
-
-        <a:outputPanel id="intervalKey"/>
-
-    <a:outputPanel id="card_read_push" style="width: 400px; height: 200px;">
-
-        <a:outputPanel rendered="#{_person.reading}">
-
-            <a:jsFunction name="personCerRead_#{_person.uuid}" render="personCardInput card_read_push #{render} " execute="@this"
-                          immediate="true" action="#{_person.numberChange}" oncomplete="clearInterval(#{r:jQuery('intervalKey')}.attr('data-interval-key'));">
-                <a:attachQueue requestDelay="0"/>
-                <a:param assignTo="#{_person.credentialsNumber}" name="cerNumber"/>
-            </a:jsFunction>
-
-            <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="personCerRead_#{_person.uuid}(event.rf.data);" >
+            <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="dataPut(event.rf.data,'#{_person.uuid}');" >
 
             </a:push>
 
-        </a:outputPanel>
-
-    </a:outputPanel>
 
 
-        <a:outputPanel id="personCardInput" layout="block" styleClass="input-group #{_person.reading ? 'reading' : ''}">
+
+        <a:outputPanel id="personCardInput" layout="block" styleClass="input-group" >
 
         <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
 
             <h:selectOneMenu  label="#{messages.person_field_credentialsType}" id="personCredentialsTypeInput"
-                              disabled="#{_person.reading}"
                               styleClass="selectpicker select-menu-btn input-group-first"
                               value="#{_person.credentialsType}" required="true">
                 <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                 <s:convertEnum/>
                 <a:ajax event="valueChange" listener="#{_person.typeChange}"
                         render="personCardInput #{render}"
+                        oncomplete="initDynamicEditInputs('#{r:clientId('credentialsType')}'); initDynamicEditInputs('#{r:clientId('render')}');"
                         execute="@this" status="#{personStatus}">
                     <a:attachQueue requestDelay="0"/>
                 </a:ajax>
@@ -73,27 +37,22 @@
 
             </h:selectOneMenu>
 
-            <h:outputLink styleClass="btn btn-default  #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
-                           id="readBtn" disabled="#{not (_person.credentialsType.name() eq 'MASTER_ID')} "
-                           style="height: 34px;" onclick="readBtnClick_#{_person.uuid}();return false;">
-                <span class="octicon octicon-file-media" />
-                <a:attachQueue requestDelay="0"/>
-            </h:outputLink>
+
+            <a data-uuid="#{_person.uuid}" href=""
+               class="btn btn-default card-read-btn #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
+               style="height: 34px;">
+                <span class="octicon octicon-file-media"/>
+            </a>
         </a:outputPanel>
 
         <h:inputText id="credentialsNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
                      label="#{messages.person_field_credentialsNO}"
-                     styleClass="form-control"
+                     styleClass="form-control person-id"
                      required="true"
                      size="25"
                      maxlength="100"
-                     disabled="#{_person.reading}"
                      p:placeholder="#{messages.person_field_credentialsNO}"
                      value="#{_person.credentialsNumber}">
-            <a:ajax event="blur" render="cerdentialsName #{render}" listener="#{_person.numberChange}"
-                    status="#{personStatus}" execute="personCredentialsTypeInput,credentialsNumber">
-                <a:attachQueue requestDelay="0"/>
-            </a:ajax>
         </h:inputText>
 
 
@@ -103,8 +62,7 @@
         </div>
         <h:inputText id="cerdentialsName" value="#{_person.personName}"
                      p:placeholder="#{messages.person_field_name}"
-                     readonly="#{_person.reading or (not empty _person.idCard)}"
-                     required="true"  styleClass="form-control" label="#{messages.BusinessPool_name}">
+                     required="true"  styleClass="form-control person-name" label="#{messages.BusinessPool_name}">
 
         </h:inputText>
 
@@ -113,76 +71,7 @@
   </a:outputPanel>
 
 
-    <h:outputScript>
 
-
-        $(document).ready( function(){
-
-        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-        var key = setInterval(reading_#{_person.uuid}, 500);
-        #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
-
-
-        }
-
-
-
-        });
-
-
-        function readBtnClick_#{_person.uuid}(){
-        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-
-        endRead_#{_person.uuid}();
-        }else{
-        beginRead_#{_person.uuid}();
-
-        }
-
-
-        }
-
-
-        function reading_#{_person.uuid}(){
-
-        var count = 1;
-        count = count  +  parseInt(#{r:jQuery('intervalKey')}.attr("data-interval-count" ));
-        if (count > 40){
-
-        endRead_#{_person.uuid}();
-
-        }
-
-
-        #{r:jQuery('intervalKey')}.attr("data-interval-count" , count);
-
-
-        if ( #{r:jQuery('personCardInput')}.hasClass("reading-bli")){
-
-        #{r:jQuery('personCardInput')}.removeClass("reading-bli");
-
-        }else{
-        #{r:jQuery('personCardInput')}.addClass("reading-bli");
-        }
-        }
-
-
-        function readStateCheck_#{_person.uuid}(){
-
-
-        if ( #{r:jQuery('personCardInput')}.hasClass("reading")){
-        var key = setInterval(reading_#{_person.uuid}, 500);
-        #{r:jQuery('intervalKey')}.attr("data-interval-key", key );
-        #{r:jQuery('intervalKey')}.attr("data-interval-count" , 0);
-        }else{
-        clearInterval(#{r:jQuery('intervalKey')}.attr("data-interval-key"));
-        }
-
-        }
-
-
-
-    </h:outputScript>
 
 
 
