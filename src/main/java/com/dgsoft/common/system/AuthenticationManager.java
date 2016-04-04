@@ -45,9 +45,6 @@ public class AuthenticationManager {
     private AuthenticationInfo authInfo;
 
 
-    @In("#{messages.superAdministrator}")
-    private String superAdminName;
-
     public boolean authenticate() {
         authInfo = new AuthenticationInfo();
         try {
