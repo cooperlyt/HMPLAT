@@ -533,7 +533,18 @@
 
                         <h:inputHidden value="#{ownerBusinessView.id}"/>
                         <r:tabPanel switchType="client">
+                            <r:tab>
+                                <f:facet name="header">
+                                    <span class="octicon octicon-file-submodule"/>
+                                    #{messages.businessFile}
+                                </f:facet>
 
+                                <ui:include src="BusinessFileView.xhtml" >
+                                    <ui:param name="fileListBean" value="#{businessFileView}"/>
+                                </ui:include>
+
+
+                            </r:tab>
 
                             <c:forEach   items="#{ownerBusinessView.viewSubscribeDefineGroups}"
 
@@ -560,18 +571,7 @@
                                 </r:tab>
                             </c:forEach>
 
-                            <r:tab>
-                                <f:facet name="header">
-                                    <span class="octicon octicon-file-submodule"/>
-                                    #{messages.businessFile}
-                                </f:facet>
 
-                                <ui:include src="/business/houseOwner/BusinessFile.xhtml">
-                                    <ui:param name="businessFileEntity" value="#{ownerBusinessFile}"/>
-                                </ui:include>
-
-
-                            </r:tab>
                             <r:tab>
                                 <f:facet name="header">
                                     <span class="octicon octicon-milestone"/>
