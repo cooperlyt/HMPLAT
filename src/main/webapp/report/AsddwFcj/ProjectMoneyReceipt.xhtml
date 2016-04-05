@@ -8,7 +8,6 @@
             title="产权登记交费单">
 
 
-    <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="8">
         <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
             <f:facet name="defaultCell">
@@ -97,32 +96,27 @@
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>房屋坐落:</p:paragraph>
+                    <p:paragraph>项目坐落:</p:paragraph>
                 </p:cell>
 
                 <p:cell colspan="3" horizontalAlignment="left">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+                    <p:paragraph>#{selectProjectByHouseCode.project.address}</p:paragraph>
                 </p:cell>
 
 
                 <p:cell>
-                    <p:paragraph>建筑面积:</p:paragraph>
+                    <p:paragraph>项目名称:</p:paragraph>
                 </p:cell>
-                <p:cell horizontalAlignment="left" noWrap="false">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph>产籍号:</p:paragraph>
-                </p:cell>
-                <p:cell horizontalAlignment="left">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+                <p:cell colspan="3" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph>#{selectProjectByHouseCode.project.name}</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>房屋用途:</p:paragraph>
+                    <p:paragraph>小区名称:</p:paragraph>
                 </p:cell>
                 <p:cell horizontalAlignment="left">
-                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
+                    <p:paragraph>#{selectProjectByHouseCode.project.sectionName}</p:paragraph>
                 </p:cell>
+
 
                 <p:cell>
                     <p:paragraph></p:paragraph>
@@ -161,10 +155,10 @@
                                 <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">#{_businessMoneys.typeName}</p:paragraph>
                             </p:cell>
                             <p:cell >
-                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">1件</p:paragraph>
+                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">#{ownerBusinessHome.instance.houseBusinesses.size}件</p:paragraph>
                             </p:cell>
                             <p:cell>
-                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">#{_businessMoneys.chargeDetails}/件</p:paragraph>
+                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">住宅80(非住宅550)/件</p:paragraph>
                             </p:cell>
                             <p:cell>
                                 <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}"><p:text value="#{_businessMoneys.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
@@ -226,6 +220,6 @@
         </p:font>
 
         <p:newPage/>
-    </a:repeat>
+
 
 </p:document>
