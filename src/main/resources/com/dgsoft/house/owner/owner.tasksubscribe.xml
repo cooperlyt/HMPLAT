@@ -558,16 +558,12 @@
 
     <!-- 编辑订阅 在业务信息 页面填写 表单型式提交 在FORM内 所以 订阅者page之中不可包含FORM 但out-page将在form外  -->
 
-    <edit-subscribe name="personCardReader" page="/layout/system/CardReader.xhtml" component="">
-        <description>
-            身份证读卡器
-        </description>
-    </edit-subscribe>
 
     <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
         <description>
             产权人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
     <edit-subscribe name="MulitHouseOwnerEdit" page="/business/houseOwner/subscribe/MulitHouseOwnerEdit.xhtml"

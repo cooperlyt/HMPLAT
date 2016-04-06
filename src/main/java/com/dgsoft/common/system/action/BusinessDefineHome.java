@@ -298,6 +298,17 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private SubscribeGroup curEditGroup;
 
+    public List<String> getCurEditGroupDependency() {
+        if (curEditGroup != null){
+            Set<String> result = new HashSet<String>();
+            for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+                result.addAll(define.getDependencys());
+            }
+            return new ArrayList<String>(result);
+        }else
+            return new ArrayList<String>(0);
+    }
+
     public SubscribeGroup getCurEditGroup() {
         return curEditGroup;
     }
@@ -360,11 +371,12 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return true;
     }
 
+
+
     private void initEditSubscribes() {
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
                 define.getComponents().initSubscribe();
-
             }
         }
     }

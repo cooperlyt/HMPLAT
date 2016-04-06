@@ -50,8 +50,19 @@
 
         <a:outputPanel >
 
+            <c:forEach items="#{businessDefineHome.curEditGroupDependency}" var="_item">
+
+                    <f:subview>
+                        <ui:include src="#{_item}"/>
+                    </f:subview>
+
+
+
+            </c:forEach>
+
 
             <c:forEach items="#{businessDefineHome.editSubscribeDefines}" var="_item">
+
                 <a:outputPanel rendered="#{_item.haveOutPage}">
                     <f:subview>
                         <ui:include src="#{_item.outPage}"/>
