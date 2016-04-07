@@ -1,6 +1,5 @@
 package com.dgsoft.house.owner.business;
 
-import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.AllTaskAdapterCacheList;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import org.jboss.seam.annotations.In;
@@ -25,6 +24,7 @@ public class TaskCompletedOper {
 
     public List<AllTaskAdapterCacheList.TaskInstanceAdapter> getTasks(){
         if (tasks == null){
+            allTaskAdapterCacheList.refresh();
             tasks =  allTaskAdapterCacheList.getTaskByKey(ownerBusinessHome.getInstance().getId());
         }
         return tasks;
