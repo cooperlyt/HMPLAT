@@ -32,7 +32,7 @@ public class MakeCardMortgageRecordSubsrcibe extends OwnerEntityHome<MakeCard> {
         super.create();
         for (MakeCard makeCard : ownerBusinessHome.getInstance().getMakeCards()) {
             if (makeCard.getType().equals(MakeCard.CardType.MORTGAGE_CARD)) {
-                setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getId());
+                setId(makeCard.getId());
                 return;
             }
         }
