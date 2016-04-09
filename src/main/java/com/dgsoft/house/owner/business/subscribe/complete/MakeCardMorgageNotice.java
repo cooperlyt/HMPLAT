@@ -49,9 +49,9 @@ public class MakeCardMorgageNotice implements TaskCompleteSubscribeComponent {
 
         MakeCard makeCard = new MakeCard(MakeCard.CardType.NOTICE_MORTGAGE, no);
 
-        if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
-
+        if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial()!=null){
+            ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().setMakeCard(makeCard);
+            makeCard.setFinancial(ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial());
         }
         makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
