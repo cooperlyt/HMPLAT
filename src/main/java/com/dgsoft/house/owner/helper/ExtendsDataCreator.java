@@ -1,14 +1,12 @@
 package com.dgsoft.house.owner.helper;
 
 import com.dgsoft.common.BigMoneyUtil;
-import com.dgsoft.common.helper.JsonDataProvider;
+import com.dgsoft.common.helper.QueueJsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
-import com.dgsoft.common.system.SystemEntityHome;
 import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.model.Fee;
 import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.model.House;
 import com.dgsoft.house.model.Project;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.AutoCreate;
@@ -19,7 +17,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.faces.context.FacesContext;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
@@ -36,7 +33,7 @@ public class ExtendsDataCreator {
     private Map<String, String> messages;
 
     @In
-    private JsonDataProvider jsonDataProvider;
+    private QueueJsonDataProvider queueJsonDataProvider;
 
     @In
     private AuthenticationInfo authInfo;
@@ -508,7 +505,7 @@ public class ExtendsDataCreator {
     }
 
     private String genPrintUrl(String data) {
-        Long putId = jsonDataProvider.putData(data);
+        Long putId = queueJsonDataProvider.putData(data);
         try {
             return EXTENDS_PRINT_PROTOCOL + URLEncoder.encode(String.valueOf(putId), "UTF-8");
         } catch (UnsupportedEncodingException e) {

@@ -140,6 +140,16 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private String taskName = Subscribe.CREATE_TASK_NAME;
 
+    private BusinessInstance.BusinessType taskType = BusinessInstance.BusinessType.NORMAL_BIZ;
+
+    public void setTaskType(BusinessInstance.BusinessType taskType) {
+        this.taskType = taskType;
+    }
+
+    public BusinessInstance.BusinessType getTaskType() {
+        return taskType;
+    }
+
     public String getTaskName() {
         return taskName;
     }
