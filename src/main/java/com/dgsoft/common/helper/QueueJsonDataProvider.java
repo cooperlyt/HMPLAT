@@ -19,16 +19,12 @@ import java.util.Map;
 @Name("queueJsonDataProvider")
 @Scope(ScopeType.APPLICATION)
 @AutoCreate
-public class QueueJsonDataProvider {
+public class QueueJsonDataProvider implements JsonDataProvider.JsonDataProviderFunction {
 
     private final static int QUEUE_SIZE = 100;
 
     @RequestParameter
     private Long id;
-
-    @In
-    private FacesContext facesContext;
-
 
     private Long index = new Long(0);
 
@@ -44,18 +40,10 @@ public class QueueJsonDataProvider {
         return index;
     }
 
-
-    public void renderJson() throws IOException {
-        ExternalContext externalContext = facesContext.getExternalContext();
-        externalContext.setResponseContentType("application/json");
-        externalContext.setResponseCharacterEncoding("UTF-8");
+    @Override
+    public String getJsonData() {
         String jsonStr = dataPool.get(id);
-        if (jsonStr == null){
-            jsonStr = "";
-        }
-        externalContext.getResponseOutputWriter().write(jsonStr);
-        facesContext.responseComplete();
         dataPool.remove(id);
+        return jsonStr;
     }
-
 }
