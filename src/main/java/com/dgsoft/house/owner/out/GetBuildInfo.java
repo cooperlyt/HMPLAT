@@ -9,6 +9,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.log.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,7 @@ public class GetBuildInfo implements JsonDataProvider.JsonDataProviderFunction {
     public String getJsonData() {
 
         try {
-            BuildInfoData data = houseEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.out.data.BuildInfoData(build.mapNumber,build.blockNo,build.buildNo,build.name,build.structure,(select sum(house.houseArea) from House house where house.build.id = build.id), (select count(house.id) from House house where house.build.id = build.id) , build.upFloorCount,build.downFloorCount) from Build build where build.id = :buildId", BuildInfoData.class)
+            BuildInfoData data = houseEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.out.data.BuildInfoData(build.mapNumber,build.blockNo,build.buildNo,build.name,build.structure,(select sum(house.houseArea) from House house where house.deleted = false and house.build.id = build.id), (select count(house.id) from House house where house.deleted = false and house.build.id = build.id) , build.upFloorCount,build.downFloorCount) from Build build where build.id = :buildId", BuildInfoData.class)
                     .setParameter("buildId", buildId).getSingleResult();
 
             JSONObject jsonObject = new JSONObject();
@@ -42,16 +43,22 @@ public class GetBuildInfo implements JsonDataProvider.JsonDataProviderFunction {
                 jsonObject.put("BuildNumber",data.getBuildNumber());
                 jsonObject.put("BuildName",data.getBuildName());
                 jsonObject.put("Structure", DictionaryWord.instance().getWordValue(data.getStructure()));
-                jsonObject.put("")
+                jsonObject.put("HouseArea",data.getHouseArea().doubleValue());
+                jsonObject.put("HouseCount",data.getHouseCount().intValue());
+                jsonObject.put("FloorCount",data.getDownFloorCount().intValue() + data.getUpFloorCount().intValue());
+                jsonObject.put("DownFloorCount",data.getDownFloorCount().intValue());
+                return jsonObject.toString();
             } catch (JSONException e) {
-                e.printStackTrace();
+                Logging.getLog(getClass()).error(e.getMessage(),e);
+                return "";
             }
 
 
         }catch (NoResultException e){
-
+            Logging.getLog(getClass()).debug("build not found:" , e);
+            return "";
         }
 
-        return null;
+
     }
 }
