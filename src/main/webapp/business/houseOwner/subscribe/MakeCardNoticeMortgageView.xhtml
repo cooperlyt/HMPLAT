@@ -10,7 +10,7 @@
 
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getCardByType('NOTICE_MORTGAGE')}">
         <dh:entryGridBlock columns="4">
-            <h:outputText value="#{messages.Card_Notice}"/>
+            <h:outputText value="#{messages.Card_Notice_MORTGAGE}"/>
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.getCardByType('NOTICE_MORTGAGE').number}"/>
 
@@ -32,7 +32,7 @@
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Card_Notice}"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{messages.Card_Notice_NOT}"/>
+                <h:outputText value="#{messages.Card_Notice_MORTGAGE_NOT}"/>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
