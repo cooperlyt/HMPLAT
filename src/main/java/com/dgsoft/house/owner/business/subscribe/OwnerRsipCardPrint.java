@@ -30,6 +30,6 @@ public class OwnerRsipCardPrint {
 
     public void preparePrintOwnerFee(){
         printUrl = extendsDataCreator.extendsPrintOwnerRsip(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next());
+                ownerBusinessHome.getCardByType("OWNER_RSHIP"));
     }
 }

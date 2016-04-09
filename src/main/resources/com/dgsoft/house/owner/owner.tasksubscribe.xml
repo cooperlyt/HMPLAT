@@ -1115,6 +1115,14 @@
             生成单房屋预告登记证明号
         </description>
     </end-subscribe>
+
+    <end-subscribe name="makeCardMorgageNoticeEnd" component="makeCardMorgageNotice">
+        <description>
+            生成单房屋预告抵押登记证明号
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="makeCardMortgageEnd" component="makeCardMortgage">
         <description>
             生成单房屋所有权抵押权证号

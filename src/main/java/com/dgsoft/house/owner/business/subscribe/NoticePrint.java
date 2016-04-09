@@ -40,6 +40,6 @@ public class NoticePrint {
 
     public void preparePrintOwnerFee(){
         printUrl = extendsDataCreator.extendsPrintNotice(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance(),getPoolInfo());
+                ownerBusinessHome.getCardByType("NOTICE"),ownerBusinessHome.getInstance(),getPoolInfo());
     }
 }

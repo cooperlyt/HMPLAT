@@ -1,4 +1,4 @@
-package com.dgsoft.house.owner.business.subscribe.complete;
+package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;
@@ -29,6 +29,6 @@ public class MortgagePrint {
     public void preparePrintOwnerFee(){
 
         printUrl = extendsDataCreator.extendsPrintMortgageCard(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance());
+                ownerBusinessHome.getCardByType("MORTGAGE_CARD"),ownerBusinessHome.getInstance());
     }
 }
