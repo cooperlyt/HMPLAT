@@ -38,15 +38,15 @@ public class GetBuildInfo implements JsonDataProvider.JsonDataProviderFunction {
 
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("MapNumber",data.getMapNumber());
-                jsonObject.put("BlockNumber", data.getBlockNumber());
-                jsonObject.put("BuildNumber",data.getBuildNumber());
-                jsonObject.put("BuildName",data.getBuildName());
-                jsonObject.put("Structure", DictionaryWord.instance().getWordValue(data.getStructure()));
-                jsonObject.put("HouseArea",data.getHouseArea().doubleValue());
-                jsonObject.put("HouseCount",data.getHouseCount().intValue());
-                jsonObject.put("FloorCount",data.getDownFloorCount().intValue() + data.getUpFloorCount().intValue());
-                jsonObject.put("DownFloorCount",data.getDownFloorCount().intValue());
+                jsonObject.put("mapNumber",data.getMapNumber());
+                jsonObject.put("blockNumber", data.getBlockNumber());
+                jsonObject.put("buildNumber",data.getBuildNumber());
+                jsonObject.put("buildName",data.getBuildName());
+                jsonObject.put("structure", DictionaryWord.instance().getWordValue(data.getStructure()));
+                jsonObject.put("houseArea",data.getHouseArea().doubleValue());
+                jsonObject.put("houseCount",data.getHouseCount().intValue());
+                jsonObject.put("floorCount",data.getDownFloorCount().intValue() + data.getUpFloorCount().intValue());
+                jsonObject.put("downFloorCount",data.getDownFloorCount().intValue());
                 return jsonObject.toString();
             } catch (JSONException e) {
                 Logging.getLog(getClass()).error(e.getMessage(),e);

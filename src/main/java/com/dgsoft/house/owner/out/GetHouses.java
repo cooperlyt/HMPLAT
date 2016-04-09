@@ -66,9 +66,9 @@ public class GetHouses implements JsonDataProvider.JsonDataProviderFunction {
                 GridBlock gridBlock = gridBlockMap.get(house.getId());
                 jsonObject.put("row",(gridBlock == null) ? 0 : gridBlock.getGridRow().getFloorIndex());
 
-                //jsonObject.put("col",)
+                jsonObject.put("col",(gridBlock == null) ? 0 : gridBlock.getOrder());
 
-
+                jsonArray.put(jsonObject);
             } catch (JSONException e) {
                 Logging.getLog(getClass()).error(e.getMessage(),e);
                 return "";
