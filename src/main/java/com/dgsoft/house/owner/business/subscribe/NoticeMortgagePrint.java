@@ -40,7 +40,7 @@ public class NoticeMortgagePrint {
     public void preparePrintOwnerFee(){
 
             printUrl = extendsDataCreator.extendsPrintNoticeMortgage(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
-                    ownerBusinessHome.getInstance().getMakeCards().iterator().next(), ownerBusinessHome.getInstance(), getPoolInfo());
+                    ownerBusinessHome.getCardByType("NOTICE_MORTGAGE"), ownerBusinessHome.getInstance(), getPoolInfo());
         
     }
 }

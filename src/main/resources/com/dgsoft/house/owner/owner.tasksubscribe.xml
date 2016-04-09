@@ -577,12 +577,14 @@
         <description>
             申请人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
     <edit-subscribe name="persionCorrectProjectEdit" page="/business/houseOwner/subscribe/PersionCorrectProjectEdit.xhtml" component="">
         <description>
             申请人编辑(抵押人转成申请人)在建抵押
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
     <edit-subscribe name="PersionCorrectProjectRshipEdit" page="/business/houseOwner/subscribe/persionCorrectProjectRshipEdit.xhtml" component="">
@@ -595,6 +597,7 @@
         <description>
             申请人编辑(备案人转成申请人)合同备案
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -608,6 +611,7 @@
         <description>
             产权代理人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -628,6 +632,7 @@
            <description>
                共有情况,共有权人,编辑(选填)
            </description>
+           <dependency>/layout/system/CardReader.xhtml</dependency>
        </edit-subscribe>
 
     <edit-subscribe name="poolOwnerRequiredEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml"
@@ -635,6 +640,7 @@
         <description>
             共有情况,共有权人,编辑(必填)
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
        <!--
@@ -657,6 +663,7 @@
          <description>
              原产权代理人编辑
          </description>
+         <dependency>/layout/system/CardReader.xhtml</dependency>
      </edit-subscribe>
 
     <edit-subscribe name="PersionPreSaleEntrustEdit" page="/business/houseOwner/subscribe/PersionPreSaleEntrustEdit.xhtml"
@@ -664,6 +671,7 @@
         <description>
             预售代理人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -672,6 +680,7 @@
         <description>
             预购人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
     <!--
     <edit-subscribe name="PersionPreBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionPreBuyEntrustEdit.xhtml"
@@ -686,6 +695,7 @@
         <description>
             （现）抵押权人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -695,6 +705,7 @@
         <description>
             抵押权人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
     <edit-subscribe name="FinancialProjectEdit" page="/business/houseOwner/subscribe/FinancialProjectEdit.xhtml" component="">
@@ -707,6 +718,7 @@
         <description>
             抵押权人代理人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -714,17 +726,20 @@
         <description>
             备案人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
     <edit-subscribe name="PersionObligorEdit" page="/business/houseOwner/subscribe/PersionObligorEdit.xhtml" component="">
         <description>
             债务人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
     <edit-subscribe name="PersionMortgageEdit" page="/business/houseOwner/subscribe/PersionMortgageEdit.xhtml" component="">
         <description>
            抵押人代理人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -1100,6 +1115,14 @@
             生成单房屋预告登记证明号
         </description>
     </end-subscribe>
+
+    <end-subscribe name="makeCardMorgageNoticeEnd" component="makeCardMorgageNotice">
+        <description>
+            生成单房屋预告抵押登记证明号
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="makeCardMortgageEnd" component="makeCardMortgage">
         <description>
             生成单房屋所有权抵押权证号

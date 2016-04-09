@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class MakeCard implements java.io.Serializable {
 
 
-    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE_CARD,PROJECT_MORTGAGE,POOL_RSHIP,PROJECT_RSHIP};
+    public enum CardType{NOTICE,NOTICE_MORTGAGE,OWNER_RSHIP,MORTGAGE_CARD,PROJECT_MORTGAGE,POOL_RSHIP,PROJECT_RSHIP};
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
