@@ -5,33 +5,43 @@
 }
 
 *.rf-p {
-    background-color: #FFFFFF;
     color: #ddd;
-    border-width: 1px;
     border-style: solid;
-    padding: 1px;
+
+
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 15px;
+    background-color: #fff;
+
+    border-width: 1px;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+
+    padding: 15px 15px 15px;
+
+    border-color: #e5e5e5 #eee #eee;
 }
 
 *.rf-p-hdr {
-    background-color: #BED6F8;
-    border-color: #BED6F8;
-    font-size: 14px;
-    color: #000000;
-    font-weight: bold;
-    font-family: "microsoft yahei", Helvetica, Arial, "宋体", sans-serif;
-    padding: 2px;
-    border-width: 1px;
-    border-style: solid;
-    background-position: top left;
-    background-repeat: repeat-x;
-    background-image: url(../org.richfaces.images/gradientA.png);
+    background-color: #FFFFFF;
+    border-width: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #959595;
+    text-transform: uppercase;
+
+    margin-bottom: 14px;
+
 }
 
 *.rf-p-b {
-    font-size: 14px;
+    font-size: 13px;
+
+    padding: 0;
     color: #000000;
-    font-family: "microsoft yahei", Helvetica, Arial, "宋体", sans-serif;
-    padding: 10px;
 }
 
 *.rf-dt {
