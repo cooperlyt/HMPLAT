@@ -255,7 +255,8 @@ public class OwnerBusinessFile {
 
     @Destroy
     public void onDestroy(){
-        destroyPush(tree);
+        if (tree != null)
+            destroyPush(tree);
     }
 
     private void destroyPush(List<? extends BusinessFileNode> src){
