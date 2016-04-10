@@ -831,6 +831,23 @@
     </description>
   </edit-subscribe>
 
+    <edit-subscribe name="CardInfoNoticeEdit"  page="/business/houseOwner/subscribe/CardInfoNoticeEdit.xhtml" component="">
+        <description>
+            权证编号、附记编辑，缮证人(预告)
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="CardInfoMortgageNoticeEdit"  page="/business/houseOwner/subscribe/CardInfoMortgageNoticeEdit.xhtml" component="">
+        <description>
+            权证编号、附记编辑，缮证人(预告抵押)
+        </description>
+    </edit-subscribe>
+
+
+
+
+
+
 
    <edit-subscribe name="cardInfoProjectEdit"  page="/business/houseOwner/subscribe/CardInfoProjectEdit.xhtml" component="">
         <description>
