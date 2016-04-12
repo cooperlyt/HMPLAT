@@ -247,7 +247,7 @@ public class OwnerBusinessFile {
 
                 }
 
-
+            changeListener();
         } catch (JSONException e) {
             throw new IllegalArgumentException(e);
         }
@@ -313,6 +313,7 @@ public class OwnerBusinessFile {
         ownerBusinessHome.getInstance().getUploadFileses().add(businessFile);
         rootNode.addChild(new OtherChildNode(rootNode, businessFile,""));
         attachFileNameCache.putName(otherFileName);
+        changeListener();
     }
 
     public void deleteSelectNode(){
@@ -327,6 +328,7 @@ public class OwnerBusinessFile {
             rootNode.getChildFileNode().remove(selectNode);
 
             selectNodeId = null;
+            changeListener();
 
         }
     }
@@ -369,6 +371,7 @@ public class OwnerBusinessFile {
     public void deleteFile(){
         if (fileId != null){
             deleteFile(tree,fileId);
+            changeListener();
         }
 
     }
