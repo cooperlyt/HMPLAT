@@ -304,7 +304,7 @@ public class OwnerBuildGridMap {
         }
 
         for (House house : houses) {
-            if (!businessHouseMap.contains(house.hashCode())) {
+            if (!businessHouseMap.contains(house.getHouseCode())) {
                 outHouseRecords.add(new HouseRecord(new BusinessHouse(house)));
             }
         }

@@ -14,26 +14,101 @@
 
     <ui:param name="funcName" value="房屋管理"/>
 
+
+
+    <h:outputStylesheet>
+
+
+        .search_repos .search-key-input{
+            display: table-cell;
+            border-bottom-right-radius: 3px !important;
+            border-top-right-radius: 3px !important;
+        }
+
+        .search_repos.MBBH .search-key-input{
+            display: none;
+        }
+
+        .search_repos .search-mbbh-input{
+            display: none;
+        }
+
+
+        .search_repos.MBBH .search-mbbh-input{
+            display: table-cell;
+        }
+
+
+
+
+
+
+    </h:outputStylesheet>
+
+    <h:outputScript>
+        function searchTypeChange(){
+
+        $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+        $('.search_repos').addClass($('.js-search-type-select').val())
+        }
+    </h:outputScript>
+
     <ui:define name="head-right">
-        <h:form styleClass="search_repos">
+
+
+        <h:form styleClass="search_repos #{houseList.searchType}">
             <div class="flex-table search-form-fluid">
+
                 <div class="flex-table-item flex-table-item-primary">
-                    <div class="input-block">
-                        <h:inputText styleClass="form-control" value="#{houseList.searchKey}"/>
+                    <a:outputPanel id="searchInputs" layout="block" styleClass="input-group input-block">
+                        <div class="input-group-btn">
+
+
+                            <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
+                                             value="#{houseList.searchType}" onchange="searchTypeChange()">
+                                <s:selectItems value="#{houseList.allSearchTypes}" var="_item"
+                                               itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
+                                               label="#{_item.label}"/>
+                                <s:convertEnum/>
+                            </h:selectOneMenu>
+
+
+                        </div>
+
+
+                        <h:inputText styleClass="form-control search-key-input" value="#{houseList.searchKey}"/>
+
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_map}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseList.mapNumber}"/>
+
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_block}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseList.blockNumber}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_build}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{houseList.buildNumber}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_house}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px"
+                                     value="#{houseList.houseNumber}"/>
 
 
                         <!-- /btn-group -->
-                    </div>
+                    </a:outputPanel>
                     <!-- /input-group -->
                 </div>
+
                 <div class="flex-table-item">
-                    <h:commandButton styleClass="button" action="#{houseList.first}" value="#{messages.Search}">
+                    <h:commandButton styleClass="button" action="#{houseList.searchAction}" value="#{messages.Search}">
 
                     </h:commandButton>
 
                 </div>
             </div>
         </h:form>
+
+
     </ui:define>
 
     <h:form id="buildListResult">
