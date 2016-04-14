@@ -203,7 +203,7 @@
                                         <h:inputText value="#{businessFileEntity.selectNode.businessFile.name}"
                                                      styleClass="form-control"/>
       <span class="input-group-btn">
-          <a:commandLink execute="@region" styleClass="btn btn-default" value="完成" render="fileTree,selectNodePanel"/>
+          <a:commandLink execute="@region" action="#{businessFileEntity.changeListener}" styleClass="btn btn-default" value="完成" render="fileTree,selectNodePanel"/>
 
       </span>
                                     </a:outputPanel>

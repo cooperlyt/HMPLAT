@@ -16,6 +16,7 @@
 
         <f:subview >
 
+            <a:outputPanel p:data-person-uuid="#{_person.uuid}">
         <div class="context-panel">
 
             <s:decorate styleClass="form-group" id="singPersonCardInput" template="/layout/edit-big.xhtml">
@@ -52,6 +53,8 @@
 
             <a:outputPanel id="attFields" layout="block" class="card-panel">
                 <ui:insert/>
+
+            </a:outputPanel>
 
             </a:outputPanel>
 
