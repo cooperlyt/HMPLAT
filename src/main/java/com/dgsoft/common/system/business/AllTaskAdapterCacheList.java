@@ -9,6 +9,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Synchronized;
 import org.jboss.seam.log.Logging;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 
@@ -20,6 +21,7 @@ import java.util.*;
 @Name("allTaskAdapterCacheList")
 @Scope(ScopeType.SESSION)
 @AutoCreate
+@Synchronized(timeout=5000)
 public class AllTaskAdapterCacheList extends TaskInstanceListCache {
 
     @Override

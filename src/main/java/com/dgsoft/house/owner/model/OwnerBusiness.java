@@ -461,13 +461,25 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.recordTime = recordTime;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, mappedBy = "ownerBusiness")
     public Set<RecordStore> getRecordStores() {
         return recordStores;
     }
 
     public void setRecordStores(Set<RecordStore> recordStores) {
         this.recordStores = recordStores;
+    }
+
+    @Transient
+    public List<RecordStore> getRecordStoreList(){
+        List<RecordStore> result = new ArrayList<RecordStore>(getRecordStores());
+        Collections.sort(result, new Comparator<RecordStore>() {
+            @Override
+            public int compare(RecordStore o1, RecordStore o2) {
+                return o1.getCreateTime().compareTo(o2.getCreateTime());
+            }
+        });
+        return result;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
@@ -674,17 +686,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return null;
     }
-    /**
-     * 档案位置信息
-     */
-    @Transient
-    public RecordStore getRecordStore(){
-        if(!getRecordStores().isEmpty()){
-            return getRecordStores().iterator().next();
 
-        }
-        return null;
-    }
 
     @Transient
     public BusinessEmp getOperEmp(BusinessEmp.EmpType empType){
