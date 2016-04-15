@@ -9,8 +9,8 @@ import org.jboss.seam.annotations.Name;
 public class HouseInBusinessCreate extends OwnerBusinessCreateComponent{
 
     private static final String NORMAL_BIZ_BEGIN_PAGE = "/business/houseOwner/HouseInBusinessPick.xhtml";
-    private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseBusinessPatch.xthml";
-
+    //private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseBusinessPatch.xthml";
+    private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/SingleHouseBusinessPatch.xthml";
 
     @Override
     protected String getNormalBusinessPage() {
