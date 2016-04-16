@@ -113,7 +113,7 @@
 
     <h:form id="buildListResult">
 
-        <s:div styleClass="blankslate" rendered="#{empty houseList.resultList}">
+        <s:div styleClass="blankslate spacious large-format" rendered="#{empty houseList.resultList}">
             <span class="mega-octicon octicon-search"></span>
 
             <h3>#{messages.EmptyResult}</h3>
@@ -129,12 +129,12 @@
 
 
 
-        <div style="min-height: 300px;">
+        <s:div style="min-height: 300px;" rendered="#{not empty houseList.resultList}">
             <h:dataTable value="#{houseList.resultList}"
                          styleClass="table table-striped table-hover table-floatThead"
                          headerClass="table-tools-header"
                          columnClasses=",,,,action-col"
-                         var="_house" rendered="#{not empty houseList.resultList}">
+                         var="_house" >
 
                 <f:facet name="header">
                     <h3>
@@ -237,7 +237,7 @@
             </h:dataTable>
 
 
-        </div>
+        </s:div>
         <a:outputPanel layout="block" rendered="#{not empty houseList.resultList}" class="paginate-container">
 
             <a:outputPanel>

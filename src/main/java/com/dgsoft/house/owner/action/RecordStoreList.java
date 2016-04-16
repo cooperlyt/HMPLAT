@@ -22,7 +22,7 @@ public class RecordStoreList extends MultiOperatorEntityQuery<RecordStore> {
             " where rs.inRoom = false";
 
     private static final String[] RESTRICTIONS = {
-            "rs.id in (#{recordStoreList.searchStoreId})",
+            "rs.recordCode in (#{recordStoreList.searchStoreId})",
 
     };
 
@@ -31,7 +31,7 @@ public class RecordStoreList extends MultiOperatorEntityQuery<RecordStore> {
         setRestrictionLogicOperator("and");
 
         setRestrictionGroup(new RestrictionGroup("and",Arrays.asList(RESTRICTIONS)));
-        setOrderExpress("rs.ownerBusiness.recordTime,rs.createTime,rs.id");
+        setOrderExpress("rs.ownerBusiness.recordTime desc,rs.createTime desc,rs.id");
 
         setMaxResults(50);
 
