@@ -143,6 +143,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.houseMgr','房屋管理','DATA_MGR','','/func/house/datas/HouseList.xhtml','',12,'',b'0');
 
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordStore','业务档案存入','DAY_WORK','','/func/house/owner/RecordStore.xhtml','',13,'',b'0');
 
 -- 角色
 
@@ -173,6 +174,8 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness',
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.initHouseCard','初始登记出证统计','初始登记出证统计',8);
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseStatusForBuild','房屋状态导出','根据楼幢导出房屋信息及状态',9);
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordFileMgr','档案管理员','可以补扫档案',10);
 
 
 -- 功能 角色

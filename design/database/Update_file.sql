@@ -110,5 +110,9 @@ REFERENCES HOUSE_OWNER_RECORD.RECORD_STORE (ID)
 
 INSERT INTO DB_PLAT_SYSTEM.REPORT(ID,NAME,DESCRIPTION,PAGE) VALUES("record.cover","卷内目录","卷内目录","/report/RecordCover.xhtml");
 
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordFileMgr','档案管理员','可以补扫档案',10);
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordStore','档案上架','DAY_WORK','','/func/house/owner/RecordStore.xhtml','',13,'',b'0');
 
+
+-- INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave','owner.recordStore');
 
