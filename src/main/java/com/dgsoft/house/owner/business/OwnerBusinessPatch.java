@@ -310,7 +310,7 @@ public class OwnerBusinessPatch {
         recordStore.setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
 
         for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            houseBusiness.setRecordStore(recordStore);
+            //houseBusiness.setRecordStore(recordStore);
 
             List<HouseStatus> houseStatuses = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
             for(AddHouseStatus addHouseStatus: houseBusiness.getAddHouseStatuses()){
@@ -359,10 +359,10 @@ public class OwnerBusinessPatch {
         }
 
 
-        for (BusinessProject businessProject : ownerBusinessHome.getInstance().getBusinessProjects()) {
-            businessProject.setRecordStore(recordStore);
-
-        }
+//        for (BusinessProject businessProject : ownerBusinessHome.getInstance().getBusinessProjects()) {
+//            businessProject.setRecordStore(recordStore);
+//
+//        }
         return ownerBusinessHome.persist();
 
     }

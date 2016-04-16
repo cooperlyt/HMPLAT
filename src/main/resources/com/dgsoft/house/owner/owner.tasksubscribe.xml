@@ -478,11 +478,6 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="RecordStoreHouseView" page="/business/houseOwner/subscribe/RecordStoreHouseView.xhtml">
-        <description>
-            房屋档案位置信息查看
-        </description>
-    </view-subscribe>
 
     <view-subscribe name="HouseOwnerOldView" page="/business/houseOwner/subscribe/HouseOwnerOldView.xhtml">
         <description>
@@ -972,11 +967,19 @@
     </edit-subscribe>
 
     <edit-subscribe name="RecordStoreHouseEdit" page="/business/houseOwner/subscribe/RecordStoreHouseEdit.xhtml"
-                    component="">
+                    component="recordStoreHouseSubscribe">
         <description>
             房屋归档编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="MultiRecordStoreEdit" page="/business/houseOwner/subscribe/ChoiceRecordStore.xhtml"
+                    component="choiceRecordStore">
+        <description>
+            多份档案归档
+        </description>
+    </edit-subscribe>
+
 
 
     <edit-subscribe name="MakeCardOwnerRsipRecordEdit" page="/business/houseOwner/subscribe/MakeCardOwnerRsipRecordEdit.xhtml"
@@ -1464,17 +1467,6 @@
             预售许可证存根打印
         </description>
     </oper-subscribe>
-
-
-    <oper-subscribe name="RecordCoverPrint" page="/business/houseOwner/subscribe/RecordCoverPrint.xhtml">
-        <description>
-            卷内目录
-        </description>
-    </oper-subscribe>
-
-
-
-
 
 
     <!-- 建立业务组件订阅 ：-->

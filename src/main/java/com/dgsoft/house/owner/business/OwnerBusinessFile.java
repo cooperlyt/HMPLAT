@@ -97,10 +97,12 @@ public class OwnerBusinessFile {
 
     public void checkedItem(){
         getSelectNode().setCheck(true);
+        changeListener();
     }
 
     public void unCheckedItem(){
         getSelectNode().setCheck(false);
+        changeListener();
     }
 
 

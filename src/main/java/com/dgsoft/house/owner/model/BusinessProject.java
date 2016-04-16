@@ -202,16 +202,6 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,optional = true)
-    @JoinColumn(name = "RECORD_STORE" , nullable = true)
-    public RecordStore getRecordStore() {
-        return recordStore;
-    }
-
-    public void setRecordStore(RecordStore recordStore) {
-        this.recordStore = recordStore;
-    }
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessProject")
     public Set<BusinessBuild> getBusinessBuilds() {
         return this.businessBuilds;

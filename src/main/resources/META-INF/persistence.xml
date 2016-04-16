@@ -127,6 +127,7 @@
         <class>com.dgsoft.house.owner.model.ProjectMortgage</class>
         <class>com.dgsoft.house.owner.model.GiveCard</class>
         <class>com.dgsoft.house.owner.model.ProjectLandEndTime</class>
+        <class>com.dgsoft.house.owner.model.RecordLocal</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

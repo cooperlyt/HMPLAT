@@ -20,7 +20,6 @@ public class HouseBusiness implements java.io.Serializable {
     private BusinessHouse startBusinessHouse;
     private BusinessHouse afterBusinessHouse;
     private String houseCode;
-    private RecordStore recordStore;
     private Set<AddHouseStatus> addHouseStatuses = new HashSet<AddHouseStatus>(0);
     private boolean canceled;
 
@@ -103,15 +102,6 @@ public class HouseBusiness implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "RECORD_STORE" ,nullable = true)
-    public RecordStore getRecordStore() {
-        return recordStore;
-    }
-
-    public void setRecordStore(RecordStore recordStore) {
-        this.recordStore = recordStore;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "houseBusiness", cascade = CascadeType.ALL)
     public Set<AddHouseStatus> getAddHouseStatuses() {
