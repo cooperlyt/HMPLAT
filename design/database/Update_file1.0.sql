@@ -6,3 +6,5 @@ insert BUSINESS_AND_FEE (BUSINESS,FEE) values ('WP150','REGISTER.HB');
 
 delete from VIEW_SUBSCRIBE where REG_NAME='RecordStoreHouseView';
 delete from VIEW_SUBSCRIBE where REG_NAME='CheckEmpRecordEdit';
+DELETE FROM TASK_SUBSCRIBE WHERE REG_NAME='RecordCoverPrint';
+DELETE FROM VIEW_SUBSCRIBE WHERE REG_NAME='CheckEmpRecordEdit';
