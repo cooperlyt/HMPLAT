@@ -1,11 +1,17 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.SubStatus;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by wxy on 2015-09-03.
@@ -16,6 +22,9 @@ public class SelectBizModifying implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    @In
+    private BusinessDefineHome businessDefineHome;
 
     @Override
     public void valid() {
@@ -30,9 +39,13 @@ public class SelectBizModifying implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         if (ownerBusinessHome.getInstance().getSelectBusiness()!=null){
+
+            List<String> allDefineIds = Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","));
+
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.MODIFYING);
             for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
-                subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+                if (allDefineIds.contains(subStatus))
+                    subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
             }
         }
 
