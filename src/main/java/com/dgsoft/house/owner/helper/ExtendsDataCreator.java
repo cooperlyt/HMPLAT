@@ -209,7 +209,7 @@ public class ExtendsDataCreator {
             jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
         }
 
-
+        jsonObject.put("产籍号",jsonField(businessHouse.getDisplayHouseCode()));
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
 //        if (ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo()!=null && ownerBusiness.getSingleHoues().getStartBusinessHouse().getHouseRegInfo().getHouseProperty()!=null){
@@ -263,7 +263,7 @@ public class ExtendsDataCreator {
         if(ownerBusiness.getRegTime()!=null){
             jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
         }
-
+        jsonObject.put("产籍号",jsonField(businessHouse.getDisplayHouseCode()));
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
         jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
@@ -292,12 +292,16 @@ public class ExtendsDataCreator {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Report", "在建工程抵押.fr3");
-        if (ownerBusiness.getHouseBusinesses()!=null && ownerBusiness.getHouseBusinesses().size()>=1){
+        if (ownerBusiness.getHouseBusinesses()!=null && ownerBusiness.getHouseBusinesses().size()>1){
             jsonObject.put("字", jsonField(ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDistrictName()));
             Project project = houseEntityLoader.getEntityManager().find(Project.class, ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getProjectCode());
             if(project!=null){
                 jsonObject.put("在建工程坐落", jsonField(project.getAddress()));
             }
+        }
+        if (ownerBusiness.getHouseBusinesses()!=null && ownerBusiness.getHouseBusinesses().size()==1){
+            jsonObject.put("在建工程坐落", jsonField(ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getAddress()));
+            jsonObject.put("产籍号",jsonField(ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDisplayHouseCode()));
         }
 
         jsonObject.put("在建工程抵押证号", jsonField(markCard.getNumber()));
@@ -309,6 +313,7 @@ public class ExtendsDataCreator {
 //        jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
 //        jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
 //        jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
+
         jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
         if(ownerBusiness.getRegTime()!=null){
             jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
@@ -359,7 +364,7 @@ public class ExtendsDataCreator {
         }
 
 
-
+        jsonObject.put("产籍号",jsonField(businessHouse.getDisplayHouseCode()));
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
         jsonObject.put("业务名称", jsonField(ownerBusiness.getDefineName()));
@@ -428,6 +433,7 @@ public class ExtendsDataCreator {
         jsonObject.put("结构", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getStructure())));
         jsonObject.put("所在层", jsonField(businessHouse.getInFloorName()));
         jsonObject.put("共有信息", jsonField(poolInfo));
+        jsonObject.put("产籍号",jsonField(businessHouse.getDisplayHouseCode()));
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
@@ -445,7 +451,7 @@ public class ExtendsDataCreator {
             if (!businessHouse.getBusinessPools().isEmpty()){
                 str="所有权人:"+businessHouse.getBusinessHouseOwner().getPersonName();
                 for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
-                    str=str+" 共有权人："+businessPool.getPersonName()+"身份证明号:"+businessPool.getCredentialsNumber();
+                    str=str+" 共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
                 }
 
             }
