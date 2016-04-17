@@ -6,6 +6,7 @@ import com.dgsoft.house.owner.model.BusinessFile;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -16,6 +17,9 @@ public class RecordRoomMgr implements java.io.Serializable{
 
     @In(create = true)
     private RunParam runParam;
+
+    @In(create = true)
+    private EntityManager ownerEntityManager;
 
     public static class RecordBox{
 
@@ -157,7 +161,15 @@ public class RecordRoomMgr implements java.io.Serializable{
 
 
     private void initResultBox(){
+        if (SearchType.RECORD_LOCATION.equals(searchType)){
 
+            List<BusinessFile> files = ownerEntityManager.createQuery("select businessFile from BusinessFile businessFile left join fetch businessFile.recordLocal location where location.frame =:frame and location.cabinet = :cabinet and location.box = :box",BusinessFile.class)
+                    .setParameter("frame",frame).setParameter("cabinet",cabinet).setParameter("box",box).getResultList();
+
+
+        }else{
+
+        }
     }
 
     public void refresh(){

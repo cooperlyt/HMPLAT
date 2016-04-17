@@ -127,3 +127,16 @@ ALTER TABLE DB_PLAT_SYSTEM.BUSINESS_DEFINE ADD UNION_BIZ VARCHAR(64) NULL;
 INSERT INTO DB_PLAT_SYSTEM.FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordRoom','数字档案室','DATA_MGR','','/func/house/owner/RecordRoomMgr.xhtml','',15,'',b'0');
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('recordRoom.enable','BOOLEAN','false','启用档案室管理');
+
+
+use DB_PLAT_SYSTEM;
+insert FEE (ID,CATEGORY,NAME,DESCRIPTION,FOR_EACH_VALUES,FOR_EACH_VAR,FEE_EL,DETAILS_EL,PRIORITY)
+ value ('REGISTER.HB','REGISTER','登记费','','#{ownerBusinessHome.instance.houseBusinesses}','_houses','#{_houses.afterBusinessHouse.useType==''80''?160.0:1100.0}','#{_houses.afterBusinessHouse.useType==''80'' ? ''160'' : ''1100''}',14);
+insert BUSINESS_AND_FEE (BUSINESS,FEE) values ('WP150','REGISTER.HB');
+
+
+delete from VIEW_SUBSCRIBE where REG_NAME='RecordStoreHouseView';
+delete from VIEW_SUBSCRIBE where REG_NAME='CheckEmpRecordEdit';
+DELETE FROM TASK_SUBSCRIBE WHERE REG_NAME='RecordCoverPrint';
+DELETE FROM VIEW_SUBSCRIBE WHERE REG_NAME='CheckEmpRecordEdit';
+

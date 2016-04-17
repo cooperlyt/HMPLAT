@@ -20,7 +20,7 @@ import javax.persistence.EntityManager;
 @Name("recordStorePut")
 public class RecordStorePut {
 
-   private String frame;
+    private String frame;
 
     private String cabinet;
 
@@ -70,24 +70,24 @@ public class RecordStorePut {
     }
 
     @Transactional
-    public void put(){
+    public void put() {
         Logging.getLog(getClass()).debug("put data: " + selectRecord);
         try {
             JSONArray select = new JSONArray(selectRecord);
 
-            if (select.length() <= 0){
-                facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN,"record.put.noselect.error");
+            if (select.length() <= 0) {
+                facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "record.put.noselect.error");
                 return;
             }
 
-            for(int i=0; i<select.length() ;i++){
+            for (int i = 0; i < select.length(); i++) {
                 RecordStore store = ownerEntityManager.find(RecordStore.class, select.get(i));
-                if (store == null){
+                if (store == null) {
                     throw new IllegalArgumentException("recordStore not found:" + select.get(i));
                 }
                 int index = 1;
-                for(BusinessFile businessFile: store.getBusinessFiles()){
-                    RecordLocal local = new RecordLocal(frame,cabinet,box,store.getRecordCode() + "-" + index,businessFile);
+                for (BusinessFile businessFile : store.getBusinessFiles()) {
+                    RecordLocal local = new RecordLocal(frame, cabinet, box, store.getRecordCode() + "-" + index, businessFile);
                     ownerEntityManager.persist(local);
                     index++;
                 }
@@ -95,18 +95,22 @@ public class RecordStorePut {
 
             }
         } catch (JSONException e) {
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN,"record.put.noselect.error");
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.WARN, "record.put.noselect.error");
             return;
         }
 
         ownerEntityManager.flush();
-        facesMessages.addFromResourceBundle(StatusMessage.Severity.INFO,"record.put.success");
+        facesMessages.addFromResourceBundle(StatusMessage.Severity.INFO, "record.put.success");
         recordStoreList.refresh();
         Logging.getLog(getClass()).debug("page: " + recordStoreList.getPage() + ";count:" + recordStoreList.getPageCount());
-        if (recordStoreList.getPage().compareTo(new Long(recordStoreList.getPageCount())) > 0  ){
-            recordStoreList.last();
+        if (recordStoreList.getResultCount() > 0) {
+            if (recordStoreList.getPage().compareTo(new Long(recordStoreList.getPageCount())) > 0) {
+                recordStoreList.last();
+            }
+        } else {
+            recordStoreList.first();
         }
-        frame= null;
+        frame = null;
         cabinet = null;
         box = null;
         selectRecord = null;
