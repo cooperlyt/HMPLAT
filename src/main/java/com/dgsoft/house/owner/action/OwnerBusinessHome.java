@@ -41,6 +41,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         OwnerBusiness result = new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
                 OwnerBusiness.BusinessStatus.RUNNING, new Date(), false, OwnerBusiness.BusinessType.NORMAL_BIZ);
 
+        String unionBiz = businessDefineHome.getInstance().getUnionBiz();
+
+        if (unionBiz != null && !unionBiz.trim().equals("")){
+            for(String s : unionBiz.split(",")){
+                if (s!= null && !s.trim().equals("")){
+                    result.getSubStatuses().add(new SubStatus(s, BusinessInstance.BusinessStatus.RUNNING,result));
+                }
+            }
+        }
+
+
         result.setDefineId(businessDefineHome.getInstance().getId());
         result.setDefineName(businessDefineHome.getInstance().getName());
 

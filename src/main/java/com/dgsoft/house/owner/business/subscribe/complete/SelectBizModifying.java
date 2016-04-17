@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.SubStatus;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -30,6 +31,9 @@ public class SelectBizModifying implements TaskCompleteSubscribeComponent {
     public void complete() {
         if (ownerBusinessHome.getInstance().getSelectBusiness()!=null){
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
+                subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+            }
         }
 
     }

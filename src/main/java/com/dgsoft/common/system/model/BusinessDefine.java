@@ -152,6 +152,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private String modifyPage;
     private String registerBookPart;
 
+    private String unionBiz;
 
 
     public BusinessDefine() {
@@ -400,6 +401,15 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setRegisterBookPart(String registerBookPage) {
         this.registerBookPart = registerBookPage;
+    }
+
+    @Column(name = "UNION_BIZ",nullable = true,length = 64)
+    public String getUnionBiz() {
+        return unionBiz;
+    }
+
+    public void setUnionBiz(String unionBiz) {
+        this.unionBiz = unionBiz;
     }
 
     @Transient

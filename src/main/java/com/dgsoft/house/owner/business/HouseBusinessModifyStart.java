@@ -148,6 +148,9 @@ public class HouseBusinessModifyStart {
     private void cloneData(OwnerBusiness ownerBusiness) {
         //TODO needFile
         ownerBusiness.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        for(SubStatus subStatus: ownerBusiness.getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        }
 
 
         ownerBusinessHome.clearInstance();

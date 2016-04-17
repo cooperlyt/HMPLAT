@@ -19,18 +19,19 @@
         </div>
     </ui:define>
 
-<ui:define name="houseSelectAction">
-    <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disabled'}"
-            disabled="#{not ((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2))}"
-            action="#{houseBusinessStart.singleHouseSelected}">
-        #{messages.select}
-    </s:link>
-</ui:define>
+    <ui:define name="houseSelectAction">
+        <s:link styleClass="btn btn-primary #{((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2)) ? '' : 'disabled'}"
+                disabled="#{not ((facesContext.maximumSeverity==null) || (facesContext.maximumSeverity.ordinal lt 2))}"
+                action="#{houseBusinessStart.singleHouseSelected}">
+            #{messages.select}
+        </s:link>
+    </ui:define>
 
     <ui:define name="header">
         <h:form>
             <a:jsFunction name="houseValid" action="#{houseBusinessStart.validSelectHouse}" status="processWaiting"
-                          oncomplete="restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})" render="houseInfoContent">
+                          oncomplete="restoreMapScroll();$('.info-modal-lg').modal({backdrop: 'static'})"
+                          render="houseInfoContent">
                 <a:param name="selectHouseCode" assignTo="#{ownerBuildGridMap.selectBizHouseId}"/>
                 <a:attachQueue requestDelay="0"/>
             </a:jsFunction>
@@ -38,11 +39,11 @@
         </h:form>
 
 
-
         <h:outputScript>
-            function houseClick(houseCode){
-            saveMapScroll();saveDataTableScroll();
-            houseValid(houseCode);
+            function houseClick(houseCode) {
+                saveMapScroll();
+                saveDataTableScroll();
+                houseValid(houseCode);
             }
         </h:outputScript>
     </ui:define>
