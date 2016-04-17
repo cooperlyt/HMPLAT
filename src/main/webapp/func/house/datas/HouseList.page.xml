@@ -11,5 +11,6 @@
     <param name="blockNumber" value="#{houseList.blockNumber}"/>
     <param name="buildNumber" value="#{houseList.buildNumber}"/>
     <param name="houseNumber" value="#{houseList.houseNumber}"/>
+    <param name="searchType" value="#{houseList.searchTypeStr}"/>
 
 </page>

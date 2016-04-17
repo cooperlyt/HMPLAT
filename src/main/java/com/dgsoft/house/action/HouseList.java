@@ -190,6 +190,20 @@ public class HouseList extends MultiOperatorEntityQuery<House> {
         return searchType;
     }
 
+    public String getSearchTypeStr(){
+        if (searchType == null){
+            return null;
+        }
+        return searchType.name();
+    }
+
+    public void setSearchTypeStr(String value){
+        if(value == null || value.trim().equals("")){
+            searchType = null;
+        }else
+            searchType = SearchType.valueOf(value);
+    }
+
     public void setSearchType(SearchType searchType) {
         this.searchType = searchType;
     }
