@@ -34,7 +34,7 @@
                 </s:link>
 
                 <s:link view="/func/system/config/TaskComponentSubscribeConfig.xhtml" class="tabnav-tab ">
-                    <span class="octicon octicon-puzzle"></span>
+                    <span class="octicon octicon-circuit-board"></span>
                     #{messages.componentSubscribe}
                 </s:link>
 
@@ -203,7 +203,7 @@
                                                            immediate="true"
                                                            render="viewGroupList"
                                                            action="#{businessSubscribeConfig.upSelectGroup}">
-                                                <span class="octicon octicon-move-up"/>
+                                                <span class="octicon octicon-arrow-up"/>
                                                 <a:attachQueue requestDelay="0"/>
                                                 <a:param value="#{_group.id}"
                                                          assignTo="#{businessSubscribeConfig.selectGroupId}"/>
@@ -212,7 +212,7 @@
                                                            style="min-width: 37px"
                                                            immediate="true" render="viewGroupList"
                                                            action="#{businessSubscribeConfig.downSelectGroup}">
-                                                <span class="octicon octicon-move-down"/>
+                                                <span class="octicon octicon-arrow-down"/>
                                                 <a:attachQueue requestDelay="0"/>
                                                 <a:param value="#{_group.id}"
                                                          assignTo="#{businessSubscribeConfig.selectGroupId}"/>
@@ -334,7 +334,7 @@
                                                                immediate="true"
                                                                render="dataList"
                                                                action="#{businessSubscribeConfig.upSelectViewSubscribe}">
-                                                    <span class="octicon octicon-move-up"/>
+                                                    <span class="octicon octicon-arrow-up"/>
                                                     <a:attachQueue requestDelay="0"/>
                                                     <a:param value="#{_group.id}"
                                                              assignTo="#{subscribeGroupHome.id}"/>
@@ -346,7 +346,7 @@
                                                                immediate="true"
                                                                render="dataList"
                                                                action="#{businessSubscribeConfig.downSelectViewSubscribe}">
-                                                    <span class="octicon octicon-move-down"/>
+                                                    <span class="octicon octicon-arrow-down"/>
                                                     <a:attachQueue requestDelay="0"/>
                                                     <a:param value="#{_group.id}"
                                                              assignTo="#{subscribeGroupHome.id}"/>

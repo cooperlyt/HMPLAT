@@ -353,7 +353,7 @@
                                                    rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
                                                    oncomplete="$('#resumeConfirmPanel').modal('show')"
                                                    p:aria-label="#{messages.CONTINUE}" immediate="true" execute="@this">
-                                        <span class="btn-icon octicon octicon-playback-play"></span>
+                                        <span class="btn-icon glyphicon glyphicon-play"></span>
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                                     </a:commandLink>
@@ -361,7 +361,7 @@
                                                    disabled="#{not ownerBusinessView.canSuspend}" oncomplete="$('#suspendConfirmPanel').modal('show')"
                                                    rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
                                                    p:aria-label="#{messages.SUSPEND}" immediate="true" execute="@this">
-                                        <span class="btn-icon octicon octicon-playback-pause"></span>
+                                        <span class="btn-icon glyphicon glyphicon-pause"></span>
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                                     </a:commandLink>
@@ -370,7 +370,7 @@
                                                    rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
                                                    oncomplete="$('#stopConfirmPanel').modal('show')" p:aria-label="#{messages.TERMINATION}"
                                                    immediate="true" execute="@this">
-                                        <span class="btn-icon octicon octicon-primitive-square"></span>
+                                        <span class="btn-icon glyphicon glyphicon-stop"></span>
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                                     </a:commandLink>
