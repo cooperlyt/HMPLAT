@@ -201,6 +201,14 @@
             </div>
         </s:decorate>
 
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">#{messages.BusinessDefing_unionBiz}</ui:define>
+            <ui:param name="for" value="unionBiz"/>
+            <h:inputText id="unionBiz" styleClass="form-control" value="#{businessDefineHome.instance.unionBiz}"
+                         label="#{messages.BusinessDefing_unionBiz}" maxlength="64">
+
+            </h:inputText>
+        </s:decorate>
 
 
         <s:decorate styleClass="form-group " template="/layout/edit-big.xhtml">

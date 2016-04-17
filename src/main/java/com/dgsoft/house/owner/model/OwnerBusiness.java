@@ -68,6 +68,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<ContractOwner> contractOwners = new HashSet<ContractOwner>(0);
     private Set<ProjectMortgage> projectMortgages = new HashSet<ProjectMortgage>(0);
     private Set<GiveCard> giveCards = new HashSet<GiveCard>(0);
+
+    private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
     public OwnerBusiness() {
     }
 
@@ -439,6 +441,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setCheckTime(Date checkTime) {
         this.checkTime = checkTime;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = CascadeType.ALL,mappedBy = "ownerBusiness")
+    public Set<SubStatus> getSubStatuses() {
+        return subStatuses;
+    }
+
+    public void setSubStatuses(Set<SubStatus> subStatuses) {
+        this.subStatuses = subStatuses;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

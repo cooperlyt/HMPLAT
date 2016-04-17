@@ -26,6 +26,7 @@ public interface BusinessInstance {
         }
     }
 
+    //不能撤回更正业务， 撤回业务要递归selectBiz设置状态
 
     public BusinessSource getSource();
 

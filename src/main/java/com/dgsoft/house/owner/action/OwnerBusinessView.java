@@ -10,6 +10,7 @@ import com.dgsoft.common.system.business.TaskSubscribeReg;
 import com.dgsoft.common.system.model.SubscribeGroup;
 import com.dgsoft.common.system.model.ViewSubscribe;
 import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.model.SubStatus;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -113,6 +114,9 @@ public class OwnerBusinessView {
     public void suspendBiz(){
         if (isCanSuspend()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.SUSPEND);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+                subStatus.setStatus(OwnerBusiness.BusinessStatus.SUSPEND);
+            }
             ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.SUSPEND, ownerBusinessHome.getInstance(),
                     authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
             processInstanceHome.suspend();
@@ -124,6 +128,9 @@ public class OwnerBusinessView {
     public void resumeBiz(){
         if (isCanResume()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.RUNNING);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+                subStatus.setStatus(OwnerBusiness.BusinessStatus.RUNNING);
+            }
             ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.CONTINUE, ownerBusinessHome.getInstance(),
                     authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
             processInstanceHome.resume();
@@ -135,6 +142,9 @@ public class OwnerBusinessView {
     public void terminationBiz(){
         if (isCanStop()) {
             ownerBusinessHome.getInstance().setStatus(OwnerBusiness.BusinessStatus.ABORT);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+                subStatus.setStatus(OwnerBusiness.BusinessStatus.ABORT);
+            }
             if (ownerBusinessHome.getInstance().getSelectBusiness() != null &&
                     BusinessInstance.BusinessStatus.MODIFYING.equals(ownerBusinessHome.getInstance().getSelectBusiness().getStatus())){
                 ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);

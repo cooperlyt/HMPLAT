@@ -7,6 +7,7 @@ import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskDescription;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.SubStatus;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -134,6 +135,9 @@ public class OwnerTaskHandle {
         ownerBusinessHome.refresh();
 
         ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
+        for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.ABORT);
+        }
         if (ownerBusinessHome.getInstance().getSelectBusiness() != null &&
                 BusinessInstance.BusinessStatus.MODIFYING.equals(ownerBusinessHome.getInstance().getSelectBusiness().getStatus())){
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);

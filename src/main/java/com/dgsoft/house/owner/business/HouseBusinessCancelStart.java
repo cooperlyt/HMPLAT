@@ -7,6 +7,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.AddHouseStatus;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.model.SubStatus;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.web.RequestParameter;
@@ -42,6 +43,9 @@ public class HouseBusinessCancelStart {
         businessDefineHome.setId(selectOwnerBusiness.getDefineId());
         businessDefineHome.setTaskType(BusinessInstance.BusinessType.CANCEL_BIZ);
         selectOwnerBusiness.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        for(SubStatus subStatus: selectOwnerBusiness.getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        }
 
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setType(BusinessInstance.BusinessType.CANCEL_BIZ);

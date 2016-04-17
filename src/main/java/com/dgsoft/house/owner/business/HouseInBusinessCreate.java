@@ -12,6 +12,7 @@ public class HouseInBusinessCreate extends OwnerBusinessCreateComponent{
     //private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseBusinessPatch.xthml";
     private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/SingleHouseBusinessPatch.xthml";
 
+
     @Override
     protected String getNormalBusinessPage() {
         return NORMAL_BIZ_BEGIN_PAGE;
@@ -19,6 +20,6 @@ public class HouseInBusinessCreate extends OwnerBusinessCreateComponent{
 
     @Override
     protected String getPatchBusinessPage() {
-        return null;
+        return PATCH_BIZ_BEGIN_PAGE;
     }
 }

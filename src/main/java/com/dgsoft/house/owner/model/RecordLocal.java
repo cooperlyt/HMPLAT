@@ -22,6 +22,17 @@ public class RecordLocal implements java.io.Serializable{
     private BusinessFile businessFile;
     private Long version;
 
+    public RecordLocal() {
+    }
+
+    public RecordLocal(String frame, String cabinet, String box, String recordCode, BusinessFile businessFile) {
+        this.frame = frame;
+        this.cabinet = cabinet;
+        this.box = box;
+        this.recordCode = recordCode;
+        this.businessFile = businessFile;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull

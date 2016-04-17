@@ -46,7 +46,11 @@
                 <a:repeat value="#{statusMessages.currentGlobalMessages}" var="_msg">
 
                     <h:outputScript>
-                        if (#{_msg.severity.ordinal == 2}){
+                        if (#{_msg.severity.ordinal == 1}){
+                        $.scojs_message.options.delay = 4000;
+                        $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_WRN);
+
+                        }else if (#{_msg.severity.ordinal == 2}){
                         $.scojs_message.options.delay = 4000;
                         $.scojs_message('#{_msg.summary}',$.scojs_message.TYPE_ERROR);
 

@@ -7,13 +7,12 @@
             title="卷内目录">
 
 
-    <ui:repeat value="#{ownerBusinessHome.instance.recordStoreList}" var="_cover">
+
         <ui:include src="RecordCoverTable.xhtml">
-            <ui:param name="_cover" value="#{_cover}"/>
+            <ui:param name="_cover" value="#{recordStoreHome.instance}"/>
         </ui:include>
 
-        <p:newPage/>
-    </ui:repeat>
+
 
 
 
