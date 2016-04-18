@@ -17,6 +17,7 @@
 
             <h:inputText label="#{label}"
                          value="#{timeArea.timeArea.fromTime}"
+                         id="#{f_id}"
                          required="#{f_required}"
                          p:placeholder="起始时间"
                          styleClass="js-datepicker form-control">
@@ -53,6 +54,7 @@
 
             <h:inputText label="#{label}" rendered="#{not (timeArea.timeArea.timeShowType eq 'DATE_TIME')}"
                          value="#{timeArea.toSize}"
+                         id="#{t_id}"
                          style="border-bottom-right-radius: 3px;border-top-right-radius: 3px;"
                          required="#{t_required}"
                          styleClass="form-control">

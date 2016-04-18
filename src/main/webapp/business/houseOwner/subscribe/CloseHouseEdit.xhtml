@@ -77,25 +77,17 @@
             #{messages.CloseHouse_CloseDate}
         </ui:define>
         <ui:param name="for" value="closeDate"/>
-        <div class="input-group">
-            <h:inputText id="closeDate"
-                         required="true"
-                         styleClass="js-datepicker form-control"
-                         label="#{messages.CloseHouse_CloseDate}"
-                         value="#{closeHouseSubsrcibe.instance.closeDate}">
-                <s:convertDateTime pattern="#{messages.datePattern}"/>
-            </h:inputText>
-            <span class="input-group-addon">-</span>
 
-            <h:inputText id="toDateField"
-                         required="true"
-                         styleClass="js-datepicker form-control"
-                         label="#{messages.timeZone}"
-                         value="#{closeHouseSubsrcibe.instance.toDate}">
-                <s:convertDateTime pattern="#{messages.datePattern}"/>
-            </h:inputText>
 
-        </div>
+        <ui:include src="/layout/system/TimeAreaInput.xhtml">
+            <ui:param name="timeArea" value="#{closeHouseSubsrcibe.timeAreaHelper}"/>
+            <ui:param name="label" value="#{messages.CloseHouse_CloseDate}"/>
+            <ui:param name="f_required" value="true"/>
+            <ui:param name="t_required" value="false"/>
+            <ui:param name="t_id" value="closeDate"/>
+            <ui:param name="f_id" value="toDateField"/>
+        </ui:include>
+
         <ui:define name="message">
             <r:message for="closeDate" styleClass="edit-below-msg" />
             <r:message for="toDateField" styleClass="edit-below-msg" />

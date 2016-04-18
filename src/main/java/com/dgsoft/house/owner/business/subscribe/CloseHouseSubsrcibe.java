@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.TimeAreaHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.CloseHouse;
@@ -30,6 +31,13 @@ public class CloseHouseSubsrcibe extends OwnerEntityHome<CloseHouse> {
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getCloseHouses().add(getInstance());
         }
+        timeAreaHelper = getInstance().getTimeArea();
+    }
+
+    private TimeAreaHelper timeAreaHelper;
+
+    public TimeAreaHelper getTimeAreaHelper() {
+        return timeAreaHelper;
     }
 
 
