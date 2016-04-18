@@ -1,11 +1,14 @@
 package com.dgsoft.common;
 
+import com.dgsoft.common.helper.ActionExecuteState;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Synchronized;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
+import org.jboss.seam.contexts.Contexts;
 
 import javax.faces.event.ValueChangeEvent;
 import java.text.DateFormat;
@@ -136,6 +139,13 @@ public class CalendarBean implements java.io.Serializable {
         return false;
     }
 
-
+    public static CalendarBean instance()
+    {
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (CalendarBean) Component.getInstance(CalendarBean.class, true);
+    }
 
 }

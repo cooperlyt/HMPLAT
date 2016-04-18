@@ -126,7 +126,7 @@ public class MoneySubscribe implements TaskSubscribeComponent {
     private void calcShouldMoney(BusinessMoney businessMoney) {
 
         if (BusinessMoney.PreferentialType.HALF_RECEIVE.equals(businessMoney.getPreferential())) {
-            businessMoney.setChargeDetails(businessMoney.getChargeDetails() + " 减半");
+            businessMoney.setChargeDetails(businessMoney.getChargeDetails() + "[半价]");
             switch (RunParam.instance().getIntParamValue("ShouldMoneyCalcType")) {
                 case 3:
                     businessMoney.setShouldMoney(businessMoney.getCheckMoney().divide(new BigDecimal(2), 0, RoundingMode.HALF_UP));
@@ -153,8 +153,10 @@ public class MoneySubscribe implements TaskSubscribeComponent {
             }
         } else if (BusinessMoney.PreferentialType.FREE_MONEY.equals(businessMoney.getPreferential())) {
             businessMoney.setShouldMoney(BigDecimal.ZERO);
-            businessMoney.setChargeDetails("减免");
+            businessMoney.setChargeDetails("[减免]");
         } else {
+            if (businessMoney.getChargeDetails() != null)
+                businessMoney.setChargeDetails(businessMoney.getChargeDetails().replace("[半价]","").replace("[减免]",""));
             switch (RunParam.instance().getIntParamValue("ShouldMoneyCalcType")) {
                 case 3:
                     businessMoney.setShouldMoney(businessMoney.getCheckMoney().setScale(0, RoundingMode.HALF_UP));

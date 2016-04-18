@@ -50,7 +50,7 @@
                                 </h:selectOneMenu>
                             </span>
                             <h:inputText id="factMoneyInput" value="#{_moneyItem.shouldMoney}" required="true"
-                                         readonly="#{ (runParam.getBooleanParamValue('AutoCalcMoney')) and not (runParam.getIntParamValue('ShouldMoneyCalcType') eq 1)}"
+                                         readonly="#{ (runParam.getBooleanParamValue('AutoCalcMoney')) and not runParam.getBooleanParamValue('ShouldMoneyAllowChange')}"
                                          class="form-control" label="#{_moneyItem.typeName} #{messages.factMoney}"
                                          p:placeholder="#{messages.factMoney}">
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"
