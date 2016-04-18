@@ -9,30 +9,31 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <a:region>
+
+
+
 
         <div class="input-group">
 
             <h:inputText label="#{label}"
                          value="#{timeArea.timeArea.fromTime}"
-                         p:placeholder="起始时间"
                          required="#{f_required}"
+                         p:placeholder="起始时间"
                          styleClass="js-datepicker form-control">
                 <s:convertDateTime pattern="#{messages.datePattern}"/>
-                <a:ajax event="blur" listener="#{timeArea.fromTimeChange}" render="@region">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
             </h:inputText>
             <div class="input-group-btn">
 
 
-                <h:selectOneMenu styleClass="selectpicker select-menu-btn sm-radius"
+                <h:selectOneMenu styleClass="selectpicker select-menu-btn sm-radius input-group-mid"
+                                 p:data-width="70"
                                  value="#{timeArea.timeArea.timeShowType}">
                     <s:selectItems value="#{allTimeShowTypes}" var="_typeItem"
                                    itemValue="#{_typeItem}"
                                    label="#{_typeItem.label}"/>
                     <s:convertEnum/>
-                    <a:ajax event="valueChange" listener="#{timeArea.typeChange}" render="@region">
+                    <a:ajax event="valueChange" listener="#{timeArea.clearToDate}" execute="@this" render="timeAreaInput">
+
                         <a:attachQueue requestDelay="0"/>
                     </a:ajax>
                 </h:selectOneMenu>
@@ -40,31 +41,29 @@
 
             </div>
 
-
+            <a:outputPanel id="timeAreaInput">
             <h:inputText label="#{label}" rendered="#{timeArea.timeArea.timeShowType eq 'DATE_TIME'}"
                          value="#{timeArea.timeArea.toTime}"
                          required="#{t_required}"
+                         style="border-bottom-right-radius: 3px;border-top-right-radius: 3px;"
                          styleClass="js-datepicker form-control">
                 <s:convertDateTime pattern="#{messages.datePattern}"/>
-                <a:ajax event="blur" listener="#{timeArea.toTimeChange}" render="@region">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
             </h:inputText>
+
 
             <h:inputText label="#{label}" rendered="#{not (timeArea.timeArea.timeShowType eq 'DATE_TIME')}"
                          value="#{timeArea.toSize}"
+                         style="border-bottom-right-radius: 3px;border-top-right-radius: 3px;"
                          required="#{t_required}"
                          styleClass="form-control">
                 <f:converter converterId="javax.faces.Long"/>
-                <a:ajax event="blur" listener="#{timeArea.toSizeChange}" render="@region">
-                    <a:attachQueue requestDelay="0"/>
-                </a:ajax>
             </h:inputText>
 
 
-        </div>
+            </a:outputPanel>
 
-    </a:region>
+
+        </div>
 
 
 </ui:composition>

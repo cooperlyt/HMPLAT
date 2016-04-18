@@ -16,11 +16,28 @@
            <h:outputText value="#{messages.MortgaegeRegiste_HighestMountMoney}"/>
            <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.highestMountMoney}"/>
 
-            <h:outputText value="#{messages.MortgaegeRegiste_MortgageDueTimeS}"/>
-            <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"/>
 
-            <h:outputText value="#{messages.MortgaegeRegiste_MortgageTimeZ}"/>
-            <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"/>
+            <h:outputText value="#{messages.MortgaegeRegiste_MortgageDueTime}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+                <h:outputText value="-" rendered="#{ownerBusinessHome.instance.mortgaegeRegiste.timeShowType eq 'DATE_TIME'}"/>
+
+                <h:outputText value=" 抵押期限:" rendered="#{not (ownerBusinessHome.instance.mortgaegeRegiste.timeShowType eq 'DATE_TIME')}"/>
+
+                <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"
+                              rendered="#{ownerBusinessHome.instance.mortgaegeRegiste.timeShowType eq 'DATE_TIME'}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+                <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.timeArea.toSize}" rendered="#{not (ownerBusinessHome.instance.mortgaegeRegiste.timeShowType eq 'DATE_TIME')}"/>
+
+
+                <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.timeShowType.label}" rendered="#{not (ownerBusinessHome.instance.mortgaegeRegiste.timeShowType eq 'DATE_TIME')}"/>
+            </dh:entryGridColumn>
+
 
             <h:outputText value="#{messages.MortgaegeRegiste_MortgageArea}"/>
             <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageArea}"/>
