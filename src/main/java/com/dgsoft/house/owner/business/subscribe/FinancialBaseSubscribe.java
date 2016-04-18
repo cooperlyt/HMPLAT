@@ -17,6 +17,7 @@ import org.jboss.seam.log.Logging;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,21 @@ import java.util.List;
  */
 @Scope(ScopeType.CONVERSATION)
 public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
+
+    public enum TimeShowType{
+        DATE_TIME("-"),YEAR("年"),MONTH("月"),DAY("天");
+
+        private String label;
+
+        public String getLabel() {
+            return label;
+        }
+
+        TimeShowType(String label) {
+            this.label = label;
+        }
+    }
+
     @In
     protected OwnerBusinessHome ownerBusinessHome;
     protected MortgaegeRegiste mortgaegeRegiste;
@@ -163,5 +179,49 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
         }
         return personMortgageInstance;
     }
+
+    private TimeShowType timeShowType = TimeShowType.DATE_TIME;
+
+    public TimeShowType getTimeShowType() {
+        return timeShowType;
+    }
+
+    public void setTimeShowType(TimeShowType timeShowType) {
+        this.timeShowType = timeShowType;
+    }
+
+
+
+    public Date getMortgageTime(){
+        return mortgaegeRegiste.getMortgageTime();
+    }
+
+    public void setMortgageTime(Date value){
+        mortgaegeRegiste.setMortgageTime(value);
+    }
+
+
+    public Integer getMortgageYear(){
+        if (mortgaegeRegiste.getMortgageTime() == null){
+            return null;
+        }
+
+       // Calendar calendar =
+        return null;
+
+    }
+
+    public void setMortgageYear(Integer year){
+
+    }
+
+    public Integer getMortgageMonth(){
+            return null;
+    }
+
+    public void setMortgageMonth(Integer value){
+
+    }
+
 
 }

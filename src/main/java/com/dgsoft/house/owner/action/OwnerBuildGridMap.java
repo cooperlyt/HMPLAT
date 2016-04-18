@@ -196,8 +196,13 @@ public class OwnerBuildGridMap {
                     .getSingleResult());
 
         } catch (NoResultException e) {
-            setSelectBizHouse(null);
-            Logging.getLog(getClass()).warn("houseCode not found in record");
+            try {
+            setSelectBizHouse(new BusinessHouse(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.deleted = false and house.id = :houseCode",House.class)
+                    .setParameter("houseCode",id).getSingleResult()));
+            } catch (NoResultException e1) {
+                setSelectBizHouse(null);
+                Logging.getLog(getClass()).warn("houseCode not found ");
+            }
         }
 
     }
