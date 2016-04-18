@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.TimeArea;
 import com.dgsoft.common.system.PersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,6 +28,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
     private Date createTime;
     private MakeCard makeCard;
     private MortgaegeRegiste mortgaegeForNew;
+
 
 	public Financial() {
 	}
@@ -188,4 +190,6 @@ public class Financial implements java.io.Serializable, PersonEntity {
     public void setMortgaegeForNew(MortgaegeRegiste mortgaegeForNew) {
         this.mortgaegeForNew = mortgaegeForNew;
     }
+
+
 }

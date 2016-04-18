@@ -201,7 +201,7 @@ public class OwnerBuildGridMap {
                     .setParameter("houseCode",id).getSingleResult()));
             } catch (NoResultException e1) {
                 setSelectBizHouse(null);
-                Logging.getLog(getClass()).warn("houseCode not found ");
+                Logging.getLog(getClass()).error("houseCode not found ");
             }
         }
 

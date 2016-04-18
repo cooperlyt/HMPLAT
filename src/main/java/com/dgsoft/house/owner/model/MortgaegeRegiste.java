@@ -2,12 +2,11 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.BigMoneyUtil;
+import com.dgsoft.common.TimeArea;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,7 +16,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "MORTGAEGE_REGISTE", catalog = "HOUSE_OWNER_RECORD")
-public class MortgaegeRegiste implements java.io.Serializable {
+public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 
 	private String id;
 	private OwnerBusiness ownerBusiness;
@@ -31,6 +30,9 @@ public class MortgaegeRegiste implements java.io.Serializable {
     private Financial financial;
 	private String orgName;
 	private BusinessHouseOwner businessHouseOwner;
+	private TimeArea.TimeShowType timeShowType;
+
+
 
 
 	public MortgaegeRegiste() {
@@ -214,4 +216,39 @@ public class MortgaegeRegiste implements java.io.Serializable {
 	}
 
 
+	@Override
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TIME_AREA_TYPE",nullable = false,length = 20)
+	@NotNull
+	public TimeArea.TimeShowType getTimeShowType() {
+		return timeShowType;
+	}
+
+	public void setTimeShowType(TimeArea.TimeShowType timeShowType) {
+		this.timeShowType = timeShowType;
+	}
+
+	@Override
+	@Transient
+	public Date getFromTime() {
+		return getMortgageDueTimeS();
+	}
+
+	@Override
+	@Transient
+	public void setFromTime(Date date) {
+		setMortgageDueTimeS(date);
+	}
+
+	@Override
+	@Transient
+	public Date getToTime() {
+		return getMortgageTime();
+	}
+
+	@Override
+	@Transient
+	public void setToTime(Date date) {
+		setMortgageTime(date);
+	}
 }
