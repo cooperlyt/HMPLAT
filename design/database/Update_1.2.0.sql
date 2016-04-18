@@ -139,6 +139,9 @@ insert FEE (ID,CATEGORY,NAME,DESCRIPTION,FOR_EACH_VALUES,FOR_EACH_VAR,FEE_EL,DET
 insert BUSINESS_AND_FEE (BUSINESS,FEE) values ('WP150','REGISTER.HB');
 
 insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('CreateCradNumberType','INTEGER','1','1:生成的权证号带-;2:生成的权证号不带-');
+insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('PoolInfoPrint','INTEGER','1','1:权证打印附记共有情况打印带所有权人;2:权证打印附记共有情况打印不带所有权人,只有共有权人姓名');
+
+
 delete from VIEW_SUBSCRIBE where REG_NAME='RecordStoreHouseView';
 delete from VIEW_SUBSCRIBE where REG_NAME='CheckEmpRecordEdit';
 DELETE FROM TASK_SUBSCRIBE WHERE REG_NAME='RecordCoverPrint';

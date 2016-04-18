@@ -4,6 +4,7 @@ import com.dgsoft.common.BigMoneyUtil;
 import com.dgsoft.common.helper.QueueJsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.model.Fee;
 import com.dgsoft.house.HouseEntityLoader;
@@ -202,7 +203,13 @@ public class ExtendsDataCreator {
         jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
         jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
-        jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
+        //判断是否是合并业务
+        if (!ownerBusiness.getSubStatuses().isEmpty() && ownerBusiness.getSubStatuses().size()>0){
+            jsonObject.put("预告登记权利种类", jsonField("预购商品房抵押权预告登记"));
+        }else {
+            jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
+        }
+
 
 
         if(ownerBusiness.getRegTime()!=null){
@@ -258,7 +265,12 @@ public class ExtendsDataCreator {
         jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
         jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
-        jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
+        //判断是否是合并业务
+        if (!ownerBusiness.getSubStatuses().isEmpty() && ownerBusiness.getSubStatuses().size()>0){
+            jsonObject.put("预告登记权利种类", jsonField("预购商品房预告登记"));
+        }else {
+            jsonObject.put("预告登记权利种类", jsonField(ownerBusiness.getDefineName()));
+        }
 
         if(ownerBusiness.getRegTime()!=null){
             jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
@@ -449,9 +461,19 @@ public class ExtendsDataCreator {
 
             String str="";
             if (!businessHouse.getBusinessPools().isEmpty()){
-                str="所有权人:"+businessHouse.getBusinessHouseOwner().getPersonName();
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
-                    str=str+" 共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                Integer poolType = RunParam.instance().getIntParamValue("PoolInfoPrint");
+                if (poolType==1) {
+                    str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName();
+                    for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                        str=str+" 共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                    }
+                }
+                if (poolType==2) {
+                    String poolStr="";
+                    for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                        poolStr = poolStr + businessPool.getPersonName()+"  ";
+                    }
+                    str = "共有权人: " + poolStr;
                 }
 
             }

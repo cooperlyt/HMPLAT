@@ -93,7 +93,9 @@
                 </p:cell>
 
                 <p:cell colspan="3" horizontalAlignment="left" noWrap="false">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (not empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}(#{ownerBusinessHome.instance.applyPersion.personName})</p:paragraph>
+
                 </p:cell>
 
                 <p:cell>

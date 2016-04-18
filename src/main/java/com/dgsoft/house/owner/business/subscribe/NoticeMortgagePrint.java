@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;
 import com.dgsoft.house.owner.model.BusinessPool;
@@ -28,11 +29,23 @@ public class NoticeMortgagePrint {
     private String getPoolInfo(){
         String str="";
         if (!ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().isEmpty()){
-            str="所有权人:"+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName();
-            for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
-                str=str+" "+businessPool.getPersonName()+" 身份证明号: "+businessPool.getCredentialsNumber();
-            }
+            Integer poolType = RunParam.instance().getIntParamValue("PoolInfoPrint");
+            if (poolType==1){
+                str="所有权人:"+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName();
+                for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+                    str=str+" 共有权人"+businessPool.getPersonName()+" 身份证明号: "+businessPool.getCredentialsNumber();
+                }
 
+            }
+//            if (poolType==2){
+//
+//                String poolStr="";
+//                for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+//                    poolStr = poolStr + businessPool.getPersonName()+"  ";
+//                }
+//                str = "共有权人: " + poolStr;
+//
+//            }
         }
         return str;
     }
