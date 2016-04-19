@@ -104,6 +104,12 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('recordRoom.enable','BOOLEAN
 INSERT INTO DB_PLAT_SYSTEM.SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('ShouldMoneyAllowChange','BOOLEAN','true','应收可是否可由用户修改');
 
 
+
+insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('CreateCradNumberType','INTEGER','1','1:生成的权证号带-;2:生成的权证号不带-');
+insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('PoolInfoPrint','INTEGER','1','1:权证打印附记共有情况打印带所有权人;2:权证打印附记共有情况打印不带所有权人,只有共有权人姓名');
+
+INSERT DB_PLAT_SYSTEM.SYSTEM_PARAM(ID, TYPE, VALUE, MEMO) VALUES ('PatchFileUpload','BOOLEAN','true','档案补录是否上传文件');
+
 -- 测试业务
 -- INSERT INTO BUSINESS_DEFINE(ID, NAME, WF_NAME, START_PAGE, START_DATA_VALIDATOR, TASK_SERVICE, CATEGORY, MEMO, VERSION) VALUES('system.business.test','测试流程','processTest','','','','erp.sale','测试流程',0);
 
