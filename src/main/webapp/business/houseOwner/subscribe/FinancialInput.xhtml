@@ -156,12 +156,19 @@
                 #{messages.MortgaegeRegiste_MortgageDueTime}
             </ui:define>
 
+            <ui:param name="for" value="mog_from_time"/>
             <ui:include src="/layout/system/TimeAreaInput.xhtml">
                 <ui:param name="timeArea" value="#{financialSubscribe.timeAreaHelper}"/>
                 <ui:param name="label" value="#{messages.MortgaegeRegiste_MortgageDueTime}"/>
                 <ui:param name="f_required" value="true"/>
                 <ui:param name="t_required" value="true"/>
+                <ui:param name="f_id" value="mog_from_time"/>
+                <ui:param name="t_id" value="mog_to_time"/>
             </ui:include>
+            <ui:define name="message">
+                <r:message for="mog_from_time" styleClass="edit-below-msg" />
+                <r:message for="mog_to_time" styleClass="edit-below-msg" />
+            </ui:define>
         </s:decorate>
     </div>
 

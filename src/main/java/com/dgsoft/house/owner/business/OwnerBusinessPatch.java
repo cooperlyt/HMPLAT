@@ -226,7 +226,7 @@ public class OwnerBusinessPatch {
 
     private String getInfoCompletePath() {
 
-        if (RunParam.instance().getBooleanParamValue("CreateUploadFile")) {
+        if (RunParam.instance().getBooleanParamValue("PatchFileUpload")) {
             return PATCH_BUSINESS_FILE_PAGE;
         } else {
             return PATCH_BUSINESS_CONFIRM_PAGE;

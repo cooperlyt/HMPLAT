@@ -23,8 +23,29 @@
 
 
             <h:outputText value="#{messages.CloseHouse_CloseDate}"/>
-            <h:outputText value="#{ownerBusinessHome.getCloseHouse().closeDate}"/>
+            <dh:entryGridColumn colspan="3">
 
+
+
+                <h:outputText value="#{ownerBusinessHome.closeHouse.closeDate}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+                <h:outputText value="-" rendered="#{ownerBusinessHome.closeHouse.timeShowType eq 'DATE_TIME'}"/>
+
+                <h:outputText value=" 查封期限:" rendered="#{not (ownerBusinessHome.closeHouse.timeShowType eq 'DATE_TIME')}"/>
+
+                <h:outputText value="#{ownerBusinessHome.closeHouse.toDate}"
+                              rendered="#{ownerBusinessHome.closeHouse.timeShowType eq 'DATE_TIME'}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+                <h:outputText value="#{ownerBusinessHome.closeHouse.timeArea.toSize}" rendered="#{not (ownerBusinessHome.closeHouse.timeShowType eq 'DATE_TIME')}"/>
+
+
+                <h:outputText value="#{ownerBusinessHome.closeHouse.timeShowType.label}" rendered="#{not (ownerBusinessHome.closeHouse.timeShowType eq 'DATE_TIME')}"/>
+
+            </dh:entryGridColumn>
             <h:outputText value="#{messages.CloseHouse_ToDate}"/>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().toDate}"/>
 

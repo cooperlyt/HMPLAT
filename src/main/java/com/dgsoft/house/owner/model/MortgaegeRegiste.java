@@ -3,7 +3,9 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.BigMoneyUtil;
 import com.dgsoft.common.TimeArea;
+import com.dgsoft.common.TimeAreaHelper;
 import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -138,7 +140,6 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MORTGAGE_DUE_TIME_S", nullable = false, length = 19)
 	@NotNull
-
 	public Date getMortgageDueTimeS() {
 		return this.mortgageDueTimeS;
 	}
@@ -238,6 +239,7 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 	@Transient
 	public void setFromTime(Date date) {
 		setMortgageDueTimeS(date);
+
 	}
 
 	@Override
@@ -251,4 +253,11 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 	public void setToTime(Date date) {
 		setMortgageTime(date);
 	}
+
+
+	@Transient
+	public TimeAreaHelper getTimeArea(){
+		return new TimeAreaHelper(this);
+	}
+
 }
