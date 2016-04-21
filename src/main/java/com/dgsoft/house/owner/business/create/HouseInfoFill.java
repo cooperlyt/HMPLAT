@@ -50,6 +50,7 @@ public class HouseInfoFill implements BusinessDataFill {
                   houseBusiness.getAfterBusinessHouse().setDeveloperCode(house.getDeveloperCode());
                   houseBusiness.getAfterBusinessHouse().setSectionName(house.getSectionName());
                   houseBusiness.getAfterBusinessHouse().setSectionCode(house.getSectionCode());
+                  houseBusiness.getAfterBusinessHouse().setUseType(house.getUseType());
 
                   if (house.getBuild()!=null) {
                       houseBusiness.getAfterBusinessHouse().setFloorCount(house.getBuild().getFloorCount());
