@@ -116,6 +116,19 @@ public class RecordStore implements java.io.Serializable {
         return result;
     }
 
+    @Transient
+    public List<BusinessFile> getBusinessShowFileList(){
+        List<BusinessFile> result = new ArrayList<BusinessFile>();
+        for(BusinessFile file: getBusinessFiles()){
+            if (file.isNoFile() || file.getUploadFiles().size() > 0){
+                result.add(file);
+            }
+        }
+
+        Collections.sort(result, OrderBeanComparator.getInstance());
+        return result;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_TIME", nullable = true, length = 19)
     public Date getCreateTime() {

@@ -18,35 +18,33 @@
 
     <h:outputStylesheet>
 
-        .search_repos .search_record_input{
+        .search_repos .search_record_input {
             display: table-cell;
             border-bottom-right-radius: 3px !important;
             border-top-right-radius: 3px !important;
         }
 
-        .search_repos.RECORD_LOCATION .search_record_input{
+        .search_repos.RECORD_LOCATION .search_record_input {
             display: none;
         }
 
-        .search_repos .search_location_input{
+        .search_repos .search_location_input {
             display: none;
         }
 
-
-        .search_repos.RECORD_LOCATION .search_location_input{
+        .search_repos.RECORD_LOCATION .search_location_input {
             display: table-cell;
         }
 
     </h:outputStylesheet>
 
     <h:outputScript>
-        function searchTypeChange(){
+        function searchTypeChange() {
 
-        $('.search_repos').removeAttr('class').attr('class', 'search_repos');
-        $('.search_repos').addClass($('.js-search-type-select').val())
+            $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+            $('.search_repos').addClass($('.js-search-type-select').val())
         }
     </h:outputScript>
-
 
 
     <ui:param name="funcName" value="数字档案室"/>
@@ -60,8 +58,9 @@
                         <div class="input-group-btn">
 
 
-                            <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
-                                             value="#{recordRoomMgr.searchType}" onchange="searchTypeChange()">
+                            <h:selectOneMenu
+                                    styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
+                                    value="#{recordRoomMgr.searchType}" onchange="searchTypeChange()">
                                 <s:selectItems value="#{recordRoomMgr.allSearchTypes}" var="_item"
                                                itemValue="#{_item}" label="#{_item.label}"/>
                                 <s:convertEnum/>
@@ -73,11 +72,14 @@
                         <h:inputText styleClass="form-control search_record_input "/>
 
                         <span class="input-group-addon search_location_input">架</span>
-                        <h:inputText styleClass="form-control search_location_input" value="#{recordRoomMgr.frame}"></h:inputText>
+                        <h:inputText styleClass="form-control search_location_input"
+                                     value="#{recordRoomMgr.frame}"></h:inputText>
                         <span class="input-group-addon search_location_input">柜</span>
-                        <h:inputText styleClass="form-control search_location_input" value="#{recordRoomMgr.cabinet}"></h:inputText>
+                        <h:inputText styleClass="form-control search_location_input"
+                                     value="#{recordRoomMgr.cabinet}"></h:inputText>
                         <span class="input-group-addon search_location_input">盒</span>
-                        <h:inputText styleClass="form-control search_location_input" value="#{recordRoomMgr.box}"></h:inputText>
+                        <h:inputText styleClass="form-control search_location_input"
+                                     value="#{recordRoomMgr.box}"></h:inputText>
 
                         <!-- /btn-group -->
                     </div>
@@ -87,14 +89,77 @@
                 </div>
                 <div class="flex-table-item">
 
-                    <h:commandButton styleClass="btn btn-default" action="#{recordStoreList.first}"
-                                     value="#{messages.Search}">
-
-                    </h:commandButton>
+                    <a:commandLink execute="@form" render="resultBox" styleClass="btn btn-default"
+                                   action="#{recordRoomMgr.refresh}"
+                                   value="#{messages.Search}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandLink>
 
                 </div>
             </div>
         </h:form>
     </ui:define>
+
+
+    <div class="container-fluid">
+
+        <a:outputPanel id="resultBox">
+            <a:outputPanel rendered="#{not empty recordRoomMgr.resultBox}">
+
+                <div class="file-group">
+
+                    <div class="row">
+
+
+                        <div class="col-md-5">
+                            <div id="tree" class="file-group-tree"></div>
+                        </div>
+
+
+                        <div class="col-md-7">
+                            <div class="file-group-gallery">
+                                <div class="ad-image-wrapper">
+                                </div>
+                                <div class="ad-controls">
+                                </div>
+                                <div class="ad-nav">
+                                    <div class="ad-thumbs">
+                                        <ul class="ad-thumb-list">
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <h:outputScript>
+                    $(document).ready(
+                    function () {alert('b');
+
+                    $('.file-group').fileShowGroup({data: '#{recordRoomMgr.resultBox.treeData}',imageServer: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}'});
+
+                    });
+
+                </h:outputScript>
+
+                <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
+                <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
+                <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
+                <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+
+                <h:outputScript library="file-show-group" name="file-show-group.js"/>
+
+
+            </a:outputPanel>
+
+
+        </a:outputPanel>
+
+
+    </div>
 
 </ui:composition>

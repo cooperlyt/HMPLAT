@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.action;
 import com.dgsoft.common.CalendarBean;
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.house.owner.model.BusinessFile;
+import com.dgsoft.house.owner.model.RecordStore;
 import com.dgsoft.house.owner.model.UploadFile;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -23,17 +24,43 @@ public class RecordRoomMgr implements java.io.Serializable{
     @In(create = true)
     private EntityManager ownerEntityManager;
 
+
+
     public static class RecordBox{
 
-        public RecordBox(List<BusinessFile> businessFiles) {
+        private String volume;
 
-            Map<String,RecordVolume> volumeMap = new HashMap<String, RecordVolume>();
+        private String frame;
+
+        private String cabinet;
+
+        private String box;
+
+        private String recordNumber;
+
+        public RecordBox(String frame, String cabinet, String box, List<BusinessFile> businessFiles) {
+            this(businessFiles);
+            this.frame = frame;
+            this.cabinet = cabinet;
+            this.box = box;
+        }
+
+        public RecordBox( String frame, String cabinet, String box, String volume, List<BusinessFile> businessFiles) {
+            this(businessFiles);
+            this.volume = volume;
+            this.frame = frame;
+            this.cabinet = cabinet;
+            this.box = box;
+        }
+
+        private RecordBox(List<BusinessFile> businessFiles) {
+            Map<RecordStore,RecordVolume> volumeMap = new HashMap<RecordStore,RecordVolume>();
             for(BusinessFile businessFile: businessFiles){
-                String volumeNumber = businessFile.getRecordStore().getRecordCode();
-                RecordVolume volume = volumeMap.get(volumeNumber);
+                RecordStore recordStore = businessFile.getRecordStore();
+                RecordVolume volume = volumeMap.get(recordStore);
                 if (volume == null){
-                    volume = new RecordVolume(volumeNumber,businessFile.getRecordStore().getCreateTime());
-                    volumeMap.put(volumeNumber,volume);
+                    volume = new RecordVolume(recordStore,recordStore.getCreateTime());
+                    volumeMap.put(recordStore,volume);
                 }
                 volume.putFile(businessFile);
             }
@@ -43,24 +70,47 @@ public class RecordRoomMgr implements java.io.Serializable{
 
         private List<RecordVolume> recordVolumes;
 
-        public JSONArray getTreeData() throws JSONException {
-            JSONArray child = new JSONArray();
-            for (RecordVolume volume: recordVolumes){
-                child.put(volume.getNodeJsonData());
+        public String getTreeData() {
+
+
+
+
+            try {
+                JSONArray child = new JSONArray();
+                for (RecordVolume volume: recordVolumes){
+                    child.put(volume.getNodeJsonData());
+                }
+                if (child.length() <= 0){
+                    return null;
+                }
+
+                JSONObject state = new JSONObject();
+                state.put("selected",true);
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("text",frame + "架" + cabinet + "柜" + box + "盒");
+                jsonObject.put("nodes",child);
+
+                //TODO change active
+                jsonObject.put("state",state);
+
+                return "[" + jsonObject.toString() + "]";
+            } catch (JSONException e) {
+                Logging.getLog(getClass()).debug("tree data error",e);
+                throw  new IllegalArgumentException(e.getMessage(),e);
             }
-            return child;
         }
 
     }
 
     public static class RecordVolume implements Comparable<RecordVolume>{
 
-        private String volumeNumber;
+        private RecordStore recordStore;
 
         private Date volumeDate;
 
-        public RecordVolume(String volumeNumber,Date volumeDate) {
-            this.volumeNumber = volumeNumber;
+        public RecordVolume(RecordStore recordStore,Date volumeDate) {
+            this.recordStore = recordStore;
             this.volumeDate = volumeDate;
         }
 
@@ -86,7 +136,7 @@ public class RecordRoomMgr implements java.io.Serializable{
                 node.put("files",genFileDataArray(businessFile.getUploadFileList()));
                 child.put(node);
             }
-            result.put("text",volumeNumber);
+            result.put("text",recordStore.getRecordCode());
             result.put("nodes",child);
             return result;
 
@@ -200,9 +250,9 @@ public class RecordRoomMgr implements java.io.Serializable{
         return SearchType.values();
     }
 
-    private String resultData;
+    private RecordBox resultData;
 
-    public String getResultBox() {
+    public RecordBox getResultBox() {
 
         if (resultData == null){
             initResultBox();
@@ -218,26 +268,9 @@ public class RecordRoomMgr implements java.io.Serializable{
             List<BusinessFile> files = ownerEntityManager.createQuery("select businessFile from BusinessFile businessFile left join fetch businessFile.recordLocal location left join fetch businessFile.recordStore where location.frame =:frame and location.cabinet = :cabinet and location.box = :box",BusinessFile.class)
                     .setParameter("frame",frame).setParameter("cabinet",cabinet).setParameter("box",box).getResultList();
 
-            RecordBox recordBox = new RecordBox(files);
+            RecordBox recordBox = new RecordBox(frame,cabinet,box,files);
+            resultData = recordBox;
 
-            JSONObject jsonObject = new JSONObject();
-            try {
-                JSONArray child = recordBox.getTreeData();
-                if (child.length() <= 0){
-
-                }
-                jsonObject.put("text",frame + "架" + cabinet + "柜" + box + "盒");
-                jsonObject.put("nodes",child);
-                JSONObject state = new JSONObject();
-                state.put("selected",true);
-                jsonObject.put("state",state);
-                resultData = "[" + jsonObject.toString() + "]";
-            } catch (JSONException e) {
-                Logging.getLog(getClass()).debug("tree data error",e);
-                throw  new IllegalArgumentException(e.getMessage(),e);
-            }
-
-        }else{
 
         }
     }
