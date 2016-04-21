@@ -43,6 +43,11 @@ public class HouseInfoFill implements BusinessDataFill {
                   houseBusiness.getAfterBusinessHouse().setStructure(house.getStructure());
                   houseBusiness.getAfterBusinessHouse().setHouseType(house.getHouseType());
                   houseBusiness.getAfterBusinessHouse().setHouseOrder(house.getHouseOrder());
+
+//                  houseBusiness.getAfterBusinessHouse().setBuildNo(house.getBuildNo());
+//                  houseBusiness.getAfterBusinessHouse().setBlockNo(house.getBlockNo());
+//                  houseBusiness.getAfterBusinessHouse().setMapNumber(house.getMapNumber());
+
                   houseBusiness.getAfterBusinessHouse().setHouseUnitName(house.getHouseUnitName());
                   houseBusiness.getAfterBusinessHouse().setDoorNo(house.getHouseUnitName());
                   houseBusiness.getAfterBusinessHouse().setBuildType(house.getBuildType());
