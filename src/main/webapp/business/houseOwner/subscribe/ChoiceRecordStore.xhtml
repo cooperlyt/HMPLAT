@@ -8,196 +8,50 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
+    <ui:decorate template="MultiVolumeRecordSave.xhtml">
 
-    <a:outputPanel layout="block" style="padding: 100px 60px;text-align: center;" styleClass="text-warning" rendered="#{not taskOwnerBusinessFile.pass}">
-            <span  style="font-size: 50px" class="glyphicon glyphicon-warning-sign " aria-hidden="true"></span>
-
-            <h3>请先上传要件附件后再归档！</h3>
-
-
-    </a:outputPanel>
-
-
-    <a:outputPanel rendered="#{taskOwnerBusinessFile.pass}">
-        <r:messages globalOnly="false"/>
-
-    <h:outputStylesheet>
-        .list-item-btn button{
-            padding: 1px 12px;
-        }
-
-        .list-title-input .input-group-addon:first-child{
-            border-bottom-left-radius: 0;
-        }
-
-
-        .list-title-input .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group{
-            border-bottom-right-radius: 0;
-        }
-        .list-group-item.file-group-item{
-            padding-left: 15px;
-        }
-        .list-group-item.file-group-item:first-child {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-
-        .new-repo-container {
-            width: 100% !important;
-        }
-    </h:outputStylesheet>
-
-    <div class="row">
-
-    <div class="col-md-6">
-
-    <a:outputPanel id="fileTree">
-        <div id="tree"></div>
-        <h:outputScript>
-
-
-            $(document).ready(
-            function(){
-            $('#tree').treeview({data: #{choiceRecordStore.fileTreeData},showCheckbox:true})
-
-
-
-            $('#tree').on('nodeChecked', function(event, node) {
-            var children = node.nodes;
-            if (children) {
-            for (var i = 0; i &lt; children.length; i++) {
-            var childNode = children[i];
-            var nodeId = childNode['nodeId'];
-            if (!childNode.state.disabled)
-            $('#tree').treeview('checkNode', nodeId);
-            }
-            }
-            });
-
-
-            $('#tree').on('nodeUnchecked', function(event, node) {
-            var children = node.nodes;
-            if (children) {
-            for (var i = 0; i &lt; children.length; i++) {
-            var childNode = children[i];
-            var nodeId = childNode['nodeId'];
-            $('#tree').treeview('uncheckNode', nodeId);
-            }
-            }
-            });
-
-            });
-
-
-
-        </h:outputScript>
-
-
-    </a:outputPanel>
-
-
-    </div>
-
-    <div class="col-md-6">
-
-        <div>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-success" onclick="assignBtnClick();return false;"><span class="octicon octicon-pin"/> </button>
-
-
-
-            </div>
-        <div class="right">
-            <div class="btn-group" role="group">
-                <a:commandLink styleClass="btn btn-danger" execute="@this" immediate="true"  render="fileTree,assignList"
-                               action="#{choiceRecordStore.reset}"><span class="glyphicon glyphicon-refresh"/>
-                    <a:attachQueue requestDelay="0"/>
-                </a:commandLink>
-
-
-
-            </div>
-        </div>
-        </div>
-
-        <hr/>
-
-        <a:outputPanel id="assignList">
-
-
-            <a:repeat value="#{saveMultiRecordStores}" var="_fileNode">
-                <div class="input-group list-title-input">
-                    <span class="input-group-addon">#{_fileNode.businessFiles.size}</span>
+        <a:repeat value="#{saveMultiRecordStores}" var="_fileNode">
+            <div class="input-group list-title-input">
+                <span class="input-group-addon">#{_fileNode.businessFiles.size}</span>
                 <h:inputText value="#{_fileNode.recordCode}" required="true" label="档案编号" styleClass="form-control" p:placeHolder="档案编号">
                     <a:ajax render="@none" execute="@this"/>
                 </h:inputText>
                      <span class="input-group-btn">
-                         <a:commandLink styleClass="btn btn-danger" action="#{choiceRecordStore.deleteRecordStore}"
+                         <a:commandLink styleClass="btn btn-danger" action="#{multiVolumeRecord.deleteRecordStore}"
                                         execute="@this" immediate="true" render="assignList,fileTree">
                              <span class=" btn-icon octicon octicon-trashcan"/>
                              <a:attachQueue requestDelay="0"/>
                          </a:commandLink>
       </span>
-                </div>
+            </div>
 
 
 
-                <ul class="list-group">
+            <ul class="list-group">
 
-                    <a:repeat value="#{_fileNode.businessFileList}" var="_file">
+                <a:repeat value="#{_fileNode.businessFileList}" var="_file">
 
-                        <li class="list-group-item file-group-item">
-                            <span class="badge">#{_file.uploadFiles.size}</span>
-                            #{_file.name}
-                            <ui:remove>
+                    <li class="list-group-item file-group-item">
+                        <span class="badge">#{_file.uploadFiles.size}</span>
+                        #{_file.name}
+                        <ui:remove>
                             <div class="right">
-                            <div class="btn-group list-item-btn" role="group">
-                                <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-down"/> </button>
-                                <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-up"/> </button>
+                                <div class="btn-group list-item-btn" role="group">
+                                    <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-down"/> </button>
+                                    <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-up"/> </button>
 
+                                </div>
                             </div>
-                            </div>
-                            </ui:remove>
-                        </li>
+                        </ui:remove>
+                    </li>
 
-                    </a:repeat>
-                </ul>
-
+                </a:repeat>
+            </ul>
 
 
-            </a:repeat>
-        </a:outputPanel>
 
-    </div>
+        </a:repeat>
 
-    </div>
-
-    <a:jsFunction name="assignFile" render="assignList,fileTree" action="#{choiceRecordStore.createRecordStore}" execute="@this">
-        <a:param name="checked" assignTo="#{choiceRecordStore.checkedString}"/>
-        <a:attachQueue requestDelay="0"/>
-    </a:jsFunction>
-
-    <h:outputScript>
-
-        function assignBtnClick() {
-            var data = $('#tree').treeview("getChecked", 0);
-
-            var arr = new Array();
-            var index = 0;
-            for (var i = 0; i &lt; data.length; i++) {
-                if (data[i].id){
-                    arr[index ++] = data[i].id;
-                }
-            }
-            assignFile(arr);
-        }
-
-    </h:outputScript>
-
-    </a:outputPanel>
-
-
-    <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
+    </ui:decorate>
 
 </ui:composition>

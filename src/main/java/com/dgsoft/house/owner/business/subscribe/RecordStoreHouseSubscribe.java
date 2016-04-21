@@ -74,6 +74,12 @@ public class RecordStoreHouseSubscribe implements TaskSubscribeComponent {
             businessFile.setRecordStore(recordStore);
         }
 
+        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
+            recordStore.getHouseBusinesses().add(houseBusiness);
+            houseBusiness.getRecordStores().clear();
+            houseBusiness.getRecordStores().add(recordStore);
+        }
+
         return true;
     }
 }
