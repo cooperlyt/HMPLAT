@@ -162,6 +162,7 @@
     in_transition: false,
     animations: false,
     init: function(wrapper, settings) {
+
       var context = this;
       this.wrapper = $(wrapper);
       this.settings = settings;

@@ -32,10 +32,12 @@
                 <ui:insert name="head-right"/>
             </div>
         </div>
+        <ui:insert name="func-container">
+
         <div class="container">
             <ui:insert/>
         </div>
-
+        </ui:insert>
         <ui:insert name="body-after"/>
 
         <h:outputScript library="bootstrap-sco" name="/js/sco.message.js"/>

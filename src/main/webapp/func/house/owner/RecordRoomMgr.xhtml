@@ -16,35 +16,6 @@
         <h:outputStylesheet library="github" name="/css/github2.css"/>
     </ui:define>
 
-    <h:outputStylesheet>
-
-        .search_repos .search_record_input {
-            display: table-cell;
-            border-bottom-right-radius: 3px !important;
-            border-top-right-radius: 3px !important;
-        }
-
-        .search_repos.RECORD_LOCATION .search_record_input {
-            display: none;
-        }
-
-        .search_repos .search_location_input {
-            display: none;
-        }
-
-        .search_repos.RECORD_LOCATION .search_location_input {
-            display: table-cell;
-        }
-
-    </h:outputStylesheet>
-
-    <h:outputScript>
-        function searchTypeChange() {
-
-            $('.search_repos').removeAttr('class').attr('class', 'search_repos');
-            $('.search_repos').addClass($('.js-search-type-select').val())
-        }
-    </h:outputScript>
 
 
     <ui:param name="funcName" value="数字档案室"/>
@@ -90,7 +61,7 @@
                 <div class="flex-table-item">
 
                     <a:commandLink execute="@form" render="resultBox" styleClass="btn btn-default"
-                                   action="#{recordRoomMgr.refresh}"
+                                   action="#{recordRoomMgr.search}"
                                    value="#{messages.Search}">
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
@@ -100,66 +71,178 @@
         </h:form>
     </ui:define>
 
+    <ui:define name="func-container">
 
-    <div class="container-fluid">
+        <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
 
-        <a:outputPanel id="resultBox">
-            <a:outputPanel rendered="#{not empty recordRoomMgr.resultBox}">
+        <h:outputStylesheet library="jquery-ad-gallery" name="/css/jquery.ad-gallery.css"/>
 
-                <div class="file-group">
+        <h:outputStylesheet library="jquery-fancybox" name="jquery.fancybox.css"/>
 
-                    <div class="row">
+        <h:outputStylesheet>
+
+            .search_repos .search_record_input {
+                display: table-cell;
+                border-bottom-right-radius: 3px !important;
+                border-top-right-radius: 3px !important;
+            }
+
+            .search_repos.RECORD_LOCATION .search_record_input {
+                display: none;
+            }
+
+            .search_repos .search_location_input {
+                display: none;
+            }
+
+            .search_repos.RECORD_LOCATION .search_location_input {
+                display: table-cell;
+            }
+
+        </h:outputStylesheet>
+
+        <h:outputStylesheet>
+
+            .ad-gallery {
+                width: 98%;
+                margin-top: 10px;
+            }
+
+            .ad-gallery .ad-image-wrapper {
+
+            }
+
+            .gh-header-show.edit-title {
+                display: none;
+            }
+
+            .ad-controls .custome-controls {
+                float: right;
+            }
+
+            .ad-controls .custome-controls a {
+                margin: 0 5px;
+            }
+
+            .ad-image {
+                cursor: pointer;
+            }
+        </h:outputStylesheet>
+
+        <h:outputScript>
+            function searchTypeChange() {
+
+            $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+            $('.search_repos').addClass($('.js-search-type-select').val())
+            }
+        </h:outputScript>
+
+        <div class="container-fluid">
+
+            <a:outputPanel id="resultBox">
+                <a:outputPanel rendered="#{not empty recordRoomMgr.resultBox}">
+
+                    <a:outputPanel rendered="#{not recordRoomMgr.resultBox.emptyBox}">
+
+                        <div class="file-group">
+
+                            <div class="row">
 
 
-                        <div class="col-md-5">
-                            <div id="tree" class="file-group-tree"></div>
-                        </div>
-
-
-                        <div class="col-md-7">
-                            <div class="file-group-gallery">
-                                <div class="ad-image-wrapper">
+                                <div class="col-md-5">
+                                    <div id="tree" class="file-group-tree"></div>
                                 </div>
-                                <div class="ad-controls">
-                                </div>
-                                <div class="ad-nav">
-                                    <div class="ad-thumbs">
-                                        <ul class="ad-thumb-list">
 
-                                        </ul>
+
+                                <div class="col-md-7 ">
+
+                                    <button class="btn btn-default"> </button>
+                                    <hr/>
+                                    <div class="file-group-empty blankslate spacious large-format">
+                                        <span class="octicon octicon-bell blankslate-icon" height="40"/>
+                                        <h3>没有电子文件</h3>
+                                        <p>没有电子文件,你可以 <h:outputLink>补扫文件</h:outputLink></p>
+                                    </div>
+
+                                    <div class="file-group-gallery">
+                                        <div class="ad-gallery">
+                                            <div class="ad-image-wrapper">
+                                            </div>
+                                            <div class="ad-controls">
+                                                <div class="custome-controls"><a class="img-delete">删除</a><a class="img-print-view" target="_blank">打印</a>
+                                                    <a class="img-orig-view" target="_blank">原图</a></div>
+                                            </div>
+                                            <div class="ad-nav">
+                                                <div class="ad-thumbs">
+                                                    <ul class="ad-thumb-list">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
-                    </div>
 
-                </div>
+                        <h:outputScript>
+                            $(document).ready(
+                            function () {
 
-                <h:outputScript>
-                    $(document).ready(
-                    function () {alert('b');
 
-                    $('.file-group').fileShowGroup({data: '#{recordRoomMgr.resultBox.treeData}',imageServer: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}'});
+                            $('.file-group').fileShowGroup({data: '#{recordRoomMgr.resultBox.treeData}',
+                            imageServer: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}',
+                            loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
+                            slideshow: {
+                            enable: false
+                            },
 
-                    });
+                            callbacks: {
+                            afterImageVisible: function() {
 
-                </h:outputScript>
+                            $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'));
+                            $('.img-print-view').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
 
-                <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
-                <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
-                <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
-                <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
 
-                <h:outputScript library="file-show-group" name="file-show-group.js"/>
+                            }}
 
+                            });
+
+                            });
+
+                        </h:outputScript>
+
+
+
+
+                    </a:outputPanel>
+
+                    <a:outputPanel layout="block" rendered="#{recordRoomMgr.resultBox.emptyBox}"
+                                   styleClass="blankslate spacious large-format">
+                        <span class="mega-octicon octicon-milestone"></span>
+
+                        <h3>#{recordRoomMgr.frame} 架 #{recordRoomMgr.cabinet} 柜 #{recordRoomMgr.box} 盒</h3>
+
+                        <p> 此盒中没有文件 </p>
+                    </a:outputPanel>
+
+
+                </a:outputPanel>
 
             </a:outputPanel>
 
 
-        </a:outputPanel>
+        </div>
+        <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
+        <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
+        <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
+        <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+
+        <h:outputScript library="file-show-group" name="file-show-group.js"/>
+    </ui:define>
 
 
-    </div>
 
 </ui:composition>

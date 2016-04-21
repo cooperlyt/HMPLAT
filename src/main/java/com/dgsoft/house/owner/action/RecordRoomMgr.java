@@ -70,11 +70,11 @@ public class RecordRoomMgr implements java.io.Serializable{
 
         private List<RecordVolume> recordVolumes;
 
+        public boolean isEmptyBox(){
+            return recordVolumes.isEmpty();
+        }
+
         public String getTreeData() {
-
-
-
-
             try {
                 JSONArray child = new JSONArray();
                 for (RecordVolume volume: recordVolumes){
@@ -154,6 +154,7 @@ public class RecordRoomMgr implements java.io.Serializable{
 
                 jsonObject.put("time",CalendarBean.instance().displayDateTime(file.getUploadTime()));
                 jsonObject.put("title",file.getBusinessFile().getName());
+                jsonObject.put("description",file.getEmpName());
 
                 result.put(jsonObject);
             }
@@ -254,15 +255,13 @@ public class RecordRoomMgr implements java.io.Serializable{
 
     public RecordBox getResultBox() {
 
-        if (resultData == null){
-            initResultBox();
-        }
 
         return resultData;
     }
 
 
-    private void initResultBox(){
+    public void search(){
+        resultData = null;
         if (SearchType.RECORD_LOCATION.equals(searchType)){
 
             List<BusinessFile> files = ownerEntityManager.createQuery("select businessFile from BusinessFile businessFile left join fetch businessFile.recordLocal location left join fetch businessFile.recordStore where location.frame =:frame and location.cabinet = :cabinet and location.box = :box",BusinessFile.class)
@@ -270,8 +269,6 @@ public class RecordRoomMgr implements java.io.Serializable{
 
             RecordBox recordBox = new RecordBox(frame,cabinet,box,files);
             resultData = recordBox;
-
-
         }
     }
 
