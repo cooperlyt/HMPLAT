@@ -15,6 +15,11 @@
         <h:outputStylesheet library="github" name="/css/github1.css"/>
         <h:outputStylesheet library="github" name="/css/github2.css"/>
     </ui:define>
+    <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
+
+    <h:outputStylesheet library="jquery-ad-gallery" name="/css/jquery.ad-gallery.css"/>
+
+    <h:outputStylesheet library="jquery-fancybox" name="jquery.fancybox.css"/>
 
     <h:outputStylesheet>
 
@@ -36,6 +41,34 @@
             display: table-cell;
         }
 
+    </h:outputStylesheet>
+
+    <h:outputStylesheet>
+
+        .ad-gallery {
+            width: 98%;
+            margin-top: 10px;
+        }
+
+        .ad-gallery .ad-image-wrapper {
+
+        }
+
+        .gh-header-show.edit-title {
+            display: none;
+        }
+
+        .ad-controls .custome-controls {
+            float: right;
+        }
+
+        .ad-controls .custome-controls a {
+            margin: 0 5px;
+        }
+
+        .ad-image {
+            cursor: pointer;
+        }
     </h:outputStylesheet>
 
     <h:outputScript>
@@ -90,7 +123,7 @@
                 <div class="flex-table-item">
 
                     <a:commandLink execute="@form" render="resultBox" styleClass="btn btn-default"
-                                   action="#{recordRoomMgr.refresh}"
+                                   action="#{recordRoomMgr.search}"
                                    value="#{messages.Search}">
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
@@ -104,7 +137,9 @@
     <div class="container-fluid">
 
         <a:outputPanel id="resultBox">
-            <a:outputPanel rendered="#{not empty recordRoomMgr.resultBox}">
+        <a:outputPanel rendered="#{not empty recordRoomMgr.resultBox}">
+
+            <a:outputPanel rendered="#{not recordRoomMgr.resultBox.emptyBox}">
 
                 <div class="file-group">
 
@@ -116,20 +151,28 @@
                         </div>
 
 
-                        <div class="col-md-7">
+                        <div class="col-md-7 ">
+                            <div class="file-group-empty blankslate spacious large-format">
+                                <span class="octicon octicon-bell blankslate-icon" height="40"/>
+                                <h3>没有电子文件</h3>
+                                <p>没有电子文件,你可以 <h:outputLink>补扫文件</h:outputLink></p>
+                            </div>
+
                             <div class="file-group-gallery">
-                                <div class="ad-image-wrapper">
-                                </div>
-                                <div class="ad-controls">
-                                </div>
-                                <div class="ad-nav">
-                                    <div class="ad-thumbs">
-                                        <ul class="ad-thumb-list">
-
-                                        </ul>
+                                <div class="ad-gallery">
+                                    <div class="ad-image-wrapper">
                                     </div>
-                                </div>
+                                    <div class="ad-controls">
+                                    </div>
+                                    <div class="ad-nav">
+                                        <div class="ad-thumbs">
+                                            <ul class="ad-thumb-list">
 
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -138,28 +181,43 @@
 
                 <h:outputScript>
                     $(document).ready(
-                    function () {alert('b');
+                    function () {
 
-                    $('.file-group').fileShowGroup({data: '#{recordRoomMgr.resultBox.treeData}',imageServer: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}'});
+
+                    $('.file-group').fileShowGroup({data: '#{recordRoomMgr.resultBox.treeData}',
+                    imageServer: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}',
+                    loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif'});
 
                     });
 
                 </h:outputScript>
 
-                <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
-                <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
-                <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
-                <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
-
-                <h:outputScript library="file-show-group" name="file-show-group.js"/>
 
 
+
+            </a:outputPanel>
+
+            <a:outputPanel layout="block" rendered="#{recordRoomMgr.resultBox.emptyBox}"
+                           styleClass="blankslate spacious large-format">
+                <span class="mega-octicon octicon-milestone"></span>
+
+                <h3>#{recordRoomMgr.frame} 架 #{recordRoomMgr.cabinet} 柜 #{recordRoomMgr.box} 盒</h3>
+
+                <p> 此盒中没有文件 </p>
             </a:outputPanel>
 
 
         </a:outputPanel>
 
+        </a:outputPanel>
+
 
     </div>
+    <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
+    <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
+    <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
+    <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+
+    <h:outputScript library="file-show-group" name="file-show-group.js"/>
 
 </ui:composition>
