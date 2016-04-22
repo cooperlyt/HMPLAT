@@ -198,6 +198,9 @@
                             slideshow: {
                             enable: false
                             },
+                            onFileNodeSelected: function(event, data) {
+                                alert(data.nodeType)
+                            },
 
                             callbacks: {
                             afterImageVisible: function() {

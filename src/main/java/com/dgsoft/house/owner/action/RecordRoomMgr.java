@@ -91,6 +91,7 @@ public class RecordRoomMgr implements java.io.Serializable{
                 jsonObject.put("text",frame + "架" + cabinet + "柜" + box + "盒");
                 jsonObject.put("nodes",child);
 
+                jsonObject.put("nodeType","box");
                 //TODO change active
                 jsonObject.put("state",state);
 
@@ -134,10 +135,12 @@ public class RecordRoomMgr implements java.io.Serializable{
                 JSONObject node = new JSONObject();
                 node.put("text", businessFile.getName());
                 node.put("files",genFileDataArray(businessFile.getUploadFileList()));
+                node.put("nodeType","file");
                 child.put(node);
             }
             result.put("text",recordStore.getRecordCode());
             result.put("nodes",child);
+            result.put("nodeType","volume");
             return result;
 
         }

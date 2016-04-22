@@ -208,6 +208,18 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.uploadFileses = uploadFileses;
     }
 
+    @Transient
+    public List<BusinessFile>  getVaidBusinessFileList(){
+        List<BusinessFile> result = new ArrayList<BusinessFile>();
+        for (BusinessFile businessFile: getUploadFileses()){
+            if (businessFile.isNoFile() || !businessFile.getUploadFiles().isEmpty()){
+                result.add(businessFile);
+            }
+        }
+        Collections.sort(result,OrderBeanComparator.getInstance());
+        return result;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<Reason> getReasons() {
         return this.reasons;

@@ -85,10 +85,10 @@ public class ChoiceRecordStore implements java.io.Serializable, TaskSubscribeCom
 
     private boolean isAllAssign() {
 
-        for (BusinessFile businessFile : ownerBusinessHome.getInstance().getUploadFileses()) {
+        for (BusinessFile businessFile : ownerBusinessHome.getInstance().getVaidBusinessFileList()) {
             boolean exists = false;
             for (RecordStore recordStore : multiVolumeRecord.getRecordStores()) {
-                for (BusinessFile assignFile : recordStore.getBusinessFiles()) {
+                for (BusinessFile assignFile : recordStore.getBusinessShowFileList()) {
                     if (assignFile.getId().equals(businessFile.getId())) {
                         exists = true;
                         break;

@@ -111,13 +111,6 @@ public class RecordStore implements java.io.Serializable {
 
 
     @Transient
-    public List<BusinessFile> getBusinessFileList(){
-        List<BusinessFile> result = new ArrayList<BusinessFile>(getBusinessFiles());
-        Collections.sort(result, OrderBeanComparator.getInstance());
-        return result;
-    }
-
-    @Transient
     public List<BusinessFile> getBusinessShowFileList(){
         List<BusinessFile> result = new ArrayList<BusinessFile>();
         for(BusinessFile file: getBusinessFiles()){
