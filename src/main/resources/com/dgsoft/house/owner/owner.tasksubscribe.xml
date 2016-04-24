@@ -838,13 +838,25 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="CardInfoMortgageEdit"  page="/business/houseOwner/subscribe/CardInfoMortgageEdit.xhtml" component="">
+        <description>
+            权证编号、附记编辑，缮证人(所有权抵押)
+        </description>
+    </edit-subscribe>
+
+
+    <edit-subscribe name="CardInfoOwnerRshipEdit"  page="/business/houseOwner/subscribe/CardInfoOwnerRshipEdit.xhtml" component="">
+        <description>
+            权证编号、附记编辑，缮证(所有权证)
+        </description>
+    </edit-subscribe>
 
 
 
 
 
 
-   <edit-subscribe name="cardInfoProjectEdit"  page="/business/houseOwner/subscribe/CardInfoProjectEdit.xhtml" component="">
+    <edit-subscribe name="cardInfoProjectEdit"  page="/business/houseOwner/subscribe/CardInfoProjectEdit.xhtml" component="">
         <description>
             预售许可证年号、第号、附记编辑，缮证人
         </description>
@@ -1068,6 +1080,11 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="AfterBusinessHouseAddressEdit" page="/business/houseOwner/subscribe/AfterBusinessHouseAddressEdit.xhtml" component="">
+        <description>
+            房屋坐落编辑(AfterBusinessHouse)
+        </description>
+    </edit-subscribe>
 
 
 
