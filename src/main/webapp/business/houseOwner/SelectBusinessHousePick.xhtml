@@ -122,7 +122,7 @@
                         #{_house.data.address}
                     </h:column>
 
-                    <h:column>
+                    <h:column rendered="#{houseInBusinessStart.singleHouse}">
                         <h:commandLink action="#{houseInBusinessStart.houseSelected}"
                                        value="选择"
                                        styleClass="btn btn-default btn-sm choose-plan">

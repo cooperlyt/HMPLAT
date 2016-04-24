@@ -137,7 +137,7 @@ public class HouseInBusinessStart {
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         for(BatchOperData<BusinessHouse> batchOperData : houseBusinessList){
-            if ((singleHouse && batchOperData.isSelected()) || (!singleHouse && batchOperData.getData().getId().equals(selectSingleHouseId))){
+            if ((!singleHouse && batchOperData.isSelected()) || (singleHouse && batchOperData.getData().getId().equals(selectSingleHouseId))){
                 ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), batchOperData.getData()));
                 if (singleHouse)
                     break;
