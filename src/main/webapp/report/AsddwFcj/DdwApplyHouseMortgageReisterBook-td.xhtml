@@ -262,7 +262,8 @@
             <p:paragraph rendered="false">房屋所有权证号(预告登记证明号)</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+            <p:paragraph rendered="#{not (ownerBusinessHome.instance.defineId eq 'WP151')}">#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+            <p:paragraph rendered="#{ownerBusinessHome.instance.defineId eq 'WP151'}">#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
         </p:cell>
 
 
