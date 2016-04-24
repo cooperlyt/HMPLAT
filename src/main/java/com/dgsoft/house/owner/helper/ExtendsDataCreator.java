@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.helper;
 
 import com.dgsoft.common.BigMoneyUtil;
+import com.dgsoft.common.TimeArea;
 import com.dgsoft.common.helper.QueueJsonDataProvider;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.DictionaryWord;
@@ -230,11 +231,22 @@ public class ExtendsDataCreator {
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo().getMemo() !=null){
+        if(markCard.getCardInfo() !=null && markCard.getCardInfo().getMemo()!=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
+
+
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
-        jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+
+        if (ownerBusiness.getMortgaegeRegiste().getTimeShowType().equals(TimeArea.TimeShowType.DATE_TIME)){
+
+            jsonObject.put("抵押时间止",jsonField("至  "+ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+        }else{
+            jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getTimeArea().getToSize().toString()+ownerBusiness.getMortgaegeRegiste().getTimeShowType().getLabel()));
+        }
+
+
+
         jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
         return jsonObject;
     }
@@ -278,13 +290,19 @@ public class ExtendsDataCreator {
         jsonObject.put("产籍号",jsonField(businessHouse.getDisplayHouseCode()));
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
-        jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
-        jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+        if (businessHouse.getHouseRegInfo()!=null && businessHouse.getHouseRegInfo().getHouseProperty()!=null){
+            jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
+        }
+        if (businessHouse.getHouseRegInfo()!=null && businessHouse.getHouseRegInfo().getHouseFrom()!=null){
+            jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+        }
+
+
         jsonObject.put("共有信息", jsonField(poolInfo));
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo().getMemo() !=null){
+        if(markCard.getCardInfo() !=null && markCard.getCardInfo().getMemo()!=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
         return jsonObject;
@@ -331,12 +349,23 @@ public class ExtendsDataCreator {
             jsonObject.put("登记时间", jsonField(ownerBusiness.getRegTime().toString()));
         }
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
-        jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+
+        //jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+
+
+        if (ownerBusiness.getMortgaegeRegiste().getTimeShowType().equals(TimeArea.TimeShowType.DATE_TIME)){
+
+            jsonObject.put("抵押时间止",jsonField("至  "+ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+        }else{
+            jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getTimeArea().getToSize().toString()+ownerBusiness.getMortgaegeRegiste().getTimeShowType().getLabel()));
+        }
+
+        //jsonObject.put("日期类型",jsonField(ownerBusiness.getMortgaegeRegiste().getTimeShowType().toString()));
         jsonObject.put("评估价格", jsonField(ownerBusiness.getEvaluate().getAssessmentPrice()));
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo() !=null){
+        if(markCard.getCardInfo() !=null && markCard.getCardInfo().getMemo()!=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
 
@@ -381,11 +410,18 @@ public class ExtendsDataCreator {
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
         jsonObject.put("业务名称", jsonField(ownerBusiness.getDefineName()));
         jsonObject.put("抵押时间始", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageDueTimeS().toString()));
-        jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+        //jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+        if (ownerBusiness.getMortgaegeRegiste().getTimeShowType().equals(TimeArea.TimeShowType.DATE_TIME)){
+
+            jsonObject.put("抵押时间止",jsonField("至  "+ownerBusiness.getMortgaegeRegiste().getMortgageTime().toString()));
+        }else{
+            jsonObject.put("抵押时间止", jsonField(ownerBusiness.getMortgaegeRegiste().getTimeArea().getToSize().toString()+ownerBusiness.getMortgaegeRegiste().getTimeShowType().getLabel()));
+        }
+
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo() !=null){
+        if(markCard.getCardInfo() !=null && markCard.getCardInfo().getMemo()!=null){
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
         return jsonObject;
@@ -440,16 +476,20 @@ public class ExtendsDataCreator {
         }
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
-        jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
-        jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
-        jsonObject.put("结构", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getStructure())));
+        if (businessHouse.getHouseRegInfo()!=null && businessHouse.getHouseRegInfo().getHouseProperty()!=null){
+            jsonObject.put("产别", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseProperty())));
+        }
+        if (businessHouse.getHouseRegInfo()!=null && businessHouse.getHouseRegInfo().getHouseFrom()!=null){
+            jsonObject.put("房屋来源", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getHouseRegInfo().getHouseFrom())));
+        }        jsonObject.put("结构", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getStructure())));
         jsonObject.put("所在层", jsonField(businessHouse.getInFloorName()));
         jsonObject.put("共有信息", jsonField(poolInfo));
         jsonObject.put("产籍号",jsonField(businessHouse.getDisplayHouseCode()));
         if(ownerBusiness.getReason(Reason.ReasonType.RECEIVE)!=null){
             jsonObject.put("受理备注", jsonField(ownerBusiness.getReason(Reason.ReasonType.RECEIVE).getReason()));
         }
-        if(markCard.getCardInfo() !=null){
+        if(markCard.getCardInfo() !=null && markCard.getCardInfo().getMemo()!=null){
+
             jsonObject.put("缮证备注", jsonField(markCard.getCardInfo().getMemo()));
         }
 
