@@ -34,8 +34,8 @@
                             <h4 class="modal-title" id="myModalLabel">选择房屋</h4>
                         </div>
                         <div class="modal-body">
-
-                            <h:dataTable id="houseBusinessSelectTable" value="#{recordStoreHouseList}" var="_houseBusiness"
+                            <a:outputPanel id="houseBusinessSelectTable">
+                            <h:dataTable  value="#{recordStoreHouseList}" var="_houseBusiness"
                                          columnClasses=",,,,action-colum"
                                          styleClass="table table-striped table-hover select-list-table" rendered="#{not empty multiVolumeRecord.selectRecordStore}">
 
@@ -64,6 +64,7 @@
                                 </h:column>
 
                             </h:dataTable>
+                            </a:outputPanel>
 
                         </div>
 
