@@ -126,7 +126,7 @@
                         <h:commandLink action="#{houseInBusinessStart.houseSelected}"
                                        value="选择"
                                        styleClass="btn btn-default btn-sm choose-plan">
-                            <f:param name="selectSingleHouseId" value="#{houseInBusinessStart.selectSingleHouseId}"/>
+                            <f:param name="selectSingleHouseId" value="#{_house.data.id}"/>
 
                         </h:commandLink>
                     </h:column>
