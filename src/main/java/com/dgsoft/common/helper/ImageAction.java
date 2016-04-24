@@ -24,7 +24,7 @@ public class ImageAction {
 
         try {
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-            URL url = new URL(RunParam.instance().getStringParamValue("IMG_SERVER_ADDRESS") + "img/orig/" + fileId);
+            URL url = new URL(RunParam.instance().getStringParamValue("IMG_SERVER_ADDRESS") + "img/800x600s/" + fileId);
 
             url.openConnection().connect();
 

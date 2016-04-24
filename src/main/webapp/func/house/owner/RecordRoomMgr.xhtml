@@ -15,7 +15,9 @@
         <h:outputStylesheet library="github" name="/css/github1.css"/>
         <h:outputStylesheet library="github" name="/css/github2.css"/>
     </ui:define>
-
+    <ui:define name="ajax-param">
+        <a:queue requestDelay="0" ignoreDupResponses="true"/>
+    </ui:define>
 
 
     <ui:param name="funcName" value="数字档案室"/>
@@ -61,7 +63,7 @@
                 <div class="flex-table-item">
 
                     <a:commandLink execute="@form" render="resultBox" styleClass="btn btn-default"
-                                   action="#{recordRoomMgr.search}"
+                                   action="#{recordRoomMgr.refresh}"
                                    value="#{messages.Search}">
                         <a:attachQueue requestDelay="0"/>
                     </a:commandLink>
@@ -112,10 +114,6 @@
 
             }
 
-            .gh-header-show.edit-title {
-                display: none;
-            }
-
             .ad-controls .custome-controls {
                 float: right;
             }
@@ -126,6 +124,10 @@
 
             .ad-image {
                 cursor: pointer;
+            }
+
+            .gh-header-show.edit-title{
+                display: inline-block;
             }
         </h:outputStylesheet>
 
@@ -155,9 +157,49 @@
 
 
                                 <div class="col-md-7 ">
+                                    <div class="gh-header">
 
-                                    <a class="btn btn-default js-print-btn"> <span class="glyphicon glyphicon-print"/> </a>
+                                        <div class="gh-header-show edit-title">
+
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <span class="glyphicon glyphicon-print"/>
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li class="js-print-box-cover">
+                                                        <s:link target="_blank" view="/report/RecordBoxCover.xhtml" value="打印盒目录">
+                                                            <f:param name="frame" value="#{recordRoomMgr.frame}"/>
+                                                            <f:param name="cabinet" value="#{recordRoomMgr.cabinet}"/>
+                                                            <f:param name="box" value="#{recordRoomMgr.box}"/>
+                                                        </s:link>
+                                                    </li>
+                                                    <li  class="js-print-volume-cover disabled"> <a target="_blank" href="#">打印卷目录</a></li>
+                                                    <li class="js-print-picture disabled"><s:link target="_blank" value="打印图片" view="/report/RecordBoxPicturePrint.xhtml">
+                                                        <f:param name="frame" value="#{recordRoomMgr.frame}"/>
+                                                        <f:param name="cabinet" value="#{recordRoomMgr.cabinet}"/>
+                                                        <f:param name="box" value="#{recordRoomMgr.box}"/>
+                                                    </s:link></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a:outputPanel layout="block" styleClass="gh-header-actions ">
+
+
+                                            <a href="#" class="btn btn-sm btn-default js-upload-btn disabled"
+                                               onclick="selectFileUpload(true,'ExtendsFileSelect');return false;">上传</a>
+                                            <a href="#" class="btn btn-sm btn-primary js-upload-btn disabled"
+                                               onclick="selectFileUpload(true,'ExtendsCamera');return false;">拍照</a>
+
+
+
+
+                                        </a:outputPanel>
+
+                                    </div>
+
                                     <hr/>
+
                                     <div class="file-group-empty blankslate spacious large-format">
                                         <span class="octicon octicon-bell blankslate-icon" height="40"/>
                                         <h3>没有电子文件</h3>
@@ -169,7 +211,9 @@
                                             <div class="ad-image-wrapper">
                                             </div>
                                             <div class="ad-controls">
-                                                <div class="custome-controls"><a class="img-delete">删除</a><a class="img-print-view" target="_blank">打印</a>
+                                                <div class="custome-controls"><a href="#" class="img-delete" onclick="selectFileUpload(false,'ExtendsFileSelect');return false;">替换</a>
+
+                                                    <a href="#"  onclick="selectFileUpload(false,'ExtendsCamera');return false;" class="img-delete">重扫</a><a class="img-print-view" target="_blank">打印</a>
                                                     <a class="img-orig-view" target="_blank">原图</a></div>
                                             </div>
                                             <div class="ad-nav">
@@ -188,6 +232,35 @@
                         </div>
 
                         <h:outputScript>
+                            function nodeSelect(data) {
+
+                            if (data.nodeType == 'box'){
+                            $('.js-print-volume-cover').addClass("disabled");
+                            $('.js-print-picture').addClass("disabled");
+                            $('.js-upload-btn').addClass("disabled");
+                            // $('js-print-picture').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/RecordBoxPicturePrint.seam?frame=#{recordRoomMgr.frame}&amp;cabinet=#{recordRoomMgr.cabinet}&amp;box=#{recordRoomMgr.box}' );
+                            }else{
+                            $('.js-print-volume-cover').removeClass("disabled");
+                            $('.js-print-picture').removeClass("disabled");
+
+                            if (data.nodeType == 'volume'){
+                            $('.js-upload-btn').addClass("disabled");
+                            $('.js-print-picture').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/RecordStorePicturePrint.seam?recordId=' + data.volumeId);
+                            $('.js-print-volume-cover').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/SingleRecordCover.seam?recordId=' + data.volumeId);
+
+                            }else{
+
+                            $('.js-upload-btn').removeClass("disabled");
+                            $('.js-print-picture').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/BusinessFilePicturePrint.seam?businessFileId=' + data.id);
+                            $('.js-print-volume-cover').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/SingleRecordCover.seam?recordId=' + data.volumeId);
+
+
+                            }
+
+                            }
+                            }
+                            
+                            
                             $(document).ready(
                             function () {
 
@@ -199,18 +272,9 @@
                             enable: false
                             },
                             onFileNodeSelected: function(event, data) {
-                                alert()
-                                if (data.nodeType == 'volume'){
-                                        $('js-print-btn').show();
-                                    $('js-print-btn').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
-                                }else if (data.nodeType == 'box'){
-                                    $('js-print-btn').show();
-                                    $('js-print-btn').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
+                                nodeSelect(data);
 
-                                }else{
-                                    $('js-print-btn').hide();
 
-                                }
 
                             },
 
@@ -224,6 +288,14 @@
                             }}
 
                             });
+
+
+                            var selectNodes = $('.file-group-tree').treeview('getSelected', 0);
+                            if (selectNodes.length > 0){
+                                nodeSelect(selectNodes[0]);
+                            }
+
+
 
                             });
 
@@ -250,6 +322,85 @@
 
 
         </div>
+
+        <a:outputPanel id="pushPanel">
+
+            #{not empty recordRoomMgr.addPushAddress}
+
+            #{not empty recordRoomMgr.replacePushAddress}
+
+            <a:push id="uploadPush" address="#{recordRoomMgr.addPushAddress}"  rendered="#{not empty recordRoomMgr.addPushAddress}"
+                    ondataavailable="addFile(event.rf.data);">
+
+            </a:push>
+
+            <a:push id="replacePush" address="#{recordRoomMgr.replacePushAddress}" rendered="#{not empty recordRoomMgr.replacePushAddress}"
+                    ondataavailable="replaceFile(event.rf.data);">
+
+            </a:push>
+
+        </a:outputPanel>
+
+        <h:form>
+            <a:jsFunction name="addFile"
+                          action="#{recordRoomMgr.addFile}"
+                          execute="@this" render="resultBox">
+                <a:param name="data" assignTo="#{recordRoomMgr.fileUploadData}"/>
+            </a:jsFunction>
+
+            <a:jsFunction name="replaceFile"
+                          action="#{recordRoomMgr.replaceFile}"
+                          execute="@this" render="resultBox">
+                <a:param name="data" assignTo="#{recordRoomMgr.fileUploadData}"/>
+            </a:jsFunction>
+            
+            <a:jsFunction name="renderPush" execute="@this" render="pushPanel">
+                <a:param name="replacePushAddress" assignTo="#{recordRoomMgr.replacePushAddress}"/>
+                <a:param name="addPushAddress" assignTo="#{recordRoomMgr.addPushAddress}"/>
+            </a:jsFunction>
+        </h:form>
+
+        <iframe style="display:none;" class="call_extend_iframe" src=""/>
+        <h:outputScript>
+
+
+            function selectFileUpload(add, protocol) {
+
+
+                var selectNodes = $('.file-group-tree').treeview('getSelected', 0);
+                var typeId;
+                var title;
+                if (add) {
+                    if (selectNodes.length > 0) {
+                        typeId = selectNodes[0].id;
+                        title = selectNodes[0].text;
+                    } else {
+                        alert('请选择文件节点')
+                    }
+                } else {
+                    typeId = $('div.ad-image img').data('file-id');
+                    typeId = typeId.replace(/,/,"");
+                    title = '重扫';
+                }
+
+                if (typeId) {
+
+                    $('.call_extend_iframe').attr('src', protocol + ":// -key='" + typeId + "' -title='" + title + "'");
+                    if (add) {
+                        renderPush('', typeId);
+                    } else {
+                        renderPush(typeId, '');
+                    }
+                }
+
+
+
+            }
+
+
+        </h:outputScript>
+
+
         <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
         <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
         <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>

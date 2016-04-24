@@ -4,8 +4,6 @@
       login-required="true"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="fileId"/>
-    <param name="title" />
-
+    <param name="recordId" value="#{recordStoreHome.id}"/>
 
 </page>
