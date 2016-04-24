@@ -156,7 +156,7 @@
 
                                 <div class="col-md-7 ">
 
-                                    <button class="btn btn-default"> </button>
+                                    <a class="btn btn-default js-print-btn"> <span class="glyphicon glyphicon-print"/> </a>
                                     <hr/>
                                     <div class="file-group-empty blankslate spacious large-format">
                                         <span class="octicon octicon-bell blankslate-icon" height="40"/>
@@ -199,7 +199,19 @@
                             enable: false
                             },
                             onFileNodeSelected: function(event, data) {
-                                alert(data.nodeType)
+                                alert()
+                                if (data.nodeType == 'volume'){
+                                        $('js-print-btn').show();
+                                    $('js-print-btn').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
+                                }else if (data.nodeType == 'box'){
+                                    $('js-print-btn').show();
+                                    $('js-print-btn').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
+
+                                }else{
+                                    $('js-print-btn').hide();
+
+                                }
+
                             },
 
                             callbacks: {

@@ -46,6 +46,14 @@ public class HouseInBusinessStart {
     @RequestParameter
     private String selectSingleHouseId;
 
+    public String getSelectBizId() {
+        return selectBizId;
+    }
+
+    public void setSelectBizId(String selectBizId) {
+        this.selectBizId = selectBizId;
+    }
+
     public String getSelectSingleHouseId() {
         return selectSingleHouseId;
     }
