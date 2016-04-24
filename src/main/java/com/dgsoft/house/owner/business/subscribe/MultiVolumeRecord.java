@@ -146,19 +146,32 @@ public class MultiVolumeRecord {
     @In
     private BusinessDefineHome businessDefineHome;
 
-    @DataModel("saveMultiRecordStores")
+
     private List<RecordStore> recordStores;
+
+
+
+
+    @DataModel("saveMultiRecordStores")
+    public List<RecordStore> getRecordStores() {
+        return recordStores;
+    }
+
+    public void setRecordStores(List<RecordStore> recordStores) {
+        this.recordStores = recordStores;
+    }
+
+    private RecordStore selectRecordStore;
+
 
     public RecordStore getSelectRecordStore() {
         return selectRecordStore;
     }
 
-    public List<RecordStore> getRecordStores() {
-        return recordStores;
-    }
-
     @DataModelSelection
-    private RecordStore selectRecordStore;
+    public void setSelectRecordStore(RecordStore selectRecordStore) {
+        this.selectRecordStore = selectRecordStore;
+    }
 
     private String fileTreeData;
 

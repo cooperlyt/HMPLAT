@@ -10,6 +10,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +27,21 @@ public class MultiHouseChoiceRecordStore extends ChoiceRecordStore{
     @DataModel("recordStoreHouseList")
     private List<HouseBusiness> houseBusinesses;
 
+
     @DataModelSelection
     private HouseBusiness selectHouseBusiness;
 
     private RecordStore selectAssignRecordStore;
 
+
+
     public void initHouseBusiness(){
+        Logging.getLog(getClass()).debug("call init house business, house count:" + ownerBusinessHome.getInstance().getHouseBusinessList().size());
 
         selectAssignRecordStore = multiVolumeRecord.getSelectRecordStore();
         houseBusinesses = new ArrayList<HouseBusiness>();
         for (HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinessList()){
+
             boolean exists = false;
             for(RecordStore recordStore: multiVolumeRecord.getRecordStores()){
                 if (recordStore.getHouseBusinesses().contains(houseBusiness)){
@@ -92,6 +98,7 @@ public class MultiHouseChoiceRecordStore extends ChoiceRecordStore{
         }
         return false;
     }
+
 
 
 }
