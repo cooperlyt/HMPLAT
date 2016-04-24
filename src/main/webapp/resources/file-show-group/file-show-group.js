@@ -31,7 +31,7 @@
 
     _default.options = {
         imageServer: '',
-
+        onFileNodeSelected: undefined
 
     };
 
@@ -63,6 +63,12 @@
         this.gallery_options = $.extend({}, _default.gallery_options, options);
         this.fancybox_options = $.extend({}, _default.fancybox_options, options);
 
+        this.$element.off('fileNodeSelected');
+
+        if (typeof (this.options.onFileNodeSelected) === 'function') {
+            this.$element.on('fileNodeSelected', this.options.onFileNodeSelected);
+        }
+
         if (options.data) {
             this.$tree_elements.treeview(this.tree_option);
 
@@ -76,6 +82,7 @@
 
     Group.prototype.treeNodeSelected = function (event, node) {
         this.showGallery(this.getData(node));
+        this.$element.trigger('fileNodeSelected', $.extend(true, {}, node));
     }
 
     Group.prototype.treeNodeUnSelected = function (event, node) {

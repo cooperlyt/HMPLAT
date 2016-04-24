@@ -40,13 +40,7 @@ public class BusinessFileView {
 
     public List<BusinessFile> getFileList() {
         if (fileList == null){
-            fileList = new ArrayList<BusinessFile>();
-            for(BusinessFile businessFile: ownerBusinessHome.getInstance().getUploadFileses()){
-                if (businessFile.isNoFile() || !businessFile.getUploadFiles().isEmpty()){
-                    fileList.add(businessFile);
-                }
-            }
-            Collections.sort(fileList, OrderBeanComparator.getInstance());
+            fileList = ownerBusinessHome.getInstance().getVaidBusinessFileList();
         }
         return fileList;
     }

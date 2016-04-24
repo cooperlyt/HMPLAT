@@ -299,14 +299,14 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     public String getDisplayHouseCode() {
         switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
             case 2:
-                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
 
             case 3:
-                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
 
             case 4:
 
-                return getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
 
         }
         return getHouseCode();

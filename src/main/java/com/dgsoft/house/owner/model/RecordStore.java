@@ -28,6 +28,7 @@ public class RecordStore implements java.io.Serializable {
 
     private Date createTime;
 
+    private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
 
 
     private Set<BusinessFile> businessFiles = new HashSet<BusinessFile>();
@@ -110,13 +111,6 @@ public class RecordStore implements java.io.Serializable {
 
 
     @Transient
-    public List<BusinessFile> getBusinessFileList(){
-        List<BusinessFile> result = new ArrayList<BusinessFile>(getBusinessFiles());
-        Collections.sort(result, OrderBeanComparator.getInstance());
-        return result;
-    }
-
-    @Transient
     public List<BusinessFile> getBusinessShowFileList(){
         List<BusinessFile> result = new ArrayList<BusinessFile>();
         for(BusinessFile file: getBusinessFiles()){
@@ -137,5 +131,31 @@ public class RecordStore implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "HOUSE_AND_RECORD",joinColumns=@JoinColumn(name="RECORD"),inverseJoinColumns = @JoinColumn(name = "HOUSE"))
+    public Set<HouseBusiness> getHouseBusinesses() {
+        return houseBusinesses;
+    }
+
+    public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
+        this.houseBusinesses = houseBusinesses;
+    }
+
+
+    @Transient
+    public HouseBusiness getHouseBusiness(){
+        if (getHouseBusinesses().isEmpty()){
+            return null;
+        }else
+            return getHouseBusinesses().iterator().next();
+    }
+
+    @Transient
+    public void setHouseBusiness(HouseBusiness houseBusiness){
+        getHouseBusinesses().clear();
+        getHouseBusinesses().add(houseBusiness);
+
     }
 }

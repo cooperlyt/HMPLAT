@@ -244,14 +244,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
     public List<BusinessFile> getUploadedFiles(){
-        List<BusinessFile> businessFiles = new ArrayList<BusinessFile>();
-        for(BusinessFile file: getInstance().getUploadFileses()){
-            if (file.isNoFile() || !file.getUploadFiles().isEmpty()){
-                businessFiles.add(file);
-            }
-        }
-        Collections.sort(businessFiles, OrderBeanComparator.getInstance());
-        return businessFiles;
+        return getInstance().getVaidBusinessFileList();
     }
 
     /**

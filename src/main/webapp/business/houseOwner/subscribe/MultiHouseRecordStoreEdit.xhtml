@@ -1,0 +1,133 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:outputStylesheet>
+        .table.select-list-table>tbody>tr>td {
+            padding: 9px
+        }
+
+        .table.select-list-table>tbody>tr>.action-colum{
+            padding: 5px !important;
+        }
+
+        .house-select-btn{
+            margin-top: -3px;
+        }
+    </h:outputStylesheet>
+
+    <ui:decorate template="MultiVolumeRecordSave.xhtml">
+
+        <ui:define name="outsideArea">
+
+            <div id="houseBusinessSelectPanel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">选择房屋</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h:form>
+                            <h:dataTable id="houseBusinessSelectTable" value="#{recordStoreHouseList}" var="_houseBusiness"
+                                         columnClasses=",,,,action-colum"
+                                         styleClass="table table-striped table-hover select-list-table" rendered="#{not empty multiVolumeRecord.selectRecordStore}">
+
+                                <h:column>
+
+                                     #{_houseBusiness.houseCode}
+                                </h:column>
+
+                                <h:column>
+                                    #{_houseBusiness.afterBusinessHouse.displayHouseCode}
+                                </h:column>
+
+                                <h:column>
+                                    #{_houseBusiness.afterBusinessHouse.buildName}
+                                </h:column>
+
+                                <h:column>
+                                    #{_houseBusiness.afterBusinessHouse.houseOrder}
+                                </h:column>
+
+                                <h:column>
+                                    <a:commandButton execute="@this" action="#{multiHouseChoiceRecordStore.assignHouse}" oncomplete="$('#houseBusinessSelectPanel').modal('hide')"
+                                                     render="assignList" value="选择" styleClass="btn btn-default btn-sm choose-plan">
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandButton>
+                                </h:column>
+
+                            </h:dataTable>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </ui:define>
+
+
+        <a:repeat value="#{saveMultiRecordStores}" var="_fileNode">
+            <div class="input-group list-title-input">
+                <span class="input-group-addon">#{_fileNode.businessFiles.size}</span>
+                <h:inputText value="#{_fileNode.recordCode}" required="true" label="档案编号" styleClass="form-control" p:placeHolder="档案编号">
+                    <a:ajax render="@none" execute="@this"/>
+                </h:inputText>
+                     <span class="input-group-btn">
+                         <a:commandLink styleClass="btn btn-danger" action="#{multiVolumeRecord.deleteRecordStore}"
+                                        execute="@this" immediate="true" render="assignList,fileTree">
+                             <span class=" btn-icon octicon octicon-trashcan"/>
+                             <a:attachQueue requestDelay="0"/>
+                         </a:commandLink>
+      </span>
+            </div>
+
+
+
+            <ul class="list-group">
+
+                <li class="list-group-item file-group-item #{empty _fileNode.houseBusiness ? 'list-group-item-danger' : 'list-group-item-success'} ">
+                    #{empty _fileNode.houseBusiness ? '请选择房屋' : ''}
+                    #{empty _fileNode.houseBusiness ? '' : '房屋编号:'}#{empty _fileNode.houseBusiness ? '' : _fileNode.houseBusiness.houseCode}
+                    #{empty _fileNode.houseBusiness ? '' : '  产籍号:'}#{empty _fileNode.houseBusiness ? '' : _fileNode.houseBusiness.afterBusinessHouse.displayHouseCode}
+
+                    <div class="right house-select-btn">
+                    <a:commandLink styleClass="btn minibutton btn-default " execute="@this" immediate="true"
+                                   render="houseBusinessSelectTable" oncomplete="$('#houseBusinessSelectPanel').modal({backdrop: 'static'})"
+                                   action="#{multiHouseChoiceRecordStore.initHouseBusiness}">房屋选择
+                    <a:attachQueue requestDelay="0"/></a:commandLink>
+                    </div>
+                </li>
+                <a:repeat value="#{_fileNode.businessShowFileList}" var="_file">
+
+                    <li class="list-group-item file-group-item">
+                        <span class="badge">#{_file.uploadFiles.size}</span>
+                        #{_file.name}
+                        <ui:remove>
+                            <div class="right">
+                                <div class="btn-group list-item-btn" role="group">
+                                    <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-down"/> </button>
+                                    <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-up"/> </button>
+
+                                </div>
+                            </div>
+                        </ui:remove>
+                    </li>
+
+                </a:repeat>
+            </ul>
+
+
+
+        </a:repeat>
+
+    </ui:decorate>
+
+</ui:composition>

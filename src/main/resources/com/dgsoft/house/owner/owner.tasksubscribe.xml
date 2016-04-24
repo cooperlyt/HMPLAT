@@ -981,17 +981,24 @@
     <edit-subscribe name="RecordStoreHouseEdit" page="/business/houseOwner/subscribe/RecordStoreHouseEdit.xhtml"
                     component="recordStoreHouseSubscribe">
         <description>
-            房屋归档编辑
+            单卷归档编辑
         </description>
     </edit-subscribe>
 
     <edit-subscribe name="MultiRecordStoreEdit" page="/business/houseOwner/subscribe/ChoiceRecordStore.xhtml"
                     component="choiceRecordStore">
         <description>
-            多份档案归档
+            单房屋分卷归档编辑
         </description>
     </edit-subscribe>
 
+
+    <edit-subscribe name="MultiHouseRecordStoreEdit" page="/business/houseOwner/subscribe/MultiHouseRecordStoreEdit.xhtml"
+                    component="multiHouseChoiceRecordStore">
+        <description>
+            多房屋分卷归档编辑
+        </description>
+    </edit-subscribe>
 
 
     <edit-subscribe name="MakeCardOwnerRsipRecordEdit" page="/business/houseOwner/subscribe/MakeCardOwnerRsipRecordEdit.xhtml"

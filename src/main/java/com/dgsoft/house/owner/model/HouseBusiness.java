@@ -21,6 +21,7 @@ public class HouseBusiness implements java.io.Serializable {
     private BusinessHouse afterBusinessHouse;
     private String houseCode;
     private Set<AddHouseStatus> addHouseStatuses = new HashSet<AddHouseStatus>(0);
+    private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private boolean canceled;
 
 
@@ -119,5 +120,15 @@ public class HouseBusiness implements java.io.Serializable {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "houseBusinesses")
+    public Set<RecordStore> getRecordStores() {
+        return recordStores;
+    }
+
+    public void setRecordStores(Set<RecordStore> recordStores) {
+        this.recordStores = recordStores;
     }
 }
