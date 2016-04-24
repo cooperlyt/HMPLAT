@@ -11,6 +11,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 
@@ -40,16 +41,29 @@ public class HouseInBusinessStart {
 
     private String selectBizId;
 
-    public String getSelectBizId() {
-        return selectBizId;
+    private boolean singleHouse;
+
+    @RequestParameter
+    private String selectSingleHouseId;
+
+    public String getSelectSingleHouseId() {
+        return selectSingleHouseId;
     }
 
-    public void setSelectBizId(String selectBizId) {
-        this.selectBizId = selectBizId;
+    public void setSelectSingleHouseId(String selectSingleHouseId) {
+        this.selectSingleHouseId = selectSingleHouseId;
     }
 
     public List<BatchOperData<BusinessHouse>> getHouseBusinessList() {
         return houseBusinessList;
+    }
+
+    public boolean isSingleHouse() {
+        return singleHouse;
+    }
+
+    public void setSingleHouse(boolean singleHouse) {
+        this.singleHouse = singleHouse;
     }
 
     public boolean isHaveSelectHouse(){
@@ -109,11 +123,16 @@ public class HouseInBusinessStart {
         return "businessSelected";
     }
 
+
     public String houseSelected(){
+
+
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         for(BatchOperData<BusinessHouse> batchOperData : houseBusinessList){
-            if (batchOperData.isSelected()){
+            if ((singleHouse && batchOperData.isSelected()) || (!singleHouse && batchOperData.getData().getId().equals(selectSingleHouseId))){
                 ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), batchOperData.getData()));
+                if (singleHouse)
+                    break;
             }
         }
         if (ownerBusinessHome.getInstance().getHouseBusinesses().isEmpty()){
@@ -124,6 +143,7 @@ public class HouseInBusinessStart {
     }
 
     public String businessAllHouseSelected(){
+
 
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBizId));
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
