@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.house.owner.model.BusinessFile;
 import com.dgsoft.house.owner.model.RecordStore;
+import com.dgsoft.house.owner.model.UploadFile;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -19,65 +21,40 @@ public class RecordStoreBoxCover {
     @In(create = true)
     private EntityManager ownerEntityManager;
 
-    private String frame;
-
-    private String cabinet;
-
-    private String box;
-
-    public String getFrame() {
-        return frame;
-    }
-
-    public void setFrame(String frame) {
-        if (frame == null || frame.trim().equals("") || !frame.equals(this.frame)){
-            result = null;
-        }
-        this.frame = frame;
-    }
-
-    public String getCabinet() {
-        return cabinet;
-    }
-
-    public void setCabinet(String cabinet) {
-        if (cabinet == null || cabinet.trim().equals("") || !cabinet.equals(this.cabinet)){
-            result = null;
-        }
-        this.cabinet = cabinet;
-    }
-
-    public String getBox() {
-        return box;
-    }
-
-    public void setBox(String box) {
-        if (box == null || box.trim().equals("") || !box.equals(this.box)){
-            result = null;
-        }
-        this.box = box;
-    }
+    @In
+    private RecordRoomMgr recordRoomMgr;
 
     private List<RecordStore> result;
 
 
     public List<RecordStore> getRecordStoreList(){
         if (result == null){
-            if (frame == null || frame.trim().equals("")
-                    || box == null || box.trim().equals("")
-                    || cabinet == null || cabinet.trim().equals("") ){
+            if (recordRoomMgr.getFrame() == null || recordRoomMgr.getFrame().trim().equals("")
+                    || recordRoomMgr.getBox() == null || recordRoomMgr.getBox().trim().equals("")
+                    || recordRoomMgr.getCabinet() == null || recordRoomMgr.getCabinet().trim().equals("") ){
                 result = new ArrayList<RecordStore>(0);
             }else{
 
                 result = ownerEntityManager.createQuery("select distinct recordStore from RecordStore recordStore left join recordStore.businessFiles bf " +
                         "where bf.recordLocal.frame = :frame and bf.recordLocal.cabinet = :cabinet and bf.recordLocal.box = :box",RecordStore.class)
-                        .setParameter("cabinet",cabinet).setParameter("frame",frame).setParameter("box",box)
+                        .setParameter("cabinet",recordRoomMgr.getCabinet()).setParameter("frame",recordRoomMgr.getFrame()).setParameter("box",recordRoomMgr.getBox())
                         .getResultList();
             }
 
         }
         return result;
 
+    }
+
+    public List<UploadFile> getAllPicture(){
+        List<UploadFile> result = new ArrayList<UploadFile>();
+        for (RecordStore recordStore: getRecordStoreList()){
+
+            for(BusinessFile businessFile: recordStore.getBusinessShowFileList()){
+                result.addAll(businessFile.getUploadFileList());
+            }
+        }
+        return result;
     }
 
 }

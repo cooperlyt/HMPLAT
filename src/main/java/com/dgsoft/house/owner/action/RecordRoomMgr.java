@@ -2,11 +2,14 @@ package com.dgsoft.house.owner.action;
 
 import com.dgsoft.common.CalendarBean;
 import com.dgsoft.common.OrderBeanComparator;
+import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.house.owner.business.OwnerBusinessFileBase;
 import com.dgsoft.house.owner.model.BusinessFile;
 import com.dgsoft.house.owner.model.RecordStore;
 import com.dgsoft.house.owner.model.UploadFile;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Logging;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,10 +26,11 @@ public class RecordRoomMgr implements java.io.Serializable{
 
     @In(create = true)
     private EntityManager ownerEntityManager;
+    @In
+    private AuthenticationInfo authInfo;
 
 
-
-    public static class RecordBox{
+    public class RecordBox{
 
         private String volume;
 
@@ -92,8 +96,8 @@ public class RecordRoomMgr implements java.io.Serializable{
                 jsonObject.put("nodes",child);
 
                 jsonObject.put("nodeType","box");
-                //TODO change active
-                jsonObject.put("state",state);
+                if (activeId == null)
+                    jsonObject.put("state",state);
 
                 return "[" + jsonObject.toString() + "]";
             } catch (JSONException e) {
@@ -104,7 +108,7 @@ public class RecordRoomMgr implements java.io.Serializable{
 
     }
 
-    public static class RecordVolume implements Comparable<RecordVolume>{
+    public class RecordVolume implements Comparable<RecordVolume>{
 
         private RecordStore recordStore;
 
@@ -131,16 +135,38 @@ public class RecordRoomMgr implements java.io.Serializable{
             JSONObject result = new JSONObject();
             JSONArray child = new JSONArray();
 
+            boolean childActive = false;
             for(BusinessFile businessFile: getFiles()){
                 JSONObject node = new JSONObject();
                 node.put("text", businessFile.getName());
                 node.put("files",genFileDataArray(businessFile.getUploadFileList()));
                 node.put("nodeType","file");
+                node.put("id",businessFile.getId());
+                node.put("volumeId",recordStore.getId());
+
+                if (activeId != null && activeId.equals(businessFile.getId())){
+                    JSONObject state = new JSONObject();
+                    state.put("selected",true);
+                    node.put("state",state);
+                    childActive = true;
+                }
+
                 child.put(node);
             }
             result.put("text",recordStore.getRecordCode());
             result.put("nodes",child);
             result.put("nodeType","volume");
+            result.put("volumeId",recordStore.getId());
+            if (activeId != null && activeId.equals(recordStore.getId())){
+                JSONObject state = new JSONObject();
+                state.put("selected",true);
+                result.put("state",state);
+            }
+            if (childActive){
+                JSONObject state = new JSONObject();
+                state.put("expanded",true);
+                result.put("state",state);
+            }
             return result;
 
         }
@@ -167,7 +193,11 @@ public class RecordRoomMgr implements java.io.Serializable{
 
         @Override
         public int compareTo(RecordVolume o) {
-            return volumeDate.compareTo(o.volumeDate);
+            int result = volumeDate.compareTo(o.volumeDate);
+            if (result == 0)
+                return recordStore.getRecordCode().compareTo(o.recordStore.getRecordCode());
+            else
+                return result;
         }
     }
 
@@ -203,11 +233,49 @@ public class RecordRoomMgr implements java.io.Serializable{
         this.recordNumber = recordNumber;
     }
 
+    public String activeId;
+
+    public String replacePushAddress;
+
+    public String addPushAddress;
+
+    public String fileUploadData;
+
+    public String getReplacePushAddress() {
+        if (replacePushAddress  == null){
+            return null;
+        }else
+        return replacePushAddress.replace(",","");
+    }
+
+    public void setReplacePushAddress(String replacePushAddress) {
+        this.replacePushAddress = replacePushAddress;
+    }
+
+    public String getAddPushAddress() {
+        return addPushAddress;
+    }
+
+    public void setAddPushAddress(String addPushAddress) {
+        this.addPushAddress = addPushAddress;
+    }
+
+    public String getFileUploadData() {
+        return fileUploadData;
+    }
+
+    public void setFileUploadData(String fileUploadData) {
+        this.fileUploadData = fileUploadData;
+    }
+
     public String getFrame() {
         return frame;
     }
 
     public void setFrame(String frame) {
+        if (isDirty(this.frame,frame) ){
+            businessFiles = null;
+        }
         this.frame = frame;
     }
 
@@ -216,6 +284,9 @@ public class RecordRoomMgr implements java.io.Serializable{
     }
 
     public void setCabinet(String cabinet) {
+        if (isDirty(this.cabinet,cabinet) ){
+            businessFiles = null;
+        }
         this.cabinet = cabinet;
     }
 
@@ -224,7 +295,20 @@ public class RecordRoomMgr implements java.io.Serializable{
     }
 
     public void setBox(String box) {
+        if (isDirty(this.box,box) ){
+            businessFiles = null;
+        }
+
         this.box = box;
+    }
+
+    protected <U> boolean isDirty(U oldValue, U newValue)
+    {
+        boolean attributeDirty = oldValue!=newValue && (
+                oldValue==null ||
+                        !oldValue.equals(newValue)
+        );
+        return attributeDirty;
     }
 
     public SearchType getSearchType() {
@@ -232,7 +316,12 @@ public class RecordRoomMgr implements java.io.Serializable{
     }
 
     public void setSearchType(SearchType searchType) {
-        this.searchType = searchType;
+        if (searchType != null) {
+            if (!this.searchType.equals(searchType)){
+                businessFiles = null;
+            }
+            this.searchType = searchType;
+        }
     }
 
     public void setSearchTypeStr(String value){
@@ -254,29 +343,35 @@ public class RecordRoomMgr implements java.io.Serializable{
         return SearchType.values();
     }
 
-    private RecordBox resultData;
 
     public RecordBox getResultBox() {
 
-
-        return resultData;
-    }
-
-
-    public void search(){
-        resultData = null;
         if (SearchType.RECORD_LOCATION.equals(searchType)){
 
-            List<BusinessFile> files = ownerEntityManager.createQuery("select businessFile from BusinessFile businessFile left join fetch businessFile.recordLocal location left join fetch businessFile.recordStore where location.frame =:frame and location.cabinet = :cabinet and location.box = :box",BusinessFile.class)
-                    .setParameter("frame",frame).setParameter("cabinet",cabinet).setParameter("box",box).getResultList();
+            return new RecordBox(frame,cabinet,box,getResultFiles());
 
-            RecordBox recordBox = new RecordBox(frame,cabinet,box,files);
-            resultData = recordBox;
+        }else{
+            return null;
         }
     }
 
+
+    private List<BusinessFile> businessFiles;
+
+
+
+    private List<BusinessFile> getResultFiles(){
+
+        if (businessFiles == null){
+            businessFiles = ownerEntityManager.createQuery("select businessFile from BusinessFile businessFile left join fetch businessFile.recordLocal location left join fetch businessFile.recordStore where location.frame =:frame and location.cabinet = :cabinet and location.box = :box",BusinessFile.class)
+                    .setParameter("frame",frame).setParameter("cabinet",cabinet).setParameter("box",box).getResultList();
+        }
+        return businessFiles;
+
+    }
+
     public void refresh(){
-        resultData = null;
+        businessFiles = null;
     }
 
     public void reset(){
@@ -284,7 +379,74 @@ public class RecordRoomMgr implements java.io.Serializable{
         cabinet = null;
         box = null;
         recordNumber = null;
-        resultData = null;
+        businessFiles = null;
+    }
+
+    @Transactional
+    public void addFile(){
+        try {
+            JSONObject jsonObject = new JSONObject(fileUploadData);
+
+
+            String key = jsonObject.getString("key");
+
+
+
+            for (BusinessFile businessFile: getResultFiles()){
+                Logging.getLog(getClass()).debug(businessFile.getId() + "?=" + key);
+                if (businessFile.getId().equals(key)){
+                    Logging.getLog(getClass()).debug("key found:" + key);
+                    assignFile(businessFile,jsonObject);
+                    return;
+                }
+            }
+            Logging.getLog(getClass()).debug("key not found" + key);
+
+        } catch (JSONException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    private void assignFile(BusinessFile businessFile , JSONObject jsonObject) throws JSONException {
+        JSONArray fileIdArray = jsonObject.getJSONArray("files");
+        if (fileIdArray.length() > 0) {
+
+            for (int i = 0; i < fileIdArray.length(); i++) {
+                JSONObject fileInfo = fileIdArray.getJSONObject(i);
+
+                businessFile.getUploadFiles().add(new UploadFile(fileInfo.getString("fid"), authInfo.getLoginEmployee().getPersonName(), authInfo.getLoginEmployee().getId(), fileInfo.getString("md5"), fileInfo.getString("name"), businessFile, fileInfo.getLong("size")));
+
+            }
+            activeId = businessFile.getId();
+            ownerEntityManager.flush();
+        }
+    }
+
+
+    //TODO HISTORY
+    public void replaceFile(){
+
+        try {
+            JSONObject jsonObject = new JSONObject(fileUploadData);
+
+
+            String key = jsonObject.getString("key");
+
+            for (BusinessFile businessFile: getResultFiles()){
+                for(UploadFile uploadFile: businessFile.getUploadFiles()){
+                    if (uploadFile.getId().replace(",","").equals(key)){
+                        businessFile.getUploadFiles().remove(uploadFile);
+                        assignFile(businessFile,jsonObject);
+                        return;
+                    }
+                }
+
+            }
+
+
+        } catch (JSONException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
 }

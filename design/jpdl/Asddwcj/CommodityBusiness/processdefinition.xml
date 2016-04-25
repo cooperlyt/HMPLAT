@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="CommodityBusiness">
+
+
+	<start-state name="业务受理">
+		<transition to="是否网签"></transition>
+	</start-state>
+
+
+	<task-node name="受理">
+		<task name="受理">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
+		</task>
+		<transition to="是否收费"></transition>
+		<transition to="结束" name="_END"></transition>
+	</task-node>
+
+	<task-node name="审核">
+		<task name="审核">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+			</description>
+			<assignment pooled-actors="commodity_check"></assignment>
+		</task>
+		<transition to="审核结果"></transition>
+	</task-node>
+
+	<task-node name="收费">
+		<task name="收费">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment pooled-actors="Money"></assignment>
+		</task>
+		<transition to="审核"></transition>
+		<transition to="网签回退判断" name="退回受理"></transition>
+	</task-node>
+
+	<decision name="是否网签">
+		<transition to="网签受理" name="是">
+			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
+		</transition>
+		<transition to="是否收费" name="否">
+			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="审核结果">
+		<transition to="审批" name="通过">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="网签回退判断" name="驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="网签受理">
+		<task name="网签受理">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment pooled-actors="contractApply"></assignment>
+		</task>
+		<transition to="是否收费"></transition>
+	</task-node>
+
+	<decision name="网签回退判断">
+		<transition to="网签受理" name="网签">
+			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
+		</transition>
+		<transition to="受理" name="非网签">
+			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="是否收费">
+		<transition to="收费" name="是">
+			<condition expression="#{(ownerBusinessHome.instance.defineId eq 'WP50') or (ownerBusinessHome.instance.defineId eq 'WP43')}"></condition>
+		</transition>
+		<transition to="审核" name="否">
+			<condition expression="#{not (ownerBusinessHome.instance.defineId eq 'WP50') and not (ownerBusinessHome.instance.defineId eq 'WP43')}"></condition>
+		</transition>
+	</decision>
+
+	<node name="业务完成">
+		<action expression='#{ownerBusinessHome.doNodeAction("业务完成")}' name="业务完成"></action>
+		<transition to="结束"></transition>
+	</node>
+
+	<task-node name="审批">
+		<task name="审批">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+			</description>
+			<assignment pooled-actors="commodity_last_check"></assignment>
+		</task>
+		<transition to="审批结果"></transition>
+	</task-node>
+
+	<decision name="审批结果">
+		<transition to="业务完成">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="网签回退判断" name="审批驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
+
+
+	<end-state name="结束"></end-state>
+
+
+</process-definition>

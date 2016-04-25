@@ -4,8 +4,7 @@
       login-required="true"
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
-    <param name="frame" value="#{recordStoreBoxCover.frame}"/>
-    <param name="cabinet" value="#{recordStoreBoxCover.cabinet}"/>
-    <param name="box" value="#{recordStoreBoxCover.box}"/>
-
+    <param name="frame" value="#{recordRoomMgr.frame}"/>
+    <param name="cabinet" value="#{recordRoomMgr.cabinet}"/>
+    <param name="box" value="#{recordRoomMgr.box}"/>
 </page>
