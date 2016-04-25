@@ -325,9 +325,6 @@
 
         <a:outputPanel id="pushPanel">
 
-            #{not empty recordRoomMgr.addPushAddress}
-
-            #{not empty recordRoomMgr.replacePushAddress}
 
             <a:push id="uploadPush" address="#{recordRoomMgr.addPushAddress}"  rendered="#{not empty recordRoomMgr.addPushAddress}"
                     ondataavailable="addFile(event.rf.data);">
