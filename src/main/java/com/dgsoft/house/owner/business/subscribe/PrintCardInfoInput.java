@@ -37,7 +37,7 @@ public class PrintCardInfoInput {
     }
 
     @Create
-    private void init(){
+    public void init(){
         for(MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCardList()){
             if (makeCard.getCardInfo() == null){
                 CardInfo cardInfo = new CardInfo(makeCard,authInfo.getLoginEmployee().getPersonName(),authInfo.getLoginEmployee().getId());
