@@ -3,7 +3,14 @@
 
     <view-subscribe name="houseInfoView" page="/business/houseOwner/subscribe/HouseInfoView.xhtml">
         <description>
-            房屋查看
+            房屋查看(Start)
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="afterHouseInfoView" page="/business/houseOwner/subscribe/AfterHouseInfoView.xhtml">
+        <description>
+
+            房屋查看(After)
         </description>
     </view-subscribe>
 
