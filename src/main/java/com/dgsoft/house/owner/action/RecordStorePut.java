@@ -81,9 +81,9 @@ public class RecordStorePut {
             }
 
             for (int i = 0; i < select.length(); i++) {
-                RecordStore store = ownerEntityManager.find(RecordStore.class, select.get(i));
+                RecordStore store = ownerEntityManager.find(RecordStore.class, select.getString(i));
                 if (store == null) {
-                    throw new IllegalArgumentException("recordStore not found:" + select.get(i));
+                    throw new IllegalArgumentException("recordStore not found:" + select.getString(i));
                 }
                 int index = 1;
                 for (BusinessFile businessFile : store.getBusinessFiles()) {
