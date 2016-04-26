@@ -11,7 +11,7 @@
 
 
 
-
+    <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
         <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
             <p:paragraph alignment="center">登记受理业务审核书
             </p:paragraph>
@@ -59,20 +59,20 @@
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>项目坐落</p:paragraph>
+                    <p:paragraph>房屋坐落</p:paragraph>
                 </p:cell>
 
                 <p:cell>
 
-                    <p:paragraph> #{selectProjectByHouseCode.project.address}</p:paragraph>
+                    <p:paragraph> #{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>项目名称</p:paragraph>
+                    <p:paragraph>产籍号</p:paragraph>
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>#{selectProjectByHouseCode.project.name}</p:paragraph>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
                 </p:cell>
 
 
@@ -154,5 +154,6 @@
         </p:font>
         <p:barCode  code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
         <p:newPage/>
+    </a:repeat>
 
 </p:document>

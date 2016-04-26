@@ -8,7 +8,7 @@
 
 
 
-
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
     <p:paragraph alignment="center">在建工程抵押权注销登记申请书
     </p:paragraph>
@@ -235,16 +235,16 @@
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
         </f:facet>
         <p:cell borderWidthLeft="0" borderWidthTop="0"  fixedHeight="28">
-            <p:paragraph>项目坐落</p:paragraph>
+            <p:paragraph>房屋坐落</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" borderWidthTop="0" colspan="3">
-            <p:paragraph>#{selectProjectByHouseCode.project.address}</p:paragraph>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="28">
-            <p:paragraph>房屋信息</p:paragraph>
+            <p:paragraph>产籍号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0"  colspan="3">
-            <p:paragraph>详见在建工程抵押登记房屋明细表</p:paragraph>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
         </p:cell>
 
 
@@ -328,13 +328,14 @@
         <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
     </p:cell>
     <p:cell>
-        <p:paragraph></p:paragraph>
+        <p:paragraph>房屋编号：</p:paragraph>
     </p:cell>
     <p:cell horizontalAlignment="left">
-        <p:paragraph></p:paragraph>
+        <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
     </p:cell>
 
 </p:table>
 </p:font>
 <p:newPage/>
+</a:repeat>
 </p:document>
