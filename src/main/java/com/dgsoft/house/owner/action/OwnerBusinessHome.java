@@ -219,14 +219,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         if (!isIdDefined()){
             return false;
         }
-        if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource())){
-            return identity.hasRole("recordRunManager");
-        }else{
 
+        return identity.hasRole("owner.deleteBiz") || (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource()) && identity.hasRole("recordRunManager"));
 
-                //return isCanModify();
-            return false;
-        }
     }
 
 

@@ -3,7 +3,14 @@
 
     <view-subscribe name="houseInfoView" page="/business/houseOwner/subscribe/HouseInfoView.xhtml">
         <description>
-            房屋查看
+            房屋查看(Start)
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="afterHouseInfoView" page="/business/houseOwner/subscribe/AfterHouseInfoView.xhtml">
+        <description>
+
+            房屋查看(After)
         </description>
     </view-subscribe>
 
@@ -1090,7 +1097,11 @@
 
 
 
-
+    <edit-subscribe name="reGetHouseInfo" page="/business/houseOwner/subscribe/ReGetHouseMapInfo.xhtml" component="">
+        <description>
+            提测绘信息(非常规!仅量不要使用)
+        </description>
+    </edit-subscribe>
 
 
 
@@ -1430,6 +1441,7 @@
            商品房初始登记添加共有情况(独有)
         </description>
     </end-subscribe>
+
 
 
 
