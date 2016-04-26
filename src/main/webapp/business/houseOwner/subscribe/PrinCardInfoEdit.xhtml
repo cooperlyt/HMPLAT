@@ -13,7 +13,7 @@
         <r:panel >
 
             <f:facet name="header">
-                <label> #{messages[_cardInfo.makeCard.type.name()]}</label>
+                <label> #{messages[_cardInfo.makeCard.type.name()]} : </label>
                 <h:outputText value="#{_cardInfo.makeCard.businessHouseOwner.personName}"
                     rendered="#{(_cardInfo.makeCard.type eq 'NOTICE') or (_cardInfo.makeCard.type eq 'OWNER_RSHIP')}">
 
