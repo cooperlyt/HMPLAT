@@ -10,7 +10,7 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
-    <div class="panel panel-primary">
+    <s:div styleClass="panel panel-primary" rendered="#{ownerRsipCardPrint.currBiz}">
         <div class="panel-body">
             <h:form>
                 <p><a:commandLink styleClass="btn minibutton right" render="@none"
@@ -31,6 +31,6 @@
             </h:form>
         </div>
 
-    </div>
+    </s:div>
 
 </ui:composition>

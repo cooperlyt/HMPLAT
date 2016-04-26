@@ -27,6 +27,9 @@ public class OwnerRsipCardPrint {
     }
 
 
+    public boolean isCurrBiz(){
+        return ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getMakeCard().getOwnerBusiness() == ownerBusinessHome.getInstance();
+    }
 
     public void preparePrintOwnerFee(){
         printUrl = extendsDataCreator.extendsPrintOwnerRsip(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse(),
