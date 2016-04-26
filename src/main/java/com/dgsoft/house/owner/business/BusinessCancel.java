@@ -50,7 +50,7 @@ public class BusinessCancel {
         if (!ownerBusinessHome.isCanCancel()) {
             return null;
         }
-        if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(ownerBusinessHome.getInstance().getSource())){
+        //if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(ownerBusinessHome.getInstance().getSource())){
 
             ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
             for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
@@ -67,9 +67,9 @@ public class BusinessCancel {
             }
 
 
-        }
+        //}
 
-        return "Cancel_Business_Create";
+       // return "Cancel_Business_Create";
     }
 
 }
