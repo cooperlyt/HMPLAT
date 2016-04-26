@@ -396,11 +396,11 @@
                                 <ui:param name="showLabel" value="false"/>
                                 <div class="input-group">
 
-                                    <h:inputText styleClass="form-control" p:placeholder="图-丘-幢-房号 多个用逗号分隔" required="true" value="#{totalHouseStatus.buildCode}">
+                                    <h:inputText styleClass="form-control" p:placeholder="图-丘-幢-房号 多个用逗号分隔" required="true" value="#{totalHouseLimit.searchKey}">
                                     </h:inputText>
 
                                      <span class="input-group-btn">
-                                         <h:commandButton action="#{totalHouseStatus.totalHouseStatus}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
+                                         <h:commandButton action="#{totalHouseLimit.export}" value="导出" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
 
                                      </span>
                                 </div>
