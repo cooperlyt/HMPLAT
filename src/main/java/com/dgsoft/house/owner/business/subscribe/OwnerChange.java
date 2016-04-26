@@ -25,7 +25,7 @@ public class OwnerChange {
     private OwnerBusinessHome ownerBusinessHome;
 
     @Create
-    private void init(){
+    public void init(){
         change = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getOwnerBusiness() == ownerBusinessHome.getInstance();
     }
 
