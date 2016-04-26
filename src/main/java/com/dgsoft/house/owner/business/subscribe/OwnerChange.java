@@ -7,6 +7,7 @@ import com.dgsoft.house.owner.business.subscribe.complete.MakeCardOwnerRship;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -22,6 +23,11 @@ public class OwnerChange {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    @Create
+    private void init(){
+        change = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getOwnerBusiness() == ownerBusinessHome.getInstance();
+    }
 
 
     public boolean isChange() {

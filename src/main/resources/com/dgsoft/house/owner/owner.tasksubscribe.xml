@@ -1100,6 +1100,11 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="cardInfoInput" page="/business/houseOwner/subscribe/PrinCardInfoEdit.xhtml" component="">
+        <description>
+            权证信息输入
+        </description>
+    </edit-subscribe>
 
 
     <edit-subscribe name="reGetHouseInfo" page="/business/houseOwner/subscribe/ReGetHouseMapInfo.xhtml" component="">

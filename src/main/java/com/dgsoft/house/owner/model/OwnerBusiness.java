@@ -581,6 +581,16 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public List<MakeCard> getMakeCardList() {
         List<MakeCard> result = new ArrayList<MakeCard>(getMakeCards());
+        Collections.sort(result, new Comparator<MakeCard>() {
+            @Override
+            public int compare(MakeCard o1, MakeCard o2) {
+                int result = Integer.valueOf(o1.getType().ordinal()).compareTo(o2.getType().ordinal());
+                if (result == 0){
+                    return o1.getNumber().compareTo(o2.getNumber());
+                }
+                return result;
+            }
+        });
         return result;
     }
 

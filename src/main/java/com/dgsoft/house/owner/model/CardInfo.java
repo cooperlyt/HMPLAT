@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,6 +29,8 @@ public class CardInfo  implements Serializable  {
 
 
 
+
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public MakeCard getMakeCard() {
@@ -47,6 +50,12 @@ public class CardInfo  implements Serializable  {
 
     public CardInfo(){
 
+    }
+
+    public CardInfo(MakeCard makeCard, String makeEmpName, String makeEmpCode) {
+        this.makeEmpName = makeEmpName;
+        this.makeCard = makeCard;
+        this.makeEmpCode = makeEmpCode;
     }
 
     @Id
@@ -118,5 +127,4 @@ public class CardInfo  implements Serializable  {
     }
 
 
-    
 }

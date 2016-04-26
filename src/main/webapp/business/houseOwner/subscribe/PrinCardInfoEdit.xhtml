@@ -1,0 +1,69 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:repeat value="#{printCardInfoInput.cardInfos}" var="_cardInfo">
+        <f:subview>
+        <r:panel >
+
+            <f:facet name="header">
+                <label> #{messages[_cardInfo.makeCard.type.name()]}</label>
+                <h:outputText value="#{_cardInfo.makeCard.businessHouseOwner.personName}"
+                    rendered="#{(_cardInfo.makeCard.type eq 'NOTICE') or (_cardInfo.makeCard.type eq 'OWNER_RSHIP')}">
+
+                </h:outputText>
+
+                <h:outputText value="#{_cardInfo.makeCard.businessPool.personName}"
+                              rendered="#{(_cardInfo.makeCard.type eq 'POOL_RSHIP')}">
+
+                </h:outputText>
+
+                <h:outputText value="#{_cardInfo.makeCard.financial.personName}"
+                              rendered="#{(_cardInfo.makeCard.type eq 'NOTICE_MORTGAGE')
+                               or (_cardInfo.makeCard.type eq 'MORTGAGE_CARD') or (_cardInfo.makeCard.type eq 'PROJECT_MORTGAGE')}">
+
+                </h:outputText>
+
+
+            </f:facet>
+
+            <div class="form-inline">
+                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                    <ui:define name="label">
+                        #{messages.CardInfo_Code}
+                    </ui:define>
+                    <ui:param name="for" value="CardInfoCode"/>
+                    <h:inputText label="#{messages.CardInfo_code}"
+                                 id="CardInfoCode"
+                                 size="30"
+                                 required="true"
+                                 styleClass="form-control"
+                                 value="#{_cardInfo.code}">
+                    </h:inputText>
+                </s:decorate>
+            </div>
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.field_memo}
+                </ui:define>
+                <ui:param name="for" value="CardInfo_Memo"/>
+                <h:inputTextarea label="#{messages.field_memo}"
+                                 id="CardInfo_Memo"
+                                 rows="3"
+                                 cols="50"
+                                 styleClass="form-control"
+                                 value="#{_cardInfo.memo}">
+                </h:inputTextarea>
+            </s:decorate>
+        </r:panel>
+        </f:subview>
+    </a:repeat>
+
+</ui:composition>
