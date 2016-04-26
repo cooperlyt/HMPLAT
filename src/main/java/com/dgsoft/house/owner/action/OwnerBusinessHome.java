@@ -219,8 +219,18 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         if (!isIdDefined()){
             return false;
         }
-
-        return identity.hasRole("owner.deleteBiz") || (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource()) && identity.hasRole("recordRunManager"));
+        boolean result = true;
+        for(HouseBusiness houseBusiness: getInstance().getHouseBusinesses()){
+            if (!houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
+                result = false;
+                break;
+            }
+        }
+        if (result){
+            return identity.hasRole("owner.deleteBiz") || (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource()) && identity.hasRole("recordRunManager"));
+        }else{
+            return false;
+        }
 
     }
 

@@ -192,6 +192,8 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRoomMgr','档�
 
 
 INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.deleteBiz','业务删除','业务删除',15);
+INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseLimitInfo','房屋限制情况导出','房屋限制情况导出',16);
+
 -- 功能 角色
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核', '', 7);
 

@@ -187,3 +187,5 @@ INSERT INTO HOUSE_AND_RECORD(HOUSE,RECORD)  select h.ID,rs.ID from BUSINESS_HOUS
 
 
 INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.deleteBiz','业务删除','业务删除',15);
+
+INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseLimitInfo','房屋限制情况导出','房屋限制情况导出',16);

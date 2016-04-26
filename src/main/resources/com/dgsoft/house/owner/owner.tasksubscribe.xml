@@ -1094,6 +1094,11 @@
     </edit-subscribe>
 
 
+    <edit-subscribe name="ownerAndCardChange" page="/business/houseOwner/subscribe/OwnerChange.xhtml" component="">
+        <description>
+            变更或更正产权人
+        </description>
+    </edit-subscribe>
 
 
 
@@ -1441,6 +1446,8 @@
            商品房初始登记添加共有情况(独有)
         </description>
     </end-subscribe>
+
+
 
 
 
