@@ -101,7 +101,7 @@
                                     <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.id}">
                                         <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.id}"
                                              data-file-id="#{_img.id}"
-                                             title="#{_img.businessFile.name}" alt="由 #{_img.empName} 于 #{calendarBean.displayDateTime(_img.uploadTime)} 上传"/>
+                                             title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '档案编号:'}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordLocal) ? ' 未上架': '位置:'} #{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.frame}#{(empty _img.businessFile.recordLocal) ? '': '架'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.cabinet}#{(empty _img.businessFile.recordLocal) ? '': '柜'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.box}#{(empty _img.businessFile.recordLocal) ? '': '盒'}" />
                                     </a>
                                 </li>
 

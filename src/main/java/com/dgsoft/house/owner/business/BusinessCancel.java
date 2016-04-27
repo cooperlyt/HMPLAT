@@ -57,6 +57,9 @@ public class BusinessCancel {
                 subStatus.setStatus(BusinessInstance.BusinessStatus.ABORT);
             }
             ownerBusinessHome.getInstance().setRecorded(false);
+            if(ownerBusinessHome.getInstance().getSelectBusiness() != null){
+                ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+            }
             resetHouseRecord();
             if ("updated".equals(ownerBusinessHome.update())){
 

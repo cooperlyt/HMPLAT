@@ -220,6 +220,15 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
             return false;
         }
         boolean result = true;
+        if (BusinessInstance.BusinessStatus.RUNNING.equals(getInstance().getStatus()) ||
+                BusinessInstance.BusinessStatus.ABORT.equals(getInstance().getStatus()) ||
+                BusinessInstance.BusinessStatus.SUSPEND.equals(getInstance().getStatus()) ){
+            return false;
+        }
+
+        if (getInstance().getSelectBusiness() != null &&
+                ((getInstance().getSelectBusiness().getSubStatuses().size() > 1) || (getInstance().getSelectBusiness().getHouseBusinesses().size() > 1)))
+            return false;
         for(HouseBusiness houseBusiness: getInstance().getHouseBusinesses()){
             if (!houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
                 result = false;
