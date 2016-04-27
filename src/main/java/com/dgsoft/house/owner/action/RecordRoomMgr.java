@@ -183,7 +183,7 @@ public class RecordRoomMgr implements java.io.Serializable{
 
                 jsonObject.put("time",CalendarBean.instance().displayDateTime(file.getUploadTime()));
                 jsonObject.put("title",file.getBusinessFile().getName());
-                jsonObject.put("description",file.getEmpName());
+                jsonObject.put("description", '由' +  file.getEmpName() + '于' + CalendarBean.instance().displayDateTime(file.getUploadTime()) + "上传");
 
                 result.put(jsonObject);
             }

@@ -2,10 +2,7 @@ package com.dgsoft.house.owner.total;
 
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.model.House;
-import com.dgsoft.house.owner.model.BusinessPool;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseRecord;
-import com.dgsoft.house.owner.model.LockedHouse;
+import com.dgsoft.house.owner.model.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -71,6 +68,12 @@ public class TotalHouseLimit {
                             .setParameter("mapNumber", mbbh[0]).setParameter("blockNumber", mbbh[1]).setParameter("buildNumber", mbbh[2]).setParameter("houseOrder", mbbh[3]).getSingleResult().getBusinessHouse());
                 }catch (NoResultException e){
                     data.put(key,null);
+                }
+            }else{
+                List<HouseRecord> houseRecords = ownerEntityManager.createQuery("select houseRecord from HouseRecord houseRecord where houseRecord.businessHouse.mapNumber = :mapNumber and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber ", HouseRecord.class)
+                        .setParameter("mapNumber", mbbh[0]).setParameter("blockNumber", mbbh[1]).setParameter("buildNumber", mbbh[2]).getResultList();
+                for(HouseRecord hr: houseRecords){
+                    data.put(key,hr.getBusinessHouse());
                 }
             }
         }
@@ -188,6 +191,25 @@ public class TotalHouseLimit {
                     cell = row.createCell(1);
                     cell.setCellValue(entry.getValue().getHouseArea().doubleValue());
                     cell.setCellStyle(cellStyle);
+
+                    if(((BusinessHouse)entry.getValue()).getBusinessHouseOwner() != null){
+                        cell = row.createCell(2);
+                        cell.setCellValue(((BusinessHouse)entry.getValue()).getBusinessHouseOwner().getPersonName());
+                        cell.setCellStyle(cellStyle);
+                    }
+
+                    if (!((BusinessHouse)entry.getValue()).getBusinessPools().isEmpty()){
+                        String poolName = "";
+                        for(BusinessPool pool: ((BusinessHouse)entry.getValue()).getBusinessPoolList()){
+                            if (!"".equals(poolName)){
+                                poolName += ",";
+                            }
+                            poolName += pool.getPersonName();
+                        }
+                        cell = row.createCell(3);
+                        cell.setCellValue(poolName);
+                        cell.setCellStyle(cellStyle);
+                    }
                 }
 
                 boolean headAdded = false;
@@ -228,9 +250,13 @@ public class TotalHouseLimit {
                     }
 
                     if (!houseBusiness.getOwnerBusiness().getDefineId().equals("WP73")){
-                        cell = row.createCell(cellIndex++);
-                        cell.setCellValue(houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial().getName());
-                        cell.setCellStyle(cellStyle);
+                        if (houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial() != null) {
+                            cell = row.createCell(cellIndex++);
+                            cell.setCellValue(houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial().getName());
+                            cell.setCellStyle(cellStyle);
+                        }else{
+                            cellIndex ++;
+                        }
 
                         cell = row.createCell(cellIndex++);
                         cell.setCellValue(houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getHighestMountMoney().doubleValue());
