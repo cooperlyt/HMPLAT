@@ -250,9 +250,13 @@ public class TotalHouseLimit {
                     }
 
                     if (!houseBusiness.getOwnerBusiness().getDefineId().equals("WP73")){
-                        cell = row.createCell(cellIndex++);
-                        cell.setCellValue(houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial().getName());
-                        cell.setCellStyle(cellStyle);
+                        if (houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial() != null) {
+                            cell = row.createCell(cellIndex++);
+                            cell.setCellValue(houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial().getName());
+                            cell.setCellStyle(cellStyle);
+                        }else{
+                            cellIndex ++;
+                        }
 
                         cell = row.createCell(cellIndex++);
                         cell.setCellValue(houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getHighestMountMoney().doubleValue());
