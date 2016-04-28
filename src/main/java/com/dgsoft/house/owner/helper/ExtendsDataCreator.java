@@ -469,10 +469,19 @@ public class ExtendsDataCreator {
             jsonObject.put("套内建筑面积", jsonField(businessHouse.getUseArea()));
         }
         if (businessHouse.getLandInfo() != null) {
-            jsonObject.put("地号", jsonField(businessHouse.getLandInfo().getNumber()));
-            jsonObject.put("土地获得方式", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getLandInfo().getLandGetMode())));
-            jsonObject.put("土地使用年始", jsonField(businessHouse.getLandInfo().getBeginUseTime().toString()));
-            jsonObject.put("土地使用年止", jsonField(businessHouse.getLandInfo().getEndUseTime().toString()));
+            if (businessHouse.getLandInfo().getNumber()!=null){
+                jsonObject.put("地号", jsonField(businessHouse.getLandInfo().getNumber()));
+            }
+            if (businessHouse.getLandInfo().getLandGetMode()!=null){
+                jsonObject.put("土地获得方式", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getLandInfo().getLandGetMode())));
+            }
+
+            if (businessHouse.getLandInfo().getBeginUseTime()!=null) {
+                jsonObject.put("土地使用年始", jsonField(businessHouse.getLandInfo().getBeginUseTime().toString()));
+            }
+            if (businessHouse.getLandInfo().getEndUseTime()!=null) {
+                jsonObject.put("土地使用年止", jsonField(businessHouse.getLandInfo().getEndUseTime().toString()));
+            }
         }
         jsonObject.put("房屋编号", jsonField(businessHouse.getHouseCode()));
         jsonObject.put("业务编号", jsonField(ownerBusiness.getId()));
