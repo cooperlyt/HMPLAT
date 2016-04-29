@@ -251,9 +251,16 @@
         <p:cell borderWidthLeft="0" fixedHeight="28">
             <p:paragraph rendered="false">产籍号</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0"  colspan="3">
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph >#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
         </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="28">
+            <p:paragraph rendered="false">在建工程登记证明号</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph>#{ownerBusinessHome.instance.selectBusiness.mortgaegeRegiste.financial.makeCard.number}</p:paragraph>
+        </p:cell>
+
 
 
 
