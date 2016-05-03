@@ -14,6 +14,7 @@ import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,6 +100,7 @@ public class ChoiceRecordStore implements java.io.Serializable, TaskSubscribeCom
                 }
             }
             if (!exists) {
+                Logging.getLog(getClass()).warn("file not assign:" + businessFile.getName() + " ID:" + businessFile.getImportantCode());
                 return false;
             }
         }
