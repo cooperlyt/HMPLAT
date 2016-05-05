@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.core.Expressions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,11 +44,16 @@ public class MultiVolumeRecord {
         }
 
         public FileNode(BusinessNeedFile businessNeedFile) {
+
+
             this.businessNeedFile = businessNeedFile;
             if (!BusinessNeedFile.NeedFileNodeFile.CHILDREN.equals(businessNeedFile.getType())) {
                 childs = new ArrayList<FileNode>(businessNeedFile.getChildren().size());
                 for (BusinessNeedFile childNeedFile : businessNeedFile.getChildrenList()) {
-                    childs.add(new FileNode(childNeedFile));
+
+                   if(childNeedFile.getCondition() == null || childNeedFile.getCondition().trim().equals("") ||
+                            Expressions.instance().createValueExpression(childNeedFile.getCondition(), Boolean.class).getValue())
+                        childs.add(new FileNode(childNeedFile));
                 }
 
 
@@ -194,7 +200,9 @@ public class MultiVolumeRecord {
         JSONArray importFileData = new JSONArray();
         boolean enable = false;
         for (BusinessNeedFile rootFile : rootNeedFiles) {
-
+            if(rootFile.getCondition() == null || rootFile.getCondition().trim().equals("") ||
+                    Expressions.instance().createValueExpression(rootFile.getCondition(), Boolean.class).getValue())
+            {
             FileNode fileNode = new FileNode(rootFile);
             JSONObject nodeData = fileNode.getJsonData();
             if (fileNode.isEnable()) {
@@ -202,6 +210,7 @@ public class MultiVolumeRecord {
             }
             if (nodeData != null) {
                 importFileData.put(nodeData);
+            }
             }
         }
 

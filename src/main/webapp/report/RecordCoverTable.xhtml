@@ -12,7 +12,6 @@
             </p:paragraph>
         </p:font>
 
-
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
             <p:table columns="2" widths="2 1" widthPercentage="100">
                 <f:facet name="defaultCell">
@@ -31,7 +30,7 @@
                     <p:cell horizontalAlignment="center" padding="5" paddingBottom="7" verticalAlignment="middle" borderWidth="1"/>
                 </f:facet>
                 <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}" colspan="2"><p:paragraph>所有权人或单位</p:paragraph></p:cell>
-                <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}" colspan="3" horizontalAlignment="left"><p:paragraph rendered="#{not empty _cover.ownerBusiness.singleHoues.afterBusinessHouse.businessHouseOwner}">#{_cover.ownerBusiness.singleHoues.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph></p:cell>
+                <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}" colspan="3" horizontalAlignment="left"><p:paragraph rendered="#{not empty _cover.ownerBusiness.applyPersion.personName}">#{_cover.ownerBusiness.singleHoues.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph></p:cell>
 
 
                 <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}"><p:paragraph>坐落</p:paragraph></p:cell>
