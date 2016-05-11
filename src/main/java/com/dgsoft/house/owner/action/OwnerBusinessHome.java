@@ -230,7 +230,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
                 ((getInstance().getSelectBusiness().getSubStatuses().size() > 1) || (getInstance().getSelectBusiness().getHouseBusinesses().size() > 1)))
             return false;
         for(HouseBusiness houseBusiness: getInstance().getHouseBusinesses()){
-            if (!houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
+            if (houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
                 result = false;
                 break;
             }
