@@ -13,8 +13,9 @@
             <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
             <assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
         </task>
-        <transition to="审核" name="审核"></transition>
-		<transition to="结束" name="_END"></transition>
+        <transition to="要件上传" name="要件上传"></transition>
+        <transition to="结束" name="_END"></transition>
+	
     </task-node>
 
     <task-node name="审核">
@@ -104,9 +105,28 @@
 			</description>
 			<assignment actor-id="#{actor.id}"></assignment>
 		</task>
-		<transition to="审核"></transition>
+		<transition to="初审"></transition>
 		<transition to="受理" name="重新受理"></transition>
 	</task-node>
+
+	<task-node name="初审">
+		<task name="初审">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+			</description>
+			<assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}first_check"></assignment>
+		</task>
+		<transition to="初审结果"></transition>
+	</task-node>
+
+	<decision name="初审结果">
+		<transition to="审核" name="初审通过">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="受理" name="初审驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
 
 
     <end-state name="结束"></end-state>
