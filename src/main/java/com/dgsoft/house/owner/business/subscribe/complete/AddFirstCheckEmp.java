@@ -11,11 +11,11 @@ import org.jboss.seam.annotations.Name;
 import java.util.Date;
 
 /**
- * Created by wxy on 2015-12-09.
- * 添加登薄人
+ * Created by wxy on 2016-05-16.
+ * 初审人
  */
-@Name("addRegerEmp")
-public class AddRegerEmp implements TaskCompleteSubscribeComponent {
+@Name("addFirstCheckEmp")
+public class AddFirstCheckEmp implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -25,6 +25,7 @@ public class AddRegerEmp implements TaskCompleteSubscribeComponent {
 
     @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
     private String transitionComments;
+
 
     @Override
     public void valid() {
@@ -39,14 +40,14 @@ public class AddRegerEmp implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (BusinessEmp businessEmp:ownerBusinessHome.getInstance().getBusinessEmps()){
-            if (businessEmp.getType().equals(BusinessEmp.EmpType.REG_EMP)){
+            if (businessEmp.getType().equals(BusinessEmp.EmpType.FIRST_CHECK)){
                 ownerBusinessHome.getInstance().getBusinessEmps().remove(businessEmp);
                 break;
             }
 
 
         }
-        BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.REG_EMP);
+        BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.FIRST_CHECK);
         businessEmp.setEmpName(authInfo.getLoginEmployee().getPersonName());
         businessEmp.setEmpCode(authInfo.getLoginEmployee().getId());
         businessEmp.setOperDate(new Date());
@@ -54,5 +55,6 @@ public class AddRegerEmp implements TaskCompleteSubscribeComponent {
         businessEmp.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().setCheckTime(businessEmp.getOperDate());
         ownerBusinessHome.getInstance().getBusinessEmps().add(businessEmp);
+
     }
 }

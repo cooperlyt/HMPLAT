@@ -453,6 +453,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PeopleFirstCheckEmpView" page="/business/houseOwner/subscribe/PeopleFirstCheckEmpView.xhtml">
+        <description>
+            初审意见查看
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="PeopleCheckEmpView" page="/business/houseOwner/subscribe/PeopleCheckEmpView.xhtml">
         <description>
@@ -465,6 +471,7 @@
             审批意见查看
         </description>
     </view-subscribe>
+
 
     <view-subscribe name="PeopleRegEmpView" page="/business/houseOwner/subscribe/PeopleRegEmpView.xhtml">
         <description>
@@ -1389,6 +1396,14 @@
         </description>
     </end-subscribe>
 
+
+
+    <end-subscribe name="addFirstCheckEmpEnd" component="addFirstCheckEmp">
+        <description>
+            初审人(初审人、时间、意见)
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="addKyCheckEmpEnd" component="addKyCheckEmp">
         <description>
             审核人(审核人、时间、意见-开原)
@@ -1431,6 +1446,7 @@
             登薄人(登薄人、时间、意见)
         </description>
     </end-subscribe>
+
 
 
 
