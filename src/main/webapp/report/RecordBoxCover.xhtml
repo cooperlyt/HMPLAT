@@ -26,9 +26,9 @@
             <p:cell><p:paragraph>业务名称</p:paragraph></p:cell>
             <a:repeat rowKeyVar="_row" value="#{recordStoreBoxCover.recordStoreList}" var="_item">
                 <p:cell><p:paragraph>#{_row + 1}</p:paragraph></p:cell>
-                <p:cell><p:paragraph >#{_item.houseBusiness.ownerBusiness.id}</p:paragraph></p:cell>
+                <p:cell><p:paragraph >#{_item.ownerBusiness.id}</p:paragraph></p:cell>
                 <p:cell><p:paragraph rendered="#{not empty _item.houseBusiness}">#{_item.houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph></p:cell>
-                <p:cell><p:paragraph rendered="#{not empty _item.houseBusiness and (not empty _item.houseBusiness.afterBusinessHouse.businessHouseOwner)}">#{_item.houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph><p:paragraph rendered="#{not empty _item.houseBusiness and (empty _item.houseBusiness.afterBusinessHouse.businessHouseOwner)}">#{_item.ownerBusiness.applyPersion}</p:paragraph></p:cell>
+                <p:cell><p:paragraph rendered="#{not empty _item.houseBusiness and (not empty _item.houseBusiness.afterBusinessHouse.businessHouseOwner)}">#{_item.houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph><p:paragraph rendered="#{not empty _item.houseBusiness and (empty _item.houseBusiness.afterBusinessHouse.businessHouseOwner)}">#{_item.ownerBusiness.applyPersion.personName}</p:paragraph></p:cell>
                 <p:cell><p:paragraph >#{_item.ownerBusiness.defineName}</p:paragraph></p:cell>
 
             </a:repeat>
