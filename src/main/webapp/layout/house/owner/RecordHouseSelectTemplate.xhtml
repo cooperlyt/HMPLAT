@@ -325,34 +325,34 @@
                         </thead>
 
                         <tbody>
-                        <a:repeat  value="#{ownerBuildGridMap.outHouseRecords}" var="_ohr">
-                            <tr ondblclick="houseClick('#{_ohr.houseCode}')">
+                        <a:repeat  value="#{ownerBuildGridMap.outHouseRecords}" var="_house">
+                            <tr ondblclick="houseClick('#{_house.houseCode}')">
                                 <td>
                                     <ui:insert name="houseMapDataTitle">
-                                        #{_ohr.houseCode}</ui:insert>
+                                        #{_house.houseCode}</ui:insert>
 
-                                                  <a:outputPanel rendered="#{not empty _ohr.houseStatus}" styleClass="house-info">
-                                                    <span class="#{_ohr.houseStatus}">
-                                                        <h:outputText styleClass="label" value="#{messages[_ohr.houseStatus.name()]}"/>
+                                                  <a:outputPanel rendered="#{not empty _house.houseStatus}" styleClass="house-info">
+                                                    <span class="#{_house.houseStatus}">
+                                                        <h:outputText styleClass="label" value="#{messages[_house.houseStatus.name()]}"/>
                                                     </span>
                                                 </a:outputPanel>
                                 </td>
                                 <td>
-                                    #{_ohr.businessHouse.displayHouseCode}
+                                    #{_house.businessHouse.displayHouseCode}
                                 </td>
                                 <td>
-                                    #{_ohr.businessHouse.buildName}
+                                    #{_house.businessHouse.buildName}
                                 </td>
                                 <td>
-                                    #{_ohr.businessHouse.houseOrder}
+                                    #{_house.businessHouse.houseOrder}
                                 </td>
                                 <td>
-                                    <h:outputText value="#{_ohr.businessHouse.businessHouseOwner.personName}"
-                                                  rendered="#{not empty _house.businessHouseOwner}"/>
+                                    <h:outputText value="#{_house.businessHouse.businessHouseOwner.personName}"
+                                                  rendered="#{not empty _house.businessHouse.businessHouseOwner}"/>
 
                                 </td>
                                 <td>
-                                    #{_ohr.businessHouse.address}
+                                    #{_house.businessHouse.address}
                                 </td>
                             </tr>
                         </a:repeat>
