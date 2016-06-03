@@ -27,6 +27,8 @@ public class Employee implements java.io.Serializable {
     private String phone;
     private String name;
     private String pyCode;
+    private String windowsNo;
+
 
     public Employee() {
 
@@ -144,6 +146,16 @@ public class Employee implements java.io.Serializable {
 
     public void setPyCode(String pyCode) {
         this.pyCode = pyCode;
+    }
+
+    @Column(name = "WINDOW_NO",nullable = true, length = 10)
+    @Size(max = 10)
+    public String getWindowsNo() {
+        return windowsNo;
+    }
+
+    public void setWindowsNo(String windowsNo) {
+        this.windowsNo = windowsNo;
     }
 
     @Override

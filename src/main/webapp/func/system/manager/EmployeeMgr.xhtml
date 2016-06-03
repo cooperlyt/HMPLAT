@@ -117,6 +117,19 @@
         </s:decorate>
 
 
+        <s:decorate id="windowNoField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.employee_field_window_no}
+            </ui:define>
+            <ui:param name="for" value="windowNoField"/>
+            <h:inputText id="windowNoField" styleClass="form-control" maxlength="10"
+                         label="#{messages.employee_field_window_no}"
+                         value="#{employeeHome.instance.windowsNo}">
+
+            </h:inputText>
+        </s:decorate>
+
+
         <ui:define name="actionButtons">
             <button type="button" class="button default" data-dismiss="modal">
                 <span class="glyphicon glyphicon-floppy-remove"/>
