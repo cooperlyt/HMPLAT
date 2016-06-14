@@ -41,6 +41,9 @@ public class PeopleApplySubscribe extends OwnerEntityHome<BusinessEmp> {
 
         getInstance().setEmpName(authInfo.getLoginEmployee().getPersonName());
         getInstance().setEmpCode(authInfo.getLoginEmployee().getId());
+        if (authInfo.getLoginEmployee().getWindowsNo()!=null){
+            getInstance().setWindowsNo(authInfo.getLoginEmployee().getWindowsNo());
+        }
         getInstance().setOperDate(new Date());
         getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().setApplyTime(getInstance().getOperDate());

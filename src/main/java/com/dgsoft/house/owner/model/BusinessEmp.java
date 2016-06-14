@@ -26,6 +26,7 @@ public class BusinessEmp implements java.io.Serializable {
 	private String empName;
     private Date operDate;
     private String comments;
+    private String windowsNo;
 
 	public BusinessEmp() {
 	}
@@ -121,4 +122,16 @@ public class BusinessEmp implements java.io.Serializable {
     public void setComments(String comments) {
         this.comments = comments;
     }
+
+    @Column(name = "WINDOW_NO",nullable = true, length = 10)
+    @Size(max = 10)
+    public String getWindowsNo() {
+        return windowsNo;
+    }
+
+    public void setWindowsNo(String windowsNo) {
+        this.windowsNo = windowsNo;
+    }
+
+
 }
