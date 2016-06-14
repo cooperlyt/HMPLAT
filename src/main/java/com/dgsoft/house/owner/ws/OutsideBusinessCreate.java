@@ -61,6 +61,9 @@ public class OutsideBusinessCreate {
     @Transactional
     public String submitContract(String contract, String userId){
 
+
+        businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
+
         DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, userId);
 
         JSONObject contractObj;
@@ -211,7 +214,6 @@ public class OutsideBusinessCreate {
             }
         }
 
-        businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
         businessDefineHome.setId(businessDefineId);
 
         ownerBusinessHome.clearInstance();
