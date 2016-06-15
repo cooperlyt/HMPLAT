@@ -67,7 +67,7 @@ public class MoneySubscribe implements TaskSubscribeComponent {
                     businessMoney = bm;
                     businessMoneyList.add(businessMoney);
                     exists = true;
-                    break;
+                    //break;
                 }
             }
             if (!exists) {
