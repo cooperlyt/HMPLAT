@@ -80,7 +80,7 @@ public class OwnerHouseHelper {
 
 
     public List<MortgaegeRegiste> getMortgaeges(String houseCode){
-       List<HouseBusiness> ownerBusinesses = ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb left join fetch hb.ownerBusiness ob  where hb.houseCode =:houseCode and (ob.status = 'COMPLETE'  or ob.status = 'MODIFYING' or ((ob.status = 'RUNNING' or ob.status = 'SUSPEND') and ob.recorded = true))", HouseBusiness.class)
+       List<HouseBusiness> ownerBusinesses = ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb left join fetch hb.ownerBusiness ob  where hb.houseCode =:houseCode and hb.canceled = false and (ob.status = 'COMPLETE'  or ob.status = 'MODIFYING' or ((ob.status = 'RUNNING' or ob.status = 'SUSPEND') and ob.recorded = true))", HouseBusiness.class)
                .setParameter("houseCode",houseCode)
                .getResultList();
 
