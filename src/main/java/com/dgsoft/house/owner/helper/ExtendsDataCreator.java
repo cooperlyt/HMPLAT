@@ -465,7 +465,7 @@ public class ExtendsDataCreator {
         jsonObject.put("规划用途", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getUseType())));
         jsonObject.put("总层数", jsonField(businessHouse.getFloorCount()));
         jsonObject.put("建筑面积", jsonField(businessHouse.getHouseArea()));
-        if (businessHouse.getUseArea().compareTo(BigDecimal.ZERO) > 0) {
+        if (businessHouse.getUseArea()!=null && businessHouse.getUseArea().compareTo(BigDecimal.ZERO) > 0) {
             jsonObject.put("套内建筑面积", jsonField(businessHouse.getUseArea()));
         }
         if (businessHouse.getLandInfo() != null) {
