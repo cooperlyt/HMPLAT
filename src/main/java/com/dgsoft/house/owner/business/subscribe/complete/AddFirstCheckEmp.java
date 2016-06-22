@@ -7,6 +7,7 @@ import com.dgsoft.house.owner.model.BusinessEmp;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.Date;
 
@@ -47,6 +48,7 @@ public class AddFirstCheckEmp implements TaskCompleteSubscribeComponent {
 
 
         }
+
         BusinessEmp businessEmp = new BusinessEmp(BusinessEmp.EmpType.FIRST_CHECK);
         businessEmp.setEmpName(authInfo.getLoginEmployee().getPersonName());
         businessEmp.setEmpCode(authInfo.getLoginEmployee().getId());
