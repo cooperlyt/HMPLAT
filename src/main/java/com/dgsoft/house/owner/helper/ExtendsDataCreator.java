@@ -92,7 +92,21 @@ public class ExtendsDataCreator {
         jsonObject.put("预售证号", jsonField(markCard.getNumber()));
         jsonObject.put("开发商", jsonField(ownerBusiness.getBusinessProject().getDeveloperName()));
         jsonObject.put("房屋坐落地点", jsonField(ownerBusiness.getBusinessProject().getAddress()));
-        jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getProjectName()));
+
+
+        Integer ProjectRshipNameType = RunParam.instance().getIntParamValue("ProjectRshipNamePrint");
+        if (ProjectRshipNameType==2){
+            jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getName()));
+        }else{
+            jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getProjectName()));
+        }
+
+
+
+
+
+
+
         jsonObject.put("建筑面积", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getArea()));
         jsonObject.put("栋", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getBuildCount()));
         jsonObject.put("套数", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getHouseCount()));
@@ -139,7 +153,14 @@ public class ExtendsDataCreator {
         jsonObject.put("Report", "商品房预售许可证存根.fr3");
         jsonObject.put("预售证号", jsonField(markCard.getNumber()));
         jsonObject.put("开发商", jsonField(ownerBusiness.getBusinessProject().getDeveloperName()));
-        jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getProjectName()));
+
+        Integer ProjectRshipNameType = RunParam.instance().getIntParamValue("ProjectRshipNamePrint");
+        if (ProjectRshipNameType==2){
+            jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getName()));
+        }else{
+            jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getProjectName()));
+        }
+
         jsonObject.put("房屋坐落地点", jsonField(ownerBusiness.getBusinessProject().getAddress()));
         jsonObject.put("房屋用途性质", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getUseType()));
         jsonObject.put("销预售对象", jsonField(ownerBusiness.getBusinessProject().getProjectSellInfo().getSellObject()));
