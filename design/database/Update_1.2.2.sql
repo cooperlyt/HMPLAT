@@ -1,0 +1,1 @@
+﻿insert DB_PLAT_SYSTEM.SYSTEM_PARAM(ID, TYPE, VALUE, MEMO) VALUES ('ProjectRshipNamePrint','INTEGER',1,'1-预售许可证打印项目名称；2-打印项目中其中一个楼幢名称');
