@@ -96,7 +96,11 @@ public class ExtendsDataCreator {
 
         Integer ProjectRshipNameType = RunParam.instance().getIntParamValue("ProjectRshipNamePrint");
         if (ProjectRshipNameType==2){
-            jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getName()));
+            String name = ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getName();
+            if (ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next() !=null && ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getDoorNo()!=null){
+                name = name +'('+ ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getDoorNo() +')';
+            }
+            jsonObject.put("项目名称", jsonField(name));
         }else{
             jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getProjectName()));
         }
@@ -156,8 +160,13 @@ public class ExtendsDataCreator {
 
         Integer ProjectRshipNameType = RunParam.instance().getIntParamValue("ProjectRshipNamePrint");
         if (ProjectRshipNameType==2){
-            jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getName()));
+            String name = ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getName();
+            if (ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next() !=null && ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getDoorNo()!=null){
+                name = name +'('+ ownerBusiness.getBusinessProject().getBusinessBuilds().iterator().next().getDoorNo() +')';
+            }
+            jsonObject.put("项目名称", jsonField(name));
         }else{
+
             jsonObject.put("项目名称", jsonField(ownerBusiness.getBusinessProject().getProjectName()));
         }
 
