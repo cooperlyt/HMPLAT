@@ -181,13 +181,17 @@
                     <p:paragraph>权证号</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="60">
-                    <p:paragraph>权证号</p:paragraph>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
+                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
+                        <p:text rendered="#{not empty _businessPoolList.makeCard}" value="#{_businessPoolList.makeCard.number} "></p:text> </ui:repeat></p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="60">
                     <p:paragraph>权证编号</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="60">
-                    <p:paragraph>权证编号</p:paragraph>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
+                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
+                        <p:text rendered="#{(not empty _businessPoolList.makeCard) and (not empty _businessPoolList.makeCard.cardInfo) }" value="#{_businessPoolList.makeCard.cardInfo.code} "></p:text> </ui:repeat></p:paragraph>
                 </p:cell>
 
 
