@@ -453,6 +453,25 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="CardInfoMortgageView" page="/business/houseOwner/subscribe/CardInfoMortgageView.xhtml">
+        <description>
+            权证编号、附记编辑，缮证人信息查看(他项权证)
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="CardInfoNoticeView" page="/business/houseOwner/subscribe/CardInfoNoticeView.xhtml">
+        <description>
+            权证编号、附记编辑，缮证人信息查看(预购商品房预告)
+        </description>
+    </view-subscribe>
+    <view-subscribe name="CardInfoMortgageNoticeView" page="/business/houseOwner/subscribe/CardInfoMortgageNoticeView.xhtml">
+        <description>
+            权证编号、附记编辑，缮证人信息查看(预购商品房抵押预告)
+        </description>
+    </view-subscribe>
+
+
+
     <view-subscribe name="PeopleApplyView" page="/business/houseOwner/subscribe/PeopleApplyView.xhtml">
         <description>
             受理意见查看
