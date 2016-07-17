@@ -447,6 +447,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="CardInfoOwnerRshipView" page="/business/houseOwner/subscribe/CardInfoOwnerRshipView.xhtml">
+        <description>
+            权证编号、附记编辑，缮证人信息查看(所有权证)
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="PeopleApplyView" page="/business/houseOwner/subscribe/PeopleApplyView.xhtml">
         <description>
             受理意见查看

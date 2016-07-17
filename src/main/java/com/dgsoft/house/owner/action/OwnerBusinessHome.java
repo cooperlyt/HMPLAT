@@ -71,6 +71,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    public CardInfo getCardInfoByCardType(String cardTypeName){
+        for (MakeCard makeCard:getInstance().getMakeCards()){
+            if (makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,cardTypeName)) ){
+               if (makeCard.getCardInfo()!=null){
+                   return makeCard.getCardInfo();
+               }
+            }
+        }
+        return null;
+    }
+
     public List<MakeCard> getMakeCardByType(EnumSet<MakeCard.CardType> types){
         List<MakeCard> result = new ArrayList<MakeCard>();
         for (MakeCard makeCard:getInstance().getMakeCards()){

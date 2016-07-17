@@ -45,7 +45,7 @@
                     <p:paragraph>登记日期</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.recordTime}"><s:convertDateTime
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.regTime}"><s:convertDateTime
                             pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
                 </p:cell>
 
@@ -372,8 +372,7 @@
                                 <p:paragraph>缮证人</p:paragraph>
                             </p:cell>
                             <p:cell>
-                                <p:paragraph
-                                        rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.makeEmpName}</p:paragraph>
+                                <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.makeEmpName}</p:paragraph>
                             </p:cell>
 
                             <p:cell>
