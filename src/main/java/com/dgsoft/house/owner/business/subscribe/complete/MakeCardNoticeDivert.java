@@ -12,10 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Administrator on 15-5-28.
+ * Created by wxy on 2016-07-17.
+ * 转移预告登记号生成
  */
-@Name("makeCardNotice")
-public class MakeCardNotice implements TaskCompleteSubscribeComponent {
+@Name("makeCardNoticeDivert")
+public class MakeCardNoticeDivert implements TaskCompleteSubscribeComponent {
 
 
 
@@ -40,7 +41,7 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (MakeCard m:ownerBusinessHome.getInstance().getMakeCards()){
-            if(m.getType().equals(MakeCard.CardType.NOTICE)){
+            if(m.getType().equals(MakeCard.CardType.NOTICE_DIVERT)){
                 return;
             }
         }
@@ -49,15 +50,15 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
         Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
         String no;
         if (typeCard==2){
-            no= datePart + Long.toString(numberBuilder.getNumber(MakeCard.CardType.NOTICE.name()));
+            no= datePart + Long.toString(numberBuilder.getNumber(MakeCard.CardType.NOTICE_DIVERT.name()));
 
         }else {
-            no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.NOTICE.name()));
+            no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.NOTICE_DIVERT.name()));
         }
 
 
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.NOTICE, no);
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.NOTICE_DIVERT, no);
 
         if(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner()!=null){
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().setMakeCard(makeCard);
@@ -69,5 +70,6 @@ public class MakeCardNotice implements TaskCompleteSubscribeComponent {
 
 
     }
+
 
 }

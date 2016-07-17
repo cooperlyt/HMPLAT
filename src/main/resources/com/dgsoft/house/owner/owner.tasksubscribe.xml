@@ -400,17 +400,27 @@
 
     <view-subscribe name="MakeCardNoticeView" page="/business/houseOwner/subscribe/MakeCardNoticeView.xhtml">
         <description>
-            保存生成的单房屋预告登记证明号查看
+            保存生成的单房屋预购商品房预告登记证明号查看
         </description>
     </view-subscribe>
 
     <view-subscribe name="MakeCardNoticeMortgageView" page="/business/houseOwner/subscribe/MakeCardNoticeMortgageView.xhtml">
         <description>
-            保存生成的单房屋预告抵押登记证明号查看
+            保存生成的单房屋预购商品房预告抵押登记证明号查看
         </description>
     </view-subscribe>
 
+    <view-subscribe name="MakeCardNoticeDivertView" page="/business/houseOwner/subscribe/MakeCardNoticeDivertView.xhtml">
+        <description>
+            保存生成的单房屋所有权转移预告登记证明号查看
+        </description>
+    </view-subscribe>
 
+    <view-subscribe name="MakeCardNoticeMortgageDivertView" page="/business/houseOwner/subscribe/MakeCardNoticeMortgageDivertView.xhtml">
+        <description>
+            保存生成的单房屋所有权转移预告抵押登记证明号查看
+        </description>
+    </view-subscribe>
 
 
     <view-subscribe name="MakeCardMortgageView" page="/business/houseOwner/subscribe/MakeCardMortgageView.xhtml">
@@ -1209,16 +1219,29 @@
 
     <end-subscribe name="makeCardNoticeEnd" component="makeCardNotice">
         <description>
-            生成单房屋预告登记证明号
+            生成单房屋预购商品房预告登记证明号
         </description>
     </end-subscribe>
 
     <end-subscribe name="makeCardMorgageNoticeEnd" component="makeCardMorgageNotice">
         <description>
-            生成单房屋预告抵押登记证明号
+            生成单房屋预购商品房预告抵押登记证明号
         </description>
     </end-subscribe>
 
+
+
+    <end-subscribe name="makeCardNoticeDivertEnd" component="makeCardNoticeDivert">
+        <description>
+            生成单房屋所有权转移预告登记证明号
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="makeCardNoticeMortgageDivertEnd" component="makeCardNoticeMortgageDivert">
+        <description>
+            生成单房屋所有权转移预告抵押登记证明号
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="makeCardMortgageEnd" component="makeCardMortgage">
         <description>
