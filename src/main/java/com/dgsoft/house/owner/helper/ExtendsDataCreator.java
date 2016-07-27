@@ -469,12 +469,19 @@ public class ExtendsDataCreator {
 
 
     private JSONObject ownerRsipJson(BusinessHouse businessHouse,
-                                     MakeCard markCard, OwnerBusiness ownerBusiness, String poolInfo) throws JSONException {
+                                     MakeCard markCard, OwnerBusiness ownerBusiness,String poolName, String poolInfo,String CardType) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Report", "产权证.fr3");
         jsonObject.put("字", jsonField(businessHouse.getDistrictName()));
         jsonObject.put("产权证号", jsonField(markCard.getNumber()));
-        jsonObject.put("房屋所有权人", jsonField(businessHouse.getBusinessHouseOwner().getPersonName()));
+        if (CardType.equals("1")) {//所有权证
+            jsonObject.put("房屋所有权人", jsonField(businessHouse.getBusinessHouseOwner().getPersonName()));
+        } if (CardType.equals("2")){//共有权证
+            jsonObject.put("房屋所有权人", jsonField(poolName));
+        }
+
+
+
         if (businessHouse.getPoolType()!=null) {
             jsonObject.put("共有情况", jsonField(messages.get(businessHouse.getPoolType().name())));
         }
@@ -555,11 +562,61 @@ public class ExtendsDataCreator {
                     str = "共有权人: " + poolStr;
                 }
 
+                if (poolType==3) {
+                    str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName()+" 身份证明号: "
+                            + businessHouse.getBusinessHouseOwner().getCredentialsNumber();
+                    for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                        str=str+" "+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                    }
+                }
+
+
+
             }
 
 
         try {
-            return genPrintUrl(ownerRsipJson(businessHouse, markCard, businessHouse.getHouseBusinessForAfter().getOwnerBusiness(),str).toString());
+            return genPrintUrl(ownerRsipJson(businessHouse, markCard, businessHouse.getHouseBusinessForAfter().getOwnerBusiness(),"",str,"1").toString());
+        } catch (JSONException e) {
+            Logging.getLog(getClass()).error(e);
+            return null;
+        }
+    }
+
+    public String extendsPrintPoolOwnerRsip(BusinessHouse businessHouse, MakeCard markCard,String poolName) {
+
+        String str="";
+        if (!businessHouse.getBusinessPools().isEmpty()){
+            Integer poolType = RunParam.instance().getIntParamValue("PoolInfoPrint");
+            if (poolType==1) {
+                str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName();
+                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    str=str+" 共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                }
+            }
+            if (poolType==2) {
+                String poolStr="";
+                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    poolStr = poolStr + businessPool.getPersonName()+"  ";
+                }
+                str = "共有权人: " + poolStr;
+            }
+
+            if (poolType==3) {
+                str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName()+" 身份证明号: "
+                        + businessHouse.getBusinessHouseOwner().getCredentialsNumber();
+                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    str=str+" "+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                }
+            }
+
+
+
+        }
+
+
+        try {
+            return genPrintUrl(ownerRsipJson(businessHouse, markCard, businessHouse.getHouseBusinessForAfter().getOwnerBusiness(),poolName,str,"2").toString());
         } catch (JSONException e) {
             Logging.getLog(getClass()).error(e);
             return null;
