@@ -83,7 +83,7 @@
                         <span class="glyphicon glyphicon-print"/>
                         <a:attachQueue requestDelay="0"/>
                         <f:param name="businessId" value="#{_pool.ownerBusiness.id}"/>
-                        <a:param value="#{poolHouse.id}" assignTo="#{poolOwnerRsipCardPrint.businessHouseId}"/>
+                        <a:param value="#{poolHouseID}" assignTo="#{poolOwnerRsipCardPrint.businessHouseId}"/>
                         <a:param value="#{_pool.makeCard.id}" assignTo="#{poolOwnerRsipCardPrint.id}"/>
                         <a:param value="#{_pool.personName}" assignTo="#{poolOwnerRsipCardPrint.poolOwner}"/>
 
