@@ -98,5 +98,10 @@ public class PoolOwnerRsipCardPrint extends OwnerEntityHome<MakeCard> {
         printUrl = extendsDataCreator.extendsPrintPoolOwnerRsip(getEntityManager().find(BusinessHouse.class,businessHouseId),getInstance(),poolOwner);
     }
 
+    public void viewPrint(){
+        printUrl = extendsDataCreator.extendsPrintPoolOwnerRsip(getEntityManager().find(BusinessHouse.class,businessHouseId),getInstance(),poolOwner);
+
+    }
+
 
 }

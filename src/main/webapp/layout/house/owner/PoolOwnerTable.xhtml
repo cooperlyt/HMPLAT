@@ -59,30 +59,40 @@
                     </h:outputText>
                 </h:column>
 
-                <h:column rendered="#{_pool.houseRegInfo.poolType eq SHARE_OWNER}">
-                    <f:facet name="header">
-                        #{messages.BusinessPool_perc}
-                    </f:facet>
-                    #{_pool.perc}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.BusinessPool_phone}
-                    </f:facet>
-                    #{_pool.phone}
-                </h:column>
 
 
-                <h:column>
+
+
+
+
+
+                <h:column rendered="#{empty _pool.makeCard}">
                     <f:facet name="header">
-                        #{messages.BusinessPool_memo}
+                        #{messages.POOL_RSHIP}
                     </f:facet>
-                    <ui:include src="/layout/long-text-display.xhtml">
-                        <ui:param name="size" value="5"/>
-                        <ui:param name="value" value="#{_pool.memo}"/>
-                    </ui:include>
+                    #{_pool.makeCard.number}
                 </h:column>
+
+                <h:column rendered="#{empty _pool.makeCard}">
+                    <f:facet name="header">
+                        #{messages.action}
+                    </f:facet>
+                    <a:commandLink styleClass="btn minibutton right" render="@none" action="#{poolOwnerRsipCardPrint.viewPrint}" immediate="true"
+                                   data="#{poolOwnerRsipCardPrint.printUrl}"
+                                   execute="@this" oncomplete="extendsCall(event.data);" rendered="#{_pool.makeCard.enable}">
+                        <span class="glyphicon glyphicon-print"/>
+                        <a:attachQueue requestDelay="0"/>
+                        <f:param name="businessId" value="#{_pool.ownerBusiness.id}"/>
+                        <a:param value="#{poolHouse.id}" assignTo="#{poolOwnerRsipCardPrint.businessHouseId}"/>
+                        <a:param value="#{_pool.makeCard.id}" assignTo="#{poolOwnerRsipCardPrint.id}"/>
+                        <a:param value="#{_pool.personName}" assignTo="#{poolOwnerRsipCardPrint.poolOwner}"/>
+
+                        打印
+                    </a:commandLink>
+
+
+                </h:column>
+
 
                 <ui:insert/>
 

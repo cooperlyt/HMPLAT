@@ -14,6 +14,7 @@
         <ui:include src="/layout/house/owner/PoolOwnerTable.xhtml">
             <ui:param name="poolOwners" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessPoolList}"/>
             <ui:param name="title" value="#{messages.BusinessPool_view}"/>
+            <ui:param name="poolHouse" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse}"/>
         </ui:include>
     </a:outputPanel>
 
