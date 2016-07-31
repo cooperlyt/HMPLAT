@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋所有权抵押登记存根" margins="40 10 20 10">
+            title="房屋预告抵押登记存根" margins="40 10 20 10">
 
 
     <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
         <p:font alignment="center" size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-            <p:paragraph alignment="center">房屋所有权抵押登记存根
+            <p:paragraph alignment="center">房屋预告抵押登记存根
             </p:paragraph>
         </p:font>
 
@@ -41,9 +41,16 @@
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
                 </p:cell>
 
+                <p:cell>
+                    <p:paragraph>预告登记业务种类</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+
+                </p:cell>
 
                 <p:cell>
-                    <p:paragraph>产权人</p:paragraph>
+                    <p:paragraph>预告登记义务人</p:paragraph>
                 </p:cell>
                 <p:cell>
                     <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
@@ -52,12 +59,12 @@
 
 
                 <p:cell>
-                    <p:paragraph>产权证号</p:paragraph>
+                    <p:paragraph>义务人证件号</p:paragraph>
                 </p:cell>
 
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph
-                            rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                            rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
                 </p:cell>
 
                 <p:cell fixedHeight="60">
@@ -90,7 +97,7 @@
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>房屋他项权证号</p:paragraph>
+                    <p:paragraph>预告抵押权证号</p:paragraph>
                 </p:cell>
 
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
@@ -107,8 +114,40 @@
 
                 <p:cell colspan="3">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
-                </p:cell >
+                </p:cell>
 
+                <p:cell>
+                    <p:paragraph>建筑面积</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>设计用途</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>总层数</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.floorCount}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>结构</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph>
+                </p:cell>
 
                 <p:cell>
                     <p:paragraph>房屋产籍标识</p:paragraph>
@@ -357,7 +396,7 @@
                             </p:cell>
                             <p:cell>
                                 <p:paragraph
-                                        rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.makeEmpName}</p:paragraph>
+                                        rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo.makeEmpName}</p:paragraph>
                             </p:cell>
 
                             <p:cell>
@@ -393,14 +432,12 @@
                             <p:cell>
                                 <p:paragraph
                                         rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo.code}</p:paragraph>
-
-
                             </p:cell>
 
                         </p:table>
 
                 </p:cell>
-                <p:cell fixedHeight="80">
+                <p:cell fixedHeight="60">
                    <p:paragraph>附记</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
