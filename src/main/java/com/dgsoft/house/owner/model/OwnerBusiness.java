@@ -911,4 +911,12 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return null;
     }
+
+    /**
+     * 当前日期
+     */
+    @Transient
+    public Date getNowDate(){
+            return new Date();
+    }
 }
