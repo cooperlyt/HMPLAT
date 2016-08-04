@@ -19,6 +19,7 @@ import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -61,10 +62,27 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
             }
         }
 
+        public boolean isRecordPrintCard() {
+            return getPersonEntity().getMakeCard() != null;
+        }
+
+        public void setRecordPrintCard(boolean printCard) {
+            if (printCard){
+                MakeCard poolMakeCard = new MakeCard(MakeCard.CardType.POOL_RSHIP);
+                poolMakeCard.setOwnerBusiness(ownerBusiness);
+                getPersonEntity().setMakeCard(poolMakeCard);
+            }else{
+                getPersonEntity().setMakeCard(null);
+            }
+        }
+
+
+
         public String getCardNumber(){
             if (getPersonEntity().getMakeCard() == null){
                 return null;
             }else{
+                Logging.getLog(getClass()).debug("11111");
                 return getPersonEntity().getMakeCard().getNumber();
             }
 
@@ -73,7 +91,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         public void setCardNumber(String value){
 
             if (getPersonEntity().getMakeCard() != null){
-
+                Logging.getLog(getClass()).debug("22222");
                 getPersonEntity().getMakeCard().setNumber(value);
             }
         }

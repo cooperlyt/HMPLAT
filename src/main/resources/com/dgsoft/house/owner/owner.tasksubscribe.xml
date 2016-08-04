@@ -687,6 +687,16 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+    <edit-subscribe name="PoolOwnerRecordEdit" page="/business/houseOwner/subscribe/PoolOwnerRecordEdit.xhtml"
+                    component="poolOwnerSubscribe">
+        <description>
+            共有情况,共有权人,编辑(档案补录)
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+
+
        <!--
         <edit-subscribe name="PersionBuyEntrustEdit" page="/business/houseOwner/subscribe/PersionBuyEntrustEdit.xhtml"
                         component="">
