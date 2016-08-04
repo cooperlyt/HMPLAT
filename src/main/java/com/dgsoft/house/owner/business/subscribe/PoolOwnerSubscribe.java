@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.PersonHelper;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.PoolType;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -19,6 +20,7 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -44,7 +46,16 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
         public void setPrintCard(boolean printCard) {
             if (printCard){
-                getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP, NumberBuilder.instance().getDateNumber("POOL_CARD_NUMBER")));
+                SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+                String datePart = numberDateformat.format(new Date());
+                Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
+                String no;
+                if (typeCard==2){
+                    no= datePart+ Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                }else {
+                    no = datePart + '-' + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                }
+                getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP,no));
             }else{
                 getPersonEntity().setMakeCard(null);
             }
