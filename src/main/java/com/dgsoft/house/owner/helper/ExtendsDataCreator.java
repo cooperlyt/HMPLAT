@@ -352,7 +352,7 @@ public class ExtendsDataCreator {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Report", "在建工程抵押.fr3");
-        if (ownerBusiness.getHouseBusinesses()!=null && ownerBusiness.getHouseBusinesses().size()>1){
+        if (ownerBusiness.getHouseBusinesses()!=null && ownerBusiness.getHouseBusinesses().size()>0){
             jsonObject.put("字", jsonField(ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDistrictName()));
             Project project = houseEntityLoader.getEntityManager().find(Project.class, ownerBusiness.getHouseBusinesses().iterator().next().getAfterBusinessHouse().getProjectCode());
             if(project!=null){
