@@ -48,7 +48,8 @@
 
     <ui:define name="h-build-pick">
 
-        <a:jsFunction execute="@form" name="findBuildBySection" action="#{buildGridMapHouseSelect.findBuildBySection}" status="processWaiting" render="houseOrderInput">
+        <a:jsFunction execute="@form" name="findBuildBySection" action="#{buildGridMapHouseSelect.findBuildBySection}" status="processWaiting" render="houseOrderInput,buildSelectBtnCaption,buildSelectList">
+            <a:param id="selectBuildId" name="selectBuildId" assignTo="#{buildHome.id}"/>
             <f:param name="searchBykey" value="#{false}"/>
             <a:attachQueue requestDelay="0"/>
         </a:jsFunction>
