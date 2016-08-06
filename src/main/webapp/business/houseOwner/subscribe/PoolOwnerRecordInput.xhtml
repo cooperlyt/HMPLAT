@@ -1,0 +1,220 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+
+
+    <div style="clear: both;"/>
+    <a:outputPanel id="poolOwnerTable">
+        <a:outputPanel
+                rendered="#{poolOwnerSubscribe.choice and  (not empty ownerBusinessHome.singleHoues.afterBusinessHouse.poolType) and (not (ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SINGLE_OWNER'))}">
+            <hr/>
+            <div class="upgrade-upsell">
+
+                <a:outputPanel id="poolOwnerPersons">
+
+
+                    <div class="select-menu table-top-total">
+                        <div class="btn-group">
+
+                            <a:commandLink styleClass="btn btn-danger btn-reversal tooltipped tooltipped-s"
+                                           p:aria-label="#{messages.EmptyPoolOwner}"
+                                           immediate="true" execute="@this"
+                                           action="#{poolOwnerSubscribe.clearOwner}" render="poolOwnerPersons">
+                                <span class="octicon octicon-trashcan"></span>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+
+
+                            <a:commandLink styleClass="btn btn-primary btn-reversal tooltipped tooltipped-s"
+                                           p:aria-label="#{messages.PersonFromCard}"
+                                           oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')">
+                                <span class="octicon octicon-file-media"></span>
+                            </a:commandLink>
+
+
+                            <a:commandLink execute="@this" immediate="true" title="#{messages.AddPoolOwner}"
+                                           action="#{poolOwnerSubscribe.addNewOwner}"
+                                           p:aria-label="#{messages.AddPoolOwner}"
+                                           oncomplete="initDynamicEditInputs('#{r:clientId('poolOwnerPersons')}')"
+                                           styleClass="btn btn-success tooltipped tooltipped-s"
+                                           render="poolOwnerPersons">
+                                <span class="octicon octicon-plus"></span>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+
+                        </div>
+
+
+                        <h3>
+
+                            <h:outputText value="#{messages.PoolOwnerIsEmpty}" style="color: #eb9316"
+                                          rendered="#{newEditPoolOwners.size eq 0}"/>
+                            <a:outputPanel rendered="#{not (newEditPoolOwners.size eq 0)}">
+                                #{messages.AddedPoolOwnerCount}#{' '}
+                                <h:outputText value="#{newEditPoolOwners.size}">
+                                    <f:convertNumber type="number" groupingUsed="true"/>
+                                </h:outputText>
+                            </a:outputPanel>
+                        </h3>
+                    </div>
+
+
+                    <ui:decorate template="/layout/system/BatchPersonInput.xhtml">
+                        <ui:param name="persons" value="#{newEditPoolOwners}"/>
+
+
+                        <div >
+                            <div style="width: 470px; float: left;font-size: 12px">
+
+                                <s:decorate rendered="#{_person.credentialsType.corp}"
+                                            id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
+                                    <ui:define name="label">
+                                        #{messages.ContractOwner_legalPerson}
+                                    </ui:define>
+                                    <ui:param name="for" value="legalPersonInput"/>
+                                    <h:inputText id="legalPersonInput" value="#{_person.personEntity.legalPerson}" maxlength="50"
+                                                 styleClass="form-control"/>
+                                </s:decorate>
+
+
+
+                                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        #{messages.BusinessPool_relation}
+                                    </ui:define>
+
+                                    <ui:param name="for" value="reationInput"/>
+
+                                    <div class="input-group">
+                                        <div class="#{(ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER') ? 'input-group-btn' : ''}">
+                                            <h:selectOneMenu value="#{_person.personEntity.relation}" id="reationInput"
+                                                             styleClass=" selectpicker  #{(ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER') ? 'select-menu-btn input-group-first' :'edit-select' } "
+                                                             label="#{messages.BusinessPool_relation}">
+                                                <s:selectItems var="_word" label="#{_word.value}"
+                                                               itemValue="#{_word.id}"
+                                                               value="#{dictionary.getWordList('67')}"
+                                                               noSelectionLabel="#{messages.noSelectLabel}"/>
+                                                <a:ajax event="blur" execute="@this"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <h:inputText value="#{_person.personEntity.poolArea}" id="poolAreaInput"
+                                                     p:placeholder="#{messages.BusinessPool_area}"
+                                                     label="#{messages.BusinessPool_area}" styleClass="form-control"
+                                                     rendered="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}">
+                                            <f:convertNumber pattern="#0.000"/>
+                                            <a:ajax event="blur"
+                                                    execute="@this" render="@none"/>
+                                        </h:inputText>
+
+                                        <a:outputPanel layout="block" class="input-group-addon"
+                                                       rendered="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}">
+                                            %
+                                        </a:outputPanel>
+
+                                        <h:inputText value="#{_person.personEntity.perc}" id="poolPercInput"
+                                                     p:placeholder="#{messages.BusinessPool_perc}"
+                                                     label="#{messages.BusinessPool_perc}" styleClass="form-control"
+                                                     rendered="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType eq 'SHARE_OWNER'}">
+                                            <a:ajax event="blur"
+                                                    execute="@this" render="@none"/>
+                                        </h:inputText>
+
+                                    </div>
+
+                                </s:decorate>
+
+                                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        共有权证
+                                    </ui:define>
+
+                                    <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <h:selectBooleanCheckbox value="#{_person.recordPrintCard}">
+                                            <a:ajax event="click" execute="@this" render="poolCardNumber">
+                                                <a:attachQueue requestDelay="0"/>
+                                            </a:ajax>
+                                        </h:selectBooleanCheckbox>
+                                    </span>
+                                        <h:inputText id="poolCardNumber" disabled="false" p:placeholder="共有权证号" styleClass="form-control" value="#{_person.cardNumber}" />
+                                    </div>
+
+
+                                </s:decorate>
+
+
+                                <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                                    <ui:define name="label">
+                                        #{messages.BusinessPool_phone}
+                                    </ui:define>
+                                    <ui:param name="phone" value="poolOwnerPhone"/>
+
+                                    <h:inputText value="#{_person.personEntity.phone}" id="poolOwnerPhone"
+                                                 styleClass="form-control"
+                                                 label="#{messages.BusinessPool_phone}">
+                                        <a:ajax event="blur"
+                                                execute="@this" render="@none"/>
+                                    </h:inputText>
+
+                                </s:decorate>
+
+
+                            </div>
+                            <a:outputPanel layout="block" style="width: 140px; float: right; min-height: 126px;">
+                                <div class="thumbnail" style="margin-bottom: 0">
+                                    <h:graphicImage styleClass="person-img" style="min-height: 126px;" alt="身份证照片" value="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}/key/img/orig/#{_person.credentialsNumber}" width="120px" height="126px"/>
+
+                                    <div style="text-align: center;color: #767676; font-size: 12px" class="caption">
+                                        <p style="margin-bottom: 5px">性别: <strong>#{messages[_person.idCard.sex.name()] } </strong> 民族:<strong>#{ _person.idCard.ethnic}</strong></p>
+                                        <p style="margin-bottom: 0"><strong><h:outputText value="#{_person.idCard.dateOfBirth}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></h:outputText></strong></p>
+                                    </div>
+                                </div>
+
+
+                            </a:outputPanel>
+
+                        </div>
+
+                        <div style="clear: both"/>
+
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                            <ui:define name="label">
+                                #{messages.BusinessPool_memo}
+                            </ui:define>
+
+                            <h:inputTextarea value="#{_person.personEntity.memo}" styleClass="form-control" rows="3">
+                                <a:ajax event="blur"
+                                        execute="@this" render="poolTable"/>
+                            </h:inputTextarea>
+                        </s:decorate>
+
+                        <ui:define name="removeAction">
+                            <a:commandLink styleClass="btn btn-danger btn-reversal"
+                                           execute="@this" immediate="true"
+                                           style="height: 34px;"
+                                           action="#{poolOwnerSubscribe.deleteSelectOwner}"
+                                           render="poolOwnerPersons">
+                                <span class="octicon octicon-trashcan"/>
+                            </a:commandLink>
+                        </ui:define>
+
+
+                    </ui:decorate>
+
+
+                </a:outputPanel>
+            </div>
+            <hr/>
+        </a:outputPanel>
+    </a:outputPanel>
+
+</ui:composition>

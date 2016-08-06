@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋所有权抵押登记存根" margins="40 10 20 10">
+            title="房屋预告登记存根" margins="40 10 20 10">
 
 
     <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
         <p:font alignment="center" size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-            <p:paragraph alignment="center">房屋所有权抵押登记存根
+            <p:paragraph alignment="center">房屋预告登记存根
             </p:paragraph>
         </p:font>
 
@@ -22,7 +22,7 @@
 
 
                 <f:facet name="defaultCell">
-                    <p:cell padding="4" paddingBottom="6" paddingTop="6" noWrap="false"
+                    <p:cell padding="5" paddingBottom="8" paddingTop="8" noWrap="false"
                             horizontalAlignment="center" verticalAlignment="middle"/>
                 </f:facet>
 
@@ -41,46 +41,6 @@
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
                 </p:cell>
 
-
-                <p:cell>
-                    <p:paragraph>产权人</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
-                </p:cell>
-
-
-
-                <p:cell>
-                    <p:paragraph>产权证号</p:paragraph>
-                </p:cell>
-
-                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
-                    <p:paragraph
-                            rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
-                </p:cell>
-
-                <p:cell fixedHeight="60">
-                    <p:paragraph>共有权人</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
-                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_abusinessPoolList">
-                        <p:text value="#{_abusinessPoolList.personName} "></p:text> </ui:repeat></p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>共有权人权证号</p:paragraph>
-                </p:cell>
-                <p:cell fixedHeight="60">
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
-                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
-                        <p:text rendered="#{not empty _businessPoolList.makeCard}" value="#{_businessPoolList.makeCard.number} "></p:text> </ui:repeat></p:paragraph>
-                </p:cell>
-
-
-
-
                 <p:cell>
                     <p:paragraph>登记日期</p:paragraph>
                 </p:cell>
@@ -90,16 +50,199 @@
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>房屋他项权证号</p:paragraph>
+                    <p:paragraph>预告登记号</p:paragraph>
                 </p:cell>
 
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph
-                            rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.number}</p:paragraph>
+                            rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>出卖人</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false" colspan="3">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.developerName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>权利人</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>证件号码</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
                 </p:cell>
 
 
 
+
+                <p:cell>
+                    <p:paragraph>联系电话</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.phone}</p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>共有情况</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.poolType}">#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>产权来源</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.houseRegInfo}">#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>产别</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.houseRegInfo}">#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.houseRegInfo.houseProperty)}</p:paragraph>
+                </p:cell>
+
+                <p:cell fixedHeight="60">
+                    <p:paragraph>共有权人</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
+                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
+                        <p:text value="#{_businessPoolList.personName} "></p:text> </ui:repeat></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>证件号码</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
+                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
+                        <p:text value="#{_businessPoolList.credentialsNumber} "></p:text> </ui:repeat></p:paragraph>
+                </p:cell>
+
+
+
+
+                <p:cell colspan="4" fixedHeight="30">
+                    <p:font alignment="center" size="10" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+                    <p:paragraph>房  屋  基  本  情  况</p:paragraph>
+                    </p:font>
+                </p:cell>
+                <p:cell fixedHeight="75" colspan="4" padding="0" paddingBottom="0" paddingTop="0">
+
+                    <p:table columns="8" widths="1 1 1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                    <f:facet name="defaultCell">
+                        <p:cell padding="0" paddingBottom="0" paddingTop="0" noWrap="false"
+                                horizontalAlignment="center" verticalAlignment="middle"/>
+                    </f:facet>
+
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>图    号</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.mapNumber}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>丘    号</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.blockNo}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>幢    号</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.buildNo}</p:paragraph>
+                        </p:cell>
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>房 号</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseOrder}</p:paragraph>
+                        </p:cell>
+
+
+
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>设计用途</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell>
+                            <p:paragraph>结  构</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell>
+                            <p:paragraph>总层数</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.floorCount}</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>所在层</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.inFloorName}</p:paragraph>
+                        </p:cell>
+
+
+
+
+
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>建筑面积</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>套内面积</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.useArea}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>分摊面积</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.commArea}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell fixedHeight="25">
+                            <p:paragraph>建成年份</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.completeYear}</p:paragraph>
+                        </p:cell>
+
+                    </p:table>
+                </p:cell>
 
                 <p:cell>
                     <p:paragraph>房屋坐落位置</p:paragraph>
@@ -108,191 +251,6 @@
                 <p:cell colspan="3">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
                 </p:cell >
-
-
-                <p:cell>
-                    <p:paragraph>房屋产籍标识</p:paragraph>
-                </p:cell>
-                <p:cell colspan="3">
-                    <p:paragraph>图号：#{_houseBusiness.afterBusinessHouse.mapNumber}     丘号：#{_houseBusiness.afterBusinessHouse.blockNo}      幢号：#{_houseBusiness.afterBusinessHouse.buildNo}     幢号：#{_houseBusiness.afterBusinessHouse.houseOrder}</p:paragraph>
-                </p:cell>
-
-
-                <p:cell>
-                    <p:paragraph>抵押权人名称</p:paragraph>
-                </p:cell>
-
-                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
-                    <p:paragraph
-                            rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}</p:paragraph>
-                </p:cell>
-
-
-                <p:cell>
-                    <p:paragraph>法人代表</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph></p:paragraph>
-                </p:cell>
-
-
-                <p:cell>
-                    <p:paragraph>抵押权代理人</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgageObligee}">#{ownerBusinessHome.instance.mortgageObligee.personName}</p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>抵押权代理人电话</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgageObligee}">#{ownerBusinessHome.instance.mortgageObligee.phone}</p:paragraph>
-                </p:cell>
-
-
-                <p:cell>
-                    <p:paragraph>抵押人名称</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
-                </p:cell>
-
-
-                <p:cell>
-                    <p:paragraph>抵押人证件号</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>抵押人电话</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessHouseOwner}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.phone}</p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>抵押代理人</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgage}">#{ownerBusinessHome.instance.mortgage.phone}</p:paragraph>
-                </p:cell>
-
-
-                <p:cell fixedHeight="60">
-                    <p:paragraph>抵押共有权人</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
-                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
-                        <p:text value="#{_businessPoolList.personName} "></p:text> </ui:repeat></p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph>抵押共有权人证件号</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.businessPoolList}"><ui:repeat
-                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
-                        <p:text value="#{_businessPoolList.credentialsNumber} "></p:text> </ui:repeat></p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>借款人姓名</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgageObligor}">#{ownerBusinessHome.instance.mortgageObligor.personName}</p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>借款人身份证号</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgageObligor}">#{ownerBusinessHome.instance.mortgageObligor.credentialsNumber}</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph>借款人电话</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgageObligor}">#{ownerBusinessHome.instance.mortgageObligor.phone}</p:paragraph>
-                </p:cell>
-
-                <p:cell>
-                    <p:paragraph>法人代表</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgageObligor}"></p:paragraph>
-                </p:cell>
-
-
-
-                <p:cell colspan="4" fixedHeight="30">
-                    <p:font alignment="center" size="10" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-                    <p:paragraph>抵  押  情  况</p:paragraph>
-                    </p:font>
-                </p:cell>
-                <p:cell fixedHeight="50" colspan="4" padding="0" paddingBottom="0" paddingTop="0">
-
-                    <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
-                    <f:facet name="defaultCell">
-                        <p:cell padding="0" paddingBottom="0" paddingTop="0" noWrap="false"
-                                horizontalAlignment="center" verticalAlignment="middle"/>
-                    </f:facet>
-
-
-                        <p:cell fixedHeight="25">
-                            <p:paragraph>抵押面积</p:paragraph>
-                        </p:cell>
-                        <p:cell>
-                            <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}">#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageArea}</p:paragraph>
-                        </p:cell>
-
-                        <p:cell fixedHeight="25">
-                            <p:paragraph>债权数额</p:paragraph>
-                        </p:cell>
-                        <p:cell>
-                            <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}">#{ownerBusinessHome.instance.mortgaegeRegiste.highestMountMoney}</p:paragraph>
-                        </p:cell>
-
-                        <p:cell fixedHeight="25">
-                            <p:paragraph>权利种类</p:paragraph>
-                        </p:cell>
-                        <p:cell>
-                            <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}">#{dictionary.getWordValue(ownerBusinessHome.instance.mortgaegeRegiste.interestType)}</p:paragraph>
-                        </p:cell>
-                        <p:cell fixedHeight="25">
-                            <p:paragraph>设定日期</p:paragraph>
-                        </p:cell>
-                        <p:cell>
-                            <p:paragraph><p:text value="#{ownerBusinessHome.instance.regTime}"><s:convertDateTime
-                                    pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
-                        </p:cell>
-
-                        <p:cell fixedHeight="25">
-                            <p:paragraph>抵押期限</p:paragraph>
-                        </p:cell>
-                        <p:cell colspan="3">
-                            <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}">自<p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime
-                                    pattern="#{messages.displayDatePattern}"/></p:text>起至<p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime
-                                    pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
-                        </p:cell>
-
-
-
-
-                        <p:cell fixedHeight="25">
-                            <p:paragraph>注销日期</p:paragraph>
-                        </p:cell>
-                        <p:cell>
-                            <p:paragraph></p:paragraph>
-                        </p:cell>
-
-
-                    </p:table>
-                </p:cell>
-
-
 
 
 
@@ -356,8 +314,7 @@
                                 <p:paragraph>缮证人</p:paragraph>
                             </p:cell>
                             <p:cell>
-                                <p:paragraph
-                                        rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.makeEmpName}</p:paragraph>
+                                <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.makeEmpName}</p:paragraph>
                             </p:cell>
 
                             <p:cell>
@@ -392,25 +349,22 @@
                             </p:cell>
                             <p:cell>
                                 <p:paragraph
-                                        rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo.code}</p:paragraph>
-
-
+                                        rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.code}</p:paragraph>
                             </p:cell>
 
                         </p:table>
 
                 </p:cell>
-                <p:cell fixedHeight="80">
+                <p:cell fixedHeight="160">
                    <p:paragraph>附记</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
                     <p:paragraph
-                            rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo.memo}</p:paragraph>
+                            rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.memo}</p:paragraph>
                 </p:cell>
 
 
             </p:table>
-
 
             <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
                 <f:facet name="defaultCell">
@@ -428,9 +382,9 @@
                 <p:cell verticalAlignment="left">
                     <p:paragraph></p:paragraph>
                 </p:cell>
+
+
             </p:table>
-
-
 
 
         </p:font>
