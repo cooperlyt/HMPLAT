@@ -389,6 +389,9 @@ public class House implements java.io.Serializable, HouseInfo {
     @Override
     @Transient
     public String getDoorNo() {
+        if (getBuild().getDoorNo() == null){
+            return null;
+        }
         return getBuild().getDoorNo() + " " + getHouseOrder();
     }
 
