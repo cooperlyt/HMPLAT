@@ -37,27 +37,19 @@
 
     </task-node>
 
-    <task-node name="归档">
-        <task name="归档">
-            <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
-            <assignment pooled-actors="RecordSave"></assignment>
-        </task>
-        <transition to="结束"></transition>
-    </task-node>
-
     <task-node name="缮证">
         <task name="缮证">
             <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
             <assignment pooled-actors="PrintCard"></assignment>
         </task>
-        <transition to="归档"></transition>
+        <transition to="结束"></transition>
     </task-node>
 
     <decision name="繕证判断">
         <transition to="缮证" name="缮证">
 			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP36','WP37','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84','WP116')}"></condition>
 		</transition>
-        <transition to="归档" name="无缮证业务">
+        <transition to="结束" name="无缮证业务">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP36','WP37','WP38','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84','WP116')}"></condition>
 		</transition>
     </decision>

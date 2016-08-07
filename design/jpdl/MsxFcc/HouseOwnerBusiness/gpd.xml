@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="HouseOwnerBusiness" width="728" height="502">
+<root-container name="HouseOwnerBusiness" width="839" height="524">
   <node name="业务受理" x="36" y="15" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -21,11 +21,6 @@
     </edge>
   </node>
   <node name="登薄" x="136" y="319" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="归档" x="194" y="462" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -83,7 +78,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="结束" x="2" y="465" width="132" height="36"/>
   <node name="初审" x="454" y="46" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -97,4 +91,5 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="结束" x="2" y="465" width="132" height="36"/>
 </root-container>
