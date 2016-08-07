@@ -43,7 +43,7 @@
                 <ui:param name="for" value="mapNumberInput"/>
 
                 <div class="input-group">
-                    <span class="input-group-addon">#{messages.MapIdentification_map}</span>
+                    <span class="input-group-addon">#{messages.MapIdentification_map}<s:span styleClass="required">*</s:span></span>
                     <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}" maxlength="4" size="10"
                                  autocomplete="off"
                                  styleClass="form-control" validatorMessage="#{messages.MapNumberValidatorMessage}"

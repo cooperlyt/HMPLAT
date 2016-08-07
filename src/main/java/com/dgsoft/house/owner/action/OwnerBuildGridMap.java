@@ -18,6 +18,7 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import java.util.*;
 
 /**
@@ -268,13 +269,17 @@ public class OwnerBuildGridMap {
     public void findBuildByNumber() {
         try {
             buildHome.setId(
-                    houseEntityLoader.getEntityManager().createQuery("select build.id from Build build where build.mapNumber = :mapNumber and build.blockNo = :blockNumber and build.buildNo = :buildNumber", String.class)
-                            .setParameter("mapNumber", mapNumber).setParameter("blockNumber", blockNumber).setParameter("buildNumber", buildNumber).getSingleResult());
+                    houseEntityLoader.getEntityManager().createQuery("select build.id from Build build where (build.mapNumber = :mapNumber or false = :haveMapNumber) and build.blockNo = :blockNumber and build.buildNo = :buildNumber", String.class)
+                            .setParameter("mapNumber", mapNumber).setParameter("haveMapNumber",(mapNumber != null && !mapNumber.trim().equals(""))).setParameter("blockNumber", blockNumber).setParameter("buildNumber", buildNumber).getSingleResult());
 
             initBuildMap();
         } catch (NoResultException e) {
             buildHome.clearInstance();
             dataTableList = false;
+        } catch (NonUniqueResultException e){
+            buildHome.clearInstance();
+            dataTableList = false;
+            Logging.getLog(getClass()).warn("图丘幢不唯一,M:" + mapNumber + ";B:" + blockNumber + ";B:" + buildNumber );
         }
     }
 
@@ -344,13 +349,15 @@ public class OwnerBuildGridMap {
 
     public void findHouseByNumber() {
 
-        findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.mapNumber = :mapNumber and house.build.blockNo = :blockNumber and house.build.buildNo =:buildNumber and house.houseOrder = :houseOrder", House.class)
+        findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where (house.build.mapNumber = :mapNumber or false = :haveMapNumber) and house.build.blockNo = :blockNumber and house.build.buildNo =:buildNumber and house.houseOrder = :houseOrder", House.class)
                         .setParameter("mapNumber", mapNumber)
+                        .setParameter("haveMapNumber",mapNumber != null && !mapNumber.trim().equals(""))
                         .setParameter("blockNumber", blockNumber)
                         .setParameter("buildNumber", buildNumber)
                         .setParameter("houseOrder", houseOrder).getResultList(),
-                ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.businessHouse.mapNumber = :mapNumber and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", HouseRecord.class)
+                ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where (houseRecord.businessHouse.mapNumber = :mapNumber or false = :haveMapNumber) and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", HouseRecord.class)
                         .setParameter("mapNumber", mapNumber)
+                        .setParameter("haveMapNumber",mapNumber != null && !mapNumber.trim().equals(""))
                         .setParameter("blockNumber", blockNumber)
                         .setParameter("buildNumber", buildNumber)
                         .setParameter("houseOrder", houseOrder).getResultList());

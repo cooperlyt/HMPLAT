@@ -51,7 +51,15 @@ public class MoneySubscribe implements TaskSubscribeComponent {
     private BusinessMoney selectBusinessMoney;
 
     public List<BusinessMoney.PreferentialType> getPreferentialTypes() {
-        return new ArrayList<BusinessMoney.PreferentialType>(EnumSet.of(BusinessMoney.PreferentialType.HALF_RECEIVE));
+
+        List<BusinessMoney.PreferentialType> result = new ArrayList<BusinessMoney.PreferentialType>();
+        if (RunParam.instance().getBooleanParamValue("moneyCalcAllowHalf")){
+            result.add(BusinessMoney.PreferentialType.HALF_RECEIVE);
+        }
+        if (RunParam.instance().getBooleanParamValue("moneyCalcAllowFree")){
+            result.add(BusinessMoney.PreferentialType.FREE_MONEY);
+        }
+        return result;
     }
 
 
