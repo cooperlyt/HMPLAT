@@ -4,7 +4,9 @@ import com.dgsoft.common.DataFormat;
 import com.dgsoft.common.GBT;
 import com.dgsoft.common.SetLinkList;
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
+import com.dgsoft.house.AutoGridMapComparator;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.OrderComparator;
@@ -63,7 +65,7 @@ public class BuildHome extends HouseEntityHome<Build> {
     public String getShortName(){
         if (isIdDefined()){
             return getInstance().getBuildNo() + "幢" +  ((getInstance().getBuildDevNumber() == null || getInstance().getBuildDevNumber().trim().equals("")) ? "" : getInstance().getBuildDevNumber() + "号楼")
-                    + getInstance().getDoorNo();
+                    + (getInstance().getDoorNo() == null ? "" : getInstance().getDoorNo()) ;
 
         }else{
             return null;
@@ -422,102 +424,93 @@ public class BuildHome extends HouseEntityHome<Build> {
     public static BuildGridMap genIdleHouseGridMap(Collection<? extends HouseInfo> houseInfos) {
         BuildGridMap result = new BuildGridMap();
 
-
-        Map<String, HouseGridTitle> titleMap = new HashMap<String, HouseGridTitle>();
-
-        Map<String, Map<String, List<GridBlock>>> floorHouse = new HashMap<String, Map<String, List<GridBlock>>>();
-        for (HouseInfo house : houseInfos) {
-
-            Map<String, List<GridBlock>> unitHouses = floorHouse.get(house.getInFloorName().trim());
-            if (unitHouses == null) {
-                unitHouses = new HashMap<String, List<GridBlock>>();
-                floorHouse.put(house.getInFloorName().trim(), unitHouses);
+        //所有单元和序名
+        List<String> unitNames = new ArrayList<String>();
+        List<String> floorNames = new ArrayList<String>();
+        for(HouseInfo houseInfo: houseInfos){
+            if (!unitNames.contains(houseInfo.getHouseUnitName())){
+                unitNames.add(houseInfo.getHouseUnitName());
             }
-
-            String unitName = (house.getHouseUnitName() == null) ? "" : house.getHouseUnitName().trim();
-            List<GridBlock> blockHouses = unitHouses.get(unitName);
-            HouseGridTitle title = titleMap.get(unitName);
-            if (blockHouses == null) {
-                blockHouses = new ArrayList<GridBlock>();
-                unitHouses.put(unitName, blockHouses);
-            }
-            blockHouses.add(new GridBlock(house, 1, 1));
-            if (title == null) {
-                title = new HouseGridTitle(result, 0, unitName);
-                titleMap.put(unitName, title);
-                result.getHouseGridTitles().add(title);
+            if(!floorNames.contains(houseInfo.getInFloorName())){
+                floorNames.add(houseInfo.getInFloorName());
             }
         }
 
+        //排序
+        Collections.sort(unitNames, AutoGridMapComparator.getUnitComparator());
+        Collections.sort(floorNames,AutoGridMapComparator.getFloorComparator());
 
-        for (Map.Entry<String, Map<String, List<GridBlock>>> floorEntry : floorHouse.entrySet()) {
-            for (Map.Entry<String, List<GridBlock>> unitEntry : floorEntry.getValue().entrySet()) {
-                int houseCount = unitEntry.getValue().size();
-                HouseGridTitle title = titleMap.get(unitEntry.getKey());
-                if (title.getColspan() < houseCount) {
-                    title.setColspan(houseCount);
+        List<HouseGridTitle> titleList = new ArrayList<HouseGridTitle>();
+
+        HouseGridTitle bt = new HouseGridTitle(result,1,"");
+        bt.setOrder(0);
+        result.getHouseGridTitles().add(bt);
+
+        int order = 1;
+        for(String name: unitNames){
+
+            Map<String,Integer> counts = new HashMap<String, Integer>();
+            for(HouseInfo houseInfo: houseInfos){
+                if (name.equals(houseInfo.getHouseUnitName())) {
+                    Integer count = counts.get(houseInfo.getInFloorName());
+                    if (count == null) {
+                        counts.put(houseInfo.getInFloorName(), 1);
+                    } else {
+                        counts.put(houseInfo.getInFloorName(), count.intValue() + 1);
+                    }
                 }
             }
+
+            HouseGridTitle title = new HouseGridTitle(result,0,name);
+            for(Integer i: counts.values()){
+                if (title.getColspan() < i.intValue()){
+                    title.setColspan(i.intValue());
+                }
+            }
+            title.setOrder(order++);
+            titleList.add(title);
+            result.getHouseGridTitles().add(title);
         }
 
 
-        for (Map.Entry<String, Map<String, List<GridBlock>>> floorEntry : floorHouse.entrySet()) {
-            Integer index = DataFormat.strToInt(floorEntry.getKey());
-            GridRow row = new GridRow(result, floorEntry.getKey(), (index == null) ? -999 : index);
+
+        int floorIndex = 0;
+        for(String name: floorNames){
+            Logging.getLog(BuildHome.class).debug("floorNames:" + name);
+            int houseOrder = 0;
+            GridRow row = new GridRow(result, name, floorIndex++);
+            row.setOrder(floorIndex);
             result.getGridRows().add(row);
 
-            List<GridBlock> blockList = new ArrayList<GridBlock>();
-            for (Map.Entry<String, List<GridBlock>> unitEntry : floorEntry.getValue().entrySet()) {
+            for(HouseGridTitle title: titleList){
 
-                Collections.sort(unitEntry.getValue(), new Comparator<GridBlock>() {
-                    @Override
-                    public int compare(GridBlock o1, GridBlock o2) {
-                        return OrderComparator.getInstance().compare(o1.getHouse().getHouseOrder(), o2.getHouse().getHouseOrder());
-                    }
-                });
-
-                blockList.addAll(unitEntry.getValue());
-
-                int colspan = titleMap.get(unitEntry.getKey()).getColspan();
-                if (unitEntry.getValue().size() < colspan) {
-                    for (int i = unitEntry.getValue().size() + 1; i <= colspan; i++) {
-                        blockList.add(new GridBlock(1, 1));
+                List<HouseInfo> pickHouse = new ArrayList<HouseInfo>();
+                for(HouseInfo houseInfo: houseInfos){
+                    if (name.equals(houseInfo.getInFloorName()) && title.getTitle().equals(houseInfo.getHouseUnitName())){
+                        pickHouse.add(houseInfo);
                     }
                 }
-            }
 
-            for (GridBlock block : blockList) {
-                block.setOrder(blockList.indexOf(block));
+                Collections.sort(pickHouse,AutoGridMapComparator.getHouseComparator());
+
+
+                for(HouseInfo houseInfo: pickHouse){
+                    GridBlock gb = new GridBlock(houseInfo,1,1);
+                    gb.setOrder(houseOrder++);
+                    gb.setGridRow(row);
+                    row.getGridBlocks().add(gb);
+                }
+
+                if (pickHouse.size() < title.getColspan()){
+                    GridBlock gb = new GridBlock(title.getColspan() - pickHouse.size() ,1);
+                    gb.setOrder(houseOrder++);
+                    gb.setGridRow(row);
+                    row.getGridBlocks().add(gb);
+                }
+
             }
-            row.getGridBlocks().addAll(blockList);
         }
 
-
-        List<HouseGridTitle> titles = new ArrayList<HouseGridTitle>(result.getHouseGridTitles());
-        Collections.sort(titles, new Comparator<HouseGridTitle>() {
-            @Override
-            public int compare(HouseGridTitle o1, HouseGridTitle o2) {
-                return OrderComparator.getInstance().compare(o1.getTitle(), o2.getTitle());
-            }
-        });
-        result.getHouseGridTitles().add(new HouseGridTitle(result, 0, "", 1));
-
-        for (HouseGridTitle title : titles) {
-            title.setOrder(titles.indexOf(title) + 1);
-        }
-
-
-        List<GridRow> rows = new ArrayList<GridRow>(result.getGridRows());
-        Collections.sort(rows, new Comparator<GridRow>() {
-            @Override
-            public int compare(GridRow o1, GridRow o2) {
-                return new Integer(o2.getFloorIndex()).compareTo(o1.getFloorIndex());
-            }
-        });
-
-        for (GridRow row : rows) {
-            row.setOrder(rows.indexOf(row));
-        }
         return result;
     }
 

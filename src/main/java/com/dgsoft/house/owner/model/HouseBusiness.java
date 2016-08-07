@@ -94,7 +94,6 @@ public class HouseBusiness implements java.io.Serializable {
 
     @Column(name = "HOUSE_CODE", nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
     public String getHouseCode() {
         return this.houseCode;
     }

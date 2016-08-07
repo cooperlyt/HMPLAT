@@ -62,7 +62,6 @@ public class HouseRecord implements java.io.Serializable {
     @Id
 	@Column(name = "HOUSE_CODE", unique = true, nullable = false, length = 32)
 	@NotNull
-	@Size(max = 32)
 	public String getHouseCode() {
 		return this.houseCode;
 	}

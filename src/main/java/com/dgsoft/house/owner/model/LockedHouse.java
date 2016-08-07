@@ -76,7 +76,6 @@ public class LockedHouse {
 
     @Column(name="HOUSE_CODE",nullable = false,length = 32)
     @NotNull
-    @Size(max = 32)
     public String getHouseCode() {
         return houseCode;
     }
@@ -139,7 +138,6 @@ public class LockedHouse {
     }
 
     @Column(name="BUILD_CODE",length = 32)
-    @Size(max = 32)
     public String getBuildCode() {
         return buildCode;
     }

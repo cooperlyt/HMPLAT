@@ -430,7 +430,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Column(name = "HOUSE_CODE", nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
     public String getHouseCode() {
         return this.houseCode;
     }
@@ -452,7 +451,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Column(name = "BUILD_CODE", nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
     public String getBuildCode() {
         return this.buildCode;
     }
@@ -473,7 +471,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Column(name = "BLOCK_NO", nullable = false, length = 10)
     @NotNull
-    @Size(max = 10)
     public String getBlockNo() {
         return this.blockNo;
     }
@@ -564,7 +561,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Column(name = "PROJECT_CODE", nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
     public String getProjectCode() {
         return this.projectCode;
     }
@@ -597,7 +593,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Column(name = "DEVELOPER_CODE", length = 32)
-    @Size(max = 32)
     public String getDeveloperCode() {
         return this.developerCode;
     }
