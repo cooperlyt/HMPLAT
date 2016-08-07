@@ -344,6 +344,9 @@
         </description>
     </view-subscribe>
 
+
+
+
     <view-subscribe name="FactMoneyInfoView" page="/business/houseOwner/subscribe/FactMoneyInfoView.xhtml">
         <description>
            缴费信息查看（缴款书编号，备注）
@@ -844,6 +847,13 @@
             房屋交易信息,监管资金,付款方式,购房款编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="SaleInfoBackHouseEdit" page="/business/houseOwner/subscribe/SaleInfoBackHouseEdit.xhtml" component="">
+        <description>
+            房屋交易信息,回迁面积,付款方式,购房款编辑
+        </description>
+    </edit-subscribe>
+
 
     <edit-subscribe name="BusinessLandInfoEdit" page="/business/houseOwner/subscribe/BusinessLandInfoEdit.xhtml"
                     component="">
