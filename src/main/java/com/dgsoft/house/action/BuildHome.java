@@ -472,12 +472,14 @@ public class BuildHome extends HouseEntityHome<Build> {
             result.getHouseGridTitles().add(title);
         }
 
-        Logging.getLog(BuildHome.class).debug("unitCount:" + unitNames.size());
 
-        int floorIndex = floorNames.size();
+
+        int floorIndex = 0;
         for(String name: floorNames){
+            Logging.getLog(BuildHome.class).debug("floorNames:" + name);
             int houseOrder = 0;
-            GridRow row = new GridRow(result, name, floorIndex--);
+            GridRow row = new GridRow(result, name, floorIndex++);
+            row.setOrder(floorIndex);
             result.getGridRows().add(row);
 
             for(HouseGridTitle title: titleList){

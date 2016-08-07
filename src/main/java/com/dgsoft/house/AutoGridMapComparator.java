@@ -30,7 +30,7 @@ public class AutoGridMapComparator {
 
         @Override
         public int compare(String o1, String o2) {
-            return o1.compareTo(o2);
+            return o1.trim().compareTo(o2.trim());
         }
     }
 
@@ -38,7 +38,7 @@ public class AutoGridMapComparator {
 
         @Override
         public int compare(String o1, String o2) {
-            return o2.compareTo(o1);
+            return o2.trim().compareTo(o1.trim());
         }
     }
 
@@ -46,7 +46,7 @@ public class AutoGridMapComparator {
 
         @Override
         public int compare(String o1, String o2) {
-            return o2.compareTo(o1);
+            return o2.trim().compareTo(o1.trim());
         }
     }
 
