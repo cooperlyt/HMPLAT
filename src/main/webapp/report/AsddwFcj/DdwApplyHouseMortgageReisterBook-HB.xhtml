@@ -275,7 +275,8 @@
 
 
         <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
-            <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
+            <p:paragraph rendered="#{not empty ownerBusinessHome.mortgageReceive}">备注:#{ownerBusinessHome.mortgageReceive.reason}</p:paragraph>
+            <p:paragraph rendered="#{empty ownerBusinessHome.mortgageReceive}">备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
     </p:table>

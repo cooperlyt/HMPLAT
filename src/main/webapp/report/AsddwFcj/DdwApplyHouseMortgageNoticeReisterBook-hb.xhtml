@@ -270,7 +270,8 @@
             <p:paragraph><p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  起  至    <p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
         </p:cell>
         <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="90">
-            <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
+            <p:paragraph rendered="#{not empty ownerBusinessHome.mortgageReceive}">备注:#{ownerBusinessHome.mortgageReceive.reason}</p:paragraph>
+            <p:paragraph rendered="#{empty ownerBusinessHome.mortgageReceive }">备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
     </p:table>

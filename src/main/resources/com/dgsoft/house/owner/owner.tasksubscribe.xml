@@ -191,6 +191,13 @@
             受理备注查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="ReasonReceiveMortgageView" page="/business/houseOwner/subscribe/ReasonReceiveMortgageView.xhtml">
+        <description>
+            受理抵押备注备注查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml">
         <description>
             变更前查看
@@ -936,6 +943,13 @@
     <edit-subscribe name="ReasonReceiveEdit" page="/business/houseOwner/subscribe/ReasonReceiveEdit.xhtml" component="">
         <description>
             受理备注编辑
+        </description>
+    </edit-subscribe>
+
+
+    <edit-subscribe name="ReasonReceiveMortgageEdit" page="/business/houseOwner/subscribe/ReasonReceiveMortgageEdit.xhtml" component="">
+        <description>
+            受理抵押备注编辑
         </description>
     </edit-subscribe>
 
