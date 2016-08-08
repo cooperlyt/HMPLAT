@@ -344,6 +344,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     @Deprecated
+    public Reason getMortgageReceive(){
+        return getInstance().getMortgageReceive();
+    }
+
+
+    @Deprecated
     public Reason getHighDebtor(){
         return getInstance().getHighDebtor();
     }
