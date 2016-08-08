@@ -99,6 +99,24 @@
 
         </p:cell>
 
+        <p:cell fixedHeight="70">
+            <p:paragraph>初审意见</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+            <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                <p:cell  colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>初审人签名:</p:paragraph>
+                </p:cell>
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph> 年      月       日</p:paragraph>
+                </p:cell>
+            </p:table>
+        </p:cell>
+
 
 
         <p:cell fixedHeight="70">
@@ -108,7 +126,7 @@
         <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
             <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
                 <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.comments}</p:paragraph>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}"></p:paragraph>
                 </p:cell>
 
                 <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
@@ -128,7 +146,7 @@
         <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
             <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
                 <p:cell  colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.comments}</p:paragraph>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}"></p:paragraph>
                 </p:cell>
                 <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
                     <p:paragraph>登薄人签名:</p:paragraph>
@@ -139,12 +157,12 @@
             </p:table>
         </p:cell>
 
-        <p:cell noWrap="false" fixedHeight="170">
+
+        <p:cell noWrap="false" fixedHeight="100">
             <p:paragraph>备注</p:paragraph>
         </p:cell>
 
         <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-
 
             <p:paragraph></p:paragraph>
 
