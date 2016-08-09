@@ -24,7 +24,11 @@ public class NoticeOwnerFill implements BusinessDataFill {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                 if (houseBusiness.getStartBusinessHouse().getNoticeOwner()!= null) {
                     houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusinessHome.getInstance(), houseBusiness.getStartBusinessHouse().getNoticeOwner()));
+                }else if(houseBusiness.getStartBusinessHouse().getBusinessHouseOwner()!=null){//倒库没有导入NoticeOwner 提取上一手产权人
+                    houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusinessHome.getInstance(), houseBusiness.getStartBusinessHouse().getBusinessHouseOwner()));
                 }
+
+
             }
         }
 
