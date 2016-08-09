@@ -349,7 +349,7 @@ public class OwnerBuildGridMap {
 
     public void findHouseByNumber() {
 
-        findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where (house.build.mapNumber = :mapNumber or false = :haveMapNumber) and house.build.blockNo = :blockNumber and house.build.buildNo =:buildNumber and house.houseOrder = :houseOrder", House.class)
+        findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where  house.deleted = false and (house.build.mapNumber = :mapNumber or false = :haveMapNumber) and house.build.blockNo = :blockNumber and house.build.buildNo =:buildNumber and house.houseOrder = :houseOrder", House.class)
                         .setParameter("mapNumber", mapNumber)
                         .setParameter("haveMapNumber",mapNumber != null && !mapNumber.trim().equals(""))
                         .setParameter("blockNumber", blockNumber)
