@@ -609,24 +609,24 @@
                                     <div class="task-status-group">
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" p:aria-label="#{messages.jbpm_task_open}"  rendered="#{_task.open}" >
-                                            <a:outputPanel styleClass="octicon octicon-alignment-align status-icon"/>
+                                            <a:outputPanel styleClass="octicon octicon-git-commit status-icon"/>
                                         </a:outputPanel>
 
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.signalling}" p:aria-label="#{messages.jbpm_task_signalling}">
-                                            <a:outputPanel styleClass="octicon octicon-git-pull-request status-icon"/>
+                                            <a:outputPanel styleClass="octicon octicon-git-compare status-icon"/>
                                         </a:outputPanel>
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.last}" p:aria-label="#{messages.jbpm_task_last}">
-                                            <span class="octicon octicon-alignment-aligned-to status-icon"/>
+                                            <span class="octicon octicon-git-merge status-icon"/>
 
                                         </a:outputPanel>
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.suspended}" p:aria-label="#{messages.jbpm_task_suspended}">
-                                            <span class="octicon octicon-playback-pause status-icon">
+                                            <span class="octicon octicon-primitive-square status-icon">
 
                                             </span>
                                         </a:outputPanel>
@@ -634,7 +634,7 @@
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status " rendered="#{_task.blocking}" p:aria-label="#{messages.jbpm_task_blocking}">
-                                            <span class="octicon octicon-alignment-unalign status-icon"/>
+                                            <span class="octicon octicon-lock status-icon"/>
                                         </a:outputPanel>
 
 

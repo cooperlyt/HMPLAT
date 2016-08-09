@@ -157,6 +157,9 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordStore','业务档案上架','DAY_WORK','','/func/house/owner/RecordStore.xhtml','',13,'',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordRoom','数字档案室','DATA_MGR','','/func/house/owner/RecordRoomMgr.xhtml','',15,'',b'0');
 
+
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.todayBusinessList', '当日业务列表', 'DAY_WORK', '', '/func/house/owner/TodayBusinessList.xhtml', '', '5', '',b'0');
+
 -- 角色
 
 -- 权限角色
