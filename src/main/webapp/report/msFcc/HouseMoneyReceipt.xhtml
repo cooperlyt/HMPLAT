@@ -57,6 +57,13 @@
                             value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
                         <p:text value="#{_businessPoolList.personName} "></p:text> </ui:repeat></p:paragraph>
                 </p:cell>
+                <p:cell>
+                    <p:paragraph>金融机构:</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}</p:paragraph>
+                </p:cell>
 
                 <p:cell>
                     <p:paragraph>房屋坐落:</p:paragraph>

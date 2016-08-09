@@ -425,7 +425,22 @@ public class ExtendsDataCreator {
         jsonObject.put("他项权证号", jsonField(markCard.getNumber()));
         jsonObject.put("房屋他项权利人", jsonField(ownerBusiness.getMortgaegeRegiste().getFinancial().getName()));
         jsonObject.put("房屋所有权人", jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
-        jsonObject.put("所有权证证号", jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber()));
+        Integer PrintOwnerCard = RunParam.instance().getIntParamValue("MortgagePrintOwnerCard");
+        if (PrintOwnerCard==1) {//打印所有权证号
+            jsonObject.put("所有权证证号", jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber()));
+        }else if (PrintOwnerCard==2){//打印所有权证号+共有权证号
+            String OwnerNo=businessHouse.getBusinessHouseOwner().getMakeCard().getNumber();
+            if (businessHouse.getBusinessPoolList()!=null) {
+                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    if (businessPool.getMakeCard()!=null){
+                        OwnerNo=OwnerNo+" 、 " +businessPool.getMakeCard().getNumber();
+                    }
+
+                }
+            }
+            jsonObject.put("所有权证证号", jsonField(OwnerNo));
+        }
+
         jsonObject.put("房屋坐落", jsonField(businessHouse.getAddress()));
         jsonObject.put("图号", jsonField(businessHouse.getMapNumber()));
         jsonObject.put("丘号", jsonField(businessHouse.getBlockNo()));
