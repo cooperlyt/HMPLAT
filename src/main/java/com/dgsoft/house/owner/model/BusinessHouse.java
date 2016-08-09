@@ -613,7 +613,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     @Column(name = "SECTION_CODE", nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
     public String getSectionCode() {
         return this.sectionCode;
     }
