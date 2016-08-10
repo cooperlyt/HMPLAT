@@ -353,6 +353,9 @@ public class House implements java.io.Serializable, HouseInfo {
     @Override
     @Transient
     public String getBuildName() {
+        if (getBuild() == null){
+            return null;
+        }
         return getBuild().getBuildName();
     }
 
