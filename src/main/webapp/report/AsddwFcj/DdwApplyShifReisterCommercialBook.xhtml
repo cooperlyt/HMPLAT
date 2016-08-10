@@ -227,7 +227,7 @@
                     </p:table>
                 </p:cell>
                 <p:cell colspan="2" fixedHeight="150">
-                    <p:table columns="5" widths="0.5 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                    <p:table columns="5" widths="0.5 2 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
                         <f:facet name="defaultCell">
                             <p:cell verticalAlignment="top" horizontalAlignment="left" padding="0" border="0" noWrap="false" borderWidthTop="0"/>
                         </f:facet>
@@ -241,21 +241,20 @@
                         <p:cell>
                         </p:cell>
                         <p:cell>
-
-                        </p:cell>
-                        <p:cell>
-                        </p:cell>
-                        <p:cell>
                             <p:paragraph>申请人（代理人）:</p:paragraph>
                         </p:cell>
+
                         <p:cell>
                         </p:cell>
+
+                        <p:cell>
+                        </p:cell>
+
+                        <p:cell>
+                        </p:cell>
+
                         <p:cell colspan="5" fixedHeight="10">
                             <p:paragraph></p:paragraph>
-                        </p:cell>
-                        <p:cell>
-                        </p:cell>
-                        <p:cell>
                         </p:cell>
                         <p:cell>
                         </p:cell>
@@ -264,18 +263,24 @@
                         </p:cell>
                         <p:cell>
                         </p:cell>
+                        <p:cell>
+
+                        </p:cell>
+                        <p:cell>
+                        </p:cell>
                         <p:cell colspan="5" fixedHeight="10">
                             <p:paragraph></p:paragraph>
+                        </p:cell >
+                        <p:cell noWrap="true">
+
                         </p:cell>
                         <p:cell>
-                        </p:cell>
-                        <p:cell>
-                            <p:paragraph></p:paragraph>
+                            <p:paragraph>申请日期：<p:text value="#{ownerBusinessHome.applyEmp.operDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
+
                         </p:cell>
                         <p:cell>
                         </p:cell>
                         <p:cell noWrap="true">
-                            <p:paragraph>申请日期：<p:text value="#{ownerBusinessHome.applyEmp.operDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
                         </p:cell>
                         <p:cell>
                         </p:cell>
