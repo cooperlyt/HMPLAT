@@ -37,6 +37,16 @@
             display: table-cell;
         }
 
+        .house-link{
+            max-width: 200px;
+            word-break:keep-all;/* 不换行 */
+            white-space:nowrap;/* 不换行 */
+            overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+            text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+            display: block;
+
+        }
+
     </h:outputStylesheet>
 
     <h:outputScript>
@@ -131,6 +141,14 @@
                          var="_house" >
 
                 <f:facet name="header">
+
+                    <s:link styleClass="btn btn-sm btn-sm-icon btn-success right compare-button "
+                        view="/func/house/datas/HouseCreate.xhtml">
+                        <span class="octicon octicon-plus"/>
+                        <f:param name="houseId" value=""/>
+                        <f:param name="from" value="/func/house/datas/HouseList.xhtml"/>
+                    </s:link>
+
                     <h3>
                         #{messages.SerachResultCount}#{' '}
                         <h:outputText value="#{houseList.resultCount}">
@@ -145,7 +163,7 @@
                     <f:facet name="header">
                         编号
                     </f:facet>
-                    <s:link value="#{_house.id}" view="/func/house/datas/HouseEdit.xhtml">
+                    <s:link styleClass="house-link" value="#{_house.id}" view="/func/house/datas/HouseEdit.xhtml">
                         <f:param name="houseId" value="#{_house.id}"/>
                         <f:param name="from" value="/func/house/datas/HouseList.xhtml"/>
                     </s:link>
