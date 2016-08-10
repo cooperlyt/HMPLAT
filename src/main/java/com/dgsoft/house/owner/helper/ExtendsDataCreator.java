@@ -423,9 +423,20 @@ public class ExtendsDataCreator {
         jsonObject.put("Report", "他项权证.fr3");
         jsonObject.put("字", jsonField(businessHouse.getDistrictName()));
         jsonObject.put("他项权证号", jsonField(markCard.getNumber()));
+
         jsonObject.put("房屋他项权利人", jsonField(ownerBusiness.getMortgaegeRegiste().getFinancial().getName()));
-        jsonObject.put("房屋所有权人", jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
         Integer PrintOwnerCard = RunParam.instance().getIntParamValue("MortgagePrintOwnerCard");
+        if (PrintOwnerCard==1) {//所有权人
+            jsonObject.put("房屋所有权人", jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName()));
+        }else if (PrintOwnerCard==2) {//所有权人 + 共有权人
+            String OwnerName = businessHouse.getBusinessHouseOwner().getPersonName();
+            if (businessHouse.getBusinessPoolList() != null) {
+                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    OwnerName = OwnerName + " 、 " + businessPool.getPersonName();
+                }
+            }
+            jsonObject.put("房屋所有权人", jsonField(OwnerName));
+        }
         if (PrintOwnerCard==1) {//打印所有权证号
             jsonObject.put("所有权证证号", jsonField(ownerBusiness.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber()));
         }else if (PrintOwnerCard==2){//打印所有权证号+共有权证号

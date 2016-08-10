@@ -405,7 +405,9 @@
                 </p:cell>
                 <p:cell colspan="3">
                     <p:paragraph
-                            rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.makeCard.cardInfo.memo}</p:paragraph>
+                            rendered="#{(not empty ownerBusinessHome.instance.mortgageReceive)}">#{ownerBusinessHome.instance.mortgageReceive.reason}</p:paragraph>
+                    <p:paragraph
+                            rendered="#{(empty ownerBusinessHome.instance.mortgageReceive) and (not empty ownerBusinessHome.instance.receive) and (not ownerBusinessHome.instance.defineId eq 'WP152') and (not ownerBusinessHome.instance.defineId eq 'WP153')}">#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
                 </p:cell>
 
 

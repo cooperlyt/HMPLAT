@@ -360,7 +360,7 @@
                 </p:cell>
                 <p:cell colspan="3">
                     <p:paragraph
-                            rendered="#{(not empty _houseBusiness.afterBusinessHouse.businessHouseOwner) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard) and (not empty _houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo)}">#{_houseBusiness.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.memo}</p:paragraph>
+                            rendered="#{(not empty ownerBusinessHome.instance.receive)}">#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
                 </p:cell>
 
 
