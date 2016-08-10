@@ -38,6 +38,9 @@ public class HouseInfoFill implements BusinessDataFill {
               House house = houseEntityLoader.getEntityManager().find(House.class, houseBusiness.getHouseCode());
               if (house != null && house.getHouseArea() != null && (house.getHouseArea().compareTo(new BigDecimal(0)) > 0)) {
                   houseBusiness.getAfterBusinessHouse().setHouseArea(house.getHouseArea());
+                  houseBusiness.getAfterBusinessHouse().setUseArea(house.getUseArea());
+                  houseBusiness.getAfterBusinessHouse().setCommArea(house.getCommArea());
+
                   houseBusiness.getAfterBusinessHouse().setAddress(house.getAddress());
                   houseBusiness.getAfterBusinessHouse().setInFloorName(house.getInFloorName());
                   houseBusiness.getAfterBusinessHouse().setStructure(house.getStructure());
@@ -56,6 +59,7 @@ public class HouseInfoFill implements BusinessDataFill {
                   houseBusiness.getAfterBusinessHouse().setSectionName(house.getSectionName());
                   houseBusiness.getAfterBusinessHouse().setSectionCode(house.getSectionCode());
                   houseBusiness.getAfterBusinessHouse().setUseType(house.getUseType());
+                  houseBusiness.getAfterBusinessHouse().setBuildName(house.getBuildName());
 
                   if (house.getBuild()!=null) {
                       houseBusiness.getAfterBusinessHouse().setFloorCount(house.getBuild().getFloorCount());
