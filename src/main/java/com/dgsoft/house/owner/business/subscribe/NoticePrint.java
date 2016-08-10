@@ -49,10 +49,10 @@ public class NoticePrint {
             }
 
             if (poolType==3){
-                str="所有权人:"+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName() +" 身份证明号: "
+                str="房屋所有权人分别为："+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName() +"，身份证明号："
                 + ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getCredentialsNumber();
                 for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
-                    str=str+" "+businessPool.getPersonName()+" 身份证明号: "+businessPool.getCredentialsNumber();
+                    str=str+"。"+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
                 }
 
             }

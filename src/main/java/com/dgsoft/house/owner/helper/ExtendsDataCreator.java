@@ -328,7 +328,9 @@ public class ExtendsDataCreator {
 
             jsonObject.put("登记时间", jsonField(dateFormat.format(ownerBusiness.getRegTime()).toString()));
         }
-
+        if (businessHouse.getPoolType()!=null) {
+            jsonObject.put("共有情况", jsonField(messages.get(businessHouse.getPoolType().name())));
+        }
         jsonObject.put("规划用途", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getUseType())));
         jsonObject.put("结构", jsonField(DictionaryWord.instance().getWordValue(businessHouse.getStructure())));
         jsonObject.put("建筑面积", jsonField(businessHouse.getHouseArea()));
@@ -606,7 +608,7 @@ public class ExtendsDataCreator {
                 if (poolType==1) {
                     str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName();
                     for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
-                        str=str+" 共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                        str=str+"，共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber()+"。";
                     }
                 }
                 if (poolType==2) {
@@ -618,15 +620,12 @@ public class ExtendsDataCreator {
                 }
 
                 if (poolType==3) {
-                    str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName()+" 身份证明号: "
-                            + businessHouse.getBusinessHouseOwner().getCredentialsNumber();
+                    str = "房屋所有权人分别为：" + businessHouse.getBusinessHouseOwner().getPersonName()+"，身份证号码:"
+                            + businessHouse.getBusinessHouseOwner().getCredentialsNumber()+"。";
                     for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
-                        str=str+" "+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                        str=str+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
                     }
                 }
-
-
-
             }
 
 
@@ -658,10 +657,10 @@ public class ExtendsDataCreator {
             }
 
             if (poolType==3) {
-                str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName()+" 身份证明号: "
-                        + businessHouse.getBusinessHouseOwner().getCredentialsNumber();
+                str = "房屋所有权人分别为：" + businessHouse.getBusinessHouseOwner().getPersonName()+"，身份证号码:"
+                        + businessHouse.getBusinessHouseOwner().getCredentialsNumber()+"。";
                 for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
-                    str=str+" "+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
+                    str=str+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
                 }
             }
 
