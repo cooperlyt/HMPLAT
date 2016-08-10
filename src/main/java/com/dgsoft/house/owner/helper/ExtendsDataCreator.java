@@ -482,6 +482,8 @@ public class ExtendsDataCreator {
         if (mortgageMonery==2){//打0
             if ((defineId.equals("WP13")) || (defineId.equals("WP14")) || (defineId.equals("WP15"))){
                 jsonObject.put("债权数额", jsonField("0"));
+            }else{
+                jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
             }
         }else if (mortgageMonery==1){
             jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
