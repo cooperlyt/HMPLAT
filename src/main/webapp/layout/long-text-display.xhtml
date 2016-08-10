@@ -3,20 +3,16 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:s="http://jboss.org/schema/seam/taglib">
 
     <!-- param: value ,size , readOnly-->
 
-    <a:outputPanel rendered="#{not empty value}">
+    <a:outputPanel rendered="#{not empty value}" styleClass="tooltipped tooltipped-s" p:aria-label="value">
 
         <h:outputText style="#{textStyle}" value="#{fn:substring(value, 0, size)}"/>
         <h:outputText value="..." rendered="#{fn:length(value) gt size}"/>
-        <r:tooltip styleClass="tooltip-custom-body"
-                      layout="block" mode="client"
-                      rendered="#{fn:length(value) gt size}">
-            <span style="white-space: pre-wrap"> #{value}</span>
 
-        </r:tooltip>
     </a:outputPanel>
 
 </ui:composition>

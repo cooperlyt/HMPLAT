@@ -1,0 +1,81 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/layout/template-edit.xhtml">
+    <div>
+
+        <h2>
+
+            新建房屋信息
+
+        </h2>
+
+    </div>
+    <rich:messages globalOnly="false" ajaxRendered="true"/>
+
+    <h:form>
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                <ui:param name="showLabel" value="false"/>
+                <ui:param name="for" value="mapNumberInput"/>
+
+                <div class="input-group">
+                    <span class="input-group-addon">#{messages.MapIdentification_map}<s:span styleClass="required">*</s:span></span>
+                    <h:inputText id="mapNumberInput" label="#{messages.Build_MapNO}" maxlength="4" size="10"
+                                 autocomplete="off"
+                                 styleClass="form-control" validatorMessage="#{messages.MapNumberValidatorMessage}"
+                                 value="#{createHouse.mapNumber}">
+
+                        <f:validateRegex pattern="^\d*$" />
+
+                    </h:inputText>
+                    <span class="input-group-addon">#{messages.MapIdentification_block}<s:span styleClass="required">*</s:span></span>
+                    <h:inputText id="blockNoInput" styleClass="form-control" validatorMessage="#{messages.BlockValidatorMessage}"
+                                 label="#{runParam.getStringParamValue('HouseBlockCodeLabel')}" maxlength="10" size="10"
+                                 value="#{createHouse.blockNumber}" required="true" autocomplete="off">
+
+                        <f:validateRegex pattern="^(\d|-)*$"/>
+                    </h:inputText>
+                    <span class="input-group-addon">#{messages.MapIdentification_build}<s:span styleClass="required">*</s:span></span>
+                    <h:inputText id="buildNoInput" value="#{createHouse.buildNumber}"
+                                 styleClass="form-control" validatorMessage="#{messages.BuildNumberValidatorMessage}"
+                                 label="#{messages.Build_BuildNO}" maxlength="10" size="10" required="true" autocomplete="off">
+                    </h:inputText>
+
+                </div>
+                <ui:define name="message">
+                    <rich:message for="mapNumberInput" styleClass="edit-below-msg"/>
+                    <rich:message for="blockNoInput" styleClass="edit-below-msg"/>
+                    <rich:message for="buildNoInput" styleClass="edit-below-msg"/>
+                </ui:define>
+
+
+            </s:decorate>
+
+
+<hr/>
+
+        <ui:include src="/layout/house/HouseEdit.xhtml">
+            <ui:param name="house" value="#{houseHome.instance}"/>
+            <ui:param name="houseOrderDisable" value="false"/>
+        </ui:include>
+        <hr/>
+
+        <h:commandButton value="#{messages.ok}"
+                         action="#{createHouse.saveHouse}"
+                         styleClass="button primary first-in-line">
+        </h:commandButton>
+    </h:form>
+
+
+</ui:composition>

@@ -12,6 +12,17 @@
 
     <ui:define name="func-body">
 
+        <h:outputStylesheet>
+
+            .apllyNameCol{
+                width: 150px;
+                word-break:keep-all;/* 不换行 */
+                white-space:nowrap;/* 不换行 */
+                overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+                text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+            }
+        </h:outputStylesheet>
+
         <div class="container">
 
             <h:form>
@@ -30,7 +41,7 @@
                     <h:dataTable value="#{todayBusinessList.businessResult}"
                                  styleClass="table table-striped table-hover table-floatThead table-condensed"
                                  headerClass="table-tools-header"
-                                 columnClasses=""
+                                 columnClasses=",,,apllyNameCol,,,,"
                                  var="_business" rendered="#{not empty todayBusinessList.businessResult}">
 
                         <f:facet name="header">
@@ -81,7 +92,7 @@
                                 申请人
                             </f:facet>
 
-                            <h:outputText value="#{_business.ownerBusiness.applyPersion.personName}"/>
+                            <h:outputText value="#{_business.ownerBusiness.applyPersion.personName}" styleClass="apllyNameCol"/>
                         </h:column>
                         <h:column headerClass="table-header">
                             <f:facet name="header">
