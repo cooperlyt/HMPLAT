@@ -477,7 +477,16 @@ public class ExtendsDataCreator {
         jsonObject.put("幢号", jsonField(businessHouse.getBuildNo()));
         jsonObject.put("房号", jsonField(businessHouse.getHouseOrder()));
         jsonObject.put("他项权利种类", jsonField(DictionaryWord.instance().getWordValue(ownerBusiness.getMortgaegeRegiste().getInterestType())));
-        jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
+        Integer mortgageMonery = RunParam.instance().getIntParamValue("MortgageMonery");
+        String defineId = ownerBusiness.getDefineId();
+        if (mortgageMonery==2){//打0
+            if ((defineId.equals("WP13")) || (defineId.equals("WP14")) || (defineId.equals("WP15"))){
+                jsonObject.put("债权数额", jsonField("0"));
+            }
+        }else if (mortgageMonery==1){
+            jsonObject.put("债权数额", jsonField(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney()));
+        }
+
         jsonObject.put("债权大写",jsonField(BigMoneyUtil.getBigMoney(ownerBusiness.getMortgaegeRegiste().getHighestMountMoney().doubleValue())));
         jsonObject.put("抵押面积", jsonField(ownerBusiness.getMortgaegeRegiste().getMortgageArea()));
 

@@ -11,3 +11,5 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 insert SYSTEM_PARAM (ID, TYPE, VALUE, MEMO)
   value ('MortgagePrintOwnerCard','INTEGER','2','1-他项权证打印所有权证号只没有共有权证号;2-他项权证打印所有权证带共有权证号');
 
+insert SYSTEM_PARAM (ID, TYPE, VALUE, MEMO)
+  value ('MortgageMonery','INTEGER','1','1-债权数额不打0;2-债权数额打0');
