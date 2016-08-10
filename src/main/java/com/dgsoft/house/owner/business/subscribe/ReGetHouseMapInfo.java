@@ -74,12 +74,7 @@ public class ReGetHouseMapInfo {
                     houseBusiness.getAfterBusinessHouse().setUpFloorCount(house.getBuild().getUpFloorCount());
                     houseBusiness.getAfterBusinessHouse().setDownFloorCount(house.getBuild().getDownFloorCount());
                 }
-
-
-
             }
-
-
         }
     }
 
