@@ -203,6 +203,12 @@
                             迁移
                         </h:outputLink>
 
+
+                        <s:link styleClass="btn minibutton" action="#{createHouse.createSingleBuild}" >
+                            <f:param name="buildId" value=""/>
+                            新建独栋
+                        </s:link>
+
                     <s:link styleClass="btn minibutton primary" view="/func/house/datas/BuildEdit.xhtml">
                         <span class="octicon octicon-plus"/>
                         <f:param name="buildId" value=""/>

@@ -137,7 +137,8 @@ public class BuildHome extends HouseEntityHome<Build> {
         }
 
         getInstance().setProject(projectHome.getInstance());
-        houseCodeHelper.genBuildCode(getInstance());
+        if (getInstance().getId() == null)
+            houseCodeHelper.genBuildCode(getInstance());
         return true;
     }
 
@@ -166,7 +167,8 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     public String genHouseOrder() {
         if (!isManaged()) {
-            throw new IllegalArgumentException("build not manager!");
+            houseCodeHelper.genBuildCode(getInstance());
+            getInstance().setNextHouseOrder(1);
         }
 
         String result = houseCodeHelper.genHouseCode(getInstance().getId(), getInstance().getNextHouseOrder());
@@ -426,13 +428,15 @@ public class BuildHome extends HouseEntityHome<Build> {
 
         //所有单元和序名
         List<String> unitNames = new ArrayList<String>();
-        List<String> floorNames = new ArrayList<String>();
+        List<Integer> floorNames = new ArrayList<Integer>();
         for(HouseInfo houseInfo: houseInfos){
             if (!unitNames.contains(houseInfo.getHouseUnitName())){
                 unitNames.add(houseInfo.getHouseUnitName());
             }
-            if(!floorNames.contains(houseInfo.getInFloorName())){
-                floorNames.add(houseInfo.getInFloorName());
+            Integer floorIndex =  AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName());
+
+            if(!floorNames.contains(floorIndex)){
+                floorNames.add(floorIndex);
             }
         }
 
@@ -475,19 +479,24 @@ public class BuildHome extends HouseEntityHome<Build> {
 
 
         int floorIndex = 0;
-        for(String name: floorNames){
+        for(Integer name: floorNames){
             Logging.getLog(BuildHome.class).debug("floorNames:" + name);
             int houseOrder = 0;
-            GridRow row = new GridRow(result, name, floorIndex++);
+            GridRow row = new GridRow(result, null, floorIndex++);
             row.setOrder(floorIndex);
             result.getGridRows().add(row);
 
+            String floorName = null;
             for(HouseGridTitle title: titleList){
 
                 List<HouseInfo> pickHouse = new ArrayList<HouseInfo>();
                 for(HouseInfo houseInfo: houseInfos){
-                    if (name.equals(houseInfo.getInFloorName()) && title.getTitle().equals(houseInfo.getHouseUnitName())){
+                    if (name.equals(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()))
+                            && title.getTitle().equals(houseInfo.getHouseUnitName())){
                         pickHouse.add(houseInfo);
+                        if (floorName == null || houseInfo.getInFloorName().length() < floorName.length()){
+                            floorName = houseInfo.getInFloorName();
+                        }
                     }
                 }
 
@@ -509,6 +518,7 @@ public class BuildHome extends HouseEntityHome<Build> {
                 }
 
             }
+            row.setTitle(floorName);
         }
 
         return result;

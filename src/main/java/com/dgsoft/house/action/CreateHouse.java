@@ -1,8 +1,10 @@
 package com.dgsoft.house.action;
 
 import com.dgsoft.house.model.Build;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 
@@ -15,6 +17,7 @@ import static com.dgsoft.house.model.House.HouseDataSource.MAPPING;
  * Created by cooper on 8/10/16.
  */
 @Name("createHouse")
+@Scope(ScopeType.CONVERSATION)
 public class CreateHouse {
 
     @In(create = true)
@@ -22,6 +25,9 @@ public class CreateHouse {
 
     @In(create = true)
     private BuildHome buildHome;
+
+    @In(create = true)
+    private ProjectHome projectHome;
 
     @In
     private FacesMessages facesMessages;
@@ -56,6 +62,23 @@ public class CreateHouse {
         this.buildNumber = buildNumber;
     }
 
+    public String createSingleBuild(){
+
+        buildHome.clearInstance();
+        buildHome.getInstance().setProject(projectHome.getInstance());
+
+        return "begin";
+    }
+
+    public String saveSingleBuild(){
+
+        houseHome.getInstance().setId(buildHome.genHouseOrder());
+        houseHome.getInstance().setBuild(buildHome.getInstance());
+        houseHome.getInstance().setDataSource(MAPPING);
+        buildHome.getInstance().getHouses().add(houseHome.getInstance());
+        return buildHome.persist();
+    }
+
     public String saveHouse(){
 
         Build build;
@@ -81,11 +104,11 @@ public class CreateHouse {
         }
 
         buildHome.setId(build.getId());
+
         houseHome.getInstance().setId(buildHome.genHouseOrder());
         houseHome.getInstance().setBuild(buildHome.getInstance());
         houseHome.getInstance().setDataSource(MAPPING);
         buildHome.getInstance().getHouses().add(houseHome.getInstance());
-
         return buildHome.update();
     }
 }

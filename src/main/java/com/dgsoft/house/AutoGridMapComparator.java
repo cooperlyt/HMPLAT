@@ -1,13 +1,20 @@
 package com.dgsoft.house;
 
 import com.dgsoft.common.system.RunParam;
+import org.jboss.seam.annotations.In;
 
 import java.util.Comparator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by cooper on 8/6/16.
  */
 public class AutoGridMapComparator {
+
+    public interface IndexExtract{
+        int getIndex(String str);
+    }
 
     public static Comparator<String> getUnitComparator(){
        String param = RunParam.instance().getStringParamValue("idleGirdMapUnitSort");
@@ -18,12 +25,24 @@ public class AutoGridMapComparator {
         }
     }
 
-    public static Comparator<String> getFloorComparator(){
+    public static Comparator<Integer> getFloorComparator(){
         return new DefaultFloorComparator();
     }
 
     public static Comparator<HouseInfo> getHouseComparator(){
         return new DefaultHouseComparator();
+    }
+
+    public static IndexExtract getFloorIndexExtract(){
+        return new DefaultFloorIndexExtract();
+    }
+
+    private static class DefaultFloorIndexExtract implements IndexExtract{
+
+        @Override
+        public int getIndex(String str) {
+            return getNumberByString(str);
+        }
     }
 
     public static class DefaultUnitComparator implements Comparator<String>{
@@ -42,11 +61,22 @@ public class AutoGridMapComparator {
         }
     }
 
-    public static class DefaultFloorComparator implements Comparator<String>{
+    public static int getNumberByString(String str){
+        Pattern p = Pattern.compile("-?\\d+");
+
+        Matcher m = p.matcher(str);
+        if (m.find()){
+            return Integer.parseInt(m.group());
+        }else{
+            return 0;
+        }
+    }
+
+    public static class DefaultFloorComparator implements Comparator<Integer>{
 
         @Override
-        public int compare(String o1, String o2) {
-            return o2.trim().compareTo(o1.trim());
+        public int compare(Integer o1, Integer o2) {
+            return o2.compareTo(o1);
         }
     }
 

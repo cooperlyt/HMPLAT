@@ -152,9 +152,12 @@ public class OwnerTaskHandle {
         throw new IllegalArgumentException("endBusiness fail");
     }
 
+    @Create
     public void init(){
-       if(taskDescription.isCheckTask() && taskInstance.getName().equals(backTaskName)){
-           transitionComments = null;
+       if(taskDescription.isCheckTask() && (taskInstance.getName().equals(backTaskName) || transitionComments == null || transitionComments.trim().equals(""))){
+
+
+           transitionComments = "同意";
        }
     }
 
