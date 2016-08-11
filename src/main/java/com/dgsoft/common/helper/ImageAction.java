@@ -2,6 +2,7 @@ package com.dgsoft.common.helper;
 
 import com.dgsoft.common.system.RunParam;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -39,6 +40,24 @@ public class ImageAction {
         } catch (IOException e) {
 
             throw new IllegalArgumentException("url is fail");
+        }
+    }
+
+    public ByteArrayInputStream getKeyImage(String fileId){
+
+        try {
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+            URL url = new URL(RunParam.instance().getStringParamValue("IMG_SERVER_ADDRESS") + "key/img/orig/ECI-"+ fileId);
+            url.openConnection().connect();
+
+            BufferedImage image = ImageIO.read(url.openStream());
+            outStream.close();
+            ImageIO.write(image,"JPEG",outStream);
+            return new ByteArrayInputStream(outStream.toByteArray());
+
+        } catch (Exception e) {
+            return null;
+
         }
     }
 

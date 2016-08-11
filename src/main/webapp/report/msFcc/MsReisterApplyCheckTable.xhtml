@@ -82,17 +82,19 @@
             <p:paragraph>受理意见</p:paragraph>
         </p:cell>
 
-        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false" paddingTop="80">
 
-            <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.applyEmp}"> #{ownerBusinessHome.applyEmp.comments}</p:paragraph>
-                </p:cell>
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+            <p:table columns="3" widths="3.8 3 8" widthPercentage="100" footerRows="0" headerRows="0" >
+
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="rigth" verticalAlignment="middle">
                     <p:paragraph>受理人签名:</p:paragraph>
                 </p:cell>
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph> 年      月       日</p:paragraph>
+                <p:cell borderWidth="0" paddingLeft="0" horizontalAlignment="left" verticalAlignment="middle">
+
+                    <p:image value="#{imageAction.getKeyImage(ownerBusinessHome.instance.applyEmp.empCode)}"  alignment="left" rendered="#{not empty imageAction.getKeyImage(ownerBusinessHome.instance.applyEmp.empCode)}"/>
+                </p:cell>
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="center" verticalAlignment="middle">
+                    <p:paragraph> 年      月     日</p:paragraph>
                 </p:cell>
 
             </p:table>
@@ -103,19 +105,25 @@
             <p:paragraph>初审意见</p:paragraph>
         </p:cell>
 
-        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-            <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell  colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
-                    <p:paragraph></p:paragraph>
-                </p:cell>
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false" paddingTop="80">
+
+            <p:table columns="3" widths="3.8 3 8" widthPercentage="100" footerRows="0" headerRows="0" >
+
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="rigth" verticalAlignment="middle">
                     <p:paragraph>初审人签名:</p:paragraph>
                 </p:cell>
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph> 年      月       日</p:paragraph>
+                <p:cell borderWidth="0" paddingLeft="0" horizontalAlignment="left" verticalAlignment="middle">
+
+                    <p:image value="#{imageAction.getKeyImage(ownerBusinessHome.instance.firstCheckEmp.empCode)}"  alignment="left" rendered="#{not empty imageAction.getKeyImage(ownerBusinessHome.instance.firstCheckEmp.empCode)}"/>
                 </p:cell>
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="center" verticalAlignment="middle">
+                    <p:paragraph> 年      月     日</p:paragraph>
+                </p:cell>
+
             </p:table>
+
         </p:cell>
+
 
 
 
@@ -123,38 +131,46 @@
             <p:paragraph>审核意见</p:paragraph>
         </p:cell>
 
-        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-            <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}"></p:paragraph>
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false" paddingTop="80">
+
+            <p:table columns="3" widths="3.8 3 8" widthPercentage="100" footerRows="0" headerRows="0" >
+
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="rigth" verticalAlignment="middle">
+                    <p:paragraph>审核人签名:</p:paragraph>
+                </p:cell>
+                <p:cell borderWidth="0" paddingLeft="0" horizontalAlignment="left" verticalAlignment="middle">
+
+                    <p:image value="#{imageAction.getKeyImage(ownerBusinessHome.instance.checkEmp.empCode)}"  alignment="left" rendered="#{not empty imageAction.getKeyImage(ownerBusinessHome.instance.checkEmp.empCode)}"/>
+                </p:cell>
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="center" verticalAlignment="middle">
+                    <p:paragraph> 年      月     日</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph> 审核人签名:</p:paragraph>
-                </p:cell>
-
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph> 年      月       日</p:paragraph>
-                </p:cell>
             </p:table>
+
         </p:cell>
 
         <p:cell fixedHeight="70">
             <p:paragraph>登薄意见</p:paragraph>
         </p:cell>
 
-        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-            <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell  colspan="2" borderWidth="0" noWrap="false" fixedHeight="70" verticalAlignment="top" horizontalAlignment="left">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}"></p:paragraph>
-                </p:cell>
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false" paddingTop="80">
+
+            <p:table columns="3" widths="3.8 3 8" widthPercentage="100" footerRows="0" headerRows="0" >
+
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="rigth" verticalAlignment="middle">
                     <p:paragraph>登薄人签名:</p:paragraph>
                 </p:cell>
-                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph> 年      月       日</p:paragraph>
+                <p:cell borderWidth="0" paddingLeft="0" horizontalAlignment="left" verticalAlignment="middle">
+
+                    <p:image value="#{imageAction.getKeyImage(ownerBusinessHome.instance.registerEmp.empCode)}"  alignment="left" rendered="#{not empty imageAction.getKeyImage(ownerBusinessHome.instance.registerEmp.empCode)}"/>
                 </p:cell>
+                <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="center" verticalAlignment="middle">
+                    <p:paragraph> 年      月     日</p:paragraph>
+                </p:cell>
+
             </p:table>
+
         </p:cell>
 
 

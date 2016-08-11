@@ -744,6 +744,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return poolMarkCards;
     }
+    /**
+     *
+     * @return 初审人
+     */
+    @Transient
+    public BusinessEmp getFirstCheckEmp(){
+        return getOperEmp(BusinessEmp.EmpType.FIRST_CHECK);
+    }
+
 
     /**
      *
