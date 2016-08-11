@@ -308,6 +308,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
                 return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
 
+            case 5:
+                if ("2772".equals(getBuildType())){
+                    return getBlockNo() + "-" + "0" + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+
+                }else{
+                    return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+
+                }
+
         }
         return getHouseCode();
     }

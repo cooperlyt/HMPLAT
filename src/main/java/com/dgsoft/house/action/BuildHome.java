@@ -137,7 +137,8 @@ public class BuildHome extends HouseEntityHome<Build> {
         }
 
         getInstance().setProject(projectHome.getInstance());
-        houseCodeHelper.genBuildCode(getInstance());
+        if (getInstance().getId() == null)
+            houseCodeHelper.genBuildCode(getInstance());
         return true;
     }
 
@@ -166,7 +167,8 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     public String genHouseOrder() {
         if (!isManaged()) {
-            throw new IllegalArgumentException("build not manager!");
+            houseCodeHelper.genBuildCode(getInstance());
+            getInstance().setNextHouseOrder(1);
         }
 
         String result = houseCodeHelper.genHouseCode(getInstance().getId(), getInstance().getNextHouseOrder());
