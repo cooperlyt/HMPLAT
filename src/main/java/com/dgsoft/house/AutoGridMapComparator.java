@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
  */
 public class AutoGridMapComparator {
 
+    public interface IndexExtract{
+        int getIndex(String str);
+    }
+
     public static Comparator<String> getUnitComparator(){
        String param = RunParam.instance().getStringParamValue("idleGirdMapUnitSort");
         if (param.equals("desc")){
@@ -21,12 +25,24 @@ public class AutoGridMapComparator {
         }
     }
 
-    public static Comparator<String> getFloorComparator(){
+    public static Comparator<Integer> getFloorComparator(){
         return new DefaultFloorComparator();
     }
 
     public static Comparator<HouseInfo> getHouseComparator(){
         return new DefaultHouseComparator();
+    }
+
+    public static IndexExtract getFloorIndexExtract(){
+        return new DefaultFloorIndexExtract();
+    }
+
+    private static class DefaultFloorIndexExtract implements IndexExtract{
+
+        @Override
+        public int getIndex(String str) {
+            return getNumberByString(str);
+        }
     }
 
     public static class DefaultUnitComparator implements Comparator<String>{
@@ -56,13 +72,11 @@ public class AutoGridMapComparator {
         }
     }
 
-    public static class DefaultFloorComparator implements Comparator<String>{
+    public static class DefaultFloorComparator implements Comparator<Integer>{
 
         @Override
-        public int compare(String o1, String o2) {
-            Integer n1 = getNumberByString(o1);
-            Integer n2 = getNumberByString(o2);
-            return n2.compareTo(n1);
+        public int compare(Integer o1, Integer o2) {
+            return o2.compareTo(o1);
         }
     }
 
