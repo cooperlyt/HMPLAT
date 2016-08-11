@@ -331,6 +331,7 @@ public class ExtendsDataCreator {
                     OwnerName = OwnerName + " 、 " + businessPool.getPersonName();
                 }
             }
+
             jsonObject.put("权利人", jsonField(OwnerName));
         }
 
