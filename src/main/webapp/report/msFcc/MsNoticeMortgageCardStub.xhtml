@@ -441,11 +441,8 @@
                    <p:paragraph>附记</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph
-                            rendered="#{(not empty ownerBusinessHome.instance.mortgageReceive)}">#{ownerBusinessHome.instance.mortgageReceive.reason}</p:paragraph>
-                    <p:paragraph
-                            rendered="#{(empty ownerBusinessHome.instance.mortgageReceive) and (not empty ownerBusinessHome.instance.receive) and (not ownerBusinessHome.instance.defineId eq 'WP150')}">#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
-                </p:cell>
+                    <p:paragraph>该房屋为#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}结构，用途#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}，建筑面积#{_houseBusiness.afterBusinessHouse.houseArea}平方米，借款合同中约定借款期限自<p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>始<p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>止。债权数额（大写人民币）#{ownerBusinessHome.instance.mortgaegeRegiste.bigHighestMountMoney}。</p:paragraph>
+                 </p:cell>
 
 
             </p:table>

@@ -417,8 +417,7 @@
                    <p:paragraph>附记</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph
-                            rendered="#{(not empty ownerBusinessHome.instance.receive)}">#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
+                    <p:paragraph>该房屋为#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]},房屋所有权人分别为：#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName},身份证证明号,#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}。<ui:repeat value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList"><p:text value="#{_businessPoolList.personName}，身份证明号：#{_businessPoolList.credentialsNumber}。"> </p:text> </ui:repeat>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}结构。</p:paragraph>
                 </p:cell>
 
 
