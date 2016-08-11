@@ -3,6 +3,7 @@
             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:h="http://java.sun.com/jsf/html"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
             title="房屋预告抵押登记存根" margins="40 10 20 10">
 
@@ -121,7 +122,7 @@
                 </p:cell>
 
                 <p:cell>
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+                    <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.houseArea}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
                 </p:cell>
 
                 <p:cell>
@@ -284,7 +285,7 @@
                             <p:paragraph>抵押面积</p:paragraph>
                         </p:cell>
                         <p:cell>
-                            <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}">#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageArea}</p:paragraph>
+                            <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}"><p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageArea}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
                         </p:cell>
 
                         <p:cell fixedHeight="25">

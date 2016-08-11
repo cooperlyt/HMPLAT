@@ -631,7 +631,7 @@ public class ExtendsDataCreator {
                 }
 
                 if (poolType==3) {
-                    str = "房屋所有权人分别为：" + businessHouse.getBusinessHouseOwner().getPersonName()+"，身份证号码:"
+                    str = "房屋所有权人分别为：" + businessHouse.getBusinessHouseOwner().getPersonName()+"，身份证明号:"
                             + businessHouse.getBusinessHouseOwner().getCredentialsNumber()+"。";
                     for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
                         str=str+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
