@@ -121,15 +121,26 @@ public class TotalSaleDetails {
 
             }
         }
-
-        List<DaySaleData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName) from HouseBusiness hb left join " +
-                "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
-                "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
-                "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode",DaySaleData.class).setParameter("defineId",businessDefineId)
-                .setParameter("searchYear",gc.get(Calendar.YEAR))
-                .setParameter("searchMonth",gc.get(Calendar.MONTH) + 1)
-                .setParameter("status" ,allowStatus)
-                .setParameter("searchDay",gc.get(Calendar.DAY_OF_MONTH)).getResultList();
+        List<DaySaleData> datas = new ArrayList<DaySaleData>();
+        if (onlyRunning == null || onlyRunning) {
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice) from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+                    "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
+                    "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
+                    "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
+                    .setParameter("searchYear", gc.get(Calendar.YEAR))
+                    .setParameter("searchMonth", gc.get(Calendar.MONTH) + 1)
+                    .setParameter("status", allowStatus)
+                    .setParameter("searchDay", gc.get(Calendar.DAY_OF_MONTH)).getResultList();
+        }else{
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice) from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+                    "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
+                    "and month(hb.ownerBusiness.regTime) = :searchMonth and day(hb.ownerBusiness.regTime) = :searchDay " +
+                    "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
+                    .setParameter("searchYear", gc.get(Calendar.YEAR))
+                    .setParameter("searchMonth", gc.get(Calendar.MONTH) + 1)
+                    .setParameter("status", allowStatus)
+                    .setParameter("searchDay", gc.get(Calendar.DAY_OF_MONTH)).getResultList();
+        }
 
         for (DaySaleData data: datas){
             colIndex = 0;
@@ -146,6 +157,14 @@ public class TotalSaleDetails {
             cell.setCellValue(data.getArea().doubleValue());
             cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
             cell.setCellValue(data.getMoney().doubleValue());
+            Logging.getLog(getClass()).debug(colIndex);
+
+            cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
+            if(data.getAssessmentPrice()!=null) {
+                cell.setCellValue(data.getAssessmentPrice().doubleValue());
+            }else {
+                cell.setCellValue(0);
+            }
         }
 
         row = sheet.createRow(rowIndex);
@@ -157,6 +176,8 @@ public class TotalSaleDetails {
         cell.setCellFormula("SUM(" + CellReference.convertNumToColString(4) + "2:" + CellReference.convertNumToColString(4) + rowIndex + ")");
         cell = row.createCell(5, Cell.CELL_TYPE_FORMULA);
         cell.setCellFormula("SUM(" + CellReference.convertNumToColString(5) + "2:" + CellReference.convertNumToColString(5) + rowIndex + ")");
+        cell = row.createCell(6, Cell.CELL_TYPE_FORMULA);
+        cell.setCellFormula("SUM(" + CellReference.convertNumToColString(6) + "2:" + CellReference.convertNumToColString(6) + rowIndex + ")");
 
         sheet.setForceFormulaRecalculation(true);
 
