@@ -47,16 +47,19 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
         public void setPrintCard(boolean printCard) {
             if (printCard){
-                SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
-                String datePart = numberDateformat.format(new Date());
-                Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
-                String no;
-                if (typeCard==2){
-                    no= datePart+ Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
-                }else {
-                    no = datePart + '-' + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                if (getPersonEntity().getMakeCard()==null) {
+                    SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+                    String datePart = numberDateformat.format(new Date());
+                    Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
+                    String no;
+                    if (typeCard == 2) {
+                        no = datePart + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                    } else {
+                        no = datePart + '-' + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                    }
+                    getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP, no));
+
                 }
-                getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP,no));
             }else{
                 getPersonEntity().setMakeCard(null);
             }
@@ -68,9 +71,11 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
         public void setRecordPrintCard(boolean printCard) {
             if (printCard){
-                MakeCard poolMakeCard = new MakeCard(MakeCard.CardType.POOL_RSHIP);
-                poolMakeCard.setOwnerBusiness(ownerBusiness);
-                getPersonEntity().setMakeCard(poolMakeCard);
+                if (getPersonEntity().getMakeCard()==null) {
+                    MakeCard poolMakeCard = new MakeCard(MakeCard.CardType.POOL_RSHIP);
+                    poolMakeCard.setOwnerBusiness(ownerBusiness);
+                    getPersonEntity().setMakeCard(poolMakeCard);
+                }
             }else{
                 getPersonEntity().setMakeCard(null);
             }
