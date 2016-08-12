@@ -52,7 +52,7 @@ public class AddCheckEmper implements TaskCompleteSubscribeComponent {
         businessEmp.setOperDate(new Date());
         businessEmp.setComments(transitionComments);
         businessEmp.setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().setRegTime(businessEmp.getOperDate());
+        ownerBusinessHome.getInstance().setCheckTime(businessEmp.getOperDate());
         ownerBusinessHome.getInstance().getBusinessEmps().add(businessEmp);
 
     }

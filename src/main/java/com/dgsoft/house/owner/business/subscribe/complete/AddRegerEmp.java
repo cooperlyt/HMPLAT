@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessEmp;
@@ -52,7 +53,12 @@ public class AddRegerEmp implements TaskCompleteSubscribeComponent {
         businessEmp.setOperDate(new Date());
         businessEmp.setComments(transitionComments);
         businessEmp.setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().setCheckTime(businessEmp.getOperDate());
+        ownerBusinessHome.getInstance().setRegTime(businessEmp.getOperDate());
         ownerBusinessHome.getInstance().getBusinessEmps().add(businessEmp);
+        Integer RegerEmpAddBotime = RunParam.instance().getIntParamValue("RegerEmpAddBotime");
+        if (RegerEmpAddBotime==2){
+            ownerBusinessHome.getInstance().setRecordTime(businessEmp.getOperDate());
+        }
+
     }
 }

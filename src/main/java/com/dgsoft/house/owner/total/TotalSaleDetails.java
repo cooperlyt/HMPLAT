@@ -104,6 +104,10 @@ public class TotalSaleDetails {
         cell.setCellValue("购房款");
         cell.setCellStyle(headCellStyle);
 
+        cell = row.createCell(colIndex++);
+        cell.setCellValue("评估价格");
+        cell.setCellStyle(headCellStyle);
+
 
         List<BusinessInstance.BusinessStatus> allowStatus = new ArrayList<BusinessInstance.BusinessStatus>();
         if(onlyRunning == null){
@@ -118,7 +122,7 @@ public class TotalSaleDetails {
             }
         }
 
-        List<DaySaleData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName) from HouseBusiness hb " +
+        List<DaySaleData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName) from HouseBusiness hb left join " +
                 "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
                 "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
                 "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode",DaySaleData.class).setParameter("defineId",businessDefineId)

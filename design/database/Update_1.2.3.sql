@@ -13,3 +13,5 @@ insert SYSTEM_PARAM (ID, TYPE, VALUE, MEMO)
 
 insert SYSTEM_PARAM (ID, TYPE, VALUE, MEMO)
   value ('MortgageMonery','INTEGER','1','1-债权数额不打0;2-债权数额打0');
+insert SYSTEM_PARAM (ID, TYPE, VALUE, MEMO)
+  value ('RegerEmpAddBotime','INTEGER','1','1-AddRegerEmp不添加归档时间;2-AddRegerEmp添加归档时间');
