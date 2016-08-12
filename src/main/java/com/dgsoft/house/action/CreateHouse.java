@@ -32,6 +32,10 @@ public class CreateHouse {
     @In
     private FacesMessages facesMessages;
 
+    private boolean autoHouseId = true;
+
+    private String houseId;
+
     private String mapNumber;
 
     private String blockNumber;
@@ -62,6 +66,22 @@ public class CreateHouse {
         this.buildNumber = buildNumber;
     }
 
+    public boolean isAutoHouseId() {
+        return autoHouseId;
+    }
+
+    public void setAutoHouseId(boolean autoHouseId) {
+        this.autoHouseId = autoHouseId;
+    }
+
+    public String getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(String houseId) {
+        this.houseId = houseId;
+    }
+
     public String createSingleBuild(){
 
         buildHome.clearInstance();
@@ -72,7 +92,10 @@ public class CreateHouse {
 
     public String saveSingleBuild(){
 
-        houseHome.getInstance().setId(buildHome.genHouseOrder());
+        if (autoHouseId) {
+            houseHome.getInstance().setId(buildHome.genHouseOrder());
+        }else
+            houseHome.getInstance().setId(houseId);
         houseHome.getInstance().setBuild(buildHome.getInstance());
         houseHome.getInstance().setDataSource(MAPPING);
         buildHome.getInstance().getHouses().add(houseHome.getInstance());
@@ -105,7 +128,10 @@ public class CreateHouse {
 
         buildHome.setId(build.getId());
 
-        houseHome.getInstance().setId(buildHome.genHouseOrder());
+        if (autoHouseId) {
+            houseHome.getInstance().setId(buildHome.genHouseOrder());
+        }else
+            houseHome.getInstance().setId(houseId);
         houseHome.getInstance().setBuild(buildHome.getInstance());
         houseHome.getInstance().setDataSource(MAPPING);
         buildHome.getInstance().getHouses().add(houseHome.getInstance());

@@ -210,7 +210,7 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.task', '业务�
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','house.businessSearch');
 
 
-
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.oldHouseSale', '存量房销售情况统计', '', 30);
 
 
 -- INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.newHouse', '商品房管理', '商品房科', 4);

@@ -453,14 +453,14 @@ public class BuildHome extends HouseEntityHome<Build> {
         int order = 1;
         for(String name: unitNames){
 
-            Map<String,Integer> counts = new HashMap<String, Integer>();
+            Map<Integer,Integer> counts = new HashMap<Integer, Integer>();
             for(HouseInfo houseInfo: houseInfos){
                 if (name.equals(houseInfo.getHouseUnitName())) {
-                    Integer count = counts.get(houseInfo.getInFloorName());
+                    Integer count = counts.get(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()));
                     if (count == null) {
-                        counts.put(houseInfo.getInFloorName(), 1);
+                        counts.put(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()), 1);
                     } else {
-                        counts.put(houseInfo.getInFloorName(), count.intValue() + 1);
+                        counts.put(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()), count.intValue() + 1);
                     }
                 }
             }
@@ -482,21 +482,22 @@ public class BuildHome extends HouseEntityHome<Build> {
         for(Integer name: floorNames){
             Logging.getLog(BuildHome.class).debug("floorNames:" + name);
             int houseOrder = 0;
-            GridRow row = new GridRow(result, null, floorIndex++);
+            GridRow row = new GridRow(result, String.valueOf(name), floorIndex++);
             row.setOrder(floorIndex);
             result.getGridRows().add(row);
 
-            String floorName = null;
+            //String floorName = null;
             for(HouseGridTitle title: titleList){
 
                 List<HouseInfo> pickHouse = new ArrayList<HouseInfo>();
                 for(HouseInfo houseInfo: houseInfos){
+
                     if (name.equals(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()))
                             && title.getTitle().equals(houseInfo.getHouseUnitName())){
                         pickHouse.add(houseInfo);
-                        if (floorName == null || houseInfo.getInFloorName().length() < floorName.length()){
-                            floorName = houseInfo.getInFloorName();
-                        }
+                        //if (floorName == null || houseInfo.getInFloorName().length() < floorName.length()){
+                        //    floorName = houseInfo.getInFloorName();
+                        //}
                     }
                 }
 
@@ -518,7 +519,7 @@ public class BuildHome extends HouseEntityHome<Build> {
                 }
 
             }
-            row.setTitle(floorName);
+            //row.setTitle(floorName);
         }
 
         return result;
