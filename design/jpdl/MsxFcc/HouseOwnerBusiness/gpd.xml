@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="HouseOwnerBusiness" width="839" height="524">
+<root-container name="HouseOwnerBusiness" width="948" height="483">
   <node name="业务受理" x="36" y="15" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -25,19 +25,6 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="缮证" x="396" y="385" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="繕证判断" x="158" y="400" width="132" height="36">
-    <edge>
-      <label x="-15" y="-12"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
   <node name="审核结果" x="445" y="238" width="132" height="36">
     <edge>
       <label x="-21" y="-13"/>
@@ -48,18 +35,18 @@
   </node>
   <node name="是否登薄" x="318" y="307" width="132" height="36">
     <edge>
-      <label x="-1" y="-4"/>
-    </edge>
-    <edge>
       <label x="-21" y="-18"/>
     </edge>
-  </node>
-  <node name="登薄结果" x="-67" y="379" width="132" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-1" y="-4"/>
     </edge>
+  </node>
+  <node name="登薄结果" x="-92" y="362" width="132" height="36">
     <edge>
       <label x="-41" y="-11"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
     </edge>
   </node>
   <node name="类型判断" x="36" y="90" width="132" height="36">
@@ -91,5 +78,5 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="结束" x="2" y="465" width="132" height="36"/>
+  <node name="结束" x="11" y="446" width="132" height="36"/>
 </root-container>
