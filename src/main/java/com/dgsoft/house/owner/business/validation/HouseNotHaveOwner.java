@@ -22,10 +22,8 @@ public class HouseNotHaveOwner extends BusinessHouseValid {
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getBusinessHouseOwner()!=null && businessHouse.getBusinessHouseOwner().getMakeCard()!=null
                 && businessHouse.getBusinessHouseOwner().getMakeCard().getType().equals(MakeCard.CardType.OWNER_RSHIP)){
-            Logging.getLog(getClass()).debug("111111");
             return new ValidResult(ValidResultLevel.SUCCESS);
         }
-        Logging.getLog(getClass()).debug("2222222222");
         return new ValidResult("House_NotHave_Owner_Card",ValidResultLevel.ERROR);
     }
 
