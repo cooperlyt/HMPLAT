@@ -564,6 +564,18 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="ReasonShiftBeforeView" page="/business/houseOwner/subscribe/ReasonShiftBeforeView.xhtml">
+        <description>
+            转移前查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ReasonShiftAfterView" page="/business/houseOwner/subscribe/ReasonShiftAfterView.xhtml">
+        <description>
+            转移后查看
+        </description>
+    </view-subscribe>
+
 
 
 
@@ -1186,6 +1198,20 @@
     <edit-subscribe name="reGetHouseInfo" page="/business/houseOwner/subscribe/ReGetHouseMapInfo.xhtml" component="">
         <description>
             提测绘信息(非常规!仅量不要使用)
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ReasonShiftBeforeEdit" page="/business/houseOwner/subscribe/ReasonShiftBeforeEdit.xhtml"
+                    component="">
+        <description>
+            转移前编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ReasonShiftAfterEdit" page="/business/houseOwner/subscribe/ReasonShiftAfterEdit.xhtml"
+                    component="">
+        <description>
+            转移后编辑
         </description>
     </edit-subscribe>
 
