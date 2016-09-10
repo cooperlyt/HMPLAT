@@ -1,0 +1,1 @@
+﻿insert DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('66','抵押权登记转移申请书','抵押权登记转移申请书','/report/AsddwFcj/DdwApplyHouseMortgageShiftReisterBook.xhtml');

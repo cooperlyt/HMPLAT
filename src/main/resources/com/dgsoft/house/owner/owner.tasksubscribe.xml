@@ -576,7 +576,11 @@
         </description>
     </view-subscribe>
 
-
+    <view-subscribe name="PersionObligeeOldView" page="/business/houseOwner/subscribe/PersionObligeeOldView.xhtml">
+        <description>
+            原抵押权人代理人查看
+        </description>
+    </view-subscribe>
 
 
 
@@ -1212,6 +1216,13 @@
                     component="">
         <description>
             转移后编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="PersionObligeeOldEdit" page="/business/houseOwner/subscribe/PersionObligeeOldEdit.xhtml"
+                    component="">
+        <description>
+            原抵押权人代理人编辑
         </description>
     </edit-subscribe>
 

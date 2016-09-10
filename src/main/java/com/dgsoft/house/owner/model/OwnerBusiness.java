@@ -639,6 +639,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     /**
+     * 原抵押权人代理人
+     */
+    @Transient
+    public BusinessPersion getMortgageObligeeOld() {
+        return getBusinessPersion(BusinessPersion.PersionType.MORTGAGE_OBLIGEE_OLD);
+
+    }
+
+    /**
      * 抵押人代理人
      */
     @Transient
@@ -914,7 +923,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public Reason getModifyAfterReason(){
         return getReason(Reason.ReasonType.MODIFY_AFTER_RENSON);
     }
+    @Transient
+    public Reason getShiftBeforeReason(){
+        return getReason(Reason.ReasonType.SHIFT_BEFORE);
+    }
 
+    @Transient
+    public Reason getShiftAfterReason(){
+        return getReason(Reason.ReasonType.SHIFT_AFTER);
+    }
     /**
      * 发证信息
      */
