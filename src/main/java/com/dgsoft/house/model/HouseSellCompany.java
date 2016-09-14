@@ -1,17 +1,10 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,12 +20,15 @@ public class HouseSellCompany implements java.io.Serializable {
 	private AttachCorporation attachCorporation;
 	private String name;
     private boolean destroyed;
-
+	private Date createTime;
 
 	public HouseSellCompany() {
-        destroyed= false;
 	}
 
+	public HouseSellCompany(AttachCorporation attachCorporation, Date createTime) {
+		this.attachCorporation = attachCorporation;
+		this.createTime = createTime;
+	}
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -56,7 +52,7 @@ public class HouseSellCompany implements java.io.Serializable {
 		this.version = version;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true, optional = true)
 	@JoinColumn(name = "ATTACH_ID", nullable = false)
 	@NotNull
 	public AttachCorporation getAttachCorporation() {
@@ -86,5 +82,16 @@ public class HouseSellCompany implements java.io.Serializable {
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATE_TIME",nullable = false)
+	@NotNull
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 }

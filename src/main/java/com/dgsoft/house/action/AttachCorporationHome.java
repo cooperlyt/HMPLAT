@@ -17,6 +17,10 @@ public class AttachCorporationHome extends HouseEntityHome<AttachCorporation> {
 
     protected final static String NUMBER_KEY = "ATTACH_CORP";
 
+    public Class<AttachCorporation> getEntityClass(){
+        return AttachCorporation.class;
+    }
+
     @Override
     protected boolean verifyPersistAvailable() {
         GregorianCalendar gc = new GregorianCalendar(Locale.CHINA);

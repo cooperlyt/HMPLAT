@@ -25,9 +25,7 @@ public class DeveloperAttachCorpHome extends AttachCorporationHome {
         return new AttachCorporation(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), AttachCorporation.AttachCorpType.DEVELOPER,true, new Date());
     }
 
-    public Class<AttachCorporation> getEntityClass(){
-        return AttachCorporation.class;
-    }
+
 
     public void developerSelectListener(){
         if (developerHome.isIdDefined()){

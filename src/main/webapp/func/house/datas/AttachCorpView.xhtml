@@ -27,7 +27,8 @@
                 <strong>
                     <h:outputText value="#{attachCorporationHome.instance.developer.name}"
                                   rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}"/>
-
+                    <h:outputText value="#{attachCorporationHome.instance.houseSellCompany.name}"
+                                  rendered="#{attachCorporationHome.instance.type eq 'AGENCIES'}"/>
                 </strong>
 
             </h1>
@@ -51,10 +52,10 @@
 
 
     <dh:entryGrid styleClass="detailsTable table table-bordered " keyWidth="150">
-        <dh:entryGridBlock columns="4" rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}">
+        <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Name}"/>
             <dh:entryGridColumn colspan="1">
-                <h:outputText value="#{attachCorporationHome.instance.developer.name}" style="padding-right: 10px"
+                <h:outputText value="#{attachCorporationHome.instance.type eq 'DEVELOPER' ? attachCorporationHome.instance.developer.name : attachCorporationHome.instance.houseSellCompany.name}" style="padding-right: 10px"
                               styleClass="#{attachCorporationHome.instance.outTime ? 'out-time' : ''} #{attachCorporationHome.instance.enable ? '' : 'delete-data'} "/>
                 <a:outputPanel styleClass="label label-danger"
                                rendered="#{not attachCorporationHome.instance.enable}">#{messages.AttachDisable}</a:outputPanel>
@@ -288,13 +289,17 @@
                                     <li>
                                         <span class="type-icon octicon octicon-key" style="color: #60b044;"/>
 
-                                        <a:commandLink style="font-size: 12px;font-weight: bold" immediate="true" render="keyProjectPickPanel_form"
+                                        <a:commandLink rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}" style="font-size: 12px;font-weight: bold" immediate="true" render="keyProjectPickPanel_form"
                                                        execute="@this" oncomplete="$('#keyProjectPickPanel').modal({backdrop: 'static'})"
                                                        action="#{attachEmployeeHome.initKeyProject}" >
                                             <a:attachQueue requestDelay="0"/>#{_key.id}
                                             <f:param name="attachEmpId" value="#{_emp.id}"/>
                                             <f:param name="keyId" value="#{_key.id}"/>
                                         </a:commandLink>
+
+                                        <a:outputPanel rendered="#{not (attachCorporationHome.instance.type eq 'DEVELOPER')}">
+                                            #{_key.id}
+                                        </a:outputPanel>
 
                                         <a:commandLink style="color:#a94442 " execute="@this" immediate="true"
                                                        render="keyDeleteConfirmPanel_form"
