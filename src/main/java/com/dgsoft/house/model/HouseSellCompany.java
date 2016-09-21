@@ -21,6 +21,7 @@ public class HouseSellCompany implements java.io.Serializable {
 	private String name;
     private boolean destroyed;
 	private Date createTime;
+	private String tel;
 
 	public HouseSellCompany() {
 	}
@@ -94,4 +95,14 @@ public class HouseSellCompany implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
+	@Column(name = "TEL", nullable = false, length = 16)
+	@Size(max = 16)
+	@NotNull
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 }

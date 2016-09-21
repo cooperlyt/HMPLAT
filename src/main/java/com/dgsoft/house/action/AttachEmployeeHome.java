@@ -1,6 +1,7 @@
 package com.dgsoft.house.action;
 
 import com.dgsoft.common.system.PersonHelper;
+import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.AttachCorporation;
 import com.dgsoft.house.model.AttachEmployee;
@@ -91,7 +92,7 @@ public class AttachEmployeeHome extends HouseEntityHome<AttachEmployee> {
 
     public List<Project> getSrcProjects() {
         if (srcProjects == null){
-            if (!isIdDefined() || !getInstance().getAttachCorporation().getType().equals(AttachCorporation.AttachCorpType.DEVELOPER)) {
+            if (!isIdDefined() || !getInstance().getAttachCorporation().getType().equals(AttachCorpType.DEVELOPER)) {
                 srcProjects = new ArrayList<Project>(0);
             }else {
                 List<Project> result = new ArrayList<Project>(getInstance().getAttachCorporation().getDeveloper().getProjects());

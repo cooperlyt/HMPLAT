@@ -1,5 +1,6 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.model.AttachCorporation;
 import com.dgsoft.house.model.HouseSellCompany;
 import org.jboss.seam.annotations.Name;
@@ -24,7 +25,7 @@ public class AgenciesAttachCorpHome extends AttachCorporationHome {
 
     @Override
     protected AttachCorporation createInstance(){
-        AttachCorporation result =  new AttachCorporation(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), AttachCorporation.AttachCorpType.AGENCIES,true, new Date());
+        AttachCorporation result =  new AttachCorporation(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), AttachCorpType.AGENCIES,true, new Date());
         houseSellCompany = new HouseSellCompany(result, new Date());
         result.setHouseSellCompany(houseSellCompany);
 

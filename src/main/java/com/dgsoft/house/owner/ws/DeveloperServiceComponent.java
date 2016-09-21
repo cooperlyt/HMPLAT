@@ -2,7 +2,7 @@ package com.dgsoft.house.owner.ws;
 
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.NumberBuilder;
-import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.model.Word;
@@ -58,8 +58,6 @@ public class DeveloperServiceComponent {
                 jsonObject.put("logonStatus", LogonStatus.KEY_NOT_FOUND.name());
             } else if (!CheckHashValues(key.getPassword(), random, password)) {
                 jsonObject.put("logonStatus", LogonStatus.PASSWORD_ERROR.name());
-            } else if (!AttachCorporation.AttachCorpType.DEVELOPER.equals(key.getAttachEmployee().getAttachCorporation().getType())) {
-                jsonObject.put("logonStatus", LogonStatus.TYPE_ERROR.name());
             } else if (!key.getAttachEmployee().isEnable()) {
                 jsonObject.put("logonStatus", LogonStatus.EMP_DISABLE.name());
             } else if (!key.getAttachEmployee().getAttachCorporation().isEnable()) {
@@ -84,7 +82,8 @@ public class DeveloperServiceComponent {
                 jsonObject.put("employeeName", key.getAttachEmployee().getPersonName());
 
                 JSONObject attachCorpJsonObj = new JSONObject();
-                attachCorpJsonObj.put("name", key.getAttachEmployee().getAttachCorporation().getDeveloper().getName());
+
+                attachCorpJsonObj.put("type",key.getAttachEmployee().getAttachCorporation().getType().name());
                 attachCorpJsonObj.put("address", key.getAttachEmployee().getAttachCorporation().getAddress());
                 attachCorpJsonObj.put("postCode", key.getAttachEmployee().getAttachCorporation().getPostCode());
                 attachCorpJsonObj.put("licenseNumber", key.getAttachEmployee().getAttachCorporation().getLicenseNumber());
@@ -99,96 +98,107 @@ public class DeveloperServiceComponent {
 
                 jsonObject.put("orgName", RunParam.instance().getStringParamValue("SetupName"));
 
-
-                jsonObject.put("groupName", key.getAttachEmployee().getAttachCorporation().getDeveloper().getName());
-                jsonObject.put("groupCode", key.getAttachEmployee().getAttachCorporation().getDeveloper().getId());
-
-                JSONArray projectArray = new JSONArray();
-                for (Project project : key.getProjects()) {
-
-
-                    JSONObject projectJsonObj = new JSONObject();
-
-
-                    projectJsonObj.put("projectName", project.getProjectName());
-                    projectJsonObj.put("projectCode", project.getProjectCode());
-
-                    projectJsonObj.put("districtName", project.getDistrictName());
-                    projectJsonObj.put("districtCode", project.getDistrictCode());
-
-
-                    projectJsonObj.put("sectionName", project.getSectionName());
-                    projectJsonObj.put("sectionCode", project.getSectionCode());
-
-                    EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
-
-                    JSONArray cardArray = new JSONArray();
-                    for (ProjectCard card : ownerEntityManager.createQuery("select projectCard from ProjectCard projectCard left join fetch projectCard.makeCard left join fetch projectCard.projectSellInfo sellInfo left join fetch sellInfo.businessProject project where project.projectCode = :projectCode and project.ownerBusiness.status in (:allowStatus)", ProjectCard.class)
-                            .setParameter("projectCode", project.getProjectCode())
-                            .setParameter("allowStatus", EnumSet.of(BusinessInstance.BusinessStatus.COMPLETE, BusinessInstance.BusinessStatus.MODIFYING))
-                            .getResultList()) {
-
-                        JSONObject cardJsonObj = new JSONObject();
-                        cardJsonObj.put("cardType", card.getProjectSellInfo().getType().name());
-                        cardJsonObj.put("cardNumber", card.getMakeCard().getNumber());
-                        cardJsonObj.put("address", card.getProjectSellInfo().getBusinessProject().getAddress());
-                        cardJsonObj.put("developerName", card.getProjectSellInfo().getBusinessProject().getDeveloperName());
-
-                        cardJsonObj.put("landCardType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandCardType()));
-                        cardJsonObj.put("landCardNumber", card.getProjectSellInfo().getLandCardNo());
-                        cardJsonObj.put("landArea", (card.getProjectSellInfo().getLandArea() == null) ? null : card.getProjectSellInfo().getLandArea().toString());
-                        cardJsonObj.put("landUseType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandUseType()));
-
-                        if (card.getProjectSellInfo().getEndUseTime().getTime() != 0){
-                            cardJsonObj.put("landEndUseTime",  card.getProjectSellInfo().getEndUseTime().getTime());
-                        }
-
-                        cardJsonObj.put("landGetMode", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandGetMode()));
-                        cardJsonObj.put("landAddress", card.getProjectSellInfo().getLandAddress());
-                        if (card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp() != null)
-                            cardJsonObj.put("mappingCropName", card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp().getName());
-
-                        cardJsonObj.put("createCardNumber", card.getProjectSellInfo().getCreateCardNumber());
-                        cardJsonObj.put("createPrepareCardNumber", card.getProjectSellInfo().getCreatePrepareCardNumber());
-                        cardJsonObj.put("name", card.getProjectSellInfo().getBusinessProject().getProjectName());
-
-                        JSONArray buildJsonArray = new JSONArray();
-                        for (BusinessBuild build : card.getProjectSellInfo().getBusinessProject().getBusinessBuildList()) {
-                            JSONObject buildJsonObj = new JSONObject();
-
-                            buildJsonObj.put("buildName", build.getBuildName());
-                            buildJsonObj.put("buildCode", build.getBuildCode());
-                            buildJsonObj.put("mapNumber", build.getMapNumber());
-                            buildJsonObj.put("blockNo", build.getBlockNo());
-                            buildJsonObj.put("buildNo", build.getBuildNo());
-                            buildJsonObj.put("completeYear", build.getCompleteYear());
-                            buildJsonObj.put("streetCode", build.getSectionCode());
-                            buildJsonObj.put("doorNo", build.getDoorNo());
-                            buildJsonObj.put("unintCount", build.getUnintCount());
-                            buildJsonObj.put("buildDevNumber", build.getBuildDevNumber());
-                            buildJsonObj.put("buildType", DictionaryWord.instance().getWordValue(build.getBuildType()));
-                            buildJsonObj.put("structure", DictionaryWord.instance().getWordValue(build.getStructure()));
-                            buildJsonObj.put("upFloorCount", build.getUpFloorCount());
-                            buildJsonObj.put("downFloorCount", build.getDownFloorCount());
-                            buildJsonObj.put("mapTime", build.getMapTime().getTime());
-
-                            buildJsonArray.put(buildJsonObj);
-                        }
-
-                        cardJsonObj.put("saleBuilds", buildJsonArray);
-                        cardArray.put(cardJsonObj);
-                    }
-
-
-                    projectJsonObj.put("saleCards", cardArray);
-
-                    projectArray.put(projectJsonObj);
-                    //jsonObject.put("project", projectJsonObj);
-                    //  jsonObject.put("corp",)
-
+                if (AttachCorpType.AGENCIES.equals(key.getAttachEmployee().getAttachCorporation().getType())){
+                    jsonObject.put("groupName", key.getAttachEmployee().getAttachCorporation().getHouseSellCompany().getName());
+                    jsonObject.put("groupCode", key.getAttachEmployee().getAttachCorporation().getHouseSellCompany().getId());
+                    attachCorpJsonObj.put("name", key.getAttachEmployee().getAttachCorporation().getHouseSellCompany().getName());
                 }
 
-                jsonObject.put("projects",projectArray);
+
+                if (AttachCorpType.DEVELOPER.equals(key.getAttachEmployee().getAttachCorporation().getType())) {
+                    attachCorpJsonObj.put("name", key.getAttachEmployee().getAttachCorporation().getDeveloper().getName());
+                    jsonObject.put("groupName", key.getAttachEmployee().getAttachCorporation().getDeveloper().getName());
+                    jsonObject.put("groupCode", key.getAttachEmployee().getAttachCorporation().getDeveloper().getId());
+
+                    JSONArray projectArray = new JSONArray();
+                    for (Project project : key.getProjects()) {
+
+
+                        JSONObject projectJsonObj = new JSONObject();
+
+
+                        projectJsonObj.put("projectName", project.getProjectName());
+                        projectJsonObj.put("projectCode", project.getProjectCode());
+
+                        projectJsonObj.put("districtName", project.getDistrictName());
+                        projectJsonObj.put("districtCode", project.getDistrictCode());
+
+
+                        projectJsonObj.put("sectionName", project.getSectionName());
+                        projectJsonObj.put("sectionCode", project.getSectionCode());
+
+                        EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
+
+                        JSONArray cardArray = new JSONArray();
+                        for (ProjectCard card : ownerEntityManager.createQuery("select projectCard from ProjectCard projectCard left join fetch projectCard.makeCard left join fetch projectCard.projectSellInfo sellInfo left join fetch sellInfo.businessProject project where project.projectCode = :projectCode and project.ownerBusiness.status in (:allowStatus)", ProjectCard.class)
+                                .setParameter("projectCode", project.getProjectCode())
+                                .setParameter("allowStatus", EnumSet.of(BusinessInstance.BusinessStatus.COMPLETE, BusinessInstance.BusinessStatus.MODIFYING))
+                                .getResultList()) {
+
+                            JSONObject cardJsonObj = new JSONObject();
+                            cardJsonObj.put("cardType", card.getProjectSellInfo().getType().name());
+                            cardJsonObj.put("cardNumber", card.getMakeCard().getNumber());
+                            cardJsonObj.put("address", card.getProjectSellInfo().getBusinessProject().getAddress());
+                            cardJsonObj.put("developerName", card.getProjectSellInfo().getBusinessProject().getDeveloperName());
+
+                            cardJsonObj.put("landCardType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandCardType()));
+                            cardJsonObj.put("landCardNumber", card.getProjectSellInfo().getLandCardNo());
+                            cardJsonObj.put("landArea", (card.getProjectSellInfo().getLandArea() == null) ? null : card.getProjectSellInfo().getLandArea().toString());
+                            cardJsonObj.put("landUseType", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandUseType()));
+
+                            if (card.getProjectSellInfo().getEndUseTime().getTime() != 0) {
+                                cardJsonObj.put("landEndUseTime", card.getProjectSellInfo().getEndUseTime().getTime());
+                            }
+
+                            cardJsonObj.put("landGetMode", DictionaryWord.instance().getWordValue(card.getProjectSellInfo().getLandGetMode()));
+                            cardJsonObj.put("landAddress", card.getProjectSellInfo().getLandAddress());
+                            if (card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp() != null)
+                                cardJsonObj.put("mappingCropName", card.getProjectSellInfo().getBusinessProject().getOwnerBusiness().getMappingCorp().getName());
+
+                            cardJsonObj.put("createCardNumber", card.getProjectSellInfo().getCreateCardNumber());
+                            cardJsonObj.put("createPrepareCardNumber", card.getProjectSellInfo().getCreatePrepareCardNumber());
+                            cardJsonObj.put("name", card.getProjectSellInfo().getBusinessProject().getProjectName());
+
+                            JSONArray buildJsonArray = new JSONArray();
+                            for (BusinessBuild build : card.getProjectSellInfo().getBusinessProject().getBusinessBuildList()) {
+                                JSONObject buildJsonObj = new JSONObject();
+
+                                buildJsonObj.put("buildName", build.getBuildName());
+                                buildJsonObj.put("buildCode", build.getBuildCode());
+                                buildJsonObj.put("mapNumber", build.getMapNumber());
+                                buildJsonObj.put("blockNo", build.getBlockNo());
+                                buildJsonObj.put("buildNo", build.getBuildNo());
+                                buildJsonObj.put("completeYear", build.getCompleteYear());
+                                buildJsonObj.put("streetCode", build.getSectionCode());
+                                buildJsonObj.put("doorNo", build.getDoorNo());
+                                buildJsonObj.put("unintCount", build.getUnintCount());
+                                buildJsonObj.put("buildDevNumber", build.getBuildDevNumber());
+                                buildJsonObj.put("buildType", DictionaryWord.instance().getWordValue(build.getBuildType()));
+                                buildJsonObj.put("structure", DictionaryWord.instance().getWordValue(build.getStructure()));
+                                buildJsonObj.put("upFloorCount", build.getUpFloorCount());
+                                buildJsonObj.put("downFloorCount", build.getDownFloorCount());
+                                buildJsonObj.put("mapTime", build.getMapTime().getTime());
+
+                                buildJsonArray.put(buildJsonObj);
+                            }
+
+                            cardJsonObj.put("saleBuilds", buildJsonArray);
+                            cardArray.put(cardJsonObj);
+                        }
+
+
+                        projectJsonObj.put("saleCards", cardArray);
+
+                        projectArray.put(projectJsonObj);
+                        //jsonObject.put("project", projectJsonObj);
+                        //  jsonObject.put("corp",)
+
+                    }
+
+                    jsonObject.put("projects", projectArray);
+                }
+
+
                 key.setSessionKey(rndData);
                 houseEntityManager.flush();
             }

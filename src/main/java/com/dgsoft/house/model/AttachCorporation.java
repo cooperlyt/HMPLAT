@@ -2,6 +2,7 @@ package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.DataFormat;
+import com.dgsoft.house.AttachCorpType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,10 +19,7 @@ import java.util.*;
 public class AttachCorporation implements java.io.Serializable {
 
 
-	public enum AttachCorpType{
-		//开发商 ， 物业， 评估， 测绘,中介
-		DEVELOPER, MCOMPANY, EVALUATE, MAPPING, AGENCIES
-	}
+
 
 	private String id;
 	private Date recordDate;
