@@ -48,6 +48,11 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/HOUSEINFOXADS</jta-data-source>
 
+        <mapping-file>jpa/houseSellInfo-orm.xml</mapping-file>
+        <mapping-file>jpa/oldHouseSell-orm.xml</mapping-file>
+        <mapping-file>jpa/sellShowImg-orm.xml</mapping-file>
+        <mapping-file>jpa/agencies-orm.xml</mapping-file>
+
         <class>com.dgsoft.house.model.AttachCorporation</class>
         <class>com.dgsoft.house.model.AttachEmployee</class>
         <class>com.dgsoft.house.model.Build</class>
@@ -60,7 +65,6 @@
         <class>com.dgsoft.house.model.GridRow</class>
         <class>com.dgsoft.house.model.House</class>
         <class>com.dgsoft.house.model.HouseGridTitle</class>
-        <class>com.dgsoft.house.model.HouseSellCompany</class>
         <class>com.dgsoft.house.model.MappingCorporation</class>
         <class>com.dgsoft.house.model.Mcompany</class>
         <class>com.dgsoft.house.model.OrgAttachAction</class>
@@ -72,7 +76,10 @@
         <class>com.dgsoft.house.model.Smsubcompany</class>
         <class>com.dgsoft.house.model.HouseNumberPool</class>
         <class>com.dgsoft.house.model.DeveloperLogonKey</class>
+
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
@@ -129,6 +136,7 @@
         <class>com.dgsoft.house.owner.model.ProjectLandEndTime</class>
         <class>com.dgsoft.house.owner.model.RecordLocal</class>
         <class>com.dgsoft.house.owner.model.SubStatus</class>
+        <class>com.dgsoft.house.owner.model.SaleShowCheck</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/layout/template-edit.xhtml">
+    <a:outputPanel id="functionTitle" layout="block" styleClass="setup-header">
+        <h1>#{agenciesAttachCorpHome.managed ? messages.edit :  messages.create} #{messages.EstateAgencies}</h1>
+    </a:outputPanel>
+
+
+    <rich:messages globalOnly="true" ajaxRendered="true"/>
+
+
+<h:form>
+    <s:decorate id="IdField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            编号
+        </ui:define>
+        <ui:param name="for" value="idInput"/>
+        <ui:param name="status" value="idStatus"/>
+
+
+        <div class="input-group">
+                 <span class="input-group-addon">
+        <h:selectBooleanCheckbox style="width: auto" value="#{agenciesAttachCorpHome.instance.enable}"/>
+      </span>
+            <h:inputText id="idInput" required="true" styleClass="form-control" maxlength="32"
+                         label="编号" size="32"
+                         value="#{agenciesAttachCorpHome.instance.id}" disabled="#{agenciesAttachCorpHome.managed}"
+                         valueChangeListener="#{agenciesAttachCorpHome.verifyIdAvailable}">
+                <f:validateRequired/>
+                <a:ajax event="change" render="IdField" status="idStatus"/>
+            </h:inputText>
+
+        </div>
+
+
+
+    </s:decorate>
+
+
+    <s:decorate id="nameField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            名称
+        </ui:define>
+        <ui:param name="for" value="nameInput"/>
+        <ui:param name="status" value="idStatus"/>
+        <h:inputText id="nameInput" required="true" styleClass="form-control" maxlength="100"
+                     label="名称"
+                     value="#{agenciesAttachCorpHome.agencies.name}">
+            <f:validateRequired/>
+        </h:inputText>
+
+    </s:decorate>
+
+    <s:decorate id="saleTel" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            销售电话
+        </ui:define>
+        <ui:param name="for" value="saleTelInput"/>
+        <h:inputText id="saleTelInput" required="true" styleClass="form-control" label="销售电话"
+                     value="#{agenciesAttachCorpHome.agencies.tel}">
+            <f:validateRequired/>
+        </h:inputText>
+    </s:decorate>
+
+
+    <ui:include src="/layout/house/AttachCorpEdit.xhtml">
+        <ui:param name="attachCorpHome" value="#{agenciesAttachCorpHome}"/>
+    </ui:include>
+
+
+    <hr/>
+
+
+    <h:commandButton value="#{messages.ok}" rendered="#{agenciesAttachCorpHome.managed}"
+                     action="#{agenciesAttachCorpHome.update}"
+                     styleClass="button primary first-in-line">
+    </h:commandButton>
+
+    <h:commandButton value="#{messages.ok}" rendered="#{not agenciesAttachCorpHome.managed}"
+                     action="#{agenciesAttachCorpHome.persist}"
+                     styleClass="button primary first-in-line">
+    </h:commandButton>
+
+</h:form>
+</ui:composition>

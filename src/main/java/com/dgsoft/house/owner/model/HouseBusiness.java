@@ -24,6 +24,7 @@ public class HouseBusiness implements java.io.Serializable {
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
     private boolean canceled;
 
+    private SaleShowCheck saleShowCheck;
 
     public HouseBusiness() {
     }
@@ -129,5 +130,15 @@ public class HouseBusiness implements java.io.Serializable {
 
     public void setRecordStores(Set<RecordStore> recordStores) {
         this.recordStores = recordStores;
+    }
+
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "houseBusiness")
+    public SaleShowCheck getSaleShowCheck() {
+        return saleShowCheck;
+    }
+
+    public void setSaleShowCheck(SaleShowCheck saleShowCheck) {
+        this.saleShowCheck = saleShowCheck;
     }
 }
