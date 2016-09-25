@@ -850,12 +850,6 @@ public class TotalContract {
 
 
         }
-
-
-
-
-
-
             row1 = sheet.createRow(rowIndex);
             Cell zzhjcell = row1.createCell(0);
             zzhjcell.setCellValue("合计");
