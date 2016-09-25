@@ -431,62 +431,87 @@ public class TotalContract {
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareHome() != null)
                     cell.setCellValue(item.getSalePrepareHome().getCount());
+                    else
+                    cell.setCellValue(0);
+
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareHome() != null)
                     cell.setCellValue(item.getSalePrepareHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareHome() != null)
                     cell.setCellValue(item.getSalePrepareHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareUnHome() != null)
                     cell.setCellValue(item.getSalePrepareUnHome().getCount());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareUnHome() != null)
                     cell.setCellValue(item.getSalePrepareUnHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareUnHome() != null)
                     cell.setCellValue(item.getSalePrepareUnHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowHome() != null)
                     cell.setCellValue(item.getSaleNowHome().getCount());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowHome() != null)
                     cell.setCellValue(item.getSaleNowHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowHome() != null)
                     cell.setCellValue(item.getSaleNowHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowUnHome() != null)
                     cell.setCellValue(item.getSaleNowUnHome().getCount());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowUnHome() != null)
                     cell.setCellValue(item.getSaleNowUnHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowUnHome() != null)
                     cell.setCellValue(item.getSaleNowUnHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
 
@@ -511,17 +536,17 @@ public class TotalContract {
         cellIndex = 2;
         for(int i = 0; i< 4; i++){
 
-            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
-            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
-            cell.setCellStyle(headCellStyle);
+            zzhjcell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            zzhjcell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            zzhjcell.setCellStyle(headCellStyle);
 
-            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
-            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
-            cell.setCellStyle(headCellStyle);
+            zzhjcell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            zzhjcell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            zzhjcell.setCellStyle(headCellStyle);
 
-            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
-            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
-            cell.setCellStyle(headCellStyle);
+            zzhjcell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            zzhjcell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            zzhjcell.setCellStyle(headCellStyle);
 
         }
 
