@@ -19,7 +19,7 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
             "left join fetch aCorp.developer developer " +
             "left join fetch aCorp.mappingCorporation mapping " +
             "left join fetch aCorp.evaluateCorporation evaluate " +
-            "left join fetch aCorp.houseSellCompany houseSellCompany";
+            "left join fetch aCorp.agencies houseSellCompany";
 
     private static final String[] RESTRICTIONS1 = {
             "aCorp.type = #{attachCorporationList.type}"

@@ -27,7 +27,7 @@
                 <strong>
                     <h:outputText value="#{attachCorporationHome.instance.developer.name}"
                                   rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}"/>
-                    <h:outputText value="#{attachCorporationHome.instance.houseSellCompany.name}"
+                    <h:outputText value="#{attachCorporationHome.instance.agencies.name}"
                                   rendered="#{attachCorporationHome.instance.type eq 'AGENCIES'}"/>
                 </strong>
 
@@ -55,7 +55,7 @@
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Name}"/>
             <dh:entryGridColumn colspan="1">
-                <h:outputText value="#{attachCorporationHome.instance.type eq 'DEVELOPER' ? attachCorporationHome.instance.developer.name : attachCorporationHome.instance.houseSellCompany.name}" style="padding-right: 10px"
+                <h:outputText value="#{attachCorporationHome.instance.type eq 'DEVELOPER' ? attachCorporationHome.instance.developer.name : attachCorporationHome.instance.agencies.name}" style="padding-right: 10px"
                               styleClass="#{attachCorporationHome.instance.outTime ? 'out-time' : ''} #{attachCorporationHome.instance.enable ? '' : 'delete-data'} "/>
                 <a:outputPanel styleClass="label label-danger"
                                rendered="#{not attachCorporationHome.instance.enable}">#{messages.AttachDisable}</a:outputPanel>

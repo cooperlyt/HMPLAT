@@ -2,7 +2,7 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.model.AttachCorporation;
-import com.dgsoft.house.model.HouseSellCompany;
+import com.dgsoft.house.model.Agencies;
 import org.jboss.seam.annotations.Name;
 
 import java.util.Date;
@@ -14,20 +14,20 @@ import java.util.Date;
 public class AgenciesAttachCorpHome extends AttachCorporationHome {
 
 
-    private HouseSellCompany houseSellCompany;
+    private Agencies agencies;
 
-    public HouseSellCompany getHouseSellCompany() {
-        if (houseSellCompany == null){
+    public Agencies getAgencies() {
+        if (agencies == null){
             initInstance();
         }
-        return houseSellCompany;
+        return agencies;
     }
 
     @Override
     protected AttachCorporation createInstance(){
         AttachCorporation result =  new AttachCorporation(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), AttachCorpType.AGENCIES,true, new Date());
-        houseSellCompany = new HouseSellCompany(result, new Date());
-        result.setHouseSellCompany(houseSellCompany);
+        agencies = new Agencies(result, new Date());
+        result.setAgencies(agencies);
 
         return result;
     }
@@ -36,7 +36,7 @@ public class AgenciesAttachCorpHome extends AttachCorporationHome {
     protected boolean verifyPersistAvailable() {
         boolean result = super.verifyPersistAvailable();
         if (result){
-            houseSellCompany.setId(getInstance().getId());
+            agencies.setId(getInstance().getId());
         }
         return result;
     }
@@ -46,7 +46,7 @@ public class AgenciesAttachCorpHome extends AttachCorporationHome {
     protected void initInstance(){
         super.initInstance();
         if (isIdDefined()){
-            houseSellCompany = getInstance().getHouseSellCompany();
+            agencies = getInstance().getAgencies();
         }
     }
 }

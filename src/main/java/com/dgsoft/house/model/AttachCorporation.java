@@ -1,9 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.DataFormat;
 import com.dgsoft.house.AttachCorpType;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,8 +15,6 @@ import java.util.*;
 @Entity
 @Table(name = "ATTACH_CORPORATION", catalog = "HOUSE_INFO")
 public class AttachCorporation implements java.io.Serializable {
-
-
 
 
 	private String id;
@@ -51,7 +47,7 @@ public class AttachCorporation implements java.io.Serializable {
 
     private EvaluateCorporation evaluateCorporation;
 
-	private HouseSellCompany houseSellCompany;
+	private Agencies agencies;
 
 
 	public AttachCorporation(String id,AttachCorpType type,boolean enable, Date recordDate) {
@@ -312,12 +308,12 @@ public class AttachCorporation implements java.io.Serializable {
     }
 
 	@OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation", cascade = CascadeType.ALL)
-	public HouseSellCompany getHouseSellCompany() {
-		return houseSellCompany;
+	public Agencies getAgencies() {
+		return agencies;
 	}
 
-	public void setHouseSellCompany(HouseSellCompany houseSellCompany) {
-		this.houseSellCompany = houseSellCompany;
+	public void setAgencies(Agencies agencies) {
+		this.agencies = agencies;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "attachCorporation")

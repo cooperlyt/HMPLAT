@@ -53,10 +53,21 @@
         <ui:param name="status" value="idStatus"/>
         <h:inputText id="nameInput" required="true" styleClass="form-control" maxlength="100"
                      label="名称"
-                     value="#{agenciesAttachCorpHome.houseSellCompany.name}">
+                     value="#{agenciesAttachCorpHome.agencies.name}">
             <f:validateRequired/>
         </h:inputText>
 
+    </s:decorate>
+
+    <s:decorate id="saleTel" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            销售电话
+        </ui:define>
+        <ui:param name="for" value="saleTelInput"/>
+        <h:inputText id="saleTelInput" required="true" styleClass="form-control" label="销售电话"
+                     value="#{agenciesAttachCorpHome.agencies.tel}">
+            <f:validateRequired/>
+        </h:inputText>
     </s:decorate>
 
 

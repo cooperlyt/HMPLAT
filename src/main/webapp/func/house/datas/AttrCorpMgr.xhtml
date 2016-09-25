@@ -159,7 +159,7 @@
                                 从业机构名称
                             </f:facet>
                             <h:outputText styleClass="  #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
-                            value="#{attachCorporationList.type eq 'DEVELOPER' ? _item.developer.name : _item.houseSellCompany.name }"/>
+                            value="#{attachCorporationList.type eq 'DEVELOPER' ? _item.developer.name : _item.agencies.name }"/>
 
                         </h:column>
 

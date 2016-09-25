@@ -1,25 +1,19 @@
 package com.dgsoft.house.owner.ws;
 
 import com.dgsoft.common.system.DictionaryWord;
-import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.model.Word;
-import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.LogonStatus;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseStatus;
-import com.dgsoft.house.PoolType;
 import com.dgsoft.house.SaleType;
-import com.dgsoft.house.UseTypeWordAdapter;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.model.*;
-import com.dgsoft.house.owner.HouseOwnerHelper;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
 import com.longmai.uitl.Base64;
-import org.eclipse.emf.common.util.Pool;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
@@ -27,11 +21,9 @@ import org.jboss.seam.log.Logging;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.tuckey.web.filters.urlrewrite.Run;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -99,9 +91,9 @@ public class DeveloperServiceComponent {
                 jsonObject.put("orgName", RunParam.instance().getStringParamValue("SetupName"));
 
                 if (AttachCorpType.AGENCIES.equals(key.getAttachEmployee().getAttachCorporation().getType())){
-                    jsonObject.put("groupName", key.getAttachEmployee().getAttachCorporation().getHouseSellCompany().getName());
-                    jsonObject.put("groupCode", key.getAttachEmployee().getAttachCorporation().getHouseSellCompany().getId());
-                    attachCorpJsonObj.put("name", key.getAttachEmployee().getAttachCorporation().getHouseSellCompany().getName());
+                    jsonObject.put("groupName", key.getAttachEmployee().getAttachCorporation().getAgencies().getName());
+                    jsonObject.put("groupCode", key.getAttachEmployee().getAttachCorporation().getAgencies().getId());
+                    attachCorpJsonObj.put("name", key.getAttachEmployee().getAttachCorporation().getAgencies().getName());
                 }
 
 
