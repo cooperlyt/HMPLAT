@@ -6,7 +6,7 @@
                  version="2.0">
 
     <entity class="cc.coopersoft.house.sale.data.SellProxyPerson" access="FIELD">
-        <table name="SELL_SHOW_IMG" catalog="HOUSE_INFO"/>
+        <table name="SELL_PROXY_PERSON" catalog="HOUSE_INFO"/>
         <attributes>
             <id name="id">
                 <column name="ID" unique="true" nullable="false" length="32"/>
