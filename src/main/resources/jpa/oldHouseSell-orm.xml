@@ -72,6 +72,10 @@
                 <cascade><cascade-all/></cascade>
             </one-to-one>
 
+            <one-to-one name="sellProxyPerson">
+                <primary-key-join-column />
+            </one-to-one>
+
             <many-to-many name="houseSellCompanies" target-entity="com.dgsoft.house.model.Agencies" fetch="LAZY">
                 <join-table name="COMPANY_SELL_INFO">
                     <join-column name="SELL_INFO" nullable="false"/>
