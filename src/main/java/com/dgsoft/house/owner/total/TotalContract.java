@@ -275,6 +275,8 @@ public class TotalContract {
                 .setParameter("usetype",getHouseUseType("1")).getResultList();
 
 
+
+
         List<TotalContractData> unhomeTotalData =ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.afterBusinessHouse.contractOwner.type,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.status = 'COMPLETE' " +
                 " and hb.afterBusinessHouse.useType not in (:usetype)  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
@@ -287,7 +289,7 @@ public class TotalContract {
 
         Map<String,DeveloperGroup<SectionRecordTypeItem>> resultData = new HashMap<String, DeveloperGroup<SectionRecordTypeItem>>();
 
-
+        Logging.getLog(getClass()).debug("homeTotalData--"+homeTotalData.size());
         for(TotalContractData data: homeTotalData){
             DeveloperGroup<SectionRecordTypeItem> dg = resultData.get(data.getDeveloperName());
             if (dg == null){
@@ -302,7 +304,7 @@ public class TotalContract {
                 throw new IllegalArgumentException(e);
             }
         }
-
+        Logging.getLog(getClass()).debug("unhomeTotalData--"+homeTotalData.size());
         for(TotalContractData data: unhomeTotalData){
             DeveloperGroup<SectionRecordTypeItem> dg = resultData.get(data.getDeveloperName());
             if (dg == null){
