@@ -459,7 +459,7 @@ public class DeveloperServiceComponent {
         if (businessBuild.getBusinessProject().getProjectSellInfo().getType().equals(SaleType.NOW_SELL)){
             saleType = SaleType.NOW_SELL;
         }else{
-             saleType = (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL : SaleType.MAP_SELL;
+            saleType = (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL : SaleType.MAP_SELL;
 
         }
 

@@ -62,7 +62,6 @@ public class RecordStoreList extends MultiOperatorEntityQuery<RecordStore> {
     }
 
 
-
     @Override
     protected String getPersistenceContextName() {
         return "ownerEntityManager";

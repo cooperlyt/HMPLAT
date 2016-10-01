@@ -10,13 +10,7 @@ import com.dgsoft.house.owner.model.UploadFile;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.core.Expressions;
-import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Logging;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.richfaces.application.push.TopicKey;
-import org.richfaces.application.push.TopicsContext;
 
 import java.util.*;
 
