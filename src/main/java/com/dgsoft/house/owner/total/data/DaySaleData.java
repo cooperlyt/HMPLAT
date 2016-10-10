@@ -21,6 +21,8 @@ public class DaySaleData {
 
     private BigDecimal assessmentPrice;
 
+    private String ownerAddress;
+
     public BigDecimal getAssessmentPrice() {
         return assessmentPrice;
     }
@@ -37,6 +39,17 @@ public class DaySaleData {
         this.money = money;
         this.sectionName = sectionName;
         this.assessmentPrice=assessmentPrice;
+    }
+
+    public DaySaleData(String businessId, String houseCode, String address, BigDecimal area, BigDecimal money, String sectionName, BigDecimal assessmentPrice, String ownerAddress) {
+        this.businessId = businessId;
+        this.houseCode = houseCode;
+        this.address = address;
+        this.area = area;
+        this.money = money;
+        this.sectionName = sectionName;
+        this.assessmentPrice = assessmentPrice;
+        this.ownerAddress = ownerAddress;
     }
 
     public String getBusinessId() {
@@ -61,5 +74,9 @@ public class DaySaleData {
 
     public String getSectionName() {
         return sectionName;
+    }
+
+    public String getOwnerAddress() {
+        return ownerAddress;
     }
 }

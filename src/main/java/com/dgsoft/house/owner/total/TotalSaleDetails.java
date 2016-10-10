@@ -60,7 +60,12 @@ public class TotalSaleDetails {
         this.searchDate = searchDate;
     }
 
-    private void createSheet(XSSFWorkbook workbook, String name, String businessDefineId){
+    private void createSheet(XSSFWorkbook workbook, String name, boolean isOld){
+
+        String businessDefineId = isOld ? RunParam.instance().getStringParamValue("oldHouseSaleBizDefineId") : RunParam.instance().getStringParamValue("newHouseSaleBizDefineId");
+
+        String ownerAddressPath = isOld ? "hb.afterBusinessHouse.businessHouseOwner.address" : "hb.afterBusinessHouse.contractOwner.address";
+
 
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(searchDate);
@@ -108,6 +113,10 @@ public class TotalSaleDetails {
         cell.setCellValue("评估价格");
         cell.setCellStyle(headCellStyle);
 
+        cell = row.createCell(colIndex++);
+        cell.setCellValue(isOld ? "产权人地址" : "备案人地址");
+        cell.setCellStyle(headCellStyle);
+
 
         List<BusinessInstance.BusinessStatus> allowStatus = new ArrayList<BusinessInstance.BusinessStatus>();
         if(onlyRunning == null){
@@ -123,7 +132,7 @@ public class TotalSaleDetails {
         }
         List<DaySaleData> datas = new ArrayList<DaySaleData>();
         if (onlyRunning == null || onlyRunning) {
-            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice) from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice ," + ownerAddressPath + ") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
                     "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
                     "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
                     "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
@@ -132,7 +141,7 @@ public class TotalSaleDetails {
                     .setParameter("status", allowStatus)
                     .setParameter("searchDay", gc.get(Calendar.DAY_OF_MONTH)).getResultList();
         }else{
-            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice) from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice, " + ownerAddressPath +") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
                     "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
                     "and month(hb.ownerBusiness.regTime) = :searchMonth and day(hb.ownerBusiness.regTime) = :searchDay " +
                     "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
@@ -165,6 +174,9 @@ public class TotalSaleDetails {
             }else {
                 cell.setCellValue(0);
             }
+            cell = row.createCell(colIndex++);
+            cell.setCellValue(data.getOwnerAddress());
+
         }
 
         row = sheet.createRow(rowIndex);
@@ -185,8 +197,8 @@ public class TotalSaleDetails {
 
     public void exportSaleDetails(){
         XSSFWorkbook workbook = new XSSFWorkbook();
-        createSheet(workbook,"商品房销售明细", RunParam.instance().getStringParamValue("newHouseSaleBizDefineId"));
-        createSheet(workbook,"存量房销售明细", RunParam.instance().getStringParamValue("oldHouseSaleBizDefineId"));
+        createSheet(workbook,"商品房销售明细", false);
+        createSheet(workbook,"存量房销售明细", true);
 
         ExternalContext externalContext = facesContext.getExternalContext();
         externalContext.responseReset();

@@ -15,13 +15,7 @@
 
         <div>
             <div style="width: 470px; float: left;font-size: 12px">
-                <a:outputPanel style="width: 100%; text-align: right;" layout="block"
-                               rendered="#{not empty personInstance.idCard}">
-                    性别 <strong>#{messages[personInstance.idCard.sex.name()]}</strong> 民族
-                    <strong>#{personInstance.idCard.ethnic}</strong> 出生 <strong><h:outputText
-                        value="#{personInstance.idCard.dateOfBirth}"><s:convertDateTime
-                        pattern="#{messages.displayDatePattern}"/></h:outputText></strong>
-                </a:outputPanel>
+
 
                 <s:decorate rendered="#{personInstance.credentialsType.corp}"
                             id="legalPersonField" styleClass="form-group" template="/layout/edit.xhtml">
