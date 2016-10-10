@@ -82,6 +82,7 @@ public class DeveloperServiceComponent {
                 attachCorpJsonObj.put("cerCode", key.getAttachEmployee().getAttachCorporation().getCerCode());
                 attachCorpJsonObj.put("ownerPerson", key.getAttachEmployee().getAttachCorporation().getOwnerName());
                 attachCorpJsonObj.put("ownerTel", key.getAttachEmployee().getAttachCorporation().getOwnerTel());
+                attachCorpJsonObj.put("checkDateTo",key.getAttachEmployee().getAttachCorporation().getDateTo().getTime());
 
 
 

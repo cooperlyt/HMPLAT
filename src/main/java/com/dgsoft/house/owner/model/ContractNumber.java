@@ -72,7 +72,7 @@ public class ContractNumber implements java.io.Serializable{
         this.version = version;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT", nullable = true)
     public HouseContract getHouseContract() {
         return houseContract;

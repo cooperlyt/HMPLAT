@@ -74,24 +74,41 @@ public class OutsideBusinessCreate {
         }
 
         String houseCode;
-        ContractOwner contractOwner;
+        ContractOwner contractOwner = null;
         PoolType poolType;
         SaleInfo saleInfo;
         BusinessPersion businessPersion;
-        List<BusinessPool> businessPools = null;
+        List<BusinessPool> businessPools;
         try {
             houseCode = contractObj.getString("houseCode");
 
-            String legalPerson;
-            try {
-                legalPerson = contractObj.getString("legalPerson");
-            }catch (JSONException e){
-                legalPerson = null;
-            }
 
             poolType = PoolType.valueOf(contractObj.getString("poolType"));
 
-            if(!PoolType.SINGLE_OWNER.equals(poolType)) {
+            //--- 兼容旧版 有产权人的
+            try {
+
+                if (contractObj.getString("name") != null && !"".equals(contractObj.getString("name").trim()) &&
+                        contractObj.getString("credentialsNumber") != null && !"".equals(contractObj.getString("credentialsNumber").trim())) {
+                    String legalPerson;
+                    try {
+                        legalPerson = contractObj.getString("legalPerson");
+                    } catch (JSONException e) {
+                        legalPerson = null;
+                    }
+                    contractOwner = new ContractOwner(contractObj.getString("name"),
+                            PersonEntity.CredentialsType.valueOf(contractObj.getString("credentialsType")),
+                            contractObj.getString("credentialsNumber"), contractObj.getString("tel"),
+                            contractObj.getString("rootAddress"), contractObj.getString("address"),
+                            legalPerson, contractObj.getString("id"),
+                            SaleType.valueOf(contractObj.getString("type")), new Date(contractObj.getLong("createTime")), houseCode);
+
+                }
+            }catch (JSONException e){
+                Logging.getLog(getClass()).debug(e.getMessage(),e);
+            }
+            //-------
+
                 businessPools = new ArrayList<BusinessPool>();
                 JSONArray poolArray = contractObj.getJSONArray("pool");
 
@@ -104,30 +121,44 @@ public class OutsideBusinessCreate {
                     } catch (JSONException e) {
                         poolLegalPerson = null;
                     }
+                    if (contractOwner == null){
 
-                    String perc = null;
-                    BigDecimal poolArea = null;
-                    if (PoolType.SHARE_OWNER.equals(poolType)){
-                        try{
-                            perc = poolObj.getString("perc");
-                        }catch (JSONException e){
+                        contractOwner = new ContractOwner(poolObj.getString("name"),
+                                PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
+                                poolObj.getString("credentialsNumber"),poolObj.getString("tel"),
+                                poolObj.getString("rootAddress"),poolObj.getString("address"),
+                                poolLegalPerson,contractObj.getString("id"),
+                                SaleType.valueOf(contractObj.getString("type")),new Date(contractObj.getLong("createTime")),houseCode);
+
+
+                    }else {
+
+
+
+                        String perc = null;
+                        BigDecimal poolArea = null;
+                        if (PoolType.SHARE_OWNER.equals(poolType)) {
+                            try {
+                                perc = poolObj.getString("perc"); // double
+                            } catch (JSONException e) {
+                            }
+                            try {
+                                poolArea = BigDecimal.valueOf(poolObj.getDouble("poolArea"));
+                            } catch (JSONException e) {
+                            }
                         }
-                        try{
-                            poolArea = BigDecimal.valueOf(poolObj.getDouble("poolArea"));
-                        }catch (JSONException e){
-                        }
+
+
+                        BusinessPool businessPool = new BusinessPool(poolObj.getString("name"),
+                                PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
+                                poolObj.getString("credentialsNumber"),
+                                poolObj.getString("relation"), poolArea,
+                                perc, poolObj.getString("tel"), new Date(), poolLegalPerson);
+                        businessPools.add(businessPool);
                     }
-
-
-                    BusinessPool businessPool = new BusinessPool(poolObj.getString("name"),
-                            PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
-                            poolObj.getString("credentialsNumber"),
-                            poolObj.getString("relation"), poolArea,
-                            perc, poolObj.getString("tel"), new Date(), poolLegalPerson);
-                    businessPools.add(businessPool);
                 }
 
-            }
+
 
 
             businessPersion = new BusinessPersion(BusinessPersion.PersionType.PRE_SALE_ENTRUST);
@@ -140,12 +171,7 @@ public class OutsideBusinessCreate {
 
 
 
-            contractOwner = new ContractOwner(contractObj.getString("name"),
-                    PersonEntity.CredentialsType.valueOf(contractObj.getString("credentialsType")),
-                    contractObj.getString("credentialsNumber"),contractObj.getString("tel"),
-                    contractObj.getString("rootAddress"),contractObj.getString("address"),
-                    legalPerson,contractObj.getString("id"),
-                    SaleType.valueOf(contractObj.getString("type")),new Date(contractObj.getLong("createTime")),houseCode);
+
 
             contractOwner.setProjectRshipNumber(contractObj.getString("projectCerNumber"));
 
@@ -155,6 +181,7 @@ public class OutsideBusinessCreate {
 
             contractOwner.setHouseContract(houseContract);
             houseContract.setContractOwner(contractOwner);
+
 
 
             JSONArray numberArray = contractObj.getJSONArray("contractNumber");
@@ -197,6 +224,17 @@ public class OutsideBusinessCreate {
         }
 
 
+
+        businessDefineHome.setId(businessDefineId);
+
+        ownerBusinessHome.clearInstance();
+        ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
+
+
+
+        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+
+
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
             BusinessDataValid.ValidResult result;
             try {
@@ -214,14 +252,9 @@ public class OutsideBusinessCreate {
             }
         }
 
-        businessDefineHome.setId(businessDefineId);
 
-        ownerBusinessHome.clearInstance();
-        ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
-        contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
-        if (businessHouse.getOldOwner() != null){
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setOldOwner(businessHouse.getOldOwner());
+        for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
+            component.fillData();
         }
 
         saleInfo.setBusinessHouse(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse());
@@ -230,7 +263,10 @@ public class OutsideBusinessCreate {
         businessPersion.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getInstance().getBusinessPersions().add(businessPersion);
 
+        contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(contractOwner);
+
+
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
         ownerBusinessHome.getInstance().getContractOwners().clear();
         ownerBusinessHome.getInstance().getContractOwners().add(contractOwner);
@@ -241,9 +277,7 @@ public class OutsideBusinessCreate {
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().addAll(businessPools);
         }
 
-        for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
-            component.fillData();
-        }
+
 
 
 
@@ -282,12 +316,7 @@ public class OutsideBusinessCreate {
     @Transactional
     public void createOldContract(LockedHouse lh,ContractOwner co){
 
-
-
-
-
             House house = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.id = :hid",House.class).setParameter("hid",lh.getHouseCode()).getSingleResult();
-
 
             businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
             businessDefineHome.setId(businessDefineId);
