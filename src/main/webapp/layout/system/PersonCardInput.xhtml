@@ -27,7 +27,7 @@
                               value="#{_person.credentialsType}" required="true">
                 <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
                 <s:convertEnum/>
-                <a:ajax event="valueChange" listener="#{_person.typeChange}"
+                <a:ajax event="valueChange"
                         render="personCardInput #{render}"
                         oncomplete="initDynamicEditInputs('#{r:clientId('credentialsType')}'); initDynamicEditInputs('#{r:clientId('render')}');"
                         execute="@this" status="#{personStatus}">
