@@ -114,8 +114,7 @@ public class BusinessPool implements PersonEntity, java.io.Serializable {
     }
 
     @Override
-    @Column(name = "ID_NO", nullable = false, length = 100)
-    @NotNull
+    @Column(name = "ID_NO", nullable = true, length = 100)
     @Size(max = 100)
     public String getCredentialsNumber() {
         return credentialsNumber;
