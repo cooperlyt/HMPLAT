@@ -95,7 +95,7 @@ public class ContractNumberPublish {
         requestNumber.removeAll(getCantPublishNumber());
         for(String num: requestNumber){
             ContractNumber contractNumber = new ContractNumber(attachCorporationHome.getInstance().getType(), i++, num,
-                    ContractNumber.ContractNumberStatus.FREE, new Date(),attachCorporationHome.getInstance().getId());
+                    ContractNumber.ContractNumberStatus.FREE, new Date(),attachCorporationHome.getInstance().getId(),attachCorporationHome.getInstance().getName());
             contractNumber.setApplyTime(new Date());
             ownerEntityLoader.getEntityManager().persist(contractNumber);
         }

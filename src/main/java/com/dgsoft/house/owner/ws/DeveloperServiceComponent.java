@@ -272,7 +272,7 @@ public class DeveloperServiceComponent {
             for (int i = 0; i < count; i++) {
                 long number = max + i;
                 ContractNumber contractNumber = new ContractNumber(key.getAttachEmployee().getAttachCorporation().getType(), number, type.getNumberPrefx() + setupCode + "-" + number,
-                        ContractNumber.ContractNumberStatus.OUT, new Date(), key.getAttachEmployee().getAttachCorporation().getId());
+                        ContractNumber.ContractNumberStatus.OUT, new Date(), key.getAttachEmployee().getAttachCorporation().getId(),key.getAttachEmployee().getAttachCorporation().getName());
                 contractNumber.setApplyTime(new Date());
                 ownerEntityManager.persist(contractNumber);
                 jsonArray.put(contractNumber.getContractNumber());

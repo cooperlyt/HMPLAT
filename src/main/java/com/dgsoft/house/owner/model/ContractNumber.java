@@ -28,19 +28,21 @@ public class ContractNumber implements java.io.Serializable{
     private long number;
 
     private String groupNumber;
+    private String groupName;
 
     private HouseContract houseContract;
 
     public ContractNumber() {
     }
 
-    public ContractNumber(AttachCorpType type, long number, String contractNumber, ContractNumberStatus status, Date createTime,String groupNumber) {
+    public ContractNumber(AttachCorpType type, long number, String contractNumber, ContractNumberStatus status, Date createTime,String groupNumber, String groupName) {
         this.number = number;
         this.createTime = createTime;
         this.type = type;
         this.status = status;
         this.contractNumber = contractNumber;
         this.groupNumber = groupNumber;
+        this.groupName = groupName;
     }
 
     @Id
@@ -135,5 +137,15 @@ public class ContractNumber implements java.io.Serializable{
 
     public void setNumber(long number) {
         this.number = number;
+    }
+
+    @Column(name="GROUP_NAME",length = 100)
+    @Size(max = 100)
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }
