@@ -2,6 +2,8 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.AttachCorporation;
+import com.dgsoft.house.owner.OwnerEntityLoader;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 import java.util.Calendar;
@@ -28,6 +30,14 @@ public class AttachCorporationHome extends HouseEntityHome<AttachCorporation> {
         gc.add(Calendar.YEAR, 1);
         getInstance().setDateTo(gc.getTime());
         return true;
+    }
+
+    @In(create = true)
+    private OwnerEntityLoader ownerEntityLoader;
+
+    public int getContractNumberCount(){
+        return ownerEntityLoader.getEntityManager().createQuery("select count(cn) from ContractNumber cn where cn.status = 'FREE' and cn.groupNumber = :groupNumber",Long.class)
+                .setParameter("groupNumber",getInstance().getId()).getSingleResult().intValue();
     }
 
 

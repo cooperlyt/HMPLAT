@@ -20,10 +20,14 @@ public class NewHouseSaleValid extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         String projectCode = businessHouse.getProjectCode();
-        if (projectCode == null){
+        String buildCode = businessHouse.getBuildCode();
+        if (projectCode == null || buildCode == null){
             return new ValidResult("house_not_have_sale_card", ValidResultLevel.ERROR, businessHouse.getHouseCode());
         }else{
-            Long count = ownerEntityLoader.getEntityManager().createQuery("select count(bp) from BusinessProject bp where bp.projectCode =:projectCode and bp.ownerBusiness.status = 'COMPLETE'", Long.class).getSingleResult();
+            Long count = ownerEntityLoader.getEntityManager().createQuery("select count(bb) from BusinessBuild bb left join bb.businessProject bp where bb.buildCode=:buildCode and bp.projectCode =:projectCode and bp.ownerBusiness.status = 'COMPLETE'", Long.class)
+                    .setParameter("buildCode",buildCode)
+                    .setParameter("projectCode",projectCode)
+                    .getSingleResult();
             if (count.intValue() <= 0){
                 return new ValidResult("house_not_have_sale_card", ValidResultLevel.ERROR, businessHouse.getHouseCode());
             }else{
