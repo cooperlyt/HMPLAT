@@ -85,7 +85,10 @@ public class ContractNumberPublish {
     public void publishNum(){
         int i = 0;
         try {
-            i = ownerEntityLoader.getEntityManager().createQuery("select max(cn.number) from ContractNumber cn", Long.class).getSingleResult().intValue();
+           Long max  = ownerEntityLoader.getEntityManager().createQuery("select max(cn.number) from ContractNumber cn", Long.class).getSingleResult();
+            if (max != null){
+                i = max.intValue();
+            }
         }catch (NoResultException e){
 
         }
