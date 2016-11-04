@@ -361,4 +361,22 @@ public class AttachCorporation implements java.io.Serializable {
 	public boolean isOutTime(){
 		return getDateTo().compareTo(new Date()) < 0;
 	}
+
+	@Transient
+	public String getName(){
+		switch (type){
+
+			case DEVELOPER:
+				return getDeveloper().getName();
+			case EVALUATE:
+				return getEvaluateCorporation().getName();
+			case MAPPING:
+				return getMappingCorporation().getName();
+			case AGENCIES:
+				return getAgencies().getName();
+
+			default:
+				throw new IllegalAccessError("unknow attr corp type");
+		}
+	}
 }

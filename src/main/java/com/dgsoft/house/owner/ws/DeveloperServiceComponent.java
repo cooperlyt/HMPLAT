@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.ws;
 
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.BusinessInstance;
@@ -240,36 +241,54 @@ public class DeveloperServiceComponent {
         //    throw new IllegalArgumentException("ContractNOCount param is zero");
         //}
 
-        SaleType type = SaleType.valueOf(typeName);
+
 
         EntityManager ownerEntityManager = (EntityManager) Component.getInstance("ownerEntityManager", true, true);
 
+        String numberType = RunParam.instance().getStringParamValue("contract_type");
 
-        //List<ContractNumber> contractNumbers = ownerEntityManager.createQuery("select n from ContractNumber n where n.type = :contractType and n.status = 'FREE'", ContractNumber.class)
-        //        .setParameter("contractType", type).setMaxResults(count).getResultList();
-        //if (contractNumbers.size() < count){
-        String setupCode = RunParam.instance().getStringParamValue("SetupCode");
-        Long max;
-        try {
-            max = ownerEntityManager.createQuery("select max(n.number) from ContractNumber n where n.type =:contractType", Long.class)
-                    .setParameter("contractType", type).getSingleResult();
-            if (max == null) {
+        JSONArray jsonArray;
+
+        if("AUTO".equals(numberType)) {
+
+            SaleType type = SaleType.valueOf(typeName);
+            //List<ContractNumber> contractNumbers = ownerEntityManager.createQuery("select n from ContractNumber n where n.type = :contractType and n.status = 'FREE'", ContractNumber.class)
+            //        .setParameter("contractType", type).setMaxResults(count).getResultList();
+            //if (contractNumbers.size() < count){
+            String setupCode = RunParam.instance().getStringParamValue("SetupCode");
+            Long max;
+            try {
+                max = ownerEntityManager.createQuery("select max(n.number) from ContractNumber n where n.type =:contractType", Long.class)
+                        .setParameter("contractType", type).getSingleResult();
+                if (max == null) {
+                    max = new Long(0);
+                }
+            } catch (NoResultException e) {
                 max = new Long(0);
             }
-        } catch (NoResultException e) {
-            max = new Long(0);
-        }
 
-        max++;
-        JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < count; i++) {
-            long number = max + i;
-            ContractNumber contractNumber = new ContractNumber(type, number, type.getNumberPrefx() + setupCode + "-" + number, ContractNumber.ContractNumberStatus.OUT, new Date());
-            contractNumber.setApplyTime(new Date());
-            ownerEntityManager.persist(contractNumber);
-            jsonArray.put(contractNumber.getContractNumber());
+            max++;
+            jsonArray = new JSONArray();
+            for (int i = 0; i < count; i++) {
+                long number = max + i;
+                ContractNumber contractNumber = new ContractNumber(key.getAttachEmployee().getAttachCorporation().getType(), number, type.getNumberPrefx() + setupCode + "-" + number,
+                        ContractNumber.ContractNumberStatus.OUT, new Date(), key.getAttachEmployee().getAttachCorporation().getId(),key.getAttachEmployee().getAttachCorporation().getName());
+                contractNumber.setApplyTime(new Date());
+                ownerEntityManager.persist(contractNumber);
+                jsonArray.put(contractNumber.getContractNumber());
+            }
+            //}
+        }else{
+            //"PUB"
+            List<ContractNumber> cns = ownerEntityManager.createQuery("select cn from ContractNumber cn where cn.type =:atype and cn.status = 'FREE' and cn.groupNumber=:gNum order by cn.number",ContractNumber.class)
+                    .setParameter("atype",key.getAttachEmployee().getAttachCorporation().getType()).setParameter("gNum",key.getAttachEmployee().getAttachCorporation().getId())
+                    .setMaxResults(count).getResultList();
+            jsonArray = new JSONArray();
+            for(ContractNumber cn: cns){
+                cn.setStatus(ContractNumber.ContractNumberStatus.OUT);
+                jsonArray.put(cn.getContractNumber());
+            }
         }
-        //}
 
 
         try {

@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.model;
 
+import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.SaleType;
 
 import javax.persistence.*;
@@ -21,22 +22,27 @@ public class ContractNumber implements java.io.Serializable{
     private String contractNumber;
     private ContractNumberStatus status;
     private long version;
-    private SaleType type;
+    private AttachCorpType type;
     private Date applyTime;
     private Date createTime;
     private long number;
+
+    private String groupNumber;
+    private String groupName;
 
     private HouseContract houseContract;
 
     public ContractNumber() {
     }
 
-    public ContractNumber(SaleType type, long number, String contractNumber, ContractNumberStatus status, Date createTime) {
+    public ContractNumber(AttachCorpType type, long number, String contractNumber, ContractNumberStatus status, Date createTime,String groupNumber, String groupName) {
         this.number = number;
         this.createTime = createTime;
         this.type = type;
         this.status = status;
         this.contractNumber = contractNumber;
+        this.groupNumber = groupNumber;
+        this.groupName = groupName;
     }
 
     @Id
@@ -85,11 +91,11 @@ public class ContractNumber implements java.io.Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE",length = 32, nullable = false)
     @NotNull
-    public SaleType getType() {
+    public AttachCorpType getType() {
         return type;
     }
 
-    public void setType(SaleType type) {
+    public void setType(AttachCorpType type) {
         this.type = type;
     }
 
@@ -114,6 +120,16 @@ public class ContractNumber implements java.io.Serializable{
         this.createTime = createTime;
     }
 
+    @Column(name = "GROUP_NUMBER",length = 32, nullable = false)
+    @NotNull
+    public String getGroupNumber() {
+        return groupNumber;
+    }
+
+    public void setGroupNumber(String groupNumber) {
+        this.groupNumber = groupNumber;
+    }
+
     @Column(name = "NUMBER", nullable = false)
     public long getNumber() {
         return number;
@@ -121,5 +137,15 @@ public class ContractNumber implements java.io.Serializable{
 
     public void setNumber(long number) {
         this.number = number;
+    }
+
+    @Column(name="GROUP_NAME",length = 100)
+    @Size(max = 100)
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }
