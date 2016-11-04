@@ -39,7 +39,7 @@
 	</decision>
 
 	<decision name="审核结果">
-		<transition to="审批判断" name="通过">
+		<transition to="审批" name="通过">
 			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
 		<transition to="网签回退判断" name="驳回">
@@ -87,15 +87,6 @@
 		</transition>
 		<transition to="网签回退判断" name="审批驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="审批判断">
-		<transition to="审批" name="审批">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP43')}"></condition>
-		</transition>
-		<transition to="业务完成" name="无审批">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP42')}"></condition>
 		</transition>
 	</decision>
 

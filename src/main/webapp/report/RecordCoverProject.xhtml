@@ -1,0 +1,66 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="卷内目录">
+
+
+
+
+
+
+        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">卷 内 目 录
+            </p:paragraph>
+        </p:font>
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+            <p:table columns="2" widths="2 1" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
+                            horizontalAlignment="left" verticalAlignment="middle"/> </f:facet>
+
+                <p:cell><p:paragraph>资料编号:  #{ownerBusinessHome.instance.id}}   </p:paragraph></p:cell>
+                <p:cell> <p:paragraph > 归档时间:  <p:text value="#{ownerBusinessHome.instance.recordTime}"><f:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  </p:paragraph></p:cell>
+            </p:table>
+
+
+            <p:table columns="5" widths="1 1 5 1 2" widthPercentage="100">
+
+
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="center" padding="5" paddingBottom="7" verticalAlignment="middle" borderWidth="1"/>
+                </f:facet>
+                <p:cell colspan="2"><p:paragraph>所有权人或单位</p:paragraph></p:cell>
+                <p:cell colspan="3" horizontalAlignment="left"><p:paragraph rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph></p:cell>
+
+
+                <p:cell><p:paragraph>坐落</p:paragraph></p:cell>
+                <p:cell colspan="2" horizontalAlignment="left"><p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph></p:cell>
+                <p:cell><p:paragraph>产别</p:paragraph></p:cell>
+                <p:cell><p:paragraph></p:paragraph></p:cell>
+                <p:cell><p:paragraph>编号</p:paragraph></p:cell><p:cell colspan="2"><p:paragraph>文 件 名 称</p:paragraph></p:cell><p:cell><p:paragraph>页数</p:paragraph></p:cell><p:cell><p:paragraph>备注</p:paragraph></p:cell>
+                <a:repeat rowKeyVar="_row" value="#{ownerBusinessHome.instance.uploadFileses}" var="_item">
+                    <p:cell><p:paragraph>#{_row + 1}</p:paragraph></p:cell>
+                    <p:cell colspan="2" horizontalAlignment="left"><p:paragraph>#{_item.name}</p:paragraph></p:cell>
+                    <p:cell><p:paragraph></p:paragraph></p:cell>
+                    <p:cell horizontalAlignment="left"></p:cell>
+                </a:repeat>
+
+
+
+            </p:table>
+
+            <p:paragraph>制表人:  #{authInfo.loginEmployee.personName}</p:paragraph>
+
+        </p:font>
+
+
+
+
+
+
+
+</p:document>

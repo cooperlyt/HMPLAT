@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="CommodityBusiness" width="855" height="432">
+<root-container name="CommodityBusiness" width="1067" height="428">
   <node name="业务受理" x="42" y="16" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
@@ -27,7 +27,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审核结果" x="244" y="266" width="132" height="36">
+  <node name="审核结果" x="47" y="388" width="132" height="36">
     <edge>
       <label x="-15" y="-11"/>
     </edge>
@@ -53,12 +53,12 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审批" x="233" y="393" width="132" height="36">
+  <node name="审批" x="261" y="390" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审批结果" x="437" y="395" width="132" height="36">
+  <node name="审批结果" x="463" y="391" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -67,12 +67,4 @@
     </edge>
   </node>
   <node name="结束" x="632" y="266" width="132" height="36"/>
-  <node name="审批判断" x="61" y="338" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
 </root-container>
