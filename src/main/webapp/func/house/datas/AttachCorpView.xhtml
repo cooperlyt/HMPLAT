@@ -27,7 +27,8 @@
                 <strong>
                     <h:outputText value="#{attachCorporationHome.instance.developer.name}"
                                   rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}"/>
-
+                    <h:outputText value="#{attachCorporationHome.instance.agencies.name}"
+                                  rendered="#{attachCorporationHome.instance.type eq 'AGENCIES'}"/>
                 </strong>
 
             </h1>
@@ -51,10 +52,10 @@
 
 
     <dh:entryGrid styleClass="detailsTable table table-bordered " keyWidth="150">
-        <dh:entryGridBlock columns="4" rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}">
+        <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Name}"/>
             <dh:entryGridColumn colspan="1">
-                <h:outputText value="#{attachCorporationHome.instance.developer.name}" style="padding-right: 10px"
+                <h:outputText value="#{attachCorporationHome.instance.type eq 'DEVELOPER' ? attachCorporationHome.instance.developer.name : attachCorporationHome.instance.agencies.name}" style="padding-right: 10px"
                               styleClass="#{attachCorporationHome.instance.outTime ? 'out-time' : ''} #{attachCorporationHome.instance.enable ? '' : 'delete-data'} "/>
                 <a:outputPanel styleClass="label label-danger"
                                rendered="#{not attachCorporationHome.instance.enable}">#{messages.AttachDisable}</a:outputPanel>
@@ -224,6 +225,84 @@
         </ui:define>
     </ui:decorate>
 
+    <h:form id="contractNumberPublishForm" rendered="#{runParam.getStringParamValue('contract_type') eq 'PUB'}">
+        <s:decorate id="recordStoreField" styleClass="form-group " template="/layout/edit-big.xhtml">
+        <ui:param name="for" value="batchNumberInput"/>
+
+        <ui:param name="showTip" value="#{false}"/>
+            <ui:define name="label">
+                合同发放
+            </ui:define>
+        <div class="input-group">
+            <span class="input-group-addon">批号</span>
+            <h:inputText id="batchNumberInput" label="批号" value="#{contractNumberPublish.batchNumber}" required="true" styleClass="form-control" p:placeholder="批号"/>
+            <span class="input-group-addon">@</span>
+            <h:inputText id="beginNumberInput" label="起始序号" value="#{contractNumberPublish.beginNum}" required="true" styleClass="form-control">
+                <f:validateLongRange minimum="0"/>
+            </h:inputText>
+            <span class="input-group-addon">至</span>
+            <h:inputText id="endNumberInput" label="终止序号" value="#{contractNumberPublish.endNum}" required="true" styleClass="form-control">
+                <f:validateLongRange minimum="0"/>
+            </h:inputText>
+            <span class="input-group-btn">
+                <a:commandLink styleClass="btn btn-success" render="recordStoreField,publishModalContent" execute="@form"
+                               oncomplete="if (event.data &gt; 0)  $('#publishModal').modal('show');" data="#{contractNumberPublish.requestCount}"
+                               action="#{contractNumberPublish.preparePublish}">
+                     <a:attachQueue requestDelay="0"/>
+                    <span class="btn-icon glyphicon glyphicon-ok"/>
+                </a:commandLink>
+            </span>
+
+        </div>
+            <ui:define name="message">
+                <r:message for="batchNumberInput" styleClass="edit-below-msg" ajaxRendered="false"/>
+                <r:message for="beginNumberInput" styleClass="edit-below-msg" ajaxRendered="false"/>
+                <r:message for="endNumberInput" styleClass="edit-below-msg" ajaxRendered="false"/>
+            </ui:define>
+
+            <ui:define name="note">
+                剩余合同数量为: <strong><h:outputText value="#{attachCorporationHome.contractNumberCount}"><f:convertNumber pattern="#0"/></h:outputText></strong>
+            </ui:define>
+        </s:decorate>
+
+
+        <div class="modal fade" id="publishModal">
+            <div class="modal-dialog">
+                    <a:outputPanel id="publishModalContent" layout="block" styleClass="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">合同发放</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-primary">请求发放数量为：<strong>#{contractNumberPublish.requestCount}</strong></p>
+                        <p class="text-success">可发放数量为：<strong>#{contractNumberPublish.requestCount - contractNumberPublish.cantUseNumber.size}</strong></p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <a:commandLink execute="@form" render="recordStoreField" oncomplete="$('#publishModal').modal('hide');initEditInput();"
+                                       styleClass="btn btn-primary" action="#{contractNumberPublish.publishNum}">
+                            发放合同
+                            <a:attachQueue requestDelay="0"/>
+                        </a:commandLink>
+                    </div>
+                    </a:outputPanel>
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
+        <h:outputScript id="initScript">
+            $(document).ready(
+                    function(){
+                        initEditInput();
+                    });
+
+        </h:outputScript>
+
+
+    </h:form>
+
 
     <h:form id="attachEmpDatas">
 
@@ -288,13 +367,17 @@
                                     <li>
                                         <span class="type-icon octicon octicon-key" style="color: #60b044;"/>
 
-                                        <a:commandLink style="font-size: 12px;font-weight: bold" immediate="true" render="keyProjectPickPanel_form"
+                                        <a:commandLink rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}" style="font-size: 12px;font-weight: bold" immediate="true" render="keyProjectPickPanel_form"
                                                        execute="@this" oncomplete="$('#keyProjectPickPanel').modal({backdrop: 'static'})"
                                                        action="#{attachEmployeeHome.initKeyProject}" >
                                             <a:attachQueue requestDelay="0"/>#{_key.id}
                                             <f:param name="attachEmpId" value="#{_emp.id}"/>
                                             <f:param name="keyId" value="#{_key.id}"/>
                                         </a:commandLink>
+
+                                        <a:outputPanel rendered="#{not (attachCorporationHome.instance.type eq 'DEVELOPER')}">
+                                            #{_key.id}
+                                        </a:outputPanel>
 
                                         <a:commandLink style="color:#a94442 " execute="@this" immediate="true"
                                                        render="keyDeleteConfirmPanel_form"

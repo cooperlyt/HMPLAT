@@ -70,10 +70,12 @@
                 <span class="octicon octicon-stop" style="font-weight: bold"/> #{messages.needFileNotUpload}
             </a:outputPanel>
 
+                <ui:remove>
         <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
-                                               rendered="#{businessDefineHome.haveNeedFile and (ownerBusinessFile.importantStatus eq 'NO_FILE')}">
+                                               rendered="#{businessDefineHome.haveNeedFile and (not ownerBusinessFile.pass)}">
             <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
         </a:outputPanel>
+                </ui:remove>
 
             <a:repeat value="#{businessInfoCompare.changeInfo}" var="_info">
                 <ui:decorate template="/business/houseOwner/HouseInfoCompare.xhtml">
@@ -89,6 +91,7 @@
 
                 <div class="panel-heading"><h3 style="margin: 0"> <span class="#{_group.group.iconCss}"/>
                     #{_group.group.name}</h3> </div>
+
 
                 <dh:entryGrid styleClass="detailsTable table table-bordered "
                               groupWidth="#{_group.group.groupWidth}" keyWidth="#{_group.group.keyWidth}"

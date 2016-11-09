@@ -33,6 +33,18 @@
 
                 <p>#{messages.NextYouCan}</p>
                 <ul>
+
+
+                    <li><s:link value="#{messages.returnToTaskList}" view="/func/system/business/task.xhtml"></s:link> </li>
+                    <li>
+
+
+                        <s:link  view="/home.xhtml"
+                                value="#{messages.returnHome}">
+
+                        </s:link>
+                    </li>
+
                     <a:repeat value="#{taskCompletedOper.tasks}" var="_task">
 
 
@@ -47,16 +59,6 @@
                             #{messages.HaveNextTaskMessages} <strong>#{_task.taskInstance.name} </strong>
                         </li>
                     </a:repeat>
-
-                    <li><s:link value="#{messages.returnToTaskList}" view="/func/system/business/task.xhtml"></s:link> </li>
-                    <li>
-
-
-                        <s:link  view="/home.xhtml"
-                                value="#{messages.returnHome}">
-
-                        </s:link>
-                    </li>
                 </ul>
 
 

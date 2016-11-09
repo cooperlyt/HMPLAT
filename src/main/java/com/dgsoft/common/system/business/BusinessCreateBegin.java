@@ -25,12 +25,14 @@ public class BusinessCreateBegin {
     public String startCreate(){
 
         businessDefineHome.setId(bussinessDefineId);
+        businessDefineHome.setTaskType(BusinessInstance.BusinessType.NORMAL_BIZ);
         return ((BusinessCreateComponent) Component.getInstance(businessDefineHome.getInstance().getStartPage(),true,true)).startCreate();
     }
 
 
     public String searchModify(){
         businessDefineHome.setId(bussinessDefineId);
+        businessDefineHome.setTaskType(BusinessInstance.BusinessType.NORMAL_BIZ);
         return ((BusinessCreateComponent) Component.getInstance(businessDefineHome.getInstance().getStartPage(),true,true)).searchModify();
 
     }

@@ -6,6 +6,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import com.dgsoft.common.system.RunParam;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,7 +48,16 @@ public class MakeCardMortgage implements TaskCompleteSubscribeComponent {
 
         SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
         String datePart = numberDateformat.format(new Date());
-        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
+
+        Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
+        String no;
+        if (typeCard==2){
+            no= datePart + Long.toString(numberBuilder.getNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
+        }else {
+            no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.MORTGAGE_CARD.name()));
+        }
+
+
 
 
 

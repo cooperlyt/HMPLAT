@@ -123,8 +123,66 @@
 
             <div style="min-height: 170px; padding: 0 4px">
 
+            <div class="btn-group bootstrap-select edit-select" style="width: 100%;">
+                <button type="button" class=" btn dropdown-toggle btn-default"
+                        data-toggle="dropdown" aria-expanded="false">
+
+                    <h:outputText id="districtSelectBtnCaption" styleClass="filter-option pull-left"
+                                  value="#{(empty sectionSelectList.district) ?  messages.districtSelect : sectionSelectList.district.name}">
+                    </h:outputText>
+                    <span class="caret"></span>
+                </button>
 
 
+                <div class="dropdown-menu select-menu-modal-holder" >
+                    <div class="select-menu-modal" >
+                        <div class="select-menu-header">
+                        <span class="select-menu-title">#{messages.DistrictSelectTitle}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                        </div>
+
+
+
+                    <s:div id="districtSelectList">
+
+                        <div class="select-menu-list">
+
+                            <a:commandLink execute="@this" immediate="true" action="#{houseStepSelect.resetSection}"
+                                           render="sectionSelectInputs,districtSelectBtnCaption,districtSelectList"
+                                           styleClass="select-menu-item #{(empty sectionSelectList.district) ? 'selected': ''}">
+
+                                <a:param value="" assignTo="#{sectionSelectList.districtId}"/>
+                                <span class="select-menu-item-icon octicon octicon-check"></span>
+                                <span class="select-menu-item-text">#{messages.districtSelect}</span>
+                                <a:attachQueue requestDelay="0"/>
+                            </a:commandLink>
+
+                            <a:repeat value="#{allDistrict.resultList}" var="_district">
+
+                                <a:commandLink execute="@this" immediate="true"
+                                               render="sectionSelectInputs,districtSelectBtnCaption,districtSelectList" action="#{houseStepSelect.resetSection}"
+                                               styleClass="select-menu-item #{(sectionSelectList.districtId eq _district.id) ? 'selected': ''}">
+
+                                    <a:param value="#{_district.id}" assignTo="#{sectionSelectList.districtId}"/>
+
+                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                    <span class="select-menu-item-text">#{_district.name}</span>
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandLink>
+                            </a:repeat>
+
+
+                        </div>
+
+                    </s:div>
+                    </div>
+
+                </div>
+
+            </div>
+
+                <ui:remove>
                 <h:selectOneMenu value="#{sectionSelectList.districtId}"
                                  p:data-header="#{messages.districtSelect}"
                                  styleClass="selectpicker edit-select form-control">
@@ -136,6 +194,8 @@
                         <a:attachQueue requestDelay="0"/>
                     </a:ajax>
                 </h:selectOneMenu>
+
+                </ui:remove>
                 <a:outputPanel id="sectionSelectInputs" >
 
                     <ui:include src="/func/house/datas/SectionSelect.xhtml"/>
@@ -156,6 +216,67 @@
                         <a:outputPanel rendered="#{not empty houseStepSelect.selectSection}">
 
 
+                            <div class="btn-group bootstrap-select edit-select" style="width: 100%;">
+                                <button type="button" class=" btn dropdown-toggle btn-default"
+                                        data-toggle="dropdown" aria-expanded="false">
+
+                                    <h:outputText id="projectSelectBtnCaption" styleClass="filter-option pull-left"
+                                                  value="#{(empty houseStepSelect.selectProject) ?  messages.projectSelect : houseStepSelect.selectProject.name}">
+                                    </h:outputText>
+                                    <span class="caret"></span>
+                                </button>
+
+
+                                <div class="dropdown-menu select-menu-modal-holder" >
+                                    <div class="select-menu-modal" >
+                                        <div class="select-menu-header">
+                                            <span class="select-menu-title">#{messages.ProjectSelectTitle}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                        </div>
+
+
+
+                                        <s:div id="projectSelectList">
+
+                                            <div class="select-menu-list">
+
+                                                <a:commandLink execute="@this" immediate="true" action="#{buildHome.clearInstance}"
+                                                               render="buildSelectInput,projectSelectBtnCaption,projectSelectList"
+                                                               styleClass="select-menu-item #{(empty houseStepSelect.selectProject) ? 'selected': ''}">
+
+                                                    <a:param value="" assignTo="#{houseStepSelect.selectProjectId}"/>
+                                                    <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                    <span class="select-menu-item-text">#{messages.projectSelect}</span>
+                                                    <a:attachQueue requestDelay="0"/>
+                                                </a:commandLink>
+
+                                                <a:repeat value="#{houseStepSelect.selectSection.projectList}" var="_project">
+
+                                                    <a:commandLink execute="@this" immediate="true"
+                                                                   render="buildSelectInput,projectSelectBtnCaption,projectSelectList" action="#{buildHome.clearInstance}"
+                                                                   styleClass="select-menu-item #{(houseStepSelect.selectProjectId eq _project.id) ? 'selected': ''}">
+
+                                                        <a:param value="#{_project.id}" assignTo="#{houseStepSelect.selectProjectId}"/>
+
+                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                        <span class="select-menu-item-text">#{_project.name}</span>
+                                                        <a:attachQueue requestDelay="0"/>
+                                                    </a:commandLink>
+                                                </a:repeat>
+
+
+                                            </div>
+
+                                        </s:div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <ui:remove>
                             <h:selectOneMenu value="#{houseStepSelect.selectProjectId}"
                                              p:data-header="#{messages.projectSelect}"
                                              styleClass="selectpicker edit-select form-control">
@@ -168,10 +289,63 @@
                                     <a:attachQueue requestDelay="0"/>
                                 </a:ajax>
                             </h:selectOneMenu>
-
+                            </ui:remove>
 
                             <a:outputPanel id="buildSelectInput">
 
+                                <s:div rendered="#{not empty houseStepSelect.selectProjectId}" styleClass="btn-group bootstrap-select edit-select" style="width: 100%;">
+                                    <button type="button" class=" btn dropdown-toggle btn-default"
+                                            data-toggle="dropdown" aria-expanded="false">
+
+                                        <a:outputPanel id="buildSelectBtnCaption" styleClass="filter-option pull-left">
+                                            <h:outputText value="#{buildHome.shortName}" rendered="#{buildHome.idDefined}"/>
+                                            <h:outputText value="#{messages.buildSelect}" rendered="#{not buildHome.idDefined}"/>
+                                        </a:outputPanel>
+                                        <span class="caret"></span>
+                                    </button>
+
+
+                                    <div class="dropdown-menu select-menu-modal-holder" >
+                                        <div class="select-menu-modal" >
+                                            <div class="select-menu-header">
+                                                <span class="select-menu-title">#{messages.BuildSelectTitle}</span>
+                                            <span class="octicon octicon-x js-menu-close"
+                                                  aria-label="#{messages.close}"></span>
+                                            </div>
+
+
+
+                                            <s:div id="buildSelectList">
+
+                                                <div class="select-menu-list">
+                                                    <a class="select-menu-item #{(not buildHome.idDefined) ? 'selected': ''}"
+                                                       onclick="findBuildBySection('');return false;">
+                                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                        <span class="select-menu-item-text">#{messages.buildSelect}</span>
+                                                    </a>
+
+                                                    <a:repeat value="#{houseStepSelect.buildList}" var="_build">
+
+                                                        <a class="select-menu-item #{(buildHome.id eq _build.id) ? 'selected': ''}"
+                                                            onclick="findBuildBySection('#{_build.id}')">
+                                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                                            <span class="select-menu-item-text">#{_build.name}</span>
+                                                        </a>
+                                                    </a:repeat>
+
+
+                                                </div>
+
+                                            </s:div>
+                                        </div>
+
+                                    </div>
+
+                                </s:div>
+
+
+
+                                <ui:remove>
                                 <h:selectOneMenu rendered="#{not empty houseStepSelect.selectProjectId}"
                                                  p:data-header="#{messages.buildSelect}"
                                                  onchange="findBuildBySection()"
@@ -183,7 +357,7 @@
                                                    noSelectionLabel="#{messages.buildSelect}"/>
 
                                 </h:selectOneMenu>
-
+                                </ui:remove>
                                 <ui:insert name="h-build-pick"/>
 
 

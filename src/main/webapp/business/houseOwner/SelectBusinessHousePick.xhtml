@@ -41,7 +41,7 @@
 
                 </h1>
 
-                <a:outputPanel layout="block" styleClass="right" ajaxRendered="true">
+                <a:outputPanel layout="block" styleClass="right" ajaxRendered="true" rendered="#{not houseInBusinessStart.singleHouse}">
                     <s:button styleClass="btn btn-primary #{houseInBusinessStart.haveSelectHouse ? '' : 'disabled'}" disabled="#{not houseInBusinessStart.haveSelectHouse}"
                               action="#{houseInBusinessStart.houseSelected}" value="完成"
                               p:data-loading-text="#{messages.skipStep}" onclick="#{r:component('wait')}.show()">
@@ -68,9 +68,10 @@
                              value="#{houseInBusinessStart.houseBusinessList}" var="_house">
 
 
-                    <h:column headerClass="check-column">
+                    <h:column headerClass="check-column" rendered="#{not houseInBusinessStart.singleHouse}">
                         <f:facet name="header">
                             <a:outputPanel ajaxRendered="true">
+
                             <h:selectBooleanCheckbox value="#{houseInBusinessStart.selectAll}">
                                 <a:ajax event="click" render="houseDataTable" execute="@this">
                                     <a:attachQueue requestDelay="0"/>
@@ -119,6 +120,15 @@
                         </f:facet>
 
                         #{_house.data.address}
+                    </h:column>
+
+                    <h:column rendered="#{houseInBusinessStart.singleHouse}">
+                        <h:commandLink action="#{houseInBusinessStart.houseSelected}"
+                                       value="选择"
+                                       styleClass="btn btn-default btn-sm choose-plan">
+                            <f:param name="selectSingleHouseId" value="#{_house.data.id}"/>
+
+                        </h:commandLink>
                     </h:column>
 
                 </h:dataTable>

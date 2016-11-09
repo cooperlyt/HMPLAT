@@ -1,7 +1,6 @@
 package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.system.PersonEntity;
-import com.dgsoft.common.system.model.Person;
 import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.GenericGenerator;
 

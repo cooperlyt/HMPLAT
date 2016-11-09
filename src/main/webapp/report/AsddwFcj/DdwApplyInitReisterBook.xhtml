@@ -4,7 +4,7 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋所有权初始登记申请书">
+            title="房屋所有权初始登记申请书" margins="40 10 20 10">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
@@ -134,10 +134,10 @@
                     <p:paragraph>产籍号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="30">
-                    <p:paragraph>是否有半下室</p:paragraph>
+                    <p:paragraph>是否有半地下室</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.haveDownRoom}">是</p:paragraph>
@@ -160,13 +160,13 @@
                                     <p:paragraph>地上层数</p:paragraph>
                                 </p:cell>
                                 <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthTop="0" borderWidthLeft="0" borderWidthRight="0" borderWidthBottom="0">
-                                    <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.upFloorCount}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.upFloorCount}</p:paragraph>
                                 </p:cell>
                                 <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthBottom="0" borderWidthLeft="0">
                                     <p:paragraph>地下层数</p:paragraph>
                                 </p:cell>
                                 <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthBottom="0" borderWidthLeft="0" borderWidthRight="0">
-                                    <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.downFloorCount}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.downFloorCount}</p:paragraph>
                                 </p:cell>
                             </p:table>
                             </p:font>
@@ -200,7 +200,7 @@
                     <p:paragraph>规划用途</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.useType)}</p:paragraph>
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
                 </p:cell>
 
 
@@ -208,13 +208,13 @@
                     <p:paragraph>房屋结构</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.structure)}</p:paragraph>
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="30">
-                    <p:paragraph>土地所有权证号</p:paragraph>
+                    <p:paragraph>土地使用权证号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
                 </p:cell>
 
                 <p:cell borderWidthLeft="0" fixedHeight="30">

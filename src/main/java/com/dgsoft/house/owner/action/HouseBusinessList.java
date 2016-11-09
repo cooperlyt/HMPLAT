@@ -1,23 +1,13 @@
 package com.dgsoft.house.owner.action;
 
-import com.dgsoft.common.SearchDateArea;
-import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.SystemEntityLoader;
-import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
-import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
-import com.dgsoft.house.owner.OwnerEntityQuery;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.MakeCard;
-import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
 
 /**

@@ -1,0 +1,317 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="商品房预(销)售许可证登记审批表">
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.businessProject.businessBuildList}" var="_buildBusiness">
+
+        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">商品房预(销)售许可证登记审批表
+            </p:paragraph>
+        </p:font>
+
+
+        <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:table columns="4" widths="1 4.5 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" border="0"/>
+                </f:facet>
+                <p:cell>
+                    <p:paragraph>业务编号:</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>楼幢编号：</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{_buildBusiness.buildCode}</p:paragraph>
+                </p:cell>
+
+            </p:table>
+        </p:font>
+
+
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+            <p:table columns="4" widths="0.8 1 0.8 1" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+                </f:facet>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>申请人单位</p:paragraph>
+
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{_buildBusiness.businessProject.developerName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>代理人姓名</p:paragraph>
+
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.ownerEntrust.personName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>联系电话</p:paragraph>
+
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.ownerEntrust.phone}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>证件类型</p:paragraph>
+
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{messages[ownerBusinessHome.instance.ownerEntrust.credentialsType.name()]}</p:paragraph>
+                </p:cell>
+
+                <p:cell fixedHeight="23">
+                    <p:paragraph>证件号</p:paragraph>
+
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.ownerEntrust.credentialsNumber}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>项目名称</p:paragraph>
+
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.name}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>项目坐落</p:paragraph>
+
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.address}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>受理时间</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>规划用途</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.useType}</p:paragraph>
+                </p:cell>
+
+                <p:cell fixedHeight="23">
+                    <p:paragraph>预售总面积</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>预售总套数</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.houseCount}"></p:text></p:paragraph>
+                </p:cell>
+
+                <p:cell fixedHeight="23">
+                    <p:paragraph>建设工程施工许可证号</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.createCardNumber}</p:paragraph>
+                </p:cell>
+
+                <p:cell fixedHeight="23">
+                    <p:paragraph>建设工程规划许可证号</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.createPrepareCardNumber}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>栋数</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.buildCount}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地证号</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.landCardNo}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>地号</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.number}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地性质</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{dictionary.getWordValue(_buildBusiness.businessProject.projectSellInfo.landProperty)}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地取得方式</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{dictionary.getWordValue(_buildBusiness.businessProject.projectSellInfo.landGetMode)}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地面积</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.landArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地使用年限始</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.beginUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地坐落</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.landAddress}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>土地使用年限止</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                       <p:paragraph rendered="#{empty _buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}"><p:text value="#{_buildBusiness.businessProject.projectSellInfo.endUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+
+                        <p:paragraph rendered="#{not empty _buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}"><ui:repeat value="#{_buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}" var="_projectLandEndTimeList"> <p:text value=" #{useTypeWordAdapter.getUseTypeCategoryName(_projectLandEndTimeList.useTypeCategory) }"></p:text> <p:text value="#{_projectLandEndTimeList.endTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></ui:repeat></p:paragraph>
+                </p:cell>
+
+
+            <p:cell fixedHeight="23">
+                    <p:paragraph>楼幢名称</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{_buildBusiness.buildName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>产籍标识</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph> 图号：#{_buildBusiness.mapNumber}    丘号: #{_buildBusiness.blockNo}     幢号：#{_buildBusiness.buildNo}   门牌号：#{_buildBusiness.doorNo}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>楼幢名称</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{_buildBusiness.buildName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>住宅套数</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_buildBusiness.homeCount}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>住宅面积</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph><p:text value="#{_buildBusiness.homeArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>网点套数</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>#{_buildBusiness.shopCount}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>网点面积</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph><p:text value="#{_buildBusiness.shopArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>其它套数</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>#{_buildBusiness.unhomeCount}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>其它面积</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph><p:text value="#{_buildBusiness.unhomeArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
+                    <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
+                </p:cell>
+                <p:cell colspan="4" fixedHeight="180">
+                    <p:table columns="2" widths="0.7 3" headerRows="0" footerRows="0" widthPercentage="100">
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
+                            <p:paragraph>受理人</p:paragraph>
+                        </p:cell>
+
+                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
+
+                            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
+                                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
+                                    <p:paragraph>签字:</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
+                                    <p:paragraph>年                月                日</p:paragraph>
+                                </p:cell>
+
+                            </p:table>
+
+                        </p:cell>
+
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
+                            <p:paragraph>审核人</p:paragraph>
+                        </p:cell>
+
+                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
+
+
+                            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
+                                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
+                                    <p:paragraph>签字:</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
+                                    <p:paragraph>年                月                日</p:paragraph>
+                                </p:cell>
+
+                            </p:table>
+
+                        </p:cell>
+
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
+                            <p:paragraph>审批人</p:paragraph>
+                        </p:cell>
+
+                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
+
+
+                            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
+                                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
+                                    <p:paragraph>签字:</p:paragraph>
+                                </p:cell>
+                                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
+                                    <p:paragraph>年                月                日</p:paragraph>
+                                </p:cell>
+
+                            </p:table>
+
+                        </p:cell>
+
+                    </p:table>
+
+                </p:cell>
+            </p:table>
+        </p:font>
+        <p:newPage/>
+    </a:repeat>
+</p:document>

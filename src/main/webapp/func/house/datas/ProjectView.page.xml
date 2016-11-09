@@ -8,4 +8,13 @@
     <param name="projectId" value="#{projectHome.id}"/>
 
 
+    <navigation from-action="#{createHouse.createSingleBuild}">
+        <rule if-outcome="begin">
+            <begin-conversation flush-mode="MANUAL"/>
+            <redirect view-id="/func/house/datas/SingleBuildCreate.xhtml">
+
+            </redirect>
+        </rule>
+    </navigation>
+
 </page>

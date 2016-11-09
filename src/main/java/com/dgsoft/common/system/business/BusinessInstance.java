@@ -17,7 +17,7 @@ public interface BusinessInstance {
         NORMAL_BIZ,MODIFY_BIZ,CANCEL_BIZ
     }
 
-    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改中,已解除
+    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改中, 已解除
     public enum BusinessStatus {
         RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFYING, COMPLETE_CANCEL;
 
@@ -26,6 +26,7 @@ public interface BusinessInstance {
         }
     }
 
+    //不能撤回更正业务， 撤回业务要递归selectBiz设置状态
 
     public BusinessSource getSource();
 

@@ -126,6 +126,8 @@
             <h:inputText value="#{house.commParam}" size="20" styleClass="form-control js-only-number"
 
                          id="commParamInput" label="#{messages.House_CommParam}">
+
+                <f:convertNumber pattern="#0.#"/>
                 <rich:validator event="blur"/>
             </h:inputText>
 

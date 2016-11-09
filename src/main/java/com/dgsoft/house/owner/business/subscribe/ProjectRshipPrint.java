@@ -28,6 +28,6 @@ public class ProjectRshipPrint {
 
 
     public void preparePrintOwnerFee(){
-        printUrl = extendsDataCreator.extendsPrintprojectRship(ownerBusinessHome.getInstance(),ownerBusinessHome.getInstance().getMakeCards().iterator().next());
+        printUrl = extendsDataCreator.extendsPrintprojectRship(ownerBusinessHome.getInstance(),ownerBusinessHome.getCardByType("PROJECT_RSHIP"));
     }
 }

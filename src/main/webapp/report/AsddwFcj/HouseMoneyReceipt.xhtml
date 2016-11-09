@@ -5,7 +5,7 @@
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
             xmlns:h="http://java.sun.com/jsf/html"
-            title="产权登记交费单">
+            title="产权登记交费单" margins="40 10 20 10">
 
 
     <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
@@ -93,7 +93,9 @@
                 </p:cell>
 
                 <p:cell colspan="3" horizontalAlignment="left" noWrap="false">
-                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (not empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}(#{ownerBusinessHome.instance.applyPersion.personName})</p:paragraph>
+
                 </p:cell>
 
                 <p:cell>
@@ -115,7 +117,7 @@
                     <p:paragraph>产籍号:</p:paragraph>
                 </p:cell>
                 <p:cell horizontalAlignment="left">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
                 </p:cell>
                 <p:cell>
                     <p:paragraph>房屋用途:</p:paragraph>
@@ -225,6 +227,7 @@
 
         </p:font>
 
-
+        <p:newPage/>
     </a:repeat>
+
 </p:document>

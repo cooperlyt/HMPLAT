@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="HouseOwnerBusiness" width="948" height="483">
+  <node name="业务受理" x="36" y="15" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="受理" x="-24" y="209" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="184" h1="-31" w2="-112" h2="109"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核" x="446" y="177" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="登薄" x="136" y="319" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核结果" x="445" y="238" width="132" height="36">
+    <edge>
+      <label x="-21" y="-13"/>
+    </edge>
+    <edge>
+      <label x="-4" y="-11"/>
+    </edge>
+  </node>
+  <node name="是否登薄" x="318" y="307" width="132" height="36">
+    <edge>
+      <label x="-21" y="-18"/>
+    </edge>
+    <edge>
+      <label x="-1" y="-4"/>
+    </edge>
+  </node>
+  <node name="登薄结果" x="-92" y="362" width="132" height="36">
+    <edge>
+      <label x="-41" y="-11"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="类型判断" x="36" y="90" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-24" y="-18"/>
+    </edge>
+  </node>
+  <node name="要件上传" x="272" y="69" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="初审" x="454" y="46" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="初审结果" x="447" y="108" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="11" y="446" width="132" height="36"/>
+</root-container>

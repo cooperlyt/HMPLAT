@@ -1,0 +1,175 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="个人房屋查询"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-block">
+                        <h:inputText styleClass="form-control" value="#{personHouseList.searchKey}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandButton styleClass="button" action="#{personHouseList.first}" value="#{messages.Search}">
+
+                    </h:commandButton>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    <h:outputStylesheet>
+        .result-count{
+
+            font-size: 12px;
+            font-weight: 700;
+            color: #959595;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+    </h:outputStylesheet>
+
+    <s:div styleClass="blankslate" rendered="#{empty personHouseList.searchKey}">
+        <span class="mega-octicon octicon-search"></span>
+
+        <h3>请输入查询条件</h3>
+
+        <p>  条件可以为产权人或共有权人的姓名,身份证号,也可直接输入产籍号直接查询房屋.
+
+
+        </p>
+    </s:div>
+
+    <a:outputPanel rendered="#{not empty personHouseList.searchKey}">
+
+        <s:div styleClass="blankslate" rendered="#{empty personHouseList.resultList}">
+            <span class="mega-octicon octicon-search"></span>
+
+            <h3>#{messages.EmptyResult}</h3>
+
+            <p>  #{messages.YouCan}#{' '}
+
+                <s:link includePageParams="false" value="重置条件"/>
+
+
+           </p>
+        </s:div>
+        <div style="min-height: 300px;">
+            <a:outputPanel layout="block" styleClass="result-count">
+                共返回房屋: <strong>#{personHouseList.resultCount} </strong>个
+                    </a:outputPanel>
+
+
+            <a:repeat value="#{personHouseList.resultList}" var="_house"  rendered="#{not empty personHouseList.resultList}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">#{_house.businessHouse.displayHouseCode} <span class="house-info">
+
+                            <a:repeat value="#{_house.businessHouse.allStatusList}" var="_status">
+                                <div class="#{_status.name()}" style="display: inline-block;">
+                                    <span class="label"> #{messages[_status.name()]} </span>
+                                </div>
+                            </a:repeat>
+
+                        </span></div>
+                    <div class="panel-body">
+
+
+                        <div class="row">
+                            <div class="col-md-7">
+                                #{_house.businessHouse.buildName} #{_house.businessHouse.inFloorName} #{_house.businessHouse.houseOrder}
+                            </div>
+                            <div class="col-md-5">
+                                #{_house.businessHouse.doorNo}
+                            </div>
+                            <div class="col-md-7">
+                                #{_house.businessHouse.address}
+                            </div>
+                            <div class="col-md-5">
+                                <h:outputText value="#{_house.businessHouse.houseArea}"><f:convertNumber pattern="#0.000"/> </h:outputText>
+                                 m<sup>2</sup>
+                            </div>
+                            <div class="col-md-3">
+                                <label>设计用途: </label>
+                                #{dictionary.getWordValue(_house.businessHouse.useType)}
+                            </div>
+                            <div class="col-md-3">
+                                <label>房屋性质: </label>
+                                #{dictionary.getWordValue(_house.businessHouse.houseType)}
+                                </div>
+
+                            <div class="col-md-3">
+                                <label>产别: </label>
+                                #{dictionary.getWordValue(_house.businessHouse.houseRegInfo.houseProperty)}
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>产权来源: </label>
+                                #{dictionary.getWordValue(_house.businessHouse.houseRegInfo.houseFrom)}
+                                </div>
+                            <div class="col-md-12">
+                                <label>产权人: </label>
+                                #{' '}<h:outputText rendered="#{not empty _house.businessHouse.businessHouseOwner}" value="#{_house.businessHouse.businessHouseOwner.personName}"/>
+
+                                <label>
+                                   <h:outputText rendered="#{not empty _house.businessHouse.businessHouseOwner}" value="#{messages[_house.businessHouse.businessHouseOwner.credentialsType.name()]}"/>
+                                </label>
+                                #{' '} <h:outputText rendered="#{not empty _house.businessHouse.businessHouseOwner}" value="#{_house.businessHouse.businessHouseOwner.credentialsNumber}"/>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <label>#{messages[_house.businessHouse.poolType.name()]}</label>
+                        <a:outputPanel rendered="#{not (_house.businessHouse.poolType eq 'SINGLE_OWNER')}">
+                            <a:repeat value="#{_house.businessHouse.businessPoolList}" var="_pool">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <h:outputText  value="#{_pool.personName}"/> #{' '}
+                                    <label> <h:outputText  value="#{messages[_pool.credentialsType.name()]}"/>  </label>
+                                    #{' '}<h:outputText value="#{_pool.credentialsNumber}"/>
+                                    </div>
+                                </div>
+                            </a:repeat>
+                        </a:outputPanel>
+
+                    </div>
+                </div>
+            </a:repeat>
+            <a:outputPanel layout="block" rendered="#{not empty personHouseList.resultList}" class="paginate-container">
+
+                <a:outputPanel>
+                    <ui:include src="/layout/pages.xhtml">
+                        <ui:param name="entityList" value="#{personHouseList}"/>
+                    </ui:include>
+                </a:outputPanel>
+
+            </a:outputPanel>
+
+        </div>
+
+
+    </a:outputPanel>
+
+
+</ui:composition>
+

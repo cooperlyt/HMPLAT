@@ -223,7 +223,8 @@
                                     <p:paragraph>房屋所有权证号</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
-                                    <p:paragraph>#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                                    <p:paragraph rendered="#{not empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard}">#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                                    <p:paragraph rendered="#{empty ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard and not empty ownerBusinessHome.singleHoues.startBusinessHouse.oldOwner}">#{ownerBusinessHome.singleHoues.startBusinessHouse.oldOwner.makeCard.number}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="20">
                                     <p:paragraph>设计用途</p:paragraph>
@@ -231,19 +232,37 @@
                                 <p:cell borderWidthLeft="0">
                                     <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.useType)}</p:paragraph>
                                 </p:cell>
+                                <p:cell colspan="4">
+                                    <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100" >
+                                        <f:facet name="defaultCell">
+                                            <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0"/>
+                                        </f:facet>
 
-                                <p:cell borderWidthLeft="0" fixedHeight="20">
-                                    <p:paragraph>产别</p:paragraph>
+                                            <p:cell borderWidthLeft="0" fixedHeight="20">
+                                                <p:paragraph>产别</p:paragraph>
+                                            </p:cell>
+                                            <p:cell borderWidthLeft="0">
+                                                <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseProperty)}</p:paragraph>
+                                            </p:cell>
+                                            <p:cell borderWidthLeft="0" fixedHeight="20">
+                                                <p:paragraph>建筑面积</p:paragraph>
+                                            </p:cell>
+                                            <p:cell borderWidthLeft="0">
+                                                <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.houseArea}</p:paragraph>
+                                            </p:cell>
+                                            <p:cell borderWidthLeft="0" fixedHeight="20">
+                                                <p:paragraph>房屋来源</p:paragraph>
+                                            </p:cell>
+                                            <p:cell borderWidthLeft="0">
+                                                <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph>
+                                            </p:cell>
+
+
+
+                                    </p:table>
                                 </p:cell>
-                                <p:cell borderWidthLeft="0">
-                                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.houseRegInfo.houseProperty)}</p:paragraph>
-                                </p:cell>
-                                <p:cell borderWidthLeft="0" fixedHeight="20">
-                                    <p:paragraph>建筑面积</p:paragraph>
-                                </p:cell>
-                                <p:cell borderWidthLeft="0">
-                                    <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.houseArea}</p:paragraph>
-                                </p:cell>
+
+
                             </p:table>
 
                         </p:cell>

@@ -37,6 +37,7 @@
                                 <ui:param name="showLabel" value="true"/>
 
                                 <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                                             required="#{runParam.getBooleanParamValue('applyPersonTelMust')}"
                                              styleClass="form-control"
                                              validatorMessage="#{messages.requiredPhoneValidator}"
                                              value="#{persion.instance.phone}"

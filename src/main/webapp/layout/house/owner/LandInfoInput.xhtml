@@ -89,7 +89,6 @@
 
                             <div class="input-group">
                                 <h:inputText id="LandBeginUseTime"
-                                             rendered="true"
                                              styleClass="js-datepicker form-control"
                                              label="#{messages.Land_BeginUseTime}"
                                              value="#{land.instance.beginUseTime}"
@@ -107,13 +106,10 @@
                                     <s:convertDateTime pattern="#{messages.datePattern}"/>
                                 </h:inputText>
                             </div>
-
                             <ui:define name="message">
                                 <r:message for="LandBeginUseTime" styleClass="edit-below-msg" />
                                 <r:message for="LandEndUseTimes" styleClass="edit-below-msg" />
                             </ui:define>
-
-
                         </s:decorate>
                         </div>
 

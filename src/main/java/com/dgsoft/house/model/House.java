@@ -319,12 +319,21 @@ public class House implements java.io.Serializable, HouseInfo {
     public String getDisplayHouseCode() {
         switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
             case 2:
-                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-")  + getHouseOrder();
 
             case 3:
-                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo()+ "-" + getHouseOrder();
+                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo()+ ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
             case 4:
-                return getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+            case 5:
+                if ("2772".equals(getBuildType())){
+                    return getBlockNo() + "-" + "0" + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+
+                }else{
+                    return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+
+                }
+
         }
         return getHouseCode();
     }
@@ -353,6 +362,9 @@ public class House implements java.io.Serializable, HouseInfo {
     @Override
     @Transient
     public String getBuildName() {
+        if (getBuild() == null){
+            return null;
+        }
         return getBuild().getBuildName();
     }
 
@@ -389,6 +401,9 @@ public class House implements java.io.Serializable, HouseInfo {
     @Override
     @Transient
     public String getDoorNo() {
+        if (getBuild().getDoorNo() == null){
+            return null;
+        }
         return getBuild().getDoorNo() + " " + getHouseOrder();
     }
 

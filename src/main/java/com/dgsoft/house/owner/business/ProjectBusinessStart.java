@@ -149,6 +149,9 @@ public class ProjectBusinessStart {
 
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBusinessId));
         ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        }
 
         ownerBusinessHome.getInstance().setBusinessProject(new BusinessProject(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject()));
 

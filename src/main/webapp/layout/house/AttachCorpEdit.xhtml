@@ -10,6 +10,82 @@
 
 
 
+    <s:decorate id="addressField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.AttachCorp_address}
+        </ui:define>
+        <ui:param name="for" value="addressInput"/>
+        <h:inputTextarea rows="3" id="addressInput" styleClass="form-control"
+                         label="#{messages.AttachCorp_address}"
+                         value="#{attachCorpHome.instance.address}">
+
+        </h:inputTextarea>
+
+    </s:decorate>
+
+    <s:decorate id="postCodeField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.AttachCorp_postCode}
+        </ui:define>
+        <ui:param name="for" value="postCodeInput"/>
+        <h:inputText rows="3" id="postCodeInput" styleClass="form-control"
+                     label="#{messages.AttachCorp_postCode}"
+                     value="#{attachCorpHome.instance.postCode}"
+                     maxlength="50"/>
+
+    </s:decorate>
+
+
+    <s:decorate id="corpLicenseField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.AttachCorp_licenseCode}
+        </ui:define>
+        <ui:param name="for" value="corpLicenseInput"/>
+        <h:inputText rows="3" id="corpLicenseInput" styleClass="form-control"
+                     label="#{messages.AttachCorp_licenseCode}"
+                     value="#{attachCorpHome.instance.licenseNumber}"
+                     maxlength="100"/>
+
+    </s:decorate>
+
+    <s:decorate id="corpCerField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.AttachCorp_cerCode}
+        </ui:define>
+        <ui:param name="for" value="corpCerInput"/>
+        <h:inputText rows="3" id="corpCerInput" styleClass="form-control"
+                     label="#{messages.AttachCorp_cerCode}"
+                     value="#{attachCorpHome.instance.cerCode}"
+                     maxlength="100"/>
+
+    </s:decorate>
+
+    <s:decorate id="corpOwnerField" styleClass="form-group" template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.AttachCorp_owner}
+        </ui:define>
+        <ui:param name="for" value="corpOwnerNameInput"/>
+
+        <div class="input-group">
+                        <span class="input-group-addon">
+                            #{messages.person_field_name}
+                        </span>
+            <h:inputText rows="3" id="corpOwnerNameInput" styleClass="form-control"
+                         label="#{messages.AttachCorp_cerCode}"
+                         value="#{attachCorpHome.instance.ownerName}"
+                         maxlength="100"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-earphone"/>
+                        </span>
+            <h:inputText rows="3" id="corpOwnerPhoneInput" styleClass="form-control"
+                         label="#{messages.Tel}"
+                         value="#{attachCorpHome.instance.ownerTel}"
+                         maxlength="100"/>
+        </div>
+
+
+    </s:decorate>
+
 
 
 </ui:composition>

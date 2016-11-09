@@ -5,6 +5,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseRecord;
+import com.dgsoft.house.owner.model.SubStatus;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -49,10 +50,16 @@ public class BusinessCancel {
         if (!ownerBusinessHome.isCanCancel()) {
             return null;
         }
-        if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(ownerBusinessHome.getInstance().getSource())){
+        //if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(ownerBusinessHome.getInstance().getSource())){
 
             ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+                subStatus.setStatus(BusinessInstance.BusinessStatus.ABORT);
+            }
             ownerBusinessHome.getInstance().setRecorded(false);
+            if(ownerBusinessHome.getInstance().getSelectBusiness() != null){
+                ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+            }
             resetHouseRecord();
             if ("updated".equals(ownerBusinessHome.update())){
 
@@ -63,9 +70,9 @@ public class BusinessCancel {
             }
 
 
-        }
+        //}
 
-        return "Cancel_Business_Create";
+       // return "Cancel_Business_Create";
     }
 
 }

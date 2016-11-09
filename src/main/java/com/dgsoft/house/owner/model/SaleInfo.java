@@ -23,6 +23,10 @@ public class SaleInfo implements java.io.Serializable {
     private BigDecimal superviseMoney;
 
 
+
+    private BigDecimal saleArea;
+
+
     private BigDecimal giftArea;
 
 
@@ -89,6 +93,16 @@ public class SaleInfo implements java.io.Serializable {
     @Column(name = "GIFTAREA", nullable = true, scale = 4)
     public BigDecimal getGiftArea() {
         return giftArea;
+    }
+
+
+    @Column(name = "SALEAREA", nullable = true, scale = 4)
+    public BigDecimal getSaleArea() {
+        return saleArea;
+    }
+
+    public void setSaleArea(BigDecimal saleArea) {
+        this.saleArea = saleArea;
     }
 
     public void setGiftArea(BigDecimal giftArea) {

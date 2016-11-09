@@ -1,9 +1,8 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
-import com.dgsoft.house.owner.HouseOwnerPersonHelper;
-import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
@@ -92,13 +91,12 @@ public class BusinessMulitHouseOwnerSubscribe implements TaskSubscribeComponent 
 
     }
 
-    private HouseOwnerPersonHelper personHelper;
+    private PersonHelper<BusinessHouseOwner> personHelper;
 
-    public HouseOwnerPersonHelper getPersonInstance() {
+    public PersonHelper<BusinessHouseOwner> getPersonInstance() {
         if ((personHelper == null) ||
                 (personHelper.getPersonEntity() != businessHouseOwner)) {
-            personHelper = new HouseOwnerPersonHelper
-                    (businessHouseOwner);
+            personHelper = new PersonHelper(businessHouseOwner);
         }
         return personHelper;
     }

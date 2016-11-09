@@ -53,6 +53,9 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
             }
 
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
+                subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
+            }
 
             Set<MakeCard> cancelCards = new HashSet<MakeCard>(ownerBusinessHome.getInstance().getSelectBusiness().getMakeCards());
 

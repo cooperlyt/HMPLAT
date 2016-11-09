@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.NumberBuilder;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.MakeCard;
@@ -41,7 +42,16 @@ public class MakeCardProjectRship implements TaskCompleteSubscribeComponent {
         }
         SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
         String datePart = numberDateformat.format(new Date());
-        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.PROJECT_RSHIP.name()));
+        Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
+        String no;
+        if (typeCard==2){
+            no= datePart + Long.toString(numberBuilder.getNumber(MakeCard.CardType.PROJECT_RSHIP.name()));
+
+        }else {
+            no= datePart+'-'+Long.toString(numberBuilder.getNumber(MakeCard.CardType.PROJECT_RSHIP.name()));
+
+        }
+
 
 
 

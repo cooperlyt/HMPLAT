@@ -9,8 +9,14 @@ import org.jboss.seam.annotations.Name;
 public class HouseBusinessSelectCreate extends OwnerBusinessCreateComponent{
 
     private static final String NORMAL_BIZ_BEGIN_PAGE = "/business/houseOwner/HouseBusinessSelectStart.xhtml";
-    private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseBusinessPatch.xthml";
-
+    /**
+     * 档案补录单业务多房屋启动页
+     */
+    //private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/MulitHouseBusinessPatch.xthml";
+    /**
+     * 档案补录单业务单房屋启动页
+     */
+    private static final String PATCH_BIZ_BEGIN_PAGE = "/business/houseOwner/SingleHouseBusinessPatch.xthml";
 
     @Override
     protected String getNormalBusinessPage() {

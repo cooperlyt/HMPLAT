@@ -4,7 +4,7 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房地产抵押权设立登记申请书">
+            title="房地产抵押权设立登记申请书" margins="40 10 20 10">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
@@ -255,14 +255,15 @@
             <p:paragraph rendered="false">产籍号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="28">
             <p:paragraph rendered="false">房屋所有权证号(预告登记证明号)</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+            <p:paragraph rendered="#{not (ownerBusinessHome.instance.defineId eq 'WP151')}">#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+            <p:paragraph rendered="#{ownerBusinessHome.instance.defineId eq 'WP151'}">#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
         </p:cell>
 
 

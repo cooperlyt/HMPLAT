@@ -32,20 +32,7 @@
             </a:outputPanel>
             <p>#{messages.NextYouCan}</p>
             <ul>
-                <a:repeat value="#{taskCompletedOper.tasks}" var="_task">
 
-
-                    <li>
-
-                        <s:link  action="#{taskPrepare.operTask}"
-                                 taskInstance="#{_task.taskInstance}">
-                            #{_task.myTask ? messages.Operator : messages.AcceptAndOper}
-                        </s:link>
-
-
-                    #{messages.HaveNextTaskMessages} <strong>#{_task.taskInstance.name} </strong>
-                    </li>
-                </a:repeat>
 
                <li>
 
@@ -57,7 +44,20 @@
                     </s:link>
                 </li>
                 <li><s:link value="#{messages.returnToCreateBusiness}" view="/func/system/business/start.xhtml"></s:link> </li>
+                <a:repeat value="#{taskCompletedOper.tasks}" var="_task">
 
+
+                    <li>
+
+                        <s:link  action="#{taskPrepare.operTask}"
+                                 taskInstance="#{_task.taskInstance}">
+                            #{_task.myTask ? messages.Operator : messages.AcceptAndOper}
+                        </s:link>
+
+
+                        #{messages.HaveNextTaskMessages} <strong>#{_task.taskInstance.name} </strong>
+                    </li>
+                </a:repeat>
             </ul>
 
 

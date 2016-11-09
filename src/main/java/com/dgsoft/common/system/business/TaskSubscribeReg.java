@@ -143,27 +143,35 @@ public class TaskSubscribeReg {
                             name = regNode.getAttributes().getNamedItem("name").getNodeValue();
                         }
 
+                        Set<String> dependencys = new HashSet<String>();
                         String description = null;
                         //String page = regNode.getAttributes().getNamedItem("page").getNodeValue();
                         for(int j = 0, subSize = regNode.getChildNodes().getLength(); j < subSize; j++){
                             Node subNode = regNode.getChildNodes().item(j);
-                            if ((subNode.getNodeType() == Node.ELEMENT_NODE) && "description".equals(subNode.getNodeName())){
-                                description = subNode.getFirstChild().getNodeValue();
-                                break;
+                            if (subNode.getNodeType() == Node.ELEMENT_NODE){
+                                if ("description".equals(subNode.getNodeName())){
+                                    description = subNode.getFirstChild().getNodeValue();
+                                }
+                                if ("dependency".equals(subNode.getNodeName())){
+                                    dependencys.add(subNode.getFirstChild().getNodeValue());
+                                }
+
                             }
                         }
 
+
                         if (VIEW_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
 
-                            viewSubScribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue()));
+                            viewSubScribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue(),dependencys));
                         } else if (EDIT_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
                             editSubscribeDefines.add(new EditSubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue(),
                                     regNode.getAttributes().getNamedItem("component").getNodeValue(),
-                                    (regNode.getAttributes().getNamedItem("out-page") == null) ? "" : regNode.getAttributes().getNamedItem("out-page").getNodeValue()));
+                                    (regNode.getAttributes().getNamedItem("out-page") == null) ? "" : regNode.getAttributes().getNamedItem("out-page").getNodeValue(),dependencys));
                         } else if (END_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
                             completeSubscribeDefines.add( new CompleteSubscribeDefine(name,description,regNode.getAttributes().getNamedItem("component").getNodeValue()));
                         } else if (OPERATOR_SUBSCRIBE_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
-                            operSubscribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue()));
+                            operSubscribeDefines.add(new SubscribeDefine(name,description,regNode.getAttributes().getNamedItem("page").getNodeValue(),dependencys));
+
                         }else if (CREATE_COMPONENT_NODE_NAME.equals(regNode.getNodeName().trim().toLowerCase())){
                             CreateComponent.CreateComponentType type = CreateComponent.CreateComponentType.valueOf(regNode.getAttributes().getNamedItem("type").getNodeValue());
                             Map<String,String> cMap = createComponents.get(type);
@@ -245,8 +253,8 @@ public class TaskSubscribeReg {
         private String component;
         private String outPage;
 
-        public EditSubscribeDefine(String name, String description, String page, String component, String outPage) {
-            super(name, description, page);
+        public EditSubscribeDefine(String name, String description, String page, String component, String outPage, Set<String> dependencys) {
+            super(name, description, page,dependencys);
             this.component = component;
             this.outPage = outPage;
         }
@@ -304,10 +312,13 @@ public class TaskSubscribeReg {
 
         private String page;
 
+        private Set<String> dependencys;
 
-        public SubscribeDefine(String name, String description, String page) {
+
+        public SubscribeDefine(String name, String description, String page, Set<String> dependencys) {
             super(name,description);
             this.page = page;
+            this.dependencys = dependencys;
 
         }
 
@@ -319,6 +330,9 @@ public class TaskSubscribeReg {
             }
         }
 
+        public Set<String> getDependencys() {
+            return dependencys;
+        }
 
         public boolean isHavePage(){
             return (page != null) && (!page.trim().equals(""));

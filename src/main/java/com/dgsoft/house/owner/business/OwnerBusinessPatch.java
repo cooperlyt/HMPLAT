@@ -179,7 +179,7 @@ public class OwnerBusinessPatch {
         }
         if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) &&  !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
 
-            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE' and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.defineId in (:defineIds)", OwnerBusiness.class)
+            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join biz.subStatuses subStatus where houseBusiness.ownerBusiness.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ') and biz.source ='BIZ_AFTER_SAVE' and houseBusiness.houseCode =:houseCode and ( houseBusiness.ownerBusiness.defineId in (:defineIds) or (subStatus.status = 'COMPLETE' and  subStatus.defineId in (:defineIds)))", OwnerBusiness.class)
                     .setParameter("houseCode", buildGridMapHouseSelect.getSelectBizHouse().getHouseCode())
                     .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","))).getResultList());
         }
@@ -226,7 +226,7 @@ public class OwnerBusinessPatch {
 
     private String getInfoCompletePath() {
 
-        if (RunParam.instance().getBooleanParamValue("CreateUploadFile")) {
+        if (RunParam.instance().getBooleanParamValue("PatchFileUpload")) {
             return PATCH_BUSINESS_FILE_PAGE;
         } else {
             return PATCH_BUSINESS_CONFIRM_PAGE;
@@ -303,6 +303,9 @@ public class OwnerBusinessPatch {
         ownerBusinessHome.getInstance().getBusinessEmps().add(new BusinessEmp(ownerBusinessHome.getInstance(), BusinessEmp.EmpType.PATCH_EMP,authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),new Date()));
 
         ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+        for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+        }
 
         ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,"档案补录",authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),null));
 
@@ -310,7 +313,7 @@ public class OwnerBusinessPatch {
         recordStore.setId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
 
         for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-            houseBusiness.setRecordStore(recordStore);
+            //houseBusiness.setRecordStore(recordStore);
 
             List<HouseStatus> houseStatuses = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
             for(AddHouseStatus addHouseStatus: houseBusiness.getAddHouseStatuses()){
@@ -359,10 +362,10 @@ public class OwnerBusinessPatch {
         }
 
 
-        for (BusinessProject businessProject : ownerBusinessHome.getInstance().getBusinessProjects()) {
-            businessProject.setRecordStore(recordStore);
-
-        }
+//        for (BusinessProject businessProject : ownerBusinessHome.getInstance().getBusinessProjects()) {
+//            businessProject.setRecordStore(recordStore);
+//
+//        }
         return ownerBusinessHome.persist();
 
     }

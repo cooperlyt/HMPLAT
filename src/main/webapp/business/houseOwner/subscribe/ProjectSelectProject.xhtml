@@ -11,7 +11,7 @@
 
     <ui:define name="itemDescription">
         <p class="repo-list-description">
-            <strong>#{messages.Developer_id}:</strong>#{_businessBuilds.developerCode}   <strong>#{messages.Developer_name}:</strong>#{_businessBuilds.developerName}
+            <strong>#{messages.Developer_id}:</strong>#{_item.businessProjects.iterator().next().getDeveloperCode() }<strong>#{messages.Developer_name}:</strong>#{_item.businessProjects.iterator().next().getDeveloperName()}
         </p>
 
 

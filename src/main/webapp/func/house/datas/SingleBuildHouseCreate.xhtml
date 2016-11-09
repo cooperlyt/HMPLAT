@@ -1,0 +1,91 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/layout/template-edit.xhtml">
+
+    <h:outputScript>
+        $(document).ready(
+        function(){
+
+        #{r:jQuery('isAutoHouseId')}.click(function() {
+        if ($(this).prop('checked')){
+        #{r:jQuery('houseIdInput')}.attr('disabled','true');
+
+        }else{
+        #{r:jQuery('houseIdInput')}.removeAttr('disabled');
+        }
+
+
+        });
+
+        if (#{r:jQuery('isAutoHouseId')}.prop('checked')){
+        #{r:jQuery('houseIdInput')}.attr('disabled','true');
+        }else{
+
+        #{r:jQuery('houseIdInput')}.removeAttr('disabled');
+
+        }
+
+
+
+        });
+
+    </h:outputScript>
+
+    <div>
+
+        <h2>
+
+
+            房屋信息
+
+        </h2>
+
+    </div>
+    <rich:messages globalOnly="false" ajaxRendered="true"/>
+
+    <h:form>
+
+
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                房屋编号
+            </ui:define>
+
+            <ui:param name="for" value="houseIdInput"/>
+
+            <div class="input-group">
+                <span class="input-group-addon">
+        <h:selectBooleanCheckbox id="isAutoHouseId" value="#{createHouse.autoHouseId}">
+
+        </h:selectBooleanCheckbox>
+                </span>
+
+                <h:inputText label="房屋编号"
+                             id="houseIdInput" value="#{createHouse.houseId}" styleClass="form-control"/>
+            </div>
+
+        </s:decorate>
+
+        <ui:include src="/layout/house/HouseEdit.xhtml">
+            <ui:param name="house" value="#{houseHome.instance}"/>
+            <ui:param name="houseOrderDisable" value="false"/>
+        </ui:include>
+        <hr/>
+
+        <h:commandButton value="#{messages.ok}"
+                         action="#{createHouse.saveSingleBuild}"
+                         styleClass="button primary first-in-line">
+        </h:commandButton>
+    </h:form>
+
+
+</ui:composition>

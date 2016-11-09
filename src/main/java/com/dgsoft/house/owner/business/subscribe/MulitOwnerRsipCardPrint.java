@@ -74,12 +74,9 @@ public class MulitOwnerRsipCardPrint extends OwnerEntityHome<MakeCard>{
     }
 
     public void print(){
-        Logging.getLog(getClass()).debug("bbbbbb--");
 
-        Logging.getLog(getClass()).debug("aaa--"+FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("makeCardId"));
         setId(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("makeCardId"));
-        Logging.getLog(getClass()).debug("id:" + isIdDefined() + "|" + getId());
-        printUrl = extendsDataCreator.extendsPrintOwnerRsip(getEntityManager().find(BusinessHouse.class,FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("businessHouseId")),getInstance());
+          printUrl = extendsDataCreator.extendsPrintOwnerRsip(getEntityManager().find(BusinessHouse.class,FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("businessHouseId")),getInstance());
 
     }
 

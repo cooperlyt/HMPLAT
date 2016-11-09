@@ -2,6 +2,7 @@ package com.dgsoft.house.action;
 
 import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
+import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.HouseEntityQuery;
 import com.dgsoft.house.model.AttachCorporation;
 import org.jboss.seam.annotations.Name;
@@ -17,7 +18,8 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
     private static final String EJBQL = "select aCorp from AttachCorporation aCorp " +
             "left join fetch aCorp.developer developer " +
             "left join fetch aCorp.mappingCorporation mapping " +
-            "left join fetch aCorp.evaluateCorporation evaluate";
+            "left join fetch aCorp.evaluateCorporation evaluate " +
+            "left join fetch aCorp.agencies houseSellCompany";
 
     private static final String[] RESTRICTIONS1 = {
             "aCorp.type = #{attachCorporationList.type}"
@@ -30,20 +32,22 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
             "lower(mapping.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
             "lower(mapping.id) = lower(#{attachCorporationList.searchKey})",
             "lower(evaluate.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
-            "lower(evaluate.id) = lower(#{attachCorporationList.searchKey})"
+            "lower(evaluate.id) = lower(#{attachCorporationList.searchKey})",
+            "lower(houseSellCompany.id) = lower(#{attachCorporationList.searchKey})",
+            "lower(houseSellCompany.name) = lower(#{attachCorporationList.searchKey})"
     };
 
     private String searchKey;
 
-    private AttachCorporation.AttachCorpType type;
+    private AttachCorpType type;
 
-    public AttachCorporation.AttachCorpType getType() {
+    public AttachCorpType getType() {
         if (type == null)
-            return AttachCorporation.AttachCorpType.DEVELOPER;
+            return AttachCorpType.DEVELOPER;
         return type;
     }
 
-    public void setType(AttachCorporation.AttachCorpType type) {
+    public void setType(AttachCorpType type) {
         this.type = type;
     }
 
@@ -51,13 +55,13 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
         if (name == null || name.trim().equals("")){
             type = null;
         }else{
-            type = AttachCorporation.AttachCorpType.valueOf(name);
+            type = AttachCorpType.valueOf(name);
         }
     }
 
     public String getTypeName(){
         if (type == null)
-            return AttachCorporation.AttachCorpType.DEVELOPER.name();
+            return AttachCorpType.DEVELOPER.name();
         return type.name();
     }
 
@@ -91,8 +95,8 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
     public Map<String, Long> getResultTypeCount() {
         if (resultCount == null){
             resultCount = new HashMap<String, Long>();
-            AttachCorporation.AttachCorpType beforType = getType();
-            for(AttachCorporation.AttachCorpType type : AttachCorporation.AttachCorpType.values()){
+            AttachCorpType beforType = getType();
+            for(AttachCorpType type : AttachCorpType.values()){
                 setType(type);
                 resultCount.put(type.name(),getResultCount());
             }

@@ -275,6 +275,8 @@ public class TotalContract {
                 .setParameter("usetype",getHouseUseType("1")).getResultList();
 
 
+
+
         List<TotalContractData> unhomeTotalData =ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.afterBusinessHouse.contractOwner.type,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.status = 'COMPLETE' " +
                 " and hb.afterBusinessHouse.useType not in (:usetype)  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
@@ -287,7 +289,7 @@ public class TotalContract {
 
         Map<String,DeveloperGroup<SectionRecordTypeItem>> resultData = new HashMap<String, DeveloperGroup<SectionRecordTypeItem>>();
 
-
+        Logging.getLog(getClass()).debug("homeTotalData--"+homeTotalData.size());
         for(TotalContractData data: homeTotalData){
             DeveloperGroup<SectionRecordTypeItem> dg = resultData.get(data.getDeveloperName());
             if (dg == null){
@@ -302,7 +304,7 @@ public class TotalContract {
                 throw new IllegalArgumentException(e);
             }
         }
-
+        Logging.getLog(getClass()).debug("unhomeTotalData--"+homeTotalData.size());
         for(TotalContractData data: unhomeTotalData){
             DeveloperGroup<SectionRecordTypeItem> dg = resultData.get(data.getDeveloperName());
             if (dg == null){
@@ -431,62 +433,87 @@ public class TotalContract {
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareHome() != null)
                     cell.setCellValue(item.getSalePrepareHome().getCount());
+                    else
+                    cell.setCellValue(0);
+
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareHome() != null)
                     cell.setCellValue(item.getSalePrepareHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareHome() != null)
                     cell.setCellValue(item.getSalePrepareHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareUnHome() != null)
                     cell.setCellValue(item.getSalePrepareUnHome().getCount());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareUnHome() != null)
                     cell.setCellValue(item.getSalePrepareUnHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSalePrepareUnHome() != null)
                     cell.setCellValue(item.getSalePrepareUnHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowHome() != null)
                     cell.setCellValue(item.getSaleNowHome().getCount());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowHome() != null)
                     cell.setCellValue(item.getSaleNowHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowHome() != null)
                     cell.setCellValue(item.getSaleNowHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowUnHome() != null)
                     cell.setCellValue(item.getSaleNowUnHome().getCount());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowUnHome() != null)
                     cell.setCellValue(item.getSaleNowUnHome().getHouseArea().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
                 cell = row.createCell(cellIndex++);
                 if (item.getSaleNowUnHome() != null)
                     cell.setCellValue(item.getSaleNowUnHome().getSumPrice().doubleValue());
+                else
+                    cell.setCellValue(0);
                 cell.setCellStyle(cellStyle);
 
 
@@ -511,17 +538,17 @@ public class TotalContract {
         cellIndex = 2;
         for(int i = 0; i< 4; i++){
 
-            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
-            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
-            cell.setCellStyle(headCellStyle);
+            zzhjcell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            zzhjcell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            zzhjcell.setCellStyle(headCellStyle);
 
-            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
-            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
-            cell.setCellStyle(headCellStyle);
+            zzhjcell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            zzhjcell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            zzhjcell.setCellStyle(headCellStyle);
 
-            cell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
-            cell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
-            cell.setCellStyle(headCellStyle);
+            zzhjcell = row1.createCell(cellIndex++,Cell.CELL_TYPE_FORMULA);
+            zzhjcell.setCellFormula("SUM(" + CellReference.convertNumToColString(cellIndex - 1) + "4:" + CellReference.convertNumToColString(cellIndex - 1)+rowIndex+")");
+            zzhjcell.setCellStyle(headCellStyle);
 
         }
 
@@ -825,12 +852,6 @@ public class TotalContract {
 
 
         }
-
-
-
-
-
-
             row1 = sheet.createRow(rowIndex);
             Cell zzhjcell = row1.createCell(0);
             zzhjcell.setCellValue("合计");

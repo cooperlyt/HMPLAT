@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="SellHouseCheck">
+
+
+	<start-state name="受理">
+		<transition to="房源审核"></transition>
+	</start-state>
+
+
+	<task-node name="房源审核">
+		<task name="HouseCheck">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment pooled-actors="sale_house_check"></assignment>
+		</task>
+		<transition to="结束"></transition>
+	</task-node>
+
+
+	<end-state name="结束"></end-state>
+
+
+</process-definition>

@@ -5,6 +5,7 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.model.SubStatus;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
@@ -34,7 +35,13 @@ public class StatusComplete implements TaskCompleteSubscribeComponent {
     public void complete() {
         if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)){
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
+            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
+                subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
+            }
         }
         ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+        for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+        }
     }
 }

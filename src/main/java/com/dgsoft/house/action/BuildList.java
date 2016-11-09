@@ -1,5 +1,7 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
+import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.HouseEntityQuery;
 import com.dgsoft.house.model.Build;
 import org.jboss.seam.ScopeType;
@@ -13,7 +15,7 @@ import java.util.Arrays;
  */
 @Name("buildList")
 @Scope(ScopeType.CONVERSATION)
-public class BuildList extends HouseEntityQuery<Build>{
+public class BuildList extends MultiOperatorEntityQuery<Build> {
 
 
     private static final String EJBQL = "select build from Build build " +
@@ -35,7 +37,12 @@ public class BuildList extends HouseEntityQuery<Build>{
             "lower(project.id) = lower(#{buildList.searchKey})",
             "lower(developer.id) = lower(#{buildList.searchKey})",
             "lower(project.address) = lower(concat('%',#{buildList.searchKey},'%'))"
+    };
 
+    private static final String[] RESTRICTIONS2 = {
+            "lower(build.mapNumber) = lower(#{buildList.searchMapNumber})",
+            "lower(build.blockNo) = lower(#{buildList.searchBlockNumber})",
+            "lower(build.buildNo) = lower(#{buildList.searchBuildNumber})"
     };
 
     @Override
@@ -86,15 +93,51 @@ public class BuildList extends HouseEntityQuery<Build>{
         this.searchKey = searchKey;
     }
 
+    public String getSearchMapNumber(){
+        if (searchKey != null){
+            String[] key = searchKey.split("-");
+            if (key.length == 3){
+                return key[0];
+            }
+        }
+        return null;
+    }
+
+    public String getSearchBlockNumber(){
+        if (searchKey != null){
+            String[] key = searchKey.split("-");
+            if (key.length == 3){
+                return key[1];
+            }
+        }
+        return null;
+    }
+
+    public String getSearchBuildNumber(){
+        if (searchKey != null){
+            String[] key = searchKey.split("-");
+            if (key.length == 3){
+                return key[2];
+            }
+        }
+        return null;
+    }
+
     public BuildList() {
         setEjbql(EJBQL);
         setRestrictionLogicOperator("or");
-        setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
+        RestrictionGroup restrictionGroup = new RestrictionGroup("or",Arrays.asList(RESTRICTIONS));
+        restrictionGroup.getChildren().add(new RestrictionGroup("and",Arrays.asList(RESTRICTIONS2)));
+        setRestrictionGroup(restrictionGroup);
+        //setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setOrderColumn("build.id");
         setOrderDirection("desc");
         setMaxResults(50);
     }
 
-
+    @Override
+    protected String getPersistenceContextName() {
+        return "houseEntityManager";
+    }
 
 }

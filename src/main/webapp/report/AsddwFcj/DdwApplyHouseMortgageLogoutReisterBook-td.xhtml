@@ -4,7 +4,7 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋抵押权登记注销申请书">
+            title="房屋抵押权登记注销申请书" margins="40 10 20 10">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
@@ -255,7 +255,7 @@
             <p:paragraph rendered="false">产籍号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="28">

@@ -98,7 +98,6 @@ public class LandInfo implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "BEGIN_USE_TIME", nullable = false, length = 19)
-    @NotNull
     public Date getBeginUseTime() {
         return this.beginUseTime;
     }
