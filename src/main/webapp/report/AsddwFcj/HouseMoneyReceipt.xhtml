@@ -1,0 +1,233 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            xmlns:h="http://java.sun.com/jsf/html"
+            title="产权登记交费单" margins="40 10 20 10">
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="8">
+        <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell padding="2" paddingBottom="2" paddingTop="2" noWrap="true" border="0"
+                        horizontalAlignment="center" verticalAlignment="middle"/>
+            </f:facet>
+
+
+
+            <p:cell horizontalAlignment="right">
+                <p:paragraph>日期:</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                        pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="right">
+                <p:paragraph>NO:</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+            </p:cell>
+            <p:cell horizontalAlignment="right">
+                <p:paragraph>经办人:</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left" fixedHeight="20">
+                <p:paragraph>#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+            </p:cell>
+            <p:cell horizontalAlignment="right">
+                <p:paragraph>
+
+                </p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph>
+
+                </p:paragraph>
+            </p:cell>
+
+
+        </p:table>
+        </p:font>
+
+
+        <p:font alignment="center" size="17" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">产权登记交费单</p:paragraph>
+        </p:font>
+
+        <p:font alignment="center" size="17" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">#{ownerBusinessHome.instance.defineName}
+            </p:paragraph>
+        </p:font>
+
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+
+
+            <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="8" paddingTop="8" noWrap="false"
+                            horizontalAlignment="right" verticalAlignment="middle" border="0"/>
+                </f:facet>
+
+                <p:cell>
+                    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="16" style="bold">
+                        <p:paragraph>权属信息</p:paragraph>
+                    </p:font>
+
+                </p:cell>
+                <p:cell colspan="3">
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>申请人:</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (not empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}(#{ownerBusinessHome.instance.applyPersion.personName})</p:paragraph>
+
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>房屋坐落:</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" horizontalAlignment="left">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>建筑面积:</p:paragraph>
+                </p:cell>
+                <p:cell horizontalAlignment="left" noWrap="false">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>产籍号:</p:paragraph>
+                </p:cell>
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>房屋用途:</p:paragraph>
+                </p:cell>
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell colspan="4" horizontalAlignment="left">
+                    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="16" style="bold">
+                    <p:paragraph>登记发证中心收费（单位：￥元）</p:paragraph>
+                    </p:font>
+                </p:cell>
+
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0">
+                        <f:facet name="defaultCell">
+                            <p:cell padding="3" paddingBottom="5" paddingTop="5" noWrap="true" border="0"
+                                    horizontalAlignment="center" verticalAlignment="middle"/>
+                        </f:facet>
+
+                        <p:cell>
+                            <p:paragraph>项目</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>数量</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>标准</p:paragraph>
+                        </p:cell>
+                        <p:cell>
+                            <p:paragraph>金额</p:paragraph>
+                        </p:cell>
+                        <c:forEach var="_businessMoneys" items="#{ownerBusinessHome.instance.businessMoneys}">
+                             <p:cell>
+                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">#{_businessMoneys.typeName}</p:paragraph>
+                            </p:cell>
+                            <p:cell >
+                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">1件</p:paragraph>
+                            </p:cell>
+                            <p:cell>
+                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}">#{_businessMoneys.chargeDetails}/件</p:paragraph>
+                            </p:cell>
+                            <p:cell>
+                                <p:paragraph rendered="#{not(_businessMoneys.shouldMoney eq 0)}"><p:text value="#{_businessMoneys.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
+                            </p:cell>
+
+                        </c:forEach>
+
+                        <p:cell>
+                            <p:paragraph>小计：</p:paragraph>
+                        </p:cell>
+                        <p:cell >
+                            <p:paragraph>￥：<p:text value="#{ownerBusinessHome.total.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
+
+                        </p:cell>
+
+                    </p:table>
+
+
+
+                </p:cell>
+
+
+
+
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false" fixedHeight="100"
+                        borderWidthTop="0">
+                    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="18" style="bold">
+
+                        <p:paragraph>
+存入鞍山经济开发区房产局的交易监管资金（单位：￥元）
+开户银行：鞍山银行股份有限公司达道湾支行
+账号：7200 0000 0418 0572</p:paragraph>
+                    </p:font>
+                </p:cell>
+            <p:cell>
+
+            </p:cell>
+
+            <p:cell>
+
+            </p:cell>
+            <p:cell>
+                <p:paragraph>总计：</p:paragraph>
+            </p:cell>
+            <p:cell >
+                <p:paragraph>￥：<p:text value="#{ownerBusinessHome.total.shouldMoney}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
+
+            </p:cell>
+
+            <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle">
+                <p:paragraph>鞍山经济开发区房屋产权登记发证中心</p:paragraph>
+            </p:cell>
+
+            </p:table>
+
+            <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+
+
+        </p:font>
+
+        <p:newPage/>
+    </a:repeat>
+
+</p:document>

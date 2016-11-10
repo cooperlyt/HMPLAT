@@ -1,0 +1,302 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="房屋所有权初始登记申请书" margins="40 10 20 10">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">房屋所有权初始登记申请书
+    </p:paragraph>
+</p:font>
+
+
+<p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+    <p:table columns="3" widths="2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+        <p:cell colspan="2" alignment="left" border="0" horizontalAlignment="justify"
+                verticalAlignment="bottom">
+            <p:paragraph> 登记机构：#{runParam.getStringParamValue('SetupName')}</p:paragraph>
+        </p:cell>
+
+        <p:cell alignment="left" horizontalAlignment="left" verticalAlignment="middle">
+            <p:paragraph>本信息收集声明：本申请书信息系依法定职权收集，用于房地产登记和登记资料利用</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" border="0" fixedHeight="2">
+        </p:cell>
+    </p:table>
+</p:font>
+
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+    <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100">
+        <f:facet name="defaultCell">
+            <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+        </f:facet>
+        <p:cell fixedHeight="240">
+            <p:paragraph>申
+                请
+                人
+                情
+                况
+            </p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
+                </f:facet>
+                <p:cell fixedHeight="40">
+                    <p:paragraph>姓名(名称)</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>联系电话</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" borderWidthRight="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.phone}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="40">
+                    <p:paragraph>证件类型</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsType.name()]}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>证件号码</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="80">
+                    <p:paragraph>共有情况</p:paragraph>
+                </p:cell>
+                <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}，共有份额：#{_businessPools.perc}。  " /></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}。  " /></ui:repeat></p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="40">
+                    <p:paragraph>代理人姓名</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0">
+                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.personName}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>联系电话</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" borderWidthRight="0">
+                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.phone}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="40">
+                    <p:paragraph>证件类型</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" borderWidthBottom="0">
+                    <p:paragraph>#{messages[ownerBusinessHome.ownerEntrust.credentialsType.name()]}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" borderWidthBottom="0">
+                    <p:paragraph>证件号码</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
+                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.credentialsNumber}</p:paragraph>
+                </p:cell>
+
+            </p:table>
+        </p:cell>
+
+        <p:cell fixedHeight="230">
+            <p:paragraph>申
+                请
+                内
+                容
+            </p:paragraph>
+        </p:cell>
+
+
+        <p:cell>
+            <p:table columns="4" widths="0.5 1 0.5 1" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
+                </f:facet>
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
+                    <p:paragraph>房屋坐落</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>产籍号</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>是否有半地下室</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.haveDownRoom}">是</p:paragraph>
+                    <p:paragraph rendered="#{not(_houseBusiness.afterBusinessHouse.haveDownRoom)}">否</p:paragraph>
+                </p:cell>
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>房屋所在建筑物总层数</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+
+                    <p:table columns="2" widths="0.5 1" headerRows="0" footerRows="0" widthPercentage="100" >
+                        <p:cell fixedHeight="30" horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0" >
+                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.floorCount}</p:paragraph>
+                        </p:cell>
+                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" borderWidthTop="0" borderWidthLeft="0" borderWidthRight="0">
+                          <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+                            <p:table columns="2" widths="1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                                <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthTop="0" borderWidthLeft="0" borderWidthBottom="0">
+                                    <p:paragraph>地上层数</p:paragraph>
+                                </p:cell>
+                                <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthTop="0" borderWidthLeft="0" borderWidthRight="0" borderWidthBottom="0">
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.upFloorCount}</p:paragraph>
+                                </p:cell>
+                                <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthBottom="0" borderWidthLeft="0">
+                                    <p:paragraph>地下层数</p:paragraph>
+                                </p:cell>
+                                <p:cell  horizontalAlignment="center" verticalAlignment="middle" borderWidthBottom="0" borderWidthLeft="0" borderWidthRight="0">
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.downFloorCount}</p:paragraph>
+                                </p:cell>
+                            </p:table>
+                            </p:font>
+                        </p:cell>
+
+                    </p:table>
+                </p:cell>
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>房屋所在层数</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.inFloorName}</p:paragraph>
+                </p:cell>
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>建筑面积</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+                </p:cell>
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>套内面积</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.useArea}</p:paragraph>
+                </p:cell>
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>规划用途</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph>
+                </p:cell>
+
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>房屋结构</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>土地使用权证号</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
+                </p:cell>
+
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>竣工日期</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+
+
+
+                <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
+                    <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
+                </p:cell>
+
+            </p:table>
+        </p:cell>
+        <p:cell colspan="2" fixedHeight="150">
+            <p:table columns="5" widths="0.5 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" border="0" noWrap="false" borderWidthTop="0"/>
+                </f:facet>
+                <p:cell colspan="5" verticalAlignment="top" horizontalAlignment="left" >
+                    <p:paragraph>     根据《中华人民共和国物权法》、《中华人民共和国城市房地产管理法》、《房屋登记管理办法》有关规定，申请人承诺所提交的申请登记材料、申请信息真实、合法、有效，如有不实由申请人承担一切法律责任。</p:paragraph>
+                </p:cell>
+                <p:cell colspan="5" fixedHeight="10">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>申请人（代理人）：</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="5" fixedHeight="15">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="2" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>（签章）：</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="5" fixedHeight="15">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>申请日期：<p:text value="#{ownerBusinessHome.applyEmp.operDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
+                </p:cell>
+
+            </p:table>
+        </p:cell>
+
+
+    </p:table>
+    <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+        <f:facet name="defaultCell">
+            <p:cell padding="0" border="0"/>
+        </f:facet>
+        <p:cell horizontalAlignment="right">
+            <p:paragraph>业务编号:</p:paragraph>
+        </p:cell>
+        <p:cell horizontalAlignment="left">
+            <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+        </p:cell>
+        <p:cell>
+
+        </p:cell>
+        <p:cell horizontalAlignment="left">
+
+        </p:cell>
+
+    </p:table>
+</p:font>
+<p:newPage/>
+</a:repeat>
+</p:document>

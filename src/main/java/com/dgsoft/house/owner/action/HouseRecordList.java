@@ -23,7 +23,9 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
             "left join owner.makeCard ownerCard " +
             "left join pool.makeCard poolCard " +
             "left join fetch businessHouse.houseBusinessForAfter houseBusiness " +
-            "left join fetch houseBusiness.recordStore store";
+
+            "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
+            "left join ownerBusiness.recordStores store " ;
 
     private static final String[] RESTRICTIONS = {
         "lower(houseRecord.houseCode) = lower(#{houseRecordList.searchKey})",

@@ -1,0 +1,199 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <h:outputStylesheet library="jquery-ad-gallery" name="/css/jquery.ad-gallery.css"/>
+
+    <h:outputStylesheet library="jquery-fancybox" name="jquery.fancybox.css"/>
+
+    <h:outputStylesheet>
+        .ad-gallery {
+            width: 98%;
+            margin-top: 10px;
+        }
+
+        .ad-gallery .ad-image-wrapper {
+
+        }
+
+        .gh-header-show.edit-title {
+            display: none;
+        }
+
+        .ad-controls .custome-controls {
+            float: right;
+        }
+
+        .ad-controls .custome-controls a {
+            margin: 0 5px;
+        }
+
+        .ad-image {
+            cursor: pointer;
+        }
+
+        .file-name-list-group .list-group-item .glyphicon{
+            padding: 0 4px;
+            margin-left: -16px;
+        }
+
+        .file-name-list-group .list-group-item.file-item {
+            padding-left: 58px;
+        }
+
+
+    </h:outputStylesheet>
+
+    <h:form>
+
+    <a:outputPanel id="fileViewPanel" layout="block" styleClass="row">
+
+        <div class="col-md-5">
+            <a:outputPanel layout="block" id="fileTree" styleClass="list-group file-name-list-group">
+
+                <a:commandLink execute="@this" render="imgShowPanel,fileTree " styleClass="all-file-item list-group-item #{empty businessFileView.activeId ? 'active' : ''}"
+                               onclick="">
+                    <span class="glyphicon glyphicon-align-justify"></span>所有文件
+                    <a:attachQueue requestDelay="0"/>
+                    <a:param name="selectActiveId" value="" assignTo="#{businessFileView.activeId}"/>
+                </a:commandLink>
+                <a:repeat var="_file" value="#{businessFileView.fileList}">
+                    <a:commandLink execute="@this" render="imgShowPanel,fileTree "
+                                   styleClass="file-item list-group-item #{_file.id eq businessFileView.activeId  ? 'active' : ''}">
+                        <span class="glyphicon glyphicon-picture"/>#{_file.name}
+                        <a:param name="selectActiveId" value="#{_file.id}" assignTo="#{businessFileView.activeId}"/>
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandLink>
+                </a:repeat>
+
+            </a:outputPanel>
+
+        </div>
+
+        <a:outputPanel id="imgShowPanel" layout="block" styleClass="col-md-7">
+            <a:outputPanel layout="block" style="margin-top: 10px"
+                           rendered="#{empty businessFileView.activeFiles}"
+                           styleClass="blankslate spacious large-format">
+                <span class="mega-octicon octicon-inbox"></span>
+
+                <h3>没有文件</h3>
+
+                <p>此节点下没有任何文件</p>
+            </a:outputPanel>
+
+            <a:outputPanel id="gallery" layout="block" styleClass="ad-gallery"
+                           rendered="#{not empty businessFileView.activeFiles}">
+                <div class="ad-image-wrapper"></div>
+                <div class="ad-controls"><div class="custome-controls"><a class="img-print-view" target="_blank" >打印</a>
+                    <a class="img-orig-view" target="_blank">原图</a></div></div>
+                <div class="ad-nav">
+                    <div class="ad-thumbs">
+                        <ul class="ad-thumb-list">
+                            <a:repeat var="_img" value="#{businessFileView.activeFiles}">
+                                <li>
+                                    <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.id}">
+                                        <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.id}"
+                                             data-file-id="#{_img.id}"
+                                             title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '档案编号:'}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordLocal) ? ' 未上架': '位置:'} #{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.frame}#{(empty _img.businessFile.recordLocal) ? '': '架'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.cabinet}#{(empty _img.businessFile.recordLocal) ? '': '柜'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.box}#{(empty _img.businessFile.recordLocal) ? '': '盒'}" />
+                                    </a>
+                                </li>
+
+                            </a:repeat>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </a:outputPanel>
+
+
+            <h:outputScript>
+                $(document).ready(
+                initGallery
+               );
+
+
+                function initGallery () {
+                $('.ad-gallery').adGallery({
+                //animate_first_image: true,
+
+                loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
+                update_window_hash: false,
+
+                slideshow: {
+                enable: false
+                },
+                callbacks: {
+                afterImageVisible: function() {
+
+                $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'));
+                $('.img-print-view').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
+
+                //$('div.ad-image a').jqzoom({
+                //    zoomType: 'standard',
+                //    //preloadText: locale.gallery.preloadText,
+                //    position: 'left',
+                //    title: true,
+                //    zoomWidth: 300,
+                //    zoomHeight: 300,
+                //    preloadImages: true
+                //});
+                //
+                //$("div.zoomPad").mouseenter(function() {
+                //    var $container = $("div.ad-image");
+                //    $container.css('width', '850px').css('height', '350px');
+                //    $container.parent().css('width', '850px').css('height', '350px');
+                //    $('div.ad-prev').css('width', '25px');
+                //}).mouseleave(function() {
+                //    var $container = $("div.ad-image");
+                //    $container.css('width', '300px').css('height', '300px');
+                //    $container.parent().css('width', '300px').css('height', '300px');
+                //    $('div.ad-prev').css('width', '25px');
+                //});
+                }
+                }
+
+                });
+
+                $(".ad-gallery").on("click", ".ad-image", function () {
+
+                // alert($(this).find("img").data("file-id"));
+                //TODO 多个图
+                $.fancybox(
+                {
+
+                href: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $(this).find("img").data("file-id") + '.jpg',
+                title: '图片',
+                // closeBtn: false,
+
+                //openEffect : 'elastic',
+                //  openSpeed  : 150,
+                //  closeEffect : 'elastic',
+                //  closeSpeed  : 150,
+
+
+                }
+                );
+                });
+
+                }
+
+
+            </h:outputScript>
+
+      </a:outputPanel>
+
+    </a:outputPanel>
+    </h:form>
+
+    <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
+    <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+
+</ui:composition>

@@ -11,11 +11,15 @@
      <a:outputPanel rendered="#{financia.financialType eq 'FINANCE_CORP'}">
          <dh:entryGridBlock columns="4" >
 
-            <h:outputText value="#{label}"/>
-            <h:outputText value="#{financia.name}"/>
+           <h:outputText value="#{label}"/>
+           <dh:entryGridColumn colspan="3">
+               <h:outputText value="#{financia.name}"/>
+           </dh:entryGridColumn>
 
            <h:outputText value="#{messages.Tel}"/>
-           <h:outputText value="#{financia.phone}"/>
+           <dh:entryGridColumn colspan="3">
+              <h:outputText value="#{financia.phone}"/>
+           </dh:entryGridColumn>
         </dh:entryGridBlock>
      </a:outputPanel>
     <a:outputPanel rendered="#{financia.financialType eq 'FINANCE_PERSON'}">

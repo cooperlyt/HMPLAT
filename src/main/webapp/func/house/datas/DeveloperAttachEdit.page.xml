@@ -17,13 +17,13 @@
         <rule if-outcome="persisted">
 
             <redirect view-id="/func/house/datas/AttrCorpMgr.xhtml">
-
+                <param name="type" value="DEVELOPER"/>
             </redirect>
         </rule>
         <rule if-outcome="updated">
 
             <redirect view-id="/func/house/datas/AttrCorpMgr.xhtml">
-
+                <param name="type" value="DEVELOPER"/>
             </redirect>
         </rule>
     </navigation>

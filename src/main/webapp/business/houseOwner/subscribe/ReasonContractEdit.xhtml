@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <div class="form-inline">
+        <s:decorate id="IdField" template="/layout/edit-big.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.Card_MerchandiseContrao}
+            </ui:define>
+            <ui:param name="for" value="MerchandiseContrao"/>
+            <h:inputText label="#{messages.Card_MerchandiseContrao}"
+                         id="MerchandiseContrao"
+                         value="#{reasonContractSubsrcibe.instance.reason}"
+                         styleClass="form-control"
+                         maxlength="32"
+                         required="true"
+                         size="50">
+            </h:inputText>
+        </s:decorate>
+    </div>
+
+
+</ui:composition>

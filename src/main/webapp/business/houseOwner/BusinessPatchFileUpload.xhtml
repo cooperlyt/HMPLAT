@@ -1,12 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/layout/template.xhtml">
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
 
-</body>
-</html>
+    <ui:define name="ajax-param">
+        <a:queue requestDelay="0" ignoreDupResponses="true"/>
+    </ui:define>
+
+
+    <ui:define name="body">
+
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>
+                        <s:link value="#{messages.BusinessPatch}" view="/func/house/owner/PatchOwnerBusiness.xhtml" propagation="end"/>
+                    </strong>
+
+
+                    <span class="path-divider">/</span>
+
+                    #{ownerBusinessHome.instance.defineName}
+                    <span class="path-divider">/</span>
+                    <s:link action="#{ownerBusinessPatch.beginEdit}">
+                        #{messages.Business_Start_Subscribe}
+                    </s:link>
+                    <span class="path-divider">/</span>
+                    #{messages.Business_Start_File_Upload}
+                </h1>
+
+
+                <a:outputPanel ajaxRendered="true" layout="block" id="passBtn" class="right">
+                    <s:link styleClass="btn btn-primary #{patchBusinessFile.pass ? '' : 'disabled'}" action="#{patchBusinessFile.save}"
+                            disabled="#{not patchBusinessFile.pass}" >
+                        #{messages.complete}
+
+                    </s:link>
+                </a:outputPanel>
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="container-fluid">
+
+            <ui:include src="BusinessFile.xhtml">
+                <ui:param name="businessFileEntity" value="#{patchBusinessFile}"/>
+            </ui:include>
+
+
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/layout/template.xhtml">
+
+
+    <ui:define name="func-body">
+
+        <h:outputStylesheet>
+
+            .apllyNameCol{
+                width: 150px;
+                display: block;
+                word-break:keep-all;/* 不换行 */
+                white-space:nowrap;/* 不换行 */
+                overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+                text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+            }
+        </h:outputStylesheet>
+
+        <div class="container">
+
+            <h:form>
+
+                <s:div styleClass="blankslate" rendered="#{empty todayBusinessList.businessResult}">
+                    <span class="mega-octicon octicon-search"></span>
+
+                    <h3>#{messages.EmptyResult}</h3>
+
+                    <p>今天还没有建业任何业务</p>
+                </s:div>
+
+
+
+                <div style="min-height: 300px;">
+                    <h:dataTable value="#{todayBusinessList.businessResult}"
+                                 styleClass="table table-striped table-hover table-floatThead table-condensed"
+                                 headerClass="table-tools-header"
+                                 columnClasses=",,,apllyNameCol,,,,"
+                                 var="_business" rendered="#{not empty todayBusinessList.businessResult}">
+
+                        <f:facet name="header">
+
+                            <!-- -->
+                            <s:link styleClass="btn btn-sm btn-sm-icon btn-primary right compare-button " includePageParams="true">
+                                <span class="octicon octicon-sync"/>
+                            </s:link>
+
+                            <h3>
+                                #{messages.SerachResultCount}#{' '}
+                                <h:outputText value="#{todayBusinessList.resultCount}">
+                                    <f:convertNumber type="number" groupingUsed="true"/>
+                                </h:outputText>
+                                #{''}#{messages.SerachResultCountPrefx}
+                            </h3>
+                        </f:facet>
+
+
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                编号
+                            </f:facet>
+
+                            <s:link view="/func/house/owner/BusinessView.xhtml">
+                                <f:param value="#{_business.ownerBusiness.id}" name="businessId"/>
+                                #{_business.ownerBusiness.id}
+                            </s:link>
+
+                        </h:column>
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                业务名称
+                            </f:facet>
+
+                            <h:outputText value="#{_business.ownerBusiness.defineName}"/>
+                        </h:column>
+
+                        <h:column headerClass="table-header">
+
+                            <f:facet name="header">
+                                状态
+                            </f:facet>
+                            #{messages[_business.ownerBusiness.status.name()]}
+                        </h:column>
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                申请人
+                            </f:facet>
+
+                            <h:outputText value="#{_business.ownerBusiness.applyPersion.personName}" styleClass="apllyNameCol"/>
+                        </h:column>
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                当前阶段
+                            </f:facet>
+
+                            <h:outputText value="#{_business.openTaskName}" />
+                        </h:column>
+
+
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                办理人员
+                            </f:facet>
+
+                            <h:outputText value="#{_business.openEmployee}" />
+                        </h:column>
+
+
+
+                        <h:column headerClass="table-header">
+                            <f:facet name="header">
+                                产籍号
+                            </f:facet>
+
+                            <h:outputText value="#{_business.businessHouse.displayHouseCode}" rendered="#{not empty _business.businessHouse}"/>
+
+                        </h:column>
+
+
+                    </h:dataTable>
+
+
+                </div>
+                <a:outputPanel layout="block" rendered="#{not empty todayBusinessList.businessResult}" class="paginate-container">
+
+                    <a:outputPanel>
+                        <ui:include src="/layout/pages.xhtml">
+                            <ui:param name="entityList" value="#{todayBusinessList}"/>
+                        </ui:include>
+                    </a:outputPanel>
+
+                </a:outputPanel>
+            </h:form>
+
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

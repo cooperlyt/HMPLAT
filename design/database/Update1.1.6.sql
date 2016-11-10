@@ -1,1 +1,0 @@
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.initHouseCard','初始登记出证统计','初始登记出证统计',8)

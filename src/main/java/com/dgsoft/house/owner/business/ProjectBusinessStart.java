@@ -149,6 +149,9 @@ public class ProjectBusinessStart {
 
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBusinessId));
         ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        }
 
         ownerBusinessHome.getInstance().setBusinessProject(new BusinessProject(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject()));
 
@@ -158,7 +161,12 @@ public class ProjectBusinessStart {
         }
 
         for (BusinessBuild businessBuild : ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject().getBusinessBuilds()) {
-            businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), businessBuild), true));
+            Build build = houseEntityLoader.getEntityManager().find(Build.class,businessBuild.getBuildCode());
+            if (build == null) {
+                businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), businessBuild), true));
+            }else{
+                businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build), true));
+            }
         }
         for (BatchOperData<Build> build : builds) {
             businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build.getData()), false));

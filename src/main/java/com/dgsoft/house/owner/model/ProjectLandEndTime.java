@@ -28,6 +28,13 @@ public class ProjectLandEndTime implements java.io.Serializable{
         this.projectSellInfo = projectSellInfo;
     }
 
+    public ProjectLandEndTime(ProjectLandEndTime other,ProjectSellInfo projectSellInfo){
+        this.useTypeCategory = other.getUseTypeCategory();
+        this.endTime = other.getEndTime();
+        this.projectSellInfo = projectSellInfo;
+
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull

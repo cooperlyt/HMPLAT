@@ -9,7 +9,7 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2015-10-03.
- * 预告登记权证信息补录
+ * 预告抵押登记权证信息补录
  *
  */
 @Name("makeCardNoticeMortgageRecordSubsrcibe")
@@ -20,7 +20,7 @@ public class MakeCardNoticeMortgageRecordSubsrcibe extends OwnerEntityHome<MakeC
 
     @Override
     public MakeCard createInstance() {
-        return new MakeCard(MakeCard.CardType.NOTICE);
+        return new MakeCard(MakeCard.CardType.NOTICE_MORTGAGE);
     }
 
 
@@ -31,8 +31,8 @@ public class MakeCardNoticeMortgageRecordSubsrcibe extends OwnerEntityHome<MakeC
     public void create() {
         super.create();
         for (MakeCard makeCard : ownerBusinessHome.getInstance().getMakeCards()) {
-            if (makeCard.getType().equals(MakeCard.CardType.NOTICE)) {
-                setId(ownerBusinessHome.getInstance().getMakeCards().iterator().next().getId());
+            if (makeCard.getType().equals(MakeCard.CardType.NOTICE_MORTGAGE)) {
+                setId(makeCard.getId());
                 return;
             }
         }

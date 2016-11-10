@@ -41,15 +41,21 @@
                 <s:link styleClass="menu-item #{attachCorporationList.type eq 'DEVELOPER' ? 'selected' : ''}"
                         propagation="none">
                     #{messages.Developer}
-                    <h:outputText styleClass="counter" value="">
-                        <f:convertNumber type="number" groupingUsed="true"/>
-                    </h:outputText>
+
+                    <f:param name="type" value="DEVELOPER"/>
 
                 </s:link>
+                <s:link styleClass="menu-item #{attachCorporationList.type eq 'AGENCIES' ? 'selected' : ''}"
+                        propagation="none">
+                    #{messages.EstateAgencies}
+
+                    <f:param name="type" value="AGENCIES"/>
+                </s:link>
+                <ui:remove>
                 <s:link styleClass="menu-item #{attachCorporationList.type eq 'EVALUATE' ? 'selected' : ''}"
                         propagation="none">
                     评估机构
-                    <h:outputText styleClass="counter" value="">
+                    <h:outputText styleClass="counter" value="#{attachCorporationList.getResultTypeCount}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
 
@@ -57,12 +63,19 @@
                 <s:link styleClass="menu-item #{attachCorporationList.type eq 'MAPPING' ? 'selected' : ''}"
                         propagation="none">
                     测绘机构
-                    <h:outputText styleClass="counter" value="">
+                    <h:outputText styleClass="counter" value="#{attachCorporationList.getResultTypeCount}">
                         <f:convertNumber type="number" groupingUsed="true"/>
                     </h:outputText>
 
                 </s:link>
+                </ui:remove>
             </nav>
+
+            <p class="meta-search-links">
+                <s:link view="/func/house/owner/ContractNumberList.xhtml">
+                    合同发放查询
+                </s:link>
+            </p>
         </a:outputPanel>
 
 
@@ -78,9 +91,17 @@
 
 
 
-                    <s:link  view="/func/house/datas/DeveloperAttachEdit.xhtml">
+                    <s:link rendered="#{attachCorporationList.type eq 'DEVELOPER'}" view="/func/house/datas/DeveloperAttachEdit.xhtml">
                         <f:param name="attachCorpId" value=""/>
                         <f:param name="changeDeveloper" value="#{true}"/>
+                        <span class="octicon octicon-plus"/>
+                        #{messages.create}
+
+                    </s:link>
+
+                    <s:link rendered="#{attachCorporationList.type eq 'AGENCIES'}" view="/func/house/datas/AgenciesAttachEdit.xhtml">
+                        <f:param name="agenciesAttachId" value=""/>
+
                         <span class="octicon octicon-plus"/>
                         #{messages.create}
 
@@ -102,11 +123,17 @@
 
 
 
-                                    <s:link styleClass="btn btn-success" view="/func/house/datas/DeveloperAttachEdit.xhtml">
+                                    <s:link rendered="#{attachCorporationList.type eq 'DEVELOPER'}" styleClass="btn btn-success" view="/func/house/datas/DeveloperAttachEdit.xhtml">
                                         <span class="octicon octicon-plus"/>
                                         #{messages.create}
                                         <f:param name="attachCorpId" value=""/>
                                         <f:param name="changeDeveloper" value="#{true}"/>
+                                    </s:link>
+
+                                    <s:link rendered="#{attachCorporationList.type eq 'AGENCIES'}" styleClass="btn btn-success" view="/func/house/datas/AgenciesAttachEdit.xhtml">
+                                        <span class="octicon octicon-plus"/>
+                                        #{messages.create}
+                                        <f:param name="agenciesAttachId" value=""/>
                                     </s:link>
 
                                 </div>
@@ -115,7 +142,7 @@
 
                             <h3>
                                 #{messages.SerachResultCount}#{' '}
-                                <h:outputText value="#{projectList.resultCount}">
+                                <h:outputText value="#{attachCorporationList.resultCount}">
                                     <f:convertNumber type="number" groupingUsed="true"/>
                                 </h:outputText>
                                 #{''}#{messages.SerachResultCountPrefx}
@@ -124,7 +151,7 @@
 
                         <h:column headerClass="table-header">
                             <f:facet name="header">
-                                开发商编号
+                                从业机构编号
                             </f:facet>
                             <s:link value="#{_item.id}" styleClass="css-truncate css-truncate-target #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
                                     view="/func/house/datas/AttachCorpView.xhtml">
@@ -132,16 +159,17 @@
                             </s:link>
                         </h:column>
 
+
                         <h:column headerClass="table-header">
                             <f:facet name="header">
-                                开发商名称
+                                从业机构名称
                             </f:facet>
                             <h:outputText styleClass="  #{_item.outTime ? 'out-time' : ''} #{_item.enable ? '' : 'delete-data'}"
-                            value="#{_item.developer.name}"/>
+                            value="#{attachCorporationList.type eq 'DEVELOPER' ? _item.developer.name : _item.agencies.name }"/>
 
                         </h:column>
 
-                        <h:column headerClass="table-header">
+                        <h:column rendered="#{attachCorporationList.type eq 'DEVELOPER'}"  headerClass="table-header">
                             <f:facet name="header">
                                 描述
                             </f:facet>
@@ -152,15 +180,22 @@
 
                         <h:column>
                             <div class="table-actions right">
-                                <s:link styleClass="table-action"
+                                <s:link styleClass="table-action" rendered="#{attachCorporationList.type eq 'DEVELOPER'}"
                                         view="/func/house/datas/DeveloperAttachEdit.xhtml"
                                         aria-label="#{messages.edit}">
                                     <span class="octicon octicon-pencil"/>
                                     #{messages.edit}
-                                    <a:attachQueue requestDelay="0"/>
                                     <f:param name="attachCorpId" value="#{_item.id}"/>
                                     <f:param name="developerId" value="#{_item.developer.id}"/>
                                     <f:param name="changeDeveloper" value="#{false}"/>
+                                </s:link>
+                                <s:link styleClass="table-action" rendered="#{attachCorporationList.type eq 'AGENCIES'}"
+                                        view="/func/house/datas/AgenciesAttachEdit.xhtml"
+                                        aria-label="#{messages.edit}">
+                                    <span class="octicon octicon-pencil"/>
+                                    #{messages.edit}
+
+                                    <f:param name="agenciesAttachId" value="#{_item.id}"/>
                                 </s:link>
 
                             </div>

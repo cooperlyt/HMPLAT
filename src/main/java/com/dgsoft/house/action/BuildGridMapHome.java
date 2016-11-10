@@ -1,6 +1,7 @@
 package com.dgsoft.house.action;
 
 import com.dgsoft.common.system.DictionaryWord;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
@@ -55,6 +56,15 @@ public class BuildGridMapHome implements DropListener {
     private BuildGridMap curBuildGridMap;
 
     private List<BuildGridMap> gridMaps;
+
+    private House.AddressGenType houseAddressGenType;
+
+    public House.AddressGenType getHouseAddressGenType() {
+        if (houseAddressGenType == null){
+            houseAddressGenType =  House.AddressGenType.valueOf(RunParam.instance().getStringParamValue("HouseAddressGen"));
+        }
+        return houseAddressGenType;
+    }
 
     @In
     private FacesMessages facesMessages;
@@ -383,7 +393,7 @@ public class BuildGridMapHome implements DropListener {
             for (GridBlock block : row.getGridBlockList()) {
                 if (block.getHouse() == null && block.getHouseOrder() != null && !"".equals(block.getHouseOrder().trim())) {
 
-                    House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), block);
+                    House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), block, getHouseAddressGenType());
                     block.setHouseCode(newHouse.getHouseCode());
                     block.setHouse(newHouse);
                     buildHome.getInstance().getHouses().add(newHouse);
@@ -481,7 +491,7 @@ public class BuildGridMapHome implements DropListener {
                 idleHouses.remove(tempHouse);
 
             } else {
-                House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock);
+                House newHouse = new House(buildHome.genHouseOrder(), buildHome.getInstance(), targetBlock,getHouseAddressGenType());
                 targetBlock.setHouse(newHouse);
                 buildHome.getInstance().getHouses().add(newHouse);
             }

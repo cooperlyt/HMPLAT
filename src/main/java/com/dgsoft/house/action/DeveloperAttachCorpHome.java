@@ -1,5 +1,6 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.model.AttachCorporation;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -22,12 +23,10 @@ public class DeveloperAttachCorpHome extends AttachCorporationHome {
 
     @Override
     protected AttachCorporation createInstance(){
-        return new AttachCorporation(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), AttachCorporation.AttachCorpType.DEVELOPER,true, new Date());
+        return new AttachCorporation(String.valueOf(HouseNumberBuilder.instance().useNumber(NUMBER_KEY)), AttachCorpType.DEVELOPER,true, new Date());
     }
 
-    public Class<AttachCorporation> getEntityClass(){
-        return AttachCorporation.class;
-    }
+
 
     public void developerSelectListener(){
         if (developerHome.isIdDefined()){

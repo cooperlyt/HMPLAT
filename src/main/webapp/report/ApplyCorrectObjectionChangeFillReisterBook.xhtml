@@ -136,7 +136,8 @@
                     </p:font>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                    <p:paragraph rendered="#{not (ownerBusinessHome.instance.type eq 'MODIFY_BIZ')}">#{_houseBusiness.startBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
+                    <p:paragraph rendered="#{ownerBusinessHome.instance.type eq 'MODIFY_BIZ'}">#{ownerBusinessHome.instance.selectBusiness.singleHoues.afterBusinessHouse.businessHouseOwner.makeCard.number}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>房号</p:paragraph>

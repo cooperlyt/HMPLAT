@@ -24,31 +24,34 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 	private String memo;
     private boolean noFile;
     private boolean important;
+	private RecordLocal recordLocal;
     private Set<UploadFile> uploadFiles = new HashSet<UploadFile>(0);
-
-
+	private RecordStore recordStore;
 
     private int priority;
 
 	public BusinessFile() {
 	}
 
-    public BusinessFile(String id, String name, String importantCode, boolean noFile, boolean important,int priority) {
-        this.id = id;
-        this.name = name;
-        this.importantCode = importantCode;
-        this.noFile = noFile;
-        this.important = important;
-		this.priority = priority;
-    }
-
-	public BusinessFile(String id, String name, int priority) {
-		this.id = id;
+	public BusinessFile(OwnerBusiness ownerBusiness,String name, String importantCode, int priority) {
+		this.id=UUID.randomUUID().toString().replace("-", "");
 		this.name = name;
+		this.importantCode = importantCode;
+		this.noFile = false;
+		this.important = true;
 		this.priority = priority;
+		this.ownerBusiness = ownerBusiness;
+	}
+
+
+
+	public BusinessFile(OwnerBusiness ownerBusiness, String name, int priority) {
+		this.id=UUID.randomUUID().toString().replace("-", "");
+		this.name = name;
 		this.noFile = false;
 		this.important = false;
 		this.priority = priority;
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Id
@@ -61,6 +64,17 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+
+	@OneToOne(fetch = FetchType.LAZY,optional = true ,cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	public RecordLocal getRecordLocal() {
+		return recordLocal;
+	}
+
+	public void setRecordLocal(RecordLocal recordLocal) {
+		this.recordLocal = recordLocal;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -148,10 +162,19 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		Collections.sort(result, new Comparator<UploadFile>() {
 			@Override
 			public int compare(UploadFile o1, UploadFile o2) {
-				return o1.getFileName().compareTo(o2.getFileName());
+				return o1.getUploadTime().compareTo(o2.getUploadTime());
 			}
 		});
 		return result;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,optional = true)
+	@JoinColumn(name = "RECORD_STORE", nullable = true)
+	public RecordStore getRecordStore() {
+		return recordStore;
+	}
+
+	public void setRecordStore(RecordStore recordStore) {
+		this.recordStore = recordStore;
+	}
 }

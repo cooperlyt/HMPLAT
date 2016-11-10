@@ -41,14 +41,14 @@ public class FinancialProjectSubscribe extends FinancialBaseSubscribe {
                }
                Developer developer = houseEntityLoader.getEntityManager().find(Developer.class,developerCode);
                if (developer==null || developer.getAttachCorporation()==null){
-                   businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.OTHER);
+                   businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
                    businessHouseOwner.setCredentialsNumber(UUID.randomUUID().toString());
                    businessHouseOwner.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
                }else {
                    businessHouseOwner.setPersonName(developer.getName());
 
                    if (developer.getAttachCorporation().getLicenseNumber()==null || developer.getAttachCorporation().getLicenseNumber().trim().equals("")){
-                       businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.OTHER);
+                       businessHouseOwner.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
                        businessHouseOwner.setCredentialsNumber(UUID.randomUUID().toString());
 
                    }else{

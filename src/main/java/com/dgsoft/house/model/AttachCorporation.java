@@ -1,8 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.DataFormat;
-import org.hibernate.annotations.GenericGenerator;
+import com.dgsoft.house.AttachCorpType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,11 +16,6 @@ import java.util.*;
 @Table(name = "ATTACH_CORPORATION", catalog = "HOUSE_INFO")
 public class AttachCorporation implements java.io.Serializable {
 
-
-	public enum AttachCorpType{
-		//开发商 ， 物业， 评估， 测绘
-		DEVELOPER, MCOMPANY, EVALUATE, MAPPING
-	}
 
 	private String id;
 	private Date recordDate;
@@ -52,6 +46,8 @@ public class AttachCorporation implements java.io.Serializable {
     private MappingCorporation  mappingCorporation;
 
     private EvaluateCorporation evaluateCorporation;
+
+	private Agencies agencies;
 
 
 	public AttachCorporation(String id,AttachCorpType type,boolean enable, Date recordDate) {
@@ -311,7 +307,16 @@ public class AttachCorporation implements java.io.Serializable {
         this.evaluateCorporation = evaluateCorporation;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attachCorporation")
+	@OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation", cascade = CascadeType.ALL)
+	public Agencies getAgencies() {
+		return agencies;
+	}
+
+	public void setAgencies(Agencies agencies) {
+		this.agencies = agencies;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "attachCorporation")
 	public Set<OrgAttachAction> getOrgAttachActions() {
 		return this.orgAttachActions;
 	}
@@ -355,5 +360,23 @@ public class AttachCorporation implements java.io.Serializable {
     @Transient
 	public boolean isOutTime(){
 		return getDateTo().compareTo(new Date()) < 0;
+	}
+
+	@Transient
+	public String getName(){
+		switch (type){
+
+			case DEVELOPER:
+				return getDeveloper().getName();
+			case EVALUATE:
+				return getEvaluateCorporation().getName();
+			case MAPPING:
+				return getMappingCorporation().getName();
+			case AGENCIES:
+				return getAgencies().getName();
+
+			default:
+				throw new IllegalAccessError("unknow attr corp type");
+		}
 	}
 }

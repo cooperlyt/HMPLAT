@@ -44,7 +44,7 @@ public class BusinessStartSelectList extends HouseBusinessSearch {
 
         defineIdCondition += ")";
 
-        return result + " where biz.defineId in " + defineIdCondition + " and biz.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ')";
+        return result + " left join biz.subStatuses subStatus where (biz.defineId in " + defineIdCondition + "  or (subStatus.status = 'COMPLETE' and subStatus.defineId in " + defineIdCondition + ")) and biz.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ')";
 
     }
 }

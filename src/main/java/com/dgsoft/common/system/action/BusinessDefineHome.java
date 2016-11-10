@@ -140,6 +140,16 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private String taskName = Subscribe.CREATE_TASK_NAME;
 
+    private BusinessInstance.BusinessType taskType = BusinessInstance.BusinessType.NORMAL_BIZ;
+
+    public void setTaskType(BusinessInstance.BusinessType taskType) {
+        this.taskType = taskType;
+    }
+
+    public BusinessInstance.BusinessType getTaskType() {
+        return taskType;
+    }
+
     public String getTaskName() {
         return taskName;
     }
@@ -298,6 +308,17 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
 
     private SubscribeGroup curEditGroup;
 
+    public List<String> getCurEditGroupDependency() {
+        if (curEditGroup != null){
+            Set<String> result = new HashSet<String>();
+            for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
+                result.addAll(define.getDependencys());
+            }
+            return new ArrayList<String>(result);
+        }else
+            return new ArrayList<String>(0);
+    }
+
     public SubscribeGroup getCurEditGroup() {
         return curEditGroup;
     }
@@ -360,11 +381,12 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
         return true;
     }
 
+
+
     private void initEditSubscribes() {
         for (TaskSubscribeReg.EditSubscribeDefine define : getEditSubscribeDefines()) {
             if (define.isHaveComponent()) {
                 define.getComponents().initSubscribe();
-
             }
         }
     }

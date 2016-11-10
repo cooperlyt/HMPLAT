@@ -122,6 +122,7 @@ public class HouseBusinessModifyStart {
 
         selectOwnerBusiness = ownerEntityLoader.getEntityManager().find(OwnerBusiness.class, selectBusinessId);
         businessDefineHome.setId(selectOwnerBusiness.getDefineId());
+        businessDefineHome.setTaskType(BusinessInstance.BusinessType.MODIFY_BIZ);
         cloneData(selectOwnerBusiness);
         if (selectOwnerBusiness.getHouseBusinesses().isEmpty()){
             return "DATA_COMPLETE";
@@ -147,6 +148,9 @@ public class HouseBusinessModifyStart {
     private void cloneData(OwnerBusiness ownerBusiness) {
         //TODO needFile
         ownerBusiness.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        for(SubStatus subStatus: ownerBusiness.getSubStatuses()){
+            subStatus.setStatus(BusinessInstance.BusinessStatus.MODIFYING);
+        }
 
 
         ownerBusinessHome.clearInstance();

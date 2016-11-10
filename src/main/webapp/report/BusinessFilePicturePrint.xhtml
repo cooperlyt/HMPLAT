@@ -1,0 +1,37 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            xmlns:h="http://xmlns.jcp.org/jsf/html"
+            title="#{businessFileHome.instance.name}">
+
+
+    <ui:repeat value="#{businessFileHome.instance.uploadFileList}" var="_file">
+        <p:table columns="1" widths="1"   headerRows="0" footerRows="0" widthPercentage="100" >
+
+
+        <f:facet name="defaultCell">
+            <p:cell padding="0" paddingBottom="0" border="0" paddingTop="0" noWrap="0"
+                    horizontalAlignment="center" verticalAlignment="middle"/>
+        </f:facet>
+
+        <p:cell>
+            <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+                <p:paragraph alignment="center">#{_file.businessFile.name}
+                </p:paragraph>
+            </p:font>
+        </p:cell>
+        <p:cell>
+
+
+        <p:image alignment="center"  value="#{imageAction.getImage(_file.id)}" scaleToFit="550 760"/>
+
+        </p:cell>
+
+        </p:table>
+        <p:newPage/>
+    </ui:repeat>
+
+</p:document>

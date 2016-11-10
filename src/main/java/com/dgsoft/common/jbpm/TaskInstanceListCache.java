@@ -89,7 +89,7 @@ public abstract class TaskInstanceListCache {
 
     @Create
     public void refresh() {
-
+        Logging.getLog(getClass()).debug("task begin refresh");
 
         Set<TaskInstanceAdapter> newTasks = initAllTaskInstances();
 
@@ -134,6 +134,8 @@ public abstract class TaskInstanceListCache {
         allTask = newTasks;
 
         reset();
+
+        Logging.getLog(getClass()).debug("task refresh complete");
     }
 
     public void reset(){

@@ -68,6 +68,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<ContractOwner> contractOwners = new HashSet<ContractOwner>(0);
     private Set<ProjectMortgage> projectMortgages = new HashSet<ProjectMortgage>(0);
     private Set<GiveCard> giveCards = new HashSet<GiveCard>(0);
+
+    private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
     public OwnerBusiness() {
     }
 
@@ -204,6 +206,18 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setUploadFileses(Set<BusinessFile> uploadFileses) {
         this.uploadFileses = uploadFileses;
+    }
+
+    @Transient
+    public List<BusinessFile>  getVaidBusinessFileList(){
+        List<BusinessFile> result = new ArrayList<BusinessFile>();
+        for (BusinessFile businessFile: getUploadFileses()){
+            if (businessFile.isNoFile() || !businessFile.getUploadFiles().isEmpty()){
+                result.add(businessFile);
+            }
+        }
+        Collections.sort(result,OrderBeanComparator.getInstance());
+        return result;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
@@ -441,6 +455,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.checkTime = checkTime;
     }
 
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true,cascade = CascadeType.ALL,mappedBy = "ownerBusiness")
+    public Set<SubStatus> getSubStatuses() {
+        return subStatuses;
+    }
+
+    public void setSubStatuses(Set<SubStatus> subStatuses) {
+        this.subStatuses = subStatuses;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "REG_TIME", nullable = true, length = 19)
     public Date getRegTime() {
@@ -461,13 +484,25 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.recordTime = recordTime;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, mappedBy = "ownerBusiness")
     public Set<RecordStore> getRecordStores() {
         return recordStores;
     }
 
     public void setRecordStores(Set<RecordStore> recordStores) {
         this.recordStores = recordStores;
+    }
+
+    @Transient
+    public List<RecordStore> getRecordStoreList(){
+        List<RecordStore> result = new ArrayList<RecordStore>(getRecordStores());
+        Collections.sort(result, new Comparator<RecordStore>() {
+            @Override
+            public int compare(RecordStore o1, RecordStore o2) {
+                return o1.getCreateTime().compareTo(o2.getCreateTime());
+            }
+        });
+        return result;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
@@ -546,6 +581,16 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public List<MakeCard> getMakeCardList() {
         List<MakeCard> result = new ArrayList<MakeCard>(getMakeCards());
+        Collections.sort(result, new Comparator<MakeCard>() {
+            @Override
+            public int compare(MakeCard o1, MakeCard o2) {
+                int result = Integer.valueOf(o1.getType().ordinal()).compareTo(o2.getType().ordinal());
+                if (result == 0){
+                    return o1.getNumber().compareTo(o2.getNumber());
+                }
+                return result;
+            }
+        });
         return result;
     }
 
@@ -590,6 +635,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public BusinessPersion getMortgageObligee() {
         return getBusinessPersion(BusinessPersion.PersionType.MORTGAGE_OBLIGEE);
+
+    }
+
+    /**
+     * 原抵押权人代理人
+     */
+    @Transient
+    public BusinessPersion getMortgageObligeeOld() {
+        return getBusinessPersion(BusinessPersion.PersionType.MORTGAGE_OBLIGEE_OLD);
 
     }
 
@@ -674,17 +728,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return null;
     }
-    /**
-     * 档案位置信息
-     */
-    @Transient
-    public RecordStore getRecordStore(){
-        if(!getRecordStores().isEmpty()){
-            return getRecordStores().iterator().next();
 
-        }
-        return null;
-    }
 
     @Transient
     public BusinessEmp getOperEmp(BusinessEmp.EmpType empType){
@@ -709,6 +753,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         }
         return poolMarkCards;
     }
+    /**
+     *
+     * @return 初审人
+     */
+    @Transient
+    public BusinessEmp getFirstCheckEmp(){
+        return getOperEmp(BusinessEmp.EmpType.FIRST_CHECK);
+    }
+
 
     /**
      *
@@ -817,6 +870,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public Reason getReceive(){
         return getReason(Reason.ReasonType.RECEIVE);
     }
+
+    @Transient
+    public Reason getMortgageReceive(){
+        return getReason(Reason.ReasonType.MORTGAGE_RECEIVE);
+    }
     @Transient
     public Reason getHighDebtor(){
         return getReason(Reason.ReasonType.High_DEBTOR);
@@ -832,6 +890,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     @Transient
     public Reason getDifficulty(){
         return getReason(Reason.ReasonType.DIFFICULTY);
+    }
+
+    @Transient
+    public Reason getContractReason(){
+        return getReason(Reason.ReasonType.CONTRACT);
     }
 
     /**
@@ -860,7 +923,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public Reason getModifyAfterReason(){
         return getReason(Reason.ReasonType.MODIFY_AFTER_RENSON);
     }
+    @Transient
+    public Reason getShiftBeforeReason(){
+        return getReason(Reason.ReasonType.SHIFT_BEFORE);
+    }
 
+    @Transient
+    public Reason getShiftAfterReason(){
+        return getReason(Reason.ReasonType.SHIFT_AFTER);
+    }
     /**
      * 发证信息
      */
@@ -870,5 +941,13 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
             return getGiveCards().iterator().next();
         }
         return null;
+    }
+
+    /**
+     * 当前日期
+     */
+    @Transient
+    public Date getNowDate(){
+            return new Date();
     }
 }

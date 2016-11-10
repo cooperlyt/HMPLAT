@@ -1,0 +1,109 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="询问笔录" margins="40 10 20 10">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="16" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">询问笔录
+    </p:paragraph>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14">
+    <p:table columns="7" widths="1 1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+
+        <f:facet name="defaultCell">
+            <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="false" border="0"
+                    horizontalAlignment="left" verticalAlignment="left"/>
+        </f:facet>
+
+
+        <p:cell>
+            <p:paragraph>询问人：</p:paragraph>
+        </p:cell>
+        <p:cell colspan="6">
+            <p:paragraph>#{ownerBusinessHome.instance.applyEmp.empName}</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>产籍号:</p:paragraph>
+        </p:cell>
+        <p:cell colspan="6">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>询问内容：</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="7">
+            <p:paragraph>1、申请登记事项是否为申请人真实意思表示？</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>回答：	□ 是	  □ 否</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>2、申请登记的房产是单独所有、共同共有、还是按份共有？</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="7">
+            <p:paragraph>回答：         □  单独所有</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>                        □ 共同共有	共有人:_________________________________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>                        □ 按份共有	具体份额:_______________________________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>______________________________________________________________________</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="7">
+            <p:paragraph>持证人：__________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>3、其它需要询问的有关事项：</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>______________________________________________________________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>______________________________________________________________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>______________________________________________________________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>______________________________________________________________________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="7">
+            <p:paragraph>经被询问人确认,以上询问事项均回答真实、无误。</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+        </p:cell>
+        <p:cell colspan="4">
+            <p:paragraph>被询问人签章: _____________</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+        </p:cell>
+        <p:cell colspan="4">
+            <p:paragraph>联系电话: _________________</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3">
+        </p:cell>
+        <p:cell colspan="4">
+            <p:paragraph><p:paragraph>询问日期：<p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph></p:paragraph>
+        </p:cell>
+
+
+    </p:table>
+    </p:font>
+</a:repeat>
+</p:document>

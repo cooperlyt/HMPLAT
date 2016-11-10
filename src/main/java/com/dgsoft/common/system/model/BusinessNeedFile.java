@@ -20,7 +20,7 @@ import java.util.*;
 public class BusinessNeedFile implements java.io.Serializable, OrderModel{
 
     public enum NeedFileNodeFile{
-       ALL,ANYONE,CHILDREN,OTHER
+       ALL,ANYONE,CHILDREN
     }
 
     private String id;

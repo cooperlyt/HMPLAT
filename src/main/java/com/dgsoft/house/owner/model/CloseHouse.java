@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.TimeArea;
+import com.dgsoft.common.TimeAreaHelper;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
@@ -13,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "CLOSE_HOUSE", catalog = "HOUSE_OWNER_RECORD")
-public class CloseHouse implements java.io.Serializable {
+public class CloseHouse implements java.io.Serializable ,TimeArea{
 
 	private String id;
 	private OwnerBusiness ownerBusiness;
@@ -33,6 +35,7 @@ public class CloseHouse implements java.io.Serializable {
     private String houseCardNo;
     private String contractCode;
     private String projectRship;
+    private TimeArea.TimeShowType timeShowType;
 
 
 
@@ -219,7 +222,48 @@ public class CloseHouse implements java.io.Serializable {
         this.projectRship = projectRship;
     }
 
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIME_AREA_TYPE",nullable = false,length = 20)
+    @NotNull
+    public TimeArea.TimeShowType getTimeShowType() {
+        return timeShowType;
+    }
 
+    public void setTimeShowType(TimeArea.TimeShowType timeShowType) {
+        this.timeShowType = timeShowType;
+    }
+
+    @Override
+    @Transient
+    public Date getFromTime() {
+        return getCloseDate();
+    }
+
+    @Override
+    @Transient
+    public void setFromTime(Date date) {
+        setCloseDate(date);
+
+    }
+
+    @Override
+    @Transient
+    public Date getToTime() {
+        return getToDate();
+    }
+
+    @Override
+    @Transient
+    public void setToTime(Date date) {
+        setToDate(date);
+    }
+
+
+    @Transient
+    public TimeAreaHelper getTimeArea(){
+        return new TimeAreaHelper(this);
+    }
 
 
 }

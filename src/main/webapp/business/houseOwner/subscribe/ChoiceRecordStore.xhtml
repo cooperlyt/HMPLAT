@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:decorate template="MultiVolumeRecordSave.xhtml">
+
+        <a:repeat value="#{saveMultiRecordStores}" var="_fileNode">
+            <div class="input-group list-title-input">
+                <span class="input-group-addon">#{_fileNode.businessFiles.size}</span>
+                <h:inputText value="#{_fileNode.recordCode}" required="true" label="档案编号" styleClass="form-control" p:placeHolder="档案编号">
+                    <a:ajax render="@none" execute="@this"/>
+                </h:inputText>
+                     <span class="input-group-btn">
+                         <a:commandLink styleClass="btn btn-danger" action="#{multiVolumeRecord.deleteRecordStore}"
+                                        execute="@this" immediate="true" render="assignList,fileTree">
+                             <span class=" btn-icon octicon octicon-trashcan"/>
+                             <a:attachQueue requestDelay="0"/>
+                         </a:commandLink>
+      </span>
+            </div>
+
+
+
+            <ul class="list-group">
+
+                <a:repeat value="#{_fileNode.businessShowFileList}" var="_file">
+
+                    <li class="list-group-item file-group-item">
+                        <span class="badge">#{_file.uploadFiles.size}</span>
+                        #{_file.name}
+                        <ui:remove>
+                            <div class="right">
+                                <div class="btn-group list-item-btn" role="group">
+                                    <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-down"/> </button>
+                                    <button type="button" class="btn btn-default"><span class="octicon octicon-arrow-up"/> </button>
+
+                                </div>
+                            </div>
+                        </ui:remove>
+                    </li>
+
+                </a:repeat>
+            </ul>
+
+
+
+        </a:repeat>
+
+    </ui:decorate>
+
+</ui:composition>

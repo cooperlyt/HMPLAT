@@ -6,6 +6,8 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.model.*;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
@@ -39,6 +41,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         OwnerBusiness result = new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
                 OwnerBusiness.BusinessStatus.RUNNING, new Date(), false, OwnerBusiness.BusinessType.NORMAL_BIZ);
 
+        String unionBiz = businessDefineHome.getInstance().getUnionBiz();
+
+        if (unionBiz != null && !unionBiz.trim().equals("")){
+            for(String s : unionBiz.split(",")){
+                if (s!= null && !s.trim().equals("")){
+                    result.getSubStatuses().add(new SubStatus(s, BusinessInstance.BusinessStatus.RUNNING,result));
+                }
+            }
+        }
+
+
         result.setDefineId(businessDefineHome.getInstance().getId());
         result.setDefineName(businessDefineHome.getInstance().getName());
 
@@ -53,6 +66,17 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         for (MakeCard makeCard:getInstance().getMakeCards()){
               if (makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,typeName))){
                 return makeCard;
+            }
+        }
+        return null;
+    }
+
+    public CardInfo getCardInfoByCardType(String cardTypeName){
+        for (MakeCard makeCard:getInstance().getMakeCards()){
+            if (makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,cardTypeName)) ){
+               if (makeCard.getCardInfo()!=null){
+                   return makeCard.getCardInfo();
+               }
             }
         }
         return null;
@@ -206,14 +230,28 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         if (!isIdDefined()){
             return false;
         }
-        if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource())){
-            return identity.hasRole("recordRunManager");
-        }else{
-
-
-                //return isCanModify();
+        boolean result = true;
+        if (BusinessInstance.BusinessStatus.RUNNING.equals(getInstance().getStatus()) ||
+                BusinessInstance.BusinessStatus.ABORT.equals(getInstance().getStatus()) ||
+                BusinessInstance.BusinessStatus.SUSPEND.equals(getInstance().getStatus()) ){
             return false;
         }
+
+        if (getInstance().getSelectBusiness() != null &&
+                ((getInstance().getSelectBusiness().getSubStatuses().size() > 1) || (getInstance().getSelectBusiness().getHouseBusinesses().size() > 1)))
+            return false;
+        for(HouseBusiness houseBusiness: getInstance().getHouseBusinesses()){
+            if (houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
+                result = false;
+                break;
+            }
+        }
+        if (result){
+            return identity.hasRole("owner.deleteBiz") || (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource()) && identity.hasRole("recordRunManager"));
+        }else{
+            return false;
+        }
+
     }
 
 
@@ -231,14 +269,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
     public List<BusinessFile> getUploadedFiles(){
-        List<BusinessFile> businessFiles = new ArrayList<BusinessFile>();
-        for(BusinessFile file: getInstance().getUploadFileses()){
-            if (file.isNoFile() || !file.getUploadFiles().isEmpty()){
-                businessFiles.add(file);
-            }
-        }
-        Collections.sort(businessFiles, OrderBeanComparator.getInstance());
-        return businessFiles;
+        return getInstance().getVaidBusinessFileList();
     }
 
     /**
@@ -313,6 +344,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     @Deprecated
+    public Reason getMortgageReceive(){
+        return getInstance().getMortgageReceive();
+    }
+
+
+    @Deprecated
     public Reason getHighDebtor(){
         return getInstance().getHighDebtor();
     }
@@ -353,6 +390,19 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @Deprecated
     public Reason getModifyAfterReason(){
         return getInstance().getModifyAfterReason();
+    }
+    @Deprecated
+    public Reason getContractReason(){
+        return getInstance().getContractReason();
+    }
+
+    @Deprecated
+    public Reason getShiftBeforeReason(){
+        return getInstance().getShiftBeforeReason();
+    }
+    @Deprecated
+    public Reason getShiftAfterReason(){
+        return getInstance().getShiftAfterReason();
     }
 
     @Deprecated

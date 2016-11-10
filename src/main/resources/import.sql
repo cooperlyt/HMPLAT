@@ -1,19 +1,18 @@
 -- If you are using Hibernate as the JPA provider, you can use this file to load seed data into the database using SQL statements
 -- The portable approach is to use a startup component (such as the @PostConstruct method of a @Startup @Singleton) or observe a lifecycle event fired by Seam Servlet
 
-ALTER TABLE HOUSE_INFO.BUILD_GRID_MAP DROP FOREIGN KEY BUILD_GRID_MAP_ibfk_1;
-DROP INDEX BUILD_GRID_PAGE ON HOUSE_INFO.BUILD_GRID_MAP;
 
 
-ALTER TABLE HOUSE_INFO.BUILD_GRID_MAP
-ADD FOREIGN KEY (BUILD_ID)
-REFERENCES HOUSE_INFO.BUILD (ID)
-  ON UPDATE RESTRICT
-  ON DELETE RESTRICT
-;
+-- 清空系统库
+
+UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM   set VALUE =0 WHERE ID='system_run_count';
+
+DELETE FROM DB_PLAT_SYSTEM.NUMBER_POOL;
 
 
 
+
+-- --- ---
 
 
 INSERT INTO HOUSE_INFO.DISTRICT(ID, NAME, SHORT_NAME, VERSION) VALUES ('211282001000','新城街道','开原市',1);
@@ -52,6 +51,8 @@ USE DB_PLAT_SYSTEM;
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.bankAccount','STRING','1002','银行总帐科目代码');
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('erp.finance.cashAccount','STRING','1001','现金总帐科目代码');
 
+INSERT INTO SYSTEM_PARAM(ID, TYPE, VALUE, MEMO) VALUES('HouseAddressGen','STRING','PA_BN_DO_HO','PA_BN_DO_HO:项目地址 + 幢号 + 门牌号 + 房号 ； PA_UN_HO: 项目地址 + 单元 +  房号');
+
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('house.id.gentype','STRING','JDJT246_3','房屋编码生成方法： JDJT246_3 竣工时间法 JDJT246_4 坐标法 JDJT246_5 分宗法 JDJT246_6 分幅法');
 
@@ -89,25 +90,25 @@ INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('AutoCalcMoney','BOOLEAN','t
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('ShouldMoneyCalcType','INTEGER','3','1:手动；2：等于核费金额 3：四舍五入到元;4 四舍五入到角；5 四舍五入到分 6: 抹掉小数取整 7：进位取整');
 
 
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('IdCardImgPath','STRING','ftp://192.168.0.6/person/','身份证照片地址');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFilePath','STRING','ftp://192.168.0.6/','业务要件附件存储地址');
-
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFile.address','STRING','192.168.0.6','FTP地址');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFile.port','INTEGER','21','FTP端口');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFile.userName','STRING','hmplat','FTP用户名');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFile.password','STRING','hmplat','FTP密码');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('businessFile.rootDir','STRING','business','FTP目录');
-
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('FTP_USER_NAME','STRING','hmplat','FTP用户名');
-
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('FTP_PASSWORD','STRING','hmplat','FTP密码');
-
-
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('BUSINESS_FILE_CHECK_TYPE','STRING','LOCAL','文件上传检测方式:FTP,LOCAL');
-INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('LOCAL_FILE_UPLOAD_PATH','STRING','/home/ftp/business/','本地文件系统检测目录');
 
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('newHouseSaleBizDefineId','STRING','WP42','商品房交易明细导出业务号');
 INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('oldHouseSaleBizDefineId','STRING','WP52','存量房交易明细导出业务号');
+
+
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('IMG_SERVER_ADDRESS','STRING','http://localhost:8090/','图片服务器地址');
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('FILE_SERVER_ADDRESS','STRING','http://localhost:9333/','文件服务器地址');
+
+
+INSERT INTO SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('recordRoom.enable','BOOLEAN','false','启用档案室管理');
+
+INSERT INTO DB_PLAT_SYSTEM.SYSTEM_PARAM(ID,TYPE,VALUE,MEMO) VALUES('ShouldMoneyAllowChange','BOOLEAN','true','应收可是否可由用户修改');
+
+
+
+insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('CreateCradNumberType','INTEGER','1','1:生成的权证号带-;2:生成的权证号不带-');
+insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('PoolInfoPrint','INTEGER','1','1:权证打印附记共有情况打印带所有权人;2:权证打印附记共有情况打印不带所有权人,只有共有权人姓名');
+
+INSERT DB_PLAT_SYSTEM.SYSTEM_PARAM(ID, TYPE, VALUE, MEMO) VALUES ('PatchFileUpload','BOOLEAN','true','档案补录是否上传文件');
 
 -- 测试业务
 -- INSERT INTO BUSINESS_DEFINE(ID, NAME, WF_NAME, START_PAGE, START_DATA_VALIDATOR, TASK_SERVICE, CATEGORY, MEMO, VERSION) VALUES('system.business.test','测试流程','processTest','','','','erp.sale','测试流程',0);
@@ -153,6 +154,11 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.houseMgr','房屋管理','DATA_MGR','','/func/house/datas/HouseList.xhtml','',12,'',b'0');
 
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordStore','业务档案上架','DAY_WORK','','/func/house/owner/RecordStore.xhtml','',13,'',b'0');
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.recordRoom','数字档案室','DATA_MGR','','/func/house/owner/RecordRoomMgr.xhtml','',15,'',b'0');
+
+
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.todayBusinessList', '当日业务列表', 'DAY_WORK', '', '/func/house/owner/TodayBusinessList.xhtml', '', '5', '',b'0');
 
 -- 角色
 
@@ -180,10 +186,16 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.RecordView','�
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('house.data.manager', '测绘成果管理', '空间库房屋相关数据管理', 3);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.patchBusiness', '档案补录', '档案补录', 7);
 
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.initHouseCard','初始登记出证统计','初始登记出证统计',8)
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.initHouseCard','初始登记出证统计','初始登记出证统计',8);
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseStatusForBuild','房屋状态导出','根据楼幢导出房屋信息及状态',9);
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordFileMgr','档案管理员','可以补扫档案',10);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRoomMgr','档案室管理员','档案室管理员',11);
 
 
-
+INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.deleteBiz','业务删除','业务删除',15);
+INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseLimitInfo','房屋限制情况导出','房屋限制情况导出',16);
 
 -- 功能 角色
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核', '', 7);
@@ -196,6 +208,9 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核'
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.task', '业务办理', '', 7);
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','house.businessSearch');
+
+
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.oldHouseSale', '存量房销售情况统计', '', 30);
 
 
 -- INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.newHouse', '商品房管理', '商品房科', 4);

@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import com.dgsoft.common.TimeAreaHelper;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.common.system.RunParam;
@@ -17,6 +18,7 @@ import org.jboss.seam.log.Logging;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +27,9 @@ import java.util.List;
  */
 @Scope(ScopeType.CONVERSATION)
 public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
+
+
+
     @In
     protected OwnerBusinessHome ownerBusinessHome;
     protected MortgaegeRegiste mortgaegeRegiste;
@@ -132,6 +137,8 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
             }
         }
 
+        timeAreaHelper = new TimeAreaHelper(mortgaegeRegiste);
+
     }
 
     public void typeChangeListener(ValueChangeEvent e) {
@@ -164,4 +171,10 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
         return personMortgageInstance;
     }
 
+
+    private TimeAreaHelper timeAreaHelper;
+
+    public TimeAreaHelper getTimeAreaHelper() {
+        return timeAreaHelper;
+    }
 }

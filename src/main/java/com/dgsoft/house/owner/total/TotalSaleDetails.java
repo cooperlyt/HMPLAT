@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.total;
 
 import com.dgsoft.common.system.RunParam;
+import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.total.data.DaySaleData;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,10 +19,9 @@ import org.jboss.seam.log.Logging;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
+
+import static com.dgsoft.common.system.business.BusinessInstance.BusinessStatus.*;
 
 /**
  * Created by cooper on 11/25/15.
@@ -29,6 +29,7 @@ import java.util.List;
 
 @Name("totalSaleDetails")
 public class TotalSaleDetails {
+
 
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
@@ -41,6 +42,16 @@ public class TotalSaleDetails {
 
     private Date searchDate;
 
+    private Boolean onlyRunning;
+
+    public Boolean getOnlyRunning() {
+        return onlyRunning;
+    }
+
+    public void setOnlyRunning(Boolean onlyRunning) {
+        this.onlyRunning = onlyRunning;
+    }
+
     public Date getSearchDate() {
         return searchDate;
     }
@@ -49,7 +60,12 @@ public class TotalSaleDetails {
         this.searchDate = searchDate;
     }
 
-    private void createSheet(XSSFWorkbook workbook, String name, String businessDefineId){
+    private void createSheet(XSSFWorkbook workbook, String name, boolean isOld){
+
+        String businessDefineId = isOld ? RunParam.instance().getStringParamValue("oldHouseSaleBizDefineId") : RunParam.instance().getStringParamValue("newHouseSaleBizDefineId");
+
+        String ownerAddressPath = isOld ? "hb.afterBusinessHouse.businessHouseOwner.address" : "hb.afterBusinessHouse.contractOwner.address";
+
 
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(searchDate);
@@ -93,14 +109,47 @@ public class TotalSaleDetails {
         cell.setCellValue("购房款");
         cell.setCellStyle(headCellStyle);
 
+        cell = row.createCell(colIndex++);
+        cell.setCellValue("评估价格");
+        cell.setCellStyle(headCellStyle);
 
-        List<DaySaleData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName) from HouseBusiness hb " +
-                "where hb.ownerBusiness.status = 'RUNNING' and year(hb.ownerBusiness.applyTime) =:searchYear " +
-                "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
-                "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode",DaySaleData.class).setParameter("defineId",businessDefineId)
-                .setParameter("searchYear",gc.get(Calendar.YEAR))
-                .setParameter("searchMonth",gc.get(Calendar.MONTH) + 1)
-                .setParameter("searchDay",gc.get(Calendar.DAY_OF_MONTH)).getResultList();
+        cell = row.createCell(colIndex++);
+        cell.setCellValue(isOld ? "产权人地址" : "备案人地址");
+        cell.setCellStyle(headCellStyle);
+
+
+        List<BusinessInstance.BusinessStatus> allowStatus = new ArrayList<BusinessInstance.BusinessStatus>();
+        if(onlyRunning == null){
+            allowStatus = new ArrayList<BusinessInstance.BusinessStatus>(EnumSet.of(RUNNING,COMPLETE,CANCEL,MODIFYING,COMPLETE_CANCEL));
+        }else{
+            if(onlyRunning){
+                allowStatus = new ArrayList<BusinessInstance.BusinessStatus>(EnumSet.of(RUNNING));
+
+            }else{
+                allowStatus = new ArrayList<BusinessInstance.BusinessStatus>(EnumSet.of(COMPLETE,MODIFYING,COMPLETE_CANCEL));
+
+            }
+        }
+        List<DaySaleData> datas = new ArrayList<DaySaleData>();
+        if (onlyRunning == null || onlyRunning) {
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice ," + ownerAddressPath + ") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+                    "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
+                    "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
+                    "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
+                    .setParameter("searchYear", gc.get(Calendar.YEAR))
+                    .setParameter("searchMonth", gc.get(Calendar.MONTH) + 1)
+                    .setParameter("status", allowStatus)
+                    .setParameter("searchDay", gc.get(Calendar.DAY_OF_MONTH)).getResultList();
+        }else{
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice, " + ownerAddressPath +") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+                    "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
+                    "and month(hb.ownerBusiness.regTime) = :searchMonth and day(hb.ownerBusiness.regTime) = :searchDay " +
+                    "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
+                    .setParameter("searchYear", gc.get(Calendar.YEAR))
+                    .setParameter("searchMonth", gc.get(Calendar.MONTH) + 1)
+                    .setParameter("status", allowStatus)
+                    .setParameter("searchDay", gc.get(Calendar.DAY_OF_MONTH)).getResultList();
+        }
 
         for (DaySaleData data: datas){
             colIndex = 0;
@@ -117,6 +166,17 @@ public class TotalSaleDetails {
             cell.setCellValue(data.getArea().doubleValue());
             cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
             cell.setCellValue(data.getMoney().doubleValue());
+            Logging.getLog(getClass()).debug(colIndex);
+
+            cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
+            if(data.getAssessmentPrice()!=null) {
+                cell.setCellValue(data.getAssessmentPrice().doubleValue());
+            }else {
+                cell.setCellValue(0);
+            }
+            cell = row.createCell(colIndex++);
+            cell.setCellValue(data.getOwnerAddress());
+
         }
 
         row = sheet.createRow(rowIndex);
@@ -128,6 +188,8 @@ public class TotalSaleDetails {
         cell.setCellFormula("SUM(" + CellReference.convertNumToColString(4) + "2:" + CellReference.convertNumToColString(4) + rowIndex + ")");
         cell = row.createCell(5, Cell.CELL_TYPE_FORMULA);
         cell.setCellFormula("SUM(" + CellReference.convertNumToColString(5) + "2:" + CellReference.convertNumToColString(5) + rowIndex + ")");
+        cell = row.createCell(6, Cell.CELL_TYPE_FORMULA);
+        cell.setCellFormula("SUM(" + CellReference.convertNumToColString(6) + "2:" + CellReference.convertNumToColString(6) + rowIndex + ")");
 
         sheet.setForceFormulaRecalculation(true);
 
@@ -135,8 +197,8 @@ public class TotalSaleDetails {
 
     public void exportSaleDetails(){
         XSSFWorkbook workbook = new XSSFWorkbook();
-        createSheet(workbook,"商品房销售明细", RunParam.instance().getStringParamValue("newHouseSaleBizDefineId"));
-        createSheet(workbook,"存量房销售明细", RunParam.instance().getStringParamValue("oldHouseSaleBizDefineId"));
+        createSheet(workbook,"商品房销售明细", false);
+        createSheet(workbook,"存量房销售明细", true);
 
         ExternalContext externalContext = facesContext.getExternalContext();
         externalContext.responseReset();

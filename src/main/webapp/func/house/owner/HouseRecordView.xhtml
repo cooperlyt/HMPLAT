@@ -204,6 +204,7 @@
                         <c:forEach items="#{houseRecordHome.ownerBusinessList}" var="_item">
 
                             <ui:decorate template="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
+                                <ui:remove>
                                 <ui:define name="itemAction">
                                     <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="架">
                                         <span class="octicon octicon-versions"/>
@@ -222,6 +223,7 @@
                                         #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.recordCode}
                                     </s:link>
                                 </ui:define>
+                                </ui:remove>
                                 <ui:define name="itemTitle">
                                     <s:link view="/func/house/owner/BusinessView.xhtml">
                                         <f:param name="businessId" value="#{_item.id}"/>

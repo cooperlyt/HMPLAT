@@ -21,7 +21,6 @@
     </ui:define>
 
 
-
     <ui:define name="func-body">
 
         <ui:define name="outcss">
@@ -270,13 +269,12 @@
                             <ui:define name="panelBody">
                                 <p>确认要撤回业务 <h:outputText value="中止后将无法还原" style="color: #900"/> </p>
                                 <p>
-                                    <h:outputText value="此业务为补录业务，将会直接被中止！" rendered="#{ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE'}"/>
-                                    <h:outputText value="将启动撤回业务流程！" rendered="#{not (ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE')}"/>
+                                    业务将被设置为中止状态! 相当于此业务没有发生过,并不会被记载到登记簿! 但业务信息将会被保留,仍可能过查询功能查找到该业务.
                                 </p>
                             </ui:define>
 
                             <s:button styleClass="button button-block danger" action="#{businessCancel.cancelBusiness}"
-                                             value="#{(ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE') ? '我确认要中止此业务' : '启动撤回业务流程'}"/>
+                                             value="我确认要中止此业务"/>
 
                         </ui:decorate>
 
@@ -354,7 +352,7 @@
                                                    rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
                                                    oncomplete="$('#resumeConfirmPanel').modal('show')"
                                                    p:aria-label="#{messages.CONTINUE}" immediate="true" execute="@this">
-                                        <span class="btn-icon octicon octicon-playback-play"></span>
+                                        <span class="btn-icon glyphicon glyphicon-play"></span>
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                                     </a:commandLink>
@@ -362,7 +360,7 @@
                                                    disabled="#{not ownerBusinessView.canSuspend}" oncomplete="$('#suspendConfirmPanel').modal('show')"
                                                    rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
                                                    p:aria-label="#{messages.SUSPEND}" immediate="true" execute="@this">
-                                        <span class="btn-icon octicon octicon-playback-pause"></span>
+                                        <span class="btn-icon glyphicon glyphicon-pause"></span>
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                                     </a:commandLink>
@@ -371,7 +369,7 @@
                                                    rendered="#{(not empty processInstanceHome.instance) and s:hasRole('system.runBusinessMgr')}"
                                                    oncomplete="$('#stopConfirmPanel').modal('show')" p:aria-label="#{messages.TERMINATION}"
                                                    immediate="true" execute="@this">
-                                        <span class="btn-icon octicon octicon-primitive-square"></span>
+                                        <span class="btn-icon glyphicon glyphicon-stop"></span>
                                         <a:attachQueue requestDelay="0"/>
                                         <a:param value="#{ownerBusinessView.id}" assignTo="#{ownerBusinessView.id}"/>
                                     </a:commandLink>
@@ -533,7 +531,18 @@
 
                         <h:inputHidden value="#{ownerBusinessView.id}"/>
                         <r:tabPanel switchType="client">
+                            <r:tab>
+                                <f:facet name="header">
+                                    <span class="octicon octicon-file-submodule"/>
+                                    #{messages.businessFile}
+                                </f:facet>
 
+                                <ui:include src="BusinessFileView.xhtml" >
+                                    <ui:param name="fileListBean" value="#{businessFileView}"/>
+                                </ui:include>
+
+
+                            </r:tab>
 
                             <c:forEach   items="#{ownerBusinessView.viewSubscribeDefineGroups}"
 
@@ -560,18 +569,7 @@
                                 </r:tab>
                             </c:forEach>
 
-                            <r:tab>
-                                <f:facet name="header">
-                                    <span class="octicon octicon-file-submodule"/>
-                                    #{messages.businessFile}
-                                </f:facet>
 
-                                <ui:include src="/business/houseOwner/BusinessFile.xhtml">
-                                    <ui:param name="businessFileEntity" value="#{ownerBusinessFile}"/>
-                                </ui:include>
-
-
-                            </r:tab>
                             <r:tab>
                                 <f:facet name="header">
                                     <span class="octicon octicon-milestone"/>
@@ -611,24 +609,24 @@
                                     <div class="task-status-group">
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" p:aria-label="#{messages.jbpm_task_open}"  rendered="#{_task.open}" >
-                                            <a:outputPanel styleClass="octicon octicon-alignment-align status-icon"/>
+                                            <a:outputPanel styleClass="octicon octicon-git-commit status-icon"/>
                                         </a:outputPanel>
 
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.signalling}" p:aria-label="#{messages.jbpm_task_signalling}">
-                                            <a:outputPanel styleClass="octicon octicon-git-pull-request status-icon"/>
+                                            <a:outputPanel styleClass="octicon octicon-git-compare status-icon"/>
                                         </a:outputPanel>
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.last}" p:aria-label="#{messages.jbpm_task_last}">
-                                            <span class="octicon octicon-alignment-aligned-to status-icon"/>
+                                            <span class="octicon octicon-git-merge status-icon"/>
 
                                         </a:outputPanel>
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status" rendered="#{_task.suspended}" p:aria-label="#{messages.jbpm_task_suspended}">
-                                            <span class="octicon octicon-playback-pause status-icon">
+                                            <span class="octicon octicon-primitive-square status-icon">
 
                                             </span>
                                         </a:outputPanel>
@@ -636,7 +634,7 @@
 
 
                                         <a:outputPanel styleClass="tooltipped tooltipped-w task-status " rendered="#{_task.blocking}" p:aria-label="#{messages.jbpm_task_blocking}">
-                                            <span class="octicon octicon-alignment-unalign status-icon"/>
+                                            <span class="octicon octicon-lock status-icon"/>
                                         </a:outputPanel>
 
 

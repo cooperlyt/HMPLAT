@@ -1,12 +1,18 @@
 package com.dgsoft.common;
 
+import com.dgsoft.common.helper.ActionExecuteState;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Synchronized;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
+import org.jboss.seam.contexts.Contexts;
 
 import javax.faces.event.ValueChangeEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -26,7 +32,6 @@ public class CalendarBean implements java.io.Serializable {
     //private String pattern;
     private boolean useCustomDayLabels;
     private TimeZone timeZone;
-
 
     public CalendarBean() {
 
@@ -55,6 +60,11 @@ public class CalendarBean implements java.io.Serializable {
             String country = tLocale.substring(3);
             locale = new Locale(lang, country, "");
         }
+    }
+
+    public String displayDateTime(Date date){
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL,locale);
+        return dateFormat.format(date);
     }
 
     public boolean isUseCustomDayLabels() {
@@ -129,6 +139,13 @@ public class CalendarBean implements java.io.Serializable {
         return false;
     }
 
-
+    public static CalendarBean instance()
+    {
+        if ( !Contexts.isEventContextActive() )
+        {
+            throw new IllegalStateException("no active event context");
+        }
+        return (CalendarBean) Component.getInstance(CalendarBean.class, true);
+    }
 
 }

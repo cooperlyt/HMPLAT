@@ -20,7 +20,7 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
     public enum PersionType{
         OWNER_ENTRUST,BUY_ENTRUST,SELL_ENTRUST,PRE_SALE_ENTRUST,APPLY_PERSION,
         PRE_BUY_ENTRUST,TERRIBLE_RELATION,CORRECT,MORTGAGE,MORTGAGE_OBLIGEE,
-        RECORD_OWNER,MORTGAGE_OBLIGOR,MORTGAGE_PROJECT;
+        RECORD_OWNER,MORTGAGE_OBLIGOR,MORTGAGE_PROJECT,MORTGAGE_OBLIGEE_OLD;
     }
 
 
@@ -76,8 +76,7 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 	}
 
     @Override
-	@Column(name = "ID_NO", nullable = false, length = 100)
-	@NotNull
+	@Column(name = "ID_NO", nullable = true, length = 100)
 	@Size(max = 100)
     public String getCredentialsNumber() {
         return this.credentialsNumber;

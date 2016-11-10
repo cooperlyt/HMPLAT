@@ -81,6 +81,10 @@ public class House implements java.io.Serializable, HouseInfo {
         MAPPING, IMPORT, RECORD_ADD
     }
 
+    public enum AddressGenType{
+        PA_UN_HO,PA_BN_DO_HO
+    }
+
     private String id;
     private Integer version;
     private Build build;
@@ -121,20 +125,26 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
 
-    public House(String id, Build build, GridBlock block) {
+    public House(String id, Build build, GridBlock block ,AddressGenType addressGenType) {
         this.id = id;
         this.build = build;
         this.houseOrder = block.getHouseOrder();
 
         dataSource = HouseDataSource.MAPPING;
+
         assginInfo(block);
 
 
-        if ((build.getProject().getAddress() != null) && !"".equals(build.getProject().getAddress())) {
-            this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
-        } else {
-            this.address = build.getName() + " " + block.getHouseOrder();
-        }
+
+
+            if (AddressGenType.PA_BN_DO_HO.equals(addressGenType)) {
+
+                this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
+            }else if (AddressGenType.PA_UN_HO.equals(addressGenType)){
+                this.address = build.getProject().getAddress() + block.getUnitName() + " " + block.getHouseOrder();
+            }else
+                this.address = build.getName() + " " + block.getHouseOrder();
+
     }
 
     @Transient
@@ -309,12 +319,21 @@ public class House implements java.io.Serializable, HouseInfo {
     public String getDisplayHouseCode() {
         switch (RunParam.instance().getIntParamValue("HouseCodeDisplayModel")){
             case 2:
-                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return ((getMapNumber() == null) ? "" : (getMapNumber() + "-")) + getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-")  + getHouseOrder();
 
             case 3:
-                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo()+ "-" + getHouseOrder();
+                return getDistrictCode() + "-" + getBlockNo() + "-" + getBuildNo()+ ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
             case 4:
-                return getBlockNo() + "-" + getBuildNo() + "-" + getHouseOrder();
+                return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+            case 5:
+                if ("2772".equals(getBuildType())){
+                    return getBlockNo() + "-" + "0" + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+
+                }else{
+                    return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
+
+                }
+
         }
         return getHouseCode();
     }
@@ -343,6 +362,9 @@ public class House implements java.io.Serializable, HouseInfo {
     @Override
     @Transient
     public String getBuildName() {
+        if (getBuild() == null){
+            return null;
+        }
         return getBuild().getBuildName();
     }
 
@@ -379,6 +401,9 @@ public class House implements java.io.Serializable, HouseInfo {
     @Override
     @Transient
     public String getDoorNo() {
+        if (getBuild().getDoorNo() == null){
+            return null;
+        }
         return getBuild().getDoorNo() + " " + getHouseOrder();
     }
 

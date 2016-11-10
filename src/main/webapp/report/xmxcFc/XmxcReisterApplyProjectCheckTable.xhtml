@@ -1,0 +1,207 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="房地产登记受理审核业务书">
+
+
+
+
+
+
+        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">房地产登记受理审核业务书
+            </p:paragraph>
+        </p:font>
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+
+            <p:table columns="4" widths="1 2 1 2"  headerRows="0" footerRows="0" widthPercentage="100" >
+
+
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+                <p:cell>
+                    <p:paragraph>业务类型</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理编号</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>申请人</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>联系电话</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.phone}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>房屋坐落</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>申请日期</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理人</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.applyEmp}">#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理日期</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+                </p:cell>
+
+                <p:cell fixedHeight="90">
+                    <p:paragraph>受理意见</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
+                            <p:paragraph rendered="#{not empty ownerBusinessHome.applyEmp}"> #{ownerBusinessHome.applyEmp.comments}</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph>受理人签名:</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+
+                        </p:cell>
+
+                    </p:table>
+
+                </p:cell>
+
+
+
+                <p:cell fixedHeight="90">
+                    <p:paragraph>审核意见</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
+                            <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.comments}</p:paragraph>
+                        </p:cell>
+
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph> 登记官签名:</p:paragraph>
+                        </p:cell>
+
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph> 审核时间:</p:paragraph>
+                        </p:cell>
+                    </p:table>
+                </p:cell>
+
+                <p:cell fixedHeight="90">
+                    <p:paragraph>终审意见</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:table columns="2" widthPercentage="100" footerRows="0" headerRows="0" >
+                        <p:cell  colspan="2" borderWidth="0" noWrap="false" fixedHeight="90" verticalAlignment="top" horizontalAlignment="left">
+                            <p:paragraph rendered="#{not empty ownerBusinessHome.checkEmp}">#{ownerBusinessHome.checkEmp.comments}</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph>终审人签名:</p:paragraph>
+                        </p:cell>
+                        <p:cell borderWidth="0" paddingLeft="30" horizontalAlignment="left" verticalAlignment="middle">
+                            <p:paragraph>终审时间:</p:paragraph>
+                        </p:cell>
+                    </p:table>
+                </p:cell>
+
+
+
+                <p:cell>
+                    <p:paragraph>登簿登记官</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.registerEmp}">#{ownerBusinessHome.registerEmp.empName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>登簿日期</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.registerEmp}"><p:text value="#{ownerBusinessHome.registerEmp.operDate}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>缮证人</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.cardPrinterEmp}">#{ownerBusinessHome.cardPrinterEmp.empName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>缮证时间</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.cardPrinterEmp}"><p:text value="#{ownerBusinessHome.cardPrinterEmp.operDate}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>权证编号</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+
+                </p:cell>
+
+                <p:cell>
+
+                </p:cell>
+
+                <p:cell>
+
+                </p:cell>
+
+            </p:table>
+        </p:font>
+        <p:barCode  code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+        <p:newPage/>
+
+</p:document>

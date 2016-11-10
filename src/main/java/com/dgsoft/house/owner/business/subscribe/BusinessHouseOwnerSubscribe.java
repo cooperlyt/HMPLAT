@@ -1,15 +1,12 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonHelper;
-
-import com.dgsoft.house.owner.HouseOwnerPersonHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouseOwner;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.log.Logging;
 
 /**
  * Created by cooper on 10/15/14.
@@ -44,11 +41,11 @@ public class BusinessHouseOwnerSubscribe extends OwnerEntityHome<BusinessHouseOw
         }
     }
 
-    private HouseOwnerPersonHelper personHelper;
+    private PersonHelper<BusinessHouseOwner> personHelper;
 
-    public HouseOwnerPersonHelper getPersonInstance() {
+    public PersonHelper<BusinessHouseOwner> getPersonInstance() {
         if ((personHelper == null) || (personHelper.getPersonEntity() != getInstance())) {
-            personHelper = new HouseOwnerPersonHelper(getInstance());
+            personHelper = new PersonHelper(getInstance());
         }
         return personHelper;
     }

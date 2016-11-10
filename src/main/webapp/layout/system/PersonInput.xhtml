@@ -5,11 +5,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: personEntityHelper  , render-->
 
-
+    <a:outputPanel p:data-person-uuid="#{personEntityHelper.uuid}">
     <ui:decorate  template="/layout/edit-multi.xhtml">
 
         <ui:define name="topValue">
@@ -40,6 +41,6 @@
             <ui:insert/>
         </a:outputPanel>
     </ui:decorate>
-
+    </a:outputPanel>
 
 </ui:composition>

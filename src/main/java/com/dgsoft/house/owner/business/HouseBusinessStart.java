@@ -107,7 +107,7 @@ public class HouseBusinessStart {
         }
         if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) &&  !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
 
-            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status = 'COMPLETE' and houseBusiness.houseCode =:houseCode and houseBusiness.ownerBusiness.defineId in (:defineIds)", OwnerBusiness.class)
+            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join biz.subStatuses subStatus where houseBusiness.ownerBusiness.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ') and houseBusiness.houseCode =:houseCode and ( houseBusiness.ownerBusiness.defineId in (:defineIds) or (subStatus.status = 'COMPLETE' and  subStatus.defineId in (:defineIds)))", OwnerBusiness.class)
                     .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
                     .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","))).getResultList());
         }

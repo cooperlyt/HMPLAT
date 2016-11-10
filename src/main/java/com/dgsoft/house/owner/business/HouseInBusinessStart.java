@@ -11,10 +11,13 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -38,6 +41,11 @@ public class HouseInBusinessStart {
 
     private String selectBizId;
 
+    private boolean singleHouse;
+
+    @RequestParameter
+    private String selectSingleHouseId;
+
     public String getSelectBizId() {
         return selectBizId;
     }
@@ -46,8 +54,24 @@ public class HouseInBusinessStart {
         this.selectBizId = selectBizId;
     }
 
+    public String getSelectSingleHouseId() {
+        return selectSingleHouseId;
+    }
+
+    public void setSelectSingleHouseId(String selectSingleHouseId) {
+        this.selectSingleHouseId = selectSingleHouseId;
+    }
+
     public List<BatchOperData<BusinessHouse>> getHouseBusinessList() {
         return houseBusinessList;
+    }
+
+    public boolean isSingleHouse() {
+        return singleHouse;
+    }
+
+    public void setSingleHouse(boolean singleHouse) {
+        this.singleHouse = singleHouse;
     }
 
     public boolean isHaveSelectHouse(){
@@ -83,17 +107,40 @@ public class HouseInBusinessStart {
                 houseBusinessList.add(new BatchOperData<BusinessHouse>(houseRecord.getBusinessHouse(), true));
             }
         }
+        Collections.sort(houseBusinessList, new Comparator<BatchOperData<BusinessHouse>>() {
+            @Override
+            public int compare(BatchOperData<BusinessHouse> o1, BatchOperData<BusinessHouse> o2) {
+                String a,b;
+                a = (o1.getData().getInFloorName() == null) ? "" :o1.getData().getInFloorName();
+                b = (o2.getData().getInFloorName() == null) ? "" :o2.getData().getInFloorName();
+                int result = a.compareTo(b);
+                if (result == 0){
+                    a = (o1.getData().getHouseUnitName() == null) ? "" : o1.getData().getHouseUnitName();
+                    b = (o2.getData().getHouseUnitName() == null) ? "" : o2.getData().getHouseUnitName();
+                    result = a.compareTo(b);
+                    if (result == 0){
+                        result = o1.getData().getHouseOrder().compareTo(o2.getData().getHouseOrder());
+                    }
+                }
+                return result;
+            }
+        });
         if (houseBusinessList.size() == 1){
             return houseSelected();
         }
         return "businessSelected";
     }
 
+
     public String houseSelected(){
+
+
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         for(BatchOperData<BusinessHouse> batchOperData : houseBusinessList){
-            if (batchOperData.isSelected()){
+            if ((!singleHouse && batchOperData.isSelected()) || (singleHouse && batchOperData.getData().getId().equals(selectSingleHouseId))){
                 ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), batchOperData.getData()));
+                if (singleHouse)
+                    break;
             }
         }
         if (ownerBusinessHome.getInstance().getHouseBusinesses().isEmpty()){
@@ -104,6 +151,7 @@ public class HouseInBusinessStart {
     }
 
     public String businessAllHouseSelected(){
+
 
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBizId));
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();

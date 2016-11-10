@@ -37,6 +37,7 @@ public class HouseGridTitle implements java.io.Serializable {
         this.title = title;
     }
 
+
     @Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull

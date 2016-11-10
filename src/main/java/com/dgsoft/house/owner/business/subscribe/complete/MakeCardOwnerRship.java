@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.NumberBuilder;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
@@ -16,6 +17,19 @@ import java.util.Date;
  */
 @Name("makeCardOwnerRship")
 public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
+
+    public static String genOwnerCardNo(){
+        SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+        String datePart = numberDateformat.format(new Date());
+        Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
+        String no;
+        if (typeCard==2){
+            no= datePart+ Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+        }else {
+            no = datePart + '-' + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+        }
+        return no;
+    }
 
    @In
    private OwnerBusinessHome ownerBusinessHome;
@@ -42,12 +56,10 @@ public class MakeCardOwnerRship implements TaskCompleteSubscribeComponent {
              return;
            }
         }
-        SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
-        String datePart = numberDateformat.format(new Date());
-        String no= datePart+'-'+ Long.toString(numberBuilder.getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
 
 
-        MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,no);
+
+        MakeCard makeCard = new MakeCard(MakeCard.CardType.OWNER_RSHIP,genOwnerCardNo());
 
 //        for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
 //            if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()!=null){

@@ -22,6 +22,7 @@ public class NoticeAndCommercialFill implements BusinessDataFill {
     public void fillData() {
 
 
+
         for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
 
             if (houseBusiness.getStartBusinessHouse().getOldOwner()!=null){

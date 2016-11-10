@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <iframe style="display:none;" class="qq_iframe" src=""/>
+
+    <h:outputScript>
+        function extPrint(printUrl){
+        $('.qq_iframe').attr('src',printUrl);
+        }
+    </h:outputScript>
+
+    <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="cardPrintPanel"/>
+        <ui:param name="panelTitle" value="#{poolOwnerRsipCardPrint.instance.number}"/>
+        <a:outputPanel rendered="#{poolOwnerRsipCardPrint.idDefined}">
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    权证编号
+                </ui:define>
+                <ui:param name="for" value="cardCodeInput"/>
+                <h:inputText id="cardCodeInput" value="#{poolOwnerRsipCardPrint.cardInfo.code}"
+                             required="true" styleClass="form-control" maxlength="100"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    附记
+                </ui:define>
+                <ui:param name="for" value="cardMemoInput"/>
+                <h:inputTextarea id="cardMemoInput" rows="3" styleClass="form-control" value="#{poolOwnerRsipCardPrint.cardInfo.memo}"/>
+            </s:decorate>
+        </a:outputPanel>
+
+        <ui:define name="actionButtons">
+            <button type="button" class="button default" data-dismiss="modal">
+
+                #{messages.cancel}</button>
+
+            <a:commandLink styleClass="button submit primary" render="cardPrintPanel_inputs,printCardList"
+                           execute="@form" data="#{poolOwnerRsipCardPrint.printUrl}"
+                           oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){extPrint(event.data); $('#cardPrintPanel').modal('hide')}"
+                           action="#{poolOwnerRsipCardPrint.saveAndPrint}">
+
+                <a:attachQueue requestDelay="0"/>
+                打印
+            </a:commandLink>
+        </ui:define>
+    </ui:decorate>
+
+    <h:form>
+    <a:outputPanel id="printCardList" rendered="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.businessPoolList}">
+    <a:repeat var="_businessPoolList" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.businessPoolList}">
+      <a:outputPanel id="poolCard" rendered="#{not empty _businessPoolList.makeCard}">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+
+
+
+                <p class="text-primary">
+                    共有权人：<strong>#{_businessPoolList.personName}</strong>
+                    权证号：<strong>#{_businessPoolList.makeCard.number}</strong>
+                    房屋坐落：<strong>#{ownerBusinessHome.singleHoues.afterBusinessHouse.address}</strong>
+                    <strong>请点击打印，打印相关权证</strong>
+                </p>
+
+                <p>
+                    <a:commandLink oncomplete="$('#cardPrintPanel').modal({backdrop: 'static'})" styleClass="btn minibutton right"
+                                   render="cardPrintPanel_form,cardPrintPanel_title">
+                        打印
+                        <a:attachQueue requestDelay="0"/>
+                        <a:param value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.id}" assignTo="#{poolOwnerRsipCardPrint.businessHouseId}"/>
+                        <a:param value="#{_businessPoolList.makeCard.id}" assignTo="#{poolOwnerRsipCardPrint.id}"/>
+                        <a:param value="#{_businessPoolList.personName}" assignTo="#{poolOwnerRsipCardPrint.poolOwner}"/>
+                    </a:commandLink>
+
+                </p>
+
+
+
+            </div>
+        </div>
+      </a:outputPanel>
+    </a:repeat>
+    </a:outputPanel>
+    </h:form>
+</ui:composition>

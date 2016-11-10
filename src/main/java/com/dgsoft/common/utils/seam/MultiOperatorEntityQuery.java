@@ -315,4 +315,47 @@ public class MultiOperatorEntityQuery<E> extends MultiOperatorQuery<EntityManage
     }
 
 
+
+    public Boolean getIsOrderDesc(){
+        if ((getOrderDirection() == null) || (getOrderDirection().length() == 0)) {
+            return null;
+        }
+        if (getOrderDirection().equals("desc")) {
+            return true;
+        } else
+            return false;
+    }
+
+    public void setIsOrderDesc(Boolean value){
+        if(value == null){
+            setOrderDirection(null);
+        }
+        if (value) {
+            setOrderDirection("desc");
+        } else {
+            setOrderDirection("asc");
+        }
+    }
+
+    public Boolean getIsOrderAsc() {
+        if ((getOrderDirection() == null) || (getOrderDirection().length() == 0)) {
+            return null;
+        }
+        if (getOrderDirection().equals("asc")) {
+            return true;
+        } else
+            return false;
+    }
+
+    public void setIsOrderAsc(Boolean value) {
+        if(value == null){
+            setOrderDirection(null);
+        }
+        if (value) {
+            setOrderDirection("asc");
+        } else {
+            setOrderDirection("desc");
+        }
+    }
+
 }

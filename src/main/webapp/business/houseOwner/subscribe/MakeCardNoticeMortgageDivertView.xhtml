@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.getCardByType('NOTICE_DIVERT_MORTGAGE')}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.NOTICE_DIVERT_MORTGAGE}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.getCardByType('NOTICE_DIVERT_MORTGAGE').number}"/>
+
+                <a:commandLink styleClass="btn minibutton right" render="@none" action="#{noticePrint.preparePrintOwnerFee}" immediate="true"
+                               data="#{noticePrint.printUrl}"
+                               execute="@this" oncomplete="extendsCall(event.data);" rendered="#{ownerBusinessHome.getCardByType('NOTICE_DIVERT_MORTGAGE').enable}">
+                    <span class="glyphicon glyphicon-print"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
+                    打印
+                </a:commandLink>
+
+
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getCardByType('NOTICE_DIVERT_MORTGAGE')}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="#{messages.NOTICE_DIVERT_MORTGAGE}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{messages.NOTICE_DIVERT_MORTGAGE_NOT}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+</ui:composition>

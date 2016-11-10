@@ -26,6 +26,6 @@ public class ProjectMortgagePrint {
 
 
     public void preparePrintOwnerFee(){
-        printUrl = extendsDataCreator.extendsPrintProjectMortgage(ownerBusinessHome.getInstance().getMakeCards().iterator().next(),ownerBusinessHome.getInstance());
+        printUrl = extendsDataCreator.extendsPrintProjectMortgage(ownerBusinessHome.getCardByType("PROJECT_MORTGAGE"),ownerBusinessHome.getInstance());
     }
 }

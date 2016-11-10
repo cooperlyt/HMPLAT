@@ -12,10 +12,12 @@
 
     <ui:param name="selectTabIndex" value="3"/>
 
+    <ui:remove>
     <a:outputPanel layout="block" styleClass="rf-msgs-err"
                    rendered="#{businessDefineHome.haveNeedFile and (taskOwnerBusinessFile.importantStatus eq 'NO_UPLOAD')}">
         <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveNeedFileNotUpload}
     </a:outputPanel>
+    </ui:remove>
 
     <a:outputPanel styleClass="rf-msgs-wrn" rendered="#{not empty ownerTaskHandle.backComments}">
         <span class="octicon octicon-alert"/>
@@ -30,7 +32,7 @@
 
 
     <a:outputPanel layout="block" styleClass="rf-msgs-wrn"
-                   rendered="#{(taskOwnerBusinessFile.importantStatus eq 'NO_FILE')}">
+                   rendered="#{(not taskOwnerBusinessFile.pass)}">
         <span class="octicon octicon-alert" style="font-weight: bold"/> #{messages.haveLaterUploadNeedFile}
     </a:outputPanel>
 
@@ -73,9 +75,9 @@
 
         <p>
 
-            <s:link styleClass="minibutton primary #{( businessDefineHome.completePass and businessDefineHome.subscribesPass and ownerTaskHandle.needFilePass) ? '' : 'disabled'}"
+            <s:link styleClass="minibutton primary #{(businessDefineHome.completePass and businessDefineHome.subscribesPass and ownerTaskHandle.needFilePass) ? '' : 'disabled'}"
                     disabled="#{not businessDefineHome.completePass or not businessDefineHome.subscribesPass or not ownerTaskHandle.needFilePass}"
-                    action="#{ownerTaskHandle.complete}" onclick="#{r:component('wait')}.show()">
+                    action="#{ownerTaskHandle.complete}" onclick=" if(#{( businessDefineHome.completePass and businessDefineHome.subscribesPass and ownerTaskHandle.needFilePass)}) #{r:component('wait')}.show();">
                 <span class="octicon octicon-split"/>
                 #{messages.completeTask}
             </s:link>

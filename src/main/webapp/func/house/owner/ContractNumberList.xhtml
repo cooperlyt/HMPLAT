@@ -1,0 +1,181 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="合同发放管理"/>
+
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+
+        <div class="flex-table search-form-fluid">
+
+            <div class="flex-table-item flex-table-item-primary">
+
+                <a:outputPanel id="searchInputs" layout="block" styleClass="input-group input-block">
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="批号"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" value="#{contractNumberList.batchNumber}"/>
+
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="@"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" value="#{contractNumberList.beginNum}"/>
+
+                    <h:outputText styleClass="input-group-addon search-mbbh-input" value="至"/>
+
+                    <h:inputText styleClass="form-control search-mbbh-input" value="#{contractNumberList.endNum}"/>
+
+                </a:outputPanel>
+            </div>
+            <div class="flex-table-item">
+                <h:commandButton styleClass="button" action="#{contractNumberList.clearData}" value="#{messages.Search}">
+
+                </h:commandButton>
+
+            </div>
+
+        </div>
+        </h:form>
+    </ui:define>
+
+    <s:div styleClass="blankslate spacious large-format" rendered="#{empty contractNumberList.resultData}">
+        <span class="mega-octicon octicon-search"></span>
+
+        <h3>#{messages.EmptyResult}</h3>
+
+        <p> 没有此区编号区域的合同 </p>
+    </s:div>
+
+    <s:div style="min-height: 300px;" rendered="#{not empty contractNumberList.resultData}">
+        <h:form>
+            <div class="modal fade" id="trashModal">
+                <div class="modal-dialog">
+                    <a:outputPanel id="publishModalContent" layout="block" styleClass="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">合同回收</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-primary">确认要回收所选合同</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+                            <h:commandLink styleClass="btn btn-primary" action="#{contractNumberList.trachNumber}">
+                                回收合同
+                            </h:commandLink>
+                        </div>
+                    </a:outputPanel>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
+
+        <h:dataTable id="dataResultTable" value="#{contractNumberList.resultData}"
+                     styleClass="table table-striped table-hover table-floatThead"
+                     headerClass="table-tools-header"
+                     columnClasses=",,,,action-col"
+                     var="_contractNumber" >
+
+            <f:facet name="header">
+
+                <h:outputLink onclick="$('#trashModal').modal('show');return false;" styleClass="btn btn-sm btn-sm-icon btn-success right compare-button ">
+                    <span class="octicon octicon-plus"/>
+                </h:outputLink>
+
+                <h3>
+                    #{messages.SerachResultCount}#{' '}
+                    <h:outputText value="#{contractNumberList.resultCount}">
+                        <f:convertNumber type="number" groupingUsed="true"/>
+                    </h:outputText>
+                    份合同
+                </h3>
+            </f:facet>
+
+
+            <h:column headerClass="table-header">
+                <f:facet name="header">
+                    <input type="checkbox" id="selectAllCheckBox" />
+                </f:facet>
+                <h:selectBooleanCheckbox styleClass="#{(_contractNumber.data.status eq 'FREE') ? 'js-select-item' : ''} " disabled="#{not (_contractNumber.data.status eq 'FREE')}" value="#{_contractNumber.selected}"/>
+
+            </h:column>
+            <h:column headerClass="table-header">
+                <f:facet name="header">
+                    合同号
+                </f:facet>
+
+                #{_contractNumber.data.contractNumber}
+            </h:column>
+
+            <h:column headerClass="table-header">
+                <f:facet name="header">
+                    状态
+                </f:facet>
+
+                #{messages[_contractNumber.data.status.name()]}
+            </h:column>
+            <h:column headerClass="table-header">
+                <f:facet name="header">
+                    机构
+                </f:facet>
+
+                #{_contractNumber.data.groupName}
+            </h:column>
+
+
+            <h:column headerClass="table-header">
+                <f:facet name="header">
+                    发放时间
+                </f:facet>
+
+                <h:outputText value="#{_contractNumber.data.createTime}" >
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+            </h:column>
+
+            <h:column headerClass="table-header">
+                <f:facet name="header">
+                    申用时间
+                </f:facet>
+                <h:outputText value="#{_contractNumber.data.applyTime}" >
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+            </h:column>
+
+        </h:dataTable>
+        </h:form>
+
+    </s:div>
+
+
+    <h:outputScript>
+        $(document).ready(
+        function(){
+        $("#selectAllCheckBox").click(function(){
+
+        if ($(this).is(':checked')){
+        $(".js-select-item").prop("checked","true");
+        }else{
+        $(".js-select-item").removeAttr("checked");
+        }
+
+        })
+
+        });
+
+    </h:outputScript>
+
+
+</ui:composition>

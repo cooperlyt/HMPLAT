@@ -1,0 +1,178 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="收件受理凭证（取证单）" margins="40 10 20 10">
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+        <p:font alignment="center" size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">收件受理凭证（取证单）
+            </p:paragraph>
+        </p:font>
+
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+            <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+                <p:cell>
+                    <p:paragraph>房屋编号</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理日期</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                            pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+                </p:cell>
+            </p:table>
+
+            <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="false"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+                <p:cell>
+                    <p:paragraph>产籍号</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理编号</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>登记申请人</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                    <p:paragraph rendered="#{(not empty ownerBusinessHome.instance.applyPersion) and (not empty ownerBusinessHome.instance.mortgaegeRegiste)}">#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}(#{ownerBusinessHome.instance.applyPersion.personName})</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>证件号码</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>共同申请人</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.startBusinessHouse.businessPoolList}"><ui:repeat
+                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
+                        <p:text value="#{_businessPoolList.personName} "></p:text> </ui:repeat></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>证件号码</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph rendered="#{not empty _houseBusiness.startBusinessHouse.businessPoolList}"><ui:repeat
+                            value="#{_houseBusiness.afterBusinessHouse.businessPoolList}" var="_businessPoolList">
+                        <p:text value="#{_businessPoolList.credentialsNumber} "></p:text> </ui:repeat></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>申请类别</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="60">
+                    <p:paragraph>备注</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.receive.reason}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>取证人</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>取证日期</p:paragraph>
+                </p:cell>
+                <p:cell>
+
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph>代理人</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.mortgage.personName}</p:paragraph>
+                </p:cell>
+
+
+
+
+                <p:cell>
+                    <p:paragraph>身份证号</p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.mortgage.credentialsNumber}</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false" fixedHeight="33">
+                    <p:paragraph>经办人签字（盖章）：</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="center" noWrap="false"
+                        borderWidthBottom="0">
+                    <p:font alignment="center" size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+                        <p:paragraph>取证须知</p:paragraph>
+                    </p:font>
+                </p:cell>
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" noWrap="false" fixedHeight="280"
+                        borderWidthTop="0">
+                    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14">
+                        <p:paragraph>
+1、申请人为自然人的，由申请人或共同申请人凭受理凭证凭身份证原件，领取权属证书.
+2、申请人为法人的，由领证人持受理凭证、授权委托书（加盖公章）、领证人身份证原价及复印件、单位营业执照复印件（领证人身份复印件和单位营业执照复印件上须加盖公章）领取权属证书。
+3、代理申请人领取权属证书的，代理人须持受理凭证、申请人身份证原件及代理人身份证原件和复印件在窗口领取权属证书。
+4、领取未成年人的权属证书，须由监护人持受理凭证、监护人身份证原件及未成年人身份证明领取权属证书。
+5、登记申请人在登记申请办结后至未领取权属证书期间死亡的，直系亲属须持受理凭证、登记申请人的死亡证明、领证人身份证原件及复印件、关系证明领取权属证书。
+6、请认真核对领取的权属证书信息，如有异议，三个月内提出申请。
+7、自登记办结次日起，5个工作日（抵押注销登记5个工作日）、补证登记（30个工作日）后，按上述要求，到发证窗口领取权属证书
+                        </p:paragraph>
+                    </p:font>
+                </p:cell>
+
+            </p:table>
+
+            <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+
+
+        </p:font>
+
+
+    </a:repeat>
+</p:document>

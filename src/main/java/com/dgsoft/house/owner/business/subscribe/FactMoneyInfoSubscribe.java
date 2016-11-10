@@ -55,7 +55,7 @@ public class FactMoneyInfoSubscribe extends OwnerEntityHome<FactMoneyInfo> imple
 
 
             printUrl = extendsDataCreator.extendsPrintFee(ownerBusinessHome.getInstance().getId(),
-                    ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName(),
+                    ownerBusinessHome.getInstance().getApplyPersion().getPersonName(),
                     ownerBusinessHome.getInstance().getDefineName(), ownerBusinessHome.getInstance().getFactMoneyInfo(),
                     ownerBusinessHome.getInstance());
         }

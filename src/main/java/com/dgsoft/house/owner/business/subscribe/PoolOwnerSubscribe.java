@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.PersonHelper;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.PoolType;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -18,7 +19,9 @@ import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -44,16 +47,47 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
         public void setPrintCard(boolean printCard) {
             if (printCard){
-                getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP, NumberBuilder.instance().getDateNumber("POOL_CARD_NUMBER")));
+                if (getPersonEntity().getMakeCard()==null) {
+                    SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
+                    String datePart = numberDateformat.format(new Date());
+                    Integer typeCard = RunParam.instance().getIntParamValue("CreateCradNumberType");
+                    String no;
+                    if (typeCard == 2) {
+                        no = datePart + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                    } else {
+                        no = datePart + '-' + Long.toString(NumberBuilder.instance().getNumber(MakeCard.CardType.OWNER_RSHIP.name()));
+                    }
+                    getPersonEntity().setMakeCard(new MakeCard(ownerBusiness, MakeCard.CardType.POOL_RSHIP, no));
+
+                }
             }else{
                 getPersonEntity().setMakeCard(null);
             }
         }
 
+        public boolean isRecordPrintCard() {
+            return getPersonEntity().getMakeCard() != null;
+        }
+
+        public void setRecordPrintCard(boolean printCard) {
+            if (printCard){
+                if (getPersonEntity().getMakeCard()==null) {
+                    MakeCard poolMakeCard = new MakeCard(MakeCard.CardType.POOL_RSHIP);
+                    poolMakeCard.setOwnerBusiness(ownerBusiness);
+                    getPersonEntity().setMakeCard(poolMakeCard);
+                }
+            }else{
+                getPersonEntity().setMakeCard(null);
+            }
+        }
+
+
+
         public String getCardNumber(){
             if (getPersonEntity().getMakeCard() == null){
                 return null;
             }else{
+                Logging.getLog(getClass()).debug("11111");
                 return getPersonEntity().getMakeCard().getNumber();
             }
 
@@ -62,7 +96,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
         public void setCardNumber(String value){
 
             if (getPersonEntity().getMakeCard() != null){
-
+                Logging.getLog(getClass()).debug("22222");
                 getPersonEntity().getMakeCard().setNumber(value);
             }
         }

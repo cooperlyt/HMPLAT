@@ -1,0 +1,411 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+    <ui:define name="ajax-param">
+        <a:queue requestDelay="0" ignoreDupResponses="true"/>
+    </ui:define>
+
+
+    <ui:param name="funcName" value="数字档案室"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos #{recordRoomMgr.searchType}">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+
+                    <div class="input-group input-block">
+                        <div class="input-group-btn">
+
+
+                            <h:selectOneMenu
+                                    styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
+                                    value="#{recordRoomMgr.searchType}" onchange="searchTypeChange()">
+                                <s:selectItems value="#{recordRoomMgr.allSearchTypes}" var="_item"
+                                               itemValue="#{_item}" label="#{_item.label}"/>
+                                <s:convertEnum/>
+                            </h:selectOneMenu>
+
+
+                        </div>
+
+                        <h:inputText styleClass="form-control search_record_input "/>
+
+                        <span class="input-group-addon search_location_input">架</span>
+                        <h:inputText styleClass="form-control search_location_input"
+                                     value="#{recordRoomMgr.frame}"></h:inputText>
+                        <span class="input-group-addon search_location_input">柜</span>
+                        <h:inputText styleClass="form-control search_location_input"
+                                     value="#{recordRoomMgr.cabinet}"></h:inputText>
+                        <span class="input-group-addon search_location_input">盒</span>
+                        <h:inputText styleClass="form-control search_location_input"
+                                     value="#{recordRoomMgr.box}"></h:inputText>
+
+                        <!-- /btn-group -->
+                    </div>
+
+
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+
+                    <a:commandLink execute="@form" render="resultBox" styleClass="btn btn-default"
+                                   action="#{recordRoomMgr.refresh}"
+                                   value="#{messages.Search}">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:commandLink>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="func-container">
+
+        <h:outputStylesheet library="bootstrap-treeview" name="bootstrap-treeview.min.css"/>
+
+        <h:outputStylesheet library="jquery-ad-gallery" name="/css/jquery.ad-gallery.css"/>
+
+        <h:outputStylesheet library="jquery-fancybox" name="jquery.fancybox.css"/>
+
+        <h:outputStylesheet>
+
+            .search_repos .search_record_input {
+                display: table-cell;
+                border-bottom-right-radius: 3px !important;
+                border-top-right-radius: 3px !important;
+            }
+
+            .search_repos.RECORD_LOCATION .search_record_input {
+                display: none;
+            }
+
+            .search_repos .search_location_input {
+                display: none;
+            }
+
+            .search_repos.RECORD_LOCATION .search_location_input {
+                display: table-cell;
+            }
+
+        </h:outputStylesheet>
+
+        <h:outputStylesheet>
+
+            .ad-gallery {
+                width: 98%;
+                margin-top: 10px;
+            }
+
+            .ad-gallery .ad-image-wrapper {
+
+            }
+
+            .ad-controls .custome-controls {
+                float: right;
+            }
+
+            .ad-controls .custome-controls a {
+                margin: 0 5px;
+            }
+
+            .ad-image {
+                cursor: pointer;
+            }
+
+            .gh-header-show.edit-title{
+                display: inline-block;
+            }
+        </h:outputStylesheet>
+
+        <h:outputScript>
+            function searchTypeChange() {
+
+            $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+            $('.search_repos').addClass($('.js-search-type-select').val())
+            }
+        </h:outputScript>
+
+        <div class="container-fluid">
+
+            <a:outputPanel id="resultBox">
+                <a:outputPanel rendered="#{not empty recordRoomMgr.resultBox}">
+
+                    <a:outputPanel rendered="#{not recordRoomMgr.resultBox.emptyBox}">
+
+                        <div class="file-group">
+
+                            <div class="row">
+
+
+                                <div class="col-md-5">
+                                    <div id="tree" class="file-group-tree"></div>
+                                </div>
+
+
+                                <div class="col-md-7 ">
+                                    <div class="gh-header">
+
+                                        <div class="gh-header-show edit-title">
+
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <span class="glyphicon glyphicon-print"/>
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li class="js-print-box-cover">
+                                                        <s:link target="_blank" view="/report/RecordBoxCover.xhtml" value="打印盒目录">
+                                                            <f:param name="frame" value="#{recordRoomMgr.frame}"/>
+                                                            <f:param name="cabinet" value="#{recordRoomMgr.cabinet}"/>
+                                                            <f:param name="box" value="#{recordRoomMgr.box}"/>
+                                                        </s:link>
+                                                    </li>
+                                                    <li  class="js-print-volume-cover disabled"> <a target="_blank" href="#">打印卷目录</a></li>
+                                                    <li class="js-print-picture disabled"><s:link target="_blank" value="打印图片" view="/report/RecordBoxPicturePrint.xhtml">
+                                                        <f:param name="frame" value="#{recordRoomMgr.frame}"/>
+                                                        <f:param name="cabinet" value="#{recordRoomMgr.cabinet}"/>
+                                                        <f:param name="box" value="#{recordRoomMgr.box}"/>
+                                                    </s:link></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a:outputPanel layout="block" styleClass="gh-header-actions ">
+
+
+                                            <a href="#" class="btn btn-sm btn-default js-upload-btn disabled"
+                                               onclick="selectFileUpload(true,'ExtendsFileSelect');return false;">上传</a>
+                                            <a href="#" class="btn btn-sm btn-primary js-upload-btn disabled"
+                                               onclick="selectFileUpload(true,'ExtendsCamera');return false;">拍照</a>
+
+
+
+
+                                        </a:outputPanel>
+
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="file-group-empty blankslate spacious large-format">
+                                        <span class="octicon octicon-bell blankslate-icon" height="40"/>
+                                        <h3>没有电子文件</h3>
+                                        <p>没有电子文件,你可以 <h:outputLink>补扫文件</h:outputLink></p>
+                                    </div>
+
+                                    <div class="file-group-gallery">
+                                        <div class="ad-gallery">
+                                            <div class="ad-image-wrapper">
+                                            </div>
+                                            <div class="ad-controls">
+                                                <div class="custome-controls"><a href="#" class="img-delete" onclick="selectFileUpload(false,'ExtendsFileSelect');return false;">替换</a>
+
+                                                    <a href="#"  onclick="selectFileUpload(false,'ExtendsCamera');return false;" class="img-delete">重扫</a><a class="img-print-view" target="_blank">打印</a>
+                                                    <a class="img-orig-view" target="_blank">原图</a></div>
+                                            </div>
+                                            <div class="ad-nav">
+                                                <div class="ad-thumbs">
+                                                    <ul class="ad-thumb-list">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <h:outputScript>
+                            function nodeSelect(data) {
+
+                            if (data.nodeType == 'box'){
+                            $('.js-print-volume-cover').addClass("disabled");
+                            $('.js-print-picture').addClass("disabled");
+                            $('.js-upload-btn').addClass("disabled");
+                            // $('js-print-picture').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/RecordBoxPicturePrint.seam?frame=#{recordRoomMgr.frame}&amp;cabinet=#{recordRoomMgr.cabinet}&amp;box=#{recordRoomMgr.box}' );
+                            }else{
+                            $('.js-print-volume-cover').removeClass("disabled");
+                            $('.js-print-picture').removeClass("disabled");
+
+                            if (data.nodeType == 'volume'){
+                            $('.js-upload-btn').addClass("disabled");
+                            $('.js-print-picture').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/RecordStorePicturePrint.seam?recordId=' + data.volumeId);
+                            $('.js-print-volume-cover').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/SingleRecordCover.seam?recordId=' + data.volumeId);
+
+                            }else{
+
+                            $('.js-upload-btn').removeClass("disabled");
+                            $('.js-print-picture').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/BusinessFilePicturePrint.seam?businessFileId=' + data.id);
+                            $('.js-print-volume-cover').children('a').attr('href','#{facesContext.externalContext.requestContextPath}/report/SingleRecordCover.seam?recordId=' + data.volumeId);
+
+
+                            }
+
+                            }
+                            }
+                            
+                            
+                            $(document).ready(
+                            function () {
+
+
+                            $('.file-group').fileShowGroup({data: '#{recordRoomMgr.resultBox.treeData}',
+                            imageServer: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}',
+                            loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
+                            slideshow: {
+                            enable: false
+                            },
+                            onFileNodeSelected: function(event, data) {
+                                nodeSelect(data);
+
+
+
+                            },
+
+                            callbacks: {
+                            afterImageVisible: function() {
+
+                            $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'));
+                            $('.img-print-view').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
+
+
+                            }}
+
+                            });
+
+
+                            var selectNodes = $('.file-group-tree').treeview('getSelected', 0);
+                            if (selectNodes.length > 0){
+                                nodeSelect(selectNodes[0]);
+                            }
+
+
+
+                            });
+
+                        </h:outputScript>
+
+
+
+
+                    </a:outputPanel>
+
+                    <a:outputPanel layout="block" rendered="#{recordRoomMgr.resultBox.emptyBox}"
+                                   styleClass="blankslate spacious large-format">
+                        <span class="mega-octicon octicon-milestone"></span>
+
+                        <h3>#{recordRoomMgr.frame} 架 #{recordRoomMgr.cabinet} 柜 #{recordRoomMgr.box} 盒</h3>
+
+                        <p> 此盒中没有文件 </p>
+                    </a:outputPanel>
+
+
+                </a:outputPanel>
+
+            </a:outputPanel>
+
+
+        </div>
+
+        <a:outputPanel id="pushPanel">
+
+
+            <a:push id="uploadPush" address="#{recordRoomMgr.addPushAddress}"  rendered="#{not empty recordRoomMgr.addPushAddress}"
+                    ondataavailable="addFile(event.rf.data);">
+
+            </a:push>
+
+            <a:push id="replacePush" address="#{recordRoomMgr.replacePushAddress}" rendered="#{not empty recordRoomMgr.replacePushAddress}"
+                    ondataavailable="replaceFile(event.rf.data);">
+
+            </a:push>
+
+        </a:outputPanel>
+
+        <h:form>
+            <a:jsFunction name="addFile"
+                          action="#{recordRoomMgr.addFile}"
+                          execute="@this" render="resultBox">
+                <a:param name="data" assignTo="#{recordRoomMgr.fileUploadData}"/>
+            </a:jsFunction>
+
+            <a:jsFunction name="replaceFile"
+                          action="#{recordRoomMgr.replaceFile}"
+                          execute="@this" render="resultBox">
+                <a:param name="data" assignTo="#{recordRoomMgr.fileUploadData}"/>
+            </a:jsFunction>
+            
+            <a:jsFunction name="renderPush" execute="@this" render="pushPanel">
+                <a:param name="replacePushAddress" assignTo="#{recordRoomMgr.replacePushAddress}"/>
+                <a:param name="addPushAddress" assignTo="#{recordRoomMgr.addPushAddress}"/>
+            </a:jsFunction>
+        </h:form>
+
+        <iframe style="display:none;" class="call_extend_iframe" src=""/>
+        <h:outputScript>
+
+
+            function selectFileUpload(add, protocol) {
+
+
+                var selectNodes = $('.file-group-tree').treeview('getSelected', 0);
+                var typeId;
+                var title;
+                if (add) {
+                    if (selectNodes.length > 0) {
+                        typeId = selectNodes[0].id;
+                        title = selectNodes[0].text;
+                    } else {
+                        alert('请选择文件节点')
+                    }
+                } else {
+                    typeId = $('div.ad-image img').data('file-id');
+                    typeId = typeId.replace(/,/,"");
+                    title = '重扫';
+                }
+
+                if (typeId) {
+
+                    $('.call_extend_iframe').attr('src', protocol + ":// -key='" + typeId + "' -title='" + title + "'");
+                    if (add) {
+                        renderPush('', typeId);
+                    } else {
+                        renderPush(typeId, '');
+                    }
+                }
+
+
+
+            }
+
+
+        </h:outputScript>
+
+
+        <h:outputScript library="jquery-mousewheel" name="jquery.mousewheel-3.0.6.pack.js"/>
+        <h:outputScript library="bootstrap-treeview" name="bootstrap-treeview.min.js"/>
+        <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
+        <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+
+        <h:outputScript library="file-show-group" name="file-show-group.js"/>
+    </ui:define>
+
+
+
+</ui:composition>

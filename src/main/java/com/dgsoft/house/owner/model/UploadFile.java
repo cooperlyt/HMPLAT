@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by cooper on 10/30/14.
@@ -18,31 +19,28 @@ public class UploadFile implements java.io.Serializable{
     private String md5;
     private String fileName;
     private BusinessFile businessFile;
-    private String ext;
+    private Long size;
     private String id;
+    private Date uploadTime;
 
     public UploadFile() {
     }
 
-    public UploadFile(BusinessFile businessFile) {
-        this.businessFile = businessFile;
-    }
-
-    public UploadFile(String empName, String empCode, String md5, String fileName, BusinessFile businessFile, String ext ) {
+    public UploadFile(String id, String empName, String empCode, String md5, String fileName, BusinessFile businessFile, Long size ) {
+        this.id = id;
         this.empName = empName;
         this.empCode = empCode;
         this.md5 = md5;
         this.fileName = fileName;
         this.businessFile = businessFile;
-        this.ext = ext;
+        this.size = size;
+        uploadTime = new Date();
     }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return id;
     }
@@ -106,14 +104,24 @@ public class UploadFile implements java.io.Serializable{
         this.businessFile = businessFile;
     }
 
-    @Column(name = "EXT",nullable = false,length = 10)
-    @NotNull
-    @Size(max = 10)
-    public String getExt() {
-        return ext;
+
+    @Column(name = "SIZE",nullable = true)
+    public Long getSize() {
+        return size;
     }
 
-    public void setExt(String ext) {
-        this.ext = ext;
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "UPLOAD_TIME",nullable = false)
+    @NotNull
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
     }
 }

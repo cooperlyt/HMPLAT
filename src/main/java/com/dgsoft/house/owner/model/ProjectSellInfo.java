@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.*;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -91,7 +92,13 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.licenseNumber = other.getLicenseNumber();
         this.createLandCardNumber = other.getCreateLandCardNumber();
         this.proofMaterial = other.getProofMaterial();
-        this.projectLandEndTimes = other.getProjectLandEndTimes();
+        if (!other.getProjectLandEndTimes().isEmpty()){
+            for (ProjectLandEndTime projectLandEndTime:other.getProjectLandEndTimes()){
+                ProjectLandEndTime newP = new ProjectLandEndTime(projectLandEndTime,this);
+                this.projectLandEndTimes.add(newP);
+
+            }
+        }
     }
 
     @Id

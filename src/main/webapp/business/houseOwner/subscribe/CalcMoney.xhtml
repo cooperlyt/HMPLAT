@@ -37,7 +37,7 @@
                             </h:inputText>
 
                             <span class="input-group-addon">#{messages.shouldMoney}</span>
-                            <span class="input-group-btn">
+                            <a:outputPanel styleClass="input-group-btn" rendered="#{not empty calcBusinessMoney.preferentialTypes}">
                                 <h:selectOneMenu value="#{_moneyItem.preferential}" styleClass="selectpicker select-menu-btn input-group-mid">
                                     <s:selectItems value="#{calcBusinessMoney.preferentialTypes}" var="_type" itemValue="#{_type}"
                                                    label="#{messages[_type.name()]}" noSelectionLabel="无减免">
@@ -48,9 +48,9 @@
                                     </a:ajax>
                                     <s:convertEnum/>
                                 </h:selectOneMenu>
-                            </span>
+                            </a:outputPanel>
                             <h:inputText id="factMoneyInput" value="#{_moneyItem.shouldMoney}" required="true"
-                                         readonly="#{ (runParam.getBooleanParamValue('AutoCalcMoney')) and not (runParam.getIntParamValue('ShouldMoneyCalcType') eq 1)}"
+                                         readonly="#{ (runParam.getBooleanParamValue('AutoCalcMoney')) and not runParam.getBooleanParamValue('ShouldMoneyAllowChange')}"
                                          class="form-control" label="#{_moneyItem.typeName} #{messages.factMoney}"
                                          p:placeholder="#{messages.factMoney}">
                                 <f:convertNumber currencySymbol="" groupingUsed="false" locale="#{calendarBean.locale}"

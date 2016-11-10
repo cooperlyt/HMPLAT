@@ -17,8 +17,11 @@ import javax.validation.constraints.Size;
 @Table(name = "MAKE_CARD", catalog = "HOUSE_OWNER_RECORD")
 public class MakeCard implements java.io.Serializable {
 
+            // 预告, 预抵 , 产权 , 抵押, 在抵, 共有, 预售许可,转移预告,转移预抵
+    public enum CardType{
+                NOTICE,NOTICE_MORTGAGE,OWNER_RSHIP,MORTGAGE_CARD,PROJECT_MORTGAGE,POOL_RSHIP,PROJECT_RSHIP,NOTICE_DIVERT,NOTICE_DIVERT_MORTGAGE;
 
-    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE_CARD,PROJECT_MORTGAGE,POOL_RSHIP,PROJECT_RSHIP};
+            }
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
@@ -29,6 +32,10 @@ public class MakeCard implements java.io.Serializable {
     private CardInfo cardInfo;
     private ProjectCard projectCard;
     private Financial financial;
+
+
+    private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
+    private BusinessPool businessPool;
 
 
     public MakeCard() {
@@ -136,6 +143,34 @@ public class MakeCard implements java.io.Serializable {
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
+
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "makeCard")
+    public Set<BusinessHouseOwner> getBusinessHouseOwners() {
+        return businessHouseOwners;
+    }
+
+    public void setBusinessHouseOwners(Set<BusinessHouseOwner> businessHouseOwners) {
+        this.businessHouseOwners = businessHouseOwners;
+    }
+
+    @Transient
+    public BusinessHouseOwner getBusinessHouseOwner(){
+        if (getBusinessHouseOwners().isEmpty()){
+            return null;
+        }
+        return getBusinessHouseOwners().iterator().next();
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "makeCard")
+    public BusinessPool getBusinessPool() {
+        return businessPool;
+    }
+
+    public void setBusinessPool(BusinessPool businessPool) {
+        this.businessPool = businessPool;
+    }
+
 
     @Override
     public boolean equals(Object o) {

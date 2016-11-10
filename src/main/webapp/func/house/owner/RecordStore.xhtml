@@ -1,0 +1,229 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+
+    <ui:param name="funcName" value="档案上架"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-block">
+                        <h:inputText styleClass="form-control" value="#{recordStoreList.searchKey}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandButton styleClass="btn btn-default" action="#{recordStoreList.first}"
+                                     value="#{messages.Search}">
+
+                    </h:commandButton>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    <h:form>
+    <a:outputPanel id="listResult">
+        <s:div styleClass="blankslate spacious large-format" rendered="#{empty recordStoreList.resultList}">
+            <span class="mega-octicon octicon-search"></span>
+
+            <h3>#{messages.EmptyResult}</h3>
+
+            <p>  #{messages.YouCan}#{' '}
+
+                <s:link includePageParams="false" value="重置条件"/>
+
+
+                #{' '} #{messages.Or}  #{messages.Try} #{' '}
+                <s:link value="#{messages.AvancedSearch}"/></p>
+        </s:div>
+
+        <s:div style="min-height: 300px;" rendered="#{not empty recordStoreList.resultList}">
+            <h:dataTable value="#{recordStoreList.resultList}"
+                         styleClass="table table-striped table-hover table-floatThead"
+                         headerClass="table-tools-header"
+                         columnClasses=",,,,action-col"
+                         var="_record">
+
+                <f:facet name="header">
+
+                    <a:region>
+                    <div class="select-menu">
+
+                            <h:inputHidden id="selectData" value="#{recordStorePut.selectRecord}"/>
+
+                            <s:decorate template="/layout/edit-mini.xhtml">
+                                <ui:param name="status" value="putStatus"/>
+                            <div class="input-group">
+
+                                <span class="input-group-addon">架</span>
+                                <h:inputText required="true" label="架" value="#{recordStorePut.frame}" size="6"
+                                             styleClass="form-control"/>
+                                <span class="input-group-addon">柜</span>
+                                <h:inputText required="true" label="柜" size="8" value="#{recordStorePut.cabinet}"
+                                             styleClass="form-control"/>
+                                <span class="input-group-addon">盒</span>
+                                <h:inputText required="true" label="盒" size="10" value="#{recordStorePut.box}"
+                                             styleClass="form-control"/>
+
+                                <div class="input-group-btn">
+                                    <a:commandLink execute="@region" styleClass="btn btn-primary js-put-action"
+                                                   action="#{recordStorePut.put}" render="listResult" status="processWaiting">
+                                        <span class="btn-icon glyphicon glyphicon-compressed"/>
+                                        <a:attachQueue requestDelay="0"/>
+                                    </a:commandLink>
+
+                                </div>
+
+
+                            </div>
+                            </s:decorate>
+
+                    </div>
+                    </a:region>
+                    <h3>
+                        #{messages.SerachResultCount}#{' '}
+                        <h:outputText value="#{recordStoreList.resultCount}">
+                            <f:convertNumber type="number" groupingUsed="true"/>
+                        </h:outputText>
+                        #{''}条未上架档案
+                    </h3>
+
+                </f:facet>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        <input id="select-all-checkbox" type="checkbox" aria-label="..."/>
+                    </f:facet>
+                    <input type="checkbox" class="js-record-checkbox" data-record-id="#{_record.id}" aria-label="..."/>
+
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        档案编号
+                    </f:facet>
+                    #{_record.recordCode}
+
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        业务编号
+                    </f:facet>
+                    #{_record.ownerBusiness.id}
+
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        业务名称
+                    </f:facet>
+                    #{_record.ownerBusiness.defineName}
+
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        归档时间
+                    </f:facet>
+                    <h:outputText value="#{_record.ownerBusiness.recordTime}">
+                        <f:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                    </h:outputText>
+
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+
+                    </f:facet>
+
+                    <div class="table-actions right">
+                        <s:link styleClass="table-action" view="/report/SingleRecordCover.xhtml" target="_blank">
+                            <f:param name="recordId" value="#{_record.id}"/>
+                            <span class="glyphicon glyphicon-print"/>
+                        </s:link>
+
+                    </div>
+
+                </h:column>
+
+            </h:dataTable>
+        </s:div>
+
+
+        <a:outputPanel layout="block" rendered="#{not empty recordStoreList.resultList}" class="paginate-container">
+
+            <a:outputPanel>
+                <ui:include src="/layout/pages.xhtml">
+                    <ui:param name="entityList" value="#{recordStoreList}"/>
+                </ui:include>
+            </a:outputPanel>
+
+        </a:outputPanel>
+
+
+
+        <h:outputScript>
+
+            function putSelectData(){
+            var record=new Array();
+
+            $(".js-record-checkbox:checked").each(function(){
+
+            record.push($(this).data("record-id"));
+            });
+            #{r:jQuery('selectData')}.val(JSON.stringify(record));
+            #{r:jQuery('selectData')}.val();
+            }
+
+
+            $(document).ready(
+            function () {
+            initEditInput();
+
+            $(".js-record-checkbox").click(function(){
+
+            putSelectData();
+            });
+
+
+            $("#select-all-checkbox").click(function(){
+
+            $(".js-record-checkbox").each(function () {
+            if ($("#select-all-checkbox").is(":checked")){
+            $(this).prop("checked",true);
+            }else{
+            $(this).removeAttr('checked');
+            }
+
+
+            });
+            putSelectData();
+            });
+            });
+        </h:outputScript>
+
+    </a:outputPanel>
+
+    </h:form>
+</ui:composition>
