@@ -259,7 +259,7 @@ public class DeveloperServiceComponent {
             Long max;
             try {
                 max = ownerEntityManager.createQuery("select max(n.number) from ContractNumber n where n.type =:contractType", Long.class)
-                        .setParameter("contractType", type).getSingleResult();
+                        .setParameter("contractType", key.getAttachEmployee().getAttachCorporation().getType()).getSingleResult();
                 if (max == null) {
                     max = new Long(0);
                 }
