@@ -23,6 +23,8 @@ public class HouseRecord implements java.io.Serializable {
 	private BusinessHouse businessHouse;
 	private String houseCode;
 	private HouseStatus houseStatus;
+	private String searchKey;
+	private String display;
 
 	public HouseRecord() {
 	}
@@ -70,5 +72,25 @@ public class HouseRecord implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+	@Size(max = 1024)
+	@NotNull
+	public String getSearchKey() {
+		return searchKey;
+	}
 
+	public void setSearchKey(String searchKey) {
+		this.searchKey = searchKey;
+	}
+
+	@Column(name = "DISPLAY",nullable = false, length = 1024)
+	@Size(max = 1024)
+	@NotNull
+	public String getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(String display) {
+		this.display = display;
+	}
 }

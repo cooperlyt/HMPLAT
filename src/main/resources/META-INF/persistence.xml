@@ -97,10 +97,9 @@
         <class>com.dgsoft.house.owner.model.BusinessEmp</class>
         <class>com.dgsoft.house.owner.model.HouseBusiness</class>
         <class>com.dgsoft.house.owner.model.BusinessMoney</class>
-        <class>com.dgsoft.house.owner.model.BusinessHouseOwner</class>
         <class>com.dgsoft.house.owner.model.BusinessHouse</class>
         <class>com.dgsoft.house.owner.model.BusinessPersion</class>
-        <class>com.dgsoft.house.owner.model.BusinessPool</class>
+        <class>com.dgsoft.house.owner.model.PowerPerson</class>
         <class>com.dgsoft.house.owner.model.Card</class>
         <class>com.dgsoft.house.owner.model.CloseHouse</class>
         <class>com.dgsoft.house.owner.model.Evaluate</class>
@@ -128,7 +127,6 @@
         <class>com.dgsoft.house.owner.model.LockedHouse</class>
         <class>com.dgsoft.house.owner.model.ProcessMessage</class>
         <class>com.dgsoft.house.owner.model.FactMoneyInfo</class>
-        <class>com.dgsoft.house.owner.model.ContractOwner</class>
         <class>com.dgsoft.house.owner.model.HouseContract</class>
         <class>com.dgsoft.house.owner.model.ContractNumber</class>
         <class>com.dgsoft.house.owner.model.ProjectMortgage</class>
@@ -137,6 +135,7 @@
         <class>com.dgsoft.house.owner.model.RecordLocal</class>
         <class>com.dgsoft.house.owner.model.SubStatus</class>
         <class>com.dgsoft.house.owner.model.SaleShowCheck</class>
+        <class>com.dgsoft.house.owner.model.ProxyPerson</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

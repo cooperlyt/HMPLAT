@@ -67,7 +67,7 @@ public class SaleShowCheck implements java.io.Serializable {
     }
 
     @OneToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "HOUSE_BUSINESS", nullable = false)
+    @JoinColumn(name = "BUSINESS", nullable = false)
     @NotNull
     public HouseBusiness getHouseBusiness() {
         return houseBusiness;

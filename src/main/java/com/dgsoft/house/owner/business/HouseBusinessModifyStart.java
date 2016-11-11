@@ -1,7 +1,6 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.business.BusinessCreateComponent;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.House;
@@ -9,19 +8,14 @@ import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.*;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
-import org.jboss.seam.log.Logging;
 
-import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -349,9 +343,9 @@ public class HouseBusinessModifyStart {
             }
 
 
-            for (BusinessPool pool : houseBusiness.getAfterBusinessHouse().getBusinessPools()) {
+            for (PowerPerson pool : houseBusiness.getAfterBusinessHouse().getBusinessPools()) {
                 if (pool.getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {
-                    result.getAfterBusinessHouse().getBusinessPools().add(new BusinessPool(ownerBusiness, pool));
+                    result.getAfterBusinessHouse().getBusinessPools().add(new PowerPerson(ownerBusiness, pool));
                 } //else {
                   //  result.getAfterBusinessHouse().getBusinessPools().add(pool);
                 //}

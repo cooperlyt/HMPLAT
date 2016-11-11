@@ -25,6 +25,10 @@ public class HouseBusiness implements java.io.Serializable {
     private boolean canceled;
 
     private SaleShowCheck saleShowCheck;
+    private HouseContract houseContract;
+
+    private String searchKey;
+    private String display;
 
     public HouseBusiness() {
     }
@@ -141,4 +145,37 @@ public class HouseBusiness implements java.io.Serializable {
     public void setSaleShowCheck(SaleShowCheck saleShowCheck) {
         this.saleShowCheck = saleShowCheck;
     }
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "houseBusiness")
+    public HouseContract getHouseContract() {
+        return houseContract;
+    }
+
+    public void setHouseContract(HouseContract houseContract) {
+        this.houseContract = houseContract;
+    }
+
+
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Column(name = "DISPLAY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
 }

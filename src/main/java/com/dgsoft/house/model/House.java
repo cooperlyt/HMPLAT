@@ -1,9 +1,9 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseInfo;
-import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -98,7 +98,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private BigDecimal loftArea;
     private BigDecimal commParam;
     private String houseType;
-    private String useType;
+    private UseType useType;
     private String structure;
     private String knotSize;
     private String address;
@@ -110,6 +110,8 @@ public class House implements java.io.Serializable, HouseInfo {
     private String direction;
     private boolean deleted;
 
+    private String designUseType;
+    private String unitNumber;
 
     private boolean haveDownRoom;
 
@@ -156,6 +158,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.shineArea = block.getShineArea();
         this.loftArea = block.getLoftArea();
         this.useType = block.getUseType();
+        this.designUseType = block.getDesignUseType();
         this.structure = block.getStructure();
         this.houseType = block.getHouseType();
         this.houseUnitName = block.getUnitName();
@@ -348,14 +351,14 @@ public class House implements java.io.Serializable, HouseInfo {
         this.houseType = houseType;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "USE_TYPE", length = 32, nullable = false)
-    @Size(min=1,max = 32)
     @NotNull
-    public String getUseType() {
+    public UseType getUseType() {
         return this.useType;
     }
 
-    public void setUseType(String useType) {
+    public void setUseType(UseType useType) {
         this.useType = useType;
     }
 
@@ -567,6 +570,28 @@ public class House implements java.io.Serializable, HouseInfo {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+
+    @Column(name = "DESIGN_USE_TYPE", nullable = false, length = 512)
+    @NotNull
+    @Size(max = 512)
+    public String getDesignUseType() {
+        return designUseType;
+    }
+
+    public void setDesignUseType(String designUseType) {
+        this.designUseType = designUseType;
+    }
+
+    @Column(name = "DESIGN_USE_TYPE", length = 32)
+    @Size(max = 32)
+    public String getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
     }
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", cascade = {CascadeType.DETACH, CascadeType.REMOVE})

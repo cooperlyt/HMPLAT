@@ -3,7 +3,7 @@ package com.dgsoft.house.owner.business.create;
 import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessPool;
+import com.dgsoft.house.owner.model.PowerPerson;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -27,8 +27,8 @@ public class BusinessPoolInput implements BusinessDataFill {
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
                 houseBusiness.getAfterBusinessHouse().setPoolType(houseBusiness.getStartBusinessHouse().getPoolType());
                 if(!houseBusiness.getStartBusinessHouse().getBusinessPools().isEmpty()) {
-                    for (BusinessPool businessPool : houseBusiness.getStartBusinessHouse().getBusinessPools()) {
-                        BusinessPool newBusinessPool =  new BusinessPool(ownerBusinessHome.getInstance(),businessPool);
+                    for (PowerPerson businessPool : houseBusiness.getStartBusinessHouse().getBusinessPools()) {
+                        PowerPerson newBusinessPool =  new PowerPerson(ownerBusinessHome.getInstance(),businessPool);
 
                         houseBusiness.getAfterBusinessHouse().getBusinessPools().add(newBusinessPool);
                     }

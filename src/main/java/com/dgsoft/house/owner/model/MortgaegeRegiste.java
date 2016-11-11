@@ -31,7 +31,6 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
     private Financial oldFinancial;
     private Financial financial;
 	private String orgName;
-	private BusinessHouseOwner businessHouseOwner;
 	private TimeArea.TimeShowType timeShowType;
 
 
@@ -63,7 +62,6 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
             financial.setMortgaegeForNew(this);
         }
         orgName = mortgaegeRegiste.getOrgName();
-        businessHouseOwner = mortgaegeRegiste.getBusinessHouseOwner();
 
     }
     public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste,Financial oldFinancial) {
@@ -77,7 +75,6 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
         this.oldFinancial = oldFinancial;
         financial = new Financial(mortgaegeRegiste.getFinancial());
         orgName = mortgaegeRegiste.getOrgName();
-        businessHouseOwner = mortgaegeRegiste.getBusinessHouseOwner();
     }
 
     @Id
@@ -204,16 +201,6 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 
 	public void setOrgName(String orgName) {
 		this.orgName = orgName;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "OWNER",nullable = false)
-	public BusinessHouseOwner getBusinessHouseOwner() {
-		return businessHouseOwner;
-	}
-
-	public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
-		this.businessHouseOwner = businessHouseOwner;
 	}
 
 

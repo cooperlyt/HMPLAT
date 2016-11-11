@@ -1,6 +1,7 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.model.LockedHouse;
@@ -35,10 +36,11 @@ public class GridBlock implements java.io.Serializable {
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private String useType;
+    private UseType useType;
     private String structure;
     private String houseType;
     private String houseOrder;
+    private String designUseType;
 
     private String direction;
     private String eastWall;
@@ -69,7 +71,7 @@ public class GridBlock implements java.io.Serializable {
     public GridBlock(String id, GridRow gridRow, int order, int colspan,
                      int rowspan, int unitIndex, String unitName, BigDecimal area,
                      BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
-                     BigDecimal loftArea, BigDecimal commParam, String useType,
+                     BigDecimal loftArea, BigDecimal commParam, UseType useType,
                      String structure, String houseType, String houseOrder,
                      String direction, String eastWall, String westWall,
                      String southWall, String northWall, String knotSize,boolean haveDownRoom,String floorName) {
@@ -225,13 +227,13 @@ public class GridBlock implements java.io.Serializable {
         this.commParam = commParam;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "USE_TYPE", length = 32)
-    @Size(max = 32)
-    public String getUseType() {
+    public UseType getUseType() {
         return this.useType;
     }
 
-    public void setUseType(String useType) {
+    public void setUseType(UseType useType) {
         this.useType = useType;
     }
 
@@ -352,6 +354,16 @@ public class GridBlock implements java.io.Serializable {
 
     public void setFloorName(String floorName) {
         this.floorName = floorName;
+    }
+
+    @Column(name = "DESIGN_USE_TYPE",length = 512)
+    @Size(max = 512)
+    public String getDesignUseType() {
+        return designUseType;
+    }
+
+    public void setDesignUseType(String designUseType) {
+        this.designUseType = designUseType;
     }
 
     @Transient

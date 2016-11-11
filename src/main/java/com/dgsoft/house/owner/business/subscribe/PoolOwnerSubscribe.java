@@ -6,8 +6,7 @@ import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.PoolType;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessHouse;
-import com.dgsoft.house.owner.model.BusinessPool;
+import com.dgsoft.house.owner.model.PowerPerson;
 import com.dgsoft.house.owner.model.MakeCard;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.ScopeType;
@@ -31,12 +30,12 @@ import java.util.*;
 @Scope(ScopeType.CONVERSATION)
 public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
-    public class PoolOwnerAdapert extends PersonHelper<BusinessPool> {
+    public class PoolOwnerAdapert extends PersonHelper<PowerPerson> {
 
         private OwnerBusiness ownerBusiness;
 
 
-        public PoolOwnerAdapert(OwnerBusiness ownerBusiness, BusinessPool entity) {
+        public PoolOwnerAdapert(OwnerBusiness ownerBusiness, PowerPerson entity) {
             super(entity);
             this.ownerBusiness = ownerBusiness;
         }
@@ -121,7 +120,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     private List<PoolOwnerAdapert> poolOwners;
 
     @DataModelSelection
-    private PersonHelper<BusinessPool> selectPoolOwner;
+    private PersonHelper<PowerPerson> selectPoolOwner;
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -135,12 +134,12 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
 
 
         poolOwners = new ArrayList<PoolOwnerAdapert>();
-        for (BusinessPool pool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+        for (PowerPerson pool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
             poolOwners.add(new PoolOwnerAdapert(ownerBusinessHome.getInstance(),pool));
         }
-        Collections.sort(poolOwners, new Comparator<PersonHelper<BusinessPool>>() {
+        Collections.sort(poolOwners, new Comparator<PersonHelper<PowerPerson>>() {
             @Override
-            public int compare(PersonHelper<BusinessPool> o1, PersonHelper<BusinessPool> o2) {
+            public int compare(PersonHelper<PowerPerson> o1, PersonHelper<PowerPerson> o2) {
                 return o1.getPersonEntity().getCreateTime().compareTo(o2.getPersonEntity().getCreateTime());
             }
         });
@@ -159,7 +158,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
     }
 
     public void addNewOwner() {
-        BusinessPool newOwner = new BusinessPool(new Date());
+        PowerPerson newOwner = new PowerPerson(new Date());
         newOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().add(newOwner);
         poolOwners.add(0,new PoolOwnerAdapert(ownerBusinessHome.getInstance(),newOwner));
@@ -216,7 +215,7 @@ public class PoolOwnerSubscribe implements TaskSubscribeComponent {
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().clear();
             poolOwners.clear();
         } else if (ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType().equals(PoolType.TOGETHER_OWNER)) {
-            for (BusinessPool pool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+            for (PowerPerson pool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
                 pool.setPerc(null);
                 pool.setPoolArea(null);
             }

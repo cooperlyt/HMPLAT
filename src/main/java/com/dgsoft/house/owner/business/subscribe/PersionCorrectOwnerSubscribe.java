@@ -1,11 +1,8 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.house.owner.model.BusinessPersion;
-import com.dgsoft.house.owner.model.BusinessProject;
-import com.dgsoft.house.owner.model.ContractOwner;
+import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2015-09-09.
@@ -21,10 +18,10 @@ public class PersionCorrectOwnerSubscribe extends BaseBusinessPersionSubscribe {
     @Override
     public void create() {
         super.create();
-        if (!isHave()) {
-            clearInstance();
 
-            ContractOwner contractOwner = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getContractOwner();
+        clearInstance();
+        if (!isHave()) {
+            PowerPerson contractOwner = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMainContractPerson();
             if (contractOwner != null) {
                 getInstance().setCredentialsType(contractOwner.getCredentialsType());
                 getInstance().setCredentialsNumber(contractOwner.getCredentialsNumber());
@@ -35,5 +32,6 @@ public class PersionCorrectOwnerSubscribe extends BaseBusinessPersionSubscribe {
             ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
             setHave(true);
         }
+
     }
 }

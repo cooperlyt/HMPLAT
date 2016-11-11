@@ -39,6 +39,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Date regTime;
     private Date recordTime;
 
+    private String searchKey;
+    private String display;
+
 
     private boolean recorded;
 
@@ -65,7 +68,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<ProcessMessage> processMessages = new HashSet<ProcessMessage>(0);
     private Set<FactMoneyInfo> factMoneyInfos = new HashSet<FactMoneyInfo>(0);
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
-    private Set<ContractOwner> contractOwners = new HashSet<ContractOwner>(0);
     private Set<ProjectMortgage> projectMortgages = new HashSet<ProjectMortgage>(0);
     private Set<GiveCard> giveCards = new HashSet<GiveCard>(0);
 
@@ -493,6 +495,28 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.recordStores = recordStores;
     }
 
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Column(name = "DISPLAY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
     @Transient
     public List<RecordStore> getRecordStoreList(){
         List<RecordStore> result = new ArrayList<RecordStore>(getRecordStores());
@@ -503,15 +527,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
             }
         });
         return result;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness")
-    public Set<ContractOwner> getContractOwners() {
-        return contractOwners;
-    }
-
-    public void setContractOwners(Set<ContractOwner> contractOwners) {
-        this.contractOwners = contractOwners;
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "ownerBusiness")
@@ -676,16 +691,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
 
-    /**
-     * 备案人
-     */
-    @Transient
-    public ContractOwner getContractOwner() {
-        if (!getContractOwners().isEmpty()) {
-            return getContractOwners().iterator().next();
-        }
-        return null;
-    }
 
     /**
      * 评估公司

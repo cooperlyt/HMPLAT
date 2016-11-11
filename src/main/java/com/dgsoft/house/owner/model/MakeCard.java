@@ -3,7 +3,6 @@ package com.dgsoft.house.owner.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -33,9 +32,7 @@ public class MakeCard implements java.io.Serializable {
     private ProjectCard projectCard;
     private Financial financial;
 
-
-    private Set<BusinessHouseOwner> businessHouseOwners = new HashSet<BusinessHouseOwner>(0);
-    private BusinessPool businessPool;
+    private PowerPerson powerPerson;
 
 
     public MakeCard() {
@@ -145,32 +142,14 @@ public class MakeCard implements java.io.Serializable {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "makeCard")
-    public Set<BusinessHouseOwner> getBusinessHouseOwners() {
-        return businessHouseOwners;
-    }
-
-    public void setBusinessHouseOwners(Set<BusinessHouseOwner> businessHouseOwners) {
-        this.businessHouseOwners = businessHouseOwners;
-    }
-
-    @Transient
-    public BusinessHouseOwner getBusinessHouseOwner(){
-        if (getBusinessHouseOwners().isEmpty()){
-            return null;
-        }
-        return getBusinessHouseOwners().iterator().next();
-    }
-
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "makeCard")
-    public BusinessPool getBusinessPool() {
-        return businessPool;
+    public PowerPerson getPowerPerson() {
+        return powerPerson;
     }
 
-    public void setBusinessPool(BusinessPool businessPool) {
-        this.businessPool = businessPool;
+    public void setPowerPerson(PowerPerson powerPerson) {
+        this.powerPerson = powerPerson;
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -236,7 +236,7 @@ public class ExtendsDataCreator {
         }else if (PrintOwnerCard==2) {//所有权人 + 共有权人
             String OwnerName = businessHouse.getBusinessHouseOwner().getPersonName();
             if (businessHouse.getBusinessPoolList() != null) {
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     OwnerName = OwnerName + " 、 " + businessPool.getPersonName();
                 }
             }
@@ -327,7 +327,7 @@ public class ExtendsDataCreator {
         }else if (PrintOwnerCard==2) {//所有权人 + 共有权人
             String OwnerName = businessHouse.getBusinessHouseOwner().getPersonName();
             if (businessHouse.getBusinessPoolList() != null) {
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     OwnerName = OwnerName + " 、 " + businessPool.getPersonName();
                 }
             }
@@ -472,7 +472,7 @@ public class ExtendsDataCreator {
         }else if (PrintOwnerCard==2) {//所有权人 + 共有权人
             String OwnerName = businessHouse.getBusinessHouseOwner().getPersonName();
             if (businessHouse.getBusinessPoolList() != null) {
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     OwnerName = OwnerName + " 、 " + businessPool.getPersonName();
                 }
             }
@@ -483,7 +483,7 @@ public class ExtendsDataCreator {
         }else if (PrintOwnerCard==2){//打印所有权证号+共有权证号
             String OwnerNo=businessHouse.getBusinessHouseOwner().getMakeCard().getNumber();
             if (businessHouse.getBusinessPoolList()!=null) {
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     if (businessPool.getMakeCard()!=null){
                         OwnerNo=OwnerNo+" 、 " +businessPool.getMakeCard().getNumber();
                     }
@@ -642,13 +642,13 @@ public class ExtendsDataCreator {
                 Integer poolType = RunParam.instance().getIntParamValue("PoolInfoPrint");
                 if (poolType==1) {
                     str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName();
-                    for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                         str=str+"，共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber()+"。";
                     }
                 }
                 if (poolType==2) {
                     String poolStr="";
-                    for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                         poolStr = poolStr + businessPool.getPersonName()+"  ";
                     }
                     str = "共有权人: " + poolStr;
@@ -657,7 +657,7 @@ public class ExtendsDataCreator {
                 if (poolType==3) {
                     str = "房屋所有权人分别为：" + businessHouse.getBusinessHouseOwner().getPersonName()+"，身份证明号:"
                             + businessHouse.getBusinessHouseOwner().getCredentialsNumber()+"。";
-                    for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                    for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                         str=str+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
                     }
                 }
@@ -679,13 +679,13 @@ public class ExtendsDataCreator {
             Integer poolType = RunParam.instance().getIntParamValue("PoolInfoPrint");
             if (poolType==1) {
                 str = "所有权人:" + businessHouse.getBusinessHouseOwner().getPersonName();
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     str=str+" 共有权人："+businessPool.getPersonName()+",身份证明号:"+businessPool.getCredentialsNumber();
                 }
             }
             if (poolType==2) {
                 String poolStr="";
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     poolStr = poolStr + businessPool.getPersonName()+"  ";
                 }
                 str = "共有权人: " + poolStr;
@@ -694,7 +694,7 @@ public class ExtendsDataCreator {
             if (poolType==3) {
                 str = "房屋所有权人分别为：" + businessHouse.getBusinessHouseOwner().getPersonName()+"，身份证号码:"
                         + businessHouse.getBusinessHouseOwner().getCredentialsNumber()+"。";
-                for (BusinessPool businessPool : businessHouse.getBusinessPools()) {
+                for (PowerPerson businessPool : businessHouse.getBusinessPools()) {
                     str=str+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
                 }
             }

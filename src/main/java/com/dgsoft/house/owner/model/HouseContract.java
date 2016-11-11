@@ -1,8 +1,10 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 24, 2015 1:17:35 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.*;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -28,8 +30,15 @@ public class HouseContract implements java.io.Serializable {
 	private int contractVersion;
 
 
-	private ContractOwner contractOwner;
 	private Set<ContractNumber> contractNumbers = new HashSet<ContractNumber>(0);
+
+
+	private String contractNumber;
+	private SaleType type;
+	private Date contractDate;
+	private String houseCode;
+
+	private HouseBusiness houseBusiness;
 
 	public HouseContract() {
 	}
@@ -56,11 +65,6 @@ public class HouseContract implements java.io.Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-
-
-
-
 
 	@Column(name = "ATTACH_EMP_ID", nullable = false, length = 32)
 	@NotNull
@@ -105,15 +109,6 @@ public class HouseContract implements java.io.Serializable {
 		this.contractVersion = contractVersion;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
-	public ContractOwner getContractOwner() {
-		return contractOwner;
-	}
-
-	public void setContractOwner(ContractOwner contractOwner) {
-		this.contractOwner = contractOwner;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "houseContract",cascade = CascadeType.ALL)
 	public Set<ContractNumber> getContractNumbers() {
@@ -122,5 +117,61 @@ public class HouseContract implements java.io.Serializable {
 
 	public void setContractNumbers(Set<ContractNumber> contractNumbers) {
 		this.contractNumbers = contractNumbers;
+	}
+
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TYPE", nullable = false, length = 32)
+	@NotNull
+	public SaleType getType() {
+		return this.type;
+	}
+
+	public void setType(SaleType type) {
+		this.type = type;
+	}
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CONTRACT_DATE", nullable = false, length = 19)
+	@NotNull
+	public Date getContractDate() {
+		return contractDate;
+	}
+
+	public void setContractDate(Date contractDate) {
+		this.contractDate = contractDate;
+	}
+
+	@Column(name = "HOUSE_CODE", length = 32, nullable = false)
+	@NotNull
+	@Size(max = 32)
+	public String getHouseCode() {
+		return houseCode;
+	}
+
+	public void setHouseCode(String houseCode) {
+		this.houseCode = houseCode;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY,optional = false)
+	@JoinColumn(name = "BUSINESS",nullable = false)
+	public HouseBusiness getHouseBusiness() {
+		return houseBusiness;
+	}
+
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
+	}
+
+	@Column(name="CONTRACT_NUMBER", nullable = false, length = 50)
+	@NotNull
+	@Size(max = 50)
+	public String getContractNumber() {
+		return contractNumber;
+	}
+
+	public void setContractNumber(String contractNumber) {
+		this.contractNumber = contractNumber;
 	}
 }

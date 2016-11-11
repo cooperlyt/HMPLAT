@@ -3,7 +3,7 @@ package com.dgsoft.house.owner.business.subscribe;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;
-import com.dgsoft.house.owner.model.BusinessPool;
+import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -33,7 +33,7 @@ public class NoticePrint {
             Integer poolType = RunParam.instance().getIntParamValue("PoolInfoPrint");
             if (poolType==1){
                 str="所有权人:"+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName();
-                for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+                for (PowerPerson businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
                     str=str+" 共有权人"+businessPool.getPersonName()+" 身份证明号: "+businessPool.getCredentialsNumber();
                 }
 
@@ -42,7 +42,7 @@ public class NoticePrint {
 
             if (poolType==2){
                 String poolStr="";
-                for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+                for (PowerPerson businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
                     poolStr = poolStr + businessPool.getPersonName()+"  ";
                 }
                 str = "共有权人: " + poolStr;
@@ -51,7 +51,7 @@ public class NoticePrint {
             if (poolType==3){
                 str="房屋所有权人分别为："+ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getPersonName() +"，身份证明号："
                 + ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessHouseOwner().getCredentialsNumber();
-                for (BusinessPool businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
+                for (PowerPerson businessPool : ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools()) {
                     str=str+"。"+businessPool.getPersonName()+"，身份证明号:"+businessPool.getCredentialsNumber()+"。";
                 }
 

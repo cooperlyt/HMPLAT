@@ -3,11 +3,9 @@ package com.dgsoft.house.owner.ws;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
-import com.dgsoft.common.system.business.BusinessCreate;
 import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.common.system.model.BusinessDefine;
 import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseEntityLoader;
@@ -30,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +75,7 @@ public class OutsideBusinessCreate {
         PoolType poolType;
         SaleInfo saleInfo;
         BusinessPersion businessPersion;
-        List<BusinessPool> businessPools;
+        List<PowerPerson> businessPools;
         try {
             houseCode = contractObj.getString("houseCode");
 
@@ -109,7 +106,7 @@ public class OutsideBusinessCreate {
             }
             //-------
 
-                businessPools = new ArrayList<BusinessPool>();
+                businessPools = new ArrayList<PowerPerson>();
                 JSONArray poolArray = contractObj.getJSONArray("pool");
 
 
@@ -149,7 +146,7 @@ public class OutsideBusinessCreate {
                         }
 
 
-                        BusinessPool businessPool = new BusinessPool(poolObj.getString("name"),
+                        PowerPerson businessPool = new PowerPerson(poolObj.getString("name"),
                                 PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
                                 poolObj.getString("credentialsNumber"),
                                 poolObj.getString("relation"), poolArea,
@@ -271,7 +268,7 @@ public class OutsideBusinessCreate {
         ownerBusinessHome.getInstance().getContractOwners().clear();
         ownerBusinessHome.getInstance().getContractOwners().add(contractOwner);
         if (businessPools != null){
-            for (BusinessPool bp : businessPools) {
+            for (PowerPerson bp : businessPools) {
                 bp.setOwnerBusiness(ownerBusinessHome.getInstance());
             }
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().addAll(businessPools);

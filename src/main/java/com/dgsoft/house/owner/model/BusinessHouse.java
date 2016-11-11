@@ -1,16 +1,14 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import cc.coopersoft.house.UseType;
+import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.RunParam;
-import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.PoolType;
-import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
-import org.apache.batik.gvt.flow.RegionInfo;
 import org.hibernate.annotations.GenericGenerator;
-import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -36,7 +34,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private BigDecimal loftArea;
     private BigDecimal commParam;
     private String houseType;
-    private String useType;
+    private UseType useType;
     private String structure;
     private String knotSize;
     private String address;
@@ -72,12 +70,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String districtName;
     //private Set<HouseBusiness> housesForAfterBusiness;
 
+    private String designUseType;
+    private String unitNumber;
+
     private LandInfo landInfo;
-    private BusinessHouseOwner businessHouseOwner;
-    private ContractOwner contractOwner;
     private HouseRegInfo houseRegInfo;
     private String buildDevNumber;
-    private Set<BusinessPool> businessPools = new HashSet<BusinessPool>(0);
+    private Set<PowerPerson> powerPersons = new HashSet<PowerPerson>(0);
+    private PowerPerson mainOwner;
+    private Set<MortgaegeRegiste> mortgaegeRegistes = new HashSet<MortgaegeRegiste>(0);
 
     private HouseBusiness houseBusinessForAfter;
     //private HouseBusiness houseBusinessForStart;
@@ -85,8 +86,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>();
     //private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
     private SaleInfo saleInfo;
-    private BusinessHouseOwner oldOwner;
-    private BusinessHouseOwner noticeOwner;
 
 
     public BusinessHouse() {
@@ -106,6 +105,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
         this.houseType = houseInfo.getHouseType();
         this.useType = houseInfo.getUseType();
+        this.designUseType = houseInfo.getDesignUseType();
+        this.unitNumber = houseInfo.getUnitNumber();
         this.structure = houseInfo.getStructure();
         this.knotSize = houseInfo.getKnotSize();
         this.address = houseInfo.getAddress();
@@ -160,8 +161,26 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     }
 
+    @Column(name = "DESIGN_USE_TYPE", nullable = false, length = 512)
+    @NotNull
+    @Size(max = 512)
+    public String getDesignUseType() {
+        return designUseType;
+    }
 
+    public void setDesignUseType(String designUseType) {
+        this.designUseType = designUseType;
+    }
 
+    @Column(name = "DESIGN_USE_TYPE", length = 32)
+    @Size(max = 32)
+    public String getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -336,11 +355,11 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     @Column(name = "USE_TYPE", nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    public String getUseType() {
+    public UseType getUseType() {
         return this.useType;
     }
 
-    public void setUseType(String useType) {
+    public void setUseType(UseType useType) {
         this.useType = useType;
     }
 
@@ -701,7 +720,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseBusinessForAfter = houseBusinessForAfter;
     }
 
-
 //   有中止的业务时 StartHouse 可能有多个 不可以@OneToOne
 //    @OneToOne(fetch = FetchType.LAZY, mappedBy = "startBusinessHouse")
 //    public HouseBusiness getHouseBusinessForStart() {
@@ -711,7 +729,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 //    public void setHouseBusinessForStart(HouseBusiness houseBusinessForStart) {
 //        this.houseBusinessForStart = houseBusinessForStart;
 //    }
-
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "LAND_INFO",nullable = true)
@@ -723,51 +740,35 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.landInfo = landInfo;
     }
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MAIN_OWNER",nullable = true)
-    public BusinessHouseOwner getBusinessHouseOwner() {
-        return businessHouseOwner;
+    public PowerPerson getMainOwner() {
+        return mainOwner;
     }
 
-    public void setBusinessHouseOwner(BusinessHouseOwner businessHouseOwner) {
-        this.businessHouseOwner = businessHouseOwner;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = true,cascade = CascadeType.ALL)
-    @JoinColumn(name = "CONTRACT_OWNER",nullable = true)
-    public ContractOwner getContractOwner() {
-        return contractOwner;
-    }
-
-    public void setContractOwner(ContractOwner contractOwner) {
-        this.contractOwner = contractOwner;
+    public void setMainOwner(PowerPerson mainOwner) {
+        this.mainOwner = mainOwner;
     }
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "HOUSE_POOL", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL"))
-    public Set<BusinessPool> getBusinessPools() {
-        return businessPools;
+    @JoinTable(name = "HOUSE_OWNER", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "POOL"))
+    public Set<PowerPerson> getPowerPersons() {
+        return powerPersons;
     }
 
-    public void setBusinessPools(Set<BusinessPool> businessPools) {
-        this.businessPools = businessPools;
+    public void setPowerPersons(Set<PowerPerson> powerPersons) {
+        this.powerPersons = powerPersons;
     }
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "HOUSE_MORTGAEGE", joinColumns = @JoinColumn(name = "HOUSE"), inverseJoinColumns = @JoinColumn(name = "MORTGAEGE"))
+    public Set<MortgaegeRegiste> getMortgaegeRegistes() {
+        return mortgaegeRegistes;
+    }
 
-
-
-    @Transient
-    public List<BusinessPool> getBusinessPoolList() {
-        List<BusinessPool> result = new ArrayList<BusinessPool>(getBusinessPools());
-        Collections.sort(result, new Comparator<BusinessPool>() {
-            @Override
-            public int compare(BusinessPool o1, BusinessPool o2) {
-                return o1.getCreateTime().compareTo(o2.getCreateTime());
-            }
-        });
-        return result;
+    public void setMortgaegeRegistes(Set<MortgaegeRegiste> mortgaegeRegistes) {
+        this.mortgaegeRegistes = mortgaegeRegistes;
     }
 
 
@@ -783,6 +784,66 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         return allStatusList;
     }
 
+    @Transient
+    private List<PowerPerson> getPowerPersonListByType(PowerPerson.PowerPersonType type, boolean old){
+        List<PowerPerson> result = new ArrayList<PowerPerson>();
+        for(PowerPerson pp: getPowerPersons()){
+            if (type.equals(pp.getType()) && (old == pp.isOld())){
+                result.add(pp);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
+    @Transient
+    private void calcMainOwner(){
+        List<PowerPerson> result = new ArrayList<PowerPerson>();
+        for(PowerPerson pp: getPowerPersons()){
+            if (!pp.isOld()){
+                result.add(pp);
+            }
+        }
+        if (result.isEmpty()){
+            setMainOwner(null);
+        }else{
+            setMainOwner(result.get(0));
+        }
+    }
+
+    @Transient
+    public void addPowerPerson(PowerPerson powerPerson){
+        int pri = 0;
+        for (PowerPerson pp : getPowerPersons()){
+            if (pp.isOld() == powerPerson.isOld() && powerPerson.getType().equals(pp.getType()) && (pp.getPriority() > pri)){
+                pri = pp.getPriority() + 1;
+            }
+        }
+        powerPerson.setPriority(pri);
+        getPowerPersons().add(powerPerson);
+        if (!powerPerson.isOld())
+            calcMainOwner();
+    }
+
+    @Transient
+    public void removePowerPerson(PowerPerson powerPerson){
+        if (getPowerPersons().remove(powerPerson) && !powerPerson.isOld()){
+            calcMainOwner();
+        }
+    }
+
+
+
+    @Transient
+    public PowerPerson getMainContractPerson(){
+        List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.CONTRACT,false);
+        if (result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "businessHouse", cascade = CascadeType.ALL)
     public SaleInfo getSaleInfo() {
@@ -793,25 +854,5 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.saleInfo = saleInfo;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "NOITCE_OWNER",nullable = true)
-
-    public BusinessHouseOwner getNoticeOwner() {
-        return noticeOwner;
-    }
-
-    public void setNoticeOwner(BusinessHouseOwner noticeOwner) {
-        this.noticeOwner = noticeOwner;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "OLD_OWNER",nullable = true)
-    public BusinessHouseOwner getOldOwner() {
-        return oldOwner;
-    }
-
-    public void setOldOwner(BusinessHouseOwner oldOwner) {
-        this.oldOwner = oldOwner;
-    }
 
 }

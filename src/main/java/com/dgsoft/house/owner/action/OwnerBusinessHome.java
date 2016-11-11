@@ -430,10 +430,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getInstance().getCardPrinterEmp();
     }
 
-    @Deprecated
-    public ContractOwner getContractOwner(){
-        return getInstance().getContractOwner();
-    }
 
     @Deprecated
     public BusinessHouse getBusinessHouse(){

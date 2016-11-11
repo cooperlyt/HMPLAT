@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.helper.ExtendsDataCreator;
-import com.dgsoft.house.owner.model.BusinessPool;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 

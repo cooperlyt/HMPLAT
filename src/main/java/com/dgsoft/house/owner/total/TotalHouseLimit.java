@@ -200,7 +200,7 @@ public class TotalHouseLimit {
 
                     if (!((BusinessHouse)entry.getValue()).getBusinessPools().isEmpty()){
                         String poolName = "";
-                        for(BusinessPool pool: ((BusinessHouse)entry.getValue()).getBusinessPoolList()){
+                        for(PowerPerson pool: ((BusinessHouse)entry.getValue()).getBusinessPoolList()){
                             if (!"".equals(poolName)){
                                 poolName += ",";
                             }
@@ -239,7 +239,7 @@ public class TotalHouseLimit {
                     cell = row.createCell(cellIndex++);
                     if (!houseBusiness.getAfterBusinessHouse().getBusinessPools().isEmpty()) {
                         String poolNames = "";
-                        for (BusinessPool pool : houseBusiness.getAfterBusinessHouse().getBusinessPoolList()) {
+                        for (PowerPerson pool : houseBusiness.getAfterBusinessHouse().getBusinessPoolList()) {
                             if ("".equals(poolNames)){
                                 poolNames += ",";
                             }

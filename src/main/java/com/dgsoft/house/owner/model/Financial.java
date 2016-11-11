@@ -28,6 +28,7 @@ public class Financial implements java.io.Serializable, PersonEntity {
     private Date createTime;
     private MakeCard makeCard;
     private MortgaegeRegiste mortgaegeForNew;
+    private ProxyPerson proxyPerson;
 
 
 	public Financial() {
@@ -191,5 +192,13 @@ public class Financial implements java.io.Serializable, PersonEntity {
         this.mortgaegeForNew = mortgaegeForNew;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "PROXY_PERSON", nullable = true)
+    public ProxyPerson getProxyPerson() {
+        return proxyPerson;
+    }
 
+    public void setProxyPerson(ProxyPerson proxyPerson) {
+        this.proxyPerson = proxyPerson;
+    }
 }

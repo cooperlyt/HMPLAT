@@ -31,6 +31,8 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 	private String personName;
 	private PersionType type;
 	private String phone;
+	private ProxyPerson proxyPerson;
+
 
 
 	public BusinessPersion() {
@@ -130,6 +132,16 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name = "PROXY_PERSON", nullable = true)
+	public ProxyPerson getProxyPerson() {
+		return proxyPerson;
+	}
+
+	public void setProxyPerson(ProxyPerson proxyPerson) {
+		this.proxyPerson = proxyPerson;
 	}
 
 }
