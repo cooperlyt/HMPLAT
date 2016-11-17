@@ -1,9 +1,10 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.PersonEntity;
-import com.dgsoft.house.owner.model.BusinessHouseOwner;
+import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.Developer;
 import com.dgsoft.house.owner.model.BusinessPersion;
-import com.dgsoft.house.owner.model.BusinessProject;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
@@ -12,6 +13,9 @@ import org.jboss.seam.annotations.Name;
  */
 @Name("persionCorrectProjectSubscribe")
 public class PersionCorrectProjectSubscribe extends BaseBusinessPersionSubscribe {
+
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
 
 
     @Override
@@ -25,13 +29,14 @@ public class PersionCorrectProjectSubscribe extends BaseBusinessPersionSubscribe
         if (!isHave()) {
             clearInstance();
 
-                BusinessHouseOwner businessPersion=ownerBusinessHome.getInstance().getMortgaegeRegiste().getBusinessHouseOwner();
-                if (businessPersion != null) {
-                    getInstance().setCredentialsType(businessPersion.getCredentialsType());
-                    getInstance().setCredentialsNumber(businessPersion.getCredentialsNumber());
-                    getInstance().setPersonName(businessPersion.getPersonName());
-                    getInstance().setPhone(businessPersion.getPhone());
-                }
+            Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperCode()) ;
+
+                    getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                    getInstance().setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
+                    getInstance().setPersonName(developer.getName());
+                    getInstance().setPhone(developer.getAttachCorporation().getPhone());
+
+
 
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());

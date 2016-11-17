@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.model;
 
+import cc.coopersoft.house.UseType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class ProjectLandEndTime implements java.io.Serializable{
 
 
     private String id;
-    private String useTypeCategory;
+    private UseType useTypeCategory;
     private Date endTime;
     private ProjectSellInfo projectSellInfo;
 
@@ -49,14 +50,15 @@ public class ProjectLandEndTime implements java.io.Serializable{
         this.id = id;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "USE_TYPE",nullable = false,length = 20)
     @NotNull
     @Size(max = 20)
-    public String getUseTypeCategory() {
+    public UseType getUseTypeCategory() {
         return useTypeCategory;
     }
 
-    public void setUseTypeCategory(String useTypeCategory) {
+    public void setUseTypeCategory(UseType useTypeCategory) {
         this.useTypeCategory = useTypeCategory;
     }
 

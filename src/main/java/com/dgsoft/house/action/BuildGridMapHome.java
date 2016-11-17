@@ -1,5 +1,6 @@
 package com.dgsoft.house.action;
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
@@ -349,7 +350,7 @@ public class BuildGridMapHome implements DropListener {
                         new BigDecimal(houseElement.attributeValue("ShineArea", "0")),
                         new BigDecimal(houseElement.attributeValue("LoftArea", "0")),
                         new BigDecimal(houseElement.attributeValue("CommParam", "0")),
-                        houseElement.attributeValue("UseType", ""),
+                        UseType.valueOf(houseElement.attributeValue("UseType", "")),houseElement.attributeValue("DesignUseType",""),
                         houseElement.attributeValue("Structure", ""),
                         houseElement.attributeValue("HouseType", ""),
                         Boolean.parseBoolean(houseElement.attributeValue("IsDeleted", "false")) ? null :houseElement.attributeValue("Order", ""),
@@ -536,11 +537,11 @@ public class BuildGridMapHome implements DropListener {
         for (GridRow row : getInstance().getGridRows()) {
             for (GridBlock block : row.getGridBlocks())
                 if (block.getHouse() != null) {
-                    BuildHome.CountAreaEntry entry = result.get(DictionaryWord.instance().getWord(block.getHouse().getUseType()));
+                    BuildHome.CountAreaEntry entry = result.get(block.getHouse().getDesignUseType());
                     if (entry != null) {
                         entry.addArea(block.getHouse().getHouseArea(), block.getHouse().getUseArea());
                     } else {
-                        result.put(DictionaryWord.instance().getWord(block.getHouse().getUseType()),
+                        result.put(DictionaryWord.instance().getWord(block.getHouse().getDesignUseType()),
                                 new BuildHome.CountAreaEntry(block.getHouse().getHouseArea(), block.getHouse().getUseArea()));
                     }
                 }
@@ -689,7 +690,8 @@ public class BuildGridMapHome implements DropListener {
                     blockNode.addAttribute("ShineArea", formatAreaForXml(block.getHouse().getShineArea()));
                     blockNode.addAttribute("CommParam", formatAreaForXml(block.getHouse().getCommParam()));
                     blockNode.addAttribute("Structure",(block.getHouse().getStructure() == null) ? "" : block.getHouse().getStructure());
-                    blockNode.addAttribute("UseType",(block.getHouse().getUseType() == null) ? "" : block.getHouse().getUseType());
+                    blockNode.addAttribute("UseType",(block.getHouse().getUseType() == null) ? "" : block.getHouse().getUseType().name());
+                    blockNode.addAttribute("DesignUseType",(block.getHouse().getDesignUseType() == null) ? "" : block.getHouse().getDesignUseType());
                     blockNode.addAttribute("HouseType",(block.getHouse().getHouseType() == null) ? "" : block.getHouse().getHouseType());
                     blockNode.addAttribute("Order",block.getHouse().getHouseOrder());
                     blockNode.addAttribute("KnotSize",(block.getHouse().getKnotSize() == null) ? "" : block.getHouse().getKnotSize());

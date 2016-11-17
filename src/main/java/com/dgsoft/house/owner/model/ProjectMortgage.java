@@ -1,8 +1,10 @@
 package com.dgsoft.house.owner.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,17 +18,25 @@ public class ProjectMortgage {
     private String id;
     private String address;
     private String landNumber;
-    private OwnerBusiness ownerBusiness;
+    private String developerCode;
+    private String developerName;
+    private MortgaegeRegiste mortgaegeRegiste;
 
     public ProjectMortgage() {
+    }
+
+    public ProjectMortgage(MortgaegeRegiste mortgaegeRegiste) {
+        this.mortgaegeRegiste = mortgaegeRegiste;
     }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+    @GenericGenerator(name = "pkGenerator",
+            strategy = "foreign",
+            parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "mortgaegeRegiste") })
+    @GeneratedValue(generator = "pkGenerator")
     public String getId() {
         return id;
     }
@@ -55,14 +65,35 @@ public class ProjectMortgage {
         this.landNumber = landNumber;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUSINESS",nullable = false)
+    @Column(name="DEVELOPER_CODE",length = 32,nullable = false)
     @NotNull
-    public OwnerBusiness getOwnerBusiness() {
-        return ownerBusiness;
+    @Size(max = 32)
+    public String getDeveloperCode() {
+        return developerCode;
     }
 
-    public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-        this.ownerBusiness = ownerBusiness;
+    public void setDeveloperCode(String developerCode) {
+        this.developerCode = developerCode;
+    }
+
+    @Column(name="DEVELOPER_NAME",length = 100,nullable = false)
+    @NotNull
+    @Size(max = 100)
+    public String getDeveloperName() {
+        return developerName;
+    }
+
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "projectMortgage")
+    @PrimaryKeyJoinColumn
+    public MortgaegeRegiste getMortgaegeRegiste() {
+        return mortgaegeRegiste;
+    }
+
+    public void setMortgaegeRegiste(MortgaegeRegiste mortgaegeRegiste) {
+        this.mortgaegeRegiste = mortgaegeRegiste;
     }
 }

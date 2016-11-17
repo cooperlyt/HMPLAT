@@ -68,7 +68,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<ProcessMessage> processMessages = new HashSet<ProcessMessage>(0);
     private Set<FactMoneyInfo> factMoneyInfos = new HashSet<FactMoneyInfo>(0);
     private Set<RecordStore> recordStores = new HashSet<RecordStore>(0);
-    private Set<ProjectMortgage> projectMortgages = new HashSet<ProjectMortgage>(0);
     private Set<GiveCard> giveCards = new HashSet<GiveCard>(0);
 
     private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
@@ -527,29 +526,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
             }
         });
         return result;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "ownerBusiness")
-    public Set<ProjectMortgage> getProjectMortgages() {
-        return projectMortgages;
-    }
-
-    public void setProjectMortgages(Set<ProjectMortgage> projectMortgages) {
-        this.projectMortgages = projectMortgages;
-    }
-
-    @Transient
-    public ProjectMortgage getProjectMortgage(){
-        if (getProjectMortgages().isEmpty()){
-            return null;
-        }
-        return getProjectMortgages().iterator().next();
-    }
-
-    @Transient
-    public void setProjectMortgage(ProjectMortgage projectMortgage){
-        getProjectMortgages().clear();
-        getProjectMortgages().add(projectMortgage);
     }
 
     @Transient

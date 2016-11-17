@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.ws;
 
+import cc.coopersoft.house.sale.data.*;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
@@ -16,6 +17,10 @@ import com.dgsoft.house.model.DeveloperLogonKey;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.*;
+import com.dgsoft.house.owner.model.ContractNumber;
+import com.dgsoft.house.owner.model.HouseContract;
+import com.dgsoft.house.owner.model.PowerPerson;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -28,10 +33,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.BUYER;
 
 /**
  * Created by cooper on 9/26/15.
@@ -58,162 +66,26 @@ public class OutsideBusinessCreate {
     @Transactional
     public String submitContract(String contract, String userId){
 
-
         businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
 
         DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, userId);
 
-        JSONObject contractObj;
+        ObjectMapper mapper = new ObjectMapper();
+        cc.coopersoft.house.sale.data.HouseContract outsideContract;
         try {
-            contractObj = new JSONObject(DESUtil.decrypt(contract, key.getSessionKey()));
-        }catch (Exception e){
-            throw new IllegalArgumentException(e);
+            outsideContract = mapper.readValue(DESUtil.decrypt(contract,key.getSessionKey()), cc.coopersoft.house.sale.data.HouseContract.class);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("contract data error",e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("contract decrypt error",e);
         }
 
-        String houseCode;
-        ContractOwner contractOwner = null;
-        PoolType poolType;
-        SaleInfo saleInfo;
-        BusinessPersion businessPersion;
-        List<PowerPerson> businessPools;
-        try {
-            houseCode = contractObj.getString("houseCode");
-
-
-            poolType = PoolType.valueOf(contractObj.getString("poolType"));
-
-            //--- 兼容旧版 有产权人的
-            try {
-
-                if (contractObj.getString("name") != null && !"".equals(contractObj.getString("name").trim()) &&
-                        contractObj.getString("credentialsNumber") != null && !"".equals(contractObj.getString("credentialsNumber").trim())) {
-                    String legalPerson;
-                    try {
-                        legalPerson = contractObj.getString("legalPerson");
-                    } catch (JSONException e) {
-                        legalPerson = null;
-                    }
-                    contractOwner = new ContractOwner(contractObj.getString("name"),
-                            PersonEntity.CredentialsType.valueOf(contractObj.getString("credentialsType")),
-                            contractObj.getString("credentialsNumber"), contractObj.getString("tel"),
-                            contractObj.getString("rootAddress"), contractObj.getString("address"),
-                            legalPerson, contractObj.getString("id"),
-                            SaleType.valueOf(contractObj.getString("type")), new Date(contractObj.getLong("createTime")), houseCode);
-
-                }
-            }catch (JSONException e){
-                Logging.getLog(getClass()).debug(e.getMessage(),e);
-            }
-            //-------
-
-                businessPools = new ArrayList<PowerPerson>();
-                JSONArray poolArray = contractObj.getJSONArray("pool");
-
-
-                for (int i = 0; i < poolArray.length(); i++) {
-                    JSONObject poolObj = poolArray.getJSONObject(i);
-                    String poolLegalPerson;
-                    try {
-                        poolLegalPerson = poolObj.getString("legalPerson");
-                    } catch (JSONException e) {
-                        poolLegalPerson = null;
-                    }
-                    if (contractOwner == null){
-
-                        contractOwner = new ContractOwner(poolObj.getString("name"),
-                                PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
-                                poolObj.getString("credentialsNumber"),poolObj.getString("tel"),
-                                poolObj.getString("rootAddress"),poolObj.getString("address"),
-                                poolLegalPerson,contractObj.getString("id"),
-                                SaleType.valueOf(contractObj.getString("type")),new Date(contractObj.getLong("createTime")),houseCode);
-
-
-                    }else {
-
-
-
-                        String perc = null;
-                        BigDecimal poolArea = null;
-                        if (PoolType.SHARE_OWNER.equals(poolType)) {
-                            try {
-                                perc = poolObj.getString("perc"); // double
-                            } catch (JSONException e) {
-                            }
-                            try {
-                                poolArea = BigDecimal.valueOf(poolObj.getDouble("poolArea"));
-                            } catch (JSONException e) {
-                            }
-                        }
-
-
-                        PowerPerson businessPool = new PowerPerson(poolObj.getString("name"),
-                                PersonEntity.CredentialsType.valueOf(poolObj.getString("credentialsType")),
-                                poolObj.getString("credentialsNumber"),
-                                poolObj.getString("relation"), poolArea,
-                                perc, poolObj.getString("tel"), new Date(), poolLegalPerson);
-                        businessPools.add(businessPool);
-                    }
-                }
-
-
-
-
-            businessPersion = new BusinessPersion(BusinessPersion.PersionType.PRE_SALE_ENTRUST);
-            businessPersion.setPersonName(contractObj.getString("proxyPerson"));
-            businessPersion.setCredentialsType(PersonEntity.CredentialsType.valueOf(contractObj.getString("proxyCredentialsType")));
-            businessPersion.setCredentialsNumber(contractObj.getString("proxyCredentialsNumber"));
-            businessPersion.setPhone(contractObj.getString("proxyTel"));
-
-            saleInfo = new SaleInfo(SalePayType.valueOf(contractObj.getString("salePayType")),BigDecimal.valueOf(contractObj.getDouble("contractPrice")));
-
-
-
-
-
-            contractOwner.setProjectRshipNumber(contractObj.getString("projectCerNumber"));
-
-            HouseContract houseContract = new HouseContract(contractObj.getString("attachEmpId"),
-                    contractObj.getString("attachEmpName"),
-                    contractObj.getJSONObject("contract").toString(),contractObj.getInt("contractVersion"));
-
-            contractOwner.setHouseContract(houseContract);
-            houseContract.setContractOwner(contractOwner);
-
-
-
-            JSONArray numberArray = contractObj.getJSONArray("contractNumber");
-            if (numberArray.length() <= 0){
-                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR.name();
-            }
-
-            for(int i = 0; i < numberArray.length(); i++){
-                ContractNumber contractNumber = ownerBusinessHome.getEntityManager().find(ContractNumber.class, numberArray.get(i));
-                if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
-
-                    return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR.name();
-                }else{
-                    contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
-                    contractNumber.setHouseContract(houseContract);
-                    houseContract.getContractNumbers().add(contractNumber);
-                }
-            }
-
-
-
-
-
-        } catch (JSONException e) {
-            Logging.getLog(getClass()).debug("property not found" , e);
-            throw new IllegalArgumentException(e);
-        }
-
-
-        HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseCode);
+        HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,outsideContract.getHouseCode());
         BusinessHouse businessHouse;
         if (houseRecord == null){
-            House house = houseEntityLoader.getEntityManager().find(House.class,houseCode);
+            House house = houseEntityLoader.getEntityManager().find(House.class,outsideContract.getHouseCode());
             if (house == null){
-                throw new IllegalArgumentException("house not found:" + houseCode);
+                throw new IllegalArgumentException("house not found:" + outsideContract.getHouseCode());
             }
             businessHouse = new BusinessHouse(house);
         }else {
@@ -226,8 +98,6 @@ public class OutsideBusinessCreate {
 
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
-
-
 
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
 
@@ -254,28 +124,74 @@ public class OutsideBusinessCreate {
             component.fillData();
         }
 
-        saleInfo.setBusinessHouse(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse());
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleInfo(saleInfo);
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleInfo(new SaleInfo(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse(),outsideContract.getSalePayType(),outsideContract.getPrice(),ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()));
 
-        businessPersion.setOwnerBusiness(ownerBusinessHome.getInstance());
+        BusinessPersion businessPersion = new BusinessPersion(ownerBusinessHome.getInstance(),BusinessPersion.PersionType.PRE_SALE_ENTRUST);
+        businessPersion.setPersonName(outsideContract.getSaleProxyPerson().getPersonName());
+        businessPersion.setCredentialsType(outsideContract.getSaleProxyPerson().getCredentialsType());
+        businessPersion.setCredentialsNumber(outsideContract.getSaleProxyPerson().getCredentialsNumber());
+        businessPersion.setPhone(outsideContract.getSaleProxyPerson().getTel());
         ownerBusinessHome.getInstance().getBusinessPersions().add(businessPersion);
 
-        contractOwner.setOwnerBusiness(ownerBusinessHome.getInstance());
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(contractOwner);
+        ownerBusinessHome.getInstance().getBusinessPersions().add(businessPersion);
 
+        ContractSubmit contractSubmit = new ContractSubmit(outsideContract.getAttachEmpId(),outsideContract.getAttachEmpName(),outsideContract.getContext(),outsideContract.getContractVersion());
+        HouseContract houseContract = new HouseContract(outsideContract.getId(),
+                outsideContract.getType(),
+                outsideContract.getCreateTime(),
+                outsideContract.getNewHouseContract().getProjectCerNumber(),
+                ownerBusinessHome.getSingleHoues(),contractSubmit);
+        contractSubmit.setHouseContract(houseContract);
 
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
-        ownerBusinessHome.getInstance().getContractOwners().clear();
-        ownerBusinessHome.getInstance().getContractOwners().add(contractOwner);
-        if (businessPools != null){
-            for (PowerPerson bp : businessPools) {
-                bp.setOwnerBusiness(ownerBusinessHome.getInstance());
+        for(cc.coopersoft.house.sale.data.ContractNumber cn : outsideContract.getContractNumbers()){
+            ContractNumber contractNumber = ownerBusinessHome.getEntityManager().find(ContractNumber.class, cn.getContractNumber());
+            if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
+
+                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR.name();
+            }else{
+                contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
+                contractNumber.setContractSubmit(contractSubmit);
+                contractSubmit.getContractNumbers().add(contractNumber);
             }
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getBusinessPools().addAll(businessPools);
         }
 
+        ownerBusinessHome.getSingleHoues().setHouseContract(houseContract);
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
 
 
+        int i = 0;
+        for(cc.coopersoft.house.sale.data.PowerPerson pp: outsideContract.getBusinessPoolList()){
+            if (BUYER.equals( pp.getContractPersonType())) {
+                PowerPerson contractOwner = new PowerPerson(PowerPerson.PowerPersonType.CONTRACT, false);
+                ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().add(contractOwner);
+                if (i == 0) {
+                    ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setMainOwner(contractOwner);
+                }
+
+                contractOwner.setPersonName(pp.getPersonName());
+                contractOwner.setCredentialsType(pp.getCredentialsType());
+                contractOwner.setCredentialsNumber(pp.getCredentialsNumber());
+                contractOwner.setRelation(pp.getRelation());
+                contractOwner.setPoolArea(pp.getPoolArea());
+                contractOwner.setPoolPerc(pp.getPoolPerc());
+                contractOwner.setLegalPerson(pp.getLegalPerson());
+                contractOwner.setLegalType(pp.getLegalType());
+                contractOwner.setPhone(pp.getPhone());
+                contractOwner.setRootAddress(pp.getRootAddress());
+                contractOwner.setAddress(pp.getAddress());
+                contractOwner.setBirthday(pp.getBirthday());
+                contractOwner.setSex(pp.getSex());
+                contractOwner.setPriority(i++);
+                if (pp.getPowerProxyPerson() != null) {
+                    contractOwner.setProxyPerson(new ProxyPerson());
+                    contractOwner.getProxyPerson().setProxyType(pp.getPowerProxyPerson().getProxyType());
+                    contractOwner.getProxyPerson().setPersonName(pp.getPowerProxyPerson().getPersonName());
+                    contractOwner.getProxyPerson().setCredentialsType(pp.getPowerProxyPerson().getCredentialsType());
+                    contractOwner.getProxyPerson().setCredentialsNumber(pp.getPowerProxyPerson().getCredentialsNumber());
+                    contractOwner.getProxyPerson().setPhone(pp.getPowerProxyPerson().getPhone());
+                }
+            }
+        }
 
 
         if (businessDefineHome.isSubscribesPass() && businessDefineHome.isCompletePass()) {
@@ -310,57 +226,57 @@ public class OutsideBusinessCreate {
 
 
     //建立旧的网签业务
-    @Transactional
-    public void createOldContract(LockedHouse lh,ContractOwner co){
-
-            House house = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.id = :hid",House.class).setParameter("hid",lh.getHouseCode()).getSingleResult();
-
-            businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
-            businessDefineHome.setId(businessDefineId);
-
-
-
-            ownerBusinessHome.clearInstance();
-            ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
-            ownerBusinessHome.getInstance().setDefineId(businessDefineId);
-            ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-            ownerBusinessHome.getInstance().setApplyTime(co.getContractDate());
-            ownerBusinessHome.getInstance().setRecorded(false);
-            ownerBusinessHome.getInstance().getContractOwners().add(co);
-            co.setOwnerBusiness(ownerBusinessHome.getInstance());
-
-
-            BusinessHouse businessHouse = new BusinessHouse(house);
-
-            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
-
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(co);
-
-
-            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
-
-
-
-            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
-            String ownerBusinessId = ownerBusinessHome.getInstance().getId();
-            ownerBusinessHome.getEntityManager().remove(lh);
-
-            for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
-                component.fillData();
-            }
-
-            businessDefineHome.completeTask();
-
-            if (!"persisted".equals(ownerBusinessHome.persist())){
-                throw new IllegalArgumentException("persited ownerBusiness fail");
-            }
-            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(),ownerBusinessId);
-
-            Logging.getLog(getClass()).debug("crete business:" + ownerBusinessHome.getInstance().getId() + "by:" + lh.getId());
-
-
-
-
-    }
+//    @Transactional
+//    public void createOldContract(LockedHouse lh,ContractOwner co){
+//
+//            House house = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.id = :hid",House.class).setParameter("hid",lh.getHouseCode()).getSingleResult();
+//
+//            businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
+//            businessDefineHome.setId(businessDefineId);
+//
+//
+//
+//            ownerBusinessHome.clearInstance();
+//            ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
+//            ownerBusinessHome.getInstance().setDefineId(businessDefineId);
+//            ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
+//            ownerBusinessHome.getInstance().setApplyTime(co.getContractDate());
+//            ownerBusinessHome.getInstance().setRecorded(false);
+//            ownerBusinessHome.getInstance().getContractOwners().add(co);
+//            co.setOwnerBusiness(ownerBusinessHome.getInstance());
+//
+//
+//            BusinessHouse businessHouse = new BusinessHouse(house);
+//
+//            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
+//
+//            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(co);
+//
+//
+//            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
+//
+//
+//
+//            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
+//            String ownerBusinessId = ownerBusinessHome.getInstance().getId();
+//            ownerBusinessHome.getEntityManager().remove(lh);
+//
+//            for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
+//                component.fillData();
+//            }
+//
+//            businessDefineHome.completeTask();
+//
+//            if (!"persisted".equals(ownerBusinessHome.persist())){
+//                throw new IllegalArgumentException("persited ownerBusiness fail");
+//            }
+//            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(),ownerBusinessId);
+//
+//            Logging.getLog(getClass()).debug("crete business:" + ownerBusinessHome.getInstance().getId() + "by:" + lh.getId());
+//
+//
+//
+//
+//    }
 
 }

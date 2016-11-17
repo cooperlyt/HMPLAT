@@ -1,8 +1,6 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.owner.OwnerEntityLoader;
-import com.dgsoft.house.owner.model.ContractOwner;
-import javassist.bytecode.stackmap.BasicBlock;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
@@ -10,7 +8,6 @@ import org.jboss.seam.international.StatusMessage;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
-import java.util.List;
 
 /**
  * Created by wxy on 2015-09-15.

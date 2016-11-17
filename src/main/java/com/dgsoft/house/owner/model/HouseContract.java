@@ -24,30 +24,24 @@ public class HouseContract implements java.io.Serializable {
 
 	private String id;
 
-	private String attachEmpId;
-	private String attachEmpName;
-	private String contractText;
-	private int contractVersion;
-
-
-	private Set<ContractNumber> contractNumbers = new HashSet<ContractNumber>(0);
-
-
 	private String contractNumber;
 	private SaleType type;
 	private Date contractDate;
-	private String houseCode;
+	private String projectSaleCerNumber;
 
 	private HouseBusiness houseBusiness;
+	private ContractSubmit contractSubmit;
 
 	public HouseContract() {
 	}
 
-	public HouseContract(String attachEmpId, String attachEmpName, String contractText, int contractVersion) {
-		this.attachEmpId = attachEmpId;
-		this.attachEmpName = attachEmpName;
-		this.contractText = contractText;
-		this.contractVersion = contractVersion;
+	public HouseContract(String contractNumber, SaleType type, Date contractDate,String projectSaleCerNumber, HouseBusiness houseBusiness, ContractSubmit contractSubmit) {
+		this.contractNumber = contractNumber;
+		this.type = type;
+		this.contractDate = contractDate;
+		this.houseBusiness = houseBusiness;
+		this.contractSubmit = contractSubmit;
+		this.projectSaleCerNumber = projectSaleCerNumber;
 	}
 
 	@Id
@@ -66,58 +60,6 @@ public class HouseContract implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "ATTACH_EMP_ID", nullable = false, length = 32)
-	@NotNull
-	@Size(max = 32)
-	public String getAttachEmpId() {
-		return attachEmpId;
-	}
-
-	public void setAttachEmpId(String attachEmpId) {
-		this.attachEmpId = attachEmpId;
-	}
-
-
-	@Column(name = "ATTACH_EMP_NAME", nullable = false, length = 50)
-	@NotNull
-	@Size(max = 50)
-	public String getAttachEmpName() {
-		return attachEmpName;
-	}
-
-	public void setAttachEmpName(String attachEmpName) {
-		this.attachEmpName = attachEmpName;
-	}
-
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "CONTRACT", columnDefinition = "LONGTEXT")
-	public String getContractText() {
-		return contractText;
-	}
-
-	public void setContractText(String contractText) {
-		this.contractText = contractText;
-	}
-
-	@Column(name = "CONTRACT_VERSION",nullable = false)
-	public int getContractVersion() {
-		return contractVersion;
-	}
-
-	public void setContractVersion(int contractVersion) {
-		this.contractVersion = contractVersion;
-	}
-
-
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "houseContract",cascade = CascadeType.ALL)
-	public Set<ContractNumber> getContractNumbers() {
-		return contractNumbers;
-	}
-
-	public void setContractNumbers(Set<ContractNumber> contractNumbers) {
-		this.contractNumbers = contractNumbers;
-	}
 
 
 	@Enumerated(EnumType.STRING)
@@ -143,16 +85,6 @@ public class HouseContract implements java.io.Serializable {
 		this.contractDate = contractDate;
 	}
 
-	@Column(name = "HOUSE_CODE", length = 32, nullable = false)
-	@NotNull
-	@Size(max = 32)
-	public String getHouseCode() {
-		return houseCode;
-	}
-
-	public void setHouseCode(String houseCode) {
-		this.houseCode = houseCode;
-	}
 
 	@OneToOne(fetch = FetchType.LAZY,optional = false)
 	@JoinColumn(name = "BUSINESS",nullable = false)
@@ -173,5 +105,25 @@ public class HouseContract implements java.io.Serializable {
 
 	public void setContractNumber(String contractNumber) {
 		this.contractNumber = contractNumber;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	public ContractSubmit getContractSubmit() {
+		return contractSubmit;
+	}
+
+	public void setContractSubmit(ContractSubmit contractSubmit) {
+		this.contractSubmit = contractSubmit;
+	}
+
+	@Column(name = "PROJECT_RSHIP_NUMBER", length = 50)
+	@Size(max = 50)
+	public String getProjectSaleCerNumber() {
+		return projectSaleCerNumber;
+	}
+
+	public void setProjectSaleCerNumber(String projectSaleCerNumber) {
+		this.projectSaleCerNumber = projectSaleCerNumber;
 	}
 }

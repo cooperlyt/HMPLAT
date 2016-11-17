@@ -6,9 +6,7 @@ import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.Financial;
-import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -18,7 +16,6 @@ import org.jboss.seam.log.Logging;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -158,17 +155,6 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
             personInstance = new PersonHelper<Financial>(getInstance());
         }
         return personInstance;
-    }
-
-
-
-    private PersonHelper<BusinessHouseOwner> personMortgageInstance;
-
-    public PersonHelper<BusinessHouseOwner> getPersonMortgageInstance() {
-        if (personInstance == null){
-            personMortgageInstance = new PersonHelper<BusinessHouseOwner>(mortgaegeRegiste.getBusinessHouseOwner());
-        }
-        return personMortgageInstance;
     }
 
 

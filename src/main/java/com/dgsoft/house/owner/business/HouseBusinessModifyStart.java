@@ -342,31 +342,13 @@ public class HouseBusinessModifyStart {
                 result.getAfterBusinessHouse().setLandInfo(null);
             }
 
-
-            for (PowerPerson pool : houseBusiness.getAfterBusinessHouse().getBusinessPools()) {
-                if (pool.getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {
-                    result.getAfterBusinessHouse().getBusinessPools().add(new PowerPerson(ownerBusiness, pool));
-                } //else {
-                  //  result.getAfterBusinessHouse().getBusinessPools().add(pool);
-                //}
+            for(PowerPerson powerPerson: houseBusiness.getAfterBusinessHouse().getPowerPersons()){
+                result.getAfterBusinessHouse().addPowerPerson(new PowerPerson(powerPerson.getType(),powerPerson.isOld(),powerPerson));
             }
+
+
             result.getAfterBusinessHouse().setPoolType(houseBusiness.getAfterBusinessHouse().getPoolType());
 
-            if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner() != null) {
-
-                if (houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner().getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())) {
-                    result.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusiness, houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner()));
-                } //else {
-                  //  result.getAfterBusinessHouse().setBusinessHouseOwner(houseBusiness.getAfterBusinessHouse().getBusinessHouseOwner());
-                //}
-            }
-
-            if (houseBusiness.getAfterBusinessHouse().getContractOwner() != null) {
-                if (houseBusiness.getAfterBusinessHouse().getContractOwner().getOwnerBusiness().getId().equals(houseBusiness.getOwnerBusiness().getId())){
-                    result.getAfterBusinessHouse().setContractOwner(new ContractOwner(ownerBusiness,houseBusiness.getAfterBusinessHouse().getContractOwner()));
-                }
-
-            }
 
 
             return result;

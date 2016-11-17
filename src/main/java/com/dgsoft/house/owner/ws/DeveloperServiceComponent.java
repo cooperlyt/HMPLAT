@@ -333,7 +333,7 @@ public class DeveloperServiceComponent {
         boolean locked = ownerEntityManager.createQuery("select count(l.id) from LockedHouse l where l.houseCode = :houseCode", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
-        boolean sale = ownerEntityManager.createQuery("select count(c.id) from ContractOwner c where c.houseCode = :houseCode and (c.ownerBusiness.status = 'RUNNING' or c.ownerBusiness.status = 'SUSPEND')", Long.class)
+        boolean sale = ownerEntityManager.createQuery("select count(c.id) from HouseContract hc left join hc.houseBusiness c where c.houseCode = :houseCode and (c.ownerBusiness.status = 'RUNNING' or c.ownerBusiness.status = 'SUSPEND')", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
         boolean inBiz = ownerEntityManager.createQuery("select count(b.id) from HouseBusiness b where b.houseCode = :houseCode and (b.ownerBusiness.status = 'RUNNING' or b.ownerBusiness.status = 'SUSPEND')", Long.class)
@@ -365,7 +365,20 @@ public class DeveloperServiceComponent {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("type", mortgaegeRegiste.getOwnerBusiness().getDefineName());
 
-                jsonObject.put("ownerPersonName", mortgaegeRegiste.getBusinessHouseOwner().getPersonName());
+                String personName = "";
+                if (mortgaegeRegiste.getProjectMortgage() != null){
+                    personName = mortgaegeRegiste.getProjectMortgage().getDeveloperName();
+                }else{
+
+                    for(HouseBusiness houseBusiness : mortgaegeRegiste.getOwnerBusiness().getHouseBusinesses()){
+                        for(PowerPerson powerPerson: houseBusiness.getAfterBusinessHouse().getMainOwnerPersonList()){
+                           if (!"".equals(personName)){
+                               personName += powerPerson.getPersonName();
+                           }
+                        }
+                    }
+                }
+                jsonObject.put("ownerPersonName", personName);
 
                 jsonObject.put("pledgePersonName", mortgaegeRegiste.getFinancial().getName());
 
@@ -411,8 +424,7 @@ public class DeveloperServiceComponent {
                 houseStatusMap.put(houseRecord.getHouseCode(), houseRecord.getHouseStatus());
             }
         }
-
-        List<String> contractHouseIds = ownerEntityManager.createQuery("select contractOwner.houseCode from ContractOwner contractOwner where contractOwner.ownerBusiness.status = 'RUNNING' and contractOwner.houseCode in (:houseCodes)", String.class)
+        List<String> contractHouseIds = ownerEntityManager.createQuery("select hc.houseBusiness.houseCode from HouseContract hc where hc.houseBusiness.ownerBusiness.status = 'RUNNING' and hc.houseBusiness.houseCode in (:houseCodes)", String.class)
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
 
@@ -482,23 +494,22 @@ public class DeveloperServiceComponent {
             saleType = (allStatus.contains(HouseStatus.INIT_REG_CONFIRM) || allStatus.contains(HouseStatus.INIT_REG)) ? SaleType.NOW_SELL : SaleType.MAP_SELL;
 
         }
-
-        if (!saleType.equals( SaleType.MAP_SELL) && houseRecord != null && houseRecord.getBusinessHouse().getBusinessHouseOwner() != null && houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard() != null){
-            houseJsonObj.put("ownerCardNumber",houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber());
-        }
+//备案证号
+//        if (!saleType.equals( SaleType.MAP_SELL) && houseRecord != null && houseRecord.getBusinessHouse().getBusinessHouseOwner() != null && houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard() != null){
+//            houseJsonObj.put("ownerCardNumber",houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber());
+//        }
 
         Date landEndTime = businessBuild.getBusinessProject().getProjectSellInfo().getEndUseTime();
-        Word useType = DictionaryWord.instance().getWord(house.getUseType());
 
-        if (useType != null){
+
             for(ProjectLandEndTime endTime: businessBuild.getBusinessProject().getProjectSellInfo().getProjectLandEndTimes()){
-                if (endTime.getUseTypeCategory().equals(useType.getKey())){
+                if (endTime.getUseTypeCategory().equals(house.getUseType())){
                     landEndTime = endTime.getEndTime();
                     break;
                 }
             }
 
-        }
+
         houseJsonObj.put("landEndUseTime",landEndTime.getTime());
 
 
@@ -535,7 +546,7 @@ public class DeveloperServiceComponent {
         if (house.getCommParam() != null)
             houseJsonObj.put("commParam", house.getCommParam().toString());
         houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
-        houseJsonObj.put("useType", DictionaryWord.instance().getWordValue(house.getUseType()));
+        houseJsonObj.put("useType", house.getDesignUseType());
         houseJsonObj.put("structure", DictionaryWord.instance().getWordValue(house.getStructure()));
         houseJsonObj.put("knotSize", DictionaryWord.instance().getWordValue(house.getKnotSize()));
         houseJsonObj.put("address", house.getAddress());

@@ -136,6 +136,7 @@
         <class>com.dgsoft.house.owner.model.SubStatus</class>
         <class>com.dgsoft.house.owner.model.SaleShowCheck</class>
         <class>com.dgsoft.house.owner.model.ProxyPerson</class>
+        <class>com.dgsoft.house.owner.model.ContractSubmit</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

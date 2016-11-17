@@ -156,8 +156,8 @@ public class ProjectSellInfo implements java.io.Serializable {
 
 
 
-	@Column(name = "USE_TYPE", length = 32)
-	@Size(max = 32)
+	@Column(name = "USE_TYPE", length = 512)
+    @Size(max = 512)
 	public String getUseType() {
 		return this.useType;
 	}

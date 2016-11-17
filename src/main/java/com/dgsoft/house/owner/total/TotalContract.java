@@ -1,18 +1,10 @@
 package com.dgsoft.house.owner.total;
 
 import com.dgsoft.common.system.DictionaryWord;
-import com.dgsoft.common.system.SystemEntityLoader;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.model.Word;
-import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.SaleType;
-import com.dgsoft.house.model.Project;
-import com.dgsoft.house.model.Section;
 import com.dgsoft.house.owner.OwnerEntityLoader;
-import com.dgsoft.house.owner.model.BusinessEmp;
-import com.dgsoft.house.owner.model.ContractOwner;
-import com.dgsoft.house.owner.model.OwnerBusiness;
-import com.dgsoft.house.owner.total.data.BusinessTotalData;
 import com.dgsoft.house.owner.total.data.TotalContractData;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,13 +19,10 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
-import sun.swing.SwingUtilities2;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**

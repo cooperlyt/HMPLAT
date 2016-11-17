@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business;
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.common.BatchOperData;
 import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.AuthenticationInfo;
@@ -562,14 +563,14 @@ public class ProjectBusinessStart {
                         if (block.getHouse() != null) {
                             if (block.isLocked()) {
                                 if ((block.getHouse().getHouseType() == null) || "".equals(block.getHouse().getHouseType().trim())) {
-                                    UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
+                                    //UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
                                     businessBuild.setHouseCount(businessBuild.getHouseCount() + 1);
                                     businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
 
-                                    if (useType.isDwelling()) {
+                                    if (UseType.DWELLING_KEY.equals(block.getHouse().getUseType())) {
                                         businessBuild.setHomeCount(businessBuild.getHomeCount() + 1);
                                         businessBuild.setHomeArea(businessBuild.getHomeArea().add(block.getHouse().getHouseArea()));
-                                    } else if (useType.isShopHouse()) {
+                                    } else if (UseType.SHOP_HOUSE_KEY.equals(block.getHouse().getUseType())) {
                                         businessBuild.setShopCount(businessBuild.getShopCount() + 1);
                                         businessBuild.setShopArea(businessBuild.getShopArea().add(block.getHouse().getHouseArea()));
                                     } else {

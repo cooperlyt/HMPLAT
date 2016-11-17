@@ -356,11 +356,11 @@ public class BuildHome extends HouseEntityHome<Build> {
     public Map<Word, CountAreaEntry> getUseTypeTotalMap() {
         Map<Word, CountAreaEntry> result = new HashMap<Word, CountAreaEntry>();
         for (House house : getInstance().getHouses()) {
-            CountAreaEntry entry = result.get(DictionaryWord.instance().getWord(house.getUseType()));
+            CountAreaEntry entry = result.get(house.getDesignUseType());
             if (entry != null) {
                 entry.addArea(house.getHouseArea(), house.getUseArea());
             } else {
-                result.put(DictionaryWord.instance().getWord(house.getUseType()),
+                result.put(DictionaryWord.instance().getWord(house.getDesignUseType()),
                         new CountAreaEntry(house.getHouseArea(), house.getUseArea()));
             }
         }

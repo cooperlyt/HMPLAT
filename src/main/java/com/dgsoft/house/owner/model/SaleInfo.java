@@ -43,9 +43,26 @@ public class SaleInfo implements java.io.Serializable {
 	public SaleInfo(SalePayType payType, BigDecimal sumPrice) {
 		this.payType = payType;
 		this.sumPrice = sumPrice;
-
 	}
-    public SaleInfo(SalePayType payType, BigDecimal sumPrice,BigDecimal giftArea,BigDecimal superviseMoney) {
+
+    public SaleInfo(BusinessHouse businessHouse, SalePayType payType, BigDecimal sumPrice, BigDecimal saleArea, BigDecimal giftArea) {
+        this.businessHouse = businessHouse;
+        this.payType = payType;
+        this.sumPrice = sumPrice;
+        this.saleArea = saleArea;
+        this.giftArea = giftArea;
+    }
+
+    public SaleInfo(BusinessHouse businessHouse, SalePayType payType, BigDecimal sumPrice,BigDecimal area) {
+        this.businessHouse = businessHouse;
+        this.payType = payType;
+        this.sumPrice = sumPrice;
+        this.giftArea = BigDecimal.ZERO;
+        this.saleArea = area;
+
+    }
+
+    public SaleInfo(SalePayType payType, BigDecimal sumPrice, BigDecimal giftArea, BigDecimal superviseMoney) {
         this.payType = payType;
         this.sumPrice = sumPrice;
         this.giftArea=giftArea;

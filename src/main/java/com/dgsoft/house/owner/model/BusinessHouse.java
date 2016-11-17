@@ -172,7 +172,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.designUseType = designUseType;
     }
 
-    @Column(name = "DESIGN_USE_TYPE", length = 32)
+    @Column(name = "UNIT_NUMBER", length = 32)
     @Size(max = 32)
     public String getUnitNumber() {
         return unitNumber;
@@ -352,9 +352,9 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.houseType = houseType;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "USE_TYPE", nullable = false, length = 32)
     @NotNull
-    @Size(max = 32)
     public UseType getUseType() {
         return this.useType;
     }
@@ -837,6 +837,21 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     @Transient
     public PowerPerson getMainContractPerson(){
         List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.CONTRACT,false);
+        if (result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
+    @Transient
+    public List<PowerPerson> getMainOwnerPersonList(){
+        return getPowerPersonListByType(PowerPerson.PowerPersonType.OWNER,false);
+    }
+
+    @Transient
+    public PowerPerson getMainOwnerPerson(){
+        List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.OWNER,false);
         if (result.isEmpty()){
             return null;
         }else{

@@ -42,7 +42,12 @@ public class BusinessPersion implements java.io.Serializable,PersonEntity{
         this.type = type;
 	}
 
-    public BusinessPersion(OwnerBusiness ownerBusiness, BusinessPersion businessPersion) {
+	public BusinessPersion(OwnerBusiness ownerBusiness, PersionType type) {
+		this.ownerBusiness = ownerBusiness;
+		this.type = type;
+	}
+
+	public BusinessPersion(OwnerBusiness ownerBusiness, BusinessPersion businessPersion) {
         Logging.getLog(getClass()).debug(ownerBusiness.getId());
         this.ownerBusiness = ownerBusiness;
         this.credentialsNumber = businessPersion.getCredentialsNumber();

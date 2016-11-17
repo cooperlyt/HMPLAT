@@ -584,7 +584,7 @@ public class House implements java.io.Serializable, HouseInfo {
         this.designUseType = designUseType;
     }
 
-    @Column(name = "DESIGN_USE_TYPE", length = 32)
+    @Column(name = "UNIT_NUMBER", length = 32)
     @Size(max = 32)
     public String getUnitNumber() {
         return unitNumber;

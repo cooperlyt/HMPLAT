@@ -6,16 +6,12 @@ import com.dgsoft.house.model.BuildGridMap;
 import com.dgsoft.house.model.GridBlock;
 import com.dgsoft.house.model.GridRow;
 import com.dgsoft.house.model.House;
-import com.dgsoft.house.owner.HouseInfoCompare;
 import com.dgsoft.house.owner.OwnerEntityLoader;
-import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseRecord;
-import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
 import java.util.*;
@@ -320,8 +316,8 @@ public class BuildGridMapHouseSelect {
                         //block.setLocked(lockedHouseCode.contains(house.getHouseCode()));
                         HouseRecord houseRecord =  businessHouseMap.get(house.getHouseCode());
                         if (houseRecord != null) {
-                            if (houseRecord.getBusinessHouse().getBusinessHouseOwner()!=null)
-                                block.setOwnerName(houseRecord.getBusinessHouse().getBusinessHouseOwner().getPersonName());
+                            if (houseRecord.getBusinessHouse().getMainOwner()!=null)
+                                block.setOwnerName(houseRecord.getBusinessHouse().getMainOwner().getPersonName());
                             block.setHouseStatus(houseRecord.getHouseStatus());
                         }
                         houseMap.remove(house.getHouseCode());
@@ -345,8 +341,8 @@ public class BuildGridMapHouseSelect {
 
                         HouseRecord houseRecord =  businessHouseMap.get(block.getHouseCode());
                         if (houseRecord != null) {
-                            if (houseRecord.getBusinessHouse().getBusinessHouseOwner() != null)
-                                block.setOwnerName(houseRecord.getBusinessHouse().getBusinessHouseOwner().getPersonName());
+                            if (houseRecord.getBusinessHouse().getMainOwner() != null)
+                                block.setOwnerName(houseRecord.getBusinessHouse().getMainOwner().getPersonName());
                             block.setHouseStatus(houseRecord.getHouseStatus());
                         }
                     }

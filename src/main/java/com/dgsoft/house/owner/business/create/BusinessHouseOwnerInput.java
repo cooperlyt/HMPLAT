@@ -3,8 +3,8 @@ package com.dgsoft.house.owner.business.create;
 import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.HouseBusiness;
+import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -23,8 +23,8 @@ public class BusinessHouseOwnerInput implements BusinessDataFill {
     public void fillData() {
         if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)){
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                if (houseBusiness.getStartBusinessHouse().getBusinessHouseOwner()!= null) {
-                    houseBusiness.getAfterBusinessHouse().setBusinessHouseOwner(new BusinessHouseOwner(ownerBusinessHome.getInstance(), houseBusiness.getStartBusinessHouse().getBusinessHouseOwner()));
+                if (houseBusiness.getStartBusinessHouse().getMainOwnerPerson()!= null) {
+                    houseBusiness.getAfterBusinessHouse().addPowerPerson(new PowerPerson(PowerPerson.PowerPersonType.OWNER,false, houseBusiness.getStartBusinessHouse().getMainOwnerPerson()));
                 }
             }
         }

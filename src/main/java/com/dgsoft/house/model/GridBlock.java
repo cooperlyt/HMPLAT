@@ -71,10 +71,11 @@ public class GridBlock implements java.io.Serializable {
     public GridBlock(String id, GridRow gridRow, int order, int colspan,
                      int rowspan, int unitIndex, String unitName, BigDecimal area,
                      BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
-                     BigDecimal loftArea, BigDecimal commParam, UseType useType,
+                     BigDecimal loftArea, BigDecimal commParam, UseType useType,String designUseType,
                      String structure, String houseType, String houseOrder,
                      String direction, String eastWall, String westWall,
                      String southWall, String northWall, String knotSize,boolean haveDownRoom,String floorName) {
+        this.designUseType = designUseType;
         this.gridRow = gridRow;
         this.order = order;
         this.colspan = colspan;

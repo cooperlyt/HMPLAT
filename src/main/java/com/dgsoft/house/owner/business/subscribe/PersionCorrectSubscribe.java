@@ -1,12 +1,12 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.house.owner.model.BusinessHouseOwner;
 import com.dgsoft.house.owner.model.BusinessPersion;
+import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2015-08-16.
- * 申请人
+ * 产权人转申请人
  */
 @Name("persionCorrectSubscribe")
 public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
@@ -22,7 +22,7 @@ public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
             clearInstance();
 
             //if (ownerBusinessHome.getInstance().getHouseBusinesses().size()==1){
-                BusinessHouseOwner businessHouseOwner = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getBusinessHouseOwner();
+                PowerPerson businessHouseOwner = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getMainOwnerPerson();
                 if (businessHouseOwner !=null){
                     getInstance().setCredentialsType(businessHouseOwner.getCredentialsType());
                     getInstance().setCredentialsNumber(businessHouseOwner.getCredentialsNumber());

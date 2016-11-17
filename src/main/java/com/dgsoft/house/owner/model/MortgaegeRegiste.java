@@ -32,8 +32,7 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
     private Financial financial;
 	private String orgName;
 	private TimeArea.TimeShowType timeShowType;
-
-
+	private ProjectMortgage projectMortgage;
 
 
 	public MortgaegeRegiste() {
@@ -203,6 +202,15 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 		this.orgName = orgName;
 	}
 
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	public ProjectMortgage getProjectMortgage() {
+		return projectMortgage;
+	}
+
+	public void setProjectMortgage(ProjectMortgage projectMortgage) {
+		this.projectMortgage = projectMortgage;
+	}
 
 	@Override
 	@Enumerated(EnumType.STRING)
@@ -246,5 +254,8 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 	public TimeAreaHelper getTimeArea(){
 		return new TimeAreaHelper(this);
 	}
+
+
+
 
 }

@@ -30,7 +30,7 @@ public class ContractNumber implements java.io.Serializable{
     private String groupNumber;
     private String groupName;
 
-    private HouseContract houseContract;
+    private ContractSubmit contractSubmit;
 
     public ContractNumber() {
     }
@@ -78,14 +78,15 @@ public class ContractNumber implements java.io.Serializable{
         this.version = version;
     }
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT", nullable = true)
-    public HouseContract getHouseContract() {
-        return houseContract;
+    public ContractSubmit getContractSubmit() {
+        return contractSubmit;
     }
 
-    public void setHouseContract(HouseContract houseContract) {
-        this.houseContract = houseContract;
+    public void setContractSubmit(ContractSubmit contractSubmit) {
+        this.contractSubmit = contractSubmit;
     }
 
     @Enumerated(EnumType.STRING)

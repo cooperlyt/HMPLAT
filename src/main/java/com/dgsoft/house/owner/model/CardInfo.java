@@ -66,7 +66,6 @@ public class CardInfo  implements Serializable  {
             strategy = "foreign",
             parameters = { @Parameter(name = "property", value = "makeCard") })
     @GeneratedValue(generator = "pkGenerator")
-
     public String getId() {
         return this.id;
     }

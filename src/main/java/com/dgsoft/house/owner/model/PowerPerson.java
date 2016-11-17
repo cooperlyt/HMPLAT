@@ -58,7 +58,6 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
     private BigDecimal poolPerc;
 
     private String legalPerson;
-    private HouseContract houseContract;
     private LegalType legalType;
 
     private String phone;
@@ -67,7 +66,6 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
 
     private Date birthday;
     private Sex sex;
-    private String postCode;
 
     private int pri;
 
@@ -88,7 +86,9 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
         this.old = old;
     }
 
-    public PowerPerson(PowerPerson pool){
+    public PowerPerson(PowerPersonType type, boolean old ,PowerPerson pool){
+        this.type = type;
+        this.old = old;
         this.personName = pool.getPersonName();
         this.credentialsNumber = pool.getCredentialsNumber();
         this.credentialsType = pool.getCredentialsType();
@@ -98,6 +98,11 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
         this.phone = pool.getPhone();
         this.makeCard = pool.getMakeCard();
         this.legalPerson = pool.getLegalPerson();
+        this.legalType = pool.getLegalType();
+        this.rootAddress = pool.getRootAddress();
+        this.address = pool.getAddress();
+        this.birthday = pool.getBirthday();
+        this.sex = pool.getSex();
     }
 
     public PowerPerson(String personName, CredentialsType credentialsType,
@@ -217,16 +222,6 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
         this.legalPerson = legalPerson;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "CONTRACT", nullable = false)
-    @NotNull
-    public HouseContract getHouseContract() {
-        return houseContract;
-    }
-
-    public void setHouseContract(HouseContract houseContract) {
-        this.houseContract = houseContract;
-    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "LEGAL_TYPE",length = 20)
@@ -279,15 +274,6 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
         this.sex = sex;
     }
 
-    @Column(name = "POST_CODE",length = 9)
-    @Size(max = 9)
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
 
     @Column(name = "PRI", nullable = false)
     public int getPriority() {
