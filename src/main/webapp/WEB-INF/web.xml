@@ -4,7 +4,12 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>MINIERP</display-name>
+    <display-name>房产交易备案系统</display-name>
+
+    <servlet-mapping>
+        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <url-pattern>/interfaces/*</url-pattern>
+    </servlet-mapping>
 
     <!-- birt -->
 
@@ -390,6 +395,7 @@
     <filter-mapping>
         <filter-name>Seam Filter</filter-name>
         <url-pattern>/*</url-pattern>
+        <url-pattern>/interfaces/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -456,7 +462,6 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.seam</url-pattern>

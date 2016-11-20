@@ -1,5 +1,9 @@
 package com.dgsoft.house;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.jboss.seam.log.Logging;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +12,28 @@ import java.util.List;
  */
 public class DescriptionDisplay {
 
+    public static DescriptionDisplay instance(String data){
+        DescriptionDisplay descriptionDisplay;
+        if (data == null){
+            descriptionDisplay = new DescriptionDisplay();
+        }else {
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                descriptionDisplay = mapper.readValue(data,DescriptionDisplay.class);
+            } catch (IOException e) {
+                Logging.getLog(DescriptionDisplay.class).warn(data + " is not a json data!");
+                descriptionDisplay = new DescriptionDisplay();
+            }
+        }
+        return descriptionDisplay;
+    }
+
 
     public enum DisplayStyle{
         NORMAL
     }
 
-    private class DisplayData{
+    public static class DisplayData{
 
         public DisplayData() {
         }
@@ -43,9 +63,13 @@ public class DescriptionDisplay {
         }
     }
 
-    private class DataLine{
+    private static class DataLine{
 
         public DataLine() {
+        }
+
+        public DataLine(DisplayStyle displayStyle) {
+            this.displayStyle = displayStyle;
         }
 
         public DataLine(DisplayStyle displayStyle, List<DisplayData> displayDatas) {
@@ -82,4 +106,13 @@ public class DescriptionDisplay {
     public void setDataLines(List<DataLine> dataLines) {
         this.dataLines = dataLines;
     }
+
+    public boolean addLine(DisplayStyle lineStyle, DisplayData... data){
+        DataLine line = new DataLine(lineStyle);
+        for(DisplayData d: data){
+            line.getDisplayDatas().add(d);
+        }
+        return dataLines.add(line);
+    }
+
 }

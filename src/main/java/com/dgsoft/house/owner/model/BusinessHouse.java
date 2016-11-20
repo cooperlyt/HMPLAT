@@ -5,6 +5,7 @@ import cc.coopersoft.house.UseType;
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseProperty;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.PoolType;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
@@ -33,7 +34,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private String houseType;
+    private HouseProperty houseType;
     private UseType useType;
     private String structure;
     private String knotSize;
@@ -341,14 +342,13 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
 
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "HOUSE_TYPE", length = 32)
-    @Size(max = 32)
-    public String getHouseType() {
+    public HouseProperty getHouseType() {
         return this.houseType;
     }
 
-    public void setHouseType(String houseType) {
+    public void setHouseType(HouseProperty houseType) {
         this.houseType = houseType;
     }
 

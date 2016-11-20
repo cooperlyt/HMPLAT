@@ -1,7 +1,5 @@
 package com.dgsoft.house.owner.ws;
 
-import cc.coopersoft.house.sale.data.*;
-import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessDataFill;
@@ -10,9 +8,6 @@ import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.PoolType;
-import com.dgsoft.house.SalePayType;
-import com.dgsoft.house.SaleType;
 import com.dgsoft.house.model.DeveloperLogonKey;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -29,15 +24,9 @@ import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.log.Logging;
 import org.jbpm.graph.def.ProcessDefinition;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.BUYER;
 
@@ -147,7 +136,7 @@ public class OutsideBusinessCreate {
             ContractNumber contractNumber = ownerBusinessHome.getEntityManager().find(ContractNumber.class, cn.getContractNumber());
             if (contractNumber == null || !ContractNumber.ContractNumberStatus.OUT.equals(contractNumber.getStatus())){
 
-                return DeveloperSaleService.CommitResult.CONTRACT_NUMBER_ERROR.name();
+                throw new IllegalArgumentException("commit contract number error");
             }else{
                 contractNumber.setStatus(ContractNumber.ContractNumberStatus.USED);
                 contractNumber.setContractSubmit(contractSubmit);
@@ -194,7 +183,7 @@ public class OutsideBusinessCreate {
         }
 
 
-        if (businessDefineHome.isSubscribesPass() && businessDefineHome.isCompletePass()) {
+        if (businessDefineHome.isCompletePass()) {
             businessDefineHome.completeTask();
 
             ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
@@ -211,7 +200,7 @@ public class OutsideBusinessCreate {
             events.raiseTransactionSuccessEvent("com.dgsoft.BusinessCreated." + businessDefineHome.getInstance().getId());
 
 
-            return DeveloperSaleService.CommitResult.COMMIT_OK.name();
+            return ownerBusinessId;
         }
 
         throw new IllegalArgumentException("fail");

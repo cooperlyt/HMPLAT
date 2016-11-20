@@ -75,6 +75,7 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
             for(ViewSubscribe subscribe: group.getViewSubscribeList()){
                 TaskSubscribeReg.EditSubscribeDefine define =
                         taskSubscribeReg.getEditDefineByName(subscribe.getRegName());
+                log.debug(getTaskName() + " isSubscribesPass:" + define.getName());
                 if (define.isHaveComponent()) {
                     if (!define.getComponents().isPass()){
                         return false;

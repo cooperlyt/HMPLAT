@@ -5,10 +5,7 @@ import com.dgsoft.common.BatchOperData;
 import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.house.HouseEntityLoader;
-import com.dgsoft.house.HouseInfo;
-import com.dgsoft.house.HouseStatus;
-import com.dgsoft.house.UseTypeWordAdapter;
+import com.dgsoft.house.*;
 import com.dgsoft.house.action.BuildHome;
 import com.dgsoft.house.action.ProjectHome;
 import com.dgsoft.house.model.*;
@@ -562,7 +559,7 @@ public class ProjectBusinessStart {
 
                         if (block.getHouse() != null) {
                             if (block.isLocked()) {
-                                if ((block.getHouse().getHouseType() == null) || "".equals(block.getHouse().getHouseType().trim())) {
+                                if (HouseProperty.SALE_HOUSE.equals(block.getHouse().getHouseType())) {
                                     //UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
                                     businessBuild.setHouseCount(businessBuild.getHouseCount() + 1);
                                     businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));

@@ -237,7 +237,7 @@ public class BuildSaleInfoProvider implements RestDataProvider {
                         bo.put("useType",dictionary.getWordValue(house.getDesignUseType()));
                         bo.put("commArea",house.getCommArea().toString());
                         bo.put("commParam",house.getCommParam().toString());
-                        bo.put("houseProperty",dictionary.getWordValue(house.getHouseType()));
+                        bo.put("houseProperty",house.getHouseType().name());
                         bo.put("knotSize",dictionary.getWordValue(house.getKnotSize()));
                         bo.put("shineArea",(house.getShineArea() == null) ? null : house.getShineArea().toString());
                         bo.put("loftArea",(house.getLoftArea() == null) ? null : house.getLoftArea().toString());

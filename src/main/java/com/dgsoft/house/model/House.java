@@ -4,6 +4,7 @@ package com.dgsoft.house.model;
 import cc.coopersoft.house.UseType;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseProperty;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -97,7 +98,7 @@ public class House implements java.io.Serializable, HouseInfo {
     private BigDecimal shineArea;
     private BigDecimal loftArea;
     private BigDecimal commParam;
-    private String houseType;
+    private HouseProperty houseType;
     private UseType useType;
     private String structure;
     private String knotSize;
@@ -341,13 +342,13 @@ public class House implements java.io.Serializable, HouseInfo {
         return getHouseCode();
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "HOUSE_TYPE", length = 32)
-    @Size(max = 32)
-    public String getHouseType() {
+    public HouseProperty getHouseType() {
         return this.houseType;
     }
 
-    public void setHouseType(String houseType) {
+    public void setHouseType(HouseProperty houseType) {
         this.houseType = houseType;
     }
 

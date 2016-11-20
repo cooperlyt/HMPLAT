@@ -3,6 +3,7 @@ package com.dgsoft.house.model;
 
 import cc.coopersoft.house.UseType;
 import com.dgsoft.house.HouseInfo;
+import com.dgsoft.house.HouseProperty;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.model.LockedHouse;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,7 +39,7 @@ public class GridBlock implements java.io.Serializable {
     private BigDecimal commParam;
     private UseType useType;
     private String structure;
-    private String houseType;
+    private HouseProperty houseType;
     private String houseOrder;
     private String designUseType;
 
@@ -72,7 +73,7 @@ public class GridBlock implements java.io.Serializable {
                      int rowspan, int unitIndex, String unitName, BigDecimal area,
                      BigDecimal useArea, BigDecimal commArea, BigDecimal shineArea,
                      BigDecimal loftArea, BigDecimal commParam, UseType useType,String designUseType,
-                     String structure, String houseType, String houseOrder,
+                     String structure, HouseProperty houseType, String houseOrder,
                      String direction, String eastWall, String westWall,
                      String southWall, String northWall, String knotSize,boolean haveDownRoom,String floorName) {
         this.designUseType = designUseType;
@@ -248,13 +249,13 @@ public class GridBlock implements java.io.Serializable {
         this.structure = structure;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "HOUSE_TYPE", length = 32)
-    @Size(max = 32)
-    public String getHouseType() {
+    public HouseProperty getHouseType() {
         return houseType;
     }
 
-    public void setHouseType(String houseType) {
+    public void setHouseType(HouseProperty houseType) {
         this.houseType = houseType;
     }
 

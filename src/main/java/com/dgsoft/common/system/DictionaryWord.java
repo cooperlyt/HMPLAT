@@ -37,6 +37,9 @@ public class DictionaryWord {
 
    private Map<String, ProvinceCode> provinceMap;
 
+    @In(create = true)
+    private Map<String,String> messages;
+
     @Create
     @Transactional
     public void load() {
@@ -172,6 +175,10 @@ public class DictionaryWord {
         }else{
             return provinceCode.getName();
         }
+    }
+
+    public String getEnumLabel(Enum value){
+        return messages.get(value.getClass().getName() + "." + value.name());
     }
 
     public static DictionaryWord instance()

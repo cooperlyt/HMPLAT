@@ -1235,6 +1235,18 @@
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
+    <end-subscribe name="GenSearchKeyForNewOwner" component="houseBusinessOwnerKeyGen">
+        <description>
+            现权力人查询KEY生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="SaleContractDisplay" component="saleContractDisplayGen">
+        <description>
+            销售合同备案显示生成器
+        </description>
+    </end-subscribe>
+
 
     <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
         <description>

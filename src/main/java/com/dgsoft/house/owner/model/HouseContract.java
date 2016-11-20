@@ -48,10 +48,8 @@ public class HouseContract implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-	@GenericGenerator(name = "pkGenerator",
-			strategy = "foreign",
-			parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "contractOwner") })
-	@GeneratedValue(generator = "pkGenerator")
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
 	public String getId() {
 		return this.id;
 	}

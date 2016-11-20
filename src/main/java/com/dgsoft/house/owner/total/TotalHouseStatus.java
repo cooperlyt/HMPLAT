@@ -133,7 +133,7 @@ public class TotalHouseStatus {
 
 
             cell = row.createCell(cellIndex++);
-            cell.setCellValue(dictionary.getWordValue(houseInfo.getHouseType()));
+            cell.setCellValue(dictionary.getEnumLabel(houseInfo.getHouseType()));
 
 
             if (houseRecord != null) {

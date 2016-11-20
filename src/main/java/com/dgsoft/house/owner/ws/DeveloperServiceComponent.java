@@ -545,7 +545,7 @@ public class DeveloperServiceComponent {
             houseJsonObj.put("loftArea", house.getLoftArea().toString());
         if (house.getCommParam() != null)
             houseJsonObj.put("commParam", house.getCommParam().toString());
-        houseJsonObj.put("houseType", DictionaryWord.instance().getWordValue(house.getHouseType()));
+        houseJsonObj.put("houseType", house.getHouseType().name());
         houseJsonObj.put("useType", house.getDesignUseType());
         houseJsonObj.put("structure", DictionaryWord.instance().getWordValue(house.getStructure()));
         houseJsonObj.put("knotSize", DictionaryWord.instance().getWordValue(house.getKnotSize()));

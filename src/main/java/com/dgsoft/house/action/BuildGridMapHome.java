@@ -4,6 +4,7 @@ import cc.coopersoft.house.UseType;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
+import com.dgsoft.house.HouseProperty;
 import com.dgsoft.house.model.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -339,6 +340,9 @@ public class BuildGridMapHome implements DropListener {
             while (houseIterator.hasNext()) {
                 Element houseElement = houseIterator.next();
 
+                String useTypeStr = houseElement.attributeValue("UseType", "");
+                String houseProperty = houseElement.attributeValue("HouseType", "");
+
                 floor.getGridBlocks().add(new GridBlock(UUID.randomUUID().toString().replace("-", "").toUpperCase(), floor, j,
                         Integer.parseInt(houseElement.attributeValue("colSpan", "1")),
                         Integer.parseInt(houseElement.attributeValue("RowSpan", "1")),
@@ -350,9 +354,9 @@ public class BuildGridMapHome implements DropListener {
                         new BigDecimal(houseElement.attributeValue("ShineArea", "0")),
                         new BigDecimal(houseElement.attributeValue("LoftArea", "0")),
                         new BigDecimal(houseElement.attributeValue("CommParam", "0")),
-                        UseType.valueOf(houseElement.attributeValue("UseType", "")),houseElement.attributeValue("DesignUseType",""),
+                        (useTypeStr == null || "".equals(useTypeStr))? null : UseType.valueOf(useTypeStr),houseElement.attributeValue("DesignUseType",""),
                         houseElement.attributeValue("Structure", ""),
-                        houseElement.attributeValue("HouseType", ""),
+                        (useTypeStr == null || "".equals(useTypeStr)) ? null : HouseProperty.valueOf(houseProperty),
                         Boolean.parseBoolean(houseElement.attributeValue("IsDeleted", "false")) ? null :houseElement.attributeValue("Order", ""),
                         houseElement.attributeValue("Direction", ""),
                         houseElement.attributeValue("EastWall", ""),
@@ -692,7 +696,7 @@ public class BuildGridMapHome implements DropListener {
                     blockNode.addAttribute("Structure",(block.getHouse().getStructure() == null) ? "" : block.getHouse().getStructure());
                     blockNode.addAttribute("UseType",(block.getHouse().getUseType() == null) ? "" : block.getHouse().getUseType().name());
                     blockNode.addAttribute("DesignUseType",(block.getHouse().getDesignUseType() == null) ? "" : block.getHouse().getDesignUseType());
-                    blockNode.addAttribute("HouseType",(block.getHouse().getHouseType() == null) ? "" : block.getHouse().getHouseType());
+                    blockNode.addAttribute("HouseType",(block.getHouse().getHouseType() == null) ? "" : block.getHouse().getHouseType().name());
                     blockNode.addAttribute("Order",block.getHouse().getHouseOrder());
                     blockNode.addAttribute("KnotSize",(block.getHouse().getKnotSize() == null) ? "" : block.getHouse().getKnotSize());
                     blockNode.addAttribute("Direction",(block.getHouse().getDirection() == null) ? "" : block.getHouse().getDirection());
