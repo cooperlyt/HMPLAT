@@ -22,7 +22,7 @@ public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
             clearInstance();
 
             //if (ownerBusinessHome.getInstance().getHouseBusinesses().size()==1){
-                PowerPerson businessHouseOwner = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getMainOwnerPerson();
+                PowerPerson businessHouseOwner = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getMainPowerPerson();
                 if (businessHouseOwner !=null){
                     getInstance().setCredentialsType(businessHouseOwner.getCredentialsType());
                     getInstance().setCredentialsNumber(businessHouseOwner.getCredentialsNumber());

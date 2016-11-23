@@ -5,11 +5,11 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                template="PowerPersonView.xhtml">
 
-    <ui:include src="BussinePersionMustHaveInput.xhtml">
-        <ui:param name="label" value="#{messages.CORRECT}"/>
-        <ui:param name="persion" value="#{persionCorrectOwnerSubscribe}" />
-        <ui:param name="personStatus" value="persionContractOwner_personCredentiaslNumberStatus"/>
-    </ui:include>
+    <ui:param name="powerPersons" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.allPowerPersonList}"/>
+    <ui:param name="_pool_type" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType}"/>
+
 </ui:composition>

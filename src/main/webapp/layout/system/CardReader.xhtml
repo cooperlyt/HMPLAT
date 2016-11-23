@@ -12,79 +12,144 @@
 
     <h:outputScript>
         function extCall(printUrl) {
-        $('.ext_iframe').attr('src', printUrl);
+            $('.ext_iframe').attr('src', printUrl);
         }
     </h:outputScript>
 
 
     <h:outputStylesheet>
         .reading-bli.card-reading {
-            color: #8a6d3b;
+            color: #8a6d3b;!important;
         }
+
+        .finger-read-btn{
+            color: #d9534f;
+        }
+
+        .finger-read-btn.finger-readed{
+            color: #5cb85c;
+        }
+
+
 
     </h:outputStylesheet>
 
 
-    <a:outputPanel ajaxRendered="true">
 
-        <h:outputScript>
 
-            $(document).ready(
-            function () {
-            $('.card-read-btn').unbind('click')
-            $('.card-read-btn').click(function () {
-
-            if ($(this).hasClass('card-reading')) {
+    <h:outputScript>
 
 
 
-            $(this).removeClass('card-reading');
+        function bindclick() {
+        $('.card-read-btn').unbind('click')
+        $('.card-read-btn').click(function () {
 
-            extCall('ExtendsCer://');
-            } else {
-
-
-            $('.card-reading').removeClass('card-reading');
-            $(this).addClass('card-reading');
-            if (!$(this).hasClass('reading-bli')) {
-            $(this).addClass('reading-bli');
-            }
-            extCall('ExtendsCer://' + $(this).attr('data-uuid'));
-
-
-            }
-            return false;
-            });
+        if ($(this).hasClass('card-reading')) {
 
 
 
-                $(".person-img").error(function() {
-                    //$(this).remove();   //1.remove the image
-                    $(this).attr("src", "#{facesContext.externalContext.requestContextPath}/img/default_person.gif");    //2.replace the image
-                });
+        $(this).removeClass('card-reading');
 
-            });
-        </h:outputScript>
+        extCall('ExtendsCer://');
+        } else {
 
 
-    </a:outputPanel>
+        $('.card-reading').removeClass('card-reading');
+        $(this).addClass('card-reading');
+        if (!$(this).hasClass('reading-bli')) {
+        $(this).addClass('reading-bli');
+        }
+        extCall('ExtendsCer://' + $(this).attr('data-uuid'));
+
+
+        }
+        return false;
+        });
+
+
+
+        $('.finger-read-btn').unbind('click')
+        $('.finger-read-btn').click(function () {
+
+        if ($(this).hasClass('card-reading')) {
+
+
+
+        $(this).removeClass('card-reading');
+
+        extCall('ExtendsFinger://');
+        } else {
+
+
+        $('.card-reading').removeClass('card-reading');
+        $(this).addClass('card-reading');
+        if (!$(this).hasClass('reading-bli')) {
+        $(this).addClass('reading-bli');
+        }
+
+        extCall('ExtendsFinger://' + $(this).attr('data-uuid')   + ' 0');
+
+
+        }
+        return false;
+        });
+        Holder.run({images:".person-img"})
+        }
+
+        $(document).ready(function(){
+        $('.person-body').each(function () {
+        var pid = $(this).find('.person-id').val();
+
+        if (pid &amp;&amp; pid.trim() != ''){
+
+        $(this).find('.person-img').attr('src','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}/person/img/' + pid.trim());
+        }
+        });
+        bindclick();
+
+
+
+        });
+    </h:outputScript>
+
+
+
 
     <h:outputScript>
 
         function dataPut(valStr,uuid){
-        $('.card-reading').removeClass('card-reading');
 
-        var card = eval("(" + valStr + ")");
 
+        var card = (new Function("", "return " + valStr))();
+
+
+        if(card.pushType &amp;&amp; card.pushType == 'finger'){
+        $('.finger-read-btn').removeClass('card-reading');
+        if (card.fingerCode){
+        $('[data-finger-code="'+ uuid +'"]').val(card.fingerCode);
+        $('[data-person-uuid="'+ uuid +'"]').find('.finger-read-btn').addClass('finger-readed');
+        }
+
+        }else {
+        $('.card-read-btn').removeClass('card-reading');
         if (card.number){
-
         $('[data-person-uuid="'+ uuid +'"]').find(".person-name").val(card.name);
         $('[data-person-uuid="'+ uuid +'"]').find(".person-id").val(card.number);
-        $('[data-person-uuid="'+ uuid +'"]').find(".person-img").attr('src','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}/key/img/orig/' + card.number);
+
+        $('[data-person-uuid="'+ uuid +'"]').find(".person-img").attr('src','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}/img/orig/' + card.img_fid);
         $('[data-person-uuid="'+ uuid +'"]').find(".person-addr").val(card.address);
+
+        $('[data-person-uuid="'+ uuid +'"]').find(".person-brithday").val(card.dateOfBirth);
+
+        $('[data-person-info="'+ uuid +'"]').val(valStr);
+
+        $('[data-person-uuid="'+ uuid +'"]').find('.person-sex').selectpicker('val',card.sex);;
 
 
         }
+        }
+
         }
 
 
@@ -103,4 +168,5 @@
         setInterval(readingBil, 500)
     </h:outputScript>
 
-    </ui:composition>
+    <h:outputScript name="holder.min.js"/>
+</ui:composition>

@@ -2,7 +2,6 @@ package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
 import cc.coopersoft.house.UseType;
-import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseProperty;
@@ -794,6 +793,36 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         }
         Collections.sort(result);
         return result;
+    }
+
+
+    @Transient
+    public List<PowerPerson> getAllPowerPersonList(){
+        List<PowerPerson> result = new ArrayList<PowerPerson>(getPowerPersons());
+        Collections.sort(result);
+        return result;
+    }
+
+    @Transient
+    public List<PowerPerson> getAllNewPowerPersonList(){
+        List<PowerPerson> result = new ArrayList<PowerPerson>();
+        for(PowerPerson pp: getPowerPersons()){
+            if (!pp.isOld()){
+                result.add(pp);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
+    @Transient
+    public PowerPerson getMainPowerPerson(){
+        List<PowerPerson> result = getAllNewPowerPersonList();
+        if (result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
     }
 
     @Transient

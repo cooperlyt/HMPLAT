@@ -340,7 +340,7 @@ public class OwnerBuildGridMap {
         findHouseByOrder(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.build.id = :buildCode  and house.houseOrder = :houseOrder", House.class)
                         .setParameter("buildCode", buildHome.getInstance().getId())
                         .setParameter("houseOrder", houseOrder).getResultList(),
-                ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.businessHouse.buildCode = :buildCode and houseRecord.businessHouse.houseOrder = :houseOrder", HouseRecord.class)
+                ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.mainOwner where houseRecord.businessHouse.buildCode = :buildCode and houseRecord.businessHouse.houseOrder = :houseOrder", HouseRecord.class)
                         .setParameter("buildCode", buildHome.getInstance().getId())
                         .setParameter("houseOrder", houseOrder).getResultList());
 
@@ -355,7 +355,7 @@ public class OwnerBuildGridMap {
                         .setParameter("blockNumber", blockNumber)
                         .setParameter("buildNumber", buildNumber)
                         .setParameter("houseOrder", houseOrder).getResultList(),
-                ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where (houseRecord.businessHouse.mapNumber = :mapNumber or false = :haveMapNumber) and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", HouseRecord.class)
+                ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.mainOwner where (houseRecord.businessHouse.mapNumber = :mapNumber or false = :haveMapNumber) and houseRecord.businessHouse.blockNo = :blockNumber and houseRecord.businessHouse.buildNo = :buildNumber and houseRecord.businessHouse.houseOrder = :houseOrder", HouseRecord.class)
                         .setParameter("mapNumber", mapNumber)
                         .setParameter("haveMapNumber",mapNumber != null && !mapNumber.trim().equals(""))
                         .setParameter("blockNumber", blockNumber)
@@ -401,7 +401,7 @@ public class OwnerBuildGridMap {
 
         if (!houseMap.isEmpty()) {
 
-            for (HouseRecord houseRecord : ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
+            for (HouseRecord houseRecord : ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.mainOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                     .setParameter("houseCodes", houseMap.keySet())
                     .getResultList()) {
                 businessHouses.add(houseRecord.getBusinessHouse());

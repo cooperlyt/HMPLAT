@@ -28,6 +28,8 @@ public class ProxyPerson implements PersonEntity, java.io.Serializable {
     public ProxyPerson() {
     }
 
+
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull

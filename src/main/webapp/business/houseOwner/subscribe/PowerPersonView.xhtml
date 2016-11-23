@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+
+<c:forEach items="#{powerPersons}" var="_person" >
+    <dh:entryGridBlock columns="4" group="#{dictionary.getEnumLabel(_person.type)}" >
+        <h:outputText value="#{messages.person_field_name}"/>
+        <dh:entryGridColumn colspan="#{(_pool_type eq 'SINGLE_OWNER') ? 3 : 1 }">
+        <h:outputText value="#{_person.personName}"/>
+        </dh:entryGridColumn>
+
+        <c:if test="#{_pool_type eq 'TOGETHER_OWNER'}">
+            <h:outputText value="共有关系"/>
+            <h:outputText value="#{dictionary.getEnumLabel(_person.relation)}"/>
+
+        </c:if>
+        
+        <c:if test="#{_pool_type eq 'TOGETHER_OWNER'}">
+            <h:outputText value="共有份额(%)"/>
+            <h:outputText value="#{_person.poolPerc}">
+                <f:convertNumber pattern="#0.#"/>
+            </h:outputText>
+
+            <h:outputText value="共有面积(㎡)"/>
+            <h:outputText value="#{_person.poolArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </c:if>
+
+        <h:outputText value="#{dictionary.getEnumLabel(_person.credentialsType)}"/>
+        <ui:include src="/layout/system/PersonViewLink.xhtml">
+            <ui:param name="number" value="#{_person.credentialsNumber}"/>
+            <ui:param name="type" value="#{_person.credentialsType}"/>
+        </ui:include>
+
+        <h:outputText value="#{messages.BusinessOwner_Phone}"/>
+        <h:outputText value="#{_person.phone}"/>
+
+        <c:if test="#{_person.credentialsType.corp}">
+        <h:outputText value="#{dictionary.getEnumLabel(_person.legalType)}"/>
+        <dh:entryGridColumn colspan="3">
+            <h:outputText value="#{_person.legalPerson}"/>
+        </dh:entryGridColumn>
+        </c:if>
+
+
+
+        <h:outputText value="#{(_person.credentialsType eq 'PASSPORT')? '国籍' : '户籍地'}"/>
+        <dh:entryGridColumn colspan="3">
+            <h:outputText value="#{_person.rootAddress}"/>
+        </dh:entryGridColumn>
+
+        <h:outputText value="出生日期"/>
+        <h:outputText value="#{_person.birthday}">
+            <f:convertDateTime pattern="#{messages.displayDatePattern}"/>
+        </h:outputText>
+
+        <h:outputText value="性别"/>
+        <h:outputText value="#{dictionary.getEnumLabel(_person.sex)}"/>
+
+
+
+
+        <h:outputText value="#{messages.BusinessOwner_Address}"/>
+        <dh:entryGridColumn colspan="3">
+            <h:outputText value="#{_person.address}"/>
+        </dh:entryGridColumn>
+
+
+        <c:if test="#{not empty _person.proxyPerson}">
+            <h:outputText value="#{dictionary.getEnumLabel(_person.proxyPerson.proxyType)}"/>
+            <dh:entryGridColumn colspan="3">
+            <h:outputText value="#{_person.proxyPerson.personName}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{dictionary.getEnumLabel(_person.proxyPerson.credentialsType)}"/>
+            <h:outputText value="#{_person.proxyPerson.credentialsNumber}"/>
+
+            <h:outputText value="联系电话"/>
+            <h:outputText value="#{_person.proxyPerson.phone}"/>
+        </c:if>
+
+    </dh:entryGridBlock>
+
+</c:forEach>
+
+</ui:composition>

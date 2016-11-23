@@ -8,8 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by cooper on 12/11/2016.
@@ -113,6 +112,18 @@ public class ContractSubmit implements java.io.Serializable {
 
     public void setContractNumbers(Set<ContractNumber> contractNumbers) {
         this.contractNumbers = contractNumbers;
+    }
+
+    @Transient
+    public List<ContractNumber> getContractNumberList(){
+        List<ContractNumber> result = new ArrayList<ContractNumber>(getContractNumbers());
+        Collections.sort(result, new Comparator<ContractNumber>() {
+            @Override
+            public int compare(ContractNumber o1, ContractNumber o2) {
+                return o1.getContractNumber().compareTo(o2.getContractNumber());
+            }
+        });
+        return result;
     }
 
 

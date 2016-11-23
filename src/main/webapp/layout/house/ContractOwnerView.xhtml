@@ -9,47 +9,7 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
 
-    <dh:entryGridBlock columns="4" group="#{nameLabel}">
-        <h:outputText value="#{messages.person_field_name}"/>
-        <h:outputText value="#{businessHouse.personName}"/>
 
-        <h:outputText value="#{messages.BusinessOwner_Phone}"/>
-        <h:outputText value="#{businessHouse.phone}"/>
-
-
-        <h:outputText value="#{messages.person_field_credentialsType}"/>
-        <h:outputText value="#{messages[businessHouse.credentialsType.name()]}"/>
-
-
-        <h:outputText value="#{messages.person_field_credentialsNO}"/>
-        <ui:include src="/layout/system/PersonViewLink.xhtml">
-            <ui:param name="number" value="#{businessHouse.credentialsNumber}"/>
-            <ui:param name="type" value="#{businessHouse.credentialsType}"/>
-        </ui:include>
-
-
-
-        <h:outputText value="#{messages.BusinessOwner_RootAddress}"/>
-        <dh:entryGridColumn colspan="3">
-            <h:outputText value="#{businessHouse.rootAddress}"/>
-        </dh:entryGridColumn>
-
-
-        <h:outputText value="#{messages.BusinessOwner_Address}"/>
-        <dh:entryGridColumn colspan="3">
-            <h:outputText value="#{businessHouse.address}"/>
-        </dh:entryGridColumn>
-
-
-        <h:outputText value="#{messages.AttachCorporation_ownerName}"/>
-        <h:outputText value="#{businessHouse.legalPerson}"/>
-
-
-
-
-
-
-    </dh:entryGridBlock>
 
 
 </ui:composition>

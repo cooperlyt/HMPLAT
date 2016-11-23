@@ -422,7 +422,7 @@
                                                     <ul >
                                                         <li><ui:insert name="houseTitle"><h2>#{_cell.house.houseOrder}  </h2> </ui:insert> </li>
                                                         <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
-                                                        <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.personName}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
+                                                        <li><h:outputText style="color: #888" value="#{_cell.house.mainOwner.personName}" rendered="#{not empty _cell.house.mainOwner}"/></li>
                                                     </ul>
                                                 </div>
                                                 <div style="float: left">

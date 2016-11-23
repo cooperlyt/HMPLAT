@@ -559,7 +559,7 @@
                                                 <ul >
                                                     <li><h2><a:outputPanel rendered="#{not empty _cell.lockedHouseList}" p:aria-label="#{_cell.lockedTip}"  class="icon-warning-sign house-locked js-grid-tip"/>#{_cell.house.houseOrder}</h2></li>
                                                     <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
-                                                    <li><h:outputText style="color: #888" value="#{_cell.house.businessHouseOwner.personName}" rendered="#{not empty _cell.house.businessHouseOwner}"/></li>
+                                                    <li><h:outputText style="color: #888" value="#{_cell.house.mainOwner.personName}" rendered="#{not empty _cell.house.mainOwner}"/></li>
                                                 </ul>
                                             </div>
                                             <div style="float: left" >

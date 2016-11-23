@@ -291,7 +291,7 @@ public class BuildGridMapHouseSelect {
 
 
         if (!houseMap.isEmpty()){
-            List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.businessHouseOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
+            List<HouseRecord> houseRecords = ownerEntityLoader.getEntityManager().createQuery("select houseRecord from HouseRecord houseRecord left join fetch houseRecord.businessHouse businessHouse left join fetch businessHouse.mainOwner where houseRecord.houseCode in (:houseCodes)", HouseRecord.class)
                     .setParameter("houseCodes", houseMap.keySet())
                     .getResultList();
             for(HouseRecord hr: houseRecords){

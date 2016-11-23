@@ -118,9 +118,15 @@
 
 
 
-    <view-subscribe name="ContractOwnerView" page="/business/houseOwner/subscribe/ContractOwnerView.xhtml">
+    <view-subscribe name="AllPowerOwnerView" page="/business/houseOwner/subscribe/AllPowerOwnerView.xhtml">
         <description>
-            备案人查看
+            单房屋所有权力人
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="SaleContractView" page="/business/houseOwner/subscribe/SaleContractView.xhtml">
+        <description>
+            销售合同查看
         </description>
     </view-subscribe>
 
@@ -629,12 +635,7 @@
     <!-- 编辑订阅 在业务信息 页面填写 表单型式提交 在FORM内 所以 订阅者page之中不可包含FORM 但out-page将在form外  -->
 
 
-    <edit-subscribe name="ownerEdit" page="/business/houseOwner/subscribe/HouseOwnerEdit.xhtml" component="">
-        <description>
-            产权人编辑
-        </description>
-        <dependency>/layout/system/CardReader.xhtml</dependency>
-    </edit-subscribe>
+
 
     <edit-subscribe name="MulitHouseOwnerEdit" page="/business/houseOwner/subscribe/MulitHouseOwnerEdit.xhtml"
                     component="businessMulitHouseOwnerSubscribe">
@@ -662,15 +663,6 @@
             申请人编辑(开发商转成申请人)预售许可证
         </description>
     </edit-subscribe>
-
-    <edit-subscribe name="PersionCorrectOwnerEdit" page="/business/houseOwner/subscribe/PersionCorrectOwnerEdit.xhtml" component="">
-        <description>
-            申请人编辑(备案人转成申请人)合同备案
-        </description>
-        <dependency>/layout/system/CardReader.xhtml</dependency>
-    </edit-subscribe>
-
-
 
 
 

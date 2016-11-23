@@ -9,27 +9,23 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: personEntityHelper  , render-->
+    <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="dataPut(event.rf.data,'#{_person.uuid}');" >
+
+    </a:push>
 
 
-            <a:push id="personCerPush" address="#{_person.uuid}" ondataavailable="dataPut(event.rf.data,'#{_person.uuid}');" >
-
-            </a:push>
-
-
-
-
-        <a:outputPanel id="personCardInput" layout="block" styleClass="input-group" >
+    <a:outputPanel id="personCardInput" layout="block" styleClass="input-group" >
 
         <a:outputPanel id="credentialsType" layout="block" styleClass="input-group-btn">
 
-            <h:selectOneMenu  label="#{messages.person_field_credentialsType}" id="personCredentialsTypeInput"
-                              styleClass="selectpicker select-menu-btn input-group-first"
-                              value="#{_person.credentialsType}" required="true">
-                <s:selectItems var="_type" value="#{credentialsTypes}" label="#{messages[_type.name()]}"/>
+            <h:selectOneMenu label="#{messages.Person_credentialsType}" id="personCredentialsTypeInput"
+                             styleClass="selectpicker select-menu-btn input-group-first"
+                             value="#{_person.credentialsType}" required="true">
+                <s:selectItems var="_type" value="#{allowCredentialsTypeList}" label="#{messages[_type.name()]}"/>
                 <s:convertEnum/>
                 <a:ajax event="valueChange"
-                        render="personCardInput #{render}"
-                        oncomplete="initDynamicEditInputs('#{r:clientId('credentialsType')}'); initDynamicEditInputs('#{r:clientId('render')}');"
+                        render=" #{empty render ? 'personCardInput' : render}"
+                        oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('credentialsType')}'); initDynamicEditInputs('#{r:clientId('render')}');"
                         execute="@this" status="#{personStatus}">
                     <a:attachQueue requestDelay="0"/>
                 </a:ajax>
@@ -37,41 +33,57 @@
 
             </h:selectOneMenu>
 
-
             <a data-uuid="#{_person.uuid}" href=""
-               class="btn btn-default card-read-btn #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
-               style="height: 34px;">
+                    class="btn btn-default card-read-btn #{((empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')) ? '' : 'disabled'}"
+                    style="height: 34px;">
                 <span class="octicon octicon-file-media"/>
             </a>
         </a:outputPanel>
 
-        <h:inputText id="credentialsNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
-                     label="#{messages.person_field_credentialsNO}"
-                     styleClass="form-control person-id"
+
+        <h:inputText id="cardNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
+                     rendered="#{not (empty _person.credentialsType.name()) and not (_person.credentialsType.name() eq 'MASTER_ID')}"
+                     label="#{messages.Person_credentialsNumber}"
+                     styleClass="form-control"
                      required="true"
                      size="25"
                      maxlength="100"
-                     p:placeholder="#{messages.person_field_credentialsNO}"
+                     p:placeholder="#{messages.Person_credentialsNumber}"
                      value="#{_person.credentialsNumber}">
+        </h:inputText>
+
+        <h:inputText id="personNumber" rendered="#{(empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')}"
+                     label="#{messages.Person_credentialsNumber}"
+                     styleClass="form-control person-id"
+                     required="true"
+                     size="25"
+                     validatorMessage="身份证编号不合法,请确认"
+                     maxlength="100"
+                     p:placeholder="身份证号"
+                     value="#{_person.credentialsNumber}">
+
+            <f:validateRegex
+                             pattern="^[1-9]\d{5}((1[89]|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dx]$"/>
+            <f:validator validatorId="cc.coopersoft.faces.IdCardNumberValidator"/>
+            <r:validator event="blur"/>
+
+
         </h:inputText>
 
 
 
         <div class="input-group-addon">
-@
+            @
         </div>
         <h:inputText id="cerdentialsName" value="#{_person.personName}"
-                     p:placeholder="#{messages.person_field_name}"
-                     required="true"  styleClass="form-control person-name" label="#{messages.BusinessPool_name}">
+                     p:placeholder="#{messages.Person_personName}"
+                     required="true" styleClass="form-control person-name" label="#{messages.Person_personName}">
 
         </h:inputText>
 
-            <ui:insert name="after"/>
+        <ui:insert name="after"/>
 
-  </a:outputPanel>
-
-
-
+    </a:outputPanel>
 
 
 

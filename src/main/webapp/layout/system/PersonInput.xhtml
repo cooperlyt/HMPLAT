@@ -5,25 +5,26 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <!-- param: personEntityHelper  , render-->
 
-    <a:outputPanel p:data-person-uuid="#{personEntityHelper.uuid}">
+    <span data-person-uuid="#{personEntityHelper.uuid}">
+
     <ui:decorate  template="/layout/edit-multi.xhtml">
 
         <ui:define name="topValue">
-            <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit.xhtml">
 
-                <ui:param name="for" value="credentialsNumber"/>
+                <ui:param name="for" value="personCredentialsTypeInput"/>
                 <ui:param name="status" value="#{personStatus}"/>
                 <ui:define name="label">
                     #{label}
                 </ui:define>
 
                 <ui:define name="message">
-                    <r:message for="credentialsNumber" styleClass="edit-below-msg" ajaxRendered="false"/>
+                    <r:message for="cardNumber" rendered="#{not (empty _person.credentialsType.name()) and not (_person.credentialsType.name() eq 'MASTER_ID')}" styleClass="edit-below-msg" ajaxRendered="false"/>
+                    <r:message for="personNumber" rendered="#{(empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')}" styleClass="edit-below-msg" ajaxRendered="false"/>
                     <r:message for="cerdentialsName" styleClass="edit-below-msg" ajaxRendered="false"/>
 
                 </ui:define>
@@ -37,10 +38,8 @@
 
         <a:outputPanel id="personEditFields">
 
-
             <ui:insert/>
         </a:outputPanel>
     </ui:decorate>
-    </a:outputPanel>
-
+</span>
 </ui:composition>

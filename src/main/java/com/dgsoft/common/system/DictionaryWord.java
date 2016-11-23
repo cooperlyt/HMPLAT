@@ -8,6 +8,10 @@ import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import org.jboss.seam.contexts.Contexts;
+import org.jboss.seam.log.Logging;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +94,27 @@ public class DictionaryWord {
             }
         }
         return result;
+    }
+
+
+    public List<Word> getWordList(String categoryId, String containKey){
+        List<Word> result = new ArrayList<Word>();
+        for(Word word: getWordList(categoryId)){
+            if(word.getKey() != null){
+                try {
+                    JSONArray jsonArray = new JSONArray(word.getKey());
+                    for(int i =0;i<jsonArray.length();i++){
+                        jsonArray.getString(i).trim().equals(containKey);
+                        result.add(word);
+                        break;
+                    }
+                } catch (JSONException e) {
+                    Logging.getLog(getClass()).debug("word key not a json data");
+                }
+            }
+        }
+        return result;
+
     }
 
     public String getWordCategory(String categoryId) {
@@ -178,7 +203,15 @@ public class DictionaryWord {
     }
 
     public String getEnumLabel(Enum value){
-        return messages.get(value.getClass().getName() + "." + value.name());
+        if (value == null){
+            return "";
+        }
+        String result = messages.get(value.getClass().getName() + "." + value.name());
+        if (result == null){
+            return value.getClass().getName() + "." + value.name();
+        }else{
+            return result;
+        }
     }
 
     public static DictionaryWord instance()

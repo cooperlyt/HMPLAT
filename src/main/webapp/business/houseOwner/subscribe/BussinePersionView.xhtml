@@ -5,22 +5,38 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
 
     <dh:entryGridBlock columns="4" >
         <h:outputText value="#{nameLabel}"/>
+        <dh:entryGridColumn colspan="3">
         <h:outputText value="#{businessPersion.personName}"/>
+        </dh:entryGridColumn>
+
+
+        <h:outputText value="#{messages[businessPersion.credentialsType.name()]}"/>
+        <h:outputText value="#{businessPersion.credentialsNumber}"/>
+
 
         <h:outputText value="#{messages.Tel}"/>
         <h:outputText value="#{businessPersion.phone}"/>
 
-        <h:outputText value="#{messages.person_field_credentialsType}"/>
-        <h:outputText value="#{messages[businessPersion.credentialsType.name()]}"/>
 
-        <h:outputText value="#{messages.person_field_credentialsNO}"/>
-        <h:outputText value="#{businessPersion.credentialsNumber}"/>
+        <c:if test="#{not empty businessPersion.proxyPerson}">
+            <h:outputText value="#{dictionary.getEnumLabel(businessPersion.proxyPerson.proxyType)}"/>
+            <h:outputText value="#{businessPersion.proxyPerson.personName}"/>
+
+            <h:outputText value="#{messages[businessPersion.proxyPerson.credentialsType.name()]}"/>
+            <h:outputText value="#{businessPersion.proxyPerson.credentialsNumber}"/>
+
+
+            <h:outputText value="#{messages.Tel}"/>
+            <h:outputText value="#{businessPersion.proxyPerson.phone}"/>
+        </c:if>
+
     </dh:entryGridBlock>
 
 
