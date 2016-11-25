@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <s:decorate id="poolTypeField" template="/layout/edit.xhtml">
+        <ui:define name="label">
+            #{messages.RegisterProperty_PoolMemo}
+        </ui:define>
+        <ui:param name="for" value="poolCountInput"/>
+
+        <div class="input-group">
+            <div class="input-group-btn">
+                <h:selectOneMenu label="#{messages.RegisterProperty_PoolMemo}"
+                                 styleClass="selectpicker edit-select"
+                                 value="#{PowerPersonIntput.poolType}" required="true">
+                    <s:selectItems value="#{poolTypes}" var="_poolType" label="#{messages[_poolType.name()]}"/>
+                    <s:convertEnum/>
+                    <a:ajax render="poolTypeField"
+                            event="valueChange" execute="@this"
+                            oncomplete="initDynamicEditInputs('#{r:clientId('poolTypeField')}')">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:selectOneMenu>
+
+
+            </div>
+
+            <h:inputText label="共有权人数量" p:placeHolder="共有权人数量"
+                         styleClass="form-control" required="true"
+                         readonly="#{PowerPersonIntput.poolType eq 'SINGLE_OWNER'}"
+                         id="poolCountInput" value="#{PowerPersonIntput.personCount}">
+                <f:converter converterId="javax.faces.Integer"/>
+                <f:validateLongRange minimum="2"/>
+                <r:validator/>
+            </h:inputText>
+
+            <a:outputPanel styleClass="input-group-btn" layout="block"
+                           rendered="#{runParam.getIntParamValue('OWNER_SHARE_CALC_TYPE') eq 3}">
+
+                <h:selectOneMenu label="共有情况"
+                                 disabled="#{not (PowerPersonIntput.poolType eq 'SHARE_OWNER')}"
+                                 styleClass="selectpicker select-menu-btn"
+                                 value="#{PowerPersonIntput.ownerShareCalcType}" required="true">
+                    <s:selectItems value="#{ownerShareCalcTypes}" var="_togetherType"
+                                   label="#{messages[_togetherType.name()]}"/>
+                    <s:convertEnum/>
+                </h:selectOneMenu>
+
+            </a:outputPanel>
+
+
+        </div>
+    </s:decorate>
+
+
+</ui:composition>

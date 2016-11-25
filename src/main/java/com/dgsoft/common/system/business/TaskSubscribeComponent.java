@@ -22,7 +22,7 @@ public interface TaskSubscribeComponent {
 
     /** 是否通过 不要添加消息
      *  在建立业务或完成任务时调用
-     * @return true:成功 false: 不成功，返回fase系统会抛出异常
+     * @return true:成功 false: 不成功，返回false系统会抛出异常
      */
     boolean isPass();
 

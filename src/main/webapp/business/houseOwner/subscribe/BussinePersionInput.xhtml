@@ -5,59 +5,34 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:decorate template="/layout/edit-multi.xhtml">
+
+    <div class="form-checkbox">
+        <label>
+            #{mainLabel}
+        </label>
+        <h:selectBooleanCheckbox value="#{businessPersonComponent.have}">
+            <a:ajax event="click" render="contextPanel" execute="@this" oncomplete="initDynamicEditInputs('#{r:clientId('contextPanel')}')"
+                    listener="#{businessPersonComponent.checkHave}">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:selectBooleanCheckbox>
+
+    </div>
+
+    <a:outputPanel id="contextPanel" >
+        <a:outputPanel layout="block"  rendered="#{businessPersonComponent.have}" style="margin-top: -16px">
+            <ui:include src="BussinePersionMustHaveInput.xhtml">
+                <ui:param name="showMainLabel" value="false"/>
+            </ui:include>
+
+        </a:outputPanel>
 
 
-        <ui:define name="topValue">
-            <div class="form-checkbox">
-                <label>
-                    #{label}
-                </label>
-                <h:selectBooleanCheckbox value="#{persion.have}">
-                    <a:ajax event="click" render="contextPanel" execute="@this"
-                            listener="#{persion.checkHave}">
-                        <a:attachQueue requestDelay="0"/>
-                    </a:ajax>
-                </h:selectBooleanCheckbox>
-
-            </div>
-
-        </ui:define>
-
-        <ui:define name="values">
-
-            <a:outputPanel id="contextPanel" >
-                <a:outputPanel layout="block"  rendered="#{persion.have}" style="margin-top: -20px">
-
-                            <ui:decorate template="/layout/system/PersonInput.xhtml">
-                                <ui:param name="label" value=""/>
-                                <ui:param name="showLabel" value="false"/>
-                                <ui:param name="personEntityHelper" value="#{persion.personInstance}"/>
+    </a:outputPanel>
 
 
-                                <div class="form-inline">
-
-                                    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
-                                        <ui:define name="label">
-                                            #{messages.Tel}
-                                        </ui:define>
-                                        <ui:param name="for" value="persionPhoneInput"/>
-                                        <ui:param name="showLabel" value="true"/>
-                                        <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
-                                                     styleClass="form-control"
-                                                     validatorMessage="#{messages.requiredPhoneValidator}"
-                                                     value="#{persion.instance.phone}"
-                                                     id="persionPhoneInput">
-                                        </h:inputText>
-                                    </s:decorate>
-                                </div>
-
-                            </ui:decorate>
-                </a:outputPanel>
-            </a:outputPanel>
-        </ui:define>
-    </ui:decorate>
 
 </ui:composition>

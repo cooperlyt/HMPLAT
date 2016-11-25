@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.model;
 
 import cc.coopersoft.house.ProxyType;
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.ProxyPersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PROXY_PERSON", catalog = "HOUSE_OWNER_RECORD")
-public class ProxyPerson implements PersonEntity, java.io.Serializable {
+public class ProxyPerson implements ProxyPersonEntity, java.io.Serializable {
 
     private String id;
 
@@ -29,6 +30,9 @@ public class ProxyPerson implements PersonEntity, java.io.Serializable {
     }
 
 
+    public ProxyPerson(ProxyType proxyType) {
+        this.proxyType = proxyType;
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)

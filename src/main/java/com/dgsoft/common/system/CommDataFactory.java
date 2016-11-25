@@ -1,6 +1,8 @@
 package com.dgsoft.common.system;
 
 import cc.coopersoft.house.ProxyType;
+import cc.coopersoft.house.sale.data.PowerPerson;
+import com.dgsoft.house.OwnerShareCalcType;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.Name;
@@ -36,5 +38,12 @@ public class CommDataFactory {
         return ProxyType.values();
     }
 
+    @Factory(value = "ownerShareCalcTypes",scope = ScopeType.APPLICATION)
+    public OwnerShareCalcType[] getOwnerShareCalcTypes(){return OwnerShareCalcType.values();}
+
+    @Factory(value = "legalTypes",scope = ScopeType.CONVERSATION)
+    public PowerPerson.LegalType[] getLegalTypes() {
+        return PowerPerson.LegalType.values();
+    }
 
 }

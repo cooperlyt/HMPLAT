@@ -43,17 +43,17 @@
 
         <h:inputText id="cardNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
                      rendered="#{not (empty _person.credentialsType.name()) and not (_person.credentialsType.name() eq 'MASTER_ID')}"
-                     label="#{messages.Person_credentialsNumber}"
+                     label="证件号"
                      styleClass="form-control"
                      required="true"
                      size="25"
                      maxlength="100"
-                     p:placeholder="#{messages.Person_credentialsNumber}"
+                     p:placeholder="证件号"
                      value="#{_person.credentialsNumber}">
         </h:inputText>
 
         <h:inputText id="personNumber" rendered="#{(empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')}"
-                     label="#{messages.Person_credentialsNumber}"
+                     label="身份证号"
                      styleClass="form-control person-id"
                      required="true"
                      size="25"
@@ -76,8 +76,8 @@
             @
         </div>
         <h:inputText id="cerdentialsName" value="#{_person.personName}"
-                     p:placeholder="#{messages.Person_personName}"
-                     required="true" styleClass="form-control person-name" label="#{messages.Person_personName}">
+                     p:placeholder="姓名"
+                     required="true" styleClass="form-control person-name" label="姓名">
 
         </h:inputText>
 

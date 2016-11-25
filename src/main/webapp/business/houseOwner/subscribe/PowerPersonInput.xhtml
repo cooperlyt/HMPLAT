@@ -1,0 +1,167 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+    <span class="person-body" data-person-uuid="#{_person.uuid}">
+        <h:inputHidden p:data-finger-code="#{_person.uuid}" value="#{_person.personEntity.fingerprint}"/>
+
+    <s:decorate styleClass="form-group" id="singPersonCardInput" template="/layout/edit-big.xhtml">
+
+        <ui:param name="for" value="personCredentialsTypeInput"/>
+        <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
+        <ui:param name="showLabel" value="#{showMainLabel}"/>
+        <ui:define name="label">
+            #{mainLabel}
+        </ui:define>
+
+
+        <ui:decorate template="/layout/system/PersonCardInput.xhtml">
+            <ui:param name="_person" value="#{_person}"/>
+            <ui:param name="status" value="#{_person.uuid}_personCredentiaslNumberStatus"/>
+            <ui:param name="render" value="attFields singPersonCardInput"/>
+        </ui:decorate>
+
+
+
+        <ui:define name="message">
+            <r:message for="cardNumber" rendered="#{not (empty _person.credentialsType.name()) and not (_person.credentialsType.name() eq 'MASTER_ID')}" styleClass="edit-below-msg" ajaxRendered="false"/>
+            <r:message for="personNumber" rendered="#{(empty _person.credentialsType.name()) or (_person.credentialsType.name() eq 'MASTER_ID')}" styleClass="edit-below-msg" ajaxRendered="false"/>
+            <r:message for="cerdentialsName" styleClass="edit-below-msg" ajaxRendered="false"/>
+
+        </ui:define>
+
+    </s:decorate>
+
+
+    <a:outputPanel id="attFields" layout="block" class="sub-details-body">
+        <h:inputHidden id="all_info" p:data-person-info="#{_person.uuid}" value="#{_person.personEntity.paperCopyInfo}"/>
+
+
+
+        <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
+                <s:decorate id="rootAddressField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                    <ui:define name="label">
+                        #{_person.credentialsType.name() eq 'PASSPORT' ? '国籍' : '户籍所在地'}
+                    </ui:define>
+                    <ui:param name="showLabel" value="false"/>
+                    <ui:param name="for" value="rootAddressInput"/>
+                    <h:inputText label="#{_person.credentialsType.name() eq 'PASSPORT' ? '国籍' : '户籍所在地'}" maxlength="50"
+                                 p:placeholder="#{_person.credentialsType.name() eq 'PASSPORT' ? '国籍' : '户籍所在地'}"
+                                 styleClass="form-control person-addr"
+                                 value="#{_person.personEntity.rootAddress}" id="rootAddressInput">
+                    </h:inputText>
+                </s:decorate>
+
+                <s:decorate id="birthdayField" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                    <ui:param name="for" value="birthdayInput"/>
+                    <ui:param name="showLabel" value="false"/>
+                    <ui:define name="label">
+                        出生日期
+                    </ui:define>
+                    <div class="input-group">
+
+                        <h:inputText id="birthdayInput" value="#{_person.personEntity.birthday}" p:placeholder="出生日期" label="出生日期" styleClass="js-datepicker form-control person-brithday"/>
+
+
+                    <span class="input-group-btn">
+
+                        <h:selectOneMenu value="#{_person.personEntity.sex}" p:data-width="70px" styleClass="selectpicker select-menu-btn person-sex">
+
+                            <s:selectItems value="#{sexValues}" var="_sex"
+                                           label="#{messages[_sex.name()]}" itemValue="#{_sex}"/>
+                            <s:convertEnum/>
+
+                        </h:selectOneMenu>
+                    </span>
+                    </div>
+                </s:decorate>
+                <s:decorate id="postCodeField" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                    <ui:param name="for" value="personPhoneInput"/>
+                    <ui:param name="showLabel" value="false"/>
+                    <ui:define name="label">
+                        邮政编码
+                    </ui:define>
+                    <div class="input-group">
+
+                        <h:inputText p:placeholder="邮政编码" size="9" maxlength="9" label="邮政编码" styleClass="form-control"/>
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-earphone"/>
+                        </div>
+                        <h:inputText label="#{messages.Tel}" size="30" maxlength="15" p:placeholder="#{messages.Tel}"
+                                     styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                                     value="#{_person.personEntity.phone}" id="personPhoneInput" required="true">
+
+                            <f:validateRegex pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                            <r:validator event="blur"/>
+                        </h:inputText>
+
+                    </div>
+                </s:decorate>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
+                <div class="thumbnail" style="margin-bottom: 0">
+                    <h:graphicImage p:data-src="holder.js/120x134?text=照片" styleClass="person-img" style="min-height: 126px;" alt="身份证照片" value="#{runParam.getParamValue('IMG_SERVER_ADDRESS')}/person/img/#{_person.credentialsNumber}" width="120px" height="134px"/>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <s:decorate id="addressField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                通讯地址
+            </ui:define>
+            <ui:param name="for" value="addressInput"/>
+            <ui:param name="showLabel" value="false"/>
+            <h:inputText label="通讯地址" maxlength="200"
+                         styleClass="form-control" p:placeholder="通讯地址"
+                         value="#{_person.personEntity.address}" id="addressInput">
+
+            </h:inputText>
+
+        </s:decorate>
+
+
+        <s:decorate rendered="#{_person.credentialsType.corp}"
+                    id="legalPersonField" styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:param name="showLabel" value="false"/>
+            <ui:param name="for" value="legalPersonInput"/>
+
+            <div class="input-group">
+
+                    <span class="input-group-btn">
+
+                        <h:selectOneMenu value="#{_person.personEntity.legalType}" styleClass="selectpicker select-menu-btn input-group-first">
+
+                            <s:selectItems value="#{legalTypes}" var="_legal"
+                                           label="#{messages[_legal.name()]}" itemValue="#{_legal}"/>
+                            <s:convertEnum/>
+
+                        </h:selectOneMenu>
+                    </span>
+                <h:inputText id="legalPersonInput" value="#{_person.personEntity.legalPerson}"
+                             maxlength="50" label="姓名" required="true"
+                             styleClass="form-control"/>
+
+            </div>
+        </s:decorate>
+
+        <ui:insert name="contractPersonAttInfo"/>
+
+
+    </a:outputPanel>
+
+
+    </span>
+</ui:composition>

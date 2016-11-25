@@ -637,13 +637,6 @@
 
 
 
-    <edit-subscribe name="MulitHouseOwnerEdit" page="/business/houseOwner/subscribe/MulitHouseOwnerEdit.xhtml"
-                    component="businessMulitHouseOwnerSubscribe">
-        <description>
-            产权人编辑(凤城初始登记,多个房屋同一个产权人)
-        </description>
-    </edit-subscribe>
-
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
         <description>
             申请人编辑
@@ -662,6 +655,7 @@
         <description>
             申请人编辑(开发商转成申请人)预售许可证
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
 
@@ -686,32 +680,6 @@
            </description>
        </edit-subscribe>
     -->
-
-
-
-       <edit-subscribe name="poolOwnerEdit" page="/business/houseOwner/subscribe/ChoicePoolOwnerEdit.xhtml"
-                       component="poolOwnerSubscribe">
-           <description>
-               共有情况,共有权人,编辑(选填)
-           </description>
-           <dependency>/layout/system/CardReader.xhtml</dependency>
-       </edit-subscribe>
-
-    <edit-subscribe name="poolOwnerRequiredEdit" page="/business/houseOwner/subscribe/PoolOwnerEdit.xhtml"
-                    component="poolOwnerSubscribe">
-        <description>
-            共有情况,共有权人,编辑(必填)
-        </description>
-        <dependency>/layout/system/CardReader.xhtml</dependency>
-    </edit-subscribe>
-
-    <edit-subscribe name="PoolOwnerRecordEdit" page="/business/houseOwner/subscribe/PoolOwnerRecordEdit.xhtml"
-                    component="poolOwnerSubscribe">
-        <description>
-            共有情况,共有权人,编辑(档案补录)
-        </description>
-        <dependency>/layout/system/CardReader.xhtml</dependency>
-    </edit-subscribe>
 
 
 
@@ -793,8 +761,13 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+    <edit-subscribe name="ContractOwnerEdit" page="/business/houseOwner/subscribe/ContractPoolTypeEdit.xhtml">
+        <description>
+            备案人准备
+        </description>
+    </edit-subscribe>
 
-    <edit-subscribe name="ContractOwnerEdit" page="/business/houseOwner/subscribe/ContractOwnerEdit.xhtml" component="contractOwnerSubscribe">
+    <edit-subscribe name="ContractOwnerEdit" page="/business/houseOwner/subscribe/ContractOwnerEdit.xhtml" component="contractPersonEdit">
         <description>
             备案人编辑
         </description>

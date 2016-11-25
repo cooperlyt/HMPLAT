@@ -14,10 +14,11 @@
     <ui:decorate  template="/layout/edit-multi.xhtml">
 
         <ui:define name="topValue">
-            <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit.xhtml">
+            <s:decorate id="personInputFields" styleClass="form-group" template="/layout/edit-big.xhtml">
 
                 <ui:param name="for" value="personCredentialsTypeInput"/>
                 <ui:param name="status" value="#{personStatus}"/>
+                <ui:param name="showLabel" value="#{showMainLabel}"/>
                 <ui:define name="label">
                     #{label}
                 </ui:define>

@@ -1,14 +1,14 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
-import com.dgsoft.common.OrderModel;
-import com.dgsoft.common.system.OwnerPersonEntity;
+
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.PowerPersonEntity;
+import com.dgsoft.common.system.ProxyPersonEntity;
 import com.dgsoft.common.system.Sex;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "POWER_OWNER", catalog = "HOUSE_OWNER_RECORD")
-public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, java.io.Serializable {
+public class PowerPerson implements PowerPersonEntity, Comparable<PowerPerson>, java.io.Serializable {
 
     @Override
     @Transient
@@ -74,7 +74,7 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
     private PowerPersonType type;
     private boolean old;
 
-    private ProxyPerson proxyPerson;
+    private ProxyPersonEntity proxyPerson;
     private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 
 
@@ -315,14 +315,19 @@ public class PowerPerson implements OwnerPersonEntity, Comparable<PowerPerson>, 
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity=ProxyPerson.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "PROXY_PERSON", nullable = true)
-    public ProxyPerson getProxyPerson() {
+    public ProxyPersonEntity getPowerProxyPerson() {
         return proxyPerson;
     }
 
-    public void setProxyPerson(ProxyPerson proxyPerson) {
+    public void setPowerProxyPerson(ProxyPersonEntity proxyPerson) {
         this.proxyPerson = proxyPerson;
+    }
+
+    @Transient
+    public ProxyPerson getProxyPerson(){
+        return (ProxyPerson) getPowerProxyPerson();
     }
 
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "powerPersons")

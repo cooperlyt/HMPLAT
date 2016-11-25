@@ -1,0 +1,182 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <a:repeat value="#{powerPersonEntityComponent.powerPersonList}" var="_person">
+        <f:subview id="#{_person.uuid}_persion_item">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <ui:decorate template="PowerPersonInput.xhtml">
+                        <ui:param name="_person" value="#{_person}"/>
+                        <ui:param name="allowCredentialsTypeList" value="#{credentialsTypes}"/>
+                        <ui:remove>
+                            <!--
+                        <ui:param name="mainLabel" value="买受人"/>
+                        -->
+                        </ui:remove>
+
+
+                        <ui:define name="contractPersonAttInfo">
+
+                            <s:decorate rendered="#{powerPersonEntityComponent.poolType eq 'TOGETHER_OWNER'}" styleClass="form-group" template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                    #{messages.BusinessPool_relation}
+                                </ui:define>
+                                <ui:param name="showLabel" value="false"/>
+                                <ui:param name="for" value="reationInput"/>
+
+                                <h:selectOneMenu value="#{_person.personEntity.relation}" id="reationInput"
+                                                 styleClass="selectpicker edit-select" p:data-width="100%"
+                                                 label="#{messages.BusinessPool_relation}">
+                                    <s:selectItems var="_word" label="#{_word.value}"
+                                                   itemValue="#{_word.id}"
+                                                   value="#{dictionary.getWordList('67')}"/>
+                                </h:selectOneMenu>
+
+                            </s:decorate>
+
+
+                            <s:decorate rendered="#{(powerPersonEntityComponent.poolType eq 'SHARE_OWNER') and (powerPersonEntityComponent.ownerShareCalcType eq 'SCALE')}" styleClass="form-group" template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                    #{messages.BusinessPool_perc}
+                                </ui:define>
+                                <ui:param name="showLabel" value="false"/>
+                                <ui:param name="for" value="poolPercInput"/>
+
+                                <div class="input-group">
+
+                                    <h:inputText value="#{_person.poolPerc}" id="poolPercInput"
+                                                 p:placeholder="#{messages.BusinessPool_perc}"
+                                                 label="#{messages.BusinessPool_perc}" styleClass="form-control">
+                                        <a:ajax event="blur"
+                                                execute="@this" render="areaForPerc"/>
+                                    </h:inputText>
+
+
+                                    <a:outputPanel id="areaForPerc" layout="block" class="input-group-addon">
+                                        #{_person.poolArea}  <strong>m<sup>2</sup></strong>
+                                    </a:outputPanel>
+
+                                </div>
+
+                            </s:decorate>
+
+
+                            <s:decorate rendered="#{(powerPersonEntityComponent.poolType eq 'SHARE_OWNER') and (powerPersonEntityComponent.ownerShareCalcType eq 'AREA')}" styleClass="form-group" template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                    #{messages.BusinessPool_area}
+                                </ui:define>
+                                <ui:param name="showLabel" value="false"/>
+                                <ui:param name="for" value="poolAreaInput"/>
+
+                                <div class="input-group">
+
+                                    <h:inputText value="#{_person.poolArea}" id="poolAreaInput"
+                                                 p:placeholder="#{messages.BusinessPool_area}"
+                                                 label="#{messages.BusinessPool_area}" styleClass="form-control"
+                                                 rendered="#{houseContractHome.instance.poolType eq 'SHARE_OWNER'}">
+                                        <f:convertNumber pattern="#0.000"/>
+                                        <a:ajax event="blur"
+                                                execute="@this" render="percForArea"/>
+                                    </h:inputText>
+
+
+                                    <a:outputPanel id="percForArea" layout="block" class="input-group-addon">
+                                        #{_person.poolPerc}<strong>%</strong>
+                                    </a:outputPanel>
+
+
+
+                                </div>
+
+                            </s:decorate>
+
+
+                        </ui:define>
+
+                    </ui:decorate>
+
+
+                    <f:subview id="#{_person.uuid}_person_proxy">
+
+                        <s:decorate
+                                id="proxyPersonTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                            <ui:param name="for" value="proxyPersonTypeInput"/>
+                            <ui:param name="showLabel" value="false"/>
+                            <h:selectOneMenu value="#{_person.proxyType}" id="proxyPersonTypeInput"
+                                             styleClass="selectpicker select-menu-btn">
+
+                                <s:selectItems value="#{proxyTypes}" var="_proxyType" noSelectionLabel="无代理人"
+                                               label="#{messages[_proxyType.name()]}" itemValue="#{_proxyType}"/>
+                                <a:ajax render="proxyPersonPanel" event="valueChange" execute="@this"
+                                        oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('proxyPersonPanel')}');">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:ajax>
+                                <s:convertEnum/>
+
+                            </h:selectOneMenu>
+                        </s:decorate>
+
+                        <a:outputPanel id="proxyPersonPanel">
+                            <a:outputPanel rendered="#{not empty _person.proxyType}">
+
+
+
+                                <ui:decorate template="/layout/system/PersonInput.xhtml">
+                                    <ui:param name="personEntityHelper" value="#{_person.proxyPersonHelper}"/>
+                                    <ui:param name="showMainLabel" value="false"/>
+                                    <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
+                                    <ui:param name="personStatus" value="#{_person.uuid}_proxy_person"/>
+
+
+                                    <s:decorate id="businessProxyPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                                        <ui:define name="label">
+                                            #{messages.Tel}
+                                        </ui:define>
+                                        <ui:param name="for" value="proxyPersonPhoneInput"/>
+                                        <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                                                     styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                                                     value="#{_person.proxyPersonHelper.personEntity.phone}"
+                                                     id="proxyPersonPhoneInput">
+                                            <f:validateRegex
+                                                    pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                                            <r:validator event="blur"/>
+                                        </h:inputText>
+
+                                    </s:decorate>
+                                </ui:decorate>
+
+
+                            </a:outputPanel>
+
+                        </a:outputPanel>
+
+                    </f:subview>
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+        </f:subview>
+
+    </a:repeat>
+
+
+
+
+
+</ui:composition>

@@ -784,7 +784,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Transient
-    private List<PowerPerson> getPowerPersonListByType(PowerPerson.PowerPersonType type, boolean old){
+    public List<PowerPerson> getPowerPersonListByType(PowerPerson.PowerPersonType type, boolean old){
         List<PowerPerson> result = new ArrayList<PowerPerson>();
         for(PowerPerson pp: getPowerPersons()){
             if (type.equals(pp.getType()) && (old == pp.isOld())){
