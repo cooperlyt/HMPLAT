@@ -19,11 +19,11 @@
 
         <c:if test="#{_pool_type eq 'TOGETHER_OWNER'}">
             <h:outputText value="共有关系"/>
-            <h:outputText value="#{dictionary.getEnumLabel(_person.relation)}"/>
+            <h:outputText value="#{dictionary.getWordValue(_person.relation)}"/>
 
         </c:if>
-        
-        <c:if test="#{_pool_type eq 'TOGETHER_OWNER'}">
+
+        <c:if test="#{_pool_type eq 'SHARE_OWNER'}">
             <h:outputText value="共有份额(%)"/>
             <h:outputText value="#{_person.poolPerc}">
                 <f:convertNumber pattern="#0.#"/>

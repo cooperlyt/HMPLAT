@@ -58,14 +58,9 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
 
         businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,contractPersonNames));
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String jsonData = mapper.writeValueAsString(businessDisplay);
-            ownerBusinessHome.getSingleHoues().setDisplay(jsonData);
-            ownerBusinessHome.getInstance().setDisplay(jsonData);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("display json data gen fail!",e);
-        }
+        String result = DescriptionDisplay.toStringValue(businessDisplay);
+        ownerBusinessHome.getSingleHoues().setDisplay(result);
+        ownerBusinessHome.getInstance().setDisplay(result);
 
     }
 }

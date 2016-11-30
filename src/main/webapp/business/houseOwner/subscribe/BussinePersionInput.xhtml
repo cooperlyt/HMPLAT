@@ -14,7 +14,7 @@
             #{mainLabel}
         </label>
         <h:selectBooleanCheckbox value="#{businessPersonComponent.have}">
-            <a:ajax event="click" render="contextPanel" execute="@this" oncomplete="initDynamicEditInputs('#{r:clientId('contextPanel')}')"
+            <a:ajax event="click" render="contextPanel" execute="@this" oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('contextPanel')}')"
                     listener="#{businessPersonComponent.checkHave}">
                 <a:attachQueue requestDelay="0"/>
             </a:ajax>

@@ -2,6 +2,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
@@ -28,29 +29,16 @@ public class HouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent 
     @Override
     public void complete() {
 
-
-
         KeyGeneratorHelper businessKey = new KeyGeneratorHelper(ownerBusinessHome.getInstance().getSearchKey());
 
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
-            KeyGeneratorHelper key = new KeyGeneratorHelper(hb.getSearchKey());
-            for (PowerPerson pp : hb.getAfterBusinessHouse().getPowerPersons()){
-                if (!pp.isOld()){
-                    key.addWord(pp.getPersonName());
-                    businessKey.addWord(pp.getPersonName());
-                    key.addWord(pp.getCredentialsNumber());
-                    businessKey.addWord(pp.getCredentialsNumber());
+            KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
 
+            businessKey.addWords(key);
 
-                }
-
-
-            }
             hb.setSearchKey(key.getKey());
         }
         ownerBusinessHome.getInstance().setSearchKey(businessKey.getKey());
-
-
 
     }
 }

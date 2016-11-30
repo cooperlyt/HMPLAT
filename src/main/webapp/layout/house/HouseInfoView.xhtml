@@ -138,10 +138,6 @@
     </h:outputText>
 
 
-
-
-
-
     <h:outputText value="#{messages.House_LoftArea}"/>
     <h:outputText value="#{houseInfo.loftArea}">
         <f:convertNumber pattern="#0.000"/>
@@ -153,8 +149,8 @@
         <f:convertNumber pattern="#0.000"/>
     </h:outputText>
 
-    <h:outputText value="#{messages.House_UseType}"/>
-    <h:outputText value="#{dictionary.getWordValue(houseInfo.useType)}"/>
+    <h:outputText value="规划用途"/>
+    <h:outputText value="#{houseInfo.designUseType}"/>
 
 
     <h:outputText value="#{messages.House_UseArea}"/>
@@ -201,7 +197,7 @@
     <dh:entryGridBlock columns="8">
 
 <h:outputText value="#{messages.House_HouseType}"/>
-<h:outputText value="#{dictionary.getWordValue(houseInfo.houseType)}"/>
+<h:outputText value="#{dictionary.getEnumLabel(houseInfo.houseType)}"/>
 
 
 

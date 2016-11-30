@@ -1,13 +1,13 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.HouseInfo;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.SalePayType;
 import com.dgsoft.house.owner.OwnerEntityLoader;
-import com.dgsoft.house.owner.model.AddHouseStatus;
-import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.MortgaegeRegiste;
-import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.business.subscribe.complete.KeyGeneratorHelper;
+import com.dgsoft.house.owner.model.*;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
@@ -16,6 +16,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -98,6 +99,46 @@ public class OwnerHouseHelper {
         return (OwnerHouseHelper) Component.getInstance(OwnerHouseHelper.class, true);
     }
 
+    public static String genHouseDisplay(BusinessHouse house){
+        DescriptionDisplay result = new DescriptionDisplay();
+
+        result.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,house.getMapNumber() + " 图 " + house.getBlockNo() + " 丘 " + house.getBuildNo() + " 幢 " + house.getHouseOrder()));
+        result.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,house.getAddress()));
+
+        List<DescriptionDisplay.DisplayData> dds = new ArrayList<DescriptionDisplay.DisplayData>();
+        for (PowerPerson pp : house.getPowerPersons()){
+            if (!pp.isOld()){
+                dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,pp.getPersonName()));
+            }
+        }
+
+
+        result.addLine(DescriptionDisplay.DisplayStyle.NORMAL,dds.toArray(new DescriptionDisplay.DisplayData[0]));
+
+
+
+        return DescriptionDisplay.toStringValue(result);
+    }
+
+    public static KeyGeneratorHelper genHouseSearchKey(BusinessHouse house){
+
+        KeyGeneratorHelper key = new KeyGeneratorHelper();
+        for (PowerPerson pp : house.getPowerPersons()){
+            if (!pp.isOld()){
+                key.addWord(pp.getPersonName());
+                key.addWord(pp.getCredentialsNumber());;
+            }
+        }
+        key.addWord(house.getHouseCode());
+        key.addWord(house.getDisplayHouseCode());
+        key.addWord(house.getAddress());
+        key.addWord(house.getSectionName());
+        key.addWord(house.getSectionCode());
+        key.addWord(house.getProjectCode());
+
+        key.addWord(house.getProjectCode());
+        return key;
+    }
 
 
 

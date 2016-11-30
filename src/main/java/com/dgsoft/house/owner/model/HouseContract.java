@@ -35,7 +35,12 @@ public class HouseContract implements java.io.Serializable {
 	public HouseContract() {
 	}
 
-	public HouseContract(String contractNumber, SaleType type, Date contractDate,String projectSaleCerNumber, HouseBusiness houseBusiness, ContractSubmit contractSubmit) {
+	public HouseContract(SaleType type, HouseBusiness houseBusiness) {
+		this.type = type;
+		this.houseBusiness = houseBusiness;
+	}
+
+	public HouseContract(String contractNumber, SaleType type, Date contractDate, String projectSaleCerNumber, HouseBusiness houseBusiness, ContractSubmit contractSubmit) {
 		this.contractNumber = contractNumber;
 		this.type = type;
 		this.contractDate = contractDate;

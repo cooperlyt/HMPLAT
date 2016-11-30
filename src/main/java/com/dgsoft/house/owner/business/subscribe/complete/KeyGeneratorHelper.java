@@ -1,20 +1,30 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by cooper on 20/11/2016.
  */
 public class KeyGeneratorHelper {
 
-    private String key;
+    private List<String> keys;
 
     public KeyGeneratorHelper() {
-        key = "";
+        keys = new ArrayList<String>();
     }
 
     public KeyGeneratorHelper(String key) {
-        this.key = key;
-        if (key == null){
-            this.key = "";
+        this.keys = new ArrayList<String>();
+        if (key != null) {
+
+            Pattern pattern = Pattern.compile("\\[([\\s\\S]+)\\]");
+            Matcher matcher = pattern.matcher(key);
+            if (matcher.find()) {
+                keys.add(matcher.group(1));
+            }
         }
     }
 
@@ -27,16 +37,28 @@ public class KeyGeneratorHelper {
     }
 
     public boolean addWord(String word){
-        String searchKey = genSearchWord(word);
-        if (key.contains(searchKey)){
-            return false;
-        }else{
-            key += searchKey;
+        if (!keys.contains(word)){
+            keys.add(word);
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    public void addWords(KeyGeneratorHelper keyGeneratorHelper){
+        for(String key : keyGeneratorHelper.getKeys()){
+            addWord(key);
+        }
+    }
+
+    public List<String> getKeys() {
+        return keys;
     }
 
     public String getKey() {
-        return key;
+        String result = "";
+        for(String key: keys){
+            result += genSearchWord(key);
+        }
+        return result;
     }
 }

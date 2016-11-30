@@ -10,6 +10,8 @@
 
 
     <ui:define name="itemDescription">
+        <!-- 用json data 代替 -->
+        <ui:remove>
         <p class="repo-list-description">
             <strong>#{messages.House_Id}:</strong>#{_item.singleHoues.houseCode}  <strong>#{messages.HOUSE_MBBH}:</strong>#{_item.singleHoues.afterBusinessHouse.displayHouseCode}     <strong>#{messages.House_MapNumber}:</strong>#{_item.singleHoues.afterBusinessHouse.mapNumber}     <strong>#{messages.House_BlockNo}:</strong>#{_item.singleHoues.afterBusinessHouse.blockNo}   <strong>#{messages.Build_BuildNO}:</strong>#{_item.singleHoues.afterBusinessHouse.buildNo}   <strong>#{messages.House_Order}:</strong>#{_item.singleHoues.afterBusinessHouse.houseOrder}
         </p>
@@ -25,6 +27,6 @@
         </p>
 
 
-
+        </ui:remove>
     </ui:define>
 </ui:composition>

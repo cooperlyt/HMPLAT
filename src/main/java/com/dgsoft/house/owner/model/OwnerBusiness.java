@@ -832,17 +832,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     @Transient
-    public BusinessPersion getSellEntrust(){
-        return getBusinessPersion(BusinessPersion.PersionType.SELL_ENTRUST);
-    }
-
-    @Transient
-    public BusinessPersion getOwnerEntrust(){
-        return getBusinessPersion(BusinessPersion.PersionType.OWNER_ENTRUST);
-    }
-
-
-    @Transient
     public BusinessPersion getPreSaleEntrust(){
         return getBusinessPersion(BusinessPersion.PersionType.PRE_SALE_ENTRUST);
     }

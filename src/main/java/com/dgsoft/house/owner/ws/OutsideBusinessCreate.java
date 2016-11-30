@@ -172,7 +172,7 @@ public class OutsideBusinessCreate {
                 contractOwner.setSex(pp.getSex());
                 contractOwner.setPriority(i++);
                 if (pp.getPowerProxyPerson() != null) {
-                    contractOwner.setProxyPerson(new ProxyPerson());
+                    contractOwner.setPowerProxyPerson(new ProxyPerson());
                     contractOwner.getProxyPerson().setProxyType(pp.getPowerProxyPerson().getProxyType());
                     contractOwner.getProxyPerson().setPersonName(pp.getPowerProxyPerson().getPersonName());
                     contractOwner.getProxyPerson().setCredentialsType(pp.getPowerProxyPerson().getCredentialsType());

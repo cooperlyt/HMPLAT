@@ -328,15 +328,6 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getInstance().getEvaluate();
     }
 
-    @Deprecated
-    public BusinessPersion getSellEntrust(){
-        return getInstance().getSellEntrust();
-    }
-
-    @Deprecated
-    public BusinessPersion getOwnerEntrust(){
-        return getInstance().getOwnerEntrust();
-    }
 
     @Deprecated
     public Reason getReceive(){

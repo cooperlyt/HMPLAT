@@ -655,6 +655,14 @@ a:focus, a:hover{
     text-overflow: ellipsis;
 }
 
+.detailsTable th.details-table-group{
+    word-wrap: break-word;
+    word-break: normal;
+    white-space: pre-wrap;
+    padding: 10px;
+
+}
+
 .details-context-td{
     padding: 0 !important;
     margin: 0 !important;

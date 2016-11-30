@@ -9,7 +9,12 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
     <span class="person-body" data-person-uuid="#{_person.uuid}">
-        <h:inputHidden p:data-finger-code="#{_person.uuid}" value="#{_person.personEntity.fingerprint}"/>
+
+        <ui:remove>
+            <!--
+            <h:inputHidden p:data-finger-code="#{_person.uuid}" value="#{_person.personEntity.fingerprint}"/>
+            -->
+        </ui:remove>
 
     <s:decorate styleClass="form-group" id="singPersonCardInput" template="/layout/edit-big.xhtml">
 
@@ -40,8 +45,6 @@
 
 
     <a:outputPanel id="attFields" layout="block" class="sub-details-body">
-        <h:inputHidden id="all_info" p:data-person-info="#{_person.uuid}" value="#{_person.personEntity.paperCopyInfo}"/>
-
 
 
         <div class="row">
@@ -68,7 +71,9 @@
                     </ui:define>
                     <div class="input-group">
 
-                        <h:inputText id="birthdayInput" value="#{_person.personEntity.birthday}" p:placeholder="出生日期" label="出生日期" styleClass="js-datepicker form-control person-brithday"/>
+                        <h:inputText id="birthdayInput" value="#{_person.personEntity.birthday}" p:placeholder="出生日期" label="出生日期" styleClass="js-datepicker form-control person-brithday">
+                            <s:convertDateTime pattern="#{messages.datePattern}"/>
+                        </h:inputText>
 
 
                     <span class="input-group-btn">
@@ -87,15 +92,7 @@
 
                     <ui:param name="for" value="personPhoneInput"/>
                     <ui:param name="showLabel" value="false"/>
-                    <ui:define name="label">
-                        邮政编码
-                    </ui:define>
-                    <div class="input-group">
 
-                        <h:inputText p:placeholder="邮政编码" size="9" maxlength="9" label="邮政编码" styleClass="form-control"/>
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-earphone"/>
-                        </div>
                         <h:inputText label="#{messages.Tel}" size="30" maxlength="15" p:placeholder="#{messages.Tel}"
                                      styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
                                      value="#{_person.personEntity.phone}" id="personPhoneInput" required="true">
@@ -104,12 +101,11 @@
                             <r:validator event="blur"/>
                         </h:inputText>
 
-                    </div>
                 </s:decorate>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
-                <div class="thumbnail" style="margin-bottom: 0">
-                    <h:graphicImage p:data-src="holder.js/120x134?text=照片" styleClass="person-img" style="min-height: 126px;" alt="身份证照片" value="#{runParam.getParamValue('IMG_SERVER_ADDRESS')}/person/img/#{_person.credentialsNumber}" width="120px" height="134px"/>
+                <div class="thumbnail right" style="margin-bottom: 0; width: 130px" >
+                    <h:graphicImage p:data-src="holder.js/120x134?text=照片" styleClass="person-img" style="min-height: 126px;" alt="身份证照片" value="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}/person/img/#{_person.credentialsNumber}" width="120px" height="134px"/>
 
                 </div>
             </div>

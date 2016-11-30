@@ -35,10 +35,20 @@ public class HouseRecord implements java.io.Serializable {
 		this.houseStatus = houseStatus;
     }
 
+	public HouseRecord(BusinessHouse businessHouse,HouseStatus houseStatus,String searchKey,String display){
+		this.businessHouse = businessHouse;
+		this.houseCode = businessHouse.getHouseCode();
+		this.houseStatus = houseStatus;
+		this.searchKey = searchKey;
+		this.display = display;
+	}
+
 	public HouseRecord(BusinessHouse businessHouse) {
 		this.businessHouse = businessHouse;
 		this.houseCode = businessHouse.getHouseCode();
 	}
+
+
 
 	@Enumerated(EnumType.STRING)
 	@Column(name ="HOUSE_STATUS",nullable = true,length = 32)

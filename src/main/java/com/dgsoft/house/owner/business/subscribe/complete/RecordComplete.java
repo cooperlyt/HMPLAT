@@ -150,12 +150,18 @@ public class RecordComplete implements TaskCompleteSubscribeComponent {
 
                 Logging.getLog(getClass()).debug("last status" + lastStatus);
                 BusinessHouse house = houseBusiness.getAfterBusinessHouse();
+                KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(house);
+
+
+
                 HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
                 if (houseRecord == null) {
-                    ownerEntityLoader.getEntityManager().persist(new HouseRecord(house,lastStatus));
+                    ownerEntityLoader.getEntityManager().persist(new HouseRecord(house,lastStatus,key.getKey(),OwnerHouseHelper.genHouseDisplay(house)));
                 } else {
                     houseRecord.setBusinessHouse(house);
                     houseRecord.setHouseStatus(lastStatus);
+                    houseRecord.setSearchKey(key.getKey());
+                    houseRecord.setDisplay(OwnerHouseHelper.genHouseDisplay(house));
                     //ownerEntityLoader.getEntityManager().merge(houseRecord);
                 }
 

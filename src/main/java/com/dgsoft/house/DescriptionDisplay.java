@@ -12,6 +12,15 @@ import java.util.List;
  */
 public class DescriptionDisplay {
 
+    public static String toStringValue(DescriptionDisplay descriptionDisplay){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(descriptionDisplay);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("display json data gen fail!",e);
+        }
+    }
+
     public static DescriptionDisplay instance(String data){
         DescriptionDisplay descriptionDisplay;
         if (data == null){

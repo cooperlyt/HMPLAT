@@ -559,7 +559,7 @@ public class ProjectBusinessStart {
 
                         if (block.getHouse() != null) {
                             if (block.isLocked()) {
-                                if (HouseProperty.SALE_HOUSE.equals(block.getHouse().getHouseType())) {
+                                if (HouseProperty.SALE_HOUSE.equals(block.getHouse().getHouseType()) || HouseProperty.LIMIT_PRICE_HOUSE.equals(block.getHouse().getHouseType())) {
                                     //UseTypeWordAdapter.UseType useType = UseTypeWordAdapter.instance().getUseType(block.getHouse().getUseType());
                                     businessBuild.setHouseCount(businessBuild.getHouseCount() + 1);
                                     businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));

@@ -16,7 +16,7 @@
         }
 
         .js-sub-details-table-row.expand td{
-            display: inherit;
+            display: table-cell;
         }
 
         .js-master-table-row td:last-child{
@@ -81,7 +81,7 @@
 
     <dh:entryGridBlock columns="8" rendered="#{not empty houseInfo.mainOwner}">
         <h:outputText value="#{dictionary.getEnumLabel(houseInfo.mainOwner.type)}"/>
-        <dh:entryGridColumn expandTarget="ownerCardInfo" colspan="7">
+        <dh:entryGridColumn colspan="7">
         <h:outputText value="#{houseInfo.mainOwner.personName}"/>
         </dh:entryGridColumn>
     </dh:entryGridBlock>
@@ -101,10 +101,10 @@
                     <thead>
                     <tr>
                         <th>权力类型</th>
-                        <th>共有人</th>
+                        <th>姓名</th>
                         <th>证件类型</th>
                         <th>证件号</th>
-                        <th>联系电话</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -114,9 +114,9 @@
                                 <td>#{_pool.personName}</td>
                                 <td>#{messages[_pool.credentialsType.name()]}</td>
                                 <td>#{_pool.credentialsNumber}</td>
-                                <td>#{_pool.phone}</td>
+
                             </tr>
-                            <tr id="#{_pool.id}" class="js-sub-details-table-row"><td colspan="5" style="padding: 0">
+                            <tr id="#{_pool.id}" class="js-sub-details-table-row"><td colspan="4" style="padding: 0">
                                 <dh:entryGrid styleClass="detailsTable table table-bordered details-sub-table" autoLastWidth="true">
 
                                     <dh:entryGridBlock columns="6">
@@ -152,12 +152,12 @@
                                         <h:outputText value="#{messages[_pool.sex.name()]}"/>
 
                                         <h:outputText value="#{(_pool.credentialsType eq 'PASSPORT') ? '图籍' : '户籍所在地'}"/>
-                                        <dh:entryGridColumn colspan="6">
+                                        <dh:entryGridColumn colspan="5">
                                         <h:outputText value="#{_pool.rootAddress}"/>
                                         </dh:entryGridColumn>
 
                                         <h:outputText value="住址"/>
-                                        <dh:entryGridColumn colspan="6">
+                                        <dh:entryGridColumn colspan="5">
                                         <h:outputText value="#{_pool.address}"/>
                                         </dh:entryGridColumn>
 

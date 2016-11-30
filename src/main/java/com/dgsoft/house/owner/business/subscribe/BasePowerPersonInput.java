@@ -20,9 +20,6 @@ import java.util.List;
 @Scope(ScopeType.CONVERSATION)
 public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
 
-
-
-
     protected abstract PowerPerson.PowerPersonType getPowerPersonType();
 
     @In
@@ -57,6 +54,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
         if (poolType == null || !poolType.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType())){
             ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().removeAll(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),false));
         }
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
     }
 
     public int getPersonCount(){

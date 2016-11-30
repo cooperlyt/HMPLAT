@@ -17,7 +17,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 public class HouseTypeNotHave extends BusinessHouseValid {
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        if(HouseProperty.SALE_HOUSE.equals(businessHouse.getHouseType())){
+        if(HouseProperty.SALE_HOUSE.equals(businessHouse.getHouseType()) || HouseProperty.LIMIT_PRICE_HOUSE.equals(businessHouse.getHouseType())){
 
             return new ValidResult(ValidResultLevel.SUCCESS);
         }

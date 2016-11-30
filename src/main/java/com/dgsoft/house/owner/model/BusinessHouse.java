@@ -803,6 +803,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         return result;
     }
 
+
     @Transient
     public List<PowerPerson> getAllNewPowerPersonList(){
         List<PowerPerson> result = new ArrayList<PowerPerson>();
@@ -813,6 +814,12 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         }
         Collections.sort(result);
         return result;
+    }
+
+    //所有备案人
+    @Transient
+    public List<PowerPerson> getNewContractOwnerList(){
+        return getPowerPersonListByType(PowerPerson.PowerPersonType.CONTRACT,false);
     }
 
     @Transient

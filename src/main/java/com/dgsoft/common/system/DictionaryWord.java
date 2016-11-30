@@ -97,6 +97,7 @@ public class DictionaryWord {
     }
 
 
+
     public List<Word> getWordList(String categoryId, String containKey){
         List<Word> result = new ArrayList<Word>();
         for(Word word: getWordList(categoryId)){

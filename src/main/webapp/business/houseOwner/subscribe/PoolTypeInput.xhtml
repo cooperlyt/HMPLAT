@@ -9,7 +9,7 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
 
-    <s:decorate id="poolTypeField" template="/layout/edit.xhtml">
+    <s:decorate id="poolTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.RegisterProperty_PoolMemo}
         </ui:define>
@@ -18,7 +18,7 @@
         <div class="input-group">
             <div class="input-group-btn">
                 <h:selectOneMenu label="#{messages.RegisterProperty_PoolMemo}"
-                                 styleClass="selectpicker edit-select"
+                                 styleClass="selectpicker select-menu-btn input-group-first"
                                  value="#{PowerPersonIntput.poolType}" required="true">
                     <s:selectItems value="#{poolTypes}" var="_poolType" label="#{messages[_poolType.name()]}"/>
                     <s:convertEnum/>
@@ -34,7 +34,7 @@
 
             <h:inputText label="共有权人数量" p:placeHolder="共有权人数量"
                          styleClass="form-control" required="true"
-                         readonly="#{PowerPersonIntput.poolType eq 'SINGLE_OWNER'}"
+                         readonly="#{empty PowerPersonIntput.poolType or (PowerPersonIntput.poolType eq 'SINGLE_OWNER')}"
                          id="poolCountInput" value="#{PowerPersonIntput.personCount}">
                 <f:converter converterId="javax.faces.Integer"/>
                 <f:validateLongRange minimum="2"/>

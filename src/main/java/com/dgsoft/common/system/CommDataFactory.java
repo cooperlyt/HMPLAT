@@ -46,4 +46,9 @@ public class CommDataFactory {
         return PowerPerson.LegalType.values();
     }
 
+    @Factory(value = "sexValues",scope = ScopeType.APPLICATION)
+    public Sex[] getSexValues(){
+        return Sex.values();
+    }
+
 }
