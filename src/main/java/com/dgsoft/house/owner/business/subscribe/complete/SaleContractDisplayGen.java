@@ -4,6 +4,7 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.ContractNumber;
+import com.dgsoft.house.owner.model.HouseContract;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.seam.annotations.In;
@@ -36,9 +37,14 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
     public void complete() {
         DescriptionDisplay businessDisplay = new DescriptionDisplay();
         List<DescriptionDisplay.DisplayData> dds = new ArrayList<DescriptionDisplay.DisplayData>();
-        dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"合同编号:" + ownerBusinessHome.getSingleHoues().getHouseContract().getContractNumber()));
-        if(ownerBusinessHome.getSingleHoues().getHouseContract().getContractSubmit() != null){
-            for (ContractNumber cn: ownerBusinessHome.getSingleHoues().getHouseContract().getContractSubmit().getContractNumbers()){
+        HouseContract houseContract = ownerBusinessHome.getSingleHoues().getHouseContract();
+        if (houseContract == null){
+            houseContract = ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getHouseContract();
+        }
+
+        dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"合同编号:" + houseContract.getContractNumber()));
+        if(houseContract.getContractSubmit() != null){
+            for (ContractNumber cn: houseContract.getContractSubmit().getContractNumbers()){
                 dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,cn.getContractNumber()));
             }
         }

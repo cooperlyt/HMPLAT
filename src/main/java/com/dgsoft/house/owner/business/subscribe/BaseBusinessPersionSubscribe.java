@@ -5,6 +5,7 @@ import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessPersion;
+import com.dgsoft.house.owner.model.PowerPerson;
 import com.dgsoft.house.owner.model.ProxyPerson;
 import org.jboss.seam.annotations.In;
 
@@ -49,8 +50,15 @@ public abstract class BaseBusinessPersionSubscribe extends OwnerEntityHome<Busin
         } else {
             have = false;
         }
+    }
 
-
+    protected void convertToPerson(PowerPerson powerPerson){
+        if (powerPerson !=null){
+            getInstance().setCredentialsType(powerPerson.getCredentialsType());
+            getInstance().setCredentialsNumber(powerPerson.getCredentialsNumber());
+            getInstance().setPersonName(powerPerson.getPersonName());
+            getInstance().setPhone(powerPerson.getPhone());
+        }
     }
 
     private String searchByDB() {

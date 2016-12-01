@@ -6,15 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:dh="http://www.dgsoft.com/jsf/html">
+                template="PowerPersonView.xhtml">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.saleInfo}">
-        <dh:entryGridBlock columns="4" >
-            <h:outputText value="#{messages.SaleInfo_PayType}"/>
-            <h:outputText value="#{messages[ownerBusinessHome.saleInfo.payType.name()]}"/>
+    <ui:param name="powerPersons" value="#{ownerBusinessHome.singleHoues.startBusinessHouse.newContractOwnerList}"/>
+    <ui:param name="_pool_type" value="#{ownerBusinessHome.singleHoues.startBusinessHouse.poolType}"/>
 
-            <h:outputText value="#{messages.SaleInfo_SUM_PRICE}"/>
-            <h:outputText value="#{ownerBusinessHome.saleInfo.sumPrice}"/>
-        </dh:entryGridBlock>
-    </a:outputPanel>
 </ui:composition>

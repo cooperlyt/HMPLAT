@@ -113,6 +113,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="SelectSaleContractView" page="/business/houseOwner/subscribe/SelectSaleContractView.xhtml">
+        <description>
+            所选销售合同查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="PersionObligorView" page="/business/houseOwner/subscribe/PersionObligorView.xhtml">
         <description>
             债务人查看
@@ -236,6 +242,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="StartSaleInfoView" page="/business/houseOwner/subscribe/StartSaleInfoView.xhtml">
+        <description>
+            房屋交易信息,付款方式,购房款查看(Start)
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="SaleInfoGiftView" page="/business/houseOwner/subscribe/SaleInfoGiftView.xhtml">
         <description>
             房屋交易信息,赠与面积,付款方式,购房款查看
@@ -261,7 +273,7 @@
 
     <view-subscribe name="HouseRegInfoStratView" page="/business/houseOwner/subscribe/HouseRegInfoStratView.xhtml">
     <description>
-        （启动） 产权来源，产别
+         产权来源，产别（StartHouse）
     </description>
    </view-subscribe>
 
@@ -272,9 +284,9 @@
     </view-subscribe>
 
 
-    <view-subscribe name="HouseOwnerStartView" page="/business/houseOwner/subscribe/HouseOwnerStartView.xhtml">
+    <view-subscribe name="StartContractOwnerView" page="/business/houseOwner/subscribe/StartContractOwnerView.xhtml">
         <description>
-            （启动） 产权人信息
+            所有备案人信息（StartHouse）
         </description>
     </view-subscribe>
 
@@ -282,7 +294,7 @@
 
     <view-subscribe name="PoolTypeStartView" page="/business/houseOwner/subscribe/PoolTypeStartView.xhtml">
         <description>
-            (启动)共有情况
+            共有情况(StartHouse)
         </description>
     </view-subscribe>
 
@@ -394,6 +406,13 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+    <edit-subscribe name="StartPersionCorrectEdit" page="/business/houseOwner/subscribe/StartOwnerToApplyPersonEdit.xhtml" component="">
+        <description>
+            申请人编辑(StartHouse转)
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
     <edit-subscribe name="persionCorrectProjectEdit" page="/business/houseOwner/subscribe/PersionCorrectProjectEdit.xhtml" component="">
         <description>
             申请人编辑(抵押人转成申请人)在建抵押
@@ -413,7 +432,7 @@
     <edit-subscribe name="PersionPreSaleEntrustEdit" page="/business/houseOwner/subscribe/PersionPreSaleEntrustEdit.xhtml"
                     component="">
         <description>
-            预售代理人编辑
+            开发商代理人编辑
         </description>
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
@@ -778,6 +797,7 @@
             存量房备案合同信息
         </description>
     </edit-subscribe>
+
 
 
 

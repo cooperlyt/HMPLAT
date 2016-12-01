@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <dh:entryGridBlock columns="4" >
+
+        <h:outputText value="合同编号"/>
+        <h:outputText value="#{ownerBusinessHome.instance.selectBusiness.singleHoues.houseContract.contractNumber}"/>
+
+        <h:outputText value="签约时间"/>
+        <h:outputText value="#{ownerBusinessHome.instance.selectBusiness.singleHoues.houseContract.contractDate}">
+            <f:convertDateTime pattern="#{messages.displayDatePattern}"/>
+        </h:outputText>
+
+        <c:if test="#{not empty ownerBusinessHome.instance.selectBusiness.singleHoues.houseContract.contractSubmit}">
+            <h:outputText value="合同号"/>
+            <dh:entryGridColumn colspan="3">
+                <c:forEach items="#{ownerBusinessHome.instance.selectBusiness.singleHoues.houseContract.contractSubmit.contractNumberList}"
+                           var="_contractNumber">
+                    <h:outputText value="  #{_contractNumber.contractNumber}"/>
+                </c:forEach>
+            </dh:entryGridColumn>
+        </c:if>
+
+
+    </dh:entryGridBlock>
+
+
+</ui:composition>
