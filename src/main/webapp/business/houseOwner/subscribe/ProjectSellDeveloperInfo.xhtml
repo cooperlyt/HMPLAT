@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+        <dh:entryGridBlock columns="4" >
+
+            <h:outputText value="开发单位"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.businessProject.developerName}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="企业性质"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.instance.businessProject.developerProperty)}"/>
+
+            <h:outputText value="资质等级"/>
+            <h:outputText value="#{dictionary.getWordValue(ownerBusinessHome.instance.businessProject.developerLevel)}"/>
+
+            <h:outputText value="单位地址"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.businessProject.developerAddress}"/>
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
+
+
+
+</ui:composition>

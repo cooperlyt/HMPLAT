@@ -1,6 +1,7 @@
 package com.dgsoft.common.system;
 
 import cc.coopersoft.house.ProxyType;
+import cc.coopersoft.house.UseType;
 import cc.coopersoft.house.sale.data.PowerPerson;
 import com.dgsoft.house.OwnerShareCalcType;
 import org.jboss.seam.ScopeType;
@@ -49,6 +50,11 @@ public class CommDataFactory {
     @Factory(value = "sexValues",scope = ScopeType.APPLICATION)
     public Sex[] getSexValues(){
         return Sex.values();
+    }
+
+    @Factory(value = "useTypes", scope = ScopeType.APPLICATION)
+    public UseType[] getUseTypes(){
+        return UseType.values();
     }
 
 }

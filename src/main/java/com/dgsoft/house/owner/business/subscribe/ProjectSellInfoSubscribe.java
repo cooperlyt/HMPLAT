@@ -1,8 +1,10 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.common.Entry;
 import com.dgsoft.common.SetLinkList;
+import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.SaleType;
+import com.dgsoft.house.model.Developer;
+import com.dgsoft.house.model.Project;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.ProjectLandEndTime;
@@ -11,10 +13,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
-import org.jboss.seam.log.Logging;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wxy on 2015-09-07.
@@ -25,6 +23,9 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
 
 
     @DataModel()
@@ -56,6 +57,17 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
         return projectLandEndTimes.isEmpty();
     }
 
+    public void reloadDeveloperInfo(){
+        Developer developer = houseEntityLoader.getEntityManager().find(Project.class, ownerBusinessHome.getInstance().getBusinessProject().getProjectCode()).getDeveloper();
+        ownerBusinessHome.getInstance().getBusinessProject().setDeveloperName(developer.getName());
+        ownerBusinessHome.getInstance().getBusinessProject().setDeveloperCode(developer.getId());
+        if (developer.getAttachCorporation() != null){
+            ownerBusinessHome.getInstance().getBusinessProject().setDeveloperAddress(developer.getAttachCorporation().getAddress());
+            ownerBusinessHome.getInstance().getBusinessProject().setDeveloperLevel(developer.getAttachCorporation().getLevel());
+            ownerBusinessHome.getInstance().getBusinessProject().setDeveloperProperty(developer.getAttachCorporation().getCompanyType());
+        }
+    }
+
     @Override
     public void create(){
         super.create();
@@ -85,13 +97,5 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
         projectLandEndTimes = new SetLinkList<ProjectLandEndTime>(getInstance().getProjectLandEndTimes());
 
     }
-
-
-
-
-
-
-
-
 
 }

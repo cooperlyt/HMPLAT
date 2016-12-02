@@ -174,7 +174,7 @@
                                                             <ul >
                                                                 <li>   <h2>
 
-                                                                    <h:selectBooleanCheckbox rendered="#{empty _cell.house.houseType}" value="#{_cell.locked}">
+                                                                    <h:selectBooleanCheckbox rendered="#{_cell.house.houseType eq 'SALE_HOUSE' or _cell.house.houseType eq 'LIMIT_PRICE_HOUSE'}" value="#{_cell.locked}">
                                                                         <a:ajax event="click"  render="buildListView"/>
                                                                     </h:selectBooleanCheckbox>
 

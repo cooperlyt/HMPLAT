@@ -61,6 +61,9 @@ public class ProjectSellInfo implements java.io.Serializable {
     private String licenseNumber;
     private String createLandCardNumber;
 
+    private BigDecimal createMoney;
+    private Date complateDate;
+
     private Set<ProjectLandEndTime> projectLandEndTimes = new HashSet<ProjectLandEndTime>(0);
 
 	public ProjectSellInfo() {
@@ -371,6 +374,23 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.proofMaterial = proofMaterial;
     }
 
+    @Column(name = "CREATE_MONEY", length = 19, scale = 4)
+    public BigDecimal getCreateMoney() {
+        return createMoney;
+    }
+
+    public void setCreateMoney(BigDecimal createMoney) {
+        this.createMoney = createMoney;
+    }
+
+    @Column(name = "COMPLATE_DATE")
+    public Date getComplateDate() {
+        return complateDate;
+    }
+
+    public void setComplateDate(Date complateDate) {
+        this.complateDate = complateDate;
+    }
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, cascade = CascadeType.ALL,mappedBy = "projectSellInfo")
     public Set<ProjectLandEndTime> getProjectLandEndTimes() {

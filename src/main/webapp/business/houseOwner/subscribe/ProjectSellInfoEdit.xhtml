@@ -8,21 +8,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
-
-
-
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">#{messages.ProjectSellInfo_isType}</ui:define>
         <h:selectBooleanCheckbox label="#{messages.ProjectSellInfo_isType}"
                                  value="#{projectSellInfoSubscribe.type}"/>
     </s:decorate>
-
-
-
-
-
-
-
 
     <div class="form-inline">
         <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
@@ -151,6 +141,7 @@
                                      rendered="true"
                                      styleClass="selectpicker select-menu-btn input-group-first">
                         <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
+                                       noSelectionLabel="#{messages.noSelectLabel}"
                                        itemValue="#{_word.id}" label="#{_word.value}"/>
                     </h:selectOneMenu>
 
@@ -169,19 +160,7 @@
 
         </s:decorate>
 
-    <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
-        <ui:define name="label">
-            #{messages.ProjectSellInfo_landUseType}
-        </ui:define>
-        <ui:param name="for" value="landUseType"/>
-        <h:inputText label="#{messages.ProjectSellInfo_landUseType}"
-                     id="landUseType"
-                     value="#{projectSellInfoSubscribe.instance.landUseType}"
-                     styleClass="form-control"
-                     maxlength="32"
-                     required="true">
-        </h:inputText>
-    </s:decorate>
+
 
 
     <div class="form-inline">
@@ -244,10 +223,12 @@
 
                     <div class="input-group">
                         <span class="input-group-btn">
-                        <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first" label="设计用途" value="#{_useTypeTime.useTypeCategory}" required="true">
+                        <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first"
+                                         label="设计用途" value="#{_useTypeTime.useTypeCategory}" required="true">
 
-                            <s:selectItems value="#{useTypeCategoryList}" var="_type"
-                                           label="#{_type.value}" itemValue="#{_type.key}" noSelectionLabel="设计用途"/>
+                            <s:selectItems value="#{useTypes}" var="_type"
+                                           label="#{dictionary.getEnumLabel(_type)}" itemValue="#{_type}" noSelectionLabel="设计用途"/>
+                            <s:convertEnum/>
                             <a:ajax execute="@this" event="valueChange" render="@none"/>
                         </h:selectOneMenu>
                         </span>
@@ -285,7 +266,20 @@
     </a:outputPanel>
 
     <div class="form-inline">
-
+        <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.ProjectSellInfo_landUseType}
+            </ui:define>
+            <ui:param name="for" value="landUseType"/>
+            <h:inputText label="#{messages.ProjectSellInfo_landUseType}"
+                         id="landUseType"
+                         value="#{projectSellInfoSubscribe.instance.landUseType}"
+                         styleClass="form-control"
+                         maxlength="32"
+                         size="32"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
 
 
 
@@ -341,6 +335,9 @@
         </h:inputText>
     </s:decorate>
 
+
+    <div class="form-inline">
+
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
             #{messages.ProjectSellInfo_buildSize}
@@ -348,23 +345,47 @@
         <ui:param name="for" value="buildSize"/>
         <h:selectOneMenu id="buildSize"
                          value="#{projectSellInfoSubscribe.instance.buildSize}"
-                         styleClass="selectpicker select-menu-btn input-group-first"
+                         styleClass="selectpicker edit-select input-group-first "
                          label="#{messages.ProjectSellInfo_buildSize}"
                          required="true">
             <s:selectItems value="#{dictionary.getWordList('house.project.buildSize')}" var="_word"
                            itemValue="#{_word.id}" label="#{_word.value}"
                            noSelectionLabel="#{messages.noSelectLabel}"/>
-
-
         </h:selectOneMenu>
 
     </s:decorate>
 
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                总投资额
+            </ui:define>
+            <ui:param name="for" value="projectCreateMoneyInput"/>
+            <h:inputText id="projectCreateMoneyInput" styleClass="form-control"
+                         value="#{projectSellInfoSubscribe.instance.createMoney}">
+                <f:convertNumber pattern="#0.00"/>
+            </h:inputText>
 
 
+        </s:decorate>
+
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                计划竣工日期
+            </ui:define>
+            <ui:param name="for" value="projectComplateDateInput"/>
+            <h:inputText id="projectComplateDateInput" styleClass="js-datepicker form-control"
+                value="#{projectSellInfoSubscribe.instance.complateDate}">
+                <s:convertDateTime pattern="#{messages.datePattern}"/>
+            </h:inputText>
 
 
+        </s:decorate>
 
+
+    </div>
+
+
+    <div class="form-inline">
 
         <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
             <ui:define name="label">
@@ -376,6 +397,7 @@
                          value="#{projectSellInfoSubscribe.instance.createCardNumber}"
                          styleClass="form-control"
                          maxlength="50"
+                         size="40"
                          required="true"/>
         </s:decorate>
 
@@ -390,11 +412,11 @@
                          id="createPrepareCardNumber"
                          value="#{projectSellInfoSubscribe.instance.createPrepareCardNumber}"
                          styleClass="form-control"
-                         maxlength="50"
+                         maxlength="50" size="40"
                          required="true"/>
         </s:decorate>
 
-
+</div>
     <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
         <ui:define name="label">
             #{messages.ProjectSellInfo_ProofMaterial}

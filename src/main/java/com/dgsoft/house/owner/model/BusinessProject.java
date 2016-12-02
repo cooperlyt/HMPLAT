@@ -32,7 +32,9 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String districtName;
     private String projectCode;
 
-    private RecordStore recordStore;
+    private String developerAddress;
+    private String developerLevel;
+    private String developerProperty;
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
     private ProjectSellInfo projectSellInfo;
 
@@ -50,6 +52,11 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.districtCode = project.getDistrictCode();
         this.districtName = project.getDistrictName();
         this.projectCode = project.getProjectCode();
+        if (project.getDeveloper().getAttachCorporation() != null){
+            this.developerAddress = project.getDeveloper().getAttachCorporation().getAddress();
+            this.developerLevel = project.getDeveloper().getAttachCorporation().getLevel();
+            this.developerProperty = project.getDeveloper().getAttachCorporation().getCompanyType();
+        }
     }
 
     public BusinessProject(OwnerBusiness ownerBusiness, BusinessProject other) {
@@ -64,6 +71,9 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.districtName = other.getDistrictName();
         this.projectCode = other.getProjectCode();
         this.projectSellInfo = new ProjectSellInfo(this,other.getProjectSellInfo());
+        this.developerAddress = other.getDeveloperAddress();
+        this.developerLevel = other.getDeveloperLevel();
+        this.developerProperty = other.getDeveloperProperty();
     }
 
     @Id
@@ -201,6 +211,35 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.projectCode = projectCode;
     }
 
+    @Column(name = "CORP_ADDRESS", length = 100)
+    @Size(max = 100)
+    public String getDeveloperAddress() {
+        return developerAddress;
+    }
+
+    public void setDeveloperAddress(String developerAddress) {
+        this.developerAddress = developerAddress;
+    }
+
+    @Column(name = "CORP_LEVEL", length = 32)
+    @Size(max = 100)
+    public String getDeveloperLevel() {
+        return developerLevel;
+    }
+
+    public void setDeveloperLevel(String developerLevel) {
+        this.developerLevel = developerLevel;
+    }
+
+    @Column(name = "CORP_PROPERTY", length = 32)
+    @Size(max = 32)
+    public String getDeveloperProperty() {
+        return developerProperty;
+    }
+
+    public void setDeveloperProperty(String developerProperty) {
+        this.developerProperty = developerProperty;
+    }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessProject")
     public Set<BusinessBuild> getBusinessBuilds() {

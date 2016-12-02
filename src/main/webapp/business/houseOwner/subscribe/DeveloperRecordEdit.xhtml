@@ -1,0 +1,88 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+    <a:outputPanel id="developerPanel">
+
+    <ui:decorate template="/layout/edit-multi.xhtml">
+
+        <ui:define name="topValue">
+            <s:decorate id="developerFields" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                <ui:param name="for" value="developerNameInput"/>
+                <ui:param name="status" value="developerInfoStatus"/>
+                <ui:define name="label">
+                    开发商信息
+                </ui:define>
+                <div class="input-group">
+                    <h:inputText id="developerNameInput" value="#{ownerBusinessHome.instance.businessProject.developerName}" disabled="true" styleClass="form-control" />
+                    <span class="input-group-btn">
+                        <a:commandLink action="#{projectSellInfoSubscribe.reloadDeveloperInfo}" execute="@this"
+                                       styleClass="btn btn-default" render="developerPanel" oncomplete="initDynamicEditInputs('#{r:clientId('developerPanel')}')">
+                            <a:attachQueue requestDelay="0"/>
+                            <span class="btn-icon glyphicon glyphicon-refresh"/>
+                        </a:commandLink>
+                    </span>
+                </div>
+
+
+            </s:decorate>
+        </ui:define>
+
+        <div class="form-inline">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:param name="for" value="developerPropertyInput"/>
+            <ui:param name="status" value="developerPropertyStatus"/>
+            <ui:define name="label">
+                企业性质
+            </ui:define>
+            <h:selectOneMenu required="true"
+                             id="developerPropertyInput"
+                             value="#{ownerBusinessHome.instance.businessProject.developerProperty}"
+                             styleClass="selectpicker edit-select input-group-first"
+                             label="企业性质">
+                <s:selectItems value="#{dictionary.getWordList('71')}" var="_word" noSelectionLabel="#{messages.noSelectLabel}"
+                               itemValue="#{_word.id}" label="#{_word.value}"/>
+            </h:selectOneMenu>
+
+        </s:decorate>
+
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:param name="for" value="developerLevelInput"/>
+            <ui:param name="status" value="developerLevelStatus"/>
+            <ui:define name="label">
+                资质等级
+            </ui:define>
+            <h:selectOneMenu required="true"
+                             id="developerLevelInput"
+                             value="#{ownerBusinessHome.instance.businessProject.developerProperty}"
+                             styleClass="selectpicker edit-select input-group-first"
+                             label="企业性质">
+                <s:selectItems value="#{dictionary.getWordList('70')}" var="_word" noSelectionLabel="#{messages.noSelectLabel}"
+                               itemValue="#{_word.id}" label="#{_word.value}"/>
+            </h:selectOneMenu>
+
+        </s:decorate>
+</div>
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:param name="for" value="developerNameInput"/>
+            <ui:param name="status" value="developerInfoStatus"/>
+            <ui:define name="label">
+                单位地址
+            </ui:define>
+             <h:inputText value="#{ownerBusinessHome.instance.businessProject.developerAddress}"
+                          styleClass="form-control"/>
+
+        </s:decorate>
+
+    </ui:decorate>
+    </a:outputPanel>
+
+
+
+</ui:composition>

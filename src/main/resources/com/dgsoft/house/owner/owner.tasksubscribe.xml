@@ -398,6 +398,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PersionObligeeOldView" page="/business/houseOwner/subscribe/ProjectSellDeveloperInfo.xhtml">
+        <description>
+            许可证开发商信息查看
+        </description>
+    </view-subscribe>
+
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
         <description>
@@ -636,6 +642,13 @@
                     component="">
         <description>
             预售许可证受理信息编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ProjectSellDeveloperEdit" page="/business/houseOwner/subscribe/DeveloperRecordEdit.xhtml"
+                    component="">
+        <description>
+            预售许可证开发商信息编辑
         </description>
     </edit-subscribe>
 
@@ -1529,10 +1542,6 @@
             抵押权人，抵押信息提取（变更抵押，抵押权变更）
         </description>
     </create-component>
-
-
-
-
 
 
     <create-component type="DATA_FILL" component="developerChangeOwner">
