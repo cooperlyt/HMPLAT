@@ -42,12 +42,8 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 
 	private Integer houseCount;
 	private BigDecimal area;
-	private Integer homeCount;
-	private BigDecimal homeArea;
-	private Integer unhomeCount;
-	private BigDecimal unhomeArea;
-	private Integer shopCount;
-	private BigDecimal shopArea;
+
+	private Set<SellTypeTotal> sellTypeTotals = new HashSet<SellTypeTotal>(0);
 
 	public BusinessBuild() {
 	}
@@ -299,59 +295,6 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 		this.structure = structure;
 	}
 
-	@Column(name = "HOME_COUNT")
-	public Integer getHomeCount() {
-		return this.homeCount;
-	}
-
-	public void setHomeCount(Integer homeCount) {
-		this.homeCount = homeCount;
-	}
-
-	@Column(name = "HOME_AREA", precision = 18, scale = 3)
-	public BigDecimal getHomeArea() {
-		return this.homeArea;
-	}
-
-	public void setHomeArea(BigDecimal homeArea) {
-		this.homeArea = homeArea;
-	}
-
-	@Column(name = "UNHOME_COUNT")
-	public Integer getUnhomeCount() {
-		return this.unhomeCount;
-	}
-
-	public void setUnhomeCount(Integer unhomeCount) {
-		this.unhomeCount = unhomeCount;
-	}
-
-	@Column(name = "UNHOME_AREA", precision = 18, scale = 3)
-	public BigDecimal getUnhomeArea() {
-		return this.unhomeArea;
-	}
-
-	public void setUnhomeArea(BigDecimal unhomeArea) {
-		this.unhomeArea = unhomeArea;
-	}
-
-	@Column(name = "SHOP_COUNT")
-	public Integer getShopCount() {
-		return this.shopCount;
-	}
-
-	public void setShopCount(Integer shopCount) {
-		this.shopCount = shopCount;
-	}
-
-	@Column(name = "SHOP_AREA", precision = 18, scale = 3)
-	public BigDecimal getShopArea() {
-		return this.shopArea;
-	}
-
-	public void setShopArea(BigDecimal shopArea) {
-		this.shopArea = shopArea;
-	}
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "businessBuild")
     public Set<ProjectExceptHouse> getProjectExceptHouses() {
@@ -362,7 +305,16 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
         this.projectExceptHouses = projectExceptHouses;
     }
 
-    @Override
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "businessBuild")
+	public Set<SellTypeTotal> getSellTypeTotals() {
+		return sellTypeTotals;
+	}
+
+	public void setSellTypeTotals(Set<SellTypeTotal> sellTypeTotals) {
+		this.sellTypeTotals = sellTypeTotals;
+	}
+
+	@Override
     @Transient
     public String getDeveloperName() {
         return getBusinessProject().getDeveloperName();
