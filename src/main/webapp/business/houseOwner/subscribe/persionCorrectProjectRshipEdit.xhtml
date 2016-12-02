@@ -7,9 +7,12 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+
     <ui:include src="BussinePersionMustHaveInput.xhtml">
-        <ui:param name="label" value="#{messages.CORRECT}"/>
-        <ui:param name="persion" value="#{persionCorrectProjectRshipSubscribe}" />
-        <ui:param name="personStatus" value="CorrectProjectRship_personCredentiaslNumberStatus"/>
+
+        <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
+
+        <ui:param name="mainLabel" value="#{messages.CORRECT}"/>
+        <ui:param name="businessPersonComponent" value="#{persionCorrectProjectRshipSubscribe}" />
     </ui:include>
 </ui:composition>

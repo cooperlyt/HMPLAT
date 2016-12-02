@@ -398,7 +398,7 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="PersionObligeeOldView" page="/business/houseOwner/subscribe/ProjectSellDeveloperInfo.xhtml">
+    <view-subscribe name="ProjectDeveloperInfoView" page="/business/houseOwner/subscribe/ProjectSellDeveloperInfo.xhtml">
         <description>
             许可证开发商信息查看
         </description>
@@ -831,6 +831,12 @@
         </description>
     </end-subscribe>
 
+
+    <end-subscribe name="ProjectBusinessKeyAndDisplay" component="projectBusinessKeyAndDisplay">
+        <description>
+            项目业务查询显示生成器
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
         <description>

@@ -545,12 +545,6 @@ public class ProjectBusinessStart {
             businessBuild.getProjectExceptHouses().clear();
             businessBuild.setHouseCount(0);
             businessBuild.setArea(BigDecimal.ZERO);
-            businessBuild.setHomeCount(0);
-            businessBuild.setHomeArea(BigDecimal.ZERO);
-            businessBuild.setUnhomeCount(0);
-            businessBuild.setUnhomeArea(BigDecimal.ZERO);
-            businessBuild.setShopCount(0);
-            businessBuild.setShopArea(BigDecimal.ZERO);
 
            // Set<String> exceptHouseCode = new HashSet<String>();
             for (BuildGridMap gridMap : entry.getValue()) {
@@ -564,16 +558,9 @@ public class ProjectBusinessStart {
                                     businessBuild.setHouseCount(businessBuild.getHouseCount() + 1);
                                     businessBuild.setArea(businessBuild.getArea().add(block.getHouse().getHouseArea()));
 
-                                    if (UseType.DWELLING_KEY.equals(block.getHouse().getUseType())) {
-                                        businessBuild.setHomeCount(businessBuild.getHomeCount() + 1);
-                                        businessBuild.setHomeArea(businessBuild.getHomeArea().add(block.getHouse().getHouseArea()));
-                                    } else if (UseType.SHOP_HOUSE_KEY.equals(block.getHouse().getUseType())) {
-                                        businessBuild.setShopCount(businessBuild.getShopCount() + 1);
-                                        businessBuild.setShopArea(businessBuild.getShopArea().add(block.getHouse().getHouseArea()));
-                                    } else {
-                                        businessBuild.setUnhomeCount(businessBuild.getUnhomeCount() + 1);
-                                        businessBuild.setUnhomeArea(businessBuild.getUnhomeArea().add(block.getHouse().getHouseArea()));
-                                    }
+                                    SellTypeTotal stt = businessBuild.getSellTypeTotal(block.getHouse().getUseType());
+                                    stt.setArea(stt.getArea().add(block.getHouse().getHouseArea()));
+                                    stt.setCount(stt.getCount() + 1);
                                 }
                             } else {
                                 businessBuild.getProjectExceptHouses().add(new ProjectExceptHouse(block.getHouseCode(), businessBuild));

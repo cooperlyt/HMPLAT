@@ -53,7 +53,6 @@ public class ProjectLandEndTime implements java.io.Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name = "USE_TYPE",nullable = false,length = 20)
     @NotNull
-    @Size(max = 20)
     public UseType getUseTypeCategory() {
         return useTypeCategory;
     }

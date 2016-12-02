@@ -1,9 +1,10 @@
 package com.dgsoft.house.owner.total;
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessBuild;
 import com.dgsoft.house.owner.model.OwnerBusiness;
-import org.apache.poi.hssf.usermodel.HSSFFont;
+import com.dgsoft.house.owner.model.SellTypeTotal;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -126,21 +127,12 @@ public class TotalProjectCard {
             cell10.setCellValue("住宅面积");
             cell10.setCellStyle(headCellStyle);
 
-            Cell cell11 = row2.createCell(col++);//列
-            cell11.setCellValue("网点套数");
-            cell11.setCellStyle(headCellStyle);
-
-            Cell cell12 = row2.createCell(col++);//列
-            cell12.setCellValue("网点面积");
-            cell12.setCellStyle(headCellStyle);
-
-
             Cell cell13 = row2.createCell(col++);//列
-            cell13.setCellValue("其它套数");
+            cell13.setCellValue("非住宅套数");
             cell13.setCellStyle(headCellStyle);
 
             Cell cell14 = row2.createCell(col++);//列
-            cell14.setCellValue("其它面积");
+            cell14.setCellValue("非住宅面积");
             cell14.setCellStyle(headCellStyle);
 
 
@@ -171,51 +163,43 @@ public class TotalProjectCard {
                             row++;
                         }else
                             br = sheet.createRow(row++);//行
+
+                        int homeCount = 0;
+                        BigDecimal homeArea = BigDecimal.ZERO;
+
+                        int unhomeCount =0;
+                        BigDecimal unhomeArea = BigDecimal.ZERO;
+
+                        for(SellTypeTotal stt : businessBuild.getSellTypeTotals()){
+                            if (UseType.DWELLING_KEY.equals(stt.getUseType())){
+                                homeCount = homeCount + stt.getCount();
+                                homeArea = homeArea.add(stt.getArea());
+                            }else{
+                                unhomeArea = unhomeArea.add(stt.getArea());
+                                unhomeCount = unhomeCount + stt.getCount();
+                            }
+                        }
+
                         cell = br.createCell(buildCol++);
                         cell.setCellValue(businessBuild.getBuildName());
                         cell = br.createCell(buildCol++);
                         cell.setCellValue(businessBuild.getDoorNo());
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getHomeCount()!=null && businessBuild.getHomeCount()>0) {
-                            cell.setCellValue(businessBuild.getHomeCount());
-
-                        }else{
-                            cell.setCellValue(0);
-                        }
-                        cell = br.createCell(buildCol++);
-                        if (businessBuild.getHomeArea()!=null && businessBuild.getHomeArea().compareTo(BigDecimal.ZERO)>0){
-                            cell.setCellValue(businessBuild.getHomeArea().doubleValue());
-                        }else {
-                            cell.setCellValue(0);
-                        }
+                        cell.setCellValue(homeCount);
 
 
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getShopCount()!=null && businessBuild.getShopCount()>0) {
-                            cell.setCellValue(businessBuild.getShopCount());
-                        }else{
-                            cell.setCellValue(0);
-                        }
+                        cell.setCellValue(homeArea.doubleValue());
+
+
 
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getShopArea()!=null && businessBuild.getShopArea().compareTo(BigDecimal.ZERO)>0) {
-                            cell.setCellValue(businessBuild.getShopArea().doubleValue());
-                        }else{
-                            cell.setCellValue(0);
-                        }
-                        cell = br.createCell(buildCol++);
-                        if(businessBuild.getUnhomeCount()!=null && businessBuild.getUnhomeCount()>0) {
-                            cell.setCellValue(businessBuild.getUnhomeCount());
-                        }else{
-                            cell.setCellValue(0);
-                        }
+                        cell.setCellValue(unhomeCount);
+
 
                         cell = br.createCell(buildCol++);
-                        if (businessBuild.getUnhomeArea()!=null && businessBuild.getUnhomeArea().compareTo(BigDecimal.ZERO)>0) {
-                            cell.setCellValue(businessBuild.getUnhomeArea().doubleValue());
-                        }else{
-                            cell.setCellValue(0);
-                        }
+                        cell.setCellValue(unhomeArea.doubleValue());
+
 
                     }
                 }
@@ -243,18 +227,7 @@ public class TotalProjectCard {
                 Logging.getLog(getClass()).error("export error", e);
             }
 
-
-
-
-
-
         }
-
-
-
-
-
-
 
     }
 

@@ -23,11 +23,16 @@
                 <p class="repo-list-description">
                     <strong>#{messages.Build_HouseCount}:</strong>#{_businessBuilds.houseCount}   <strong>#{messages.Build_FloorCount}:</strong>#{_businessBuilds.floorCount} <strong>#{messages.Build_UpFloorCount}:</strong>#{_businessBuilds.upFloorCount}  <strong>#{messages.Build_DownFloorCount}:</strong>#{_businessBuilds.downFloorCount}  <strong>#{messages.Build_UnitCount}:</strong>#{_businessBuilds.unintCount}   <strong>#{messages.House_BuildDevNumber}:</strong>#{_businessBuilds.buildDevNumber}
                 </p>
+
+
                 <p class="repo-list-description">
                     <strong>#{messages.House_HouseArea}:</strong>#{_businessBuilds.area}   <strong>#{messages.Build_Type}:</strong>#{dictionary.getWordValue(_businessBuilds.buildType)} <strong>#{messages.Build_Structure}:</strong>#{dictionary.getWordValue(_businessBuilds.structure)} <strong>#{messages.Build_CompleteYear}:</strong>#{_businessBuilds.completeYear} <strong>#{messages.House_MapTime}:</strong>#{_businessBuilds.mapTime}
                 </p>
                 <p class="repo-list-description">
-                    <strong>#{messages.Build_HomeArea}:</strong>#{_businessBuilds.homeArea} <strong>#{messages.Build_HomeCount}:</strong>#{_businessBuilds.homeCount}  <strong>#{messages.Build_ShopArea}:</strong>#{_businessBuilds.shopArea}  <strong>#{messages.Build_ShopCount}:</strong>#{_businessBuilds.shopCount}  <strong>#{messages.Build_UnHomeArea}:</strong>#{_businessBuilds.unhomeArea} <strong>#{messages.Build_UnHomeCount}:</strong>#{_businessBuilds.unhomeCount}
+                    <a:repeat value="#{_businessBuilds.sellTypeTotalList}" var="_sellTypeTotal">
+                        <strong>#{dictionary.getEnumLabel(_sellTypeTotal.useType)}套数:</strong>#{_sellTypeTotal.count}
+                        <strong>#{dictionary.getEnumLabel(_sellTypeTotal.useType)}面积:</strong><h:outputText value="#{_sellTypeTotal.area}"><f:convertNumber pattern="#0.000" /></h:outputText>
+                    </a:repeat>
                 </p>
             </li>
         </a:repeat>

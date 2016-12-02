@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "SELL_TYPE_TOTAL", catalog = "HOUSE_OWNER_RECORD")
-public class SellTypeTotal implements java.io.Serializable {
+public class SellTypeTotal implements Comparable<SellTypeTotal>, java.io.Serializable {
 
     private String id;
     private UseType useType;
@@ -28,6 +28,8 @@ public class SellTypeTotal implements java.io.Serializable {
     public SellTypeTotal(UseType useType, BusinessBuild businessBuild) {
         this.useType = useType;
         this.businessBuild = businessBuild;
+        count = 0;
+        area = BigDecimal.ZERO;
     }
 
     @Id
@@ -82,5 +84,10 @@ public class SellTypeTotal implements java.io.Serializable {
 
     public void setBusinessBuild(BusinessBuild businessBuild) {
         this.businessBuild = businessBuild;
+    }
+
+    @Override
+    public int compareTo(SellTypeTotal o) {
+        return getUseType().compareTo(o.getUseType());
     }
 }

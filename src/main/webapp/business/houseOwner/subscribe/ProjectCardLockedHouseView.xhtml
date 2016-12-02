@@ -8,11 +8,16 @@
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+    <ui:remove>
     <a:outputPanel
             rendered="#{ empty projectCardLockedHouseView.resultList}">
-        未设置不可售房屋
-            </a:outputPanel>
+        <dh:entryGridBlock columns="1">
 
+            <h:outputText value="未设置不可售房屋"/>
+
+        </dh:entryGridBlock>
+            </a:outputPanel>
+    </ui:remove>
     <a:outputPanel
             rendered="#{not empty projectCardLockedHouseView.resultList}">
 

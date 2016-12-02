@@ -1,14 +1,13 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.house.BuildInfo;
 import com.dgsoft.house.model.Build;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -312,6 +311,25 @@ public class BusinessBuild implements java.io.Serializable, BuildInfo{
 
 	public void setSellTypeTotals(Set<SellTypeTotal> sellTypeTotals) {
 		this.sellTypeTotals = sellTypeTotals;
+	}
+
+	@Transient
+	public SellTypeTotal getSellTypeTotal(UseType useType){
+		for(SellTypeTotal stt: getSellTypeTotals()){
+			if (useType.equals(stt.getUseType())){
+				return stt;
+			}
+		}
+		SellTypeTotal stt = new SellTypeTotal(useType,this);
+		getSellTypeTotals().add(stt);
+		return stt;
+	}
+
+	@Transient
+	public List<SellTypeTotal> getSellTypeTotalList(){
+		List<SellTypeTotal> result = new ArrayList<SellTypeTotal>(getSellTypeTotals());
+		Collections.sort(result);
+		return result;
 	}
 
 	@Override
