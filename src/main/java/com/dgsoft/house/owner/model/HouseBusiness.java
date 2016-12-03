@@ -156,8 +156,8 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
 
-    @Column(name = "SEARCH_KEY",nullable = false, length = 2048)
-    @Size(max = 2048)
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
     @NotNull
     public String getSearchKey() {
         return searchKey;
@@ -168,6 +168,7 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
     @NotNull
     public String getDisplay() {

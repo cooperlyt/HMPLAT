@@ -129,14 +129,9 @@ public class OwnerHouseHelper {
                 key.addWord(pp.getCredentialsNumber());;
             }
         }
-        key.addWord(house.getHouseCode());
         key.addWord(house.getDisplayHouseCode());
         key.addWord(house.getAddress());
-        key.addWord(house.getSectionName());
-        key.addWord(house.getSectionCode());
-        key.addWord(house.getProjectCode());
 
-        key.addWord(house.getProjectCode());
         return key;
     }
 

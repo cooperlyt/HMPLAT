@@ -104,6 +104,7 @@ public class DescriptionDisplay {
         public void setDisplayDatas(List<DisplayData> displayDatas) {
             this.displayDatas = displayDatas;
         }
+
     }
 
     private List<DataLine> dataLines = new ArrayList<DataLine>();

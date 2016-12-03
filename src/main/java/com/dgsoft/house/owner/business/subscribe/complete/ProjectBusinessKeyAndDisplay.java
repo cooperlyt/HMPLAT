@@ -35,17 +35,12 @@ public class ProjectBusinessKeyAndDisplay implements TaskCompleteSubscribeCompon
     public void complete() {
         KeyGeneratorHelper businessKey = new KeyGeneratorHelper();
 
-        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getProjectName());
-        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getProjectCode());
-        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getDeveloperCode());
-        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getDeveloperName());
 
         for(BusinessBuild bb: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()){
             businessKey.addWord(bb.getMapNumber() + "-" + bb.getBlockNo() + "-" + bb.getBuildNo());
             businessKey.addWord(bb.getBuildName());
             businessKey.addWord(bb.getBuildCode());
             businessKey.addWord(bb.getDoorNo());
-            businessKey.addWord(bb.getBuildName());
         }
 
         for(MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
@@ -53,7 +48,7 @@ public class ProjectBusinessKeyAndDisplay implements TaskCompleteSubscribeCompon
         }
 
         Logging.getLog(getClass()).debug("set project key:" + businessKey.getKey());
-        ownerBusinessHome.getInstance().setSearchKey(businessKey.getKey());
+        ownerBusinessHome.getInstance().getBusinessProject().setSearchKey(businessKey.getKey());
 
         DescriptionDisplay businessDisplay = new DescriptionDisplay();
 
@@ -75,6 +70,6 @@ public class ProjectBusinessKeyAndDisplay implements TaskCompleteSubscribeCompon
                     new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"面积:" + df.format(bb.getArea()) + "㎡"));
         }
 
-        ownerBusinessHome.getInstance().setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
+        ownerBusinessHome.getInstance().getBusinessProject().setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
     }
 }

@@ -25,6 +25,7 @@ public class HouseRecord implements java.io.Serializable {
 	private HouseStatus houseStatus;
 	private String searchKey;
 	private String display;
+	private Date lastChangeTime;
 
 	public HouseRecord() {
 	}
@@ -82,8 +83,8 @@ public class HouseRecord implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-    @Column(name = "SEARCH_KEY",nullable = false, length = 2048)
-	@Size(max = 2048)
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+	@Size(max = 1024)
 	@NotNull
 	public String getSearchKey() {
 		return searchKey;
@@ -94,6 +95,7 @@ public class HouseRecord implements java.io.Serializable {
 	}
 
 	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
 	@NotNull
 	public String getDisplay() {
@@ -102,5 +104,16 @@ public class HouseRecord implements java.io.Serializable {
 
 	public void setDisplay(String display) {
 		this.display = display;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LAST_CHANGE_DATE", nullable = false)
+	@NotNull
+	public Date getLastChangeTime() {
+		return lastChangeTime;
+	}
+
+	public void setLastChangeTime(Date lastChangeTime) {
+		this.lastChangeTime = lastChangeTime;
 	}
 }

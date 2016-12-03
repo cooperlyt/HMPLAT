@@ -38,6 +38,9 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
     private ProjectSellInfo projectSellInfo;
 
+    private String searchKey;
+    private String display;
+
     public BusinessProject() {
     }
 
@@ -239,6 +242,29 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
 
     public void setDeveloperProperty(String developerProperty) {
         this.developerProperty = developerProperty;
+    }
+
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
+    @NotNull
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "businessProject")

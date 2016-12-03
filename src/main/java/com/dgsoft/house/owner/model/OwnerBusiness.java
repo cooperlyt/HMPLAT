@@ -39,10 +39,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Date regTime;
     private Date recordTime;
 
-    private String searchKey;
-    private String display;
-
-
     private boolean recorded;
 
     private Set<BusinessFile> uploadFileses = new HashSet<BusinessFile>(0);
@@ -492,28 +488,6 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setRecordStores(Set<RecordStore> recordStores) {
         this.recordStores = recordStores;
-    }
-
-    @Column(name = "SEARCH_KEY",nullable = false, length = 2048)
-    @Size(max = 2048)
-    @NotNull
-    public String getSearchKey() {
-        return searchKey;
-    }
-
-    public void setSearchKey(String searchKey) {
-        this.searchKey = searchKey;
-    }
-
-    @Lob
-    @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
-    @NotNull
-    public String getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
     }
 
     @Transient

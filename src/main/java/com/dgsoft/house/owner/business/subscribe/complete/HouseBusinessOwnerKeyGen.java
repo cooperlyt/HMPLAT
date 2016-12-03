@@ -28,17 +28,10 @@ public class HouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent 
 
     @Override
     public void complete() {
-
-        KeyGeneratorHelper businessKey = new KeyGeneratorHelper(ownerBusinessHome.getInstance().getSearchKey());
-
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
-
-            businessKey.addWords(key);
-
             hb.setSearchKey(key.getKey());
         }
-        ownerBusinessHome.getInstance().setSearchKey(businessKey.getKey());
 
     }
 }
