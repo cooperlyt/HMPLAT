@@ -11,6 +11,7 @@ import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.bpm.ManagedJbpmContext;
+import org.jboss.seam.log.Logging;
 import org.jbpm.graph.def.ProcessDefinition;
 
 import java.util.Date;
@@ -54,6 +55,7 @@ public class OwnerBusinessCreate extends BusinessCreate {
             ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
 
             ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
+            Logging.getLog(getClass()).debug("persist:" + ownerBusinessHome.getInstance().getId());
             String result = ownerBusinessHome.persist();
             verify = ((result != null) && result.equals("persisted") && (businessDefineHome.getInstance().getWfName() != null) &&
                     !businessDefineHome.getInstance().getWfName().trim().equals(""));

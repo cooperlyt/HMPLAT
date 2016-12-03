@@ -7,6 +7,7 @@ import com.dgsoft.house.owner.model.BusinessBuild;
 import com.dgsoft.house.owner.model.MakeCard;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -51,6 +52,7 @@ public class ProjectBusinessKeyAndDisplay implements TaskCompleteSubscribeCompon
             businessKey.addWord(makeCard.getNumber());
         }
 
+        Logging.getLog(getClass()).debug("set project key:" + businessKey.getKey());
         ownerBusinessHome.getInstance().setSearchKey(businessKey.getKey());
 
         DescriptionDisplay businessDisplay = new DescriptionDisplay();

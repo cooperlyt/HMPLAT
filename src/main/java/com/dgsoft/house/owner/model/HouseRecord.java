@@ -82,8 +82,8 @@ public class HouseRecord implements java.io.Serializable {
         this.houseCode = houseCode;
     }
 
-    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
-	@Size(max = 1024)
+    @Column(name = "SEARCH_KEY",nullable = false, length = 2048)
+	@Size(max = 2048)
 	@NotNull
 	public String getSearchKey() {
 		return searchKey;
@@ -93,8 +93,8 @@ public class HouseRecord implements java.io.Serializable {
 		this.searchKey = searchKey;
 	}
 
-	@Column(name = "DISPLAY",nullable = false, length = 1024)
-	@Size(max = 1024)
+	@Lob
+	@Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
 	@NotNull
 	public String getDisplay() {
 		return display;

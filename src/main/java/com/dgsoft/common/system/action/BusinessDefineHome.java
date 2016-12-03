@@ -131,8 +131,9 @@ public class BusinessDefineHome extends SystemEntityHome<BusinessDefine> {
     }
 
     public void completeTask() {
-
+        Logging.getLog(getClass()).debug("call completeTask component:" + getTaskName());
         for (TaskSubscribeReg.CompleteSubscribeDefine define : getCompleteSubscribeDefines()) {
+            Logging.getLog(getClass()).debug("begin call completeTask component:" + define.getName());
             define.getComponents().complete();
         }
 
