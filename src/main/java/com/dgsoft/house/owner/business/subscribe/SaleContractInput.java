@@ -21,9 +21,9 @@ public abstract class SaleContractInput implements TaskSubscribeComponent {
 
     public HouseContract getHouseContract() {
         if (houseContract == null){
-            houseContract = ownerBusinessHome.getSingleHoues().getHouseContract();
+            houseContract = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getSaleContract();
             if (houseContract == null){
-                ownerBusinessHome.getSingleHoues().setHouseContract(new HouseContract(getSaleType(),ownerBusinessHome.getSingleHoues()));
+                ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseContracts().add(new HouseContract(getSaleType(),ownerBusinessHome.getInstance()));
             }
         }
         return houseContract;
@@ -43,7 +43,7 @@ public abstract class SaleContractInput implements TaskSubscribeComponent {
 
     @Override
     public boolean isPass() {
-        return ownerBusinessHome.getSingleHoues().getHouseContract() != null;
+        return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getSaleContract() != null;
     }
 
     @Override

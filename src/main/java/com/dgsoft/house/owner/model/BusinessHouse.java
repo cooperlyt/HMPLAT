@@ -3,10 +3,7 @@ package com.dgsoft.house.owner.model;
 
 import cc.coopersoft.house.UseType;
 import com.dgsoft.common.system.RunParam;
-import com.dgsoft.house.HouseInfo;
-import com.dgsoft.house.HouseProperty;
-import com.dgsoft.house.HouseStatus;
-import com.dgsoft.house.PoolType;
+import com.dgsoft.house.*;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -86,6 +83,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private Set<HouseRecord> houseRecords = new HashSet<HouseRecord>();
     //private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
     private SaleInfo saleInfo;
+
+    private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
 
 
     public BusinessHouse() {
@@ -770,6 +769,26 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.mortgaegeRegistes = mortgaegeRegistes;
     }
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "HOUSE_AND_CONTRACT",joinColumns=@JoinColumn(name="HOUSE"),inverseJoinColumns = @JoinColumn(name = "CONTRACT"))
+    public Set<HouseContract> getHouseContracts() {
+        return houseContracts;
+    }
+
+    public void setHouseContracts(Set<HouseContract> houseContracts) {
+        this.houseContracts = houseContracts;
+    }
+
+    @Transient
+    public HouseContract getSaleContract(){
+        for(HouseContract hc: getHouseContracts()){
+            if (SaleType.MAP_SELL.equals(hc.getType()) || SaleType.NOW_SELL.equals(hc.getType()) ||
+                    SaleType.OLD_SELL.equals(hc.getType())){
+                return hc;
+            }
+        }
+        return null;
+    }
 
     @Transient
     private List<HouseStatus> allStatusList;

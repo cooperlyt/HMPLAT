@@ -29,9 +29,6 @@
             display: table-cell;
         }
 
-        .search_repos.HOUSE_CARD .card-type-select{
-            display: table-cell;
-        }
 
         .search_repos .card-type-select{
             display: none;
@@ -41,7 +38,7 @@
             display: table-cell;
         }
 
-        .search_repos.PERSON .search-key-input , .search_repos.HOUSE_CARD .search-key-input{
+        .search_repos.PERSON .search-key-input {
             border-bottom-right-radius: 0px !important;
             border-top-right-radius: 0px !important;
         }
@@ -107,17 +104,7 @@
                     <h:inputText styleClass="form-control search-mbbh-input" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px"
                                  value="#{conditionBean.houseNumber}"/>
 
-                    <a:outputPanel styleClass="input-group-btn card-type-select">
 
-                        <h:selectOneMenu styleClass="selectpicker select-menu-btn"
-                                         value="#{conditionBean.cardType}">
-                            <s:selectItems value="#{conditionBean.allCardTypes}" var="_item"
-                                           itemValue="#{_item}" label="#{messages[_item.name()]}"/>
-
-                            <s:convertEnum/>
-                        </h:selectOneMenu>
-
-                    </a:outputPanel>
 
                     <a:outputPanel styleClass="input-group-btn person-type-select">
                         <h:selectOneMenu styleClass="selectpicker select-menu-btn"
@@ -136,7 +123,7 @@
 
             <div class="flex-table-item">
                 <ui:insert name="conditionSearchButton">
-                <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseBusinessList.resetPage}"
+                <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseBusinessList.searchAction}"
                                value="#{messages.Search}">
                 </h:commandLink>
                 </ui:insert>

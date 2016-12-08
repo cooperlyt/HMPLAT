@@ -28,23 +28,24 @@ public class HouseContract implements java.io.Serializable {
 	private SaleType type;
 	private Date contractDate;
 	private String projectSaleCerNumber;
+	private OwnerBusiness ownerBusiness;
 
-	private HouseBusiness houseBusiness;
+	private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
 	private ContractSubmit contractSubmit;
 
 	public HouseContract() {
 	}
 
-	public HouseContract(SaleType type, HouseBusiness houseBusiness) {
+	public HouseContract(SaleType type, OwnerBusiness ownerBusiness) {
 		this.type = type;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 	}
 
-	public HouseContract(String contractNumber, SaleType type, Date contractDate, String projectSaleCerNumber, HouseBusiness houseBusiness, ContractSubmit contractSubmit) {
+	public HouseContract(String contractNumber, SaleType type, Date contractDate, String projectSaleCerNumber, OwnerBusiness ownerBusiness, ContractSubmit contractSubmit) {
 		this.contractNumber = contractNumber;
 		this.type = type;
 		this.contractDate = contractDate;
-		this.houseBusiness = houseBusiness;
+		this.ownerBusiness = ownerBusiness;
 		this.contractSubmit = contractSubmit;
 		this.projectSaleCerNumber = projectSaleCerNumber;
 	}
@@ -89,14 +90,24 @@ public class HouseContract implements java.io.Serializable {
 	}
 
 
-	@OneToOne(fetch = FetchType.LAZY,optional = false)
-	@JoinColumn(name = "BUSINESS",nullable = false)
-	public HouseBusiness getHouseBusiness() {
-		return houseBusiness;
+	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "houseContracts")
+	public Set<BusinessHouse> getHouseBusinesses() {
+		return businessHouses;
 	}
 
-	public void setHouseBusiness(HouseBusiness houseBusiness) {
-		this.houseBusiness = houseBusiness;
+	public void setHouseBusinesses(Set<BusinessHouse> houseBusinesses) {
+		this.businessHouses = houseBusinesses;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BUSINESS",nullable = false)
+	@NotNull
+	public OwnerBusiness getOwnerBusiness() {
+		return ownerBusiness;
+	}
+
+	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
+		this.ownerBusiness = ownerBusiness;
 	}
 
 	@Column(name="CONTRACT_NUMBER", nullable = false, length = 50)

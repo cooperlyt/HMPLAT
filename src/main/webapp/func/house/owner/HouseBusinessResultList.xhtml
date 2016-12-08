@@ -11,17 +11,62 @@
 
 
 
-    <a:outputPanel rendered="#{not empty listBean.searchResult}">
+    <a:outputPanel rendered="#{not empty listBean.resultList}">
         <ul class="repo-list js-repo-list full-width">
-            <c:forEach items="#{listBean.searchResult}" var="_item">
-                <f:subview id="details_#{_item.id}">
-                <ui:include src="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}"/>
-                    <ui:param name="_item" value="#{_item}"/>
-                </f:subview>
+            <c:forEach items="#{listBean.resultList}" var="_item">
+
+
+                <li class="repo-list-item public source">
+                    <div class="repo-list-stats">
+                        <ui:insert name="itemAction">
+
+                        </ui:insert>
+
+                    </div>
+                    <h3 class="repo-list-name">
+                        <ui:insert name="itemTitle">
+
+
+                            #{_item.ownerBusiness.defineName} / #{_item.ownerBusiness.id}
+
+
+                        </ui:insert>
+                    </h3>
+
+                    <p class="repo-list-description">
+                        <strong>TODO: #{_item.display}</strong>
+                    </p>
+
+
+                    <p class="repo-list-meta">
+
+                            #{messages['ownerBusiness.applyTime']}
+                            <h:outputText value="#{_item.ownerBusiness.applyTime}">
+                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                            </h:outputText>
+
+                            <a:outputPanel rendered="#{_item.ownerBusiness.recorded}">
+                                #{messages['ownerBusiness.regTime']}
+                                <h:outputText value="#{_item.ownerBusiness.regTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+                            </a:outputPanel>
+                            #{messages['ownerBusiness.recordTime']}
+                            <h:outputText value="#{_item.ownerBusiness.recordTime}">
+                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                            </h:outputText>
+
+
+                    </p>
+                </li>
+
+
+
+
             </c:forEach>
         </ul>
     </a:outputPanel>
-    <a:outputPanel layout="block" rendered="#{not empty listBean.searchResult}" class="paginate-container">
+    <a:outputPanel layout="block" rendered="#{not empty listBean.resultList}" class="paginate-container">
 
         <a:outputPanel>
             <ui:include src="/layout/pages.xhtml">

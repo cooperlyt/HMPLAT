@@ -66,9 +66,7 @@ public class SaleShowCheck implements java.io.Serializable {
         this.messages = messages;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "BUSINESS", nullable = false)
-    @NotNull
+    @OneToOne(fetch = FetchType.LAZY,optional = false, mappedBy = "saleShowCheck")
     public HouseBusiness getHouseBusiness() {
         return houseBusiness;
     }

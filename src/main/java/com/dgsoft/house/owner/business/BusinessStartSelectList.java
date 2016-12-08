@@ -15,7 +15,7 @@ public class BusinessStartSelectList extends HouseBusinessSearch {
 
     public BusinessStartSelectList() {
         super();
-        setEjbql(HouseBusinessCondition.SHORT_EJBQL);
+        //setEjbql(HouseBusinessCondition.SHORT_EJBQL);
     }
 
     @In(create = true)

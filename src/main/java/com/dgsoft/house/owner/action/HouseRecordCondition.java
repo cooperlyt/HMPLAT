@@ -16,220 +16,120 @@ import java.util.List;
 @Name("houseRecordCondition")
 public class HouseRecordCondition extends BusinessHouseCondition {
 
+    public static final String POWER_PERSON_EJBQL = "select distinct hr from HouseRecord hr " +
+            "left join hr.businessHouse house " +
+            "left join house.powerPersons owner " ;
 
-    public static final String[] RESTRICTIONS_PERSON_POOL = {
-            "pool.credentialsType = #{houseRecordCondition.searchCredentialsType}",
-            "lower(pool.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})"
-    };
-
-    public static final String[] RESTRICTIONS_PERSON_OWNER = {
-            "owner.credentialsType = #{houseRecordCondition.searchCredentialsType}",
-            "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})"
-    };
-
-    public static final String[] RESTRICTIONS_CONTRACT_OWNER = {
-            "contractOwner.credentialsType = #{houseRecordCondition.searchCredentialsType}",
-            "lower(contractOwner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})"
-    };
+    public static final String EJBQL = "select hr from HouseRecord hr " ;
 
 
+    public enum SearchType{
+        ALL(EJBQL,new RestrictionGroup("or",Arrays.asList(new String[] {
+                "lower(hr.key) like lower(concat('%',concat('%',#{houseRecordCondition.searchKey},'%')))",
+                "lower(hr.houseCode) = lower(#{houseRecordCondition.searchKey})"
+        }))),
+        HOUSE_CODE(EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{"lower(hr.houseCode) = lower(#{houseRecordCondition.searchKey})"}))),
+        HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.old = false", "owner.personName = #{houseRecordCondition.searchKey}"}))),
+        PERSON(POWER_PERSON_EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{ "owner.old = false",
+                "owner.credentialsType = #{houseRecordCondition.searchCredentialsType}",
+                "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})"}))),
+        HOUSE_MBBH("select hr from HouseRecord hr left join hr.businessHouse house ",
+                new RestrictionGroup("and",Arrays.asList(new String[]{
+                "lower(house.mapNumber) = lower(#{houseRecordCondition.searchMapNumber})",
+                "lower(house.blockNo) = lower(#{houseRecordCondition.searchBlockNumber})",
+                "lower(house.buildNo) = lower(#{houseRecordCondition.searchBuildNumber})",
+                "lower(house.houseOrder) = lower(#{houseRecordCondition.searchHouseNumber})"})));
 
-    public static final String[] ORESTRICTIONS_OWNER_CARD = {
-            "lower(ownerCard.number) = lower(#{houseRecordCondition.searchCardNumber})",
-            "ownerCard.type = #{houseRecordCondition.searchCardType}"
-    };
+        private RestrictionGroup restrictionGroup;
 
-    public static final String[] ORESTRICTIONS_POOL_CARD = {
-            "lower(poolCard.number) = lower(#{houseRecordCondition.searchCardNumber})",
-            "poolCard.type = #{houseRecordCondition.searchCardType}"
-    };
+        private String jpql;
 
-
-    public static final String[] RESTRICTIONS_MBBH = {
-            "lower(house.mapNumber) = lower(#{houseRecordCondition.searchMapNumber})",
-            "lower(house.blockNo) = lower(#{houseRecordCondition.searchBlockNumber})",
-            "lower(house.buildNo) = lower(#{houseRecordCondition.searchBuildNumber})",
-            "lower(house.houseOrder) = lower(#{houseRecordCondition.searchHouseNumber})"
-    };
-
-
-    public static final String[] RESTRICTIONS_LOCATION = {
-            "lower(rs.frame) = lower(#{houseRecordCondition.searchFrameNumber})",
-            "lower(rs.cabinet) = lower(#{houseRecordCondition.searchCabinetNumber})",
-            "lower(rs.box) = lower(#{houseRecordCondition.searchBoxNumber})"
-    };
-
-    public static final String[] RESTRICTIONS = {
-            "lower(pool.personName) like lower(concat('%',concat(#{houseRecordCondition.searchOwnerName},'%')))",
-            "lower(owner.personName) like lower(concat('%',concat(#{houseRecordCondition.searchOwnerName},'%')))",
-            "lower(contractOwner.personName) like lower(concat('%',concat(#{houseRecordCondition.searchOwnerName},'%')))",
-            "lower(pool.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})",
-            "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.searchCredentialsNumber})",
-            "lower(house.buildName) like lower(concat('%',concat(#{houseRecordCondition.searchProjectName},'%')))",
-            "lower(houseBusiness.houseCode) = lower(#{houseRecordCondition.searchHouseCode})",
-            "lower(ownerCard.number) = lower(#{houseRecordCondition.searchCardNumber})",
-            "lower(poolCard.number) = lower(#{houseRecordCondition.searchCardNumber})",
-            "lower(rs.recordCode) = lower(#{houseRecordCondition.searchRecordNumber})",
-    };
-
-
-    private String frameNumber;
-
-    private String cabinetNumber;
-
-    private String boxNumber;
-
-    public String getFrameNumber() {
-        return frameNumber;
-    }
-
-    public void setFrameNumber(String frameNumber) {
-        this.frameNumber = frameNumber;
-    }
-
-    public String getCabinetNumber() {
-        return cabinetNumber;
-    }
-
-    public void setCabinetNumber(String cabinetNumber) {
-        this.cabinetNumber = cabinetNumber;
-    }
-
-    public String getBoxNumber() {
-        return boxNumber;
-    }
-
-    public void setBoxNumber(String boxNumber) {
-        this.boxNumber = boxNumber;
-    }
-
-
-    public String getSearchFrameNumber(){
-        if ((getSearchType() == null) || getSearchType().equals(SearchType.RECORD_LOCATION)){
-            return frameNumber;
+        public String getJpql() {
+            return jpql;
         }
-        return null;
-    }
 
-    public String getSearchCabinetNumber(){
-        if ((getSearchType() == null) || getSearchType().equals(SearchType.RECORD_LOCATION)){
-            return cabinetNumber;
+        public RestrictionGroup getRestrictionGroup() {
+            return restrictionGroup;
         }
-        return null;
-    }
 
-    public String getSearchBoxNumber(){
-        if ((getSearchType() == null) || getSearchType().equals(SearchType.RECORD_LOCATION)){
-            return boxNumber;
+        SearchType(String jpql, RestrictionGroup restrictionGroup) {
+            this.restrictionGroup = restrictionGroup;
+            this.jpql = jpql;
         }
-        return null;
     }
 
-    public String getSearchRecordNumber(){
-        if ((getSearchType() == null) || getSearchType().equals(SearchType.RECORD_NUMBER)){
-            return getSearchKey();
+    private HouseBusinessCondition.SearchType searchType = HouseBusinessCondition.SearchType.ALL;
+
+    public HouseBusinessCondition.SearchType getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(HouseBusinessCondition.SearchType searchType) {
+        this.searchType = searchType;
+    }
+
+    public void setSearchTypeName(String type){
+        if ((type == null) || type.trim().equals("")){
+            setSearchType(null);
+        }else{
+            setSearchType(HouseBusinessCondition.SearchType.valueOf(type));
         }
-        return null;
     }
 
-    @Override
+    public String getSearchTypeName(){
+        if (searchType == null){
+            return null;
+        }
+        return getSearchType().name();
+    }
+
+//
+//    private String frameNumber;
+//
+//    private String cabinetNumber;
+//
+//    private String boxNumber;
+//
+//    public String getFrameNumber() {
+//        return frameNumber;
+//    }
+//
+//    public void setFrameNumber(String frameNumber) {
+//        this.frameNumber = frameNumber;
+//    }
+//
+//    public String getCabinetNumber() {
+//        return cabinetNumber;
+//    }
+//
+//    public void setCabinetNumber(String cabinetNumber) {
+//        this.cabinetNumber = cabinetNumber;
+//    }
+//
+//    public String getBoxNumber() {
+//        return boxNumber;
+//    }
+//
+//    public void setBoxNumber(String boxNumber) {
+//        this.boxNumber = boxNumber;
+//    }
+//
+//
+
+
     public List<SearchType> getAllSearchTypes() {
         return new ArrayList<SearchType>(EnumSet.allOf(SearchType.class));
     }
 
-    @Override
-    public List<MakeCard.CardType> getAllCardTypes() {
-        return new ArrayList<MakeCard.CardType>(EnumSet.of(MakeCard.CardType.NOTICE,
-                MakeCard.CardType.OWNER_RSHIP,
-                MakeCard.CardType.PROJECT_MORTGAGE,
-                MakeCard.CardType.POOL_RSHIP));
-    }
 
-    @Override
     public String getEjbql() {
-        return null;
+        return getSearchType().getJpql();
     }
-
-    @Override
-    protected boolean isHaveCondition(){
-        boolean result = super.isHaveCondition();
-        if (!result){
-            if (SearchType.RECORD_LOCATION.equals(getSearchType())){
-                return (frameNumber != null && !frameNumber.trim().equals("")) ||
-                        (cabinetNumber != null && !cabinetNumber.trim().equals("")) ||
-                        (boxNumber != null && !boxNumber.trim().equals(""));
-            }
-        }
-        return result;
-    }
-
-    private RestrictionGroup restrictionDefault;
-    private RestrictionGroup restrictionLocation;
-    private RestrictionGroup restrictionOwnerCard;
-    private RestrictionGroup restrictionPoolCard;
-    private RestrictionGroup restrictionMBBH;
-    private RestrictionGroup personRestriction;
-
-
 
     @Override
     public RestrictionGroup getRestrictionGroup() {
-        if (!isHaveCondition()){
-            return null;
-        }
-
-        if (getSearchType() != null) {
-            if (SearchType.RECORD_NUMBER.equals(getSearchType()) ||
-                    SearchType.RECORD_LOCATION.equals(getSearchType())) {
-                return null;
-            }
-
-            if (BusinessHouseCondition.SearchType.PERSON.equals(getSearchType())) {
-
-                if(personRestriction == null) {
-                    personRestriction = new RestrictionGroup("or");
-                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_POOL)));
-                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_PERSON_OWNER)));
-                    personRestriction.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_CONTRACT_OWNER)));
-                }
-
-
-                return personRestriction;
-            } else if (BusinessHouseCondition.SearchType.HOUSE_MBBH.equals(getSearchType())) {
-                if (restrictionMBBH == null){
-                    restrictionMBBH = new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_MBBH));
-                }
-
-                return restrictionMBBH;
-
-
-            } else if (BusinessHouseCondition.SearchType.HOUSE_CARD.equals(getSearchType())) {
-                if (MakeCard.CardType.POOL_RSHIP.equals(getCardType()) ){
-                    if (restrictionPoolCard == null){
-                        restrictionPoolCard = new RestrictionGroup("and", Arrays.asList(ORESTRICTIONS_POOL_CARD));
-                    }
-                    return restrictionPoolCard;
-                }else{
-                    if (restrictionOwnerCard == null){
-                        restrictionOwnerCard = new RestrictionGroup("and", Arrays.asList(ORESTRICTIONS_OWNER_CARD));
-                    }
-                    return restrictionOwnerCard;
-                }
-            } else if (BusinessHouseCondition.SearchType.RECORD_LOCATION.equals(getSearchType())){
-                if (restrictionLocation == null){
-                    restrictionLocation = new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_LOCATION));
-                }
-                return restrictionLocation;
-            }
-        }
-
-        if (restrictionDefault == null){
-            List<String> allCondition = new ArrayList<String>(Arrays.asList(RESTRICTIONS));
-            allCondition.addAll(Arrays.asList(RESTRICTIONS_MBBH));
-            restrictionDefault = new RestrictionGroup("or",allCondition);
-        }
-
-
-        return restrictionDefault;
+        return getSearchType().getRestrictionGroup();
     }
+
+
 }

@@ -38,14 +38,10 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
 
             DescriptionDisplay businessDisplay = new DescriptionDisplay();
             List<DescriptionDisplay.DisplayData> dds = new ArrayList<DescriptionDisplay.DisplayData>();
-            HouseContract houseContract = bh.getHouseContract();
+            HouseContract houseContract = bh.getAfterBusinessHouse().getSaleContract();
 
-            if (houseContract == null && ownerBusinessHome.getInstance().getSelectBusiness() != null){
-                for(HouseBusiness shb: ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()){
-                    if (shb.getHouseCode().equals(bh.getHouseCode())){
-                        houseContract = shb.getHouseContract();
-                    }
-                }
+            if (houseContract == null){
+                houseContract = bh.getStartBusinessHouse().getSaleContract();
             }
 
             if (houseContract != null) {

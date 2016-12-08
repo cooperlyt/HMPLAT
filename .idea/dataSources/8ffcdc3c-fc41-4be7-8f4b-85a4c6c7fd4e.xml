@@ -1,0 +1,2477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - HOUSE_OWNER_RECORD@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="HOUSE_OWNER_RECORD">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="CONTRACT"/>
+    <schema id="3" name="DB_JBPM"/>
+    <schema id="4" name="DB_PLAT_SYSTEM"/>
+    <schema id="5" name="DG_JBPM"/>
+    <schema id="6" name="DG_SYSTEM"/>
+    <schema id="7" name="ESTATE_PRINT"/>
+    <schema id="8" name="HOUSE_INFO"/>
+    <schema id="9" name="information_schema"/>
+    <schema id="10" name="MINI_ERP"/>
+    <schema id="11" name="mysql"/>
+    <schema id="12" name="performance_schema"/>
+    <schema id="13" name="PLAT_SYSTEM"/>
+    <schema id="14" name="RESTAURANT"/>
+    <schema id="15" name="test"/>
+    <table id="16" parent="1" name="ADD_HOUSE_STATUS"/>
+    <table id="17" parent="1" name="BUILD"/>
+    <table id="18" parent="1" name="BUSINESS_EMP"/>
+    <table id="19" parent="1" name="BUSINESS_FILE"/>
+    <table id="20" parent="1" name="BUSINESS_HOUSE"/>
+    <table id="21" parent="1" name="BUSINESS_MONEY"/>
+    <table id="22" parent="1" name="BUSINESS_PERSION"/>
+    <table id="23" parent="1" name="CARD">
+      <comment>记录业务关联时，权证号，和同同，法律文件号，等相关证件的正价编号</comment>
+    </table>
+    <table id="24" parent="1" name="CARD_INFO"/>
+    <table id="25" parent="1" name="CLOSE_HOUSE"/>
+    <table id="26" parent="1" name="CONTRACT_NUMBER"/>
+    <table id="27" parent="1" name="EVALUATE"/>
+    <table id="28" parent="1" name="EXCEPT_HOUSE"/>
+    <table id="29" parent="1" name="FACT_MONEYINFO"/>
+    <table id="30" parent="1" name="FINANCIAL"/>
+    <table id="31" parent="1" name="GIVE_CARD">
+      <comment>非房产部门的证</comment>
+    </table>
+    <table id="32" parent="1" name="HOUSE"/>
+    <table id="33" parent="1" name="HOUSE_AND_RECORD"/>
+    <table id="34" parent="1" name="HOUSE_CLOSE_CANCEL"/>
+    <table id="35" parent="1" name="HOUSE_CONTRACT"/>
+    <table id="36" parent="1" name="HOUSE_RECORD"/>
+    <table id="37" parent="1" name="HOUSE_REG_INFO"/>
+    <table id="38" parent="1" name="LAND_END_TIME"/>
+    <table id="39" parent="1" name="LAND_INFO"/>
+    <table id="40" parent="1" name="LOCKED_HOUSE"/>
+    <table id="41" parent="1" name="MAKE_CARD"/>
+    <table id="42" parent="1" name="MAPPING_CORP"/>
+    <table id="43" parent="1" name="MORTGAEGE_REGISTE"/>
+    <table id="44" parent="1" name="OWNER_BUSINESS"/>
+    <table id="45" parent="1" name="PROCESS_MESSAGES"/>
+    <table id="46" parent="1" name="PROJECT"/>
+    <table id="47" parent="1" name="PROJECT_CARD"/>
+    <table id="48" parent="1" name="PROJECT_MORTGAGE"/>
+    <table id="49" parent="1" name="PROJECT_SELL_INFO"/>
+    <table id="50" parent="1" name="REASON">
+      <comment>记录注销原因，更正前，更正后，变更前，变更后等事由信息</comment>
+    </table>
+    <table id="51" parent="1" name="RECORD_LOCAL"/>
+    <table id="52" parent="1" name="RECORD_STORE"/>
+    <table id="53" parent="1" name="SALE_INFO"/>
+    <table id="54" parent="1" name="SUB_STATUS"/>
+    <table id="55" parent="1" name="TASK_OPER"/>
+    <table id="56" parent="1" name="UPLOAD_FILE"/>
+    <table id="57" parent="1" name="SALE_SHOW_CHECK"/>
+    <table id="58" parent="1" name="CONTRACT_SUBMIT"/>
+    <table id="59" parent="1" name="HOUSE_MORTGAEGE"/>
+    <table id="60" parent="1" name="HOUSE_OWNER"/>
+    <table id="61" parent="1" name="POWER_OWNER"/>
+    <table id="62" parent="1" name="PROXY_PERSON"/>
+    <table id="63" parent="1" name="SELL_TYPE_TOTAL"/>
+    <table id="64" parent="1" name="HOUSE_AND_CONTRACT"/>
+    <column id="65" parent="16" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="66" parent="16" name="BUSINESS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="67" parent="16" name="STATUS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="68" parent="16" name="IS_REMOVE">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <index id="69" parent="16" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="70" parent="16" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="71" parent="16" name="ADD_HOUSE_STATUS_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.BUSINESS_HOUSE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="72" parent="17" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="73" parent="17" name="MAP_NUMBER">
+      <data-type>varchar(4)|0</data-type>
+    </column>
+    <column id="74" parent="17" name="BLOCK_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="75" parent="17" name="BUILD_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(24)|0</data-type>
+    </column>
+    <column id="76" parent="17" name="BUILD_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="77" parent="17" name="STREET_CODE">
+      <data-type>varchar(4)|0</data-type>
+    </column>
+    <column id="78" parent="17" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="79" parent="17" name="DOOR_NO">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="80" parent="17" name="UNINT_COUNT">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="81" parent="17" name="FLOOR_COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="82" parent="17" name="UP_FLOOR_COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="83" parent="17" name="DOWN_FLOOR_COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="84" parent="17" name="HOUSE_COUNT">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="85" parent="17" name="AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="86" parent="17" name="BUILD_TYPE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="87" parent="17" name="STRUCTURE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="88" parent="17" name="PROJECT">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="89" parent="17" name="COMPLETE_DATE">
+      <data-type>varchar(6)|0</data-type>
+    </column>
+    <column id="90" parent="17" name="BUILD_DEVELOPER_NUMBER">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="91" parent="17" name="MAP_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <index id="92" parent="17" name="PROJECT">
+      <columns>PROJECT</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="93" parent="17" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="94" parent="17" name="BUILD_ibfk_1">
+      <columns>PROJECT</columns>
+      <ref-key>~.PROJECT.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="95" parent="18" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="96" parent="18" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="97" parent="18" name="EMP_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="98" parent="18" name="EMP_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="99" parent="18" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="100" parent="18" name="OPER_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="101" parent="18" name="COMMENTS">
+      <data-type>varchar(500)|0</data-type>
+    </column>
+    <column id="102" parent="18" name="WINDOW_NO">
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <index id="103" parent="18" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="104" parent="18" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="105" parent="18" name="BUSINESS_EMP_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="106" parent="19" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="107" parent="19" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="108" parent="19" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="109" parent="19" name="IMPORTANT_CODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="110" parent="19" name="NO_FILE">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="111" parent="19" name="IMPORTANT">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="112" parent="19" name="MEMO">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="113" parent="19" name="PRIORITY">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="114" parent="19" name="RECORD_STORE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="115" parent="19" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="116" parent="19" name="RECORD_STORE">
+      <columns>RECORD_STORE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="117" parent="19" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="118" parent="19" name="BUSINESS_FILE_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="119" parent="19" name="BUSINESS_FILE_ibfk_2">
+      <columns>RECORD_STORE</columns>
+      <ref-key>~.RECORD_STORE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="120" parent="20" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="121" parent="20" name="HOUSE_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="122" parent="20" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="123" parent="20" name="START_HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="124" parent="20" name="AFTER_HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="125" parent="20" name="CANCELED">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="126" parent="20" name="SEARCH_KEY">
+      <data-type>varchar(2048)|0</data-type>
+    </column>
+    <column id="127" parent="20" name="DISPLAY">
+      <data-type>longtext|0</data-type>
+    </column>
+    <column id="128" parent="20" name="SALE_CHECK">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="129" parent="20" name="AFTER_HOUSE">
+      <columns>AFTER_HOUSE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="130" parent="20" name="BUSINESS_HOUSE_CODE_INDEX">
+      <columns>HOUSE_CODE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="131" parent="20" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="132" parent="20" name="F_SALE_CHECK_SHOW">
+      <columns>SALE_CHECK</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="133" parent="20" name="START_HOUSE">
+      <columns>START_HOUSE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="134" parent="20" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="135" parent="20" name="BUSINESS_HOUSE_ibfk_3">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="136" parent="20" name="BUSINESS_HOUSE_ibfk_1">
+      <columns>START_HOUSE</columns>
+      <ref-key>~.HOUSE_RECORD.HOUSE</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="137" parent="20" name="BUSINESS_HOUSE_ibfk_2">
+      <columns>AFTER_HOUSE</columns>
+      <ref-key>~.HOUSE_RECORD.HOUSE</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="138" parent="20" name="F_SALE_CHECK_SHOW">
+      <columns>SALE_CHECK</columns>
+      <ref-key>~.SALE_SHOW_CHECK.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="139" parent="21" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="140" parent="21" name="TYPE_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="141" parent="21" name="MONEY_TYPE_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="142" parent="21" name="CHECK_MONEY">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="143" parent="21" name="SHOULD_MONEY">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="144" parent="21" name="FACT_MONEY">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="145" parent="21" name="CHARGE_DETAILS">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="146" parent="21" name="BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="147" parent="21" name="FEE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="148" parent="21" name="PRI">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="149" parent="21" name="PREFERENTIAL">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <index id="150" parent="21" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="151" parent="21" name="FEE">
+      <columns>FEE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="152" parent="21" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="153" parent="21" name="BUSINESS_MONEY_ibfk_2">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="154" parent="21" name="BUSINESS_MONEY_ibfk_1">
+      <columns>FEE</columns>
+      <ref-key>~.FACT_MONEYINFO.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="155" parent="22" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="156" parent="22" name="ID_NO">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="157" parent="22" name="ID_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="158" parent="22" name="NAME">
+      <comment>领证人</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="159" parent="22" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="160" parent="22" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="161" parent="22" name="PHONE">
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <column id="162" parent="22" name="PROXY_PERSON">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="163" parent="22" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="164" parent="22" name="BUSINESS_PERSON_IBFK">
+      <columns>PROXY_PERSON</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="165" parent="22" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="166" parent="22" name="BUSINESS_PERSION_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="167" parent="22" name="BUSINESS_PERSON_IBFK">
+      <columns>PROXY_PERSON</columns>
+      <ref-key>~.PROXY_PERSON.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="168" parent="23" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="169" parent="23" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="170" parent="23" name="NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="171" parent="23" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="172" parent="23" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="173" parent="23" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="174" parent="23" name="CARD_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="175" parent="24" name="CODE">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="176" parent="24" name="MEMO">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="177" parent="24" name="MAKE_EMP_CODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="178" parent="24" name="MAKE_EMP_NAME">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="179" parent="24" name="PRINT_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="180" parent="24" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <key id="181" parent="24" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="182" parent="24" name="CARD_INFO_ibfk_1">
+      <columns>ID</columns>
+      <ref-key>~.MAKE_CARD.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="183" parent="25" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="184" parent="25" name="CLOSE_DOWN_CLOUR">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="185" parent="25" name="ACTION">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="186" parent="25" name="CLOSE_DATE">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="187" parent="25" name="TO_DATE">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="188" parent="25" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="189" parent="25" name="LEGAL_DOCUMENTS">
+      <comment>裁定书、判决书或其它生效的法律文书 (查封文件)</comment>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="190" parent="25" name="EXECUTION_NOTICE">
+      <comment>查封文号</comment>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="191" parent="25" name="SEND_PEOPLE">
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="192" parent="25" name="PHONE">
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <column id="193" parent="25" name="EXECUTION_CARD_NO">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="194" parent="25" name="WORK_CARD_NO">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="195" parent="25" name="HOUSECARDNO">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="196" parent="25" name="CONTRACTCODE">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="197" parent="25" name="PROJECTRSIHP">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="198" parent="25" name="TIME_AREA_TYPE">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <index id="199" parent="25" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="200" parent="25" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="201" parent="25" name="CLOSE_HOUSE_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="202" parent="26" name="CONTRACT_NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="203" parent="26" name="CONTRACT">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="204" parent="26" name="STATUS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="205" parent="26" name="VERSION">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="206" parent="26" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="207" parent="26" name="APPLY_TIME">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="208" parent="26" name="NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="209" parent="26" name="CREATE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="210" parent="26" name="GROUP_NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="211" parent="26" name="GROUP_NAME">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <index id="212" parent="26" name="CONTRACT">
+      <columns>CONTRACT</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="213" parent="26" name="PRIMARY">
+      <columns>CONTRACT_NUMBER</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="214" parent="26" name="contract_number_ibfk_1">
+      <columns>CONTRACT</columns>
+      <ref-key>~.CONTRACT_SUBMIT.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="215" parent="27" name="EVALUATE_CORP_NAME">
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="216" parent="27" name="EVALUATE_CORP_N0">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="217" parent="27" name="ASSESSMENT_PRICE">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="218" parent="27" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="219" parent="27" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="220" parent="27" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="221" parent="27" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="222" parent="27" name="EVALUATE_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="223" parent="28" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="224" parent="28" name="BUILD">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="225" parent="28" name="HOUSE_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="226" parent="28" name="BUILD_AND_HOUSE_UNIQUE">
+      <columns>BUILD
+HOUSE_CODE</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="227" parent="28" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <key id="228" parent="28" name="BUILD_AND_HOUSE_UNIQUE">
+      <columns>BUILD
+HOUSE_CODE</columns>
+      <underlying-index>BUILD_AND_HOUSE_UNIQUE</underlying-index>
+    </key>
+    <foreign-key id="229" parent="28" name="EXCEPT_HOUSE_ibfk_1">
+      <columns>BUILD</columns>
+      <ref-key>~.BUILD.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="230" parent="29" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="231" parent="29" name="FACT_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="232" parent="29" name="PAYMENT_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(25)|0</data-type>
+    </column>
+    <column id="233" parent="29" name="BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="234" parent="29" name="MEMO">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <index id="235" parent="29" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="236" parent="29" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="237" parent="29" name="FACT_MONEYINFO_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="238" parent="30" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="239" parent="30" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(120)|0</data-type>
+    </column>
+    <column id="240" parent="30" name="CODE">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="241" parent="30" name="PHONE">
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <column id="242" parent="30" name="FINANCIAL_TYPE">
+      <comment>个人
+机构</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="243" parent="30" name="ID_TYPE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="244" parent="30" name="BANK">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="245" parent="30" name="CREATE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="246" parent="30" name="CARD">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="247" parent="30" name="PROXY_PERSON">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="248" parent="30" name="CARD">
+      <columns>CARD</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="249" parent="30" name="FINANCIAL_PROXY_IBFK">
+      <columns>PROXY_PERSON</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="250" parent="30" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="251" parent="30" name="FINANCIAL_ibfk_1">
+      <columns>CARD</columns>
+      <ref-key>~.MAKE_CARD.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="252" parent="30" name="FINANCIAL_PROXY_IBFK">
+      <columns>PROXY_PERSON</columns>
+      <ref-key>~.PROXY_PERSON.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="253" parent="31" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="254" parent="31" name="BUISINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="255" parent="31" name="NAME">
+      <comment>领证人</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="256" parent="31" name="ID_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="257" parent="31" name="ID_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="258" parent="31" name="PHONE">
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <column id="259" parent="31" name="GIVE_TIME">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="260" parent="31" name="MEMO">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <index id="261" parent="31" name="BUISINESS_ID">
+      <columns>BUISINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="262" parent="31" name="ID">
+      <columns>ID</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="263" parent="31" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <key id="264" parent="31" name="ID">
+      <columns>ID</columns>
+      <underlying-index>ID</underlying-index>
+    </key>
+    <foreign-key id="265" parent="31" name="GIVE_CARD_ibfk_1">
+      <columns>BUISINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="266" parent="32" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="267" parent="32" name="HOUSE_ORDER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="268" parent="32" name="HOUSE_UNIT_NAME">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="269" parent="32" name="IN_FLOOR_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="270" parent="32" name="HOUSE_AREA">
+      <mandatory>1</mandatory>
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="271" parent="32" name="USE_AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="272" parent="32" name="COMM_AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="273" parent="32" name="SHINE_AREA">
+      <data-type>decimal(18,10)|0</data-type>
+    </column>
+    <column id="274" parent="32" name="LOFT_AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="275" parent="32" name="COMM_PARAM">
+      <data-type>decimal(18,10)|0</data-type>
+    </column>
+    <column id="276" parent="32" name="HOUSE_TYPE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="277" parent="32" name="USE_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="278" parent="32" name="STRUCTURE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="279" parent="32" name="KNOT_SIZE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="280" parent="32" name="ADDRESS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="281" parent="32" name="EAST_WALL">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="282" parent="32" name="WEST_WALL">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="283" parent="32" name="SOUTH_WALL">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="284" parent="32" name="NORTH_WALL">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="285" parent="32" name="MAP_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="286" parent="32" name="DIRECTION">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="287" parent="32" name="HOUSE_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="288" parent="32" name="HAVE_DOWN_ROOM">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="289" parent="32" name="BUILD_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="290" parent="32" name="MAP_NUMBER">
+      <data-type>varchar(4)|0</data-type>
+    </column>
+    <column id="291" parent="32" name="BLOCK_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="292" parent="32" name="BUILD_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(24)|0</data-type>
+    </column>
+    <column id="293" parent="32" name="STREET_CODE">
+      <data-type>varchar(4)|0</data-type>
+    </column>
+    <column id="294" parent="32" name="DOOR_NO">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="295" parent="32" name="UP_FLOOR_COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="296" parent="32" name="FLOOR_COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="297" parent="32" name="DOWN_FLOOR_COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="298" parent="32" name="BUILD_TYPE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="299" parent="32" name="PROJECT_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="300" parent="32" name="PROJECT_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="301" parent="32" name="COMPLETE_DATE">
+      <data-type>varchar(6)|0</data-type>
+    </column>
+    <column id="302" parent="32" name="DEVELOPER_CODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="303" parent="32" name="DEVELOPER_NAME">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="304" parent="32" name="SECTION_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="305" parent="32" name="SECTION_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="306" parent="32" name="DISTRICT_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="307" parent="32" name="DISTRICT_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="308" parent="32" name="BUILD_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="309" parent="32" name="BUILD_DEVELOPER_NUMBER">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="310" parent="32" name="POOL_MEMO">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="311" parent="32" name="MAIN_OWNER">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="312" parent="32" name="LAND_INFO">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="313" parent="32" name="REG_INFO">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="314" parent="32" name="DESIGN_USE_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(512)|0</data-type>
+    </column>
+    <column id="315" parent="32" name="UNIT_NUMBER">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="316" parent="32" name="LAND_INFO">
+      <columns>LAND_INFO</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="317" parent="32" name="MAIN_OWNER">
+      <columns>MAIN_OWNER</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="318" parent="32" name="REG_INFO">
+      <columns>REG_INFO</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="319" parent="32" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="320" parent="32" name="house_ibfk_1">
+      <columns>MAIN_OWNER</columns>
+      <ref-key>~.POWER_OWNER.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="321" parent="32" name="HOUSE_ibfk_6">
+      <columns>LAND_INFO</columns>
+      <ref-key>~.LAND_INFO.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="322" parent="32" name="HOUSE_ibfk_5">
+      <columns>REG_INFO</columns>
+      <ref-key>~.HOUSE_REG_INFO.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="323" parent="33" name="RECORD">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="324" parent="33" name="HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="325" parent="33" name="HOUSE">
+      <columns>HOUSE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="326" parent="33" name="PRIMARY">
+      <columns>RECORD
+HOUSE</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="327" parent="33" name="HOUSE_AND_RECORD_ibfk_2">
+      <columns>RECORD</columns>
+      <ref-key>~.RECORD_STORE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="328" parent="33" name="HOUSE_AND_RECORD_ibfk_1">
+      <columns>HOUSE</columns>
+      <ref-key>~.BUSINESS_HOUSE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="329" parent="34" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="330" parent="34" name="CANCEL_DATE">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="331" parent="34" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="332" parent="34" name="CANCEL_DOWN_CLOUR">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="333" parent="34" name="ACTION">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="334" parent="34" name="LEGAL_DOCUMENTS">
+      <comment>裁定书、判决书或其它生效的法律文书 (查封文件)</comment>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="335" parent="34" name="EXECUTION_NOTICE">
+      <comment>查封文号</comment>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="336" parent="34" name="SEND_PEOPLE">
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="337" parent="34" name="PHONE">
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <column id="338" parent="34" name="EXECUTION_CARD_NO">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="339" parent="34" name="WORK_CARD_NO">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="340" parent="34" name="HOUSECARDNO">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="341" parent="34" name="CONTRACTCODE">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="342" parent="34" name="PROJECTRSIHP">
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <index id="343" parent="34" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="344" parent="34" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="345" parent="34" name="HOUSE_CLOSE_CANCEL_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="346" parent="35" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="347" parent="35" name="CONTRACT_NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="348" parent="35" name="CONTRACT_DATE">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="349" parent="35" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="350" parent="35" name="PROJECT_RSHIP_NUMBER">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="351" parent="35" name="BUSINESS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="352" parent="35" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="353" parent="35" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="354" parent="35" name="house_contract_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="355" parent="36" name="HOUSE_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="356" parent="36" name="HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="357" parent="36" name="HOUSE_STATUS">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="358" parent="36" name="SEARCH_KEY">
+      <data-type>varchar(2048)|0</data-type>
+    </column>
+    <column id="359" parent="36" name="DISPLAY">
+      <data-type>longtext|0</data-type>
+    </column>
+    <column id="360" parent="36" name="LAST_CHANGE_DATE">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <index id="361" parent="36" name="HOUSE">
+      <columns>HOUSE</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <index id="362" parent="36" name="HOUSE_CODE_UNIQUE">
+      <columns>HOUSE_CODE
+HOUSE</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="363" parent="36" name="PRIMARY">
+      <columns>HOUSE_CODE</columns>
+      <primary>1</primary>
+    </key>
+    <key id="364" parent="36" name="HOUSE_CODE_UNIQUE">
+      <columns>HOUSE_CODE
+HOUSE</columns>
+      <underlying-index>HOUSE_CODE_UNIQUE</underlying-index>
+    </key>
+    <key id="365" parent="36" name="HOUSE">
+      <columns>HOUSE</columns>
+      <underlying-index>HOUSE</underlying-index>
+    </key>
+    <foreign-key id="366" parent="36" name="HOUSE_RECORD_ibfk_1">
+      <columns>HOUSE</columns>
+      <ref-key>HOUSE</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="367" parent="37" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="368" parent="37" name="HOUSE_PORPERTY">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="369" parent="37" name="HOUSE_FROM">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <key id="370" parent="37" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <column id="371" parent="38" name="PROJECT_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="372" parent="38" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="373" parent="38" name="END_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="374" parent="38" name="USE_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <index id="375" parent="38" name="LAND_TIME_PROJECT_USE_TYPE">
+      <columns>PROJECT_ID
+USE_TYPE</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="376" parent="38" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <key id="377" parent="38" name="LAND_TIME_PROJECT_USE_TYPE">
+      <columns>PROJECT_ID
+USE_TYPE</columns>
+      <underlying-index>LAND_TIME_PROJECT_USE_TYPE</underlying-index>
+    </key>
+    <foreign-key id="378" parent="38" name="LAND_END_TIME_ibfk_1">
+      <columns>PROJECT_ID</columns>
+      <ref-key>~.PROJECT_SELL_INFO.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="379" parent="39" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="380" parent="39" name="LAND_CARD_NO">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="381" parent="39" name="NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="382" parent="39" name="LAND_PROPERTY">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="383" parent="39" name="BEGIN_USE_TIME">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="384" parent="39" name="END_USE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="385" parent="39" name="LAND_GET_MODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="386" parent="39" name="LAND_AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <key id="387" parent="39" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <column id="388" parent="40" name="HOUSE_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="389" parent="40" name="DESCRIPTION">
+      <data-type>varchar(500)|0</data-type>
+    </column>
+    <column id="390" parent="40" name="TYPE">
+      <comment>字典</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="391" parent="40" name="EMP_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="392" parent="40" name="EMP_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="393" parent="40" name="LOCKED_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="394" parent="40" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="395" parent="40" name="BUILD_CODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <key id="396" parent="40" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <column id="397" parent="41" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="398" parent="41" name="NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="399" parent="41" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="400" parent="41" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="401" parent="41" name="ENABLE">
+      <comment>true 生效</comment>
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <index id="402" parent="41" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="403" parent="41" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="404" parent="41" name="MAKE_CARD_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="405" parent="42" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="406" parent="42" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="407" parent="42" name="CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="408" parent="42" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="409" parent="42" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="410" parent="42" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="411" parent="42" name="MAPPING_CORP_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="412" parent="43" name="HIGHEST_MOUNT_MONEY">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="413" parent="43" name="WARRANT_SCOPE">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="414" parent="43" name="INTEREST_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="415" parent="43" name="MORTGAGE_DUE_TIME_S">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="416" parent="43" name="MORTGAGE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="417" parent="43" name="MORTGAGE_AREA">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="418" parent="43" name="TIME_AREA_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="419" parent="43" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="420" parent="43" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="421" parent="43" name="OLD_FIN">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="422" parent="43" name="FIN">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="423" parent="43" name="ORG_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <index id="424" parent="43" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="425" parent="43" name="FIN">
+      <columns>FIN</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="426" parent="43" name="OLD_FIN">
+      <columns>OLD_FIN</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="427" parent="43" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="428" parent="43" name="MORTGAEGE_REGISTE_ibfk_4">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="429" parent="43" name="MORTGAEGE_REGISTE_ibfk_3">
+      <columns>OLD_FIN</columns>
+      <ref-key>~.FINANCIAL.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="430" parent="43" name="MORTGAEGE_REGISTE_ibfk_2">
+      <columns>FIN</columns>
+      <ref-key>~.FINANCIAL.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="431" parent="44" name="ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="432" parent="44" name="VERSION">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="433" parent="44" name="SOURCE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="434" parent="44" name="MEMO">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="435" parent="44" name="STATUS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="436" parent="44" name="DEFINE_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="437" parent="44" name="DEFINE_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="438" parent="44" name="DEFINE_VERSION">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="439" parent="44" name="SELECT_BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="440" parent="44" name="CREATE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="441" parent="44" name="APPLY_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="442" parent="44" name="CHECK_TIME">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="443" parent="44" name="REG_TIME">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="444" parent="44" name="RECORD_TIME">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="445" parent="44" name="RECORDED">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="446" parent="44" name="TYPE">
+      <comment>正常业务
+撤消业务
+更正业务</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <index id="447" parent="44" name="OWNER_BUSINESS_REG_TIME_INDEX">
+      <columns>REG_TIME</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="448" parent="44" name="SELECT_BUSINESS">
+      <columns>SELECT_BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="449" parent="44" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="450" parent="44" name="OWNER_BUSINESS_ibfk_1">
+      <columns>SELECT_BUSINESS</columns>
+      <ref-key>PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="451" parent="45" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="452" parent="45" name="LEVEL">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="453" parent="45" name="MESSAGES">
+      <mandatory>1</mandatory>
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="454" parent="45" name="BUSINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="455" parent="45" name="BUSINESS_ID">
+      <columns>BUSINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="456" parent="45" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="457" parent="45" name="PROCESS_MESSAGES_ibfk_1">
+      <columns>BUSINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="458" parent="46" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="459" parent="46" name="PROJECT_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="460" parent="46" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="461" parent="46" name="ADDRESS">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="462" parent="46" name="DEVELOPER_NAME">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="463" parent="46" name="DEVELOPER_CODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="464" parent="46" name="SECTION_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="465" parent="46" name="SECTION_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="466" parent="46" name="DISTRICT_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="467" parent="46" name="DISTRICT_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="468" parent="46" name="BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="469" parent="46" name="CORP_ADDRESS">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="470" parent="46" name="CORP_LEVEL">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="471" parent="46" name="CORP_PROPERTY">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="472" parent="46" name="SEARCH_KEY">
+      <data-type>varchar(1024)|0</data-type>
+    </column>
+    <column id="473" parent="46" name="DISPLAY">
+      <mandatory>1</mandatory>
+      <data-type>longtext|0</data-type>
+    </column>
+    <index id="474" parent="46" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="475" parent="46" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="476" parent="46" name="PROJECT_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="477" parent="47" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="478" parent="47" name="YEAR_NUMBER">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="479" parent="47" name="ORDER_NUMBER">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="480" parent="47" name="MEMO">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="481" parent="47" name="PRINT_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="482" parent="47" name="MAKE_EMP_CODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="483" parent="47" name="MAKE_EMP_NAME">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="484" parent="47" name="PROJECT">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="485" parent="47" name="PROJECT">
+      <columns>PROJECT</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="486" parent="47" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="487" parent="47" name="PROJECT_CARD_ibfk_1">
+      <columns>ID</columns>
+      <ref-key>~.MAKE_CARD.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="488" parent="47" name="PROJECT_CARD_ibfk_2">
+      <columns>PROJECT</columns>
+      <ref-key>~.PROJECT_SELL_INFO.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="489" parent="48" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="490" parent="48" name="ADDRESS">
+      <data-type>varchar(512)|0</data-type>
+    </column>
+    <column id="491" parent="48" name="LAND_NUMBER">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="492" parent="48" name="DEVELOPER_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="493" parent="48" name="DEVELOPER_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <key id="494" parent="48" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="495" parent="48" name="project_mortgage_ibfk_1">
+      <columns>ID</columns>
+      <ref-key>~.MORTGAEGE_REGISTE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="496" parent="49" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="497" parent="49" name="HOUSE_COUNT">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="498" parent="49" name="BUILD_COUNT">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="499" parent="49" name="AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="500" parent="49" name="USE_TYPE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="501" parent="49" name="SELL_OBJECT">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="502" parent="49" name="TYPE">
+      <comment>预售 现售</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="503" parent="49" name="LAND_CARD_NO">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="504" parent="49" name="NUMBER">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="505" parent="49" name="LAND_PROPERTY">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="506" parent="49" name="BEGIN_USE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="507" parent="49" name="END_USE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="508" parent="49" name="LAND_GET_MODE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="509" parent="49" name="LAND_AREA">
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <column id="510" parent="49" name="BUILD_SIZE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="511" parent="49" name="LAND_ADDRESS">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="512" parent="49" name="LAND_CARD_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="513" parent="49" name="LAND_USE_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="514" parent="49" name="CREATE_CARD_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="515" parent="49" name="CREATE_PREPARE_CARD_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="516" parent="49" name="LICENSE_NUMBER">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="517" parent="49" name="CREATE_LAND_CARD_CODE">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="518" parent="49" name="PROOF_MATERIAL">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="519" parent="49" name="CREATE_MONEY">
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="520" parent="49" name="COMPLATE_DATE">
+      <data-type>datetime|0</data-type>
+    </column>
+    <key id="521" parent="49" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="522" parent="49" name="PROJECT_SELL_INFO_ibfk_1">
+      <columns>ID</columns>
+      <ref-key>~.PROJECT.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="523" parent="50" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="524" parent="50" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="525" parent="50" name="REASON">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="526" parent="50" name="BUISINESS_ID">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="527" parent="50" name="BUISINESS_ID">
+      <columns>BUISINESS_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="528" parent="50" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="529" parent="50" name="REASON_ibfk_1">
+      <columns>BUISINESS_ID</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="530" parent="51" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="531" parent="51" name="FRAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="532" parent="51" name="CABINET">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="533" parent="51" name="BOX">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="534" parent="51" name="RECORD_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="535" parent="51" name="VERSION">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <key id="536" parent="51" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="537" parent="51" name="RECORD_LOCAL_ibfk_1">
+      <columns>ID</columns>
+      <ref-key>~.BUSINESS_FILE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="538" parent="52" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="539" parent="52" name="BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="540" parent="52" name="IN_ROOM">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="541" parent="52" name="VERSION">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="542" parent="52" name="CREATE_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="543" parent="52" name="RECORD_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <index id="544" parent="52" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="545" parent="52" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="546" parent="52" name="RECORD_STORE_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="547" parent="53" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="548" parent="53" name="PAY_TYPE">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="549" parent="53" name="SUM_PRICE">
+      <mandatory>1</mandatory>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="550" parent="53" name="GIFTAREA">
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="551" parent="53" name="HOUSEID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="552" parent="53" name="SUPERVISE_MONEY">
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="553" parent="53" name="SALEAREA">
+      <comment>计算收费面积使用</comment>
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <index id="554" parent="53" name="HOUSEID">
+      <columns>HOUSEID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="555" parent="53" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="556" parent="53" name="SALE_INFO_ibfk_1">
+      <columns>HOUSEID</columns>
+      <ref-key>~.HOUSE_RECORD.HOUSE</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="557" parent="54" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="558" parent="54" name="DEFINE_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="559" parent="54" name="BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="560" parent="54" name="STATUS">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <index id="561" parent="54" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="562" parent="54" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="563" parent="54" name="SUB_STATUS_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="564" parent="55" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="565" parent="55" name="BUSINESS">
+      <comment>倒库导入原库的NO</comment>
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="566" parent="55" name="OPER_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="567" parent="55" name="EMP_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="568" parent="55" name="EMP_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="569" parent="55" name="TASK_NAME">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="570" parent="55" name="COMMENTS">
+      <data-type>varchar(500)|0</data-type>
+    </column>
+    <column id="571" parent="55" name="OPER_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="572" parent="55" name="TASK_ID">
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="573" parent="55" name="TASK_DESCRIPTION">
+      <data-type>varchar(500)|0</data-type>
+    </column>
+    <index id="574" parent="55" name="BUSINESS">
+      <columns>BUSINESS</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="575" parent="55" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="576" parent="55" name="TASK_OPER_ibfk_1">
+      <columns>BUSINESS</columns>
+      <ref-key>~.OWNER_BUSINESS.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="577" parent="56" name="FILE_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="578" parent="56" name="EMP_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="579" parent="56" name="EMP_CODE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="580" parent="56" name="MD5">
+      <mandatory>1</mandatory>
+      <data-type>varchar(500)|0</data-type>
+    </column>
+    <column id="581" parent="56" name="BUSINESS_FILE_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="582" parent="56" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="583" parent="56" name="SIZE">
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="584" parent="56" name="UPLOAD_TIME">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <index id="585" parent="56" name="BUSINESS_FILE_ID">
+      <columns>BUSINESS_FILE_ID</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="586" parent="56" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="587" parent="56" name="UPLOAD_FILE_ibfk_1">
+      <columns>BUSINESS_FILE_ID</columns>
+      <ref-key>~.BUSINESS_FILE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="588" parent="57" name="PASS">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="589" parent="57" name="SELL_SHOW_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="590" parent="57" name="MESSAGES">
+      <data-type>varchar(512)|0</data-type>
+    </column>
+    <column id="591" parent="57" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <key id="592" parent="57" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <column id="593" parent="58" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="594" parent="58" name="ATTACH_EMP_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="595" parent="58" name="ATTACH_EMP_NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="596" parent="58" name="CONTRACT">
+      <mandatory>1</mandatory>
+      <data-type>longtext|0</data-type>
+    </column>
+    <column id="597" parent="58" name="CONTRACT_VERSION">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="598" parent="58" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="599" parent="58" name="contract_submit_ibfk_1">
+      <columns>ID</columns>
+      <ref-key>~.HOUSE_CONTRACT.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="600" parent="59" name="MORTGAEGE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="601" parent="59" name="HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="602" parent="59" name="HOUSE">
+      <columns>HOUSE</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="603" parent="59" name="PRIMARY">
+      <columns>MORTGAEGE
+HOUSE</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="604" parent="59" name="house_mortgaege_ibfk_2">
+      <columns>MORTGAEGE</columns>
+      <ref-key>~.MORTGAEGE_REGISTE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="605" parent="59" name="house_mortgaege_ibfk_1">
+      <columns>HOUSE</columns>
+      <ref-key>~.HOUSE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="606" parent="60" name="HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="607" parent="60" name="POOL">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="608" parent="60" name="POOL">
+      <columns>POOL</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="609" parent="60" name="PRIMARY">
+      <columns>HOUSE
+POOL</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="610" parent="60" name="house_owner_ibfk_1">
+      <columns>HOUSE</columns>
+      <ref-key>~.HOUSE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="611" parent="60" name="house_owner_ibfk_2">
+      <columns>POOL</columns>
+      <ref-key>~.POWER_OWNER.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="612" parent="61" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="613" parent="61" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="614" parent="61" name="ID_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="615" parent="61" name="ID_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="616" parent="61" name="RELATION">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="617" parent="61" name="POOL_AREA">
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="618" parent="61" name="PERC">
+      <data-type>decimal(19,4)|0</data-type>
+    </column>
+    <column id="619" parent="61" name="PHONE">
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <column id="620" parent="61" name="LEGAL_PERSON">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="621" parent="61" name="LEGAL_TYPE">
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="622" parent="61" name="ROOT_ADDRESS">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="623" parent="61" name="ADDRESS">
+      <data-type>varchar(200)|0</data-type>
+    </column>
+    <column id="624" parent="61" name="BIRTHDAY">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="625" parent="61" name="SEX">
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="626" parent="61" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(16)|0</data-type>
+    </column>
+    <column id="627" parent="61" name="PRI">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="628" parent="61" name="CARD">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="629" parent="61" name="OLD">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="630" parent="61" name="OLD_MEMO">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="631" parent="61" name="PROXY_PERSON">
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="632" parent="61" name="CARD">
+      <columns>CARD</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="633" parent="61" name="PROXY_PERSON">
+      <columns>PROXY_PERSON</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="634" parent="61" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="635" parent="61" name="power_owner_ibfk_1">
+      <columns>CARD</columns>
+      <ref-key>~.MAKE_CARD.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="636" parent="61" name="power_owner_ibfk_2">
+      <columns>PROXY_PERSON</columns>
+      <ref-key>~.PROXY_PERSON.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="637" parent="62" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="638" parent="62" name="TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(16)|0</data-type>
+    </column>
+    <column id="639" parent="62" name="NAME">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="640" parent="62" name="ID_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="641" parent="62" name="ID_NO">
+      <mandatory>1</mandatory>
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="642" parent="62" name="PHONE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(15)|0</data-type>
+    </column>
+    <key id="643" parent="62" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <column id="644" parent="63" name="ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="645" parent="63" name="BUILD_ID">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="646" parent="63" name="USE_TYPE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="647" parent="63" name="COUNT">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="648" parent="63" name="AREA">
+      <mandatory>1</mandatory>
+      <data-type>decimal(18,3)|0</data-type>
+    </column>
+    <index id="649" parent="63" name="BUILD_ID">
+      <columns>BUILD_ID
+USE_TYPE</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="650" parent="63" name="PRIMARY">
+      <columns>ID</columns>
+      <primary>1</primary>
+    </key>
+    <key id="651" parent="63" name="BUILD_ID">
+      <columns>BUILD_ID
+USE_TYPE</columns>
+      <underlying-index>BUILD_ID</underlying-index>
+    </key>
+    <foreign-key id="652" parent="63" name="sell_type_total_ibfk_1">
+      <columns>BUILD_ID</columns>
+      <ref-key>~.BUILD.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="653" parent="64" name="HOUSE">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <column id="654" parent="64" name="CONTRACT">
+      <mandatory>1</mandatory>
+      <data-type>varchar(32)|0</data-type>
+    </column>
+    <index id="655" parent="64" name="CONTRACT">
+      <columns>CONTRACT</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="656" parent="64" name="PRIMARY">
+      <columns>HOUSE
+CONTRACT</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="657" parent="64" name="house_and_contract_ibfk_1">
+      <columns>HOUSE</columns>
+      <ref-key>~.HOUSE.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="658" parent="64" name="house_and_contract_ibfk_2">
+      <columns>CONTRACT</columns>
+      <ref-key>~.HOUSE_CONTRACT.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+  </database-model>
+</dataSource>

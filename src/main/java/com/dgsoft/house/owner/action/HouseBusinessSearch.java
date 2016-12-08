@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * Created by cooper on 7/31/15.
  */
-public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<OwnerBusiness> {
-
+public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<HouseBusiness> {
 
     protected abstract RestrictionGroup getUseRestrictionGroup();
 
@@ -40,21 +39,15 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Owne
     }
 
 
-    public List<OwnerBusiness> getSearchResult(){
+    public void searchAction(){
         resetEjbql(getUseEjbql());
         setRestrictionGroup(getUseRestrictionGroup());
-        return getResultList();
-    }
-
-    public Long getResultCount(){
-        resetEjbql(getUseEjbql());
-        setRestrictionGroup(getUseRestrictionGroup());
-        return super.getResultCount();
+        resetPage();
     }
 
     public enum SortCol{
-        ORDER_BY_CREATE_TIME("biz.createTime"),
-        ORDER_BY_BUSINESS_NAME("biz.defineName");
+        ORDER_BY_CREATE_TIME("ob.createTime"),
+        ORDER_BY_BUSINESS_NAME("ob.defineName");
 
 
         private String colPath;
@@ -83,7 +76,6 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Owne
 
 
     public HouseBusinessSearch() {
-        //setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
         setRestrictionLogicOperator("and");
         setOrderColumn(SortCol.ORDER_BY_CREATE_TIME.colPath);
         setOrderDirection("desc");

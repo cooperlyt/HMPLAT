@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Oct 11, 2014 3:13:15 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class HouseBusiness implements java.io.Serializable {
     private boolean canceled;
 
     private SaleShowCheck saleShowCheck;
-    private HouseContract houseContract;
+
 
     private String searchKey;
     private String display;
@@ -137,22 +138,14 @@ public class HouseBusiness implements java.io.Serializable {
     }
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "houseBusiness")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "SALE_CHECK")
     public SaleShowCheck getSaleShowCheck() {
         return saleShowCheck;
     }
 
     public void setSaleShowCheck(SaleShowCheck saleShowCheck) {
         this.saleShowCheck = saleShowCheck;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "houseBusiness")
-    public HouseContract getHouseContract() {
-        return houseContract;
-    }
-
-    public void setHouseContract(HouseContract houseContract) {
-        this.houseContract = houseContract;
     }
 
 

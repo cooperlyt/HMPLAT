@@ -129,7 +129,7 @@ public class OutsideBusinessCreate {
                 outsideContract.getType(),
                 outsideContract.getCreateTime(),
                 outsideContract.getNewHouseContract().getProjectCerNumber(),
-                ownerBusinessHome.getSingleHoues(),contractSubmit);
+                ownerBusinessHome.getInstance(),contractSubmit);
         contractSubmit.setHouseContract(houseContract);
 
         for(cc.coopersoft.house.sale.data.ContractNumber cn : outsideContract.getContractNumbers()){
@@ -144,7 +144,7 @@ public class OutsideBusinessCreate {
             }
         }
 
-        ownerBusinessHome.getSingleHoues().setHouseContract(houseContract);
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseContracts().add(houseContract);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
 
 

@@ -62,7 +62,7 @@
                                      value="#{houseBusinessList.businessCategoryId}">
                         <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
                                        label="#{_category.name}" itemValue="#{_category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.resetPage}" status="processWaiting" render="myBizDefineFilter,resultBlank,resultDatas">
+                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.searchAction}" status="processWaiting" render="myBizDefineFilter,resultBlank,resultDatas">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectOneMenu>
@@ -74,7 +74,7 @@
                                                  styleClass="selectpicker mini-select"  value="#{houseBusinessList.businessDefineId}">
                                     <s:selectItems value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define"
                                                    label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                                    <a:ajax event="valueChange" listener="#{houseBusinessList.resetPage}" status="processWaiting" execute="@form"
+                                    <a:ajax event="valueChange" listener="#{houseBusinessList.searchAction}" status="processWaiting" execute="@form"
                                             render="resultDatas,resultBlank">
                                         <a:attachQueue requestDelay="0"/>
                                     </a:ajax>
@@ -113,7 +113,7 @@
 
 
                 <a:outputPanel id="resultDatas">
-                    <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseBusinessList.searchResult}">
+                    <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseBusinessList.resultList}">
                         <span class="mega-octicon octicon-search"></span>
 
                         <h3>#{messages.EmptyResult}</h3>
@@ -127,14 +127,14 @@
                         <ui:param name="listBean" value="#{houseBusinessList}"/>
                         <ui:define name="itemTitle">
                             <s:link view="/func/house/owner/BusinessView.xhtml">
-                                <f:param value="#{_item.id}" name="businessId"/>
-                                #{_item.defineName}
-                                <h:outputText value="#{messages[_item.type.name()]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/>
-                                / #{_item.id}
+                                <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
+                                #{_item.ownerBusiness.defineName}
+                                <h:outputText value="#{messages[_item.ownerBusiness.type.name()]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+                                / #{_item.ownerBusiness.id}
                             </s:link>
 
-                                        <span class="label label-biz-status #{_item.status}">
-                                            #{messages[_item.status.name()]}
+                                        <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                                            #{messages[_item.ownerBusiness.status.name()]}
                                         </span>
                         </ui:define>
                     </ui:decorate>

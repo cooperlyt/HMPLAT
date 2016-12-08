@@ -15,7 +15,7 @@ public class HouseBusinessModifyList extends HouseBusinessSearch {
 
     public HouseBusinessModifyList(){
         super();
-        setEjbql(HouseBusinessCondition.SHORT_EJBQL);
+       // setEjbql(HouseBusinessCondition.SHORT_EJBQL);
     }
 
     @In(create = true)

@@ -831,6 +831,12 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="LinkSaleContract" component="linkSaleContract">
+        <description>
+            联接销售合同到AFTER
+        </description>
+    </end-subscribe>
+
 
     <end-subscribe name="ProjectBusinessKeyAndDisplay" component="projectBusinessKeyAndDisplay">
         <description>

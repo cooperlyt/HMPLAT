@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,14 +18,14 @@ import java.util.List;
 public class HouseBusinessList extends HouseBusinessSearch {
 
     private static final String[] RESTRICTIONS_BIZ = {
-            "biz.defineId in (#{houseBusinessList.filterBizDefineId})"
+            "ob.defineId in (#{houseBusinessList.filterBizDefineId})"
     };
 
 
 
     public HouseBusinessList(){
         super();
-        setEjbql(houseBusinessCondition.SHORT_EJBQL);
+        setEjbql(HouseBusinessCondition.EJBQL);
         setMaxResults(10);
     }
 
@@ -93,8 +94,10 @@ public class HouseBusinessList extends HouseBusinessSearch {
 
     @Override
     protected RestrictionGroup getUseRestrictionGroup() {
-
-        return houseBusinessCondition.getRestrictionGroup(RESTRICTIONS_BIZ);
+        RestrictionGroup result = new RestrictionGroup("and");
+        result.getChildren().add(new RestrictionGroup("and", Arrays.asList(RESTRICTIONS_BIZ)));
+        result.getChildren().add(houseBusinessCondition.getRestrictionGroup());
+        return result;
     }
 
     @Override
