@@ -12,17 +12,17 @@
     <dh:entryGridBlock columns="4" >
 
         <h:outputText value="合同编号"/>
-        <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.contractNumber}"/>
+        <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.saleContract.contractNumber}"/>
 
         <h:outputText value="签约时间"/>
-        <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.contractDate}">
+        <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.saleContract.contractDate}">
             <f:convertDateTime pattern="#{messages.displayDatePattern}"/>
         </h:outputText>
 
-        <c:if test="#{not empty ownerBusinessHome.singleHoues.houseContract.contractSubmit}">
+        <c:if test="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.saleContract.contractSubmit}">
             <h:outputText value="合同号"/>
             <dh:entryGridColumn colspan="3">
-                <c:forEach items="#{ownerBusinessHome.singleHoues.houseContract.contractSubmit.contractNumberList}"
+                <c:forEach items="#{ownerBusinessHome.singleHoues.afterBusinessHouse.saleContract.contractSubmit.contractNumberList}"
                     var="_contractNumber">
                     <h:outputText value="  #{_contractNumber.contractNumber}"/>
                 </c:forEach>

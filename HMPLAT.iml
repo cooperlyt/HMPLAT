@@ -13,36 +13,15 @@
         </webroots>
       </configuration>
     </facet>
-    <facet type="Seam" name="Seam">
-      <configuration />
-    </facet>
-    <facet type="hibernate" name="Hibernate">
-      <configuration>
-        <datasource-map>
-          <unit-entry name="bin:target:HMPLAT_SNAPSHOT.war:WEB-INF:classes:hibernate.cfg.xml" />
-          <unit-entry name="bin:target:classes:hibernate.cfg.xml" />
-          <unit-entry name="jbpm-hibernate.cfg.xml" />
-        </datasource-map>
-        <naming-strategy-map />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/bin/src/main/resources/jbpm-hibernate.cfg.xml" />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/bin/target/HMPLAT_SNAPSHOT.war/WEB-INF/classes/hibernate.cfg.xml" />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/bin/target/HMPLAT_SNAPSHOT.war/WEB-INF/classes/jbpm-hibernate.cfg.xml" />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/bin/target/classes/hibernate.cfg.xml" />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/bin/target/classes/jbpm-hibernate.cfg.xml" />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/jbpm-hibernate.cfg.xml" />
-      </configuration>
-    </facet>
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="" />
-        <datasource-mapping>
-          <factory-entry name="houseEntityManagerFactory" />
-          <factory-entry name="ownerEntityManagerFactory" value="8ffcdc3c-fc41-4be7-8f4b-85a4c6c7fd4e" />
-          <factory-entry name="systemEntityManagerFactory" />
-        </datasource-mapping>
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping />
       </configuration>
+    </facet>
+    <facet type="Seam" name="Seam">
+      <configuration />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
@@ -53,7 +32,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: local.house:houseInterface:2.0.26Bate" level="project" />
     <orderEntry type="library" name="Maven: local.birt:servlet:1.0" level="project" />
