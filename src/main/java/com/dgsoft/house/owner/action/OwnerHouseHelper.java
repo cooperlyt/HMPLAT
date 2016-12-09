@@ -17,6 +17,8 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -101,19 +103,48 @@ public class OwnerHouseHelper {
 
     public static String genHouseDisplay(BusinessHouse house){
         DescriptionDisplay result = new DescriptionDisplay();
+        result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
 
-        result.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,house.getMapNumber() + " 图 " + house.getBlockNo() + " 丘 " + house.getBuildNo() + " 幢 " + house.getHouseOrder()));
-        result.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,house.getAddress()));
 
-        List<DescriptionDisplay.DisplayData> dds = new ArrayList<DescriptionDisplay.DisplayData>();
-        for (PowerPerson pp : house.getPowerPersons()){
-            if (!pp.isOld()){
-                dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,pp.getPersonName()));
-            }
+        String contractPersonNames = "";
+        for (PowerPerson pp : house.getAllNewPowerPersonList()){
+
+                if (!"".equals(contractPersonNames)){
+                    contractPersonNames += ",";
+                }
+                contractPersonNames += pp.getPersonName();
+
         }
 
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,contractPersonNames);
 
-        result.addLine(DescriptionDisplay.DisplayStyle.NORMAL,dds.toArray(new DescriptionDisplay.DisplayData[0]));
+        result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,house.getAddress());
+
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,house.getMapNumber());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE,"图");
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,house.getBlockNo());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE,"丘");
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,house.getBuildNo());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE,"幢");
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,house.getHouseOrder());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE,"房");
+
+        result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+        result.addData(DescriptionDisplay.DisplayStyle.LABEL,"规划用途");
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,house.getDesignUseType());
+
+        DecimalFormat df = new DecimalFormat("#0.000");
+        df.setGroupingUsed(false);
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        result.addData(DescriptionDisplay.DisplayStyle.LABEL,"建筑面积");
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,df.format(house.getHouseArea()));
+
+        result.addData(DescriptionDisplay.DisplayStyle.LABEL,"套内面积");
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,df.format(house.getUseArea()));
+
+
 
 
 

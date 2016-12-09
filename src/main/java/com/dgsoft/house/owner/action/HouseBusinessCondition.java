@@ -14,30 +14,29 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 
     public static final String POWER_PERSON_EJBQL = "select distinct biz from HouseBusiness biz " +
             "left join fetch biz.ownerBusiness ob " +
-            "left join fetch biz.ownerBusiness ob " +
             "left join biz.afterBusinessHouse house " +
-            "left join house.powerPersons owner " ;
+            "left join house.powerPersons owner where owner.old = false" ;
 
     public static final String EJBQL = "select biz from HouseBusiness biz  left join fetch biz.ownerBusiness ob  " ;
 
 
     public enum SearchType {
         ALL(EJBQL,new RestrictionGroup("or",Arrays.asList(new String[] {
-                "lower(biz.key) like lower(concat('%',concat('%',#{houseBusinessCondition.searchKey},'%')))",
+                "lower(biz.searchKey) like lower(concat('%',concat('%',#{houseBusinessCondition.searchKey},'%')))",
                 "lower(biz.houseCode) = lower(#{houseBusinessCondition.searchKey})",
                 "lower(ob.id) = lower(#{houseBusinessCondition.searchKey})"
         }))),
         OWNER_BIZ_ID(EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{"lower(ob.id) = lower(#{houseBusinessCondition.searchKey})"}))),
         HOUSE_CODE(EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{"lower(biz.houseCode) = lower(#{houseBusinessCondition.searchKey})"}))),
-        HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.old = false", "owner.personName = #{houseBusinessCondition.searchKey}"}))),
-        PERSON(POWER_PERSON_EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{ "owner.old = false",
-                "owner.credentialsType = #{houseBusinessCondition.searchCredentialsType}",
-                "lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.searchCredentialsNumber})"}))),
+        HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.personName = #{houseBusinessCondition.searchKey}"}))),
+        PERSON(POWER_PERSON_EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{
+                "owner.credentialsType = #{houseBusinessCondition.credentialsType}",
+                "lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.searchKey})"}))),
         HOUSE_MBBH("select biz from HouseBusiness biz  left join fetch biz.ownerBusiness ob left join biz.afterBusinessHouse house ",
-                new RestrictionGroup("and",Arrays.asList(new String[]{"lower(house.mapNumber) = lower(#{houseBusinessCondition.searchMapNumber})",
-                "lower(house.blockNo) = lower(#{houseBusinessCondition.searchBlockNumber})",
-                "lower(house.buildNo) = lower(#{houseBusinessCondition.searchBuildNumber})",
-                "lower(house.houseOrder) = lower(#{houseBusinessCondition.searchHouseNumber})"})));
+                new RestrictionGroup("and",Arrays.asList(new String[]{"lower(house.mapNumber) = lower(#{houseBusinessCondition.mapNumber})",
+                "lower(house.blockNo) = lower(#{houseBusinessCondition.blockNumber})",
+                "lower(house.buildNo) = lower(#{houseBusinessCondition.buildNumber})",
+                "lower(house.houseOrder) = lower(#{houseBusinessCondition.houseNumber})"})));
 
         private RestrictionGroup restrictionGroup;
 
@@ -202,16 +201,16 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 //    }
 
 
-    protected boolean isHaveCondition(){
-        if (SearchType.HOUSE_MBBH.equals(getSearchType())) {
-            return (getMapNumber() != null && !getMapNumber().trim().equals("")) ||
-                    (getBlockNumber() != null && !getBlockNumber().trim().equals("")) ||
-                    (getBuildNumber() != null && !getBuildNumber().trim().equals("")) ||
-                    (getHouseNumber() != null && !getHouseNumber().trim().equals(""));
-        }else {
-            return (getSearchKey() != null) && (!getSearchKey().trim().equals(""));
-        }
-
-    }
+//    protected boolean isHaveCondition(){
+//        if (SearchType.HOUSE_MBBH.equals(getSearchType())) {
+//            return (getMapNumber() != null && !getMapNumber().trim().equals("")) ||
+//                    (getBlockNumber() != null && !getBlockNumber().trim().equals("")) ||
+//                    (getBuildNumber() != null && !getBuildNumber().trim().equals("")) ||
+//                    (getHouseNumber() != null && !getHouseNumber().trim().equals(""));
+//        }else {
+//            return (getSearchKey() != null) && (!getSearchKey().trim().equals(""));
+//        }
+//
+//    }
 
 }

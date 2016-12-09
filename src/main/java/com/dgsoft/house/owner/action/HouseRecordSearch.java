@@ -14,24 +14,13 @@ import java.util.List;
 @Name("houseRecordSearch")
 public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
-    private static final String EJBQL = "select hr from HouseRecord hr " +
-            "left join fetch hr.businessHouse house " +
-            "left join fetch house.businessHouseOwner owner " +
-            "left join owner.makeCard ownerCard " +
-            "left join fetch house.houseBusinessForAfter houseBusiness " +
-            "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
-            "left join ownerBusiness.recordStores rs " +
-            "left join house.businessPools pool " +
-            "left join house.contractOwner contractOwner " +
-            "left join pool.makeCard poolCard where 1=2 ";
+    private static final String EJBQL = "select hr from HouseRecord hr left join fetch hr.businessHouse";
 
 
 
     public enum SortCol{
-        OwnerBusiness_recordTime_sort("ownerBusiness.recordTime"),
-        Record_location_sort("rs.frame,rs.cabinet,rs.box"),
-        House_sort("hr.houseCode"),
-        MainHouseOwner_sort("owner.credentialsType,owner.credentialsNumber");
+        OwnerBusiness_recordTime_sort("hr.lastChangeTime"),
+        House_sort("hr.houseCode");
 
 
         private String colPath;
@@ -75,6 +64,11 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
     }
 
 
+    public void searchAction(){
+        setEjbql(houseRecordCondition.getEjbql());
+        setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
+    }
+
     @In(create = true)
     private HouseRecordCondition houseRecordCondition;
 
@@ -85,12 +79,11 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
 
     public List<HouseRecord> getSearchResult(){
-        setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
+
         return getResultList();
     }
 
     public Long getResultCount(){
-        setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
         return super.getResultCount();
     }
 

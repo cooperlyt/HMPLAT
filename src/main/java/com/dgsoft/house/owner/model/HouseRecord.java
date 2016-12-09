@@ -34,6 +34,7 @@ public class HouseRecord implements java.io.Serializable {
        this.businessHouse = businessHouse;
        this.houseCode = businessHouse.getHouseCode();
 		this.houseStatus = houseStatus;
+		this.lastChangeTime = new Date();
     }
 
 	public HouseRecord(BusinessHouse businessHouse,HouseStatus houseStatus,String searchKey,String display){
@@ -42,11 +43,13 @@ public class HouseRecord implements java.io.Serializable {
 		this.houseStatus = houseStatus;
 		this.searchKey = searchKey;
 		this.display = display;
+		this.lastChangeTime = new Date();
 	}
 
 	public HouseRecord(BusinessHouse businessHouse) {
 		this.businessHouse = businessHouse;
 		this.houseCode = businessHouse.getHouseCode();
+		this.lastChangeTime = new Date();
 	}
 
 

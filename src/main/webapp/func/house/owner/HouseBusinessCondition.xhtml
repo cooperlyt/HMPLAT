@@ -77,7 +77,7 @@
                         <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
                                          value="#{conditionBean.searchType}" onchange="searchTypeChange()">
                             <s:selectItems value="#{conditionBean.allSearchTypes}" var="_item"
-                                           itemValue="#{_item}" noSelectionLabel="#{messages.allConditionCategory}"
+                                           itemValue="#{_item}"
                                            label="#{messages[_item.name()]}"/>
                             <s:convertEnum/>
                         </h:selectOneMenu>

@@ -8,40 +8,10 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
         template="HouseBusinessCondition.xhtml">
 
-    <ui:define name="conditionCss">
-        <h:outputStylesheet>
-            .search_repos .search-location-input{
-                display: none;
-            }
 
-
-            .search_repos.RECORD_LOCATION .search-location-input{
-                display: table-cell;
-            }
-
-            .search_repos.RECORD_LOCATION .search-key-input{
-                display: none;
-            }
-        </h:outputStylesheet>
-    </ui:define>
-
-    <ui:define name="inputCondition">
-
-        <h:outputText styleClass="input-group-addon search-location-input" value="#{messages.RecordStore_FRAME}"/>
-
-        <h:inputText styleClass="form-control search-location-input" value="#{conditionBean.frameNumber}"/>
-
-        <h:outputText styleClass="input-group-addon search-location-input" value="#{messages.RecrodStore_CABINET}"/>
-
-        <h:inputText styleClass="form-control search-location-input" value="#{conditionBean.cabinetNumber}"/>
-        <h:outputText styleClass="input-group-addon search-location-input" value="#{messages.RecordStore_Box}"/>
-
-        <h:inputText styleClass="form-control search-location-input" value="#{conditionBean.boxNumber}"/>
-
-    </ui:define>
 
     <ui:define name="conditionSearchButton">
-        <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseRecordSearch.resetPage}"
+        <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{houseRecordSearch.searchAction}"
                        value="#{messages.Search}">
         </h:commandLink>
     </ui:define>
