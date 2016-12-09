@@ -39,7 +39,7 @@ public class DescriptionDisplay {
 
 
     public enum DisplayStyle{
-        NORMAL
+        NORMAL,LABEL,TEXT,PARAGRAPH,IMPORTANT,DECORATE
     }
 
     public static class DisplayData{
@@ -123,6 +123,23 @@ public class DescriptionDisplay {
             line.getDisplayDatas().add(d);
         }
         return dataLines.add(line);
+    }
+
+    private DataLine curLine;
+
+    public DataLine newLine(DisplayStyle lineStyle){
+        curLine = new DataLine(lineStyle);
+        dataLines.add(curLine);
+        return curLine;
+    }
+
+    public DataLine addData(DisplayStyle displayStyle, String value){
+        if (curLine != null){
+            curLine.getDisplayDatas().add(new DisplayData(displayStyle,value));
+            return curLine;
+        }else{
+            throw new IllegalArgumentException("not in line");
+        }
     }
 
 }

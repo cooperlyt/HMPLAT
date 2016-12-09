@@ -14,7 +14,7 @@ import java.util.List;
 @Name("houseRecordSearch")
 public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
 
-    private static final String EJBQL = "select distinct hr from HouseRecord hr " +
+    private static final String EJBQL = "select hr from HouseRecord hr " +
             "left join fetch hr.businessHouse house " +
             "left join fetch house.businessHouseOwner owner " +
             "left join owner.makeCard ownerCard " +

@@ -37,7 +37,9 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
         for(HouseBusiness bh: ownerBusinessHome.getInstance().getHouseBusinesses()){
 
             DescriptionDisplay businessDisplay = new DescriptionDisplay();
-            List<DescriptionDisplay.DisplayData> dds = new ArrayList<DescriptionDisplay.DisplayData>();
+
+            businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+
             HouseContract houseContract = bh.getAfterBusinessHouse().getSaleContract();
 
             if (houseContract == null){
@@ -45,22 +47,12 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
             }
 
             if (houseContract != null) {
-                dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL, "合同编号:" + houseContract.getContractNumber()));
-                if (houseContract.getContractSubmit() != null) {
-                    for (ContractNumber cn : houseContract.getContractSubmit().getContractNumbers()) {
-                        dds.add(new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL, cn.getContractNumber()));
-                    }
-                }
-
-
-                businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL,dds.toArray(new DescriptionDisplay.DisplayData[0]));
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "合同编号");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,houseContract.getContractNumber());
             }
 
-            businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL, new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"图:" + bh.getAfterBusinessHouse().getMapNumber() + " 丘:" + bh.getAfterBusinessHouse().getBlockNo() + " 幢:" + bh.getAfterBusinessHouse().getBuildNo() + " 房: " + bh.getAfterBusinessHouse().getHouseOrder()));
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "备案人");
 
-            businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL, new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,bh.getAfterBusinessHouse().getAddress()));
-
-            // List<DescriptionDisplay.DisplayData> dds2 = new ArrayList<DescriptionDisplay.DisplayData>();
             String contractPersonNames = "";
             for (PowerPerson pp: bh.getAfterBusinessHouse().getAllNewPowerPersonList()){
                 if (pp.getType().equals(PowerPerson.PowerPersonType.CONTRACT)){
@@ -70,11 +62,21 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
                     contractPersonNames += pp.getPersonName();
                 }
             }
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
 
-            businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,contractPersonNames));
+            businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getAfterBusinessHouse().getAddress());
 
-            String result = DescriptionDisplay.toStringValue(businessDisplay);
-            bh.setDisplay(result);
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getMapNumber());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"图");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getBlockNo());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"丘");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getBuildNo());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"幢");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getBuildNo());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"房");
+
+            bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
         }
 
 

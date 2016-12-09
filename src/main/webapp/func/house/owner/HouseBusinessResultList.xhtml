@@ -37,10 +37,6 @@
 
                     </span>
 
-                    <p class="repo-list-description" >
-                        <strong>TODO: #{_item.display}</strong>
-                    </p>
-
 
                     <p class="repo-list-meta">
 
@@ -80,5 +76,8 @@
 
     </a:outputPanel>
 
-    <h:outputScript name="describeDisplay.js"/>
+    <a:outputPanel ajaxRendered="true">
+        <h:outputScript name="describeDisplay.js"/>
+    </a:outputPanel>
+
 </ui:composition>
