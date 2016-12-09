@@ -57,21 +57,21 @@
 
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{ownerBusinessHome.instance.ownerEntrust.personName}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>联系电话</p:paragraph>
 
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{ownerBusinessHome.instance.ownerEntrust.phone}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.applyPersion.phone}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>证件类型</p:paragraph>
 
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{messages[ownerBusinessHome.instance.ownerEntrust.credentialsType.name()]}</p:paragraph>
+                    <p:paragraph>#{messages[ownerBusinessHome.instance.applyPersion.credentialsType.name()]}</p:paragraph>
                 </p:cell>
 
                 <p:cell fixedHeight="23">
@@ -79,7 +79,7 @@
 
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{ownerBusinessHome.instance.ownerEntrust.credentialsNumber}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>项目名称</p:paragraph>
@@ -214,7 +214,7 @@
                     <p:paragraph>住宅套数</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{_buildBusiness.homeCount}</p:paragraph>
+                    <p:paragraph>#{_buildBusiness.}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>住宅面积</p:paragraph>
@@ -232,19 +232,19 @@
                     <p:paragraph>网点面积</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph><p:text value="#{_buildBusiness.shopArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                    <p:paragraph><p:text value="0"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>其它套数</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>#{_buildBusiness.unhomeCount}</p:paragraph>
+                    <p:paragraph>#{_buildBusiness}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>其它面积</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph><p:text value="#{_buildBusiness.unhomeArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                    <p:paragraph><p:text value="0"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
                 </p:cell>
                 <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
                     <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
