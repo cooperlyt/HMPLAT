@@ -26,7 +26,7 @@ public class PowerPerson implements PowerPersonEntity, Comparable<PowerPerson>, 
     @Override
     @Transient
     public int compareTo(PowerPerson o) {
-        Integer typePri = getPriority();
+        Integer typePri = getType().getPri();
         int result = typePri.compareTo(o.getType().getPri());
         if(result == 0){
             return Integer.valueOf(getPriority()).compareTo(o.getPriority());
