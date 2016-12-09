@@ -8,6 +8,15 @@
 
             if (!data) {
 
+                var lines = $this.data('description').dataLines;
+                $.each(lines, function (i, n){
+                    $this.append('append');
+                    $this.prepend('prepend');
+                    $this.after('after');
+                    $this.before('before');
+
+
+                });
 
                 $this.data('describeDisplay', {target: $this})
             }
@@ -16,9 +25,12 @@
     };
 
     $(window).on('load.describeDisplay', function () {
+
         $('[data-describe="json"]').each(function () {
-            var $carousel = $(this)
-            Plugin.call($carousel, $carousel.data())
+
+            $(this).describeDisplay();
+
+
         })
     })
 

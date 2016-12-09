@@ -33,7 +33,11 @@
                         </ui:insert>
                     </h3>
 
-                    <p class="repo-list-description">
+                    <span data-describe="json" data-description="#{_item.display}">
+
+                    </span>
+
+                    <p class="repo-list-description" >
                         <strong>TODO: #{_item.display}</strong>
                     </p>
 
@@ -75,4 +79,6 @@
         </a:outputPanel>
 
     </a:outputPanel>
+
+    <h:outputScript name="describeDisplay.js"/>
 </ui:composition>
