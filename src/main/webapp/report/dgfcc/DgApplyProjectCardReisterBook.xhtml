@@ -78,9 +78,19 @@
                     <p:paragraph>证件号</p:paragraph>
 
                 </p:cell>
+
+
                 <p:cell>
                     <p:paragraph>#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
                 </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>单位地址</p:paragraph>
+
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.developerAddress}</p:paragraph>
+                </p:cell>
+
                 <p:cell fixedHeight="23">
                     <p:paragraph>项目名称</p:paragraph>
 
@@ -96,16 +106,16 @@
                     <p:paragraph>#{_buildBusiness.businessProject.address}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>受理时间</p:paragraph>
+                    <p:paragraph>企业性质</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.instance.businessProject.developerProperty)}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>规划用途</p:paragraph>
+                    <p:paragraph>资质等级</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.useType}</p:paragraph>
+                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.instance.businessProject.developerLevel)}</p:paragraph>
                 </p:cell>
 
                 <p:cell fixedHeight="23">
@@ -134,12 +144,7 @@
                 <p:cell>
                     <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.createPrepareCardNumber}</p:paragraph>
                 </p:cell>
-                <p:cell fixedHeight="23">
-                    <p:paragraph>栋数</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.buildCount}</p:paragraph>
-                </p:cell>
+
                 <p:cell fixedHeight="23">
                     <p:paragraph>土地证号</p:paragraph>
                 </p:cell>
@@ -147,10 +152,11 @@
                     <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.landCardNo}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>地号</p:paragraph>
+                    <p:paragraph>受理时间</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.number}</p:paragraph>
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                            pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>土地性质</p:paragraph>
@@ -176,12 +182,7 @@
                 <p:cell>
                     <p:paragraph><p:text value="#{_buildBusiness.businessProject.projectSellInfo.beginUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
                 </p:cell>
-                <p:cell fixedHeight="23">
-                    <p:paragraph>土地坐落</p:paragraph>
-                </p:cell>
-                <p:cell>
-                    <p:paragraph>#{_buildBusiness.businessProject.projectSellInfo.landAddress}</p:paragraph>
-                </p:cell>
+
                 <p:cell fixedHeight="23">
                     <p:paragraph>土地使用年限止</p:paragraph>
                 </p:cell>
@@ -214,48 +215,72 @@
                     <p:paragraph>住宅套数</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph>#{_buildBusiness.}</p:paragraph>
+                    <p:paragraph>#{_buildBusiness.getSellTypeTotal('DWELLING_KEY').count}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>住宅面积</p:paragraph>
                 </p:cell>
                 <p:cell>
-                    <p:paragraph><p:text value="#{_buildBusiness.homeArea}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                    <p:paragraph><p:text value="#{_buildBusiness.getSellTypeTotal('DWELLING_KEY').area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>网点套数</p:paragraph>
+                    <p:paragraph>商业套数</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>#{_buildBusiness.shopCount}</p:paragraph>
+                    <p:paragraph>#{_buildBusiness.getSellTypeTotal('SHOP_HOUSE_KEY').count}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>网点面积</p:paragraph>
+                    <p:paragraph>商业面积</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph><p:text value="0"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                    <p:paragraph><p:text value="#{_buildBusiness.getSellTypeTotal('SHOP_HOUSE_KEY').area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>车库套数</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>#{_buildBusiness.getSellTypeTotal('CAR_STORE').count}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>车库面积</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph><p:text value="#{_buildBusiness.getSellTypeTotal('CAR_STORE').area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>办公套数</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>#{_buildBusiness.getSellTypeTotal('OFFICE').count}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>办公面积</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph><p:text value="#{_buildBusiness.getSellTypeTotal('OFFICE').area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>其它套数</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>#{_buildBusiness}</p:paragraph>
+                    <p:paragraph>#{_buildBusiness.getSellTypeTotal('OTHER').count}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>其它面积</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph><p:text value="0"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
+                    <p:paragraph><p:text value="#{_buildBusiness.getSellTypeTotal('OTHER').area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
                 </p:cell>
-                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
+                <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" fixedHeight="50">
                     <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
                 </p:cell>
-                <p:cell colspan="4" fixedHeight="180">
+                <p:cell colspan="4" fixedHeight="150">
                     <p:table columns="2" widths="0.7 3" headerRows="0" footerRows="0" widthPercentage="100">
                         <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
                             <p:paragraph>受理人</p:paragraph>
                         </p:cell>
 
-                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
+                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
 
                             <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
                                 <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
@@ -273,7 +298,7 @@
                             <p:paragraph>审核人</p:paragraph>
                         </p:cell>
 
-                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
+                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
 
 
                             <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
@@ -292,7 +317,7 @@
                             <p:paragraph>审批人</p:paragraph>
                         </p:cell>
 
-                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
+                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
 
 
                             <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
