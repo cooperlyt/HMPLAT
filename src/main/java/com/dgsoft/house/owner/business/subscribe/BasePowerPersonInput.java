@@ -78,9 +78,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
     public List<PowerPersonHelper<PowerPerson>> getPowerPersonList(){
         if (powerPersonList == null){
             powerPersonList = new ArrayList<PowerPersonHelper<PowerPerson>>();
-            for (int i = 0 ; i < getPersonCount(); i++) {
-                PowerPerson powerPerson = new PowerPerson(getPowerPersonType(), false);
-                ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().addPowerPerson(powerPerson);
+            for(PowerPerson powerPerson: ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),false)){
                 powerPersonList.add(new PowerPersonHelper<PowerPerson>(powerPerson, ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()) {
                     @Override
                     protected ProxyPersonEntity createProxyPerson() {
@@ -88,7 +86,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
                     }
                 });
             }
-        }else{
+        }
             while (powerPersonList.size() >  getPersonCount()){
                 PersonHelper<PowerPerson> powerPerson = powerPersonList.remove(powerPersonList.size() - 1);
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().removePowerPerson(powerPerson.getPersonEntity());
@@ -104,7 +102,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
                     }
                 });
             }
-        }
+
         return powerPersonList;
     }
 
