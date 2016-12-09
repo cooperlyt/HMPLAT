@@ -10,11 +10,14 @@
 
                 var lines = $this.data('description').dataLines;
                 $.each(lines, function (i, n){
-                    $this.append('append');
-                    $this.prepend('prepend');
-                    $this.after('after');
-                    $this.before('before');
+                    var datas = n.displayDatas;
 
+                    var data = '';
+                    $.each(datas,function (i1,n1) {
+                        data += '<span class="list-description-block biz-' + n1.displayStyle + '">' + n1.value + '</span>';
+                    });
+
+                    $this.append('<p class="repo-list-description biz-' + n.displayStyle + '">' + data + '</p>');
 
                 });
 
