@@ -43,7 +43,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
         this.ownerShareCalcType = ownerShareCalcType;
     }
 
-    private int personCount = 1;
+    private Integer personCount = null;
 
 
     public PoolType getPoolType(){
@@ -60,9 +60,13 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
     public int getPersonCount(){
         if (getPoolType() == null || PoolType.SINGLE_OWNER.equals(getPoolType())){
             return 1;
-        }else{
-            return personCount;
+        }else if (personCount == null){
+            personCount = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getAllNewPowerPersonList().size();
+            if (personCount.equals(0)){
+                personCount = 1;
+            }
         }
+        return personCount;
     }
 
     public void setPersonCount(int count){

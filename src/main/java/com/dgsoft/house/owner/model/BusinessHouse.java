@@ -870,7 +870,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     public void addPowerPerson(PowerPerson powerPerson){
         int pri = 0;
         for (PowerPerson pp : getPowerPersons()){
-            if (pp.isOld() == powerPerson.isOld() && powerPerson.getType().equals(pp.getType()) && (pp.getPriority() > pri)){
+            if (pp.isOld() == powerPerson.isOld() && powerPerson.getType().equals(pp.getType()) && (pp.getPriority() >= pri)){
                 pri = pp.getPriority() + 1;
             }
         }
