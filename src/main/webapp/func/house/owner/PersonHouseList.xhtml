@@ -126,12 +126,12 @@
                                 </div>
                             <div class="col-md-12">
                                 <label>产权人: </label>
-                                #{' '}<h:outputText rendered="#{not empty _house.businessHouse.businessHouseOwner}" value="#{_house.businessHouse.businessHouseOwner.personName}"/>
+                                #{' '}<h:outputText rendered="#{not empty _house.businessHouse.mainOwner}" value="#{_house.businessHouse.mainOwner.personName}"/>
 
                                 <label>
-                                   <h:outputText rendered="#{not empty _house.businessHouse.businessHouseOwner}" value="#{messages[_house.businessHouse.businessHouseOwner.credentialsType.name()]}"/>
+                                   <h:outputText rendered="#{not empty _house.businessHouse.mainOwner}" value="#{messages[_house.businessHouse.mainOwner.credentialsType.name()]}"/>
                                 </label>
-                                #{' '} <h:outputText rendered="#{not empty _house.businessHouse.businessHouseOwner}" value="#{_house.businessHouse.businessHouseOwner.credentialsNumber}"/>
+                                #{' '} <h:outputText rendered="#{not empty _house.businessHouse.mainOwner}" value="#{_house.businessHouse.mainOwner.credentialsNumber}"/>
 
                             </div>
 
