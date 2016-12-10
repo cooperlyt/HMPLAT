@@ -10,6 +10,7 @@ import com.dgsoft.house.owner.model.ProxyPerson;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.List;
 public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
 
     protected abstract PowerPerson.PowerPersonType getPowerPersonType();
+
+    protected abstract boolean isOld();
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -36,7 +39,6 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
             default:
                 return ownerShareCalcType;
         }
-
     }
 
     public void setOwnerShareCalcType(OwnerShareCalcType ownerShareCalcType) {
@@ -47,21 +49,27 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
 
 
     public PoolType getPoolType(){
-        return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType();
+        if (isOld()){
+            return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getOldPoolType();
+        }else
+            return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType();
     }
 
     public void setPoolType(PoolType poolType){
-        if (poolType == null || !poolType.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType())){
-            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().removeAll(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),false));
-        }
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
+//        if (poolType == null || (isOld() && !poolType.equals()) !poolType.equals(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPoolType())){
+//            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().removeAll(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),isOld()));
+//        }
+        if (isOld()){
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setOldPoolType(poolType);
+        }else
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(poolType);
     }
 
     public int getPersonCount(){
         if (getPoolType() == null || PoolType.SINGLE_OWNER.equals(getPoolType())){
             return 1;
         }else if (personCount == null){
-            personCount = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getAllNewPowerPersonList().size();
+            personCount = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),isOld()).size();
             if (personCount.equals(0)){
                 personCount = 1;
             }
@@ -78,7 +86,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
     public List<PowerPersonHelper<PowerPerson>> getPowerPersonList(){
         if (powerPersonList == null){
             powerPersonList = new ArrayList<PowerPersonHelper<PowerPerson>>();
-            for(PowerPerson powerPerson: ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),false)){
+            for(PowerPerson powerPerson: ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),isOld())){
                 powerPersonList.add(new PowerPersonHelper<PowerPerson>(powerPerson, ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()) {
                     @Override
                     protected ProxyPersonEntity createProxyPerson() {
@@ -93,7 +101,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
             }
 
             while (powerPersonList.size() < getPersonCount()){
-                PowerPerson powerPerson = new PowerPerson(getPowerPersonType(), false);
+                PowerPerson powerPerson = new PowerPerson(getPowerPersonType(), isOld());
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().addPowerPerson(powerPerson);
                 powerPersonList.add(new PowerPersonHelper<PowerPerson>(powerPerson, ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()) {
                     @Override
@@ -116,7 +124,8 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
 
     @Override
     public boolean isPass() {
-        return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().size() == getPersonCount();
+
+        return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),isOld()).size() == getPersonCount();
     }
 
     @Override

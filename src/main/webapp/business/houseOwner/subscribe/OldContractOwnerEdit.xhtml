@@ -4,12 +4,12 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                template="PowerPersonView.xhtml">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:param name="powerPersons" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldContractOwnerList}"/>
-    <ui:param name="_pool_type" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.oldPoolType}"/>
-
-
+    <ui:include src="PowerPersonEdit.xhtml">
+        <ui:param name="powerPersonEntityComponent" value="#{oldContractPersonEdit}"/>
+        <ui:param name="mainLabel" value="备案人"/>
+        <ui:param name="onlyProxy" value="true"/>
+    </ui:include>
 </ui:composition>

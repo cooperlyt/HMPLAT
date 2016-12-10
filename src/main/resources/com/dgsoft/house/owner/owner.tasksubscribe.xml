@@ -286,7 +286,7 @@
 
     <view-subscribe name="StartContractOwnerView" page="/business/houseOwner/subscribe/StartContractOwnerView.xhtml">
         <description>
-            所有备案人信息（StartHouse）
+            原备案人信息
         </description>
     </view-subscribe>
 
@@ -490,6 +490,13 @@
     <edit-subscribe name="ContractOwnerEdit" page="/business/houseOwner/subscribe/ContractOwnerEdit.xhtml" component="contractPersonEdit">
         <description>
             备案人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+    <edit-subscribe name="OldContractOwnerEdit" page="/business/houseOwner/subscribe/OldContractOwnerEdit.xhtml" component="oldContractPersonEdit">
+        <description>
+            原备案人编辑
         </description>
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
@@ -1512,6 +1519,13 @@
     <create-component type="DATA_FILL" component="initPowerPersonFill">
         <description>
             提取首次登记人到现
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_FILL" component="extractContractPersonToOld">
+        <description>
+            提取备案人到原
         </description>
     </create-component>
 

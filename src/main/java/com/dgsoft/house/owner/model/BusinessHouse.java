@@ -6,6 +6,7 @@ import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.*;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import org.hibernate.annotations.GenericGenerator;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -43,6 +44,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     private String direction;
     private String houseCode;
     private PoolType poolType;
+    private PoolType oldPoolType;
 
     private boolean haveDownRoom;
     private String buildCode;
@@ -157,6 +159,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         if (houseInfo.getLandInfo() != null){
             this.landInfo = new LandInfo(houseInfo.getLandInfo());
         }
+
+        this.oldPoolType = houseInfo.getPoolType();
 
     }
 
@@ -292,6 +296,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.poolType = poolType;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "OLD_POOL_MEMO", length = 32)
+    public PoolType getOldPoolType() {
+        return oldPoolType;
+    }
+
+    public void setOldPoolType(PoolType oldPoolType) {
+        this.oldPoolType = oldPoolType;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY,optional = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "REG_INFO",nullable = true)
@@ -848,6 +861,11 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     @Transient
     public List<PowerPerson> getNewContractOwnerList(){
         return getPowerPersonListByType(PowerPerson.PowerPersonType.CONTRACT,false);
+    }
+
+    @Transient
+    public List<PowerPerson> getOldContractOwnerList(){
+        return getPowerPersonListByType(PowerPerson.PowerPersonType.CONTRACT,true);
     }
 
     @Transient

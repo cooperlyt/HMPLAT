@@ -80,7 +80,7 @@
 
                         <h:selectOneMenu value="#{_person.personEntity.sex}" p:data-width="70px" styleClass="selectpicker select-menu-btn person-sex">
 
-                            <s:selectItems value="#{sexValues}" var="_sex"
+                            <s:selectItems value="#{sexValues}" var="_sex" noSelectionLabel="性别"
                                            label="#{messages[_sex.name()]}" itemValue="#{_sex}"/>
                             <s:convertEnum/>
 

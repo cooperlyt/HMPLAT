@@ -4,10 +4,10 @@ import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by cooper on 24/11/2016.
+ * Created by cooper on 10/12/2016.
  */
-@Name("contractPersonEdit")
-public class ContractPersonEdit extends BasePowerPersonInput {
+@Name("oldContractPersonEdit")
+public class OldContractPersonEdit extends BasePowerPersonInput{
     @Override
     protected PowerPerson.PowerPersonType getPowerPersonType() {
         return PowerPerson.PowerPersonType.CONTRACT;
@@ -15,6 +15,6 @@ public class ContractPersonEdit extends BasePowerPersonInput {
 
     @Override
     protected boolean isOld() {
-        return false;
+        return true;
     }
 }
