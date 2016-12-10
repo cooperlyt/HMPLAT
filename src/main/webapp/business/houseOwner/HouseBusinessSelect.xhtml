@@ -52,7 +52,7 @@
             <h:form>
             <ul class="repo-list js-repo-list full-width">
                 <c:forEach items="#{houseBusinessStart.allowSelectBizs}" var="_item">
-                     <ui:decorate template="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
+                     <ui:decorate template="/business/houseOwner/BusinessSelectListItem.xhtml">
                         <ui:define name="itemAction">
                             <s:button styleClass="btn btn-sm btn-success" value="#{messages.Select}" action="#{houseBusinessStart.businessSelected}"
                                              onclick="#{r:component('wait')}.show()">
@@ -67,6 +67,10 @@
             </h:form>
             
         </div>
+        <a:outputPanel ajaxRendered="true">
+            <h:outputScript name="describeDisplay.js"/>
+        </a:outputPanel>
     </ui:define>
+
 
 </ui:composition>
