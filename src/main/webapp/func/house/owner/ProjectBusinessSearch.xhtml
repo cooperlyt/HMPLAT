@@ -1,0 +1,149 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="#{messages.HouseBusinessSearch}"/>
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:define name="funcNav">
+        <ui:include src="/layout/function-nav.xhtml">
+            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+        </ui:include>
+    </ui:define>
+
+
+
+    <ui:define name="head-right">
+        <ui:include src="HouseBusinessCondition.xhtml">
+            <ui:param name="conditionBean" value="#{houseBusinessCondition}"/>
+        </ui:include>
+    </ui:define>
+
+    <h:outputStylesheet>
+        .action-col{
+            width: 140px !important;
+            max-width: 140px !important;
+        }
+
+        .repo-list-description{
+            max-width: none;
+        }
+
+    </h:outputStylesheet>
+
+
+
+
+    <a:outputPanel ajaxRendered="false">
+
+
+
+
+
+        <a:outputPanel layout="block" style="min-height: 300px;">
+
+            <div class="file-navigation in-mid-page" style="margin-top: 0">
+                <h:form>
+                    <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
+                                     value="#{houseBusinessList.businessCategoryId}">
+                        <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
+                                       label="#{_category.name}" itemValue="#{_category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
+                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.searchAction}" status="processWaiting" render="myBizDefineFilter,resultBlank,resultDatas">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                    </h:selectOneMenu>
+
+                    <a:outputPanel id="myBizDefineFilter">
+                        <a:outputPanel rendered="#{not empty houseBusinessList.businessCategory}">
+                            <span class="i-separator">/</span>
+                            <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
+                                             styleClass="selectpicker mini-select"  value="#{houseBusinessList.businessDefineId}">
+                                <s:selectItems value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define"
+                                               label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
+                                <a:ajax event="valueChange" listener="#{houseBusinessList.searchAction}" status="processWaiting" execute="@form"
+                                        render="resultDatas,resultBlank">
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:ajax>
+                            </h:selectOneMenu>
+                        </a:outputPanel>
+                    </a:outputPanel>
+
+
+
+                    <div class="right" >
+                        <div class="select-menu">
+                            <div class="btn-group btn-group-sm">
+                                <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                    <ui:define name="caption">
+                                        <i>#{messages.SortBy}:</i>
+
+                                        <span style="">#{messages[houseBusinessList.sortCol.name()]}</span>
+                                    </ui:define>
+                                    <ui:param name="menuTitle" value="#{messages.SortOption}"/>
+
+                                    <a:repeat value="#{houseBusinessList.allSortCol}" var="_col">
+                                        <s:link styleClass="select-menu-item #{(houseBusinessList.sortCol eq _col) ? 'selected': ''}">
+                                            <f:param name="sort" value="#{_col.colPath}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{messages[_col.name()]}</span>
+                                        </s:link>
+                                    </a:repeat>
+                                </ui:decorate>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+
+
+
+
+            <a:outputPanel id="resultDatas">
+                <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseBusinessList.resultList}">
+                    <span class="mega-octicon octicon-search"></span>
+
+                    <h3>#{messages.EmptyResult}</h3>
+
+                    <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessList.resetCondition}"/>
+                        #{' '}#{messages.orOther} #{messages.Try} #{' '}
+                        <s:link value="#{messages.AvancedSearch}"/></p>
+                </a:outputPanel>
+
+                <ui:decorate template="HouseBusinessResultList.xhtml">
+                    <ui:param name="listBean" value="#{houseBusinessList}"/>
+                    <ui:define name="itemTitle">
+                        <s:link view="/func/house/owner/BusinessView.xhtml">
+                            <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
+                            #{_item.ownerBusiness.defineName}
+                            <h:outputText value="#{messages[_item.ownerBusiness.type.name()]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+                            / #{_item.ownerBusiness.id}
+                        </s:link>
+
+                        <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                                            #{messages[_item.ownerBusiness.status.name()]}
+                                        </span>
+                    </ui:define>
+                </ui:decorate>
+            </a:outputPanel>
+
+        </a:outputPanel>
+
+
+
+    </a:outputPanel>
+
+
+
+</ui:composition>

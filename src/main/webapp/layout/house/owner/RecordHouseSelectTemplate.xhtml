@@ -279,8 +279,8 @@
                                     #{_house.businessHouse.houseOrder}
                                 </td>
                                 <td>
-                                    <h:outputText value="#{_house.businessHouse.businessHouseOwner.personName}"
-                                                  rendered="#{not empty _house.businessHouse.businessHouseOwner}"/>
+                                    <h:outputText value="#{_house.businessHouse.mainOwner.personName}"
+                                                  rendered="#{not empty _house.businessHouse.mainOwner}"/>
 
                                 </td>
                                 <td>
@@ -348,8 +348,8 @@
                                     #{_house.businessHouse.houseOrder}
                                 </td>
                                 <td>
-                                    <h:outputText value="#{_house.businessHouse.businessHouseOwner.personName}"
-                                                  rendered="#{not empty _house.businessHouse.businessHouseOwner}"/>
+                                    <h:outputText value="#{_house.businessHouse.mainOwner.personName}"
+                                                  rendered="#{not empty _house.businessHouse.mainOwner}"/>
 
                                 </td>
                                 <td>
@@ -365,9 +365,6 @@
                 </a:outputPanel>
             </a:outputPanel>
             <a:outputPanel rendered="#{not searchBykey and  not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
-
-
-
 
                 <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd;"/>
 

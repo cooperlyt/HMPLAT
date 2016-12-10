@@ -40,6 +40,9 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
 
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
 
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "房屋编号");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getHouseCode());
+
             HouseContract houseContract = bh.getAfterBusinessHouse().getSaleContract();
 
             if (houseContract == null){
