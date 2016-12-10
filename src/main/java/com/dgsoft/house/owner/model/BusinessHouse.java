@@ -334,12 +334,18 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
                     return getBlockNo() + "-" + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "-") + getHouseOrder();
 
                 }
-            case 7:
-                return ((getMapNumber() == null) ? "" : ("图: "+getMapNumber()  )) + "丘: "+ getBlockNo()+"幢: "  + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "房号: ") + getHouseOrder();
+
+
 
 
         }
         return getHouseCode();
+    }
+
+
+    @Transient
+    public String getDisplayHouseCodeByCh() {
+        return ((getMapNumber() == null) ? "" : ("图: "+getMapNumber()  )) + "丘: "+ getBlockNo()+"幢: "  + getBuildNo() + ((getHouseOrder() == null || getHouseOrder().trim().equals("")) ? "" : "房号: ") + getHouseOrder();
     }
 
 
