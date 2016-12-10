@@ -272,12 +272,12 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
 
             return getEntityManager().createQuery("select hr from HouseRecord hr " +
                     "left join fetch hr.businessHouse house " +
-                    "left join fetch house.businessHouseOwner owner " +
-                    "left join fetch owner.makeCard ownerCard " +
+
+
                     "left join fetch house.houseBusinessForAfter houseBusiness " +
                     "left join fetch houseBusiness.ownerBusiness ownerBusiness " +
-                    "left join fetch house.businessPools pool " +
-                    "left join fetch pool.makeCard poolCard where hr.houseCode = :houseCode", HouseRecord.class)
+
+                    " where hr.houseCode = :houseCode", HouseRecord.class)
                     .setParameter("houseCode", getId()).getSingleResult();
         }catch (NoResultException e){
             return null;

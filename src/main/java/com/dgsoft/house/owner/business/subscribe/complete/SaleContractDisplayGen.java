@@ -73,7 +73,7 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"丘");
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getBuildNo());
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"幢");
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getBuildNo());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getHouseOrder());
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"房");
 
             bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));

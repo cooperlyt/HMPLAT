@@ -101,7 +101,7 @@
 
                                 <s:link view="/func/house/owner/HouseRecordView.xhtml">
                                     <f:param name="houseCode" value="#{_item.houseCode}"/>
-                                    #{_item.businessHouse.houseCode}  / #{_item.businessHouse.displayHouseCode}
+                                    #{_item.houseCode}  / #{_item.businessHouse.displayHouseCode}
                                 </s:link>
 
                                         <span class="label">
@@ -109,22 +109,13 @@
                                         </span>
                             </h3>
 
-                            <p class="repo-list-description tooltipped tooltipped-w">
+                            <span data-describe="json" data-description="#{_item.display}">
 
-                                <strong>#{_item.businessHouse.businessHouseOwner.personName}</strong>
-                                #{_item.businessHouse.mapNumber}图#{_item.businessHouse.blockNo}丘#{_item.businessHouse.buildNo}幢<strong>#{_item.businessHouse.houseOrder}</strong>
-                            </p>
-                            <p class="repo-list-description">
-                                #{_item.businessHouse.buildName} <strong>#{_item.businessHouse.houseOrder}</strong>
-                            </p>
-
-                            <p class="repo-list-description tooltipped tooltipped-w" aria-label="房屋坐落">
-                                #{_item.businessHouse.address}
-                            </p>
+                            </span>
 
                             <p class="repo-list-meta">
                                 <strong>#{messages['OwnerBusiness_recordTime_sort']}</strong> &nbsp;
-                                <h:outputText value="#{_item.businessHouse.houseBusinessForAfter.ownerBusiness.recordTime}">
+                                <h:outputText value="#{_item.lastChangeTime}">
                                     <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
                                 </h:outputText>
                             </p>
@@ -146,6 +137,8 @@
 
     </a:outputPanel>
 
-
+    <a:outputPanel ajaxRendered="true">
+        <h:outputScript name="describeDisplay.js"/>
+    </a:outputPanel>
 
 </ui:composition>
