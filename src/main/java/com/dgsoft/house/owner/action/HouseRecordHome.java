@@ -296,11 +296,11 @@ public class HouseRecordHome extends OwnerEntityHome<HouseRecord> {
         return OwnerHouseHelper.instance().getMortgaeges(getInstance().getHouseCode());
     }
 
-    private List<OwnerBusiness> ownerBusinessList;
+    private List<HouseBusiness> ownerBusinessList;
 
-    public List<OwnerBusiness> getOwnerBusinessList(){
+    public List<HouseBusiness> getOwnerBusinessList(){
         if (ownerBusinessList == null) {
-            ownerBusinessList = getEntityManager().createQuery("select houseBusiness.ownerBusiness from HouseBusiness houseBusiness where houseBusiness.houseCode =:houseCode order by houseBusiness.ownerBusiness.regTime desc", OwnerBusiness.class)
+            ownerBusinessList = getEntityManager().createQuery("select houseBusiness from HouseBusiness houseBusiness left join fetch houseBusiness.ownerBusiness ob  where houseBusiness.houseCode =:houseCode order by houseBusiness.ownerBusiness.regTime desc", HouseBusiness.class)
                     .setParameter("houseCode", getInstance().getHouseCode()).getResultList();
         }
         return ownerBusinessList;

@@ -203,39 +203,72 @@
                     <ul class="repo-list js-repo-list full-width">
                         <c:forEach items="#{houseRecordHome.ownerBusinessList}" var="_item">
 
-                            <ui:decorate template="#{businessDefineCache.getDefine(_item.defineId).pickBusinessViewPage}">
-                                <ui:remove>
+
+
+
+
+                            <li class="repo-list-item public source">
+                                <div class="repo-list-stats">
+                                </div>
+                                <h3 class="repo-list-name">
+                                    <s:link view="/func/house/owner/BusinessView.xhtml">
+                                        <f:param name="businessId" value="#{_item.ownerBusiness.id}"/>
+                                        #{_item.ownerBusiness.defineName}<h:outputText value="#{messages[_item.ownerBusiness.type.name()]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/> / #{_item.ownerBusiness.id}
+                                    </s:link>
+                                    <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                                            #{messages[_item.ownerBusiness.status.name()]}
+                                        </span>
+                                </h3>
+
+                                <span  data-describe="json" data-description="#{_item.display}"/>
+
+
+
+                                <p class="repo-list-meta">
+                                    <ui:insert name="itemMeta">
+                                        #{messages['ownerBusiness.applyTime']}
+                                        <h:outputText value="#{_item.ownerBusiness.applyTime}">
+                                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                        </h:outputText>
+
+                                        <a:outputPanel rendered="#{_item.ownerBusiness.recorded}">
+                                            #{messages['ownerBusiness.regTime']}
+                                            <h:outputText value="#{_item.ownerBusiness.regTime}">
+                                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                            </h:outputText>
+                                        </a:outputPanel>
+                                        #{messages['ownerBusiness.recordTime']}
+                                        <h:outputText value="#{_item.ownerBusiness.recordTime}">
+                                            <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                        </h:outputText>
+                                    </ui:insert>
+
+                                </p>
+                            </li>
+
+
+                            <ui:remove>
                                 <ui:define name="itemAction">
                                     <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="架">
                                         <span class="octicon octicon-versions"/>
-                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.frame}
+                                        #{_item.recordStore.frame}
                                     </s:link>
                                     <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="柜">
                                         <span class="glyphicon glyphicon-compressed"/>
-                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.cabinet}
+                                        #{_item.recordStore.cabinet}
                                     </s:link>
                                     <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="盒">
                                         <span class="octicon octicon-inbox"/>
-                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.box}
+                                        #{_item.recordStore.box}
                                     </s:link>
                                     <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="档案编号">
                                         <span class="octicon octicon-repo"/>
-                                        #{_item.getHouseBusiness(houseRecordHome.instance.houseCode).recordStore.recordCode}
+                                        #{_item.recordStore.recordCode}
                                     </s:link>
                                 </ui:define>
-                                </ui:remove>
-                                <ui:define name="itemTitle">
-                                    <s:link view="/func/house/owner/BusinessView.xhtml">
-                                        <f:param name="businessId" value="#{_item.id}"/>
-                                        #{_item.defineName}<h:outputText value="#{messages[_item.type.name()]}" rendered="#{not (_item.type eq 'NORMAL_BIZ')}"/> / #{_item.id}
-                                    </s:link>
-                                                   <span class="label label-biz-status #{_item.status}">
-                                            #{messages[_item.status.name()]}
-                                        </span>
-                                </ui:define>
+                            </ui:remove>
 
 
-                            </ui:decorate>
 
 
                         </c:forEach>
@@ -247,6 +280,8 @@
 
         </div>
 
+
+        <h:outputScript name="describeDisplay.js"/>
 
     </ui:define>
 
