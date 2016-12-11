@@ -105,6 +105,11 @@ public class PowerPerson implements PowerPersonEntity, Comparable<PowerPerson>, 
         this.sex = pool.getSex();
     }
 
+    public PowerPerson(PowerPersonType type, boolean old ,PowerPerson pool, int pri){
+        this(type, old , pool);
+        this.pri = pri;
+    }
+
     public PowerPerson(String personName, CredentialsType credentialsType,
                        String credentialsNumber, String relation, BigDecimal poolArea,
                        BigDecimal perc, String phone, String legalPerson) {

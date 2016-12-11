@@ -23,7 +23,7 @@ public abstract class PowerPersonFill implements BusinessDataFill {
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             for(PowerPerson pp: hb.getStartBusinessHouse().getPowerPersons()){
                 if (!pp.isOld() && getType().equals(pp.getType())){
-                    hb.getAfterBusinessHouse().getPowerPersons().add(new PowerPerson(getType(),isfillToOld(),pp));
+                    hb.getAfterBusinessHouse().getPowerPersons().add(new PowerPerson(getType(),isfillToOld(),pp,pp.getPriority()));
                 }
             }
         }
