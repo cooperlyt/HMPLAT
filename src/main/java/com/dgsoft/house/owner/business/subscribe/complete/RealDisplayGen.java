@@ -3,21 +3,20 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.*;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.dgsoft.house.owner.model.HouseBusiness;
+import com.dgsoft.house.owner.model.HouseContract;
+import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.jboss.seam.log.Logging;
 
 /**
- * Created by cooper on 20/11/2016.
- * 销售备案-房屋业务查询
+ * Created by wxy on 2016-12-11.
+ * 房屋交易-查询
+ * SaleContractDisplay
  */
-@Name("saleContractDisplayGen")
-public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
+@Name("realDisplayGen")
+public class RealDisplayGen implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -55,11 +54,11 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,houseContract.getContractNumber());
             }
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "备案人");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "交易备案人");
 
             String contractPersonNames = "";
             for (PowerPerson pp: bh.getAfterBusinessHouse().getAllNewPowerPersonList()){
-                if (pp.getType().equals(PowerPerson.PowerPersonType.CONTRACT)){
+                if (pp.getType().equals(PowerPerson.PowerPersonType.OWNER)){
                     if (!"".equals(contractPersonNames)){
                         contractPersonNames += ",";
                     }

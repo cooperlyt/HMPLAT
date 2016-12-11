@@ -60,9 +60,9 @@
 
 
 
-    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/HouseOwnerView.xhtml">
+    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
         <description>
-            产权人查看
+            所有交易备案人(现)
         </description>
     </view-subscribe>
 
@@ -501,6 +501,19 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+    <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
+        <description>
+            交易备案人准备
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="OwnerEdit" page="/business/houseOwner/subscribe/OwnerEdit.xhtml" component="ownerPersonEdit">
+        <description>
+            交易备案人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
     <edit-subscribe name="PersionObligorEdit" page="/business/houseOwner/subscribe/PersionObligorEdit.xhtml" component="">
         <description>
             债务人编辑
@@ -825,6 +838,13 @@
 
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
+
+    <end-subscribe name="RealDisplayGen" component="realDisplayGen">
+        <description>
+            房屋交易备案显示生成器
+        </description>
+    </end-subscribe>
+
 
     <end-subscribe name="GenSearchKeyForNewOwner" component="houseBusinessOwnerKeyGen">
         <description>
