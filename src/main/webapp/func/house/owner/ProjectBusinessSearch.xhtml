@@ -7,10 +7,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:r="http://richfaces.org/rich"
                 template="/layout/template-data.xhtml">
 
 
-    <ui:param name="funcName" value="#{messages.HouseBusinessSearch}"/>
+    <ui:param name="funcName" value="项目业务查询"/>
 
     <ui:define name="outcss">
         <h:outputStylesheet library="github" name="/css/github1.css"/>
@@ -26,9 +27,96 @@
 
 
     <ui:define name="head-right">
-        <ui:include src="HouseBusinessCondition.xhtml">
-            <ui:param name="conditionBean" value="#{houseBusinessCondition}"/>
-        </ui:include>
+
+
+
+        <h:outputStylesheet>
+
+
+            .search_repos .search-key-input{
+                display: table-cell;
+                border-bottom-right-radius: 3px !important;
+                border-top-right-radius: 3px !important;
+            }
+
+            .search_repos.HOUSE_MBBH .search-key-input{
+                display: none;
+            }
+
+            .search_repos .search-mbbh-input{
+                display: none;
+            }
+
+
+            .search_repos.HOUSE_MBBH .search-mbbh-input{
+                display: table-cell;
+            }
+
+            .person-type-select button , .card-type-select button{
+                border-top-left-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+            }
+
+        </h:outputStylesheet>
+
+        <h:outputScript>
+            function searchTypeChange(){
+
+            $('.search_repos').removeAttr('class').attr('class', 'search_repos');
+            $('.search_repos').addClass($('.js-search-type-select').val())
+            }
+        </h:outputScript>
+
+        <h:form styleClass="search_repos #{projectBusinessList.searchType}">
+            <div class="flex-table search-form-fluid">
+
+                <div class="flex-table-item flex-table-item-primary">
+                    <a:outputPanel id="searchInputs" layout="block" styleClass="input-group input-block">
+                        <div class="input-group-btn">
+
+
+                            <h:selectOneMenu styleClass="selectpicker select-menu-btn input-group-first sm-radius js-search-type-select"
+                                             value="#{projectBusinessList.searchType}" onchange="searchTypeChange()">
+                                <s:selectItems value="#{projectBusinessList.allSearchTypes}" var="_item"
+                                               itemValue="#{_item}"
+                                               label="#{messages[_item.name()]}"/>
+                                <s:convertEnum/>
+                            </h:selectOneMenu>
+
+
+                        </div>
+
+
+                        <h:inputText styleClass="form-control search-key-input" value="#{projectBusinessList.searchKey}"/>
+
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_map}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{projectBusinessList.mapNumber}"/>
+
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_block}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{projectBusinessList.blockNumber}"/>
+                        <h:outputText styleClass="input-group-addon search-mbbh-input" value="#{messages.MapIdentification_build}"/>
+
+                        <h:inputText styleClass="form-control search-mbbh-input" value="#{projectBusinessList.buildNumber}"/>
+
+
+                        <!-- /btn-group -->
+                    </a:outputPanel>
+                    <!-- /input-group -->
+                </div>
+
+                <div class="flex-table-item">
+
+                        <h:commandLink styleClass="btn" onclick="#{r:component('wait')}.show()" action="#{projectBusinessList.searchAction}"
+                                       value="#{messages.Search}">
+                        </h:commandLink>
+
+                </div>
+            </div>
+        </h:form>
+
+
     </ui:define>
 
     <h:outputStylesheet>
@@ -56,45 +144,20 @@
 
             <div class="file-navigation in-mid-page" style="margin-top: 0">
                 <h:form>
-                    <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
-                                     value="#{houseBusinessList.businessCategoryId}">
-                        <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
-                                       label="#{_category.name}" itemValue="#{_category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.searchAction}" status="processWaiting" render="myBizDefineFilter,resultBlank,resultDatas">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-                    </h:selectOneMenu>
-
-                    <a:outputPanel id="myBizDefineFilter">
-                        <a:outputPanel rendered="#{not empty houseBusinessList.businessCategory}">
-                            <span class="i-separator">/</span>
-                            <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
-                                             styleClass="selectpicker mini-select"  value="#{houseBusinessList.businessDefineId}">
-                                <s:selectItems value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define"
-                                               label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                                <a:ajax event="valueChange" listener="#{houseBusinessList.searchAction}" status="processWaiting" execute="@form"
-                                        render="resultDatas,resultBlank">
-                                    <a:attachQueue requestDelay="0"/>
-                                </a:ajax>
-                            </h:selectOneMenu>
-                        </a:outputPanel>
-                    </a:outputPanel>
-
-
 
                     <div class="right" >
-                        <div class="select-menu">
-                            <div class="btn-group btn-group-sm">
+                        <div class="select-menu" style="margin: 0">
+                            <div class="btn-group btn-group-sm" style="margin: 0">
                                 <ui:decorate template="/layout/dropdown-actions.xhtml">
                                     <ui:define name="caption">
                                         <i>#{messages.SortBy}:</i>
 
-                                        <span style="">#{messages[houseBusinessList.sortCol.name()]}</span>
+                                        <span style="">#{messages[projectBusinessList.sortCol.name()]}</span>
                                     </ui:define>
                                     <ui:param name="menuTitle" value="#{messages.SortOption}"/>
 
-                                    <a:repeat value="#{houseBusinessList.allSortCol}" var="_col">
-                                        <s:link styleClass="select-menu-item #{(houseBusinessList.sortCol eq _col) ? 'selected': ''}">
+                                    <a:repeat value="#{projectBusinessList.allSortCol}" var="_col">
+                                        <s:link styleClass="select-menu-item #{(projectBusinessList.sortCol eq _col) ? 'selected': ''}">
                                             <f:param name="sort" value="#{_col.colPath}"/>
                                             <span class="select-menu-item-icon octicon octicon-check"></span>
                                             <span class="select-menu-item-text">#{messages[_col.name()]}</span>
@@ -104,6 +167,15 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <h3 style="margin: 0">
+                        #{messages.SerachResultCount}#{' '}
+                        <h:outputText value="#{projectBusinessList.resultCount}">
+                            <f:convertNumber type="number" groupingUsed="true"/>
+                        </h:outputText>
+                        条符合条件的房屋档案
+                    </h3>
                 </h:form>
             </div>
 
@@ -111,18 +183,18 @@
 
 
             <a:outputPanel id="resultDatas">
-                <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty houseBusinessList.resultList}">
+                <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty projectBusinessList.resultList}">
                     <span class="mega-octicon octicon-search"></span>
 
                     <h3>#{messages.EmptyResult}</h3>
 
-                    <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{houseBusinessList.resetCondition}"/>
+                    <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{projectBusinessList.resetPage}"/>
                         #{' '}#{messages.orOther} #{messages.Try} #{' '}
                         <s:link value="#{messages.AvancedSearch}"/></p>
                 </a:outputPanel>
 
                 <ui:decorate template="HouseBusinessResultList.xhtml">
-                    <ui:param name="listBean" value="#{houseBusinessList}"/>
+                    <ui:param name="listBean" value="#{projectBusinessList}"/>
                     <ui:define name="itemTitle">
                         <s:link view="/func/house/owner/BusinessView.xhtml">
                             <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>

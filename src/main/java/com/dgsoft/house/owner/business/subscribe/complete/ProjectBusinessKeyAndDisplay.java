@@ -34,41 +34,59 @@ public class ProjectBusinessKeyAndDisplay implements TaskCompleteSubscribeCompon
     @Override
     public void complete() {
         KeyGeneratorHelper businessKey = new KeyGeneratorHelper();
+        DescriptionDisplay businessDisplay = new DescriptionDisplay();
+        businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getBusinessProject().getProjectName() + "(" + ownerBusinessHome.getInstance().getBusinessProject().getProjectCode()  + ")");
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getBusinessProject().getDeveloperName() + "(" + ownerBusinessHome.getInstance().getBusinessProject().getDeveloperCode() + ")");
+
+
+
 
 
         for(BusinessBuild bb: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()){
+            businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
             businessKey.addWord(bb.getMapNumber() + "-" + bb.getBlockNo() + "-" + bb.getBuildNo());
             businessKey.addWord(bb.getBuildName());
             businessKey.addWord(bb.getBuildCode());
             businessKey.addWord(bb.getDoorNo());
+
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bb.getBuildName());
+
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bb.getMapNumber());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"图");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bb.getBlockNo());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"丘");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bb.getBuildNo());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"幢");
+
+
         }
+
+        businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+
+
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL,"许可证号");
 
         for(MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
             businessKey.addWord(makeCard.getNumber());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH ,makeCard.getNumber());
         }
 
-        Logging.getLog(getClass()).debug("set project key:" + businessKey.getKey());
-        ownerBusinessHome.getInstance().getBusinessProject().setSearchKey(businessKey.getKey());
-
-        DescriptionDisplay businessDisplay = new DescriptionDisplay();
-
-        businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL,new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,ownerBusinessHome.getInstance().getBusinessProject().getProjectName()));
-
-        businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL,
-                        new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"开发商编号:" + ownerBusinessHome.getInstance().getBusinessProject().getDeveloperCode()),
-                        new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"开发商名称:" + ownerBusinessHome.getInstance().getBusinessProject().getDeveloperName()));
-
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL,"总套数");
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH ,String.valueOf(ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo().getHouseCount()));
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL,"总面积");
         DecimalFormat df = new DecimalFormat("#0.000");
         df.setGroupingUsed(true);
         df.setRoundingMode(RoundingMode.HALF_UP);
+        businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH ,String.valueOf(ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo().getArea()));
 
-        for(BusinessBuild bb: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuildList()){
-            businessDisplay.addLine(DescriptionDisplay.DisplayStyle.NORMAL,
-                    new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"图:" + bb.getMapNumber() + " 丘:" + bb.getBlockNo() + " 幢:" + bb.getBuildNo()),
-                    new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,bb.getBuildName()),
-                    new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"套数:" + bb.getHouseCount()),
-                    new DescriptionDisplay.DisplayData(DescriptionDisplay.DisplayStyle.NORMAL,"面积:" + df.format(bb.getArea()) + "㎡"));
-        }
+
+
+        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getDeveloperName());
+        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getProjectName());
+        businessKey.addWord(ownerBusinessHome.getInstance().getBusinessProject().getSectionName());
+
+        ownerBusinessHome.getInstance().getBusinessProject().setSearchKey(businessKey.getKey());
 
         ownerBusinessHome.getInstance().getBusinessProject().setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
     }

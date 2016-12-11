@@ -138,6 +138,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.MappingCorporation', '测绘机构管理', 'DATA_MGR', '', '/func/house/datas/MappingCorporationMgr.xhtml', '', '2', '',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.EvaluateCorporation', '评估机构管理', 'DATA_MGR', '', '/func/house/datas/EvaluateCorporationMgr.xhtml', '', '3', '',b'0');
 
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('project.businessSearch','项目业务查询','DAY_WORK','','/func/house/owner/ProjectBusinessSearch.xhtml','',2,'',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.businessSearch','房屋业务查询','DAY_WORK','','/func/house/owner/HouseBusinessSearch.xhtml','',1,'',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.businessMgr','业务管理','DAY_WORK','','/func/house/owner/BusinessView.xhtml','',1,'',b'0');
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.patchBusiness','档案补录','DAY_WORK','','/func/house/owner/PatchOwnerBusiness.xhtml','',3,'',b'0');
@@ -203,6 +204,7 @@ INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseLimi
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核', '', 7);
 
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','house.businessSearch');
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','project.businessSearch');
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.MapHouseRecordSearch');
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.houseRecordSearch');
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','owner.totalDataExport');
@@ -210,6 +212,7 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核'
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.task', '业务办理', '', 7);
   INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','house.businessSearch');
+  INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','project.businessSearch');
 
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.oldHouseSale', '存量房销售情况统计', '', 30);
@@ -224,6 +227,7 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.oldHouse
 
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave','house.businessSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave','project.businessSearch');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.param');
 
@@ -240,6 +244,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.config', 'system.word
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.lockHouseMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'house.businessSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'project.businessSearch');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.houseRecordSearch');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'house.businessMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.runBusinessMgr', 'owner.totalDataExport');
@@ -252,6 +257,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.wor
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'system.processInstanceMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.runBusinessMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.businessSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'project.businessSearch');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.businessMgr');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('system.manager', 'house.businessMgr');
@@ -269,7 +275,7 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'house
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.newHouse', 'owner.attrCorpMgr');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('apply', 'house.businessSearch');
-INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('apply', 'house.businessSearch');
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('apply', 'project.businessSearch');
 
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner.buildMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('owner.patchBusiness', 'owner.houseMgr');
