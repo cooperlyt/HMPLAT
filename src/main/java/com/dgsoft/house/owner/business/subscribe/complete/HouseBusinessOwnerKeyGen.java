@@ -8,9 +8,11 @@ import com.dgsoft.house.owner.model.HouseContract;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by cooper on 20/11/2016.
+ * serchkey 房屋和现权力人查询KEY生成器
  */
 @Name("houseBusinessOwnerKeyGen")
 public class HouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent {
@@ -31,6 +33,7 @@ public class HouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent 
     public void complete() {
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
+
             if(hb.getAfterBusinessHouse().getHouseContracts()!=null) {
                 for (HouseContract hc : hb.getAfterBusinessHouse().getHouseContracts()) {
                     key.addWord(hc.getContractNumber());
