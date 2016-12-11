@@ -3,6 +3,7 @@ package com.dgsoft.common.system;
 import cc.coopersoft.house.ProxyType;
 import cc.coopersoft.house.UseType;
 import cc.coopersoft.house.sale.data.PowerPerson;
+import com.dgsoft.house.HouseProperty;
 import com.dgsoft.house.OwnerShareCalcType;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
@@ -55,6 +56,11 @@ public class CommDataFactory {
     @Factory(value = "useTypes", scope = ScopeType.APPLICATION)
     public UseType[] getUseTypes(){
         return UseType.values();
+    }
+
+    @Factory(value = "houseProperties", scope = ScopeType.APPLICATION)
+    public HouseProperty[] getHouseProperty(){
+        return HouseProperty.values();
     }
 
 }

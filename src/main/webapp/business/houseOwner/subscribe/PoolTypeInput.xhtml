@@ -11,7 +11,7 @@
 
     <s:decorate id="poolTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            #{messages.RegisterProperty_PoolMemo}
+            #{empty poolTypeLabel ?  messages.RegisterProperty_PoolMemo : poolTypeLabel}
         </ui:define>
         <ui:param name="for" value="poolCountInput"/>
 

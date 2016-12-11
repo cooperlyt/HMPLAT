@@ -153,17 +153,23 @@
 
         <div class="input-group">
             <span class="input-group-addon">#{messages.House_UseType}<s:span styleClass="required">*</s:span></span>
-
+            <span class="input-group-btn">
             <h:selectOneMenu style="width: 255px" required="true" id="useTypeInput" value="#{house.useType}" label="#{messages.House_UseType}"
-                             styleClass="form-control selectpicker edit-select input-group-mid">
-                <s:selectItems value="#{dictionary.getWordList('house.useType')}" var="_word"
-                               itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                             styleClass="form-control selectpicker input-group-mid" p:data-width="120px">
+                <s:selectItems value="#{useTypes}" var="_word"
+                               itemValue="#{_word}" label="#{dictionary.getEnumLabel(_word)}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                <s:convertEnum/>
             </h:selectOneMenu>
+            </span>
 
+            <h:inputText label="规划用途" id="designTypeInput" value="#{house.designUseType}"
+                         required="true" size="10" styleClass="form-control">
+
+            </h:inputText>
 
             <span class="input-group-addon">#{messages.House_Structure}<s:span styleClass="required">*</s:span></span>
 
-            <h:selectOneMenu style="width: 171px" required="true" id="structureInput" value="#{house.structure}"
+            <h:selectOneMenu required="true" id="structureInput" value="#{house.structure}"
                              styleClass="form-control selectpicker edit-select input-group-mid"
                              label="#{messages.House_Structure}">
                 <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
@@ -184,6 +190,7 @@
         </div>
         <ui:define name="message">
             <rich:message for="useTypeInput" styleClass="edit-below-msg"/>
+            <rich:message for="designTypeInput" styleClass="edit-below-msg"/>
             <rich:message for="structureInput" styleClass="edit-below-msg"/>
             <rich:message for="houseTypeInput" styleClass="edit-below-msg"/>
         </ui:define>
@@ -200,9 +207,12 @@
 
             <h:selectOneMenu id="houseTypeInput" value="#{house.houseType}" label="#{messages.House_HouseType}"
                              styleClass="form-control selectpicker edit-select input-group-mid">
-                <s:selectItems value="#{dictionary.getWordList('house.houseType')}" var="_word"
-                               itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                <s:selectItems value="#{houseProperties}" var="_word"
+                               itemValue="#{_word}" label="#{dictionary.getEnumLabel(_word)}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                <s:convertEnum/>
             </h:selectOneMenu>
+
+
 
 
             <span class="input-group-addon">#{messages.House_KnotSize}</span>
