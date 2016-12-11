@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by cooper on 20/11/2016.
+ * 房屋业务查询
  */
 @Name("saleContractDisplayGen")
 public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
