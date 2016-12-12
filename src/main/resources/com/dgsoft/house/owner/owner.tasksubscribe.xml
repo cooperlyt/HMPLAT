@@ -58,6 +58,11 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="oldOwnerView" page="/business/houseOwner/subscribe/OldOwnerView.xhtml">
+        <description>
+            原产权人（转移）
+        </description>
+    </view-subscribe>
 
 
     <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
@@ -501,11 +506,29 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+    <edit-subscribe name="OldOwnerEdit" page="/business/houseOwner/subscribe/OldOwnerEdit.xhtml" component="oldOwnerPersonEdit">
+        <description>
+            原产权人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+
+
+
     <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
         <description>
             交易备案人准备
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="oldOwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OldOwnerPoolTypeEdit.xhtml" component="">
+        <description>
+           原产权人准备
+        </description>
+    </edit-subscribe>
+
+
 
     <edit-subscribe name="OwnerEdit" page="/business/houseOwner/subscribe/OwnerEdit.xhtml" component="ownerPersonEdit">
         <description>
