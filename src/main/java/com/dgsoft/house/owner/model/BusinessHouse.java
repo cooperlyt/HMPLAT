@@ -946,6 +946,16 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         }
     }
 
+    @Transient
+    public PowerPerson getOldMainOwnerPerson(){
+        List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.OWNER,true);
+        if (result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "businessHouse", cascade = CascadeType.ALL)
     public SaleInfo getSaleInfo() {
