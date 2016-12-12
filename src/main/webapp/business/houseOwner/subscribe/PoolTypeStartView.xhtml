@@ -8,18 +8,18 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.startBusinessHouse.poolType)}">
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldPoolType)}">
         <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{messages[ownerBusinessHome.singleHoues.startBusinessHouse.poolType.name()]}"/>
+                <h:outputText value="#{messages[ownerBusinessHome.singleHoues.afterBusinessHouse.oldPoolType.name()]}"/>
 
 
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{(empty ownerBusinessHome.singleHoues.startBusinessHouse.poolType)}">
+    <a:outputPanel rendered="#{(empty ownerBusinessHome.singleHoues.afterBusinessHouse.oldPoolType)}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
             <ui:param name="title" value="#{messages.RegisterProperty_PoolMemo}" />
             <ui:param name="noDataLabel" value="#{messages.PoolNotInput}"/>
