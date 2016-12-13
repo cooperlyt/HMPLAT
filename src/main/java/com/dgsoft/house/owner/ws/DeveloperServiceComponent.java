@@ -333,7 +333,7 @@ public class DeveloperServiceComponent {
         boolean locked = ownerEntityManager.createQuery("select count(l.id) from LockedHouse l where l.houseCode = :houseCode", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
-        boolean sale = ownerEntityManager.createQuery("select count(c.id) from HouseContract hc left join hc.houseBusiness c where c.houseCode = :houseCode and (c.ownerBusiness.status = 'RUNNING' or c.ownerBusiness.status = 'SUSPEND')", Long.class)
+        boolean sale = ownerEntityManager.createQuery("select count(hc.id) from HouseContract hc left join hc.houseBusinesses hb where hb.houseCode = :houseCode and (hc.ownerBusiness.status = 'RUNNING' or hc.ownerBusiness.status = 'SUSPEND')", Long.class)
                 .setParameter("houseCode", houseCode).getSingleResult().compareTo(new Long(0)) > 0;
 
         boolean inBiz = ownerEntityManager.createQuery("select count(b.id) from HouseBusiness b where b.houseCode = :houseCode and (b.ownerBusiness.status = 'RUNNING' or b.ownerBusiness.status = 'SUSPEND')", Long.class)
@@ -424,7 +424,7 @@ public class DeveloperServiceComponent {
                 houseStatusMap.put(houseRecord.getHouseCode(), houseRecord.getHouseStatus());
             }
         }
-        List<String> contractHouseIds = ownerEntityManager.createQuery("select hc.houseBusiness.houseCode from HouseContract hc where hc.houseBusiness.ownerBusiness.status = 'RUNNING' and hc.houseBusiness.houseCode in (:houseCodes)", String.class)
+        List<String> contractHouseIds = ownerEntityManager.createQuery("select distinct hb.houseCode from HouseContract hc left join hc.houseBusinesses hb where (hc.ownerBusiness.status = 'RUNNING' or hc.ownerBusiness.status =  'SUSPEND')  and hb.houseCode in (:houseCodes)", String.class)
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
 

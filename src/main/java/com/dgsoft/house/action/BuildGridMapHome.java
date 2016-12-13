@@ -354,7 +354,7 @@ public class BuildGridMapHome implements DropListener {
                         new BigDecimal(houseElement.attributeValue("ShineArea", "0")),
                         new BigDecimal(houseElement.attributeValue("LoftArea", "0")),
                         new BigDecimal(houseElement.attributeValue("CommParam", "0")),
-                        (useTypeStr == null || "".equals(useTypeStr))? null : UseType.valueOf(useTypeStr),houseElement.attributeValue("DesignUseType",""),
+                        (useTypeStr == null || "".equals(useTypeStr))? null : UseType.valueOf(useTypeStr),houseElement.attributeValue("DesignType",""),
                         houseElement.attributeValue("Structure", ""),
                         (useTypeStr == null || "".equals(useTypeStr)) ? null : HouseProperty.valueOf(houseProperty),
                         Boolean.parseBoolean(houseElement.attributeValue("IsDeleted", "false")) ? null :houseElement.attributeValue("Order", ""),
@@ -695,7 +695,7 @@ public class BuildGridMapHome implements DropListener {
                     blockNode.addAttribute("CommParam", formatAreaForXml(block.getHouse().getCommParam()));
                     blockNode.addAttribute("Structure",(block.getHouse().getStructure() == null) ? "" : block.getHouse().getStructure());
                     blockNode.addAttribute("UseType",(block.getHouse().getUseType() == null) ? "" : block.getHouse().getUseType().name());
-                    blockNode.addAttribute("DesignUseType",(block.getHouse().getDesignUseType() == null) ? "" : block.getHouse().getDesignUseType());
+                    blockNode.addAttribute("DesignType",(block.getHouse().getDesignUseType() == null) ? "" : block.getHouse().getDesignUseType());
                     blockNode.addAttribute("HouseType",(block.getHouse().getHouseType() == null) ? "" : block.getHouse().getHouseType().name());
                     blockNode.addAttribute("Order",block.getHouse().getHouseOrder());
                     blockNode.addAttribute("KnotSize",(block.getHouse().getKnotSize() == null) ? "" : block.getHouse().getKnotSize());
