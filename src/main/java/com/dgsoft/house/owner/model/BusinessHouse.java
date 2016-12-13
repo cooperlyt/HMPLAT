@@ -141,6 +141,8 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.sectionName = houseInfo.getSectionName();
         this.districtCode = houseInfo.getDistrictCode();
         this.districtName = houseInfo.getDistrictName();
+        this.unitNumber = houseInfo.getUnitNumber();
+        this.designUseType = houseInfo.getDesignUseType();
     }
 
 
