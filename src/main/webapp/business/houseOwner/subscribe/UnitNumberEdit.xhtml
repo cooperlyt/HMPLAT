@@ -1,0 +1,24 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            不动产单元号
+        </ui:define>
+        <ui:param name="for" value="unitNumberText"/>
+
+        <h:inputText label="不动产单元号"
+                     value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.unitNumber}"
+                     id="unitNumberText"
+
+                     styleClass="form-control">
+        </h:inputText>
+
+    </s:decorate>
+</ui:composition>

@@ -22,7 +22,7 @@
                     <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
                             horizontalAlignment="left" verticalAlignment="middle"/> </f:facet>
 
-                <p:cell><p:paragraph>资料编号:  #{_cover.recordCode}   </p:paragraph></p:cell>
+                <p:cell><p:paragraph>资料编号:  #{ownerBusinessHome.instance.id}   </p:paragraph></p:cell>
                 <p:cell> <p:paragraph > 归档时间:  <p:text value="#{_cover.ownerBusiness.recordTime}"><f:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  </p:paragraph></p:cell>
             </p:table>
 
@@ -34,7 +34,7 @@
                     <p:cell horizontalAlignment="center" padding="5" paddingBottom="7" verticalAlignment="middle" borderWidth="1"/>
                 </f:facet>
                 <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}" colspan="2"><p:paragraph>所有权人或单位</p:paragraph></p:cell>
-                <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}" colspan="3" horizontalAlignment="left"><p:paragraph rendered="#{not empty _cover.ownerBusiness.applyPersion.personName}">#{_cover.ownerBusiness.singleHoues.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph></p:cell>
+                <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}" colspan="3" horizontalAlignment="left"><p:paragraph rendered="#{not empty _cover.ownerBusiness.applyPersion.personName}">#{_cover.ownerBusiness.singleHoues.afterBusinessHouse.mainOwnerPerson.personName}</p:paragraph></p:cell>
 
 
                 <p:cell rendered="#{_cover.ownerBusiness.houseBusinesses.size eq 1}"><p:paragraph>坐落</p:paragraph></p:cell>

@@ -164,13 +164,13 @@
             <p:paragraph>房屋所有权证号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" colspan="3">
-            <p:paragraph> </p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="23">
             <p:paragraph>不动产单元号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" colspan="3">
-            <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.unitNumber}</p:paragraph>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.unitNumber}</p:paragraph>
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="23">
@@ -179,9 +179,6 @@
         <p:cell borderWidthLeft="0" colspan="3">
             <p:paragraph>#{ownerBusinessHome.singleHoues.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph>
         </p:cell>
-
-
-
         <p:cell borderWidthLeft="0" fixedHeight="23">
             <p:paragraph>规划用途</p:paragraph>
         </p:cell>
