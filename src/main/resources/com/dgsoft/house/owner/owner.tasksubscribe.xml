@@ -58,18 +58,7 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="oldOwnerView" page="/business/houseOwner/subscribe/OldOwnerView.xhtml">
-        <description>
-            原产权人（转移）
-        </description>
-    </view-subscribe>
 
-
-    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
-        <description>
-            所有交易备案人(现)
-        </description>
-    </view-subscribe>
 
     <view-subscribe name="houseDeveloperView" page="/business/houseOwner/subscribe/HouseDeveloperView.xhtml">
         <description>
@@ -169,11 +158,10 @@
     </view-subscribe>
 
 
-    <view-subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml">
-        <description>
-           房屋所有权证号查看
-        </description>
-    </view-subscribe>
+
+
+
+
 
   <!--
     <view-subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml">
@@ -415,6 +403,26 @@
             许可证开发商信息查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml">
+        <description>
+            房屋所有权证号查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
+        <description>
+            所有交易备案人(现)
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="oldOwnerView" page="/business/houseOwner/subscribe/OldOwnerView.xhtml">
+        <description>
+            原产权人（转移）
+        </description>
+    </view-subscribe>
+
+
 
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
