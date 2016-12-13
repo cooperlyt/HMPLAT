@@ -168,6 +168,13 @@
         </description>
     </view-subscribe>
 
+
+    <view-subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml">
+        <description>
+           房屋所有权证号查看
+        </description>
+    </view-subscribe>
+
   <!--
     <view-subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml">
         <description>
@@ -829,6 +836,13 @@
                     component="">
         <description>
             转移后编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml"
+                    component="">
+        <description>
+            房屋所有权证号编辑
         </description>
     </edit-subscribe>
 
