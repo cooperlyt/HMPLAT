@@ -229,7 +229,7 @@
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>业务名称</p:paragraph>
+            <p:paragraph>业务类别</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" colspan="3">
             <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
@@ -239,7 +239,13 @@
             <p:paragraph>房屋权属证书号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" colspan="3">
-            <p:paragraph> </p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="20">
+            <p:paragraph>不动产单元号</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="3">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.unitNumber}</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="20">
             <p:paragraph>产籍号</p:paragraph>
@@ -276,13 +282,13 @@
             <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.houseArea}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>购房款</p:paragraph>
+            <p:paragraph>合同价格</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
             <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.saleInfo.sumPrice}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>评估价格</p:paragraph>
+            <p:paragraph>契税价格</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
             <p:paragraph><p:text value="#{ownerBusinessHome.instance.evaluate.assessmentPrice}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>

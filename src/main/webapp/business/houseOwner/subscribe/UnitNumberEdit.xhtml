@@ -9,14 +9,14 @@
 
     <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            #{label}
+            不动产单元号
         </ui:define>
-        <ui:param name="for" value="cardIinputText"/>
+        <ui:param name="for" value="unitNumberText"/>
 
-        <h:inputText label="#{label}"
-                     value="#{card.number}"
-                     id="cardIinputText"
-                     required="true"
+        <h:inputText label="不动产单元号"
+                     value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.unitNumber}"
+                     id="unitNumberText"
+
                      styleClass="form-control">
         </h:inputText>
 

@@ -58,18 +58,7 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="oldOwnerView" page="/business/houseOwner/subscribe/OldOwnerView.xhtml">
-        <description>
-            原产权人（转移）
-        </description>
-    </view-subscribe>
 
-
-    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
-        <description>
-            所有交易备案人(现)
-        </description>
-    </view-subscribe>
 
     <view-subscribe name="houseDeveloperView" page="/business/houseOwner/subscribe/HouseDeveloperView.xhtml">
         <description>
@@ -167,6 +156,12 @@
             销售许可证不可售房屋查看
         </description>
     </view-subscribe>
+
+
+
+
+
+
 
   <!--
     <view-subscribe name="NowPoolOwnerView" page="/business/houseOwner/subscribe/NowPoolOwnerView.xhtml">
@@ -409,6 +404,26 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml">
+        <description>
+            房屋所有权证号查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
+        <description>
+            所有交易备案人(现)
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="oldOwnerView" page="/business/houseOwner/subscribe/OldOwnerView.xhtml">
+        <description>
+            原产权人（转移）
+        </description>
+    </view-subscribe>
+
+
+
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
         <description>
@@ -506,36 +521,7 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
-    <edit-subscribe name="OldOwnerEdit" page="/business/houseOwner/subscribe/OldOwnerEdit.xhtml" component="oldOwnerPersonEdit">
-        <description>
-            原产权人编辑
-        </description>
-        <dependency>/layout/system/CardReader.xhtml</dependency>
-    </edit-subscribe>
 
-
-
-
-    <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
-        <description>
-            交易备案人准备
-        </description>
-    </edit-subscribe>
-
-    <edit-subscribe name="oldOwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OldOwnerPoolTypeEdit.xhtml" component="">
-        <description>
-           原产权人准备
-        </description>
-    </edit-subscribe>
-
-
-
-    <edit-subscribe name="OwnerEdit" page="/business/houseOwner/subscribe/OwnerEdit.xhtml" component="ownerPersonEdit">
-        <description>
-            交易备案人编辑
-        </description>
-        <dependency>/layout/system/CardReader.xhtml</dependency>
-    </edit-subscribe>
 
     <edit-subscribe name="PersionObligorEdit" page="/business/houseOwner/subscribe/PersionObligorEdit.xhtml" component="">
         <description>
@@ -832,6 +818,8 @@
         </description>
     </edit-subscribe>
 
+
+
     <edit-subscribe name="PersionObligeeOldEdit" page="/business/houseOwner/subscribe/PersionObligeeOldEdit.xhtml"
                     component="">
         <description>
@@ -853,6 +841,47 @@
             存量房备案合同信息
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="UnitNumberEdit" page="/business/houseOwner/subscribe/UnitNumberEdit.xhtml"
+                    component="">
+        <description>
+            不动产单元号编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="CardOwnerRshipEdit" page="/business/houseOwner/subscribe/CardOwnerRshipEdit.xhtml"
+                    component="">
+        <description>
+            房屋所有权证号编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
+        <description>
+            交易备案人准备
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="oldOwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OldOwnerPoolTypeEdit.xhtml" component="">
+        <description>
+            原产权人准备
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="OwnerEdit" page="/business/houseOwner/subscribe/OwnerEdit.xhtml" component="ownerPersonEdit">
+        <description>
+            交易备案人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+    <edit-subscribe name="OldOwnerEdit" page="/business/houseOwner/subscribe/OldOwnerEdit.xhtml" component="oldOwnerPersonEdit">
+        <description>
+            原产权人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
 
 
 
