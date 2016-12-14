@@ -40,7 +40,7 @@ CREATE PROCEDURE `HOUSE_OWNER_RECORD`.`GenDisplayAndKey` ()
           SET done = 0;
 
           DECLARE C_NUMBER VARCHAR(50);
-          SELECT CONTRACT_NUMBER INTO C_NUMBER FROM HOUSE_CONTRACT where BUSINESS = B_ID;
+          SELECT CONTRACT_NUMBER INTO C_NUMBER FROM HOUSE_CONTRACT  where BUSINESS = B_ID;
           if C_NUMBER is not null THEN
               SET SK = concat(SK,'[',C_NUMBER,']');
           END IF;
