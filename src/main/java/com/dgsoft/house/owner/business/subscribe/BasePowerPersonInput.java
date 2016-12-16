@@ -23,6 +23,10 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
 
     protected abstract PowerPerson.PowerPersonType getPowerPersonType();
 
+    protected PowerPerson.PowerPersonType getToType(){
+        return getPowerPersonType();
+    }
+
     protected abstract boolean isOld();
 
     @In
@@ -101,7 +105,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
             }
 
             while (powerPersonList.size() < getPersonCount()){
-                PowerPerson powerPerson = new PowerPerson(getPowerPersonType(), isOld());
+                PowerPerson powerPerson = new PowerPerson(getToType(), isOld());
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().addPowerPerson(powerPerson);
                 powerPersonList.add(new PowerPersonHelper<PowerPerson>(powerPerson, ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()) {
                     @Override
@@ -125,7 +129,7 @@ public abstract class BasePowerPersonInput implements TaskSubscribeComponent {
     @Override
     public boolean isPass() {
 
-        return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getPowerPersonType(),isOld()).size() == getPersonCount();
+        return ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersonListByType(getToType(),isOld()).size() == getPersonCount();
     }
 
     @Override
