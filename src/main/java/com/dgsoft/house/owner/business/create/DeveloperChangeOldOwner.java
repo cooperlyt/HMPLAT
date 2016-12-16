@@ -14,11 +14,11 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by Administrator on 15-8-1.
- * 开发商转化成现产权人
+ * Created by wxy on 2016-12-17.
+ * 开发商转化成原产权人
  */
-@Name("developerChangeOwner")
-public class DeveloperChangeOwner implements BusinessDataFill {
+@Name("developerChangeOldOwner")
+public class DeveloperChangeOldOwner implements BusinessDataFill {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -30,9 +30,9 @@ public class DeveloperChangeOwner implements BusinessDataFill {
     @Override
     public void fillData() {
 
-        if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
+
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                PowerPerson powerPerson = new PowerPerson(PowerPerson.PowerPersonType.INIT,false);
+                PowerPerson powerPerson = new PowerPerson(PowerPerson.PowerPersonType.INIT,true);
 
                 powerPerson.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
                 powerPerson.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
@@ -44,9 +44,10 @@ public class DeveloperChangeOwner implements BusinessDataFill {
                 powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
                 powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
 
-                houseBusiness.getAfterBusinessHouse().addPowerPerson(powerPerson);
-                houseBusiness.getAfterBusinessHouse().setPoolType(PoolType.SINGLE_OWNER);
+                houseBusiness.getAfterBusinessHouse().getPowerPersons().add(powerPerson);
+
+                houseBusiness.getAfterBusinessHouse().setOldPoolType(PoolType.SINGLE_OWNER);
             }
-        }
+
     }
 }

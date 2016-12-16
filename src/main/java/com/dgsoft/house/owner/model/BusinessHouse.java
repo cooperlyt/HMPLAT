@@ -929,6 +929,11 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Transient
+    public List<PowerPerson> getOldInitPersonList(){
+        return getPowerPersonListByType(PowerPerson.PowerPersonType.INIT,true);
+    }
+
+    @Transient
     public List<PowerPerson> getOldMainOwnerPersonList(){
         return getPowerPersonListByType(PowerPerson.PowerPersonType.OWNER,true);
     }
@@ -957,6 +962,17 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
             return result.get(0);
         }
     }
+
+    @Transient
+    public PowerPerson getOldMainInitPerson(){
+        List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.INIT,true);
+        if (result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
 
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "businessHouse", cascade = CascadeType.ALL)

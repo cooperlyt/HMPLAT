@@ -416,6 +416,13 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="OldInitView" page="/business/houseOwner/subscribe/OldInitView.xhtml">
+        <description>
+            原产权人（转移,开发商）
+        </description>
+    </view-subscribe>
+
+
     <view-subscribe name="oldOwnerView" page="/business/houseOwner/subscribe/OldOwnerView.xhtml">
         <description>
             原产权人（转移）
@@ -841,6 +848,22 @@
             存量房备案合同信息
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="oldInitPoolTypeEdit" page="/business/houseOwner/subscribe/OldInitPoolTypeEdit.xhtml" component="">
+        <description>
+            原产权人准备(开发商)
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="OldInitEdit" page="/business/houseOwner/subscribe/OldInitEdit.xhtml" component="oldInitPersonEdit">
+        <description>
+            原产权人编辑(开发商)
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+
+
 
     <edit-subscribe name="UnitNumberEdit" page="/business/houseOwner/subscribe/UnitNumberEdit.xhtml"
                     component="">
@@ -1623,6 +1646,18 @@
         </description>
     </create-component>
 
+    <create-component type="DATA_FILL" component="contractPersonToNewOwner">
+        <description>
+            备案人提取到当前产权人
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="poolTypeFill">
+        <description>
+            现共有情况提取
+        </description>
+    </create-component>
+
 
 
 
@@ -1644,9 +1679,18 @@
 
     <create-component type="DATA_FILL" component="developerChangeOwner">
         <description>
-            开发商转换成产前人
+            开发商转换成现产权人
         </description>
     </create-component>
+
+
+    <create-component type="DATA_FILL" component="developerChangeOldOwner">
+        <description>
+            开发商转换成原产权人
+        </description>
+    </create-component>
+
+
 
     <create-component type="DATA_FILL" component="contractChangeOwnerFill">
         <description>
