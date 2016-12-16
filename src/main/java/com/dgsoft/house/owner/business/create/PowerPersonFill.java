@@ -13,6 +13,10 @@ public abstract class PowerPersonFill implements BusinessDataFill {
 
     protected abstract PowerPerson.PowerPersonType getType();
 
+    protected PowerPerson.PowerPersonType getToType(){
+        return getType();
+    }
+
     protected abstract boolean isfillToOld();
 
     @In
@@ -23,7 +27,7 @@ public abstract class PowerPersonFill implements BusinessDataFill {
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             for(PowerPerson pp: hb.getStartBusinessHouse().getPowerPersons()){
                 if (!pp.isOld() && getType().equals(pp.getType())){
-                    hb.getAfterBusinessHouse().getPowerPersons().add(new PowerPerson(getType(),isfillToOld(),pp,pp.getPriority()));
+                    hb.getAfterBusinessHouse().getPowerPersons().add(new PowerPerson(getToType(),isfillToOld(),pp,pp.getPriority()));
                 }
             }
         }
