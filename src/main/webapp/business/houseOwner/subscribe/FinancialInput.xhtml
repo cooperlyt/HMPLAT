@@ -89,62 +89,7 @@
                                  styleClass="form-control"/>
 
 
-                    <f:subview id="financial_proxy_person">
 
-                        <s:decorate
-                                id="proxyPersonTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
-
-                            <ui:param name="for" value="proxyPersonTypeInput"/>
-                            <ui:param name="showLabel" value="false"/>
-                            <h:selectOneMenu value="#{financialSubscribe.proxyType}" id="proxyPersonTypeInput"
-                                             styleClass="selectpicker select-menu-btn">
-
-                                <s:selectItems value="#{proxyTypes}" var="_proxyType" noSelectionLabel="无代理人"
-                                               label="#{messages[_proxyType.name()]}" itemValue="#{_proxyType}"/>
-                                <a:ajax render="proxyPersonPanel" event="valueChange" execute="@this"
-                                        oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('proxyPersonPanel')}');">
-                                    <a:attachQueue requestDelay="0"/>
-                                </a:ajax>
-                                <s:convertEnum/>
-
-                            </h:selectOneMenu>
-                        </s:decorate>
-
-                        <a:outputPanel id="proxyPersonPanel">
-                            <a:outputPanel rendered="#{not empty financialSubscribe.proxyType}">
-
-
-
-                                <ui:decorate template="/layout/system/PersonInput.xhtml">
-                                    <ui:param name="personEntityHelper" value="#{financialSubscribe.proxyPersonHelper}"/>
-                                    <ui:param name="showMainLabel" value="false"/>
-                                    <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
-                                    <ui:param name="personStatus" value="financial_proxy_person"/>
-
-
-                                    <s:decorate id="businessProxyPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
-                                        <ui:define name="label">
-                                            #{messages.Tel}
-                                        </ui:define>
-                                        <ui:param name="for" value="proxyPersonPhoneInput"/>
-                                        <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
-                                                     styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
-                                                     value="#{financialSubscribe.proxyPersonHelper.personEntity.phone}"
-                                                     id="proxyPersonPhoneInput">
-                                            <f:validateRegex
-                                                    pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
-                                            <r:validator event="blur"/>
-                                        </h:inputText>
-
-                                    </s:decorate>
-                                </ui:decorate>
-
-
-                            </a:outputPanel>
-
-                        </a:outputPanel>
-
-                    </f:subview>
 
 
 
@@ -152,6 +97,64 @@
                 </div>
 
             </s:decorate>
+
+
+            <f:subview id="financial_proxy_person">
+
+                <s:decorate
+                        id="proxyPersonTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                    <ui:param name="for" value="proxyPersonTypeInput"/>
+                    <ui:param name="showLabel" value="false"/>
+                    <h:selectOneMenu value="#{financialSubscribe.proxyType}" id="proxyPersonTypeInput"
+                                     styleClass="selectpicker select-menu-btn">
+
+                        <s:selectItems value="#{proxyTypes}" var="_proxyType" noSelectionLabel="无代理人"
+                                       label="#{messages[_proxyType.name()]}" itemValue="#{_proxyType}"/>
+                        <a:ajax render="proxyPersonPanel" event="valueChange" execute="@this"
+                                oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('proxyPersonPanel')}');">
+                            <a:attachQueue requestDelay="0"/>
+                        </a:ajax>
+                        <s:convertEnum/>
+
+                    </h:selectOneMenu>
+                </s:decorate>
+
+                <a:outputPanel id="proxyPersonPanel">
+                    <a:outputPanel rendered="#{not empty financialSubscribe.proxyType}">
+
+
+
+                        <ui:decorate template="/layout/system/PersonInput.xhtml">
+                            <ui:param name="personEntityHelper" value="#{financialSubscribe.proxyPersonHelper}"/>
+                            <ui:param name="showMainLabel" value="false"/>
+                            <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
+                            <ui:param name="personStatus" value="financial_proxy_person"/>
+
+
+                            <s:decorate id="businessProxyPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                                <ui:define name="label">
+                                    #{messages.Tel}
+                                </ui:define>
+                                <ui:param name="for" value="proxyPersonPhoneInput"/>
+                                <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                                             styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                                             value="#{financialSubscribe.proxyPersonHelper.personEntity.phone}"
+                                             id="proxyPersonPhoneInput">
+                                    <f:validateRegex
+                                            pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                                    <r:validator event="blur"/>
+                                </h:inputText>
+
+                            </s:decorate>
+                        </ui:decorate>
+
+
+                    </a:outputPanel>
+
+                </a:outputPanel>
+
+            </f:subview>
 
         </ui:define>
 
