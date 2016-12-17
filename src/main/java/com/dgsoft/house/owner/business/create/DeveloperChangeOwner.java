@@ -40,7 +40,7 @@ public class DeveloperChangeOwner implements BusinessDataFill {
                 Developer developer = houseEntityLoader.getEntityManager().find(Developer.class,houseBusiness.getStartBusinessHouse().getDeveloperCode());
 
                 powerPerson.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
-                powerPerson.setLegalType(OwnerPersonEntity.LegalType.LEGAL_OWNER);
+                powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
                 powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
                 powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
 

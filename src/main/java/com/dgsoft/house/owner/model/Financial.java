@@ -2,7 +2,10 @@ package com.dgsoft.house.owner.model;
 // Generated Aug 19, 2014 4:32:06 PM by Hibernate Tools 4.0.0
 
 import com.dgsoft.common.TimeArea;
+import com.dgsoft.common.system.OwnerPersonEntity;
 import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.PowerPersonEntity;
+import com.dgsoft.common.system.ProxyPersonEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

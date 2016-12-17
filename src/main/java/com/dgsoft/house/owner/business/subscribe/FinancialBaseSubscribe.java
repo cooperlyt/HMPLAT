@@ -1,15 +1,19 @@
 package com.dgsoft.house.owner.business.subscribe;
 
+import cc.coopersoft.house.ProxyType;
 import com.dgsoft.common.TimeAreaHelper;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.PersonHelper;
+import com.dgsoft.common.system.ProxyPersonEntity;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Financial;
 import com.dgsoft.house.owner.model.MortgaegeRegiste;
+import com.dgsoft.house.owner.model.ProxyPerson;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Logging;
 
@@ -22,8 +26,9 @@ import java.util.List;
 /**
  * Created by wxy on 2015-09-18.
  */
+@Name("financialSubscribe")
 @Scope(ScopeType.CONVERSATION)
-public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
+public class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
 
 
 
@@ -32,7 +37,7 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
     protected MortgaegeRegiste mortgaegeRegiste;
     private boolean selected;
 
-    protected abstract void addMortgage();
+    //protected abstract void addMortgage();
 
     public Financial.FinancialType[] getFinancialTypes() {
         return Financial.FinancialType.values();
@@ -114,9 +119,9 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
 
             mortgaegeRegiste.setFinancial(getInstance());
             ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
+            proxyPersonHelper = new PersonHelper<ProxyPersonEntity>();
 
-
-            addMortgage();
+            //addMortgage();
 
             // ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
         } else {
@@ -130,6 +135,11 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
                     setInstance(mortgaegeRegiste.getFinancial());
                 } else {
                     setId(mortgaegeRegiste.getFinancial().getId());
+                }
+                if (getInstance().getProxyPerson() != null){
+                    proxyPersonHelper = new PersonHelper<ProxyPersonEntity>(getInstance().getProxyPerson());
+                }else{
+                    proxyPersonHelper = new PersonHelper<ProxyPersonEntity>();
                 }
             }
         }
@@ -162,5 +172,35 @@ public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> 
 
     public TimeAreaHelper getTimeAreaHelper() {
         return timeAreaHelper;
+    }
+
+    private PersonHelper<ProxyPersonEntity> proxyPersonHelper;
+
+
+    public ProxyType getProxyType() {
+        if (getInstance().getProxyPerson() == null){
+            return null;
+        }else{
+            return getInstance().getProxyPerson().getProxyType();
+        }
+
+    }
+
+    public void setProxyType(ProxyType proxyType) {
+        if (proxyType == null){
+            getInstance().setProxyPerson(null);
+            proxyPersonHelper.setPersonEntity(null);
+        }else{
+            if (getInstance().getProxyPerson() == null){
+                //new PowerProxyPerson(getPersonEntity())
+                getInstance().setProxyPerson(new ProxyPerson());
+                proxyPersonHelper.setPersonEntity( getInstance().getProxyPerson());
+            }
+            getInstance().getProxyPerson().setProxyType(proxyType);
+        }
+    }
+
+    public PersonHelper<ProxyPersonEntity> getProxyPersonHelper() {
+        return proxyPersonHelper;
     }
 }
