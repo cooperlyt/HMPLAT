@@ -6,7 +6,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:dh="http://www.dgsoft.com/jsf/html">
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
      <a:outputPanel rendered="#{financia.financialType eq 'FINANCE_CORP'}">
          <dh:entryGridBlock columns="4" >
@@ -41,4 +42,36 @@
 
         </dh:entryGridBlock>
     </a:outputPanel>
+
+
+
+    <a:outputPanel rendered="#{not empty financia.proxyPerson}">
+        <dh:entryGridBlock columns="4" >
+
+            <h:outputText value="抵押权代理人"/>
+            <dh:entryGridColumn colspan="3">
+                 <h:outputText value="#{financia.proxyPerson.personName}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages[financia.proxyPerson.credentialsType.name()]}"/>
+            <h:outputText value="#{financia.proxyPerson.credentialsNumber}"/>
+
+
+            <h:outputText value="#{messages.Tel}"/>
+            <h:outputText value="#{financia.proxyPerson.phone}"/>
+
+
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+    <a:outputPanel rendered="#{empty financia.proxyPerson}">
+        <dh:entryGridBlock columns="4" >
+
+            <h:outputText value="抵押权代理人"/>
+            <dh:entryGridColumn colspan="3">
+               <h:outputText value="#{financia.proxyPerson.personName}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
 </ui:composition>
