@@ -881,7 +881,7 @@
 
     <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
         <description>
-            交易备案人准备
+            交易(抵押)备案人准备
         </description>
     </edit-subscribe>
 
@@ -904,6 +904,16 @@
         </description>
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
+
+    <edit-subscribe name="OwnerMortgaegeEdit" page="/business/houseOwner/subscribe/OwnerMortgaegeEdit.xhtml" component="ownerPersonEdit">
+        <description>
+           抵押备案人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+
+
 
 
 
