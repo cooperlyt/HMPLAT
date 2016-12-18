@@ -60,6 +60,17 @@ public class LockedHouse {
         this.lockedTime = lockedTime;
     }
 
+
+    public LockedHouse(String houseCode, LockType type, String description, String empCode, String empName, Date lockedTime,String buildCode) {
+        this.houseCode = houseCode;
+        this.type = type;
+        this.description = description;
+        this.empCode = empCode;
+        this.empName = empName;
+        this.lockedTime = lockedTime;
+        this.buildCode = buildCode;
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
