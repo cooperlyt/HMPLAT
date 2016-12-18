@@ -911,6 +911,19 @@
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
+    <end-subscribe name="MortgageDisplayGen" component="mortgageDisplayGen">
+        <description>
+            房屋抵押备案显示生成器
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="HouseBusinessMortgageKeyGen" component="houseBusinessMortgageKeyGen">
+        <description>
+            房屋和抵押人查询KEY生成器
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="RealDisplayGen" component="realDisplayGen">
         <description>
             房屋交易备案显示生成器
