@@ -8,8 +8,10 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:include src="BussinePersionMustHaveInput.xhtml">
-        <ui:param name="label" value="#{messages.CORRECT}"/>
-        <ui:param name="persion" value="#{persionCorrectProjectSubscribe}" />
-        <ui:param name="personStatus" value="correctProject_personCredentiaslNumberStatus"/>
+
+        <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
+
+        <ui:param name="mainLabel" value="#{messages.CORRECT}"/>
+        <ui:param name="businessPersonComponent" value="#{persionCorrectProjectSubscribe}" />
     </ui:include>
 </ui:composition>

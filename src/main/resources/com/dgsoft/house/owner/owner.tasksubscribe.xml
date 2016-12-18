@@ -924,6 +924,19 @@
         </description>
     </end-subscribe>
 
+
+    <end-subscribe name="MortgageProjectDisplayGen" component="mortgageProjectDisplayGen">
+        <description>
+            房屋在建备案显示生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="HouseBusinessProjectMortgageKeyGen" component="houseBusinessProjectMortgageKeyGen">
+        <description>
+            房屋和在建抵押人查询KEY生成器
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="RealDisplayGen" component="realDisplayGen">
         <description>
             房屋交易备案显示生成器

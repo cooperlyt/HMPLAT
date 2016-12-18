@@ -11,8 +11,8 @@ import org.jboss.seam.annotations.Name;
 /**
  * Created by wxy on 2016-12-18.
  */
-@Name("houseBusinessMortgageKeyGen")
-public class HouseBusinessMortgageKeyGen implements TaskCompleteSubscribeComponent {
+@Name("houseBusinessProjectMortgageKeyGen")
+public class HouseBusinessProjectMortgageKeyGen  implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -29,7 +29,7 @@ public class HouseBusinessMortgageKeyGen implements TaskCompleteSubscribeCompone
     @Override
     public void complete() {
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
-            KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
+            KeyGeneratorHelper key = OwnerHouseHelper.genProjectSearchKey(hb.getAfterBusinessHouse());
 
             if(hb.getAfterBusinessHouse().getHouseContracts()!=null) {
                 for (HouseContract hc : hb.getAfterBusinessHouse().getHouseContracts()) {
@@ -41,6 +41,8 @@ public class HouseBusinessMortgageKeyGen implements TaskCompleteSubscribeCompone
                     key.addWord(hc.getContractNumber());
                 }
             }
+
+
             hb.setSearchKey(key.getKey());
         }
 
