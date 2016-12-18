@@ -944,8 +944,23 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Transient
+    public List<PowerPerson> getMainPreparePersonList(){
+        return getPowerPersonListByType(PowerPerson.PowerPersonType.PREPARE,false);
+    }
+
+    @Transient
     public PowerPerson getMainOwnerPerson(){
         List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.OWNER,false);
+        if (result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
+    @Transient
+    public PowerPerson getMainPreparePerson(){
+        List<PowerPerson> result = getPowerPersonListByType(PowerPerson.PowerPersonType.PREPARE,false);
         if (result.isEmpty()){
             return null;
         }else{

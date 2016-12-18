@@ -133,9 +133,9 @@
 
 
 
-    <view-subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml">
+    <view-subscribe name="MortgagerPrepareView" page="/business/houseOwner/subscribe/MortgagerPrepareView.xhtml">
         <description>
-            预告人查看
+            预告抵押人查看
         </description>
     </view-subscribe>
 
@@ -404,6 +404,13 @@
             房屋所有权证号查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml">
+        <description>
+            预告登记证明查看
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
         <description>
@@ -873,6 +880,19 @@
             房屋所有权证号编辑
         </description>
     </edit-subscribe>
+    <edit-subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml"
+                    component="">
+        <description>
+            预告登记证明号编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="NoticeMortgaegePoolTypeEdit" page="/business/houseOwner/subscribe/NoticeMortgaegePoolTypeEdit.xhtml" component="">
+        <description>
+            预告(抵押)备案人准备
+        </description>
+    </edit-subscribe>
+
 
     <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
         <description>
@@ -883,6 +903,12 @@
     <edit-subscribe name="oldOwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OldOwnerPoolTypeEdit.xhtml" component="">
         <description>
             原产权人准备
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="NoticeMortgaegePersonEdit" page="/business/houseOwner/subscribe/NoticeMortgaegePersonEdit.xhtml" component="noticeMortgaegePersonEdit">
+        <description>
+            预告(抵押)备案人编辑
         </description>
     </edit-subscribe>
 
