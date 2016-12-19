@@ -42,13 +42,14 @@ public class DeveloperChangeOldOwner implements BusinessDataFill {
                     powerPerson.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
                     powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
                     powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
+                    powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
+
                 }else{
                     powerPerson.setCredentialsNumber("未知");
-                    powerPerson.setLegalPerson("未知");
+
                     powerPerson.setPhone("未知");
 
                 }
-                powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
 
                 houseBusiness.getAfterBusinessHouse().getPowerPersons().add(powerPerson);
 

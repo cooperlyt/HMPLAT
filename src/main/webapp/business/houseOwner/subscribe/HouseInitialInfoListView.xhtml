@@ -21,7 +21,7 @@
 
             <li class="repo-list-item public source">
                 <h3 class="repo-list-name" >
-                   #{messages.House_Id}:#{_houseBusinessList.afterBusinessHouse.houseCode} #{messages.MainHouseOwner_sort}:#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.personName}
+                   #{messages.House_Id}:#{_houseBusinessList.afterBusinessHouse.houseCode} #{messages.MainHouseOwner_sort}:#{_houseBusinessList.afterBusinessHouse.newMainInitPerson.personName}
                 </h3>
                 <p class="repo-list-description">
                     <strong>#{messages.Build_Name}:</strong>#{_houseBusinessList.afterBusinessHouse.buildName}
@@ -30,7 +30,7 @@
                     <strong>#{messages.Developer_id}:</strong>#{_houseBusinessList.afterBusinessHouse.developerCode}   <strong>#{messages.Developer_name}:</strong>#{_houseBusinessList.afterBusinessHouse.developerName}
                 </p>
                 <p class="repo-list-description">
-                    <strong>#{messages.House_Code}:</strong>#{_houseBusinessList.afterBusinessHouse.displayHouseCode}   <strong>#{messages.House_Order}:</strong>#{_houseBusinessList.afterBusinessHouse.houseOrder}  <strong>#{messages.House_UseType}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.useType)}  <strong>#{messages.House_Area}:</strong>#{_houseBusinessList.afterBusinessHouse.houseArea}
+                    <strong>#{messages.House_Code}:</strong>#{_houseBusinessList.afterBusinessHouse.displayHouseCode}   <strong>#{messages.House_Order}:</strong>#{_houseBusinessList.afterBusinessHouse.houseOrder}  <strong>规划用途:</strong>#{_houseBusinessList.afterBusinessHouse.designUseType}  <strong>#{messages.House_Area}:</strong>#{_houseBusinessList.afterBusinessHouse.houseArea}
                 </p>
                 <p class="repo-list-description">
                    <strong>#{messages.HOUSE_FROM}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.houseRegInfo.houseFrom)}  <strong>#{messages.HOUSE_PORPERTY}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.houseRegInfo.houseProperty)} <strong>#{messages.Land_Number}:</strong>#{_houseBusinessList.afterBusinessHouse.landInfo.number} <strong>#{messages.Land_LandGetMode}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.landInfo.landGetMode)}
@@ -39,18 +39,8 @@
                     <strong>#{messages.House_Address}:</strong>#{_houseBusinessList.afterBusinessHouse.address}
                 </p>
                 <p class="repo-list-description">
-                    <strong>#{messages.Card_OwnerRship}:</strong>#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.number}
+                    <strong>项目备案号:</strong>#{_houseBusinessList.afterBusinessHouse.newMainInitPerson.makeCard.number}
 
-                        <a:commandLink styleClass="btn minibutton right" render="@none" action="#{mulitOwnerRsipCardPrint.print}" immediate="true"
-                                       data="#{mulitOwnerRsipCardPrint.printUrl}"
-                                       execute="@this" oncomplete="extendsCall(event.data);" rendered="#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.enable}">
-                            <span class="glyphicon glyphicon-print"/>
-                            <a:attachQueue requestDelay="0"/>
-                            <f:param name="businessHouseId" value="#{_houseBusinessList.afterBusinessHouse.id}"/>
-                            <f:param name="makeCardId" value="#{_houseBusinessList.afterBusinessHouse.businessHouseOwner.makeCard.id}"/>
-                            <f:param name="businessId" value="#{ownerBusinessHome.instance.id}"/>
-                            打印产权证
-                        </a:commandLink>
 
                 </p>
             </li>

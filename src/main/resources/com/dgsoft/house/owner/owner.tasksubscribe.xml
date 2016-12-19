@@ -971,6 +971,19 @@
         </description>
     </end-subscribe>
 
+
+    <end-subscribe name="ProjectDisplayGen" component="projectDisplayGen">
+        <description>
+            项目备案显示生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="ProjectBusinessOwnerKeyGen" component="projectBusinessOwnerKeyGen">
+        <description>
+            项目备案显示生成器
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="RealDisplayGen" component="realDisplayGen">
         <description>
             房屋交易备案显示生成器
