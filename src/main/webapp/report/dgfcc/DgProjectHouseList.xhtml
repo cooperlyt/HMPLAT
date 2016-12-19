@@ -4,11 +4,11 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="在建工程抵押备案登记房屋明细表" orientation="landscape">
+            title="项目备案房屋明细表" orientation="landscape">
 
 
     <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-        <p:paragraph alignment="center">在建工程抵押备案登记房屋明细表
+        <p:paragraph alignment="center">项目备案房屋明细表
         </p:paragraph>
     </p:font>
 
@@ -30,20 +30,25 @@
 
 
     <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="11">
-        <p:table columns="6" widths="2 1 1 1 1 2" headerRows="1" footerRows="0" widthPercentage="100">
-
+        <p:table columns="9" widths="0.8 2 0.6 0.6 0.8 0.8 0.8 0.8 2.5" headerRows="1" footerRows="0" widthPercentage="100">
+            <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>房屋编号</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>房籍号</p:paragraph></p:cell>
+            <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>总层数</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>所在层</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>结构</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>用途</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>建筑面积</p:paragraph></p:cell>
+            <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>套内面积</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>房屋坐落</p:paragraph></p:cell>
             <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+                <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.houseCode}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.floorCount}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.inFloorName}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.designUseType}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph rendered="#{not empty _houseBusiness.afterBusinessHouse.useArea}">#{_houseBusiness.afterBusinessHouse.useArea}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph></p:cell>
             </a:repeat>
         </p:table>
