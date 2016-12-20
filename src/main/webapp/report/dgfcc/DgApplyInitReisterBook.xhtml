@@ -98,25 +98,25 @@
                     <p:paragraph>代理人姓名</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.newMainInitPerson.proxyPerson.personName}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST').personName}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>联系电话</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthRight="0">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.newMainInitPerson.proxyPerson.phone}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST').phone}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="30">
                     <p:paragraph>证件类型</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
-                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.newMainInitPerson.proxyPerson.credentialsType.name()]}</p:paragraph>
+                    <p:paragraph>#{messages[ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST').credentialsType.name()]}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
                     <p:paragraph>证件号码</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.newMainInitPerson.proxyPerson.credentialsNumber}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST').credentialsNumber}</p:paragraph>
                 </p:cell>
 
             </p:table>
