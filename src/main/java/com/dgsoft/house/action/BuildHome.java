@@ -13,12 +13,25 @@ import com.dgsoft.house.OrderComparator;
 import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseRecord;
+import org.apache.poi.POIXMLDocument;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -33,6 +46,9 @@ public class BuildHome extends HouseEntityHome<Build> {
 
     @In
     private Map<String, String> messages;
+
+    @In(create = true)
+    private FacesContext facesContext;
 
     @In
     private HouseCodeHelper houseCodeHelper;
@@ -70,6 +86,124 @@ public class BuildHome extends HouseEntityHome<Build> {
         }else{
             return null;
         }
+    }
+
+
+    public static Workbook createworkbook(InputStream inp) throws IOException,InvalidFormatException {
+        if (!inp.markSupported()) {
+            inp = new PushbackInputStream(inp, 8);
+        }
+        if (POIFSFileSystem.hasPOIFSHeader(inp)) {
+            return new HSSFWorkbook(inp);
+        }
+        if (POIXMLDocument.hasOOXMLHeader(inp)) {
+            return new XSSFWorkbook(OPCPackage.open(inp));
+        }
+        throw new IllegalArgumentException("excel ver not include");
+    }
+
+    public void downloadHouseExcel(){
+        //TODO change to record db
+
+
+
+        try {
+            Workbook workbook = WorkbookFactory.create(facesContext.getExternalContext().getResourceAsStream("/resources/houseMapping.xlsx"));
+            Sheet sheet = workbook.getSheetAt(0);
+            int rowIndex = 2;
+
+            for(House house: getInstance().getHouses() ){
+
+                int cellIndex = 0;
+                Row row = sheet.createRow(rowIndex++);
+                Cell cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(house.getHouseOrder());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(house.getUnitNumber());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(house.getInFloorName());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(house.getHouseArea().doubleValue());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(house.getUseArea().doubleValue());
+
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(house.getCommArea().doubleValue());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(house.getShineArea().doubleValue());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(house.getLoftArea().doubleValue());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(house.getCommParam().doubleValue());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getEnumLabel(house.getHouseType()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getEnumLabel(house.getUseType()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(house.getDesignUseType());
+
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(house.isHaveDownRoom()? "有" : "无");
+
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(house.getAddress());
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getStructure()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getKnotSize()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getDirection()));
+
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getEastWall()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getWestWall()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getSouthWall()));
+
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getWestWall()));
+            }
+
+
+            sheet.setForceFormulaRecalculation(true);
+            ExternalContext externalContext = facesContext.getExternalContext();
+            externalContext.responseReset();
+            externalContext.setResponseContentType("application/vnd.ms-excel");
+            externalContext.setResponseHeader("Content-Disposition", "attachment;filename=houseMapping.xlsx");
+            try {
+                workbook.write(externalContext.getResponseOutputStream());
+                facesContext.responseComplete();
+            } catch (IOException e) {
+                facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR, "ExportIOError");
+                Logging.getLog(getClass()).error("export error", e);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

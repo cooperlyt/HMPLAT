@@ -6,6 +6,7 @@
 
     <restrict>#{s:hasRole('house.data.manager')}</restrict>
     <param name="projectId" value="#{projectHome.id}"/>
+    <param name="buildId" value="#{buildHome.id}"/>
 
 
     <navigation from-action="#{createHouse.createSingleBuild}">

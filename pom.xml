@@ -263,7 +263,7 @@
         <dependency>
             <groupId>local.house</groupId>
             <artifactId>houseInterface</artifactId>
-            <version>2.0.30Bate</version>
+            <version>2.0.31Bate</version>
         </dependency>
 
         <dependency>
@@ -284,22 +284,15 @@
             <version>${richfaces.version}</version>
         </dependency>
 
+        
 
         <dependency>
-            <groupId>org.eclipse.birt.runtime</groupId>
-            <artifactId>org.eclipse.birt.runtime</artifactId>
-            <version>4.3.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>org.apache.poi</artifactId>
-                    <groupId>org.eclipse.birt.runtime</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.poi</groupId>
-                    <artifactId>poi-ooxml-schemas</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -311,22 +304,6 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>ooxml-schemas</artifactId>
             <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.birt.runtime</groupId>
-            <artifactId>viewservlets</artifactId>
-            <version>4.3.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-discovery</groupId>
-                    <artifactId>axis</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.eclipse.birt.runtime</groupId>
-                    <artifactId>org.eclipse.birt.runtime</artifactId>
-                </exclusion>
-
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -662,6 +639,23 @@
                 </configuration>
             </plugin>
 
+
+            <plugin>
+                <groupId>com.ning.maven.plugins</groupId>
+                <artifactId>maven-duplicate-finder-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!--<plugin>-->
                 <!--<groupId>org.richfaces.cdk</groupId>-->
                 <!--<artifactId>maven-richfaces-resources-plugin</artifactId>-->

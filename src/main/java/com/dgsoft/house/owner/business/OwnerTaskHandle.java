@@ -155,8 +155,6 @@ public class OwnerTaskHandle {
     @Create
     public void init(){
        if(taskDescription.isCheckTask() && (taskInstance.getName().equals(backTaskName) || transitionComments == null || transitionComments.trim().equals(""))){
-
-
            transitionComments = "同意";
        }
     }

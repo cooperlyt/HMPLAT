@@ -323,6 +323,12 @@
                             <f:param name="from" value="/func/house/datas/ProjectView.xhtml"/>
                         </s:link>
 
+                        <s:link styleClass="table-action"  action="#{buildHome.downloadHouseExcel}">
+                            <span class="glyphicon glyphicon glyphicon-envelope"/>
+                            <f:param name="buildId" value="#{_build.data.id}"/>
+                        </s:link>
+
+
 
                         <s:link styleClass="table-action" propagation="begin"
                                 view="/func/house/datas/BuildGridMapEdit.xhtml">
@@ -330,6 +336,8 @@
 
                             <span class="glyphicon glyphicon-th"/>
                         </s:link>
+
+
 
 
                     </div>
