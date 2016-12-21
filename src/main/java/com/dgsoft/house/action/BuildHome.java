@@ -110,17 +110,34 @@ public class BuildHome extends HouseEntityHome<Build> {
         try {
             Workbook workbook = WorkbookFactory.create(facesContext.getExternalContext().getResourceAsStream("/resources/houseMapping.xlsx"));
             Sheet sheet = workbook.getSheetAt(0);
-            int rowIndex = 2;
 
+            Row row = sheet.getRow(0);
+            Cell cell = row.getCell(1);
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            cell.setCellValue(getInstance().getMapNumber());
+
+            cell = row.getCell(3);
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            cell.setCellValue(getInstance().getBlockNo());
+
+            cell = row.getCell(5);
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            cell.setCellValue(getInstance().getBuildNo());
+
+            cell = row.getCell(7);
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            cell.setCellValue(getInstance().getBuildName());
+
+            int rowIndex = 2;
             for(House house: getInstance().getHouses() ){
 
                 int cellIndex = 0;
-                Row row = sheet.createRow(rowIndex++);
-                Cell cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
+                row = sheet.createRow(rowIndex++);
+                cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
                 cell.setCellValue(house.getHouseOrder());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
-                cell.setCellValue(house.getUnitNumber());
+                cell.setCellValue(house.getHouseUnitName());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
                 cell.setCellValue(house.getInFloorName());
@@ -181,7 +198,7 @@ public class BuildHome extends HouseEntityHome<Build> {
                 cell.setCellValue(DictionaryWord.instance().getWordValue(house.getSouthWall()));
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
-                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getWestWall()));
+                cell.setCellValue(DictionaryWord.instance().getWordValue(house.getNorthWall()));
             }
 
 

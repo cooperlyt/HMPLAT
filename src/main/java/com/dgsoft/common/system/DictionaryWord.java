@@ -137,6 +137,26 @@ public class DictionaryWord {
         return wordCache.get(wordId);
     }
 
+    public Word getWordByValue(String categoryId, String value){
+        if (value == null || "".equals(value.trim())){
+            return null;
+        }
+        for (Word word: getWordList(categoryId)) {
+            if (value.trim().equals(word.getValue().trim())){
+                return word;
+            }
+        }
+        return null;
+    }
+
+    public String getWordIdByValue(String categoryId, String value){
+        Word result = getWordByValue(categoryId,value);
+        if (result != null){
+            return result.getId();
+        }
+        return null;
+    }
+
     public String getWordValue(String wordId) {
         if (wordId == null || "".equals(wordId.trim()))
             return "";

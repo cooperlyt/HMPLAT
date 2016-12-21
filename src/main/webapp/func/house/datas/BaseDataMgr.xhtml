@@ -302,6 +302,36 @@
             </nav>
         </a:outputPanel>
 
+        <rich:popupPanel id="updateFilePopup" modal="true" onmaskclick="#{rich:component('updateFilePopup')}.hide();"
+                         autosized="true" resizeable="false" styleClass="context-modal-panel">
+
+
+            <h:form id="uploadForm" enctype="multipart/form-data">
+
+
+                <rich:fileUpload maxFilesQuantity="5" title="#{messages.Upload_Build_XML}"
+                                 serverErrorLabel="#{messages.fileUpload_serverErrorLabel}"
+                                 deleteLabel="#{messages.fileUpload_deleteLabel}"
+                                 doneLabel="#{messages.fileUpload_doneLabel}"
+                                 cancelEntryControlLabel="#{messages.fileUpload_cancelEntryControlLabel}"
+                                 addLabel="#{messages.fileUpload_addControlLabel}"
+                                 progressLabel="#{messages.fileUpload_progressLabel}"
+                                 sizeExceededLabel="#{messages.fileUpload_sizeErrorLabel}"
+                                 uploadLabel="#{messages.fileUpload_uploadControlLabel}"
+                                 transferErrorLabel="#{messages.fileUpload_transferErrorLabel}"
+                                 clearAllLabel="#{messages.fileUpload_clearAllControlLabel}"
+                                 clearLabel="#{messages.fileUpload_clearControlLabel}"
+                                 stopControlLabel="#{messages.fileUpload_stopControlLabel}" fileUploadListener="#{mappingHouseOper.housesExcelUploadListener}"
+                                 ontyperejected="alert('不支持的文件类型');"
+                                 onuploadcomplete="#{rich:component('updateFilePopup')}.hide();"
+                                 acceptedTypes="xls,xlsx">
+
+                </rich:fileUpload>
+
+
+
+            </h:form>
+        </rich:popupPanel>
 
         <h:form>
             <a:outputPanel id="dataResult" layout="block" styleClass="column three-fourths codesearch-results">
@@ -355,10 +385,35 @@
 
                 <a:outputPanel rendered="#{not baseMapDataMgr.emptyResult}">
 
+                    <h:outputStylesheet>
+
+                        .project_name_colum{
+                            white-space:nowrap;
+                            word-break:keep-all;
+                            overflow:hidden;
+                            text-overflow:ellipsis;
+                        }
+
+                        .project_developer_colum{
+                            max-width: 150px;
+                            white-space:nowrap;
+                            word-break:keep-all;
+                            overflow:hidden;
+                            text-overflow:ellipsis;
+                        }
+
+
+
+                    </h:outputStylesheet>
+
+
+
+
                     <div class="repo-list">
                         <h:dataTable id="projectDataTable" value="#{projectList.resultList}" var="_item"
                                      styleClass="table table-striped table-hover table-floatThead result-data-table"
                                      headerClass="table-tools-header"
+                                     columnClasses=",project_name_colum,project_developer_colum,"
                                      rendered="#{(empty baseMapDataMgr.dataType) or (baseMapDataMgr.dataType eq 'PROJECT_MGR')}">
                             <f:facet name="header">
 
@@ -379,6 +434,10 @@
                                             <f:param name="developerSearchName" value=""/>
                                             <f:param name="newDeveloperName"  value=""/>
 
+                                        </s:link>
+
+                                        <s:link styleClass="btn btn-default" onclick="#{rich:component('updateFilePopup')}.show(); return false;">
+                                            <span class="btn-icon glyphicon glyphicon-log-in"/>
                                         </s:link>
 
                                         <div class="btn-group btn-group-sm">
@@ -418,7 +477,7 @@
                                     #{messages.Project_id}
                                 </f:facet>
 
-                                <s:link value="#{_item.id}" styleClass="css-truncate css-truncate-target" view="/func/house/datas/ProjectView.xhtml">
+                                <s:link value="#{_item.id}" style="max-width: 130px;" styleClass="css-truncate css-truncate-target" view="/func/house/datas/ProjectView.xhtml">
                                     <f:param name="projectId" value="#{_item.id}"/>
                                 </s:link>
 
