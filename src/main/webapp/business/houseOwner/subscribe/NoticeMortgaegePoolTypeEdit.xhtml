@@ -3,14 +3,15 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:include src="BussinePersionInput.xhtml">
-        <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
-        <ui:param name="mainLabel" value="开发商代理人"/>
-        <ui:param name="businessPersonComponent" value="#{persionPreSaleEntrustSubscribe}" />
+    <ui:include src="PoolTypeInput.xhtml">
 
+        <ui:param name="PowerPersonIntput" value="#{noticeMortgaegePersonEdit}"/>
     </ui:include>
+
+
 </ui:composition>

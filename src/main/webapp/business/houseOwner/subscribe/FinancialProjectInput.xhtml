@@ -8,9 +8,6 @@
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-
-
-
 <h:outputStylesheet>
     .financial-title-inputs .input-group-first button {
         border-radius: 0 !important;
@@ -27,30 +24,6 @@
 
     }
 </h:outputStylesheet>
-
-
-<f:subview id="personMortgage">
-    <ui:decorate template="/layout/system/PersonInput.xhtml">
-        <ui:param name="personEntityHelper" value="#{FinancialProjectSubscribe.personMortgageInstance}"/>
-        <ui:param name="personStatus" value="FinancialProject_personCredentiaslNumberStatus"/>
-        <ui:param name="label" value="#{messages.MORTGAGE_PROJECT}"/>
-        <div class="form-inline">
-
-            <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
-                <ui:define name="label">
-                    #{messages.BusinessOwner_Phone}
-                </ui:define>
-                <ui:param name="for" value="persionMortgagePhoneInput"/>
-                <h:inputText label="#{messages.BusinessOwner_Phone}" size="30" maxlength="15"
-                             styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
-                             value="#{FinancialProjectSubscribe.mortgaegeRegiste.businessHouseOwner.phone}" id="persionMortgagePhoneInput">
-                </h:inputText>
-
-            </s:decorate>
-        </div>
-    </ui:decorate>
-</f:subview>
-
 
 
 <ui:decorate template="/layout/edit-multi.xhtml">
@@ -77,13 +50,13 @@
 
             <div class="input-group financial-title-inputs" style="width: 100%">
                 <a:region>
-                    <h:selectOneMenu value="#{FinancialProjectSubscribe.instance.financialType}"
+                    <h:selectOneMenu value="#{financialProjectSubscribe.instance.financialType}"
                                      id="typeSelectInput"
                                      label="#{label}#{messages.FinancialType}"
                                      required="true"
                                      styleClass="selectpicker select-menu-btn financial-type-select"
-                                     valueChangeListener="#{FinancialProjectSubscribe.typeChangeListener}">
-                        <s:selectItems value="#{FinancialProjectSubscribe.financialTypes}"
+                                     valueChangeListener="#{financialProjectSubscribe.typeChangeListener}">
+                        <s:selectItems value="#{financialProjectSubscribe.financialTypes}"
                                        var="_type"
                                        itemValue="#{_type}"
                                        label="#{messages[_type.name()]}"/>
@@ -95,27 +68,93 @@
                     </h:selectOneMenu>
                 </a:region>
 
-                <a:outputPanel rendered="#{FinancialProjectSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+                <a:outputPanel rendered="#{financialProjectSubscribe.instance.financialType eq 'FINANCE_PERSON'}">
+
                     <ui:include src="/layout/system/PersonCardInput.xhtml">
-                        <ui:param name="_person" value="#{FinancialProjectSubscribe.personInstance}"/>
+                        <ui:param name="_person" value="#{financialProjectSubscribe.personInstance}"/>
                         <ui:param name="personStatus" value="final_personCredentiaslNumberStatus"/>
                         <ui:param name="render" value="personInputFields,financeAttrField"/>
+                        <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
                     </ui:include>
                 </a:outputPanel>
 
 
                 <h:inputText id="financeNameInput"
                              required="true"
-                             p:pplaceholder="#{messages.Financial_name}"
-                             rendered="#{FinancialProjectSubscribe.instance.financialType eq 'FINANCE_CORP'}"
+                             p:placeholder="#{messages.Financial_name}"
+                             rendered="#{financialProjectSubscribe.instance.financialType eq 'FINANCE_CORP'}"
                              label="#{messages.Financial_name}"
-                             value="#{FinancialProjectSubscribe.instance.name}"
-                             disabled="#{FinancialProjectSubscribe.selected}"
+                             value="#{financialProjectSubscribe.instance.name}"
+                             disabled="#{financialProjectSubscribe.selected}"
                              styleClass="form-control"/>
+
+
+
+
+
+
 
             </div>
 
         </s:decorate>
+
+
+        <f:subview id="financial_proxy_person">
+
+            <s:decorate
+                    id="proxyPersonTypeField" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                <ui:param name="for" value="proxyPersonTypeInput"/>
+                <ui:param name="showLabel" value="false"/>
+                <h:selectOneMenu value="#{financialProjectSubscribe.proxyType}" id="proxyPersonTypeInput"
+                                 styleClass="selectpicker select-menu-btn">
+
+                    <s:selectItems value="#{proxyTypes}" var="_proxyType" noSelectionLabel="无代理人"
+                                   label="#{messages[_proxyType.name()]}" itemValue="#{_proxyType}"/>
+                    <a:ajax render="proxyPersonPanel" event="valueChange" execute="@this"
+                            oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('proxyPersonPanel')}');">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                    <s:convertEnum/>
+
+                </h:selectOneMenu>
+            </s:decorate>
+
+            <a:outputPanel id="proxyPersonPanel">
+                <a:outputPanel rendered="#{not empty financialProjectSubscribe.proxyType}">
+
+
+
+                    <ui:decorate template="/layout/system/PersonInput.xhtml">
+                        <ui:param name="personEntityHelper" value="#{financialProjectSubscribe.proxyPersonHelper}"/>
+                        <ui:param name="showMainLabel" value="false"/>
+                        <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
+                        <ui:param name="personStatus" value="financial_proxy_person"/>
+
+
+                        <s:decorate id="businessProxyPersonPhoneField" styleClass="form-group" template="/layout/edit-big.xhtml">
+                            <ui:define name="label">
+                                #{messages.Tel}
+                            </ui:define>
+                            <ui:param name="for" value="proxyPersonPhoneInput"/>
+                            <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                                         styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                                         value="#{financialProjectSubscribe.proxyPersonHelper.personEntity.phone}"
+                                         id="proxyPersonPhoneInput">
+                                <f:validateRegex
+                                        pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                                <r:validator event="blur"/>
+                            </h:inputText>
+
+                        </s:decorate>
+                    </ui:decorate>
+
+
+                </a:outputPanel>
+
+            </a:outputPanel>
+
+        </f:subview>
 
     </ui:define>
 
@@ -128,7 +167,7 @@
 
 
             <h:inputText label="#{messages.Tel}"
-                         value="#{FinancialProjectSubscribe.instance.phone}"
+                         value="#{financialProjectSubscribe.instance.phone}"
                          styleClass="form-control"/>
         </s:decorate>
 
@@ -150,7 +189,7 @@
 
                 <h:selectOneMenu required="true"
                                  id="interestTypenput"
-                                 value="#{FinancialProjectSubscribe.mortgaegeRegiste.interestType}"
+                                 value="#{financialProjectSubscribe.mortgaegeRegiste.interestType}"
                                  styleClass="selectpicker select-menu-btn input-group-first"
                                  label="#{messages.MortgaegeRegiste_InterestType}">
                     <s:selectItems value="#{dictionary.getWordList('42')}" var="_word"
@@ -158,7 +197,7 @@
                 </h:selectOneMenu>
 
             </a:outputPanel>
-            <h:inputText value="#{FinancialProjectSubscribe.mortgaegeRegiste.highestMountMoney}"
+            <h:inputText value="#{financialProjectSubscribe.mortgaegeRegiste.highestMountMoney}"
                          size="20"
                          id="highestMountMoneyInput"
                          label="#{messages.MortgaegeRegiste_HighestMountMoney}"
@@ -184,7 +223,7 @@
 
         <ui:param name="for" value="mog_from_time"/>
         <ui:include src="/layout/system/TimeAreaInput.xhtml">
-            <ui:param name="timeArea" value="#{financialSubscribe.timeAreaHelper}"/>
+            <ui:param name="timeArea" value="#{financialProjectSubscribe.timeAreaHelper}"/>
             <ui:param name="label" value="#{messages.MortgaegeRegiste_MortgageDueTime}"/>
             <ui:param name="f_required" value="true"/>
             <ui:param name="t_required" value="true"/>
@@ -205,7 +244,7 @@
             #{messages.MortgaegeRegiste_MortgageArea}
         </ui:define>
         <ui:param name="for" value="mortgageAreaInput"/>
-        <h:inputText value="#{FinancialProjectSubscribe.mortgaegeRegiste.mortgageArea}"
+        <h:inputText value="#{financialProjectSubscribe.mortgaegeRegiste.mortgageArea}"
                      id="mortgageAreaInput"
                      required="true"
                      label="#{messages.MortgaegeRegiste_MortgageArea}"
@@ -226,7 +265,7 @@
     <h:inputTextarea label="#{messages.MortgaegeRegiste_WarrantScope}"
                      cols="50"
                      rows="3"
-                     value="#{FinancialProjectSubscribe.mortgaegeRegiste.warrantScope}"
+                     value="#{financialProjectSubscribe.mortgaegeRegiste.warrantScope}"
                      id="warrantScopeInput"
                      styleClass="form-control">
 

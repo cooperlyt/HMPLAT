@@ -8,15 +8,15 @@
                 xmlns:h="http://java.sun.com/jsf/html">
     <a:outputPanel rendered="#{not empty ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST')}">
         <ui:include src="BussinePersionView.xhtml">
-            <ui:param name="nameLabel" value="#{messages.PRE_SALE_ENTRUST}"/>
+            <ui:param name="nameLabel" value="开发商代理人"/>
             <ui:param name="businessPersion" value="#{ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST')}"/>
         </ui:include>
     </a:outputPanel>
 
     <a:outputPanel rendered="#{empty ownerBusinessHome.getBusinessPersionByType('PRE_SALE_ENTRUST')}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
-            <ui:param name="title" value="#{messages.PersionOwnerEntrust}" />
-            <ui:param name="noDataLabel" value="#{messages.PersionPreSaleEntrust_not}"/>
+            <ui:param name="title" value="开发商代理人" />
+            <ui:param name="noDataLabel" value="没有开发商代理人"/>
         </ui:include>
     </a:outputPanel>
 

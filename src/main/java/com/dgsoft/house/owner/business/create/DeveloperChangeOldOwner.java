@@ -38,11 +38,18 @@ public class DeveloperChangeOldOwner implements BusinessDataFill {
                 powerPerson.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
 
                 Developer developer = houseEntityLoader.getEntityManager().find(Developer.class,houseBusiness.getStartBusinessHouse().getDeveloperCode());
+                if (developer.getAttachCorporation()!=null){
+                    powerPerson.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
+                    powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
+                    powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
+                    powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
 
-                powerPerson.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
-                powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
-                powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
-                powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
+                }else{
+                    powerPerson.setCredentialsNumber("未知");
+
+                    powerPerson.setPhone("未知");
+
+                }
 
                 houseBusiness.getAfterBusinessHouse().getPowerPersons().add(powerPerson);
 

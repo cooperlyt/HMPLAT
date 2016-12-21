@@ -166,6 +166,15 @@ public class OwnerHouseHelper {
         return key;
     }
 
+    public static KeyGeneratorHelper genProjectSearchKey(BusinessHouse house){
+
+        KeyGeneratorHelper key = new KeyGeneratorHelper();
+        key.addWord(house.getDeveloperName());
+        key.addWord(house.getDisplayHouseCode());
+        key.addWord(house.getAddress());
+
+        return key;
+    }
 
 
     public SalePayType[] getSalePayType(){

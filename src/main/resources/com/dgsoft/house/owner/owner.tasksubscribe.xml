@@ -80,6 +80,14 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PersionMortgageView" page="/business/houseOwner/subscribe/PersionMortgageView.xhtml">
+        <description>
+            抵押人代理人(在建)查看
+        </description>
+    </view-subscribe>
+
+
+
     <view-subscribe name="persionMortgageProjectView" page="/business/houseOwner/subscribe/PersionMortgageProjectView.xhtml">
         <description>
             在建工程抵押人查看
@@ -118,17 +126,7 @@
             债务人查看
         </description>
     </view-subscribe>
-    <view-subscribe name="PersionMortgageView" page="/business/houseOwner/subscribe/PersionMortgageView.xhtml">
-        <description>
-            抵押人代理人查看
-        </description>
-    </view-subscribe>
 
-    <view-subscribe name="PersionObligeeView" page="/business/houseOwner/subscribe/PersionObligeeView.xhtml">
-        <description>
-            抵押权代理人查看
-        </description>
-    </view-subscribe>
 
     <view-subscribe name="PersionPreSaleEntrustView" page="/business/houseOwner/subscribe/PersionPreSaleEntrustView.xhtml">
         <description>
@@ -138,9 +136,13 @@
 
 
 
-    <view-subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml">
+
+
+
+
+    <view-subscribe name="MortgagerPrepareView" page="/business/houseOwner/subscribe/MortgagerPrepareView.xhtml">
         <description>
-            预告人查看
+            预告抵押人查看
         </description>
     </view-subscribe>
 
@@ -409,6 +411,13 @@
             房屋所有权证号查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml">
+        <description>
+            预告登记证明查看
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
         <description>
@@ -878,6 +887,19 @@
             房屋所有权证号编辑
         </description>
     </edit-subscribe>
+    <edit-subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml"
+                    component="">
+        <description>
+            预告登记证明号编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="NoticeMortgaegePoolTypeEdit" page="/business/houseOwner/subscribe/NoticeMortgaegePoolTypeEdit.xhtml" component="">
+        <description>
+            预告(抵押)备案人准备
+        </description>
+    </edit-subscribe>
+
 
     <edit-subscribe name="OwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OwnerPoolTypeEdit.xhtml" component="">
         <description>
@@ -888,6 +910,12 @@
     <edit-subscribe name="oldOwnerPoolTypeEdit" page="/business/houseOwner/subscribe/OldOwnerPoolTypeEdit.xhtml" component="">
         <description>
             原产权人准备
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="NoticeMortgaegePersonEdit" page="/business/houseOwner/subscribe/NoticeMortgaegePersonEdit.xhtml" component="noticeMortgaegePersonEdit">
+        <description>
+            预告(抵押)备案人编辑
         </description>
     </edit-subscribe>
 
@@ -923,6 +951,45 @@
 
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
+
+    <end-subscribe name="MortgageDisplayGen" component="mortgageDisplayGen">
+        <description>
+            房屋抵押备案显示生成器
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="HouseBusinessMortgageKeyGen" component="houseBusinessMortgageKeyGen">
+        <description>
+            房屋和抵押人查询KEY生成器
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="MortgageProjectDisplayGen" component="mortgageProjectDisplayGen">
+        <description>
+            房屋在建备案显示生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="HouseBusinessProjectMortgageKeyGen" component="houseBusinessProjectMortgageKeyGen">
+        <description>
+            房屋和在建抵押人查询KEY生成器
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="ProjectDisplayGen" component="projectDisplayGen">
+        <description>
+            项目备案显示生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="ProjectBusinessOwnerKeyGen" component="projectBusinessOwnerKeyGen">
+        <description>
+            项目备案显示生成器
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="RealDisplayGen" component="realDisplayGen">
         <description>
@@ -1307,7 +1374,11 @@
         </description>
     </end-subscribe>
 
-
+    <end-subscribe name="addLockedHousePledgeEnd" component="addLockedHousePledge">
+        <description>
+            抵押登记添添加预警
+        </description>
+    </end-subscribe>
 
 
 

@@ -26,9 +26,9 @@ import java.util.List;
 /**
  * Created by wxy on 2015-09-18.
  */
-@Name("financialSubscribe")
+
 @Scope(ScopeType.CONVERSATION)
-public class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
+public abstract class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
 
 
 
@@ -37,7 +37,7 @@ public class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
     protected MortgaegeRegiste mortgaegeRegiste;
     private boolean selected;
 
-    //protected abstract void addMortgage();
+    protected abstract void addMortgage();
 
     public Financial.FinancialType[] getFinancialTypes() {
         return Financial.FinancialType.values();
@@ -121,7 +121,7 @@ public class FinancialBaseSubscribe extends OwnerEntityHome<Financial> {
             ownerBusinessHome.getInstance().getMortgaegeRegistes().add(mortgaegeRegiste);
             proxyPersonHelper = new PersonHelper<ProxyPersonEntity>();
 
-            //addMortgage();
+            addMortgage();
 
             // ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getMortgaegeRegistes().add(mortgaegeRegiste);
         } else {

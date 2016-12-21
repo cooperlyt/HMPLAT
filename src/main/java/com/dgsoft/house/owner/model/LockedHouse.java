@@ -15,9 +15,10 @@ import java.util.Date;
         , catalog = "HOUSE_OWNER_RECORD",uniqueConstraints = {@UniqueConstraint(columnNames = {"HOUSE_CODE","TYPE"})}
 )
 public class LockedHouse {
-        //不可售， 系统锁定(无论什么业务都不可以运行)， 预警, 异议， 查询 ， 其它登记限制
+        //不可售， 系统锁定(无论什么业务都不可以运行)， 预警, 异议， 查询 ， 其它登记限制  MORTGAGE_REEG 抵押登记
+
     public enum LockType{
-        CANT_SALE,SYSTEM_LOCKED,HOUSE_LOCKED,DISPUTE_REG,CLOSE_REG,OTHER_REG
+        CANT_SALE,SYSTEM_LOCKED,HOUSE_LOCKED,DISPUTE_REG,CLOSE_REG,OTHER_REG,MORTGAGE_REEG
     }
 
     private String id;
@@ -57,6 +58,17 @@ public class LockedHouse {
         this.empCode = empCode;
         this.empName = empName;
         this.lockedTime = lockedTime;
+    }
+
+
+    public LockedHouse(String houseCode, LockType type, String description, String empCode, String empName, Date lockedTime,String buildCode) {
+        this.houseCode = houseCode;
+        this.type = type;
+        this.description = description;
+        this.empCode = empCode;
+        this.empName = empName;
+        this.lockedTime = lockedTime;
+        this.buildCode = buildCode;
     }
 
     @Id
