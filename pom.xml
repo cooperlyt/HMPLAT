@@ -437,6 +437,19 @@
 
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
+            <artifactId>com.lowagie.text</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>org.reflections</groupId>
@@ -459,11 +472,7 @@
         <!--<artifactId>cssparser</artifactId>-->
         <!--<version>0.9.14</version>-->
         <!--</dependency>-->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-asian</artifactId>
-            <version>5.2.0</version>
-        </dependency>
+
 
 
         <dependency>
@@ -579,6 +588,8 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.51</version>
         </dependency>
+
+
 
     </dependencies>
 
