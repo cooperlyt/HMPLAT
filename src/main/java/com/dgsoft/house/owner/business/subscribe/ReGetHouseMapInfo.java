@@ -69,6 +69,7 @@ public class ReGetHouseMapInfo {
                 houseBusiness.getAfterBusinessHouse().setUseType(house.getUseType());
                 houseBusiness.getAfterBusinessHouse().setBuildName(house.getBuildName());
 
+                houseBusiness.getAfterBusinessHouse().setDesignUseType(house.getDesignUseType());
                 if (house.getBuild()!=null) {
                     houseBusiness.getAfterBusinessHouse().setFloorCount(house.getBuild().getFloorCount());
                     houseBusiness.getAfterBusinessHouse().setUpFloorCount(house.getBuild().getUpFloorCount());

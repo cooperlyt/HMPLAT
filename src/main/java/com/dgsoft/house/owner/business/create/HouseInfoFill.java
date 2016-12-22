@@ -11,6 +11,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 
@@ -61,6 +62,7 @@ public class HouseInfoFill implements BusinessDataFill {
                   houseBusiness.getAfterBusinessHouse().setUseType(house.getUseType());
                   houseBusiness.getAfterBusinessHouse().setBuildName(house.getBuildName());
                   houseBusiness.getAfterBusinessHouse().setDesignUseType(house.getDesignUseType());
+
                   if (house.getBuild()!=null) {
                       houseBusiness.getAfterBusinessHouse().setFloorCount(house.getBuild().getFloorCount());
                       houseBusiness.getAfterBusinessHouse().setUpFloorCount(house.getBuild().getUpFloorCount());
