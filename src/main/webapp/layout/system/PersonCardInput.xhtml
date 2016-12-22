@@ -63,7 +63,7 @@
                      value="#{_person.credentialsNumber}">
 
             <f:validateRegex
-                             pattern="^[1-9]\d{5}((1[89]|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dx]$"/>
+                             pattern="^[1-9]\d{5}((1[89]|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dxX]$"/>
             <f:validator validatorId="cc.coopersoft.faces.IdCardNumberValidator"/>
             <r:validator event="blur"/>
 
