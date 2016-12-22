@@ -189,7 +189,8 @@
                 <p:cell colspan="3">
                        <p:paragraph rendered="#{empty _buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}"><p:text value="#{_buildBusiness.businessProject.projectSellInfo.endUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
 
-                        <p:paragraph rendered="#{not empty _buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}"><ui:repeat value="#{_buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}" var="_projectLandEndTimeList"> <p:text value=" #{useTypeWordAdapter.getUseTypeCategoryName(_projectLandEndTimeList.useTypeCategory) }"></p:text> <p:text value="#{_projectLandEndTimeList.endTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></ui:repeat></p:paragraph>
+                       <p:paragraph rendered="#{not empty _buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}">住宅： <p:text value="#{_buildBusiness.businessProject.projectSellInfo.endUseTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>
+                           <ui:repeat value="#{_buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}" var="_projectLandEndTimeList"> <p:text value="   #{dictionary.getEnumLabel(_projectLandEndTimeList.useTypeCategory)} :  "></p:text> <p:text value="#{_projectLandEndTimeList.endTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></ui:repeat></p:paragraph>
                 </p:cell>
 
 
