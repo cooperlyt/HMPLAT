@@ -206,6 +206,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     @Transient
+    public List<BusinessFile>  getBusinessFileListSort(){
+        List<BusinessFile> result = new ArrayList<BusinessFile>();
+        for (BusinessFile businessFile: getUploadFileses()){
+
+                result.add(businessFile);
+
+        }
+        Collections.sort(result,OrderBeanComparator.getInstance());
+        return result;
+    }
+
+
+    @Transient
     public List<BusinessFile>  getVaidBusinessFileList(){
         List<BusinessFile> result = new ArrayList<BusinessFile>();
         for (BusinessFile businessFile: getUploadFileses()){

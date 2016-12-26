@@ -42,7 +42,7 @@
                 <p:cell><p:paragraph>产别</p:paragraph></p:cell>
                 <p:cell><p:paragraph></p:paragraph></p:cell>
                 <p:cell><p:paragraph>编号</p:paragraph></p:cell><p:cell colspan="2"><p:paragraph>文 件 名 称</p:paragraph></p:cell><p:cell><p:paragraph>页数</p:paragraph></p:cell><p:cell><p:paragraph>备注</p:paragraph></p:cell>
-                <a:repeat rowKeyVar="_row" value="#{ownerBusinessHome.instance.uploadFileses}" var="_item">
+                <a:repeat rowKeyVar="_row" value="#{ownerBusinessHome.instance.businessFileListSort}" var="_item">
                     <p:cell><p:paragraph>#{_row + 1}</p:paragraph></p:cell>
                     <p:cell colspan="2" horizontalAlignment="left"><p:paragraph>#{_item.name}</p:paragraph></p:cell>
                     <p:cell><p:paragraph></p:paragraph></p:cell>
