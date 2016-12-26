@@ -127,7 +127,7 @@
 
                          id="commParamInput" label="#{messages.House_CommParam}">
 
-                <f:convertNumber pattern="#0.#"/>
+                <f:convertNumber pattern="#0.#" minFractionDigits="6" maxFractionDigits="10"/>
                 <rich:validator event="blur"/>
             </h:inputText>
 

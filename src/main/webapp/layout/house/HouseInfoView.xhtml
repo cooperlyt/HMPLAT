@@ -168,7 +168,7 @@
 
     <h:outputText value="#{messages.House_CommParam}"/>
     <h:outputText value="#{houseInfo.commParam}">
-        <f:convertNumber pattern="#0.#"/>
+        <f:convertNumber pattern="#0.#" minFractionDigits="6" maxFractionDigits="10"/>
     </h:outputText>
 
 

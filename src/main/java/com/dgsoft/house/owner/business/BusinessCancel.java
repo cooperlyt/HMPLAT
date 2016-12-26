@@ -8,6 +8,7 @@ import com.dgsoft.house.owner.model.HouseRecord;
 import com.dgsoft.house.owner.model.SubStatus;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.List;
 
@@ -31,8 +32,11 @@ public class BusinessCancel {
                     .setParameter("houseBusinessId", houseBusiness.getId())
                     .getResultList();
 
+
             if (houseBusinessList.isEmpty()){
                 if (hr != null){
+
+                    houseBusiness.getAfterBusinessHouse().getHouseRecords().clear();
                     ownerBusinessHome.getEntityManager().remove(hr);
                 }
             }else{

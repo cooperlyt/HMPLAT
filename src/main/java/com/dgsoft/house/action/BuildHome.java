@@ -89,19 +89,6 @@ public class BuildHome extends HouseEntityHome<Build> {
     }
 
 
-    public static Workbook createworkbook(InputStream inp) throws IOException,InvalidFormatException {
-        if (!inp.markSupported()) {
-            inp = new PushbackInputStream(inp, 8);
-        }
-        if (POIFSFileSystem.hasPOIFSHeader(inp)) {
-            return new HSSFWorkbook(inp);
-        }
-        if (POIXMLDocument.hasOOXMLHeader(inp)) {
-            return new XSSFWorkbook(OPCPackage.open(inp));
-        }
-        throw new IllegalArgumentException("excel ver not include");
-    }
-
     public void downloadHouseExcel(){
         //TODO change to record db
 
