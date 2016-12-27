@@ -503,6 +503,11 @@ INSERT INTO DB_PLAT_SYSTEM.ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('RecordSave','
 INSERT INTO DB_PLAT_SYSTEM.ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.check','project.businessSearch');
 INSERT INTO DB_PLAT_SYSTEM.ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('func.task','project.businessSearch');
 
+
+
+USE HOUSE_OWNER_RECORD;
+
+update  HOUSE h left join BUSINESS_HOUSE bh on bh.AFTER_HOUSE = h.ID left join OWNER_BUSINESS ob on ob.ID = bh.BUSINESS_ID set  h.MAIN_OWNER = (select ID FROM POWER_OWNER po left join HOUSE_OWNER ho on ho.POOL = po.ID  where po.PRI= 0 and ho.HOUSE=h.ID)  where ob.DEFINE_ID='WP42' and  h.MAIN_OWNER is NULL ;
 UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.0' where ID='database_version';
 
 
