@@ -54,7 +54,7 @@ public class RealDisplayGen implements TaskCompleteSubscribeComponent {
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,houseContract.getContractNumber());
             }
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "交易备案人");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "现产权备案人");
 
             String contractPersonNames = "";
             for (PowerPerson pp: bh.getAfterBusinessHouse().getAllNewPowerPersonList()){
