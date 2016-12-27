@@ -102,7 +102,7 @@
                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
                     <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldPoolType.name()]}</p:paragraph>
                     <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额：#{_businessPools.poolPerc}。" /></ui:repeat></p:paragraph>
-                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}。" /></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系:#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="20">
                     <p:paragraph>代理人姓名</p:paragraph>
@@ -174,7 +174,7 @@
                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
                     <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
                     <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额：#{_businessPools.poolPerc}。" /></ui:repeat></p:paragraph>
-                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}。" /></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系:#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="20">
                     <p:paragraph>代理人姓名</p:paragraph>
@@ -269,26 +269,26 @@
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>结构</p:paragraph>
+            <p:paragraph>房屋取得方式</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
-            <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.structure)}</p:paragraph>
+            <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph>
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>建筑面积</p:paragraph>
+            <p:paragraph>建筑面积（㎡）</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
             <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.houseArea}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>合同价格</p:paragraph>
+            <p:paragraph>买卖合同价格（元）</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
             <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.saleInfo.sumPrice}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>契税价格</p:paragraph>
+            <p:paragraph>契税税额（元）</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
             <p:paragraph><p:text value="#{ownerBusinessHome.instance.evaluate.assessmentPrice}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
