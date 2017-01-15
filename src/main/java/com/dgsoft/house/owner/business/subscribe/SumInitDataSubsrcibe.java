@@ -87,12 +87,10 @@ public class SumInitDataSubsrcibe {
                     otherArea = otherArea.add(initToData.getHouseArea());
                     otherCount= otherCount+initToData.getCount().intValue();
                 }
-                System.out.println("dwellingArea--"+dwellingArea);
-                System.out.println("dwellingConut--"+dwellingConut);
+
                 sumArea = sumArea.add(dwellingArea);
                 sumArea = sumArea.add(shopArea);
                 sumArea = sumArea.add(otherArea);
-                System.out.println("sumArea--"+sumArea);
 
                 sumCount = dwellingConut+shopCount+otherCount;
             }
