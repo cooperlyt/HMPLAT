@@ -32,11 +32,8 @@ public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
     public void complete() {
 
         for(HouseBusiness bh: ownerBusinessHome.getInstance().getHouseBusinesses()){
-
             DescriptionDisplay businessDisplay = new DescriptionDisplay();
-
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
-
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "房屋编号");
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getHouseCode());
 
@@ -45,7 +42,7 @@ public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
 
 
             if (bh.getAfterBusinessHouse().getNewMainInitPerson() != null && bh.getAfterBusinessHouse().getNewMainInitPerson().getMakeCard()!=null) {
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "合同编号");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "项目备案号");
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getAfterBusinessHouse().getNewMainInitPerson().getMakeCard().getNumber());
             }
 
@@ -70,7 +67,7 @@ public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
             bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
         }
 
-
+        System.out.println("bh-----");
 
     }
 }
