@@ -67,7 +67,7 @@ public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
             bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
         }
 
-        System.out.println("bh-----");
+
 
     }
 }
