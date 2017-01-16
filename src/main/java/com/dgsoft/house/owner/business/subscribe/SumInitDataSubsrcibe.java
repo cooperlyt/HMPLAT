@@ -80,7 +80,7 @@ public class SumInitDataSubsrcibe {
 
     public void serchBybizid(String bizid){
 
-        List<BusinessHouse> businessHouseList = ownerEntityLoader.getEntityManager().createQuery("select bh from BusinessHouse bh where bh.houseBusinessForAfter.ownerBusiness.id=:bizid and bh.houseType in ('SALE_HOUSE')",BusinessHouse.class)
+        List<BusinessHouse> businessHouseList = ownerEntityLoader.getEntityManager().createQuery("select bh from BusinessHouse bh where bh.houseBusinessForAfter.ownerBusiness.id=:bizid and bh.houseType = 'COMM_USE_HOUSE'",BusinessHouse.class)
                 .setParameter("bizid",bizid)
                 .getResultList();
 

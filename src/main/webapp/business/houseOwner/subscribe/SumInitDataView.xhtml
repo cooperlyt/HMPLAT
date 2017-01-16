@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    #{sumInitDataSubsrcibe.serchBybizid(ownerBusinessHome.instance.id)}#{sumInitDataSubsrcibe.serchByBuildCode(ownerBusinessHome.instance.businessHouse.buildCode)}
+
+    <a:outputPanel>
+        <dh:entryGridBlock columns="4" >
+
+            <h:outputText value="小区名称"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.build.project.section.name}"/>
+            <h:outputText value="项目名称称"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.build.project.name}"/>
+            <h:outputText value="楼幢名称"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{sumInitDataSubsrcibe.build.name}"/>
+            </dh:entryGridColumn>
+            <h:outputText value="楼号"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.build.doorNo}"/>
+            <h:outputText value="总层数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.build.floorCount}"/>
+            <h:outputText value="地上总层数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.build.upFloorCount}"/>
+            <h:outputText value="地下总层数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.build.downFloorCount}"/>
+            <h:outputText value="总套数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.sumCount}"/>
+            <h:outputText value="总面积"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.sumArea}"/>
+            <h:outputText value="住宅套数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.sumCount}"/>
+            <h:outputText value="住宅面积"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.sumArea}"/>
+            <h:outputText value="商业套数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.shopCount}"/>
+            <h:outputText value="商业面积"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.shopArea}"/>
+            <h:outputText value="其它套数"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.otherCount}"/>
+            <h:outputText value="其它面积"/>
+            <h:outputText value="#{sumInitDataSubsrcibe.otherArea}"/>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+</ui:composition>
