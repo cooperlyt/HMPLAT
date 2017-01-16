@@ -46,7 +46,7 @@
         <f:facet name="defaultCell">
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
         </f:facet>
-        <p:cell fixedHeight="120">
+        <p:cell fixedHeight="175">
             <p:paragraph>申
                 请
                 人
@@ -86,10 +86,11 @@
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
                     <p:paragraph>#{ownerBusinessHome.instance.applyPersion.credentialsNumber}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="60">
+                <p:cell borderWidthLeft="0" fixedHeight="90">
                     <p:paragraph>共有建筑</p:paragraph>
                 </p:cell>
                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph rendered="#{not empty sumInitDataSubsrcibe.houseList}"><ui:repeat var="_houses" value="#{sumInitDataSubsrcibe.houseList}"><p:text value="图号：#{_houses.mapNumber}、丘号：#{_houses.blockNo}、幢号：#{_houses.buildNo}、房号：#{_houses.houseOrder}、建筑面积：#{_houses.houseArea}、所在层：#{_houses.inFloorName}、规划用途：#{_houses.designUseType} 。 "/></ui:repeat></p:paragraph>
 
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="20">
