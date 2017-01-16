@@ -121,7 +121,7 @@ public class BuildSaleInfoProvider implements RestDataProvider {
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
 
-        List<String> saledHouse = ownerEntityLoader.getEntityManager().createQuery("select contractOwner.houseCode from ContractOwner contractOwner where contractOwner.ownerBusiness.status = 'RUNNING' and contractOwner.houseCode in (:houseCodes)", String.class)
+        List<String> saledHouse = ownerEntityLoader.getEntityManager().createQuery("select distinct hb.houseCode from HouseContract hc left join hc.houseBusinesses hb where  hc.type in ('NOW_SELL', 'MAP_SELL') and  hc.ownerBusiness.status = 'RUNNING' and hb.houseCode in (:houseCodes)", String.class)
                 .setParameter("houseCodes", houseMap.keySet()).getResultList();
 
         Map<String, HouseStatus> recordHouse = new HashMap<String, HouseStatus>();
