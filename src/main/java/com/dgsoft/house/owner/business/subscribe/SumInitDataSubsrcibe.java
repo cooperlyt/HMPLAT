@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe;
 import cc.coopersoft.house.UseType;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.Build;
+import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseBusiness;
@@ -54,6 +55,18 @@ public class SumInitDataSubsrcibe {
 
     private Build build;
 
+
+
+    List<BusinessHouse> houseList = new ArrayList<BusinessHouse>();
+
+    public List<BusinessHouse> getHouseList() {
+        return houseList;
+    }
+
+    public void setHouseList(List<BusinessHouse> houseList) {
+        this.houseList = houseList;
+    }
+
     public void serchByBuildCode(String BuildCode){
 
         Build build1 = houseEntityLoader.getEntityManager().find(Build.class,BuildCode);
@@ -61,13 +74,21 @@ public class SumInitDataSubsrcibe {
             build=build1;
         }
 
+
     }
 
 
     public void serchBybizid(String bizid){
 
+        List<BusinessHouse> businessHouseList = ownerEntityLoader.getEntityManager().createQuery("select bh from BusinessHouse bh where bh.houseBusinessForAfter.ownerBusiness.id=:bizid and bh.houseType = 'COMM_USE_HOUSE'",BusinessHouse.class)
+                .setParameter("bizid",bizid)
+                .getResultList();
 
-        List<InitToData> initToDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.InitToData(count(hb.afterBusinessHouse.id),sum(hb.afterBusinessHouse.houseArea),hb.afterBusinessHouse.useType) from HouseBusiness hb where hb.ownerBusiness.defineId = 'WP40' and hb.ownerBusiness.status in ('RUNNING') and hb.ownerBusiness.id=:bizid group by hb.afterBusinessHouse.useType",InitToData.class)
+        if (businessHouseList!=null && businessHouseList.size()>0){
+            this.houseList = businessHouseList;
+        }
+
+        List<InitToData> initToDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.InitToData(count(hb.afterBusinessHouse.id),sum(hb.afterBusinessHouse.houseArea),hb.afterBusinessHouse.useType) from HouseBusiness hb where hb.ownerBusiness.id=:bizid group by hb.afterBusinessHouse.useType",InitToData.class)
                 .setParameter("bizid",bizid)
                 .getResultList();
 

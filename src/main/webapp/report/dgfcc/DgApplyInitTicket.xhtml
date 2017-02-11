@@ -4,38 +4,29 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="项目备案审批表">
+            title="项目备案信息告知单">
 
 
 
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">项目备案审批表#{sumInitDataSubsrcibe.serchBybizid(ownerBusinessHome.instance.id)}#{sumInitDataSubsrcibe.serchByBuildCode(ownerBusinessHome.instance.businessHouse.buildCode)}
+    <p:paragraph alignment="center">项目备案信息告知单#{sumInitDataSubsrcibe.serchBybizid(ownerBusinessHome.instance.id)}#{sumInitDataSubsrcibe.serchByBuildCode(ownerBusinessHome.instance.businessHouse.buildCode)}
     </p:paragraph>
 </p:font>
 
 
-<p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
-    <p:table columns="4" widths="1 5 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+<p:font size="11" name="STSong-Light" encoding="UniGB-UCS2-H">
+    <p:table columns="1" widths="1" headerRows="0" footerRows="0" widthPercentage="100">
         <f:facet name="defaultCell">
-            <p:cell padding="5" border="0"/>
+            <p:cell padding="5" border="0" horizontalAlignment="center" verticalAlignment="middle" paddingBottom="5"/>
         </f:facet>
-        <p:cell>
-            <p:paragraph>业务编号:</p:paragraph>
+        <p:cell padding="0">
+            <p:paragraph>东房转字第#{ownerBusinessHome.instance.id}号</p:paragraph>
         </p:cell>
-        <p:cell verticalAlignment="left">
-            <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+        <p:cell paddingTop="0" paddingBottom="15">
+            <p:paragraph>      根据《中华人民共和国城市房地产管理法》、《国土资源部、住房城乡建设部关于做好不动产统一登记与房屋交易管理衔接的指导意见》、《房屋交易与产权管理工作导则》等法律、法规规定为保障房屋交易</p:paragraph>
+            <p:paragraph>安全，维护房屋交易当事人的合法权益，经审查核实，现对以下房屋转让交易信息予以备案。</p:paragraph>
         </p:cell>
-
-        <p:cell horizontalAlignment="left">
-            <p:paragraph>楼幢编号:</p:paragraph>
-        </p:cell>
-
-
-        <p:cell horizontalAlignment="left">
-            <p:paragraph>#{sumInitDataSubsrcibe.build.buildCode}</p:paragraph>
-        </p:cell>
-
     </p:table>
 </p:font>
 
@@ -293,72 +284,28 @@
 
             </p:table>
         </p:cell>
-        <p:cell colspan="2" fixedHeight="180">
-
-            <p:table columns="2" widths="0.7 3" headerRows="0" footerRows="0" widthPercentage="100">
-                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
-                    <p:paragraph>受理人</p:paragraph>
-                </p:cell>
-
-                <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
-
-                    <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>签字:</p:paragraph>
-                        </p:cell>
-                        <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>年                月                日</p:paragraph>
-                        </p:cell>
-
-                    </p:table>
-
-                </p:cell>
-
-                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
-                    <p:paragraph>审核人</p:paragraph>
-                </p:cell>
-
-                <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
-
-
-                    <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>签字:</p:paragraph>
-                        </p:cell>
-                        <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>年                月                日</p:paragraph>
-                        </p:cell>
-
-                    </p:table>
-
-                </p:cell>
-
-                <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
-                    <p:paragraph>审批人</p:paragraph>
-                </p:cell>
-
-                <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="60">
-
-
-                    <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                        <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>签字:</p:paragraph>
-                        </p:cell>
-                        <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                            <p:paragraph>年                月                日</p:paragraph>
-                        </p:cell>
-
-                    </p:table>
-
-                </p:cell>
-
-            </p:table>
-
-
-        </p:cell>
-
     </p:table>
 
+</p:font>
+<p:font size="14" name="STSong-Light" encoding="UniGB-UCS2-H">
+    <p:table columns="2" widths="1 1" headerRows="0" footerRows="0" widthPercentage="100">
+        <f:facet name="defaultCell">
+            <p:cell padding="10" border="0" horizontalAlignment="center" verticalAlignment="middle"  paddingTop="15"/>
+        </f:facet>
+        <p:cell padding="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>东港市房地产管理处(章)</p:paragraph>
+        </p:cell>
+
+        <p:cell padding="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>年      月       日</p:paragraph>
+        </p:cell>
+    </p:table>
 </p:font>
 <p:newPage/>
 </p:document>
