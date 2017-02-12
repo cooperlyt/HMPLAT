@@ -21,6 +21,14 @@ public class HouseRecordCondition extends BusinessHouseCondition {
 
     public static final String EJBQL = "select hr from HouseRecord hr left join fetch hr.businessHouse house " ;
 
+    private static RestrictionGroup personRestrictionGroup = new RestrictionGroup("and",Arrays.asList(new String[]{
+            "owner.credentialsType = #{houseRecordCondition.credentialsType}"}));
+
+    static {
+        personRestrictionGroup.getChildren().add(new RestrictionGroup("or", Arrays.asList(new String[]{"lower(owner.credentialsNumber) = lower(#{houseRecordCondition.credentialsNumber18})",
+                "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.credentialsNumber15})" })));
+    }
+
 
     public enum SearchType{
         ALL(EJBQL,new RestrictionGroup("or",Arrays.asList(new String[] {
@@ -29,9 +37,7 @@ public class HouseRecordCondition extends BusinessHouseCondition {
         }))),
         HOUSE_CODE(EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{"lower(hr.houseCode) = lower(#{houseRecordCondition.searchKey})"}))),
         HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.personName = #{houseRecordCondition.searchKey}"}))),
-        PERSON(POWER_PERSON_EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{
-                "owner.credentialsType = #{houseRecordCondition.credentialsType}",
-                "lower(owner.credentialsNumber) = lower(#{houseRecordCondition.searchKey})"}))),
+        PERSON(POWER_PERSON_EJBQL,personRestrictionGroup),
         HOUSE_MBBH("select hr from HouseRecord hr left join hr.businessHouse house ",
                 new RestrictionGroup("and",Arrays.asList(new String[]{
                 "lower(house.mapNumber) = lower(#{houseRecordCondition.mapNumber})",
