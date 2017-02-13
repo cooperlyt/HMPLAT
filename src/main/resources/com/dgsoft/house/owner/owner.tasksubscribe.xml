@@ -167,6 +167,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="ResonFillChangeView" page="/business/houseOwner/subscribe/ResonFillChangeView.xhtml">
+        <description>
+            补换证事由查看
+        </description>
+    </view-subscribe>
+
 
 
   <!--
@@ -804,6 +810,11 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="ResonFillChangeEdit" page="/business/houseOwner/subscribe/resonFillChangeEdit.xhtml" component="">
+        <description>
+            补换证事由编辑
+        </description>
+    </edit-subscribe>
 
     <edit-subscribe name="ownerAndCardChange" page="/business/houseOwner/subscribe/OwnerChange.xhtml" component="">
         <description>

@@ -11,6 +11,7 @@ import com.dgsoft.house.owner.total.data.InitCardTotalData;
 import com.dgsoft.house.owner.total.data.InitToData;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class SumInitDataSubsrcibe {
 
 
     public void serchBybizid(String bizid){
+
 
         List<BusinessHouse> businessHouseList = ownerEntityLoader.getEntityManager().createQuery("select bh from BusinessHouse bh where bh.houseBusinessForAfter.ownerBusiness.id=:bizid and bh.houseType = 'COMM_USE_HOUSE'",BusinessHouse.class)
                 .setParameter("bizid",bizid)
