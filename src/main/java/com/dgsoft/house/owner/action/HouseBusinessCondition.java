@@ -19,6 +19,13 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
 
     public static final String EJBQL = "select biz from HouseBusiness biz  left join fetch biz.ownerBusiness ob  " ;
 
+    private static RestrictionGroup personRestrictionGroup = new RestrictionGroup("and",Arrays.asList(new String[]{
+            "owner.credentialsType = #{houseBusinessCondition.credentialsType}"}));
+
+    static {
+        personRestrictionGroup.getChildren().add(new RestrictionGroup("or", Arrays.asList(new String[]{"lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.credentialsNumber18})",
+                "lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.credentialsNumber15})" })));
+    }
 
     public enum SearchType {
         ALL(EJBQL,new RestrictionGroup("or",Arrays.asList(new String[] {
@@ -29,9 +36,7 @@ public class HouseBusinessCondition extends BusinessHouseCondition {
         OWNER_BIZ_ID(EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{"lower(ob.id) = lower(#{houseBusinessCondition.searchKey})"}))),
         HOUSE_CODE(EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{"lower(biz.houseCode) = lower(#{houseBusinessCondition.searchKey})"}))),
         HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.personName = #{houseBusinessCondition.searchKey}"}))),
-        PERSON(POWER_PERSON_EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{
-                "owner.credentialsType = #{houseBusinessCondition.credentialsType}",
-                "lower(owner.credentialsNumber) = lower(#{houseBusinessCondition.searchKey})"}))),
+        PERSON(POWER_PERSON_EJBQL,personRestrictionGroup),
         HOUSE_MBBH("select biz from HouseBusiness biz  left join fetch biz.ownerBusiness ob left join biz.afterBusinessHouse house ",
                 new RestrictionGroup("and",Arrays.asList(new String[]{"lower(house.mapNumber) = lower(#{houseBusinessCondition.mapNumber})",
                 "lower(house.blockNo) = lower(#{houseBusinessCondition.blockNumber})",

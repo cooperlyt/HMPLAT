@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import cc.coopersoft.comm.tools.IdCardUtils;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
 
@@ -90,6 +91,28 @@ public abstract class BusinessHouseCondition {
             credentialsType = null;
         }else{
             credentialsType = PersonEntity.CredentialsType.valueOf(name);
+        }
+    }
+
+    public String getCredentialsNumber18(){
+        if (getSearchKey() == null){
+            return null;
+        }
+        if (PersonEntity.CredentialsType.MASTER_ID.equals(credentialsType) && (getSearchKey().trim().length() == 15)){
+           return IdCardUtils.conver15CardTo18(getSearchKey().trim());
+        }else{
+            return getSearchKey();
+        }
+    }
+
+    public String getCredentialsNumber15(){
+        if (getSearchKey() == null){
+            return null;
+        }
+        if (PersonEntity.CredentialsType.MASTER_ID.equals(credentialsType) && (getSearchKey().trim().length() == 18)){
+            return IdCardUtils.conver18CardTo15(getSearchKey().trim());
+        }else{
+            return getSearchKey();
         }
     }
 
