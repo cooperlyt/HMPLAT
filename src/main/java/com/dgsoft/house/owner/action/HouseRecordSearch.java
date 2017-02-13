@@ -48,7 +48,7 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
     }
 
     public HouseRecordSearch() {
-        setRestrictionLogicOperator("or");
+        setRestrictionLogicOperator("and");
 
         setOrderColumn(null);
         setEjbql(EJBQL);
