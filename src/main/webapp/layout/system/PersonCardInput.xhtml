@@ -41,7 +41,7 @@
         </a:outputPanel>
 
 
-        <h:inputText id="cardNumber" readonly="#{(_person.credentialsType.name() eq 'OTHER')}"
+        <h:inputText id="cardNumber"
                      rendered="#{not (empty _person.credentialsType.name()) and not (_person.credentialsType.name() eq 'MASTER_ID')}"
                      label="证件号"
                      styleClass="form-control"

@@ -130,23 +130,29 @@ public class BuildHome extends HouseEntityHome<Build> {
                 cell.setCellValue(house.getInFloorName());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(house.getHouseArea().doubleValue());
+                if (house.getHouseArea() != null)
+                    cell.setCellValue(house.getHouseArea().doubleValue());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(house.getUseArea().doubleValue());
+                if (house.getUseArea() != null)
+                    cell.setCellValue(house.getUseArea().doubleValue());
 
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(house.getCommArea().doubleValue());
+                if (house.getCommArea() != null)
+                    cell.setCellValue(house.getCommArea().doubleValue());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(house.getShineArea().doubleValue());
+                if (house.getShineArea() != null)
+                    cell.setCellValue(house.getShineArea().doubleValue());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(house.getLoftArea().doubleValue());
+                if (house.getLoftArea() != null)
+                    cell.setCellValue(house.getLoftArea().doubleValue());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_NUMERIC);
-                cell.setCellValue(house.getCommParam().doubleValue());
+                if (house.getCommParam() != null)
+                    cell.setCellValue(house.getCommParam().doubleValue());
 
                 cell = row.createCell(cellIndex++,Cell.CELL_TYPE_STRING);
                 cell.setCellValue(DictionaryWord.instance().getEnumLabel(house.getHouseType()));
