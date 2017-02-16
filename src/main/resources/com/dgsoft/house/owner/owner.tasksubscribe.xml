@@ -20,6 +20,18 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="ModifyBeforReasonView" page="/business/houseOwner/subscribe/ModifyBeforReasonView.xhtml">
+        <description>
+            变更前查看
+        </description>
+    </view-subscribe>
+
+
+    <view-subscribe name="ModifyAfterReasonView" page="/business/houseOwner/subscribe/ModifyAfterReasonView.xhtml">
+        <description>
+            变更后查看
+        </description>
+    </view-subscribe>
 
     <view-subscribe name="MakeCardView" page="/business/houseOwner/subscribe/MakeCardView.xhtml">
         <description>
@@ -172,6 +184,9 @@
             补换证事由查看
         </description>
     </view-subscribe>
+
+
+
 
 
 
@@ -668,8 +683,18 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="modifyAfterReasonEdit" page="/business/houseOwner/subscribe/ModifyAfterReasonEdit.xhtml" component="">
+        <description>
+            变更后编辑
+        </description>
+    </edit-subscribe>
 
 
+    <edit-subscribe name="modifyBeforReasonEdit" page="/business/houseOwner/subscribe/ModifyBeforReasonEdit.xhtml" component="">
+        <description>
+            变更前编辑
+        </description>
+    </edit-subscribe>
 
 
     <edit-subscribe name="PeopleApplyEdit" page="/business/houseOwner/subscribe/PeopleApplyEdit.xhtml"
