@@ -152,7 +152,7 @@
         <ui:decorate template="/layout/system/PersonInput.xhtml">
             <ui:param name="showLabel" value="false"/>
             <ui:param name="personEntityHelper" value="#{attachEmployeeHome.personInstance}"/>
-
+            <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
             <s:decorate id="employeeIdField" template="/layout/edit-big.xhtml" styleClass="form-group">
                 <ui:define name="label">
                     #{messages.AttachEmployee_id}
