@@ -19,6 +19,8 @@ public class Card implements java.io.Serializable {
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
 	private String number;
+    private String code;
+    private String memo;
 
 
 
@@ -81,5 +83,25 @@ public class Card implements java.io.Serializable {
 	public void setNumber(String number) {
 		this.number = number;
 	}
+
+    @Column(name = "MEMO", nullable = true, length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    @Column(name = "CODE", nullable = true, length = 30)
+    @Size(max = 30)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
 }
