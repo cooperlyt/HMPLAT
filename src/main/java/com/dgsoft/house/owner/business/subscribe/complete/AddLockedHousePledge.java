@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import cc.coopersoft.house.LockType;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.HouseEntityLoader;
@@ -44,7 +45,7 @@ public class AddLockedHousePledge implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseBusiness.getHouseCode(), LockedHouse.LockType.MORTGAGE_REEG,ownerBusinessHome.getInstance().getDefineName(), authInfo.getLoginEmployee().getId(),
+            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseBusiness.getHouseCode(), LockType.MORTGAGE_REEG,ownerBusinessHome.getInstance().getDefineName(), authInfo.getLoginEmployee().getId(),
                     authInfo.getLoginEmployee().getPersonName(), new Date(),houseBusiness.getAfterBusinessHouse().getBuildCode()));
             ownerEntityLoader.getEntityManager().flush();
         }

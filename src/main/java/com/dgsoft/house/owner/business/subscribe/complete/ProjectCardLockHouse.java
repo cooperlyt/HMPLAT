@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
+import cc.coopersoft.house.LockType;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -37,11 +38,11 @@ public class ProjectCardLockHouse implements TaskCompleteSubscribeComponent {
         for(BusinessBuild bb: ownerBusinessHome.getInstance().getBusinessProject().getBusinessBuilds()){
 
             ownerBusinessHome.getEntityManager().createQuery("DELETE FROM LockedHouse lh where lh.buildCode = :buildCode and lh.type =:lockType")
-                .setParameter("buildCode",bb.getBuildCode()).setParameter("lockType", LockedHouse.LockType.CANT_SALE).executeUpdate();
+                .setParameter("buildCode",bb.getBuildCode()).setParameter("lockType", LockType.CANT_SALE).executeUpdate();
             for(ProjectExceptHouse eh: bb.getProjectExceptHouses()){
                 ownerBusinessHome.getEntityManager().persist(
                         new LockedHouse(eh.getHouseCode(),
-                                LockedHouse.LockType.CANT_SALE,
+                                LockType.CANT_SALE,
                                 authInfo.getLoginEmployee().getId(),
                                 authInfo.getLoginEmployee().getPersonName(), new Date(),bb.getBuildCode()));
             }

@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import cc.coopersoft.house.LockType;
 import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseInfo;
@@ -88,7 +89,7 @@ public class LockedHouseMgr {
     @Transient
     public void lockHouse(){
         if (isCodeDefined()) {
-            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseCode, LockedHouse.LockType.HOUSE_LOCKED, lockedReason, authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), new Date()));
+            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseCode, LockType.HOUSE_LOCKED, lockedReason, authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), new Date()));
             ownerEntityLoader.getEntityManager().flush();
             lockedHouses = null;
             lockedReason = null;
@@ -99,7 +100,7 @@ public class LockedHouseMgr {
     public void unLockAll(){
         if (isCodeDefined()) {
             for (LockedHouse lh : getLockedHouses()) {
-                if (LockedHouse.LockType.HOUSE_LOCKED.equals(lh.getType())) {
+                if (LockType.HOUSE_LOCKED.equals(lh.getType())) {
                     ownerEntityLoader.getEntityManager().remove(lh);
                 }
             }
