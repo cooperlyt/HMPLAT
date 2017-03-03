@@ -13,12 +13,14 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "CARD", catalog = "HOUSE_OWNER_RECORD")
 public class Card implements java.io.Serializable {
-
-    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE,PROJECT_MORTGAGE,SALE_LICENSE,MERCHANDISE_CONTRAC};
+    //预告登记证明号，所有权证号，抵押权证号，在建工程抵押登记证明号，预售许可证证号，                                 抵押预告登记证明号
+    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE,PROJECT_MORTGAGE,SALE_LICENSE,MERCHANDISE_CONTRAC,NOTICE_MORTGAGE,OTHER_CARD};
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
 	private String number;
+    private String code;
+    private String memo;
 
 
 
@@ -81,5 +83,25 @@ public class Card implements java.io.Serializable {
 	public void setNumber(String number) {
 		this.number = number;
 	}
+
+    @Column(name = "MEMO", nullable = true, length = 200)
+    @Size(max = 200)
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    @Column(name = "CODE", nullable = true, length = 30)
+    @Size(max = 30)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
 }
