@@ -101,7 +101,7 @@
                     <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
                               action="#{houseInBusinessStart.businessSelected}"
                               onclick="#{r:component('wait')}.show()">
-                        <f:param name="selectBusinessId" value="#{_item.id}"/>
+                        <f:param name="selectBusinessId" value="#{_item.ownerBusiness.id}"/>
                     </s:button>
                 </ui:define>
 
