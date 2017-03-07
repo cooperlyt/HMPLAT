@@ -5,20 +5,27 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage)}">
-        <ui:include src="BussinePersionView.xhtml">
-            <ui:param name="nameLabel" value="抵押人"/>
-            <ui:param name="businessPersion" value="#{ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage.developerName}"/>
-        </ui:include>
+        <dh:entryGridBlock columns="4" >
+            <h:outputText value="抵押人"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage.developerName}"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
     </a:outputPanel>
 
     <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (empty ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage)}">
-        <ui:include src="/layout/emptyViewGrid.xhtml">
-            <ui:param name="title" value="抵押人" />
-            <ui:param name="noDataLabel" value="无申抵押人信息"/>
-        </ui:include>
+
+        <dh:entryGridBlock columns="4" >
+            <h:outputText value="抵押人"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="无抵押人信息"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>>
+
     </a:outputPanel>
 
 </ui:composition>
