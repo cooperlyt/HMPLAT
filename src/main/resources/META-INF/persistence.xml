@@ -47,12 +47,6 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/HOUSEINFOXADS</jta-data-source>
 
-        <mapping-file>jpa/houseSellInfo-orm.xml</mapping-file>
-        <mapping-file>jpa/oldHouseSell-orm.xml</mapping-file>
-        <mapping-file>jpa/sellShowImg-orm.xml</mapping-file>
-        <mapping-file>jpa/agencies-orm.xml</mapping-file>
-        <mapping-file>jpa/sellProxyPerson-orm.xml</mapping-file>
-
         <class>com.dgsoft.house.model.AttachCorporation</class>
         <class>com.dgsoft.house.model.AttachEmployee</class>
         <class>com.dgsoft.house.model.Build</class>
@@ -76,6 +70,7 @@
         <class>com.dgsoft.house.model.Smsubcompany</class>
         <class>com.dgsoft.house.model.HouseNumberPool</class>
         <class>com.dgsoft.house.model.DeveloperLogonKey</class>
+        <class>com.dgsoft.house.model.Agencies</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 

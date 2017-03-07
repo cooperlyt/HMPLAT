@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.business.validation;
 
+import cc.coopersoft.house.LockType;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.OwnerEntityLoader;
@@ -30,11 +31,11 @@ public class HouseLockedValid extends BusinessHouseValid {
 
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
-        List<LockedHouse.LockType> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.type from LockedHouse lockedHouse where lockedHouse.houseCode =:houseCode", LockedHouse.LockType.class)
+        List<LockType> lockedHouseCode = ownerEntityLoader.getEntityManager().createQuery("select lockedHouse.type from LockedHouse lockedHouse where lockedHouse.houseCode =:houseCode", LockType.class)
                 .setParameter("houseCode", businessHouse.getHouseCode()).getResultList();
         if (lockedHouseCode.size() > 0) {
-            for (LockedHouse.LockType lockType:lockedHouseCode){
-                if (!lockType.equals(LockedHouse.LockType.CANT_SALE) ){
+            for (LockType lockType:lockedHouseCode){
+                if (!lockType.equals(LockType.CANT_SALE) ){
                     return new ValidResult("business_house_locked", ValidResultLevel.ERROR, messages.get(lockedHouseCode.get(0).name()));
                 }
             }
