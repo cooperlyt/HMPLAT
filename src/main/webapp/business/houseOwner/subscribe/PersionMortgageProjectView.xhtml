@@ -7,14 +7,14 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getBusinessPersionByType('CORRECT')}">
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (not empty ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage)}">
         <ui:include src="BussinePersionView.xhtml">
             <ui:param name="nameLabel" value="抵押人"/>
-            <ui:param name="businessPersion" value="#{ownerBusinessHome.getBusinessPersionByType('CORRECT')}"/>
+            <ui:param name="businessPersion" value="#{ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage.developerName}"/>
         </ui:include>
     </a:outputPanel>
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.getBusinessPersionByType('CORRECT')}">
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.mortgaegeRegiste) and (empty ownerBusinessHome.instance.mortgaegeRegiste.projectMortgage)}">
         <ui:include src="/layout/emptyViewGrid.xhtml">
             <ui:param name="title" value="抵押人" />
             <ui:param name="noDataLabel" value="无申抵押人信息"/>

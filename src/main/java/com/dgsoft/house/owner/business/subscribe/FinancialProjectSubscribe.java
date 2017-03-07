@@ -13,7 +13,7 @@ public class FinancialProjectSubscribe extends FinancialBaseSubscribe {
     @Override
     protected void addMortgage() {
         if (ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next()!=null &&
-        ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse()!=null){
+            ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse()!=null){
             BusinessHouse businessHouse = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse();
             ProjectMortgage projectMortgage = new ProjectMortgage();
             projectMortgage.setDeveloperCode(businessHouse.getDeveloperCode());

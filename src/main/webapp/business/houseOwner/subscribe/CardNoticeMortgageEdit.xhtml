@@ -5,11 +5,9 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:dh="http://www.dgsoft.com/jsf/html"
-                template="PowerPersonView.xhtml">
-
-    <ui:param name="powerPersons" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.mainPreparePersonList}"/>
-    <ui:param name="_pool_type" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.poolType}"/>
-
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:include src="/layout/house/owner/CardInput.xhtml">
+        <ui:param name="label" value="#{messages.Card_Notice_MORTGAGE}"/>
+        <ui:param name="card" value="#{cardNoticeMortgageSubscribe.instance}" />
+    </ui:include>
 </ui:composition>

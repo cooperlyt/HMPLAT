@@ -158,6 +158,15 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="declareOwnerView" page="/business/houseOwner/subscribe/DeclareOwnerView.xhtml">
+        <description>
+            预告人查看
+        </description>
+    </view-subscribe>
+
+
+
+
     <view-subscribe name="poolTypeInBizView" page="/business/houseOwner/subscribe/PoolTypeInBizView.xhtml">
         <description>
             共有情况（业务中）
@@ -437,11 +446,33 @@
         </description>
     </view-subscribe>
 
+
+    <view-subscribe name="CardProjectMortgageView" page="/business/houseOwner/subscribe/CardProjectMortgageView.xhtml">
+        <description>
+            在建工程抵押权证明号查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="CardMortgageView" page="/business/houseOwner/subscribe/CardMortgageView.xhtml">
+        <description>
+            房屋他项权证号查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="CardNoticeView" page="/business/houseOwner/subscribe/CardNoticeView.xhtml">
         <description>
            预告登记证明查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="CardNoticeMortgageView" page="/business/houseOwner/subscribe/CardNoticeMortgageView.xhtml">
+        <description>
+            预告抵押登记证明号查看
+        </description>
+    </view-subscribe>
+
+
+
 
 
     <view-subscribe name="ownerView" page="/business/houseOwner/subscribe/OwnerView.xhtml">
@@ -927,12 +958,35 @@
             房屋所有权证号编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="CardMortgageEdit" page="/business/houseOwner/subscribe/CardMortgageEdit.xhtml"
+                    component="">
+        <description>
+            房屋他项权证号编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="CardProjectMortgageEdit" page="/business/houseOwner/subscribe/CardProjectMortgageEdit.xhtml"
+                    component="">
+        <description>
+            在建工程抵押证明号编辑
+        </description>
+    </edit-subscribe>
+
     <edit-subscribe name="CardNoticeEdit" page="/business/houseOwner/subscribe/CardNoticeEdit.xhtml"
                     component="">
         <description>
             预告登记证明号编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="CardNoticeMortgageEdit" page="/business/houseOwner/subscribe/CardNoticeMortgageEdit.xhtml"
+                    component="">
+        <description>
+            预告抵押登记证明号编辑
+        </description>
+    </edit-subscribe>
+
 
     <edit-subscribe name="NoticeMortgaegePoolTypeEdit" page="/business/houseOwner/subscribe/NoticeMortgaegePoolTypeEdit.xhtml" component="">
         <description>
