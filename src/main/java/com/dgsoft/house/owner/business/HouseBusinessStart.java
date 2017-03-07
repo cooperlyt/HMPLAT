@@ -46,15 +46,15 @@ public class HouseBusinessStart {
 
     public void validSelectHouse(){
 
-        validSelectHouseResult();
+        validSelectHouseResult(ownerBuildGridMap.getSelectBizHouse());
     }
 
-    private boolean validSelectHouseResult(){
+    private boolean validSelectHouseResult(BusinessHouse businessHouse){
         boolean success = true;
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
             BusinessDataValid.ValidResult result;
             try {
-                result = valid.valid(ownerBuildGridMap.getSelectBizHouse());
+                result = valid.valid(businessHouse);
             }catch (Exception e){
                 Logging.getLog(getClass()).error(e.getMessage(),e,"config error:" + valid.getClass().getSimpleName());
                 throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
@@ -163,12 +163,22 @@ public class HouseBusinessStart {
             lastMulitAddOK = true;
         }else {
 
-            lastMulitAddOK = validSelectHouseResult();
+            lastMulitAddOK = validSelectHouseResult(ownerBuildGridMap.getSelectBizHouse());
             if (lastMulitAddOK) {
                 ownerBuildGridMap.getSelectBizHouses().add(ownerBuildGridMap.getSelectBizHouse());
             }
         }
         Logging.getLog(getClass()).debug("fast add house result:" + lastMulitAddOK);
+    }
+
+    public void fastAddAllToMulit(){
+        for(BusinessHouse bh: ownerBuildGridMap.getCurAllAsBusinessHouse()){
+            if (!ownerBuildGridMap.getSelectBizHouses().contains(bh)){
+                if (validSelectHouseResult(bh)){
+                    ownerBuildGridMap.getSelectBizHouses().add(bh);
+                }
+            }
+        }
     }
 
 

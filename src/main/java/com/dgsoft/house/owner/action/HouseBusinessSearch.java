@@ -28,7 +28,7 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
     }
 
     private void resetEjbql(String sql){
-        if (!getEjbql().equals(sql)){
+        if (getEjbql() == null || !getEjbql().equals(sql)){
             setEjbql(sql);
         }
     }

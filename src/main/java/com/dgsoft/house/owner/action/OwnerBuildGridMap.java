@@ -184,28 +184,46 @@ public class OwnerBuildGridMap {
         }
 
 
+        Logging.getLog(getClass()).warn("houseCode not found in map");
+        setSelectBizHouse(getAsBusinessHouse(id));
+    }
+
+
+    private BusinessHouse getAsBusinessHouse(String id){
+
         for (BusinessHouse businessHouse : resultBusinessHouse) {
             if (businessHouse.getHouseCode().equals(id)) {
-                setSelectBizHouse(businessHouse);
-                return;
+                return businessHouse;
             }
         }
-        Logging.getLog(getClass()).warn("houseCode not found in map");
+
         try {
-            setSelectBizHouse(ownerEntityLoader.getEntityManager().createQuery("select hr.businessHouse from HouseRecord hr where hr.houseCode =:houseCode", BusinessHouse.class)
+            return ownerEntityLoader.getEntityManager().createQuery("select hr.businessHouse from HouseRecord hr where hr.houseCode =:houseCode", BusinessHouse.class)
                     .setParameter("houseCode", id)
-                    .getSingleResult());
+                    .getSingleResult();
 
         } catch (NoResultException e) {
             try {
-            setSelectBizHouse(new BusinessHouse(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.deleted = false and house.id = :houseCode",House.class)
-                    .setParameter("houseCode",id).getSingleResult()));
+                return new BusinessHouse(houseEntityLoader.getEntityManager().createQuery("select house from House house where house.deleted = false and house.id = :houseCode",House.class)
+                        .setParameter("houseCode",id).getSingleResult());
             } catch (NoResultException e1) {
-                setSelectBizHouse(null);
+
                 Logging.getLog(getClass()).error("houseCode not found ");
+                return null;
             }
         }
+    }
 
+    public List<BusinessHouse> getCurAllAsBusinessHouse(){
+        List<BusinessHouse> result = new ArrayList<BusinessHouse>();
+        for (GridRow row: curMap.getGridRowList()){
+            for (GridBlock block: row.getGridBlockList()){
+                if (block.getHouseCode() != null && !block.getHouseCode().trim().equals("")){
+                    result.add(getAsBusinessHouse(block.getHouseCode()));
+                }
+            }
+        }
+        return result;
     }
 
     public void setId(String buildId) {

@@ -366,7 +366,9 @@
             </a:outputPanel>
             <a:outputPanel rendered="#{not searchBykey and  not ownerBuildGridMap.dataTableList and buildHome.idDefined and (not empty ownerBuildGridMap.curMap)}">
 
-                <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd;"/>
+                <div style="position: absolute; left: 171px; top: 50px; width: 50px; height: 50px; border-bottom: 2px solid #ddd;">
+                    <ui:insert name="house-map-header"/>
+                </div>
 
                 <div class="grid-map map-thead map-col-thead">
                     <table class="map-col-thead-table" width="#{ownerBuildGridMap.curMap.unitColList.size * 90}px ">
@@ -376,7 +378,9 @@
                         <tr>
                             <a:repeat value="#{ownerBuildGridMap.curMap.houseGridUnitList}" var="_unit">
                                 <th colspan="#{_unit.colspan}">
-                                    #{_unit.title}
+
+                                        #{_unit.title}
+
                                 </th>
                             </a:repeat>
                         </tr>

@@ -10,6 +10,17 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/layout/house/owner/MulitRecordHouseSelect.xhtml">
 
+    <ui:define name="house-map-header">
+        <a:commandLink action="#{houseBusinessStart.fastAddAllToMulit}"
+                       onclick="saveSelectedScroll();saveMapScroll()"
+                       render="mulitSelected,blankslate, houseInfoContent" execute="@this" immediate="true"
+                       status="processWaiting" style="width: 40%;height: 40%;overflow: auto;margin: auto;position: absolute;top: 0; left: 0; bottom: 0; right: 0;"
+                       oncomplete=" restoreSelectedScroll();restoreMapScroll(); ">
+            <span class="icon-check icon-large"/>
+            <a:attachQueue requestDelay="0"/>
+        </a:commandLink>
+    </ui:define>
+
     <ui:define name="function-title">
         <div class="left" style="max-width: 350px;   text-overflow: ellipsis;
   white-space: nowrap;overflow: hidden;display: inline-block;">

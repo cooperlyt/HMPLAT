@@ -22,6 +22,11 @@ public class HouseBusinessModifyList extends HouseBusinessSearch {
     private HouseBusinessCondition houseBusinessCondition;
 
     @Override
+    public void validate(){
+        searchAction();
+    }
+
+    @Override
     protected RestrictionGroup getUseRestrictionGroup() {
 
         return houseBusinessCondition.getRestrictionGroup();

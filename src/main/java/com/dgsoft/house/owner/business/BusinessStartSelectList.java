@@ -4,6 +4,7 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.owner.action.HouseBusinessCondition;
 import com.dgsoft.house.owner.action.HouseBusinessSearch;
+import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -25,6 +26,12 @@ public class BusinessStartSelectList extends HouseBusinessSearch {
     private BusinessDefineHome businessDefineHome;
 
     @Override
+    public void validate(){
+        searchAction();
+    }
+
+
+    @Override
     protected RestrictionGroup getUseRestrictionGroup() {
         return houseBusinessCondition.getRestrictionGroup();
     }
@@ -44,7 +51,7 @@ public class BusinessStartSelectList extends HouseBusinessSearch {
 
         defineIdCondition += ")";
 
-        return result + " left join biz.subStatuses subStatus where (biz.defineId in " + defineIdCondition + "  or (subStatus.status = 'COMPLETE' and subStatus.defineId in " + defineIdCondition + ")) and biz.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ')";
+        return result + " left join ob.subStatuses subStatus where (ob.defineId in " + defineIdCondition + "  or (subStatus.status = 'COMPLETE' and subStatus.defineId in " + defineIdCondition + ")) and ob.status = 'COMPLETE' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ')";
 
     }
 }
