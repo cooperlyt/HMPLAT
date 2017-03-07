@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋预告抵押备案审批表" margins="40 10 20 10">
+            title="房屋预告抵押注销备案审批表" margins="40 10 20 10">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">房屋预告抵押备案审批表
+    <p:paragraph alignment="center">房屋预告抵押注销备案审批表
     </p:paragraph>
 </p:font>
 
@@ -269,8 +269,8 @@
             <p:paragraph>房屋所有权证号(预告登记证明号)</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" colspan="3">
-            <p:paragraph rendered="#{empty ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}">#{ownerBusinessHome.getCardNoByType('NOTICE').number}</p:paragraph>
-            <p:paragraph rendered="#{not empty ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}">#{ownerBusinessHome.getCardNoByType('NOTICE').number}  #{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.getCardNoByType('NOTICE_MORTGAGE').number}</p:paragraph>
+
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">
