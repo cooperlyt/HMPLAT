@@ -610,7 +610,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Column(name = "PROJECT_CODE", nullable = false, length = 32)
-    @NotNull
     public String getProjectCode() {
         return this.projectCode;
     }
@@ -662,7 +661,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     }
 
     @Column(name = "SECTION_CODE", nullable = false, length = 32)
-    @NotNull
     public String getSectionCode() {
         return this.sectionCode;
     }
