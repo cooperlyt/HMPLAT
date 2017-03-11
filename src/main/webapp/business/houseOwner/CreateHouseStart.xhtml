@@ -1,12 +1,340 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>Title</title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template.xhtml">
 
-</body>
-</html>
+
+
+    <ui:define name="body">
+
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>
+
+                        #{messages.createBusiness}
+
+                    </strong>
+
+                    <span class="path-divider">/</span>
+
+
+                    #{ownerBusinessHome.instance.defineName}
+
+                    <span class="path-divider">/</span>
+                    创建房屋
+
+                </h1>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="new-repo-container">
+
+
+            <rich:messages globalOnly="true" ajaxRendered="true"/>
+
+            <h:form>
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    房屋标识
+                </ui:define>
+
+                <div class="input-group">
+                    <span class="input-group-addon">图<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText styleClass="form-control" value="#{ownerBuildGridMap.selectBizHouse.mapNumber}" required="true" label="图号"/>
+                    <span class="input-group-addon">丘<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText styleClass="form-control" value="#{ownerBuildGridMap.selectBizHouse.blockNo}" required="true" label="丘号"/>
+                    <span class="input-group-addon">幢<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText styleClass="form-control" value="#{ownerBuildGridMap.selectBizHouse.buildNo}" required="true" label="幢号"/>
+                    <span class="input-group-addon">房<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText styleClass="form-control" value="#{ownerBuildGridMap.selectBizHouse.houseOrder}" required="true" label="幢号"/>
+
+                </div>
+
+
+
+            </s:decorate>
+
+                <h:inputHidden id="district_name" value="#{ownerBuildGridMap.selectBizHouse.districtName}"/>
+
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    小区名称
+                </ui:define>
+
+
+
+                <div class="input-group">
+                <span class="input-group-btn">
+
+
+            <h:selectOneMenu style="width: 255px" required="true" value="#{ownerBuildGridMap.selectBizHouse.districtCode}"
+                             label="#{messages.District}" onchange=""
+                             styleClass="form-control selectpicker js-district-select" p:data-width="120px">
+<s:selectItems value="#{allDistrict.resultList}" var="_district"
+               itemValue="#{_district.id}" label="#{_district.name}"/>
+
+            </h:selectOneMenu>
+
+                </span>
+                           <h:inputText id="section_name_input" styleClass="form-control"
+                                        label="小区名称" required="true"
+                                        value="#{ownerBuildGridMap.selectBizHouse.sectionName}"/>
+
+
+
+                </div>
+            </s:decorate>
+
+                <h:outputScript>
+                    
+                    function setDistrictName() {
+                    #{rich:jQuery('district_name')}.val($('.js-district-select').find('option:selected').text());
+
+                    }
+                    
+                    $(function () {
+
+                        setDistrictName();
+                    $('.js-district-select').change(function() {
+                    setDistrictName();
+                    })
+                    })
+                </h:outputScript>
+
+            <s:decorate template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                项目名称
+            </ui:define>
+                <h:inputText id="project_name_input" styleClass="form-control"
+                             label="项目名称" required="true"
+                             value="#{ownerBuildGridMap.selectBizHouse.projectName}"/>
+            </s:decorate>
+
+
+
+            <hr/>
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:param name="showLabel" value="false"/>
+
+                <ui:param name="for" value="houseOrderInput"/>
+
+                <div class="input-group">
+
+
+                    <span class="input-group-addon">#{messages.House_InFloor}<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText value="#{ownerBuildGridMap.selectBizHouse.inFloorName}" size="20" maxlength="50" styleClass="form-control"
+                                 id="inFloorNameInput" required="true" label="#{messages.House_InFloor}">
+                        <rich:validator event="blur"/>
+                    </h:inputText>
+
+
+                    <span class="input-group-addon">  #{messages.up}      </span>
+                    <h:inputText required="true" styleClass="form-control" id="upfloorCountInput"
+                                 label="#{messages.Build_UpFloorCount}"
+                                 value="#{ownerBuildGridMap.selectBizHouse.upFloorCount}" size="4" autocomplete="off">
+
+                        <f:validateLongRange minimum="0"/>
+                    </h:inputText>
+
+
+                    <span class="input-group-addon"> #{messages.down}    </span>
+
+                    <h:inputText required="true" styleClass="form-control" id="downFloorCountInput"
+                                 label="#{messages.Build_DownFloorCount}" autocomplete="off"
+                                 value="#{buildHome.instance.downFloorCount}" size="4">
+
+                        <f:validateLongRange minimum="0"/>
+                    </h:inputText>
+
+                    <span class="input-group-addon">#{messages.House_Unit}</span>
+
+                    <h:inputText  value="#{ownerBuildGridMap.selectBizHouse.houseUnitName}" size="20" maxlength="20" styleClass="form-control"
+                                  id="houseUnitNameInput" label="#{messages.House_Unit}">
+                        <rich:validator event="blur"/>
+                    </h:inputText>
+
+                </div>
+                <ui:define name="message">
+                    <rich:message for="houseOrderInput" styleClass="edit-below-msg"/>
+                    <rich:message for="inFloorNameInput" styleClass="edit-below-msg"/>
+                    <rich:message for="houseUnitNameInput" styleClass="edit-below-msg"/>
+
+                </ui:define>
+
+
+            </s:decorate>
+
+
+
+
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:param name="showLabel" value="false"/>
+                <ui:param name="for" value="useAreaInput"/>
+
+                <div class="input-group">
+
+                    <span class="input-group-addon">#{messages.House_Area}<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText value="#{ownerBuildGridMap.selectBizHouse.houseArea}" size="20" styleClass="form-control"
+                                 id="houseAreaInput" required="true" label="#{messages.House_Area}">
+                        <rich:validator event="blur"/>
+                        <f:validateDoubleRange minimum="0"/>
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:inputText>
+
+                    <span class="input-group-addon">#{messages.House_UseArea}<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText value="#{ownerBuildGridMap.selectBizHouse.useArea}" size="20" styleClass="form-control" required="true"
+                                 id="useAreaInput" label="#{messages.House_UseArea}">
+                        <rich:validator event="blur"/>
+                        <f:validateDoubleRange minimum="0"/>
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:inputText>
+
+                    <span class="input-group-addon">#{messages.House_CommArea}</span>
+
+                    <h:inputText value="#{ownerBuildGridMap.selectBizHouse.commArea}" size="20" styleClass="form-control js-only-number"
+
+                                 id="commAreaInput" label="#{messages.House_CommArea}">
+                        <rich:validator event="blur"/>
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:inputText>
+
+                    <span class="input-group-addon">
+
+                <h:selectBooleanCheckbox id="haveDownRoomInput" value="#{ownerBuildGridMap.selectBizHouse.haveDownRoom}" label="#{messages.Build_HaveDownRoom}"/>
+
+
+                        #{' '} #{messages.Build_HaveDownRoom}
+
+            </span>
+
+
+                </div>
+                <ui:define name="message">
+                    <rich:message for="useAreaInput" styleClass="edit-below-msg"/>
+                    <rich:message for="commAreaInput" styleClass="edit-below-msg"/>
+                    <rich:message for="commParamInput" styleClass="edit-below-msg"/>
+
+                </ui:define>
+
+
+            </s:decorate>
+
+
+
+
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:param name="showLabel" value="false"/>
+                <ui:param name="for" value="useTypeInput"/>
+
+                <div class="input-group">
+                    <span class="input-group-addon">#{messages.House_UseType}<s:span styleClass="required">*</s:span></span>
+                    <span class="input-group-btn">
+            <h:selectOneMenu style="width: 255px" required="true" id="useTypeInput" value="#{ownerBuildGridMap.selectBizHouse.useType}" label="#{messages.House_UseType}"
+                             styleClass="form-control selectpicker input-group-mid" p:data-width="120px">
+                <s:selectItems value="#{useTypes}" var="_word"
+                               itemValue="#{_word}" label="#{dictionary.getEnumLabel(_word)}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                <s:convertEnum/>
+            </h:selectOneMenu>
+            </span>
+
+                    <h:inputText label="规划用途" id="designTypeInput" value="#{ownerBuildGridMap.selectBizHouse.designUseType}"
+                                 required="true" size="10" styleClass="form-control">
+
+                    </h:inputText>
+
+                    <span class="input-group-addon">#{messages.House_Structure}<s:span styleClass="required">*</s:span></span>
+
+                    <h:selectOneMenu required="true" id="structureInput" value="#{ownerBuildGridMap.selectBizHouse.structure}"
+                                     styleClass="form-control selectpicker edit-select input-group-mid"
+                                     label="#{messages.House_Structure}">
+                        <s:selectItems value="#{dictionary.getWordList('house.structure')}" var="_word"
+
+                                       itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                    </h:selectOneMenu>
+
+
+
+                    <span class="input-group-addon">#{messages.House_HouseType}</span>
+
+                    <h:selectOneMenu id="houseTypeInput" value="#{ownerBuildGridMap.selectBizHouse.houseType}" label="#{messages.House_HouseType}"
+                                     styleClass="form-control selectpicker edit-select input-group-mid">
+                        <s:selectItems value="#{houseProperties}" var="_word"
+                                       itemValue="#{_word}" label="#{dictionary.getEnumLabel(_word)}" noSelectionLabel="#{messages.noSelectLabel}"/>
+                        <s:convertEnum/>
+                    </h:selectOneMenu>
+
+
+                </div>
+                <ui:define name="message">
+                    <rich:message for="useTypeInput" styleClass="edit-below-msg"/>
+                    <rich:message for="designTypeInput" styleClass="edit-below-msg"/>
+                    <rich:message for="structureInput" styleClass="edit-below-msg"/>
+                    <rich:message for="houseTypeInput" styleClass="edit-below-msg"/>
+                </ui:define>
+
+            </s:decorate>
+
+
+
+
+            <s:decorate template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    #{messages.House_Address}
+                </ui:define>
+                <ui:param name="for" value="addressInput"/>
+
+                <h:inputTextarea value="#{ownerBuildGridMap.selectBizHouse.address}" size="60" maxlength="200" styleClass="form-control"
+                                 id="addressInput" required="true" label="#{messages.House_Address}">
+                    <rich:validator event="blur"/>
+                </h:inputTextarea>
+
+            </s:decorate>
+
+            <hr/>
+
+            <h:commandLink styleClass="button primary first-in-line" action="#{houseBusinessStart.singleHouseCreate}">
+                确定
+            </h:commandLink>
+            </h:form>
+        </div>
+
+
+
+        <h:outputScript rendered="#{(facesContext.maximumSeverity==null) or (facesContext.maximumSeverity.ordinal lt 2)}">
+            $(document).ready(
+            function(){
+            initEditInput();
+            });
+
+        </h:outputScript>
+    </ui:define>
+
+
+</ui:composition>

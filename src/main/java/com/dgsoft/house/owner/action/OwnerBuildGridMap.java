@@ -91,6 +91,10 @@ public class OwnerBuildGridMap {
         return selectBizHouse;
     }
 
+    public void createSelectBizHouse(){
+        this.selectBizHouse = new BusinessHouse();
+    }
+
     public void setSelectBizHouse(BusinessHouse selectBizHouse) {
         this.selectBizHouse = selectBizHouse;
         selectHouseChangeData = null;

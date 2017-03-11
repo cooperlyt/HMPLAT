@@ -4,7 +4,8 @@
                 xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -197,6 +198,10 @@
 
 
         </h:form>
+
+        <s:link action="#{ownerBuildGridMap.createSelectBizHouse}" view="/business/houseOwner/CreateHouseStart.xhtml" styleClass="left" style="padding: 5px 5px" value="建立房屋">
+
+        </s:link>
 
         <ui:insert name="function-title"/>
 
