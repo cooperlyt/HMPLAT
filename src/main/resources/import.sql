@@ -168,6 +168,7 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 -- 权限角色
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.fee','收费数据统计','收费数据统计',1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.transfer','业务移交单','业务移交单',2);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.saleTotal','房地产交易情况表','房地产交易情况表',5);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.projectCard','预售许可证统计','预售许可证统计',3);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.business','业务统计','业务统计',4);
 

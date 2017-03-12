@@ -69,6 +69,43 @@
                 </div>
             </h:form>
 
+
+
+            <h:form rendered="#{s:hasRole('total.export.saleTotal')}">
+                <div class="container advanced-search-form">
+                    <fieldset>
+                        <h3>房地产交易情况表</h3>
+                        <dl class="form flattened">
+                            <dt><s:label for="feetotalInput">业务审批时间区间</s:label></dt>
+                            <dd style="margin-left: 0">
+                                <s:decorate template="/layout/edit-big.xhtml">
+                                    <ui:param name="showLabel" value="false"/>
+                                    <div class="input-group">
+
+                                        <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="起始时间" required="true" value="#{houseSaleTotal.fromDateTime}">
+                                            <s:convertDateTime pattern="#{messages.datetimepattern}"/>
+                                        </h:inputText>
+                                        <span class="input-group-addon">至</span>
+                                        <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="终到时间" required="true" style="border-radius: 0; " value="#{houseSaleTotal.toDateTime}">
+                                            <s:convertDateTime pattern="#{messages.datetimepattern}"/>
+                                        </h:inputText>
+
+                                        <span class="input-group-btn">
+                                         <h:commandButton action="#{houseSaleTotal.total}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
+
+                                     </span>
+                                    </div>
+                                </s:decorate>
+
+                            </dd>
+                        </dl>
+
+                    </fieldset>
+
+                </div>
+            </h:form>
+
+
             <h:form rendered="#{s:hasRole('total.export.projectCard')}">
                 <div class="container advanced-search-form">
                     <fieldset>
