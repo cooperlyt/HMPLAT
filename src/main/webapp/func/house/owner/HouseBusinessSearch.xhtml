@@ -8,6 +8,7 @@
                 xmlns:a="http://richfaces.org/a4j"
                 xmlns:r="http://richfaces.org/rich"
                 xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 template="/layout/template-data.xhtml">
 
@@ -58,27 +59,67 @@
 
                 <div class="file-navigation in-mid-page" style="margin-top: 0">
                     <h:form>
-                    <h:selectOneMenu styleClass="selectpicker mini-select" p:data-width="150px" p:data-header="#{messages.FilterBusinessCategory}"
-                                     value="#{houseBusinessList.businessCategoryId}">
-                        <s:selectItems value="#{businessCategoryList.resultList}" var="_category"
-                                       label="#{_category.name}" itemValue="#{_category.id}" noSelectionLabel="#{messages.AllBusinessCategory}"/>
-                        <a:ajax event="valueChange" execute="@this" listener="#{houseBusinessList.searchAction}" status="processWaiting" render="myBizDefineFilter,resultBlank,resultDatas">
-                            <a:attachQueue requestDelay="0"/>
-                        </a:ajax>
-                    </h:selectOneMenu>
+
+
+
+                        <div class="select-menu" style="display: inline-block">
+                            <div class="btn-group btn-group-sm">
+                                <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                    <ui:define name="caption">
+                                        <span style="">#{empty houseBusinessList.businessCategoryId  ? messages.AllBusinessCategory : 'aaa'}</span>
+                                    </ui:define>
+                                    <ui:param name="menuTitle" value="业务种类"/>
+                                    <ui:param name="right" value="false"/>
+                                    <s:link action="#{houseBusinessList.searchAction}"
+                                            styleClass="select-menu-item #{ empty houseBusinessList.businessCategoryId  ? 'selected': ''}">
+                                        <f:param name="bizCategoryId" value=""/>
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">#{messages.AllBusinessCategory}</span>
+                                    </s:link>
+                                    <a:repeat value="#{businessCategoryList.resultList}" var="_category">
+                                        <s:link action="#{houseBusinessList.searchAction}"
+                                                styleClass="select-menu-item #{(houseBusinessList.businessCategoryId eq _category.id) ? 'selected': ''}">
+                                            <f:param name="bizCategoryId" value="#{_category.id}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{_category.name}</span>
+                                        </s:link>
+                                    </a:repeat>
+                                </ui:decorate>
+                            </div>
+                        </div>
+
 
                         <a:outputPanel id="myBizDefineFilter">
                             <a:outputPanel rendered="#{not empty houseBusinessList.businessCategory}">
                                 <span class="i-separator">/</span>
-                                <h:selectOneMenu p:data-header="#{messages.FilterBusinessDefine}" p:data-width="320px"
-                                                 styleClass="selectpicker mini-select"  value="#{houseBusinessList.businessDefineId}">
-                                    <s:selectItems value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define"
-                                                   label="#{_define.name}" itemValue="#{_define.id}" noSelectionLabel="#{messages.AllBusinessDefine}"/>
-                                    <a:ajax event="valueChange" listener="#{houseBusinessList.searchAction}" status="processWaiting" execute="@form"
-                                            render="resultDatas,resultBlank">
-                                        <a:attachQueue requestDelay="0"/>
-                                    </a:ajax>
-                                </h:selectOneMenu>
+
+                                <div class="select-menu" style="display: inline-block">
+                                <div class="btn-group btn-group-sm">
+
+                                <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                    <ui:define name="caption">
+                                        <span style="">#{empty houseBusinessList.businessDefineId  ? messages.AllBusinessDefine : 'aaa'}</span>
+                                    </ui:define>
+                                    <ui:param name="menuTitle" value="#{messages.FilterBusinessDefine}"/>
+                                    <ui:param name="right" value="false"/>
+                                    <s:link action="#{houseBusinessList.searchAction}"
+                                            styleClass="select-menu-item #{ empty houseBusinessList.businessDefineId  ? 'selected': ''}">
+                                        <f:param name="bizDefineId" value=""/>
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">#{messages.AllBusinessDefine}</span>
+                                    </s:link>
+                                    <a:repeat value="#{houseBusinessList.businessCategory.businessDefineList}" var="_define">
+                                        <s:link action="#{houseBusinessList.searchAction}"
+                                                styleClass="select-menu-item #{(houseBusinessList.businessDefineId eq _define.id) ? 'selected': ''}">
+                                            <f:param name="bizDefineId" value="#{_define.id}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{_define.name}</span>
+                                        </s:link>
+                                    </a:repeat>
+                                </ui:decorate>
+
+                                </div>
+                                </div>
                             </a:outputPanel>
                         </a:outputPanel>
 

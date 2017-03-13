@@ -13,7 +13,7 @@
     </button>
     </ui:insert>
 
-    <div class="dropdown-menu dropdown-menu-right select-menu-modal-holder"
+    <div class="dropdown-menu #{(empty right or right) ? 'dropdown-menu-right' : ''}  select-menu-modal-holder"
          aria-hidden="false">
         <div class="select-menu-modal">
             <div class="select-menu-header">

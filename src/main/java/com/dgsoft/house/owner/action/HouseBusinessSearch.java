@@ -40,9 +40,14 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
 
 
     public void searchAction(){
+
+        resetPage();
+    }
+
+    @Override
+    protected void createResultList(){
         resetEjbql(getUseEjbql());
         setRestrictionGroup(getUseRestrictionGroup());
-        resetPage();
     }
 
     public enum SortCol{
