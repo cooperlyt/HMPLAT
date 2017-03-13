@@ -66,7 +66,7 @@
                             <div class="btn-group btn-group-sm">
                                 <ui:decorate template="/layout/dropdown-actions.xhtml">
                                     <ui:define name="caption">
-                                        <span style="">#{empty houseBusinessList.businessCategoryId  ? messages.AllBusinessCategory : 'aaa'}</span>
+                                        <span style="">#{empty houseBusinessList.businessCategoryId  ? messages.AllBusinessCategory : businessDefineCache.getCategory(houseBusinessList.businessCategoryId).name}</span>
                                     </ui:define>
                                     <ui:param name="menuTitle" value="业务种类"/>
                                     <ui:param name="right" value="false"/>
@@ -98,7 +98,7 @@
 
                                 <ui:decorate template="/layout/dropdown-actions.xhtml">
                                     <ui:define name="caption">
-                                        <span style="">#{empty houseBusinessList.businessDefineId  ? messages.AllBusinessDefine : 'aaa'}</span>
+                                        <span style="">#{empty houseBusinessList.businessDefineId  ? messages.AllBusinessDefine : businessDefineCache.getDefine(houseBusinessList.businessDefineId).name}</span>
                                     </ui:define>
                                     <ui:param name="menuTitle" value="#{messages.FilterBusinessDefine}"/>
                                     <ui:param name="right" value="false"/>

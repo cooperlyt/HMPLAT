@@ -1,6 +1,7 @@
 package com.dgsoft.common.system.business;
 
 import com.dgsoft.common.system.SystemEntityLoader;
+import com.dgsoft.common.system.model.BusinessCategory;
 import com.dgsoft.common.system.model.BusinessDefine;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class BusinessDefineCache {
 
     private Map<String,BusinessDefine> result;
+
+    private Map<String,BusinessCategory> category;
 
     @In(create = true)
     private SystemEntityLoader systemEntityLoader;
@@ -46,6 +49,22 @@ public class BusinessDefineCache {
             }
 
         }
+    }
+
+
+    protected void initCategory(){
+        if (category == null){
+            List<BusinessCategory> categories = systemEntityLoader.getEntityManager().createQuery("select category from BusinessCategory category",BusinessCategory.class).getResultList();
+            category = new HashMap<String, BusinessCategory>();
+            for (BusinessCategory c: categories){
+                category.put(c.getId(),c);
+            }
+        }
+    }
+
+    public BusinessCategory getCategory(String id){
+        initCategory();
+        return category.get(id);
     }
 
     public static BusinessDefineCache instance()
