@@ -71,7 +71,7 @@ public class DeveloperChangeOwner implements BusinessDataFill {
                     no= datePart+'-'+Long.toString(numberBuilder.getNumber(MakeCard.CardType.PROJECT_RSHIP.name()));
 
                 }
-                MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_RSHIP, no);
+                MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_RECORD, no);
                 makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
                 ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
                 makeCard.setPowerPerson(powerPerson);
