@@ -15,8 +15,8 @@ public class PersonHouseList extends MultiOperatorEntityQuery<HouseRecord>{
 
     private static final String EJBQL = "select distinct hr from HouseRecord hr " +
             "left join fetch hr.businessHouse h " +
-            "left join h.businessPools pool " +
-            "left join fetch h.businessHouseOwner owner";
+            "left join h.powerPersons pool " +
+            "left join fetch h.mainOwner owner";
 
 
     private static final String[] RESTRICTIONS = {
