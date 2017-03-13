@@ -325,6 +325,12 @@
             <p:paragraph><p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  起  至    <p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
         </p:cell>
 
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>担保范围</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthLeft="0">
+            <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.warrantScope}</p:paragraph>
+        </p:cell>
 
 
 
