@@ -16,9 +16,9 @@ import javax.validation.constraints.Size;
 @Table(name = "MAKE_CARD", catalog = "HOUSE_OWNER_RECORD")
 public class MakeCard implements java.io.Serializable {
 
-            // 预告, 预抵 , 产权 , 抵押, 在抵, 共有, 预售许可,转移预告,转移预抵
+            // 预告, 预抵 , 产权 , 抵押, 在抵, 共有, 预售许可,转移预告,转移预抵,项目备案书
     public enum CardType{
-                NOTICE,NOTICE_MORTGAGE,OWNER_RSHIP,MORTGAGE_CARD,PROJECT_MORTGAGE,POOL_RSHIP,PROJECT_RSHIP,NOTICE_DIVERT,NOTICE_DIVERT_MORTGAGE;
+                NOTICE,NOTICE_MORTGAGE,OWNER_RSHIP,MORTGAGE_CARD,PROJECT_MORTGAGE,POOL_RSHIP,PROJECT_RSHIP,NOTICE_DIVERT,NOTICE_DIVERT_MORTGAGE,PROJECT_RECORD
 
             }
 	private String id;

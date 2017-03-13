@@ -495,9 +495,22 @@ public class DeveloperServiceComponent {
 
         }
 //备案证号
-//        if (!saleType.equals( SaleType.MAP_SELL) && houseRecord != null && houseRecord.getBusinessHouse().getBusinessHouseOwner() != null && houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard() != null){
-//            houseJsonObj.put("ownerCardNumber",houseRecord.getBusinessHouse().getBusinessHouseOwner().getMakeCard().getNumber());
-//        }
+
+
+        if (!saleType.equals( SaleType.MAP_SELL) && houseRecord != null ){
+            for(PowerPerson powerPerson:  houseRecord.getBusinessHouse().getPowerPersons()){
+                if (powerPerson.getMakeCard() != null &&
+                        (MakeCard.CardType.PROJECT_RECORD.equals(powerPerson.getMakeCard().getType()) ||
+                                MakeCard.CardType.OWNER_RSHIP.equals(powerPerson.getMakeCard().getType()))){
+
+                    houseJsonObj.put("ownerCardNumber",powerPerson.getMakeCard().getNumber());
+                    houseJsonObj.put("oldOwnerCard",MakeCard.CardType.OWNER_RSHIP.equals(powerPerson.getMakeCard().getType()));
+                    break;
+                }
+            }
+
+
+        }
 
         Date landEndTime = businessBuild.getBusinessProject().getProjectSellInfo().getEndUseTime();
 
