@@ -30,10 +30,10 @@ public class FinancialChangeFill extends  FinancialModerfyFill {
                     BusinessPersion businessPersion = selectBiz.getMortgageObligor();
                     ownerBusinessHome.getInstance().getBusinessPersions().add(new BusinessPersion(ownerBusinessHome.getInstance(),businessPersion));
                 }
-                if(selectBiz.getEvaluate()!=null) {
-                    Evaluate evaluate = selectBiz.getEvaluate();
-                    ownerBusinessHome.getInstance().getEvaluates().add(new Evaluate(ownerBusinessHome.getInstance(),evaluate));
-                }
+//                if(selectBiz.getEvaluate()!=null) {
+//                    Evaluate evaluate = selectBiz.getEvaluate();
+//                    ownerBusinessHome.getInstance().getEvaluates().add(new Evaluate(ownerBusinessHome.getInstance(),evaluate));
+//                }
             }
 
         }
