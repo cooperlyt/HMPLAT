@@ -303,7 +303,8 @@
             <p:paragraph></p:paragraph>
         </p:cell>
         <p:cell>
-            <p:paragraph>年      月       日</p:paragraph>
+            <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                    pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
         </p:cell>
     </p:table>
 </p:font>
