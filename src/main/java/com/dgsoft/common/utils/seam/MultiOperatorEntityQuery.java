@@ -78,10 +78,15 @@ public class MultiOperatorEntityQuery<E> extends MultiOperatorQuery<EntityManage
     {
         if (resultList==null)
         {
+            createResultList();
             Logging.getLog(getClass()).debug("MultiOperatorEntity  resultList is null call query");
             javax.persistence.Query query = createQuery();
             resultList = query==null ? null : query.getResultList();
         }
+    }
+
+    protected void createResultList(){
+
     }
 
     /**
