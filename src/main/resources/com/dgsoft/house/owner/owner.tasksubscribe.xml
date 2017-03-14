@@ -440,6 +440,14 @@
         </description>
     </view-subscribe>
 
+
+    <view-subscribe name="ReasonHouseStateInfoReceiveView" page="/business/houseOwner/subscribe/ReasonHouseStateInfoReceiveView.xhtml">
+        <description>
+            查封、抵押（按揭）情况查看
+        </description>
+    </view-subscribe>
+
+
     <view-subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml">
         <description>
             房屋所有权证号查看
@@ -942,7 +950,12 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
-
+    <edit-subscribe name="ReasonHouseStateInfoReceiveEdit" page="/business/houseOwner/subscribe/ReasonHouseStateInfoReceiveEdit.xhtml"
+                    component="">
+        <description>
+            查封、抵押（按揭）情况编辑
+        </description>
+    </edit-subscribe>
 
 
     <edit-subscribe name="UnitNumberEdit" page="/business/houseOwner/subscribe/UnitNumberEdit.xhtml"
