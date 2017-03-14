@@ -9,34 +9,50 @@
 
 
 
-<p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">项目备案审批表#{sumInitDataSubsrcibe.serchBybizid(ownerBusinessHome.instance.id)}#{sumInitDataSubsrcibe.serchByBuildCode(ownerBusinessHome.instance.businessHouse.buildCode)}
-    </p:paragraph>
-</p:font>
-
-
 <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
-    <p:table columns="4" widths="1 5 1 2" headerRows="0" footerRows="0" widthPercentage="100">
-        <f:facet name="defaultCell">
-            <p:cell padding="5" border="0"/>
-        </f:facet>
-        <p:cell>
-            <p:paragraph>业务编号:</p:paragraph>
-        </p:cell>
-        <p:cell verticalAlignment="left">
-            <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+
+    <p:table columns="2" widths="6 2" headerRows="0" footerRows="0" widthPercentage="100" >
+        <p:cell border="0">
+            <p:table columns="4" widths="1 3 1 3" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="0" border="0"/>
+                </f:facet>
+
+                <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle" >
+                     <p:paragraph>
+                        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+                            项目备案审批表#{sumInitDataSubsrcibe.serchBybizid(ownerBusinessHome.instance.id)}#{sumInitDataSubsrcibe.serchByBuildCode(ownerBusinessHome.instance.businessHouse.buildCode)}
+                        </p:font>
+                    </p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>业务编号:</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>楼幢编号:</p:paragraph>
+                </p:cell>
+
+
+                <p:cell verticalAlignment="bottom" horizontalAlignment="left">
+                    <p:paragraph>#{sumInitDataSubsrcibe.build.buildCode}</p:paragraph>
+                </p:cell>
+
+            </p:table>
+
         </p:cell>
 
-        <p:cell horizontalAlignment="left">
-            <p:paragraph>楼幢编号:</p:paragraph>
-        </p:cell>
-
-
-        <p:cell horizontalAlignment="left">
-            <p:paragraph>#{sumInitDataSubsrcibe.build.buildCode}</p:paragraph>
+        <p:cell horizontalAlignment="" colspan="2" border="0">
+            <p:barCode code="#{ownerBusinessHome.instance.id}"  codeType="CODE128"/>
         </p:cell>
 
     </p:table>
+
 </p:font>
 
 
@@ -357,35 +373,33 @@
 
         </p:cell>
         <p:cell colspan="2" fixedHeight="20">
-            <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
-                <f:facet name="defaultCell">
-                    <p:cell horizontalAlignment="center" verticalAlignment="middle" noWrap="false"/>
-                </f:facet>
-                <p:cell fixedHeight="25">
-                    <p:paragraph>领取人</p:paragraph>
-                </p:cell>
-                <p:cell>
+        <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell horizontalAlignment="center" verticalAlignment="middle" noWrap="false"/>
+            </f:facet>
+            <p:cell fixedHeight="25">
+                <p:paragraph>领取人</p:paragraph>
+            </p:cell>
+            <p:cell>
 
-                </p:cell>
+            </p:cell>
 
-                <p:cell>
-                    <p:paragraph>领取时间</p:paragraph>
-                </p:cell>
+            <p:cell>
+                <p:paragraph>领取时间</p:paragraph>
+            </p:cell>
 
-                <p:cell>
+            <p:cell>
 
-                </p:cell>
-                <p:cell>
-                    <p:paragraph>领取人电话</p:paragraph>
-                </p:cell>
-                <p:cell>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>领取人电话</p:paragraph>
+            </p:cell>
+            <p:cell>
 
-                </p:cell>
+            </p:cell>
 
-            </p:table>
-
-        </p:cell>
-
+        </p:table>
+    </p:cell>
 
     </p:table>
 
