@@ -1011,6 +1011,7 @@
         <description>
             预告(抵押)备案人编辑
         </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
     <edit-subscribe name="OwnerEdit" page="/business/houseOwner/subscribe/OwnerEdit.xhtml" component="ownerPersonEdit">
