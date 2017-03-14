@@ -261,7 +261,7 @@
             <p:paragraph><p:text value="#{_houseBusiness.afterBusinessHouse.saleInfo.sumPrice}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="23">
-            <p:paragraph>契税价格</p:paragraph>
+            <p:paragraph>契税税额</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
             <p:paragraph><p:text value="#{ownerBusinessHome.instance.evaluate.assessmentPrice}"><f:convertNumber pattern="#0.000"/></p:text></p:paragraph>
@@ -277,7 +277,7 @@
             <p:paragraph>查封、抵押（按揭）情况</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0">
-            <p:paragraph></p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.getReasonByType("HOUSE_STATE_INFO").reason}</p:paragraph>
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="23">
