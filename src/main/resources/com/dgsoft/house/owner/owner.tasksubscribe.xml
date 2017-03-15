@@ -1118,11 +1118,38 @@
         </description>
     </end-subscribe>
 
+
+
     <end-subscribe name="ProjectBusinessOwnerKeyGen" component="projectBusinessOwnerKeyGen">
         <description>
             项目备案显示生成器
         </description>
     </end-subscribe>
+
+    <end-subscribe name="CloseOpenHouseDisplayGen" component="closeOpenHouseDisplayGen">
+        <description>
+            查封备案显示生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="CloseOpenHouseKeyGen" component="closeOpenHouseKeyGen">
+        <description>
+            查封备案查询KEY生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="OpenHouseDisplayGen" component="openHouseDisplayGen">
+        <description>
+            解封备案显示生成器
+        </description>
+    </end-subscribe>
+    <end-subscribe name="OpenHouseKeyGen" component="openHouseKeyGen">
+        <description>
+            解封备案查询KEY生成器
+        </description>
+    </end-subscribe>
+
+
 
     <end-subscribe name="RealDisplayGen" component="realDisplayGen">
         <description>
@@ -1137,11 +1164,15 @@
         </description>
     </end-subscribe>
 
+
+
     <end-subscribe name="SaleContractDisplay" component="saleContractDisplayGen">
         <description>
             销售合同备案显示生成器
         </description>
     </end-subscribe>
+
+
 
     <end-subscribe name="LinkSaleContract" component="linkSaleContract">
         <description>

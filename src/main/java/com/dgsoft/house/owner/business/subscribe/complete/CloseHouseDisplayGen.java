@@ -4,16 +4,14 @@ import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
-import com.dgsoft.house.owner.model.HouseContract;
-import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by wxy on 2016-12-19.
+ * Created by wxy on 2017-03-15.
  */
-@Name("projectDisplayGen")
-public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
+@Name("closeOpenHouseDisplayGen")
+public class CloseHouseDisplayGen implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -38,20 +36,18 @@ public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getHouseCode());
 
 
-            if (bh.getAfterBusinessHouse().getNewMainInitPerson() != null && bh.getAfterBusinessHouse().getNewMainInitPerson().getMakeCard()!=null) {
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "项目备案号");
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getAfterBusinessHouse().getNewMainInitPerson().getMakeCard().getNumber());
-            }
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "项目备案人");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封法院");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouse().getCloseDownClour());
 
-            String contractPersonNames = bh.getAfterBusinessHouse().getNewMainInitPerson().getPersonName();
 
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封申请人");
+
+            String contractPersonNames = ownerBusinessHome.getInstance().getApplyPersion().getPersonName();
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
 
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getAfterBusinessHouse().getAddress());
-
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getMapNumber());
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"图");
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,bh.getAfterBusinessHouse().getBlockNo());
@@ -63,7 +59,6 @@ public class ProjectDisplayGen implements TaskCompleteSubscribeComponent {
 
             bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
         }
-
 
 
     }

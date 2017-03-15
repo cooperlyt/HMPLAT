@@ -119,6 +119,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         }
         return null;
     }
+    public HouseCloseCancel getCloseHouseCancel(){
+        if(!getInstance().getHouseCloseCancels().isEmpty()){
+            return getInstance().getHouseCloseCancels().iterator().next();
+        }
+        return null;
+    }
+
+
 
     public SaleInfo getSaleInfo(){
 
