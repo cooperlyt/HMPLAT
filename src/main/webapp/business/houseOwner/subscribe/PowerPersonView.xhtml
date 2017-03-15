@@ -13,7 +13,7 @@
 <c:forEach items="#{powerPersons}" var="_person" >
     <dh:entryGridBlock columns="4" group="#{dictionary.getEnumLabel(_person.type)}" >
         <h:outputText value="#{messages.person_field_name}"/>
-        <dh:entryGridColumn colspan="#{(_pool_type eq 'SINGLE_OWNER') or (empty _pool_type) ? 3 : 1 }">
+        <dh:entryGridColumn colspan="#{(_pool_type eq 'SINGLE_OWNER') or (_pool_type eq 'SHARE_OWNER') or (empty _pool_type) ? 3 : 1 }">
         <h:outputText value="#{_person.personName}"/>
         </dh:entryGridColumn>
 

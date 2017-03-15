@@ -447,6 +447,21 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="CloseHouseView" page="/business/houseOwner/subscribe/CloseHouseView.xhtml">
+        <description>
+            查封查看
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="CloseHouseCanceView" page="/business/houseOwner/subscribe/CloseHouseCanceView.xhtml">
+        <description>
+            解封查看
+        </description>
+    </view-subscribe>
+
+
+
+
 
     <view-subscribe name="CardOwnerRshipView" page="/business/houseOwner/subscribe/CardOwnerRshipView.xhtml">
         <description>
@@ -950,12 +965,31 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+
+
     <edit-subscribe name="ReasonHouseStateInfoReceiveEdit" page="/business/houseOwner/subscribe/ReasonHouseStateInfoReceiveEdit.xhtml"
                     component="">
         <description>
             查封、抵押（按揭）情况编辑
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="CloseHouseEdit" page="/business/houseOwner/subscribe/CloseHouseEdit.xhtml"
+                    component="">
+        <description>
+            查封信息编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="CloseHouseCanceEdit" page="/business/houseOwner/subscribe/CloseHouseCanceEdit.xhtml"
+                    component="">
+        <description>
+            解封信息编辑
+        </description>
+    </edit-subscribe>
+
+
+
 
 
     <edit-subscribe name="UnitNumberEdit" page="/business/houseOwner/subscribe/UnitNumberEdit.xhtml"
