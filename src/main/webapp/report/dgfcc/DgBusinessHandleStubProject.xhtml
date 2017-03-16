@@ -15,7 +15,7 @@
 
 
         <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
-            <p:table columns="6" widths="1 2 1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+            <p:table columns="6" widths="1.1 2 1.1 2 1.1 2" headerRows="0" footerRows="0" widthPercentage="100">
                 <f:facet name="defaultCell">
                     <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="false" border="0"
                             horizontalAlignment="center" verticalAlignment="middle"/>
@@ -118,8 +118,16 @@
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph> </p:paragraph>
                 </p:cell>
+                <p:cell>
+                    <p:paragraph>金融机构</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false" colspan="3">
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}"> #{ownerBusinessHome.instance.mortgaegeRegiste.financial.name} </p:paragraph>
+                </p:cell>
+
 
             </p:table>
+
             <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
 
         </p:font>
@@ -235,6 +243,12 @@
 
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph> </p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>金融机构</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false" colspan="3">
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}"> #{ownerBusinessHome.instance.mortgaegeRegiste.financial.name} </p:paragraph>
                 </p:cell>
 
             </p:table>
