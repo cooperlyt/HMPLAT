@@ -119,6 +119,12 @@
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph> </p:paragraph>
                 </p:cell>
+                <p:cell>
+                    <p:paragraph>金融机构</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false" colspan="3">
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}"> #{ownerBusinessHome.instance.mortgaegeRegiste.financial.name} </p:paragraph>
+                </p:cell>
 
             </p:table>
             <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
@@ -237,7 +243,12 @@
                 <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph> </p:paragraph>
                 </p:cell>
-
+                <p:cell>
+                    <p:paragraph>金融机构</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false" colspan="3">
+                    <p:paragraph rendered="#{not empty ownerBusinessHome.instance.mortgaegeRegiste}"> #{ownerBusinessHome.instance.mortgaegeRegiste.financial.name} </p:paragraph>
+                </p:cell>
             </p:table>
 
             <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
