@@ -217,12 +217,17 @@ public class HouseList extends MultiOperatorEntityQuery<House> {
     }
 
     public void searchAction(){
+
+        first();
+    }
+
+    @Override
+    protected void createResultList(){
         if(searchType != null && SearchType.MBBH.equals(searchType)){
             setRestrictionGroup(new RestrictionGroup("and",Arrays.asList(MBBH_RESTRICTIONS)));
         }else{
             setRestrictionGroup(new RestrictionGroup("or",Arrays.asList(RESTRICTIONS)));
         }
-        first();
     }
 
     public HouseList() {
