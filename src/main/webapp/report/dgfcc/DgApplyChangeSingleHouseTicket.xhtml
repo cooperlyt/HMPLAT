@@ -218,7 +218,7 @@
                     <p:paragraph>房屋所有权证</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
                     <p:paragraph>补(换)证事由</p:paragraph>
@@ -226,7 +226,12 @@
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
                     <p:paragraph>#{ownerBusinessHome.instance.fillChange.reason}</p:paragraph>
                 </p:cell>
-
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
+                    <p:paragraph>查封、抵押（按揭）情况</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3" >
+                    <p:paragraph>#{ownerBusinessHome.getReasonByType("HOUSE_STATE_INFO").reason}</p:paragraph>
+                </p:cell>
 
                 <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="90">
                     <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>

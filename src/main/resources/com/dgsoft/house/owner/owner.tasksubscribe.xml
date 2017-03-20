@@ -1544,6 +1544,12 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addLockedHousePreapreMortgageEnd" component="addLockedHousePreapreMortgage">
+        <description>
+            抵押预告登记添加预警
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="AddLockedHouseDestroy" component="addLockedHouseDestroy">
         <description>
             注销灭籍添加预警
@@ -1666,6 +1672,12 @@
     <create-component type="DATA_VALID" component="houseLockedValid">
         <description>
            没有冻结（预查封）
+        </description>
+    </create-component>
+
+    <create-component type="DATA_VALID" component="houseLockedNMValid">
+        <description>
+            没有冻结（预售不可售，预告抵押可以启动）
         </description>
     </create-component>
 

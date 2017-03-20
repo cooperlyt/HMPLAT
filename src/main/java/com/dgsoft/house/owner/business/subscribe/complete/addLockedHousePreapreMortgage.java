@@ -14,11 +14,10 @@ import org.jboss.seam.annotations.Name;
 import java.util.Date;
 
 /**
- * Created by wxy on 2017-03-17.
+ * Created by wxy on 2017-03-20.
  */
-
-@Name("addLockedHouseDestroy")
-public class addLockedHouseDestroy implements TaskCompleteSubscribeComponent {
+@Name("addLockedHousePreapreMortgage")
+public class addLockedHousePreapreMortgage implements TaskCompleteSubscribeComponent {
 
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
@@ -31,6 +30,8 @@ public class addLockedHouseDestroy implements TaskCompleteSubscribeComponent {
 
     @In
     private AuthenticationInfo authInfo;
+
+
     @Override
     public void valid() {
 
@@ -43,16 +44,12 @@ public class addLockedHouseDestroy implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-
-
-
         for(HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getHouseBusinesses()){
-            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseBusiness.getHouseCode(), LockType.OTHER_REG,ownerBusinessHome.getInstance().getDefineName(), authInfo.getLoginEmployee().getId(),
+            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseBusiness.getHouseCode(), LockType.PREAPRE_MORTGAGE,ownerBusinessHome.getInstance().getDefineName(), authInfo.getLoginEmployee().getId(),
                     authInfo.getLoginEmployee().getPersonName(), new Date(),houseBusiness.getAfterBusinessHouse().getBuildCode()));
 
             ownerEntityLoader.getEntityManager().flush();
         }
-
 
     }
 }
