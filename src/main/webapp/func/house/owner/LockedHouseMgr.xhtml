@@ -193,13 +193,13 @@
                                 ，因:
 
 
-                                <a:outputPanel rendered="#{not (_lockedHouse.type eq 'CANT_SALE')}"><strong>#{_lockedHouse.description}</strong> 建立预警 </a:outputPanel>
+                                <a:outputPanel rendered="#{not (_lockedHouse.type eq 'CANT_SALE')}"><strong>#{_lockedHouse.description}</strong> 建立#{messages[_lockedHouse.type.name()]} </a:outputPanel>
                                 <a:outputPanel rendered="#{_lockedHouse.type eq 'CANT_SALE'}">办理（预）销售许可证 设置为不可售 </a:outputPanel>
 
 
+                                <h:outputText value=",您可以" rendered="#{not ((_lockedHouse.type eq 'CANT_SALE') or (_lockedHouse.type eq 'SYSTEM_LOCKED'))}"/>
 
-                                ,您可以
-                                <a:commandLink rendered="#{_lockedHouse.type eq 'HOUSE_LOCKED'}"
+                                <a:commandLink rendered="#{not ((_lockedHouse.type eq 'CANT_SALE') or (_lockedHouse.type eq 'SYSTEM_LOCKED'))}"
                                                oncomplete="$('#lockedCancelConfirm').modal('show')"
                                                render="lockedCancelConfirm_form" execute="@this" immediate="true">
                                     <span class="icon-unlock"/>
