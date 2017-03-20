@@ -174,7 +174,7 @@
 
                                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
                                     <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
-                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.allNewPowerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber},共有份额:#{_businessPools.poolPerc}。" /></ui:repeat></p:paragraph>
+                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.allNewPowerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber},共有份额:#{_businessPools.poolPerc} 。" /></ui:repeat></p:paragraph>
                                     <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.allNewPowerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}。" /></ui:repeat></p:paragraph>
 
                                 </p:cell>
