@@ -74,7 +74,7 @@ public class DeveloperChangeOwner implements BusinessDataFill {
                 MakeCard makeCard = new MakeCard(MakeCard.CardType.PROJECT_RECORD, no);
                 makeCard.setOwnerBusiness(ownerBusinessHome.getInstance());
                 ownerBusinessHome.getInstance().getMakeCards().add(makeCard);
-                makeCard.setPowerPerson(powerPerson);
+                //makeCard.setPowerPerson(powerPerson);
                 powerPerson.setMakeCard(makeCard);
                 houseBusiness.getAfterBusinessHouse().getPowerPersons().add(powerPerson);
                 houseBusiness.getAfterBusinessHouse().setPoolType(PoolType.SINGLE_OWNER);

@@ -289,7 +289,7 @@ public class PowerPerson implements PowerPersonEntity, Comparable<PowerPerson>, 
         this.pri = pri;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "CARD", nullable = true)
     public MakeCard getMakeCard() {
         return this.makeCard;

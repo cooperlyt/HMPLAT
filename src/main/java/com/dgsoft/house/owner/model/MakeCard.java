@@ -32,7 +32,7 @@ public class MakeCard implements java.io.Serializable {
     private ProjectCard projectCard;
     private Financial financial;
 
-    private PowerPerson powerPerson;
+   // private PowerPerson powerPerson;
 
 
     public MakeCard() {
@@ -141,15 +141,15 @@ public class MakeCard implements java.io.Serializable {
         this.enable = enable;
     }
 
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "makeCard")
-    public PowerPerson getPowerPerson() {
-        return powerPerson;
-    }
-
-    public void setPowerPerson(PowerPerson powerPerson) {
-        this.powerPerson = powerPerson;
-    }
+//
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "makeCard")
+//    public PowerPerson getPowerPerson() {
+//        return powerPerson;
+//    }
+//
+//    public void setPowerPerson(PowerPerson powerPerson) {
+//        this.powerPerson = powerPerson;
+//    }
 
     @Override
     public boolean equals(Object o) {
