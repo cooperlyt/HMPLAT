@@ -64,7 +64,7 @@ public class HouseSaleTotal {
     public void total(){
         HouseSaleTotalData projectDataAll;
                 try {
-                    projectDataAll =ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(p.houseCount),sum(p.area)) from ProjectSellInfo p where p.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and p.businessProject.ownerBusiness.recorded = true and p.businessProject.ownerBusiness.regTime >= :beginTime and p.businessProject.ownerBusiness.regTime <= :endTime", HouseSaleTotalData.class)
+                    projectDataAll =ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(p.houseCount),sum(p.area)) from ProjectSellInfo p where p.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and p.businessProject.ownerBusiness.recorded = true and p.businessProject.ownerBusiness.regTime >= :beginTime and p.businessProject.ownerBusiness.regTime <= :endTime and p.businessProject.ownerBusiness.defineId in ('WP50', 'WP51') ", HouseSaleTotalData.class)
                             .setParameter("beginTime", fromDateTime)
                             .setParameter("endTime", toDateTime).getSingleResult();
                 }catch (NoResultException e){
@@ -73,7 +73,7 @@ public class HouseSaleTotal {
 
         HouseSaleTotalData projectDataD ;
                 try {
-                    projectDataD =  ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(st.count), sum(st.area)) from SellTypeTotal st where st.useType = 'DWELLING_KEY' and st.businessBuild.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and st.businessBuild.businessProject.ownerBusiness.recorded = true and st.businessBuild.businessProject.ownerBusiness.regTime >= :beginTime and st.businessBuild.businessProject.ownerBusiness.regTime < :endTime", HouseSaleTotalData.class)
+                    projectDataD =  ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(st.count), sum(st.area)) from SellTypeTotal st where st.useType = 'DWELLING_KEY' and st.businessBuild.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and st.businessBuild.businessProject.ownerBusiness.recorded = true and st.businessBuild.businessProject.ownerBusiness.regTime >= :beginTime and st.businessBuild.businessProject.ownerBusiness.regTime < :endTime  and st.businessBuild.businessProject.ownerBusiness.defineId in ('WP50', 'WP51')", HouseSaleTotalData.class)
                             .setParameter("beginTime", fromDateTime)
                             .setParameter("endTime", toDateTime).getSingleResult();
 
@@ -141,6 +141,81 @@ public class HouseSaleTotal {
         }catch (NoResultException e){
             oldSaleD = null;
         }
+
+//        //总批准现售住宅面积
+//        BigDecimal initD;
+//
+//        try {
+//            initD = ownerEntityLoader.getEntityManager().createQuery("select sum(h.houseArea) from HouseBusiness hb left join hb.ownerBusiness ob left join hb.afterBusinessHouse h  where h.useType = 'DWELLING_KEY' and  hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP40' and hb.ownerBusiness.regTime <= :endTime and h.buildCode in (select b.buildCode from BusinessBuild b left join b.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51'))", BigDecimal.class)
+//                .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            initD = BigDecimal.ZERO;
+//        }
+//
+//        //总批准现售面积
+//        BigDecimal initAll;
+//        try {
+//        initAll = ownerEntityLoader.getEntityManager().createQuery("select sum(h.houseArea) from HouseBusiness hb left join hb.ownerBusiness ob left join hb.afterBusinessHouse h  where  hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP40' and hb.ownerBusiness.regTime <= :endTime and h.buildCode in (select b.buildCode from BusinessBuild b left join b.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51'))", BigDecimal.class)
+//                .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            initAll = BigDecimal.ZERO;
+//        }
+//
+//        //总批准销售面积
+//        BigDecimal allSellAll;
+//        try{
+//            allSellAll = ownerEntityLoader.getEntityManager().createQuery("select sum(psi.area) from ProjectSellInfo  psi left join psi.businessProject.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51') and ob.regTime <= :endTime ",BigDecimal.class)
+//                    .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            allSellAll = BigDecimal.ZERO;
+//        }
+//
+//
+//        //总批准销售住宅面积
+//        BigDecimal allSellD;
+//        try{
+//            allSellD = ownerEntityLoader.getEntityManager().createQuery("select sum(stt.area) from SellTypeTotal  stt left join stt.businessBuild.businessProject.ownerBusiness ob where stt.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51') and ob.regTime <= :endTime ",BigDecimal.class)
+//                    .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            allSellD = BigDecimal.ZERO;
+//        }
+//
+//
+//        // 总现售面积
+//        BigDecimal initSaledAll;
+//        try {
+//            initSaledAll = ownerEntityLoader.getEntityManager().createQuery("select sum(h.houseArea) from HouseBusiness  hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime <= :endTime and h.buildCode in (select b.buildCode from BusinessBuild b left join b.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51'))", BigDecimal.class)
+//                    .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            initSaledAll = BigDecimal.ZERO;
+//        }
+//
+//
+//        //总现售住宅面积
+//        BigDecimal initSaledD;
+//
+//
+//
+//
+//        // 总销售面积
+//        BigDecimal allSaledAll;
+//        try {
+//            allSaledAll = ownerEntityLoader.getEntityManager().createQuery("select sum(h.houseArea) from HouseBusiness  hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime <= :endTime and h.buildCode in (select b.buildCode from BusinessBuild b left join b.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51'))", BigDecimal.class)
+//                    .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            allSaledAll = BigDecimal.ZERO;
+//        }
+//
+//
+//        //总销售住宅面积
+//        BigDecimal allSaledD;
+//        try {
+//            allSaledD = ownerEntityLoader.getEntityManager().createQuery("select sum(h.houseArea) from HouseBusiness  hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where h.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime <= :endTime and h.buildCode in (select b.buildCode from BusinessBuild b left join b.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51'))", BigDecimal.class)
+//                    .setParameter("endTime", toDateTime).getSingleResult();
+//        }catch (NoResultException e){
+//            allSaledD = BigDecimal.ZERO;
+//        }
+
 
 
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -218,7 +293,7 @@ public class HouseSaleTotal {
 
         cell = row.createCell(0);
         cell.setCellStyle(headCellStyle);
-        cell.setCellValue("新建设商品房批准预售面积");
+        cell.setCellValue("新建设商品房批准预售套数");
 
         cell = row.createCell(1);
         cell.setCellStyle(headCellStyle);
@@ -501,6 +576,43 @@ public class HouseSaleTotal {
             cell = row.createCell(5);
             cell.setCellValue(oldSaleD.getMoney().divide(oldSaleD.getArea(), 2).doubleValue());
         }
+
+
+        row = sheet.createRow(rowIndex++);
+        cell = row.createCell(0);
+        cell.setCellStyle(headCellStyle);
+        cell.setCellValue("商品房库存面积");
+
+
+        row = sheet.createRow(rowIndex++);
+        cell = row.createCell(0);
+        cell.setCellStyle(headCellStyle);
+        cell.setCellValue("现房面积");
+
+        cell = row.createCell(1);
+        cell.setCellStyle(headCellStyle);
+        cell.setCellValue("万平方米");
+
+//
+//
+//        cell = row.createCell(2);
+//        cell.setCellValue(initAll.subtract(sellAll.getArea()).divide(new BigDecimal("10000"),2).doubleValue());
+//
+//
+//        cell = row.createCell(5);
+//        cell.setCellValue(initD.subtract(sellD.getArea()).divide(new BigDecimal("10000"),2).doubleValue());
+//
+//
+//
+//
+//
+//        row = sheet.createRow(rowIndex++);
+//        cell = row.createCell(0);
+//        cell.setCellStyle(headCellStyle);
+//        cell.setCellValue("注：库存计算按商品房交易业务审批为准，因旧房屋可能未开展合同备案业务， 其它以合同备案审批为准");
+
+
+
 
 
 

@@ -13,6 +13,14 @@ public class HouseSaleTotalData {
 
     private BigDecimal money;
 
+    private String id;
+
+    public HouseSaleTotalData(String id, Long count, BigDecimal area) {
+        this.count = count;
+        this.area = area;
+        this.id = id;
+    }
+
     public HouseSaleTotalData(Long count, BigDecimal area) {
         this.count = count;
         this.area = area;
@@ -43,5 +51,13 @@ public class HouseSaleTotalData {
             return BigDecimal.ZERO;
         }
         return area;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

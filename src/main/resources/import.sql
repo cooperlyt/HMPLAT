@@ -175,7 +175,9 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION, PRIORITY)  VALUES('total.export.busines
 INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.mapHouse','测绘数据统计','基于测绘数据的房屋统计',5);
 INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.houseSale','房屋销售明细导出','每日房屋效果明细导出',6);
 
-INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.tempSql','临时查询统计','临时查询统计',6);
+INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.tempSql','临时查询统计','临时查询统计',7);
+
+INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.storeHouse','库存商品房统计','库存商品房统计',8);
 
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
