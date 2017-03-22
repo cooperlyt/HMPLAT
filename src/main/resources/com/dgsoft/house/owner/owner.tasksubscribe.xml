@@ -1681,6 +1681,12 @@
         </description>
     </create-component>
 
+    <create-component type="DATA_VALID" component="houseLockedMortgageValid">
+        <description>
+            没有冻结（预售不可售，预告抵押，抵押可以启动）
+        </description>
+    </create-component>
+
 
     <create-component type="DATA_VALID" component="houseStatusNotHaveCourtClose">
         <description>
