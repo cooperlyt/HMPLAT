@@ -127,7 +127,7 @@ public class HouseSaleTotal {
         HouseSaleTotalData oldSaleD;
 
         try {
-            oldSaleAll = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h where hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP41' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime ", HouseSaleTotalData.class)
+            oldSaleAll = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h where hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP56' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime ", HouseSaleTotalData.class)
                     .setParameter("beginTime", fromDateTime)
                     .setParameter("endTime", toDateTime).getSingleResult();
         }catch (NoResultException e){
@@ -135,7 +135,7 @@ public class HouseSaleTotal {
         }
 
         try {
-            oldSaleD = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h where  h.useType = 'DWELLING_KEY' and hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP41' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime ", HouseSaleTotalData.class)
+            oldSaleD = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h where  h.useType = 'DWELLING_KEY' and hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP56' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime ", HouseSaleTotalData.class)
                     .setParameter("beginTime", fromDateTime)
                     .setParameter("endTime", toDateTime).getSingleResult();
         }catch (NoResultException e){
@@ -413,10 +413,10 @@ public class HouseSaleTotal {
         cell.setCellValue("套");
 
         cell = row.createCell(2);
-        cell.setCellValue(preSellAll.getCount());
+        cell.setCellValue(preSellAll.getCount() + sellAll.getCount());
 
         cell = row.createCell(5);
-        cell.setCellValue(preSellD.getCount());
+        cell.setCellValue(preSellD.getCount() + sellD.getCount());
 
         row = sheet.createRow(rowIndex++);
         cell = row.createCell(0);

@@ -163,7 +163,7 @@
 
         </rich:popupPanel>
 
-        <h:form>
+
         <nav class="navbar navbar-static-top nav-header">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -233,6 +233,7 @@
 
 
                         <li class="dropdown">
+
                             <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 #{(empty houseStepSelect.selectSection) ? "请选择小区" : houseStepSelect.selectSection.name}<span class="caret"></span></a>
                             <div class="dropdown-menu select-menu-modal-holder" >
@@ -246,6 +247,7 @@
                                     <a:outputPanel layout="block" id="sectionSelectPanel">
                                         <div class="select-menu-filters">
                                             <div class="select-menu-text-filter">
+                                                <h:form>
                                                 <h:inputText id="sectionSearchName" autocomplete="off" value="#{sectionSelectList.searchKey}">
                                                     <a:ajax event="keyup" immediate="true" execute="@this"
                                                             render="SectionSelectItemList">
@@ -253,6 +255,7 @@
                                                     </a:ajax>
 
                                                 </h:inputText>
+                                                </h:form>
                                             </div>
                                         </div>
                                         <a:outputPanel layout="block" styleClass="select-menu-list" id="SectionSelectItemList">
@@ -302,6 +305,7 @@
 
                                 </div>
                             </div>
+
                         </li>
 
 
@@ -465,7 +469,10 @@
 
                     </ul>
 
+
+
                     <ul class="nav navbar-nav navbar-right">
+
                         <ui:remove> 批量选取
                         <li class="header-nav-item">
 
@@ -491,12 +498,28 @@
 
 
                     </ul>
+
+                    <h:form styleClass="navbar-form navbar-right">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon3">图</span>
+                            <h:inputText value="#{ownerBuildGridMap.mapNumber}" styleClass="form-control" size="4" p:placeholder="图号" p:aria-describedby="sizing-addon3"/>
+                            <span class="input-group-addon" id="sizing-addon4">丘</span>
+                            <h:inputText value="#{ownerBuildGridMap.blockNumber}" styleClass="form-control" size="10" p:placeholder="丘号" p:aria-describedby="sizing-addon3"/>
+                            <span class="input-group-addon" id="sizing-addon5">幢</span>
+                            <h:inputText value="#{ownerBuildGridMap.buildNumber}" styleClass="form-control" style="width: 100px" size="24" p:placeholder="幢号" p:aria-describedby="sizing-addon3"/>
+                            <span class="input-group-btn">
+                                <h:commandLink styleClass="btn btn-default" action="#{ownerBuildGridMap.findBuildByNumber}">
+                                    <span class="octicon octicon-search" style="line-height: 1.3;"/>
+                                </h:commandLink>
+                            </span>
+                        </div>
+                    </h:form>
                 </a:outputPanel>
 
 
             </div>
         </nav>
-        </h:form>
+
 
 
         <a:outputPanel rendered="#{ not empty ownerBuildGridMap.curMap}"
