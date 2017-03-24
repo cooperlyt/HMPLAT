@@ -8,17 +8,17 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getCardNoByType('Card_ProjectMortgage')}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.getCardNoByType('PROJECT_MORTGAGE')}">
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Card_ProjectMortgage}"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{ownerBusinessHome.getCardNoByType('Card_ProjectMortgage').number}"/>
+                <h:outputText value="#{ownerBusinessHome.getCardNoByType('PROJECT_MORTGAGE').number}"/>
             </dh:entryGridColumn>
         </dh:entryGridBlock>
     </a:outputPanel>
 
 
-    <a:outputPanel rendered="#{empty ownerBusinessHome.getCardNoByType('Card_ProjectMortgage')}">
+    <a:outputPanel rendered="#{empty ownerBusinessHome.getCardNoByType('PROJECT_MORTGAGE')}">
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Card_ProjectMortgage}"/>
             <dh:entryGridColumn colspan="3">
