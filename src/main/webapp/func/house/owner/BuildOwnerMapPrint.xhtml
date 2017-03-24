@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:s="http://jboss.org/schema/seam/taglib">
+<f:view
+        contentType="text/html">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <title>#{messages.mainTitle}</title>
+
+        <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+
+
+        <ui:insert name="head"/>
+    </h:head>
+    <h:body >
+        <h:outputStylesheet library="bootstrap" name="/css/bootstrap.min.css"/>
+
+        <h:outputStylesheet name="biz.css"/>
+        <h:outputStylesheet>
+
+
+            .house-info .house-status{
+                float: right;
+                min-height: 17px;
+                max-height: 17px;
+                height: 17px;
+                margin-bottom: 4px;
+            }
+
+
+
+
+            .map-thead{
+                position: absolute;  overflow: hidden;
+            }
+
+
+
+            .map-col-thead{
+                top: 0; left: 50px; right: 0; height: 50px;
+            }
+
+            .map-row-thead{
+                top:50px; left: 0; bottom: 0; width: 50px;
+            }
+
+            th{
+                text-align: center;
+                vertical-align: middle;
+
+            }
+
+            thead th{
+                height: 90px;
+                width: 49px;
+            }
+
+            tbody th{
+                height: 49px;
+                width: 90px;
+            }
+
+            .grid-map table{
+                table-layout: fixed;
+            }
+
+            .grid-map col{
+                width: 90px;
+            }
+
+            .grid-map td, .grid-map th{
+                border: 1px solid #ddd;
+                vertical-align: middle;
+                text-align: center;
+                white-space:nowrap;
+                overflow:hidden;text-overflow:ellipsis;
+            }
+
+            .grid-map td:hover{
+                background-color: #f5f9fc;
+                cursor: pointer;
+            }
+
+            .map-context{
+                position: absolute; top:50px; left: 50px;bottom: 0; right: 0; overflow: auto;
+            }
+
+            .house-info-context{
+                min-height: 63px;
+                max-height: 63px;
+                height: 63px;
+            }
+
+            .house-info{
+                padding: 2px;
+                width: 100%;
+                height: 100%;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+            .house-info ul{
+                list-style: none;
+                padding: 0;
+            }
+
+            .house-info li{
+                min-height: 20px;
+                white-space:nowrap;
+
+            }
+
+            .house-info li h2{
+                margin: 3px 0;
+                font-size: 16px;
+                font-weight: bold;
+                /*color: #337ab7;*/
+            }
+
+            .icon-warning-sign.house-locked{
+                font-size: 14px;
+                color: #a94442;
+            }
+
+
+
+        </h:outputStylesheet>
+
+        <table class="table table-bordered">
+            <thead>
+            <col/>
+            <a:repeat value="#{ownerBuildGridMap.curMap.unitColList}" var="_col">
+                <col/>
+            </a:repeat>
+            <tr>
+                <th/>
+                <a:repeat value="#{ownerBuildGridMap.curMap.houseGridUnitList}" var="_unit">
+                    <th colspan="#{_unit.colspan}">
+                        #{_unit.title}
+                    </th>
+                </a:repeat>
+            </tr>
+
+            </thead>
+
+            <tbody>
+            <a:repeat value="#{ownerBuildGridMap.curMap.gridRowList}" var="_floor">
+                <tr>
+
+                    <th>
+                        #{_floor.title}
+                    </th>
+
+                    <a:repeat value="#{_floor.gridBlockList}" var="_cell">
+                        <td colspan="#{_cell.colspan}"
+                            rowspan="#{_cell.rowspan}" height="#{_cell.rowspan * 90}px">
+
+                            <a:outputPanel layout="block" styleClass="house-info" rendered="#{not empty _cell.house}" ondblclick="showHouseInfo('#{_cell.house.houseCode}')">
+                                <div class="#{_cell.houseStatus}" >
+                                    <div class="house-info-context">
+                                        <ul >
+                                            <li><h2><a:outputPanel rendered="#{not empty _cell.lockedHouseList}" p:aria-label="#{_cell.lockedTip}"  class="icon-warning-sign house-locked js-grid-tip"/>#{_cell.house.houseOrder}</h2></li>
+                                            <li><h:outputText style="color: #666" value="#{_cell.house.houseArea}"><f:convertNumber pattern="#0.000"/></h:outputText></li>
+                                            <li><h:outputText style="color: #888" value="#{_cell.house.mainOwner.personName}" rendered="#{not empty _cell.house.mainOwner}"/></li>
+                                        </ul>
+                                    </div>
+                                    <div style="float: left" >
+                                        <a:outputPanel styleClass="icon-lock js-grid-tip" p:aria-label="正在办理【#{_cell.inBizName}】业务" rendered="#{not empty _cell.inBizName}">
+
+                                        </a:outputPanel>
+                                    </div>
+                                    <div class="house-status" >
+                                        <a:outputPanel styleClass="label" rendered="#{not empty _cell.houseStatus}">
+                                            #{messages[_cell.houseStatus.name()]}
+                                        </a:outputPanel>
+                                    </div>
+                                </div>
+
+
+                            </a:outputPanel>
+
+                        </td>
+                    </a:repeat>
+
+                </tr>
+
+            </a:repeat>
+            </tbody>
+
+        </table>
+
+
+    </h:body>
+
+
+</f:view>
+
+</html>
