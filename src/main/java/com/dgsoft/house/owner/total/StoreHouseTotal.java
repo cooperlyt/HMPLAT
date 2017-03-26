@@ -40,6 +40,8 @@ public class StoreHouseTotal {
     private FacesMessages facesMessages;
 
 
+    private boolean allowNegative = false;
+
     private Date toDateTime;
 
     public Date getToDateTime() {
@@ -50,7 +52,15 @@ public class StoreHouseTotal {
         this.toDateTime = toDateTime;
     }
 
-    private BigDecimal getArea( Map<String,HouseSaleTotalData>  data , String id){
+    public boolean isAllowNegative() {
+        return allowNegative;
+    }
+
+    public void setAllowNegative(boolean allowNegative) {
+        this.allowNegative = allowNegative;
+    }
+
+    private BigDecimal getArea(Map<String,HouseSaleTotalData>  data , String id){
         HouseSaleTotalData totalData = data.get(id);
         if (totalData != null){
             if (totalData.getArea() != null)
@@ -66,6 +76,25 @@ public class StoreHouseTotal {
                 return totalData.getCount();
         }
         return 0;
+    }
+
+    private long outNumber(long number){
+        if (number >= 0 || allowNegative){
+            return number;
+        }else{
+            return 0;
+        }
+    }
+
+    private double outNumber(BigDecimal number){
+        if (number == null){
+            return 0;
+        }
+        if (number.compareTo(BigDecimal.ZERO) >= 0 || allowNegative){
+            return number.doubleValue();
+        }else{
+            return 0;
+        }
     }
 
     public void total(){
@@ -246,40 +275,57 @@ public class StoreHouseTotal {
             cell = row.createCell(cellIndex++);
             cell.setCellValue(getCount(dw,entry.getKey()));
 
+
+            BigDecimal initAllArea;
+            BigDecimal initDwArea;
+            long initAllCount;
+            long initDwCount;
+            if (SaleType.NOW_SELL.equals(entry.getValue().getType())){
+                initAllArea = entry.getValue().getArea();
+                initDwArea = getArea(dw,entry.getKey());
+                initAllCount = entry.getValue().getHouseCount();
+                initDwCount = getCount(dw,entry.getKey());
+            }else{
+                initAllArea = getArea(initAll,entry.getKey());
+                initDwArea = getArea(initDw,entry.getKey());
+                initAllCount = getCount(initAll,entry.getKey());
+                initDwCount = getCount(initDw,entry.getKey());
+            }
+
             //已竣工待售商品房数量
             cell = row.createCell(cellIndex++);
-            BigDecimal a1 = getArea(initAll,entry.getKey()).subtract(getArea(saledInitAll,entry.getKey()));
-            cell.setCellValue(a1.doubleValue());
+            BigDecimal a1 = initAllArea.subtract(getArea(saledInitAll,entry.getKey()));
+            cell.setCellValue(outNumber(a1));
 
             cell = row.createCell(cellIndex++);
-            BigDecimal a2 = getArea(initDw,entry.getKey()).subtract(getArea(saledInitDw,entry.getKey()));
-            cell.setCellValue( a2.doubleValue());
+            BigDecimal a2 = initDwArea.subtract(getArea(saledInitDw,entry.getKey()));
+            cell.setCellValue(outNumber(a2));
 
             cell = row.createCell(cellIndex++);
-            long c1 = getCount(initAll,entry.getKey())-getCount(saledInitAll,entry.getKey());
-            cell.setCellValue(c1 );
+            long c1 = initAllCount - getCount(saledInitAll,entry.getKey());
+            cell.setCellValue(outNumber(c1));
 
             cell = row.createCell(cellIndex++);
-            long c2 = getCount(initAll,entry.getKey())-getCount(saledInitAll,entry.getKey());
-            cell.setCellValue(c2);
+            long c2 = initDwCount - getCount(saledInitDw,entry.getKey());
+            cell.setCellValue(outNumber(c2));
 
 
             //未竣工待售商品房数量
             cell = row.createCell(cellIndex++);
             if (SaleType.MAP_SELL.equals(entry.getValue().getType()))
-                cell.setCellValue(entry.getValue().getArea().subtract(getArea(saledAll,entry.getKey())).subtract(a1).doubleValue());
+                cell.setCellValue(outNumber(entry.getValue().getArea().subtract(getArea(saledAll,entry.getKey())).subtract(a1)));
 
             cell = row.createCell(cellIndex++);
             if (SaleType.MAP_SELL.equals(entry.getValue().getType()))
-                cell.setCellValue(getArea(dw,entry.getKey()).subtract(getArea(saledDw,entry.getKey())).subtract(a2).doubleValue());
+                cell.setCellValue(outNumber(getArea(dw,entry.getKey()).subtract(getArea(saledDw,entry.getKey())).subtract(a2)));
 
             cell = row.createCell(cellIndex++);
             if (SaleType.MAP_SELL.equals(entry.getValue().getType()))
-                cell.setCellValue(entry.getValue().getHouseCount() - getCount(saledAll,entry.getKey()) - c1 );
+                cell.setCellValue(outNumber(entry.getValue().getHouseCount() - getCount(saledAll,entry.getKey()) - c1 ));
 
             cell = row.createCell(cellIndex++);
             if (SaleType.MAP_SELL.equals(entry.getValue().getType()))
-                cell.setCellValue(getCount(dw,entry.getKey()) - getCount(saledDw,entry.getKey()) - c2 );
+                cell.setCellValue(outNumber(getCount(dw,entry.getKey()) - getCount(saledDw,entry.getKey()) - c2 ));
 
 
         }
