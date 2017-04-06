@@ -139,6 +139,16 @@
 
         </h:outputStylesheet>
 
+        <h2 style="text-align: center">
+            #{buildHome.instance.name}
+        </h2>
+        <div>
+            <strong>总套数：</strong> <h:outputText value="#{buildHome.houseCount}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <strong>总建筑面积：</strong> <h:outputText value="#{buildHome.totalHouseArea}">
+                <f:convertNumber pattern="#0.000"/>
+            </h:outputText>
+        </div>
+
         <table class="table table-bordered">
             <thead>
             <col/>
