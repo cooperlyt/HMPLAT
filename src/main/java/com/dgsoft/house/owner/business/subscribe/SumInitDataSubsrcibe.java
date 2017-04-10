@@ -58,13 +58,13 @@ public class SumInitDataSubsrcibe {
 
 
 
-    List<BusinessHouse> houseList = new ArrayList<BusinessHouse>();
+    List<House> houseList = new ArrayList<House>();
 
-    public List<BusinessHouse> getHouseList() {
+    public List<House> getHouseList() {
         return houseList;
     }
 
-    public void setHouseList(List<BusinessHouse> houseList) {
+    public void setHouseList(List<House> houseList) {
         this.houseList = houseList;
     }
 
@@ -75,20 +75,21 @@ public class SumInitDataSubsrcibe {
             build=build1;
         }
 
+         List<House> houses = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.build.id=:bid and h.houseType = 'COMM_USE_HOUSE'",House.class)
+                .setParameter("bid",build.getId())
+                .getResultList();
+
+        if (houses!=null && houses.size()>0){
+            this.houseList = houses;
+        }
+
+
 
     }
 
 
     public void serchBybizid(String bizid){
 
-
-        List<BusinessHouse> businessHouseList = ownerEntityLoader.getEntityManager().createQuery("select bh from BusinessHouse bh where bh.houseBusinessForAfter.ownerBusiness.id=:bizid and bh.houseType = 'COMM_USE_HOUSE'",BusinessHouse.class)
-                .setParameter("bizid",bizid)
-                .getResultList();
-
-        if (businessHouseList!=null && businessHouseList.size()>0){
-            this.houseList = businessHouseList;
-        }
 
         List<InitToData> initToDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.InitToData(count(hb.afterBusinessHouse.id),sum(hb.afterBusinessHouse.houseArea),hb.afterBusinessHouse.useType) from HouseBusiness hb where hb.ownerBusiness.id=:bizid group by hb.afterBusinessHouse.useType",InitToData.class)
                 .setParameter("bizid",bizid)
