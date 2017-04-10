@@ -117,12 +117,15 @@
                                     <ui:param name="showLabel" value="false"/>
                                     <div class="input-group">
 
+                                         <span class="input-group-addon">
+                                             <h:selectBooleanCheckbox value="#{storeHouseTotal.allowNegative}" title="是否输出负数"/>
+                                        </span>
                                         <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="结止时间" required="true"  value="#{storeHouseTotal.toDateTime}">
                                             <s:convertDateTime pattern="#{messages.datetimepattern}"/>
                                         </h:inputText>
 
                                         <span class="input-group-btn">
-                                         <h:commandButton action="#{storeHouseTotal.total}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
+                                         <h:commandButton  action="#{storeHouseTotal.total}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
 
                                         </span>
                                     </div>
@@ -157,7 +160,7 @@
                                         </h:inputText>
 
                                      <span class="input-group-btn">
-                                         <h:commandButton action="#{totalProjectCard.totalProjectCardData}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
+                                         <h:commandButton  action="#{totalProjectCard.totalProjectCardData}" value="统计" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px" styleClass="btn btn-primary"/>
 
                                      </span>
                                     </div>

@@ -6,6 +6,27 @@
 
     <param name="selectBusinessId" value="#{houseInBusinessStart.selectBizId}"/>
 
+
+    <param name="searchKey" value="#{houseBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{houseBusinessCondition.searchTypeName}"/>
+
+    <param name="mapNumber" value="#{houseBusinessCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{houseBusinessCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{houseBusinessCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{houseBusinessCondition.houseNumber}"/>
+
+
+    <param name="credentialsTypeName" value="#{houseBusinessCondition.credentialsTypeName}"/>
+
+
+    <param name="firstResult" value="#{businessStartSelectList.firstResult}"/>
+
+    <param name="sort" value="#{businessStartSelectList.orderColumn}"/>
+    <param name="dir" value="#{businessStartSelectList.orderDirection}"/>
+
+
+
+
     <navigation from-action="#{houseInBusinessStart.businessSelected}">
         <rule if-outcome="businessSelected">
             <redirect view-id="/business/houseOwner/SelectBusinessHousePick.xhtml"/>
