@@ -75,7 +75,7 @@ public class SumInitDataSubsrcibe {
             build=build1;
         }
 
-         List<House> houses = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.build.id=:bid and h.houseType = 'COMM_USE_HOUSE'",House.class)
+         List<House> houses = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.build.id=:bid and h.deleted=false and h.houseType = 'COMM_USE_HOUSE'",House.class)
                 .setParameter("bid",build.getId())
                 .getResultList();
 
