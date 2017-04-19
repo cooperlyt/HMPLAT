@@ -240,10 +240,10 @@
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.designUseType}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="30">
-                    <p:paragraph>土地所有权证号</p:paragraph>
+                    <p:paragraph>房屋所有权证号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
                     <p:paragraph>变更前</p:paragraph>
@@ -257,7 +257,14 @@
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
                     <p:paragraph>#{ownerBusinessHome.instance.modifyAfterReason.reason}</p:paragraph>
                 </p:cell>
-                <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
+
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
+                    <p:paragraph>查封、抵押（按揭）情况</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
+                    <p:paragraph>#{ownerBusinessHome.getReasonByType("HOUSE_STATE_INFO").reason}</p:paragraph>
+                </p:cell>
+                <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="40">
                     <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
                 </p:cell>
 
