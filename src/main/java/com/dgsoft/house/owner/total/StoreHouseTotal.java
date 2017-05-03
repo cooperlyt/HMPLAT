@@ -120,52 +120,51 @@ public class StoreHouseTotal {
         Map<String,HouseSaleTotalData> saledInitDw = new HashMap<String, HouseSaleTotalData>();
 
 
-        for(ProjectSellInfo data: ownerEntityLoader.getEntityManager().createQuery("select psi from ProjectSellInfo psi left join fetch psi.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51') and ob.regTime  <= :endTime" ,ProjectSellInfo.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+        for(ProjectSellInfo data: ownerEntityLoader.getEntityManager().createQuery("select psi from ProjectSellInfo psi left join fetch psi.businessProject p left join p.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51') " ,ProjectSellInfo.class)
+                .getResultList()){
             all.put(data.getBusinessProject().getProjectCode(),data);
         }
 
         for(HouseSaleTotalData data:  ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(p.projectCode,sum(stt.count),sum(stt.area)) from SellTypeTotal stt left join stt.businessBuild.businessProject p  left join p.ownerBusiness ob where stt.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51') and ob.regTime  <= :endTime group by p.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(p.projectCode,sum(stt.count),sum(stt.area)) from SellTypeTotal stt left join stt.businessBuild.businessProject p  left join p.ownerBusiness ob where stt.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId in ('WP50', 'WP51')  group by p.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             dw.put(data.getId(),data);
         }
 
         for(HouseSaleTotalData data: ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP40' and ob.regTime  <= :endTime and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP40' and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             initAll.put(data.getId(),data);
         }
 
         for(HouseSaleTotalData data: ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where h.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP40' and ob.regTime  <= :endTime and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where h.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP40' and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             initDw.put(data.getId(),data);
         }
 
 
-
         for(HouseSaleTotalData data: ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime  <= :endTime and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseRecord hr left join hr.businessHouse h where  hr.houseStatus <> null and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             saledAll.put(data.getId(),data);
         }
 
         for(HouseSaleTotalData data: ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where h.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime  <= :endTime and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseRecord hr left join hr.businessHouse h where hr.houseStatus <> null and  h.useType = 'DWELLING_KEY'  and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) group by h.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             saledDw.put(data.getId(),data);
         }
 
         for(HouseSaleTotalData data: ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime  <= :endTime and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) and h.houseCode in (select hb1.houseCode from HouseBusiness hb1 left join hb1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId = 'WP40') group by h.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseRecord hr left join hr.businessHouse h where hr.houseStatus <> null and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) and h.houseCode in (select hb1.houseCode from HouseBusiness hb1 left join hb1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId = 'WP40') group by h.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             saledInitAll.put(data.getId(),data);
         }
 
         for(HouseSaleTotalData data: ownerEntityLoader.getEntityManager()
-                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseBusiness hb left join hb.afterBusinessHouse h left join hb.ownerBusiness ob where h.useType = 'DWELLING_KEY' and ob.status in ('RUNNING','COMPLETE','SUSPEND') and ob.recorded = true and ob.defineId = 'WP41' and ob.regTime  <= :endTime and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) and h.houseCode in (select hb1.houseCode from HouseBusiness hb1 left join hb1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId = 'WP40') group by h.projectCode",HouseSaleTotalData.class)
-                .setParameter("endTime", toDateTime).getResultList()){
+                .createQuery("select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(h.projectCode,count(h.houseCode),sum(h.houseArea)) from HouseRecord hr left join hr.businessHouse h where hr.houseStatus <> null and h.useType = 'DWELLING_KEY' and h.projectCode in (select p1.projectCode from BusinessProject p1 left join p1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId in ('WP50', 'WP51')) and h.houseCode in (select hb1.houseCode from HouseBusiness hb1 left join hb1.ownerBusiness ob1 where ob1.status in ('RUNNING','COMPLETE','SUSPEND') and ob1.recorded = true and ob1.defineId = 'WP40') group by h.projectCode",HouseSaleTotalData.class)
+                .getResultList()){
             saledInitDw.put(data.getId(),data);
         }
 
@@ -295,19 +294,32 @@ public class StoreHouseTotal {
             //已竣工待售商品房数量
             cell = row.createCell(cellIndex++);
             BigDecimal a1 = initAllArea.subtract(getArea(saledInitAll,entry.getKey()));
-            cell.setCellValue(outNumber(a1));
+            if (SaleType.NOW_SELL.equals(entry.getValue().getType())){
+                cell.setCellValue(outNumber(a1.add(entry.getValue().getArea().subtract(getArea(saledAll,entry.getKey())).subtract(a1))));
+            }else
+                cell.setCellValue(outNumber(a1));
 
             cell = row.createCell(cellIndex++);
             BigDecimal a2 = initDwArea.subtract(getArea(saledInitDw,entry.getKey()));
-            cell.setCellValue(outNumber(a2));
+            if (SaleType.NOW_SELL.equals(entry.getValue().getType())){
+                cell.setCellValue(outNumber(a2.add(getArea(dw,entry.getKey()).subtract(getArea(saledDw,entry.getKey())).subtract(a2))));
+
+            }else
+                cell.setCellValue(outNumber(a2));
 
             cell = row.createCell(cellIndex++);
             long c1 = initAllCount - getCount(saledInitAll,entry.getKey());
-            cell.setCellValue(outNumber(c1));
+            if (SaleType.NOW_SELL.equals(entry.getValue().getType())){
+                cell.setCellValue(outNumber(c1 + (entry.getValue().getHouseCount() - getCount(saledAll,entry.getKey()) - c1 )));
+            }else
+                cell.setCellValue(outNumber(c1));
 
             cell = row.createCell(cellIndex++);
             long c2 = initDwCount - getCount(saledInitDw,entry.getKey());
-            cell.setCellValue(outNumber(c2));
+            if (SaleType.NOW_SELL.equals(entry.getValue().getType())){
+                cell.setCellValue(outNumber(c2 + (getCount(dw,entry.getKey()) - getCount(saledDw,entry.getKey()) - c2 )));
+            }else
+                cell.setCellValue(outNumber(c2));
 
 
             //未竣工待售商品房数量
