@@ -26,7 +26,7 @@
                 </p:cell>
 
                 <p:cell horizontalAlignment="left">
-                    <p:paragraph></p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().afterBusinessHouse.mapNumber}-#{ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().afterBusinessHouse.blockNo}-#{ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().afterBusinessHouse.buildNo}</p:paragraph>
                 </p:cell>
 
                 <p:cell>
@@ -91,7 +91,7 @@
                     <p:paragraph>项目坐落</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
+                    <p:paragraph>#{selectProjectByHouseCode.project.address}</p:paragraph>
                 </p:cell>
                 <p:cell colspan="4">
                     <p:paragraph>提供要件</p:paragraph>
@@ -156,7 +156,7 @@
                 </p:cell>
 
                 <p:cell horizontalAlignment="left">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().afterBusinessHouse.mapNumber}-#{ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().afterBusinessHouse.blockNo}-#{ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().afterBusinessHouse.buildNo}</p:paragraph>
                 </p:cell>
 
                 <p:cell>
@@ -217,7 +217,7 @@
                     <p:paragraph>项目坐落</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
-                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.address}</p:paragraph>
+                    <p:paragraph>#{selectProjectByHouseCode.project.address}</p:paragraph>
                 </p:cell>
                 <p:cell colspan="4">
                     <p:paragraph>提供要件</p:paragraph>
