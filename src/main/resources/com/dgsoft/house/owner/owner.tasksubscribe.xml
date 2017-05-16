@@ -1085,6 +1085,13 @@
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
+    <end-subscribe name="NoticeDisplayGen" component="noticeDisplayGen">
+        <description>
+            预告备案显示生成器
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="MortgageDisplayGen" component="mortgageDisplayGen">
         <description>
             房屋抵押备案显示生成器
