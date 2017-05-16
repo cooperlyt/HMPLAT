@@ -54,7 +54,7 @@ public class NoticeDisplayGen implements TaskCompleteSubscribeComponent {
 
             String contractPersonNames = "";
             for (PowerPerson pp: bh.getAfterBusinessHouse().getAllNewPowerPersonList()){
-                if (pp.getType().equals(PowerPerson.PowerPersonType.OWNER)){
+                if (pp.getType().equals(PowerPerson.PowerPersonType.PREPARE)){
                     if (!"".equals(contractPersonNames)){
                         contractPersonNames += ",";
                     }
