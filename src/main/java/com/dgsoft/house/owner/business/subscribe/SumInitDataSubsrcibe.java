@@ -112,12 +112,13 @@ public class SumInitDataSubsrcibe {
                     otherCount= otherCount+initToData.getCount().intValue();
                 }
 
-                sumArea = sumArea.add(dwellingArea);
-                sumArea = sumArea.add(shopArea);
-                sumArea = sumArea.add(otherArea);
 
-                sumCount = dwellingConut+shopCount+otherCount;
             }
+            sumArea = sumArea.add(dwellingArea);
+            sumArea = sumArea.add(shopArea);
+            sumArea = sumArea.add(otherArea);
+
+            sumCount = dwellingConut+shopCount+otherCount;
         }
     }
 
