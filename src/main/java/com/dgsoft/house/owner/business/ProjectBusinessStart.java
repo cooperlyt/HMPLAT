@@ -204,6 +204,7 @@ public class ProjectBusinessStart {
 
 
         initBuildGridMap();
+        ownerBusinessHome.getInstance().setDefineName(ownerBusinessHome.getInstance().getDefineName() + "变更");
         return PROJECT_HOUSE_GRID_MAP_SELECT_PAGE;
     }
 

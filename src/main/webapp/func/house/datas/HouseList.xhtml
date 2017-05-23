@@ -236,10 +236,10 @@
 
                 <h:column headerClass="table-header">
                     <f:facet name="header">
-                        设计用途
+                        用途/结构
                     </f:facet>
 
-                    <h:outputText value="#{_house.designUseType}"/>
+                    <h:outputText value="#{_house.designUseType}"/>/<h:outputText value="#{dictionary.getWordValue(_house.structure)}"/>
                 </h:column>
 
 

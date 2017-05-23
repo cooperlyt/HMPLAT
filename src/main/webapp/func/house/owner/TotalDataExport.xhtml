@@ -120,7 +120,7 @@
                                          <span class="input-group-addon">
                                              <h:selectBooleanCheckbox value="#{storeHouseTotal.allowNegative}" title="是否输出负数"/>
                                         </span>
-                                        <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="结止时间" required="true"  value="#{storeHouseTotal.toDateTime}">
+                                        <h:inputText styleClass="js-datetimepicker form-control" p:placeholder="结止时间" disabled="true"  value="#{storeHouseTotal.toDateTime}">
                                             <s:convertDateTime pattern="#{messages.datetimepattern}"/>
                                         </h:inputText>
 

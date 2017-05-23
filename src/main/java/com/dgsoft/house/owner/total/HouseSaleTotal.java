@@ -64,7 +64,7 @@ public class HouseSaleTotal {
     public void total(){
         HouseSaleTotalData projectDataAll;
                 try {
-                    projectDataAll =ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(p.houseCount),sum(p.area)) from ProjectSellInfo p where p.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND','COMPLETE_CANCEL') and p.businessProject.ownerBusiness.selectBusiness <> null and p.businessProject.ownerBusiness.recorded = true and p.businessProject.ownerBusiness.regTime >= :beginTime and p.businessProject.ownerBusiness.regTime <= :endTime and p.businessProject.ownerBusiness.defineId in ('WP50', 'WP51') ", HouseSaleTotalData.class)
+                    projectDataAll =ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(p.houseCount),sum(p.area)) from ProjectSellInfo p where p.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND','COMPLETE_CANCEL') and p.businessProject.ownerBusiness.selectBusiness = null and p.businessProject.ownerBusiness.recorded = true and p.businessProject.ownerBusiness.regTime >= :beginTime and p.businessProject.ownerBusiness.regTime <= :endTime and p.businessProject.ownerBusiness.defineId in ('WP50', 'WP51') ", HouseSaleTotalData.class)
                             .setParameter("beginTime", fromDateTime)
                             .setParameter("endTime", toDateTime).getSingleResult();
                 }catch (NoResultException e){
@@ -73,7 +73,7 @@ public class HouseSaleTotal {
 
         HouseSaleTotalData projectDataD ;
                 try {
-                    projectDataD =  ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(st.count), sum(st.area)) from SellTypeTotal st where st.useType = 'DWELLING_KEY' and st.businessBuild.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND','COMPLETE_CANCEL') and st.businessBuild.businessProject.ownerBusiness.selectBusiness <> null and st.businessBuild.businessProject.ownerBusiness.recorded = true and st.businessBuild.businessProject.ownerBusiness.regTime >= :beginTime and st.businessBuild.businessProject.ownerBusiness.regTime < :endTime  and st.businessBuild.businessProject.ownerBusiness.defineId in ('WP50', 'WP51')", HouseSaleTotalData.class)
+                    projectDataD =  ownerEntityLoader.getEntityManager().createQuery("select new  com.dgsoft.house.owner.total.data.HouseSaleTotalData(sum(st.count), sum(st.area)) from SellTypeTotal st where st.useType = 'DWELLING_KEY' and st.businessBuild.businessProject.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND','COMPLETE_CANCEL') and st.businessBuild.businessProject.ownerBusiness.selectBusiness = null and st.businessBuild.businessProject.ownerBusiness.recorded = true and st.businessBuild.businessProject.ownerBusiness.regTime >= :beginTime and st.businessBuild.businessProject.ownerBusiness.regTime < :endTime  and st.businessBuild.businessProject.ownerBusiness.defineId in ('WP50', 'WP51')", HouseSaleTotalData.class)
                             .setParameter("beginTime", fromDateTime)
                             .setParameter("endTime", toDateTime).getSingleResult();
 
