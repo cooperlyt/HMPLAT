@@ -13,6 +13,7 @@ import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.BuildGridMapHouseSelect;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
+import com.dgsoft.house.owner.business.subscribe.complete.KeyGeneratorHelper;
 import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -337,7 +338,11 @@ public class OwnerBusinessPatch {
             if (houseRecord == null){
                 Logging.getLog(getClass()).debug(houseBusiness.getAfterBusinessHouse());
 
-                houseBusiness.getAfterBusinessHouse().getHouseRecords().add(new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus));
+                KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(houseBusiness.getAfterBusinessHouse());
+                houseRecord = new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus);
+                houseRecord.setSearchKey(key.getKey());
+                houseRecord.setDisplay(OwnerHouseHelper.genHouseDisplay(houseBusiness.getAfterBusinessHouse()));
+                houseBusiness.getAfterBusinessHouse().getHouseRecords().add(houseRecord);
 
             }else{
                 if (ownerBusinessHome.getEntityManager().createQuery("select count(houseBusiness.id) from HouseBusiness houseBusiness where houseBusiness.ownerBusiness.status <> 'ABORT' and houseBusiness.ownerBusiness.source <> 'BIZ_AFTER_SAVE' and houseBusiness.houseCode = :houseCode", Long.class).setParameter("houseCode", houseBusiness.getHouseCode()).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
