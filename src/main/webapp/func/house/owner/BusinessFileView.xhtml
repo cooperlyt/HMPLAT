@@ -6,8 +6,44 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
 
+    <h:outputStylesheet library="viewerjs" name="viewer.css"/>
+
+    <h:outputStylesheet>
+
+
+
+        .docs-pictures {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .docs-pictures .thumbnail{
+            margin-bottom: 12px;
+            margin-right: 12px;
+            cursor: zoom-in;
+        }
+
+        .docs-pictures > li {
+            float: left;
+
+            margin: 0 -1px -1px 0;
+            border: 1px solid transparent;
+            overflow: hidden;
+        }
+
+        .docs-pictures > li > img {
+            width: 100%;
+            cursor: -webkit-zoom-in;
+            cursor: zoom-in;
+        }
+
+    </h:outputStylesheet>
+
+    <ui:remove>
 
     <h:outputStylesheet library="jquery-ad-gallery" name="/css/jquery.ad-gallery.css"/>
 
@@ -50,22 +86,22 @@
 
 
     </h:outputStylesheet>
+    </ui:remove>
 
-    <h:form>
 
     <a:outputPanel id="fileViewPanel" layout="block" styleClass="row">
 
         <div class="col-md-5">
             <a:outputPanel layout="block" id="fileTree" styleClass="list-group file-name-list-group">
 
-                <a:commandLink execute="@this" render="imgShowPanel,fileTree " styleClass="all-file-item list-group-item #{empty businessFileView.activeId ? 'active' : ''}"
+                <a:commandLink execute="@this" render="imgShowPanel,fileTree,deleteNodeConfirmPanel_buttons,docEditPanel_form" styleClass="all-file-item list-group-item #{empty businessFileView.activeId ? 'active' : ''}"
                                onclick="">
                     <span class="glyphicon glyphicon-align-justify"></span>所有文件
                     <a:attachQueue requestDelay="0"/>
                     <a:param name="selectActiveId" value="" assignTo="#{businessFileView.activeId}"/>
                 </a:commandLink>
                 <a:repeat var="_file" value="#{businessFileView.fileList}">
-                    <a:commandLink execute="@this" render="imgShowPanel,fileTree "
+                    <a:commandLink execute="@this" render="imgShowPanel,fileTree,deleteNodeConfirmPanel_buttons,docEditPanel_form "
                                    styleClass="file-item list-group-item #{_file.id eq businessFileView.activeId  ? 'active' : ''}">
                         <span class="glyphicon glyphicon-picture"/>#{_file.name}
                         <a:param name="selectActiveId" value="#{_file.id}" assignTo="#{businessFileView.activeId}"/>
@@ -75,9 +111,84 @@
 
             </a:outputPanel>
 
+
+
+
+                <a:outputPanel layout="block" style="margin-bottom: 15px" rendered="#{s:hasRole('recordRunManager') and ((ownerBusinessHome.instance.status eq 'COMPLETE') or (ownerBusinessHome.instance.status eq 'COMPLETE_CANCEL'))}">
+                    <h:form>
+                    <div class="input-group">
+                        <h:inputText id="newOtherFileInput" styleClass="form-control typeahead" autocomplete="off"
+
+                                     value="#{businessFileView.createDocGroupName}" required="true"/>
+                        <span class="input-group-btn">
+                                <a:commandLink styleClass="btn  btn-default"
+                                               p:placeholder="新建补扫项名称"
+                                               oncomplete="#{r:jQuery('newOtherFileInput')}.val('');"
+                                               execute="@form" render="imgShowPanel,fileTree, deleteNodeConfirmPanel_buttons,docEditPanel_form"
+                                               action="#{businessFileView.addNewDocGroup}">
+                                    添加
+                                    <a:attachQueue requestDelay="0"/>
+                                </a:commandLink>
+                            </span>
+                    </div>
+                    </h:form>
+                </a:outputPanel>
+
+                <h:outputScript>
+
+                    $(document).ready(
+                    function(){
+
+
+                    // 此操作 耗时 如果是查询耗时 加入业务 和 时间 过滤
+                    $('.typeahead').typeahead({source:#{attachFileNameCache.attachFileAutoComplete},minLength:0});
+
+                    });
+
+
+                </h:outputScript>
+
+
+
         </div>
 
+        <h:form>
+
         <a:outputPanel id="imgShowPanel" layout="block" styleClass="col-md-7">
+
+            <a:outputPanel rendered="#{(not empty businessFileView.activeId) and (businessFileView.activeItem.type eq 'AFTER') and s:hasRole('recordRunManager') and ((ownerBusinessHome.instance.status eq 'COMPLETE') or (ownerBusinessHome.instance.status eq 'COMPLETE_CANCEL'))}" >
+
+
+
+                <div class="gh-header">
+
+                    <div class="gh-header-show node-title" >
+
+                        <a:outputPanel layout="block" styleClass="gh-header-actions" >
+
+                            <a href="#" class="btn btn-sm btn-default"
+                               onclick="selectFileUpload('#{businessFileView.activeId}','#{businessFileView.activeItem.name}');return false;">上传</a>
+                            <a href="#" class="btn btn-sm btn-primary" onclick="cameraUpload('#{businessFileView.activeId}','#{businessFileView.activeItem.name}');return false;">拍照</a>
+                            <a:push id="uploadPush" address="#{businessFileView.activeId}"
+                                    ondataavailable="receiveFile(event.rf.data);">
+
+                            </a:push>
+
+                        </a:outputPanel>
+
+                        <div style="margin-top: 3px">
+                            <a href="#" class="btn btn-sm btn-default"
+                                onclick="$('#docEditPanel').modal('show'); return false;">更名</a>
+                            <a href="#" class="btn btn-sm btn-danger"
+                               onclick="$('#deleteNodeConfirmPanel').modal('show'); return false;">删除</a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </a:outputPanel>
+
             <a:outputPanel layout="block" style="margin-top: 10px"
                            rendered="#{empty businessFileView.activeFiles}"
                            styleClass="blankslate spacious large-format">
@@ -88,112 +199,121 @@
                 <p>此节点下没有任何文件</p>
             </a:outputPanel>
 
-            <a:outputPanel id="gallery" layout="block" styleClass="ad-gallery"
-                           rendered="#{not empty businessFileView.activeFiles}">
-                <div class="ad-image-wrapper"></div>
-                <div class="ad-controls"><div class="custome-controls"><a class="img-print-view" target="_blank" >打印</a>
-                    <a class="img-orig-view" target="_blank">原图</a></div></div>
-                <div class="ad-nav">
-                    <div class="ad-thumbs">
-                        <ul class="ad-thumb-list">
-                            <a:repeat var="_img" value="#{businessFileView.activeFiles}">
-                                <li>
-                                    <a href="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/800x600s/#{_img.id}">
-                                        <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/100x100/#{_img.id}"
-                                             data-file-id="#{_img.id}"
-                                             title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '档案编号:'}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordLocal) ? ' 未上架': '位置:'} #{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.frame}#{(empty _img.businessFile.recordLocal) ? '': '架'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.cabinet}#{(empty _img.businessFile.recordLocal) ? '': '柜'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.box}#{(empty _img.businessFile.recordLocal) ? '': '盒'}" />
-                                    </a>
-                                </li>
 
-                            </a:repeat>
+            <a:outputPanel rendered="#{not empty businessFileView.activeFiles}">
+                <ul id="docs-pictures" class="docs-pictures clearfix ">
+                    <a:repeat var="_img" value="#{businessFileView.activeFiles}">
+                        <li >
+                                <div class="thumbnail">
+                                <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/160x160s/#{_img.id}"
+                                     data-file-id="#{_img.id}"  data-original="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/#{_img.id}"
+                                     title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '档案编号:'}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordLocal) ? ' 未上架': '位置:'} #{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.frame}#{(empty _img.businessFile.recordLocal) ? '': '架'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.cabinet}#{(empty _img.businessFile.recordLocal) ? '': '柜'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.box}#{(empty _img.businessFile.recordLocal) ? '': '盒'}" />
+                                </div>
+                        </li>
 
+                    </a:repeat>
+                </ul>
+                <h:outputScript>
+                    $(document).ready(function () {
+                                var viewer = new Viewer(document.getElementById('docs-pictures'), {
+                                    url: 'data-original'
+                                })
+                    }
 
-                        </ul>
-                    </div>
-                </div>
+                    );
+                </h:outputScript>
             </a:outputPanel>
 
 
-            <h:outputScript>
-                $(document).ready(
-                initGallery
-               );
-
-
-                function initGallery () {
-                $('.ad-gallery').adGallery({
-                //animate_first_image: true,
-
-                loader_image:'#{facesContext.externalContext.requestContextPath}/img/adGallery/loader.gif',
-                update_window_hash: false,
-
-                slideshow: {
-                enable: false
-                },
-                callbacks: {
-                afterImageVisible: function() {
-
-                $('.img-orig-view').attr('href','#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $('div.ad-image img').data('file-id'));
-                $('.img-print-view').attr('href','#{facesContext.externalContext.requestContextPath}/report/PicturePrint.seam?fileId=' + $('div.ad-image img').data('file-id'));
-
-                //$('div.ad-image a').jqzoom({
-                //    zoomType: 'standard',
-                //    //preloadText: locale.gallery.preloadText,
-                //    position: 'left',
-                //    title: true,
-                //    zoomWidth: 300,
-                //    zoomHeight: 300,
-                //    preloadImages: true
-                //});
-                //
-                //$("div.zoomPad").mouseenter(function() {
-                //    var $container = $("div.ad-image");
-                //    $container.css('width', '850px').css('height', '350px');
-                //    $container.parent().css('width', '850px').css('height', '350px');
-                //    $('div.ad-prev').css('width', '25px');
-                //}).mouseleave(function() {
-                //    var $container = $("div.ad-image");
-                //    $container.css('width', '300px').css('height', '300px');
-                //    $container.parent().css('width', '300px').css('height', '300px');
-                //    $('div.ad-prev').css('width', '25px');
-                //});
-                }
-                }
-
-                });
-
-                $(".ad-gallery").on("click", ".ad-image", function () {
-
-                // alert($(this).find("img").data("file-id"));
-                //TODO 多个图
-                $.fancybox(
-                {
-
-                href: '#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/' + $(this).find("img").data("file-id") + '.jpg',
-                title: '图片',
-                // closeBtn: false,
-
-                //openEffect : 'elastic',
-                //  openSpeed  : 150,
-                //  closeEffect : 'elastic',
-                //  closeSpeed  : 150,
-
-
-                }
-                );
-                });
-
-                }
-
-
-            </h:outputScript>
-
       </a:outputPanel>
-
+        </h:form>
     </a:outputPanel>
-    </h:form>
 
+    <ui:remove>
     <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
     <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
+    </ui:remove>
+    <h:form>
+        <a:jsFunction name="receiveFile"
+                      action="#{businessFileView.fileUploaded}"
+                      execute="@this" render="imgShowPanel">
+            <a:param name="data" assignTo="#{businessFileView.fileUploadData}"/>
+        </a:jsFunction>
+    </h:form>
+
+    <a:outputPanel rendered="#{s:hasRole('recordRunManager')}">
+    <ui:decorate template="/layout/delete_confirm_dialog.xhtml" >
+        <ui:param name="panelId" value="deleteNodeConfirmPanel"/>
+        <ui:param name="entityTitle" value="节点"/>
+        <ui:define name="deleteNote">
+            <p>将同时删除节点所有文件</p>
+        </ui:define>
+        <a:commandButton styleClass="btn btn-block btn-danger" action="#{businessFileView.deleteSelectNode}"
+                         value="#{messages.confirmDelete}" oncomplete="$('#deleteNodeConfirmPanel').modal('hide')"
+                         render="imgShowPanel,fileTree" immediate="true" execute="@this">
+            <a:attachQueue requestDelay="0"/>
+            <a:param name="selectActiveId" value="#{businessFileView.activeId}" assignTo="#{businessFileView.activeId}"/>
+        </a:commandButton>
+    </ui:decorate>
+
+        <ui:decorate template="/layout/edit-modalpanel.xhtml">
+        <ui:param name="panelId" value="docEditPanel"/>
+        <ui:param name="panelTitle" value="名称修改"/>
+
+        <s:decorate id="nameField" styleClass="form-group " template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                补扫名称
+            </ui:define>
+            <ui:param name="for" value="docNameInput"/>
+            <ui:param name="status" value="docNameStatus"/>
+            <h:inputText id="docNameInput" required="true" styleClass="form-control" maxlength="32"
+                         label="补扫名称"
+                         value="#{businessFileView.activeName}">
+                <f:validateRequired/>
+            </h:inputText>
+
+        </s:decorate>
+
+
+
+            <ui:define name="actionButtons">
+                <button type="button" class="button default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-remove"/>
+                    #{messages.abort}</button>
+
+                <a:commandLink styleClass="button submit primary" render="fileTree"
+                               execute="@form"
+                               oncomplete="if (#{facesContext.maximumSeverity==null} || #{facesContext.maximumSeverity.ordinal lt 2}){$('#docEditPanel').modal('hide')}"
+                               action="#{businessFileView.changeDocName}">
+
+                    <span class="glyphicon glyphicon-floppy-disk"/>
+                    <a:attachQueue requestDelay="0"/>
+                    <a:param name="selectActiveId" value="#{businessFileView.activeId}" assignTo="#{businessFileView.activeId}"/>
+
+                    #{messages.saveUpdate}
+                </a:commandLink>
+            </ui:define>
+        </ui:decorate>
+
+    </a:outputPanel>
+
+    <iframe style="display:none;" class="call_extend_iframe" src=""/>
+    <h:outputScript>
+
+
+        function selectFileUpload(typeId,title){
+        $('.call_extend_iframe').attr('src', "ExtendsFileSelect:// -key='" + typeId + "' -title='" + title + "'");
+        }
+
+        function cameraUpload(typeId,title){
+        $('.call_extend_iframe').attr('src', "ExtendsCamera://-key='" + typeId + "' -title='" + title + "'");
+        }
+
+
+
+
+    </h:outputScript>
+
+    <h:outputScript library="viewerjs" name="viewer.js"/>
 
 </ui:composition>
