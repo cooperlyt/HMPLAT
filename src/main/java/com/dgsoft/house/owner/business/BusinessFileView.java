@@ -36,6 +36,16 @@ public class BusinessFileView {
 
     private String activeName;
 
+    private String fileId;
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
     public String getCreateDocGroupName() {
         return createDocGroupName;
     }
@@ -166,5 +176,16 @@ public class BusinessFileView {
         ownerBusinessHome.update();
         fileList = null;
         activeName = null;
+    }
+
+    public void removeFile(){
+        for (UploadFile uf: getActiveItem().getUploadFiles()){
+            if (uf.getId().equals(fileId)){
+                getActiveItem().getUploadFiles().remove(uf);
+                ownerBusinessHome.update();
+                return;
+            }
+        }
+
     }
 }

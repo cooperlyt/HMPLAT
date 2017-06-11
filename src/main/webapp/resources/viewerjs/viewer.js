@@ -54,6 +54,8 @@ var DEFAULTS = {
   // Enable keyboard support
   keyboard: true,
 
+    removeable: false,
+
   // Define interval of each image when playing
   interval: 5000,
 
@@ -89,10 +91,12 @@ var DEFAULTS = {
   hide: null,
   hidden: null,
   view: null,
-  viewed: null
+  viewed: null,
+  remove: null
+
 };
 
-var TEMPLATE = '<div class="viewer-container">' + '<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<ul class="viewer-toolbar">' + '<li role="button" class="viewer-zoom-in" data-action="zoom-in"></li>' + '<li role="button" class="viewer-zoom-out" data-action="zoom-out"></li>' + '<li role="button" class="viewer-one-to-one" data-action="one-to-one"></li>' + '<li role="button" class="viewer-reset" data-action="reset"></li>' + '<li role="button" class="viewer-prev" data-action="prev"></li>' + '<li role="button" class="viewer-play" data-action="play"></li>' + '<li role="button" class="viewer-next" data-action="next"></li>' + '<li role="button" class="viewer-rotate-left" data-action="rotate-left"></li>' + '<li role="button" class="viewer-rotate-right" data-action="rotate-right"></li>' + '<li role="button" class="viewer-flip-horizontal" data-action="flip-horizontal"></li>' + '<li role="button" class="viewer-flip-vertical" data-action="flip-vertical"></li>' + '<li role="button" class="viewer-print" data-action="print"></li>' + '</ul>' + '<div class="viewer-navbar">' + '<ul class="viewer-list"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip"></div>' + '<div role="button" class="viewer-button" data-action="mix"></div>' + '<div class="viewer-player"></div>' + '</div>';
+var TEMPLATE = '<div class="viewer-container">' + '<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<ul class="viewer-toolbar">' + '<li role="button" class="viewer-zoom-in" data-action="zoom-in"></li>' + '<li role="button" class="viewer-zoom-out" data-action="zoom-out"></li>' + '<li role="button" class="viewer-one-to-one" data-action="one-to-one"></li>' + '<li role="button" class="viewer-reset" data-action="reset"></li>' + '<li role="button" class="viewer-prev" data-action="prev"></li>' + '<li role="button" class="viewer-play" data-action="play"></li>' + '<li role="button" class="viewer-next" data-action="next"></li>' + '<li role="button" class="viewer-rotate-left" data-action="rotate-left"></li>' + '<li role="button" class="viewer-rotate-right" data-action="rotate-right"></li>' + '<li role="button" class="viewer-flip-horizontal" data-action="flip-horizontal"></li>' + '<li role="button" class="viewer-flip-vertical" data-action="flip-vertical"></li>' + '<li role="button" class="viewer-print" data-action="print"></li>' + '<li role="button" class="viewer-remove" data-action="remove"></li>' + '</ul>' + '<div class="viewer-navbar">' + '<ul class="viewer-list"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip"></div>' + '<div role="button" class="viewer-button" data-action="mix"></div>' + '<div class="viewer-player"></div>' + '</div>';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -822,7 +826,9 @@ var render$1 = {
         url = url.call(image, image);
       }
 
-      items.push('<li>' + '<img' + (' src="' + src + '"') + ' role="button"' + ' data-action="view"' + (' data-index="' + i + '"') + (' data-original-url="' + (url || src) + '"') + (' alt="' + alt + '"') + '>' + '</li>');
+      var id = image.getAttribute('data-id');
+
+      items.push('<li>' + '<img' + (' src="' + src + '"') + ' role="button"' + ' data-action="view"' + (' data-id="' + id + '"' ) + (' data-index="' + i + '"') + (' data-original-url="' + (url || src) + '"') + (' alt="' + alt + '"') + '>' + '</li>');
     });
 
     list.innerHTML = items.join('');
@@ -965,6 +971,7 @@ var EVENT_RESIZE = 'resize';
 var EVENT_VIEW = 'view';
 var EVENT_VIEWED = 'viewed';
 
+
 var events = {
   bind: function bind() {
     var self = this;
@@ -1098,6 +1105,10 @@ var handlers = {
 
         case 'print':
           self.print();
+          break;
+
+        case 'remove':
+          self.removeImg();
           break;
 
       default:
@@ -1502,6 +1513,7 @@ var methods = {
 
     image.src = url;
     image.alt = alt;
+    image.setAttribute("data-id",img.getAttribute('data-id'));
 
     if (dispatchEvent(element, 'view', {
       originalImage: self.images[index],
@@ -1734,6 +1746,26 @@ var methods = {
 
     return self;
   },
+
+    removeImg: function removeImg() {
+        var self = this;
+        var options = self.options;
+        var element = self.element;
+        if (isFunction(options.remove)) {
+            addListener(element, 'remove', options.remove, true);
+        }
+
+        if (dispatchEvent(element, 'remove') === false) {
+            return self;
+        }
+        // remove code
+
+        self.update();
+        if (self.length == 0){
+          self.hide();
+        }
+        return self;
+    },
 
     print: function print() {
         var self = this;
@@ -2485,6 +2517,13 @@ var Viewer = function () {
 
         addClass(rotates, 'viewer-invisible');
         appendChild(toolbar, rotates);
+      }
+
+      if (!options.removeable) {
+          var removes = toolbar.querySelectorAll('li[class*="remove"]');
+
+          addClass(removes, 'viewer-invisible');
+          appendChild(toolbar, removes);
       }
 
       if (options.inline) {

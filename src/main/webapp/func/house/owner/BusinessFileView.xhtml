@@ -203,10 +203,10 @@
             <a:outputPanel rendered="#{not empty businessFileView.activeFiles}">
                 <ul id="docs-pictures" class="docs-pictures clearfix ">
                     <a:repeat var="_img" value="#{businessFileView.activeFiles}">
-                        <li >
+                        <li data-file-img-id="#{_img.id}">
                                 <div class="thumbnail">
                                 <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/160x160s/#{_img.id}"
-                                     data-file-id="#{_img.id}"  data-original="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/#{_img.id}"
+                                     data-id="#{_img.id}"  data-original="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/#{_img.id}"
                                      title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '档案编号:'}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordLocal) ? ' 未上架': '位置:'} #{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.frame}#{(empty _img.businessFile.recordLocal) ? '': '架'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.cabinet}#{(empty _img.businessFile.recordLocal) ? '': '柜'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.box}#{(empty _img.businessFile.recordLocal) ? '': '盒'}" />
                                 </div>
                         </li>
@@ -216,7 +216,18 @@
                 <h:outputScript>
                     $(document).ready(function () {
                                 var viewer = new Viewer(document.getElementById('docs-pictures'), {
-                                    url: 'data-original'
+                                    url: 'data-original',
+
+                    removeable: #{(not empty businessFileView.activeId) and (businessFileView.activeItem.type eq 'AFTER') and s:hasRole('recordRunManager') and ((ownerBusinessHome.instance.status eq 'COMPLETE') or (ownerBusinessHome.instance.status eq 'COMPLETE_CANCEL'))},
+                    remove: function () {
+
+                                        var fileId = $('.viewer-canvas img').attr('data-id');
+
+                    deleteFile(fileId,'#{businessFileView.activeId}');
+                                        $('li[data-file-img-id="' + fileId + '"]').remove();
+
+                                        return true;
+                                    }
                                 })
                     }
 
@@ -229,15 +240,17 @@
         </h:form>
     </a:outputPanel>
 
-    <ui:remove>
-    <h:outputScript library="jquery-ad-gallery" name="/js/jquery.ad-gallery.js"/>
-    <h:outputScript library="jquery-fancybox" name="jquery.fancybox.pack.js"/>
-    </ui:remove>
+
     <h:form>
         <a:jsFunction name="receiveFile"
                       action="#{businessFileView.fileUploaded}"
                       execute="@this" render="imgShowPanel">
             <a:param name="data" assignTo="#{businessFileView.fileUploadData}"/>
+        </a:jsFunction>
+
+        <a:jsFunction name="deleteFile" action="#{businessFileView.removeFile}" execute="@this" render="@none">
+            <a:param name="fileId" assignTo="#{businessFileView.fileId}"/>
+            <a:param name="docId" assignTo="#{businessFileView.activeId}"/>
         </a:jsFunction>
     </h:form>
 
