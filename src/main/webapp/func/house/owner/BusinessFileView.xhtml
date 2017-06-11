@@ -176,14 +176,16 @@
                     removeable: #{(not empty businessFileView.activeId) and (businessFileView.activeItem.type eq 'AFTER') and s:hasRole('recordRunManager') and ((ownerBusinessHome.instance.status eq 'COMPLETE') or (ownerBusinessHome.instance.status eq 'COMPLETE_CANCEL'))},
                     remove: function () {
 
-                                        var fileId = $('.viewer-canvas img').attr('data-id');
+                    if (confirm('确认要删除此图片?')==true){
+                    var fileId = $('.viewer-canvas img').attr('data-id');
 
                     deleteFile(fileId,'#{businessFileView.activeId}');
-                                        $('li[data-file-img-id="' + fileId + '"]').remove();
+                    $('li[data-file-img-id="' + fileId + '"]').remove();
 
-                                        return true;
-                                    }
-                                })
+                    return true;
+                    }else {return false;}
+                    }
+                    })
                     }
 
                     );
