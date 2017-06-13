@@ -252,6 +252,13 @@
             现抵押权人信息查看
         </description>
     </view-subscribe>
+
+    <view-subscribe name="FinancialCanceView" page="/business/houseOwner/subscribe/FinancialCanceView.xhtml">
+        <description>
+            现抵押权人信息查看(注销)
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="MortgaegeRegisteView" page="/business/houseOwner/subscribe/MortgaegeRegisteView.xhtml">
         <description>
            (现)抵押登记信息（债权数额，抵押期限等）查看
@@ -583,9 +590,22 @@
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
 
+    <edit-subscribe name="FinancialCanceEdit" page="/business/houseOwner/subscribe/FinancialCanceEdit.xhtml" component="">
+        <description>
+            抵押权人编辑(所有权抵押注销,预抵注销)
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
     <edit-subscribe name="FinancialProjectEdit" page="/business/houseOwner/subscribe/FinancialProjectEdit.xhtml" component="">
         <description>
             在建工程抵押权人编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="FinancialCanceProjectEdit" page="/business/houseOwner/subscribe/FinancialCanceProjectEdit.xhtml" component="">
+        <description>
+            在建工程抵押权人编辑（在建注销）
         </description>
     </edit-subscribe>
 
