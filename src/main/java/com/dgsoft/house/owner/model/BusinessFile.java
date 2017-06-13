@@ -17,13 +17,18 @@ import java.util.*;
 @Table(name = "BUSINESS_FILE", catalog = "HOUSE_OWNER_RECORD")
 public class BusinessFile implements java.io.Serializable, OrderModel {
 
+	public enum DocType {
+		IMPORTANT,ADDITIONAL,AFTER
+	}
+
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private String name;
 	private String importantCode;
 	private String memo;
     private boolean noFile;
-    private boolean important;
+    //private boolean important;
+	private DocType type;
 	private RecordLocal recordLocal;
     private Set<UploadFile> uploadFiles = new HashSet<UploadFile>(0);
 	private RecordStore recordStore;
@@ -38,7 +43,7 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		this.name = name;
 		this.importantCode = importantCode;
 		this.noFile = false;
-		this.important = true;
+		this.type = DocType.IMPORTANT;
 		this.priority = priority;
 		this.ownerBusiness = ownerBusiness;
 	}
@@ -49,7 +54,7 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		this.id=UUID.randomUUID().toString().replace("-", "");
 		this.name = name;
 		this.noFile = false;
-		this.important = false;
+		this.type = DocType.ADDITIONAL;
 		this.priority = priority;
 		this.ownerBusiness = ownerBusiness;
 	}
@@ -99,14 +104,22 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		this.name = name;
 	}
 
-    @Column(name = "IMPORTANT",nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TYPE",nullable = false, length = 20)
+	@NotNull
+	public DocType getType() {
+		return type;
+	}
+
+	public void setType(DocType type) {
+		this.type = type;
+	}
+
+	@Transient
     public boolean isImportant() {
-        return important;
+        return DocType.IMPORTANT.equals(getType());
     }
 
-    public void setImportant(boolean important) {
-        this.important = important;
-    }
 
     @Column(name = "IMPORTANT_CODE",nullable = true,length = 32)
     public String getImportantCode() {

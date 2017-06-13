@@ -223,9 +223,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public List<BusinessFile>  getVaidBusinessFileList(){
         List<BusinessFile> result = new ArrayList<BusinessFile>();
         for (BusinessFile businessFile: getUploadFileses()){
-            if (businessFile.isNoFile() || !businessFile.getUploadFiles().isEmpty()){
+            //if (businessFile.isNoFile() || !businessFile.getUploadFiles().isEmpty()){
                 result.add(businessFile);
-            }
+            //}
         }
         Collections.sort(result,OrderBeanComparator.getInstance());
         return result;

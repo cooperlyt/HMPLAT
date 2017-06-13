@@ -21,7 +21,7 @@ public class AttachFileNameCache {
 
     public Set<String> getNames() {
         if (names == null){
-            names = new HashSet<String>(ownerEntityManager.createQuery("select distinct f.name from BusinessFile f where f.important = false and f.ownerBusiness.status in ('COMPLETE','COMPLETE_CANCEL')", String.class).getResultList());
+            names = new HashSet<String>(ownerEntityManager.createQuery("select distinct f.name from BusinessFile f where f.type <> 'IMPORTANT' and f.ownerBusiness.status in ('COMPLETE','COMPLETE_CANCEL')", String.class).getResultList());
         }
         return names;
     }

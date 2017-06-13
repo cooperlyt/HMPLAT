@@ -183,7 +183,7 @@ INSERT INTO ROLE(ID, NAME, DESCRIPTION, PRIORITY) VALUES ('total.export.storeHou
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.config', '系统设置', '调整系统运行方式', 1);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.manager', '系统管理', '系统管理', 2);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('system.runBusinessMgr', '业务运行维护', '中止，挂起，分发正在运行的业务', 5);
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档,预警', 9);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRunManager', '档案运行维护', '中止档案补录，查档,预警,补扫档案', 9);
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.businessView', '业务档案查看', '查看业务档案', 6);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.RecordView','档案查看', '查看档案', 10);
@@ -196,7 +196,6 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.initHous
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseStatusForBuild','房屋状态导出','根据楼幢导出房屋信息及状态',9);
 
-INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordFileMgr','档案管理员','可以补扫档案',10);
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRoomMgr','档案室管理员','档案室管理员',11);
 
 
