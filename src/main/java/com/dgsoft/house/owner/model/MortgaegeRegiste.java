@@ -165,7 +165,7 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
 		this.mortgageArea = mortgageArea;
 	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "OLD_FIN", nullable = true)
     public Financial getOldFinancial() {
         return oldFinancial;
