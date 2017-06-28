@@ -66,6 +66,9 @@ public class HouseInfoFill implements BusinessDataFill {
                   if (house.getUnitNumber()!=null){
                       houseBusiness.getAfterBusinessHouse().setUnitNumber(house.getUnitNumber());
                   }
+                  if (house.getUnitNumber() == null && houseBusiness.getStartBusinessHouse().getUnitNumber()!=null){
+                      houseBusiness.getAfterBusinessHouse().setUnitNumber(houseBusiness.getStartBusinessHouse().getUnitNumber());
+                  }
 
                   if (house.getBuild()!=null) {
                       houseBusiness.getAfterBusinessHouse().setFloorCount(house.getBuild().getFloorCount());
