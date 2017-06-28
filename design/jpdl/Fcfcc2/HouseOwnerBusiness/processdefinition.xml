@@ -24,19 +24,7 @@
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}check"></assignment>
         </task>
-		<transition to="是否审批"></transition>
 		<transition to="受理" name="回退受理"></transition>
-    </task-node>
-
-    <task-node name="登薄">
-        <task name="登薄">
-            <description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
-			</description>
-            <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}RecordFile"></assignment>
-        </task>
-        <transition to="登薄结果"></transition>
-
     </task-node>
 
     <task-node name="归档">
@@ -64,77 +52,12 @@
 		</transition>
     </decision>
 
-    <decision name="是否登薄">
-		<transition to="繕证判断" name="不登薄">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
-		</transition>
-		<transition to="登薄" name="需要登薄">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP43','WP51','WP50','WP42','WP76','WP116')}"></condition>
-		</transition>
-	</decision>
-
-	<task-node name="审批">
-		<task name="审批">
-			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
-			</description>
-			<assignment pooled-actors="commodity_last_check"></assignment>
-		</task>
-		<transition to="审批结果"></transition>
-	</task-node>
-
-	<decision name="是否审批">
-		<transition to="是否质检" name="不审批">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP40','WP50')}"></condition>
-		</transition>
-		<transition to="审批" name="审批">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP40','WP50')}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="审批结果">
-		<transition to="是否质检">
-			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
-		</transition>
-		<transition to="受理" name="审批驳回">
-			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="登薄结果">
-		<transition to="繕证判断">
-			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
-		</transition>
-		<transition to="受理" name="登薄驳回">
-			<condition></condition>
-		</transition>
-	</decision>
-
-	<decision name="类型判断">
+    <decision name="类型判断">
 		<transition to="受理" name="更正业务">
 			<condition expression="#{ownerBusinessHome.instance.type eq 'MODIFY_BIZ'}"></condition>
 		</transition>
 		<transition to="要件上传" name="正常业务">
 			<condition expression="#{ownerBusinessHome.instance.type eq 'NORMAL_BIZ'}"></condition>
-		</transition>
-	</decision>
-
-	<task-node name="质检">
-		<task name="质检">
-			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
-			</description>
-			<assignment pooled-actors="quality_check"></assignment>
-		</task>
-		<transition to="质检结果"></transition>
-	</task-node>
-
-	<decision name="质检结果">
-		<transition to="受理" name="质检驳回">
-			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
-		</transition>
-		<transition to="是否登薄" name="质检通过">
-			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
 	</decision>
 
@@ -145,43 +68,11 @@
 			</description>
 			<assignment pooled-actors="Money"></assignment>
 		</task>
-		<transition to="是否发证"></transition>
 	</task-node>
 
 	<decision name="收费判断">
 		<transition to="收费" name="收费">
 			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP38','WP110','WP12','WP17','WP21','WP46','WP4','WP8','WP70','WP73','WP74','WP42','WP50')}"></condition>
-		</transition>
-		<transition to="是否发证" name="不收费">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP38','WP110','WP12','WP17','WP21','WP46','WP4','WP8','WP70','WP73','WP74','WP42','WP50')}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="是否发证">
-		<transition to="归档" name="不发证">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP36','WP37','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84','WP116')}"></condition>
-		</transition>
-		<transition to="发证" name="发证">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP36','WP37','WP42','WP43','WP46','WP4','WP8','WP12','WP17','WP21','WP73','WP74','WP84','WP116')}"></condition>
-		</transition>
-	</decision>
-
-	<task-node name="发证">
-		<task name="发证">
-			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
-			</description>
-			<assignment pooled-actors="give_card"></assignment>
-		</task>
-		<transition to="归档"></transition>
-	</task-node>
-
-	<decision name="是否质检">
-		<transition to="质检" name="质检">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP73','WP74')}"></condition>
-		</transition>
-		<transition to="登薄" name="不质检">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74')}"></condition>
 		</transition>
 	</decision>
 

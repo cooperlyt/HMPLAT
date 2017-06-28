@@ -25,6 +25,12 @@ public class ProjectMortgage {
     public ProjectMortgage() {
     }
 
+    public ProjectMortgage(String developerCode,String developerName) {
+        this.developerCode = developerCode;
+        this.developerName = developerName;
+
+    }
+
     public ProjectMortgage(MortgaegeRegiste mortgaegeRegiste) {
         this.mortgaegeRegiste = mortgaegeRegiste;
     }
