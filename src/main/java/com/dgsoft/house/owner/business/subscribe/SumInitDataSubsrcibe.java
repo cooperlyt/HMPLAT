@@ -81,6 +81,7 @@ public class SumInitDataSubsrcibe {
 
         if (houses!=null && houses.size()>0){
             this.houseList = houses;
+
         }
 
 

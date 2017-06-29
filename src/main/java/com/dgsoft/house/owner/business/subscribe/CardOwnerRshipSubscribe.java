@@ -5,6 +5,7 @@ import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Card;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +29,11 @@ public class CardOwnerRshipSubscribe extends OwnerEntityHome<Card> {
         super.create();
         for(Card card:ownerBusinessHome.getInstance().getCards()){
             if (card.getType().equals(Card.CardType.OWNER_RSHIP)){
-                setId(card.getId());
+                if (card.getId()!=null){
+                    setId(card.getId());
+                }else{
+                    setInstance(card);
+                }
                 return;
             }
 
