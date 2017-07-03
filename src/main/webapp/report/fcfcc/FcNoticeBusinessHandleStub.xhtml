@@ -1,0 +1,339 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="业务受理单">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="20" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center"> 房 地 产 登 记 受 理 凭 证 (存根联) </p:paragraph>
+</p:font>
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+    <p:table columns="5" widths="1 1 2 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+        <f:facet name="defaultCell">
+            <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
+                   />
+        </f:facet>
+
+        <p:cell horizontalAlignment="right">
+            <p:paragraph>受理编号：</p:paragraph>
+        </p:cell>
+
+        <p:cell horizontalAlignment="left">
+            <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+        </p:cell>
+        <p:cell horizontalAlignment="left">
+
+        </p:cell>
+        <p:cell horizontalAlignment="right">
+            <p:paragraph>受理人：</p:paragraph>
+        </p:cell>
+
+        <p:cell horizontalAlignment="left">
+            <p:paragraph
+                    rendered="#{not empty ownerBusinessHome.applyEmp}">#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+        </p:cell>
+    </p:table>
+
+    <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+        <f:facet name="defaultCell">
+            <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="true"
+                    horizontalAlignment="center" verticalAlignment="middle"/>
+        </f:facet>
+
+        <p:cell>
+            <p:paragraph>房屋编号</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>产权标识</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>申请人</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+
+            <p:paragraph><ui:repeat var="_abusinessPools" value="#{_houseBusiness.afterBusinessHouse.mainPreparePersonList}"><p:text value="  #{_abusinessPools.personName}"/></ui:repeat></p:paragraph>
+
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>房屋坐落</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+        </p:cell>
+
+
+        <p:cell>
+            <p:paragraph>受理日期</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                    pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>登记类别</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>取证时间</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>    年       月      日</p:paragraph>
+
+        </p:cell>
+
+        <p:cell>
+            <p:paragraph>登记申请人签字</p:paragraph>
+        </p:cell>
+
+        <p:cell>
+
+        </p:cell>
+
+
+        <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="center" noWrap="false" border="0">
+            <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="16" style="bold">
+                <p:paragraph>办 理 须 知</p:paragraph>
+            </p:font>
+
+        </p:cell>
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12" style="bold">
+            <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="left" noWrap="false" border="0">
+
+                <p:paragraph>一、备案部门在内部需要进行审核等工作程序，如果发现问题将通知当事人，请予以配合。</p:paragraph>
+
+            </p:cell>
+
+            <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="left" noWrap="false" border="0">
+
+                <p:paragraph>二、符合备案条件的，予以备案确认</p:paragraph>
+
+            </p:cell>
+
+            <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="left" noWrap="false" border="0">
+
+                <p:paragraph>三、不符合备案条件或申请人（代理人）在通知的补正期限内无正当理由未补齐材料的，不予备案确认。备案部门将电话通知当事人于指定时间持本受理凭证及身份证明到原受理窗口领取《不予备案登记决定书》。</p:paragraph>
+
+            </p:cell>
+
+        </p:font>
+
+    </p:table>
+
+    <p:table columns="4" widths="1 5 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+        <f:facet name="defaultCell">
+            <p:cell padding="1" paddingBottom="1" paddingTop="1" noWrap="true"
+                    horizontalAlignment="center" verticalAlignment="middle"/>
+        </f:facet>
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+            <p:cell fixedHeight="15"><p:paragraph>序号</p:paragraph></p:cell>
+            <p:cell><p:paragraph>材料名称</p:paragraph></p:cell>
+            <p:cell><p:paragraph>原件/复印件</p:paragraph></p:cell>
+            <p:cell><p:paragraph>页数</p:paragraph></p:cell>
+            <c:forEach begin="0" end="17" step="1" var="_filesesNames">
+                <p:cell> <p:paragraph>#{_filesesNames+1}</p:paragraph></p:cell>
+
+                <p:cell fixedHeight="17"><p:paragraph
+                        rendered="#{_filesesNames lt (ownerBusinessHome.uploadedFiles.size)}">#{ownerBusinessHome.uploadedFiles.get(_filesesNames).name}</p:paragraph></p:cell>
+                <p:cell></p:cell>
+                <p:cell></p:cell>
+            </c:forEach>
+        </p:font>
+    </p:table>
+
+    <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+</p:font>
+<p:newPage/>
+
+<p:newPage>
+
+    <p:font alignment="center" size="20" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:paragraph alignment="center">房 地 产 登 记 受 理 凭 证 (领证联) </p:paragraph>
+    </p:font>
+    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+        <p:table columns="5" widths="1 1 2 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell padding="5" paddingBottom="10" paddingTop="10" noWrap="true" border="0"
+                        />
+            </f:facet>
+
+            <p:cell horizontalAlignment="right">
+                <p:paragraph>受理编号：</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+            </p:cell>
+            <p:cell horizontalAlignment="left">
+
+            </p:cell>
+            <p:cell horizontalAlignment="right">
+                <p:paragraph>受理人：</p:paragraph>
+            </p:cell>
+
+            <p:cell horizontalAlignment="left">
+                <p:paragraph rendered="#{not empty ownerBusinessHome.applyEmp}">#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+            </p:cell>
+        </p:table>
+
+        <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+            <f:facet name="defaultCell">
+                <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="true"
+                        horizontalAlignment="center" verticalAlignment="middle"/>
+            </f:facet>
+
+            <p:cell>
+                <p:paragraph>房屋编号</p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseCode}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>产权标识</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>申请人</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+
+                <p:paragraph><ui:repeat var="_abusinessPools" value="#{_houseBusiness.afterBusinessHouse.mainPreparePersonList}"><p:text value="  #{_abusinessPools.personName}"/></ui:repeat></p:paragraph>
+
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>房屋坐落</p:paragraph>
+            </p:cell>
+
+            <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+            </p:cell>
+
+
+            <p:cell>
+                <p:paragraph>受理日期</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                        pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>登记类别</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>取证时间</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>    年       月      日</p:paragraph>
+
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>登记申请人签字</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+
+            </p:cell>
+
+
+            <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="center" noWrap="false" border="0">
+                <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="16" style="bold">
+                    <p:paragraph>办 理 须 知</p:paragraph>
+                </p:font>
+
+            </p:cell>
+            <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12" style="bold">
+                <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="left" noWrap="false" border="0">
+
+                    <p:paragraph>一、备案部门在内部需要进行审核等工作程序，如果发现问题将通知当事人，请予以配合。</p:paragraph>
+
+                </p:cell>
+
+                <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="left" noWrap="false" border="0">
+
+                    <p:paragraph>二、符合备案条件的，予以备案确认</p:paragraph>
+
+                </p:cell>
+
+                <p:cell colspan="4" verticalAlignment="middle" horizontalAlignment="left" noWrap="false" border="0">
+
+                    <p:paragraph>三、不符合备案条件或申请人（代理人）在通知的补正期限内无正当理由未补齐材料的，不予备案确认。备案部门将电话通知当事人于指定时间持本受理凭证及身份证明到原受理窗口领取《不予备案登记决定书》。</p:paragraph>
+
+                </p:cell>
+            </p:font>
+
+        </p:table>
+
+        <p:table columns="4" widths="1 5 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+            <f:facet name="defaultCell">
+                <p:cell padding="1" paddingBottom="1" paddingTop="1" noWrap="true"
+                        horizontalAlignment="center" verticalAlignment="middle"/>
+            </f:facet>
+            <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+                <p:cell><p:paragraph>序号</p:paragraph></p:cell>
+                <p:cell><p:paragraph>材料名称</p:paragraph></p:cell>
+                <p:cell><p:paragraph>原件/复印件</p:paragraph></p:cell>
+                <p:cell><p:paragraph>页数</p:paragraph></p:cell>
+                <c:forEach begin="0" end="17" step="1" var="_filesesNames">
+                    <p:cell fixedHeight="17"><p:paragraph>#{_filesesNames+1}</p:paragraph></p:cell>
+
+                    <p:cell><p:paragraph
+                            rendered="#{_filesesNames lt (ownerBusinessHome.uploadedFiles.size)}">#{ownerBusinessHome.uploadedFiles.get(_filesesNames).name}</p:paragraph></p:cell>
+                    <p:cell></p:cell>
+                    <p:cell></p:cell>
+                </c:forEach>
+            </p:font>
+        </p:table>
+
+        <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+    </p:font>
+</p:newPage>
+
+</a:repeat>
+</p:document>
