@@ -20,8 +20,8 @@
                 <p:paragraph> 登记机构：#{runParam.getStringParamValue('SetupName')}</p:paragraph>
             </p:cell>
 
-            <p:cell alignment="left" horizontalAlignment="left" verticalAlignment="middle">
-                <p:paragraph>本信息收集声明：本申请书信息系依法定职权收集，用于房地产登记和登记资料利用</p:paragraph>
+            <p:cell alignment="left" horizontalAlignment="left" verticalAlignment="middle" border="0">
+                <p:paragraph></p:paragraph>
             </p:cell>
             <p:cell colspan="3" border="0" fixedHeight="2">
             </p:cell>
@@ -43,7 +43,7 @@
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.houseCode}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCode}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.houseOrder}</p:paragraph></p:cell>
-                <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.useType)}</p:paragraph></p:cell>
+                <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.designUseType)}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph></p:cell>
             </a:repeat>
