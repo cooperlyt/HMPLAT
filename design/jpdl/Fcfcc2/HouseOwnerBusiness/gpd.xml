@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="HouseOwnerBusiness" width="1067" height="753">
+<root-container name="HouseOwnerBusiness" width="799" height="547">
   <node name="业务受理" x="36" y="15" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="受理" x="35" y="187" width="132" height="36">
+  <node name="受理" x="-24" y="209" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
+      <bendpoint w1="184" h1="-31" w2="-112" h2="109"/>
     </edge>
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="审核" x="512" y="89" width="132" height="36">
-    <edge>
-      <label x="-49" y="-1"/>
-      <bendpoint w1="-247" h1="15" w2="230" h2="-83"/>
-    </edge>
-  </node>
-  <node name="归档" x="63" y="524" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="缮证" x="636" y="716" width="132" height="36">
+  <node name="审核" x="468" y="257" width="132" height="38">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="繕证判断" x="635" y="603" width="132" height="36">
+  <node name="归档" x="249" y="510" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="缮证" x="484" y="367" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="繕证判断" x="242" y="371" width="132" height="36">
     <edge>
       <label x="-15" y="-12"/>
     </edge>
@@ -38,21 +38,23 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
+  <node name="审核结果" x="229" y="257" width="132" height="36">
+    <edge>
+      <label x="-21" y="-13"/>
+    </edge>
+    <edge>
+      <label x="10" y="-19"/>
+    </edge>
+  </node>
   <node name="类型判断" x="36" y="90" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
-      <label x="-19" y="-9"/>
+      <label x="-24" y="-18"/>
     </edge>
   </node>
-  <node name="收费" x="429" y="523" width="132" height="36"/>
-  <node name="收费判断" x="425" y="616" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-  </node>
-  <node name="要件上传" x="265" y="34" width="132" height="36">
+  <node name="要件上传" x="272" y="69" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -60,5 +62,21 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="结束" x="42" y="455" width="132" height="36"/>
+  <node name="结束" x="33" y="454" width="132" height="36"/>
+  <node name="收费" x="641" y="67" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="收费判断" x="443" y="71" width="138" height="36">
+    <edge>
+      <label x="-8" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>

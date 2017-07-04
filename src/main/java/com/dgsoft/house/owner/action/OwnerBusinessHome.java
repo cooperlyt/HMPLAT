@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Logging;
 import org.jboss.seam.security.Identity;
+import sun.rmi.runtime.Log;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -195,6 +196,26 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
             }
         }
         return true;
+    }
+
+    public boolean isMoney(){
+
+
+        Set<HouseBusiness> houseBusinesses = getInstance().getHouseBusinesses();
+        if (houseBusinesses.size() > 1) {
+
+            return false;
+        }
+        if (houseBusinesses.size()==1 && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo()!=null
+              && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getHouseFrom()!=null
+              && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getHouseFrom().equals("5046")){
+
+            return true;
+
+        }
+
+
+        return false;
     }
 
     public List<TaskOper> getTaskOperList(){
