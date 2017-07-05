@@ -206,13 +206,21 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
             return false;
         }
-        if (houseBusinesses.size()==1 && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo()!=null
-              && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getHouseFrom()!=null
-              && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getHouseFrom().equals("5046")){
+        if (getInstance().getBusinessMoneys()!=null && getInstance().getBusinessMoneys().size()>0){
+            for(BusinessMoney money: getInstance().getBusinessMoneys()){
+                  if (money.getShouldMoney().compareTo(BigDecimal.ZERO)>0){
+                      return true;
 
-            return true;
-
+                  }
+            }
         }
+//        if (houseBusinesses.size()==1 && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo()!=null
+//              && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getHouseFrom()!=null
+//              && getSingleHoues().getAfterBusinessHouse().getHouseRegInfo().getHouseFrom().equals("5046")){
+//
+//            return true;
+//
+//        }
 
 
         return false;
