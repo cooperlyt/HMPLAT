@@ -4,13 +4,13 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房地产抵押权设立备案登记申请书">
+            title="房地产抵押权注销备案登记申请书">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">房地产抵押权设立备案登记申请书
+    <p:paragraph alignment="center">房地产抵押权注销备案登记申请书
     </p:paragraph>
 </p:font>
 
@@ -66,50 +66,49 @@
                     <p:paragraph>姓名(名称)</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.financial.name}</p:paragraph>
-
+                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.name}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>联系电话</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthRight="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.financial.phone}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.phone}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>证件类型</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{messages[ownerBusinessHome.instance.mortgaegeRegiste.financial.credentialsType.name()]}</p:paragraph>
+                    <p:paragraph>#{messages[ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.credentialsType.name()]}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>证件号码</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.financial.credentialsNumber}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.credentialsNumber}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>代理人姓名</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.financial.proxyPerson.personName}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.proxyPerson.personName}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>联系电话</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthRight="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.financial.proxyPerson.phone}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.proxyPerson.phone}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="25">
                     <p:paragraph>证件类型</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
-                    <p:paragraph>#{messages[ownerBusinessHome.instance.mortgaegeRegiste.financial.proxyPerson.credentialsType.name()]}</p:paragraph>
+                    <p:paragraph>#{messages[ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.proxyPerson.credentialsType.name()]}</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
                     <p:paragraph>证件号码</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.financial.proxyPerson.credentialsNumber}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.oldFinancial.proxyPerson.credentialsNumber}</p:paragraph>
                 </p:cell>
 
             </p:table>
@@ -237,67 +236,77 @@
         <f:facet name="defaultCell">
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
         </f:facet>
-        <p:cell borderWidthLeft="0" borderWidthTop="0"  fixedHeight="28">
+        <p:cell borderWidthLeft="0" borderWidthTop="0"  fixedHeight="22">
             <p:paragraph>房屋坐落</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" borderWidthTop="0" colspan="3">
             <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>房号</p:paragraph>
+        <p:cell borderWidthLeft="0" fixedHeight="22">
+            <p:paragraph>房屋所有权证号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseOrder}</p:paragraph>
+            <p:paragraph></p:paragraph>
         </p:cell>
 
-        <p:cell borderWidthLeft="0" fixedHeight="20">
+        <p:cell borderWidthLeft="0" fixedHeight="22">
+            <p:paragraph>他项权利证号</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" >
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="22">
+            <p:paragraph>建筑面积（㎡）</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="22">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="22">
             <p:paragraph>预告登记证明号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
             <p:paragraph>#{ownerBusinessHome.getCardNoByType('NOTICE').number}</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>建筑面积（㎡）</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" >
-            <p:paragraph>用 途</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{_houseBusiness.afterBusinessHouse.designUseType}</p:paragraph>
-        </p:cell>
 
-        <p:cell borderWidthLeft="0" fixedHeight="28">
-            <p:paragraph>主债权数额(最高债权额)</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0"  >
-            <p:paragraph>大写：#{ownerBusinessHome.instance.mortgaegeRegiste.bigHighestMountMoney}  ￥：#{ownerBusinessHome.instance.mortgaegeRegiste.highestMountMoney}</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="28">
+        <p:cell borderWidthLeft="0" fixedHeight="22">
             <p:paragraph>债务履行期限(债权确定期间)</p:paragraph>
         </p:cell>
         <p:cell colspan="3" borderWidthLeft="0"  >
             <p:paragraph><p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageDueTimeS}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  起  至    <p:text value="#{ownerBusinessHome.instance.mortgaegeRegiste.mortgageTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="28">
-            <p:paragraph>担保范围</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" borderWidthLeft="0">
-            <p:paragraph>#{ownerBusinessHome.instance.mortgaegeRegiste.warrantScope}</p:paragraph>
-        </p:cell>
 
-        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="30" >
+        <p:cell borderWidthLeft="0" fixedHeight="38">
+            <p:paragraph>变更类型</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false" >
             <p:paragraph>申请#{ownerBusinessHome.instance.defineName}</p:paragraph>
         </p:cell>
-        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="30">
+        <p:cell borderWidthLeft="0" fixedHeight="28">
+            <p:paragraph>变更前</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthLeft="0"  >
+            <p:paragraph>#{ownerBusinessHome.modifyBeforReason.reason}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="28">
+            <p:paragraph>变更后</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3" borderWidthLeft="0">
+            <p:paragraph>#{ownerBusinessHome.modifyAfterReason.reason}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="20">
+            <p:paragraph>注销类型</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="3" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false" fixedHeight="30" >
+            <p:paragraph>  因 □主债权消灭  □抵押权已经实现  □抵押权人放弃抵押权  □其他情形，申请抵押权注销登记。</p:paragraph>
+        </p:cell>
+        <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="22">
             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
     </p:table>
 </p:cell>
-<p:cell colspan="2" fixedHeight="130">
+<p:cell colspan="2" fixedHeight="110">
     <p:table columns="5" widths="0.5 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
         <f:facet name="defaultCell">
             <p:cell verticalAlignment="top" horizontalAlignment="left" padding="0" border="0" noWrap="false" borderWidthTop="0"/>
