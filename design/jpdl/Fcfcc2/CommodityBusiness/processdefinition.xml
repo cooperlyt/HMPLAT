@@ -26,7 +26,7 @@
 			</description>
 			<assignment pooled-actors="commodity_check"></assignment>
 		</task>
-		<transition to="是否审批"></transition>
+		<transition to="业务完成"></transition>
 		<transition to="网签回退判断" name="回退"></transition>
 	</task-node>
 
@@ -62,34 +62,6 @@
 		<action expression='#{ownerBusinessHome.doNodeAction("业务完成")}' name="业务完成"></action>
 		<transition to="结束"></transition>
 	</node>
-
-	<task-node name="审批">
-		<task name="审批">
-			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
-			</description>
-			<assignment pooled-actors="commodity_last_check"></assignment>
-		</task>
-		<transition to="审批结果"></transition>
-	</task-node>
-
-	<decision name="审批结果">
-		<transition to="网签回退判断" name="审批驳回">
-			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
-		</transition>
-		<transition to="业务完成" name="审批通过">
-			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
-		</transition>
-	</decision>
-
-	<decision name="是否审批">
-		<transition to="审批" name="是">
-			<condition expression="#{(ownerBusinessHome.instance.defineId eq 'WP43')}"></condition>
-		</transition>
-		<transition to="业务完成" name="否">
-			<condition expression="#{(ownerBusinessHome.instance.defineId eq 'WP42')}"></condition>
-		</transition>
-	</decision>
 
 
 	<end-state name="结束"></end-state>
