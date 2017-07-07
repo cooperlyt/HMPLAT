@@ -23,7 +23,7 @@
                 </p:cell>
 
                 <p:cell alignment="left" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>本信息收集声明：本申请书信息系依法定职权收集，用于房地产登记和登记资料利用</p:paragraph>
+                    <p:paragraph>本信息收集声明：本申请书信息系依法定职权收集，用于房地产备案登记和登记备案资料利用</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" border="0" fixedHeight="2">
                 </p:cell>
@@ -65,25 +65,25 @@
                                             <p:paragraph>姓名(名称)</p:paragraph>
                                         </p:cell>
                                         <p:cell colspan="3" borderWidthLeft="0">
-                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.developerName}</p:paragraph>
+                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainInitPerson.personName}}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0">
                                             <p:paragraph>联系电话</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" borderWidthRight="0">
-                                            <p:paragraph></p:paragraph>
+                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainInitPerson.phone}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" fixedHeight="20">
                                             <p:paragraph>证件类型</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0">
-                                            <p:paragraph></p:paragraph>
+                                            <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldMainInitPerson.credentialsType.name()]}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0">
                                             <p:paragraph>证件号码</p:paragraph>
                                         </p:cell>
                                         <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
-                                            <p:paragraph></p:paragraph>
+                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainInitPerson.credentialsNumber}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" fixedHeight="100">
                                             <p:paragraph>共有情况</p:paragraph>
@@ -95,25 +95,25 @@
                                             <p:paragraph>代理人姓名</p:paragraph>
                                         </p:cell>
                                         <p:cell colspan="3" borderWidthLeft="0">
-                                            <p:paragraph>#{ownerBusinessHome.sellEntrust.personName}</p:paragraph>
+                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.personName}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0">
                                             <p:paragraph>联系电话</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" borderWidthRight="0">
-                                            <p:paragraph>#{ownerBusinessHome.sellEntrust.phone}</p:paragraph>
+                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.phone}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="20">
                                             <p:paragraph>证件类型</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" borderWidthBottom="0">
-                                            <p:paragraph>#{messages[ownerBusinessHome.sellEntrust.credentialsType.name()]}</p:paragraph>
+                                            <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.credentialsType.name()]}</p:paragraph>
                                         </p:cell>
                                         <p:cell borderWidthLeft="0" borderWidthBottom="0">
                                             <p:paragraph>证件号码</p:paragraph>
                                         </p:cell>
                                         <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
-                                            <p:paragraph>#{ownerBusinessHome.sellEntrust.credentialsNumber}</p:paragraph>
+                                            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.credentialsNumber}</p:paragraph>
                                         </p:cell>
 
                                     </p:table>
@@ -133,25 +133,25 @@
                                     <p:paragraph>姓名(名称)</p:paragraph>
                                 </p:cell>
                                 <p:cell colspan="3" borderWidthLeft="0">
-                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.personName}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.personName}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
                                     <p:paragraph>联系电话</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" borderWidthRight="0">
-                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.phone}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.phone}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="20">
                                     <p:paragraph>证件类型</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
-                                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsType.name()]}</p:paragraph>
+                                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.mainOwnerPerson.credentialsType.name()]}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
                                     <p:paragraph>证件号码</p:paragraph>
                                 </p:cell>
                                 <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
-                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.businessHouseOwner.credentialsNumber}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.credentialsNumber}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="100">
                                     <p:paragraph>共有情况</p:paragraph>
@@ -159,32 +159,32 @@
 
                                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
                                     <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
-                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}，共有份额：#{_businessPools.perc}。  " /></ui:repeat></p:paragraph>
-                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.businessPoolList}"><p:text value="姓名：#{_businessPools.personName},电话：#{_businessPools.phone},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}。  " /></ui:repeat></p:paragraph>
+                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.#"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
+                                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系:#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="20">
                                     <p:paragraph>代理人姓名</p:paragraph>
                                 </p:cell>
                                 <p:cell colspan="3" borderWidthLeft="0">
-                                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.personName}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.powerProxyPerson.personName}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
                                     <p:paragraph>联系电话</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" borderWidthRight="0">
-                                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.phone}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.powerProxyPerson.phone}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="20">
                                     <p:paragraph>证件类型</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
-                                    <p:paragraph>#{messages[ownerBusinessHome.ownerEntrust.credentialsType.name()]}</p:paragraph>
+                                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.mainOwnerPerson.powerProxyPerson.credentialsType.name()]}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
                                     <p:paragraph>证件号码</p:paragraph>
                                 </p:cell>
                                 <p:cell colspan="3" borderWidthLeft="0" borderWidthBottom="0" borderWidthRight="0">
-                                    <p:paragraph>#{ownerBusinessHome.ownerEntrust.credentialsNumber}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.powerProxyPerson.credentialsNumber}</p:paragraph>
                                 </p:cell>
 
                             </p:table>
@@ -221,13 +221,13 @@
                                     <p:paragraph>房屋所有权证号</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
-                                    <p:paragraph>#{(empty ownerBusinessHome.singleHoues.startBusinessHouse.oldOwner.makeCard.number) ? ownerBusinessHome.singleHoues.startBusinessHouse.businessHouseOwner.makeCard.number : ownerBusinessHome.singleHoues.startBusinessHouse.oldOwner.makeCard.number}</p:paragraph>
+                                    <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0" fixedHeight="20">
                                     <p:paragraph>设计用途</p:paragraph>
                                 </p:cell>
                                 <p:cell borderWidthLeft="0">
-                                    <p:paragraph>#{dictionary.getWordValue(ownerBusinessHome.singleHoues.afterBusinessHouse.useType)}</p:paragraph>
+                                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.designUseType}</p:paragraph>
                                 </p:cell>
                                 <p:cell colspan="4">
                                     <p:table columns="6" widths="1 1 1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100" >
