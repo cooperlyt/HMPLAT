@@ -1,0 +1,72 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="询问笔录">
+
+
+
+    <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+        <p:paragraph alignment="center">询问笔录（存量房转移登记）
+        </p:paragraph>
+    </p:font>
+
+
+    <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="11">
+        <p:paragraph>受理编号：#{ownerBusinessHome.instance.id}</p:paragraph>
+
+        <p:paragraph>询问人：#{ownerBusinessHome.applyEmp.empName}</p:paragraph>
+
+
+
+        <p:paragraph>1、申请登记事项是否为申请人真实意思表示？</p:paragraph>
+        <p:paragraph>回答：（请填写是或否）    </p:paragraph>
+        <p:paragraph>_____________________________________________________________________________</p:paragraph>
+
+
+        <p:paragraph>2、原房屋登记薄（房屋所有权证书）所记载的权利人（原产权人）是否存在其他共有人？</p:paragraph>
+        <p:paragraph>回答：（请填写是或否，若填“是”，请填写共有人名称）</p:paragraph>
+        <p:paragraph>                          共有人名称:</p:paragraph>
+        <p:paragraph>_____________________________________________________________________________</p:paragraph>
+
+        <p:paragraph>3、申请登记（现产权人）的房地产是共有，还是单独所有？</p:paragraph>
+        <p:paragraph>回答：（请填写共有或单独所有，若填写“共有”，请继续填写第4题，否则不必做第4题）</p:paragraph>
+        <p:paragraph>_____________________________________________________________________________</p:paragraph>
+
+        <p:paragraph>4、申请登记（现产权人）的房地产是共同共有还是按份共有？办理几本所有权证？</p:paragraph>
+        <p:paragraph>回答：（请填写共同共有或按份共有，若填"按份共有"，请填写具体份额；请填写1,2...）</p:paragraph>
+        <p:paragraph>                          按份共有份额:                             几本所有权证:
+        </p:paragraph>
+        <p:paragraph>_____________________________________________________________________________</p:paragraph>
+
+        <p:paragraph>5、谁来领取房屋所有权证？</p:paragraph>
+        <p:paragraph>回答：（请填写领取房屋权证人的姓名）</p:paragraph>
+        <p:paragraph>_____________________________________________________________________________</p:paragraph>
+
+
+        <p:paragraph>6、婚姻状况保证：自达到法定结婚年龄起（或者离婚、丧偶等视情况该）至今（或再婚前）是否登记结婚？
+
+            回答:            本人保证                                      保证人签名：
+                                  本人保证                                      保证人签名：
+                                  本人保证                                      保证人签名：</p:paragraph>
+        <p:paragraph>___________________________________________________________________________</p:paragraph>
+
+        <p:paragraph>7、其它需要询问的有关事项：
+        </p:paragraph>
+        <p:paragraph>_____________________________________________________________________________</p:paragraph>
+        <p:paragraph>8、其它需要说明的情况</p:paragraph>
+
+        <p:paragraph>回答：
+            现告知：根据《物权法》(主席令第62号)、《不动产登记暂行条例》(国务院令第656号)、《房屋登记办法》(建设部令第168号)的规定，申请人应当对申请登记材料的真实性、合法性、有效性负责，不得隐瞒真实情况或者提供虚假材料申请房屋登记。申请人提交错误、虚假的材料申请房屋登记，给他人造成损害的，应当承当相应的法律责任。</p:paragraph>
+
+        <p:paragraph>
+            经被询问人确认，以上询问事项均回答真实、无误。</p:paragraph>
+        <p:paragraph>
+            被询问人签名（签章）：
+        </p:paragraph>
+
+        <p:paragraph>询问日期：<p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></p:text></p:paragraph>
+    </p:font>
+</p:document>
