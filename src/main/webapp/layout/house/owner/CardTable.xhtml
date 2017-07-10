@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich">
+
+
+    <h:outputStylesheet>
+        .subTableHeader{
+            text-align: left !important;
+        }
+    </h:outputStylesheet>
+
+    <dh:entryGridBlock columns="1" group="#{title}">
+
+        <dh:entryGridColumn colspan="1">
+            <h:dataTable style="width: 100%;" styleClass="table " headerClass="subTableHeader"
+                         value="#{MarkCards}" var="_MarkCards">
+
+
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.MakeCard_type}
+                    </f:facet>
+                    <h:outputText
+                                  value="#{messages[_MarkCards.type.name()]}">
+                    </h:outputText>
+                </h:column>
+
+
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.MakeCard_number}
+                    </f:facet>
+
+                    <h:outputText
+                                  value="#{_MarkCards.number}">
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.field_memo}
+                    </f:facet>
+                    <h:outputText
+                            value="#{_MarkCards.memo}">
+                    </h:outputText>
+                </h:column>
+
+            </h:dataTable>
+        </dh:entryGridColumn>
+    </dh:entryGridBlock>
+</ui:composition>
