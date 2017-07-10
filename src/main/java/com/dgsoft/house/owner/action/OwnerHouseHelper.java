@@ -89,7 +89,8 @@ public class OwnerHouseHelper {
 
         List<MortgaegeRegiste> result = new ArrayList<MortgaegeRegiste>();
         for (HouseBusiness houseBusiness: ownerBusinesses){
-            if (houseBusiness.getOwnerBusiness().getMortgaegeRegiste() != null){
+            if (houseBusiness.getOwnerBusiness().getMortgaegeRegiste() != null &&
+                    houseBusiness.getOwnerBusiness().getMortgaegeRegiste().getFinancial() != null){
                 result.add(houseBusiness.getOwnerBusiness().getMortgaegeRegiste());
             }
         }

@@ -29,12 +29,17 @@
                     <ul class="pagehead-actions">
 
                         <li>
+                            <ui:remove>
                             <s:link styleClass="btn btn-sm" target="_blank" view="/report/register-book/RegisterBookFull.xhtml">
                                 <span class="glyphicon glyphicon-print"></span>
                                 登记簿
                                 <f:param name="houseCode" value="#{houseRecordHome.instance.houseCode}"/>
                             </s:link>
-
+                            </ui:remove>
+                            <h:outputLink styleClass="btn btn-sm" target="_blank"
+                                          value="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}view/page/houseRegBook.html?mapNumber=#{houseRecordHome.instance.businessHouse.mapNumber}&amp;blockNumber=#{houseRecordHome.instance.businessHouse.blockNo}&amp;buildNumber=#{houseRecordHome.instance.businessHouse.buildNo}&amp;houseNumber=#{houseRecordHome.instance.businessHouse.houseOrder}">
+                                登记簿
+                            </h:outputLink>
 
                         </li>
                     </ul>
