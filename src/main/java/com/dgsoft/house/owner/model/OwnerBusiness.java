@@ -78,6 +78,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.applyTime = createTime;
         this.recorded = recorded;
         this.type = type;
+        
     }
 
     @Id
