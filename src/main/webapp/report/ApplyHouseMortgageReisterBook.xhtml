@@ -251,10 +251,11 @@
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>房屋所有权证号(预告登记证明号)</p:paragraph>
+            <p:paragraph>房屋所有权证号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" >
-            <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
+            <p:paragraph rendered="#{(not ownerBusinessHome.instance.defineId eq 'WP153') and (not ownerBusinessHome.instance.defineId eq 'WP152')}">#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
+
         </p:cell>
         <p:cell borderWidthLeft="0" fixedHeight="20">
             <p:paragraph>建筑面积（㎡）</p:paragraph>
