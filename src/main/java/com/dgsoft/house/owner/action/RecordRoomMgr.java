@@ -176,9 +176,9 @@ public class RecordRoomMgr implements java.io.Serializable{
             for(UploadFile file: files){
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("fid",file.getId());
-                jsonObject.put("frame",file.getBusinessFile().getRecordLocal().getFrame());
-                jsonObject.put("cabinet",file.getBusinessFile().getRecordLocal().getCabinet());
-                jsonObject.put("box",file.getBusinessFile().getRecordLocal().getBox());
+//                jsonObject.put("frame",file.getBusinessFile().getRecordLocal().getFrame());
+//                jsonObject.put("cabinet",file.getBusinessFile().getRecordLocal().getCabinet());
+//                jsonObject.put("box",file.getBusinessFile().getRecordLocal().getBox());
                 jsonObject.put("emp",file.getEmpName());
 
                 jsonObject.put("time",CalendarBean.instance().displayDateTime(file.getUploadTime()));

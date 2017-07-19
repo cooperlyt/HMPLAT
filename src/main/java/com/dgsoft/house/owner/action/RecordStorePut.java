@@ -1,7 +1,6 @@
 package com.dgsoft.house.owner.action;
 
 import com.dgsoft.house.owner.model.BusinessFile;
-import com.dgsoft.house.owner.model.RecordLocal;
 import com.dgsoft.house.owner.model.RecordStore;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -86,12 +85,12 @@ public class RecordStorePut {
                     throw new IllegalArgumentException("recordStore not found:" + select.getString(i));
                 }
                 int index = 1;
-                for (BusinessFile businessFile : store.getBusinessFiles()) {
-                    RecordLocal local = new RecordLocal(frame, cabinet, box, store.getRecordCode() + "-" + index, businessFile);
-                    ownerEntityManager.persist(local);
-                    index++;
-                }
-                store.setInRoom(true);
+//                for (BusinessFile businessFile : store.getBusinessFiles()) {
+//                    RecordLocal local = new RecordLocal(frame, cabinet, box, store.getRecordCode() + "-" + index, businessFile);
+//                    ownerEntityManager.persist(local);
+//                    index++;
+//                }
+//                store.setInRoom(true);
 
             }
         } catch (JSONException e) {

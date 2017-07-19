@@ -29,7 +29,6 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
     private boolean noFile;
     //private boolean important;
 	private DocType type;
-	private RecordLocal recordLocal;
     private Set<UploadFile> uploadFiles = new HashSet<UploadFile>(0);
 	private RecordStore recordStore;
 
@@ -71,16 +70,6 @@ public class BusinessFile implements java.io.Serializable, OrderModel {
 		this.id = id;
 	}
 
-
-	@OneToOne(fetch = FetchType.LAZY,optional = true ,cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	public RecordLocal getRecordLocal() {
-		return recordLocal;
-	}
-
-	public void setRecordLocal(RecordLocal recordLocal) {
-		this.recordLocal = recordLocal;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID", nullable = false)

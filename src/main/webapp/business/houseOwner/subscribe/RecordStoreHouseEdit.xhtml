@@ -5,9 +5,72 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <div class="form-inline">
+    <div class="form">
+
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                档案室
+            </ui:define>
+            <ui:param name="for" value="recodRoomInput"/>
+            <h:selectOneMenu id="recodRoomInput" value="#{recordStoreHouseSubscribe.room}" required="true"
+                             styleClass="form-control selectpicker edit-select">
+                <s:selectItems value="#{recordRoomList.resultList}" var="room" label="#{room.name}" itemValue="#{room}"
+                               noSelectionLabel="请选择档案室"/>
+                <f:converter converterId="ownerEntityConverter"/>
+                <a:ajax event="change" render="recordStoreLocalPanel">
+                    <a:attachQueue requestDelay="0"/>
+                </a:ajax>
+            </h:selectOneMenu>
+        </s:decorate>
+
+
+        <a:outputPanel id="recordStoreLocalPanel">
+            <a:outputPanel rendered="#{not empty recordStoreHouseSubscribe.room}">
+
+
+
+
+
+                <div class="input-group">
+                <span class="input-group-addon">架<s:span styleClass="required">*</s:span></span>
+                <span class="input-group-btn">
+                <h:selectOneMenu label="架" required="true" id="frameInput"
+                                 styleClass="form-control selectpicker input-group-mid edit-select"
+                                 p:data-width="120px" style="width: 255px"
+                                 value="#{recordStoreHouseSubscribe.recordStore.recordFrame}">
+                    <s:selectItems value="#{recordStoreHouseSubscribe.room.recordFrames}" var="frame"
+                                   label="#{frame.name}" itemValue="#{frame}"/>
+                    <f:converter converterId="ownerEntityConverter"/>
+                </h:selectOneMenu>
+
+                </span>
+
+                    <span class="input-group-addon">柜<s:span styleClass="required">*</s:span></span>
+                    <h:inputText label="柜"
+                                 required="true"
+                                 value="#{recordStoreHouseSubscribe.recordStore.cabinet}"
+                                 id="cabinetInput"
+                                 styleClass="form-control"
+                                 maxlength="50">
+                    </h:inputText>
+
+                    <span class="input-group-addon">盒<s:span styleClass="required">*</s:span></span>
+
+                    <h:inputText label="盒"
+                                 required="true"
+                                 value="#{recordStoreHouseSubscribe.recordStore.box}"
+                                 id="boxInput"
+                                 styleClass="form-control"
+                                 maxlength="50">
+                    </h:inputText>
+
+                </div>
+        </a:outputPanel>
+
+
         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
                 #{messages.RecordStore_Code}
@@ -21,6 +84,9 @@
                          maxlength="50">
             </h:inputText>
         </s:decorate>
+        </a:outputPanel>
+
+
     </div>
 
 
