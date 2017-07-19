@@ -40,6 +40,7 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Date recordTime;
 
     private boolean recorded;
+    private boolean inRoom;
 
     private Set<BusinessFile> uploadFileses = new HashSet<BusinessFile>(0);
     private Set<Reason> reasons = new HashSet<Reason>(0);
@@ -71,13 +72,14 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     public OwnerBusiness() {
     }
 
-    public OwnerBusiness(BusinessSource source, BusinessStatus status, Date createTime, boolean recorded, BusinessType type) {
+    public OwnerBusiness(BusinessSource source, BusinessStatus status, Date createTime, boolean recorded, boolean inRoom, BusinessType type) {
         this.source = source;
         this.status = status;
         this.createTime = createTime;
         this.applyTime = createTime;
         this.recorded = recorded;
         this.type = type;
+        this.inRoom = false;
     }
 
     @Id
@@ -433,6 +435,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.recorded = recorded;
     }
 
+
+    @Column(name = "IN_ROOM", nullable = false)
+    public boolean isInRoom() {
+        return inRoom;
+    }
+
+    public void setInRoom(boolean inRoom) {
+        this.inRoom = inRoom;
+    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATE_TIME", nullable = false, length = 19)

@@ -5,6 +5,7 @@ import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessFile;
 import com.dgsoft.house.owner.model.HouseBusiness;
+import com.dgsoft.house.owner.model.RecordRoom;
 import com.dgsoft.house.owner.model.RecordStore;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
@@ -25,6 +26,8 @@ public class RecordStoreHouseSubscribe implements TaskSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    private RecordRoom room;
 
     private RecordStore recordStore;
 
@@ -47,6 +50,14 @@ public class RecordStoreHouseSubscribe implements TaskSubscribeComponent {
 
     public void setRecordStore(RecordStore recordStore) {
         this.recordStore = recordStore;
+    }
+
+    public RecordRoom getRoom() {
+        return room;
+    }
+
+    public void setRoom(RecordRoom room) {
+        this.room = room;
     }
 
     @Override
@@ -72,12 +83,6 @@ public class RecordStoreHouseSubscribe implements TaskSubscribeComponent {
 
         for(BusinessFile businessFile: ownerBusinessHome.getInstance().getUploadFileses()){
             businessFile.setRecordStore(recordStore);
-        }
-
-        for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getHouseBusinesses()){
-            recordStore.getHouseBusinesses().add(houseBusiness);
-            houseBusiness.getRecordStores().clear();
-            houseBusiness.getRecordStores().add(recordStore);
         }
 
         return true;

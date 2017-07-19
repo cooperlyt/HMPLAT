@@ -73,7 +73,6 @@ public class ChoiceRecordStore implements java.io.Serializable, TaskSubscribeCom
                     file.setRecordStore(recordStore);
                 }
                 ownerBusinessHome.getInstance().getRecordStores().add(recordStore);
-                recordStore.setHouseBusiness(ownerBusinessHome.getSingleHoues());
             }
 
             return true;

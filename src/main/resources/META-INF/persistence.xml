@@ -127,12 +127,13 @@
         <class>com.dgsoft.house.owner.model.ProjectMortgage</class>
         <class>com.dgsoft.house.owner.model.GiveCard</class>
         <class>com.dgsoft.house.owner.model.ProjectLandEndTime</class>
-        <class>com.dgsoft.house.owner.model.RecordLocal</class>
         <class>com.dgsoft.house.owner.model.SubStatus</class>
         <class>com.dgsoft.house.owner.model.SaleShowCheck</class>
         <class>com.dgsoft.house.owner.model.ProxyPerson</class>
         <class>com.dgsoft.house.owner.model.ContractSubmit</class>
         <class>com.dgsoft.house.owner.model.SellTypeTotal</class>
+        <class>com.dgsoft.house.owner.model.RecordRoom</class>
+        <class>com.dgsoft.house.owner.model.RecordFrame</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

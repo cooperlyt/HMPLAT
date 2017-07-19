@@ -21,14 +21,14 @@ public class RecordStore implements java.io.Serializable {
     private OwnerBusiness ownerBusiness;
 
     private String recordCode;
+    private RecordFrame recordFrame;
+    private String cabinet;
+    private String box;
 
-    private boolean inRoom;
 
     private Long version;
 
     private Date createTime;
-
-    private Set<HouseBusiness> houseBusinesses = new HashSet<HouseBusiness>(0);
 
 
     private Set<BusinessFile> businessFiles = new HashSet<BusinessFile>();
@@ -39,7 +39,6 @@ public class RecordStore implements java.io.Serializable {
     public RecordStore(OwnerBusiness ownerBusiness) {
         this.ownerBusiness = ownerBusiness;
         this.createTime = new Date();
-        this.inRoom = false;
     }
 
     @Id
@@ -80,14 +79,6 @@ public class RecordStore implements java.io.Serializable {
         this.ownerBusiness = ownerBusiness;
     }
 
-    @Column(name = "IN_ROOM",nullable = false)
-    public boolean isInRoom() {
-        return inRoom;
-    }
-
-    public void setInRoom(boolean inRoom) {
-        this.inRoom = inRoom;
-    }
 
     @Version
     @Column(name = "VERSION" , nullable = true)
@@ -133,29 +124,36 @@ public class RecordStore implements java.io.Serializable {
         this.createTime = createTime;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name = "HOUSE_AND_RECORD",joinColumns=@JoinColumn(name="RECORD"),inverseJoinColumns = @JoinColumn(name = "HOUSE"))
-    public Set<HouseBusiness> getHouseBusinesses() {
-        return houseBusinesses;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FRAME", nullable = false)
+    @NotNull
+    public RecordFrame getRecordFrame() {
+        return recordFrame;
     }
 
-    public void setHouseBusinesses(Set<HouseBusiness> houseBusinesses) {
-        this.houseBusinesses = houseBusinesses;
+    public void setRecordFrame(RecordFrame recordFrame) {
+        this.recordFrame = recordFrame;
     }
 
-
-    @Transient
-    public HouseBusiness getHouseBusiness(){
-        if (getHouseBusinesses().isEmpty()){
-            return null;
-        }else
-            return getHouseBusinesses().iterator().next();
+    @Column(name="CABINET",length = 32,nullable = false)
+    @NotNull
+    public String getCabinet() {
+        return cabinet;
     }
 
-    @Transient
-    public void setHouseBusiness(HouseBusiness houseBusiness){
-        getHouseBusinesses().clear();
-        getHouseBusinesses().add(houseBusiness);
-
+    public void setCabinet(String cabinet) {
+        this.cabinet = cabinet;
     }
+
+    @Column(name = "BOX",length = 32,nullable = false)
+    @NotNull
+    public String getBox() {
+        return box;
+    }
+
+    public void setBox(String box) {
+        this.box = box;
+    }
+
 }

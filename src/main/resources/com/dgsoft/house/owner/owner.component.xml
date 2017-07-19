@@ -13,7 +13,9 @@
         <property name="entityLoader">#{ownerEntityLoader}</property>
     </component>
 
-
+    <component name="recordRoomList" class="com.dgsoft.house.owner.OwnerEntityQuery" scope="conversation">
+        <property name="ejbql">select room from RecordRoom room order by room.id</property>
+    </component>
 
 
 </components>
