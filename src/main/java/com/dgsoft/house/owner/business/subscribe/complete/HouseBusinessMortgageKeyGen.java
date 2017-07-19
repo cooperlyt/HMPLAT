@@ -7,6 +7,7 @@ import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseContract;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2016-12-18.
@@ -32,15 +33,19 @@ public class HouseBusinessMortgageKeyGen implements TaskCompleteSubscribeCompone
             KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
 
             if(hb.getAfterBusinessHouse().getHouseContracts()!=null) {
+
                 for (HouseContract hc : hb.getAfterBusinessHouse().getHouseContracts()) {
+                    Logging.getLog(getClass()).debug("11111--"+hc.getContractNumber());
                     key.addWord(hc.getContractNumber());
                 }
             }
             if(hb.getStartBusinessHouse().getHouseContracts()!=null) {
                 for (HouseContract hc : hb.getStartBusinessHouse().getHouseContracts()) {
+                    Logging.getLog(getClass()).debug("22222--"+hc.getContractNumber());
                     key.addWord(hc.getContractNumber());
                 }
             }
+            Logging.getLog(getClass()).debug("333333--");
             hb.setSearchKey(key.getKey());
         }
 

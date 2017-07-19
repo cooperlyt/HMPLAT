@@ -40,7 +40,7 @@ public class SelectBizModifying implements TaskCompleteSubscribeComponent {
     public void complete() {
         if (ownerBusinessHome.getInstance().getSelectBusiness()!=null){
 
-            List<String> allDefineIds = Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","));
+           // List<String> allDefineIds = Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","));
 
             ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.MODIFYING);
 //            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){

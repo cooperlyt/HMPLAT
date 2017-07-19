@@ -12,6 +12,7 @@ import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2016-12-17.
@@ -32,32 +33,36 @@ public class DeveloperChangeOldOwner implements BusinessDataFill {
 
 
             for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                PowerPerson powerPerson = new PowerPerson(PowerPerson.PowerPersonType.INIT,true);
+                if (houseBusiness.getStartBusinessHouse()!=null && houseBusiness.getStartBusinessHouse().getDeveloperCode()!=null && !houseBusiness.getStartBusinessHouse().getDeveloperCode().equals("")) {
+                    PowerPerson powerPerson = new PowerPerson(PowerPerson.PowerPersonType.INIT, true);
 
-                powerPerson.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
-                powerPerson.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                    powerPerson.setPersonName(houseBusiness.getStartBusinessHouse().getDeveloperName());
+                    powerPerson.setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
 
-                Developer developer = houseEntityLoader.getEntityManager().find(Developer.class,houseBusiness.getStartBusinessHouse().getDeveloperCode());
-                if (developer.getAttachCorporation()!=null){
-                    if ( developer.getAttachCorporation().getLicenseNumber()!=null) {
-                        powerPerson.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
-                    }else{
+                    Logging.getLog(getClass()).debug("111---" + houseBusiness.getStartBusinessHouse().getDeveloperCode());
+
+                    Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, houseBusiness.getStartBusinessHouse().getDeveloperCode());
+                    if (developer.getAttachCorporation() != null) {
+                        if (developer.getAttachCorporation().getLicenseNumber() != null) {
+                            powerPerson.setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
+                        } else {
+                            powerPerson.setCredentialsNumber(developer.getId());
+                        }
+                        powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
+                        powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
+                        powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
+
+                    } else {
                         powerPerson.setCredentialsNumber(developer.getId());
+
+                        powerPerson.setPhone("");
+
                     }
-                    powerPerson.setLegalPerson(developer.getAttachCorporation().getOwnerName());
-                    powerPerson.setPhone(developer.getAttachCorporation().getOwnerTel());
-                    powerPerson.setLegalType(cc.coopersoft.house.sale.data.PowerPerson.LegalType.LEGAL_OWNER);
 
-                }else{
-                    powerPerson.setCredentialsNumber(developer.getId());
+                    houseBusiness.getAfterBusinessHouse().getPowerPersons().add(powerPerson);
 
-                    powerPerson.setPhone("");
-
+                    houseBusiness.getAfterBusinessHouse().setOldPoolType(PoolType.SINGLE_OWNER);
                 }
-
-                houseBusiness.getAfterBusinessHouse().getPowerPersons().add(powerPerson);
-
-                houseBusiness.getAfterBusinessHouse().setOldPoolType(PoolType.SINGLE_OWNER);
             }
 
     }
