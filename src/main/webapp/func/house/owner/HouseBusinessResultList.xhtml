@@ -37,6 +37,16 @@
 
                     </span>
 
+                    <ui:repeat  value="#{_item.ownerBusiness.recordStoreList}" var="_store">
+                        <p class="repo-list-meta">
+                            档案室
+                            #{_store.recordFrame.recordRoom.name}
+                            #{_store.recordFrame.name}架
+                            #{_store.cabinet}柜
+                            #{_store.box}盒
+                            #{_store.recordCode}卷
+                        </p>
+                    </ui:repeat>
 
                     <p class="repo-list-meta">
 
@@ -59,16 +69,7 @@
 
                     </p>
 
-                    <ui:repeat  value="#{_item.ownerBusiness.recordStoreList}" var="_store">
-                        <p class="repo-list-meta">
-                            档案室
-                        #{_store.recordFrame.recordRoom.name}
-                        #{_store.recordFrame.name}架
-                        #{_store.cabinet}柜
-                        #{_store.box}盒
-                        #{_store.recordCode}卷
-                        </p>
-                    </ui:repeat>
+
                 </li>
 
 

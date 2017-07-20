@@ -13,7 +13,10 @@
 
     <h:outputStylesheet>
 
-
+        .img-print img{
+            width: 10px;
+            height: 10px;
+        }
 
         .docs-pictures {
             margin: 0;
@@ -163,7 +166,7 @@
                                 <div class="thumbnail">
                                 <img src="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/160x160s/#{_img.id}"
                                      data-id="#{_img.id}"  data-original="#{runParam.getStringParamValue('IMG_SERVER_ADDRESS')}img/orig/#{_img.id}"
-                                     title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '档案编号:'}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordLocal) ? ' 未上架': '位置:'} #{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.frame}#{(empty _img.businessFile.recordLocal) ? '': '架'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.cabinet}#{(empty _img.businessFile.recordLocal) ? '': '柜'}#{(empty _img.businessFile.recordLocal) ? '': _img.businessFile.recordLocal.box}#{(empty _img.businessFile.recordLocal) ? '': '盒'}" />
+                                     title="#{_img.businessFile.name}" alt="#{(empty _img.businessFile.recordStore) ? '未归档' : '' }  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordFrame.recordRoom.name}  #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordFrame.name} #{(empty _img.businessFile.recordStore) ? ' ' : '架'} #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.cabinet} #{(empty _img.businessFile.recordStore) ? ' ' : '柜'} #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.box} #{(empty _img.businessFile.recordStore) ? ' ' : '盒'} #{(empty _img.businessFile.recordStore) ? ' ' : _img.businessFile.recordStore.recordCode} #{(empty _img.businessFile.recordStore) ? ' ' : '卷'}" />
                                 </div>
                         </li>
 

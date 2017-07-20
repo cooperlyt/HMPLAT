@@ -1796,7 +1796,11 @@ var methods = {
             doc = content.document;
         }
 
-        doc.write($($('<div><img src="' + self.image.src + '"/></div>')).html());
+        // landscape  portrait
+
+        var page_order = (self.image.naturalWidth > self.image.naturalHeight) ? 'landscape' : 'portrait';
+
+        doc.write('<style type="text/css">@Page {size: A4 ' + page_order +  '; margin:0;}  @media only print { .img-print img{width: ' + (page_order == 'landscape' ? '292' : '205') + 'mm; height: ' + (page_order == 'landscape' ? '205' : '292') + 'mm;}} </style><div class="img-print"><img src="' + self.image.src + '" /></div>');
 
         doc.close();
 

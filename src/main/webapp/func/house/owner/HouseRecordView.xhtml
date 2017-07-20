@@ -228,6 +228,16 @@
                                 <span  data-describe="json" data-description="#{_item.display}"/>
 
 
+                                <ui:repeat  value="#{_item.ownerBusiness.recordStoreList}" var="_store">
+                                    <p class="repo-list-meta">
+                                        档案室
+                                        #{_store.recordFrame.recordRoom.name}
+                                        #{_store.recordFrame.name}架
+                                        #{_store.cabinet}柜
+                                        #{_store.box}盒
+                                        #{_store.recordCode}卷
+                                    </p>
+                                </ui:repeat>
 
                                 <p class="repo-list-meta">
                                     <ui:insert name="itemMeta">
@@ -249,30 +259,11 @@
                                     </ui:insert>
 
                                 </p>
+
+
+
+
                             </li>
-
-
-                            <ui:remove>
-                                <ui:define name="itemAction">
-                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="架">
-                                        <span class="octicon octicon-versions"/>
-                                        #{_item.recordStore.frame}
-                                    </s:link>
-                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="柜">
-                                        <span class="glyphicon glyphicon-compressed"/>
-                                        #{_item.recordStore.cabinet}
-                                    </s:link>
-                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="盒">
-                                        <span class="octicon octicon-inbox"/>
-                                        #{_item.recordStore.box}
-                                    </s:link>
-                                    <s:link styleClass="repo-list-stat-item tooltipped tooltipped-s" p:aria-label="档案编号">
-                                        <span class="octicon octicon-repo"/>
-                                        #{_item.recordStore.recordCode}
-                                    </s:link>
-                                </ui:define>
-                            </ui:remove>
-
 
 
 
