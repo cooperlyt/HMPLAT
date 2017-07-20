@@ -169,6 +169,21 @@ public class OwnerHouseHelper {
         return key;
     }
 
+    public static KeyGeneratorHelper fcgenHouseSearchKey(BusinessHouse house){
+
+        KeyGeneratorHelper key = new KeyGeneratorHelper();
+        for (PowerPerson pp : house.getPowerPersons()){
+
+                key.addWord(pp.getPersonName());
+                key.addWord(pp.getCredentialsNumber());;
+
+        }
+        key.addWord(house.getHouseCode());
+        key.addWord(house.getAddress());
+
+        return key;
+    }
+
     public static KeyGeneratorHelper genProjectSearchKey(BusinessHouse house){
 
         KeyGeneratorHelper key = new KeyGeneratorHelper();
