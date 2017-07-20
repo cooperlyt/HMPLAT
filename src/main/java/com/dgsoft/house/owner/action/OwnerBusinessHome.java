@@ -40,7 +40,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @Override
     public OwnerBusiness createInstance(){
         OwnerBusiness result = new OwnerBusiness(OwnerBusiness.BusinessSource.BIZ_CREATE,
-                OwnerBusiness.BusinessStatus.RUNNING, new Date(), false,false, OwnerBusiness.BusinessType.NORMAL_BIZ);
+                OwnerBusiness.BusinessStatus.RUNNING, new Date(), false, OwnerBusiness.BusinessType.NORMAL_BIZ);
 
         String unionBiz = businessDefineHome.getInstance().getUnionBiz();
 

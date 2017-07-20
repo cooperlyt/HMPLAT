@@ -46,7 +46,7 @@
                             </h:outputText>
 
                             <a:outputPanel rendered="#{_item.ownerBusiness.recorded}">
-                                #{messages['ownerBusiness.regTime']}
+                                备案时间
                                 <h:outputText value="#{_item.ownerBusiness.regTime}">
                                     <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
                                 </h:outputText>
@@ -58,6 +58,17 @@
 
 
                     </p>
+
+                    <ui:repeat  value="#{_item.ownerBusiness.recordStoreList}" var="_store">
+                        <p class="repo-list-meta">
+                            档案室
+                        #{_store.recordFrame.recordRoom.name}
+                        #{_store.recordFrame.name}架
+                        #{_store.cabinet}柜
+                        #{_store.box}盒
+                        #{_store.recordCode}卷
+                        </p>
+                    </ui:repeat>
                 </li>
 
 

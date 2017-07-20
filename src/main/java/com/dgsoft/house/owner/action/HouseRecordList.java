@@ -27,7 +27,7 @@ public class HouseRecordList extends OwnerEntityQuery<HouseRecord> {
     private static final String[] RESTRICTIONS = {
         "lower(houseRecord.houseCode) = lower(#{houseRecordList.searchKey})",
             "lower(businessHouse.buildName) like lower(concat('%',concat(#{houseRecordList.searchKey},'%')))",
-
+            "lower(houseRecord.searchKey) like lower(concat('%',concat(#{houseRecordList.searchKey},'%')))",
             "lower(poolCard.number) = lower(#{houseRecordList.searchKey})",
             "lower(pool.personName) = lower(#{houseRecordList.searchKey})",
             "lower(pool.credentialsNumber) = lower(#{houseRecordList.searchKey})",

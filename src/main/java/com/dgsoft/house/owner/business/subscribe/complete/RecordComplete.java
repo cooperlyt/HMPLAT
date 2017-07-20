@@ -22,153 +22,18 @@ import java.util.Set;
  * 房屋档案
  */
 @Name("recordComplete")
-public class RecordComplete implements TaskCompleteSubscribeComponent {
+public class RecordComplete extends HouseRecordCompleteBase {
 
-
-    @In
-    private OwnerBusinessHome ownerBusinessHome;
-
-    @In(create = true)
-    private OwnerEntityLoader ownerEntityLoader;
 
     @Override
-    public void valid() {
-
+    protected String getSearchKey(HouseBusiness houseBusiness) {
+        KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(houseBusiness.getAfterBusinessHouse());
+        return key.getKey();
     }
 
     @Override
-    public boolean isPass() {
-        return true;
-    }
+    protected String getDisplay(HouseBusiness houseBusiness) {
 
-    @Override
-    public void complete() {
-        for (MakeCard makeCard: ownerBusinessHome.getInstance().getMakeCards()){
-            makeCard.setEnable(true);
-        }
-
-        if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)) {
-            if (ownerBusinessHome.getInstance().getSelectBusiness() == null){
-                throw new IllegalArgumentException("Modify or Cancel Business not have selectBiz");
-            }
-
-            ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
-            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
-                subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
-            }
-
-            Set<MakeCard> cancelCards = new HashSet<MakeCard>(ownerBusinessHome.getInstance().getSelectBusiness().getMakeCards());
-
-            Set<HouseBusiness> cancelHouse = new HashSet<HouseBusiness>(ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses());
-
-            if (ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.MODIFY_BIZ)) {
-                for (HouseBusiness old : ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()) {
-                    for (HouseBusiness now : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-                        if (old.getHouseCode().equals(now.getHouseCode())) {
-                            cancelHouse.remove(old);
-                            HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, now.getHouseCode());
-                            if (houseRecord != null){
-                                houseRecord.setBusinessHouse(now.getAfterBusinessHouse());
-                            }else{
-                                Logging.getLog(getClass()).warn("MODIFY_BIZ select biz not have houseRecord. ");
-                            }
-                        }
-                    }
-                }
-                for (MakeCard old: ownerBusinessHome.getInstance().getSelectBusiness().getMakeCards()){
-                    for(MakeCard now: ownerBusinessHome.getInstance().getMakeCards()){
-                        if (old.getId().equals(now.getId())){
-                            cancelCards.remove(old);
-                        }
-                    }
-                }
-            }
-
-            for(MakeCard card: cancelCards){
-                card.setEnable(false);
-            }
-
-            for (HouseBusiness houseBusiness : cancelHouse) {
-
-
-                List<HouseStatus> oldStatus = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-                for (HouseBusiness old : ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()) {
-                    if (old.getHouseCode().equals(houseBusiness.getHouseCode())){
-                        for(AddHouseStatus addHouseStatus: old.getAddHouseStatuses()){
-                            if (addHouseStatus.isRemove()){
-                                oldStatus.add(addHouseStatus.getStatus());
-                            }else{
-                                oldStatus.remove(addHouseStatus.getStatus());
-                            }
-                        }
-                    }
-                }
-
-                HouseStatus lastStatus;
-                if (oldStatus.isEmpty()){
-                    lastStatus = null;
-                }else{
-                    Collections.sort(oldStatus, HouseStatus.StatusComparator.getInstance());
-                    lastStatus = oldStatus.get(0);
-                }
-
-                HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
-                if (houseRecord != null){
-                    houseRecord.setBusinessHouse(houseBusiness.getStartBusinessHouse());
-                    houseRecord.setHouseStatus(lastStatus);
-                }else{
-                    Logging.getLog(getClass()).warn("MODIFY_BIZ select biz not have houseRecord. ");
-                }
-            }
-
-
-        } else {
-            for (HouseBusiness houseBusiness : ownerBusinessHome.getInstance().getHouseBusinesses()) {
-
-                List<HouseStatus> oldStatus = OwnerHouseHelper.instance().getHouseAllStatus(houseBusiness.getHouseCode());
-
-
-                for (AddHouseStatus addHouseStatus: houseBusiness.getAddHouseStatuses()){
-                    if (addHouseStatus.isRemove()){
-                        oldStatus.remove(addHouseStatus.getStatus());
-                        Logging.getLog(getClass()).debug("remove status" + addHouseStatus.getStatus());
-                    }else{
-                        oldStatus.add(addHouseStatus.getStatus());
-                        Logging.getLog(getClass()).debug("add status" + addHouseStatus.getStatus());
-                    }
-                }
-
-
-
-                HouseStatus lastStatus;
-                if (oldStatus.isEmpty()){
-                    lastStatus = null;
-                }else{
-                    Collections.sort(oldStatus, HouseStatus.StatusComparator.getInstance());
-                    lastStatus = oldStatus.get(0);
-                }
-
-                Logging.getLog(getClass()).debug("last status" + lastStatus);
-                BusinessHouse house = houseBusiness.getAfterBusinessHouse();
-                KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(house);
-
-
-
-                HouseRecord houseRecord = ownerEntityLoader.getEntityManager().find(HouseRecord.class, house.getHouseCode());
-                if (houseRecord == null) {
-                    ownerEntityLoader.getEntityManager().persist(new HouseRecord(house,lastStatus,key.getKey(),OwnerHouseHelper.genHouseDisplay(house)));
-                } else {
-                    houseRecord.setBusinessHouse(house);
-                    houseRecord.setHouseStatus(lastStatus);
-                    houseRecord.setSearchKey(key.getKey());
-                    houseRecord.setDisplay(OwnerHouseHelper.genHouseDisplay(house));
-                    //ownerEntityLoader.getEntityManager().merge(houseRecord);
-                }
-
-            }
-        }
-
-
-
+        return OwnerHouseHelper.genHouseDisplay(houseBusiness.getAfterBusinessHouse());
     }
 }
