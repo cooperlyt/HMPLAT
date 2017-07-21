@@ -8,10 +8,10 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by wxy on 2017-03-15.
+ * Created by wxy on 2017-07-21.
  */
-@Name("openHouseKeyGen")
-public class OpenHouseKeyGen implements TaskCompleteSubscribeComponent {
+@Name("fcCloseHouseKeyGen")
+public class FcCloseHouseKeyGen implements TaskCompleteSubscribeComponent {
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -28,12 +28,17 @@ public class OpenHouseKeyGen implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
+
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
-            KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
+            KeyGeneratorHelper key = OwnerHouseHelper.fcgenHouseSearchKey(hb.getAfterBusinessHouse());
+
+
             if (ownerBusinessHome.getApplyPersion()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
             }
+
             hb.setSearchKey(key.getKey());
+
         }
 
     }

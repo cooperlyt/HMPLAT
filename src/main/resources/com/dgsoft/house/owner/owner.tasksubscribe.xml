@@ -1128,6 +1128,48 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcNoticeDisplayGen" component="fcNoticeDisplayGen">
+        <description>
+            预告备案显示生成器（凤城）
+        </description>
+    </end-subscribe>
+
+
+
+
+
+    <end-subscribe name="NotemortgageDisplayGen" component="notemortgageDisplayGen">
+        <description>
+            预告抵押备案显示生成器(东港)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcNotemortgageDisplayGen" component="fcNotemortgageDisplayGen">
+        <description>
+            预告抵押备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
+
+
+    <end-subscribe name="NoteMortgageKeyGen" component="noteMortgageKeyGen">
+        <description>
+            预告抵押备案查询KEY生成器(东港)
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="FcNoteMortgageKeyGen" component="fcNoteMortgageKeyGen">
+        <description>
+            预告抵押备案查询KEY生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
+
+
+
 
     <end-subscribe name="MortgageDisplayGen" component="mortgageDisplayGen">
         <description>
@@ -1202,23 +1244,50 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcCloseHouseDisplayGen" component="fcCloseHouseDisplayGen">
+        <description>
+            查封备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="CloseOpenHouseKeyGen" component="closeOpenHouseKeyGen">
         <description>
             查封备案查询KEY生成器
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcCloseHouseKeyGen" component="fcCloseHouseKeyGen">
+        <description>
+            查封备案查询KEY生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="OpenHouseDisplayGen" component="openHouseDisplayGen">
         <description>
             解封备案显示生成器
         </description>
     </end-subscribe>
+
+    <end-subscribe name="FcOpenHouseDisplayGen" component="fcOpenHouseDisplayGen">
+        <description>
+            解封备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="OpenHouseKeyGen" component="openHouseKeyGen">
         <description>
             解封备案查询KEY生成器
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcOpenHouseKeyGen" component="fcOpenHouseKeyGen">
+        <description>
+            解封备案查询KEY生成器（凤城）
+        </description>
+    </end-subscribe>
 
 
     <end-subscribe name="RealDisplayGen" component="realDisplayGen">
@@ -1263,6 +1332,21 @@
             销售合同备案显示生成器
         </description>
     </end-subscribe>
+
+    <end-subscribe name="FcSaleContractDisplayGen" component="fcSaleContractDisplayGen">
+        <description>
+            销售合同备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcSaleContractDisplayGenCancel" component="fcSaleContractDisplayGenCancel">
+        <description>
+            撤销销售合同备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
+
 
 
 
