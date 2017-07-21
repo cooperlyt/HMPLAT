@@ -22,12 +22,11 @@
 	<task-node name="审核">
 		<task name="审核">
 			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:false}
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
 			</description>
 			<assignment pooled-actors="commodity_check"></assignment>
 		</task>
-		<transition to="业务完成"></transition>
-		<transition to="网签回退判断" name="回退"></transition>
+		<transition to="审核结果" name="to 审核结果"></transition>
 	</task-node>
 
 	<decision name="是否网签">
@@ -62,6 +61,15 @@
 		<action expression='#{ownerBusinessHome.doNodeAction("业务完成")}' name="业务完成"></action>
 		<transition to="结束"></transition>
 	</node>
+
+	<decision name="审核结果">
+		<transition to="业务完成" name="审核通过">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="网签回退判断" name="审核回退">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
 
 
 	<end-state name="结束"></end-state>

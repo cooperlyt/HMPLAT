@@ -1149,6 +1149,18 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcMortgageDisplayGen" component="fcMortgageDisplayGen">
+        <description>
+            房屋抵押备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcHouseBusinessMortgageKeyGen" component="fcHouseBusinessMortgageKeyGen">
+        <description>
+            房屋和抵押人查询KEY生成器(凤城)
+        </description>
+    </end-subscribe>
+
 
     <end-subscribe name="MortgageProjectDisplayGen" component="mortgageProjectDisplayGen">
         <description>
@@ -1156,9 +1168,23 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcMortgageProjectDisplayGen" component="fcMortgageProjectDisplayGen">
+        <description>
+            房屋在建备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
+
     <end-subscribe name="HouseBusinessProjectMortgageKeyGen" component="houseBusinessProjectMortgageKeyGen">
         <description>
             房屋和在建抵押人查询KEY生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcProjectMortgageKeyGen" component="fcProjectMortgageKeyGen">
+        <description>
+            房屋和在建抵押人查询KEY生成器（凤城）
         </description>
     </end-subscribe>
 
@@ -1208,12 +1234,34 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcRealDisplayGen" component="fcRealDisplayGen">
+        <description>
+            房屋交易备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
+
 
     <end-subscribe name="GenSearchKeyForNewOwner" component="houseBusinessOwnerKeyGen">
         <description>
             房屋和现权力人查询KEY生成器
         </description>
     </end-subscribe>
+
+    <end-subscribe name="FcHouseBusinessOwnerKeyGen" component="fcHouseBusinessOwnerKeyGen">
+        <description>
+            房屋和现权力人查询KEY生成器(凤城)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcRealDisplayCommodityGen" component="fcRealDisplayCommodityGen">
+        <description>
+            房屋交易备案显示生成器(凤城商品房)
+        </description>
+    </end-subscribe>
+
+
 
 
 
