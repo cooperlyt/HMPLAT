@@ -99,29 +99,7 @@ public class HouseBusinessStart {
 //    private OwnerBusiness selectedBusiness;
 
     public String singleHouseCreate(){
-        if (ownerBusinessHome.getEntityManager().createQuery("Select count(hr) from HouseRecord hr where hr.businessHouse.mapNumber = :mapNumber and hr.businessHouse.blockNo = :blockNumber and hr.businessHouse.buildNo = :buildNumber and hr.businessHouse.houseOrder = :houseOrder", Long.class)
-                .setParameter("mapNumber",ownerBuildGridMap.getSelectBizHouse().getMapNumber())
-                .setParameter("blockNumber", ownerBuildGridMap.getSelectBizHouse().getBlockNo())
-                .setParameter("buildNumber", ownerBuildGridMap.getSelectBizHouse().getBuildNo())
-                .setParameter("houseOrder", ownerBuildGridMap.getSelectBizHouse().getHouseOrder()).getSingleResult().intValue() > 0){
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"cantCreateExistsHouse");
-            return null;
-        }
-
-        ownerBuildGridMap.getSelectBizHouse().setBuildCode("MB" +
-                ownerBuildGridMap.getSelectBizHouse().getMapNumber() + "-" +
-                ownerBuildGridMap.getSelectBizHouse().getBlockNo() + "-" +
-                ownerBuildGridMap.getSelectBizHouse().getBuildNo());
-
-        ownerBuildGridMap.getSelectBizHouse().setHouseCode("MH" +
-                ownerBuildGridMap.getSelectBizHouse().getMapNumber() + "-" +
-                ownerBuildGridMap.getSelectBizHouse().getBlockNo() + "-" +
-                ownerBuildGridMap.getSelectBizHouse().getBuildNo() + "-" +
-                ownerBuildGridMap.getSelectBizHouse().getHouseOrder());
-
-        ownerBuildGridMap.getSelectBizHouse().setBuildName(ownerBuildGridMap.getSelectBizHouse().getProjectName() + " " + ownerBuildGridMap.getSelectBizHouse().getBuildNo());
-
-
+        ownerBuildGridMap.createRecordHouse();
         return singleHouseSelected();
     }
 

@@ -15,6 +15,8 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.jboss.seam.log.Logging;
 
 import javax.persistence.NoResultException;
@@ -32,6 +34,8 @@ public class OwnerBuildGridMap {
     @In(create = true)
     private BuildHome buildHome;
 
+    @In(create = true)
+    private FacesMessages facesMessages;
 
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
@@ -521,4 +525,30 @@ public class OwnerBuildGridMap {
         }
     }
 
+
+    public boolean createRecordHouse(){
+        if (ownerEntityLoader.getEntityManager().createQuery("Select count(hr) from HouseRecord hr where hr.businessHouse.mapNumber = :mapNumber and hr.businessHouse.blockNo = :blockNumber and hr.businessHouse.buildNo = :buildNumber and hr.businessHouse.houseOrder = :houseOrder", Long.class)
+                .setParameter("mapNumber",getSelectBizHouse().getMapNumber())
+                .setParameter("blockNumber", getSelectBizHouse().getBlockNo())
+                .setParameter("buildNumber", getSelectBizHouse().getBuildNo())
+                .setParameter("houseOrder", getSelectBizHouse().getHouseOrder()).getSingleResult().intValue() > 0){
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"cantCreateExistsHouse");
+            return false;
+        }
+
+        getSelectBizHouse().setBuildCode("MB" +
+                getSelectBizHouse().getMapNumber() + "-" +
+                getSelectBizHouse().getBlockNo() + "-" +
+                getSelectBizHouse().getBuildNo());
+
+        getSelectBizHouse().setHouseCode("MH" +
+                getSelectBizHouse().getMapNumber() + "-" +
+                getSelectBizHouse().getBlockNo() + "-" +
+                getSelectBizHouse().getBuildNo() + "-" +
+                getSelectBizHouse().getHouseOrder());
+
+        getSelectBizHouse().setBuildName(getSelectBizHouse().getProjectName() + " " + getSelectBizHouse().getBuildNo());
+        return true;
+
+    }
 }

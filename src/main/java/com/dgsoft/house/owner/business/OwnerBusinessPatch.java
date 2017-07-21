@@ -11,6 +11,7 @@ import com.dgsoft.common.system.model.Employee;
 import com.dgsoft.common.system.model.Role;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.owner.action.BuildGridMapHouseSelect;
+import com.dgsoft.house.owner.action.OwnerBuildGridMap;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.business.subscribe.complete.KeyGeneratorHelper;
@@ -42,6 +43,9 @@ public class OwnerBusinessPatch {
 
     @In
     private Credentials credentials;
+
+    @In(required = false)
+    private OwnerBuildGridMap ownerBuildGridMap;
 
     @In(create = true)
     private EntityManager systemEntityManager;
@@ -169,8 +173,18 @@ public class OwnerBusinessPatch {
         return filterBusinessCategories;
     }
 
+    public String singleHouseCreate(){
+        ownerBuildGridMap.createRecordHouse();
 
-    public String singleHouseSelected() {
+        return singleHouseSelected(ownerBuildGridMap.getSelectBizHouse());
+    }
+
+    public String singleHouseSelected(){
+        return singleHouseSelected(new BusinessHouse(buildGridMapHouseSelect.getSelectBizHouse()));
+    }
+
+
+    public String singleHouseSelected(BusinessHouse startHouse) {
 
 
         allowSelectBizs = new ArrayList<OwnerBusiness>();
@@ -195,7 +209,7 @@ public class OwnerBusinessPatch {
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
         ownerBusinessHome.getInstance().setApplyTime(null);
-        BusinessHouse startHouse = new BusinessHouse(buildGridMapHouseSelect.getSelectBizHouse());
+
 
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), startHouse));
 
