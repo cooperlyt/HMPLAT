@@ -80,6 +80,12 @@ public class MortgageDisplayGen implements TaskCompleteSubscribeComponent {
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押权人");
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().getName());
             }
+
+            if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial()!=null){
+                businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押权人");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
+            }
             bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
 
         }

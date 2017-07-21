@@ -10,10 +10,12 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by wxy on 2016-12-18.
+ * Created by wxy on 2017-07-21.
+ * 东港预告抵押查询显示
  */
-@Name("mortgageProjectDisplayGen")
-public class MortgageProjectDisplayGen  implements TaskCompleteSubscribeComponent {
+@Name("notemortgageDisplayGen")
+public class NotemortgageDisplayGen implements TaskCompleteSubscribeComponent {
+
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
@@ -29,7 +31,6 @@ public class MortgageProjectDisplayGen  implements TaskCompleteSubscribeComponen
 
     @Override
     public void complete() {
-
         for(HouseBusiness bh: ownerBusinessHome.getInstance().getHouseBusinesses()){
 
             DescriptionDisplay businessDisplay = new DescriptionDisplay();
@@ -53,9 +54,13 @@ public class MortgageProjectDisplayGen  implements TaskCompleteSubscribeComponen
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押备案人");
 
             String contractPersonNames = "";
-            if (bh.getAfterBusinessHouse().getDeveloperName()!=null){
-                contractPersonNames = bh.getAfterBusinessHouse().getDeveloperName();
-
+            for (PowerPerson pp: bh.getAfterBusinessHouse().getAllNewPowerPersonList()){
+                if (pp.getType().equals(PowerPerson.PowerPersonType.PREPARE)){
+                    if (!"".equals(contractPersonNames)){
+                        contractPersonNames += ",";
+                    }
+                    contractPersonNames += pp.getPersonName();
+                }
             }
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
 
@@ -78,15 +83,13 @@ public class MortgageProjectDisplayGen  implements TaskCompleteSubscribeComponen
             }
             if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial()!=null){
                 businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押权人 ");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押权人");
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
             }
 
             bh.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
 
         }
-
-
 
     }
 }
