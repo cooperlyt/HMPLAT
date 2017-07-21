@@ -319,9 +319,13 @@
 
             <hr/>
 
-            <h:commandLink styleClass="button primary first-in-line" action="#{houseBusinessStart.singleHouseCreate}">
+            <h:commandLink styleClass="button primary first-in-line" rendered="#{not (ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE')}" action="#{houseBusinessStart.singleHouseCreate}">
                 确定
             </h:commandLink>
+                <h:commandLink styleClass="button primary first-in-line" rendered="#{ (ownerBusinessHome.instance.source eq 'BIZ_AFTER_SAVE')}" action="#{ownerBusinessPatch.singleHouseCreate}">
+                    确定
+                </h:commandLink>
+
             </h:form>
         </div>
 

@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <ul class="boxed-group-inner list-group notifications status-list-group">
+         <ui:repeat value="#{houseBusinessConnectList.resultList}" var="_hbusiness">
+
+             <li class="list-group-item issue-notification #{(_hbusiness.ownerBusiness.id eq ownerBusinessHome.instance.id) ? 'list-group-item-info' : ''}">
+
+                 <s:link view="/func/house/owner/BusinessView.xhtml">
+                 <f:param value="#{_hbusiness.ownerBusiness.id}" name="businessId"/>
+
+                                <span class="list-group-item-name css-truncate" style="max-width: 700px">
+                                    <span class="type-icon" style="width: 50px;">
+    <span class="label label-biz-status #{_hbusiness.ownerBusiness.status} tooltipped tooltipped-s" aria-label="#{messages[_hbusiness.ownerBusiness.source]}  #{messages[_hbusiness.ownerBusiness.status.name()]}"> #{messages[_hbusiness.ownerBusiness.status.name()]}</span>
+
+                                    </span>
+
+                                     <h:outputText value="#{_hbusiness.ownerBusiness.defineName}"
+                                                   styleClass="css-truncate-target list-item-title"/>
+
+
+                                    <h:outputText value="#{_hbusiness.ownerBusiness.id}"
+                                                  styleClass="css-truncate-target list-item-description"
+                                                  style="max-width: 600px"/>
+
+
+                                    <h:outputText value="#{_hbusiness.afterBusinessHouse.mainOwner.personName}" rendered="#{not empty _hbusiness.afterBusinessHouse.mainOwner}"
+                                        styleClass="css-truncate-target list-item-description"
+                                            style="max-width: 600px; float: right;"/>
+                                </span>
+
+                 <ul class="notification-actions">
+                     <li class="time"><h:outputText value="#{_hbusiness.ownerBusiness.applyTime}">
+                         <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                     </h:outputText></li>
+                     <li><h:outputText value=""
+                                       styleClass="tooltipped tooltipped-w"
+                                       p:aria-label=""/></li>
+                 </ul>
+                 </s:link>
+             </li>
+
+
+         </ui:repeat>
+    </ul>
+
+</ui:composition>

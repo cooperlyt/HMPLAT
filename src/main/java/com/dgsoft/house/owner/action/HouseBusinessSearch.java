@@ -51,7 +51,7 @@ public abstract class HouseBusinessSearch  extends MultiOperatorEntityQuery<Hous
     }
 
     public enum SortCol{
-        ORDER_BY_CREATE_TIME("ob.createTime"),
+        ORDER_BY_CREATE_TIME("ob.applyTime"),
         ORDER_BY_BUSINESS_NAME("ob.defineName");
 
 
