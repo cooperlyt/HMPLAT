@@ -1161,9 +1161,23 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcMortgageProjectDisplayGen" component="fcMortgageProjectDisplayGen">
+        <description>
+            房屋在建备案显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+
+
     <end-subscribe name="HouseBusinessProjectMortgageKeyGen" component="houseBusinessProjectMortgageKeyGen">
         <description>
             房屋和在建抵押人查询KEY生成器
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcProjectMortgageKeyGen" component="fcProjectMortgageKeyGen">
+        <description>
+            房屋和在建抵押人查询KEY生成器（凤城）
         </description>
     </end-subscribe>
 
