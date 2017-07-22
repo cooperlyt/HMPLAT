@@ -318,8 +318,8 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         this.businessCreateDataValids = businessCreateDataValids;
     }
 
-    @Column(name = "PICK_BUSINESS_DEFINE_ID", nullable = true, length = 32)
-    @Size(max = 32)
+    @Column(name = "PICK_BUSINESS_DEFINE_ID", nullable = true, length = 200)
+    @Size(max = 200)
     public String getPickBusinessDefineId() {
         return pickBusinessDefineId;
     }

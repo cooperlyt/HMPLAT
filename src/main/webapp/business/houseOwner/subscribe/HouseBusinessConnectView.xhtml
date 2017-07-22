@@ -24,17 +24,17 @@
                                     </span>
 
                                      <h:outputText value="#{_hbusiness.ownerBusiness.defineName}"
-                                                   styleClass="css-truncate-target list-item-title"/>
+                                                   styleClass="css-truncate-target list-item-title" style="max-width: 400px !important;"/>
 
 
                                     <h:outputText value="#{_hbusiness.ownerBusiness.id}"
                                                   styleClass="css-truncate-target list-item-description"
-                                                  style="max-width: 600px"/>
+                                                  style="max-width: 200px"/>
 
 
                                     <h:outputText value="#{_hbusiness.afterBusinessHouse.mainOwner.personName}" rendered="#{not empty _hbusiness.afterBusinessHouse.mainOwner}"
                                         styleClass="css-truncate-target list-item-description"
-                                            style="max-width: 600px; float: right;"/>
+                                            style="max-width: 400px; float: right;"/>
                                 </span>
 
                  <ul class="notification-actions">
