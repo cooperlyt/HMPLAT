@@ -154,6 +154,64 @@ public class OwnerHouseHelper {
         return DescriptionDisplay.toStringValue(result);
     }
 
+    public static String FcgenHouseDisplay(BusinessHouse house,OwnerBusinessHome ownerBusinessHome) {
+        DescriptionDisplay result = new DescriptionDisplay();
+        result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+
+
+        String contractPersonNames = "";
+        for (PowerPerson pp : house.getAllNewPowerPersonList()) {
+
+            if (!"".equals(contractPersonNames)) {
+                contractPersonNames += ",";
+            }
+            contractPersonNames += pp.getPersonName()+"["+pp.getCredentialsNumber()+"]";
+
+        }
+
+        if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")){
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null && !ownerBusinessHome.getApplyPersion().getPersonName().equals("")){
+                contractPersonNames = ownerBusinessHome.getApplyPersion().getPersonName()+"["+ownerBusinessHome.getApplyPersion().getCredentialsNumber()+"]";
+            }
+
+        }
+
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
+        result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, house.getAddress());
+
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, house.getMapNumber());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE, "图");
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, house.getBlockNo());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE, "丘");
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, house.getBuildNo());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE, "幢");
+        result.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, house.getHouseOrder());
+        result.addData(DescriptionDisplay.DisplayStyle.DECORATE, "房");
+
+        result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+        result.addData(DescriptionDisplay.DisplayStyle.LABEL, "规划用途");
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, house.getDesignUseType());
+
+        DecimalFormat df = new DecimalFormat("#0.000");
+        df.setGroupingUsed(false);
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        result.addData(DescriptionDisplay.DisplayStyle.LABEL, "建筑面积");
+        result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, df.format(house.getHouseArea()));
+
+        if (house.getUseArea() != null){
+            result.addData(DescriptionDisplay.DisplayStyle.LABEL, "套内面积");
+            result.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, df.format(house.getUseArea()));
+        }
+
+
+
+
+
+        return DescriptionDisplay.toStringValue(result);
+    }
+
     public static KeyGeneratorHelper genHouseSearchKey(BusinessHouse house){
 
         KeyGeneratorHelper key = new KeyGeneratorHelper();
@@ -168,6 +226,22 @@ public class OwnerHouseHelper {
 
         return key;
     }
+
+    public static KeyGeneratorHelper FcgenHouseSearchKeyRecord(BusinessHouse house){
+
+        KeyGeneratorHelper key = new KeyGeneratorHelper();
+        for (PowerPerson pp : house.getPowerPersons()){
+            if (!pp.isOld()){
+                key.addWord(pp.getPersonName());
+                key.addWord(pp.getCredentialsNumber());
+            }
+        }
+        key.addWord(house.getHouseCode());
+        key.addWord(house.getAddress());
+
+        return key;
+    }
+
 
     public static KeyGeneratorHelper fcgenHouseSearchKey(BusinessHouse house){
 

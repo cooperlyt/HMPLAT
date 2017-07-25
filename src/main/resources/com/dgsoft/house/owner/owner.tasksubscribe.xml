@@ -1401,6 +1401,13 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="FcRecordComplete" component="fcRecordComplete">
+        <description>
+            登记薄建立房屋档案关联(凤城)
+        </description>
+    </end-subscribe>
+
+
     <end-subscribe name="statusComplete" component="statusComplete">
         <description>
             业务完成设置业务状态(归档阶段配置)
