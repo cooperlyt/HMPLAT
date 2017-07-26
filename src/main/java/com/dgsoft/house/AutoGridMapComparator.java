@@ -49,7 +49,9 @@ public class AutoGridMapComparator {
 
         @Override
         public int compare(String o1, String o2) {
-            return o1.trim().compareTo(o2.trim());
+            String oo1 = (o1 == null) ? "" : o1;
+            String oo2 = (o2 == null) ? "" : o2;
+            return oo1.trim().compareTo(oo2.trim());
         }
     }
 
@@ -57,7 +59,9 @@ public class AutoGridMapComparator {
 
         @Override
         public int compare(String o1, String o2) {
-            return o2.trim().compareTo(o1.trim());
+            String oo1 = (o1 == null) ? "" : o1;
+            String oo2 = (o2 == null) ? "" : o2;
+            return oo2.trim().compareTo(oo1.trim());
         }
     }
 
