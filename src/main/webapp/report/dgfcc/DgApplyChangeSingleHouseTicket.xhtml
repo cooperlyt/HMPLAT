@@ -113,7 +113,7 @@
             </p:table>
         </p:cell>
 
-        <p:cell fixedHeight="230">
+        <p:cell fixedHeight="200">
             <p:paragraph>申
                 请
                 内
@@ -179,7 +179,7 @@
 
 
 
-                <p:cell fixedHeight="30">
+                <p:cell fixedHeight="25">
                     <p:paragraph>产别</p:paragraph>
                 </p:cell>
                 <p:cell>
@@ -193,14 +193,14 @@
                     <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>建筑面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>套内建筑面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -208,25 +208,31 @@
                 </p:cell>
 
 
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>规划用途</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.designUseType}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
                     <p:paragraph>房屋所有权证</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" fixedHeight="25">
+                    <p:paragraph>不动产单元号</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3">
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.unitNumber}</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
                     <p:paragraph>补(换)证事由</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
                     <p:paragraph>#{ownerBusinessHome.instance.fillChange.reason}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
                     <p:paragraph>查封、抵押（按揭）情况</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" colspan="3" >
