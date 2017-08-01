@@ -355,7 +355,7 @@ public class OwnerBusinessPatch {
                 KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(houseBusiness.getAfterBusinessHouse());
                 houseRecord = new HouseRecord(houseBusiness.getAfterBusinessHouse(),masterStatus);
                 houseRecord.setSearchKey(key.getKey());
-                houseRecord.setDisplay(OwnerHouseHelper.genHouseDisplay(houseBusiness.getAfterBusinessHouse()));
+                houseRecord.setDisplay(OwnerHouseHelper.genHouseDisplay(houseBusiness.getAfterBusinessHouse(),ownerBusinessHome));
                 houseBusiness.getAfterBusinessHouse().getHouseRecords().add(houseRecord);
 
             }else{

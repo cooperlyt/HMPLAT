@@ -34,14 +34,14 @@ public class NoteMortgageKeyGen implements TaskCompleteSubscribeComponent {
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
 
-            if(ownerBusinessHome.getCardNoByType("NOTICE")!=null) {
-                key.addWord(ownerBusinessHome.getCardNoByType("NOTICE").getNumber());
-            }
-
-            if(ownerBusinessHome.getCardNoByType("NOTICE_MORTGAGE")!=null) {
-                key.addWord(ownerBusinessHome.getCardNoByType("NOTICE_MORTGAGE").getNumber());
-            }
-
+//            if(ownerBusinessHome.getCardNoByType("NOTICE")!=null) {
+//                key.addWord(ownerBusinessHome.getCardNoByType("NOTICE").getNumber());
+//            }
+//
+//            if(ownerBusinessHome.getCardNoByType("NOTICE_MORTGAGE")!=null) {
+//                key.addWord(ownerBusinessHome.getCardNoByType("NOTICE_MORTGAGE").getNumber());
+//            }
+//
             if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial()!=null){
                 key.addWord(ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().getName());
             }
