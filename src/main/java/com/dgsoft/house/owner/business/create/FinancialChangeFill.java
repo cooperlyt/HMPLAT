@@ -9,7 +9,7 @@ import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2015-08-30.
- * 抵押变更提取抵押权人
+ * 注销提取到OLD
  */
 @Name("financialChangeFill")
 @Scope(ScopeType.STATELESS)

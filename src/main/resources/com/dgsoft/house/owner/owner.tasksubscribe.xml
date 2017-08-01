@@ -2145,6 +2145,12 @@
     </create-component>
     <create-component type="DATA_FILL" component="financialChangeFill">
         <description>
+            抵押权人，抵押信息提取（抵押注销）
+        </description>
+    </create-component>
+
+    <create-component type="DATA_FILL" component="financialFill">
+        <description>
             抵押权人，抵押信息提取（变更抵押，抵押权变更）
         </description>
     </create-component>

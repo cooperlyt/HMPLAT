@@ -42,7 +42,7 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
         this.ownerBusiness = ownerBusiness;
     }
 
-    public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste) {
+    public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste) {//变更
         this.ownerBusiness = ownerBusiness;
         highestMountMoney = mortgaegeRegiste.getHighestMountMoney();
         warrantScope = mortgaegeRegiste.getWarrantScope();
@@ -53,9 +53,9 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
         oldFinancial = mortgaegeRegiste.getOldFinancial();
         financial = mortgaegeRegiste.getFinancial();
 
-        if (mortgaegeRegiste.getOldFinancial() != null){
-            oldFinancial = mortgaegeRegiste.getOldFinancial();
-        }
+//        if (mortgaegeRegiste.getOldFinancial() != null){
+//            oldFinancial = mortgaegeRegiste.getOldFinancial();
+//        }
         if (mortgaegeRegiste.getFinancial() != null){
             financial = new Financial(mortgaegeRegiste.getFinancial());
             financial.setMortgaegeForNew(this);
@@ -63,7 +63,7 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
         orgName = mortgaegeRegiste.getOrgName();
 
     }
-    public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste,Financial oldFinancial) {
+    public MortgaegeRegiste(OwnerBusiness ownerBusiness, MortgaegeRegiste mortgaegeRegiste,Financial oldFinancial) {//注销
         this.ownerBusiness = ownerBusiness;
         highestMountMoney = mortgaegeRegiste.getHighestMountMoney();
         warrantScope = mortgaegeRegiste.getWarrantScope();
@@ -71,8 +71,8 @@ public class MortgaegeRegiste implements java.io.Serializable ,TimeArea{
         mortgageDueTimeS = mortgaegeRegiste.getMortgageDueTimeS();
         mortgageTime = mortgaegeRegiste.getMortgageTime();
         mortgageArea = mortgaegeRegiste.getMortgageArea();
-        this.oldFinancial = oldFinancial;
-        financial = new Financial(mortgaegeRegiste.getFinancial());
+        this.oldFinancial = new Financial(mortgaegeRegiste.getFinancial());
+       // financial = new Financial(mortgaegeRegiste.getFinancial());
         orgName = mortgaegeRegiste.getOrgName();
     }
 
