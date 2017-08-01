@@ -24,16 +24,25 @@ import java.util.Set;
 @Name("recordComplete")
 public class RecordComplete extends HouseRecordCompleteBase {
 
+    @In
+    private OwnerBusinessHome ownerBusinessHome;
+
 
     @Override
     protected String getSearchKey(HouseBusiness houseBusiness) {
         KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(houseBusiness.getAfterBusinessHouse());
+
+        if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")){
+            if (ownerBusinessHome.getApplyPersion()!=null){
+                key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
+            }
+        }
         return key.getKey();
     }
 
     @Override
     protected String getDisplay(HouseBusiness houseBusiness) {
 
-        return OwnerHouseHelper.genHouseDisplay(houseBusiness.getAfterBusinessHouse());
+        return OwnerHouseHelper.genHouseDisplay(houseBusiness.getAfterBusinessHouse(),ownerBusinessHome);
     }
 }

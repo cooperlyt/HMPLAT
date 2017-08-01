@@ -102,7 +102,7 @@ public class OwnerHouseHelper {
         return (OwnerHouseHelper) Component.getInstance(OwnerHouseHelper.class, true);
     }
 
-    public static String genHouseDisplay(BusinessHouse house) {
+    public static String genHouseDisplay(BusinessHouse house,OwnerBusinessHome ownerBusinessHome) {
         DescriptionDisplay result = new DescriptionDisplay();
         result.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
 
@@ -114,6 +114,12 @@ public class OwnerHouseHelper {
                 contractPersonNames += ",";
             }
             contractPersonNames += pp.getPersonName();
+
+        }
+        if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")){
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null && !ownerBusinessHome.getApplyPersion().getPersonName().equals("")){
+                contractPersonNames = ownerBusinessHome.getApplyPersion().getPersonName()+"["+ownerBusinessHome.getApplyPersion().getCredentialsNumber()+"]";
+            }
 
         }
 
