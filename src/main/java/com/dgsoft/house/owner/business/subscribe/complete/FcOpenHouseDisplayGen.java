@@ -38,7 +38,7 @@ public class FcOpenHouseDisplayGen implements TaskCompleteSubscribeComponent {
 
 
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封法院");
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouse().getCloseDownClour());
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouseCancel().getClour());
 
 
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封申请人");
