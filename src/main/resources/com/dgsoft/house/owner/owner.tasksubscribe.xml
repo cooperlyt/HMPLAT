@@ -224,6 +224,13 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PoolBuildReceiveView" page="/business/houseOwner/subscribe/PoolBuildReceiveView.xhtml">
+        <description>
+            共有建筑查看
+        </description>
+    </view-subscribe>
+
+
     <view-subscribe name="ReasonReceiveMortgageView" page="/business/houseOwner/subscribe/ReasonReceiveMortgageView.xhtml">
         <description>
             受理抵押备注备注查看
@@ -771,6 +778,12 @@
     <edit-subscribe name="ReasonReceiveEdit" page="/business/houseOwner/subscribe/ReasonReceiveEdit.xhtml" component="">
         <description>
             业务备注编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="PoolBuildReceiveEdit" page="/business/houseOwner/subscribe/PoolBuildReceiveEdit.xhtml" component="">
+        <description>
+            共有建筑编辑
         </description>
     </edit-subscribe>
 
