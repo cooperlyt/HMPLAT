@@ -40,11 +40,30 @@ public class FcOpenHouseDisplayGen implements TaskCompleteSubscribeComponent {
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封法院");
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouseCancel().getClour());
 
+            if (ownerBusinessHome.getInstance().getApplyPersion()!=null) {
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封申请人");
+                String contractPersonNames = ownerBusinessHome.getInstance().getApplyPersion().getPersonName();
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
+            }
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封申请人");
 
-            String contractPersonNames = ownerBusinessHome.getInstance().getApplyPersion().getPersonName();
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
+            businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getLegalDocuments()!=null){
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "法律文书");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouseCancel().getLegalDocuments());
+
+            }
+
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getExecutionNotice()!=null){
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "协助执行通知书");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouseCancel().getExecutionNotice());
+            }
+
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getHouseCardNo()!=null){
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "所有权证号");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouseCancel().getHouseCardNo());
+            }
 
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getAfterBusinessHouse().getAddress());

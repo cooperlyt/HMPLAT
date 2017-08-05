@@ -34,6 +34,19 @@ public class FcOpenHouseKeyGen implements TaskCompleteSubscribeComponent {
             if (ownerBusinessHome.getApplyPersion()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
             }
+
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getLegalDocuments()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouseCancel().getLegalDocuments());
+            }
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getExecutionNotice()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouseCancel().getExecutionNotice());
+            }
+
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getHouseCardNo()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouseCancel().getHouseCardNo());
+            }
+
+
             hb.setSearchKey(key.getKey());
         }
 

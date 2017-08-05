@@ -46,12 +46,32 @@ public class FcRecordComplete extends HouseRecordCompleteBase {
             if (ownerBusinessHome.getApplyPersion()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
             }
-            if (ownerBusinessHome.getCloseHouse()!=null && ownerBusinessHome.getCloseHouse().getHouseCardNo()!=null && ownerBusinessHome.getCloseHouse().getHouseCardNo().equals("")){
+            if (ownerBusinessHome.getCloseHouse()!=null && ownerBusinessHome.getCloseHouse().getHouseCardNo()!=null && !ownerBusinessHome.getCloseHouse().getHouseCardNo().equals("")){
                 key.addWord(ownerBusinessHome.getCloseHouse().getHouseCardNo());
             }
-            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getHouseCardNo()!=null && ownerBusinessHome.getCloseHouseCancel().getHouseCardNo().equals("")){
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getHouseCardNo()!=null && !ownerBusinessHome.getCloseHouseCancel().getHouseCardNo().equals("")){
                 key.addWord(ownerBusinessHome.getCloseHouseCancel().getHouseCardNo());
             }
+
+            if (ownerBusinessHome.getCloseHouse()!=null && ownerBusinessHome.getCloseHouse().getLegalDocuments()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouse().getLegalDocuments());
+            }
+            if (ownerBusinessHome.getCloseHouse()!=null && ownerBusinessHome.getCloseHouse().getExecutionNotice()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouse().getExecutionNotice());
+            }
+
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getLegalDocuments()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouseCancel().getLegalDocuments());
+            }
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getExecutionNotice()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouseCancel().getExecutionNotice());
+            }
+            if (ownerBusinessHome.getCloseHouseCancel()!=null && ownerBusinessHome.getCloseHouseCancel().getHouseCardNo()!=null){
+                key.addWord(ownerBusinessHome.getCloseHouseCancel().getHouseCardNo());
+            }
+
+
+
         }
 
         return key.getKey();
