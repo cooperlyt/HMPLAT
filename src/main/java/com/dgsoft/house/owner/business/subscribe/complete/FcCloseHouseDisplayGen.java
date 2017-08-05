@@ -43,8 +43,8 @@ public class FcCloseHouseDisplayGen implements TaskCompleteSubscribeComponent {
 
 
             if (ownerBusinessHome.getInstance().getApplyPersion()!=null) {
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封申请人");
-                String contractPersonNames = ownerBusinessHome.getInstance().getApplyPersion().getPersonName();
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "产权备案人");
+                String contractPersonNames = ownerBusinessHome.getInstance().getApplyPersion().getPersonName()+"["+ownerBusinessHome.getInstance().getApplyPersion().getCredentialsNumber()+"]";
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
             }
 

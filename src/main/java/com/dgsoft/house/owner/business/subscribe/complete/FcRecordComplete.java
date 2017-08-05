@@ -43,8 +43,13 @@ public class FcRecordComplete extends HouseRecordCompleteBase {
             key.addWord(ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
         }
         if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")){
-            if (ownerBusinessHome.getApplyPersion()!=null){
+
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
+            }
+
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getCredentialsNumber()!=null){
+                key.addWord(ownerBusinessHome.getApplyPersion().getCredentialsNumber());
             }
             if (ownerBusinessHome.getCloseHouse()!=null && ownerBusinessHome.getCloseHouse().getHouseCardNo()!=null && !ownerBusinessHome.getCloseHouse().getHouseCardNo().equals("")){
                 key.addWord(ownerBusinessHome.getCloseHouse().getHouseCardNo());

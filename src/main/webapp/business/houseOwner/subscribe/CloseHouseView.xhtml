@@ -90,6 +90,14 @@
             </a:outputPanel>
             <h:outputText value="#{ownerBusinessHome.getCloseHouse().workCardNo}"/>
 
+            <a:outputPanel style="text-align: center">
+                <ui:include src="/layout/long-text-display.xhtml">
+                    <ui:param name="value" value="产权证号"/>
+                    <ui:param name="size" value="6"/>
+                </ui:include>
+            </a:outputPanel>
+            <h:outputText value="#{ownerBusinessHome.instance.houseCloseCancel.houseCardNo}"/>
+
 
         </dh:entryGridBlock>
     </a:outputPanel>

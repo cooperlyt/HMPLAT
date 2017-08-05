@@ -36,6 +36,9 @@ public class FcCloseHouseKeyGen implements TaskCompleteSubscribeComponent {
             if (ownerBusinessHome.getApplyPersion()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
             }
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion()!=null){
+                key.addWord(ownerBusinessHome.getApplyPersion().getCredentialsNumber());
+            }
 
             if (ownerBusinessHome.getCloseHouse()!=null && ownerBusinessHome.getCloseHouse().getLegalDocuments()!=null){
                 key.addWord(ownerBusinessHome.getCloseHouse().getLegalDocuments());

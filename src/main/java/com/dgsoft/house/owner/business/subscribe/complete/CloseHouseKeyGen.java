@@ -35,8 +35,11 @@ public class CloseHouseKeyGen implements TaskCompleteSubscribeComponent {
 //                key.addWord(hb.getAfterBusinessHouse().getNewMainInitPerson().getMakeCard().getNumber());
 //
 //            }
-            if (ownerBusinessHome.getApplyPersion()!=null){
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
+            }
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getCredentialsNumber()!=null){
+                key.addWord(ownerBusinessHome.getApplyPersion().getCredentialsNumber());
             }
 
             hb.setSearchKey(key.getKey());

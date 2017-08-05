@@ -30,8 +30,11 @@ public class OpenHouseKeyGen implements TaskCompleteSubscribeComponent {
     public void complete() {
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
-            if (ownerBusinessHome.getApplyPersion()!=null){
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
+            }
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getCredentialsNumber()!=null){
+                key.addWord(ownerBusinessHome.getApplyPersion().getCredentialsNumber());
             }
             hb.setSearchKey(key.getKey());
         }

@@ -33,9 +33,14 @@ public class RecordComplete extends HouseRecordCompleteBase {
         KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(houseBusiness.getAfterBusinessHouse());
 
         if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")){
-            if (ownerBusinessHome.getApplyPersion()!=null){
+
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
             }
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getCredentialsNumber()!=null){
+                key.addWord(ownerBusinessHome.getApplyPersion().getCredentialsNumber());
+            }
+
         }
         return key.getKey();
     }
