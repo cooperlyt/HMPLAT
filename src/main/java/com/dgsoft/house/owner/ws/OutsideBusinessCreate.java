@@ -1,13 +1,17 @@
 package com.dgsoft.house.owner.ws;
 
+import cc.coopersoft.house.SubmitType;
+import cc.coopersoft.house.sale.data.HouseSource;
+import cc.coopersoft.house.sale.data.SubmitResult;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.developersale.DeveloperSaleService;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.Agencies;
+import com.dgsoft.house.model.AttachEmployee;
 import com.dgsoft.house.model.DeveloperLogonKey;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -15,7 +19,7 @@ import com.dgsoft.house.owner.model.*;
 import com.dgsoft.house.owner.model.ContractNumber;
 import com.dgsoft.house.owner.model.HouseContract;
 import com.dgsoft.house.owner.model.PowerPerson;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
@@ -51,45 +55,50 @@ public class OutsideBusinessCreate {
     @In
     private Events events;
 
+    private String createBusiness(String empId,String empName){
+        if (businessDefineHome.isCompletePass()) {
+            businessDefineHome.completeTask();
 
-    @Transactional
-    public String submitContract(String contract, String userId){
+            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
 
-        businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
+            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,"提交合同",empId,empName,"",new Date()));
+            String ownerBusinessId = ownerBusinessHome.getInstance().getId();
+            if (!"persisted".equals(ownerBusinessHome.persist())){
+                throw new IllegalArgumentException("persited ownerBusiness fail");
+            }
 
-        DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, userId);
+            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(),ownerBusinessId);
 
-        ObjectMapper mapper = new ObjectMapper();
-        cc.coopersoft.house.sale.data.HouseContract outsideContract;
-        try {
-            outsideContract = mapper.readValue(DESUtil.decrypt(contract,key.getSessionKey()), cc.coopersoft.house.sale.data.HouseContract.class);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("contract data error",e);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("contract decrypt error",e);
+            events.raiseTransactionSuccessEvent("com.dgsoft.BusinessCreated." + businessDefineHome.getInstance().getId());
+
+
+            return ownerBusinessId;
         }
+        return null;
+    }
 
-        HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,outsideContract.getHouseCode());
+
+
+    private void genHouseBusiness(String defineId,String houseCode){
+        businessDefineId = defineId;
+        HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseCode);
         BusinessHouse businessHouse;
         if (houseRecord == null){
-            House house = houseEntityLoader.getEntityManager().find(House.class,outsideContract.getHouseCode());
+            House house = houseEntityLoader.getEntityManager().find(House.class,houseCode);
             if (house == null){
-                throw new IllegalArgumentException("house not found:" + outsideContract.getHouseCode());
+                throw new IllegalArgumentException("house not found:" + houseCode);
             }
             businessHouse = new BusinessHouse(house);
         }else {
             businessHouse = houseRecord.getBusinessHouse();
         }
 
-
-
         businessDefineHome.setId(businessDefineId);
 
         ownerBusinessHome.clearInstance();
         ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
-
         ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
-
 
         for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
             BusinessDataValid.ValidResult result;
@@ -108,10 +117,32 @@ public class OutsideBusinessCreate {
             }
         }
 
-
         for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
             component.fillData();
         }
+
+
+    }
+
+    @Transactional
+    public String submitContract(String contract, String userId){
+
+
+        DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, userId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        cc.coopersoft.house.sale.data.HouseContract outsideContract;
+        try {
+            outsideContract = mapper.readValue(DESUtil.decrypt(contract,key.getSessionKey()), cc.coopersoft.house.sale.data.HouseContract.class);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("contract data error",e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("contract decrypt error",e);
+        }
+
+        genHouseBusiness(RunParam.instance().getStringParamValue("NewHouseContractBizId"),outsideContract.getHouseCode());
+
+
 
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleInfo(new SaleInfo(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse(),outsideContract.getSalePayType(),outsideContract.getPrice(),ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()));
 
@@ -182,30 +213,84 @@ public class OutsideBusinessCreate {
             }
         }
 
+        String businessId = createBusiness(key.getAttachEmployee().getId(),
+                key.getAttachEmployee().getPersonName());
 
-        if (businessDefineHome.isCompletePass()) {
-            businessDefineHome.completeTask();
-
-            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
-
-            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,"提交合同","outside",key.getAttachEmployee().getPersonName(),"",new Date()));
-            String ownerBusinessId = ownerBusinessHome.getInstance().getId();
-            if (!"persisted".equals(ownerBusinessHome.persist())){
-                throw new IllegalArgumentException("persited ownerBusiness fail");
-            }
-
-            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(),ownerBusinessId);
-
-            events.raiseTransactionSuccessEvent("com.dgsoft.BusinessCreated." + businessDefineHome.getInstance().getId());
-
-
-            return ownerBusinessId;
-        }
-
-        throw new IllegalArgumentException("fail");
+        if (businessId != null){
+            return businessId;
+        }else
+            throw new IllegalArgumentException("fail");
     }
 
+
+    public SubmitResult submitBusiness(SubmitType type,String data,String attrId){
+        DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, attrId);
+        try {
+            String jsonData = DESUtil.decrypt(data,key.getSessionKey());
+            Logging.getLog(getClass()).debug("data:" + jsonData);
+            switch (type){
+                case SALE_CONTRACT:
+                    break;
+                case MORTGAGE_CONTRACT:
+                    break;
+                case HOUSE_SOURCE:
+                    return submitHouseSource(key.getAttachEmployee(), jsonData);
+            }
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
+        throw new IllegalArgumentException("unknow type:" + type);
+    }
+
+    private SubmitResult submitSellContract(){
+        //TODO sell contract
+        return null;
+    }
+
+    private SubmitResult submitMortgageContract(){
+
+        //TODO mortgage contract
+        return null;
+    }
+
+    private SubmitResult submitHouseSource(AttachEmployee attachEmployee , String data) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        HouseSource houseSource = mapper.readValue(data,HouseSource.class);
+
+        //TODO check data
+        businessDefineId = RunParam.instance().getStringParamValue("HouseSourceBizId");
+        HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class,houseSource.getHouseCode());
+        if (houseRecord == null){
+            throw new IllegalArgumentException("houseSource not have HouseRecord!");
+        }
+        businessDefineHome.setId(businessDefineId);
+        ownerBusinessHome.clearInstance();
+        ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
+
+        Agencies agencies = houseEntityLoader.getEntityManager().find(Agencies.class,houseSource.getGroupId());
+
+        HouseSourceBusiness houseSourceBusiness = new HouseSourceBusiness(ownerBusinessHome.getInstance(),data,houseSource.getSourceId(),false,houseSource.getGroupId(),agencies.getName());
+
+        houseSourceBusiness.setHouse(houseRecord.getBusinessHouse());
+
+        ownerBusinessHome.getInstance().getHouseSourceBusinesses().clear();
+        ownerBusinessHome.getInstance().getHouseSourceBusinesses().add(houseSourceBusiness);
+
+
+
+        String businessId = createBusiness(attachEmployee.getId(),attachEmployee.getPersonName());
+
+        if (businessId != null){
+            SubmitResult result = new SubmitResult(SubmitResult.SubmitStatus.SUCCESS,"房源审核中，审核业务编号：" + businessId);
+            result.setBusinessId(businessId);
+            return result;
+        }else{
+            return new SubmitResult(SubmitResult.SubmitStatus.FAIL,"房源验证失败！");
+        }
+
+    }
 
 
     public static OutsideBusinessCreate instance()
@@ -213,59 +298,5 @@ public class OutsideBusinessCreate {
         return (OutsideBusinessCreate) Component.getInstance(OutsideBusinessCreate.class,true);
     }
 
-
-    //建立旧的网签业务
-//    @Transactional
-//    public void createOldContract(LockedHouse lh,ContractOwner co){
-//
-//            House house = houseEntityLoader.getEntityManager().createQuery("select h from House h where h.id = :hid",House.class).setParameter("hid",lh.getHouseCode()).getSingleResult();
-//
-//            businessDefineId = RunParam.instance().getStringParamValue("NewHouseContractBizId");
-//            businessDefineHome.setId(businessDefineId);
-//
-//
-//
-//            ownerBusinessHome.clearInstance();
-//            ownerBusinessHome.getInstance().setSource(BusinessInstance.BusinessSource.BIZ_OUTSIDE);
-//            ownerBusinessHome.getInstance().setDefineId(businessDefineId);
-//            ownerBusinessHome.getInstance().setDefineName(businessDefineHome.getInstance().getName());
-//            ownerBusinessHome.getInstance().setApplyTime(co.getContractDate());
-//            ownerBusinessHome.getInstance().setRecorded(false);
-//            ownerBusinessHome.getInstance().getContractOwners().add(co);
-//            co.setOwnerBusiness(ownerBusinessHome.getInstance());
-//
-//
-//            BusinessHouse businessHouse = new BusinessHouse(house);
-//
-//            ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), businessHouse));
-//
-//            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setContractOwner(co);
-//
-//
-//            ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
-//
-//
-//
-//            ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
-//            String ownerBusinessId = ownerBusinessHome.getInstance().getId();
-//            ownerBusinessHome.getEntityManager().remove(lh);
-//
-//            for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
-//                component.fillData();
-//            }
-//
-//            businessDefineHome.completeTask();
-//
-//            if (!"persisted".equals(ownerBusinessHome.persist())){
-//                throw new IllegalArgumentException("persited ownerBusiness fail");
-//            }
-//            BusinessProcess.instance().createProcess(businessDefineHome.getInstance().getWfName(),ownerBusinessId);
-//
-//            Logging.getLog(getClass()).debug("crete business:" + ownerBusinessHome.getInstance().getId() + "by:" + lh.getId());
-//
-//
-//
-//
-//    }
 
 }
