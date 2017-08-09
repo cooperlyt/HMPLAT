@@ -49,7 +49,7 @@
 
         <a:outputPanel layout="block" styleClass="container" id="resultDatas">
 
-            <a:outputPanel rendered="#{not empty businessStartSelectList.searchResult}">
+            <a:outputPanel rendered="#{not empty businessStartSelectList.resultList}">
                 <div class="right" >
                     <div class="select-menu">
                         <div class="btn-group btn-group-sm">
@@ -84,7 +84,7 @@
 
             </a:outputPanel>
 
-            <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty businessStartSelectList.searchResult}">
+            <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty businessStartSelectList.resultList}">
                 <span class="mega-octicon octicon-search"></span>
 
                 <h3>#{messages.EmptyResult}</h3>
@@ -102,7 +102,7 @@
                     <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
                               action="#{houseInBusinessStart.businessAllHouseSelected}"
                               onclick="#{r:component('wait')}.show()">
-                        <f:param name="selectBusinessId" value="#{_item.id}"/>
+                        <f:param name="selectBusinessId" value="#{_item.ownerBusiness.id}"/>
                     </s:button>
                 </ui:define>
 
