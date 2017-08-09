@@ -175,7 +175,9 @@ public class OwnerHouseHelper {
 
         }
 
-        if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")){
+        if(ownerBusinessHome.getInstance().getDefineId().equals("WP73") || ownerBusinessHome.getInstance().getDefineId().equals("WP74")
+                || ownerBusinessHome.getInstance().getDefineId().equals("WP18") || ownerBusinessHome.getInstance().getDefineId().equals("WP19")
+                || ownerBusinessHome.getInstance().getDefineId().equals("WP21")){
             if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null && !ownerBusinessHome.getApplyPersion().getPersonName().equals("")){
                 contractPersonNames = ownerBusinessHome.getApplyPersion().getPersonName()+"["+ownerBusinessHome.getApplyPersion().getCredentialsNumber()+"]";
             }
