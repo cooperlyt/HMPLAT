@@ -41,9 +41,9 @@ public class FcMortgageProjectDisplayGen implements TaskCompleteSubscribeCompone
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押备案人 ");
 
             String contractPersonNames = "";
-            if (bh.getAfterBusinessHouse().getDeveloperName()!=null){
-                contractPersonNames = bh.getAfterBusinessHouse().getDeveloperName();
 
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
+                contractPersonNames=ownerBusinessHome.getApplyPersion().getPersonName()+"["+ownerBusinessHome.getApplyPersion().getCredentialsNumber()+"]";
             }
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
 
