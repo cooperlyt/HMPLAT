@@ -42,7 +42,7 @@ public class FcRecordComplete extends HouseRecordCompleteBase {
         if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial()!=null){
             key.addWord(ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
         }
-        if(ownerBusinessHome.getInstance().getDefineId().equals("WP18") || ownerBusinessHome.getInstance().getDefineId().equals("WP19") || ownerBusinessHome.getInstance().getDefineId().equals("WP19")){
+        if(ownerBusinessHome.getInstance().getDefineId().equals("WP18") || ownerBusinessHome.getInstance().getDefineId().equals("WP19") || ownerBusinessHome.getInstance().getDefineId().equals("WP21")){
             if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
             }

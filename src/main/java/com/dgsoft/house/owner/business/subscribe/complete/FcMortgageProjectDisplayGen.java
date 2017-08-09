@@ -42,7 +42,7 @@ public class FcMortgageProjectDisplayGen implements TaskCompleteSubscribeCompone
 
             String contractPersonNames = "";
 
-            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null && !ownerBusinessHome.getApplyPersion().getPersonName().equals("")){
+            if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
                 contractPersonNames=ownerBusinessHome.getApplyPersion().getPersonName()+"["+ownerBusinessHome.getApplyPersion().getCredentialsNumber()+"]";
             }
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
