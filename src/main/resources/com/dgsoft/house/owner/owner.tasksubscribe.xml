@@ -1,6 +1,7 @@
 <subscribes>
 
 
+
     <view-subscribe name="houseInfoView" page="/business/houseOwner/subscribe/HouseInfoView.xhtml">
         <description>
             房屋查看(Start)
@@ -556,6 +557,20 @@
     </view-subscribe>
 
 
+
+    <view-subscribe name="houseSourceInfoView" page="/business/houseOwner/subscribe/HouseSourceInfoView.xhtml">
+        <description>
+            房源信息查看
+        </description>
+
+    </view-subscribe>
+
+    <view-subscribe name="houseSourcePicView" page="/business/houseOwner/subscribe/HouseSourcePicView.xhtml">
+        <description>
+            房源图片查看
+        </description>
+
+    </view-subscribe>
 
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
@@ -1759,7 +1774,11 @@
         </description>
     </end-subscribe>
 
-
+    <end-subscribe name="houseSourceCheck" component="houseSourceCheck">
+        <description>
+            房源审核
+        </description>
+    </end-subscribe>
 
 
 

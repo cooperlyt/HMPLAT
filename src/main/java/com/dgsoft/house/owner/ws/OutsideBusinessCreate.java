@@ -9,6 +9,7 @@ import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.developersale.wsinterface.DESUtil;
+import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.Agencies;
 import com.dgsoft.house.model.AttachEmployee;
@@ -55,14 +56,14 @@ public class OutsideBusinessCreate {
     @In
     private Events events;
 
-    private String createBusiness(String empId,String empName){
+    private String createBusiness(String empId,String empName,String taskName){
         if (businessDefineHome.isCompletePass()) {
             businessDefineHome.completeTask();
 
             ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(businessDefineHome.getInstance().getWfName());
 
             ownerBusinessHome.getInstance().setDefineVersion(definition == null ? null : definition.getVersion());
-            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,"提交合同",empId,empName,"",new Date()));
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(ownerBusinessHome.getInstance(), TaskOper.OperType.CREATE,taskName,empId,empName,"",new Date()));
             String ownerBusinessId = ownerBusinessHome.getInstance().getId();
             if (!"persisted".equals(ownerBusinessHome.persist())){
                 throw new IllegalArgumentException("persited ownerBusiness fail");
@@ -214,7 +215,7 @@ public class OutsideBusinessCreate {
         }
 
         String businessId = createBusiness(key.getAttachEmployee().getId(),
-                key.getAttachEmployee().getPersonName());
+                key.getAttachEmployee().getPersonName(),"提交合同");
 
         if (businessId != null){
             return businessId;
@@ -223,6 +224,7 @@ public class OutsideBusinessCreate {
     }
 
 
+    @Transactional
     public SubmitResult submitBusiness(SubmitType type,String data,String attrId){
         DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, attrId);
         try {
@@ -275,12 +277,25 @@ public class OutsideBusinessCreate {
 
         houseSourceBusiness.setHouse(houseRecord.getBusinessHouse());
 
+        String searchKey = houseRecord.getSearchKey();
+        searchKey += "[" + houseSource.getGroupId() + "][" + agencies.getName() + "]";
+
+        houseSourceBusiness.setSearchKey(searchKey);
+
+        DescriptionDisplay display =  DescriptionDisplay.instance(houseRecord.getDisplay());
+
+        display.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+        display.addData(DescriptionDisplay.DisplayStyle.LABEL, "提交机构");
+        display.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,agencies.getName());
+        houseSourceBusiness.setDisplay(DescriptionDisplay.toStringValue(display));
+
         ownerBusinessHome.getInstance().getHouseSourceBusinesses().clear();
         ownerBusinessHome.getInstance().getHouseSourceBusinesses().add(houseSourceBusiness);
 
 
 
-        String businessId = createBusiness(attachEmployee.getId(),attachEmployee.getPersonName());
+
+        String businessId = createBusiness(attachEmployee.getId(),attachEmployee.getPersonName(),"提交房源");
 
         if (businessId != null){
             SubmitResult result = new SubmitResult(SubmitResult.SubmitStatus.SUCCESS,"房源审核中，审核业务编号：" + businessId);

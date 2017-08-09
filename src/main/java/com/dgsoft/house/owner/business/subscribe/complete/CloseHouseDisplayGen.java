@@ -37,6 +37,7 @@ public class CloseHouseDisplayGen implements TaskCompleteSubscribeComponent {
 
 
 
+
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "查封法院");
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCloseHouse().getCloseDownClour());
 

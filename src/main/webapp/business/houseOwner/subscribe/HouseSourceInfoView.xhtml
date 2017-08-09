@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:include src="/layout/house/HouseInfoView.xhtml">
+        <ui:param name="houseInfo" value="#{ownerBusinessHome.singleHouseSource.house}"/>
+    </ui:include>
+
+
+    <dh:entryGridBlock columns="8" group="房源信息">
+        <h:outputText value="提交机构"/>
+        <dh:entryGridColumn colspan="7">
+            <h:outputText value="#{ownerBusinessHome.singleHouseSource.attrName}"/>
+        </dh:entryGridColumn>
+
+        <h:outputText value="房源标题"/>
+        <dh:entryGridColumn colspan="7">
+                <div class="js-house-source-title">
+
+                </div>
+        </dh:entryGridColumn>
+        <h:outputText value="朝向"/>
+        <dh:entryGridColumn colspan="3">
+            <div class="js-house-source-order">
+
+            </div>
+        </dh:entryGridColumn>
+        <h:outputText value="所在层"/>
+        <div class="js-house-source-floor">
+
+        </div>
+
+        <h:outputText value="套型"/>
+        <div class="js-house-source-know">
+
+        </div>
+
+        <h:outputText value="房源标签"/>
+        <dh:entryGridColumn colspan="7">
+            <div class="js-house-source-tag">
+
+            </div>
+        </dh:entryGridColumn>
+        <h:outputText value="描述"/>
+        <dh:entryGridColumn colspan="7">
+            <div class="js-house-source-description">
+
+            </div>
+        </dh:entryGridColumn>
+        <h:outputText value="环境"/>
+        <dh:entryGridColumn colspan="7">
+            <div class="js-house-source-environment">
+
+            </div>
+        </dh:entryGridColumn>
+
+    </dh:entryGridBlock>
+
+    <h:outputStylesheet library="jquery.fancybox3" name="jquery.fancybox.min.css"/>
+    <h:outputScript library="jquery.fancybox3" name="jquery.fancybox.min.js"/>
+
+    <h:outputScript>//<![CDATA[
+        var pageInitialized = false;
+        $(document).ready(
+            function () {
+                if (pageInitialized) return;
+
+                var data = #{ownerBusinessHome.singleHouseSource.data};
+                $(".js-house-source-title").append(data.houseSaleInfo.title);
+                $(".js-house-source-order").append(data.houseSaleInfo.direction);
+                $(".js-house-source-floor").append(data.houseSaleInfo.IN_FLOOR_NAME);
+                $(".js-house-source-know").append(data.houseSaleInfo.roomCount + "室" + data.houseSaleInfo.livingRoom + "厅");
+                $(".js-house-source-tag").append(data.houseSaleInfo.tags);
+                $(".js-house-source-description").append(data.houseSaleInfo.description);
+                $(".js-house-source-environment").append(data.houseSaleInfo.environment);
+
+
+                for(var i=0;i<data.houseSaleInfo.houseSalePics.length;i++){
+                    var pic_tag = '<div class="col-xs-3 col-md-3"><a class="thumbnail" data-fancybox="group" href="#{runParam.getStringParamValue("IMG_SERVER_ADDRESS")}public/img/orig/'
+                    + data.houseSaleInfo.houseSalePics[i].id + '" data-caption="' + data.houseSaleInfo.houseSalePics[i].title + '">' +
+                            '<img src="#{runParam.getStringParamValue("IMG_SERVER_ADDRESS")}public/img/200x200/'
+                    + data.houseSaleInfo.houseSalePics[i].id + '" alt="" /></a></div>';
+
+                    $(".house-source-pic").append(pic_tag);
+                }
+
+                $("[data-fancybox]").fancybox();
+
+                pageInitialized = true;
+            }
+        );
+
+    //]]></h:outputScript>
+</ui:composition>

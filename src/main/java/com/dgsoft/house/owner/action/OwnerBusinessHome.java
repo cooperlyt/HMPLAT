@@ -173,6 +173,16 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+    public HouseSourceBusiness getSingleHouseSource(){
+        Set<HouseSourceBusiness> houseSourceBusinesses = getInstance().getHouseSourceBusinesses();
+        if (houseSourceBusinesses.size() > 1 ){
+            throw new IllegalArgumentException("HouseSourceBusiness count > 1");
+        } else if (houseSourceBusinesses.size() == 1){
+            return houseSourceBusinesses.iterator().next();
+        }else
+            return null;
+    }
+
     public BusinessMoney getTotal(){
         BusinessMoney result = new BusinessMoney();
         result.setCheckMoney(BigDecimal.ZERO);
