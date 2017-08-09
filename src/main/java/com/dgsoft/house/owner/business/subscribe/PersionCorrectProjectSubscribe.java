@@ -32,20 +32,22 @@ public class PersionCorrectProjectSubscribe extends BaseBusinessPersionSubscribe
             Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperCode()) ;
 
 
-                    if (developer.getAttachCorporation()!=null && developer.getAttachCorporation().getLicenseNumber()!=null) {
+                    if (developer!=null && developer.getAttachCorporation()!=null) {
+                        getInstance().setPersonName(developer.getName());
                         getInstance().setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
                         getInstance().setPhone(developer.getAttachCorporation().getPhone());
                         getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+
+
                     }
 
-                    getInstance().setPersonName(developer.getName());
+                 getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+                 ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
+                 setHave(true);
 
 
 
 
-            getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-            ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
-            setHave(true);
         }
     }
 }
