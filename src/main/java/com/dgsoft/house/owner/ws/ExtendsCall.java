@@ -1,5 +1,7 @@
 package com.dgsoft.house.owner.ws;
 
+import cc.coopersoft.house.SubmitType;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.seam.log.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import java.io.IOException;
 
 /**
  * Created by cooper on 9/26/16.
@@ -20,10 +23,22 @@ public class ExtendsCall {
 
 
     @POST
+    @Path("/contract/{type}/{key}")
+    public String submitBusiness(@PathParam("type") String type,
+                                    @PathParam("key") String attrEmpId,
+                                    @FormParam("data") String data){
+        Logging.getLog(getClass()).info(attrEmpId + " submit " + type );
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(OutsideBusinessCreate.instance().submitBusiness(SubmitType.valueOf(type),data,attrEmpId));
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
+    }
+
+    @POST
     @Path("/person/{key}")
     public String putPerson(@PathParam("key") String key , @FormParam("cer") String cer){
-
-
 
         Logging.getLog(this.getClass()).debug("receive person card data:" + cer);
         JSONObject contractJson;

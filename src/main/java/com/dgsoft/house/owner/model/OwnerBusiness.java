@@ -3,9 +3,6 @@ package com.dgsoft.house.owner.model;
 
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.system.business.BusinessInstance;
-import com.dgsoft.house.model.House;
-import org.jboss.seam.log.Logging;
-import sun.rmi.runtime.Log;
 
 import java.util.*;
 import javax.persistence.*;
@@ -68,6 +65,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
 
     private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
+
+    private Set<HouseSourceBusiness> houseSourceBusinesses = new HashSet<HouseSourceBusiness>(0);
     public OwnerBusiness() {
     }
 
@@ -524,6 +523,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setHouseContracts(Set<HouseContract> houseContracts) {
         this.houseContracts = houseContracts;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, mappedBy = "ownerBusiness", cascade = CascadeType.ALL)
+    public Set<HouseSourceBusiness> getHouseSourceBusinesses() {
+        return houseSourceBusinesses;
+    }
+
+    public void setHouseSourceBusinesses(Set<HouseSourceBusiness> houseSourceBusinesses) {
+        this.houseSourceBusinesses = houseSourceBusinesses;
     }
 
     @Transient

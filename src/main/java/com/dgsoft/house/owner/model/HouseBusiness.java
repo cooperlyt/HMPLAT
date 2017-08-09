@@ -24,8 +24,6 @@ public class HouseBusiness implements java.io.Serializable {
     private Set<AddHouseStatus> addHouseStatuses = new HashSet<AddHouseStatus>(0);
     private boolean canceled;
 
-    private SaleShowCheck saleShowCheck;
-
 
     private String searchKey;
     private String display;
@@ -126,15 +124,6 @@ public class HouseBusiness implements java.io.Serializable {
         this.canceled = canceled;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALE_CHECK")
-    public SaleShowCheck getSaleShowCheck() {
-        return saleShowCheck;
-    }
-
-    public void setSaleShowCheck(SaleShowCheck saleShowCheck) {
-        this.saleShowCheck = saleShowCheck;
-    }
 
 
     @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
