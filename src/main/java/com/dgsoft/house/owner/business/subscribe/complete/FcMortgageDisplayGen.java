@@ -8,6 +8,7 @@ import com.dgsoft.house.owner.model.HouseContract;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2017-07-20.
@@ -80,6 +81,13 @@ public class FcMortgageDisplayGen implements TaskCompleteSubscribeComponent {
                 businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押权人 ");
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
+            }
+
+            if(ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT")!=null) {
+
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押(贷款)合同号 ");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT").getNumber());
+
             }
 
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);

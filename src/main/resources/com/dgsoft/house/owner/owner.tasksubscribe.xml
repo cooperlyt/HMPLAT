@@ -557,6 +557,12 @@
     </view-subscribe>
 
 
+    <view-subscribe name="MortgageContractView" page="/business/houseOwner/subscribe/MortgageContractView.xhtml">
+        <description>
+            抵押(贷款)合同号查看
+        </description>
+    </view-subscribe>
+
 
     <view-subscribe name="houseSourceInfoView" page="/business/houseOwner/subscribe/HouseSourceInfoView.xhtml">
         <description>
@@ -1153,6 +1159,17 @@
         </description>
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
+
+
+    <edit-subscribe name="MortgageContractEdit" page="/business/houseOwner/subscribe/MortgageContractEdit.xhtml"
+                    component="">
+        <description>
+            抵押(贷款)合同号编辑
+        </description>
+    </edit-subscribe>
+
+
+
 
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->

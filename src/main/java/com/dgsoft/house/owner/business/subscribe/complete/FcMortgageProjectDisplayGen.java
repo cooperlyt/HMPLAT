@@ -60,6 +60,13 @@ public class FcMortgageProjectDisplayGen implements TaskCompleteSubscribeCompone
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押权人 ");
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
             }
+
+            if(ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT")!=null) {
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押(贷款)合同号 ");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT").getNumber());
+            }
+
+
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getAfterBusinessHouse().getAddress());
 

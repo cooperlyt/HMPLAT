@@ -41,6 +41,10 @@ public class FcProjectMortgageKeyGen implements TaskCompleteSubscribeComponent {
                 key.addWord(ownerBusinessHome.getInstance().getMortgaegeRegiste().getOldFinancial().getName());
             }
 
+            if(ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT")!=null) {
+                key.addWord(ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT").getNumber());
+            }
+
             if (ownerBusinessHome.getApplyPersion()!=null && ownerBusinessHome.getApplyPersion().getPersonName()!=null){
                 key.addWord(ownerBusinessHome.getApplyPersion().getPersonName());
                 if (ownerBusinessHome.getApplyPersion().getCredentialsNumber()!=null){

@@ -41,6 +41,11 @@ public class FcHouseBusinessMortgageKeyGen implements TaskCompleteSubscribeCompo
                 key.addWord(ownerBusinessHome.getCardNoByType("MORTGAGE").getNumber());
             }
 
+            if(ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT")!=null) {
+                key.addWord(ownerBusinessHome.getCardNoByType("MORTGAGE_CONTRACT").getNumber());
+            }
+
+
             if(ownerBusinessHome.getInstance().getMortgaegeRegiste()!=null && ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial()!=null){
                 key.addWord(ownerBusinessHome.getInstance().getMortgaegeRegiste().getFinancial().getName());
             }
