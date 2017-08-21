@@ -259,10 +259,17 @@
 
 
         <p:cell borderWidthLeft="0" fixedHeight="25">
-            <p:paragraph>房屋权属证书号</p:paragraph>
+            <p:paragraph>预告登记证明号</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" colspan="3">
+        <p:cell borderWidthLeft="0">
             <p:paragraph>#{ownerBusinessHome.getCardNoByType('NOTICE_MORTGAGE').number}</p:paragraph>
+
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>房屋所有权证号</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
 
         </p:cell>
 
