@@ -15,7 +15,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审核" x="505" y="208" width="132" height="38">
+  <node name="审核" x="464" y="298" width="132" height="38">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -25,12 +25,12 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="缮证" x="484" y="367" width="132" height="36">
+  <node name="缮证" x="451" y="382" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="繕证判断" x="242" y="371" width="132" height="36">
+  <node name="繕证判断" x="169" y="383" width="132" height="36">
     <edge>
       <label x="-15" y="-12"/>
     </edge>
@@ -38,7 +38,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审核结果" x="239" y="217" width="132" height="36">
+  <node name="审核结果" x="153" y="298" width="132" height="36">
     <edge>
       <label x="-21" y="-13"/>
     </edge>
@@ -63,4 +63,25 @@
     </edge>
   </node>
   <node name="结束" x="33" y="454" width="132" height="36"/>
+  <node name="复审" x="369" y="135" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="复审结果" x="365" y="212" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="是否复审" x="570" y="74" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>

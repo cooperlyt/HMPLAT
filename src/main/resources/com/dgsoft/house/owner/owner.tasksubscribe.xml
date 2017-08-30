@@ -1709,6 +1709,14 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="addSceondCheckEmp" component="addSceondCheckEmp">
+        <description>
+            复审人(初审人、时间、意见)
+        </description>
+    </end-subscribe>
+
+
+
     <end-subscribe name="addKyCheckEmpEnd" component="addKyCheckEmp">
         <description>
             审核人(审核人、时间、意见-开原)
