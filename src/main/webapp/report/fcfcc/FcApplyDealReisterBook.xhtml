@@ -66,7 +66,7 @@
 <f:facet name="defaultCell">
     <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
 </f:facet>
-<p:cell fixedHeight="360">
+<p:cell fixedHeight="320">
     <p:paragraph>申
         请
         人
@@ -79,7 +79,7 @@
         <f:facet name="defaultCell">
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
         </f:facet>
-        <p:cell borderWidthLeft="0" borderWidthTop="0" borderWidthRight="0" fixedHeight="180">
+        <p:cell borderWidthLeft="0" borderWidthTop="0" borderWidthRight="0" fixedHeight="160">
             <p:paragraph >原
                 权
                 利
@@ -115,7 +115,7 @@
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.credentialsNumber}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="100">
+                <p:cell borderWidthLeft="0" fixedHeight="80">
                     <p:paragraph>共有情况</p:paragraph>
                 </p:cell>
                 <p:cell colspan="5" borderWidthLeft="0" borderWidthRight="0" verticalAlignment="top" horizontalAlignment="left" noWrap="false">
@@ -150,7 +150,7 @@
 
             </p:table>
         </p:cell>
-        <p:cell borderWidthLeft="0" borderWidthTop="0" borderWidthRight="0" borderWidthBottom="0" fixedHeight="180">
+        <p:cell borderWidthLeft="0" borderWidthTop="0" borderWidthRight="0" borderWidthBottom="0" fixedHeight="160">
             <p:paragraph>现
                 申
                 请
@@ -186,7 +186,7 @@
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthRight="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.credentialsNumber}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="100">
+                <p:cell borderWidthLeft="0" fixedHeight="80">
                     <p:paragraph>共有情况</p:paragraph>
                 </p:cell>
 
@@ -322,11 +322,29 @@
         </p:cell>
     </p:table>
 </p:cell>
-<p:cell colspan="2" fixedHeight="100">
+<p:cell colspan="2" fixedHeight="150">
 
     <p:table columns="2" widths="0.7 3" headerRows="0" footerRows="0" widthPercentage="100">
         <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
             <p:paragraph>受理人</p:paragraph>
+        </p:cell>
+
+        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
+
+            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
+                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>签字:</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
+                    <p:paragraph>年                月                日</p:paragraph>
+                </p:cell>
+
+            </p:table>
+
+        </p:cell>
+
+        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
+            <p:paragraph>复审</p:paragraph>
         </p:cell>
 
         <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
