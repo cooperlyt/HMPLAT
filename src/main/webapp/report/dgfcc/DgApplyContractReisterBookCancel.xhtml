@@ -273,7 +273,8 @@
                             <p:paragraph>购房金额</p:paragraph>
                         </p:cell>
                         <p:cell borderWidthLeft="0" fixedHeight="20">
-                            <p:paragraph><p:text value="#{_houseBusiness.startBusinessHouse.saleInfo.sumPrice}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
+
+                            <p:paragraph><p:text value="#{ownerBusinessHome.instance.selectBusiness.singleHoues.afterBusinessHouse.saleInfo.sumPrice}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
                         </p:cell>
 
                         <p:cell borderWidthLeft="0" fixedHeight="20">
@@ -286,7 +287,7 @@
                             <p:paragraph>合同提交时间</p:paragraph>
                         </p:cell>
                         <p:cell borderWidthLeft="0" fixedHeight="20">
-                            <p:paragraph><p:text value="#{_houseBusiness.startBusinessHouse.saleContract.contractDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
+                            <p:paragraph><p:text value="#{ownerBusinessHome.instance.selectBusiness.singleHoues.afterBusinessHouse.saleContract.contractDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/> </p:text></p:paragraph>
                         </p:cell>
 
 
