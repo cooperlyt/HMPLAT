@@ -79,7 +79,7 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
     public enum HouseDataSource {
-        MAPPING, IMPORT, RECORD_ADD
+        MAPPING, IMPORT, RECORD_ADD,BDC
     }
 
     public enum AddressGenType{
