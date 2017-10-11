@@ -37,7 +37,7 @@ public class TotalOldHouseSale {
     @In(create = true)
     private FacesMessages facesMessages;
 
-    private static final String SALE_SQL = "select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(count(hb.id),sum(bh.houseArea) ) from HouseBusiness hb left join hb.afterBusinessHouse bh where hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime and bh.useType in (:useTypes) and hb.ownerBusiness.defineId ='WP56' and hb.ownerBusiness.recorded = true ";
+    private static final String SALE_SQL = "select new com.dgsoft.house.owner.total.data.HouseSaleTotalData(count(hb.id),sum(bh.houseArea) ) from HouseBusiness hb left join hb.afterBusinessHouse bh where hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime and hb.ownerBusiness.defineId ='WP56' and hb.ownerBusiness.recorded = true ";
 
     private Date fromDateTime;
 
@@ -141,63 +141,63 @@ public class TotalOldHouseSale {
         //data
         row = sheet.createRow(rowIndex++);
         colIndex = 0;
-        HouseSaleTotalData totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea > 0 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getDwellingTypes()).getSingleResult();
+        HouseSaleTotalData totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType = 'DWELLING_KEY' and bh.houseArea > 0 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea > 0 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getUnDwellingTypes()).getSingleResult();
-        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue(totalData.getCount());
-        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue(totalData.getArea().doubleValue());
-
-
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=60   and bh.houseArea <90 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getDwellingTypes()).getSingleResult();
-        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue(totalData.getCount());
-        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue(totalData.getArea().doubleValue());
-
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=60   and bh.houseArea <90 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getUnDwellingTypes()).getSingleResult();
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType <> 'DWELLING_KEY' and bh.houseArea > 0 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=90   and bh.houseArea <120 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getDwellingTypes()).getSingleResult();
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType = 'DWELLING_KEY' and bh.houseArea >=60   and bh.houseArea <90 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=90   and bh.houseArea <120 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getUnDwellingTypes()).getSingleResult();
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType <> 'DWELLING_KEY' and bh.houseArea >=60   and bh.houseArea <90 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=120   and bh.houseArea <140 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getDwellingTypes()).getSingleResult();
+
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType = 'DWELLING_KEY' and bh.houseArea >=90   and bh.houseArea <120 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=120   and bh.houseArea <140 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getUnDwellingTypes()).getSingleResult();
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType <> 'DWELLING_KEY' and bh.houseArea >=90   and bh.houseArea <120 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.houseArea >=140  ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getDwellingTypes()).getSingleResult();
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType = 'DWELLING_KEY' and bh.houseArea >=120   and bh.houseArea <140 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getArea().doubleValue());
 
-        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL  + " and bh.houseArea >=140  ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).setParameter("useTypes", UseTypeWordAdapter.instance().getUnDwellingTypes()).getSingleResult();
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType <> 'DWELLING_KEY' and bh.houseArea >=120   and bh.houseArea <140 ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
+        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
+        cell.setCellValue(totalData.getCount());
+        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
+        cell.setCellValue(totalData.getArea().doubleValue());
+
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL + " and bh.useType = 'DWELLING_KEY' and bh.houseArea >=140  ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
+        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
+        cell.setCellValue(totalData.getCount());
+        cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
+        cell.setCellValue(totalData.getArea().doubleValue());
+
+        totalData =  ownerEntityLoader.getEntityManager().createQuery(SALE_SQL  + " and bh.useType <> 'DWELLING_KEY' and bh.houseArea >=140  ", HouseSaleTotalData.class).setParameter("beginTime",fromDateTime).setParameter("endTime",toDateTime).getSingleResult();
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);
         cell.setCellValue(totalData.getCount());
         cell = row.createCell(colIndex++,Cell.CELL_TYPE_NUMERIC);

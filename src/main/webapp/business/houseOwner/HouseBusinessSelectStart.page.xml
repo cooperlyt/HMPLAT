@@ -5,4 +5,13 @@
 
 
     <param name="selectBusinessId" value="#{houseInBusinessStart.selectBizId}"/>
+
+
+    <param name="firstResult" value="#{businessStartSelectList.firstResult}"/>
+
+    <param name="sort" value="#{businessStartSelectList.orderColumn}"/>
+    <param name="dir" value="#{businessStartSelectList.orderDirection}"/>
+
+    <param name="searchKey" value="#{houseBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{houseBusinessCondition.searchTypeName}"/>
 </page>

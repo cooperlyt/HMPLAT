@@ -4,9 +4,11 @@ import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.owner.action.HouseBusinessCondition;
 import com.dgsoft.house.owner.action.HouseBusinessSearch;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 
 /**
  * Created by cooper on 9/29/15.

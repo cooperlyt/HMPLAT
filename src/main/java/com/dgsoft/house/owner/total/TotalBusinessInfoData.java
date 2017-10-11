@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.total;
 
+import cc.coopersoft.house.UseType;
 import com.dgsoft.common.OrderBeanComparator;
 import com.dgsoft.common.SearchDateArea;
 import com.dgsoft.common.system.DictionaryWord;
@@ -111,16 +112,6 @@ public class TotalBusinessInfoData {
         this.housePorperty = housePorperty;
     }
 
-    public List<String> getHouseUseType(String key){
-        List<Word> words =DictionaryWord.instance().getWordList("house.useType");
-        List<String> xzwords = new ArrayList<String>();
-        for (Word word:words){
-            if (word.getKey().equals(key)){
-                xzwords.add(word.getId());
-            }
-        }
-        return xzwords;
-    }
 
     public void totalBusiness(){
 
@@ -136,54 +127,59 @@ public class TotalBusinessInfoData {
 
 
 
+
        //住宅
         List<BusinessTotalData> zcbusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
                 "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
+                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType = :usetype  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
-                .setParameter("usetype",getHouseUseType("1")).getResultList();
+                .setParameter("usetype", UseType.DWELLING_KEY).getResultList();
 
         Logging.getLog(getClass()).debug("zcbusinessTotalDataList---"+zcbusinessTotalDataList.size());
         //商业营业
         List<BusinessTotalData> sybusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
                 "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
+                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType = :usetype  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
-                .setParameter("usetype",getHouseUseType("2")).getResultList();
+                .setParameter("usetype",UseType.SHOP_HOUSE_KEY).getResultList();
 
 
         Logging.getLog(getClass()).debug("sybusinessTotalDataList---"+sybusinessTotalDataList.size());
         //办公
         List<BusinessTotalData> bgbusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
                 "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
+                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType = :usetype  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
-                .setParameter("usetype",getHouseUseType("3")).getResultList();
+                .setParameter("usetype",UseType.OFFICE).getResultList();
 
         Logging.getLog(getClass()).debug("bgbusinessTotalDataList---"+bgbusinessTotalDataList.size());
 
-        //工也仓储
+        //工也
         List<BusinessTotalData> gybusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
                 "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
+                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType = :usetype  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
-                .setParameter("usetype",getHouseUseType("4")).getResultList();
+                .setParameter("usetype",UseType.INDUSTRY).getResultList();
         Logging.getLog(getClass()).debug("gybusinessTotalDataList---"+gybusinessTotalDataList.size());
         //其它
         List<BusinessTotalData> qtbusinessTotalDataList = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.BusinessTotalData(ob.defineId,ob.defineName,count(ob.id),sum(SaleInfos.sumPrice),sum(Evaluates.assessmentPrice),sum(AfterBusinessHouse.houseArea)) " +
                 "from OwnerBusiness ob left join ob.evaluates Evaluates left join ob.houseBusinesses HouseBusinesses left join HouseBusinesses.afterBusinessHouse AfterBusinessHouse left join AfterBusinessHouse.saleInfo SaleInfos" +
-                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype)  and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
+                " where ob.status in ('COMPLETE','COMPLETE_CANCEL','MODIFYING') and ob.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') and AfterBusinessHouse.useType in (:usetype) and ob.regTime >= :beginDate and ob.regTime <= :endDate group by ob.defineId",BusinessTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime)
-                .setParameter("usetype",getHouseUseType("0")).getResultList();
+                .setParameter("usetype", EnumSet.of(UseType.OTHER,UseType.CAR_STORE,UseType.STORE_HOUSE)).getResultList();
         Logging.getLog(getClass()).debug("qtbusinessTotalDataList---"+qtbusinessTotalDataList.size());
 
 
 
+
+//                STORE_HOUSE,
+//
+//                CAR_STORE,
 
 
 
@@ -204,10 +200,13 @@ public class TotalBusinessInfoData {
         strings.add("住宅");
         strings.add("商业营业");
         strings.add("办公");
-        strings.add("工业仓储");
+        strings.add("工业用房");
         strings.add("其他");
+
+
         Row row1 = sheet.createRow(rowIndex++);
         Row row2 = sheet.createRow(rowIndex++);
+
 
 
         Cell cell1 = row1.createCell(cellIndex++);

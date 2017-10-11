@@ -156,6 +156,12 @@ public class ProjectBusinessList extends MultiOperatorEntityQuery<BusinessProjec
         }
     }
 
+    @Override
+    protected void createResultList(){
+        setEjbql(getSearchType().getJpql());
+        setRestrictionGroup(getSearchType().getRestrictionGroup());
+    }
+
     public SortCol[] getAllSortCol(){
         return SortCol.values();
     }
@@ -170,8 +176,7 @@ public class ProjectBusinessList extends MultiOperatorEntityQuery<BusinessProjec
     }
 
     public void searchAction(){
-        setEjbql(getSearchType().getJpql());
-        setRestrictionGroup(getSearchType().getRestrictionGroup());
+
         setFirstResult(0);
     }
 
