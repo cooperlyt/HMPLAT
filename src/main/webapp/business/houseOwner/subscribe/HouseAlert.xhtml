@@ -1,0 +1,37 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty houseAlertCache.getHouseAlertList(ownerBusinessHome.singleHoues.houseCode)}"
+                   style="padding-left: 40px"
+                   layout="block" styleClass="alert alert-warning" role="alert">
+
+    <a:repeat value="#{houseAlertCache.getHouseAlertList(ownerBusinessHome.singleHoues.houseCode)}" var="_lockedHouse">
+
+        <p class="#{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
+        </strong> 由 <strong>
+            <h:outputText value="系统" rendered="#{_lockedHouse.type eq 'SYSTEM_LOCKED'}"/>
+            <h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}" rendered="#{not (_lockedHouse.type eq 'SYSTEM_LOCKED')}"/></strong>
+            ，因:
+
+
+            <a:outputPanel rendered="#{not (_lockedHouse.type eq 'CANT_SALE')}"><strong>#{_lockedHouse.description}</strong> 建立预警。 </a:outputPanel>
+            <a:outputPanel rendered="#{_lockedHouse.type eq 'CANT_SALE'}">办理（预）销售许可证 设置为不可售。 </a:outputPanel>
+
+
+
+        </p>
+
+
+    </a:repeat>
+
+    </a:outputPanel>
+
+</ui:composition>

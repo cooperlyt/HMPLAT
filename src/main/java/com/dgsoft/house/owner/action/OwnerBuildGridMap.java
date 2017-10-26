@@ -319,7 +319,8 @@ public class OwnerBuildGridMap {
 
             BusinessHouse businessHouse = businessHouseMap.get(house.getHouseCode());
             if (businessHouse == null) {
-                result.add(new BusinessHouse(house));
+                if (!house.isDeleted())
+                    result.add(new BusinessHouse(house));
             } else {
                 result.add(businessHouse);
                 businessHouseMap.remove(businessHouse.getHouseCode());
@@ -476,7 +477,7 @@ public class OwnerBuildGridMap {
                     BusinessHouse house = null;
                     if ((block.getHouseCode() != null) && !block.getHouseCode().trim().equals(""))
                         house = businessHouseMap.get(block.getHouseCode());
-                    if (house != null) {
+                    if (house != null ) {
                         block.setHouse(house);
                         block.setInBizName(inBusinessHouseCode.get(house.getHouseCode()));
                         block.setLockedHouseList(lockedHouseMap.get(house.getHouseCode()));

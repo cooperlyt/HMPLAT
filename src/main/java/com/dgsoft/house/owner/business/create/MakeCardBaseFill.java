@@ -29,6 +29,13 @@ public abstract class MakeCardBaseFill implements BusinessDataFill {
 
     @Override
     public void fillData() {
+
+        for (Card card: ownerBusinessHome.getInstance().getCards()){
+            if (Card.CardType.OWNER_RSHIP.equals(card.getType())){
+                return;
+            }
+        }
+
         List<HouseBusiness> houseBusiness =  ownerEntityLoader.getEntityManager().createQuery("select hb from HouseBusiness hb where hb.ownerBusiness.defineId='WP40' and hb.ownerBusiness.status='COMPLETE' and hb.houseCode=:houseCode",HouseBusiness.class)
                 .setParameter("houseCode",ownerBusinessHome.getInstance().getSingleHoues().getHouseCode())
                 .getResultList();
