@@ -22,6 +22,12 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="houseAlertDisplay" page="/business/houseOwner/subscribe/HouseAlert.xhtml">
+        <description>
+            房屋预警查看
+        </description>
+    </view-subscribe>
+
     <view-subscribe name="houseMappingView" page="/business/houseOwner/subscribe/HouseMappingMemo.xhtml">
         <description>
             房屋测绘备注
