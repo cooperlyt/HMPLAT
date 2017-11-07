@@ -1,6 +1,8 @@
 package com.dgsoft.house.model;
 // Generated Jul 12, 2013 11:32:23 AM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.system.PersonEntity;
+import com.dgsoft.common.system.PowerPersonEntity;
 import com.dgsoft.house.AttachCorpType;
 
 import javax.persistence.*;
@@ -31,23 +33,29 @@ public class AttachCorporation implements java.io.Serializable {
 	private boolean enable;
 	private String licenseNumber;
 	private String cerCode;
-	private String taxLicense;
+
 	private String companyCode;
 	private String companyType;
 	private BigDecimal registerMoney;
 	private String level;
 	private Date dateTo;
-	private String manager;
+
+	private PowerPersonEntity.LegalType legalType;
+	private PersonEntity.CredentialsType credentialsType;
+
 	private AttachCorpType type;
 	private Set<OrgAttachAction> orgAttachActions = new HashSet<OrgAttachAction>(0);
     private Set<AttachEmployee> attachEmployees = new HashSet<AttachEmployee>(0);
     private Developer developer;
+
 
     private MappingCorporation  mappingCorporation;
 
     private EvaluateCorporation evaluateCorporation;
 
 	private Agencies agencies;
+
+
 
 
 	public AttachCorporation(String id,AttachCorpType type,boolean enable, Date recordDate) {
@@ -89,8 +97,9 @@ public class AttachCorporation implements java.io.Serializable {
 		this.recordDate = recordDate;
 	}
 
-	@Column(name = "ADDRESS", length = 100)
+	@Column(name = "ADDRESS", nullable = false,length = 100)
 	@Size(max = 100)
+	@NotNull
 	public String getAddress() {
 		return this.address;
 	}
@@ -99,8 +108,9 @@ public class AttachCorporation implements java.io.Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "PHONE", length = 200)
+	@Column(name = "PHONE",nullable = false,length = 200)
 	@Size(max = 200)
+	@NotNull
 	public String getPhone() {
 		return this.phone;
 	}
@@ -109,8 +119,9 @@ public class AttachCorporation implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	@Column(name = "OWNER_NAME", length = 20)
+	@Column(name = "OWNER_NAME",nullable = false, length = 20)
 	@Size(max = 20)
+	@NotNull
 	public String getOwnerName() {
 		return this.ownerName;
 	}
@@ -178,8 +189,9 @@ public class AttachCorporation implements java.io.Serializable {
         this.enable = enable;
     }
 
-	@Column(name = "LICENSE_NUMBER", length = 100)
+	@Column(name = "LICENSE_NUMBER",nullable = false,length = 100)
 	@Size(max = 100)
+	@NotNull
 	public String getLicenseNumber() {
 		return this.licenseNumber;
 	}
@@ -208,15 +220,6 @@ public class AttachCorporation implements java.io.Serializable {
         this.ownerTel = ownerTel;
     }
 
-    @Column(name = "TAX_LICENSE", length = 100)
-	@Size(max = 100)
-	public String getTaxLicense() {
-		return this.taxLicense;
-	}
-
-	public void setTaxLicense(String taxLicense) {
-		this.taxLicense = taxLicense;
-	}
 
 	@Column(name = "COMPANY_CODE", length = 100)
 	@Size(max = 100)
@@ -269,15 +272,7 @@ public class AttachCorporation implements java.io.Serializable {
 		this.dateTo = dateTo;
 	}
 
-	@Column(name = "MANAGER", length = 20)
-	@Size(max = 20)
-	public String getManager() {
-		return this.manager;
-	}
 
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation", cascade = CascadeType.ALL)
     public Developer getDeveloper() {
@@ -341,7 +336,29 @@ public class AttachCorporation implements java.io.Serializable {
         return attachEmployees;
     }
 
-    public void setAttachEmployees(Set<AttachEmployee> attachEmployees) {
+    @Enumerated(EnumType.STRING)
+	@Column(name = "LEGAL_TYPE", nullable = false, length = 16)
+	@NotNull
+	public PowerPersonEntity.LegalType getLegalType() {
+		return legalType;
+	}
+
+	public void setLegalType(PowerPersonEntity.LegalType legalType) {
+		this.legalType = legalType;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "CREDENTIALS_TYPE",nullable = false, length = 16)
+	@NotNull
+	public PersonEntity.CredentialsType getCredentialsType() {
+		return credentialsType;
+	}
+
+	public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
+		this.credentialsType = credentialsType;
+	}
+
+	public void setAttachEmployees(Set<AttachEmployee> attachEmployees) {
         this.attachEmployees = attachEmployees;
     }
 
@@ -379,4 +396,6 @@ public class AttachCorporation implements java.io.Serializable {
 				throw new IllegalAccessError("unknow attr corp type");
 		}
 	}
+
+
 }

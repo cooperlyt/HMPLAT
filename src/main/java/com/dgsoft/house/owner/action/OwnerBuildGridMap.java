@@ -496,25 +496,29 @@ public class OwnerBuildGridMap {
 
             for (House house : houseMap.values()) {
                 BusinessHouse businessHouse = businessHouseMap.get(house.getHouseCode());
-                idleHouses.add(businessHouse);
+                if (businessHouse != null)
+                    idleHouses.add(businessHouse);
             }
 
-            BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses);
-            for (GridRow gridRow : idleMap.getGridRows()) {
-                for (GridBlock block : gridRow.getGridBlocks()) {
-                    if (block.getHouse() != null) {
+            if (!idleHouses.isEmpty()) {
 
-                        block.setHouseStatus(houseMasterStatus.get(block.getHouse().getHouseCode()));
+                BuildGridMap idleMap = BuildHome.genIdleHouseGridMap(idleHouses);
+                for (GridRow gridRow : idleMap.getGridRows()) {
+                    for (GridBlock block : gridRow.getGridBlocks()) {
+                        if (block.getHouse() != null) {
 
-                        block.setLocked(inBusinessHouseCode.keySet().contains(block.getHouse().getHouseCode()) || lockedHouseMap.keySet().contains(block.getHouse().getHouseCode()));
-                        block.setInBizName(inBusinessHouseCode.get(block.getHouse().getHouseCode()));
-                        block.setLockedHouseList(lockedHouseMap.get(block.getHouse().getHouseCode()));
+                            block.setHouseStatus(houseMasterStatus.get(block.getHouse().getHouseCode()));
+
+                            block.setLocked(inBusinessHouseCode.keySet().contains(block.getHouse().getHouseCode()) || lockedHouseMap.keySet().contains(block.getHouse().getHouseCode()));
+                            block.setInBizName(inBusinessHouseCode.get(block.getHouse().getHouseCode()));
+                            block.setLockedHouseList(lockedHouseMap.get(block.getHouse().getHouseCode()));
+                        }
                     }
                 }
-            }
 
-            idleMap.setId(UUID.randomUUID().toString());
-            buildGridMaps.add(idleMap);
+                idleMap.setId(UUID.randomUUID().toString());
+                buildGridMaps.add(idleMap);
+            }
 
         }
 

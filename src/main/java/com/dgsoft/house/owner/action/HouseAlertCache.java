@@ -18,7 +18,7 @@ import java.util.Map;
 @Scope(ScopeType.CONVERSATION)
 public class HouseAlertCache {
 
-    @In
+    @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
 
     private Map<String,List<LockedHouse>> cache = new HashMap<String, List<LockedHouse>>();
