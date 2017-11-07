@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Table(name = "CARD", catalog = "HOUSE_OWNER_RECORD")
 public class Card implements java.io.Serializable {
     //预告登记证明号，所有权证号，抵押权证号，在建工程抵押登记证明号，预售许可证证号，                                 抵押预告登记证明号             原产权证号        原他项权证号   原在建工程登记证明用     备案合同号    抵押合同号
-    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE,PROJECT_MORTGAGE,SALE_LICENSE,MERCHANDISE_CONTRAC,NOTICE_MORTGAGE,OTHER_CARD,OLD_OWNER_RSHIP,OLD_MORTGAGE,OLD_PROJECT_MORTGAGE,CONTRACT_NO,MORTGAGE_CONTRACT};
+    public enum CardType{NOTICE,OWNER_RSHIP,MORTGAGE,PROJECT_MORTGAGE,SALE_LICENSE,MERCHANDISE_CONTRAC,NOTICE_MORTGAGE,OTHER_CARD,OLD_OWNER_RSHIP,OLD_MORTGAGE,OLD_PROJECT_MORTGAGE,CONTRACT_NO,MORTGAGE_CONTRACT,POOL_RSHIP};
 	private String id;
 	private OwnerBusiness ownerBusiness;
 	private CardType type;
