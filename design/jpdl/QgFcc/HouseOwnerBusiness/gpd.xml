@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="HouseOwnerBusiness" width="859" height="547">
+  <node name="业务受理" x="36" y="15" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="受理" x="-24" y="209" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="185" h1="-48" w2="-111" h2="92"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核" x="456" y="149" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审批" x="460" y="271" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="归档" x="249" y="510" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="缮证" x="481" y="357" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="繕证判断" x="210" y="369" width="132" height="36">
+    <edge>
+      <label x="-15" y="-12"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核结果" x="456" y="205" width="132" height="36">
+    <edge>
+      <label x="-21" y="-13"/>
+    </edge>
+    <edge>
+      <label x="10" y="-19"/>
+    </edge>
+  </node>
+  <node name="审批结果" x="137" y="276" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-41" y="-11"/>
+    </edge>
+  </node>
+  <node name="类型判断" x="36" y="90" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-24" y="-18"/>
+    </edge>
+  </node>
+  <node name="要件上传" x="267" y="52" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="不归档业务判断" x="498" y="464" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="33" y="454" width="132" height="36"/>
+  <node name="复审" x="471" y="13" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="复审结果" x="471" y="83" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="11" y="-4"/>
+      <bendpoint w1="-222" h1="91" w2="273" h2="-35"/>
+    </edge>
+  </node>
+</root-container>
