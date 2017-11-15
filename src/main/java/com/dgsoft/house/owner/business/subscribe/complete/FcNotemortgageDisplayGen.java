@@ -54,7 +54,7 @@ public class FcNotemortgageDisplayGen implements TaskCompleteSubscribeComponent 
 
 
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "抵押备案人 ");
+            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "预告备案人 ");
 
             String contractPersonNames = "";
             for (PowerPerson pp: bh.getAfterBusinessHouse().getAllNewPowerPersonList()){
