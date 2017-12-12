@@ -58,6 +58,7 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     private BigDecimal sumArea;
     private String memo;
     private Date createTime;
+    private boolean enable;
 
 
     private Set<Build> builds = new HashSet<Build>(0);
@@ -70,6 +71,7 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     public Project(Section section, Developer developer) {
         this.section = section;
         this.developer = developer;
+        this.enable=true;
     }
 
     public Project(Section section,String id, Date createTime) {
@@ -78,11 +80,13 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
         this.createTime = createTime;
         this.id = id;
         this.address = section.getAddress();
+        this.enable=true;
     }
 
     public Project(String id, Date createTime) {
         this.createTime = createTime;
         this.id = id;
+        this.enable=true;
     }
 
     @Id
@@ -178,6 +182,15 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    @Column(name = "ENABLE", nullable = false)
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
 
@@ -288,5 +301,6 @@ public class Project implements java.io.Serializable, TreeNode, ProjectInfo {
     public Enumeration children() {
         return Iterators.asEnumeration(getBuilds().iterator());
     }
+
 
 }

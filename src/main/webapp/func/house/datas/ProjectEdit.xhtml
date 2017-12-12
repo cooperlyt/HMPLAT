@@ -9,6 +9,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
                 template="/layout/template-edit.xhtml">
     <div class="setup-header">
         <h1>#{projectHome.idDefined ? messages.edit :  messages.create} #{messages.Project}</h1>
@@ -38,7 +39,7 @@
     <h:form>
 
 
-
+        <div class="form-inline">
 
         <s:decorate id="IdField" styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
@@ -57,6 +58,18 @@
 
         </s:decorate>
 
+
+        <div class="form-big-switch form-group">
+            <dh:switch value="#{projectHome.instance.enable}"
+
+                       onText="#{messages.Enable}"
+                       offText="#{messages.Disable}"
+                       styleClass="js-switch "/>
+
+
+        </div>
+
+        </div>
 
         <s:decorate id="districtField" styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">

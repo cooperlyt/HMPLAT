@@ -3,6 +3,7 @@ package com.dgsoft.house.action;
 import com.dgsoft.common.BatchOperData;
 import com.dgsoft.common.SetLinkList;
 import com.dgsoft.common.helper.ActionExecuteState;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.Build;
 import com.dgsoft.house.model.House;
@@ -154,6 +155,8 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
     public void moveBuild(){
         ProjectHome ph = (ProjectHome)Component.getInstance("projectHome");
+
+        House.AddressGenType addressGenType =  House.AddressGenType.valueOf(RunParam.instance().getStringParamValue("HouseAddressGen"));
         for(BatchOperData<Build> build: ph.getBatchOperBuild()) {
             Logging.getLog(getClass()).debug("move select build:" + build.getData().getId() + "-" + build.isSelected());
             if (build.isSelected()){
@@ -178,7 +181,20 @@ public class ProjectHome extends HouseEntityHome<Project> {
 
                 if (moveChangeHouseAddress  && moveHouseAddress != null){
                     for(House house: build.getData().getHouses()){
-                        house.setAddress(moveHouseAddress + build.getData().getBuildNo() + "幢" + build.getData().getDoorNo() + " " + house.getHouseOrder());
+
+                        String address = null;
+
+                        if (House.AddressGenType.PA_BN_DO_HO.equals(addressGenType)) {
+
+                            address = moveHouseAddress + build.getData().getBuildNo()  + "幢" + build.getData().getDoorNo() + " " + house.getHouseOrder();
+                        }else if (House.AddressGenType.PA_UN_HO.equals(addressGenType)){
+                            address = moveHouseAddress + house.getHouseUnitName() + " " + house.getHouseOrder();
+                        }else if (House.AddressGenType.PA_DO_HO.equals(addressGenType)) {
+                            address = moveHouseAddress  + build.getData().getDoorNo() + "号楼" + house.getHouseOrder();
+                        }else
+                            address = moveHouseAddress + " " + house.getHouseOrder();
+
+                        house.setAddress(address);
                     }
                 }
 

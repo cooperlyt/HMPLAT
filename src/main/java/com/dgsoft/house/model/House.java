@@ -83,7 +83,7 @@ public class House implements java.io.Serializable, HouseInfo {
     }
 
     public enum AddressGenType{
-        PA_UN_HO,PA_BN_DO_HO
+        PA_UN_HO,PA_BN_DO_HO,PA_DO_HO
     }
 
     private String id;
@@ -145,6 +145,8 @@ public class House implements java.io.Serializable, HouseInfo {
                 this.address = build.getProject().getAddress() + build.getBuildNo() + "幢" + build.getDoorNo() + " " + block.getHouseOrder();
             }else if (AddressGenType.PA_UN_HO.equals(addressGenType)){
                 this.address = build.getProject().getAddress() + block.getUnitName() + " " + block.getHouseOrder();
+            }else if (AddressGenType.PA_DO_HO.equals(addressGenType)) {
+                this.address = build.getProject().getAddress()  + build.getDoorNo() + "号楼" + block.getHouseOrder();
             }else
                 this.address = build.getName() + " " + block.getHouseOrder();
 
