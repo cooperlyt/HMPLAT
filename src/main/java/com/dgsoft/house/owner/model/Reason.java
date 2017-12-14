@@ -74,8 +74,8 @@ public class Reason implements java.io.Serializable {
         this.type = type;
     }
 
-    @Column(name = "REASON", nullable = true, length = 400)
-    @Size(max = 400)
+    @Column(name = "REASON", nullable = true, length = 200)
+    @Size(max = 200)
     public String getReason() {
         return this.reason;
     }
