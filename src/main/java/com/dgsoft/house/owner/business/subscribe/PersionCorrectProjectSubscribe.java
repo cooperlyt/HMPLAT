@@ -29,21 +29,24 @@ public class PersionCorrectProjectSubscribe extends BaseBusinessPersionSubscribe
         if (!isHave()) {
             clearInstance();
 
-            Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperCode()) ;
+            if(ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperCode()!=null
+                    && !ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperCode().equals("")) {
+
+                Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getDeveloperCode());
 
 
-                    if (developer!=null && developer.getAttachCorporation()!=null) {
-                        getInstance().setPersonName(developer.getName());
-                        getInstance().setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
-                        getInstance().setPhone(developer.getAttachCorporation().getPhone());
-                        getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                if (developer != null && developer.getAttachCorporation() != null) {
+                    getInstance().setPersonName(developer.getName());
+                    getInstance().setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
+                    getInstance().setPhone(developer.getAttachCorporation().getPhone());
+                    getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                }
+            }
 
+                getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
+                ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
+                setHave(true);
 
-                    }
-
-                 getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
-                 ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
-                 setHave(true);
 
 
 
