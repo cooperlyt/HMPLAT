@@ -465,8 +465,12 @@ public class BuildHome extends HouseEntityHome<Build> {
         List<String> unitNames = new ArrayList<String>();
         List<Integer> floorNames = new ArrayList<Integer>();
         for(HouseInfo houseInfo: houseInfos){
-            if (!unitNames.contains(houseInfo.getHouseUnitName())){
-                unitNames.add(houseInfo.getHouseUnitName());
+            String unitName = houseInfo.getHouseUnitName();
+            if (unitName == null){
+                unitName = "";
+            }
+            if (!unitNames.contains(unitName)){
+                unitNames.add(unitName);
             }
             Integer floorIndex =  AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName());
 
@@ -490,7 +494,7 @@ public class BuildHome extends HouseEntityHome<Build> {
 
             Map<Integer,Integer> counts = new HashMap<Integer, Integer>();
             for(HouseInfo houseInfo: houseInfos){
-                if (name.equals(houseInfo.getHouseUnitName())) {
+                if (("".equals(name) &&  houseInfo.getHouseUnitName() == null) || name.equals(houseInfo.getHouseUnitName())) {
                     Integer count = counts.get(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()));
                     if (count == null) {
                         counts.put(AutoGridMapComparator.getFloorIndexExtract().getIndex(houseInfo.getInFloorName()), 1);

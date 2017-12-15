@@ -64,9 +64,16 @@ public class HouseRecordSearch extends MultiOperatorEntityQuery<HouseRecord> {
     }
 
 
-    public void searchAction(){
+
+    @Override
+    protected void createResultList(){
         setEjbql(houseRecordCondition.getEjbql());
         setRestrictionGroup(houseRecordCondition.getRestrictionGroup());
+    }
+
+
+    public void searchAction(){
+        setFirstResult(0);
     }
 
     @In(create = true)
