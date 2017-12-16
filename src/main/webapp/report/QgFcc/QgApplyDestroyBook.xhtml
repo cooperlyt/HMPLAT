@@ -4,7 +4,7 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="房屋备案审批表">
+            title="房屋灭藉备案审批表">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
@@ -20,7 +20,7 @@
                 <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle" >
                     <p:paragraph>
                         <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-                            房屋备案审批表
+                            房屋灭藉备案
                         </p:font>
                     </p:paragraph>
                 </p:cell>
@@ -34,9 +34,14 @@
                 <p:cell horizontalAlignment="left">
                     <p:paragraph>房屋编号:</p:paragraph>
                 </p:cell>
+
+
                 <p:cell verticalAlignment="bottom" horizontalAlignment="left">
                     <p:paragraph>#{_houseBusiness.houseCode}</p:paragraph>
                 </p:cell>
+
+
+
 
             </p:table>
 
@@ -51,13 +56,12 @@
 </p:font>
 
 
-
 <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
     <p:table columns="2" widths="1 21" headerRows="0" footerRows="0" widthPercentage="100">
         <f:facet name="defaultCell">
             <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
         </f:facet>
-        <p:cell fixedHeight="160">
+        <p:cell fixedHeight="180">
             <p:paragraph>申
                 请
                 人
@@ -70,7 +74,7 @@
                 <f:facet name="defaultCell">
                     <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
                 </f:facet>
-                <p:cell fixedHeight="25">
+                <p:cell fixedHeight="30">
                     <p:paragraph>姓名(名称)</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0">
@@ -85,7 +89,7 @@
                 </p:cell>
 
 
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>证件类型</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -105,7 +109,7 @@
                     <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.allNewPowerPersonList}"><p:text value="姓名：#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.#"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
                     <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.allNewPowerPersonList}"><p:text value="姓名：#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号：#{_businessPools.credentialsNumber}，共有关系：#{dictionary.getWordValue(_businessPools.relation)}。  " /></ui:repeat></p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>代理人姓名</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0">
@@ -117,7 +121,7 @@
                 <p:cell borderWidthLeft="0" borderWidthRight="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.proxyPerson.phone}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" borderWidthBottom="0" fixedHeight="30">
                     <p:paragraph>证件类型</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" borderWidthBottom="0">
@@ -133,7 +137,7 @@
             </p:table>
         </p:cell>
 
-        <p:cell fixedHeight="200">
+        <p:cell fixedHeight="230">
             <p:paragraph>申
                 请
                 内
@@ -147,19 +151,19 @@
                 <f:facet name="defaultCell">
                     <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
                 </f:facet>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
                     <p:paragraph>产籍号</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="30">
                     <p:paragraph>房屋坐落</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>房屋所在建筑物总层数</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -190,7 +194,7 @@
                     </p:table>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>房屋所在层数</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -199,7 +203,7 @@
 
 
 
-                <p:cell fixedHeight="25">
+                <p:cell fixedHeight="30">
                     <p:paragraph>产别</p:paragraph>
                 </p:cell>
                 <p:cell>
@@ -213,14 +217,14 @@
                     <p:paragraph>#{dictionary.getWordValue(_houseBusiness.afterBusinessHouse.houseRegInfo.houseFrom)}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>建筑面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.houseArea}</p:paragraph>
                 </p:cell>
 
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>套内建筑面积</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
@@ -228,42 +232,21 @@
                 </p:cell>
 
 
-                <p:cell borderWidthLeft="0" fixedHeight="25">
+                <p:cell borderWidthLeft="0" fixedHeight="30">
                     <p:paragraph>规划用途</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
                     <p:paragraph>#{_houseBusiness.afterBusinessHouse.designUseType}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="25">
-                    <p:paragraph>房屋所有权证</p:paragraph>
+                <p:cell borderWidthLeft="0" fixedHeight="30">
+                    <p:paragraph>土地所有权证号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0">
-                    <p:paragraph>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:paragraph>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.landInfo.landCardNo}</p:paragraph>
                 </p:cell>
-                <p:cell borderWidthLeft="0" fixedHeight="25">
-                    <p:paragraph>不动产单元号</p:paragraph>
-                </p:cell>
-                <p:cell borderWidthLeft="0" colspan="3">
-                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.unitNumber}</p:paragraph>
-                </p:cell>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
-                    <p:paragraph>补(换)证事由</p:paragraph>
-                </p:cell>
-                <p:cell colspan="3" borderWidthLeft="0" borderWidthTop="0">
-                    <p:paragraph>#{ownerBusinessHome.instance.fillChange.reason}</p:paragraph>
-                </p:cell>
-                <p:cell borderWidthLeft="0" borderWidthTop="0" fixedHeight="25">
-                    <p:paragraph>查封、抵押（按揭）情况</p:paragraph>
-                </p:cell>
-                <p:cell borderWidthLeft="0" colspan="3" >
-                    <p:paragraph>#{ownerBusinessHome.getReasonByType("HOUSE_STATE_INFO").reason}</p:paragraph>
-                </p:cell>
-
-
                 <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="90">
                     <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
                 </p:cell>
-
 
             </p:table>
         </p:cell>
@@ -348,6 +331,7 @@
 
 
         </p:cell>
+
 
 
     </p:table>
