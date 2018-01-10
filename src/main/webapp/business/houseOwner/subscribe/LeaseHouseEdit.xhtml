@@ -1,0 +1,203 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.CloseHouse_CloseDownClour}
+        </ui:define>
+        <ui:param name="for" value="closeDownClourInput"/>
+        <h:inputText label="#{messages.CloseHouse_CloseDownClour}"
+                     required="true"
+                     value="#{closeHouseSubsrcibe.instance.closeDownClour}"
+                     id="closeDownClourInput"
+
+                     styleClass="form-control">
+
+        </h:inputText>
+
+    </s:decorate>
+
+
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.CloseHouse_Action}
+        </ui:define>
+        <ui:param name="for" value="actionInput"/>
+        <h:inputText label="#{messages.CloseHouse_Action}"
+                     required="true"
+                     value="#{closeHouseSubsrcibe.instance.action}"
+                     id="actionInput"
+                     styleClass="form-control">
+
+        </h:inputText>
+    </s:decorate>
+
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.CloseHouse_LegalDocuments}
+        </ui:define>
+        <ui:param name="for" value="LegalDocuments"/>
+        <h:inputText label="#{messages.CloseHouse_LegalDocuments}"
+                     id="LegalDocuments"
+                     maxlength="100"
+                     value="#{closeHouseSubsrcibe.instance.legalDocuments}"
+                     styleClass="form-control"
+                     required="true">
+        </h:inputText>
+    </s:decorate>
+
+
+    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
+        <ui:define name="label">
+            #{messages.CloseHouse_ExecutionNotice}
+        </ui:define>
+        <ui:param name="for" value="ExecutionNotice"/>
+        <h:inputText label="#{messages.CloseHouse_ExecutionNotice}"
+                     maxlength="100"
+                     id="ExecutionNotice"
+                     value="#{closeHouseSubsrcibe.instance.executionNotice}"
+                     styleClass="form-control"
+                     required="true">
+        </h:inputText>
+    </s:decorate>
+
+
+    <div class="form-inline">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                #{messages.CloseHouse_CloseDate}
+            </ui:define>
+            <ui:param name="for" value="closeDate"/>
+
+
+            <ui:include src="/layout/system/TimeAreaInput.xhtml">
+                <ui:param name="timeArea" value="#{closeHouseSubsrcibe.timeAreaHelper}"/>
+                <ui:param name="label" value="#{messages.CloseHouse_CloseDate}"/>
+                <ui:param name="f_required" value="true"/>
+                <ui:param name="t_required" value="false"/>
+                <ui:param name="t_id" value="closeDate"/>
+                <ui:param name="f_id" value="toDateField"/>
+            </ui:include>
+
+            <ui:define name="message">
+                <r:message for="closeDate" styleClass="edit-below-msg" />
+                <r:message for="toDateField" styleClass="edit-below-msg" />
+            </ui:define>
+        </s:decorate>
+    </div>
+
+
+
+
+    <div class="form-inline">
+
+
+
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_SendPeople}
+            </ui:define>
+
+            <ui:param name="for" value="SendPeople"/>
+            <h:inputText label="#{messages.CloseHouse_SendPeople}"
+                         maxlength="100"
+                         id="SendPeople"
+                         value="#{closeHouseSubsrcibe.instance.sendPeople}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_Phone}
+            </ui:define>
+            <ui:param name="for" value="CloseHousePhone"/>
+            <h:inputText label="#{messages.CloseHouse_Phone}"
+                         maxlength="100"
+                         id="CloseHousePhone"
+                         value="#{closeHouseSubsrcibe.instance.phone}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_ExecutCardNo}
+            </ui:define>
+            <ui:param name="for" value="ExecutCardNo"/>
+            <h:inputText label="#{messages.CloseHouse_ExecutCardNo}"
+                         maxlength="100"
+                         id="ExecutCardNo"
+                         value="#{closeHouseSubsrcibe.instance.executCardNo}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_WorkCardNo}
+            </ui:define>
+            <ui:param name="for" value="WorkCardNo"/>
+            <h:inputText label="#{messages.CloseHouse_WorkCardNo}"
+                         maxlength="100"
+                         id="WorkCardNo"
+                         value="#{closeHouseSubsrcibe.instance.workCardNo}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_contractCode}
+            </ui:define>
+            <ui:param name="for" value="contractCode"/>
+            <h:inputText label="#{messages.CloseHouse_contractCode}"
+                         maxlength="30"
+                         id="contractCode"
+                         value="#{closeHouseSubsrcibe.instance.contractCode}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_projectRship}
+            </ui:define>
+            <ui:param name="for" value="WorkCardNo"/>
+            <h:inputText label="#{messages.CloseHouse_projectRship}"
+                         maxlength="30"
+                         id="projectRship"
+                         value="#{closeHouseSubsrcibe.instance.projectRship}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.CloseHouse_houseCardNo}
+            </ui:define>
+            <ui:param name="for" value="houseCardNo"/>
+            <h:inputText label="#{messages.CloseHouse_houseCardNo}"
+                         maxlength="30"
+                         id="houseCardNo"
+                         value="#{closeHouseSubsrcibe.instance.houseCardNo}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+
+    </div>
+</ui:composition>
