@@ -1,5 +1,7 @@
 package com.dgsoft.house.owner.model;
 
+import com.dgsoft.common.TimeArea;
+import com.dgsoft.common.TimeAreaHelper;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,7 +18,7 @@ import java.util.Date;
 @Table(name = "LEASE"
         , catalog = "HOUSE_OWNER_RECORD"
 )
-public class LeaseHouse implements java.io.Serializable{
+public class LeaseHouse implements java.io.Serializable,TimeArea{
 
     private String id;
     private OwnerBusiness ownerBusiness;
@@ -28,6 +30,7 @@ public class LeaseHouse implements java.io.Serializable{
     private Date startDate;
     private Date endDate;
     private int sumMonth;
+    private TimeArea.TimeShowType timeShowType;
 
     public LeaseHouse(){
     }
@@ -141,5 +144,51 @@ public class LeaseHouse implements java.io.Serializable{
     public void setSumMonth(int sumMonth) {
         this.sumMonth = sumMonth;
     }
+
+
+    @Override
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIME_AREA_TYPE",nullable = false,length = 20)
+    @NotNull
+    public TimeArea.TimeShowType getTimeShowType() {
+        return timeShowType;
+    }
+
+    public void setTimeShowType(TimeArea.TimeShowType timeShowType) {
+        this.timeShowType = timeShowType;
+    }
+
+    @Override
+    @Transient
+    public Date getFromTime() {
+        return getStartDate();
+    }
+
+    @Override
+    @Transient
+    public void setFromTime(Date date) {
+        setStartDate(date);
+
+    }
+
+    @Override
+    @Transient
+    public Date getToTime() {
+        return getEndDate();
+    }
+
+    @Override
+    @Transient
+    public void setToTime(Date date) {
+        setEndDate(date);
+    }
+
+
+    @Transient
+    public TimeAreaHelper getTimeArea(){
+        return new TimeAreaHelper(this);
+    }
+
+
 
 }
