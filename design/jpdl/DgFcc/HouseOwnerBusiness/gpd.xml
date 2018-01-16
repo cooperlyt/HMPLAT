@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="HouseOwnerBusiness" width="931" height="547">
-  <node name="业务受理" x="36" y="15" width="132" height="36">
+<root-container name="HouseOwnerBusiness" width="893" height="556">
+  <node name="业务受理" x="-121" y="21" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="受理" x="-24" y="209" width="132" height="36">
+  <node name="受理" x="58" y="209" width="132" height="36">
     <edge>
-      <label x="5" y="-10"/>
-      <bendpoint w1="184" h1="-31" w2="-112" h2="109"/>
+      <label x="-78" y="9"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审核" x="447" y="107" width="132" height="36">
+  <node name="审核" x="496" y="98" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审批" x="455" y="311" width="132" height="36">
+  <node name="审批" x="498" y="279" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -30,28 +29,28 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="缮证" x="481" y="357" width="132" height="36">
+  <node name="缮证" x="500" y="360" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="繕证判断" x="210" y="369" width="132" height="36">
+  <node name="繕证判断" x="282" y="356" width="132" height="36">
     <edge>
       <label x="-15" y="-12"/>
     </edge>
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-23" y="-15"/>
     </edge>
   </node>
-  <node name="审核结果" x="450" y="188" width="132" height="36">
+  <node name="审核结果" x="497" y="208" width="132" height="36">
     <edge>
       <label x="-21" y="-13"/>
     </edge>
     <edge>
-      <label x="10" y="-19"/>
+      <label x="6" y="-10"/>
     </edge>
   </node>
-  <node name="审批结果" x="137" y="276" width="132" height="36">
+  <node name="审批结果" x="280" y="280" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -59,29 +58,50 @@
       <label x="-41" y="-11"/>
     </edge>
   </node>
-  <node name="类型判断" x="36" y="90" width="132" height="36">
+  <node name="类型判断" x="-120" y="97" width="132" height="36">
     <edge>
-      <label x="5" y="-10"/>
+      <label x="-35" y="-23"/>
     </edge>
     <edge>
-      <label x="-24" y="-18"/>
-    </edge>
-  </node>
-  <node name="要件上传" x="272" y="69" width="132" height="36">
-    <edge>
-      <label x="5" y="-10"/>
-    </edge>
-    <edge>
-      <label x="5" y="-10"/>
+      <label x="-44" y="-5"/>
     </edge>
   </node>
-  <node name="结束" x="33" y="454" width="132" height="36"/>
-  <node name="不归档业务判断" x="498" y="464" width="132" height="36">
+  <node name="要件上传" x="275" y="101" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
     <edge>
       <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="不归档业务判断" x="501" y="443" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="59" y="440" width="132" height="36"/>
+  <node name="是否网签" x="53" y="22" width="132" height="36">
+    <edge>
+      <label x="-36" y="-22"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="网签受理" x="54" y="97" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="受理来源" x="277" y="209" width="132" height="36">
+    <edge>
+      <label x="29" y="13"/>
+    </edge>
+    <edge>
+      <label x="-13" y="-10"/>
     </edge>
   </node>
 </root-container>
