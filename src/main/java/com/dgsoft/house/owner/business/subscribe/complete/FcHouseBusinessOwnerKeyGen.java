@@ -35,18 +35,16 @@ public class FcHouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponen
                 key.addWord(ownerBusinessHome.getCardNoByType("OWNER_RSHIP").getNumber());
             }
 
-            if(hb.getAfterBusinessHouse().getHouseContracts()!=null) {
-                for (HouseContract hc : hb.getAfterBusinessHouse().getHouseContracts()) {
-                    key.addWord(hc.getContractNumber());
-                }
+            if(hb.getAfterBusinessHouse().getSaleContract()!=null) {
+                key.addWord(hb.getAfterBusinessHouse().getSaleContract().getContractNumber());
+
                 if (hb.getAfterBusinessHouse().getDeveloperName()!=null && !hb.getAfterBusinessHouse().getDeveloperName().equals("")){
                     key.addWord(hb.getAfterBusinessHouse().getDeveloperName());
                 }
             }
-            if(hb.getStartBusinessHouse().getHouseContracts()!=null) {
-                for (HouseContract hc : hb.getStartBusinessHouse().getHouseContracts()) {
-                    key.addWord(hc.getContractNumber());
-                }
+            if(hb.getStartBusinessHouse().getSaleContract()!=null) {
+                    key.addWord(hb.getStartBusinessHouse().getSaleContract().getContractNumber());
+
                 if (hb.getAfterBusinessHouse().getDeveloperName()!=null && !hb.getAfterBusinessHouse().getDeveloperName().equals("")){
                     key.addWord(hb.getAfterBusinessHouse().getDeveloperName());
                 }

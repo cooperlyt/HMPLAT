@@ -23,7 +23,7 @@ public abstract class SaleContractInput implements TaskSubscribeComponent {
         if (houseContract == null){
             houseContract = ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getSaleContract();
             if (houseContract == null){
-                ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseContracts().add(new HouseContract(getSaleType(),ownerBusinessHome.getInstance()));
+                ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleContract(new HouseContract(getSaleType(),ownerBusinessHome.getInstance()));
             }
         }
         return houseContract;

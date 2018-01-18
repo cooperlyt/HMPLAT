@@ -86,8 +86,7 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     //private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
     private SaleInfo saleInfo;
 
-    private Set<HouseContract> houseContracts = new HashSet<HouseContract>(0);
-
+    private HouseContract saleContract;
 
     public BusinessHouse() {
     }
@@ -791,25 +790,15 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
         this.mortgaegeRegistes = mortgaegeRegistes;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "HOUSE_AND_CONTRACT",joinColumns=@JoinColumn(name="HOUSE"),inverseJoinColumns = @JoinColumn(name = "CONTRACT"))
-    public Set<HouseContract> getHouseContracts() {
-        return houseContracts;
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "SALE_CONTRACT", nullable = true)
+    public HouseContract getSaleContract() {
+        return saleContract;
     }
 
-    public void setHouseContracts(Set<HouseContract> houseContracts) {
-        this.houseContracts = houseContracts;
-    }
-
-    @Transient
-    public HouseContract getSaleContract(){
-        for(HouseContract hc: getHouseContracts()){
-            if (SaleType.MAP_SELL.equals(hc.getType()) || SaleType.NOW_SELL.equals(hc.getType()) ||
-                    SaleType.OLD_SELL.equals(hc.getType())){
-                return hc;
-            }
-        }
-        return null;
+    public void setSaleContract(HouseContract saleContract) {
+        this.saleContract = saleContract;
     }
 
     @Transient

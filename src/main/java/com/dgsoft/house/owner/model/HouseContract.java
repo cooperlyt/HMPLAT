@@ -30,7 +30,7 @@ public class HouseContract implements java.io.Serializable {
 	private String projectSaleCerNumber;
 	private OwnerBusiness ownerBusiness;
 
-	private Set<BusinessHouse> businessHouses = new HashSet<BusinessHouse>(0);
+	private BusinessHouse businessHouse;
 	private ContractSubmit contractSubmit;
 
 	public HouseContract() {
@@ -90,13 +90,13 @@ public class HouseContract implements java.io.Serializable {
 	}
 
 
-	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "houseContracts")
-	public Set<BusinessHouse> getHouseBusinesses() {
-		return businessHouses;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "saleContract")
+	public BusinessHouse getBusinessHouse() {
+		return businessHouse;
 	}
 
-	public void setHouseBusinesses(Set<BusinessHouse> houseBusinesses) {
-		this.businessHouses = houseBusinesses;
+	public void setBusinessHouse(BusinessHouse businessHouse) {
+		this.businessHouse = businessHouse;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

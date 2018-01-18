@@ -32,9 +32,10 @@ public abstract class LinkContract implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         for (HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
-            for(HouseContract hc: hb.getStartBusinessHouse().getHouseContracts()){
+            HouseContract hc = hb.getStartBusinessHouse().getSaleContract();
+            if ( hc != null){
                 if (getLinkTypes().contains(hc.getType())){
-                    hb.getAfterBusinessHouse().getHouseContracts().add(hc);
+                    hb.getAfterBusinessHouse().setSaleContract(hc);
                 }
             }
         }
