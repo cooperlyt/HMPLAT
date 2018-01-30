@@ -11,6 +11,7 @@ import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.SaleType;
 import com.dgsoft.house.model.Agencies;
 import com.dgsoft.house.model.AttachEmployee;
 import com.dgsoft.house.model.DeveloperLogonKey;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.BUYER;
+import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.SELLER;
 
 /**
  * Created by cooper on 9/26/15.
@@ -125,23 +127,9 @@ public class OutsideBusinessCreate {
 
     }
 
-    @Transactional
-    public String submitContract(String contract, String userId){
+    private String submitContract(AttachEmployee attachEmployee ,cc.coopersoft.house.sale.data.HouseContract outsideContract, String defineId){
 
-
-        DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, userId);
-
-        ObjectMapper mapper = new ObjectMapper();
-        cc.coopersoft.house.sale.data.HouseContract outsideContract;
-        try {
-            outsideContract = mapper.readValue(DESUtil.decrypt(contract,key.getSessionKey()), cc.coopersoft.house.sale.data.HouseContract.class);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("contract data error",e);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("contract decrypt error",e);
-        }
-
-        genHouseBusiness(RunParam.instance().getStringParamValue("NewHouseContractBizId"),outsideContract.getHouseCode());
+        genHouseBusiness(defineId,outsideContract.getHouseCode());
 
 
 
@@ -160,7 +148,7 @@ public class OutsideBusinessCreate {
         HouseContract houseContract = new HouseContract(outsideContract.getId(),
                 outsideContract.getType(),
                 outsideContract.getCreateTime(),
-                outsideContract.getNewHouseContract().getProjectCerNumber(),
+                SaleType.OLD_SELL.equals(outsideContract.getType()) ? null : outsideContract.getNewHouseContract().getProjectCerNumber(),
                 ownerBusinessHome.getInstance(),contractSubmit);
         contractSubmit.setHouseContract(houseContract);
 
@@ -176,14 +164,14 @@ public class OutsideBusinessCreate {
             }
         }
 
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseContracts().add(houseContract);
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleContract(houseContract);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
 
 
         int i = 0;
         for(cc.coopersoft.house.sale.data.PowerPerson pp: outsideContract.getBusinessPoolList()){
-            if (BUYER.equals( pp.getContractPersonType())) {
-                PowerPerson contractOwner = new PowerPerson(PowerPerson.PowerPersonType.CONTRACT, false);
+
+                PowerPerson contractOwner = new PowerPerson(PowerPerson.PowerPersonType.CONTRACT, SELLER.equals( pp.getContractPersonType()));
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().add(contractOwner);
                 if (i == 0) {
                     ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setMainOwner(contractOwner);
@@ -211,16 +199,37 @@ public class OutsideBusinessCreate {
                     contractOwner.getProxyPerson().setCredentialsNumber(pp.getPowerProxyPerson().getCredentialsNumber());
                     contractOwner.getProxyPerson().setPhone(pp.getPowerProxyPerson().getPhone());
                 }
-            }
+
         }
 
-        String businessId = createBusiness(key.getAttachEmployee().getId(),
-                key.getAttachEmployee().getPersonName(),"提交合同");
+        String businessId = createBusiness(attachEmployee.getId(),
+                attachEmployee.getPersonName(),"提交合同");
 
         if (businessId != null){
             return businessId;
         }else
             throw new IllegalArgumentException("fail");
+    }
+
+    @Deprecated
+    @Transactional
+    public String submitContract(String contract, String userId){
+
+
+        DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, userId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        cc.coopersoft.house.sale.data.HouseContract outsideContract;
+        try {
+            outsideContract = mapper.readValue(DESUtil.decrypt(contract,key.getSessionKey()), cc.coopersoft.house.sale.data.HouseContract.class);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("contract data error",e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("contract decrypt error",e);
+        }
+
+        return submitContract(key.getAttachEmployee(),outsideContract,RunParam.instance().getStringParamValue("NewHouseContractBizId"));
+
     }
 
 
@@ -232,7 +241,7 @@ public class OutsideBusinessCreate {
             Logging.getLog(getClass()).debug("data:" + jsonData);
             switch (type){
                 case SALE_CONTRACT:
-                    break;
+                    return submitSellContract(key.getAttachEmployee(), jsonData);
                 case MORTGAGE_CONTRACT:
                     break;
                 case HOUSE_SOURCE:
@@ -245,12 +254,27 @@ public class OutsideBusinessCreate {
         throw new IllegalArgumentException("unknow type:" + type);
     }
 
-    private SubmitResult submitSellContract(){
-        //TODO sell contract
-        return null;
+    private SubmitResult submitSellContract(AttachEmployee attachEmployee , String data) throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        cc.coopersoft.house.sale.data.HouseContract outsideContract = mapper.readValue(data,cc.coopersoft.house.sale.data.HouseContract.class);
+
+        String defineIdParamName = SaleType.OLD_SELL.equals(outsideContract.getType()) ? "OldHouseContractBizId" : "NewHouseContractBizId" ;
+
+        String businessId = submitContract(attachEmployee,outsideContract,RunParam.instance().getStringParamValue(defineIdParamName));
+
+
+        if (businessId != null){
+            SubmitResult result = new SubmitResult(SubmitResult.SubmitStatus.SUCCESS,"合同已提交，业务编号：" + businessId);
+            result.setBusinessId(businessId);
+            return result;
+        }else{
+            return new SubmitResult(SubmitResult.SubmitStatus.FAIL,"合同提交失败！");
+        }
     }
 
-    private SubmitResult submitMortgageContract(){
+    private SubmitResult submitMortgageContract(AttachEmployee attachEmployee , String data){
 
         //TODO mortgage contract
         return null;

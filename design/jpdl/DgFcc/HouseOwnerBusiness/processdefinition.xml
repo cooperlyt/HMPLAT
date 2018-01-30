@@ -13,7 +13,7 @@
             <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
             <assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
         </task>
-        <transition to="要件上传" name="要件上传"></transition>
+        <transition to="要件上传" name="受理业务"></transition>
         <transition to="结束" name="_END"></transition>
 	
     </task-node>
@@ -63,7 +63,7 @@
     </decision>
 
     <decision name="审核结果">
-		<transition to="受理" name="审核驳回">
+		<transition to="受理来源" name="审核驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
 		<transition to="审批" name="审核通过">
@@ -75,7 +75,7 @@
 		<transition to="繕证判断">
 			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
-		<transition to="受理" name="登薄驳回">
+		<transition to="受理来源" name="登薄驳回">
 			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
 		</transition>
 	</decision>
@@ -84,7 +84,7 @@
 		<transition to="受理" name="更正业务">
 			<condition expression="#{ownerBusinessHome.instance.type eq 'MODIFY_BIZ'}"></condition>
 		</transition>
-		<transition to="要件上传" name="正常业务">
+		<transition to="是否网签" name="正常业务">
 			<condition expression="#{ownerBusinessHome.instance.type eq 'NORMAL_BIZ'}"></condition>
 		</transition>
 	</decision>
@@ -97,7 +97,7 @@
 			<assignment actor-id="#{actor.id}"></assignment>
 		</task>
 		<transition to="审核"></transition>
-		<transition to="受理" name="重新受理"></transition>
+		<transition to="受理来源" name="重新受理"></transition>
 	</task-node>
 
 	<decision name="不归档业务判断">
@@ -106,6 +106,34 @@
 		</transition>
 		<transition to="结束" name="不归档结束">
 			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74')}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="是否网签">
+		<transition to="要件上传" name="送办业务">
+			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
+		</transition>
+		<transition to="网签受理" name="网签业务">
+			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="网签受理">
+		<task name="网签受理">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment pooled-actors="ownerApply"></assignment>
+		</task>
+		<transition to="要件上传"></transition>
+	</task-node>
+
+	<decision name="受理来源">
+		<transition to="网签受理" name="网签业务">
+			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
+		</transition>
+		<transition to="受理" name="送办业务">
+			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
 	</decision>
 

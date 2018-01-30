@@ -34,15 +34,13 @@ public class HouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent 
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(hb.getAfterBusinessHouse());
 
-            if(hb.getAfterBusinessHouse().getHouseContracts()!=null) {
-                for (HouseContract hc : hb.getAfterBusinessHouse().getHouseContracts()) {
-                    key.addWord(hc.getContractNumber());
-                }
+            if(hb.getAfterBusinessHouse().getSaleContract()!=null) {
+                    key.addWord(hb.getAfterBusinessHouse().getSaleContract().getContractNumber());
+
             }
-            if(hb.getStartBusinessHouse().getHouseContracts()!=null) {
-                for (HouseContract hc : hb.getStartBusinessHouse().getHouseContracts()) {
-                    key.addWord(hc.getContractNumber());
-                }
+            if(hb.getStartBusinessHouse().getSaleContract()!=null) {
+                    key.addWord(hb.getStartBusinessHouse().getSaleContract().getContractNumber());
+
             }
             hb.setSearchKey(key.getKey());
         }
