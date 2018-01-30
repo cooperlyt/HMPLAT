@@ -40,7 +40,7 @@
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>建筑面积</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>套内面积</p:paragraph></p:cell>
             <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>房屋坐落</p:paragraph></p:cell>
-            <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+            <a:repeat value="#{ownerBusinessHome.instance.houseBusinessListByHouseOrder}" var="_houseBusiness">
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.houseCode}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph></p:cell>
                 <p:cell horizontalAlignment="center" verticalAlignment="middle"><p:paragraph>#{_houseBusiness.afterBusinessHouse.floorCount}</p:paragraph></p:cell>

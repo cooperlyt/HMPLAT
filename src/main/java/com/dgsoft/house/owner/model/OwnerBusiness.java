@@ -376,6 +376,25 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return result;
     }
 
+    @Transient
+    public List<HouseBusiness> getHouseBusinessListByHouseOrder() {
+        List<HouseBusiness> result = new ArrayList<HouseBusiness>(getHouseBusinesses());
+        Collections.sort(result, new Comparator<HouseBusiness>() {
+            @Override
+            public int compare(HouseBusiness o1, HouseBusiness o2) {
+                if (o1.getId() == null || o2.getId() == null) {
+                    if (o1.getAfterBusinessHouse().getHouseOrder() == null || o2.getAfterBusinessHouse().getHouseOrder() == null) {
+                        return 0;
+                    } else {
+                        return o1.getAfterBusinessHouse().getHouseOrder().compareTo(o2.getAfterBusinessHouse().getHouseOrder());
+                    }
+                }
+                return o1.getAfterBusinessHouse().getHouseOrder().compareTo(o2.getAfterBusinessHouse().getHouseOrder());
+            }
+        });
+        return result;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
     public Set<CloseHouse> getCloseHouses() {
         return this.closeHouses;
