@@ -9,10 +9,27 @@
 
 <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
 
-<p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-    <p:paragraph alignment="center">房屋抵押注销备案信息告知单
-    </p:paragraph>
-</p:font>
+
+<p:table columns="2" widths="3 1" headerRows="0"  footerRows="0" widthPercentage="100" >
+    <p:cell border="0" fixedHeight="20" colspan="2"  horizontalAlignment="center" verticalAlignment="middle">
+        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">房屋抵押注销备案信息告知单 </p:paragraph>
+        </p:font>
+
+    </p:cell>
+    <p:cell border="0" >
+
+    </p:cell>
+
+
+    <p:cell horizontalAlignment="" colspan="1" border="0">
+        <p:font alignment="right" size="6" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:barCode code="#{ownerBusinessHome.instance.id}"  codeType="CODE128"/>
+        </p:font>
+
+    </p:cell>
+
+</p:table>
 
 <p:font size="11" name="STSong-Light" encoding="UniGB-UCS2-H">
     <p:table columns="1" widths="1" headerRows="0" footerRows="0" widthPercentage="100">
