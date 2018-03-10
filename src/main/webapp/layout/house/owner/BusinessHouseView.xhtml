@@ -210,11 +210,11 @@
             <h:outputText value="#{messages.Land_LandProperty}"/>
             <dh:entryGridColumn  colspan="7">
             <h:outputText value="#{dictionary.getWordValue(houseInfo.landInfo.beginUseTime)}">
-                <f:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
             </h:outputText>
                 -
                 <h:outputText value="#{dictionary.getWordValue(houseInfo.landInfo.endUseTime)}">
-                    <f:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
                 </h:outputText>
             </dh:entryGridColumn>
 

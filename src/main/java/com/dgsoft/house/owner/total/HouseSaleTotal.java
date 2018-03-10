@@ -85,7 +85,7 @@ public class HouseSaleTotal {
         HouseSaleTotalData sellAll = null;
 
 
-        for (ContractTypeTotal totalData: ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.ContractTypeTotal(hc.type,count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h left join h.houseContracts hc where hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime group by hc.type", ContractTypeTotal.class)
+        for (ContractTypeTotal totalData: ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.ContractTypeTotal(hc.type,count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h left join h.saleContract hc where hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime group by hc.type", ContractTypeTotal.class)
                 .setParameter("beginTime",fromDateTime)
                 .setParameter("endTime",toDateTime).getResultList()){
             if (SaleType.NOW_SELL.equals(totalData.getSaleType())){
@@ -106,7 +106,7 @@ public class HouseSaleTotal {
         HouseSaleTotalData preSellD = null;
         HouseSaleTotalData sellD = null;
 
-        for (ContractTypeTotal totalData:ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.ContractTypeTotal(hc.type,count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h left join h.houseContracts hc where h.useType = 'DWELLING_KEY' and hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime group by hc.type", ContractTypeTotal.class)
+        for (ContractTypeTotal totalData:ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.ContractTypeTotal(hc.type,count(hb),sum(h.houseArea),sum(h.saleInfo.sumPrice)) from HouseBusiness hb left join hb.afterBusinessHouse h left join h.saleContract hc where h.useType = 'DWELLING_KEY' and hb.ownerBusiness.status in ('RUNNING','COMPLETE','SUSPEND') and hb.ownerBusiness.recorded = true and hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.regTime >= :beginTime and hb.ownerBusiness.regTime <= :endTime group by hc.type", ContractTypeTotal.class)
                 .setParameter("beginTime",fromDateTime)
                 .setParameter("endTime",toDateTime).getResultList()){
             if (SaleType.NOW_SELL.equals(totalData.getSaleType())){

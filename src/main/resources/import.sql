@@ -218,6 +218,7 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.task', '业务�
 
 
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.oldHouseSale', '存量房销售情况统计', '', 30);
+INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('ownerApply', '存量房网签受理', '存量房网签受理', 30);
 
 
 -- INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.newHouse', '商品房管理', '商品房科', 4);

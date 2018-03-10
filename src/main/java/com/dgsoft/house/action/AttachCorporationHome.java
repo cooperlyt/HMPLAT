@@ -1,8 +1,10 @@
 package com.dgsoft.house.action;
 
+import com.dgsoft.common.system.PersonHelper;
 import com.dgsoft.house.HouseEntityHome;
 import com.dgsoft.house.model.AttachCorporation;
 import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.model.BusinessPersion;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 
@@ -40,5 +42,15 @@ public class AttachCorporationHome extends HouseEntityHome<AttachCorporation> {
                 .setParameter("groupNumber",getInstance().getId()).getSingleResult().intValue();
     }
 
+
+
+    private PersonHelper<AttachCorporation> ownerPersonHelper;
+
+    public PersonHelper<AttachCorporation> getOwnerPersonInstance() {
+        if ((ownerPersonHelper == null) || (ownerPersonHelper.getPersonEntity() != getInstance())) {
+            ownerPersonHelper = new PersonHelper<AttachCorporation>(getInstance());
+        }
+        return ownerPersonHelper;
+    }
 
 }
