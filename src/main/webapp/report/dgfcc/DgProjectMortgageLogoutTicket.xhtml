@@ -282,7 +282,8 @@
 
 
         <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="69" paddingBottom="0">
-            <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
+            <p:paragraph>备注: 解除抵押日期：<p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                    pattern="#{messages.displayDatePattern}"/> </p:text> #{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
 
     </p:table>
