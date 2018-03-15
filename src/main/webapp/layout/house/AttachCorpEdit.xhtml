@@ -60,31 +60,48 @@
 
     </s:decorate>
 
-    <s:decorate id="corpOwnerField" styleClass="form-group" template="/layout/edit-big.xhtml">
+
+    <s:decorate id="phoneField" styleClass="form-group" template="/layout/edit.xhtml">
         <ui:define name="label">
-            #{messages.AttachCorp_owner}
+            联系电话
         </ui:define>
-        <ui:param name="for" value="corpOwnerNameInput"/>
-
-        <div class="input-group">
-                        <span class="input-group-addon">
-                            #{messages.person_field_name}
-                        </span>
-            <h:inputText rows="3" id="corpOwnerNameInput" styleClass="form-control"
-                         label="#{messages.AttachCorp_cerCode}"
-                         value="#{attachCorpHome.instance.ownerName}"
-                         maxlength="100"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-earphone"/>
-                        </span>
-            <h:inputText rows="3" id="corpOwnerPhoneInput" styleClass="form-control"
-                         label="#{messages.Tel}"
-                         value="#{attachCorpHome.instance.ownerTel}"
-                         maxlength="100"/>
-        </div>
-
+        <ui:param name="for" value="phoneInput"/>
+        <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                     styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                     value="#{attachCorpHome.instance.phone}"
+                     id="phoneInput">
+            <f:validateRegex
+                    pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+            <r:validator event="blur"/>
+        </h:inputText>
 
     </s:decorate>
+
+    <ui:decorate template="/layout/system/PersonInput.xhtml">
+
+        <ui:param name="label" value="#{messages.AttachCorp_owner}"/>
+        <ui:param name="personEntityHelper" value="#{attachCorpHome.ownerPersonInstance}"/>
+        <ui:param name="personStatus" value="#{attachCorpHome.ownerPersonInstance.uuid}_person"/>
+        <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
+
+
+
+        <s:decorate id="businessPersonPhoneField" styleClass="form-group" template="/layout/edit.xhtml">
+            <ui:define name="label">
+                #{messages.Tel}
+            </ui:define>
+            <ui:param name="for" value="bussinessPersionPhoneInput"/>
+            <h:inputText label="#{messages.Tel}" size="30" maxlength="15"
+                         styleClass="form-control" validatorMessage="#{messages.requiredPhoneValidator}"
+                         value="#{attachCorpHome.instance.ownerTel}"
+                         id="bussinessPersionPhoneInput">
+                <f:validateRegex
+                        pattern="\+?(\d{2})?((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"/>
+                <r:validator event="blur"/>
+            </h:inputText>
+
+        </s:decorate>
+    </ui:decorate>
 
 
 

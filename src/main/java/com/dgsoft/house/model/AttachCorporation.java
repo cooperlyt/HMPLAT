@@ -16,7 +16,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "ATTACH_CORPORATION", catalog = "HOUSE_INFO")
-public class AttachCorporation implements java.io.Serializable {
+public class AttachCorporation implements PersonEntity, java.io.Serializable {
 
 
 	private String id;
@@ -63,6 +63,7 @@ public class AttachCorporation implements java.io.Serializable {
 		this.id = id;
 		this.type = type;
 		this.recordDate = recordDate;
+		this.legalType = PowerPersonEntity.LegalType.LEGAL_OWNER;
 	}
 
 	public AttachCorporation() {
@@ -356,6 +357,30 @@ public class AttachCorporation implements java.io.Serializable {
 
 	public void setCredentialsType(PersonEntity.CredentialsType credentialsType) {
 		this.credentialsType = credentialsType;
+	}
+
+	@Transient
+	@Override
+	public String getCredentialsNumber() {
+		return getOwnerCard();
+	}
+
+	@Transient
+	@Override
+	public void setCredentialsNumber(String s) {
+		setOwnerCard(s);
+	}
+
+	@Transient
+	@Override
+	public String getPersonName() {
+		return getOwnerName();
+	}
+
+	@Transient
+	@Override
+	public void setPersonName(String s) {
+		setOwnerName(s);
 	}
 
 	public void setAttachEmployees(Set<AttachEmployee> attachEmployees) {

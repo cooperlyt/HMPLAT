@@ -19,7 +19,7 @@
                             horizontalAlignment="left" verticalAlignment="middle"/> </f:facet>
 
                 <p:cell><p:paragraph>资料编号:  #{_cover.recordCode}   </p:paragraph></p:cell>
-                <p:cell> <p:paragraph > 归档时间:  <p:text value="#{_cover.ownerBusiness.recordTime}"><f:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  </p:paragraph></p:cell>
+                <p:cell> <p:paragraph > 归档时间:  <p:text value="#{_cover.ownerBusiness.recordTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text>  </p:paragraph></p:cell>
             </p:table>
 
 

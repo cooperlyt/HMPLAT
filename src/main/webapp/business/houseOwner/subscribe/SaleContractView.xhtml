@@ -16,7 +16,7 @@
 
         <h:outputText value="签约时间"/>
         <h:outputText value="#{ownerBusinessHome.singleHoues.afterBusinessHouse.saleContract.contractDate}">
-            <f:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
         </h:outputText>
 
         <c:if test="#{not empty ownerBusinessHome.singleHoues.afterBusinessHouse.saleContract.contractSubmit}">

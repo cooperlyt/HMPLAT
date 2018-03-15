@@ -43,7 +43,7 @@
         <s:decorate id="dateOfBirth" template="layout/display.xhtml">
             <ui:define name="label">Date of birth</ui:define>
             <h:outputText value="#{personHome.instance.dateOfBirth}">
-                <f:convertDateTime type="both" dateStyle="short"/>
+                <s:convertDateTime type="both" dateStyle="short"/>
             </h:outputText>
         </s:decorate>
 
