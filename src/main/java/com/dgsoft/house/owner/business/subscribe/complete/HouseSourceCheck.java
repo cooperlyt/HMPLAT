@@ -1,12 +1,17 @@
 package com.dgsoft.house.owner.business.subscribe.complete;
 
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
+import com.dgsoft.house.owner.action.NotifySend;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.HouseSourceBusiness;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.core.Events;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cooper on 07/08/2017.
@@ -23,8 +28,6 @@ public class HouseSourceCheck implements TaskCompleteSubscribeComponent {
     @In(scope = ScopeType.BUSINESS_PROCESS)
     private String transitionComments;
 
-    @In
-    private Events events;
 
     @Override
     public void valid() {
@@ -39,11 +42,19 @@ public class HouseSourceCheck implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        ownerBusinessHome.getSingleHouseSource().setMessage(transitionComments);
-        ownerBusinessHome.getSingleHouseSource().setChecked(TaskOper.OperType.CHECK_ACCEPT.name().equals(transitionType));
+        boolean checked = TaskOper.OperType.CHECK_ACCEPT.name().equals(transitionType);
+        List<NotifySend.Messages> messagesList = new ArrayList<NotifySend.Messages>();
+        for(HouseSourceBusiness hsb: ownerBusinessHome.getInstance().getHouseSourceBusinesses()){
+            hsb.setMessage(transitionComments);
+            hsb.setChecked(checked);
+            messagesList.add(new NotifySend.Messages(hsb.getHouse().getHouseCode(),
+                    checked? NotifySend.MessageType.COMPLETE: NotifySend.MessageType.ABORT,
+                    ownerBusinessHome.getInstance().getDefineId(),ownerBusinessHome.getInstance().getId(),
+                    transitionComments));
+        }
 
-        events.raiseTransactionSuccessEvent("cc.coopersoft.house.HouseStateChanged", ownerBusinessHome.getSingleHouseSource().getHouse().getHouseCode());
 
-            //TODO 异步事件 events
+
+        Events.instance().raiseAsynchronousEvent("cc.copersoft.houseStatusChangeEvent",messagesList);
     }
 }

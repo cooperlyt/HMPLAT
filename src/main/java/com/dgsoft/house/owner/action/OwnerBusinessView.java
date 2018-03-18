@@ -16,6 +16,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.core.Events;
 import org.jboss.seam.framework.EntityNotFoundException;
 import org.jboss.seam.log.Logging;
 import org.jboss.seam.security.Identity;
@@ -154,6 +155,7 @@ public class OwnerBusinessView {
             ownerBusinessHome.getInstance().setRegTime(new Date());
             processInstanceHome.stop();
             ownerBusinessHome.update();
+            Events.instance().raiseEvent("com.coopersoft.businessStop." + ownerBusinessHome.getInstance().getDefineId(),comments);
         }
     }
 

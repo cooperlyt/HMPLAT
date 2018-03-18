@@ -1,13 +1,16 @@
 package com.dgsoft.house.owner.business;
 
+import com.dgsoft.common.system.AuthenticationInfo;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.action.OwnerHouseHelper;
 import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.HouseRecord;
 import com.dgsoft.house.owner.model.SubStatus;
+import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.core.Events;
 import org.jboss.seam.log.Logging;
 
 import java.util.List;
@@ -19,7 +22,20 @@ import java.util.List;
 public class BusinessCancel {
 
     @In
+    private AuthenticationInfo authInfo;
+
+    @In
     private OwnerBusinessHome ownerBusinessHome;
+
+    private String comments;
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     //RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFYING, COMPLETE_CANCEL;
     protected void resetHouseRecord(){
@@ -54,6 +70,7 @@ public class BusinessCancel {
         if (!ownerBusinessHome.isCanCancel()) {
             return null;
         }
+        //TODO add taskOper
         //if (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(ownerBusinessHome.getInstance().getSource())){
 
             ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.ABORT);
@@ -64,9 +81,11 @@ public class BusinessCancel {
             if(ownerBusinessHome.getInstance().getSelectBusiness() != null){
                 ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
             }
+            ownerBusinessHome.getInstance().getTaskOpers().add(new TaskOper(TaskOper.OperType.TERMINATION, ownerBusinessHome.getInstance(),
+                authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), comments));
             resetHouseRecord();
             if ("updated".equals(ownerBusinessHome.update())){
-
+                Events.instance().raiseEvent("com.coopersoft.businessCancel." + ownerBusinessHome.getInstance().getDefineId(),comments);
                 return "Business_is_Deleted";
             }else
             {

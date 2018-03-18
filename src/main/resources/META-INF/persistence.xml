@@ -135,6 +135,9 @@
         <class>com.dgsoft.house.owner.model.RecordFrame</class>
         <class>com.dgsoft.house.owner.model.HouseSourceBusiness</class>
         <class>com.dgsoft.house.owner.model.LeaseHouse</class>
+        <class>com.dgsoft.house.owner.model.MoneyBusiness</class>
+        <class>com.dgsoft.house.owner.model.RegInfo</class>
+        <class>com.dgsoft.house.owner.model.MoneyPayInfo</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

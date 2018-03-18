@@ -68,6 +68,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
 
     private Set<HouseSourceBusiness> houseSourceBusinesses = new HashSet<HouseSourceBusiness>(0);
+
+    private Set<MoneyBusiness> moneyBusinesses = new HashSet<MoneyBusiness>(0);
+
     public OwnerBusiness() {
     }
 
@@ -560,6 +563,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setHouseSourceBusinesses(Set<HouseSourceBusiness> houseSourceBusinesses) {
         this.houseSourceBusinesses = houseSourceBusinesses;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "ownerBusiness",cascade = CascadeType.ALL)
+    public Set<MoneyBusiness> getMoneyBusinesses() {
+        return moneyBusinesses;
+    }
+
+    public void setMoneyBusinesses(Set<MoneyBusiness> moneyBusinesses) {
+        this.moneyBusinesses = moneyBusinesses;
     }
 
     @Transient

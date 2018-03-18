@@ -68,6 +68,30 @@
             <a:outputPanel rendered="#{s:hasRole('system.runBusinessMgr')}">
 
 
+                <ui:decorate template="/layout/edit-modalpanel.xhtml">
+                    <ui:param name="panelId" value="businessDeleteConfirmPanel"/>
+                    <ui:param name="panelTitle" value="确认要撤回业务: #{ownerBusinessHome.id}"/>
+                    <ui:define name="panelBody">
+                        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml" >
+                            <ui:define name="label">
+                                <p>撤回后将无法还原,业务将被设置为中止状态! 相当于此业务没有发生过,并不会被记载到登记簿! 但业务信息将会被保留,仍可能过查询功能查找到该业务.</p>
+                            </ui:define>
+                            <ui:param name="for" value="cancelCommentsInput"/>
+                            <h:inputTextarea id="cancelCommentsInput" styleClass="form-control" rows="4" value="#{businessCancel.comments}"
+                                             p:placeholder="#{messages.businessComments}">
+
+                            </h:inputTextarea>
+
+                        </s:decorate>
+                    </ui:define>
+
+                    <ui:define name="actionButtons">
+                    <s:button styleClass="button button-block danger" action="#{businessCancel.cancelBusiness}"
+                              value="我确认要撤回此业务"/>
+                    </ui:define>
+
+                </ui:decorate>
+
 
                 <ui:decorate template="/layout/edit-modalpanel.xhtml">
                     <ui:param name="panelId" value="stopConfirmPanel"/>
@@ -263,20 +287,9 @@
                         </div>
 
 
-                        <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
-                            <ui:param name="panelId" value="businessDeleteConfirmPanel"/>
-                            <ui:param name="entityTitle" value="#{ownerBusinessHome.id}"/>
-                            <ui:define name="panelBody">
-                                <p>确认要撤回业务 <h:outputText value="中止后将无法还原" style="color: #900"/> </p>
-                                <p>
-                                    业务将被设置为中止状态! 相当于此业务没有发生过,并不会被记载到登记簿! 但业务信息将会被保留,仍可能过查询功能查找到该业务.
-                                </p>
-                            </ui:define>
 
-                            <s:button styleClass="button button-block danger" action="#{businessCancel.cancelBusiness}"
-                                             value="我确认要中止此业务"/>
 
-                        </ui:decorate>
+
 
 
                         <div class="dashboard-notice #{ownerBusinessHome.instance.source} #{ownerBusinessHome.instance.recorded ? 'recorded' : ''}" style="margin-top: 5px">

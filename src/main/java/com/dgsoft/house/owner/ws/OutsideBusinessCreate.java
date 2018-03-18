@@ -170,8 +170,8 @@ public class OutsideBusinessCreate {
 
         int i = 0;
         for(cc.coopersoft.house.sale.data.PowerPerson pp: outsideContract.getBusinessPoolList()){
-
-                PowerPerson contractOwner = new PowerPerson(PowerPerson.PowerPersonType.CONTRACT, SELLER.equals( pp.getContractPersonType()));
+                                                            // 备案和交易业务合并，所以不是备案人而是产权人
+                PowerPerson contractOwner = new PowerPerson(PowerPerson.PowerPersonType.OWNER, SELLER.equals( pp.getContractPersonType()));
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().add(contractOwner);
                 if (i == 0) {
                     ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setMainOwner(contractOwner);

@@ -17,5 +17,16 @@
         <property name="ejbql">select room from RecordRoom room order by room.id</property>
     </component>
 
+    <event type="cc.copersoft.houseStatusChangeEvent">
+        <action execute="#{notifySend.onMessageSend}"/>
+    </event>
+
+    <event type="com.coopersoft.businessStop.HS">
+        <action execute="#{notifySend.onMessageSend}"/>
+    </event>
+
+    <event type="com.coopersoft.businessCancel.HS">
+        <action execute="#{notifySend.onMessageSend}"/>
+    </event>
 
 </components>
