@@ -44,10 +44,14 @@ public class SaleContractDisplayGen implements TaskCompleteSubscribeComponent {
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "房屋编号");
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,bh.getHouseCode());
 
-            HouseContract houseContract = bh.getAfterBusinessHouse().getSaleContract();
 
-            if (houseContract == null){
-                houseContract = bh.getStartBusinessHouse().getSaleContract();
+
+            HouseContract houseContract = bh.getHouseContract();
+
+            if (houseContract == null && ownerBusinessHome.getInstance().getSelectBusiness() != null &&
+                    ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size() > 0){
+
+                houseContract = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().iterator().next().getHouseContract();
             }
 
             if (houseContract != null) {

@@ -35,21 +35,20 @@ public class FcHouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponen
                 key.addWord(ownerBusinessHome.getCardNoByType("OWNER_RSHIP").getNumber());
             }
 
-            if(hb.getAfterBusinessHouse().getSaleContract()!=null) {
-                key.addWord(hb.getAfterBusinessHouse().getSaleContract().getContractNumber());
-
-                if (hb.getAfterBusinessHouse().getDeveloperName()!=null && !hb.getAfterBusinessHouse().getDeveloperName().equals("")){
-                    key.addWord(hb.getAfterBusinessHouse().getDeveloperName());
-                }
-            }
-            if(hb.getStartBusinessHouse().getSaleContract()!=null) {
-                    key.addWord(hb.getStartBusinessHouse().getSaleContract().getContractNumber());
-
-                if (hb.getAfterBusinessHouse().getDeveloperName()!=null && !hb.getAfterBusinessHouse().getDeveloperName().equals("")){
-                    key.addWord(hb.getAfterBusinessHouse().getDeveloperName());
-                }
+            if(hb.getHouseContract()!=null) {
+                key.addWord(hb.getHouseContract().getContractNumber());
             }
 
+            if (hb.getHouseContract()  == null && ownerBusinessHome.getInstance().getSelectBusiness() != null &&
+                    ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size() > 0){
+
+                key.addWord(ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().iterator().next().getHouseContract().getContractNumber());
+            }
+
+
+            if (hb.getAfterBusinessHouse().getDeveloperName()!=null && !hb.getAfterBusinessHouse().getDeveloperName().equals("")){
+                key.addWord(hb.getAfterBusinessHouse().getDeveloperName());
+            }
 
             hb.setSearchKey(key.getKey());
         }

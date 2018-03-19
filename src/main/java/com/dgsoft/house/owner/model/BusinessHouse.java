@@ -86,7 +86,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
     //private Set<SaleInfo> saleInfos = new HashSet<SaleInfo>(0);
     private SaleInfo saleInfo;
 
-    private HouseContract saleContract;
 
     public BusinessHouse() {
     }
@@ -788,17 +787,6 @@ public class BusinessHouse implements java.io.Serializable, HouseInfo {
 
     public void setMortgaegeRegistes(Set<MortgaegeRegiste> mortgaegeRegistes) {
         this.mortgaegeRegistes = mortgaegeRegistes;
-    }
-
-
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALE_CONTRACT", nullable = true)
-    public HouseContract getSaleContract() {
-        return saleContract;
-    }
-
-    public void setSaleContract(HouseContract saleContract) {
-        this.saleContract = saleContract;
     }
 
     @Transient

@@ -19,8 +19,7 @@ public class MoneyBusiness implements java.io.Serializable{
         CREATED,
         // 资金已存入
         PROTECTED,
-        // 中止（资金未存入）
-        ABORT,
+
         // 交易取消等待银行拨款
         CANCEL,
         // 已变更

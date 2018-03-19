@@ -34,7 +34,6 @@ import org.jbpm.graph.def.ProcessDefinition;
 import java.io.IOException;
 import java.util.Date;
 
-import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.BUYER;
 import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.SELLER;
 
 /**
@@ -127,13 +126,12 @@ public class OutsideBusinessCreate {
 
     }
 
-    private String submitContract(AttachEmployee attachEmployee ,cc.coopersoft.house.sale.data.HouseContract outsideContract, String defineId){
+    private String submitContract(AttachEmployee attachEmployee ,
+                                  cc.coopersoft.house.sale.data.HouseContract outsideContract,
+                                  String defineId,PowerPerson.PowerPersonType ownerType){
 
         genHouseBusiness(defineId,outsideContract.getHouseCode());
 
-
-
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleInfo(new SaleInfo(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse(),outsideContract.getSalePayType(),outsideContract.getPrice(),ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()));
 
         BusinessPersion businessPersion = new BusinessPersion(ownerBusinessHome.getInstance(),BusinessPersion.PersionType.PRE_SALE_ENTRUST);
         businessPersion.setPersonName(outsideContract.getSaleProxyPerson().getPersonName());
@@ -149,7 +147,10 @@ public class OutsideBusinessCreate {
                 outsideContract.getType(),
                 outsideContract.getCreateTime(),
                 SaleType.OLD_SELL.equals(outsideContract.getType()) ? null : outsideContract.getNewHouseContract().getProjectCerNumber(),
-                ownerBusinessHome.getInstance(),contractSubmit);
+                ownerBusinessHome.getSingleHoues(),contractSubmit);
+        houseContract.setPayType(outsideContract.getSalePayType());
+        houseContract.setSaleArea(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea());
+        houseContract.setSumPrice(outsideContract.getPrice());
         contractSubmit.setHouseContract(houseContract);
 
         for(cc.coopersoft.house.sale.data.ContractNumber cn : outsideContract.getContractNumbers()){
@@ -164,14 +165,14 @@ public class OutsideBusinessCreate {
             }
         }
 
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleContract(houseContract);
+        ownerBusinessHome.getSingleHoues().setHouseContract(houseContract);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
 
 
         int i = 0;
         for(cc.coopersoft.house.sale.data.PowerPerson pp: outsideContract.getBusinessPoolList()){
                                                             // 备案和交易业务合并，所以不是备案人而是产权人
-                PowerPerson contractOwner = new PowerPerson(PowerPerson.PowerPersonType.OWNER, SELLER.equals( pp.getContractPersonType()));
+                PowerPerson contractOwner = new PowerPerson(ownerType, SELLER.equals( pp.getContractPersonType()));
                 ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getPowerPersons().add(contractOwner);
                 if (i == 0) {
                     ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setMainOwner(contractOwner);
@@ -228,7 +229,7 @@ public class OutsideBusinessCreate {
             throw new IllegalArgumentException("contract decrypt error",e);
         }
 
-        return submitContract(key.getAttachEmployee(),outsideContract,RunParam.instance().getStringParamValue("NewHouseContractBizId"));
+        return submitContract(key.getAttachEmployee(),outsideContract,RunParam.instance().getStringParamValue("NewHouseContractBizId"),PowerPerson.PowerPersonType.CONTRACT);
 
     }
 
@@ -260,9 +261,9 @@ public class OutsideBusinessCreate {
 
         cc.coopersoft.house.sale.data.HouseContract outsideContract = mapper.readValue(data,cc.coopersoft.house.sale.data.HouseContract.class);
 
-        String defineIdParamName = SaleType.OLD_SELL.equals(outsideContract.getType()) ? "OldHouseContractBizId" : "NewHouseContractBizId" ;
-
-        String businessId = submitContract(attachEmployee,outsideContract,RunParam.instance().getStringParamValue(defineIdParamName));
+        String businessId = submitContract(attachEmployee,outsideContract,
+                RunParam.instance().getStringParamValue(SaleType.OLD_SELL.equals(outsideContract.getType()) ? "OldHouseContractBizId" : "NewHouseContractBizId"),
+                SaleType.OLD_SELL.equals(outsideContract.getType()) ? PowerPerson.PowerPersonType.OWNER : PowerPerson.PowerPersonType.CONTRACT);
 
 
         if (businessId != null){

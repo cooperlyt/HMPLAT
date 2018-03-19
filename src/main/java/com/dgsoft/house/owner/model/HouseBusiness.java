@@ -27,6 +27,7 @@ public class HouseBusiness implements java.io.Serializable {
 
     private String searchKey;
     private String display;
+    private HouseContract houseContract;
 
     public HouseBusiness() {
     }
@@ -149,4 +150,13 @@ public class HouseBusiness implements java.io.Serializable {
         this.display = display;
     }
 
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @PrimaryKeyJoinColumn
+    public HouseContract getHouseContract() {
+        return houseContract;
+    }
+
+    public void setHouseContract(HouseContract houseContract) {
+        this.houseContract = houseContract;
+    }
 }

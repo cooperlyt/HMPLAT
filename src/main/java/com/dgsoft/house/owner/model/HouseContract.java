@@ -1,9 +1,12 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 24, 2015 1:17:35 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.house.SalePayType;
 import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Parameter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,34 +31,41 @@ public class HouseContract implements java.io.Serializable {
 	private SaleType type;
 	private Date contractDate;
 	private String projectSaleCerNumber;
-	private OwnerBusiness ownerBusiness;
+	private HouseBusiness houseBusiness;
 
-	private BusinessHouse businessHouse;
+	private SalePayType payType;
+	private BigDecimal sumPrice;
+	private BigDecimal saleArea;
+
+
 	private ContractSubmit contractSubmit;
 
 	public HouseContract() {
 	}
 
-	public HouseContract(SaleType type, OwnerBusiness ownerBusiness) {
+	public HouseContract(SaleType type, HouseBusiness houseBusiness) {
 		this.type = type;
-		this.ownerBusiness = ownerBusiness;
+		this.houseBusiness = houseBusiness;
 	}
 
-	public HouseContract(String contractNumber, SaleType type, Date contractDate, String projectSaleCerNumber, OwnerBusiness ownerBusiness, ContractSubmit contractSubmit) {
+	public HouseContract(String contractNumber, SaleType type, Date contractDate, String projectSaleCerNumber, HouseBusiness houseBusiness, ContractSubmit contractSubmit) {
 		this.contractNumber = contractNumber;
 		this.type = type;
 		this.contractDate = contractDate;
-		this.ownerBusiness = ownerBusiness;
+		this.houseBusiness = houseBusiness;
 		this.contractSubmit = contractSubmit;
 		this.projectSaleCerNumber = projectSaleCerNumber;
 	}
+
 
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, length = 32)
 	@NotNull
 	@Size(max = 32)
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
+	@GenericGenerator(name = "pkGenerator",
+			strategy = "foreign",
+			parameters = { @Parameter(name = "property", value = "houseBusiness") })
+	@GeneratedValue(generator = "pkGenerator")
 	public String getId() {
 		return this.id;
 	}
@@ -90,24 +100,16 @@ public class HouseContract implements java.io.Serializable {
 	}
 
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "saleContract")
-	public BusinessHouse getBusinessHouse() {
-		return businessHouse;
-	}
 
-	public void setBusinessHouse(BusinessHouse businessHouse) {
-		this.businessHouse = businessHouse;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS",nullable = false)
+	@OneToOne(fetch = FetchType.LAZY,optional = false)
+	@PrimaryKeyJoinColumn
 	@NotNull
-	public OwnerBusiness getOwnerBusiness() {
-		return ownerBusiness;
+	public HouseBusiness getHouseBusiness() {
+		return houseBusiness;
 	}
 
-	public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
-		this.ownerBusiness = ownerBusiness;
+	public void setHouseBusiness(HouseBusiness houseBusiness) {
+		this.houseBusiness = houseBusiness;
 	}
 
 	@Column(name="CONTRACT_NUMBER", nullable = false, length = 50)
@@ -139,5 +141,35 @@ public class HouseContract implements java.io.Serializable {
 
 	public void setProjectSaleCerNumber(String projectSaleCerNumber) {
 		this.projectSaleCerNumber = projectSaleCerNumber;
+	}
+
+
+	@Column(name = "PAY_TYPE", length = 32)
+	@Enumerated(EnumType.STRING)
+	public SalePayType getPayType() {
+		return this.payType;
+	}
+
+	public void setPayType(SalePayType payType) {
+		this.payType = payType;
+	}
+
+	@Column(name = "SUM_PRICE", nullable = false, scale = 4)
+	@NotNull
+	public BigDecimal getSumPrice() {
+		return this.sumPrice;
+	}
+
+	public void setSumPrice(BigDecimal sumPrice) {
+		this.sumPrice = sumPrice;
+	}
+
+	@Column(name = "SALEAREA", nullable = true, scale = 4)
+	public BigDecimal getSaleArea() {
+		return saleArea;
+	}
+
+	public void setSaleArea(BigDecimal saleArea) {
+		this.saleArea = saleArea;
 	}
 }
