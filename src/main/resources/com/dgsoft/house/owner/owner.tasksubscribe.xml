@@ -1224,23 +1224,12 @@
         </description>
     </end-subscribe>
 
-
-
-
-
-
     <end-subscribe name="MortgageDisplayGen" component="mortgageDisplayGen">
         <description>
             房屋抵押备案显示生成器
         </description>
     </end-subscribe>
 
-
-    <end-subscribe name="HouseBusinessMortgageKeyGen" component="houseBusinessMortgageKeyGen">
-        <description>
-            房屋和抵押人查询KEY生成器
-        </description>
-    </end-subscribe>
 
     <end-subscribe name="FcMortgageDisplayGen" component="fcMortgageDisplayGen">
         <description>
@@ -1400,17 +1389,6 @@
     <end-subscribe name="FcSaleContractDisplayGenCancel" component="fcSaleContractDisplayGenCancel">
         <description>
             撤销销售合同备案显示生成器(凤城)
-        </description>
-    </end-subscribe>
-
-
-
-
-
-
-    <end-subscribe name="LinkSaleContract" component="linkSaleContract">
-        <description>
-            联接销售合同到AFTER
         </description>
     </end-subscribe>
 

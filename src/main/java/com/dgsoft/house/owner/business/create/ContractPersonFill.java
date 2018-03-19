@@ -2,12 +2,9 @@ package com.dgsoft.house.owner.business.create;
 
 import com.dgsoft.common.system.business.BusinessDataFill;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.HouseBusiness;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.log.Logging;
-import sun.font.TrueTypeFont;
 
 /**
  * Created by wxy on 2017-06-13.

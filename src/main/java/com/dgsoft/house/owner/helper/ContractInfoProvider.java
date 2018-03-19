@@ -40,9 +40,9 @@ public class ContractInfoProvider implements RestDataProvider {
         try {
 
             HouseContract houseContract = ownerEntityLoader.getEntityManager().
-                    createQuery("select hc from OwnerBusiness  ob left join ob.houseContracts hc where hc.contractNumber = :cNumber", HouseContract.class)
+                    createQuery("select hc from HouseContract hc left join fetch hc.houseBusiness hb left join fetch hb.ownerBusiness ob where hc.contractNumber = :cNumber", HouseContract.class)
                     .setParameter("cNumber", contractNumber).getSingleResult();
-            BusinessHouse bh = houseContract.getBusinessHouse();
+            BusinessHouse bh = houseContract.getHouseBusiness().getAfterBusinessHouse();
                 for(PowerPerson pp: bh.getPowerPersons()){
                     if (personNumber.equals(pp.getCredentialsNumber())){
                         JSONObject result = new JSONObject();
@@ -57,8 +57,8 @@ public class ContractInfoProvider implements RestDataProvider {
                             result.put("inFloor",bh.getInFloorName());
                             result.put("unitName",bh.getHouseUnitName());
                             result.put("houseCode",bh.getHouseCode());
-                            result.put("status",messages.get(houseContract.getOwnerBusiness().getStatus().name()));
-                            result.put("businessId",houseContract.getOwnerBusiness().getId());
+                            result.put("status",messages.get(houseContract.getHouseBusiness().getOwnerBusiness().getStatus().name()));
+                            result.put("businessId",houseContract.getHouseBusiness().getOwnerBusiness().getId());
                             return result;
                         } catch (JSONException e) {
                             return null;

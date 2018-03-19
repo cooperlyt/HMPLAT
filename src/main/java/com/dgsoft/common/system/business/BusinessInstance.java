@@ -17,7 +17,7 @@ public interface BusinessInstance {
         NORMAL_BIZ,MODIFY_BIZ,CANCEL_BIZ
     }
 
-    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， 修改中, 已解除
+    //业务中 ， 完成 ， 中止 ， 挂起， 撤消， \\修改中, 已解除 移动到HOUSE_BUSINESS 和 PROJECT_BUSINESS 中
     public enum BusinessStatus {
         RUNNING, COMPLETE, ABORT, SUSPEND, CANCEL, MODIFYING, COMPLETE_CANCEL;
 

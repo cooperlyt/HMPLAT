@@ -34,7 +34,6 @@ import org.jbpm.graph.def.ProcessDefinition;
 import java.io.IOException;
 import java.util.Date;
 
-import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.BUYER;
 import static cc.coopersoft.house.sale.data.PowerPerson.ContractPersonType.SELLER;
 
 /**
@@ -132,9 +131,6 @@ public class OutsideBusinessCreate {
         genHouseBusiness(defineId,outsideContract.getHouseCode());
 
 
-
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleInfo(new SaleInfo(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse(),outsideContract.getSalePayType(),outsideContract.getPrice(),ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea()));
-
         BusinessPersion businessPersion = new BusinessPersion(ownerBusinessHome.getInstance(),BusinessPersion.PersionType.PRE_SALE_ENTRUST);
         businessPersion.setPersonName(outsideContract.getSaleProxyPerson().getPersonName());
         businessPersion.setCredentialsType(outsideContract.getSaleProxyPerson().getCredentialsType());
@@ -149,7 +145,10 @@ public class OutsideBusinessCreate {
                 outsideContract.getType(),
                 outsideContract.getCreateTime(),
                 SaleType.OLD_SELL.equals(outsideContract.getType()) ? null : outsideContract.getNewHouseContract().getProjectCerNumber(),
-                ownerBusinessHome.getInstance(),contractSubmit);
+                ownerBusinessHome.getSingleHoues(),contractSubmit);
+        houseContract.setPayType(outsideContract.getSalePayType());
+        houseContract.setSaleArea(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea());
+        houseContract.setSumPrice(outsideContract.getPrice());
         contractSubmit.setHouseContract(houseContract);
 
         for(cc.coopersoft.house.sale.data.ContractNumber cn : outsideContract.getContractNumbers()){
@@ -164,7 +163,7 @@ public class OutsideBusinessCreate {
             }
         }
 
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setSaleContract(houseContract);
+        ownerBusinessHome.getSingleHoues().setHouseContract(houseContract);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
 
 

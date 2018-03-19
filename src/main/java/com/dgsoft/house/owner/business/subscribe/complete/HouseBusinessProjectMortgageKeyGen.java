@@ -31,14 +31,17 @@ public class HouseBusinessProjectMortgageKeyGen  implements TaskCompleteSubscrib
         for(HouseBusiness hb: ownerBusinessHome.getInstance().getHouseBusinesses()){
             KeyGeneratorHelper key = OwnerHouseHelper.genProjectSearchKey(hb.getAfterBusinessHouse());
 
-            if(hb.getAfterBusinessHouse().getSaleContract() !=null) {
-                    key.addWord(hb.getAfterBusinessHouse().getSaleContract().getContractNumber());
 
+            if(hb.getHouseContract()!=null) {
+                key.addWord(hb.getHouseContract().getContractNumber());
             }
-            if(hb.getStartBusinessHouse().getSaleContract()!=null) {
-                    key.addWord(hb.getStartBusinessHouse().getSaleContract().getContractNumber());
 
+            if (hb.getHouseContract()  == null && ownerBusinessHome.getInstance().getSelectBusiness() != null &&
+                    ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size() > 0){
+
+                key.addWord(ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().iterator().next().getHouseContract().getContractNumber());
             }
+
 
 
             hb.setSearchKey(key.getKey());
