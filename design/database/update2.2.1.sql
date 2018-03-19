@@ -108,6 +108,7 @@ INSERT INTO HOUSE_CONTRACT(ID,CONTRACT_NUMBER,CONTRACT_DATE,TYPE,PAY_TYPE,SUM_PR
 	(select  bh.ID,'未知',ob.APPLY_TIME,'OTHER', s.PAY_TYPE,s.SUM_PRICE,s.SALEAREA from SALE_INFO s LEFT JOIN BUSINESS_HOUSE bh on bh.AFTER_HOUSE = s.HOUSEID left join HOUSE_CONTRACT hc on hc.ID = bh.ID left join OWNER_BUSINESS ob on ob.ID = bh.BUSINESS_ID
 	WHERE hc.ID is null and ((s.PAY_TYPE is not null )  or (s.SUM_PRICE is not null and s.SUM_PRICE > 0) or (s.SALEAREA is not null and s.SALEAREA > 0)));
 
+-- TODO 改丹东个人住房视图
 
 
 UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.2.1' where ID='database_version';
