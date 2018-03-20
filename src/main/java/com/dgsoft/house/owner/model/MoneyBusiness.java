@@ -65,7 +65,7 @@ public class MoneyBusiness implements java.io.Serializable{
         this.id = id;
     }
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false, length = 16)
     @NotNull
     public MoneyBusinessStatus getStatus() {
