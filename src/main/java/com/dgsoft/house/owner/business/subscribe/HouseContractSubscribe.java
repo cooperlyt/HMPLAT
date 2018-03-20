@@ -1,6 +1,5 @@
 package com.dgsoft.house.owner.business.subscribe;
 
-import com.dgsoft.house.SaleType;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.HouseBusiness;
