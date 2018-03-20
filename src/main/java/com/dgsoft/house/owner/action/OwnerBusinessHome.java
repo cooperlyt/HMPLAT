@@ -125,10 +125,10 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
 
-    public SaleInfo getSaleInfo(){
-
-        return getInstance().getSaleInfo();
-    }
+//    public SaleInfo getSaleInfo(){
+//
+//        return getInstance().getSaleInfo();
+//    }
 
     public FactMoneyInfo getFactMoneyInfo(){
         if (!getInstance().getFactMoneyInfos().isEmpty()){
