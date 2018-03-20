@@ -306,11 +306,6 @@
         </description>
     </view-subscribe>
 
-    <view-subscribe name="StartSaleInfoView" page="/business/houseOwner/subscribe/StartSaleInfoView.xhtml">
-        <description>
-            房屋交易信息,付款方式,购房款查看(Start)
-        </description>
-    </view-subscribe>
 
     <view-subscribe name="SaleInfoGiftView" page="/business/houseOwner/subscribe/SaleInfoGiftView.xhtml">
         <description>
@@ -320,7 +315,7 @@
 
     <view-subscribe name="SaleInfoSuperviseView" page="/business/houseOwner/subscribe/SaleInfoSuperviseView.xhtml">
         <description>
-            房屋交易信息,监管资金,付款方式,购房款查看
+            房屋交易信息(商品房),付款方式,购房款查看
         </description>
     </view-subscribe>
 
@@ -2238,11 +2233,6 @@
     </create-component>
 
 
-    <create-component type="DATA_FILL" component="saleInfoFill">
-        <description>
-            购房款信息提取
-        </description>
-    </create-component>
 
 
     <create-component type="DATA_FILL" component="noticeOwnerFill">
