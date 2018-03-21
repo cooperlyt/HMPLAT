@@ -8,19 +8,32 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.getSaleInfo()}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.houseContract}">
         <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.SaleInfo_PayType}"/>
-            <h:outputText value="#{messages[ownerBusinessHome.getSaleInfo().payType.name()]}"/>
+            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.houseContract.payType.name()]}"/>
 
             <h:outputText value="#{messages.SaleInfo_SUM_PRICE}"/>
-            <h:outputText value="#{ownerBusinessHome.getSaleInfo().sumPrice}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.sumPrice}"/>
 
-            <h:outputText value="#{messages.SaleInfo_Supervise}"/>
+
+            <h:outputText value="合同类型"/>
+            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.houseContract.type.name()]}"/>
+
+            <h:outputText value="交易面积"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.saleArea}"/>
+
+            <h:outputText value="合同编号"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.contractNumber}"/>
+
+            <h:outputText value="合同签约时间"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.contractDate}" >
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            </h:outputText>
+            <h:outputText value="商品房预售许可证号"/>
             <dh:entryGridColumn colspan="3">
-                <h:outputText value="#{ownerBusinessHome.getSaleInfo().superviseMoney}"/>
+                <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.projectSaleCerNumber}"/>
             </dh:entryGridColumn>
-
 
 
         </dh:entryGridBlock>

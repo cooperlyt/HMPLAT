@@ -732,11 +732,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     /**
      * 交易信息
      */
-    @Transient
-    public SaleInfo getSaleInfo() {
-        return getSingleHoues().getAfterBusinessHouse().getSaleInfo();
-    }
+//    @Transient
+//    public SaleInfo getSaleInfo() {
+//        return getSingleHoues().getAfterBusinessHouse().getSaleInfo();
+//    }
 
+    /**
+     * 合同备案信息,交易信息
+     */
+
+    @Transient
+    public HouseContract getHouseContract(){
+        return  getSingleHoues().getHouseContract();
+    }
     /**
      * 查封信息
      */

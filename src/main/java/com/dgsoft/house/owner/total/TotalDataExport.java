@@ -275,7 +275,7 @@ public class TotalDataExport {
 
 
     public void totalHouseInitCard(){
-        List<InitCardTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.InitCardTotalData(hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.code)) from HouseBusiness hb where hb.ownerBusiness.defineId = 'WP40' and hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.code is not null and hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.printTime >= :beginDate and hb.afterBusinessHouse.businessHouseOwner.makeCard.cardInfo.printTime <= :endDate group by hb.afterBusinessHouse.developerName, hb.afterBusinessHouse.sectionName", InitCardTotalData.class)
+        List<InitCardTotalData> datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.InitCardTotalData(hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(pp.makeCard.cardInfo.code)) from HouseBusiness hb left join hb.afterBusinessHouse.powerPersons pp where pp.type='INIT' and pp.old=false and hb.ownerBusiness.defineId = 'WP40' and pp.makeCard.cardInfo.code is not null and pp.makeCard.cardInfo.printTime >= :beginDate and pp.makeCard.cardInfo.printTime <= :endDate group by hb.afterBusinessHouse.developerName, hb.afterBusinessHouse.sectionName", InitCardTotalData.class)
                 .setParameter("beginDate",fromDateTime)
                 .setParameter("endDate", toDateTime).getResultList();
 

@@ -25,4 +25,9 @@ public class HouseBusinessHome extends OwnerEntityHome<HouseBusiness> {
     public EnumSet<SaleType> getDealSaleTypes(){
         return EnumSet.of(SaleType.OLD_SELL);
     }
+
+    @Factory(value = "commodityTypes")
+    public EnumSet<SaleType> getCommoditySaleTypes(){
+        return EnumSet.of(SaleType.MAP_SELL,SaleType.NOW_SELL);
+    }
 }

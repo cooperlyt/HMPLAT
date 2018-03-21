@@ -64,7 +64,7 @@ public class TotalSaleDetails {
 
         String businessDefineId = isOld ? RunParam.instance().getStringParamValue("oldHouseSaleBizDefineId") : RunParam.instance().getStringParamValue("newHouseSaleBizDefineId");
 
-        String ownerAddressPath = isOld ? "hb.afterBusinessHouse.businessHouseOwner.address" : "hb.afterBusinessHouse.contractOwner.address";
+        String ownerAddressPath = isOld ? "hb.afterBusinessHouse.mainOwner.address" : "hb.afterBusinessHouse.mainOwner.address";
 
 
         GregorianCalendar gc = new GregorianCalendar();
@@ -132,7 +132,7 @@ public class TotalSaleDetails {
         }
         List<DaySaleData> datas = new ArrayList<DaySaleData>();
         if (onlyRunning == null || onlyRunning) {
-            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice ," + ownerAddressPath + ") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.houseContract.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice ," + ownerAddressPath + ") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
                     "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
                     "and month(hb.ownerBusiness.applyTime) = :searchMonth and day(hb.ownerBusiness.applyTime) = :searchDay " +
                     "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)
@@ -141,7 +141,7 @@ public class TotalSaleDetails {
                     .setParameter("status", allowStatus)
                     .setParameter("searchDay", gc.get(Calendar.DAY_OF_MONTH)).getResultList();
         }else{
-            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.afterBusinessHouse.saleInfo.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice, " + ownerAddressPath +") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
+            datas = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.DaySaleData(hb.ownerBusiness.id,hb.houseCode,hb.afterBusinessHouse.address,hb.afterBusinessHouse.houseArea,hb.houseContract.sumPrice,hb.afterBusinessHouse.sectionName,ev.assessmentPrice, " + ownerAddressPath +") from HouseBusiness hb left join hb.ownerBusiness.evaluates ev " +
                     "where hb.ownerBusiness.status in (:status)  and year(hb.ownerBusiness.applyTime) =:searchYear " +
                     "and month(hb.ownerBusiness.regTime) = :searchMonth and day(hb.ownerBusiness.regTime) = :searchDay " +
                     "and hb.ownerBusiness.defineId = :defineId order by hb.afterBusinessHouse.sectionCode", DaySaleData.class).setParameter("defineId", businessDefineId)

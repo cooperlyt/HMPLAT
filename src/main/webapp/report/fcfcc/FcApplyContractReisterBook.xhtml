@@ -274,7 +274,7 @@
                             <p:paragraph>购房金额</p:paragraph>
                         </p:cell>
                         <p:cell borderWidthLeft="0" fixedHeight="20">
-                            <p:paragraph><p:text value="#{ownerBusinessHome.instance.saleInfo.sumPrice}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
+                            <p:paragraph><p:text value="#{ownerBusinessHome.instance.houseContract.sumPrice}"><f:convertNumber pattern="#0.00"/></p:text></p:paragraph>
                         </p:cell>
 
                         <p:cell borderWidthLeft="0" fixedHeight="20">
@@ -305,7 +305,7 @@
                             <p:paragraph>付款方式</p:paragraph>
                         </p:cell>
                         <p:cell borderWidthLeft="0" fixedHeight="20">
-                            <p:paragraph>#{messages[ownerBusinessHome.instance.saleInfo.payType.name()]}</p:paragraph>
+                            <p:paragraph>#{messages[ownerBusinessHome.instance.houseContract.payType.name()]}</p:paragraph>
                         </p:cell>
 
 

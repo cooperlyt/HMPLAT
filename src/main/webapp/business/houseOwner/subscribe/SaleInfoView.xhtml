@@ -8,13 +8,30 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-    <a:outputPanel rendered="#{not empty ownerBusinessHome.saleInfo}">
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.houseContract}">
         <dh:entryGridBlock columns="4" >
             <h:outputText value="#{messages.SaleInfo_PayType}"/>
-            <h:outputText value="#{messages[ownerBusinessHome.saleInfo.payType.name()]}"/>
+            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.houseContract.payType.name()]}"/>
 
             <h:outputText value="#{messages.SaleInfo_SUM_PRICE}"/>
-            <h:outputText value="#{ownerBusinessHome.saleInfo.sumPrice}"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.sumPrice}"/>
+
+
+            <h:outputText value="合同类型"/>
+            <h:outputText value="#{messages[ownerBusinessHome.singleHoues.houseContract.type.name()]}"/>
+
+            <h:outputText value="交易面积"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.saleArea}"/>
+
+            <h:outputText value="合同编号"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.contractNumber}"/>
+
+            <h:outputText value="合同签约时间"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.houseContract.contractDate}" >
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            </h:outputText>
+
+
         </dh:entryGridBlock>
     </a:outputPanel>
 </ui:composition>

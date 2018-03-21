@@ -12,6 +12,49 @@
 
 
 
+
+
+    <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+        <ui:param name="for" value="saleAreaInput"/>
+        <ui:param name="for" value="typeInput"/>
+        <ui:define name="label">
+            #{messages.SALEINFO_AREA}
+        </ui:define>
+
+        <div class="input-group">
+            <a:outputPanel styleClass="input-group-btn">
+
+                <h:selectOneMenu id="typeInput"
+                                 value="#{houseContractSubscribe.instance.type}"
+                                 label="#{messages.SALEINFO_TYPE}"
+                                 styleClass="selectpicker select-menu-btn input-group-first">
+                    <s:selectItems value="#{commodityTypes}"
+                                   var="_saleTypes"
+                                   itemValue="#{_commodityTypes}"
+                                   label="#{messages[_saleTypes.name()]}"
+                                   noSelectionLabel="请选择合同类型"/>
+                    <s:convertEnum></s:convertEnum>
+                </h:selectOneMenu>
+
+            </a:outputPanel>
+
+            <h:inputText value="#{houseContractSubscribe.instance.saleArea}"
+                         label="#{messages.SALEINFO_AREA}"
+                         size="20"
+                         required="true"
+                         id="saleAreaInput"
+                         p:placeholder="#{messages.SALEINFO_AREA}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
+            </h:inputText>
+
+        </div>
+
+    </s:decorate>
+
+
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
 
         <ui:param name="for" value="sumPriceInput"/>
@@ -24,7 +67,7 @@
             <a:outputPanel styleClass="input-group-btn">
 
                 <h:selectOneMenu id="payTypeInput"
-                                 value="#{saleInfoSubscribe.instance.payType}"
+                                 value="#{houseContractSubscribe.instance.payType}"
                                  label="#{messages.SaleInfo_PayType}"
                                  styleClass="selectpicker select-menu-btn input-group-first">
                     <s:selectItems value="#{ownerHouseHelper.salePayType}"
@@ -37,7 +80,7 @@
 
             </a:outputPanel>
 
-            <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}"
+            <h:inputText value="#{houseContractSubscribe.instance.sumPrice}"
                          label="#{messages.SaleInfo_SUM_PRICE}"
                          size="20"
                          required="true"
@@ -47,32 +90,60 @@
                 <f:validateDoubleRange minimum="0"/>
                 <f:convertNumber pattern="#0.00"/>
             </h:inputText>
-
-
         </div>
-
-
-        <div class="form-inline">
-            <s:decorate template="/layout/edit-big.xhtml" styleClass="form-group">
-                <ui:define name="label">
-                    #{messages.SaleInfo_Supervise}
-                </ui:define>
-                <ui:param name="for" value="SuperviseInput"/>
-                <h:inputText label="#{messages.SaleInfo_Supervise}"
-                             id="SuperviseInput"
-                             value="#{saleInfoSubscribe.instance.superviseMoney}"
-                             styleClass="form-control"
-                             required="true">
-                    <r:validator event="blur"/>
-                    <f:validateDoubleRange minimum="0"/>
-                    <f:convertNumber pattern="#0.00"/>
-                </h:inputText>
-            </s:decorate>
-        </div>
-
-
-
     </s:decorate>
+
+    <div class="form-inline">
+        <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+            <ui:define name="label">
+                合同签约时间
+            </ui:define>
+            <ui:param name="for" value="closeDate"/>
+
+            <div class="input-group">
+                <h:inputText id="closeDate"
+                             required="true"
+                             styleClass="js-datepicker form-control"
+                             label="合同签约时间"
+                             value="#{houseContractSubscribe.instance.contractDate}">
+                    <s:convertDateTime pattern="#{messages.datePattern}"/>
+                </h:inputText>
+            </div>
+            <ui:define name="message">
+                <r:message for="closeDate" styleClass="edit-below-msg"/>
+            </ui:define>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                合同编号
+            </ui:define>
+            <ui:param name="for" value="contractNumber"/>
+            <h:inputText label="合同编号"
+                         maxlength="100"
+                         id="contractNumber"
+                         value="#{houseContractSubscribe.instance.contractNumber}"
+                         styleClass="form-control"
+                         required="true">
+            </h:inputText>
+        </s:decorate>
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                商品房预售许可证号
+            </ui:define>
+            <ui:param name="for" value="houseCardNo"/>
+            <h:inputText label="商品房预售许可证号"
+                         maxlength="30"
+                         id="projectSaleCerNumber"
+                         value="#{houseContractSubscribe.instance.projectSaleCerNumber}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
+    </div>
+
+
+
 
 
 </ui:composition>

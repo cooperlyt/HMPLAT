@@ -120,7 +120,7 @@ public class ProjectSaleTopTen implements RestDataProvider {
                 .setParameter("beginTime", type.getBeginDate())
                 .setParameter("endTime", type.getEndDate()).setMaxResults(10).getResultList();
 
-        List<ProjectTopTenData> moneys = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.ProjectTopTenData(hb.afterBusinessHouse.projectCode,sum(hb.afterBusinessHouse.saleInfo.sumPrice))  from HouseBusiness hb where hb.ownerBusiness.status in ('RUNNING', 'COMPLETE', 'SUSPEND', 'MODIFYING') and hb.ownerBusiness.defineId =:defineId and hb.ownerBusiness.createTime >= :beginTime and hb.ownerBusiness.createTime <= :endTime group by hb.afterBusinessHouse.projectCode order by sum(hb.afterBusinessHouse.saleInfo.sumPrice) desc ", ProjectTopTenData.class)
+        List<ProjectTopTenData> moneys = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.ProjectTopTenData(hb.afterBusinessHouse.projectCode,sum(hb.houseContract.sumPrice))  from HouseBusiness hb where hb.ownerBusiness.status in ('RUNNING', 'COMPLETE', 'SUSPEND', 'MODIFYING') and hb.ownerBusiness.defineId =:defineId and hb.ownerBusiness.createTime >= :beginTime and hb.ownerBusiness.createTime <= :endTime group by hb.afterBusinessHouse.projectCode order by sum(hb.houseContract.sumPrice) desc ", ProjectTopTenData.class)
                 .setParameter("defineId", RunParam.instance().getStringParamValue("NewHouseContractBizId"))
                 .setParameter("beginTime", type.getBeginDate())
                 .setParameter("endTime", type.getEndDate()).setMaxResults(10).getResultList();

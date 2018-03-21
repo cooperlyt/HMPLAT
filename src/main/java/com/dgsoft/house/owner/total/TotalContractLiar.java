@@ -242,7 +242,7 @@ public class TotalContractLiar {
 
     public void tatalContractBySellType(){
 
-        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hc.type,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb left join  hb.afterBusinessHouse h left join h.houseContracts hc where hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.status = 'COMPLETE' " +
+        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hc.type,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hc.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb left join  hb.afterBusinessHouse h left join hb.houseContract hc where hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.status = 'COMPLETE' " +
                 " and hb.afterBusinessHouse.useType = 'DWELLING_KEY'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
                 "group by  hc.type, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName ", TotalContractData.class)
@@ -252,7 +252,7 @@ public class TotalContractLiar {
 
 
 
-        List<TotalContractData> unhomeTotalData =ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hc.type,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb left join  hb.afterBusinessHouse h left join h.houseContracts hc  where hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.status = 'COMPLETE' " +
+        List<TotalContractData> unhomeTotalData =ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hc.type,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hc.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb left join  hb.afterBusinessHouse h left join hb.houseContract hc  where hb.ownerBusiness.defineId = 'WP42' and hb.ownerBusiness.status = 'COMPLETE' " +
                 " and hb.afterBusinessHouse.useType <> 'DWELLING_KEY'  and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
                 "group by  hc.type, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName ", TotalContractData.class)
@@ -552,7 +552,7 @@ public class TotalContractLiar {
 
 
 
-        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
+        List<TotalContractData> homeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.houseContract.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
                 " and hb.afterBusinessHouse.useType = 'DWELLING_KEY' and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
                 "group by hb.ownerBusiness.status, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)
@@ -560,7 +560,7 @@ public class TotalContractLiar {
                 .setParameter("endDate", toDateTime).getResultList();
 
 
-        List<TotalContractData> unhomeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.afterBusinessHouse.saleInfo.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
+        List<TotalContractData> unhomeTotalData = ownerEntityLoader.getEntityManager().createQuery("select new com.dgsoft.house.owner.total.data.TotalContractData(hb.ownerBusiness.status,hb.ownerBusiness.defineId,hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,count(hb.id),sum(hb.houseContract.sumPrice),sum(hb.afterBusinessHouse.houseArea)) from HouseBusiness hb where hb.ownerBusiness.defineId in ('WP42','WP43') and hb.ownerBusiness.status in ('COMPLETE','ABORT') " +
                 " and hb.afterBusinessHouse.useType <> 'DWELLING_KEY' and hb.ownerBusiness.source in ('BIZ_CREATE','BIZ_IMPORT','BIZ_OUTSIDE') " +
                 "and hb.ownerBusiness.regTime >= :beginDate and hb.ownerBusiness.regTime <= :endDate " +
                 "group by hb.ownerBusiness.status, hb.afterBusinessHouse.developerName,hb.afterBusinessHouse.sectionName,hb.ownerBusiness.defineId ", TotalContractData.class)

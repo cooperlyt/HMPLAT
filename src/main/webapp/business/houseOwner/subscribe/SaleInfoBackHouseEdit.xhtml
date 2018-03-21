@@ -11,6 +11,11 @@
 
 
 
+   
+
+
+
+
 
     <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
 
@@ -24,7 +29,7 @@
             <a:outputPanel styleClass="input-group-btn">
 
                 <h:selectOneMenu id="payTypeInput"
-                                 value="#{saleInfoSubscribe.instance.payType}"
+                                 value="#{houseContractSubscribe.instance.payType}"
                                  label="#{messages.SaleInfo_PayType}"
                                  styleClass="selectpicker select-menu-btn input-group-first">
                     <s:selectItems value="#{ownerHouseHelper.salePayType}"
@@ -37,7 +42,7 @@
 
             </a:outputPanel>
 
-            <h:inputText value="#{saleInfoSubscribe.instance.sumPrice}"
+            <h:inputText value="#{houseContractSubscribe.instance.sumPrice}"
                          label="#{messages.SaleInfo_SUM_PRICE}"
                          size="20"
                          required="true"
@@ -61,7 +66,7 @@
             <ui:param name="for" value="giftAreaInput"/>
             <h:inputText label="#{messages.SaleInfo_giftArea}"
                          id="giftAreaInput"
-                         value="#{saleInfoSubscribe.instance.giftArea}"
+                         value="#{houseContractSubscribe.instance.saleArea}"
                          styleClass="form-control"
                          required="true">
                 <r:validator event="blur"/>

@@ -59,28 +59,28 @@ public class SaleBusinessDayReport extends NativeReportBase {
 
         String SQL = "(select '商品房', count(bh.ID),sum(h.HOUSE_AREA), sum(si.SUM_PRICE) from BUSINESS_HOUSE bh " +
                 " LEFT join HOUSE h on h.ID = bh.AFTER_HOUSE " +
-                " LEFT join SALE_INFO si on si.HOUSEID = h.ID " +
+                " LEFT join HOUSE_CONTRACT si on bh.ID = si.ID " +
                 "left join OWNER_BUSINESS ob on ob.ID = bh.BUSINESS_ID " +
                 "where ob.DEFINE_ID = 'WP42' and ob.RECORDED = true " +
                 "and YEAR(REG_TIME) = :s_year and MONTH(REG_TIME) = :s_month and DAY(REG_TIME) = :s_day)" +
                 " union all " +
                 "(select '商品房住宅', count(bh.ID),sum(h.HOUSE_AREA), sum(si.SUM_PRICE) from BUSINESS_HOUSE bh " +
                 " LEFT join HOUSE h on h.ID = bh.AFTER_HOUSE " +
-                " LEFT join SALE_INFO si on si.HOUSEID = h.ID " +
+                " LEFT join HOUSE_CONTRACT si on bh.ID = si.ID " +
                 "left join OWNER_BUSINESS ob on ob.ID = bh.BUSINESS_ID " +
                 "where ob.DEFINE_ID = 'WP42' and ob.RECORDED = true and h.USE_TYPE = 'DWELLING_KEY' " +
                 "and YEAR(REG_TIME) = :s_year and MONTH(REG_TIME) = :s_month and DAY(REG_TIME) = :s_day) " +
                 " union all " +
                 "(select '二手房', count(bh.ID),sum(h.HOUSE_AREA), sum(si.SUM_PRICE) from BUSINESS_HOUSE bh " +
                 " LEFT join HOUSE h on h.ID = bh.AFTER_HOUSE " +
-                " LEFT join SALE_INFO si on si.HOUSEID = h.ID " +
+                " LEFT join HOUSE_CONTRACT si on bh.ID = si.ID " +
                 "left join OWNER_BUSINESS ob on ob.ID = bh.BUSINESS_ID " +
                 "where ob.DEFINE_ID = 'WP56' and ob.RECORDED = true " +
                 "and YEAR(REG_TIME) = :s_year and MONTH(REG_TIME) = :s_month and DAY(REG_TIME) = :s_day)" +
                 " union all " +
                 "(select '二手房住宅', count(bh.ID),sum(h.HOUSE_AREA), sum(si.SUM_PRICE) from BUSINESS_HOUSE bh " +
                 " LEFT join HOUSE h on h.ID = bh.AFTER_HOUSE " +
-                " LEFT join SALE_INFO si on si.HOUSEID = h.ID " +
+                " LEFT join HOUSE_CONTRACT si on bh.ID = si.ID " +
                 "left join OWNER_BUSINESS ob on ob.ID = bh.BUSINESS_ID " +
                 "where ob.DEFINE_ID = 'WP56' and ob.RECORDED = true and h.USE_TYPE = 'DWELLING_KEY' " +
                 "and YEAR(REG_TIME) = :s_year and MONTH(REG_TIME) = :s_month and DAY(REG_TIME) = :s_day) ";
