@@ -132,7 +132,6 @@ public class OutsideBusinessCreate {
 
         genHouseBusiness(defineId,outsideContract.getHouseCode());
 
-
         BusinessPersion businessPersion = new BusinessPersion(ownerBusinessHome.getInstance(),BusinessPersion.PersionType.PRE_SALE_ENTRUST);
         businessPersion.setPersonName(outsideContract.getSaleProxyPerson().getPersonName());
         businessPersion.setCredentialsType(outsideContract.getSaleProxyPerson().getCredentialsType());
