@@ -44,10 +44,10 @@
 
     <decision name="繕证判断">
         <transition to="缮证" name="缮证">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP50','WP76')}"></condition>
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP76')}"></condition>
 		</transition>
         <transition to="归档" name="无缮证业务">
-			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP50','WP76')}"></condition>
+			<condition expression="#{not calcHelper.stringIn(businessDefineHome.id,'WP76')}"></condition>
 		</transition>
     </decision>
 
