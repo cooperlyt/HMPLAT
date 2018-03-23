@@ -41,9 +41,9 @@ public class HouseBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent 
 
 
             if (hb.getHouseContract()  == null && ownerBusinessHome.getInstance().getSelectBusiness() != null &&
+                    ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getHouseContract()!=null &&
                     ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size() > 0){
-
-                key.addWord(ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().iterator().next().getHouseContract().getContractNumber());
+                key.addWord(ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getHouseContract().getContractNumber());
             }
 
             hb.setSearchKey(key.getKey());
