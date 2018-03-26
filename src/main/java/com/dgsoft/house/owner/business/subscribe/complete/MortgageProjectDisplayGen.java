@@ -42,11 +42,7 @@ public class MortgageProjectDisplayGen  implements TaskCompleteSubscribeComponen
 
             HouseContract houseContract = bh.getHouseContract();
 
-            if (houseContract == null && ownerBusinessHome.getInstance().getSelectBusiness() != null &&
-                    ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size() > 0){
-
-                houseContract = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().iterator().next().getHouseContract();
-            }
+            
 
             if (houseContract != null) {
                 businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "合同编号");
