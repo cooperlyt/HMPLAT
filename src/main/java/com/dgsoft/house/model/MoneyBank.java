@@ -104,4 +104,26 @@ public class MoneyBank implements java.io.Serializable,OrderModel {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof MoneyBank)) {
+            return false;
+        }
+
+
+        if (((MoneyBank)obj).getId().equals(getId())){
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return getId().hashCode();
+    }
+
+
 }

@@ -43,6 +43,10 @@
         <property name="ejbql">select financialCorporation from FinancialCorporation financialCorporation</property>
     </component>
 
+    <component name="moneyBankList" scope="event" class="com.dgsoft.house.model.MoneyBank">
+        <property name="ejbql">select moneyBank from MoneyBank moneyBank</property>
+    </component>
+
     <component name="validDeveloper" scope="event" class="com.dgsoft.house.HouseEntityQuery">
         <property name="ejbql">select developer from Developer developer left join fetch developer.attachCorporation where destroyed = false</property>
     </component>
