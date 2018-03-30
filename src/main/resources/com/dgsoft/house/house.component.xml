@@ -43,7 +43,7 @@
         <property name="ejbql">select financialCorporation from FinancialCorporation financialCorporation</property>
     </component>
 
-    <component name="moneyBankList" scope="event" class="com.dgsoft.house.model.MoneyBank">
+    <component name="moneyBankList" scope="event" class="com.dgsoft.house.HouseEntityQuery">
         <property name="ejbql">select moneyBank from MoneyBank moneyBank</property>
     </component>
 
