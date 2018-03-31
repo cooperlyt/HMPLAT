@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.instance.moneyBusiness}">
+        <dh:entryGridBlock columns="4" >
+
+
+            <h:outputText value="监管银行编号"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.bank}"/>
+
+            <h:outputText value="监管银行名称"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.bankName}"/>
+
+            <h:outputText value="监管银行账户"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.accountNumber}"/>
+
+            <h:outputText value="监管资金"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.money}"/>
+
+            <h:outputText value="业务监管状态"/>
+            <h:outputText value="#{messages[ownerBusinessHome.instance.moneyBusiness.status.name()]}"/>
+
+
+            <h:outputText value="银行开户行名称(收款方)"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.moneyPayInfo.bankName}"/>
+
+            <h:outputText value="持卡人姓名(收款方)"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.moneyPayInfo.cardName}"/>
+
+            <h:outputText value="银行卡号(收款方)"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.moneyPayInfo.cardNumber}"/>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+</ui:composition>

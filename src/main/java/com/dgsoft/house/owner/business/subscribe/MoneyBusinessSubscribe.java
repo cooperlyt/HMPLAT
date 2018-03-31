@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
+import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.model.MoneyBank;
 import com.dgsoft.house.owner.OwnerEntityHome;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
@@ -20,6 +21,11 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
     @In
     private OwnerBusinessHome ownerBusinessHome;
 
+
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
+
+
     private MoneyBank moneyBank;
 
     private boolean have;
@@ -33,16 +39,14 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
         this.have = have;
     }
 
-
-
-
     public MoneyBank getMoneyBank() {
+        if (getInstance().getBank()!=null && !getInstance().getBank().equals("")){
+            moneyBank =  houseEntityLoader.getEntityManager().find(MoneyBank.class,getInstance().getBank());
+        }
         return moneyBank;
     }
 
     public void setMoneyBank(MoneyBank moneyBank) {
-        Logging.getLog(getClass()).debug("ddddddd--");
-        Logging.getLog(getClass()).debug("ddddd1111111--"+moneyBank.getAccountNumber());
         getInstance().setAccountNumber(moneyBank.getAccountNumber());
         getInstance().setBank(moneyBank.getId());
         getInstance().setBankName(moneyBank.getName());
@@ -50,7 +54,6 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
     }
     @Override
     public MoneyBusiness createInstance(){
-        Logging.getLog(getClass()).debug("555555--");
         MoneyBusiness result = new  MoneyBusiness ();
         result.setStatus(MoneyBusiness.MoneyBusinessStatus.CREATED);
         result.setVer(1);
@@ -58,7 +61,6 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
         amoneyPayInfo.setMoneyBusiness(result);
         result.setMoneyPayInfo(amoneyPayInfo);
         result.setOwnerBusiness(ownerBusinessHome.getInstance());
-        Logging.getLog(getClass()).debug("555555aaaaaaaaa--");
         return result;
     }
 
@@ -66,9 +68,7 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
     @Override
     public void create(){
         super.create();
-        Logging.getLog(getClass()).debug("444444--");
         if (!ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()){
-            Logging.getLog(getClass()).debug("444444aaaaaaaaa--");
             if (ownerBusinessHome.getInstance().getMoneyBusinesses().iterator().next().getId()==null){
                 setInstance(ownerBusinessHome.getInstance().getMoneyBusinesses().iterator().next());
                 have=true;
@@ -77,25 +77,20 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
                 have=true;
             }
         }else {
-            Logging.getLog(getClass()).debug("444444bbbbb--");
             have =false;
         }
     }
     public void checkHave() {
         if (have) {
-            Logging.getLog(getClass()).debug("33333--");
 
             if (!ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty() &&
                     ownerBusinessHome.getInstance().getMoneyBusinesses().iterator().next().getId()!= null) {
                 setId(ownerBusinessHome.getInstance().getMoneyBusinesses().iterator().next().getId());
             }
-            Logging.getLog(getClass()).debug("33333aaaaaaaaaaa--");
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getMoneyBusinesses().add(getInstance());
-            Logging.getLog(getClass()).debug("33333bbbbbbbbbbbbb--");
         }
         else {
-            Logging.getLog(getClass()).debug("88888--");
             ownerBusinessHome.getInstance().getMoneyBusinesses().remove(getInstance());
             clearInstance();
         }
@@ -114,21 +109,12 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
 
     @Override
     public boolean isPass() {
-        return true;
+        return ownerBusinessHome.getInstance().getSingleHoues().getHouseContract()!=null;
     }
 
     @Override
     public boolean saveSubscribe() {
-        Logging.getLog(getClass()).debug("22222--");
-        Logging.getLog(getClass()).debug("11111--"+ownerBusinessHome.getInstance().getSingleHoues().getHouseContract());
-        if (ownerBusinessHome.getInstance().getSingleHoues().getHouseContract()!=null){
-            Logging.getLog(getClass()).debug("22222ccccc--");
-            Logging.getLog(getClass()).debug("22222ddddd--"+ownerBusinessHome.getInstance().getSingleHoues().getHouseContract().getId());
-        }else {
-
-            Logging.getLog(getClass()).debug("ffffffffff--");
-        }
         getInstance().setHouseContract(ownerBusinessHome.getInstance().getSingleHoues().getHouseContract());
-        return true;
+        return isPass();
     }
 }

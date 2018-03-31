@@ -730,6 +730,19 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     /**
+     * 资金监管备案信息
+     */
+
+    @Transient
+    public MoneyBusiness getMoneyBusiness() {
+
+        if (!getMoneyBusinesses().isEmpty()) {
+
+            return getMoneyBusinesses().iterator().next();
+        }
+        return null;
+    }
+    /**
      * 交易信息
      */
 //    @Transient
