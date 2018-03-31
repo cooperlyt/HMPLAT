@@ -20,13 +20,25 @@ public class MoneyPayInfo implements java.io.Serializable{
     private String cardName;
     private MoneyBusiness moneyBusiness;
 
+    public MoneyPayInfo(){
+
+    }
+
+    public MoneyPayInfo(String bankName,String cardNumber,String cardName,MoneyBusiness moneyBusiness){
+        this.bankName=bankName;
+        this.cardNumber=cardNumber;
+        this.cardName=cardName;
+        this.moneyBusiness=moneyBusiness;
+
+    }
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
     @GenericGenerator(name = "pkGenerator",
             strategy = "foreign",
-            parameters = { @Parameter(name = "property", value = "moneyPayInfo") })
+            parameters = { @Parameter(name = "property", value = "moneyBusiness") })
     @GeneratedValue(generator = "pkGenerator")
     public String getId() {
         return id;

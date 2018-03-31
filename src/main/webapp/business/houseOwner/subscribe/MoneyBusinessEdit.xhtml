@@ -1,0 +1,110 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <div class="form-checkbox">
+        <label>
+            资金监管账号信息
+        </label>
+        <h:selectBooleanCheckbox value="#{moneyBusinessSubscribe.have}">
+            <a:ajax event="click" render="contextBackPanel" execute="@this" oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('contextBackPanel')}')"
+                    listener="#{moneyBusinessSubscribe.checkHave}">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:selectBooleanCheckbox>
+
+    </div>
+
+    <a:outputPanel id="contextBackPanel" >
+        <a:outputPanel layout="block"  rendered="#{moneyBusinessSubscribe.have}" style="margin-top: -16px">
+
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+
+                <ui:param name="for" value="moneyInput"/>
+
+                <ui:define name="label">
+                    监管银行
+                </ui:define>
+
+                <div class="input-group">
+                    <a:outputPanel styleClass="input-group-btn">
+
+                        <h:selectOneMenu id="moneyBankInput"
+                                         value="#{moneyBusinessSubscribe.moneyBank}"
+                                         label="监管银行名称"
+                                         styleClass="selectpicker select-menu-btn input-group-first">
+                            <s:selectItems value="#{moneyBankList.resultList}"
+                                           var="_moneyBankList"
+                                           itemValue="#{_moneyBankList}"
+                                           label="#{_moneyBankList.name}"
+                                           noSelectionLabel="监管银行名称"/>
+                            <f:converter converterId="houseEntityConverter"/>
+                        </h:selectOneMenu>
+
+                    </a:outputPanel>
+
+                    <h:inputText value="#{moneyBusinessSubscribe.instance.money}"
+                                 label="监管资金"
+                                 size="20"
+                                 required="true"
+                                 id="moneyInput"
+                                 p:placeholder="监管资金">
+                        <r:validator event="blur"/>
+                        <f:validateDoubleRange minimum="0"/>
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:inputText>
+
+                </div>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    银行开户行名称(收款方)
+                </ui:define>
+                <ui:param name="for" value="bankName"/>
+                <h:inputText label="银行开户行名称(收款方)"
+                             maxlength="200"
+                             id="bankName"
+                             value="#{moneyBusinessSubscribe.instance.moneyPayInfo.bankName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    持卡人姓名(收款方)
+                </ui:define>
+                <ui:param name="for" value="cardName"/>
+                <h:inputText label="持卡人姓名(收款方))"
+                             maxlength="200"
+                             id="cardName"
+                             value="#{moneyBusinessSubscribe.instance.moneyPayInfo.cardName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    银行卡号(收款方)
+                </ui:define>
+                <ui:param name="for" value="cardNumber"/>
+                <h:inputText label="银行卡号(收款方)"
+                             maxlength="200"
+                             id="cardNumber"
+                             value="#{moneyBusinessSubscribe.instance.moneyPayInfo.cardNumber}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+        </a:outputPanel>
+    </a:outputPanel>
+</ui:composition>

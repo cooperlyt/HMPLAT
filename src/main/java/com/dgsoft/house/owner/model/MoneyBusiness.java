@@ -50,6 +50,23 @@ public class MoneyBusiness implements java.io.Serializable{
     private MoneyPayInfo moneyPayInfo;
     private OwnerBusiness ownerBusiness;
 
+    public MoneyBusiness(MoneyBusinessStatus status,String bank,String bankName,String accountNumber,int ver,int version,BigDecimal money,
+        HouseContract houseContract,MoneyPayInfo moneyPayInfo,OwnerBusiness ownerBusiness){
+        this.status=status;
+        this.bank=bank;
+        this.bankName=bankName;
+        this.accountNumber = accountNumber;
+        this.ver=ver;
+        this.version=version;
+        this.money=money;
+        this.houseContract=houseContract;
+        this.moneyPayInfo=moneyPayInfo;
+        this.ownerBusiness=ownerBusiness;
+    }
+
+    public MoneyBusiness(){
+
+    }
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
