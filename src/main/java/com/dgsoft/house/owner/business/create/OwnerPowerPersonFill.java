@@ -4,14 +4,14 @@ import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by wxy on 2018-01-30.
- * 初始登记（查封）业务提预告人到现
+ * Created by wxy on 2018-03-31.
+ * 初始登记（查封）提产权人到现
  */
-@Name("preparePowerPersonFill")
-public class PreparePowerPersonFill extends PowerPersonFill {
+@Name("ownerPowerPersonFill")
+public class OwnerPowerPersonFill extends PowerPersonFill {
     @Override
     protected PowerPerson.PowerPersonType getType() {
-        return PowerPerson.PowerPersonType.PREPARE;
+        return PowerPerson.PowerPersonType.OWNER;
     }
 
     @Override

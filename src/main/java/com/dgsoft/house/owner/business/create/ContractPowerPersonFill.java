@@ -5,7 +5,7 @@ import org.jboss.seam.annotations.Name;
 
 /**
  * Created by wxy on 2018-01-30.
- * 初始登记业务提备案人到现
+ * 初始登记（查封）业务提备案人到现
  */
 @Name("contractPowerPersonFill")
 public class ContractPowerPersonFill extends PowerPersonFill {
