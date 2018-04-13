@@ -154,3 +154,6 @@ WHERE V.GROUP_ID=G.ID AND (V.REG_NAME='saleInfoEdit' OR V.REG_NAME='SaleInfoView
       AND G.DEFINE_ID IN ('WP46','WP57','WP58','WP59','WP60','WP61', 'WP62',
                           'WP63','WP64','WP65','WP66','WP67','WP68', 'WP70',
                           'WP71','WP86','WP87', 'WP90');
+
+
+insert DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('SiteShort','STRING','DG','内网生成合同编号位置缩写');
