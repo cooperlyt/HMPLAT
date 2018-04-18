@@ -1358,8 +1358,21 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="、MoneyRealDisplayGen" component="moneyRealDisplayGen">
+        <description>
+           资金监管(变更/东港)
+        </description>
+    </end-subscribe>
 
 
+
+
+
+    <end-subscribe name="MoneyBusinessOwnerKeyGen" component="moneyBusinessOwnerKeyGen">
+        <description>
+            资金监管查询KEY生成器
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="GenSearchKeyForNewOwner" component="houseBusinessOwnerKeyGen">
         <description>
