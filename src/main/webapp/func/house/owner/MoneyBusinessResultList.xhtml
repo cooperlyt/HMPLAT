@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
+
+
+
+
+    <a:outputPanel rendered="#{not empty listBean.resultList}">
+        <ul class="repo-list js-repo-list full-width">
+            <c:forEach items="#{listBean.resultList}" var="_item">
+
+
+                <li class="repo-list-item public source">
+                    <div class="repo-list-stats">
+                        <ui:insert name="itemAction">
+
+                        </ui:insert>
+
+                    </div>
+                    <h3 class="repo-list-name">
+                        <ui:insert name="itemTitle">
+
+
+                            #{_item.ownerBusiness.defineName} / #{_item.ownerBusiness.id}
+
+
+                        </ui:insert>
+                    </h3>
+
+                    <span data-describe="json" data-description="#{_item.display}">
+
+                    </span>
+
+                    <ui:repeat  value="#{_item.ownerBusiness.recordStoreList}" var="_store">
+                        <p class="repo-list-meta">
+                            档案室
+                            #{_store.recordFrame.recordRoom.name}
+                            #{_store.recordFrame.name}架
+                            #{_store.cabinet}柜
+                            #{_store.box}盒
+                            #{_store.recordCode}卷
+                        </p>
+                    </ui:repeat>
+
+                    <p class="repo-list-meta">
+
+                            #{messages['ownerBusiness.applyTime']}
+                            <h:outputText value="#{_item.ownerBusiness.applyTime}">
+                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                            </h:outputText>
+
+                            <a:outputPanel rendered="#{_item.ownerBusiness.recorded}">
+                                备案时间
+                                <h:outputText value="#{_item.ownerBusiness.regTime}">
+                                    <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                                </h:outputText>
+                            </a:outputPanel>
+                            #{messages['ownerBusiness.recordTime']}
+                            <h:outputText value="#{_item.ownerBusiness.recordTime}">
+                                <s:convertDateTime pattern="#{messages.displayDateTimePattern}"/>
+                            </h:outputText>
+
+
+                    </p>
+
+
+                </li>
+
+
+
+
+            </c:forEach>
+        </ul>
+    </a:outputPanel>
+    <a:outputPanel layout="block" rendered="#{not empty listBean.resultList}" class="paginate-container">
+
+        <a:outputPanel>
+            <ui:include src="/layout/pages.xhtml">
+                <ui:param name="entityList" value="#{listBean}"/>
+            </ui:include>
+        </a:outputPanel>
+
+    </a:outputPanel>
+
+    <a:outputPanel ajaxRendered="true">
+        <h:outputScript name="describeDisplay.js"/>
+    </a:outputPanel>
+
+</ui:composition>

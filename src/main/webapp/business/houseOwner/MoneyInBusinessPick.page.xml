@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" login-required="true"
+      no-conversation-view-id="/func/system/business/start.xhtml"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+    <param name="selectBusinessId" value="#{houseInBusinessStart.selectBizId}"/>
+
+
+    <param name="searchKey" value="#{houseBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{houseBusinessCondition.searchTypeName}"/>
+
+    <param name="mapNumber" value="#{houseBusinessCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{houseBusinessCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{houseBusinessCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{houseBusinessCondition.houseNumber}"/>
+
+
+    <param name="credentialsTypeName" value="#{houseBusinessCondition.credentialsTypeName}"/>
+
+
+    <param name="firstResult" value="#{businessStartSelectList.firstResult}"/>
+
+    <param name="sort" value="#{businessStartSelectList.orderColumn}"/>
+    <param name="dir" value="#{businessStartSelectList.orderDirection}"/>
+
+
+
+
+</page>

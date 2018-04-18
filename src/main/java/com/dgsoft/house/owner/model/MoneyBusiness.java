@@ -49,6 +49,8 @@ public class MoneyBusiness implements java.io.Serializable{
     private RegInfo regInfo;
     private MoneyPayInfo moneyPayInfo;
     private OwnerBusiness ownerBusiness;
+    private String searchKey;
+    private String display;
 
     public MoneyBusiness(MoneyBusinessStatus status,String bank,String bankName,String accountNumber,int ver,int version,BigDecimal money,
         HouseContract houseContract,MoneyPayInfo moneyPayInfo,OwnerBusiness ownerBusiness){
@@ -196,4 +198,30 @@ public class MoneyBusiness implements java.io.Serializable{
     public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
         this.ownerBusiness = ownerBusiness;
     }
+
+
+
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
+    @NotNull
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
 }
