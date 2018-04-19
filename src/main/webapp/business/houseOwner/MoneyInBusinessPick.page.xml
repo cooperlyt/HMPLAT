@@ -7,23 +7,22 @@
     <param name="selectBusinessId" value="#{houseInBusinessStart.selectBizId}"/>
 
 
-    <param name="searchKey" value="#{houseBusinessCondition.searchKey}"/>
-    <param name="searchType" value="#{houseBusinessCondition.searchTypeName}"/>
+    <param name="searchKey" value="#{moneyBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{moneyBusinessCondition.searchTypeName}"/>
 
-    <param name="mapNumber" value="#{houseBusinessCondition.mapNumber}"/>
-    <param name="blockNumber" value="#{houseBusinessCondition.blockNumber}"/>
-    <param name="buildNumber" value="#{houseBusinessCondition.buildNumber}"/>
-    <param name="houseNumber" value="#{houseBusinessCondition.houseNumber}"/>
-
-
-    <param name="credentialsTypeName" value="#{houseBusinessCondition.credentialsTypeName}"/>
+    <param name="mapNumber" value="#{moneyBusinessCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{moneyBusinessCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{moneyBusinessCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{moneyBusinessCondition.houseNumber}"/>
 
 
-    <param name="firstResult" value="#{businessStartSelectList.firstResult}"/>
+    <param name="credentialsTypeName" value="#{moneyBusinessCondition.credentialsTypeName}"/>
 
-    <param name="sort" value="#{businessStartSelectList.orderColumn}"/>
-    <param name="dir" value="#{businessStartSelectList.orderDirection}"/>
 
+    <param name="firstResult" value="#{moneyStartSelectList.firstResult}"/>
+
+    <param name="sort" value="#{moneyStartSelectList.orderColumn}"/>
+    <param name="dir" value="#{moneyStartSelectList.orderDirection}"/>
 
 
 

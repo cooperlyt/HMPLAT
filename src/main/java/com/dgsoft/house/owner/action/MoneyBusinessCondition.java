@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.action;
 import com.dgsoft.common.SearchDateArea;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 import java.util.Arrays;
 
@@ -12,16 +13,20 @@ import java.util.Arrays;
 @Name("moneyBusinessCondition")
 public class MoneyBusinessCondition extends  BusinessHouseCondition{
 
+
+
+
+
      // MoneyBusiness.status<>CHANGED
     //ownerBusiness.status<>RUNNING MODIFYING SUSPEND
     //建立的时候把 把所选的业务状态 修改成MODIFYING，完成后把所选的业改成COMPLETE
 
-    public static final String POWER_PERSON_EJBQL = "select mb from MoneyBusiness mb " +
+    public static final String POWER_PERSON_EJBQL = "select distinct mb from MoneyBusiness mb " +
             "left join mb.houseContract hc " +
             "left join mb.ownerBusiness ob " +
             "left join hc.houseBusiness biz " +
             "left join biz.afterBusinessHouse house "+
-            "left join house.powerPersons owner where owner.old = false and mc.status<>CHANGED";
+            "left join house.powerPersons owner";
 
 
 
@@ -43,8 +48,17 @@ public class MoneyBusinessCondition extends  BusinessHouseCondition{
                 "lower(mb.searchKey) like lower(concat('%',concat('%',#{moneyBusinessCondition.searchKey},'%')))",
                 "lower(biz.houseCode) = lower(#{moneyBusinessCondition.searchKey})",
                 "lower(ob.id) = lower(#{moneyBusinessCondition.searchKey})"
-        })));
-
+        }))),
+        HOUSE_CONTRACT(EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{"lower(hc.contractNumber) = lower(#{moneyBusinessCondition.searchKey})"}))),
+        OWNER_BIZ_ID(EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{"lower(ob.id) = lower(#{moneyBusinessCondition.searchKey})"}))),
+        HOUSE_CODE(EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{"lower(biz.houseCode) = lower(#{moneyBusinessCondition.searchKey})"}))),
+        HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.personName = #{moneyBusinessCondition.searchKey}"}))),
+        PERSON(POWER_PERSON_EJBQL,personRestrictionGroup),
+        HOUSE_MBBH("select mb from MoneyBusiness mb left join mb.houseContract hc left join hc.houseBusiness biz left join mb.ownerBusiness ob left join biz.afterBusinessHouse house ",
+                           new RestrictionGroup("and",Arrays.asList(new String[]{"lower(house.mapNumber) = lower(#{moneyBusinessCondition.mapNumber})",
+                "lower(house.blockNo) = lower(#{moneyBusinessCondition.blockNumber})",
+                "lower(house.buildNo) = lower(#{moneyBusinessCondition.buildNumber})",
+                "lower(house.houseOrder) = lower(#{moneyBusinessCondition.houseNumber})"})));
 
         private RestrictionGroup restrictionGroup;
 
@@ -109,6 +123,8 @@ public class MoneyBusinessCondition extends  BusinessHouseCondition{
 
     @Override
     public String getEjbql(){
+        Logging.getLog(getClass()).debug("111---"+getSearchType().getJpql());
+        Logging.getLog(getClass()).debug("2222---"+getSearchType().name());
         return getSearchType().getJpql();
 
     }
