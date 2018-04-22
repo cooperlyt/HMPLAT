@@ -123,8 +123,6 @@ public class MoneyBusinessCondition extends  BusinessHouseCondition{
 
     @Override
     public String getEjbql(){
-        Logging.getLog(getClass()).debug("111---"+getSearchType().getJpql());
-        Logging.getLog(getClass()).debug("2222---"+getSearchType().name());
         return getSearchType().getJpql();
 
     }

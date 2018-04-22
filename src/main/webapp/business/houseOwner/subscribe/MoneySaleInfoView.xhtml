@@ -1,0 +1,37 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.instance.moneyBusiness.houseContract}">
+        <dh:entryGridBlock columns="4" >
+            <h:outputText value="#{messages.SaleInfo_PayType}"/>
+            <h:outputText value="#{messages[oownerBusinessHome.instance.moneyBusiness.houseContract.payType.name()]}"/>
+
+            <h:outputText value="#{messages.SaleInfo_SUM_PRICE}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.houseContract.sumPrice}"/>
+
+
+            <h:outputText value="合同类型"/>
+            <h:outputText value="#{messages[ownerBusinessHome.instance.moneyBusiness.houseContract.type.name()]}"/>
+
+            <h:outputText value="交易面积"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.houseContract.saleArea}"/>
+
+            <h:outputText value="合同编号"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.houseContract.contractNumber}"/>
+
+            <h:outputText value="合同签约时间"/>
+            <h:outputText value="#{ownerBusinessHome.instance.moneyBusiness.houseContract.contractDate}" >
+                <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+            </h:outputText>
+
+
+        </dh:entryGridBlock>
+    </a:outputPanel>
+</ui:composition>

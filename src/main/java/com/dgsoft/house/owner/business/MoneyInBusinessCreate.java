@@ -15,6 +15,8 @@ public class MoneyInBusinessCreate extends OwnerBusinessCreateComponent {
     private static final String MONEY_BUSINESS_PATCH_PAGE = "";
 
 
+
+
     @Override
     protected String getNormalBusinessPage() {
 

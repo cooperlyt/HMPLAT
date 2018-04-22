@@ -57,6 +57,7 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
         MoneyBusiness result = new  MoneyBusiness ();
         result.setStatus(MoneyBusiness.MoneyBusinessStatus.CREATED);
         result.setVer(1);
+        result.setChecked(false);
         MoneyPayInfo amoneyPayInfo = new  MoneyPayInfo();
         amoneyPayInfo.setMoneyBusiness(result);
         result.setMoneyPayInfo(amoneyPayInfo);

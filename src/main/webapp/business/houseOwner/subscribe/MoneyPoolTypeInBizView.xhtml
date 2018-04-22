@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.moneyBusiness.houseContract.houseBusiness.afterBusinessHouse.poolType)}">
+        <dh:entryGridBlock columns="4" >
+            <h:outputText value="#{messages.RegisterProperty_PoolMemo}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{messages[ownerBusinessHome.instance.moneyBusiness.houseContract.houseBusiness.afterBusinessHouse.poolType.name()]}"/>
+
+
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+    <a:outputPanel rendered="#{(empty ownerBusinessHome.instance.moneyBusiness.houseContract.houseBusiness.afterBusinessHouse.poolType)}">
+        <ui:include src="/layout/emptyViewGrid.xhtml">
+            <ui:param name="title" value="#{messages.RegisterProperty_PoolMemo}" />
+            <ui:param name="noDataLabel" value="#{messages.PoolNotInput}"/>
+        </ui:include>
+    </a:outputPanel>
+
+</ui:composition>

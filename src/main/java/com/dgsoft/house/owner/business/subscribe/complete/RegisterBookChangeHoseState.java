@@ -3,6 +3,7 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.common.system.business.TaskSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.model.MoneyBusiness;
 import com.dgsoft.house.owner.model.OwnerBusiness;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -31,6 +32,12 @@ public class RegisterBookChangeHoseState implements TaskCompleteSubscribeCompone
     @Override
     public void complete() {
         ownerBusinessHome.getInstance().setRecorded(true);
+        if (!ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()) {
+            for (MoneyBusiness mb : ownerBusinessHome.getInstance().getMoneyBusinesses()) {
+                mb.setChecked(true);
+            }
+        }
+
     }
 
 

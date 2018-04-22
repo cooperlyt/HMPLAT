@@ -34,6 +34,9 @@ public class MoneyBusiness implements java.io.Serializable{
         CANCEL_PAY_FAIL,
         // 交易成功 拨款失败
         REGISTERED_PAY_FAIL
+
+
+
     }
 
     private String id;
@@ -52,6 +55,9 @@ public class MoneyBusiness implements java.io.Serializable{
     private String searchKey;
     private String display;
 
+
+    private boolean checked;
+
     public MoneyBusiness(MoneyBusinessStatus status,String bank,String bankName,String accountNumber,int ver,int version,BigDecimal money,
         HouseContract houseContract,MoneyPayInfo moneyPayInfo,OwnerBusiness ownerBusiness){
         this.status=status;
@@ -64,6 +70,21 @@ public class MoneyBusiness implements java.io.Serializable{
         this.houseContract=houseContract;
         this.moneyPayInfo=moneyPayInfo;
         this.ownerBusiness=ownerBusiness;
+    }
+    public MoneyBusiness(OwnerBusiness ownerBusiness,MoneyBusiness startMoneyBusiness){
+        this.ownerBusiness = ownerBusiness;
+        this.status = startMoneyBusiness.status;
+        this.bank = startMoneyBusiness.getBank();
+        this.bankName = startMoneyBusiness.getBankName();
+        this.accountNumber = startMoneyBusiness.getAccountNumber();
+        this.ver = startMoneyBusiness.getVer()+1;
+        this.version = startMoneyBusiness.getVer();
+        this.money = startMoneyBusiness.getMoney();
+        this.houseContract = startMoneyBusiness.getHouseContract();
+        this.regInfo = startMoneyBusiness.getRegInfo();
+        this.moneyPayInfo = new MoneyPayInfo(startMoneyBusiness.getMoneyPayInfo(),this);
+        this.checked = false;
+
     }
 
     public MoneyBusiness(){
@@ -223,5 +244,16 @@ public class MoneyBusiness implements java.io.Serializable{
     public void setDisplay(String display) {
         this.display = display;
     }
+
+
+    @Column(name = "CHECKED", nullable = false)
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
 
 }

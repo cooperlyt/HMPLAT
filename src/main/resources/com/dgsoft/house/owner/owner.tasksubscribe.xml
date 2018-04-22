@@ -16,6 +16,14 @@
     </view-subscribe>
 
 
+    <view-subscribe name="moneyHouseInfoView" page="/business/houseOwner/subscribe/MoneyHouseInfoView.xhtml">
+        <description>
+            资金监管（变更）房屋信息查看
+        </description>
+    </view-subscribe>
+
+
+
     <view-subscribe name="houseBusinessConnectView" page="/business/houseOwner/subscribe/HouseBusinessConnectView.xhtml">
         <description>
             房屋上下手业务关联查看
@@ -188,6 +196,14 @@
     </view-subscribe>
 
 
+
+    <view-subscribe name="moneyPoolTypeInBizView" page="/business/houseOwner/subscribe/MoneyPoolTypeInBizView.xhtml">
+        <description>
+            共有情况（资金监管）
+        </description>
+    </view-subscribe>
+
+
     <view-subscribe name="ProjectCardLockedHouseView" page="/business/houseOwner/subscribe/ProjectCardLockedHouseView.xhtml">
         <description>
             销售许可证不可售房屋查看
@@ -253,6 +269,14 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="MoneyEvaluateView" page="/business/houseOwner/subscribe/MoneyEvaluateView.xhtml">
+        <description>
+            评估机构,评估价格编辑查看(资金监管)
+        </description>
+    </view-subscribe>
+
+
+
 
     <view-subscribe name="BusinessLandInfoInBizView"
                     page="/business/houseOwner/subscribe/BusinessLandInfoInBizView.xhtml">
@@ -306,6 +330,15 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="MoneySaleInfoView" page="/business/houseOwner/subscribe/MoneySaleInfoView.xhtml">
+        <description>
+            房屋交易信息,付款方式,购房款查看(资金监管)
+        </description>
+    </view-subscribe>
+
+
+
+
 
     <view-subscribe name="SaleInfoGiftView" page="/business/houseOwner/subscribe/SaleInfoGiftView.xhtml">
         <description>
@@ -339,6 +372,12 @@
     <view-subscribe name="HouseRegInfoView" page="/business/houseOwner/subscribe/HouseRegInfoView.xhtml">
         <description>
             （业务中） 产权来源，产别
+        </description>
+    </view-subscribe>
+
+    <view-subscribe name="MoneyRegInfoView" page="/business/houseOwner/subscribe/MoneyRegInfoView.xhtml">
+        <description>
+           产权来源，产别(资金监管)
         </description>
     </view-subscribe>
 
@@ -544,6 +583,16 @@
         </description>
     </view-subscribe>
 
+
+    <view-subscribe name="moneyOwnerView" page="/business/houseOwner/subscribe/MoneyOwnerView.xhtml">
+        <description>
+            所有交易备案人(资金监管)
+        </description>
+    </view-subscribe>
+
+
+
+
     <view-subscribe name="OldInitView" page="/business/houseOwner/subscribe/OldInitView.xhtml">
         <description>
             原产权人（转移,开发商）
@@ -588,6 +637,13 @@
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
         <description>
             申请人编辑
+        </description>
+        <dependency>/layout/system/CardReader.xhtml</dependency>
+    </edit-subscribe>
+
+    <edit-subscribe name="PersionMoneyCorrectEdit" page="/business/houseOwner/subscribe/PersionMoneyCorrectEdit.xhtml" component="">
+        <description>
+            申请人(资金监管)编辑
         </description>
         <dependency>/layout/system/CardReader.xhtml</dependency>
     </edit-subscribe>
@@ -1180,6 +1236,13 @@
             资金监管账户信息(存量房)
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="MoneyBusinessChangeEdit" page="/business/houseOwner/subscribe/MoneyBusinessChangeEdit.xhtml" component="">
+         <description>
+            资金监管修改收款信息(存量房)
+        </description>
+    </edit-subscribe>
+
 
 
 
@@ -2126,6 +2189,13 @@
     <create-component type="DATA_VALID" component="houseNotHaveOwner">
         <description>
             房屋必须有产权人，所有权证
+        </description>
+    </create-component>
+
+
+    <create-component type="DATA_VALID" component="moneyStatusNotHaveComplete">
+        <description>
+            资金监管业务已经交易成功 拨款完成
         </description>
     </create-component>
 

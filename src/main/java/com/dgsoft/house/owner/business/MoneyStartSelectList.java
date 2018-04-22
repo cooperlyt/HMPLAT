@@ -51,9 +51,9 @@ public class MoneyStartSelectList extends HouseBusinessSearch {
 
         defineIdCondition += ")";
         if (moneyBusinessCondition.getSearchType().equals(MoneyBusinessCondition.SearchType.HOUSE_OWNER) || moneyBusinessCondition.getSearchType().equals(MoneyBusinessCondition.SearchType.PERSON)){
-            return result + " where owner.old = false and ob.defineId in " + defineIdCondition + " and ob.status <> 'RUNNING' and ob.status <> 'MODIFYING' and ob.status <> 'SUSPEND' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ')";
+            return result + " where owner.old = false and ob.defineId in " + defineIdCondition + " and ob.status <> 'RUNNING' and ob.status <> 'MODIFYING' and ob.status <> 'SUSPEND' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ') and mb.status<>'CHANGED'";
         }else{
-            return result + " where ob.defineId in " + defineIdCondition + " and ob.status <> 'RUNNING' and ob.status <> 'MODIFYING' and ob.status <> 'SUSPEND' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ')";
+            return result + " where ob.defineId in " + defineIdCondition + " and ob.status <> 'RUNNING' and ob.status <> 'MODIFYING' and ob.status <> 'SUSPEND' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ') and mb.status<>'CHANGED'";
         }
 
 

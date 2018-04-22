@@ -24,6 +24,14 @@ public class MoneyPayInfo implements java.io.Serializable{
 
     }
 
+    public MoneyPayInfo(MoneyPayInfo moneyPayInfo,MoneyBusiness moneyBusiness){
+        this.bankName = moneyPayInfo.getBankName();
+        this.cardName = moneyPayInfo.getCardName();
+        this.cardNumber = moneyPayInfo.getCardNumber();
+        this.moneyBusiness = moneyBusiness;
+
+    }
+
     public MoneyPayInfo(String bankName,String cardNumber,String cardName,MoneyBusiness moneyBusiness){
         this.bankName=bankName;
         this.cardNumber=cardNumber;

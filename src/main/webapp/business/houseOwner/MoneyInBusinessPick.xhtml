@@ -99,8 +99,11 @@
                 <ui:param name="listBean" value="#{moneyStartSelectList}"/>
 
                 <ui:define name="itemAction">
+                    <h:outputText value="已交易成功,拨款完成,无法启动" rendered="#{(_item.status.name() eq 'COMPLETE')}"></h:outputText>
+                    <h:outputText value="交易已取消,拨款完成,无法启动" rendered="#{(_item.status.name() eq 'CANCEL_COMPLETE')}"></h:outputText>
                     <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
-                              action="#{houseInBusinessStart.businessSelected}"
+                              rendered="#{not (_item.status.name() eq 'COMPLETE') and not (_item.status.name() eq 'CANCEL_COMPLETE')}"
+                              action="#{moneyInBusinessStart.businessSelected}"
                               onclick="#{r:component('wait')}.show()">
                         <f:param name="selectBusinessId" value="#{_item.ownerBusiness.id}"/>
                     </s:button>
