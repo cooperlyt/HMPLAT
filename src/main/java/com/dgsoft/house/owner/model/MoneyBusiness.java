@@ -71,7 +71,7 @@ public class MoneyBusiness implements java.io.Serializable{
         this.moneyPayInfo=moneyPayInfo;
         this.ownerBusiness=ownerBusiness;
     }
-    public MoneyBusiness(OwnerBusiness ownerBusiness,MoneyBusiness startMoneyBusiness){
+    public MoneyBusiness(OwnerBusiness ownerBusiness,MoneyBusiness startMoneyBusiness,int i){
         this.ownerBusiness = ownerBusiness;
         this.status = startMoneyBusiness.status;
         this.bank = startMoneyBusiness.getBank();
@@ -82,7 +82,12 @@ public class MoneyBusiness implements java.io.Serializable{
         this.money = startMoneyBusiness.getMoney();
         this.houseContract = startMoneyBusiness.getHouseContract();
         this.regInfo = startMoneyBusiness.getRegInfo();
-        this.moneyPayInfo = new MoneyPayInfo(startMoneyBusiness.getMoneyPayInfo(),this);
+        if (i==1) {
+            this.moneyPayInfo = new MoneyPayInfo(startMoneyBusiness.getMoneyPayInfo(), this);
+        }else{
+            this.moneyPayInfo = new MoneyPayInfo(this);
+        }
+
         this.checked = false;
 
     }

@@ -40,19 +40,19 @@ public class MoneyInBusinessStart {
     public String businessSelected() {
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBizId));
         ownerBusinessHome.getInstance().getMoneyBusinesses().clear();
-        for  (MoneyBusiness mb:ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusinesses()){
-            ownerBusinessHome.getInstance().getMoneyBusinesses().add(new MoneyBusiness(ownerBusinessHome.getInstance(),mb));
-        }
-        for (MoneyBusiness omb:ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusinesses()){
-            omb.setStatus(MoneyBusiness.MoneyBusinessStatus.CHANGED);
-
-        }
-        if (ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()){
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"selectMoneyInBusinessIsEmpty");
-            return null;
-        }else {
+//        for  (MoneyBusiness mb:ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusinesses()){
+//            ownerBusinessHome.getInstance().getMoneyBusinesses().add(new MoneyBusiness(ownerBusinessHome.getInstance(),mb));
+//        }
+//        for (MoneyBusiness omb:ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusinesses()){
+//            omb.setStatus(MoneyBusiness.MoneyBusinessStatus.CHANGED);
+//
+//        }
+//        if (ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()){
+//            facesMessages.addFromResourceBundle(StatusMessage.Severity.ERROR,"selectMoneyInBusinessIsEmpty");
+//            return null;
+//        }else {
             return ownerBusinessStart.dataSelected();
-        }
+//        }
     }
 
 
