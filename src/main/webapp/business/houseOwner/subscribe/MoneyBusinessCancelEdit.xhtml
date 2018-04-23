@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    银行开户行名称(收款方)
+                </ui:define>
+                <ui:param name="for" value="bankName"/>
+                <h:inputText label="银行开户行名称(收款方)"
+                             maxlength="200"
+                             id="bankName"
+                             value="#{moneyBusinessCanceldSubscribe.instance.moneyPayInfo.bankName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    持卡人姓名(收款方)
+                </ui:define>
+                <ui:param name="for" value="cardName"/>
+                <h:inputText label="持卡人姓名(收款方)"
+                             maxlength="200"
+                             id="cardName"
+                             value="#{moneyBusinessCanceldSubscribe.instance.moneyPayInfo.cardName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    银行卡号(收款方)
+                </ui:define>
+                <ui:param name="for" value="cardNumber"/>
+                <h:inputText label="银行卡号(收款方)"
+                             maxlength="200"
+                             id="cardNumber"
+                             value="#{moneyBusinessCanceldSubscribe.instance.moneyPayInfo.cardNumber}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+</ui:composition>

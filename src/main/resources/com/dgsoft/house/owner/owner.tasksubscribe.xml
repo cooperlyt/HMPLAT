@@ -1244,6 +1244,18 @@
     </edit-subscribe>
 
 
+    <edit-subscribe name="MoneyBusinessCancelEdit" page="/business/houseOwner/subscribe/MoneyBusinessCancelEdit.xhtml" component="">
+        <description>
+            资金监管撤回、取消收款信息(存量房)
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="MoneyBusinessRemoveEdit" page="/business/houseOwner/subscribe/MoneyBusinessRemoveEdit.xhtml" component="">
+        <description>
+            资金监管解除收款信息(存量房)
+        </description>
+    </edit-subscribe>
+
 
 
 
