@@ -19,7 +19,7 @@ public class MoneyBusinessRemovedSubscribe extends OwnerEntityHome<MoneyBusiness
     public MoneyBusiness createInstance(){
         if (ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()) {
             MoneyBusiness moneyBusiness = new MoneyBusiness(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusiness(), 1);
-            moneyBusiness.setStatus(MoneyBusiness.MoneyBusinessStatus.REGISTERED);
+           // moneyBusiness.setStatus(MoneyBusiness.MoneyBusinessStatus.REGISTERED);
             ownerBusinessHome.getInstance().getMoneyBusinesses().add(moneyBusiness);
             for (MoneyBusiness omb : ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusinesses()) {
                 omb.setStatus(MoneyBusiness.MoneyBusinessStatus.CHANGED);

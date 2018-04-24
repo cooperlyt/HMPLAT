@@ -1886,6 +1886,19 @@
         </description>
     </end-subscribe>
 
+    <end-subscribe name="MoneyBusinessCanceldState" component="moneyBusinessCanceldState">
+        <description>
+            资金监管撤回，审批状态修改
+        </description>
+    </end-subscribe>
+
+
+    <end-subscribe name="MoneyBusinessRemovedState" component="moneyBusinessRemovedState">
+        <description>
+            资金监管解除，审批状态修改
+        </description>
+    </end-subscribe>
+
 
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->

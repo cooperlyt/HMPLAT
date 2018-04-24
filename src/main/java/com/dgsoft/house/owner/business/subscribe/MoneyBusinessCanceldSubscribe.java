@@ -21,7 +21,7 @@ public class MoneyBusinessCanceldSubscribe extends OwnerEntityHome<MoneyBusiness
     public MoneyBusiness createInstance(){
         if (ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()) {
             MoneyBusiness moneyBusiness = new MoneyBusiness(ownerBusinessHome.getInstance(), ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusiness(), 2);
-            moneyBusiness.setStatus(MoneyBusiness.MoneyBusinessStatus.CANCEL);
+           // moneyBusiness.setStatus(MoneyBusiness.MoneyBusinessStatus.CANCEL);
             ownerBusinessHome.getInstance().getMoneyBusinesses().add(moneyBusiness);
             for (MoneyBusiness omb : ownerBusinessHome.getInstance().getSelectBusiness().getMoneyBusinesses()) {
                 omb.setStatus(MoneyBusiness.MoneyBusinessStatus.CHANGED);
