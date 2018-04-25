@@ -70,7 +70,7 @@
                 </ui:define>
                 <ui:param name="for" value="bankName"/>
                 <h:inputText label="银行开户行名称(收款方)"
-                             maxlength="200"
+                             maxlength="512"
                              id="bankName"
                              value="#{moneyBusinessSubscribe.instance.moneyPayInfo.bankName}"
                              styleClass="form-control"
@@ -84,7 +84,7 @@
                 </ui:define>
                 <ui:param name="for" value="cardName"/>
                 <h:inputText label="持卡人姓名(收款方)"
-                             maxlength="200"
+                             maxlength="50"
                              id="cardName"
                              value="#{moneyBusinessSubscribe.instance.moneyPayInfo.cardName}"
                              styleClass="form-control"
@@ -98,7 +98,7 @@
                 </ui:define>
                 <ui:param name="for" value="cardNumber"/>
                 <h:inputText label="银行卡号(收款方)"
-                             maxlength="200"
+                             maxlength="34"
                              id="cardNumber"
                              value="#{moneyBusinessSubscribe.instance.moneyPayInfo.cardNumber}"
                              styleClass="form-control"
