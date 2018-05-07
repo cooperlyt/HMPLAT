@@ -33,9 +33,14 @@ public class SelectBizProjectMortgageCompleteCancel implements TaskCompleteSubsc
         if (ownerBusinessHome.getInstance().getSelectBusiness() != null) {
             int selectBusinessHouse = 0, nowBusinessHouse = 0;
             if (!ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().isEmpty()) {
-                selectBusinessHouse = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size();
+                //selectBusinessHouse = ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size();
+                //getSelectBusiness 不是 COMPLETE_CANCEL
+                for (HouseBusiness houseBusiness:ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()){
+                    if (!houseBusiness.isCanceled()){
+                        selectBusinessHouse++;
+                    }
+                }
             }
-
             if (!ownerBusinessHome.getInstance().getHouseBusinesses().isEmpty()) {
                 nowBusinessHouse = ownerBusinessHome.getInstance().getHouseBusinesses().size();
             }
