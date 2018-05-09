@@ -29,7 +29,7 @@
 
 
     <ui:define name="head-right">
-        <ui:include src="HouseBusinessCondition.xhtml">
+        <ui:include src="MoneyBusinessCondition.xhtml">
             <ui:param name="conditionBean" value="#{moneyBusinessCondition}"/>
             <ui:param name="listBean" value="#{moneyBusinessList}"/>
         </ui:include>
@@ -165,7 +165,7 @@
                             <s:link value="#{messages.AvancedSearch}"/></p>
                     </a:outputPanel>
 
-                    <ui:decorate template="HouseBusinessResultList.xhtml">
+                    <ui:decorate template="MoneyBusinessResultList.xhtml">
                         <ui:param name="listBean" value="#{moneyBusinessList}"/>
                         <ui:define name="itemTitle">
                             <s:link view="/func/house/owner/BusinessView.xhtml">
