@@ -4,7 +4,7 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="#{ownerBusinessHome.instance.defineName}信息告知单" margins="40 10 20 10">
+            title="#{ownerBusinessHome.instance.defineName}受理单" margins="40 10 20 10">
 
 
 <a:repeat value="#{ownerBusinessHome.instance.moneyBusiness.houseContract.houseBusiness}" var="_houseBusiness">
@@ -13,7 +13,7 @@
 <p:table columns="2" widths="3 1" headerRows="0"  footerRows="0" widthPercentage="100" >
     <p:cell border="0" fixedHeight="20" colspan="2"  horizontalAlignment="center" verticalAlignment="middle">
         <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-            <p:paragraph alignment="center">#{ownerBusinessHome.instance.defineName}信息告知单 </p:paragraph>
+            <p:paragraph alignment="center">#{ownerBusinessHome.instance.defineName}受理单 </p:paragraph>
         </p:font>
 
     </p:cell>
@@ -233,10 +233,10 @@
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">
-            <p:paragraph>业务类别</p:paragraph>
+            <p:paragraph>监管银行账号</p:paragraph>
         </p:cell>
         <p:cell borderWidthLeft="0" colspan="3">
-            <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.instance.moneyBusiness.accountNumber}</p:paragraph>
         </p:cell>
 
         <p:cell borderWidthLeft="0" fixedHeight="20">

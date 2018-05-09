@@ -70,8 +70,8 @@ public class MoneyPayInfo implements java.io.Serializable{
         this.bankName = bankName;
     }
 
-    @Column(name = "CARD_NUMBER",nullable = false, length = 32)
-    @Size(max = 32)
+    @Column(name = "CARD_NUMBER",nullable = false, length = 128)
+    @Size(max = 128)
     @NotNull
     public String getCardNumber() {
         return cardNumber;
