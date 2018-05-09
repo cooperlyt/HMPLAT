@@ -13,7 +13,8 @@
 <p:table columns="2" widths="3 1" headerRows="0"  footerRows="0" widthPercentage="100" >
     <p:cell border="0" fixedHeight="20" colspan="2"  horizontalAlignment="center" verticalAlignment="middle">
         <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-            <p:paragraph alignment="center">#{ownerBusinessHome.instance.defineName}受理单 </p:paragraph>
+            <p:paragraph alignment="center" rendered="#{not (ownerBusinessHome.instance.defineId eq 'WP56')}">#{ownerBusinessHome.instance.defineName}受理单 </p:paragraph>
+            <p:paragraph alignment="center" rendered="#{ownerBusinessHome.instance.defineId eq 'WP56'}">存量房资金监管受理单 </p:paragraph>
         </p:font>
 
     </p:cell>
@@ -263,16 +264,45 @@
         <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
             <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
         </p:cell>
-        <p:cell borderWidthLeft="0" fixedHeight="25">
-            <p:paragraph>申请人签字(盖章)</p:paragraph>
-        </p:cell>
-        <p:cell borderWidthLeft="0" colspan="3">
-            <p:paragraph></p:paragraph>
-        </p:cell>
+
 
 
 
     </p:table>
+</p:cell>
+<p:cell colspan="2">
+    <p:table columns="4" widths="1 1 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+    <f:facet name="defaultCell">
+        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0" noWrap="false" borderWidthTop="0"/>
+    </f:facet>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>出卖人签字(盖章)</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" >
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>买受人签字(盖章)</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>代理人签字(盖章)</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" >
+            <p:paragraph></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>代理人签字(盖章)</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0">
+            <p:paragraph></p:paragraph>
+        </p:cell>
+
+    </p:table>
+
 </p:cell>
 </p:table>
 </p:font>
