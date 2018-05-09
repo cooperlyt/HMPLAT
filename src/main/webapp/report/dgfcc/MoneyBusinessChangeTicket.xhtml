@@ -6,7 +6,7 @@
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
             title="#{ownerBusinessHome.instance.defineName}受理单" margins="40 10 20 10">
 
-
+<c:forEach begin="0" end="1">
 <a:repeat value="#{ownerBusinessHome.instance.moneyBusiness.houseContract.houseBusiness}" var="_houseBusiness">
 
 
@@ -328,4 +328,6 @@
 </p:font>
 <p:newPage/>
 </a:repeat>
+</c:forEach>
 </p:document>
+
