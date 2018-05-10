@@ -202,6 +202,31 @@ public class OutsideBusinessCreate {
 
         }
 
+        //资金监管业务
+        if(outsideContract.getMoneyManager() != null){
+           MoneyBusiness mb = new MoneyBusiness();
+           mb.setOwnerBusiness(ownerBusinessHome.getInstance());
+           mb.setStatus(MoneyBusiness.MoneyBusinessStatus.CREATED);
+           mb.setBank(outsideContract.getMoneyManager().getBank());
+           mb.setBankName(outsideContract.getMoneyManager().getBankName());
+           mb.setAccountNumber(outsideContract.getMoneyManager().getAccount());
+           mb.setVer(1);
+           mb.setMoney(outsideContract.getMoneyManager().getMoney());
+           mb.setHouseContract(houseContract);
+           mb.setChecked(false);
+
+
+           ownerBusinessHome.getInstance().getMoneyBusinesses().add(mb);
+
+           if (outsideContract.getMoneyManager().getOldHouseMoney() != null){
+               MoneyPayInfo payInfo = new MoneyPayInfo(mb);
+               payInfo.setBankName(outsideContract.getMoneyManager().getOldHouseMoney().getBankName());
+               payInfo.setCardName(outsideContract.getMoneyManager().getOldHouseMoney().getCardName());
+               payInfo.setCardNumber(outsideContract.getMoneyManager().getOldHouseMoney().getCardNumber());
+               mb.setMoneyPayInfo(payInfo);
+           }
+        }
+
         String businessId = createBusiness(attachEmployee.getId(),
                 attachEmployee.getPersonName(),"提交合同");
 
@@ -266,6 +291,7 @@ public class OutsideBusinessCreate {
 
 
         if (businessId != null){
+
             SubmitResult result = new SubmitResult(SubmitResult.SubmitStatus.SUCCESS,"合同已提交，业务编号：" + businessId);
             result.setBusinessId(businessId);
             return result;
