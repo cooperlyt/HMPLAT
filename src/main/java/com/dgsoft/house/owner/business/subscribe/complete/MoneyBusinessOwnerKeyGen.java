@@ -26,12 +26,14 @@ public class MoneyBusinessOwnerKeyGen implements TaskCompleteSubscribeComponent 
 
     @Override
     public void complete() {
-        for(MoneyBusiness mb: ownerBusinessHome.getInstance().getMoneyBusinesses()){
-            KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse());
-            if(mb.getHouseContract()!=null) {
-                key.addWord(mb.getHouseContract().getContractNumber());
+        if (!ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()) {
+            for (MoneyBusiness mb : ownerBusinessHome.getInstance().getMoneyBusinesses()) {
+                KeyGeneratorHelper key = OwnerHouseHelper.genHouseSearchKey(mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse());
+                if (mb.getHouseContract() != null) {
+                    key.addWord(mb.getHouseContract().getContractNumber());
+                }
+                mb.setSearchKey(key.getKey());
             }
-            mb.setSearchKey(key.getKey());
         }
 
     }

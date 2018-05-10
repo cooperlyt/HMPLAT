@@ -30,55 +30,56 @@ public class MoneyRealDisplayGen implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
+        if (!ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()) {
 
-        for(MoneyBusiness mb: ownerBusinessHome.getInstance().getMoneyBusinesses()) {
+            for (MoneyBusiness mb : ownerBusinessHome.getInstance().getMoneyBusinesses()) {
 
-            DescriptionDisplay businessDisplay = new DescriptionDisplay();
+                DescriptionDisplay businessDisplay = new DescriptionDisplay();
 
-            HouseContract houseContract = mb.getHouseContract();
+                HouseContract houseContract = mb.getHouseContract();
 
-            businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+                businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "房屋编号");
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, houseContract.getHouseBusiness().getHouseCode());
-
-
-            if (houseContract != null) {
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "合同编号");
-                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,houseContract.getContractNumber());
-            }
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "房屋编号");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, houseContract.getHouseBusiness().getHouseCode());
 
 
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "现产权备案人");
-
-            String contractPersonNames = "";
-            for (PowerPerson pp: mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getAllNewPowerPersonList()){
-                if (pp.getType().equals(PowerPerson.PowerPersonType.OWNER)){
-                    if (!"".equals(contractPersonNames)){
-                        contractPersonNames += ",";
-                    }
-                    contractPersonNames += pp.getPersonName();
+                if (houseContract != null) {
+                    businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "合同编号");
+                    businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, houseContract.getContractNumber());
                 }
+
+
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "现产权备案人");
+
+                String contractPersonNames = "";
+                for (PowerPerson pp : mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getAllNewPowerPersonList()) {
+                    if (pp.getType().equals(PowerPerson.PowerPersonType.OWNER)) {
+                        if (!"".equals(contractPersonNames)) {
+                            contractPersonNames += ",";
+                        }
+                        contractPersonNames += pp.getPersonName();
+                    }
+                }
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
+
+                businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getAddress());
+
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getMapNumber());
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE, "图");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getBlockNo());
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE, "丘");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getBuildNo());
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE, "幢");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT, mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getHouseOrder());
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE, "房");
+
+                mb.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
+
             }
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, contractPersonNames);
 
-            businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getAddress());
-
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getMapNumber());
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"图");
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getBlockNo());
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"丘");
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getBuildNo());
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"幢");
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.IMPORTANT,mb.getHouseContract().getHouseBusiness().getAfterBusinessHouse().getHouseOrder());
-            businessDisplay.addData(DescriptionDisplay.DisplayStyle.DECORATE,"房");
-
-            mb.setDisplay(DescriptionDisplay.toStringValue(businessDisplay));
 
         }
-
-
-
     }
 }
