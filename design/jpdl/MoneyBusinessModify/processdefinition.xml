@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="MoneyBusinessModify">
+
+
+	<start-state name="业务受理">
+		<transition to="要件上传"></transition>
+	</start-state>
+
+
+	<task-node name="要件上传">
+		<task name="要件上传">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment actor-id="#{actor.id}"></assignment>
+		</task>
+		<transition to="审批"></transition>
+		<transition to="受理" name="重新受理"></transition>
+	</task-node>
+
+	<task-node name="受理">
+		<task name="受理">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment actor-id="#{ownerBusinessHome.createEmp.empCode}"></assignment>
+		</task>
+		<transition to="要件上传"></transition>
+		<transition to="结束" name="_end"></transition>
+	</task-node>
+
+	<task-node name="审批">
+		<task name="审批">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;,isCheck:true}
+			</description>
+			<assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}mbm_last_check"></assignment>
+		</task>
+		<transition to="审批结果"></transition>
+	</task-node>
+
+	<task-node name="归档">
+		<task name="归档">
+			<description>
+				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
+			</description>
+			<assignment pooled-actors="RecordSave"></assignment>
+		</task>
+		<transition to="结束"></transition>
+	</task-node>
+
+	<decision name="审批结果">
+		<transition to="归档">
+			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
+		</transition>
+		<transition to="受理" name="审批驳回">
+			<condition expression="#{transitionType eq 'CHECK_BACK'}"></condition>
+		</transition>
+	</decision>
+
+
+	<end-state name="结束"></end-state>
+
+
+</process-definition>

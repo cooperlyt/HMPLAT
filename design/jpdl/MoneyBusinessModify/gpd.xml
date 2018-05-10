@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="MoneyBusinessModify" width="686" height="353">
+  <node name="业务受理" x="386" y="19" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="要件上传" x="390" y="104" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-23" y="-18"/>
+    </edge>
+  </node>
+  <node name="受理" x="153" y="102" width="142" height="34">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="120" h1="21" w2="-112" h2="18"/>
+    </edge>
+    <edge>
+      <label x="-21" y="-2"/>
+    </edge>
+  </node>
+  <node name="审批" x="386" y="172" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="归档" x="156" y="246" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审批结果" x="158" y="181" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="结束" x="-22" y="179" width="132" height="36"/>
+</root-container>
