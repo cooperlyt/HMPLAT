@@ -167,7 +167,8 @@ update HOUSE_OWNER_RECORD.MONEY_BUSINESS AS MB LEFT JOIN HOUSE_OWNER_RECORD.OWNE
 INSERT DB_PLAT_SYSTEM.FUNCTION (ID, NAME, ICON, LOCATION, BANNER, PRIORITY, MEMO, CATEGORY, NEED_CONVERSATION)
   VALUE ('money.businessSearch','资金监管业务查询','','/func/house/owner/MoneyBusinessSearch.xhtml',true,4,'','DAY_WORK',0);
 INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION(FUN_ID, ROL_ID) VALUE ('money.businessSearch','cqsl');
-
+INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION(FUN_ID, ROL_ID) VALUE ('money.businessSearch','cqcommodity_last_check');
+INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION(FUN_ID, ROL_ID) VALUE ('money.businessSearch','zjjgmbm_last_check');
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('42','资金监管审批表','资金监管审批表','/report/dgfcc/MoneyBusinessChangeReisterBook.xhtml');
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('43','资金监管受理单','资金监管受理单','/report/dgfcc/MoneyBusinessChangeTicket.xhtml');
 

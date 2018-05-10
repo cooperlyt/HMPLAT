@@ -8,6 +8,7 @@ import com.dgsoft.house.owner.model.MoneyBusiness;
 import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2018-04-18.
