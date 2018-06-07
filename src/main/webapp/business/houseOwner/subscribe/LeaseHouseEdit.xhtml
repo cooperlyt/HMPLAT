@@ -5,66 +5,33 @@
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 
     <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            #{messages.CloseHouse_CloseDownClour}
-        </ui:define>
-        <ui:param name="for" value="closeDownClourInput"/>
-        <h:inputText label="#{messages.CloseHouse_CloseDownClour}"
-                     required="true"
-                     value="#{closeHouseSubsrcibe.instance.closeDownClour}"
-                     id="closeDownClourInput"
-
-                     styleClass="form-control">
-
-        </h:inputText>
-
-    </s:decorate>
-
-
-
-    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-            #{messages.CloseHouse_Action}
-        </ui:define>
-        <ui:param name="for" value="actionInput"/>
-        <h:inputText label="#{messages.CloseHouse_Action}"
-                     required="true"
-                     value="#{closeHouseSubsrcibe.instance.action}"
-                     id="actionInput"
-                     styleClass="form-control">
-
-        </h:inputText>
-    </s:decorate>
-
-
-    <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
-        <ui:define name="label">
-            #{messages.CloseHouse_LegalDocuments}
+            #{messages.LEASE_NAME}
         </ui:define>
         <ui:param name="for" value="LegalDocuments"/>
-        <h:inputText label="#{messages.CloseHouse_LegalDocuments}"
-                     id="LegalDocuments"
+        <h:inputText label="#{messages.LEASE_NAME}"
+                     id="leaseName"
                      maxlength="100"
-                     value="#{closeHouseSubsrcibe.instance.legalDocuments}"
+                     value="#{leaseHouseSubsrcibe.instance.name}"
                      styleClass="form-control"
                      required="true">
         </h:inputText>
     </s:decorate>
 
-
     <s:decorate styleClass="form-group"  template="/layout/edit-big.xhtml">
         <ui:define name="label">
-            #{messages.CloseHouse_ExecutionNotice}
+            #{messages.LEASE_COMPANY_NAME}
         </ui:define>
-        <ui:param name="for" value="ExecutionNotice"/>
-        <h:inputText label="#{messages.CloseHouse_ExecutionNotice}"
+        <ui:param name="for" value="LegalDocuments"/>
+        <h:inputText label="#{messages.LEASE_COMPANY_NAME}"
+                     id="sellCompanyName"
                      maxlength="100"
-                     id="ExecutionNotice"
-                     value="#{closeHouseSubsrcibe.instance.executionNotice}"
+                     value="#{leaseHouseSubsrcibe.instance.sellCompanyName}"
                      styleClass="form-control"
                      required="true">
         </h:inputText>
@@ -74,14 +41,14 @@
     <div class="form-inline">
         <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
             <ui:define name="label">
-                #{messages.CloseHouse_CloseDate}
+                #{messages.LEASE_DATE}
             </ui:define>
             <ui:param name="for" value="closeDate"/>
 
 
             <ui:include src="/layout/system/TimeAreaInput.xhtml">
-                <ui:param name="timeArea" value="#{closeHouseSubsrcibe.timeAreaHelper}"/>
-                <ui:param name="label" value="#{messages.CloseHouse_CloseDate}"/>
+                <ui:param name="timeArea" value="#{leaseHouseSubsrcibe.timeAreaHelper}"/>
+                <ui:param name="label" value="#{messages.LEASE_DATE}"/>
                 <ui:param name="f_required" value="true"/>
                 <ui:param name="t_required" value="false"/>
                 <ui:param name="t_id" value="closeDate"/>
@@ -100,104 +67,92 @@
 
     <div class="form-inline">
 
-
-
-
         <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
             <ui:define name="label">
-                #{messages.CloseHouse_SendPeople}
+                #{messages.LEASE_AREA}
             </ui:define>
-
-            <ui:param name="for" value="SendPeople"/>
-            <h:inputText label="#{messages.CloseHouse_SendPeople}"
-                         maxlength="100"
-                         id="SendPeople"
-                         value="#{closeHouseSubsrcibe.instance.sendPeople}"
-                         styleClass="form-control"
-                         required="true">
+            <ui:param name="for" value="leaseArea"/>
+            <h:inputText value="#{leaseHouseSubsrcibe.instance.leaseArea}"
+                         label="#{messages.LEASE_AREA}"
+                         size="20"
+                         required="true"
+                         id="leaseArea"
+                         p:placeholder="#{messages.LEASE_AREA}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
             </h:inputText>
         </s:decorate>
 
         <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
             <ui:define name="label">
-                #{messages.CloseHouse_Phone}
+                #{messages.LEASE_SELF_RENT}
             </ui:define>
-            <ui:param name="for" value="CloseHousePhone"/>
-            <h:inputText label="#{messages.CloseHouse_Phone}"
-                         maxlength="100"
-                         id="CloseHousePhone"
-                         value="#{closeHouseSubsrcibe.instance.phone}"
-                         styleClass="form-control"
-                         required="true">
+            <ui:param name="for" value="selfRent"/>
+            <h:inputText value="#{leaseHouseSubsrcibe.instance.selfRent}"
+                         label="#{messages.LEASE_SELF_RENT}"
+                         size="20"
+                         required="true"
+                         id="selfRent"
+                         p:placeholder="#{messages.LEASE_SELF_RENT}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
             </h:inputText>
         </s:decorate>
 
         <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
             <ui:define name="label">
-                #{messages.CloseHouse_ExecutCardNo}
+                #{messages.LEASE_EVALUATE_RENT}
             </ui:define>
-            <ui:param name="for" value="ExecutCardNo"/>
-            <h:inputText label="#{messages.CloseHouse_ExecutCardNo}"
-                         maxlength="100"
-                         id="ExecutCardNo"
-                         value="#{closeHouseSubsrcibe.instance.executCardNo}"
-                         styleClass="form-control"
-                         required="true">
+            <ui:param name="for" value="evaluateRent"/>
+            <h:inputText value="#{leaseHouseSubsrcibe.instance.evaluateRent}"
+                         label="#{messages.LEASE_EVALUATE_RENT}"
+                         size="20"
+                         required="true"
+                         id="evaluateRent"
+                         p:placeholder="#{messages.LEASE_EVALUATE_RENT}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
             </h:inputText>
         </s:decorate>
 
-        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
-            <ui:define name="label">
-                #{messages.CloseHouse_WorkCardNo}
-            </ui:define>
-            <ui:param name="for" value="WorkCardNo"/>
-            <h:inputText label="#{messages.CloseHouse_WorkCardNo}"
-                         maxlength="100"
-                         id="WorkCardNo"
-                         value="#{closeHouseSubsrcibe.instance.workCardNo}"
-                         styleClass="form-control"
-                         required="true">
-            </h:inputText>
-        </s:decorate>
 
         <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
             <ui:define name="label">
-                #{messages.CloseHouse_contractCode}
+                #{messages.LEASE_SUM_RENT}
             </ui:define>
-            <ui:param name="for" value="contractCode"/>
-            <h:inputText label="#{messages.CloseHouse_contractCode}"
+            <ui:param name="for" value="sumRent"/>
+            <h:inputText value="#{leaseHouseSubsrcibe.instance.sumRent}"
+                         label="#{messages.LEASE_SUM_RENT}"
+                         size="20"
+                         required="true"
+                         id="sumRent"
+                         p:placeholder="#{messages.LEASE_SUM_RENT}">
+                <r:validator event="blur"/>
+                <f:validateDoubleRange minimum="0"/>
+                <f:convertNumber pattern="#0.00"/>
+            </h:inputText>
+        </s:decorate>
+
+
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.LEASE_SUM_MONTH}
+            </ui:define>
+            <ui:param name="for" value="sumMonth"/>
+            <h:inputText label="#{messages.LEASE_SUM_MONTH}"
                          maxlength="30"
-                         id="contractCode"
-                         value="#{closeHouseSubsrcibe.instance.contractCode}"
+                         id="sumMonth"
+                         value="#{leaseHouseSubsrcibe.instance.sumMonth}"
                          styleClass="form-control">
+                         <f:converter converterId="javax.faces.Integer"/>
             </h:inputText>
         </s:decorate>
 
 
-        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
-            <ui:define name="label">
-                #{messages.CloseHouse_projectRship}
-            </ui:define>
-            <ui:param name="for" value="WorkCardNo"/>
-            <h:inputText label="#{messages.CloseHouse_projectRship}"
-                         maxlength="30"
-                         id="projectRship"
-                         value="#{closeHouseSubsrcibe.instance.projectRship}"
-                         styleClass="form-control">
-            </h:inputText>
-        </s:decorate>
-        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
-            <ui:define name="label">
-                #{messages.CloseHouse_houseCardNo}
-            </ui:define>
-            <ui:param name="for" value="houseCardNo"/>
-            <h:inputText label="#{messages.CloseHouse_houseCardNo}"
-                         maxlength="30"
-                         id="houseCardNo"
-                         value="#{closeHouseSubsrcibe.instance.houseCardNo}"
-                         styleClass="form-control">
-            </h:inputText>
-        </s:decorate>
+
 
     </div>
 </ui:composition>

@@ -20,6 +20,15 @@ import java.util.Date;
 )
 public class LeaseHouse implements java.io.Serializable,TimeArea{
 
+    public enum LeaseHouseStatus{
+        // 已登记
+        REGISTERED,
+        // 已变更
+        CHANGED,
+        //已取消
+        CANCEL
+    }
+
     private String id;
     private OwnerBusiness ownerBusiness;
     private String name;
@@ -30,6 +39,13 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
     private Date startDate;
     private Date endDate;
     private int sumMonth;
+    private String sellCompanyName;
+    private String searchKey;
+    private String display;
+
+
+
+
     private TimeArea.TimeShowType timeShowType;
 
     public LeaseHouse(){
@@ -190,5 +206,40 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
     }
 
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
+    @NotNull
+    public String getDisplay() {
+        return display;
+    }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    @NotNull
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+
+
+    @Column(name = "SELL_COMPANY_NAME", nullable = false, length = 100)
+    @NotNull
+    @Size(max = 100)
+    public String getSellCompanyName() {
+        return sellCompanyName;
+    }
+
+    public void setSellCompanyName(String sellCompanyName) {
+        this.sellCompanyName = sellCompanyName;
+    }
 }
