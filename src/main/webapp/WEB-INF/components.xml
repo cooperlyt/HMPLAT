@@ -68,12 +68,16 @@
     <security:identity
             authenticate-method="#{authenticationManager.authenticate}"/>
 
+    <factory name="currentSession" scope="stateless" value="#{facesContext.externalContext.request.session}"/>
+
     <event type="org.jboss.seam.security.notLoggedIn">
         <action execute="#{redirect.captureCurrentView}"/>
     </event>
     <event type="org.jboss.seam.security.loginSuccessful">
         <action execute="#{redirect.returnToCapturedView}"/>
+        <action execute="#{currentSession.setMaxInactiveInterval(3600)}"/>
     </event>
+
 
     <mail:mail-session host="localhost" port="25"/>
 
