@@ -670,6 +670,23 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return getBusinessPersion(BusinessPersion.PersionType.CORRECT);
     }
 
+
+    /**
+     * 出租人
+     */
+    @Transient
+    public BusinessPersion getLessorPersion() {
+        return getBusinessPersion(BusinessPersion.PersionType.LESSOR_PEOPLE);
+    }
+
+    /**
+     * 承租人
+     */
+    @Transient
+    public BusinessPersion getLesseePersion() {
+        return getBusinessPersion(BusinessPersion.PersionType.LESSEE_PEOPLE);
+    }
+
     /**
      * 抵押权人代理人
      */
@@ -717,6 +734,16 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
 
+    /**
+     * 租赁登记
+     */
+    @Transient
+    public LeaseHouse getLeaseHouse(){
+        if (!getLeaseHouses().isEmpty()) {
+            return getLeaseHouses().iterator().next();
+        }
+        return null;
+    }
 
     /**
      * 评估公司

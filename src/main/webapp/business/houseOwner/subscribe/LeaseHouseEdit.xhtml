@@ -13,7 +13,7 @@
         <ui:define name="label">
             #{messages.LEASE_NAME}
         </ui:define>
-        <ui:param name="for" value="LegalDocuments"/>
+        <ui:param name="for" value="leaseName"/>
         <h:inputText label="#{messages.LEASE_NAME}"
                      id="leaseName"
                      maxlength="100"
@@ -27,7 +27,7 @@
         <ui:define name="label">
             #{messages.LEASE_COMPANY_NAME}
         </ui:define>
-        <ui:param name="for" value="LegalDocuments"/>
+        <ui:param name="for" value="sellCompanyName"/>
         <h:inputText label="#{messages.LEASE_COMPANY_NAME}"
                      id="sellCompanyName"
                      maxlength="100"
@@ -151,7 +151,18 @@
             </h:inputText>
         </s:decorate>
 
-
+        <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+            <ui:define name="label">
+                #{messages.LESSEE_NO}
+            </ui:define>
+            <ui:param name="for" value="leaseNo"/>
+            <h:inputText label="#{messages.LESSEE_NO}"
+                         maxlength="30"
+                         id="leaseNo"
+                         value="#{leaseHouseSubsrcibe.instance.leaseNo}"
+                         styleClass="form-control">
+            </h:inputText>
+        </s:decorate>
 
 
     </div>

@@ -21,8 +21,8 @@ public class LeaseHouseSubsrcibe extends OwnerEntityHome<LeaseHouse> {
     public void create()
     {
         super.create();
-        if (!ownerBusinessHome.getInstance().getCloseHouses().isEmpty()) {
-            setId(ownerBusinessHome.getInstance().getCloseHouses().iterator().next().getId());
+        if (!ownerBusinessHome.getInstance().getLeaseHouses().isEmpty()) {
+            setId(ownerBusinessHome.getInstance().getLeaseHouses().iterator().next().getId());
         }else {
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getLeaseHouses().add(getInstance());

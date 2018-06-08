@@ -5,14 +5,14 @@ import com.dgsoft.house.owner.model.PowerPerson;
 import org.jboss.seam.annotations.Name;
 
 /**
- * Created by wxy on 2015-08-16.
- * 产权人转申请人
+ * Created by wxy on 2018-06-07.
+ * 承租人
  */
-@Name("persionCorrectSubscribe")
-public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
+@Name("persionLesseeSubscribe")
+public class PersionLesseeSubscribe extends BaseBusinessPersionSubscribe {
     @Override
     protected BusinessPersion.PersionType getType() {
-        return  BusinessPersion.PersionType.CORRECT;
+        return BusinessPersion.PersionType.LESSEE_PEOPLE;
     }
 
     @Override
@@ -21,11 +21,7 @@ public class PersionCorrectSubscribe extends BaseBusinessPersionSubscribe {
         if (!isHave()){
             clearInstance();
 
-            //if (ownerBusinessHome.getInstance().getHouseBusinesses().size()==1){
-            PowerPerson businessHouseOwner = ownerBusinessHome.getInstance().getHouseBusinesses().iterator().next().getAfterBusinessHouse().getMainPowerPerson();
-            convertToPerson(businessHouseOwner);
 
-            //}
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
             setHave(true);

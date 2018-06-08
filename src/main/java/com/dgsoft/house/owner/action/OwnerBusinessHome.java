@@ -333,6 +333,31 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     /**
+     * 租赁登记信息
+     */
+    @Deprecated
+    public LeaseHouse getLeaseHouse(){
+        return getInstance().getLeaseHouse();
+    }
+
+    /**
+     * 出租人
+     */
+    @Deprecated
+    public BusinessPersion getLessorPersion(){
+        return getInstance().getLessorPersion();
+    }
+
+    /**
+     * 承租人
+     */
+    @Deprecated
+    public BusinessPersion getLesseePersion(){
+        return getInstance().getLesseePersion();
+    }
+
+
+    /**
      * 申请人
      */
     @Deprecated

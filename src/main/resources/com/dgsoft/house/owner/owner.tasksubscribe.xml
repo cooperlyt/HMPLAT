@@ -1263,8 +1263,18 @@
     </edit-subscribe>
 
 
+    <edit-subscribe name="PersionLesseeEdit" page="/business/houseOwner/subscribe/PersionLesseeEdit.xhtml" component="">
+        <description>
+            承租人编辑
+        </description>
+    </edit-subscribe>
 
 
+    <edit-subscribe name="PersionLessorEdit" page="/business/houseOwner/subscribe/PersionLessorEdit.xhtml" component="">
+        <description>
+            出租人编辑
+        </description>
+    </edit-subscribe>
 
 
 
@@ -1433,7 +1443,7 @@
         </description>
     </end-subscribe>
 
-    <end-subscribe name="FcRealDisplayGen" component="fcRealDisplayGen">
+    <end-subscribe name="FcRealDisplayGen" component="FcRealDisplayGen">
         <description>
             房屋交易备案显示生成器(凤城)
         </description>
@@ -1474,6 +1484,17 @@
     </end-subscribe>
 
 
+    <end-subscribe name="FcLeaseHouseOwnerKeyGen" component="fcLeaseHouseOwnerKeyGen">
+        <description>
+            租赁登记查询查询KEY生成器(凤城)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcLeaseHouseDisplayGen" component="fcLeaseHouseDisplayGen">
+        <description>
+            租赁登记显示生成器(凤城)
+        </description>
+    </end-subscribe>
 
 
 

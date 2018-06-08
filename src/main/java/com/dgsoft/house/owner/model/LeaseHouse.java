@@ -45,6 +45,10 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
 
 
 
+    private String leaseNo;
+
+
+
 
     private TimeArea.TimeShowType timeShowType;
 
@@ -209,7 +213,6 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
-    @NotNull
     public String getDisplay() {
         return display;
     }
@@ -220,7 +223,6 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
 
     @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
     @Size(max = 1024)
-    @NotNull
     public String getSearchKey() {
         return searchKey;
     }
@@ -241,5 +243,15 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
 
     public void setSellCompanyName(String sellCompanyName) {
         this.sellCompanyName = sellCompanyName;
+    }
+
+    @Column(name = "LEASE_NO", nullable = false, length = 20)
+    @Size(max = 20)
+    public String getLeaseNo() {
+        return leaseNo;
+    }
+
+    public void setLeaseNo(String leaseNo) {
+        this.leaseNo = leaseNo;
     }
 }
