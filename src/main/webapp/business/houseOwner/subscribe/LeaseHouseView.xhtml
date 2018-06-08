@@ -1,12 +1,67 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title></title>
-</head>
-<body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
-</body>
-</html>
+    <a:outputPanel rendered="#{(not empty ownerBusinessHome.instance.leaseHouse)}">
+        <dh:entryGridBlock columns="4" >
+
+
+            <h:outputText value="#{messages.LEASE_NAME}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.name}"/>
+            </dh:entryGridColumn>
+
+            <h:outputText value="#{messages.LEASE_COMPANY_NAME}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.sellCompanyName}"/>
+            </dh:entryGridColumn>
+
+
+
+            <h:outputText value="#{messages.LEASE_AREA}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.leaseArea}"/>
+            <h:outputText value="#{messages.LEASE_SELF_RENT}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.selfRent}"/>
+
+            <h:outputText value="#{messages.LEASE_EVALUATE_RENT}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.evaluateRent}"/>
+            <h:outputText value="#{messages.LEASE_SUM_RENT}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.sumMonth}"/>
+
+
+            <h:outputText value="#{messages.LEASE_SUM_MONTH}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.sumMonth}"/>
+            <h:outputText value="#{messages.LESSEE_NO}"/>
+            <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.leaseNo}"/>
+
+            <h:outputText value="#{messages.LEASE_DATE}"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.startDate}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+                <h:outputText value="-" rendered="#{ownerBusinessHome.instance.leaseHouse.timeShowType eq 'DATE_TIME'}"/>
+
+                <h:outputText value=" 租赁期限:" rendered="#{not (ownerBusinessHome.instance.leaseHouse.timeShowType eq 'DATE_TIME')}"/>
+
+                <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.endDate}"
+                              rendered="#{ownerBusinessHome.instance.leaseHouse.timeShowType eq 'DATE_TIME'}">
+                    <s:convertDateTime pattern="#{messages.displayDatePattern}"/>
+                </h:outputText>
+
+                <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.timeArea.toSize}" rendered="#{not (ownerBusinessHome.instance.leaseHouse.timeShowType eq 'DATE_TIME')}"/>
+
+
+                <h:outputText value="#{ownerBusinessHome.instance.leaseHouse.timeShowType.label}" rendered="#{not (ownerBusinessHome.instance.leaseHouse.timeShowType eq 'DATE_TIME')}"/>
+            </dh:entryGridColumn>
+
+        </dh:entryGridBlock>
+
+    </a:outputPanel>
+</ui:composition>
