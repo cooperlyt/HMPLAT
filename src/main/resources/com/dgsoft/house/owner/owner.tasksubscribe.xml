@@ -639,8 +639,17 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="PersionLesseeView" page="/business/houseOwner/subscribe/PersionLesseeView.xhtml">
+        <description>
+            承租人查看(凤城)
+        </description>
+    </view-subscribe>
 
-
+    <view-subscribe name="PersionLessorView" page="/business/houseOwner/subscribe/PersionLessorView.xhtml">
+        <description>
+            出租人查看(凤城)
+        </description>
+    </view-subscribe>
 
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
