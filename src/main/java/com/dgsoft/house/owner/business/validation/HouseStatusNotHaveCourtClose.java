@@ -8,6 +8,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by cooper on 6/25/15.
@@ -20,6 +21,7 @@ public class HouseStatusNotHaveCourtClose extends BusinessHouseValid{
     @Override
     public ValidResult valid(BusinessHouse businessHouse) {
         if (businessHouse.getAllStatusList().contains(HouseStatus.COURT_CLOSE)){
+
             return new ValidResult("business_house_status_not_have_court_close",ValidResultLevel.ERROR);
         }
         return new ValidResult(ValidResultLevel.SUCCESS);
