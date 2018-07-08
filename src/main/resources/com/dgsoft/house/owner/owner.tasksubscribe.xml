@@ -1936,6 +1936,20 @@
         </description>
     </end-subscribe>
 
+
+
+    <end-subscribe name="addContractsPowerPerson" component="addContractsPowerPerson">
+        <description>
+           备案完成时修改mainowner
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="addPreparePowerPerson" component="addPreparePowerPerson">
+        <description>
+            预告完成时修改mainowner
+        </description>
+    </end-subscribe>
+
     <end-subscribe name="MoneyBusinessCanceldState" component="moneyBusinessCanceldState">
         <description>
             资金监管撤回，审批状态修改
