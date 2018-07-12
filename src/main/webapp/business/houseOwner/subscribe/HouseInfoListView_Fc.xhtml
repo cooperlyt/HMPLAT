@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:r="http://richfaces.org/rich">
+    <ul class="repo-list js-repo-list full-width" id="user-links">
+        <a:repeat var="_houseBusinessList" value="#{ownerBusinessHome.instance.houseBusinessList}">
+
+            <li class="repo-list-item public source">
+                <h3 class="repo-list-name" >
+                   #{messages.House_Id}:#{_houseBusinessList.afterBusinessHouse.houseCode}
+                </h3>
+                <p class="repo-list-description">
+                    <strong>#{messages.Build_Name}:</strong>#{_houseBusinessList.afterBusinessHouse.buildName}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.person_field_credentialsNO}:</strong>#{_houseBusinessList.afterBusinessHouse.mainOwner.credentialsNumber}   <strong>#{messages.Mortgager_view}:</strong>#{_houseBusinessList.afterBusinessHouse.mainOwner.personName}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.House_Code}:</strong>#{_houseBusinessList.afterBusinessHouse.displayHouseCode}   <strong>#{messages.House_Order}:</strong>#{_houseBusinessList.afterBusinessHouse.houseOrder}  <strong>#{messages.House_UseType}:</strong>#{_houseBusinessList.afterBusinessHouse.designUseType}  <strong>#{messages.House_Area}:</strong>#{_houseBusinessList.afterBusinessHouse.houseArea}
+                </p>
+                <p class="repo-list-description">
+                   <strong>#{messages.HOUSE_FROM}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.houseRegInfo.houseFrom)}  <strong>#{messages.HOUSE_PORPERTY}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.houseRegInfo.houseProperty)} <strong>#{messages.Land_Number}:</strong>#{_houseBusinessList.afterBusinessHouse.landInfo.number} <strong>#{messages.Land_LandGetMode}:</strong>#{dictionary.getWordValue(_houseBusinessList.afterBusinessHouse.landInfo.landGetMode)}
+                </p>
+                <p class="repo-list-description">
+                    <strong>#{messages.House_Address}:</strong>#{_houseBusinessList.afterBusinessHouse.address}
+                </p>
+
+                <a:repeat rendered="#{not empty houseAlertCache.getHouseAlertList(_houseBusinessList.houseCode)}"
+                          value="#{houseAlertCache.getHouseAlertList(_houseBusinessList.houseCode)}" var="_lockedHouse">
+
+                    <p class="repo-list-description #{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHouse.lockedTime}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
+                    </strong> 由 <strong>
+                        <h:outputText value="系统" rendered="#{_lockedHouse.type eq 'SYSTEM_LOCKED'}"/>
+                        <h:outputText value="#{_lockedHouse.empName}" p:aria-label="#{_lockedHouse.empCode}" rendered="#{not (_lockedHouse.type eq 'SYSTEM_LOCKED')}"/></strong>
+                        ，因:
+
+
+                        <a:outputPanel rendered="#{not (_lockedHouse.type eq 'CANT_SALE')}"><strong>#{_lockedHouse.description}</strong> 建立预警。 </a:outputPanel>
+                        <a:outputPanel rendered="#{_lockedHouse.type eq 'CANT_SALE'}">办理（预）销售许可证 设置为不可售。 </a:outputPanel>
+
+
+
+                    </p>
+                </a:repeat>
+
+            </li>
+        </a:repeat>
+    </ul>
+
+</ui:composition>
