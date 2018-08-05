@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+
+    <a:outputPanel id="contextBackPanel">
+        <a:outputPanel layout="block" title="322323"   rendered="#{moneySafeSubscribe.moneySafeShow}" style="margin-top: 10px">
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    开户行名称(监管银行)
+                </ui:define>
+                <ui:param name="for" value="bankName"/>
+                <h:inputText label="银行开户行名称"
+                             maxlength="512"
+                             id="bankName"
+                             value="#{moneySafeSubscribe.instance.createBankName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    银行代码（监管银行）
+                </ui:define>
+                <ui:param name="for" value="bank"/>
+                <h:inputText label="银行代码（监管银行）"
+                             maxlength="32"
+                             id="bank"
+                             value="#{moneySafeSubscribe.instance.bank}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    账户名称（监管账户的类型名称）
+                </ui:define>
+                <ui:param name="for" value="accountName"/>
+                <h:inputText label="账户名称（监管账户的类型名称）"
+                             maxlength="128"
+                             id="accountName"
+                             value="#{moneySafeSubscribe.instance.accountName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    收款户名（开发商名称）
+                </ui:define>
+                <ui:param name="for" value="cardName"/>
+                <h:inputText label="收款户名（开发商名称）"
+                             maxlength="50"
+                             id="cardName"
+                             value="#{moneySafeSubscribe.instance.cardName}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    账户号码（收款账户号）
+                </ui:define>
+                <ui:param name="for" value="cardNumber"/>
+                <h:inputText label="账户号码（收款账户号）"
+                             maxlength="128"
+                             id="cardNumber"
+                             value="#{moneySafeSubscribe.instance.cardNumber}"
+                             styleClass="form-control"
+                             required="true">
+                </h:inputText>
+            </s:decorate>
+        </a:outputPanel>
+    </a:outputPanel>
+</ui:composition>
