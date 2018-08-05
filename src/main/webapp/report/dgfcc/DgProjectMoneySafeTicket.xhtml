@@ -4,9 +4,9 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="#{ownerBusinessHome.instance.defineName}登记审批表">
+            title="商品房资金监管受理单">
 
-
+<c:forEach begin="0" end="1">
     <a:repeat value="#{ownerBusinessHome.instance.businessProject.businessBuildList}" var="_buildBusiness">
         <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
 
@@ -19,7 +19,7 @@
                         <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle" >
                             <p:paragraph>
                                 <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-                                    #{ownerBusinessHome.instance.defineName}登记审批表
+                                    商品房资金监管受理单
                                 </p:font>
                             </p:paragraph>
                         </p:cell>
@@ -204,18 +204,17 @@
                            <ui:repeat value="#{_buildBusiness.businessProject.projectSellInfo.projectLandEndTimeList}" var="_projectLandEndTimeList"> <p:text value="   #{dictionary.getEnumLabel(_projectLandEndTimeList.useTypeCategory)} :  "></p:text> <p:text value="#{_projectLandEndTimeList.endTime}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></ui:repeat></p:paragraph>
                 </p:cell>
 
-
-            <p:cell fixedHeight="23">
-                    <p:paragraph>楼幢名称</p:paragraph>
-                </p:cell>
-                <p:cell colspan="3">
-                    <p:paragraph>#{_buildBusiness.buildName}</p:paragraph>
-                </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>产籍标识</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3">
                     <p:paragraph> 图号：#{_buildBusiness.mapNumber}    丘号: #{_buildBusiness.blockNo}     幢号：#{_buildBusiness.buildNo}   门牌号：#{_buildBusiness.doorNo}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>楼幢名称</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3">
+                    <p:paragraph>#{_buildBusiness.buildName}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
                     <p:paragraph>住宅套数</p:paragraph>
@@ -277,72 +276,73 @@
                 <p:cell colspan="3">
                     <p:paragraph><p:text value="#{_buildBusiness.getSellTypeTotal('OTHER').area}"><f:convertNumber pattern="#0.000"/> </p:text></p:paragraph>
                 </p:cell>
+
+                <p:cell fixedHeight="23">
+                    <p:paragraph>开户行名称</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.createBankName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>银行代码</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.bank}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>账户名称</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.accountName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>收款户名</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.cardName}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="23">
+                    <p:paragraph>账户号码</p:paragraph>
+                </p:cell>
+                <p:cell borderWidthLeft="0" colspan="3">
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.cardNumber}</p:paragraph>
+                </p:cell>
                 <p:cell colspan="4" verticalAlignment="top" horizontalAlignment="left" fixedHeight="50">
                     <p:paragraph>备注:#{ownerBusinessHome.receive.reason}</p:paragraph>
                 </p:cell>
-                <p:cell colspan="4" fixedHeight="150">
-                    <p:table columns="2" widths="0.7 3" headerRows="0" footerRows="0" widthPercentage="100">
-                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
-                            <p:paragraph>受理人</p:paragraph>
-                        </p:cell>
 
-                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
-
-                            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
-                                    <p:paragraph>签字:</p:paragraph>
-                                </p:cell>
-                                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
-                                    <p:paragraph>年                月                日</p:paragraph>
-                                </p:cell>
-
-                            </p:table>
-
-                        </p:cell>
-
-                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
-                            <p:paragraph>审核人</p:paragraph>
-                        </p:cell>
-
-                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
+                <p:cell fixedHeight="25">
+                    <p:paragraph>代理人签字(盖章)</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" borderWidthLeft="0" >
+                    <p:paragraph></p:paragraph>
+                </p:cell>
 
 
-                            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
-                                    <p:paragraph>签字:</p:paragraph>
-                                </p:cell>
-                                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
-                                    <p:paragraph>年                月                日</p:paragraph>
-                                </p:cell>
 
-                            </p:table>
+            </p:table>
+        </p:font>
+        <p:font size="14" name="STSong-Light" encoding="UniGB-UCS2-H">
+            <p:table columns="2" widths="1 1" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="10" border="0" horizontalAlignment="center" verticalAlignment="middle"  paddingTop="15"/>
+                </f:facet>
+                <p:cell padding="0">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>东港市房地产管理处(业务专用章)</p:paragraph>
+                </p:cell>
 
-                        </p:cell>
-
-                        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="5" paddingBottom="10" paddingTop="10">
-                            <p:paragraph>审批人</p:paragraph>
-                        </p:cell>
-
-                        <p:cell verticalAlignment="bottom" horizontalAlignment="left" noWrap="false" fixedHeight="50">
-
-
-                            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
-                                    <p:paragraph>签字:</p:paragraph>
-                                </p:cell>
-                                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="10" horizontalAlignment="left" verticalAlignment="middle">
-                                    <p:paragraph>年                月                日</p:paragraph>
-                                </p:cell>
-
-                            </p:table>
-
-                        </p:cell>
-
-                    </p:table>
-
+                <p:cell padding="0">
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>年      月       日</p:paragraph>
                 </p:cell>
             </p:table>
         </p:font>
         <p:newPage/>
     </a:repeat>
+</c:forEach>
 </p:document>
