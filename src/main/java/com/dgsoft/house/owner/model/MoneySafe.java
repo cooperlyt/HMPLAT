@@ -73,7 +73,7 @@ public class MoneySafe implements java.io.Serializable {
         this.accountName = accountName;
     }
 
-    @Column(name = "CREATE_BANK", length = 512, nullable = false)
+    @Column(name = "CREATE_BANK_NAME", length = 512, nullable = false)
     @NotNull
     @Size(max = 512)
     public String getCreateBankName() {
