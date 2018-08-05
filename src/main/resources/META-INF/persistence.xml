@@ -138,6 +138,7 @@
         <class>com.dgsoft.house.owner.model.MoneyBusiness</class>
         <class>com.dgsoft.house.owner.model.RegInfo</class>
         <class>com.dgsoft.house.owner.model.MoneyPayInfo</class>
+        <class>com.dgsoft.house.owner.model.MoneySafe</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>

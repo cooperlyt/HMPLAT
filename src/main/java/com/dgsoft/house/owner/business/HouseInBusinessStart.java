@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.business;
 
 import com.dgsoft.common.BatchOperData;
+import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.BusinessHouse;
@@ -14,6 +16,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
+import org.jboss.seam.log.Logging;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,16 +31,58 @@ import java.util.List;
 @Scope(ScopeType.CONVERSATION)
 public class HouseInBusinessStart {
 
+    public static class SelectBusinessHouseItem extends BatchOperData<BusinessHouse>{
+
+        private List<BusinessDataValid.ValidResult> validInfoList;
+
+        private BusinessDataValid.ValidResultLevel validLevel;
+
+        public SelectBusinessHouseItem(BusinessHouse data, List<BusinessDataValid.ValidResult> validInfo) {
+            super(data, false);
+            this.validInfoList = validInfo;
+            validLevel = BusinessDataValid.ValidResultLevel.SUCCESS;
+            for(BusinessDataValid.ValidResult vr: validInfoList){
+                if (vr.getResult().getPri() > validLevel.getPri()){
+                    validLevel = vr.getResult();
+                }
+            }
+        }
+
+        public List<BusinessDataValid.ValidResult> getValidInfoList() {
+            return validInfoList;
+        }
+
+        public BusinessDataValid.ValidResultLevel getValidLevel() {
+            return validLevel;
+        }
+
+        public boolean isCanSelect(){
+            return validLevel.getPri() <= BusinessDataValid.ValidResultLevel.WARN.getPri();
+        }
+//
+//        @Override
+//        public boolean isSelected() {
+//            if (isCanSelect()) {
+//                return super.isSelected();
+//            }else{
+//                return false;
+//            }
+//        }
+    }
+
     @In(create = true)
     private OwnerBusinessHome ownerBusinessHome;
 
     @In(create = true)
     private OwnerBusinessStart ownerBusinessStart;
 
+    @In
+    private BusinessDefineHome businessDefineHome;
+
     @In(create = true)
     private FacesMessages facesMessages;
 
-    private List<BatchOperData<BusinessHouse>> houseBusinessList = new ArrayList<BatchOperData<BusinessHouse>>(0);
+    private List<SelectBusinessHouseItem> houseBusinessList = new ArrayList<SelectBusinessHouseItem>(0);
 
     private String selectBizId;
 
@@ -62,7 +107,7 @@ public class HouseInBusinessStart {
         this.selectSingleHouseId = selectSingleHouseId;
     }
 
-    public List<BatchOperData<BusinessHouse>> getHouseBusinessList() {
+    public List<SelectBusinessHouseItem> getHouseBusinessList() {
         return houseBusinessList;
     }
 
@@ -100,11 +145,30 @@ public class HouseInBusinessStart {
 
     public String businessSelected() {
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBizId));
-        houseBusinessList = new ArrayList<BatchOperData<BusinessHouse>>();
+        houseBusinessList = new ArrayList<SelectBusinessHouseItem>();
         for(HouseBusiness houseBusiness: ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses()){
             if (!houseBusiness.isCanceled()) {
                 HouseRecord houseRecord = ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode());
-                houseBusinessList.add(new BatchOperData<BusinessHouse>(houseRecord.getBusinessHouse(), true));
+
+
+
+                List<BusinessDataValid.ValidResult> validResults = new ArrayList<BusinessDataValid.ValidResult>();
+
+
+                for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
+
+                    try {
+                        BusinessDataValid.ValidResult validResult = valid.valid(houseBusiness);
+                        if (validResult.getResult().getPri() > BusinessDataValid.ValidResultLevel.SUCCESS.getPri())
+                            validResults.add(validResult);
+                    }catch (Exception e){
+                        Logging.getLog(getClass()).error(e.getMessage(),e,"config error:" + valid.getClass().getSimpleName());
+                        throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
+                    }
+
+                }
+
+                houseBusinessList.add(new SelectBusinessHouseItem(houseRecord.getBusinessHouse(), validResults));
             }
         }
         Collections.sort(houseBusinessList, new Comparator<BatchOperData<BusinessHouse>>() {
@@ -125,9 +189,10 @@ public class HouseInBusinessStart {
                 return result;
             }
         });
-        if (houseBusinessList.size() == 1){
-            return houseSelected();
-        }
+        // 有验证器的信息要显示，所以不在自动跳过房屋选择步骤
+//        if (houseBusinessList.size() == 1){
+//            return houseSelected();
+//        }
         return "businessSelected";
     }
 

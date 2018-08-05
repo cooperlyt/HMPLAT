@@ -37,6 +37,7 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String developerProperty;
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
     private ProjectSellInfo projectSellInfo;
+    private MoneySafe moneySafe;
 
     private String searchKey;
     private String display;
@@ -305,7 +306,15 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
         this.projectSellInfo = projectSellInfo;
     }
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public MoneySafe getMoneySafe() {
+        return moneySafe;
+    }
 
+    public void setMoneySafe(MoneySafe moneySafe) {
+        this.moneySafe = moneySafe;
+    }
 }
 
 
