@@ -1580,9 +1580,23 @@
             登记薄阶段将选中的业务状态改成已解除(CompleteCancel)
         </description>
     </end-subscribe>
+
+
     <end-subscribe name="selectBizProjectMortgageCompleteCancelEnd" component="selectBizProjectMortgageCompleteCancel">
         <description>
             登记薄阶段将选中的业务状态改成已解除在(在建工程抵押注销CompleteCancel)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="enableProjectSell" component="projectEnableSell">
+        <description>
+            将项目状态设置为启用（可售）
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="disableProjectSell" component="projectDisableSell">
+        <description>
+            将项目状态设置为禁用（不可售）
         </description>
     </end-subscribe>
 

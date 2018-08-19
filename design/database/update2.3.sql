@@ -21,3 +21,15 @@ ALTER TABLE HOUSE_OWNER_RECORD.MONEY_SAFE
 
 INSERT DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('MONEY_SAFE_TIME','STRING','2018-01-01','商口房资金监管开始时间');
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('86','商品房资金监管受理单','商品房资金监管受理单','/report/dgfcc/DgProjectMoneySafeTicket.xhtml');
+
+
+UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.3.0' where ID='database_version';
+
+INSERT DB_PLAT_SYSTEM.SYSTEM_PARAM (ID, TYPE, VALUE, MEMO) values ('CHECK_PROJECT_SELL','BOOLEAN','true','测绘更改楼盘图时，是否检查预售许可证发生变化，并设备为不可用');
+
+
+INSERT INTO DB_PLAT_SYSTEM.ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('house.sell','商品房销售管理','商品房科',20);
+INSERT INTO DB_PLAT_SYSTEM.FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.projectSell', '项目销售管理', 'DATA_MGR', '', '/func/house/datas/ProjectSellManager.xhtml', '', '20', '',b'0');
+INSERT INTO DB_PLAT_SYSTEM.ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.sell', 'house.projectSell');
+
+UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.3.1' where ID='database_version';

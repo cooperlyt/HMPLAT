@@ -9,7 +9,7 @@
     <param name="firstResult" value="#{houseList.firstResult}"/>
     <param name="searchKey" value="#{houseList.searchKey}"/>
 
-    <navigation from-action="#{houseHome.update}">
+    <navigation from-action="#{houseHome.updateHouse}">
         <rule if-outcome="updated">
 
             <redirect view-id="#{from}">

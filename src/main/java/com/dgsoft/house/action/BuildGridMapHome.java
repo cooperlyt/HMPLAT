@@ -4,8 +4,11 @@ import cc.coopersoft.house.UseType;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
+import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseProperty;
 import com.dgsoft.house.model.*;
+import com.dgsoft.house.owner.OwnerEntityLoader;
+import com.dgsoft.house.owner.model.BusinessBuild;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -61,6 +64,9 @@ public class BuildGridMapHome implements DropListener {
 
     private House.AddressGenType houseAddressGenType;
 
+    @In(create = true)
+    private OwnerEntityLoader ownerEntityLoader;
+
     public House.AddressGenType getHouseAddressGenType() {
         if (houseAddressGenType == null){
             houseAddressGenType =  House.AddressGenType.valueOf(RunParam.instance().getStringParamValue("HouseAddressGen"));
@@ -106,6 +112,26 @@ public class BuildGridMapHome implements DropListener {
             }
         }
 
+        if (RunParam.instance().getBooleanParamValue("CHECK_PROJECT_SELL")){
+            List<BusinessBuild> businessBuilds = ownerEntityLoader.getEntityManager().createQuery("select b from BusinessBuild b where b.buildCode = :buildCode and b.businessProject.ownerBusiness.status = 'COMPLETE'",BusinessBuild.class).
+                    setParameter("buildCode",buildHome.getInstance().getId()).getResultList();
+            if (!businessBuilds.isEmpty()){
+                BusinessBuild build = businessBuilds.get(0);
+                BigDecimal sellArea = BigDecimal.ZERO;
+                int sellCount = 0;
+                for(House h: buildHome.getInstance().getHouses()){
+                    if (!h.isDeleted() && HouseProperty.SALE_HOUSE.equals(h.getHouseType())){
+                        sellCount++;
+                        sellArea = sellArea.add(h.getHouseArea());
+                    }
+                }
+                if(sellCount != build.getHouseCount() || !sellArea.equals(build.getArea())){
+
+                    buildHome.getInstance().getProject().setEnable(false);
+                }
+            }
+
+        }
 
         return buildHome.update();
 
@@ -536,16 +562,16 @@ public class BuildGridMapHome implements DropListener {
         return result;
     }
 
-    public Map<Word, BuildHome.CountAreaEntry> getUseTypeTotalMap() {
-        Map<Word, BuildHome.CountAreaEntry> result = new HashMap<Word, BuildHome.CountAreaEntry>();
+    public Map<UseType, BuildHome.CountAreaEntry> getUseTypeTotalMap() {
+        Map<UseType, BuildHome.CountAreaEntry> result = new HashMap<UseType, BuildHome.CountAreaEntry>();
         for (GridRow row : getInstance().getGridRows()) {
             for (GridBlock block : row.getGridBlocks())
                 if (block.getHouse() != null) {
-                    BuildHome.CountAreaEntry entry = result.get(block.getHouse().getDesignUseType());
+                    BuildHome.CountAreaEntry entry = result.get(block.getHouse().getUseType());
                     if (entry != null) {
                         entry.addArea(block.getHouse().getHouseArea(), block.getHouse().getUseArea());
                     } else {
-                        result.put(DictionaryWord.instance().getWord(block.getHouse().getDesignUseType()),
+                        result.put(block.getHouse().getUseType(),
                                 new BuildHome.CountAreaEntry(block.getHouse().getHouseArea(), block.getHouse().getUseArea()));
                     }
                 }
@@ -553,13 +579,13 @@ public class BuildGridMapHome implements DropListener {
         return result;
     }
 
-    public List<Map.Entry<Word, BuildHome.CountAreaEntry>> getUseTypeTotalList() {
-        List<Map.Entry<Word, BuildHome.CountAreaEntry>> result = new ArrayList<Map.Entry<Word, BuildHome.CountAreaEntry>>(getUseTypeTotalMap().entrySet());
-        Collections.sort(result, new Comparator<Map.Entry<Word, BuildHome.CountAreaEntry>>() {
+    public List<Map.Entry<UseType, BuildHome.CountAreaEntry>> getUseTypeTotalList() {
+        List<Map.Entry<UseType, BuildHome.CountAreaEntry>> result = new ArrayList<Map.Entry<UseType, BuildHome.CountAreaEntry>>(getUseTypeTotalMap().entrySet());
+        Collections.sort(result, new Comparator<Map.Entry<UseType, BuildHome.CountAreaEntry>>() {
             @Override
-            public int compare(Map.Entry<Word, BuildHome.CountAreaEntry> o1, Map.Entry<Word, BuildHome.CountAreaEntry> o2) {
+            public int compare(Map.Entry<UseType, BuildHome.CountAreaEntry> o1, Map.Entry<UseType, BuildHome.CountAreaEntry> o2) {
                 if((o1.getKey() != null) && (o2.getKey() != null)) {
-                    return new Integer(o1.getKey().getPriority()).compareTo(o2.getKey().getPriority());
+                    return new Integer(o1.getKey().ordinal()).compareTo(o2.getKey().ordinal());
                 }else {
                     if (o1.getKey() == null){
                         return -1;

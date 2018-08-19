@@ -167,6 +167,8 @@ INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO
 
 INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('owner.todayBusinessList', '当日业务列表', 'DAY_WORK', '', '/func/house/owner/TodayBusinessList.xhtml', '', '5', '',b'0');
 
+INSERT INTO FUNCTION (ID, NAME, CATEGORY, ICON, LOCATION, BANNER, PRIORITY, MEMO,NEED_CONVERSATION) VALUES ('house.projectSell', '项目销售管理', 'DATA_MGR', '', '/func/house/datas/ProjectSellManager.xhtml', '', '20', '',b'0');
+
 -- 角色
 
 -- 权限角色
@@ -205,6 +207,11 @@ INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('recordRoomMgr','档�
 
 INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('owner.deleteBiz','业务删除','业务删除',15);
 INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('total.export.houseLimitInfo','房屋限制情况导出','房屋限制情况导出',16);
+
+
+INSERT INTO ROLE(ID, NAME, DESCRIPTION,PRIORITY) VALUES ('house.sell','商品房销售管理','商品房科',20);
+
+
 
 -- 功能 角色
 INSERT INTO ROLE (ID, NAME, DESCRIPTION,PRIORITY) VALUES ('func.check', '审核', '', 7);
@@ -303,6 +310,9 @@ INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.lo
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'owner.totalDataExport');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'house.businessMgr');
 INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('recordRunManager', 'house.businessSearch');
+
+
+INSERT INTO ROLE_FUNCTION (ROL_ID, FUN_ID) VALUES ('house.sell', 'house.projectSell');
 
 -- ADMIN INSERY
 -- INSERT INTO PERSON (ID,NAME,CREDENTIALS_TYPE,_FOREIGN,CREDENTIALS_NUMBER,DATE_OF_BIRTH) VALUES ('admin','admin','OTHER',1,'1','2013-07-15 10:27:08');

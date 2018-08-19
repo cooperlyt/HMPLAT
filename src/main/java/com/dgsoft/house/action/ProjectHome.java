@@ -148,6 +148,11 @@ public class ProjectHome extends HouseEntityHome<Project> {
     @In
     private Map<String, String> messages;
 
+    public void changeSellStatus(){
+        getInstance().setEnable(!getInstance().isEnable());
+        update();
+    }
+
     public void moveBuild(){
         ProjectHome ph = (ProjectHome)Component.getInstance("projectHome");
 

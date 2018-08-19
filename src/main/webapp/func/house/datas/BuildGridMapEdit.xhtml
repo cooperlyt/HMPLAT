@@ -465,7 +465,7 @@
                                 <f:facet name="header">
                                     #{messages.House_UseType}
                                 </f:facet>
-                                #{_entry.key.value}
+                                #{dictionary.getEnumLabel(_entry.key) }
 
                                 <f:facet name="footer">
                                     #{messages.recordTotal}
