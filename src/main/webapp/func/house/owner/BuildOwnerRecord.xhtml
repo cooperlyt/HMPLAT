@@ -366,7 +366,7 @@
 
                                 <li class="dropdown">
                                     <a href="#" style="font-weight: bold;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        #{(buildHome.idDefined) ? buildHome.shortName : "请选择楼幢"}<span class="caret"></span></a>
+                                        #{(buildHome.idDefined) ? buildHome.shortName : "请选择楼幢"}<a:outputPanel rendered="#{buildHome.idDefined and not (buildHome.saleType eq 'OTHER')}" styleClass="#{(buildHome.saleType eq 'NOW_SELL') ? 'text-success' : 'text-warning'}"> <sup>#{(buildHome.saleType eq 'NOW_SELL') ? '现' : '预'}</sup></a:outputPanel><span class="caret"></span></a>
 
 
                                     <div class="dropdown-menu select-menu-modal-holder" >

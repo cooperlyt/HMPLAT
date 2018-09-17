@@ -6,11 +6,9 @@ import com.dgsoft.common.SetLinkList;
 import com.dgsoft.common.system.DictionaryWord;
 import com.dgsoft.common.system.RunParam;
 import com.dgsoft.common.system.model.Word;
-import com.dgsoft.house.AutoGridMapComparator;
-import com.dgsoft.house.HouseEntityHome;
-import com.dgsoft.house.HouseInfo;
-import com.dgsoft.house.OrderComparator;
+import com.dgsoft.house.*;
 import com.dgsoft.house.model.*;
+import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessHouse;
 import com.dgsoft.house.owner.model.HouseRecord;
 import org.apache.poi.POIXMLDocument;
@@ -56,6 +54,10 @@ public class BuildHome extends HouseEntityHome<Build> {
     @In(required = false)
     private ProjectHome projectHome;
 
+
+    @In(create = true)
+    private OwnerEntityLoader ownerEntityLoader;
+
 //    private SetLinkList<House> houses;
 //
 //    public SetLinkList<House> getHouses() {
@@ -64,6 +66,28 @@ public class BuildHome extends HouseEntityHome<Build> {
 //        }
 //        return houses;
 //    }
+
+    private SaleType saleType = null;
+
+    private void querySaleType(){
+        List<SaleType> result = ownerEntityLoader.getEntityManager().createQuery("select ps.type from BusinessBuild bb left join bb.businessProject bp left join bp.projectSellInfo ps left join bp.ownerBusiness ob where ob.status = 'COMPLETE' and bb.buildCode =:buildId",SaleType.class)
+                .setParameter("buildId",getInstance().getId()).getResultList();
+        if (result.isEmpty()){
+            saleType = SaleType.OTHER;
+        }else{
+            saleType = result.get(0);
+        }
+
+    }
+
+    public SaleType getSaleType(){
+        if (saleType == null){
+            querySaleType();
+        }
+        return saleType;
+    }
+
+
 
     @Override
     protected Build createInstance(){
