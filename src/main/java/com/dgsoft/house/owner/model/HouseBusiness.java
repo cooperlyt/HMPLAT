@@ -28,6 +28,7 @@ public class HouseBusiness implements java.io.Serializable {
     private String searchKey;
     private String display;
     private HouseContract houseContract;
+    private Set<RepairMoneyPay> repairMoneyPays = new HashSet<RepairMoneyPay>(0);
 
     public HouseBusiness() {
     }
@@ -158,5 +159,15 @@ public class HouseBusiness implements java.io.Serializable {
 
     public void setHouseContract(HouseContract houseContract) {
         this.houseContract = houseContract;
+    }
+
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "houseBusiness", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<RepairMoneyPay> getRepairMoneyPays() {
+        return repairMoneyPays;
+    }
+
+    public void setRepairMoneyPays(Set<RepairMoneyPay> repairMoneyPays) {
+        this.repairMoneyPays = repairMoneyPays;
     }
 }
