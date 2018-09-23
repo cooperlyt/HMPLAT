@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "REPAIR_MONEY_PAY", catalog = "HOUSE_OWNER_RECORD")
@@ -15,6 +16,9 @@ public class RepairMoneyPay implements java.io.Serializable {
     private BigDecimal money;
     private String description;
     private HouseBusiness houseBusiness;
+    private Date noticeTime;
+    private String empCode;
+    private String empName;
 
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
@@ -39,6 +43,7 @@ public class RepairMoneyPay implements java.io.Serializable {
     }
 
     @Column(name = "MUST_MONEY", nullable = false)
+    @NotNull
     public BigDecimal getMustMoney() {
         return mustMoney;
     }
@@ -48,12 +53,45 @@ public class RepairMoneyPay implements java.io.Serializable {
     }
 
     @Column(name = "MONEY",nullable = false)
+    @NotNull
     public BigDecimal getMoney() {
         return money;
     }
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    @Column(name="NOTICE_TIME",nullable = false)
+    @NotNull
+    public Date getNoticeTime() {
+        return noticeTime;
+    }
+
+    public void setNoticeTime(Date noticeTime) {
+        this.noticeTime = noticeTime;
+    }
+
+    @Column(name = "EMP_CODE" , length = 32, nullable = false)
+    @Size(max = 32)
+    @NotNull
+    public String getEmpCode() {
+        return empCode;
+    }
+
+    public void setEmpCode(String empCode) {
+        this.empCode = empCode;
+    }
+
+    @Column(name = "EMP_NAME", length = 50, nullable = false)
+    @Size(max = 50)
+    @NotNull
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
     }
 
     @Column(name = "DESCRIPTION", length = 512)
