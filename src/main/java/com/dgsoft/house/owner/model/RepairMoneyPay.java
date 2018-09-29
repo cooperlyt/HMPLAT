@@ -1,5 +1,7 @@
 package com.dgsoft.house.owner.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,6 +26,8 @@ public class RepairMoneyPay implements java.io.Serializable {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid.hex")
     public String getId() {
         return id;
     }
