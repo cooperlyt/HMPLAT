@@ -22,6 +22,10 @@ public class RepairMoneyPay implements java.io.Serializable {
     private String empCode;
     private String empName;
 
+
+
+    private RepairMoneyInfo repairMoneyInfo;
+
     @Id
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
@@ -116,5 +120,15 @@ public class RepairMoneyPay implements java.io.Serializable {
 
     public void setHouseBusiness(HouseBusiness houseBusiness) {
         this.houseBusiness = houseBusiness;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @PrimaryKeyJoinColumn
+    public RepairMoneyInfo getRepairMoneyInfo() {
+        return repairMoneyInfo;
+    }
+
+    public void setRepairMoneyInfo(RepairMoneyInfo repairMoneyInfo) {
+        this.repairMoneyInfo = repairMoneyInfo;
     }
 }

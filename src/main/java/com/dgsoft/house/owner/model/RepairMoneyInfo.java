@@ -22,25 +22,24 @@ public class RepairMoneyInfo implements java.io.Serializable {
     private BigDecimal privateArea;
     private BigDecimal publicRate;
     private BigDecimal privateRate;
-
-
-
     private RepairMoneyPay repairMoneyPay;
 
     public RepairMoneyInfo(){
 
     }
 
-    public RepairMoneyInfo(BigDecimal publicArea,BigDecimal privateArea,BigDecimal publicRate,BigDecimal privateRate){
+    public RepairMoneyInfo(RepairMoneyPay repairMoneyPay,BigDecimal publicArea,BigDecimal privateArea,BigDecimal publicRate,BigDecimal privateRate){
         this.publicArea=publicArea;
         this.privateArea=privateArea;
         this.publicRate=publicRate;
         this.privateRate=privateRate;
+        this.repairMoneyPay=repairMoneyPay;
     }
 
-    public RepairMoneyInfo(BigDecimal publicArea,BigDecimal publicRate){
+    public RepairMoneyInfo(RepairMoneyPay repairMoneyPay,BigDecimal publicArea,BigDecimal publicRate){
         this.publicArea=publicArea;
         this.publicRate=publicRate;
+        this.repairMoneyPay=repairMoneyPay;
     }
 
 
