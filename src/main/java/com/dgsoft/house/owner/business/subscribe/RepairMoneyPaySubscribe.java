@@ -43,8 +43,6 @@ public class RepairMoneyPaySubscribe extends OwnerEntityHome<RepairMoneyPay> {
         result.setNoticeTime(new Date());
         result.setHouseBusiness(ownerBusinessHome.getInstance().getSingleHoues());
         RepairMoneyInfo repairMoneyInfo = new RepairMoneyInfo();
-//        repairMoneyInfo.setPrivateArea(new BigDecimal(0));
-//        repairMoneyInfo.setPrivateRate(new BigDecimal(0));
         result.setRepairMoneyInfo(repairMoneyInfo);
         repairMoneyInfo.setRepairMoneyPay(result);
         return result;
@@ -61,6 +59,8 @@ public class RepairMoneyPaySubscribe extends OwnerEntityHome<RepairMoneyPay> {
                 setId(ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next().getId());
                 have=true;
             }
+
+
         }else {
             have =false;
         }
@@ -73,6 +73,22 @@ public class RepairMoneyPaySubscribe extends OwnerEntityHome<RepairMoneyPay> {
                     ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next().getId()!= null) {
                 setId(ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next().getId());
             }
+            // 费率公式 元/㎡ 四舍五入到元
+            getInstance().setCalcDetails(getInstance().getRepairMoneyInfo().getPublicRate().toString());
+
+            if (getInstance().getRepairMoneyInfo().getPrivateRate()!=null){
+                getInstance().setCalcDetails(getInstance().getCalcDetails()+","+getInstance().getRepairMoneyInfo().getPrivateRate().toString());
+            }
+            BigDecimal sumMoney = new BigDecimal(0);
+            sumMoney = getInstance().getRepairMoneyInfo().getPublicArea().multiply(getInstance().getRepairMoneyInfo().getPublicRate());
+           //私有面积计算
+            if (getInstance().getRepairMoneyInfo().getPrivateRate()!=null
+                    && getInstance().getRepairMoneyInfo().getPrivateArea()!=null){
+                sumMoney.add(getInstance().getRepairMoneyInfo().getPrivateRate().multiply(getInstance().getRepairMoneyInfo().getPrivateArea()));
+
+            }
+            getInstance().setMustMoney(sumMoney.setScale(0,BigDecimal.ROUND_HALF_UP));
+            getInstance().setMoney(getInstance().getMoney());
             getInstance().setHouseBusiness(ownerBusinessHome.getSingleHoues());
             ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().add(getInstance());
         }
