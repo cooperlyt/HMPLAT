@@ -1,0 +1,371 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="存量房买卖合同" margins="40 10 20 10">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font alignment="center" size="22" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+    <p:paragraph alignment="center">存量房买卖合同 </p:paragraph>
+</p:font>
+
+<p:font size="14" name="STSong-Light" encoding="UniGB-UCS2-H">
+    <p:table columns="1" widths="1" headerRows="0" footerRows="0" widthPercentage="100" paddingTop="20">
+        <f:facet name="defaultCell">
+            <p:cell padding="10" border="0" horizontalAlignment="center" verticalAlignment="middle"  paddingTop="10"/>
+        </f:facet>
+        <p:cell >
+            <p:paragraph>(合同编号：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.instance.houseContract.contractNumber}</p:font>号)</p:paragraph>
+        </p:cell>
+    </p:table>
+</p:font>
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="14">
+    <p:table columns="6" widths="0.8 1 1 0.8 1 1" headerRows="0" footerRows="0" widthPercentage="100">
+        <f:facet name="defaultCell">
+            <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="3" noWrap="false" border="0"/>
+        </f:facet>
+        <p:cell fixedHeight="25" colspan="6" horizontalAlignment="left" verticalAlignment="middle">
+            <p:paragraph><p:font alignment="middle" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">合同双方当事人：</p:font></p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25">
+            <p:paragraph>出卖人：</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25" colspan="5" borderWidthBottom="1" horizontalAlignment="left">
+            <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="#{_businessPools.personName}   " /></ui:repeat></p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25">
+            <p:paragraph>证件类型：</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25" colspan="3" borderWidthBottom="1" horizontalAlignment="left">
+            <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="#{messages[_businessPools.credentialsType.name()]}   " /></ui:repeat></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>联系电话:</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.phone}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>证件号:</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="5">
+            <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="#{_businessPools.credentialsNumber}   " /></ui:repeat></p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>委托代理人（监护人）：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.personName}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>联系电话：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.phone}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>证件类型：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.credentialsType.name()]}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>证件号：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.oldMainOwnerPerson.proxyPerson.credentialsNumber}</p:paragraph>
+        </p:cell>
+
+
+
+        <p:cell fixedHeight="25">
+            <p:paragraph>买受人：</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25" colspan="5" borderWidthBottom="1" horizontalAlignment="left">
+            <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="#{_businessPools.personName}   " /></ui:repeat></p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25">
+            <p:paragraph>证件类型：</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="25" colspan="3" borderWidthBottom="1" horizontalAlignment="left">
+            <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="#{messages[_businessPools.credentialsType.name()]}   " /></ui:repeat></p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>联系电话:</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.phone}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>证件号:</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="5">
+            <p:paragraph><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="#{_businessPools.credentialsNumber}   " /></ui:repeat></p:paragraph>
+        </p:cell>
+
+
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>委托代理人（监护人）：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.proxyPerson.personName}</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>联系电话：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.proxyPerson.phone}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>证件类型：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.mainOwnerPerson.proxyPerson.credentialsType.name()]}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" fixedHeight="25">
+            <p:paragraph>证件号：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthBottom="1" horizontalAlignment="left" colspan="2">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.mainOwnerPerson.proxyPerson.credentialsNumber}</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     根 据《中华人民共和国合同法》、《中华人民共和国城市房地产管理法》及其他有关法律法规的规定，买受人与出卖人在平等、自愿、协商一致的基础上就买卖存量房达成如下协议：</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     第一条 房屋基本情况</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" multipliedLeading="1.5" leading="1.5">
+            <p:paragraph multipliedLeading="1.5" leading="1.5">    1.出卖人所售房屋（以下简称该房屋）坐落于<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{_houseBusiness.afterBusinessHouse.address}</p:font>。该房屋共<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{_houseBusiness.afterBusinessHouse.upFloorCount}</p:font>层，所在<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{_houseBusiness.afterBusinessHouse.inFloorName}</p:font>层。建筑面积<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{_houseBusiness.afterBusinessHouse.houseArea}</p:font>平方米。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     第二条 房屋权属情况</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     1.该房屋所有权证证号为：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</p:font> ，共有权证证号为<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.pooCards} </p:font>。</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     2.该房屋占用的国有土地使用权以：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{dictionary.getWordValue(ownerBusinessHome.oldSellContractInfo.landGetMode)}</p:font> ，方式获得。土地使用权证号为：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.landCardNo} </p:font>。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     3.该房屋性质为：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"> #{messages[_houseBusiness.afterBusinessHouse.houseType.name()]}</p:font></p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     4.该房屋的租赁情况为：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"> #{dictionary.getWordValue(ownerBusinessHome.oldSellContractInfo.leaseMemo)}</p:font>。</p:paragraph>
+        </p:cell>
+
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     第三条  该房屋交易达成方式为<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"> #{ownerBusinessHome.oldSellContractInfo.sellType}</p:font>。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     1.出卖人与买受人自行成交达成交易。</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     2.通过房地产经纪机构成交达成交易，房地产经纪机构名称为<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"> #{ownerBusinessHome.oldSellContractInfo.houseSellCompany}</p:font>。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     第四条  房屋的成交价格和房款支付方式</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" multipliedLeading="1.5" leading="1.5">
+            <p:paragraph>     1.经买卖双方协商一致，该房屋成交价格为：人民币（小写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"> <p:text value="#{ownerBusinessHome.instance.houseContract.sumPrice}"><f:convertNumber pattern="#0.00"/></p:text></p:font>，（大写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.instance.houseContract.bigSumPrice} </p:font> 。买卖双方约定，买受人在<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"><p:text value="#{ownerBusinessHome.oldSellContractInfo.earnestDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:font>前交付定金人民币（小写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.earnestMoney}</p:font>元，（大写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.bigEarnestMoney}</p:font>(定金不高于成交价格的20％）。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     2.双方按下列第<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.payType}</p:font> 项方式交付房款，定金于买受人交付房款时，抵作房款。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     （1）一次性付款。买受人<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"><p:text value="#{ownerBusinessHome.oldSellContractInfo.allPayDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:font> 前支付全部房款；</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" multipliedLeading="1.5" leading="1.5">
+            <p:paragraph>     （2）贷款方式付款。买受人在<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"><p:text value="#{ownerBusinessHome.oldSellContractInfo.debitDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:font>前支付房屋首付款人民币（小写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"><p:text value="#{ownerBusinessHome.oldSellContractInfo.debitFirstMoney}"><f:convertNumber pattern="#0.00"/></p:text></p:font>元，（大写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.bigDebitFirstMoney}</p:font>余款人民币（小写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"><p:text value="#{ownerBusinessHome.oldSellContractInfo.debitOtherMoney}"><f:convertNumber pattern="#0.00"/></p:text></p:font>元，（大写）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.bigDebitOtherMoney}</p:font>以贷款方式支付，买受人购房贷款由银行或住房公积金管理中心直接将贷款划入出卖人的银行账户（具体的贷款金额按最终审核发放为准，首付款多退少补）。</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     （3）其他方式。<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.payOther}</p:font> 。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     3.关于贷款的约定</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     买受人因自身原因未获得贷款部门批准的，双方同意按照第。<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.debitType}</p:font> 种方式解决：</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     （1）买受人自行筹齐剩余房价款，以现金形式支付给出卖人；</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph>     （2）买受人继续申请其他银行贷款，至贷款批准，其间产生的费用由买受人自行负担；</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph rendered="#{not empty ownerBusinessHome.oldSellContractInfo.debitOther}">     （3）<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.debitOther}</p:font> 。</p:paragraph>
+            <p:paragraph rendered="#{empty ownerBusinessHome.oldSellContractInfo.debitOther}">         （3）___________________________________________________________________ </p:paragraph>
+
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     4.买卖双方约定按下列第<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.keepingType}</p:font>项方式支付及保管房款。</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >    （1）买卖双方自行交割。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >    （2）委托银行机构对交易资金进行托管，通过托管银行划转交易资金。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" multipliedLeading="1.5" leading="1.5" >
+            <p:paragraph >     （3）通过存量房交易结算资金专用存款账户划转。买受人将交易资金存入买卖双方共同委托的<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.contractSellCompany}</p:font>（备案的房地产经纪机构）在<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.bankName}</p:font>银行设立的存量房交易结算资金专用存款账户划转，账号为<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.bankNameNo}</p:font>。买受人取得房屋所有权证后，出卖人到委托的房地产经纪机构按照《存量房交易结算资金划转协议》的约定办理资金划转手续。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     第五条 房屋产权及具体状况的承诺</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     出卖人保证该房屋没有产权纠纷，因出卖人原因造成该房屋不能办理产权登记或发生债权债务等纠纷的，由出卖人承担相应责任。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     出卖人应当保证已如实陈述该房屋权属状况、附属设施设备、装饰装修情况和相关关系，买受人对出卖人出售的该房屋具体状况充分了解，自愿买受该房屋。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10"  multipliedLeading="1.5" leading="1.5">
+            <p:paragraph>     该房屋在交付日以前发生的水、电、<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.houseOtherMemo}</p:font>等费用由出卖人承担，交付日以后（含当日）发生的费用由买受人承担。出卖人同意其缴纳的该房屋专项维修资金的账面余额转移至买受人名下。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     第六条 房屋交付时间</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10"  multipliedLeading="1.5" leading="1.5">
+            <p:paragraph>      出卖人应当在<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H"><p:text value="#{ownerBusinessHome.oldSellContractInfo.payHouseDate}"><s:convertDateTime pattern="#{messages.displayDatePattern}"/></p:text></p:font>前将该房屋交付给买受人。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10"  multipliedLeading="1.5" leading="1.5">
+            <p:paragraph>     第七条 买卖双方约定按以下第<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.breachType}</p:font>项方式承担违约责任。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     1.按照国家的相关规定执行</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph rendered="#{not empty ownerBusinessHome.oldSellContractInfo.breachOther}">     2.<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.breachOther}</p:font> 。</p:paragraph>
+            <p:paragraph rendered="#{empty ownerBusinessHome.oldSellContractInfo.breachOther}">         2.___________________________________________________________________ </p:paragraph>
+
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     第八条 税、费承担方式</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     买卖双方已知道国家规定的各项税、费标准，经协商同意按照下列第<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.taxType}</p:font>种方式承担过户税、费。</p:paragraph>
+        </p:cell>
+
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     1.买卖双方按国家规定各自承担应由其缴纳的税、费；</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     2.所需税、费全部由<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.taxPay}</p:font>方缴纳；</p:paragraph>
+        </p:cell>
+
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph rendered="#{not empty ownerBusinessHome.oldSellContractInfo.taxOther}">     3.<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.taxOther}</p:font> 。</p:paragraph>
+            <p:paragraph rendered="#{empty ownerBusinessHome.oldSellContractInfo.taxOther}">         3.___________________________________________________________________ 。</p:paragraph>
+
+        </p:cell>
+
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     第九条 争议解决方式</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     本合同项下发生的争议，由双方协商解决；协商不成的，按照下列第<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.disputeType}</p:font>种方式解决。</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     1.依法向房屋所在地人民法院起诉；</p:paragraph>
+        </p:cell>
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     2.提交丹东市仲裁委员会仲裁。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" >
+            <p:paragraph >     第十条 其他约定事项：<p:font size="14" style="underline" name="STSong-Light" encoding="UniGB-UCS2-H">#{ownerBusinessHome.oldSellContractInfo.otherMemo}</p:font></p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" multipliedLeading="1.5" leading="1.5">
+            <p:paragraph >     第十一条 本合同自双方签字（盖章）之日起生效。对本合同的解除，应当采用书面形式，并共同申请撤销网签备案。</p:paragraph>
+        </p:cell>
+
+        <p:cell borderWidthLeft="0" colspan="6" horizontalAlignment="left" verticalAlignment="middle" paddingTop="10" multipliedLeading="1.5" leading="1.5" >
+            <p:paragraph >     第十二条 本合同共_______页，一式_______份，具有同等法律效力，其中出卖人_______份，买受人_______份，交易管理及登记部门各一份。</p:paragraph>
+        </p:cell>
+
+
+    </p:table>
+
+        <p:table columns="2" widths="1 1" headerRows="0" footerRows="0" widthPercentage="100">
+            <f:facet name="defaultCell">
+                <p:cell horizontalAlignment="left" verticalAlignment="middle" noWrap="false" border="0" padding="10" />
+            </f:facet>
+            <p:cell fixedHeight="25">
+                <p:paragraph>出卖人：</p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>买受人：</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>法定代表人：</p:paragraph>
+            </p:cell>
+
+            <p:cell>
+                <p:paragraph>法定代表人：</p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>委托代理人 ： </p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>委托代理人 ： </p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph> </p:paragraph>
+            </p:cell>
+            <p:cell>
+                <p:paragraph>签订时间：_____年_____月____日 </p:paragraph>
+            </p:cell>
+
+        </p:table>
+
+
+
+</p:font>
+<p:newPage/>
+</a:repeat>
+</p:document>
