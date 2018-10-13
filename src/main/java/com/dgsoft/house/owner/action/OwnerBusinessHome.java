@@ -77,6 +77,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+
     public CardInfo getCardInfoByCardType(String cardTypeName){
         for (MakeCard makeCard:getInstance().getMakeCards()){
             if (makeCard.getType().equals(MakeCard.CardType.valueOf(MakeCard.CardType.class,cardTypeName)) ){
@@ -123,6 +124,14 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return null;
     }
 
+    public OldSellContractInfo getOldSellContractInfo(){
+        if(!getInstance().getOldSellContractInfos().isEmpty()){
+            return getInstance().getOldSellContractInfos().iterator().next();
+        }
+
+        return null;
+
+    }
 
 
 //    public SaleInfo getSaleInfo(){

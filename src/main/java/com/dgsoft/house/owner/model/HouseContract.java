@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.model;
 // Generated Aug 24, 2015 1:17:35 PM by Hibernate Tools 4.0.0
 
+import com.dgsoft.common.BigMoneyUtil;
 import com.dgsoft.house.SalePayType;
 import com.dgsoft.house.SaleType;
 import org.hibernate.annotations.*;
@@ -172,4 +173,10 @@ public class HouseContract implements java.io.Serializable {
 	public void setSaleArea(BigDecimal saleArea) {
 		this.saleArea = saleArea;
 	}
+
+
+    @Transient
+    public String getBigSumPrice(){
+        return BigMoneyUtil.getBigMoney(getSumPrice().doubleValue());
+    }
 }

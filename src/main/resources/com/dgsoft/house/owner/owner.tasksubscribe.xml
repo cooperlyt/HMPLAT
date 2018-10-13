@@ -665,7 +665,11 @@
         </description>
     </view-subscribe>
 
-
+    <view-subscribe name="RepairMoneyPayView" page="/business/houseOwner/subscribe/RepairMoneyPayView.xhtml">
+        <description>
+            维修资金收费查看
+        </description>
+    </view-subscribe>
 
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
@@ -1322,7 +1326,18 @@
         </description>
     </edit-subscribe>
 
+    <edit-subscribe name="OldSellContractInfoEdit" page="/business/houseOwner/subscribe/OldSellContractInfoEdit.xhtml" component="">
+        <description>
+            存量房备案合同编辑(凤城)
+        </description>
+    </edit-subscribe>
 
+
+    <edit-subscribe name="RepairMoneyPayEdit" page="/business/houseOwner/subscribe/RepairMoneyPayEdit.xhtml" component="repairMoneyPaySubscribe">
+        <description>
+            维修缴费费率
+        </description>
+    </edit-subscribe>
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 

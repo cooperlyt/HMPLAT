@@ -116,7 +116,9 @@ public class MoneyBusinessSubscribe extends OwnerEntityHome<MoneyBusiness> imple
 
     @Override
     public boolean saveSubscribe() {
-        getInstance().setHouseContract(ownerBusinessHome.getInstance().getSingleHoues().getHouseContract());
+        if (!ownerBusinessHome.getInstance().getMoneyBusinesses().isEmpty()) {
+            getInstance().setHouseContract(ownerBusinessHome.getInstance().getSingleHoues().getHouseContract());
+        }
         return isPass();
     }
 }

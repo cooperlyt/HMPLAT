@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
+
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.singleHoues.repairMoneyPays}">
+        <dh:entryGridBlock columns="4" >
+            <h:outputText value="缴费（房改）面积"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().repairMoneyInfo.publicArea}"/>
+
+            <h:outputText value="缴费费率"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().repairMoneyInfo.publicRate}"/>
+
+            <h:outputText value="维修资金应收合计"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().mustMoney}"/>
+            </dh:entryGridColumn>
+
+
+
+        </dh:entryGridBlock>
+    </a:outputPanel>
+    <a:outputPanel rendered="#{empty ownerBusinessHome.singleHoues.repairMoneyPays}">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="维修资金"/>
+            <dh:entryGridColumn colspan="3">
+                <h:outputText value="无维修资金收费项目"/>
+            </dh:entryGridColumn>
+        </dh:entryGridBlock>
+    </a:outputPanel>
+
+
+</ui:composition>
