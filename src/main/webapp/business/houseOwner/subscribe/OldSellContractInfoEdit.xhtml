@@ -9,9 +9,9 @@
 
 
     <br><label><font size="4">（合同编号：<u>#{ownerBusinessHome.instance.singleHoues.houseContract.contractNumber}</u>）</font></label></br>
-<br><font size="4">根据《中华人民共和国合同法》、《中华人民共和国城市房地产管理法》及其他有关法律法规的规定，买受人与出卖人在平等、自愿、协商一致的基础上就买卖存量房达成如下协议：</font></br>
-<br><label><font size="4">第一条 房屋基本情况</font></label></br>
-<br><font size="4">1.出卖人所售房屋（以下简称该房屋）坐落于<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.address}</u>
+    <br><font size="4">根据《中华人民共和国合同法》、《中华人民共和国城市房地产管理法》及其他有关法律法规的规定，买受人与出卖人在平等、自愿、协商一致的基础上就买卖存量房达成如下协议：</font></br>
+    <br><label><font size="4">第一条 房屋基本情况</font></label></br>
+    <br><font size="4">1.出卖人所售房屋（以下简称该房屋）坐落于<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.address}</u>
     该房屋共<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.upFloorCount}" size="5" required="true" id="upFloorCount"> <r:validator event="blur"/> <f:validateDoubleRange minimum="0"/> </h:inputText>层，
     所在<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.inFloorName}" size="5" required="true" id="inFloorName">层。</h:inputText>
     建筑面积<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.houseArea}" size="20" required="true" id="houseArea"> <r:validator event="blur"/> <f:validateDoubleRange minimum="0"/> <f:convertNumber pattern="#0.000"/> </h:inputText>平方米。
@@ -41,17 +41,67 @@
 
     <br><label><font size="4">第四条  房屋的成交价格和房款支付方式</font></label></br>
     <div class="form-inline"><font size="4">1.经买卖双方协商一致，该房屋成交价格为：人民币（小写）<u>#{ownerBusinessHome.instance.houseContract.sumPrice}</u>元，（大写）<u>#{ownerBusinessHome.instance.houseContract.bigSumPrice}</u>元整。买卖双方约定，
-    买受人在<h:inputText id="closeDate" styleClass="js-datepicker form-control" size="20" value="#{oldSellContractInfoSubsrcibe.instance.earnestDate}">
+    买受人在<h:inputText id="earnestDate" styleClass="js-datepicker form-control" size="20" value="#{oldSellContractInfoSubsrcibe.instance.earnestDate}">
     <s:convertDateTime pattern="#{messages.datePattern}"/></h:inputText>日前交付定金人民币（小写）<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.earnestMoney}" size="25" id="earnestMoney"><r:validator event="blur"/><f:validateDoubleRange minimum="0"/> <f:convertNumber pattern="#0.00"/></h:inputText>
      元整（定金不高于成交价格的20％）。</font></div>
-    <div class="form-inline">
-
-    <br><font size="4">2.双方按下列第     项方式交付房款，定金于买受人交付房款时，抵作房款。</font></br>
 
 
+    <br><font size="4">2.双方按下列第<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.payType}" size="10" id="payType"></h:inputText>项方式交付房款，定金于买受人交付房款时，抵作房款。</font></br>
+    <div class="form-inline"><font size="4">（1）一次性付款。买受人在<h:inputText id="allPayDate" styleClass="js-datepicker form-control" size="20" value="#{oldSellContractInfoSubsrcibe.instance.allPayDate}">
+    <s:convertDateTime pattern="#{messages.datePattern}"/></h:inputText>日前支付全部房款；</font></div>
+    <div class="form-inline"><font size="4">（2）贷款方式付款。买受人在<h:inputText id="debitDate" styleClass="js-datepicker form-control" size="20" value="#{oldSellContractInfoSubsrcibe.instance.debitDate}">
+    <s:convertDateTime pattern="#{messages.datePattern}"/></h:inputText>日前支付房屋首付款人民币（小写）<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.debitFirstMoney}" size="25" id="debitFirstMoney"><r:validator event="blur"/><f:validateDoubleRange minimum="0"/> <f:convertNumber pattern="#0.00"/></h:inputText>
+    元，余款人民币（小写）<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.debitOtherMoney}" size="25" id="debitOtherMoney"><r:validator event="blur"/><f:validateDoubleRange minimum="0"/>
+    <f:convertNumber pattern="#0.00"/></h:inputText>元整以贷款方式支付，买受人购房贷款由银行或住房公积金管理中心直接将贷款划入出卖人的银行账户（具体的贷款金额按最终审核发放为准，首付款多退少补）。</font></div>
+    <div class="form-inline"><font size="4">（3）其他方式。<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.payOther}" size="75" id="payOther"></h:inputText></font></div>
+
+    <br><font size="4">3.关于贷款的约定</font></br>
+    <br><font size="4">买受人因自身原因未获得贷款部门批准的，双方同意按照第<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.debitType}" size="4" id="debitType"></h:inputText>种方式解决：</font></br>
+    <br><font size="4">（1）买受人自行筹齐剩余房价款，以现金形式支付给出卖人；</font></br>
+    <br><font size="4">（2）买受人继续申请其他银行贷款，至贷款批准，其间产生的费用由买受人自行负担；</font></br>
+    <br><font size="4">（3）<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.debitOther}" size="85" id="debitOther"></h:inputText></font></br>
+    <br><font size="4">4.买卖双方约定按下列第<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.keepingType}" size="4" id="keepingType"></h:inputText>项方式支付及保管房款。</font></br>
+    <br><font size="4">（1）买卖双方自行交割。</font></br>
+    <br><font size="4">（2）委托银行机构对交易资金进行托管，通过托管银行划转交易资金。</font></br>
+    <br><font size="4">（3）通过存量房交易结算资金专用存款账户划转。买受人将交易资金存入买卖双方共同委托的<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.contractSellCompany}" size="20" id="contractSellCompany"></h:inputText>（备案的房地产经纪机构）在
+        <h:inputText value="#{oldSellContractInfoSubsrcibe.instance.bankName}" size="20" id="bankName"></h:inputText>银行设立的存量房交易结算资金专用存款账户划转，账号为
+        <h:inputText value="#{oldSellContractInfoSubsrcibe.instance.bankNameNo}" size="20" id="bankNameNo"></h:inputText>。买受人取得房屋所有权证后，出卖人到委托的房地产经纪机构按照《存量房交易结算资金划转协议》的约定办理资金划转手续。</font></br>
 
 
+    <br><label><font size="4">第五条 房屋产权及具体状况的承诺</font></label></br>
+    <br><font size="4">出卖人保证该房屋没有产权纠纷，因出卖人原因造成该房屋不能办理产权登记或发生债权债务等纠纷的，由出卖人承担相应责任。</font></br>
+    <br><font size="4">出卖人应当保证已如实陈述该房屋权属状况、附属设施设备、装饰装修情况和相关关系，买受人对出卖人出售的该房屋具体状况充分了解，自愿买受该房屋。</font></br>
+    <br><font size="4"> 该房屋在交付日以前发生的水、电、<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.houseOtherMemo}" size="50" id="houseOtherMemo"></h:inputText>等费用由出卖人承担，交付日以后（含当日）发生的费用由买受人承担。出卖人同意其缴纳的该房屋专项维修资金的账面余额转移至买受人名下。</font></br>
+
+    <br><label><font size="4">第六条 房屋交付时间</font></label></br>
+    <div class="form-inline"><font size="4">出卖人应当在<h:inputText id="payHouseDate" styleClass="js-datepicker form-control" size="20" value="#{oldSellContractInfoSubsrcibe.instance.payHouseDate}">
+    <s:convertDateTime pattern="#{messages.datePattern}"/></h:inputText>日前将该房屋交付给买受人。</font></div>
 
 
-    </div>
+    <br><label><font size="4">第七条 买卖双方约定按以下第<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.breachType}" size="5" id="breachType"></h:inputText>项方式承担违约责任。</font></label></br>
+    <br><font size="4">1.按照国家的相关规定执行；</font></br>
+    <br><font size="4">2.<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.breachOther}" size="85" id="breachOther"></h:inputText></font></br>
+
+    <br><label><font size="4">第八条 税、费承担方式</font></label></br>
+    <br><font size="4">买卖双方已知道国家规定的各项税、费标准，经协商同意按照下列第<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.taxType}" size="5" id="taxType"></h:inputText>种方式承担过户税、费</font></br>
+    <br><font size="4">1.买卖双方按国家规定各自承担应由其缴纳的税、费；</font></br>
+    <br><font size="4">2.所需税、费全部由<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.taxPay}" size="5" id="taxPay"></h:inputText>方缴纳；</font></br>
+    <br><font size="4">3.<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.taxOther}" size="85" id="taxOther"></h:inputText></font></br>
+
+    <br><label><font size="4">第九条 争议解决方式</font></label></br>
+    <br><font size="4">本合同项下发生的争议，由双方协商解决；协商不成的，按照下列第<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.disputeType}" size="5" id="disputeType"></h:inputText>种方式解决。</font></br>
+    <br><font size="4">1.依法向房屋所在地人民法院起诉；</font></br>
+    <br><font size="4">2.提交丹东市仲裁委员会仲裁</font></br>
+
+    <br><label><font size="4">第十条 其他约定事项：<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.otherMemo}" size="100" id="otherMemo"></h:inputText></font></label></br>
+
+
+    <br><label><font size="4">第十一条 本合同自双方签字（盖章）之日起生效。对本合同的解除，应当采用书面形式，并共同申请撤销网签备案。</font></label></br>
+
+    <br><label><font size="4">第十二条 本合同共<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.pages}" size="5" id="pages"></h:inputText>页，
+    一式<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.sheres}" size="5" id="sheres"></h:inputText>份，具有同等法律效力，其中出卖人
+        <h:inputText value="#{oldSellContractInfoSubsrcibe.instance.sellerSheres}" size="5" id="sellerSheres"></h:inputText>份，买受人
+        <h:inputText value="#{oldSellContractInfoSubsrcibe.instance.buyerSheres}" size="5" id="buyerSheres"></h:inputText>份，交易管理及登记部门各一份。</font></label></br>
+
+
 </ui:composition>

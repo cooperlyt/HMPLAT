@@ -109,3 +109,5 @@ INSERT DB_PLAT_SYSTEM.WORD (ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, E
   value ('lease.2','0','出卖人已将该房屋出租，买受人为该房屋承租人','oldSell.lease',null,2,true);
 INSERT DB_PLAT_SYSTEM.WORD (ID, _KEY, _VALUE, CATEGORY, DESCRIPTION, PRIORITY, ENABLE)
   value ('lease.3','0','出卖人已将该房屋出租，承租人已放弃优先购买权','oldSell.lease',null,3,true);
+
+ALTER TABLE HOUSE_OWNER_RECORD.OLD_SELL_CONTRACT_INFO ADD TAX_PAY varchar(5) NULL;

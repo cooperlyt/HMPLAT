@@ -48,6 +48,9 @@ public class OldSellContractInfo implements java.io.Serializable {
 
     private String BreachType;
     private String BreachOther;
+
+
+    private String TaxType;
     private String TaxPay;
     private String TaxOther;
 
@@ -326,6 +329,16 @@ public class OldSellContractInfo implements java.io.Serializable {
 
     public void setBreachOther(String breachOther) {
         BreachOther = breachOther;
+    }
+
+    @Column(name = "TAX_TYPE", length = 5)
+    @Size(max = 5)
+    public String getTaxType() {
+        return TaxType;
+    }
+
+    public void setTaxType(String taxType) {
+        TaxType = taxType;
     }
 
 
