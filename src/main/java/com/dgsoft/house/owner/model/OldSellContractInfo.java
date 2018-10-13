@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.model;
 
+import com.dgsoft.common.BigMoneyUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -408,6 +409,19 @@ public class OldSellContractInfo implements java.io.Serializable {
     }
 
 
+    @Transient
+     public String getBigEarnestMoney(){
+        return BigMoneyUtil.getBigMoney(getEarnestMoney().doubleValue());
+    }
 
+    @Transient
+    public String getBigDebitFirstMoney(){
+        return BigMoneyUtil.getBigMoney(getDebitFirstMoney().doubleValue());
+    }
+
+    @Transient
+    public String getBigDebitOtherMoney(){
+        return BigMoneyUtil.getBigMoney(getDebitOtherMoney().doubleValue());
+    }
 
 }

@@ -9,17 +9,44 @@
 
 
     <br><label><font size="4">（合同编号：<u>#{ownerBusinessHome.instance.singleHoues.houseContract.contractNumber}</u>）</font></label></br>
-    <br><font size="4">根据《中华人民共和国合同法》、《中华人民共和国城市房地产管理法》及其他有关法律法规的规定，买受人与出卖人在平等、自愿、协商一致的基础上就买卖存量房达成如下协议：</font></br>
-    <br><label><font size="4">第一条 房屋基本情况</font></label></br>
-    <br><font size="4">1.出卖人所售房屋（以下简称该房屋）坐落于<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.address}</u>该房屋共<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.upFloorCount}</u>层，所在<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.inFloorName}</u>层。建筑面积<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.houseArea}</u>平方米。该房屋规划设计用途为<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.designUseType}</u>。</font></br>
+<br><font size="4">根据《中华人民共和国合同法》、《中华人民共和国城市房地产管理法》及其他有关法律法规的规定，买受人与出卖人在平等、自愿、协商一致的基础上就买卖存量房达成如下协议：</font></br>
+<br><label><font size="4">第一条 房屋基本情况</font></label></br>
+<br><font size="4">1.出卖人所售房屋（以下简称该房屋）坐落于<u>#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.address}</u>
+    该房屋共<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.upFloorCount}" size="5" required="true" id="upFloorCount"> <r:validator event="blur"/> <f:validateDoubleRange minimum="0"/> </h:inputText>层，
+    所在<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.inFloorName}" size="5" required="true" id="inFloorName">层。</h:inputText>
+    建筑面积<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.houseArea}" size="20" required="true" id="houseArea"> <r:validator event="blur"/> <f:validateDoubleRange minimum="0"/> <f:convertNumber pattern="#0.000"/> </h:inputText>平方米。
+    该房屋规划设计用途为<h:inputText value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.designUseType}" size="10" required="true" id="designUseType">  </h:inputText>。</font></br>
+
+<br><label><font size="4">第二条 房屋权属情况</font></label></br>
+    <br><font size="4">1.该房屋所有权证证号为：<u>#{ownerBusinessHome.getCardNoByType('OWNER_RSHIP').number}</u>，共有权证证号为
+    <h:inputText value="#{oldSellContractInfoSubsrcibe.instance.pooCards}" size="30" id="pooCards"></h:inputText>。</font></br>
+    <br><font size="4">2.该房屋占用的国有土地使用权以
+        <h:selectOneMenu id="landGetMode" value="#{oldSellContractInfoSubsrcibe.instance.landGetMode}"
+                         styleClass="selectpicker select-menu-btn input-group-first">
+            <s:selectItems value="#{dictionary.getWordList('55')}" var="_word"
+                           itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        </h:selectOneMenu>
+        方式获得。土地使用权证号为：<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.landCardNo}" size="20" id="landCardNo"></h:inputText>。</font>
+    </br>
+    <br><font size="4">3.该房屋性质为：<h:selectOneMenu id="houseTypeInput" value="#{ownerBusinessHome.instance.singleHoues.afterBusinessHouse.houseType}" styleClass="selectpicker select-menu-btn input-group-first">
+        <s:selectItems value="#{houseProperties}" var="_word" itemValue="#{_word}" label="#{dictionary.getEnumLabel(_word)}" noSelectionLabel="#{messages.noSelectLabel}"/>
+        <s:convertEnum/>
+    </h:selectOneMenu>。</font></br>
+    <br><div class="form-inline"><font size="4">4.该房屋的租赁情况为：<h:selectOneMenu id="leaseMemo" value="#{oldSellContractInfoSubsrcibe.instance.leaseMemo}" styleClass="form-control selectpicker edit-select input-group-mid"> <s:selectItems value="#{dictionary.getWordList('oldSell.lease')}" var="_word" itemValue="#{_word.id}" label="#{_word.value}" noSelectionLabel="#{messages.noSelectLabel}"/></h:selectOneMenu></font></div></br>
+
+    <br><label><font size="4">第三条  该房屋交易达成方式为<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.sellType}" size="2" id="sellType"></h:inputText>。</font></label></br>
+    <br><font size="4">1.出卖人与买受人自行成交达成交易。</font></br>
+    <br><font size="4">2.通过房地产经纪机构成交达成交易，房地产经纪机构名称为<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.houseSellCompany}" size="25" id="houseSellCompany"></h:inputText></font></br>
 
 
-
-
-
-
+    <br><label><font size="4">第四条  房屋的成交价格和房款支付方式</font></label></br>
+    <div class="form-inline"><font size="4">1.经买卖双方协商一致，该房屋成交价格为：人民币（小写）<u>#{ownerBusinessHome.instance.houseContract.sumPrice}</u>元，（大写）<u>#{ownerBusinessHome.instance.houseContract.bigSumPrice}</u>元整。买卖双方约定，
+    买受人在<h:inputText id="closeDate" styleClass="js-datepicker form-control" size="20" value="#{oldSellContractInfoSubsrcibe.instance.earnestDate}">
+    <s:convertDateTime pattern="#{messages.datePattern}"/></h:inputText>日前交付定金人民币（小写）<h:inputText value="#{oldSellContractInfoSubsrcibe.instance.earnestMoney}" size="25" id="earnestMoney"><r:validator event="blur"/><f:validateDoubleRange minimum="0"/> <f:convertNumber pattern="#0.00"/></h:inputText>
+     元整（定金不高于成交价格的20％）。</font></div>
     <div class="form-inline">
 
+    <br><font size="4">2.双方按下列第     项方式交付房款，定金于买受人交付房款时，抵作房款。</font></br>
 
 
 
