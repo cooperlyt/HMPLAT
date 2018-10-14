@@ -177,6 +177,10 @@ public class HouseContract implements java.io.Serializable {
 
     @Transient
     public String getBigSumPrice(){
-        return BigMoneyUtil.getBigMoney(getSumPrice().doubleValue());
+        if (getSumPrice()!=null) {
+            return BigMoneyUtil.getBigMoney(getSumPrice().doubleValue());
+        }else{
+            return null;
+        }
     }
 }

@@ -424,17 +424,30 @@ public class OldSellContractInfo implements java.io.Serializable {
 
     @Transient
      public String getBigEarnestMoney(){
-        return BigMoneyUtil.getBigMoney(getEarnestMoney().doubleValue());
+        if (getEarnestMoney()!=null) {
+            return BigMoneyUtil.getBigMoney(getEarnestMoney().doubleValue());
+        }else{
+            return  null;
+        }
     }
 
     @Transient
     public String getBigDebitFirstMoney(){
-        return BigMoneyUtil.getBigMoney(getDebitFirstMoney().doubleValue());
+
+        if (getDebitFirstMoney()!=null) {
+            return BigMoneyUtil.getBigMoney(getDebitFirstMoney().doubleValue());
+        }else{
+            return null;
+        }
     }
 
     @Transient
     public String getBigDebitOtherMoney(){
-        return BigMoneyUtil.getBigMoney(getDebitOtherMoney().doubleValue());
+        if (getDebitOtherMoney()!=null) {
+            return BigMoneyUtil.getBigMoney(getDebitOtherMoney().doubleValue());
+        }else {
+            return null;
+        }
     }
 
 }
