@@ -33,7 +33,7 @@
                      maxlength="100"
                      value="#{leaseHouseSubsrcibe.instance.sellCompanyName}"
                      styleClass="form-control"
-                     required="true">
+                     >
         </h:inputText>
     </s:decorate>
 
@@ -109,7 +109,6 @@
             <h:inputText value="#{leaseHouseSubsrcibe.instance.evaluateRent}"
                          label="#{messages.LEASE_EVALUATE_RENT}"
                          size="20"
-                         required="true"
                          id="evaluateRent"
                          p:placeholder="#{messages.LEASE_EVALUATE_RENT}">
                 <r:validator event="blur"/>

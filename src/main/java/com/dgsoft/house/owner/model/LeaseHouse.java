@@ -113,8 +113,7 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
         this.selfRent = selfRent;
     }
 
-    @Column(name = "EVALUATE_RENT", nullable = false, scale = 4)
-    @NotNull
+    @Column(name = "EVALUATE_RENT", scale = 4)
     public BigDecimal getEvaluateRent() {
         return evaluateRent;
     }
@@ -234,8 +233,7 @@ public class LeaseHouse implements java.io.Serializable,TimeArea{
 
 
 
-    @Column(name = "SELL_COMPANY_NAME", nullable = false, length = 100)
-    @NotNull
+    @Column(name = "SELL_COMPANY_NAME", length = 100)
     @Size(max = 100)
     public String getSellCompanyName() {
         return sellCompanyName;
