@@ -1,0 +1,300 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="维修资金缴费单" margins="40 10 20 10">
+
+
+    <a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+        <p:font alignment="center" size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">维修资金缴费单
+            </p:paragraph>
+        </p:font>
+
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="11">
+            <p:table columns="6" widths="1 2 1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="true" border="0"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+                <p:cell>
+                    <p:paragraph>受理编号:</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理窗口:</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.applyEmp.windowsNo}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理日期:</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                            pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+                </p:cell>
+            </p:table>
+
+            <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="8" paddingTop="8" noWrap="false"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+
+
+                <p:cell>
+                    <p:paragraph>产籍号</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>登记类别</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>付款人</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>受理人</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty ownerBusinessHome.instance.applyEmp}">#{ownerBusinessHome.instance.applyEmp.empName}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>房屋坐落</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" >
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="100" >
+                    <p:paragraph>共有情况</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3"  verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldPoolType.name()]}</p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.##"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系：#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>建筑(房改)面积</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.publicArea} </p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>建筑(房改)费率</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.publicRate}元/平方米 </p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>私有面积</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="(#{not empty _houseBusiness.repairMoneyPays} and #{not empty _houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateArea}) ">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateArea} </p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>私有面积费率</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="(#{not empty _houseBusiness.repairMoneyPays} and #{not empty _houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateRate}) ">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateRate}元/平方米 </p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>应收合计</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().mustMoney}元 </p:paragraph>
+                </p:cell>
+
+
+            </p:table>
+            <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+
+        </p:font>
+
+
+        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">_______________________________________________________________________
+            </p:paragraph>
+        </p:font>
+
+        <p:font alignment="center" size="15" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+            <p:paragraph alignment="center">维修资金缴费单
+            </p:paragraph>
+        </p:font>
+
+
+        <p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="11">
+            <p:table columns="6" widths="1 2 1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="5" paddingTop="5" noWrap="true" border="0"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+                <p:cell>
+                    <p:paragraph>受理编号:</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理窗口:</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph>#{ownerBusinessHome.instance.applyEmp.windowsNo}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>受理日期:</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+                    <p:paragraph><p:text value="#{ownerBusinessHome.instance.applyTime}"><s:convertDateTime
+                            pattern="#{messages.displayDatePattern}"/></p:text></p:paragraph>
+                </p:cell>
+            </p:table>
+
+            <p:table columns="4" widths="1 2 1 2" headerRows="0" footerRows="0" widthPercentage="100">
+
+
+                <f:facet name="defaultCell">
+                    <p:cell padding="5" paddingBottom="8" paddingTop="8" noWrap="false"
+                            horizontalAlignment="center" verticalAlignment="middle"/>
+                </f:facet>
+
+
+
+                <p:cell>
+                    <p:paragraph>产籍号</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>登记类别</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>#{ownerBusinessHome.instance.defineName}</p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>付款人</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty ownerBusinessHome.instance.applyPersion}">#{ownerBusinessHome.instance.applyPersion.personName}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>受理人</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph
+                            rendered="#{not empty ownerBusinessHome.instance.applyEmp}">#{ownerBusinessHome.instance.applyEmp.empName}</p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>房屋坐落</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3" >
+                    <p:paragraph>#{_houseBusiness.afterBusinessHouse.address}</p:paragraph>
+                </p:cell>
+                <p:cell fixedHeight="100" >
+                    <p:paragraph>共有情况</p:paragraph>
+                </p:cell>
+                <p:cell colspan="3"  verticalAlignment="top" horizontalAlignment="left" noWrap="false">
+                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldPoolType.name()]}</p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.##"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系：#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>建筑(房改)面积</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.publicArea} </p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>建筑(房改)费率</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.publicRate}元/平方米 </p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>私有面积</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="(#{not empty _houseBusiness.repairMoneyPays} and #{not empty _houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateArea}) ">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateArea} </p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>私有面积费率</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="(#{not empty _houseBusiness.repairMoneyPays} and #{not empty _houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateRate}) ">#{_houseBusiness.repairMoneyPays.iterator().next().repairMoneyInfo.privateRate}元/平方米 </p:paragraph>
+                </p:cell>
+
+                <p:cell>
+                    <p:paragraph>应收合计</p:paragraph>
+                </p:cell>
+
+                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().mustMoney}元 </p:paragraph>
+                </p:cell>
+
+
+            </p:table>
+
+            <p:barCode code="#{ownerBusinessHome.instance.id}" codeType="CODE128"/>
+
+
+        </p:font>
+
+
+    </a:repeat>
+</p:document>
