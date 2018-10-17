@@ -1,0 +1,113 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <div class="form-checkbox">
+        <label>
+            维修资金缴费信息
+        </label>
+        <h:selectBooleanCheckbox value="#{repairMoneyPaySubscribe.have}">
+            <a:ajax event="click" render="contextMoneyPayPanel" execute="@this" oncomplete="bindclick();initDynamicEditInputs('#{r:clientId('contextMoneyPayPanel')}')"
+                    listener="#{repairMoneyPaySubscribe.checkHave}">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:selectBooleanCheckbox>
+
+    </div>
+
+    <a:outputPanel id="contextMoneyPayPanel" >
+        <a:outputPanel layout="block"  rendered="#{repairMoneyPaySubscribe.have}" style="margin-top: -16px">
+            <div class="form-inline">
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:param name="for" value="rateInput"/>
+                <ui:define name="label">
+                    费率
+                </ui:define>
+
+
+                <h:selectOneMenu id="rateInput"
+                                 value="#{repairMoneyPaySubscribe.instance.repairMoneyInfo.publicRate}"
+                                 label="费率"
+                                 styleClass="selectpicker edit-select"
+                                 required="true">
+
+                    <s:selectItems value="#{dictionary.getWordList('repair.rate')}"
+                                   var="_word"
+                                   itemValue="#{_word.id}"
+                                   label="#{_word.value}"
+                                   noSelectionLabel="#{messages.noSelectLabel}"/>
+                                   <f:convertNumber pattern="#0.00"/>
+                </h:selectOneMenu>
+
+            </s:decorate>
+
+
+            <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                <ui:define name="label">
+                    缴费面积
+                </ui:define>
+                <ui:param name="for" value="publicArea"/>
+                <h:inputText label="缴费面积"
+                             maxlength="30"
+                             id="publicArea"
+                             value="#{repairMoneyPaySubscribe.instance.repairMoneyInfo.publicArea}"
+                             styleClass="form-control"
+                             required="true">
+                    <r:validator event="blur"/>
+                    <f:validateDoubleRange minimum="0"/>
+                    <f:convertNumber pattern="#0.000"/>
+                </h:inputText>
+            </s:decorate>
+
+                <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                    <ui:param name="for" value="privateRate"/>
+                    <ui:define name="label">
+                        私有面积费率
+                    </ui:define>
+
+
+                    <h:selectOneMenu id="privateRate"
+                                     value="#{repairMoneyPaySubscribe.instance.repairMoneyInfo.privateRate}"
+                                     label="费率"
+                                     styleClass="selectpicker edit-select"
+                                     >
+
+                        <s:selectItems value="#{dictionary.getWordList('repair.rate')}"
+                                       var="_word"
+                                       itemValue="#{_word.id}"
+                                       label="#{_word.value}"
+                                       noSelectionLabel="#{messages.noSelectLabel}"/>
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:selectOneMenu>
+
+                </s:decorate>
+
+
+                <s:decorate template="/layout/edit-inline.xhtml" styleClass="form-group">
+                    <ui:define name="label">
+                        私有面积
+                    </ui:define>
+                    <ui:param name="for" value="privateArea"/>
+                    <h:inputText label="缴费面积"
+                                 maxlength="30"
+                                 id="privateArea"
+                                 value="#{repairMoneyPaySubscribe.instance.repairMoneyInfo.privateArea}"
+                                 styleClass="form-control"
+                                 required="true">
+                        <r:validator event="blur"/>
+                        <f:validateDoubleRange minimum="0"/>
+                        <f:convertNumber pattern="#0.000"/>
+                    </h:inputText>
+                </s:decorate>
+
+</div>
+        </a:outputPanel>
+    </a:outputPanel>
+</ui:composition>

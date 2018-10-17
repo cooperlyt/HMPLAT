@@ -16,6 +16,12 @@
             <h:outputText value="缴费费率"/>
             <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().repairMoneyInfo.publicRate}"/>
 
+            <h:outputText value="缴费私有面积"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().repairMoneyInfo.privateArea}"/>
+
+            <h:outputText value="缴费私有面积费率"/>
+            <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().repairMoneyInfo.privateRate}"/>
+
             <h:outputText value="维修资金应收合计"/>
             <dh:entryGridColumn colspan="3">
                 <h:outputText value="#{ownerBusinessHome.singleHoues.repairMoneyPays.iterator().next().mustMoney}"/>
