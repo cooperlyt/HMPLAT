@@ -121,7 +121,7 @@
 
 	<decision name="是否归档">
 		<transition to="结束" name="不归档">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP76')}"></condition>
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP76','WP50')}"></condition>
 		</transition>
 		<transition to="归档" name="归档"></transition>
 	</decision>
