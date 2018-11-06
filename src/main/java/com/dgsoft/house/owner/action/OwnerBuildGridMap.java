@@ -1,5 +1,8 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.system.NumberBuilder;
+import com.dgsoft.common.system.RunParam;
+import com.dgsoft.common.system.model.SystemParam;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.HouseStatus;
 import com.dgsoft.house.action.BuildHome;
@@ -96,7 +99,13 @@ public class OwnerBuildGridMap {
     }
 
     public void createSelectBizHouse(){
+
         this.selectBizHouse = new BusinessHouse();
+        if (!RunParam.instance().getBooleanParamValue("haveMapId")){
+            String number = NumberBuilder.instance().getDateNumber("randomMapId");
+            selectBizHouse.setMapNumber(number.substring(number.length() - 4));
+            selectBizHouse.setBlockNo(number.substring(0,10));
+        }
     }
 
     public void setSelectBizHouse(BusinessHouse selectBizHouse) {

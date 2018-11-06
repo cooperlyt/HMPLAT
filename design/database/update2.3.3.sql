@@ -3,3 +3,5 @@ ALTER TABLE HOUSE_OWNER_RECORD.LEASE MODIFY COLUMN EVALUATE_RENT decimal(19,4) N
 
 
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('88','维修资金缴费单','维修资金缴费单','/report/dgfcc/DgRepairMoneyPayStub.xhtml');
+
+UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.3.3' where ID='database_version';

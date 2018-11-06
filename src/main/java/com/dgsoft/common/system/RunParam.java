@@ -157,7 +157,7 @@ public class RunParam {
         if (systemParam == null){
             throw new IllegalArgumentException("not have system Param:" + name);
         }else if (!systemParam.getType().equals(SystemParam.ParamType.BOOLEAN)){
-            throw new IllegalArgumentException("system Param:" + name + " type not a DOUBLE");
+            throw new IllegalArgumentException("system Param:" + name + " type not a BOOLEAN");
         }else{
             return systemParam.getValue().trim().toLowerCase().equals("true") || systemParam.getValue().trim().equals('1');
         }
