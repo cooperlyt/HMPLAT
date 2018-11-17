@@ -28,7 +28,8 @@ public class RepairMoneyInfo implements java.io.Serializable {
 
     }
 
-    public RepairMoneyInfo(RepairMoneyPay repairMoneyPay,BigDecimal publicArea,BigDecimal privateArea,BigDecimal publicRate,BigDecimal privateRate){
+    public RepairMoneyInfo(String id,RepairMoneyPay repairMoneyPay,BigDecimal publicArea,BigDecimal privateArea,BigDecimal publicRate,BigDecimal privateRate){
+        this.id=id;
         this.publicArea=publicArea;
         this.privateArea=privateArea;
         this.publicRate=publicRate;
@@ -36,7 +37,8 @@ public class RepairMoneyInfo implements java.io.Serializable {
         this.repairMoneyPay=repairMoneyPay;
     }
 
-    public RepairMoneyInfo(RepairMoneyPay repairMoneyPay,BigDecimal publicArea,BigDecimal publicRate){
+    public RepairMoneyInfo(String id,RepairMoneyPay repairMoneyPay,BigDecimal publicArea,BigDecimal publicRate){
+        this.id=id;
         this.publicArea=publicArea;
         this.publicRate=publicRate;
         this.repairMoneyPay=repairMoneyPay;
@@ -47,10 +49,7 @@ public class RepairMoneyInfo implements java.io.Serializable {
     @Column(name = "ID", unique = true, nullable = false, length = 32)
     @NotNull
     @Size(max = 32)
-    @GenericGenerator(name = "pkGenerator",
-            strategy = "foreign",
-            parameters = { @Parameter(name = "property", value = "repairMoneyPay") })
-    @GeneratedValue(generator = "pkGenerator")
+
     public String getId() {
         return id;
     }

@@ -40,11 +40,13 @@ public class RepairMoneyPaySubscribe extends OwnerEntityHome<RepairMoneyPay> imp
     @Override
     public RepairMoneyPay createInstance(){
         RepairMoneyPay result = new RepairMoneyPay();
+        result.setId(ownerBusinessHome.getInstance().getId());
         result.setEmpName(authInfo.getLoginEmployee().getPersonName());
         result.setEmpCode(authInfo.getLoginEmployee().getId());
         result.setNoticeTime(new Date());
         result.setHouseBusiness(ownerBusinessHome.getInstance().getSingleHoues());
         RepairMoneyInfo repairMoneyInfo = new RepairMoneyInfo();
+        repairMoneyInfo.setId(ownerBusinessHome.getInstance().getId());
         repairMoneyInfo.setPublicArea(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse().getHouseArea());
         result.setRepairMoneyInfo(repairMoneyInfo);
         repairMoneyInfo.setRepairMoneyPay(result);
@@ -57,11 +59,11 @@ public class RepairMoneyPaySubscribe extends OwnerEntityHome<RepairMoneyPay> imp
         if (!ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().isEmpty()){
             if (ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next().getId()==null){
                 setInstance(ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next());
-                Logging.getLog(getClass()).debug("eeee--"+1111);
+
                 have=true;
             }else {
                 setId(ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next().getId());
-                Logging.getLog(getClass()).debug("eeee--"+ownerBusinessHome.getInstance().getSingleHoues().getRepairMoneyPays().iterator().next().getRepairMoneyInfo().getPublicRate());
+
                 have=true;
             }
 
@@ -124,9 +126,6 @@ public class RepairMoneyPaySubscribe extends OwnerEntityHome<RepairMoneyPay> imp
                 BigDecimal privateMoney = new BigDecimal(0);
                 privateMoney = getInstance().getRepairMoneyInfo().getPrivateRate().multiply(getInstance().getRepairMoneyInfo().getPrivateArea());
                 sumMoney = sumMoney.add(privateMoney);
-                Logging.getLog(getClass()).debug("yyyyyy--privateMoney" + privateMoney);
-                Logging.getLog(getClass()).debug("yyyyyy--sumMoney.add(privateMoney)" + sumMoney.add(privateMoney));
-                Logging.getLog(getClass()).debug("yyyyyy--sumMoney" + sumMoney);
             }
             getInstance().setMustMoney(sumMoney.setScale(0, BigDecimal.ROUND_HALF_UP));
             getInstance().setMoney(getInstance().getMustMoney());
