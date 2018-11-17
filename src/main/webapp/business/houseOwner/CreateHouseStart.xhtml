@@ -206,9 +206,9 @@
                         <f:convertNumber pattern="#0.000"/>
                     </h:inputText>
 
-                    <span class="input-group-addon">#{messages.House_UseArea}<s:span styleClass="required">*</s:span></span>
+                    <span class="input-group-addon">#{messages.House_UseArea}</span>
 
-                    <h:inputText value="#{ownerBuildGridMap.selectBizHouse.useArea}" size="20" styleClass="form-control" required="true"
+                    <h:inputText value="#{ownerBuildGridMap.selectBizHouse.useArea}" size="20" styleClass="form-control"
                                  id="useAreaInput" label="#{messages.House_UseArea}">
                         <rich:validator event="blur"/>
                         <f:validateDoubleRange minimum="0"/>
