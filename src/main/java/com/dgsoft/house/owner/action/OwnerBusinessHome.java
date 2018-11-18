@@ -391,6 +391,15 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     }
 
     /**
+     * 开发商代理人
+     */
+    @Deprecated
+    public BusinessPersion getPreSaleEntrust(){
+        return getInstance().getPreSaleEntrust();
+    }
+
+
+    /**
      * 债务人
      */
     @Deprecated

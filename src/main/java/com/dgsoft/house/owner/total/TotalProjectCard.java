@@ -1,6 +1,8 @@
 package com.dgsoft.house.owner.total;
 
 import cc.coopersoft.house.UseType;
+import com.dgsoft.house.HouseEntityLoader;
+import com.dgsoft.house.model.Developer;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessBuild;
 import com.dgsoft.house.owner.model.OwnerBusiness;
@@ -33,6 +35,9 @@ import java.util.List;
 public class TotalProjectCard {
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
+
+    @In(create = true)
+    private HouseEntityLoader houseEntityLoader;
 
     @In(create = true)
     private FacesMessages facesMessages;
@@ -103,11 +108,11 @@ public class TotalProjectCard {
             cell4.setCellStyle(headCellStyle);
 
             Cell cell5 = row2.createCell(col++);//列
-            cell5.setCellValue("预售许可证号");
+            cell5.setCellValue("预售许可证号（行政许可决定书文号）");
             cell5.setCellStyle(headCellStyle);
 
             Cell cell8 = row2.createCell(col++);//列
-            cell8.setCellValue("审批时间");
+            cell8.setCellValue("审批时间(许可决定日期)");
             cell8.setCellStyle(headCellStyle);
 
 
@@ -134,6 +139,31 @@ public class TotalProjectCard {
             Cell cell14 = row2.createCell(col++);//列
             cell14.setCellValue("非住宅面积");
             cell14.setCellStyle(headCellStyle);
+
+            Cell cell15 = row2.createCell(col++);//列
+            cell15.setCellValue("项目名称");
+            cell15.setCellStyle(headCellStyle);
+
+            Cell cell16 = row2.createCell(col++);//列
+            cell16.setCellValue("机构代码证");
+            cell16.setCellStyle(headCellStyle);
+
+            Cell cell17 = row2.createCell(col++);//列
+            cell17.setCellValue("法定代表人");
+            cell17.setCellStyle(headCellStyle);
+
+            Cell cell18 = row2.createCell(col++);//列
+            cell18.setCellValue("法定代表人身份证号");
+            cell18.setCellStyle(headCellStyle);
+
+
+            Cell cell19 = row2.createCell(col++);//列
+            cell19.setCellValue("联络人姓名");
+            cell19.setCellStyle(headCellStyle);
+
+            Cell cell20 = row2.createCell(col++);//列
+            cell20.setCellValue("联络人电话");
+            cell20.setCellStyle(headCellStyle);
 
 
             for (OwnerBusiness ob: ownerBusinessList){
@@ -199,6 +229,39 @@ public class TotalProjectCard {
 
                         cell = br.createCell(buildCol++);
                         cell.setCellValue(unhomeArea.doubleValue());
+
+                        cell = br.createCell(buildCol++);
+                        cell.setCellValue(ob.getBusinessProject().getSectionName());
+
+
+
+                        if (ob.getBusinessProject().getDeveloperCode()!=null && !ob.getBusinessProject().getDeveloperCode().equals("")) {
+                            List<Developer> developerList = houseEntityLoader.getEntityManager().createQuery("select d from Developer d where d.id=:id")
+                                    .setParameter("id", ob.getBusinessProject().getDeveloperCode()).getResultList();
+
+                            if (developerList != null) {
+                                if (developerList.get(0).getAttachCorporation() != null) {
+                                    cell = br.createCell(buildCol++);
+                                    cell.setCellValue(developerList.get(0).getAttachCorporation().getLicenseNumber());
+
+                                    cell = br.createCell(buildCol++);
+                                    cell.setCellValue(developerList.get(0).getAttachCorporation().getOwnerName());
+
+                                    cell = br.createCell(buildCol++);
+                                    cell.setCellValue(developerList.get(0).getAttachCorporation().getOwnerCard());
+                                }
+                            }
+                        }
+
+                        if (ob.getPreSaleEntrust()!=null) {
+
+                            cell = br.createCell(buildCol++);
+                            cell.setCellValue(ob.getPreSaleEntrust().getPersonName());
+
+
+                            cell = br.createCell(buildCol++);
+                            cell.setCellValue(ob.getPreSaleEntrust().getPhone());
+                        }
 
 
                     }
