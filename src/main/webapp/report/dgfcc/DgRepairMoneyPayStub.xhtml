@@ -98,9 +98,9 @@
                     <p:paragraph>共有情况</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3"  verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldPoolType.name()]}</p:paragraph>
-                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.##"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
-                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系：#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
+                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.##"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系:#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
                 </p:cell>
                 <p:cell>
                     <p:paragraph>建筑(房改)面积</p:paragraph>
@@ -139,8 +139,17 @@
                     <p:paragraph>应收合计</p:paragraph>
                 </p:cell>
 
-                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().mustMoney}元 </p:paragraph>
+                </p:cell>
+
+
+                <p:cell>
+                    <p:paragraph>单元号</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph >#{_houseBusiness.afterBusinessHouse.houseUnitName}</p:paragraph>
                 </p:cell>
 
 
@@ -244,9 +253,9 @@
                     <p:paragraph>共有情况</p:paragraph>
                 </p:cell>
                 <p:cell colspan="3"  verticalAlignment="top" horizontalAlignment="left" noWrap="false">
-                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.oldPoolType.name()]}</p:paragraph>
-                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.##"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
-                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.oldPoolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.oldMainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型：#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系：#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
+                    <p:paragraph>#{messages[_houseBusiness.afterBusinessHouse.poolType.name()]}</p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'SHARE_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有份额:" /><p:text value="#{_businessPools.poolPerc}"><f:convertNumber pattern="#0.##"/></p:text><p:text value="%。"/></ui:repeat></p:paragraph>
+                    <p:paragraph rendered="#{_houseBusiness.afterBusinessHouse.poolType eq 'TOGETHER_OWNER'}"><ui:repeat var="_businessPools" value="#{_houseBusiness.afterBusinessHouse.mainOwnerPersonList}"><p:text value="姓名:#{_businessPools.personName},证件类型:#{messages[_businessPools.credentialsType.name()]},证件号:#{_businessPools.credentialsNumber}，共有关系:#{dictionary.getWordValue(_businessPools.relation)}。" /></ui:repeat></p:paragraph>
                 </p:cell>
                 <p:cell>
                     <p:paragraph>建筑(房改)面积</p:paragraph>
@@ -284,9 +293,18 @@
                     <p:paragraph>应收合计</p:paragraph>
                 </p:cell>
 
-                <p:cell colspan="3" verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                <p:cell  verticalAlignment="top" horizontalAlignment="center" noWrap="false">
                     <p:paragraph rendered="#{not empty _houseBusiness.repairMoneyPays}">#{_houseBusiness.repairMoneyPays.iterator().next().mustMoney}元 </p:paragraph>
                 </p:cell>
+
+                <p:cell>
+                    <p:paragraph>单元号</p:paragraph>
+                </p:cell>
+
+                <p:cell verticalAlignment="top" horizontalAlignment="center" noWrap="false">
+                    <p:paragraph >#{_houseBusiness.afterBusinessHouse.houseUnitName}</p:paragraph>
+                </p:cell>
+
 
 
             </p:table>
