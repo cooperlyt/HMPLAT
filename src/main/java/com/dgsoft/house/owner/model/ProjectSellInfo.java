@@ -60,6 +60,7 @@ public class ProjectSellInfo implements java.io.Serializable {
     private BigDecimal area;
     private String licenseNumber;
     private String createLandCardNumber;
+    private String govName;
 
     private Set<ProjectLandEndTime> projectLandEndTimes = new HashSet<ProjectLandEndTime>(0);
 
@@ -371,6 +372,16 @@ public class ProjectSellInfo implements java.io.Serializable {
         this.proofMaterial = proofMaterial;
     }
 
+    @Column(name = "GOV_NAME", length = 32, nullable = false)
+    @NotNull
+    @Size(max = 32)
+    public String getGovName() {
+        return govName;
+    }
+
+    public void setGovName(String govName) {
+        this.govName = govName;
+    }
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true, cascade = CascadeType.ALL,mappedBy = "projectSellInfo")
     public Set<ProjectLandEndTime> getProjectLandEndTimes() {
