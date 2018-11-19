@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.business.subscribe;
 
 import com.dgsoft.common.SetLinkList;
+import com.dgsoft.common.system.RunParam;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.SaleType;
 import com.dgsoft.house.model.Developer;
@@ -84,12 +85,17 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
                 getInstance().setType(SaleType.NOW_SELL);
             }
 
+            //发证机关
+            getInstance().setGovName(RunParam.instance().getStringParamValue("SetupName"));
+
         }else{
             if(isType){
                 getInstance().setType(SaleType.MAP_SELL);
             }else {
                 getInstance().setType(SaleType.NOW_SELL);
             }
+            //发证机关
+            getInstance().setGovName(RunParam.instance().getStringParamValue("SetupName"));
             getInstance().setBusinessProject(ownerBusinessHome.getInstance().getBusinessProject());
             ownerBusinessHome.getInstance().getBusinessProject().setProjectSellInfo(getInstance());
         }
