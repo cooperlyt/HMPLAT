@@ -58,7 +58,7 @@ public class ProjectSaleInfoProvider implements RestDataProvider {
                 projectObj.put("cardNumber",project.getProjectSellInfo().getProjectCard().getMakeCard().getNumber());
                 projectObj.put("cardId",project.getId());
                 projectObj.put("name", project.getName());
-                projectObj.put("orgName", RunParam.instance().getStringParamValue("SetupName"));
+                projectObj.put("orgName", project.getProjectSellInfo().getGovName());
                 projectObj.put("developerName",project.getDeveloperName());
                 projectObj.put("developerCode",project.getDeveloperCode());
                 projectObj.put("houseCount",project.getProjectSellInfo().getHouseCount());

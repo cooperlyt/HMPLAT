@@ -152,6 +152,7 @@ public class DeveloperServiceComponent {
                                 cardJsonObj.put("createCardNumber", card.getProjectSellInfo().getCreateCardNumber());
                                 cardJsonObj.put("createPrepareCardNumber", card.getProjectSellInfo().getCreatePrepareCardNumber());
                                 cardJsonObj.put("name", card.getProjectSellInfo().getBusinessProject().getProjectName());
+                                cardJsonObj.put("govName", card.getProjectSellInfo().getGovName());
 
                                 JSONArray buildJsonArray = new JSONArray();
                                 for (BusinessBuild build : card.getProjectSellInfo().getBusinessProject().getBusinessBuildList()) {

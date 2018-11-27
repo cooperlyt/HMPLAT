@@ -138,8 +138,10 @@ public class HouseInBusinessStart {
     }
 
     public void setSelectAll(boolean selectAll){
-        for(BatchOperData<BusinessHouse> data: houseBusinessList){
-            data.setSelected(selectAll);
+        for(SelectBusinessHouseItem data: houseBusinessList){
+            if (data.isCanSelect()) {
+                data.setSelected(selectAll);
+            }
         }
     }
 
@@ -159,8 +161,16 @@ public class HouseInBusinessStart {
 
                     try {
                         BusinessDataValid.ValidResult validResult = valid.valid(houseBusiness);
-                        if (validResult.getResult().getPri() > BusinessDataValid.ValidResultLevel.SUCCESS.getPri())
+                        if (validResult.getResult().getPri() > BusinessDataValid.ValidResultLevel.SUCCESS.getPri()) {
                             validResults.add(validResult);
+                        }
+                        if (validResult.getResult().equals(BusinessDataValid.ValidResultLevel.FATAL)){
+                            throw new IllegalArgumentException(validResult.getMsgKey());
+                        }
+                        if (!validResult.getResult().equals(BusinessDataValid.ValidResultLevel.SUCCESS)){
+                            facesMessages.addFromResourceBundle(validResult.getResult().getSeverity(),validResult.getMsgKey(),validResult.getParams());
+                        }
+
                     }catch (Exception e){
                         Logging.getLog(getClass()).error(e.getMessage(),e,"config error:" + valid.getClass().getSimpleName());
                         throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
@@ -169,6 +179,7 @@ public class HouseInBusinessStart {
                 }
 
                 houseBusinessList.add(new SelectBusinessHouseItem(houseRecord.getBusinessHouse(), validResults));
+
             }
         }
         Collections.sort(houseBusinessList, new Comparator<BatchOperData<BusinessHouse>>() {
@@ -189,6 +200,8 @@ public class HouseInBusinessStart {
                 return result;
             }
         });
+
+
         // 有验证器的信息要显示，所以不在自动跳过房屋选择步骤
 //        if (houseBusinessList.size() == 1){
 //            return houseSelected();
@@ -201,8 +214,8 @@ public class HouseInBusinessStart {
 
 
         ownerBusinessHome.getInstance().getHouseBusinesses().clear();
-        for(BatchOperData<BusinessHouse> batchOperData : houseBusinessList){
-            if ((!singleHouse && batchOperData.isSelected()) || (singleHouse && batchOperData.getData().getId().equals(selectSingleHouseId))){
+        for(SelectBusinessHouseItem batchOperData : houseBusinessList){
+            if ( batchOperData.isCanSelect() &&  ((!singleHouse && batchOperData.isSelected()) || (singleHouse && batchOperData.getData().getId().equals(selectSingleHouseId)))){
                 ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), batchOperData.getData()));
                 if (singleHouse)
                     break;
@@ -224,6 +237,14 @@ public class HouseInBusinessStart {
             if (!houseBusiness.isCanceled())
                 ownerBusinessHome.getInstance().getHouseBusinesses().add(new HouseBusiness(ownerBusinessHome.getInstance(), ownerBusinessHome.getEntityManager().find(HouseRecord.class, houseBusiness.getHouseCode()).getBusinessHouse()));
         }
+        return ownerBusinessStart.dataSelected();
+
+    }
+
+
+    private String validAndStart(){
+
+
         return ownerBusinessStart.dataSelected();
 
     }

@@ -54,6 +54,7 @@
 
         </div>
 
+            <r:messages ajaxRendered="false" globalOnly="true"/>
 
         <h:outputStylesheet>
             .check-column{
@@ -80,7 +81,7 @@
                             </a:outputPanel>
                         </f:facet>
 
-                        <h:selectBooleanCheckbox value="#{_house.selected}">
+                        <h:selectBooleanCheckbox value="#{_house.selected}" disabled="#{not _house.canSelect}">
                             <a:ajax event="click" execute="@this">
                                 <a:attachQueue requestDelay="0"/>
                             </a:ajax>
@@ -124,7 +125,7 @@
 
                     <h:column rendered="#{houseInBusinessStart.singleHouse}">
                         <h:commandLink action="#{houseInBusinessStart.houseSelected}"
-                                       value="选择"
+                                       value="选择" disabled="#{not _house.canSelect}"
                                        styleClass="btn btn-default btn-sm choose-plan">
                             <f:param name="selectSingleHouseId" value="#{_house.data.id}"/>
 
