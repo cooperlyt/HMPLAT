@@ -2022,6 +2022,26 @@
     </end-subscribe>
 
 
+    <end-subscribe name="FcLzyjKeyGen" component="fcLzyjKeyGen">
+        <description>
+            楼幢预警查询KEY生成器（凤城）
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="FcLzyjDisplayGen" component="fcLzyjDisplayGen">
+        <description>
+            楼幢预警显示生成器(凤城)
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="AddLockedHouseOther" component="addLockedHouseOther">
+        <description>
+            楼幢预警批量预警(凤城)
+        </description>
+    </end-subscribe>
+
+
+
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
 
