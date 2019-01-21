@@ -10,8 +10,16 @@
 
     <s:decorate template="/layout/edit.xhtml">
         <ui:define name="label">#{messages.ProjectSellInfo_isType}</ui:define>
-        <h:selectBooleanCheckbox label="#{messages.ProjectSellInfo_isType}"
-                                 value="#{projectSellInfoSubscribe.type}"/>
+        <h:selectBooleanCheckbox id="cardSellType" label="#{messages.ProjectSellInfo_isType}"  value="#{projectSellInfoSubscribe.cardtype}">
+
+
+            <a:ajax event="click"
+                    render="cardSellType"
+                    execute="@this"
+                    listener="#{projectSellInfoSubscribe.checkCrdTypeBox}">
+                <a:attachQueue requestDelay="0"/>
+            </a:ajax>
+        </h:selectBooleanCheckbox>
     </s:decorate>
 
     <div class="form-inline">

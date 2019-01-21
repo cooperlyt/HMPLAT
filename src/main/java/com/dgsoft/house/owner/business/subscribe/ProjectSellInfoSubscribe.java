@@ -14,6 +14,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.log.Logging;
 
 /**
  * Created by wxy on 2015-09-07.
@@ -35,16 +36,20 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
     @DataModelSelection
     private ProjectLandEndTime selectLandEndTime;
 
+    private boolean Cardtype=true;
 
-    private boolean isType=true;
-
-    public boolean isType() {
-        return isType;
+    public boolean isCardtype() {
+        return Cardtype;
     }
 
-    public void setType(boolean isType) {
-        this.isType = isType;
+    public void setCardtype(boolean cardtype) {
+        Cardtype = cardtype;
     }
+
+
+
+
+
 
     public void addProjectLandEndTime(){
         projectLandEndTimes.add(new ProjectLandEndTime(getInstance()));
@@ -68,6 +73,16 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
             ownerBusinessHome.getInstance().getBusinessProject().setDeveloperProperty(developer.getAttachCorporation().getCompanyType());
         }
     }
+    public void checkCrdTypeBox(){
+
+
+        if(isCardtype()){
+            getInstance().setType(SaleType.MAP_SELL);
+        }else {
+            getInstance().setType(SaleType.NOW_SELL);
+        }
+
+    }
 
     @Override
     public void create(){
@@ -77,23 +92,25 @@ public class ProjectSellInfoSubscribe extends OwnerEntityHome<ProjectSellInfo> {
                 setInstance(ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo());
             }else{
                 setId(ownerBusinessHome.getInstance().getBusinessProject().getProjectSellInfo().getId());
+                if(getInstance().getType().equals(SaleType.MAP_SELL)){
+                    this.setCardtype(true);
+                }else{
+                    this.setCardtype(false);
+                }
+
+
             }
 
-            if(isType){
+            if(isCardtype()){
                 getInstance().setType(SaleType.MAP_SELL);
             }else {
                 getInstance().setType(SaleType.NOW_SELL);
             }
-
             //发证机关
             getInstance().setGovName(RunParam.instance().getStringParamValue("SetupName"));
 
         }else{
-            if(isType){
-                getInstance().setType(SaleType.MAP_SELL);
-            }else {
-                getInstance().setType(SaleType.NOW_SELL);
-            }
+
             //发证机关
             getInstance().setGovName(RunParam.instance().getStringParamValue("SetupName"));
             getInstance().setBusinessProject(ownerBusinessHome.getInstance().getBusinessProject());
