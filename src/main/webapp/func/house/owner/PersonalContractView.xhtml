@@ -1,0 +1,108 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-view.xhtml">
+
+
+    <ui:define name="function-tile">
+        <div>
+
+            <ui:include src="/layout/function-nav.xhtml">
+                <ui:param name="functions" value="#{authInfo.dataFunctions}"/>
+            </ui:include>
+            <h1>
+                <s:link view="/func/house/owner/PersonalContractLogOnList.xhtml" value="个人网签备案开户"/>
+                <span class="path-divider">/</span>
+                <strong>
+                    <h:outputText value="#{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.personName}"/>
+                </strong>
+            </h1>
+        </div>
+
+    </ui:define>
+
+    <h:outputStylesheet>
+        .out-time {
+            color: #8a6d3b;
+        }
+
+        .mega-octicon.emp-enable {
+            color: #4078c0 !important;
+        }
+    </h:outputStylesheet>
+
+
+
+
+    <dh:entryGrid styleClass="detailsTable table table-bordered " keyWidth="150">
+        <dh:entryGridBlock columns="4">
+            <h:outputText value="业务编号"/>
+            <h:outputText value="#{personalContractHome.houseBusiness.ownerBusiness.id}"/>
+            <h:outputText value="房屋编号"/>
+            <h:outputText value="#{personalContractHome.houseBusiness.houseCode}"/>
+            <h:outputText value="申请人姓名"/>
+            <h:outputText value="#{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.personName}"/>
+            <h:outputText value="证件号"/>
+            <h:outputText value="#{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.credentialsNumber}"/>
+            <h:outputText value="权证号"/>
+            <h:outputText value="#{personalContractHome.houseBusiness.ownerBusiness.card.number}"/>
+            <h:outputText value="联系电话"/>
+            <h:outputText value="#{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.phone}"/>
+        </dh:entryGridBlock>
+    </dh:entryGrid>
+
+    <h:form id="attachEmpDatas">
+        <a:outputPanel>
+            <div class="sort-bar" style="margin-bottom: 0;">
+                <h3>请插入电子钥匙</h3>
+            </div>
+        </a:outputPanel>
+
+        <div class="sub-list-item">
+            <div class="item-body">
+                <span class="mega-octicon octicon-person emp-enable"/>
+
+                <div class="item-title">
+                            <span style="float: left;"> <s:link value="#{personalContractHome.houseBusiness.houseCode}" style="min-width:100px"/> <strong
+                                    class="">  #{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.personName}</strong> </span>
+                            <span class="table-actions" style="float: right;">
+
+
+                            <s:link styleClass="table-action" title="#{messages.AttachEmpAddKey}"
+                                    view="/func/house/owner/PersonalKeyBinding.xhtml">
+                                <span class="octicon octicon-plus"/>
+                                #{messages.AttachEmpAddKey}
+                                <f:param name="pid" value="#{personalContractHome.instance.id}"/>
+
+                                <a:attachQueue requestDelay="0"/>
+                            </s:link>
+
+                            </span>
+                </div>
+
+                <div class="details" style="clear: both;">
+                    <div class="commits pusher-is-only-committer">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </h:form>
+
+
+
+
+
+
+</ui:composition>

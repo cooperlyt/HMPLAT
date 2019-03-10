@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      login-required="true"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+    <param name="pid" value="#{personalContractHome.id}"/>
+    <param name="businessId" value="#{personalContractHome.businessId}"/>
+
+    <navigation from-action="#{personalContractHome.addKey}">
+
+        <rule if-outcome="persisted">
+
+            <redirect view-id="/func/house/owner/PersonalContractView.xhtml">
+                <param name="pid" value="#{personalContractHome.id}"/>
+                <param name="businessId" value="#{personalContractHome.businessId}"/>
+            </redirect>
+        </rule>
+    </navigation>
+
+</page>

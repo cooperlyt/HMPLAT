@@ -71,7 +71,7 @@
 			<condition></condition>
 		</transition>
 		<transition to="结束" name="不归档结束">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74','WP56')}"></condition>
+			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74','WP56','GRSQBA')}"></condition>
 		</transition>
 	</decision>
 
