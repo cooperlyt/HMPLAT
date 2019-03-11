@@ -58,6 +58,19 @@
         </dh:entryGridBlock>
     </dh:entryGrid>
 
+    <ui:decorate template="/layout/delete_confirm_dialog.xhtml">
+        <ui:param name="panelId" value="keyDeleteConfirmPanel"/>
+        <ui:param name="entityTitle" value="#{messages.AttachCorpLogonKey}"/>
+        <ui:define name="deleteNote">
+            <p>#{messages.deleteKeyNote}</p>
+        </ui:define>
+        <a:commandButton styleClass="button button-block danger" action="#{personalContractHome.deleteKey}"
+                         value="#{messages.confirmDelete}" oncomplete="$('#keyDeleteConfirmPanel').modal('hide')"
+                         render="attachEmpDatas" immediate="true" execute="@this">
+            <a:attachQueue requestDelay="0"/>
+        </a:commandButton>
+    </ui:decorate>
+
     <h:form id="attachEmpDatas">
         <a:outputPanel>
             <div class="sort-bar" style="margin-bottom: 0;">
@@ -70,8 +83,7 @@
                 <span class="mega-octicon octicon-person emp-enable"/>
 
                 <div class="item-title">
-                            <span style="float: left;"> <s:link value="#{personalContractHome.houseBusiness.houseCode}" style="min-width:100px"/> <strong
-                                    class="">  #{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.personName}</strong> </span>
+                            <span style="float: left;"> <strong class=""> #{personalContractHome.houseBusiness.houseCode}  #{personalContractHome.houseBusiness.afterBusinessHouse.mainOwner.personName}</strong> </span>
                             <span class="table-actions" style="float: right;">
 
 
@@ -87,9 +99,28 @@
                             </span>
                 </div>
 
+
                 <div class="details" style="clear: both;">
                     <div class="commits pusher-is-only-committer">
                         <ul>
+                            <a:repeat value="#{personalContractHome.personalContractLogOnList}" var="_key">
+                            <li>
+
+                                <span class="type-icon octicon octicon-key" style="color: #60b044;"/>
+                                <a:outputPanel>
+                                    #{_key.id}
+                                </a:outputPanel>
+                                <a:commandLink style="color:#a94442 " execute="@this" immediate="true"
+                                               render="keyDeleteConfirmPanel_form"
+                                               oncomplete="$('#keyDeleteConfirmPanel').modal('show')">
+                                    <a:attachQueue requestDelay="0"/>
+                                    <span class="octicon octicon-trashcan"/>
+                                    <f:param name="businessId" value="#{_key.businessID}"/>
+                                    <f:param name="keyId" value="#{_key.id}"/>
+                                </a:commandLink>
+
+                            </li>
+                            </a:repeat>
 
                         </ul>
                     </div>

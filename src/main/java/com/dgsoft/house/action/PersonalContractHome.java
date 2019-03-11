@@ -111,11 +111,10 @@ public class PersonalContractHome extends HouseEntityHome<PersonalContractLogOn>
     }
 
 
-//    public List<PersonalContractLogOn> getPersonalContractLogOnList(){
-//        personalContractLogOnList = houseEntityLoader.getEntityManager().createQuery("select pc from PersonalContractLogOn pc where pc.houseCode = :houseCode and pc.businessID = :biz", PersonalContractLogOn.class)
-//                .setParameter("houseCode",houseBusiness.getHouseCode()).setPgarameter("biz",businessId).getResultList();
-//        return personalContractLogOnList;
-//    }
+    public List<PersonalContractLogOn> getPersonalContractLogOnList(){
+        personalContractLogOnList = houseEntityLoader.getEntityManager().createQuery("select pc from PersonalContractLogOn pc where pc.businessID = :biz", PersonalContractLogOn.class).setParameter("biz",businessId).getResultList();
+        return personalContractLogOnList;
+    }
 
     public void serchHB(){
 
@@ -131,13 +130,6 @@ public class PersonalContractHome extends HouseEntityHome<PersonalContractLogOn>
                 .setParameter("keyId",keyUid).getSingleResult().compareTo(Long.valueOf(0)) <= 0) {
             Logging.getLog(getClass()).debug("businessId------"+businessId);
             serchHB();
-            if (houseBusiness !=null){
-
-                Logging.getLog(getClass()).debug("wwwwwwww------"+getHouseBusiness().getHouseCode());
-                Logging.getLog(getClass()).debug("ttttttttt------"+houseBusiness.getHouseCode());
-            }else {
-                Logging.getLog(getClass()).debug("ssssssss");
-            }
             getInstance().setId(keyUid);
             getInstance().setPassword(keySeed);
             getInstance().setUserKey(keyDesKey);
@@ -157,9 +149,16 @@ public class PersonalContractHome extends HouseEntityHome<PersonalContractLogOn>
 
     }
 
-    public void deleteDeveloperKey(){
+
+    public void deleteKey(){
         Logging.getLog(getClass()).debug("selectKeyId:" + selectKeyId);
-
-
+        PersonalContractLogOn pl = houseEntityLoader.getEntityManager().find(PersonalContractLogOn.class,selectKeyId);
+        if (pl!=null){
+            houseEntityLoader.getEntityManager().remove(pl);
+            houseEntityLoader.getEntityManager().flush();
+            return;
+        }
     }
+
+
 }
