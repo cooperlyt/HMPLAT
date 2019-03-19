@@ -27,7 +27,7 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @In(required = false)
     private BusinessDefineHome businessDefineHome;
 
-    @In(create = true)
+    @In(create = true , value = "org.jboss.seam.bpm.businessProcess")
     private BusinessProcessUtils businessProcessUtils;
 
     @In
