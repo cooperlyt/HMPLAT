@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<root-container name="HouseOwnerBusiness" width="944" height="419">
+<root-container name="HouseOwnerBusiness" width="932" height="419">
   <node name="业务受理" x="-121" y="21" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="受理" x="58" y="209" width="132" height="36">
+  <node name="受理" x="-118" y="248" width="132" height="36">
     <edge>
       <label x="-78" y="9"/>
     </edge>
@@ -14,12 +14,12 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审批" x="560" y="160" width="132" height="36">
+  <node name="审批" x="501" y="199" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="审批结果" x="506" y="375" width="132" height="36">
+  <node name="审批结果" x="498" y="373" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -27,7 +27,7 @@
       <label x="-41" y="-11"/>
     </edge>
   </node>
-  <node name="类型判断" x="-133" y="181" width="132" height="36">
+  <node name="类型判断" x="-89" y="117" width="132" height="36">
     <edge>
       <label x="-35" y="-23"/>
     </edge>
@@ -43,7 +43,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="是否网签" x="53" y="22" width="132" height="36">
+  <node name="是否网签" x="157" y="21" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -51,7 +51,7 @@
       <label x="5" y="-10"/>
     </edge>
   </node>
-  <node name="受理来源" x="329" y="170" width="132" height="36">
+  <node name="受理来源" x="222" y="229" width="132" height="36">
     <edge>
       <label x="5" y="-10"/>
     </edge>
@@ -60,4 +60,9 @@
     </edge>
   </node>
   <node name="结束" x="77" y="382" width="132" height="36"/>
+  <node name="审批完成" x="509" y="283" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
 </root-container>
