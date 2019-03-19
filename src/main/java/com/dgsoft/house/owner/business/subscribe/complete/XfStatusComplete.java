@@ -18,6 +18,7 @@ import org.jboss.seam.log.Logging;
 public class XfStatusComplete implements TaskCompleteSubscribeComponent {
 
     @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
+    @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
     private String transitionType;
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -34,12 +35,13 @@ public class XfStatusComplete implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
         Logging.getLog(getClass()).debug("transitionType--"+transitionType);
-        if (TaskOper.OperType.CHECK_BACK.name().equals(transitionType) && !ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)){
+        if (TaskOper.OperType.CHECK_BACK.name().equals(transitionType) && ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)){
             ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.CANCEL);
             for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
                 subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
             }
-        }else{
+        }else if (TaskOper.OperType.CHECK_ACCEPT.name().equals(transitionType)){
+
             if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)){
                 ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
                 for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){

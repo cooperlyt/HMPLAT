@@ -29,16 +29,8 @@
 
     </task-node>
 
-    <task-node name="归档">
-        <task name="归档">
-            <description>{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}</description>
-            <assignment pooled-actors="RecordSave"></assignment>
-        </task>
-        <transition to="结束"></transition>
-    </task-node>
-
     <decision name="审批结果">
-		<transition to="不归档业务判断">
+		<transition to="结束">
 			<condition expression="#{transitionType eq 'CHECK_ACCEPT'}"></condition>
 		</transition>
 		<transition to="受理来源" name="登薄驳回">
@@ -66,29 +58,22 @@
 		<transition to="受理来源" name="重新受理"></transition>
 	</task-node>
 
-	<decision name="不归档业务判断">
-		<transition to="归档" name="归档结束">
-			<condition></condition>
-		</transition>
-		<transition to="结束" name="不归档结束">
-			<condition expression="#{calcHelper.stringIn(businessDefineHome.id,'WP73','WP74','WP56','GRSQBA')}"></condition>
-		</transition>
-	</decision>
-
 	<decision name="是否网签">
 		<transition to="审批" name="网签业务">
 			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
 		</transition>
-		<transition to="要件上传" name="正常业务">
+		<transition to="要件上传" name="to 要件上传">
 			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
 	</decision>
 
 	<decision name="受理来源">
-		<transition to="受理" name="送办业务">
+		<transition to="结束" name="to 结束">
+			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
+		</transition>
+		<transition to="受理" name="to 受理">
 			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
-		<transition to="结束" name="网签业务"></transition>
 	</decision>
 
 	<node name="审批完成">
