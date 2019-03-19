@@ -51,7 +51,20 @@ public class FcRealDisplayGen implements TaskCompleteSubscribeComponent {
             }
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH, ycontractPersonNames);
 
+            HouseContract houseContract = bh.getHouseContract();
 
+
+
+            if ((houseContract  == null) && (ownerBusinessHome.getInstance().getSelectBusiness() != null) &&
+                    (ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getHouseContract() !=null) &&
+                    (ownerBusinessHome.getInstance().getSelectBusiness().getHouseBusinesses().size() > 0)) {
+                houseContract = ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getHouseContract();
+            }
+
+            if (houseContract != null) {
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "合同编号");
+                businessDisplay.addData(DescriptionDisplay.DisplayStyle.PARAGRAPH,houseContract.getContractNumber());
+            }
 
             businessDisplay.newLine(DescriptionDisplay.DisplayStyle.NORMAL);
             businessDisplay.addData(DescriptionDisplay.DisplayStyle.LABEL, "原权证号 ");
