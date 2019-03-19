@@ -8,9 +8,11 @@ import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.bpm.ProcessInstance;
 import org.jboss.seam.log.Logging;
 import org.jboss.seam.security.Identity;
 
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -31,6 +33,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     public void doNodeAction(String name){
         businessDefineHome.doNodeAction(name);
         update();
+    }
+
+    @Transient
+    public void doNodeComplete(String name){
+        doNodeAction(name);
+        ProcessInstance.instance().signal();
     }
 
     @Override
