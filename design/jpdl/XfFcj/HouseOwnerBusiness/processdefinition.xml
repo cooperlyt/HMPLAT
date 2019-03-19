@@ -25,7 +25,7 @@
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}commodity_last_check"></assignment>
         </task>
-        <transition to="审批完成"></transition>
+        <transition to="审批结果"></transition>
 
     </task-node>
 
@@ -75,11 +75,6 @@
 			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
 	</decision>
-
-	<node name="审批完成">
-		<action name="审批完成" expression='#{ownerBusinessHome.doNodeComplete("审批完成")}'></action>
-		<transition to="审批结果"></transition>
-	</node>
 
 
     <end-state name="结束"></end-state>
