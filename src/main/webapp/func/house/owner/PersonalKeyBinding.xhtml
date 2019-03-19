@@ -1,0 +1,132 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich"
+                template="/layout/template-base.xhtml">
+
+
+    <ui:define name="body">
+
+
+        <div class="flash-messages container">
+            <r:messages globalOnly="false"/>
+        </div>
+
+
+        <h:outputScript library="bootbox" name="bootbox.min.js"/>
+        <h:outputScript library="long-mai" name="mToken_K1Mgr.js"/>
+
+        <h:outputScript library="long-mai" name="base64.js"/>
+        <h:outputScript name="tools.js"/>
+
+        <object id="mTokenPlugin" type="application/x-mtokenplugin" width="0" height="0">
+            <param value="pluginLoaded"/>
+        </object>
+        <h:outputScript>
+            var K1mTokenMgr = new mTokenMgr("mTokenPlugin");
+
+
+            function writeKey() {
+
+            K1mTokenMgr.LoadLibrary();
+
+
+            var keyNumber = 0;
+            keyNumber = K1mTokenMgr.K1Mgr_mTokenFindDevice();
+            if(keyNumber &lt; 1){
+            bootbox.alert("没有找到电子钥匙,错误码:" + K1mTokenMgr.K1Mgr_mTokenGetLastError());
+            return false;
+            }
+
+
+            var keyUID = "";
+            keyUID = K1mTokenMgr.K1Mgr_mTokenGetUID(1);
+            if (keyUID == null || keyUID == "") {
+            bootbox.alert("获取设备唯一硬件ID失败,错误码:" + K1mTokenMgr.K1Mgr_mTokenGetLastError());
+            return false;
+            }
+            var g_keyUID = "";
+            g_keyUID = keyUID;
+
+            document.getElementById("#{r:clientId('keyUid')}").value = keyUID;
+
+
+            var keyPassword = document.getElementById("keyAdminPassword").value;
+            var nRet = K1mTokenMgr.K1Mgr_mTokenOpen(g_keyUID, keyPassword);
+            if (nRet != 0) {
+            bootbox.alert("验证用户密码权限失败,错误码:" + K1mTokenMgr.K1Mgr_mTokenGetLastError());
+            return false;
+            }
+
+
+            var sha1SeedKey = createHexRandom();
+            var sha1SeedKeyBase64 = _Base64encode(sha1SeedKey);
+
+            var nRet = K1mTokenMgr.K1Mgr_mTokenSetSeedKey(g_keyUID, sha1SeedKeyBase64);
+            if(nRet != 0)
+            {
+            bootbox.alert("设置SHA1种子码失败,错误码:" + K1mTokenMgr.K1Mgr_mTokenGetLastError());
+            return false;
+            }
+
+
+            document.getElementById("#{r:clientId('keySeed')}").value = sha1SeedKey;
+
+            var triDesKey = randomPassword();;
+            var triDesKeyBase64 = _Base64encode(triDesKey);
+            var nRet = K1mTokenMgr.K1Mgr_mTokenSetMainKey(g_keyUID, triDesKeyBase64);
+            if(nRet != 0)
+            {
+            bootbox.alert("设置SHA1种子码失败,错误码:" + K1mTokenMgr.K1Mgr_mTokenGetLastError());
+            return false;
+            }
+
+
+            document.getElementById("#{r:clientId('keyTriDESKey')}").value = triDesKey;
+            return true;
+            }
+
+
+        </h:outputScript>
+
+        <div class="auth-form" >
+
+        <h:form>                <r:focus/>
+
+            <div class="auth-form-header">
+                <h1>#{messages.MakeEmployeeKey}</h1>
+            </div>
+            <div class="auth-form-body">
+
+
+            <h:inputHidden id="keyUid" value="#{personalContractHome.keyUid}"/>
+            <h:inputHidden id="keySeed" value="#{personalContractHome.keySeed}"/>
+            <h:inputHidden id="keyTriDESKey" value="#{personalContractHome.keyDesKey}"/>
+                <label for="keyAdminPassword">
+                    #{messages.AttachKeyAdminPassword}
+                </label>
+
+                <input type="password"  value="admin" id="keyAdminPassword" class="input-block"/>
+
+
+                <h:commandButton styleClass="button" value="#{messages.MakeEmployeeKey}"
+                                 onclick=" return writeKey(); " action="#{personalContractHome.addKey}"/>
+
+                <s:button styleClass="button" value="#{messages.cancel}" view="/func/house/owner/PersonalContractView.xhtml" action="#{personalContractHome.serchHB}">
+                    <f:param name="pid" value="#{personalContractHome.instance.id}"/>
+                    <f:param name="businessId" value="#{personalContractHome.businessId}"/>
+                </s:button>
+
+            </div>
+
+        </h:form>
+        </div>
+    </ui:define>
+
+
+</ui:composition>

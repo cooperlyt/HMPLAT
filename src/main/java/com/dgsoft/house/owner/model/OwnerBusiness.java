@@ -1025,6 +1025,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
 
+
+    @Transient
+    public Card getCard(){
+        if (!getCards().isEmpty()){
+            return getCards().iterator().next();
+        }
+        return null;
+    }
+
     /**
      * 当前日期
      */

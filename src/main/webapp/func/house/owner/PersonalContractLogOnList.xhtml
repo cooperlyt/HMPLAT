@@ -1,0 +1,156 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="个人网签备案开户"/>
+
+    <ui:define name="head-right">
+        <h:form styleClass="search_repos">
+            <div class="flex-table search-form-fluid">
+                <div class="flex-table-item flex-table-item-primary">
+                    <div class="input-block">
+                        <h:inputText styleClass="form-control" value="#{personalContractLogOnList.searchKey}"/>
+
+
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <div class="flex-table-item">
+                    <h:commandButton styleClass="button" action="#{personalContractLogOnList.first}" value="#{messages.Search}">
+
+                    </h:commandButton>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    <h:outputStylesheet>
+        .result-count{
+
+            font-size: 12px;
+            font-weight: 700;
+            color: #959595;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+    </h:outputStylesheet>
+
+    <s:div styleClass="blankslate" rendered="#{empty personalContractLogOnList.searchKey}">
+        <span class="mega-octicon octicon-search"></span>
+
+        <h3>请输入查询条件</h3>
+
+        <p>  条件可以为申请人的姓名,身份证号,权证号也可直接输入开户业务编号直接查询.
+
+
+        </p>
+    </s:div>
+
+    <a:outputPanel rendered="#{not empty personalContractLogOnList.searchKey}">
+
+        <s:div styleClass="blankslate" rendered="#{empty personalContractLogOnList.resultList}">
+            <span class="mega-octicon octicon-search"></span>
+
+            <h3>#{messages.EmptyResult}</h3>
+
+            <p>  #{messages.YouCan}#{' '}
+
+                <s:link includePageParams="false" value="重置条件"/>
+
+
+           </p>
+        </s:div>
+        <div style="min-height: 300px;">
+            <h:dataTable value="#{personalContractLogOnList.resultList}"
+                         styleClass="table table-striped table-hover table-floatThead"
+                         headerClass="table-tools-header"
+                         columnClasses=",,,,,action-col"
+                         var="_personList" rendered="#{not empty personalContractLogOnList.resultList}">
+                <f:facet name="header">
+
+                    <h3>
+                        #{messages.SerachResultCount}#{' '}
+                        <h:outputText value="#{personalContractLogOnList.resultCount}">
+                            <f:convertNumber type="number" groupingUsed="true"/>
+                        </h:outputText>
+                        #{''}#{messages.SerachResultCountPrefx}
+                    </h3>
+                </f:facet>
+                    <h:column headerClass="table-header">
+                        <f:facet name="header">
+                            业务编号
+                        </f:facet>
+
+                        <h:outputText value="#{_personList.ownerBusiness.id}" />
+                    </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        权证号
+                    </f:facet>
+
+                    <h:outputText value="#{_personList.ownerBusiness.card.number}" />
+                </h:column>
+
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        姓名
+                    </f:facet>
+                    <h:outputText value="#{_personList.afterBusinessHouse.mainOwner.personName}" />
+                </h:column>
+
+                <h:column headerClass="table-header">
+                    <f:facet name="header">
+                        证件号
+                    </f:facet>
+                    <h:outputText value="#{_personList.afterBusinessHouse.mainOwner.credentialsNumber}" />
+                </h:column>
+
+
+                <h:column>
+                    <div class="table-actions right">
+                        <s:link styleClass="table-action"
+                                view="/func/house/owner/PersonalContractView.xhtml" action="#{personalContractHome.serchHB}">
+                            <span class="glyphicon glyphicon-pencil"/>
+                            <f:param name="businessId" value="#{_personList.ownerBusiness.id}"/>
+
+                        </s:link>
+                    </div>
+                </h:column>
+
+
+
+
+
+
+
+            </h:dataTable>
+
+
+
+            <a:outputPanel layout="block" rendered="#{not empty personalContractLogOnList.resultList}" class="paginate-container">
+                <a:outputPanel>
+                    <ui:include src="/layout/pages.xhtml">
+                        <ui:param name="entityList" value="#{personalContractLogOnList}"/>
+                    </ui:include>
+                </a:outputPanel>
+            </a:outputPanel>
+        </div>
+
+
+    </a:outputPanel>
+</ui:composition>
+
