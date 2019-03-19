@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.action;
 
+import com.dgsoft.common.jbpm.BusinessProcessUtils;
 import com.dgsoft.common.system.NumberBuilder;
 import com.dgsoft.common.system.action.BusinessDefineHome;
 import com.dgsoft.common.system.business.BusinessInstance;
@@ -8,6 +9,7 @@ import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.bpm.ManagedJbpmContext;
 import org.jboss.seam.bpm.ProcessInstance;
 import org.jboss.seam.log.Logging;
 import org.jboss.seam.security.Identity;
@@ -25,6 +27,9 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @In(required = false)
     private BusinessDefineHome businessDefineHome;
 
+    @In(create = true)
+    private BusinessProcessUtils businessProcessUtils;
+
     @In
     private Identity identity;
 
@@ -32,13 +37,8 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
     @Transactional
     public void doNodeAction(String name){
         businessDefineHome.doNodeAction(name);
+        businessProcessUtils.signalProcess(businessDefineHome.getInstance().getWfName(),getInstance().getId());
         update();
-    }
-
-    @Transient
-    public void doNodeComplete(String name){
-        doNodeAction(name);
-        ProcessInstance.instance().signal();
     }
 
     @Override

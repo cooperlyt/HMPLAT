@@ -19,11 +19,8 @@ import org.jboss.seam.log.Logging;
 @Name("xfStatusComplete")
 public class XfStatusComplete implements TaskCompleteSubscribeComponent {
 
-    @In(required = false)
-    private OwnerTaskHandle ownerTaskHandle;
-
-    @In(required = false)
-    private CheckTaskOperation checkTaskOperation;
+    @In(required = false, scope = ScopeType.BUSINESS_PROCESS)
+    private String transitionType;
 
     @In
     private OwnerBusinessHome ownerBusinessHome;
@@ -40,14 +37,7 @@ public class XfStatusComplete implements TaskCompleteSubscribeComponent {
     @Override
     public void complete() {
 
-        String transitionType;
-        if (ownerTaskHandle !=null){
-            transitionType = ownerTaskHandle.getTransitionType();
-        }else if (checkTaskOperation != null){
-            transitionType = checkTaskOperation.getTransitionType();
-        }else{
-            throw new IllegalStateException("XfStatusComplete ownerTaskHandle is error");
-        }
+
 
             Logging.getLog(getClass()).debug("ownerTaskHandle--" + transitionType);
             if (TaskOper.OperType.CHECK_BACK.name().equals(transitionType) && ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)) {

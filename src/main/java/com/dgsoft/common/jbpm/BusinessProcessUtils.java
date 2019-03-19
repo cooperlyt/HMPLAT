@@ -66,5 +66,13 @@ public class BusinessProcessUtils extends BusinessProcess {
         Events.instance().raiseTransactionSuccessEvent("org.jboss.seam.processSuspended");
     }
 
+    public void signalProcess(String processDefinitionName, String businessKey){
+        ProcessDefinition definition = ManagedJbpmContext.instance().getGraphSession().findLatestProcessDefinition(processDefinitionName);
+        ProcessInstance processInstance = definition == null ?
+                null : ManagedJbpmContext.instance().getProcessInstanceForUpdate(definition, businessKey);
+
+        processInstance.signal();
+    }
+
 
 }
