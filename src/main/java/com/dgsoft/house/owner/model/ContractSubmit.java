@@ -21,6 +21,7 @@ public class ContractSubmit implements java.io.Serializable {
     private String attachEmpId;
     private String attachEmpName;
     private String contractText;
+    private String fid;
     private int contractVersion;
     private Set<ContractNumber> contractNumbers = new HashSet<ContractNumber>(0);
     private HouseContract houseContract;
@@ -104,6 +105,14 @@ public class ContractSubmit implements java.io.Serializable {
         this.contractVersion = contractVersion;
     }
 
+    @Column(name = "FILE_ID", length = 32)
+    public String getFid() {
+        return fid;
+    }
+
+    public void setFid(String fid) {
+        this.fid = fid;
+    }
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "contractSubmit",cascade = CascadeType.ALL)
     public Set<ContractNumber> getContractNumbers() {
