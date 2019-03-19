@@ -25,7 +25,7 @@
 			</description>
             <assignment pooled-actors="#{businessDefineHome.instance.rolePrefix}commodity_last_check"></assignment>
         </task>
-        <transition to="审批结果"></transition>
+        <transition to="审批完成"></transition>
 
     </task-node>
 
@@ -76,32 +76,25 @@
 	</decision>
 
 	<decision name="是否网签">
-		<transition to="要件上传" name="送办业务">
-			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
-		</transition>
-		<transition to="网签受理" name="网签业务">
+		<transition to="审批" name="网签业务">
 			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
+		</transition>
+		<transition to="要件上传" name="正常业务">
+			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
 	</decision>
 
-	<task-node name="网签受理">
-		<task name="网签受理">
-			<description>
-				{&quot;businessName&quot;:&quot;#{ownerBusinessHome.instance.defineName}&quot;,&quot;businessKey&quot;:&quot;#{ownerBusinessHome.instance.id}&quot;, &quot;businessDefineKey&quot;:&quot;#{businessDefineHome.instance.id}&quot;,&quot;createTime&quot;:#{ownerBusinessHome.instance.createTime.time},&quot;description&quot;:&quot;#{businessDefineHome.description}&quot;,&quot;operComponent&quot;:&quot;houseOwnerTaskOper&quot;}
-			</description>
-			<assignment pooled-actors="ownerApply"></assignment>
-		</task>
-		<transition to="要件上传"></transition>
-	</task-node>
-
 	<decision name="受理来源">
-		<transition to="网签受理" name="网签业务">
-			<condition expression="#{ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE'}"></condition>
-		</transition>
 		<transition to="受理" name="送办业务">
 			<condition expression="#{not (ownerBusinessHome.instance.source eq 'BIZ_OUTSIDE')}"></condition>
 		</transition>
+		<transition to="结束" name="网签业务"></transition>
 	</decision>
+
+	<node name="审批完成">
+		<action name="审批完成" expression='#{ownerBusinessHome.doNodeAction("审批完成")}'></action>
+		<transition to="审批结果"></transition>
+	</node>
 
 
     <end-state name="结束"></end-state>
