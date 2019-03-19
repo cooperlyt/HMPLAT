@@ -3,6 +3,8 @@ package com.dgsoft.house.owner.business.subscribe.complete;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.common.system.business.TaskCompleteSubscribeComponent;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
+import com.dgsoft.house.owner.business.CheckTaskOperation;
+import com.dgsoft.house.owner.business.OwnerTaskHandle;
 import com.dgsoft.house.owner.model.SubStatus;
 import com.dgsoft.house.owner.model.TaskOper;
 import org.jboss.seam.ScopeType;
@@ -17,9 +19,12 @@ import org.jboss.seam.log.Logging;
 @Name("xfStatusComplete")
 public class XfStatusComplete implements TaskCompleteSubscribeComponent {
 
-    @In(required = false,scope = ScopeType.BUSINESS_PROCESS)
-    @Out(required = false,scope = ScopeType.BUSINESS_PROCESS)
-    private String transitionType;
+    @In(required = false)
+    private OwnerTaskHandle ownerTaskHandle;
+
+    @In(required = false)
+    private CheckTaskOperation checkTaskOperation;
+
     @In
     private OwnerBusinessHome ownerBusinessHome;
     @Override
@@ -34,24 +39,28 @@ public class XfStatusComplete implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        Logging.getLog(getClass()).debug("transitionType--"+transitionType);
-        if (TaskOper.OperType.CHECK_BACK.name().equals(transitionType) && ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)){
-            ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.CANCEL);
-            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
-                subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
-            }
-        }else if (TaskOper.OperType.CHECK_ACCEPT.name().equals(transitionType)){
-
-            if(!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)){
-                ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
-                for(SubStatus subStatus: ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()){
+        if (ownerTaskHandle !=null) {
+            Logging.getLog(getClass()).debug("ownerTaskHandle--" + ownerTaskHandle.getTransitionType());
+            if (TaskOper.OperType.CHECK_BACK.name().equals(ownerTaskHandle.getTransitionType()) && ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)) {
+                ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.CANCEL);
+                for (SubStatus subStatus : ownerBusinessHome.getInstance().getSubStatuses()) {
                     subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
                 }
+            } else if (TaskOper.OperType.CHECK_ACCEPT.name().equals(ownerTaskHandle.getTransitionType())) {
+
+                if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)) {
+                    ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
+                    for (SubStatus subStatus : ownerBusinessHome.getInstance().getSelectBusiness().getSubStatuses()) {
+                        subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
+                    }
+                }
+                ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+                for (SubStatus subStatus : ownerBusinessHome.getInstance().getSubStatuses()) {
+                    subStatus.setStatus(BusinessInstance.BusinessStatus.COMPLETE);
+                }
             }
-            ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.COMPLETE);
-            for(SubStatus subStatus: ownerBusinessHome.getInstance().getSubStatuses()){
-                subStatus.setStatus(BusinessInstance.BusinessStatus.COMPLETE);
-            }
+        }else {
+            throw new IllegalStateException("XfStatusComplete ownerTaskHandle is errers");
         }
 
     }
