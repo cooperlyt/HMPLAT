@@ -1,6 +1,7 @@
 package com.dgsoft.house.owner.ws;
 
 import cc.coopersoft.house.SubmitType;
+import cc.coopersoft.house.sale.data.CommitFile;
 import cc.coopersoft.house.sale.data.HouseSource;
 import cc.coopersoft.house.sale.data.SubmitResult;
 import com.dgsoft.common.system.RunParam;
@@ -12,10 +13,7 @@ import com.dgsoft.developersale.wsinterface.DESUtil;
 import com.dgsoft.house.DescriptionDisplay;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.SaleType;
-import com.dgsoft.house.model.Agencies;
-import com.dgsoft.house.model.AttachEmployee;
-import com.dgsoft.house.model.DeveloperLogonKey;
-import com.dgsoft.house.model.House;
+import com.dgsoft.house.model.*;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.*;
 import com.dgsoft.house.owner.model.ContractNumber;
@@ -96,6 +94,12 @@ public class OutsideBusinessCreate {
             businessHouse = houseRecord.getBusinessHouse();
         }
 
+        genHouseBusiness(businessHouse);
+
+
+    }
+
+    private void genHouseBusiness(BusinessHouse businessHouse) {
         businessDefineHome.setId(businessDefineId);
 
         ownerBusinessHome.clearInstance();
@@ -122,8 +126,6 @@ public class OutsideBusinessCreate {
         for(BusinessDataFill component: businessDefineHome.getCreateDataFillComponents()){
             component.fillData();
         }
-
-
     }
 
     private String submitContract(AttachEmployee attachEmployee ,
@@ -132,6 +134,10 @@ public class OutsideBusinessCreate {
 
         genHouseBusiness(defineId,outsideContract.getHouseCode());
 
+        return submitSaleContract(attachEmployee, outsideContract, ownerType);
+    }
+
+    private String submitSaleContract(AttachEmployee attachEmployee, cc.coopersoft.house.sale.data.HouseContract outsideContract, PowerPerson.PowerPersonType ownerType) {
         BusinessPersion businessPersion = new BusinessPersion(ownerBusinessHome.getInstance(),BusinessPersion.PersionType.PRE_SALE_ENTRUST);
         businessPersion.setPersonName(outsideContract.getSaleProxyPerson().getPersonName());
         businessPersion.setCredentialsType(outsideContract.getSaleProxyPerson().getCredentialsType());
@@ -151,6 +157,28 @@ public class OutsideBusinessCreate {
         houseContract.setSaleArea(ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().getHouseArea());
         houseContract.setSumPrice(outsideContract.getPrice());
         contractSubmit.setHouseContract(houseContract);
+        contractSubmit.setFid(outsideContract.getFileId());
+        if (!outsideContract.getCommitFiles().isEmpty()){
+            BusinessFile businessFile = new BusinessFile(ownerBusinessHome.getInstance(),"网签要件",0);
+
+            businessFile.setType(BusinessFile.DocType.ADDITIONAL);
+
+
+            for(CommitFile file: outsideContract.getCommitFiles()){
+                UploadFile uploadFile = new UploadFile();
+                uploadFile.setBusinessFile(businessFile);
+                uploadFile.setId(file.getId());
+                uploadFile.setFileName(businessFile.getName());
+                uploadFile.setUploadTime(file.getUploadTime());
+                uploadFile.setMd5(file.getMd5());
+                uploadFile.setEmpCode(attachEmployee.getId());
+                uploadFile.setEmpName(attachEmployee.getPersonName());
+                businessFile.getUploadFiles().add(uploadFile);
+            }
+
+            ownerBusinessHome.getInstance().getUploadFileses().add(businessFile);
+
+        }
 
         for(cc.coopersoft.house.sale.data.ContractNumber cn : outsideContract.getContractNumbers()){
             ContractNumber contractNumber = ownerBusinessHome.getEntityManager().find(ContractNumber.class, cn.getContractNumber());
@@ -166,7 +194,7 @@ public class OutsideBusinessCreate {
 
         ownerBusinessHome.getSingleHoues().setHouseContract(houseContract);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
-
+        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setOldPoolType(outsideContract.getOldHouseContract().getSellerPoolType());
 
         int i = 0;
         for(cc.coopersoft.house.sale.data.PowerPerson pp: outsideContract.getBusinessPoolList()){
@@ -255,6 +283,77 @@ public class OutsideBusinessCreate {
 
         return submitContract(key.getAttachEmployee(),outsideContract,RunParam.instance().getStringParamValue("NewHouseContractBizId"),PowerPerson.PowerPersonType.CONTRACT);
 
+    }
+
+    @Transactional
+    public SubmitResult submitHouseAndContract(String house,String contract,String attrId){
+        DeveloperLogonKey key = houseEntityLoader.getEntityManager().find(DeveloperLogonKey.class, attrId);
+        try {
+            String houseData = DESUtil.decrypt(house,key.getSessionKey());
+            String contractData = DESUtil.decrypt(contract,key.getSessionKey());
+
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            cc.coopersoft.house.sale.data.HouseContract outsideContract = mapper.readValue(contractData,cc.coopersoft.house.sale.data.HouseContract.class);
+            HouseSource houseSource = mapper.readValue(houseData,HouseSource.class);
+
+
+            businessDefineId = RunParam.instance().getStringParamValue("OldHouseContractBizId");
+
+            BusinessHouse businessHouse = new BusinessHouse();
+            businessHouse.setHouseOrder(houseSource.getHouseOrder());
+            businessHouse.setInFloorName((houseSource.getInFloorName() == null) ? "-" : houseSource.getInFloorName());
+            businessHouse.setHouseArea(houseSource.getHouseArea());
+            businessHouse.setUseArea(houseSource.getUseArea());
+            businessHouse.setStructure(houseSource.getStructure());
+            businessHouse.setAddress(houseSource.getAddress());
+            businessHouse.setUseType(houseSource.getUseType());
+            businessHouse.setDesignUseType(houseSource.getDesignUseType());
+            businessHouse.setHouseCode(houseSource.getHouseCode());
+            businessHouse.setBuildCode("-");
+            businessHouse.setHaveDownRoom(false);
+            businessHouse.setBlockNo(houseSource.getBlockNumber());
+            businessHouse.setMapNumber(houseSource.getMapNumber());
+            businessHouse.setBuildNo(houseSource.getBuildNumber());
+            businessHouse.setUpFloorCount(houseSource.getFloorCount());
+            businessHouse.setDownFloorCount(0);
+            businessHouse.setProjectName("-");
+            businessHouse.setSectionName(houseSource.getSectionName());
+            businessHouse.setDistrictCode(houseSource.getDistrict());
+            businessHouse.setBuildName(houseSource.getSectionName() + houseSource.getBuildNumber());
+
+
+            District d = houseEntityLoader.getEntityManager().find(District.class,houseSource.getDistrict());
+            if (d == null){
+                businessHouse.setDistrictName(businessHouse.getDistrictCode());
+            }else{
+                businessHouse.setDistrictName(d.getName());
+            }
+
+            genHouseBusiness(businessHouse);
+
+
+            Card oldCard = new Card(Card.CardType.OWNER_RSHIP);
+            oldCard.setOwnerBusiness(ownerBusinessHome.getInstance());
+            oldCard.setNumber(houseSource.getPowerCardNumber());
+            ownerBusinessHome.getInstance().getCards().add(oldCard);
+
+            String businessId = submitSaleContract(key.getAttachEmployee(), outsideContract, PowerPerson.PowerPersonType.OWNER);
+
+
+            if (businessId != null){
+
+                SubmitResult result = new SubmitResult(SubmitResult.SubmitStatus.SUCCESS,"合同已提交，业务编号：" + businessId);
+                result.setBusinessId(businessId);
+                return result;
+            }else{
+                return new SubmitResult(SubmitResult.SubmitStatus.FAIL,"合同提交失败！");
+            }
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
     }
 
 

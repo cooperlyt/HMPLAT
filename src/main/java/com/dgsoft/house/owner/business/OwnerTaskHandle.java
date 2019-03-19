@@ -69,6 +69,15 @@ public class OwnerTaskHandle {
     @In
     private TaskDescription taskDescription;
 
+    public String getTransitionType() {
+        return transitionType;
+    }
+
+    public void setTransitionType(String transitionType) {
+        this.transitionType = transitionType;
+    }
+
+
     public String getTransitionComments() {
         return transitionComments;
     }

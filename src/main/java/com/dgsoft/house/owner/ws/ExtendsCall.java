@@ -37,6 +37,20 @@ public class ExtendsCall {
     }
 
     @POST
+    @Path("/contract_and_house/{key}")
+    public String submitHouseContract(
+                                 @PathParam("key") String attrEmpId,
+                                 @FormParam("source") String source, @FormParam("data") String contract){
+        Logging.getLog(getClass()).info(attrEmpId  );
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(OutsideBusinessCreate.instance().submitHouseAndContract(source,contract,attrEmpId));
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e.getMessage(),e);
+        }
+    }
+
+    @POST
     @Path("/person/{key}")
     public String putPerson(@PathParam("key") String key , @FormParam("cer") String cer){
 

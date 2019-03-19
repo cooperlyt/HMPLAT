@@ -83,8 +83,7 @@ public class UploadFile implements java.io.Serializable{
         this.empCode = empCode;
     }
 
-    @Column(name = "MD5", nullable = false, length = 500)
-    @NotNull
+    @Column(name = "MD5", length = 500)
     @Size(max = 500)
     public String getMd5() {
         return this.md5;
