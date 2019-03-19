@@ -92,13 +92,13 @@ public class CheckTaskOperation {
 
         businessDefineHome.setTaskName(task.getTaskInstance().getName());
 
-        if (TaskOper.OperType.CHECK_ACCEPT.equals(operType)) {
+        //if (TaskOper.OperType.CHECK_ACCEPT.equals(operType)) {
             if (businessDefineHome.isCompletePass()) {
                 businessDefineHome.completeTask();
             } else {
                 return false;
             }
-        }
+        //}
 
         TaskInstance taskInstance = ManagedJbpmContext.instance().getTaskInstanceForUpdate(task.getTaskInstance().getId());
 

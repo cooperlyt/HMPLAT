@@ -108,8 +108,12 @@ public class OwnerTaskHandle {
                 TaskOper.OperType.CHECK_BACK, ownerBusinessHome.getInstance(),
                 authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(),
                 taskInstance.getName(),transitionComments,taskDescription.getDescription()));
-        if ("updated".equals(ownerBusinessHome.update())) {
-            return "taskCompleted";
+
+        if (businessDefineHome.isCompletePass() && businessDefineHome.isSubscribesPass()){
+            businessDefineHome.completeTask();
+            if ("updated".equals(ownerBusinessHome.update())) {
+                return "taskCompleted";
+            }
         }
         throw new IllegalArgumentException("backFail");
     }
