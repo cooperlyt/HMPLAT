@@ -77,7 +77,7 @@
 	</decision>
 
 	<node name="审批完成">
-		<action name="审批完成" expression='#{ownerBusinessHome.doNodeAction("审批完成")}'></action>
+		<action name="审批完成" expression='#{ownerBusinessHome.doNodeComplete("审批完成")}'></action>
 		<transition to="审批结果"></transition>
 	</node>
 

@@ -74,6 +74,7 @@ public class CheckTaskOperation {
         this.transitionComments = transitionComments;
     }
 
+
     private boolean singleEnd(long taskid, TaskOper.OperType operType) {
 
         for (TaskInstanceListCache.TaskInstanceAdapter task : allTaskAdapterCacheList.getResultTask()) {
