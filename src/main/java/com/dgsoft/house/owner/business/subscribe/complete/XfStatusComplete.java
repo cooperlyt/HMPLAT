@@ -39,14 +39,23 @@ public class XfStatusComplete implements TaskCompleteSubscribeComponent {
 
     @Override
     public void complete() {
-        if (ownerTaskHandle !=null) {
-            Logging.getLog(getClass()).debug("ownerTaskHandle--" + ownerTaskHandle.getTransitionType());
-            if (TaskOper.OperType.CHECK_BACK.name().equals(ownerTaskHandle.getTransitionType()) && ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)) {
+
+        String transitionType;
+        if (ownerTaskHandle !=null){
+            transitionType = ownerTaskHandle.getTransitionType();
+        }else if (checkTaskOperation != null){
+            transitionType = checkTaskOperation.getTransitionType();
+        }else{
+            throw new IllegalStateException("XfStatusComplete ownerTaskHandle is error");
+        }
+
+            Logging.getLog(getClass()).debug("ownerTaskHandle--" + transitionType);
+            if (TaskOper.OperType.CHECK_BACK.name().equals(transitionType) && ownerBusinessHome.getInstance().getSource().equals(BusinessInstance.BusinessSource.BIZ_OUTSIDE)) {
                 ownerBusinessHome.getInstance().setStatus(BusinessInstance.BusinessStatus.CANCEL);
                 for (SubStatus subStatus : ownerBusinessHome.getInstance().getSubStatuses()) {
                     subStatus.setStatus(BusinessInstance.BusinessStatus.CANCEL);
                 }
-            } else if (TaskOper.OperType.CHECK_ACCEPT.name().equals(ownerTaskHandle.getTransitionType())) {
+            } else if (TaskOper.OperType.CHECK_ACCEPT.name().equals(transitionType)) {
 
                 if (!ownerBusinessHome.getInstance().getType().equals(BusinessInstance.BusinessType.NORMAL_BIZ)) {
                     ownerBusinessHome.getInstance().getSelectBusiness().setStatus(BusinessInstance.BusinessStatus.CANCEL);
@@ -59,9 +68,7 @@ public class XfStatusComplete implements TaskCompleteSubscribeComponent {
                     subStatus.setStatus(BusinessInstance.BusinessStatus.COMPLETE);
                 }
             }
-        }else {
-            throw new IllegalStateException("XfStatusComplete ownerTaskHandle is errers");
-        }
+
 
     }
 }
