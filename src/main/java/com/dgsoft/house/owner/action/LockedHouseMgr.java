@@ -36,6 +36,8 @@ public class LockedHouseMgr {
 
     private List<LockedHouse> lockedHouses;
 
+    private List<LockedHouseCancel> lockedHousesCancels;
+
     private String houseCode;
 
     private String lockedReason;
@@ -75,6 +77,13 @@ public class LockedHouseMgr {
         return lockedHouses;
     }
 
+
+    public List<LockedHouseCancel> getLockedHousesCancels(){
+        initLocked();
+        return lockedHousesCancels;
+    }
+
+
     public boolean isCodeDefined(){
         return houseCode != null && !houseCode.trim().equals("");
     }
@@ -108,6 +117,7 @@ public class LockedHouseMgr {
             }
             ownerEntityLoader.getEntityManager().flush();
             lockedHouses = null;
+            lockedHousesCancels = null;
         }
 
     }
@@ -122,6 +132,7 @@ public class LockedHouseMgr {
                 ownerEntityLoader.getEntityManager().flush();
             }
             lockedHouses = null;
+            lockedHousesCancels = null;
         }
     }
 
@@ -142,12 +153,17 @@ public class LockedHouseMgr {
                         return o1.getLockedTime().compareTo(o2.getLockedTime());
                     }
                 });
+        }
+        if (isCodeDefined() && lockedHousesCancels == null){
+            lockedHousesCancels = ownerEntityLoader.getEntityManager().createQuery("select lc from LockedHouseCancel lc where lc.houseCode =:houseCode", LockedHouseCancel.class)
+                    .setParameter("houseCode",houseCode).getResultList();
+            Collections.sort(lockedHousesCancels,new Comparator<LockedHouseCancel>() {
+                @Override
+                public int compare(LockedHouseCancel o1, LockedHouseCancel o2) {
+                    return o1.getCancelDate().compareTo(o2.getCancelDate());
+                }
+            });
 
         }
     }
-
-
-
-
-
 }

@@ -128,7 +128,7 @@
                 <ui:define name="actionButtons">
                     <a:commandButton styleClass="button button-block danger" action="#{lockedHouseMgr.unLockAll}"
                                      value="解除此房屋的所有预警" oncomplete="$('#allLockedCancelConfirm').modal('hide')"
-                                     render="resultDatas" immediate="true" execute="@this">
+                                     render="resultDatas,cancelPancel" immediate="true" execute="@this">
                         <a:attachQueue requestDelay="0"/>
                     </a:commandButton>
                 </ui:define>
@@ -156,7 +156,7 @@
                 <ui:define name="actionButtons">
                     <a:commandButton styleClass="button button-block danger" action="#{lockedHouseMgr.unLock}"
                                      value="解除此项预警" oncomplete="$('#lockedCancelConfirm').modal('hide')"
-                                     render="resultDatas" immediate="true" execute="@this">
+                                     render="resultDatas,cancelPancel" immediate="true" execute="@this">
                         <a:attachQueue requestDelay="0"/>
                     </a:commandButton>
                 </ui:define>
@@ -227,6 +227,20 @@
 
             </a:outputPanel>
 
+            </a:outputPanel>
+
+            <a:outputPanel id="cancelPancel" layout="block" styleClass="panel panel-default" rendered="#{lockedHouseMgr.codeDefined and not empty lockedHouseMgr.houseInfo}" >
+                <a:repeat rendered="#{not empty lockedHouseMgr.lockedHousesCancels}"
+                          value="#{lockedHouseMgr.lockedHousesCancels}" var="_lockedHousesCancel">
+                    <p class="#{_lockedHouse.type}">  <strong> <h:outputText value="#{_lockedHousesCancel.cancelDate}"><s:convertDateTime pattern="#{messages.displayDateTimePattern}"/></h:outputText>
+                    </strong> 由 <strong>
+
+                        <h:outputText value="#{_lockedHousesCancel.empName}" p:aria-label="#{_lockedHousesCancel.empCode}"/></strong>
+
+                        <strong>解除原因为： #{_lockedHousesCancel.description} 的预警</strong>
+
+                    </p>
+                </a:repeat>
             </a:outputPanel>
         </div>
 
