@@ -309,17 +309,32 @@ public class OutsideBusinessCreate {
             businessHouse.setStructure(houseSource.getStructure());
             businessHouse.setAddress(houseSource.getAddress());
             businessHouse.setUseType(houseSource.getUseType());
-            businessHouse.setDesignUseType(houseSource.getDesignUseType());
+            if (houseSource.getDesignUseType() == null) {
+                businessHouse.setDesignUseType("-");
+            }else{
+                businessHouse.setDesignUseType(houseSource.getDesignUseType());
+            }
             businessHouse.setHouseCode(houseSource.getHouseCode());
             businessHouse.setBuildCode("-");
             businessHouse.setHaveDownRoom(false);
             businessHouse.setBlockNo(houseSource.getBlockNumber());
+
             businessHouse.setMapNumber(houseSource.getMapNumber());
-            businessHouse.setBuildNo(houseSource.getBuildNumber());
+            if (houseSource.getBuildNumber() == null){
+                businessHouse.setBuildNo("-");
+            }else{
+                businessHouse.setBuildNo(houseSource.getBuildNumber());
+            }
+
             businessHouse.setUpFloorCount(houseSource.getFloorCount());
             businessHouse.setDownFloorCount(0);
             businessHouse.setProjectName("-");
-            businessHouse.setSectionName(houseSource.getSectionName());
+            if (houseSource.getSectionName() == null){
+                businessHouse.setSectionName("-");
+            }else{
+                businessHouse.setSectionName(houseSource.getSectionName());
+            }
+
             businessHouse.setDistrictCode(houseSource.getDistrict());
             businessHouse.setBuildName(houseSource.getSectionName() + houseSource.getBuildNumber());
 

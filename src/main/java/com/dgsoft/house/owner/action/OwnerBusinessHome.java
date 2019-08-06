@@ -309,12 +309,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         if (getInstance().getSelectBusiness() != null &&
                 ((getInstance().getSelectBusiness().getSubStatuses().size() > 1) || (getInstance().getSelectBusiness().getHouseBusinesses().size() > 1)))
             return false;
-        for(HouseBusiness houseBusiness: getInstance().getHouseBusinesses()){
-            if (houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
-                result = false;
-                break;
-            }
-        }
+//        for(HouseBusiness houseBusiness: getInstance().getHouseBusinesses()){
+//            if (houseBusiness.getAfterBusinessHouse().getHouseRecords().isEmpty()){
+//                result = false;
+//                break;
+//            }
+//        }
         if (result){
             return identity.hasRole("owner.deleteBiz") || (BusinessInstance.BusinessSource.BIZ_AFTER_SAVE.equals(getInstance().getSource()) && identity.hasRole("recordRunManager"));
         }else{
