@@ -11,7 +11,7 @@ CREATE TABLE HOUSE_INFO.PERSONAL_CONTRACT_LOGON
 	PRIMARY KEY (ID)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
-
+-- 处了西丰其余地方没有
 INSERT DB_PLAT_SYSTEM.FUNCTION (ID, NAME, ICON, LOCATION, BANNER, PRIORITY, MEMO, CATEGORY, NEED_CONVERSATION) VALUE ('owner.PersonalContract','个人网签备案开户','','/func/house/owner/PersonalContractLogOnList.xhtml','',102,'','DATA_MGR',0);
 INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('owner.PersonalContractMgr','个人网签备案开户','个人网签备案开户',102);
 INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION (FUN_ID, ROL_ID) VALUE ('owner.PersonalContract','owner.PersonalContractMgr');

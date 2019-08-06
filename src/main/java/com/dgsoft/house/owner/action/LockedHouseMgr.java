@@ -8,6 +8,7 @@ import com.dgsoft.house.model.House;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.HouseRecord;
 import com.dgsoft.house.owner.model.LockedHouse;
+import com.dgsoft.house.owner.model.LockedHouseCancel;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.log.Logging;
@@ -34,6 +35,8 @@ public class LockedHouseMgr {
     private HouseInfo houseInfo;
 
     private List<LockedHouse> lockedHouses;
+
+    private List<LockedHouseCancel> lockedHousesCancels;
 
     private String houseCode;
 
@@ -74,6 +77,13 @@ public class LockedHouseMgr {
         return lockedHouses;
     }
 
+
+    public List<LockedHouseCancel> getLockedHousesCancels(){
+        initLocked();
+        return lockedHousesCancels;
+    }
+
+
     public boolean isCodeDefined(){
         return houseCode != null && !houseCode.trim().equals("");
     }
@@ -101,11 +111,13 @@ public class LockedHouseMgr {
         if (isCodeDefined()) {
             for (LockedHouse lh : getLockedHouses()) {
                 if (LockType.HOUSE_LOCKED.equals(lh.getType())) {
+                    ownerEntityLoader.getEntityManager().persist(new LockedHouseCancel(lh.getHouseCode(),lh.getEmpCode(),lh.getEmpName(),new Date(),lh.getDescription()));
                     ownerEntityLoader.getEntityManager().remove(lh);
                 }
             }
             ownerEntityLoader.getEntityManager().flush();
             lockedHouses = null;
+            lockedHousesCancels = null;
         }
 
     }
@@ -115,10 +127,12 @@ public class LockedHouseMgr {
         if (isCodeDefined()) {
             LockedHouse lh = ownerEntityLoader.getEntityManager().find(LockedHouse.class, selectLockedId);
             if (lh != null) {
+                ownerEntityLoader.getEntityManager().persist(new LockedHouseCancel(lh.getHouseCode(),lh.getEmpCode(),lh.getEmpName(),new Date(),lh.getDescription()));
                 ownerEntityLoader.getEntityManager().remove(lh);
                 ownerEntityLoader.getEntityManager().flush();
             }
             lockedHouses = null;
+            lockedHousesCancels = null;
         }
     }
 
@@ -139,12 +153,17 @@ public class LockedHouseMgr {
                         return o1.getLockedTime().compareTo(o2.getLockedTime());
                     }
                 });
+        }
+        if (isCodeDefined() && lockedHousesCancels == null){
+            lockedHousesCancels = ownerEntityLoader.getEntityManager().createQuery("select lc from LockedHouseCancel lc where lc.houseCode =:houseCode", LockedHouseCancel.class)
+                    .setParameter("houseCode",houseCode).getResultList();
+            Collections.sort(lockedHousesCancels,new Comparator<LockedHouseCancel>() {
+                @Override
+                public int compare(LockedHouseCancel o1, LockedHouseCancel o2) {
+                    return o1.getCancelDate().compareTo(o2.getCancelDate());
+                }
+            });
 
         }
     }
-
-
-
-
-
 }
