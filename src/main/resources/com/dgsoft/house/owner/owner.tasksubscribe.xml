@@ -659,11 +659,7 @@
             出租人查看(凤城)
         </description>
     </view-subscribe>
-    <view-subscribe name="MoneySafeView" page="/business/houseOwner/subscribe/MoneySafeView.xhtml">
-        <description>
-            预售许可证监管账户信息查看（资金监管）
-        </description>
-    </view-subscribe>
+
 
     <view-subscribe name="RepairMoneyPayView" page="/business/houseOwner/subscribe/RepairMoneyPayView.xhtml">
         <description>
@@ -1320,11 +1316,6 @@
     </edit-subscribe>
 
 
-    <edit-subscribe name="MoneySafeEdit" page="/business/houseOwner/subscribe/MoneySafeEdit.xhtml" component="">
-        <description>
-            预售许可证监管账户信息（资金监管）
-        </description>
-    </edit-subscribe>
 
     <edit-subscribe name="OldSellContractInfoEdit" page="/business/houseOwner/subscribe/OldSellContractInfoEdit.xhtml" component="">
         <description>
