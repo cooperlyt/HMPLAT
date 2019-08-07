@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.model;
 
+import cc.coopersoft.house.LockType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,17 +25,22 @@ public class LockedHouseCancel {
     private Date cancelDate;
     private String description;
 
+
+    private LockType type;
+
+
     public LockedHouseCancel (){
 
     }
 
-    public LockedHouseCancel (String houseCode,String empCode,String empName,Date cancelDate,String description){
+    public LockedHouseCancel (String houseCode,String empCode,String empName,Date cancelDate,String description,LockType type){
 
         this.houseCode = houseCode;
         this.empCode = empCode;
         this.empName = empName;
         this.cancelDate = cancelDate;
         this.description = description;
+        this.type = type;
 
     }
 
@@ -103,6 +109,18 @@ public class LockedHouseCancel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE" , nullable = false, length = 32)
+    @NotNull
+    public LockType getType() {
+        return type;
+    }
+
+    public void setType(LockType type) {
+        this.type = type;
+    }
+
 
 
 }
