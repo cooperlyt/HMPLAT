@@ -21,3 +21,5 @@ CREATE TABLE HOUSE_OWNER_RECORD.MONEY_SAFE
   CARD_NAME VARCHAR(128) NOT NULL,
   PRIMARY KEY (ID)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
+
+INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('89','商品房预售资金监管账户建立通知书','商品房预售资金监管账户建立通知书','/report/dgfcc/DgCommodityAccountCreateTicket.xhtml');
