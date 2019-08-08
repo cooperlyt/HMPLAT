@@ -6,7 +6,6 @@
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
             title="商品房资金监管受理单">
 
-<c:forEach begin="0" end="1">
     <a:repeat value="#{ownerBusinessHome.instance.businessProject.businessBuildList}" var="_buildBusiness">
         <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
 
@@ -278,31 +277,33 @@
                 </p:cell>
 
                 <p:cell fixedHeight="23">
-                    <p:paragraph>开户行名称</p:paragraph>
+                    <p:paragraph>监管账户号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" colspan="3">
-                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.createBankName}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.accountName}</p:paragraph>
                 </p:cell>
+
                 <p:cell fixedHeight="23">
                     <p:paragraph>银行代码</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" colspan="3">
                     <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.bank}</p:paragraph>
                 </p:cell>
+
                 <p:cell fixedHeight="23">
-                    <p:paragraph>账户名称</p:paragraph>
+                    <p:paragraph>付款开户行</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" colspan="3">
-                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.accountName}</p:paragraph>
+                    <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.createBankName}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>收款户名</p:paragraph>
+                    <p:paragraph>付款账户号</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" colspan="3">
                     <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.cardName}</p:paragraph>
                 </p:cell>
                 <p:cell fixedHeight="23">
-                    <p:paragraph>账户号码</p:paragraph>
+                    <p:paragraph>付款账户号码</p:paragraph>
                 </p:cell>
                 <p:cell borderWidthLeft="0" colspan="3">
                     <p:paragraph>#{ownerBusinessHome.instance.businessProject.moneySafe.cardNumber}</p:paragraph>
@@ -344,5 +345,4 @@
         </p:font>
         <p:newPage/>
     </a:repeat>
-</c:forEach>
 </p:document>
