@@ -48,7 +48,7 @@ public class HouseContractSubscribe extends OwnerEntityHome<HouseContract> {
                 }
             }else{
                // Logging.getLog(getClass()).debug("BuildCode-"+houseBusiness.getAfterBusinessHouse().getBuildCode());
-                List<String> projectSaleCerNumber = ownerEntityLoader.getEntityManager().createQuery("select (bizBuid.businessProject.projectSellInfo.projectCard.makeCard.number) from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('COMPLETE','MODIFYING') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode", String.class)
+                List<String> projectSaleCerNumber = ownerEntityLoader.getEntityManager().createQuery("select (bizBuid.businessProject.projectSellInfo.projectCard.makeCard.number) from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('COMPLETE') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode", String.class)
                         .setParameter("buildCode",houseBusiness.getAfterBusinessHouse().getBuildCode()).getResultList();
 
                 if (!projectSaleCerNumber.isEmpty() && projectSaleCerNumber.size()>0){
