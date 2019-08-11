@@ -198,7 +198,7 @@
 
                                     <a:ajax event="valueChange"
                                             listener="#{projectBusinessStart.projectSelectedListener}" execute="@this"
-                                            render="buildSelectForm">
+                                            render="buildSelectForm,buildMesForm">
                                         <a:attachQueue requestDelay="0"/>
                                     </a:ajax>
                                 </h:selectOneMenu>
@@ -231,8 +231,14 @@
 
 
             </h:outputStylesheet>
+            <h:form id="buildMesForm" styleClass="setup-form">
+                <r:messages ajaxRendered="false" globalOnly="true"/>
+            </h:form>
+
 
             <h:form id="buildSelectForm" styleClass="setup-form">
+
+
                 <a:outputPanel layout="block"
                                rendered="#{not projectHome.idDefined or (empty projectHome.instance.builds)}"
                                styleClass="blankslate spacious large-format">
@@ -269,11 +275,12 @@
                                     </a:ajax>
                                 </h:selectBooleanCheckbox>
                             </f:facet>
-                            <h:selectBooleanCheckbox value="#{_build.selected}">
+                            <h:selectBooleanCheckbox value="#{_build.selected}" rendered="#{_build.canSelect}" disabled="#{not _build.canSelect}">
                                 <a:ajax render="buildSelectForm" event="click" execute="@this">
                                     <a:attachQueue requestDelay="0"/>
                                 </a:ajax>
                             </h:selectBooleanCheckbox>
+
                         </h:column>
 
                         <h:column>

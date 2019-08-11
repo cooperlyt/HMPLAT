@@ -61,17 +61,18 @@
 
                 <h:column headerClass="checkHeader">
                     <f:facet name="header">
-                        <h:selectBooleanCheckbox value="#{projectBusinessStart.modifyBuildSelectAll}">
+                        <h:selectBooleanCheckbox value="#{projectBusinessStart.modifyBuildSelectAll}" rendered="#{false}">
                             <a:ajax render="buildSelectForm" event="click" execute="@this" immediate="true">
                                 <a:attachQueue requestDelay="0"/>
                             </a:ajax>
                         </h:selectBooleanCheckbox>
                     </f:facet>
-                    <h:selectBooleanCheckbox value="#{_build.selected}">
+                    <h:selectBooleanCheckbox value="#{_build.selected}" rendered="#{_build.inBiz}">
                         <a:ajax render="buildSelectForm" event="click" execute="@this">
                             <a:attachQueue requestDelay="0"/>
                         </a:ajax>
                     </h:selectBooleanCheckbox>
+                    <h:outputText rendered="#{not _build.inBiz}" value="业务中"/>
                 </h:column>
 
                 <h:column>

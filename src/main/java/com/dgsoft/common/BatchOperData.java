@@ -32,6 +32,13 @@ public class BatchOperData<T> {
         this.selected = selected;
     }
 
+    public BatchOperData(T data, boolean selected,boolean inbiz){
+        this.data = data;
+        this.selected = selected;
+        this.inBiz = inbiz;
+
+    }
+
     private boolean selected;
 
     public boolean isSelected() {
@@ -41,6 +48,17 @@ public class BatchOperData<T> {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
+    public boolean isInBiz() {
+        return inBiz;
+    }
+
+    public void setInBiz(boolean inBiz) {
+        this.inBiz = inBiz;
+    }
+
+    private boolean inBiz;
+
 
     public T getData() {
         return data;

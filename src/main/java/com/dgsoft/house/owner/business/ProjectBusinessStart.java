@@ -4,6 +4,8 @@ import cc.coopersoft.house.UseType;
 import com.dgsoft.common.BatchOperData;
 import com.dgsoft.common.Entry;
 import com.dgsoft.common.system.AuthenticationInfo;
+import com.dgsoft.common.system.action.BusinessDefineHome;
+import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.common.system.business.BusinessInstance;
 import com.dgsoft.house.*;
 import com.dgsoft.house.action.BuildHome;
@@ -17,6 +19,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.log.Logging;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -47,15 +51,56 @@ public class ProjectBusinessStart {
     @In
     private AuthenticationInfo authInfo;
 
+    @In(create = true)
+    private FacesMessages facesMessages;
+
+    @In
+    private BusinessDefineHome businessDefineHome;
+
     private boolean forProject;
 
-    private List<BatchOperData<Build>> builds = new ArrayList<BatchOperData<Build>>(0);
+
+
+   public static class HouseBuild extends BatchOperData<Build>{
+
+       private List<BusinessDataValid.ValidResult> validInfoList;
+
+       private BusinessDataValid.ValidResultLevel validLevel;
+
+       public  HouseBuild(Build data,List<BusinessDataValid.ValidResult> validInfo){
+           super(data, false);
+           this.validInfoList = validInfo;
+           validLevel = BusinessDataValid.ValidResultLevel.SUCCESS;
+           for(BusinessDataValid.ValidResult vr: validInfoList){
+               if (vr.getResult().getPri() > validLevel.getPri()){
+                   validLevel = vr.getResult();
+               }
+           }
+
+       }
+       public List<BusinessDataValid.ValidResult> getValidInfoList() {
+           return validInfoList;
+       }
+
+       public BusinessDataValid.ValidResultLevel getValidLevel() {
+           return validLevel;
+       }
+
+       public boolean isCanSelect(){
+           return validLevel.getPri() <= BusinessDataValid.ValidResultLevel.WARN.getPri();
+       }
+   }
+
+
+
+
+    private List<HouseBuild> builds = new ArrayList<HouseBuild>(0);
 
     private List<BusinessProject> projects = new ArrayList<BusinessProject>(0);
 
     private Map<Build, List<BuildGridMap>> buildGridMaps;
 
-    public List<BatchOperData<Build>> getBuilds() {
+    public List<HouseBuild> getBuilds() {
         return builds;
     }
 
@@ -169,6 +214,17 @@ public class ProjectBusinessStart {
         for (BatchOperData<Build> build : builds) {
             businessModifyBuilds.add(new BatchOperData<BusinessBuild>(new BusinessBuild(ownerBusinessHome.getInstance().getBusinessProject(), build.getData()), false));
         }
+        for (BatchOperData<BusinessBuild> builds1:businessModifyBuilds){
+            List<BusinessBuild> businessBuilds = ownerBusinessHome.getEntityManager().createQuery("select bizBuid from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('RUNNING','SUSPEND','MODIFYING') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode",BusinessBuild.class)
+                    .setParameter("buildCode",builds1.getData().getBuildCode()).getResultList();
+            if (businessBuilds.size()>0){
+                builds1.setInBiz(false);
+            }else {
+                builds1.setInBiz(true);
+            }
+
+
+        }
 
         return "modifyBuild";
     }
@@ -215,7 +271,9 @@ public class ProjectBusinessStart {
             projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode", BusinessProject.class)
                     .setParameter("projectCode", projectHome.getInstance().getProjectCode()).getResultList();
 
-            builds = new ArrayList<BatchOperData<Build>>();
+            builds = new ArrayList<HouseBuild>();
+
+
 
             for (Build build : projectHome.getInstance().getBuildList()) {
                 boolean found = false;
@@ -231,16 +289,55 @@ public class ProjectBusinessStart {
                     }
                 }
                 if (!found) {
-                    builds.add(new BatchOperData<Build>(build, true));
+                    List<BusinessDataValid.ValidResult> validResults = new ArrayList<BusinessDataValid.ValidResult>();
+                    for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
+                        try {
+                            BusinessDataValid.ValidResult validResult = valid.valid(build);
+                            if (validResult.getResult().getPri() > BusinessDataValid.ValidResultLevel.SUCCESS.getPri()) {
+                                validResults.add(validResult);
+                            }
+                            if (validResult.getResult().equals(BusinessDataValid.ValidResultLevel.FATAL)){
+                                throw new IllegalArgumentException(validResult.getMsgKey());
+                            }
+                            if (!validResult.getResult().equals(BusinessDataValid.ValidResultLevel.SUCCESS)){
+                                facesMessages.addFromResourceBundle(validResult.getResult().getSeverity(),validResult.getMsgKey(),validResult.getParams());
+                            }
+
+                        }catch (Exception e){
+                            Logging.getLog(getClass()).error(e.getMessage(),e,"config error:" + valid.getClass().getSimpleName());
+                            throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
+                        }
+                    }
+                    builds.add(new HouseBuild(build,validResults));
                 }
             }
         }else{
-            builds = new ArrayList<BatchOperData<Build>>(projectHome.getInstance().getBuilds().size());
+            builds = new ArrayList<HouseBuild>(projectHome.getInstance().getBuilds().size());
             for(Build build: projectHome.getInstance().getBuildList()){
-                builds.add(new BatchOperData<Build>(build,true));
+                List<BusinessDataValid.ValidResult> validResults = new ArrayList<BusinessDataValid.ValidResult>();
+                for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
+                    try {
+                        BusinessDataValid.ValidResult validResult = valid.valid(build);
+                        if (validResult.getResult().getPri() > BusinessDataValid.ValidResultLevel.SUCCESS.getPri()) {
+                            validResults.add(validResult);
+                        }
+                        if (validResult.getResult().equals(BusinessDataValid.ValidResultLevel.FATAL)){
+                            throw new IllegalArgumentException(validResult.getMsgKey());
+                        }
+                        if (!validResult.getResult().equals(BusinessDataValid.ValidResultLevel.SUCCESS)){
+                            facesMessages.addFromResourceBundle(validResult.getResult().getSeverity(),validResult.getMsgKey(),validResult.getParams());
+                        }
+
+                    }catch (Exception e){
+                        Logging.getLog(getClass()).error(e.getMessage(),e,"config error:" + valid.getClass().getSimpleName());
+                        throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
+                    }
+                }
+                builds.add(new HouseBuild(build,validResults));
             }
         }
     }
+
 
     public boolean isSelectBuild() {
         if (projectHome.isIdDefined()) {
@@ -266,8 +363,10 @@ public class ProjectBusinessStart {
     }
 
     public void setSelectAll(boolean selected) {
-        for (BatchOperData<Build> bb : builds) {
-            bb.setSelected(selected);
+        for (HouseBuild bb : builds) {
+            if (bb.isCanSelect()) {
+                bb.setSelected(selected);
+            }
         }
     }
 
@@ -611,4 +710,5 @@ public class ProjectBusinessStart {
 
         return ownerBusinessStart.dataSelected();
     }
+
 }

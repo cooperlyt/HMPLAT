@@ -23,6 +23,8 @@ public class HouseContractSubscribe extends OwnerEntityHome<HouseContract> {
     private OwnerBusinessHome ownerBusinessHome;
 
 
+
+
     @In(create = true)
     private NumberBuilder numberBuilder;
 
@@ -43,6 +45,7 @@ public class HouseContractSubscribe extends OwnerEntityHome<HouseContract> {
                 String no=site+datePart + Long.toString(numberBuilder.getNumber("HTBH"));
                 getInstance().setContractNumber(no);
                 getInstance().setHouseBusiness(houseBusiness);
+
                 houseBusiness.setHouseContract(getInstance());
             }
         }
