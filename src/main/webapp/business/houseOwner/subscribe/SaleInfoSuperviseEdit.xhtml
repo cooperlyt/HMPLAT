@@ -133,11 +133,12 @@
             <ui:define name="label">
                 商品房预售许可证号
             </ui:define>
-            <ui:param name="for" value="houseCardNo"/>
+            <ui:param name="for" value="projectSaleCerNumber"/>
             <h:inputText label="商品房预售许可证号"
                          maxlength="30"
                          id="projectSaleCerNumber"
                          value="#{houseContractSubscribe.instance.projectSaleCerNumber}"
+                         required="true"
                          styleClass="form-control">
             </h:inputText>
         </s:decorate>

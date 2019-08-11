@@ -217,7 +217,7 @@ public class ProjectBusinessStart {
         for (BatchOperData<BusinessBuild> builds1:businessModifyBuilds){
             List<BusinessBuild> businessBuilds = ownerBusinessHome.getEntityManager().createQuery("select bizBuid from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('RUNNING','SUSPEND','MODIFYING') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode",BusinessBuild.class)
                     .setParameter("buildCode",builds1.getData().getBuildCode()).getResultList();
-            if (businessBuilds.size()>0){
+            if (businessBuilds!=null && businessBuilds.size()>0){
                 builds1.setInBiz(false);
             }else {
                 builds1.setInBiz(true);
