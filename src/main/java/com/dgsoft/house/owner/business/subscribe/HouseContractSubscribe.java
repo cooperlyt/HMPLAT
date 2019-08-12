@@ -53,7 +53,7 @@ public class HouseContractSubscribe extends OwnerEntityHome<HouseContract> {
 
                 if (!projectSaleCerNumber.isEmpty() && projectSaleCerNumber.size()>0){
                    // Logging.getLog(getClass()).debug("projectSaleCerNumber-"+houseBusiness.getAfterBusinessHouse().getBuildCode());
-                    getInstance().setProjectSaleCerNumber(projectSaleCerNumber.get(0));
+                    getInstance().setProjectSaleCerNumber(projectSaleCerNumber.get(projectSaleCerNumber.size()-1));
                 }else{
                     getInstance().setProjectSaleCerNumber(null);
                 }
