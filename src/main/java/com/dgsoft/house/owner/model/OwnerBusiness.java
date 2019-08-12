@@ -65,6 +65,10 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<GiveCard> giveCards = new HashSet<GiveCard>(0);
 
 
+
+    private Set<MoneyBackBusiness> moneyBackBusinesses = new HashSet<MoneyBackBusiness>(0);
+
+
     private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
 
     private Set<HouseSourceBusiness> houseSourceBusinesses = new HashSet<HouseSourceBusiness>(0);
@@ -276,6 +280,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setMappingCorps(Set<MappingCorp> mappingCorps) {
         this.mappingCorps = mappingCorps;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ownerBusiness",cascade = {CascadeType.ALL},orphanRemoval = true)
+    public Set<MoneyBackBusiness> getMoneyBackBusinesses() {
+        return moneyBackBusinesses;
+    }
+
+    public void setMoneyBackBusinesses(Set<MoneyBackBusiness> moneyBackBusinesses) {
+        this.moneyBackBusinesses = moneyBackBusinesses;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
