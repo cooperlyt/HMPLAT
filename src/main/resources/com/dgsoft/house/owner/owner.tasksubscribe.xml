@@ -1336,6 +1336,13 @@
         </description>
     </edit-subscribe>
 
+
+    <edit-subscribe name="CancelMoneyBackBusinessEdit" page="/business/houseOwner/subscribe/CancelMoneyBackBusinessEdit.xhtml" component="repairMoneyPaySubscribe">
+        <description>
+            撤销备案退款信息
+        </description>
+    </edit-subscribe>
+
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
     <end-subscribe name="NoticeDisplayGen" component="noticeDisplayGen">

@@ -96,12 +96,61 @@ public class NumberBuilder {
 
     @Transactional
     public String getNumber(String type, int length){
-        long number = getNumber(type);
+        long number = getNumberL4(type);
         StringBuffer result =  new StringBuffer(String.valueOf(number));
         while (result.length() < length){
             result.insert(0,'0');
         }
         return result.toString();
+    }
+    @Transactional
+    public long getNumberL4(String type) {
+
+        Numbers result = numbers.get(type);
+        long resultNumber;
+        if (result == null) {
+            EntityManager entityManager = getSystemEntityManger();
+            NumberPool numberPool = entityManager.find(NumberPool.class,type);
+            Numbers newNumber;
+
+
+            if (numberPool == null){
+                newNumber = new Numbers();
+                entityManager.persist(new NumberPool(type,newNumber.maxNumber,DEFAULT_STEP));
+                entityManager.flush();
+                Logging.getLog(this.getClass()).debug("flush entityManager from numberBuild");
+            }else{
+                if (numberPool.getNumber()>=9985){
+                    newNumber = new Numbers();
+                }else {
+                    newNumber = new Numbers(numberPool.getNumber(),
+                            numberPool.getPoolSize() + numberPool.getNumber());
+                }
+                numberPool.setNumber(newNumber.maxNumber);
+                entityManager.flush();
+                Logging.getLog(this.getClass()).debug("flush entityManager from numberBuild");
+            }
+            numbers.put(type,newNumber);
+            resultNumber = newNumber.nextNumber;
+            newNumber.nextNumber = newNumber.nextNumber + 1;
+
+        } else {
+            resultNumber = result.nextNumber;
+            if (result.nextNumber>9985){
+                result.nextNumber = 1;
+                result.maxNumber = 11;
+            }
+            result.nextNumber = result.nextNumber + 1;
+            if (result.nextNumber >= result.maxNumber){
+                EntityManager entityManager = getSystemEntityManger();
+                NumberPool pool = entityManager.find(NumberPool.class,type);
+                pool.setNumber(result.nextNumber + pool.getPoolSize());
+                entityManager.flush();
+                Logging.getLog(this.getClass()).debug("flush entityManager from numberBuild");
+                result.maxNumber = pool.getNumber();
+            }
+        }
+        return resultNumber;
     }
 
     @Transactional

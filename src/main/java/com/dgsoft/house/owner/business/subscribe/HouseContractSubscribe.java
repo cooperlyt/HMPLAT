@@ -61,7 +61,8 @@ public class HouseContractSubscribe extends OwnerEntityHome<HouseContract> {
                 SimpleDateFormat numberDateformat = new SimpleDateFormat("yyyyMMdd");
                 String datePart = numberDateformat.format(new Date());
                 String site = RunParam.instance().getStringParamValue("SiteShort");
-                String no=site+datePart + Long.toString(numberBuilder.getNumber("HTBH"));
+                String no=site+datePart + numberBuilder.getNumber("HTBH",4);
+
                 getInstance().setContractNumber(no);
                 getInstance().setHouseBusiness(houseBusiness);
 
