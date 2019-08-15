@@ -1,0 +1,186 @@
+<p:document xmlns:p="http://jboss.org/schema/seam/pdf"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:a="http://richfaces.org/a4j"
+            xmlns:s="http://jboss.org/schema/seam/taglib"
+            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+            title="商品房预售监管资金撤销备案退款申请表">
+
+
+<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+
+<p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
+
+    <p:table columns="2" widths="6 2" headerRows="0" footerRows="0" widthPercentage="100" >
+        <p:cell border="0">
+            <p:table columns="4" widths="1 3 1 3" headerRows="0" footerRows="0" widthPercentage="100">
+                <f:facet name="defaultCell">
+                    <p:cell padding="0" border="0"/>
+                </f:facet>
+                <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle" >
+                    <p:paragraph>
+                        <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
+                            商品房预售监管资金撤销备案退款申请表
+                        </p:font>
+                    </p:paragraph>
+                </p:cell>
+                <p:cell>
+                    <p:paragraph>房屋编号:</p:paragraph>
+                </p:cell>
+                <p:cell verticalAlignment="left">
+                    <p:paragraph>#{_houseBusiness.houseCode}</p:paragraph>
+                </p:cell>
+
+                <p:cell horizontalAlignment="left">
+
+                </p:cell>
+                <p:cell verticalAlignment="bottom" horizontalAlignment="left">
+                    <p:paragraph>#{bankList.SearchBusinessBuild(_houseBusiness.afterBusinessHouse.buildCode)}</p:paragraph>
+                </p:cell>
+
+            </p:table>
+
+        </p:cell>
+
+        <p:cell horizontalAlignment="" colspan="2" border="0">
+            <p:barCode code="#{ownerBusinessHome.instance.id}"  codeType="CODE128"/>
+        </p:cell>
+
+    </p:table>
+
+</p:font>
+
+
+
+<p:font name="STSong-Light" encoding="UniGB-UCS2-H" size="12">
+    <p:table columns="4" widths="0.8 1 0.8 1" headerRows="0" footerRows="0" widthPercentage="100">
+    <f:facet name="defaultCell">
+        <p:cell horizontalAlignment="center" verticalAlignment="middle" padding="0"/>
+    </f:facet>
+
+        <p:cell fixedHeight="30">
+            <p:paragraph>申请人(企业名称)</p:paragraph>
+
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.developerName}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>代理人姓名</p:paragraph>
+        </p:cell>
+        <p:cell >
+            <p:paragraph>#{ownerBusinessHome.instance.preSaleEntrust.personName}</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>联系电话</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.preSaleEntrust.phone}</p:paragraph>
+        </p:cell>
+        <p:cell  fixedHeight="30">
+            <p:paragraph>证件类型</p:paragraph>
+        </p:cell>
+        <p:cell >
+            <p:paragraph>#{messages[ownerBusinessHome.instance.preSaleEntrust.credentialsType.name()]}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>证件号码</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.preSaleEntrust.credentialsNumber}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>业务编号</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.id}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>退款编号</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.moneyBackCancel.id}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>合同备案号</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{ownerBusinessHome.instance.selectBusiness.houseContract.contractNumber}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>预售许可证号</p:paragraph>
+        </p:cell>
+        <p:cell>
+            <p:paragraph>#{bankList.businessBuild.businessProject.projectSellInfo.projectCard.makeCard.number}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>监管项目</p:paragraph>
+         </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.projectName}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>监管范围</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.buildName}</p:paragraph>
+        </p:cell>
+
+        <p:cell fixedHeight="30">
+            <p:paragraph>产籍标识</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{_houseBusiness.afterBusinessHouse.displayHouseCodeByCh}</p:paragraph>
+        </p:cell>
+
+        <p:cell fixedHeight="30">
+            <p:paragraph>监管银行</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{bankList.bank.bankName}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>监管账户号</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{bankList.businessBuild.businessProject.moneySafe.accountName}</p:paragraph>
+        </p:cell>
+        <p:cell fixedHeight="30">
+            <p:paragraph>退款金额</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph><p:text value="小写： #{ownerBusinessHome.instance.moneyBackCancel.backMoney}"><f:convertNumber pattern="#0.000"/></p:text>        大写： #{ownerBusinessHome.instance.moneyBackCancel.bigHighestMountMoney}</p:paragraph>
+        </p:cell>
+
+        <p:cell colspan="4">
+            <p:table columns="4" widths="1 1 1 1" widthPercentage="100" footerRows="0" headerRows="0" >
+                 <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="left" verticalAlignment="middle" border="0"/>
+                </f:facet>
+                <p:cell colspan="4" padding="10" horizontalAlignment="center" verticalAlignment="middle">
+                    <p:paragraph>本公司保证所提供以上信息及资料均真实准确，如有不实愿承担法律和经济责任</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" padding="40">
+                    <p:paragraph>法定代表人(签章)</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" >
+                    <p:paragraph>（开发企业公章）</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" padding="40">
+                    <p:paragraph>委托代理人（签章）</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2">
+                    <p:paragraph>年        月         日</p:paragraph>
+                </p:cell>
+
+            </p:table>
+        </p:cell>
+
+
+
+
+    </p:table>
+</p:font>
+<p:newPage/>
+</a:repeat>
+</p:document>
