@@ -526,6 +526,12 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
 
     @Deprecated
+    public MoneyBackBusiness getMoneyBackCancel(){
+        return getInstance().getMoneyBackCancel();
+    }
+
+
+    @Deprecated
     public BusinessHouse getBusinessHouse(){
         return getInstance().getBusinessHouse();
     }

@@ -1,5 +1,6 @@
 package com.dgsoft.house.owner.model;
 
+import com.dgsoft.common.BigMoneyUtil;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 
@@ -83,5 +84,9 @@ public class MoneyBackBusiness implements Serializable{
         this.ownerBusiness = ownerBusiness;
     }
 
+    @Transient
+    public String getBigHighestMountMoney(){
+        return BigMoneyUtil.getBigMoney(getBackMoney().doubleValue());
+    }
 
 }

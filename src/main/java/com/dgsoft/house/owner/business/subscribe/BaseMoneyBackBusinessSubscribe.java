@@ -73,11 +73,10 @@ public abstract class BaseMoneyBackBusinessSubscribe extends OwnerEntityHome<Mon
 
     @Override
     public void create() {
-        bankList.setBuildCode(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse().getBuildCode());
-        businessBuild = bankList.SearchBusinessBuild();
-        if (businessBuild!= null){
-            bankList.setBankId(businessBuild.getBusinessProject().getMoneySafe().getBank());
-            Bank bank = bankList.SearchBank();
+        bankList.SearchBusinessBuild(ownerBusinessHome.getInstance().getSingleHoues().getAfterBusinessHouse().getBuildCode());
+        businessBuild =bankList.getBusinessBuild();
+        if (businessBuild!= null && businessBuild.getBusinessProject()!=null && businessBuild.getBusinessProject().getMoneySafe()!=null){
+            Bank bank = bankList.getBank();
             if (bank!=null && bank.getBankName()!=null){
                 setBankName(bank.getBankName());
             }else{

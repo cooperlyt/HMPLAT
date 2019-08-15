@@ -846,6 +846,35 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
     /**
+     * 商品房资金监管退款
+     */
+    @Transient
+    public MoneyBackBusiness getMoneyBackBusiness(MoneyBackBusiness.MoneyBackType moneyBackType){
+        for(MoneyBackBusiness moneyBackBusiness: getMoneyBackBusinesses()){
+            if (moneyBackBusiness.getBackType().equals(moneyBackType)){
+                return moneyBackBusiness;
+            }
+
+        }
+        return null;
+    }
+
+    @Transient
+    public MoneyBackBusiness getMoneyBackCancel(){
+        return getMoneyBackBusiness(MoneyBackBusiness.MoneyBackType.CANCEL);
+    }
+    @Transient
+    public MoneyBackBusiness getMoneyAbort(){
+        return getMoneyBackBusiness(MoneyBackBusiness.MoneyBackType.ABORT);
+    }
+
+    @Transient
+    public MoneyBackBusiness getMoneyDelte(){
+        return getMoneyBackBusiness(MoneyBackBusiness.MoneyBackType.DELETE);
+    }
+
+
+    /**
      *
      * @return 共有权证数量
      */

@@ -8,6 +8,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.log.Logging;
 
 import java.util.List;
 
@@ -41,21 +42,46 @@ public class BankList {
         this.buildCode = buildCode;
     }
 
+    public BusinessBuild getBusinessBuild() {
+        return businessBuild;
+    }
 
-    public BusinessBuild SearchBusinessBuild(){
-        BusinessBuild bizBuild = null;
-        List<BusinessBuild> businessBuilds = ownerEntityLoader.getEntityManager().createQuery("select bizBuid from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('COMPLETE') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode", BusinessBuild.class)
-                .setParameter("buildCode", getBuildCode()).getResultList();
-        if (businessBuilds !=null && businessBuilds.size()>0){
-            return businessBuilds.get(0);
+    public void setBusinessBuild(BusinessBuild businessBuild) {
+        this.businessBuild = businessBuild;
+    }
+
+    private BusinessBuild businessBuild = null;
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    private Bank bank = null;
+
+
+
+
+    public void SearchBusinessBuild(String buildCode){
+        if (businessBuild == null) {
+            List<BusinessBuild> businessBuilds = ownerEntityLoader.getEntityManager().createQuery("select bizBuid from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('COMPLETE') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode", BusinessBuild.class)
+                    .setParameter("buildCode", buildCode).getResultList();
+            if (businessBuilds != null && businessBuilds.size() > 0) {
+                businessBuild = businessBuilds.get(0);
+
+            }
+            if (businessBuild!= null && businessBuild.getBusinessProject()!=null && businessBuild.getBusinessProject().getMoneySafe()!=null){
+                if (bank == null){
+                    bank = ownerEntityLoader.getEntityManager().find(Bank.class,businessBuild.getBusinessProject().getMoneySafe().getBank());
+                }
+            }
         }
-        return bizBuild;
+
     }
 
-
-    public Bank SearchBank(){
-        return ownerEntityLoader.getEntityManager().find(Bank.class,getBankId());
-    }
 
 
 
