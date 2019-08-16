@@ -110,11 +110,25 @@ public class HouseBusinessStart {
             for(BusinessInstance bizInstance: component.getAllowSelectBusiness(ownerBuildGridMap.getSelectBizHouse()))
                 allowSelectBizs.add((OwnerBusiness)bizInstance);
         }
-        if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) &&  !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
 
-            allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join biz.subStatuses subStatus where houseBusiness.ownerBusiness.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ') and houseBusiness.houseCode =:houseCode and ( houseBusiness.ownerBusiness.defineId in (:defineIds) or (subStatus.status = 'COMPLETE' and  subStatus.defineId in (:defineIds)))", OwnerBusiness.class)
-                    .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
-                    .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","))).getResultList());
+        if ((businessDefineHome.getInstance().getPickBusinessDefineId() != null) && !businessDefineHome.getInstance().getPickBusinessDefineId().trim().equals("") ){
+            if (businessDefineHome.getInstance().getPickBusinessDefineStatus()!= null && !businessDefineHome.getInstance().getPickBusinessDefineStatus().trim().equals("")){
+                ArrayList<BusinessInstance.BusinessStatus> arrayList = new ArrayList<BusinessInstance.BusinessStatus>(0);
+                String[] statusStr = businessDefineHome.getInstance().getPickBusinessDefineStatus().split(",");
+                for (String str:statusStr){
+                    arrayList.add(BusinessInstance.BusinessStatus.valueOf(str));
+                }
+                allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join biz.subStatuses subStatus where houseBusiness.ownerBusiness.status in (:status) and biz.type in ('NORMAL_BIZ','MODIFY_BIZ') and houseBusiness.houseCode =:houseCode and ( houseBusiness.ownerBusiness.defineId in (:defineIds) or (subStatus.status in (:status) and  subStatus.defineId in (:defineIds)))", OwnerBusiness.class)
+                        .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
+                        .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(",")))
+                        .setParameter("status", arrayList).getResultList());
+            }else{
+                allowSelectBizs.addAll(ownerBusinessHome.getEntityManager().createQuery("select distinct houseBusiness.ownerBusiness from HouseBusiness houseBusiness left join houseBusiness.ownerBusiness biz left join biz.subStatuses subStatus where houseBusiness.ownerBusiness.status = 'COMPLETE' and biz.type in ('NORMAL_BIZ','MODIFY_BIZ') and houseBusiness.houseCode =:houseCode and ( houseBusiness.ownerBusiness.defineId in (:defineIds) or (subStatus.status = 'COMPLETE' and  subStatus.defineId in (:defineIds)))", OwnerBusiness.class)
+                        .setParameter("houseCode", ownerBuildGridMap.getSelectBizHouse().getHouseCode())
+                        .setParameter("defineIds", Arrays.asList(businessDefineHome.getInstance().getPickBusinessDefineId().split(","))).getResultList());
+
+            }
+
         }
 
         if (businessDefineHome.getInstance().isRequiredBiz() && allowSelectBizs.isEmpty()){

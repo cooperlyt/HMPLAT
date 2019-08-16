@@ -20,8 +20,8 @@
             <ui:insert name="itemTitle">
 
 
-                    #{_item.defineName} / #{_item.id}
-
+                    #{_item.defineName} / #{_item.id}/
+                <span class="label label-biz-status #{_item.status} tooltipped tooltipped-s" aria-label="#{messages[_item.source]} #{_item.recorded ? messages.OwnerBusinessRecord : messages.OwnerBusinessNoRecord} #{messages[_item.status.name()]}"> #{messages[_item.status.name()]}</span>
 
             </ui:insert>
         </h3>

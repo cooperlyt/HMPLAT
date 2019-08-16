@@ -186,6 +186,11 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
 
     }
 
+    public OwnerBusiness getSelectBusiness(){
+        return getInstance().getSelectBusiness();
+    }
+
+
     public HouseSourceBusiness getSingleHouseSource(){
         Set<HouseSourceBusiness> houseSourceBusinesses = getInstance().getHouseSourceBusinesses();
         if (houseSourceBusinesses.size() > 1 ){

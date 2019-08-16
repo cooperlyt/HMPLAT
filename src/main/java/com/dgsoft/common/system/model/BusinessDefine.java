@@ -143,6 +143,7 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
     private Set<CreateComponent> businessCreateDataValids = new HashSet<CreateComponent>(0);
     private boolean enable;
     private String pickBusinessDefineId;
+    private String pickBusinessDefineStatus;
     private String pickBusinessViewPage;
     private boolean requiredBiz;
 
@@ -326,6 +327,16 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
 
     public void setPickBusinessDefineId(String pickBusinessDefineId) {
         this.pickBusinessDefineId = pickBusinessDefineId;
+    }
+
+    @Column(name = "PICK_BUSINESS_DEFINE_STATUS", nullable = true, length = 50)
+    @Size(max = 50)
+    public String getPickBusinessDefineStatus() {
+        return pickBusinessDefineStatus;
+    }
+
+    public void setPickBusinessDefineStatus(String pickBusinessDefineStatus) {
+        this.pickBusinessDefineStatus = pickBusinessDefineStatus;
     }
 
     @Column(name="PICK_BUSINESS_VIEW_PAGE", nullable = true, length = 255)
