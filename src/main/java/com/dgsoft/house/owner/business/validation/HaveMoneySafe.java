@@ -4,6 +4,7 @@ import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.model.BusinessBuild;
 import com.dgsoft.house.owner.model.BusinessHouse;
+import com.dgsoft.house.owner.model.HouseBusiness;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -17,18 +18,17 @@ import java.util.List;
  */
 @Name("haveMoneySafe")
 @Scope(ScopeType.STATELESS)
-public class HaveMoneySafe extends BusinessHouseValid {
+public class HaveMoneySafe extends HouseBusinessValid {
     @In(create = true)
     private OwnerEntityLoader ownerEntityLoader;
 
 
     @Override
-    public ValidResult valid(BusinessHouse businessHouse) {
-
+    public ValidResult valid(HouseBusiness houseBusiness) {
         BusinessBuild  businessBuild = null;
 
         List<BusinessBuild> businessBuilds = ownerEntityLoader.getEntityManager().createQuery("select bizBuid from BusinessBuild bizBuid where bizBuid.businessProject.ownerBusiness.status in('COMPLETE') and bizBuid.businessProject.ownerBusiness.type<>'CANCEL_BIZ' and bizBuid.buildCode=:buildCode", BusinessBuild.class)
-                .setParameter("buildCode", businessHouse.getBuildCode()).getResultList();
+                .setParameter("buildCode", houseBusiness.getAfterBusinessHouse().getBuildCode()).getResultList();
 
         if (businessBuilds != null && businessBuilds.size() > 0) {
             businessBuild = businessBuilds.get(0);
