@@ -29,7 +29,7 @@
 
     <navigation from-action="#{moneyBackBusinessStart.businessSelected}">
         <rule if-outcome="backMoneySelected">
-            <redirect view-id="/business/houseOwner/SelectBusinessHousePick.xhtml"/>
+            <redirect view-id="/business/houseOwner/SelectMoneyBackBusinessHousePick.xhtml"/>
         </rule>
     </navigation>
 

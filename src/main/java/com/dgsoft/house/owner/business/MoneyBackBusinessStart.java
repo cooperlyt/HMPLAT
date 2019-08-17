@@ -75,6 +75,7 @@ public class MoneyBackBusinessStart {
 
     private String selectBizId;
 
+
     private boolean singleHouse;
 
     @RequestParameter
@@ -100,9 +101,14 @@ public class MoneyBackBusinessStart {
         return houseBusinessList;
     }
 
+    public boolean isSingleHouse() {
+        return singleHouse;
+    }
+
     public void setSingleHouse(boolean singleHouse) {
         this.singleHouse = singleHouse;
     }
+
 
     public boolean isHaveSelectHouse(){
         for(BatchOperData<BusinessHouse> data: houseBusinessList){

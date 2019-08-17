@@ -27,7 +27,7 @@ INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('91','商品�
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('92','商品房预售监管资金撤销备案退款同意拨付证明','商品房预售监管资金撤销备案退款同意拨付证明','/report/dgfcc/DgMoneyBackCancelNotice.xhtml');
 
 INSERT DB_PLAT_SYSTEM.BUSINESS_DEFINE (ID, NAME, WF_NAME, START_PAGE, CATEGORY, MEMO, VERSION, ROLE_PREFIX, DESCRIPTION, PRIORITY, ENABLE, PICK_BUSINESS_DEFINE_ID, PICK_BUSINESS_VIEW_PAGE, MODIFY_PAGE, REQUIRED_BIZ, REGISTER_BOOK_PART, UNION_BIZ, PICK_BUSINESS_DEFINE_STATUS)
-  VALUE ('MB1','商品房未备案退款','CommodityBusiness','singleHouseBusinessCreate','house.owner.commodity','',1,'cq','申请人：#{ownerBusinessHome.getBusinessPersionByType(''CORRECT'').personName} 房屋编号：#{ownerBusinessHome.singleHoues.houseCode} 合同编号: #{ownerBusinessHome.selectBusiness.houseContract.contractNumber}',
+  VALUE ('MB1','商品房未备案退款','CommodityBusiness','moneyBackBusinessCreate','house.owner.commodity','',1,'cq','申请人：#{ownerBusinessHome.getBusinessPersionByType(''CORRECT'').personName} 房屋编号：#{ownerBusinessHome.singleHoues.houseCode} 合同编号: #{ownerBusinessHome.selectBusiness.houseContract.contractNumber}',
 99,true ,'WP42','','',true,'','','ABORT');
 
 CREATE TABLE HOUSE_OWNER_RECORD.BANK
