@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" login-required="true"
+      no-conversation-view-id="/func/system/business/start.xhtml"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+    <param name="selectBusinessId" value="#{moneyBackBusinessStart.selectBizId}"/>
+
+
+    <param name="searchKey" value="#{moneyBackBusinessCondition.searchKey}"/>
+    <param name="searchType" value="#{moneyBackBusinessCondition.searchTypeName}"/>
+
+    <param name="mapNumber" value="#{moneyBackBusinessCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{moneyBackBusinessCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{moneyBackBusinessCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{moneyBackBusinessCondition.houseNumber}"/>
+
+
+    <param name="credentialsTypeName" value="#{moneyBackBusinessCondition.credentialsTypeName}"/>
+
+
+    <param name="firstResult" value="#{moneyBackBusinessStartSelectList.firstResult}"/>
+
+    <param name="sort" value="#{moneyBackBusinessStartSelectList.orderColumn}"/>
+    <param name="dir" value="#{moneyBackBusinessStartSelectList.orderDirection}"/>
+
+
+
+
+    <navigation from-action="#{moneyBackBusinessStart.businessSelected}">
+        <rule if-outcome="backMoneySelected">
+            <redirect view-id="/business/houseOwner/SelectBusinessHousePick.xhtml"/>
+        </rule>
+    </navigation>
+
+</page>
