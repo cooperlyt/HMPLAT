@@ -1337,11 +1337,19 @@
     </edit-subscribe>
 
 
-    <edit-subscribe name="CancelMoneyBackBusinessEdit" page="/business/houseOwner/subscribe/CancelMoneyBackBusinessEdit.xhtml" component="repairMoneyPaySubscribe">
+    <edit-subscribe name="CancelMoneyBackBusinessEdit" page="/business/houseOwner/subscribe/CancelMoneyBackBusinessEdit.xhtml" component="">
         <description>
-            撤销备案退款信息
+            撤销备案退款信息(预售监管)
         </description>
     </edit-subscribe>
+
+    <edit-subscribe name="AbortMoneyBackBusinessEdit" page="/business/houseOwner/subscribe/AbortMoneyBackBusinessEdit.xhtml" component="">
+        <description>
+            退款信息(预售监管)
+        </description>
+    </edit-subscribe>
+
+
 
     <!-- 完成订阅 ： 在业务保存之后，完成任务或建立业务时调用-->
 
