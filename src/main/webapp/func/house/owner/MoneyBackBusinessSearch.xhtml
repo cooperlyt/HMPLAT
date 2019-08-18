@@ -1,0 +1,193 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:dh="http://www.dgsoft.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="/layout/template-data.xhtml">
+
+
+    <ui:param name="funcName" value="商品房退款业务查询"/>
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:define name="funcNav">
+        <ui:include src="/layout/function-nav.xhtml">
+            <ui:param name="functions" value="#{authInfo.workFunctions}"/>
+        </ui:include>
+    </ui:define>
+
+
+
+    <ui:define name="head-right">
+        <ui:include src="MoneyBackBusinessCondition.xhtml">
+            <ui:param name="conditionBean" value="#{moneyBackSearchCondition}"/>
+            <ui:param name="listBean" value="#{moneyBackSearchList}"/>
+        </ui:include>
+    </ui:define>
+
+    <h:outputStylesheet>
+        .action-col{
+            width: 140px !important;
+            max-width: 140px !important;
+        }
+
+        .repo-list-description{
+            max-width: none;
+        }
+
+    </h:outputStylesheet>
+
+
+
+
+        <a:outputPanel ajaxRendered="false">
+
+
+
+
+
+            <a:outputPanel layout="block" style="min-height: 300px;">
+
+                <div class="file-navigation in-mid-page" style="margin-top: 0">
+                    <h:form>
+
+
+
+                        <div class="select-menu" style="display: inline-block">
+                            <div class="btn-group btn-group-sm">
+                                <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                    <ui:define name="caption">
+                                        <span style="">#{empty moneyBackSearchList.businessCategoryId  ? messages.AllBusinessCategory : businessDefineCache.getCategory(moneyBackSearchList.businessCategoryId).name}</span>
+                                    </ui:define>
+                                    <ui:param name="menuTitle" value="业务种类"/>
+                                    <ui:param name="right" value="false"/>
+                                    <s:link action="#{moneyBackSearchList.searchAction}"
+                                            styleClass="select-menu-item #{ empty moneyBackSearchList.businessCategoryId  ? 'selected': ''}">
+                                        <f:param name="bizCategoryId" value=""/>
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">#{messages.AllBusinessCategory}</span>
+                                    </s:link>
+                                    <a:repeat value="#{businessCategoryList.resultList}" var="_category">
+                                        <s:link action="#{moneyBackSearchList.searchAction}"
+                                                styleClass="select-menu-item #{(moneyBackSearchList.businessCategoryId eq _category.id) ? 'selected': ''}">
+                                            <f:param name="bizCategoryId" value="#{_category.id}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{_category.name}</span>
+                                        </s:link>
+                                    </a:repeat>
+                                </ui:decorate>
+                            </div>
+                        </div>
+
+
+                        <a:outputPanel id="myBizDefineFilter">
+                            <a:outputPanel rendered="#{not empty moneyBackSearchList.businessCategory}">
+                                <span class="i-separator">/</span>
+
+                                <div class="select-menu" style="display: inline-block">
+                                <div class="btn-group btn-group-sm">
+
+                                <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                    <ui:define name="caption">
+                                        <span style="">#{empty moneyBackSearchList.businessDefineId  ? messages.AllBusinessDefine : businessDefineCache.getDefine(moneyBusinessList.businessDefineId).name}</span>
+                                    </ui:define>
+                                    <ui:param name="menuTitle" value="#{messages.FilterBusinessDefine}"/>
+                                    <ui:param name="right" value="false"/>
+                                    <s:link action="#{moneyBackSearchList.searchAction}"
+                                            styleClass="select-menu-item #{ empty moneyBackSearchList.businessDefineId  ? 'selected': ''}">
+                                        <f:param name="bizDefineId" value=""/>
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <span class="select-menu-item-text">#{messages.AllBusinessDefine}</span>
+                                    </s:link>
+                                    <a:repeat value="#{moneyBackSearchList.businessCategory.businessDefineList}" var="_define">
+                                        <s:link action="#{moneyBackSearchList.searchAction}"
+                                                styleClass="select-menu-item #{(moneyBackSearchList.businessDefineId eq _define.id) ? 'selected': ''}">
+                                            <f:param name="bizDefineId" value="#{_define.id}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{_define.name}</span>
+                                        </s:link>
+                                    </a:repeat>
+                                </ui:decorate>
+
+                                </div>
+                                </div>
+                            </a:outputPanel>
+                        </a:outputPanel>
+
+
+
+                    <div class="right" >
+                        <div class="select-menu">
+                            <div class="btn-group btn-group-sm">
+                                <ui:decorate template="/layout/dropdown-actions.xhtml">
+                                    <ui:define name="caption">
+                                        <i>#{messages.SortBy}:</i>
+
+                                        <span style="">#{messages[moneyBackSearchList.sortCol.name()]}</span>
+                                    </ui:define>
+                                    <ui:param name="menuTitle" value="#{messages.SortOption}"/>
+
+                                    <a:repeat value="#{moneyBackSearchList.allSortCol}" var="_col">
+                                        <s:link styleClass="select-menu-item #{(moneyBackSearchList.sortCol eq _col) ? 'selected': ''}">
+                                            <f:param name="sort" value="#{_col.colPath}"/>
+                                            <span class="select-menu-item-icon octicon octicon-check"></span>
+                                            <span class="select-menu-item-text">#{messages[_col.name()]}</span>
+                                        </s:link>
+                                    </a:repeat>
+                                </ui:decorate>
+                            </div>
+                        </div>
+                    </div>
+                    </h:form>
+                </div>
+
+
+
+
+                <a:outputPanel id="resultDatas">
+                    <a:outputPanel layout="block" styleClass="blankslate spacious large-format" rendered="#{empty moneyBackSearchList.resultList}">
+                        <span class="mega-octicon octicon-search"></span>
+
+                        <h3>#{messages.EmptyResult}</h3>
+
+                        <p>  #{messages.YouCan}#{' '} <s:link value="#{messages.reset}#{messages.CONDITION} " action="#{moneyBackSearchList.resetCondition}"/>
+                            #{' '}#{messages.orOther} #{messages.Try} #{' '}
+                            <s:link value="#{messages.AvancedSearch}"/></p>
+                    </a:outputPanel>
+
+                    <ui:decorate template="MoneyBusinessResultList.xhtml">
+                        <ui:param name="listBean" value="#{moneyBackSearchList}"/>
+                        <ui:define name="itemTitle">
+                            <s:link view="/func/house/owner/BusinessView.xhtml">
+                                <f:param value="#{_item.ownerBusiness.id}" name="businessId"/>
+                                #{_item.ownerBusiness.defineName}
+                                <h:outputText value="#{messages[_item.ownerBusiness.type.name()]}" rendered="#{not (_item.ownerBusiness.type eq 'NORMAL_BIZ')}"/>
+                                / #{_item.ownerBusiness.id}
+                            </s:link>
+
+                                        <span class="label label-biz-status #{_item.ownerBusiness.status}">
+                                            #{messages[_item.ownerBusiness.status.name()]}
+                                        </span>
+                        </ui:define>
+                    </ui:decorate>
+                </a:outputPanel>
+
+            </a:outputPanel>
+
+
+
+        </a:outputPanel>
+
+
+
+</ui:composition>

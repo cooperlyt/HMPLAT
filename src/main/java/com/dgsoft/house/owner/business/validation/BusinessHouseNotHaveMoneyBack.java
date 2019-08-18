@@ -26,7 +26,7 @@ public class BusinessHouseNotHaveMoneyBack extends HouseBusinessValid {
     @Override
     public ValidResult valid(HouseBusiness houseBusiness) {
 
-        List<MoneyBackBusiness> moneyBackBusinessList = ownerEntityLoader.getEntityManager().createQuery("select mb from MoneyBackBusiness mb where mb.ownerBusiness.status in('COMPLETE') and mb.ownerBusiness.type<>'CANCEL_BIZ' and mb.contract=:contract", MoneyBackBusiness.class)
+        List<MoneyBackBusiness> moneyBackBusinessList = ownerEntityLoader.getEntityManager().createQuery("select mb from MoneyBackBusiness mb where mb.ownerBusiness.status in('COMPLETE','RUNNING','SUSPEND') and mb.ownerBusiness.type<>'CANCEL_BIZ' and mb.contract=:contract", MoneyBackBusiness.class)
                 .setParameter("contract", houseBusiness.getHouseContract().getContractNumber()).getResultList();
 
         if (moneyBackBusinessList ==null || moneyBackBusinessList.size()<=0){

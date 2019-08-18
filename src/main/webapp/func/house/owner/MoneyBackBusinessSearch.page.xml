@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      login-required="true"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+    <restrict>#{s:hasRole('owner.businessView')}</restrict>
+
+
+    <param name="searchKey" value="#{moneyBackSearchCondition.searchKey}"/>
+    <param name="searchType" value="#{moneyBackSearchCondition.searchTypeName}"/>
+
+    <param name="mapNumber" value="#{moneyBackSearchCondition.mapNumber}"/>
+    <param name="blockNumber" value="#{moneyBackSearchCondition.blockNumber}"/>
+    <param name="buildNumber" value="#{moneyBackSearchCondition.buildNumber}"/>
+    <param name="houseNumber" value="#{moneyBackSearchCondition.houseNumber}"/>
+
+
+    <param name="credentialsTypeName" value="#{moneyBackSearchCondition.credentialsTypeName}"/>
+
+
+    <param name="bizCategoryId" value="#{moneyBackSearchList.businessCategoryId}"/>
+    <param name="bizDefineId" value="#{moneyBackSearchList.businessDefineId}"/>
+
+    <param name="firstResult" value="#{moneyBackSearchList.firstResult}"/>
+
+    <param name="sort" value="#{moneyBackSearchList.orderColumn}"/>
+    <param name="dir" value="#{moneyBackSearchList.orderDirection}"/>
+
+
+</page>

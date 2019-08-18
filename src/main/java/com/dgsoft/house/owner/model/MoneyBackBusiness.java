@@ -29,6 +29,9 @@ public class MoneyBackBusiness implements Serializable{
     private BigDecimal backMoney;
     private OwnerBusiness ownerBusiness;
 
+    private String searchKey;
+    private String display;
+
     public MoneyBackBusiness(){
 
     }
@@ -82,6 +85,28 @@ public class MoneyBackBusiness implements Serializable{
     }
     public void setOwnerBusiness(OwnerBusiness ownerBusiness) {
         this.ownerBusiness = ownerBusiness;
+    }
+
+
+    @Column(name = "SEARCH_KEY",nullable = false, length = 1024)
+    @Size(max = 1024)
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "DISPLAY",nullable = false, columnDefinition = "LONGTEXT")
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 
     @Transient

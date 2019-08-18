@@ -9,10 +9,16 @@
 
 
 
-
+    <a:outputPanel rendered="#{not empty ownerBusinessHome.instance.houseBusinesses}">
     <ui:include src="/layout/house/HouseInfoView.xhtml">
         <ui:param name="houseInfo" value="#{ownerBusinessHome.singleHoues.afterBusinessHouse}"/>
     </ui:include>
+    </a:outputPanel>
+    <a:outputPanel rendered="#{empty ownerBusinessHome.instance.houseBusinesses}">
+        <ui:include src="/layout/house/HouseInfoView.xhtml">
+            <ui:param name="houseInfo" value="#{ownerBusinessHome.selectBusiness.singleHoues.afterBusinessHouse}"/>
+        </ui:include>
+    </a:outputPanel>
 
 
 </ui:composition>
