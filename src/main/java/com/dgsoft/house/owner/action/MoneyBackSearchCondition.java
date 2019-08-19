@@ -41,7 +41,7 @@ public class MoneyBackSearchCondition extends BusinessHouseCondition {
         HOUSE_CODE(EJBQL,new RestrictionGroup("and",Arrays.asList(new String[]{"lower(biz.houseCode) = lower(#{moneyBackSearchCondition.searchKey})"}))),
         HOUSE_OWNER(POWER_PERSON_EJBQL,new RestrictionGroup("and", Arrays.asList(new String[]{ "owner.personName = #{moneyBackSearchCondition.searchKey}"}))),
         PERSON(POWER_PERSON_EJBQL,personRestrictionGroup),
-        HOUSE_MBBH("select mb from MoneyBackBusiness mb left join mb.ownerBusiness ob left join mb.ownerBusiness.selectBusiness sob left join sob.houseBusiness biz left join biz.afterBusinessHouse house ",
+        HOUSE_MBBH("select mb from MoneyBackBusiness mb left join mb.ownerBusiness ob left join mb.ownerBusiness.selectBusiness sob left join sob.houseBusinesses biz left join biz.afterBusinessHouse house ",
                 new RestrictionGroup("and",Arrays.asList(new String[]{"lower(house.mapNumber) = lower(#{moneyBackSearchCondition.mapNumber})",
                         "lower(house.blockNo) = lower(#{moneyBackSearchCondition.blockNumber})",
                         "lower(house.buildNo) = lower(#{moneyBackSearchCondition.buildNumber})",

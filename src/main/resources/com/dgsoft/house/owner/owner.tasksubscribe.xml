@@ -2053,6 +2053,21 @@
     </end-subscribe>
 
 
+    <end-subscribe name="MneyBackDisplayGen" component="moneyBackDisplayGen">
+        <description>
+            商品房退款业务显示（预售资金监管）
+        </description>
+    </end-subscribe>
+
+    <end-subscribe name="MoneyBackKeyGen" component="moneyBackKeyGen">
+        <description>
+            商品房退款业务sreachkey（预售资金监管）
+        </description>
+    </end-subscribe>
+
+
+
+
 
 
     <!-- 打印订阅 ： 在业务保存之后，完成之前 显示 所有内容 所有内容在点完成时不提交 -->
