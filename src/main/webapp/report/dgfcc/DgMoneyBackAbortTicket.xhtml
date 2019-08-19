@@ -4,10 +4,10 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="商品房预售监管资金撤销备案退款申请表">
+            title="商品房预售监管资金网签未备案退款申请表">
 
 
-<a:repeat value="#{ownerBusinessHome.instance.houseBusinessList}" var="_houseBusiness">
+<a:repeat value="#{ownerBusinessHome.instance.selectBusiness.houseBusinessList}" var="_houseBusiness">
 
 <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
 
@@ -20,7 +20,7 @@
                 <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle" >
                     <p:paragraph>
                         <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-                            商品房预售监管资金撤销备案退款申请表
+                            商品房预售监管资金网签未备案退款申请表
                         </p:font>
                     </p:paragraph>
                 </p:cell>
@@ -99,7 +99,7 @@
             <p:paragraph>退款编号</p:paragraph>
         </p:cell>
         <p:cell>
-            <p:paragraph>#{ownerBusinessHome.instance.moneyBackCancel.id}</p:paragraph>
+            <p:paragraph>#{ownerBusinessHome.instance.moneyAbort.id}</p:paragraph>
         </p:cell>
         <p:cell fixedHeight="30">
             <p:paragraph>合同备案号</p:paragraph>
@@ -149,7 +149,7 @@
             <p:paragraph>退款金额</p:paragraph>
         </p:cell>
         <p:cell colspan="3">
-            <p:paragraph><p:text value="小写： #{ownerBusinessHome.instance.moneyBackCancel.backMoney}"><f:convertNumber pattern="#0.000"/></p:text>        大写： #{ownerBusinessHome.instance.moneyBackCancel.bigHighestMountMoney}</p:paragraph>
+            <p:paragraph><p:text value="小写： #{ownerBusinessHome.instance.moneyAbort.backMoney}"><f:convertNumber pattern="#0.000"/></p:text>        大写： #{ownerBusinessHome.instance.moneyAbort.bigHighestMountMoney}</p:paragraph>
         </p:cell>
         <p:cell fixedHeight="60">
             <p:paragraph>备注</p:paragraph>
@@ -166,18 +166,37 @@
                 <p:cell colspan="4" padding="10" horizontalAlignment="center" verticalAlignment="middle">
                     <p:paragraph>本公司保证所提供以上信息及资料均真实准确，如有不实愿承担法律和经济责任。</p:paragraph>
                 </p:cell>
-                <p:cell colspan="2" padding="40">
+                <p:cell colspan="2" padding="20">
                     <p:paragraph>法定代表人(签章)</p:paragraph>
                 </p:cell>
                 <p:cell colspan="2" >
                     <p:paragraph>（开发企业公章）</p:paragraph>
                 </p:cell>
-                <p:cell colspan="2" padding="40">
+                <p:cell colspan="2" padding="20">
                     <p:paragraph>委托代理人（签章）</p:paragraph>
                 </p:cell>
                 <p:cell colspan="2">
                     <p:paragraph>年        月         日</p:paragraph>
                 </p:cell>
+
+            </p:table>
+        </p:cell>
+
+        <p:cell colspan="4">
+            <p:table columns="4" widths="1 1 1 1" widthPercentage="100" footerRows="0" headerRows="0" >
+                <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="left" verticalAlignment="middle" border="0"/>
+                </f:facet>
+                <p:cell colspan="4" padding="10" horizontalAlignment="center" verticalAlignment="middle">
+                    <p:paragraph>本人确认以上信息真实准确，如有不实愿承担法律和经济责任。</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" padding="20">
+                    <p:paragraph>购房人签字：</p:paragraph>
+                </p:cell>
+                <p:cell colspan="2" >
+                    <p:paragraph></p:paragraph>
+                </p:cell>
+
 
             </p:table>
         </p:cell>
