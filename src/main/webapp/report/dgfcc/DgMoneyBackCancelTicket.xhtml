@@ -151,6 +151,12 @@
         <p:cell colspan="3">
             <p:paragraph><p:text value="小写： #{ownerBusinessHome.instance.moneyBackCancel.backMoney}"><f:convertNumber pattern="#0.000"/></p:text>        大写： #{ownerBusinessHome.instance.moneyBackCancel.bigHighestMountMoney}</p:paragraph>
         </p:cell>
+        <p:cell fixedHeight="60">
+            <p:paragraph>备注</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
+        </p:cell>
 
         <p:cell colspan="4">
             <p:table columns="4" widths="1 1 1 1" widthPercentage="100" footerRows="0" headerRows="0" >

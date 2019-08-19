@@ -151,7 +151,14 @@
         <p:cell colspan="3">
             <p:paragraph><p:text value="小写： #{ownerBusinessHome.instance.moneyBackCancel.backMoney}"><f:convertNumber pattern="#0.000"/></p:text>        大写： #{ownerBusinessHome.instance.moneyBackCancel.bigHighestMountMoney}</p:paragraph>
         </p:cell>
-        <p:cell fixedHeight="100">
+        <p:cell fixedHeight="60">
+            <p:paragraph>备注</p:paragraph>
+        </p:cell>
+        <p:cell colspan="3">
+            <p:paragraph>#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
+        </p:cell>
+
+        <p:cell fixedHeight="80">
             <p:paragraph>受理人</p:paragraph>
         </p:cell>
         <p:cell colspan="3" verticalAlignment="bottom" horizontalAlignment="left" noWrap="false">
@@ -166,7 +173,7 @@
             </p:table>
         </p:cell>
 
-        <p:cell fixedHeight="100">
+        <p:cell fixedHeight="80">
             <p:paragraph>审核人</p:paragraph>
         </p:cell>
         <p:cell colspan="3" verticalAlignment="bottom" horizontalAlignment="left" noWrap="false">
@@ -180,7 +187,7 @@
 
             </p:table>
         </p:cell>
-        <p:cell fixedHeight="100">
+        <p:cell fixedHeight="80">
             <p:paragraph>审批人</p:paragraph>
         </p:cell>
         <p:cell colspan="3" verticalAlignment="bottom" horizontalAlignment="left" noWrap="false">
