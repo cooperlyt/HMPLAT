@@ -4,10 +4,10 @@
             xmlns:a="http://richfaces.org/a4j"
             xmlns:s="http://jboss.org/schema/seam/taglib"
             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-            title="商品房预售监管资金网签未备案退款审批单">
+            title="商品房预售监管资金网签未备案退款通知书">
 
 
-<a:repeat value="#{ownerBusinessHome.instance.selectBusiness.houseBusinesses}" var="_houseBusiness">
+<a:repeat value="#{ownerBusinessHome.instance.selectBusiness.houseBusinessList}" var="_houseBusiness">
 
 <p:font size="10" name="STSong-Light" encoding="UniGB-UCS2-H">
 
@@ -20,7 +20,7 @@
                 <p:cell colspan="4" horizontalAlignment="center" verticalAlignment="middle" >
                     <p:paragraph>
                         <p:font alignment="center" size="14" name="STSong-Light" style="bold" encoding="UniGB-UCS2-H">
-                            商品房预售监管资金网签未备案退款审批单
+                            商品房预售监管资金网签未备案退款通知书
                         </p:font>
                     </p:paragraph>
                 </p:cell>
@@ -146,7 +146,7 @@
             <p:paragraph>#{bankList.businessBuild.businessProject.moneySafe.accountName}</p:paragraph>
         </p:cell>
         <p:cell fixedHeight="30">
-            <p:paragraph>申请冲正金额</p:paragraph>
+            <p:paragraph>申请金额</p:paragraph>
         </p:cell>
         <p:cell colspan="3">
             <p:paragraph><p:text value="小写： #{ownerBusinessHome.instance.moneyAbort.backMoney}"><f:convertNumber pattern="#0.000"/></p:text>        大写： #{ownerBusinessHome.instance.moneyAbort.bigHighestMountMoney}</p:paragraph>
@@ -159,49 +159,24 @@
             <p:paragraph>#{ownerBusinessHome.instance.receive.reason}</p:paragraph>
         </p:cell>
 
-        <p:cell fixedHeight="80">
-            <p:paragraph>受理人</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" verticalAlignment="bottom" horizontalAlignment="left" noWrap="false">
-            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>签字:</p:paragraph>
+        <p:cell colspan="4" fixedHeight="200">
+            <p:table columns="4" widths="1 1 1 1" widthPercentage="100" footerRows="0" headerRows="0" >
+                 <f:facet name="defaultCell">
+                    <p:cell horizontalAlignment="left" verticalAlignment="middle" border="0"/>
+                </f:facet>
+
+                <p:cell colspan="2" padding="40">
+                    <p:paragraph>（同意拨付专用章）</p:paragraph>
                 </p:cell>
-                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>年                月                日</p:paragraph>
+                <p:cell colspan="2">
+
                 </p:cell>
+
 
             </p:table>
         </p:cell>
 
-        <p:cell fixedHeight="80">
-            <p:paragraph>审核人</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" verticalAlignment="bottom" horizontalAlignment="left" noWrap="false">
-            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>签字:</p:paragraph>
-                </p:cell>
-                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>年                月                日</p:paragraph>
-                </p:cell>
 
-            </p:table>
-        </p:cell>
-        <p:cell fixedHeight="80">
-            <p:paragraph>审批人</p:paragraph>
-        </p:cell>
-        <p:cell colspan="3" verticalAlignment="bottom" horizontalAlignment="left" noWrap="false">
-            <p:table columns="4" widthPercentage="100" footerRows="0" headerRows="0" >
-                <p:cell colspan="2" borderWidth="0" paddingLeft="40" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>签字:</p:paragraph>
-                </p:cell>
-                <p:cell colspan="2" borderWidth="0" paddingLeft="30" paddingBottom="15" horizontalAlignment="left" verticalAlignment="middle">
-                    <p:paragraph>年                月                日</p:paragraph>
-                </p:cell>
-
-            </p:table>
-        </p:cell>
 
 
     </p:table>
