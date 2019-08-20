@@ -49,12 +49,25 @@ public class MoneyBackBusinessStartSelectList extends HouseBusinessSearch {
             }
             defineIdCondition += "'"+ defineId.trim() + "'" ;
         }
-
         defineIdCondition += ")";
+        String defineStatusCondition = null;
+        for(String defineStatus: businessDefineHome.getInstance().getPickBusinessDefineStatus().split(",")){
+            if (defineStatusCondition == null){
+                defineStatusCondition = "(";
+            }else{
+                defineStatusCondition += ",";
+            }
+            defineStatusCondition += "'"+ defineStatus.trim() + "'" ;
+
+        }
+
+        defineStatusCondition += ")";
         if (moneyBackBusinessCondition.getSearchType().equals(MoneyBusinessCondition.SearchType.HOUSE_OWNER) || moneyBackBusinessCondition.getSearchType().equals(MoneyBusinessCondition.SearchType.PERSON)){
-            return result + " where owner.old = false and ob.defineId in " + defineIdCondition + " and ob.status <> 'RUNNING' and ob.status <> 'MODIFYING' and ob.status <> 'SUSPEND' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ') and mb.status<>'CHANGED'";
+
+            return result + " where owner.old = false and ob.defineId in " + defineIdCondition + " and ob.status in " + defineStatusCondition  +" and ob.type in ('NORMAL_BIZ','MODIFY_BIZ')";
         }else{
-            return result + " left join ob.subStatuses subStatus where (ob.defineId in " + defineIdCondition + "  or (subStatus.status = 'ABORT' and subStatus.defineId in " + defineIdCondition + ")) and ob.status = 'ABORT' and ob.type in ('NORMAL_BIZ','MODIFY_BIZ')";
+
+            return result + " left join ob.subStatuses subStatus where (ob.defineId in " + defineIdCondition + " or (subStatus.status in" + defineStatusCondition +" and subStatus.defineId in " + defineIdCondition + ")) and ob.status in "+defineStatusCondition+" and ob.type in ('NORMAL_BIZ','MODIFY_BIZ')";
 
         }
 

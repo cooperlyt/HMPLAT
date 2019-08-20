@@ -24,13 +24,13 @@ public class BusinessHouseOnlyDeleteMoneyBack extends HouseBusinessValid  {
     @Override
     public ValidResult valid(HouseBusiness houseBusiness) {
 
-        List<MoneyBackBusiness> moneyBackBusinessList = ownerEntityLoader.getEntityManager().createQuery("select mb from MoneyBackBusiness mb where mb.ownerBusiness.status in('COMPLETE','RUNNING','SUSPEND') and mb.ownerBusiness.type<>'CANCEL_BIZ' and mb.contract=:contract and mc.backType in ('','')", MoneyBackBusiness.class)
+        List<MoneyBackBusiness> moneyBackBusinessList = ownerEntityLoader.getEntityManager().createQuery("select mb from MoneyBackBusiness mb where mb.ownerBusiness.status in('COMPLETE','RUNNING','SUSPEND') and mb.ownerBusiness.type<>'CANCEL_BIZ' and mb.contract=:contract and mb.backType in ('CANCEL','ABORT')", MoneyBackBusiness.class)
                 .setParameter("contract", houseBusiness.getHouseContract().getContractNumber()).getResultList();
 
         if (moneyBackBusinessList ==null || moneyBackBusinessList.size()<=0){
             return new ValidResult(ValidResultLevel.SUCCESS);
 
         }
-        return new ValidResult("house_have_moneyBackBusiness", ValidResultLevel.ERROR, moneyBackBusinessList.get(0).getOwnerBusiness().getId(),houseBusiness.getHouseContract().getContractNumber());
+        return new ValidResult("house_only_have_delete_moneyBackBusiness",ValidResultLevel.ERROR );
     }
 }

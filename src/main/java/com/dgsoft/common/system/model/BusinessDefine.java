@@ -329,8 +329,8 @@ public class BusinessDefine implements java.io.Serializable,OrderModel {
         this.pickBusinessDefineId = pickBusinessDefineId;
     }
 
-    @Column(name = "PICK_BUSINESS_DEFINE_STATUS", nullable = true, length = 50)
-    @Size(max = 50)
+    @Column(name = "PICK_BUSINESS_DEFINE_STATUS", nullable = true, length = 100)
+    @Size(max = 100)
     public String getPickBusinessDefineStatus() {
         return pickBusinessDefineStatus;
     }

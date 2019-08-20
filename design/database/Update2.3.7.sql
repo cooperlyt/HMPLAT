@@ -20,7 +20,7 @@ CREATE TABLE HOUSE_OWNER_RECORD.MONEY_SAFE
   CARD_NAME VARCHAR(128) NOT NULL,
   PRIMARY KEY (ID)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
-ALTER TABLE DB_PLAT_SYSTEM.BUSINESS_DEFINE ADD PICK_BUSINESS_DEFINE_STATUS varchar(50) NULL;
+ALTER TABLE DB_PLAT_SYSTEM.BUSINESS_DEFINE ADD PICK_BUSINESS_DEFINE_STATUS varchar(100) NULL;
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('89','商品房预售资金监管账户建立通知书','商品房预售资金监管账户建立通知书','/report/dgfcc/DgCommodityAccountCreateTicket.xhtml');
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('90','商品房预售监管资金撤销备案退款审批单','商品房预售监管资金撤销备案退款审批单','/report/dgfcc/DgMoneyBackCancelReisterBook.xhtml');
 INSERT DB_PLAT_SYSTEM.REPORT (ID, NAME, DESCRIPTION, PAGE) VALUE ('91','商品房预售监管资金撤销备案退款申请表','商品房预售监管资金撤销备案退款申请表','/report/dgfcc/DgMoneyBackCancelTicket.xhtml');
@@ -30,9 +30,7 @@ INSERT DB_PLAT_SYSTEM.FUNCTION (ID, NAME, ICON, LOCATION, BANNER, PRIORITY, MEMO
   VALUE ('money.moneyBackBusinessSearch','商品房退款业务查询','','/func/house/owner/MoneyBackBusinessSearch.xhtml',true,5,'','DAY_WORK',0);
 INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION (FUN_ID, ROL_ID) VALUE ('money.moneyBackBusinessSearch','cqsl');
 
--- INSERT DB_PLAT_SYSTEM.BUSINESS_DEFINE (ID, NAME, WF_NAME, START_PAGE, CATEGORY, MEMO, VERSION, ROLE_PREFIX, DESCRIPTION, PRIORITY, ENABLE, PICK_BUSINESS_DEFINE_ID, PICK_BUSINESS_VIEW_PAGE, MODIFY_PAGE, REQUIRED_BIZ, REGISTER_BOOK_PART, UNION_BIZ, PICK_BUSINESS_DEFINE_STATUS)
---  VALUE ('MB1','商品房未备案退款','CommodityBusiness','moneyBackBusinessCreate','house.owner.commodity','',1,'cq','申请人：#{ownerBusinessHome.getBusinessPersionByType('CORRECT').personName} 房屋编号：#{ownerBusinessHome.singleHoues.houseCode} 合同编号: #{ownerBusinessHome.selectBusiness.houseContract.contractNumber}',
--- 99,true ,'WP42','','',true,'','','ABORT');
+
 
 CREATE TABLE HOUSE_OWNER_RECORD.BANK
 (
