@@ -1345,7 +1345,13 @@
 
     <edit-subscribe name="AbortMoneyBackBusinessEdit" page="/business/houseOwner/subscribe/AbortMoneyBackBusinessEdit.xhtml" component="">
         <description>
-            退款信息(预售监管)
+            网签未备案退款信息(预售监管)
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="DeleteMoneyBackBusinessEdit" page="/business/houseOwner/subscribe/DeleteMoneyBackBusinessEdit.xhtml" component="">
+        <description>
+            网签未备案冲正信息(预售监管)
         </description>
     </edit-subscribe>
 
