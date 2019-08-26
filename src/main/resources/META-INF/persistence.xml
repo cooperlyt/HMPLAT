@@ -145,6 +145,8 @@
         <class>com.dgsoft.house.owner.model.LockedHouseCancel</class>
         <class>com.dgsoft.house.owner.model.MoneyBackBusiness</class>
         <class>com.dgsoft.house.owner.model.Bank</class>
+        <class>com.dgsoft.house.owner.model.ProjectCheck</class>
+        <class>com.dgsoft.house.owner.model.BuildPoint</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="com.dgsoft.common.persistence.Mysql5BitBooleanDialect"/>
