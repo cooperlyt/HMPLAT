@@ -194,7 +194,8 @@ public class OutsideBusinessCreate {
 
         ownerBusinessHome.getSingleHoues().setHouseContract(houseContract);
         ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setPoolType(outsideContract.getPoolType());
-        ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setOldPoolType(outsideContract.getOldHouseContract().getSellerPoolType());
+        if (outsideContract.getOldHouseContract() != null)
+            ownerBusinessHome.getSingleHoues().getAfterBusinessHouse().setOldPoolType(outsideContract.getOldHouseContract().getSellerPoolType());
 
         int i = 0;
         for(cc.coopersoft.house.sale.data.PowerPerson pp: outsideContract.getBusinessPoolList()){
