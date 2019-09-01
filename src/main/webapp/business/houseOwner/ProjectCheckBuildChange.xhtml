@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+                template="/layout/template.xhtml">
+
+    <ui:define name="outcss">
+        <h:outputStylesheet library="github" name="/css/github1.css"/>
+        <h:outputStylesheet library="github" name="/css/github2.css"/>
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form styleClass="setup-form">
+
+        <div class="pagehead repohead instapaper_ignore readability-menu">
+
+            <div class="container">
+
+                <h1 class="entry-title public">
+                    <span class="mega-octicon octicon-repo"></span>
+                    <strong>#{messages.createBusiness}</strong>
+
+
+                    <span class="path-divider">/</span>
+
+                    #{ownerBusinessHome.instance.defineName}
+
+                    <span class="path-divider">/</span>
+                    幢楼选择
+
+                </h1>
+
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="container">
+
+            <h:dataTable styleClass="boxed-group-table setup-plans"
+                         value="#{projectCheckStart.businessModifyBuilds}" var="_build">
+
+                <h:column headerClass="checkHeader">
+                    <f:facet name="header">
+
+                    </f:facet>
+
+
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_Id}
+                    </f:facet>
+                    #{_build.data.buildCode}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_Name}
+                    </f:facet>
+                    #{_build.data.buildName}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_MapNO}
+                    </f:facet>
+                    #{_build.data.mapNumber}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.House_BlockNo}
+                    </f:facet>
+
+                    #{_build.data.blockNo}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_BuildNO}
+                    </f:facet>
+                    #{_build.data.buildNo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_devBuildNumber}
+                    </f:facet>
+                    #{_build.data.buildDevNumber}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.Build_DoorNO}
+                    </f:facet>
+                    #{_build.data.doorNo}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        #{messages.action}
+                    </f:facet>
+                    <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
+                              action="#{projectCheckStart.businessSelected}"
+                              onclick="#{r:component('wait')}.show()">
+                        <f:param name="selectBuildId" value="#{_build.data.buildCode}"/>
+                    </s:button>
+                </h:column>
+            </h:dataTable>
+
+
+        </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
