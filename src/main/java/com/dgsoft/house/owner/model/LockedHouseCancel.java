@@ -25,6 +25,11 @@ public class LockedHouseCancel {
     private Date cancelDate;
     private String description;
 
+    private String lEmpCode;
+
+
+
+    private String lEmpName;
 
     private LockType type;
 
@@ -33,7 +38,7 @@ public class LockedHouseCancel {
 
     }
 
-    public LockedHouseCancel (String houseCode,String empCode,String empName,Date cancelDate,String description,LockType type){
+    public LockedHouseCancel (String houseCode,String empCode,String empName,Date cancelDate,String description,LockType type,String lEmpCode,String lEmpName){
 
         this.houseCode = houseCode;
         this.empCode = empCode;
@@ -41,6 +46,8 @@ public class LockedHouseCancel {
         this.cancelDate = cancelDate;
         this.description = description;
         this.type = type;
+        this.lEmpCode = lEmpCode;
+        this.lEmpName = lEmpName;
 
     }
 
@@ -122,5 +129,24 @@ public class LockedHouseCancel {
     }
 
 
+    @Column(name = "LEMP_NAME" , nullable = true, length = 50)
+    @Size(max = 50)
+    public String getlEmpName() {
+        return lEmpName;
+    }
 
+    public void setlEmpName(String lEmpName) {
+        this.lEmpName = lEmpName;
+    }
+
+
+    @Column(name = "LEMP_CODE" , nullable = true, length = 32)
+    @Size(max = 32)
+    public String getlEmpCode() {
+        return lEmpCode;
+    }
+
+    public void setlEmpCode(String lEmpCode) {
+        this.lEmpCode = lEmpCode;
+    }
 }
