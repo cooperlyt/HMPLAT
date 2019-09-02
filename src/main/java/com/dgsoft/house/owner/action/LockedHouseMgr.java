@@ -111,7 +111,7 @@ public class LockedHouseMgr {
         if (isCodeDefined()) {
             for (LockedHouse lh : getLockedHouses()) {
                 if (LockType.HOUSE_LOCKED.equals(lh.getType())) {
-                    ownerEntityLoader.getEntityManager().persist(new LockedHouseCancel(lh.getHouseCode(),lh.getEmpCode(),lh.getEmpName(),new Date(),lh.getDescription(),lh.getType()));
+                    ownerEntityLoader.getEntityManager().persist(new LockedHouseCancel(lh.getHouseCode(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),new Date(),lh.getDescription(),lh.getType()));
                     ownerEntityLoader.getEntityManager().remove(lh);
                 }
             }
@@ -127,7 +127,7 @@ public class LockedHouseMgr {
         if (isCodeDefined()) {
             LockedHouse lh = ownerEntityLoader.getEntityManager().find(LockedHouse.class, selectLockedId);
             if (lh != null) {
-                ownerEntityLoader.getEntityManager().persist(new LockedHouseCancel(lh.getHouseCode(),lh.getEmpCode(),lh.getEmpName(),new Date(),lh.getDescription(),lh.getType()));
+                ownerEntityLoader.getEntityManager().persist(new LockedHouseCancel(lh.getHouseCode(),authInfo.getLoginEmployee().getId(),authInfo.getLoginEmployee().getPersonName(),new Date(),lh.getDescription(),lh.getType()));
                 ownerEntityLoader.getEntityManager().remove(lh);
                 ownerEntityLoader.getEntityManager().flush();
             }
