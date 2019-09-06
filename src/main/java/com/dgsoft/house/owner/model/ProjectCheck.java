@@ -21,6 +21,8 @@ public class ProjectCheck implements Serializable {
     private String point;
     private String pointName;
     private int payPercent;
+    private String searchKey;
+    private String display;
 
 
     public ProjectCheck(){
@@ -95,6 +97,25 @@ public class ProjectCheck implements Serializable {
         this.payPercent = payPercent;
     }
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "DISPLAY",nullable = true, columnDefinition = "LONGTEXT")
+    public String getDisplay() {
+        return display;
+    }
 
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    @Column(name = "SEARCH_KEY",nullable = true, length = 1024)
+    @Size(max = 1024)
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 
 }

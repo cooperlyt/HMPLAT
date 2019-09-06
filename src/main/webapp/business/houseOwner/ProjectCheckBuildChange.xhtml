@@ -139,15 +139,8 @@
                 </h:selectOneMenu>
             </s:decorate>
             </div>
-            <a:outputPanel layout="block"
-
-                           id="pointPanel" >
-
-
-
-
+            <a:outputPanel layout="block" id="pointPanel" >
             <div class="right">
-
                 <s:button styleClass="btn btn-primary" value="#{messages.createBusiness}"
                           action="#{projectCheckStart.businessSelected}"
                           disabled="#{(empty projectCheckStart.buildPoint) or (empty projectCheckStart.selectHouseBuild) or (not projectCheckStart.selectHouseBuild.canSelect)}"
@@ -156,15 +149,7 @@
                 </s:button>
             </div>
             </a:outputPanel>
-
-
         </div>
-
-
-
-
-
-
         </h:form>
     </ui:define>
 
