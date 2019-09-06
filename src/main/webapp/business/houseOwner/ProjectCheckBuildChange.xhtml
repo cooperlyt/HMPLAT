@@ -10,7 +10,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
-                template="/layout/template.xhtml">
+                template="/layout/template.xhtml"
+                xmlns:dh="http://www.dgsoft.com/jsf/html">
 
     <ui:define name="outcss">
         <h:outputStylesheet library="github" name="/css/github1.css"/>
@@ -18,7 +19,7 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:form styleClass="setup-form">
+        <h:form styleClass="setup-form" id="bfrom">
 
         <div class="pagehead repohead instapaper_ignore readability-menu">
 
@@ -46,10 +47,22 @@
         </div>
 
 
+       <r:messages ajaxRendered="false" globalOnly="true"/>
+
+
         <div class="container">
+
+
+
 
             <h:dataTable styleClass="boxed-group-table setup-plans"
                          value="#{projectCheckStart.businessModifyBuilds}" var="_build">
+                <f:facet name="header">
+
+                    <strong> #{messages[projectCheckStart.selectBusinessBuild.businessProject.projectSellInfo.projectCard.makeCard.type.name()]}</strong>  #{projectCheckStart.selectBusinessBuild.businessProject.projectSellInfo.projectCard.makeCard.number}
+
+                </f:facet>
+
 
                 <h:column headerClass="checkHeader">
                     <f:facet name="header">
@@ -106,20 +119,51 @@
                     #{_build.data.doorNo}
                 </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        #{messages.action}
-                    </f:facet>
-                    <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
-                              action="#{projectCheckStart.businessSelected}"
-                              onclick="#{r:component('wait')}.show()">
-                        <f:param name="selectBuildId" value="#{_build.data.buildCode}"/>
-                    </s:button>
-                </h:column>
             </h:dataTable>
+            <div class="form-group" style="width: 21%">
+            <s:decorate styleClass="form-group" template="/layout/edit-big.xhtml">
+                <ui:define name="label">
+                    项目拨付节点选择
+                </ui:define>
+                <ui:param name="for" value="buildPointInput"/>
+                <h:selectOneMenu id="buildPointInput" value="#{projectCheckStart.buildPoint}" required="true"
+                                 styleClass="form-control selectpicker edit-select">
+                    <s:selectItems value="#{buildPointList.resultList}" var="buildPoint" label="#{buildPoint.name}" itemValue="#{buildPoint}"
+                                   noSelectionLabel="请选择项目拨付节点"/>
+                    <f:converter converterId="ownerEntityConverter"/>
+                    <a:ajax event="valueChange"
+                            execute="@this"
+                            render="pointPanel,bfrom">
+                        <a:attachQueue requestDelay="0"/>
+                    </a:ajax>
+                </h:selectOneMenu>
+            </s:decorate>
+            </div>
+            <a:outputPanel layout="block"
+
+                           id="pointPanel" >
+
+
+
+
+            <div class="right">
+
+                <s:button styleClass="btn btn-primary" value="#{messages.createBusiness}"
+                          action="#{projectCheckStart.businessSelected}"
+                          disabled="#{(empty projectCheckStart.buildPoint) or (empty projectCheckStart.selectHouseBuild) or (not projectCheckStart.selectHouseBuild.canSelect)}"
+                          onclick="#{r:component('wait')}.show()">
+
+                </s:button>
+            </div>
+            </a:outputPanel>
 
 
         </div>
+
+
+
+
+
 
         </h:form>
     </ui:define>

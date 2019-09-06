@@ -4,6 +4,7 @@ import com.dgsoft.house.owner.OwnerEntityLoader;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
 import com.dgsoft.house.owner.model.Bank;
 import com.dgsoft.house.owner.model.BusinessBuild;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -80,6 +81,10 @@ public class BankList {
             }
         }
 
+    }
+
+    public List<Bank> getBankList(){
+        return ownerEntityLoader.getEntityManager().createQuery("select bank from Bank bank",Bank.class).getResultList();
     }
 
 

@@ -230,9 +230,6 @@
 
 
             </h:outputStylesheet>
-            <h:form id="buildMesForm" styleClass="setup-form">
-                <r:messages ajaxRendered="false" globalOnly="true"/>
-            </h:form>
 
 
             <h:form id="buildSelectForm" styleClass="setup-form">
@@ -248,7 +245,15 @@
                     <p>#{projectHome.idDefined ? messages.projectBusinessBuildEmptyDescript : messages.projectBusinessBuildNoSelectDescript}</p>
                 </a:outputPanel>
 
-                <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds)}">
+                <a:outputPanel layout="block"
+                               rendered="#{projectHome.idDefined and (not empty projectHome.instance.builds) and (empty projectCheckStart.projects)}"
+                               styleClass="blankslate spacious large-format">
+                    <span class="mega-octicon octicon-inbox"></span>
+
+                    <p>所选项目没有建立监管账户，无法进行下一步操作</p>
+                </a:outputPanel>
+
+                <a:outputPanel rendered="#{projectHome.idDefined and not (empty projectHome.instance.builds) and not (empty projectCheckStart.projects)}">
 
                     <a:repeat value="#{projectCheckStart.projects}" var="_businessProject">
 
@@ -257,11 +262,7 @@
                             <f:facet name="header">
                                 <strong> #{messages[_businessProject.projectSellInfo.projectCard.makeCard.type.name()]}</strong>  #{_businessProject.projectSellInfo.projectCard.makeCard.number}
 
-                                <s:link styleClass="btn btn-sm btn-primary boxed-group-action" action="#{projectCheckStart.findProjectCard}">
-                                    选择
-                                    <f:param name="selectBusinessId" value="#{_businessProject.ownerBusiness.id}"/>
-                                    <f:param name="selectProjectId" value="#{_businessProject.id}"/>
-                                </s:link>
+
 
                             </f:facet>
 
@@ -312,6 +313,19 @@
                                 </f:facet>
                                 #{_businessBuild.doorNo}
                             </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    #{messages.action}
+                                </f:facet>
+                                <s:button styleClass="btn btn-sm btn-primary" value="#{messages.Select}"
+                                          action="#{projectCheckStart.findProjectCard}"
+                                          onclick="#{r:component('wait')}.show()">
+                                    <f:param name="selectBuildId" value="#{_businessBuild.id}"/>
+                                    <f:param name="selectBusinessId" value="#{_businessProject.ownerBusiness.id}"/>
+                                </s:button>
+                            </h:column>
+
 
                         </h:dataTable>
 

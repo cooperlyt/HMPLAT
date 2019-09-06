@@ -16,6 +16,9 @@
     <component name="recordRoomList" class="com.dgsoft.house.owner.OwnerEntityQuery" scope="conversation">
         <property name="ejbql">select room from RecordRoom room order by room.id</property>
     </component>
+    <component name="buildPointList" class="com.dgsoft.house.owner.OwnerEntityQuery" scope="conversation">
+        <property name="ejbql">select buildPoint from BuildPoint buildPoint</property>
+    </component>
 
     <event type="cc.copersoft.houseStatusChangeEvent">
         <action execute="#{notifySend.onMessageSend}"/>

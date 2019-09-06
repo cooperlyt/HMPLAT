@@ -7,10 +7,9 @@ import com.dgsoft.common.system.business.BusinessDataValid;
 import com.dgsoft.house.HouseEntityLoader;
 import com.dgsoft.house.action.ProjectHome;
 import com.dgsoft.house.model.Build;
+import com.dgsoft.house.model.MoneyBank;
 import com.dgsoft.house.owner.action.OwnerBusinessHome;
-import com.dgsoft.house.owner.model.BusinessBuild;
-import com.dgsoft.house.owner.model.BusinessProject;
-import com.dgsoft.house.owner.model.OwnerBusiness;
+import com.dgsoft.house.owner.model.*;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -59,14 +58,7 @@ public class ProjectCheckStart {
         this.selectBusinessId = selectBusinessId;
     }
 
-    private String selectProjectId;
-    public String getSelectProjectId() {
-        return selectProjectId;
-    }
 
-    public void setSelectProjectId(String selectProjectId) {
-        this.selectProjectId = selectProjectId;
-    }
 
     public String getSelectBuildId() {
         return selectBuildId;
@@ -77,6 +69,16 @@ public class ProjectCheckStart {
     }
 
     private String selectBuildId;
+
+    public BuildPoint getBuildPoint() {
+        return buildPoint;
+    }
+
+    public void setBuildPoint(BuildPoint buildPoint) {
+        this.buildPoint = buildPoint;
+    }
+
+    private BuildPoint buildPoint;
 
 
     public static class HouseBuild extends BatchOperData<BusinessBuild> {
@@ -121,22 +123,29 @@ public class ProjectCheckStart {
         return projects;
     }
 
+
     public void projectSelectedListener() {
-        projects = ownerBusinessHome.getEntityManager().createQuery("select project from BusinessProject project where project.ownerBusiness.status = 'COMPLETE' and project.ownerBusiness.type <> 'CANCEL_BIZ' and project.projectCode =:projectCode", BusinessProject.class)
+        projects.clear();
+       List<MoneySafe> moneySafes = ownerBusinessHome.getEntityManager().createQuery("select moneySafe from MoneySafe moneySafe where moneySafe.businessProject.ownerBusiness.status = 'COMPLETE' and moneySafe.businessProject.ownerBusiness.type <> 'CANCEL_BIZ' and moneySafe.businessProject.projectCode =:projectCode", MoneySafe.class)
                 .setParameter("projectCode", projectHome.getInstance().getProjectCode()).getResultList();
 
+        for (MoneySafe moneySafe:moneySafes){
+            projects.add(moneySafe.getBusinessProject());
+        }
+
+
     }
 
 
-    public BusinessProject getSelectBusinessProject() {
-        return selectBusinessProject;
+    public BusinessBuild getSelectBusinessBuild() {
+        return selectBusinessBuild;
     }
 
-    public void setSelectBusinessProject(BusinessProject selectBusinessProject) {
-        this.selectBusinessProject = selectBusinessProject;
+    public void setSelectBusinessBuild(BusinessBuild selectBusinessBuild) {
+        this.selectBusinessBuild = selectBusinessBuild;
     }
 
-    private BusinessProject selectBusinessProject;
+    private BusinessBuild selectBusinessBuild;
 
     public List<HouseBuild> getBusinessModifyBuilds() {
         return businessModifyBuilds;
@@ -145,16 +154,13 @@ public class ProjectCheckStart {
     private List<HouseBuild> businessModifyBuilds = new ArrayList<HouseBuild>(0);
 
     public String findProjectCard() {
-
-
-        selectBusinessProject = ownerBusinessHome.getEntityManager().find(BusinessProject.class,selectProjectId);
+        buildPoint = null;
+        selectBusinessBuild = ownerBusinessHome.getEntityManager().find(BusinessBuild.class,selectBuildId);
         businessModifyBuilds.clear();
-        for (BusinessBuild businessBuild:selectBusinessProject.getBusinessBuildList()){
-
             List<BusinessDataValid.ValidResult> validResults = new ArrayList<BusinessDataValid.ValidResult>();
             for(BusinessDataValid valid: businessDefineHome.getCreateDataValidComponents()){
                 try {
-                    BusinessDataValid.ValidResult validResult = valid.valid(businessBuild);
+                    BusinessDataValid.ValidResult validResult = valid.valid(selectBusinessBuild);
                     if (validResult.getResult().getPri() > BusinessDataValid.ValidResultLevel.SUCCESS.getPri()) {
                         validResults.add(validResult);
                     }
@@ -170,17 +176,31 @@ public class ProjectCheckStart {
                     throw new IllegalArgumentException("config error:" + valid.getClass().getSimpleName());
                 }
             }
-
-            businessModifyBuilds.add(new HouseBuild(businessBuild,validResults));
-
-        }
+            businessModifyBuilds.add(new HouseBuild(selectBusinessBuild,validResults));
         return "modifyBuild";
     }
 
+    public HouseBuild getSelectHouseBuild() {
+        if (!businessModifyBuilds.isEmpty()){
+            return businessModifyBuilds.get(0);
+        }else {
+            return null;
+        }
+
+    }
+
+    private HouseBuild selectHouseBuild;
+
+
     public String businessSelected() {
         ownerBusinessHome.getInstance().setSelectBusiness(ownerBusinessHome.getEntityManager().find(OwnerBusiness.class, selectBusinessId));
-
-
+        ProjectCheck projectCheck = new ProjectCheck();
+        projectCheck.setBuildCode(selectBusinessBuild.getBuildCode());
+        projectCheck.setPayPercent(buildPoint.getPercent());
+        projectCheck.setPoint(buildPoint.getId());
+        projectCheck.setPointName(buildPoint.getName());
+        projectCheck.setOwnerBusiness(ownerBusinessHome.getInstance());
+        ownerBusinessHome.getInstance().getProjectChecks().add(projectCheck);
         return ownerBusinessStart.dataSelected();
     }
 
