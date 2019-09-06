@@ -808,6 +808,18 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
     /**
+     * 资金监管备案信息
+     */
+
+    @Transient
+    public ProjectCheck getProjectCheck(){
+        if(!getProjectChecks().isEmpty()){
+            return  getProjectChecks().iterator().next();
+        }
+        return null;
+    }
+
+    /**
      * 交易信息
      */
 //    @Transient

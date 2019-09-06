@@ -1602,6 +1602,7 @@
         </description>
     </end-subscribe>
 
+
     <end-subscribe name="RegisterBookChangeHoseStateEnd" component="registerBookChangeHoseState">
         <description>
             登记薄阶段是否完成登记薄
@@ -2073,6 +2074,11 @@
 
 
 
+    <end-subscribe name="projectCheckKeyAndDisplay" component="projectCheckKeyAndDisplay">
+        <description>
+            项目勘察业务查询显示生成器
+        </description>
+    </end-subscribe>
 
 
 
