@@ -22,6 +22,13 @@
         </description>
     </view-subscribe>
 
+    <view-subscribe name="projectCheckReasonView" page="/business/houseOwner/subscribe/ProjectCheckReasonView.xhtml">
+        <description>
+            勘察明细查看
+        </description>
+    </view-subscribe>
+
+
 
     <view-subscribe name="projectCheckBuildView" page="/business/houseOwner/subscribe/ProjectCheckBuildView.xhtml">
         <description>
@@ -1339,6 +1346,12 @@
     <edit-subscribe name="RepairMoneyPayChangeEdit" page="/business/houseOwner/subscribe/RepairMoneyPayChangeEdit.xhtml" component="repairMoneyPaySubscribe">
         <description>
             维修缴费费率(房改)
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="ProjectCheckReasonEdit" page="/business/houseOwner/subscribe/ProjectCheckReasonEdit.xhtml" component="">
+        <description>
+            勘察明细（项目勘察）
         </description>
     </edit-subscribe>
 

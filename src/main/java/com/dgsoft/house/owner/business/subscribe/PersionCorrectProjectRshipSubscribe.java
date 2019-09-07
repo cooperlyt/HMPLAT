@@ -59,9 +59,6 @@ public class PersionCorrectProjectRshipSubscribe extends BaseBusinessPersionSubs
 
             }
 
-
-
-
             getInstance().setOwnerBusiness(ownerBusinessHome.getInstance());
             ownerBusinessHome.getInstance().getBusinessPersions().add(getInstance());
             setHave(true);

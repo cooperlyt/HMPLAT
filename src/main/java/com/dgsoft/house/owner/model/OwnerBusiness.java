@@ -1035,6 +1035,11 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     }
 
     @Transient
+    public Reason getProjectCheckReceive(){
+        return getReason(Reason.ReasonType.PROJECT_CHECK);
+    }
+
+    @Transient
     public Reason getMortgageReceive(){
         return getReason(Reason.ReasonType.MORTGAGE_RECEIVE);
     }
