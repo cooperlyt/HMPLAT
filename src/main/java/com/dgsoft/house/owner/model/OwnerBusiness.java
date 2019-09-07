@@ -819,6 +819,22 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         return null;
     }
 
+    @Transient
+    public List<BusinessBuild> getProjectCheckBuild(){
+        List<BusinessBuild> buildList = new ArrayList<BusinessBuild>(0);
+        buildList.clear();
+        for (ProjectCheck pc:getProjectChecks()){
+            for (BusinessProject businessProject:getSelectBusiness().getBusinessProjects()){
+                for (BusinessBuild businessBuild:businessProject.getBusinessBuilds()){
+                    if (pc.getBuildCode().equals(businessBuild.getBuildCode())){
+                        buildList.add(businessBuild);
+                    }
+                }
+            }
+        }
+        return buildList;
+    }
+
     /**
      * 交易信息
      */

@@ -28,22 +28,35 @@ public class PersionCorrectProjectRshipSubscribe extends BaseBusinessPersionSubs
         super.create();
         if (!isHave()) {
             clearInstance();
-
+            String developerCode = null;
             if (ownerBusinessHome.getInstance().getBusinessProject() != null){
                 BusinessProject businessProject = ownerBusinessHome.getInstance().getBusinessProject();
                 if (businessProject!=null) {
-                    getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
-                    getInstance().setCredentialsNumber(businessProject.getDeveloperCode());
-                    getInstance().setPersonName(businessProject.getDeveloperName());
+                     developerCode = businessProject.getDeveloperCode();
                 }
 
             }else {
-                Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, ownerBusinessHome.getSelectBusiness().getSingleHoues().getAfterBusinessHouse().getDeveloperCode());
-                if (developer != null) {
+                if (ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues()!=null && !ownerBusinessHome.getInstance().getMoneyBackBusinesses().isEmpty()){
+                     developerCode = ownerBusinessHome.getInstance().getSelectBusiness().getSingleHoues().getAfterBusinessHouse().getDeveloperCode();
+
+                }else if (!ownerBusinessHome.getInstance().getProjectChecks().isEmpty()){
+                    developerCode = ownerBusinessHome.getInstance().getSelectBusiness().getBusinessProject().getDeveloperCode();
+
+                }
+            }
+
+            Developer developer = houseEntityLoader.getEntityManager().find(Developer.class, developerCode);
+            if (developer!=null){
+                if (developer.getAttachCorporation()!=null) {
                     getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
-                    getInstance().setCredentialsNumber(developer.getId());
+                    getInstance().setCredentialsNumber(developer.getAttachCorporation().getLicenseNumber());
+                    getInstance().setPersonName(developer.getName());
+                }else {
+                    getInstance().setCredentialsType(PersonEntity.CredentialsType.COMPANY_CODE);
+                    getInstance().setCredentialsNumber("未知");
                     getInstance().setPersonName(developer.getName());
                 }
+
             }
 
 
