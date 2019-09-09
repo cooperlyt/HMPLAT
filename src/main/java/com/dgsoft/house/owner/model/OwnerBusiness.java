@@ -72,6 +72,9 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
     private Set<ProjectCheck> projectChecks = new HashSet<ProjectCheck>(0);
 
 
+    private Set<ProjectInitBusiness> projectInitBusinesses = new HashSet<ProjectInitBusiness>(0);
+
+
     private Set<SubStatus> subStatuses = new HashSet<SubStatus>(0);
 
     private Set<HouseSourceBusiness> houseSourceBusinesses = new HashSet<HouseSourceBusiness>(0);
@@ -300,6 +303,16 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     public void setProjectChecks(Set<ProjectCheck> projectChecks) {
         this.projectChecks = projectChecks;
+    }
+
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ownerBusiness",cascade = {CascadeType.ALL},orphanRemoval = true)
+    public Set<ProjectInitBusiness> getProjectInitBusinesses() {
+        return projectInitBusinesses;
+    }
+
+    public void setProjectInitBusinesses(Set<ProjectInitBusiness> projectInitBusinesses) {
+        this.projectInitBusinesses = projectInitBusinesses;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)

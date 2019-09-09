@@ -36,8 +36,13 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
     private String developerLevel;
     private String developerProperty;
     private Set<BusinessBuild> businessBuilds = new HashSet<BusinessBuild>(0);
+
+
+
+    private Set<ProjectInitBusiness> projectInitBusinesses = new HashSet<ProjectInitBusiness>(0);
     private ProjectSellInfo projectSellInfo;
     private MoneySafe moneySafe;
+
 
     private String searchKey;
     private String display;
@@ -275,6 +280,15 @@ public class BusinessProject implements java.io.Serializable, ProjectInfo {
 
     public void setBusinessBuilds(Set<BusinessBuild> businessBuilds) {
         this.businessBuilds = businessBuilds;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "businessProject",cascade = {CascadeType.ALL},orphanRemoval = true)
+    public Set<ProjectInitBusiness> getProjectInitBusinesses() {
+        return projectInitBusinesses;
+    }
+
+    public void setProjectInitBusinesses(Set<ProjectInitBusiness> projectInitBusinesses) {
+        this.projectInitBusinesses = projectInitBusinesses;
     }
 
     @Transient
