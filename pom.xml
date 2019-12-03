@@ -264,6 +264,8 @@
             <groupId>local.house</groupId>
             <artifactId>houseInterface</artifactId>
             <version>2.0.136Bate</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/local/house/houseInterface/2.0.136Bate/HouseInterface-2.0.136Bate.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -282,12 +284,16 @@
             <groupId>local.birt</groupId>
             <artifactId>servlet</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/local/birt/servlet/1.0/servlet-1.0.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>local.birt</groupId>
             <artifactId>jbossseambirt</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/local/birt/jbossseambirt/1.0/jbossseambirt-1.0.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -628,13 +634,15 @@
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
             </plugin>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
 
                     <webResources>
@@ -664,6 +672,15 @@
                                 <exclude>**/*.xlsx</exclude>
                             </includes>
                         </resource>
+
+                        <resource>
+                            <directory>${project.basedir}/lib</directory>
+                            <targetPath>WEB-INF/lib/</targetPath>
+                            <includes>
+                                <include>**/*.jar</include>
+                            </includes>
+                        </resource>
+
                     </webResources>
                     <archive>
                         <manifest>
