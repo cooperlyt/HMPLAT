@@ -680,6 +680,11 @@
         </description>
     </view-subscribe>
 
+  <edit-subscribe name="CorpEdit" page="/business/houseOwner/subscribe/BusinessCorpEdit.xhtml" component="corpEditSubscribe">
+    <description>
+      从业机构编辑
+    </description>
+  </edit-subscribe>
 
     <edit-subscribe name="PersionCorrectEdit" page="/business/houseOwner/subscribe/PersionCorrectEdit.xhtml" component="">
         <description>

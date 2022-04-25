@@ -85,6 +85,8 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
 
     private Set<OldSellContractInfo> oldSellContractInfos = new HashSet<OldSellContractInfo>(0);
 
+    private Set<BusinessCorp> businessCorps = new HashSet<BusinessCorp>(0);
+
     public OwnerBusiness() {
     }
 
@@ -409,6 +411,15 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         this.houseBusinesses = houseBusinesses;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ownerBusiness", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public Set<BusinessCorp> getBusinessCorps() {
+        return businessCorps;
+    }
+
+    public void setBusinessCorps(Set<BusinessCorp> businessCorps) {
+        this.businessCorps = businessCorps;
+    }
+
     @Transient
     public List<HouseBusiness> getHouseBusinessList() {
         List<HouseBusiness> result = new ArrayList<HouseBusiness>(getHouseBusinesses());
@@ -641,6 +652,23 @@ public class OwnerBusiness implements java.io.Serializable, BusinessInstance {
         getBusinessProjects().clear();
         if (businessProject != null) {
             getBusinessProjects().add(businessProject);
+        }
+    }
+
+    @Transient
+    public BusinessCorp getBusinessCorp(){
+        if (getBusinessCorps().isEmpty()){
+            return null;
+        } else {
+            return getBusinessCorps().iterator().next();
+        }
+    }
+
+    @Transient
+    public void setBusinessCorp(BusinessCorp corp){
+        getBusinessCorps().clear();
+        if (corp != null){
+            getBusinessCorps().add(corp);
         }
     }
 
