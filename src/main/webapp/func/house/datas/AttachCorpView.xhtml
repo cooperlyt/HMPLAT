@@ -19,16 +19,28 @@
             </ui:include>
 
             <h1>
-                <s:link view="/func/house/datas/AttrCorpMgr.xhtml" value="#{messages.AttachCorporation}"/>
+
+
+                #{messages.AttachCorporation}
+                <span class="path-divider">/</span>
+                    <s:link view="/func/house/datas/AttrCorpMgr.xhtml"
+                            value="#{dictionary.getEnumLabel(attachCorporationHome.instance.type)}">
+                        <f:param name="type" value="#{attachCorporationHome.instance.type}"/>
+                    </s:link>
 
 
                 <span class="path-divider">/</span>
-
                 <strong>
                     <h:outputText value="#{attachCorporationHome.instance.developer.name}"
                                   rendered="#{attachCorporationHome.instance.type eq 'DEVELOPER'}"/>
                     <h:outputText value="#{attachCorporationHome.instance.agencies.name}"
                                   rendered="#{attachCorporationHome.instance.type eq 'AGENCIES'}"/>
+
+                    <h:outputText value="#{attachCorporationHome.instance.mappingCorporation.name}"
+                                  rendered="#{attachCorporationHome.instance.type eq 'MAPPING'}"/>
+
+                    <h:outputText value="#{attachCorporationHome.instance.evaluateCorporation.name}"
+                                  rendered="#{attachCorporationHome.instance.type eq 'EVALUATE'}"/>
                 </strong>
 
             </h1>
@@ -52,6 +64,9 @@
 
 
     <dh:entryGrid styleClass="detailsTable table table-bordered " keyWidth="150">
+        <ui:remove>
+
+
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.Name}"/>
             <dh:entryGridColumn colspan="1">
@@ -66,7 +81,7 @@
             <h:outputText value="#{messages.description}"/>
             <h:outputText value="#{attachCorporationHome.instance.developer.description}"/>
         </dh:entryGridBlock>
-
+        </ui:remove>
         <dh:entryGridBlock columns="4">
             <h:outputText value="#{messages.AttachCorp_id}"/>
             <h:outputText value="#{attachCorporationHome.instance.id}"/>

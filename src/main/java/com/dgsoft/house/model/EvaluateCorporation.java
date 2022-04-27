@@ -27,8 +27,7 @@ public class EvaluateCorporation implements java.io.Serializable {
         destroyed = false;
 	}
 
-	public EvaluateCorporation(String id, AttachCorporation attachCorporation,
-			String name) {
+	public EvaluateCorporation(AttachCorporation attachCorporation) {
         destroyed = false;
 		this.attachCorporation = attachCorporation;
 

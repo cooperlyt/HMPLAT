@@ -7,7 +7,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:a="http://richfaces.org/a4j" xmlns:r="http://richfaces.org/rich" >
 
-
+    <ui:include src="/layout/system/CardReader.xhtml"></ui:include>
 
 
     <s:decorate id="addressField" styleClass="form-group" template="/layout/edit-big.xhtml">
@@ -77,11 +77,12 @@
 
     </s:decorate>
 
+
     <ui:decorate template="/layout/system/PersonInput.xhtml">
 
         <ui:param name="label" value="#{messages.AttachCorp_owner}"/>
         <ui:param name="personEntityHelper" value="#{attachCorpHome.ownerPersonInstance}"/>
-        <ui:param name="personStatus" value="#{attachCorpHome.ownerPersonInstance.uuid}_person"/>
+        <ui:param name="personStatus" value="#{attachCorpHome.ownerPersonInstance.uuid}_corp_owner"/>
         <ui:param name="allowCredentialsTypeList" value="#{personCredentialsTypes}"/>
 
 
@@ -103,6 +104,10 @@
         </s:decorate>
     </ui:decorate>
 
+
+    <a:outputPanel ajaxRendered="true">
+        <h:outputScript name="init.js"/>
+    </a:outputPanel>
 
 
 </ui:composition>

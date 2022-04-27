@@ -4,6 +4,7 @@ package com.dgsoft.house.model;
 import com.dgsoft.common.system.PersonEntity;
 import com.dgsoft.common.system.PowerPersonEntity;
 import com.dgsoft.house.AttachCorpType;
+import org.jboss.seam.log.Logging;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -348,6 +349,7 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
 		this.legalType = legalType;
 	}
 
+	@Override
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CREDENTIALS_TYPE",nullable = false, length = 16)
 	@NotNull
@@ -368,7 +370,8 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
 	@Transient
 	@Override
 	public void setCredentialsNumber(String s) {
-		setOwnerCard(s);
+		Logging.getLog(this.getClass()).debug("set card number:" + s);
+		this.setOwnerCard(s);
 	}
 
 	@Transient

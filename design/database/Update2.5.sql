@@ -43,5 +43,6 @@ INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_apply'
 INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_first_check','从业机构业务初审','从业机构业务初审',41);
 INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_last_check','从业机构业务审批','从业机构业务审批',42);
 
+alter table HOUSE_INFO.ATTACH_CORPORATION modify OWNER_TEL varchar(100) null;
 
 UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.5' where ID='database_version';
