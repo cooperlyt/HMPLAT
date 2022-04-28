@@ -5,6 +5,8 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
     <param name="developerId" value="#{developerHome.id}"/>
+    <param name="owner_card_type" value="#{developerHome.instance.credentialsType}"/>
+
     <param name="developerSearchName" value="#{developerSearchList.searchKey}"/>
     <param name="developerListResultCount" value="#{developerSearchList.maxResults}"/>
     <param name="newDeveloperName" value="#{developerSearchList.newDeveloperName}"/>

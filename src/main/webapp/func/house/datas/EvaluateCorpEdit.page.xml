@@ -5,6 +5,7 @@
       xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
 
   <param name="attachId" value="#{evaluateCorpHome.id}"/>
+  <param name="owner_card_type" value="#{evaluateCorpHome.instance.credentialsType}"/>
 
   <navigation from-action="#{evaluateCorpHome.persist}">
     <rule if-outcome="persisted">
