@@ -54,6 +54,8 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
 
     private EvaluateCorporation evaluateCorporation;
 
+    private Mcompany propertyCorporation;
+
 	private Agencies agencies;
 
 
@@ -311,6 +313,16 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
 
 	public void setAgencies(Agencies agencies) {
 		this.agencies = agencies;
+	}
+
+
+	@OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation", cascade = CascadeType.ALL)
+	public Mcompany getPropertyCorporation() {
+		return propertyCorporation;
+	}
+
+	public void setPropertyCorporation(Mcompany propertyCorporation) {
+		this.propertyCorporation = propertyCorporation;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "attachCorporation")

@@ -62,14 +62,14 @@
                     <f:param name="type" value="MAPPING"/>
                 </s:link>
 
-                <ui:remove>
+
                 <s:link  styleClass="menu-item #{attachCorporationList.type eq 'MCOMPANY' ? 'selected' : ''}"
                          propagation="none">
                     物业公司
                     <f:param name="type" value="MCOMPANY"/>
                 </s:link>
 
-
+                <ui:remove>
                     <s:link styleClass="menu-item #{attachCorporationList.type eq 'EVALUATE' ? 'selected' : ''}"
                             propagation="none">
                         评估机构
@@ -121,13 +121,6 @@
 
                     </s:link>
 
-                    <s:link rendered="#{attachCorporationList.type eq 'AGENCIES'}" view="/func/house/datas/AgenciesAttachEdit.xhtml">
-                        <f:param name="agenciesAttachId" value=""/>
-
-                        <span class="octicon octicon-plus"/>
-                        #{messages.create}
-
-                    </s:link>
                     #{' '} #{messages.Or}  #{messages.Try} #{' '}
                     <s:link value="#{messages.AvancedSearch}"/></p>
             </s:div>
@@ -198,6 +191,7 @@
                                     <h:outputText rendered="#{attachCorporationList.type eq 'EVALUATE'}" value="#{_item.evaluateCorporation.name}"/>
                                     <h:outputText rendered="#{attachCorporationList.type eq 'MAPPING'}" value="#{_item.mappingCorporation.name}"/>
                                     <h:outputText rendered="#{attachCorporationList.type eq 'AGENCIES'}" value="#{_item.agencies.name}"/>
+                                <h:outputText rendered="#{attachCorporationList.type eq 'MCOMPANY'}" value="#{_item.propertyCorporation.name}"/>
 
                             </s:link>
 
@@ -246,6 +240,14 @@
 
                                 <s:link styleClass="table-action" rendered="#{attachCorporationList.type eq 'MAPPING'}"
                                         view="/func/house/datas/MapCorpEdit.xhtml"
+                                        aria-label="#{messages.edit}">
+                                    <span class="octicon octicon-pencil"/>
+                                    #{messages.edit}
+
+                                    <f:param name="attachId" value="#{_item.id}"/>
+                                </s:link>
+                                <s:link styleClass="table-action" rendered="#{attachCorporationList.type eq 'MCOMPANY'}"
+                                        view="/func/house/datas/PropertyCorpEdit.xhtml"
                                         aria-label="#{messages.edit}">
                                     <span class="octicon octicon-pencil"/>
                                     #{messages.edit}

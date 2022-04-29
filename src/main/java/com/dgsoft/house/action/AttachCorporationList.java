@@ -19,7 +19,8 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
             "left join fetch aCorp.developer developer " +
             "left join fetch aCorp.mappingCorporation mapping " +
             "left join fetch aCorp.evaluateCorporation evaluate " +
-            "left join fetch aCorp.agencies houseSellCompany";
+            "left join fetch aCorp.agencies houseSellCompany " +
+            "left join fetch aCorp.propertyCorporation propertyCorp ";
 
     private static final String[] RESTRICTIONS1 = {
             "aCorp.type = #{attachCorporationList.type}"
@@ -34,7 +35,10 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
             "lower(evaluate.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
             "lower(evaluate.id) = lower(#{attachCorporationList.searchKey})",
             "lower(houseSellCompany.id) = lower(#{attachCorporationList.searchKey})",
-            "lower(houseSellCompany.name) = lower(#{attachCorporationList.searchKey})"
+            "lower(houseSellCompany.name) = like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
+            "lower(propertyCorp.id) = lower(#{attachCorporationList.searchKey})",
+            "lower(propertyCorp.name) = like lower(concat('%',#{attachCorporationList.searchKey},'%'))"
+
     };
 
     private String searchKey;

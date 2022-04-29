@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.org/schema/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      login-required="true"
+      xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+
+  <param name="attachId" value="#{propertyCorpHome.id}"/>
+  <param name="owner_card_type" value="#{propertyCorpHome.instance.credentialsType}"/>
+
+  <navigation from-action="#{propertyCorpHome.persist}">
+    <rule if-outcome="persisted">
+
+      <redirect view-id="/func/house/datas/AttrCorpMgr.xhtml">
+        <param name="type" value="MCOMPANY"/>
+      </redirect>
+    </rule>
+  </navigation>
+
+  <navigation from-action="#{propertyCorpHome.update}">
+
+    <rule if-outcome="updated">
+
+      <redirect view-id="/func/house/datas/AttrCorpMgr.xhtml">
+        <param name="type" value="MCOMPANY"/>
+      </redirect>
+    </rule>
+  </navigation>
+
+</page>
