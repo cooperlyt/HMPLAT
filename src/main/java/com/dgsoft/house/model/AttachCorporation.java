@@ -24,7 +24,7 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
 	private Date recordDate;
 	private String address;
 	private String phone;
-    private String ownerTel;
+	private String ownerTel;
 	private String ownerName;
 	private String ownerCard;
 	private String fax;
@@ -425,6 +425,8 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
 
 			case DEVELOPER:
 				return getDeveloper().getName();
+			case MCOMPANY:
+				return getPropertyCorporation().getName();
 			case EVALUATE:
 				return getEvaluateCorporation().getName();
 			case MAPPING:

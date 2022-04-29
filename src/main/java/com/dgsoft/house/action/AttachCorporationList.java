@@ -46,8 +46,6 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
     private AttachCorpType type;
 
     public AttachCorpType getType() {
-        if (type == null)
-            return AttachCorpType.DEVELOPER;
         return type;
     }
 
@@ -65,7 +63,7 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
 
     public String getTypeName(){
         if (type == null)
-            return AttachCorpType.DEVELOPER.name();
+            return null;
         return type.name();
     }
 
