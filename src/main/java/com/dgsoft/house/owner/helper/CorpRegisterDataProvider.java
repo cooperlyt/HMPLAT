@@ -4,6 +4,7 @@ import com.dgsoft.common.utils.seam.MultiOperatorEntityQuery;
 import com.dgsoft.common.utils.seam.RestrictionGroup;
 import com.dgsoft.house.AttachCorpType;
 import com.dgsoft.house.model.AttachCorporation;
+import com.dgsoft.house.model.AttachEmployee;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.log.Logging;
@@ -26,31 +27,28 @@ public class CorpRegisterDataProvider extends MultiOperatorEntityQuery<AttachCor
           "left join fetch aCorp.propertyCorporation propertyCorp ";
 
   private static final String[] RESTRICTIONS1 = {
-          "aCorp.type = #{attachCorporationList.type}" ,
-          "aCorp.enable = true "
+          "aCorp.type = #{corpRegisterDataProvider.type}" ,
+          "aCorp.enable = #{true} "
   };
 
   private static final String[] RESTRICTIONS = {
-          "lower(aCorp.id) = lower(#{attachCorporationList.searchKey})",
-          "lower(developer.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
-          "lower(developer.id) = lower(#{attachCorporationList.searchKey})",
-          "lower(mapping.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
-          "lower(mapping.id) = lower(#{attachCorporationList.searchKey})",
-          "lower(evaluate.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
-          "lower(evaluate.id) = lower(#{attachCorporationList.searchKey})",
-          "lower(houseSellCompany.id) = lower(#{attachCorporationList.searchKey})",
-          "lower(houseSellCompany.name) = like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
-          "lower(propertyCorp.id) = lower(#{attachCorporationList.searchKey})",
-          "lower(propertyCorp.name) = like lower(concat('%',#{attachCorporationList.searchKey},'%'))"
+          "lower(aCorp.id) = lower(#{corpRegisterDataProvider.searchKey})",
+          "lower(developer.name) like lower(concat('%',#{corpRegisterDataProvider.searchKey},'%'))",
+          "lower(developer.id) = lower(#{corpRegisterDataProvider.searchKey})",
+          "lower(mapping.name) like lower(concat('%',#{corpRegisterDataProvider.searchKey},'%'))",
+          "lower(mapping.id) = lower(#{corpRegisterDataProvider.searchKey})",
+          "lower(evaluate.name) like lower(concat('%',#{corpRegisterDataProvider.searchKey},'%'))",
+          "lower(evaluate.id) = lower(#{corpRegisterDataProvider.searchKey})",
+          "lower(houseSellCompany.id) = lower(#{corpRegisterDataProvider.searchKey})",
+          "lower(houseSellCompany.name) like lower(concat('%',#{corpRegisterDataProvider.searchKey},'%'))",
+          "lower(propertyCorp.id) = lower(#{corpRegisterDataProvider.searchKey})",
+          "lower(propertyCorp.name) like lower(concat('%',#{corpRegisterDataProvider.searchKey},'%'))"
 
   };
 
-  @RequestParameter
-  @Override
-  public Integer getFirstResult(){
-    return super.getFirstResult();
-  }
 
+
+  @RequestParameter
   @Override
   public void setFirstResult(Integer firstResult){
     super.setFirstResult(firstResult);
@@ -58,6 +56,7 @@ public class CorpRegisterDataProvider extends MultiOperatorEntityQuery<AttachCor
 
   @RequestParameter
   private String searchKey;
+
 
   public String getSearchKey() {
     return searchKey;
@@ -124,6 +123,18 @@ public class CorpRegisterDataProvider extends MultiOperatorEntityQuery<AttachCor
         jsonObject.put("ownerName",corporation.getName());
         jsonObject.put("licenseNumber",corporation.getLicenseNumber());
         jsonObject.put("cerCode",corporation.getCerCode());
+
+        JSONArray personArray = new JSONArray();
+        for(AttachEmployee employee: corporation.getAttachEmployeeList()){
+          JSONObject employeeJsonObject = new JSONObject();
+          employeeJsonObject.put("name",employee.getPersonName());
+          employeeJsonObject.put("id",employee.getId());
+
+          personArray.put(employeeJsonObject);
+        }
+        jsonObject.put("employee",personArray);
+
+        dataArray.put(jsonObject);
       }
 
       result.put("datas",dataArray);
