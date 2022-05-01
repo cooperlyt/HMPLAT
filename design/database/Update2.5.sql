@@ -39,10 +39,21 @@ ALTER TABLE HOUSE_OWNER_RECORD.ATTACH_CORPORATION
 ;
 
 
-INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_apply','从业机构业务受理','从业机构业务受理',40);
-INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_first_check','从业机构业务初审','从业机构业务初审',41);
-INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_last_check','从业机构业务审批','从业机构业务审批',42);
+INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_apply','从业主体备案业务受理','从业机构业务受理',40);
+INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_first_check','从业主体备案业务初审','从业机构业务初审',41);
+INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_last_check','从业主体备案业务审批','从业机构业务审批',42);
+
+INSERT DB_PLAT_SYSTEM.ROLE (ID, NAME, DESCRIPTION, PRIORITY) VALUE ('corp_register_view','从业主体备案管理','从业机构管理',43);
+
+
+
+INSERT DB_PLAT_SYSTEM.FUNCTION (ID, NAME, ICON, LOCATION, BANNER, PRIORITY, MEMO, CATEGORY, NEED_CONVERSATION)
+    VALUE ('corp.registerBusinessSearch','从业主体备案业务查询','','/func/house/owner/CorpRegisterBusinessSearch.xhtml',true,7,'','DAY_WORK',0);
+INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION (FUN_ID, ROL_ID) VALUE ('corp.registerBusinessSearch','corp_register_view');
+INSERT DB_PLAT_SYSTEM.ROLE_FUNCTION (FUN_ID, ROL_ID) VALUE ('owner.attrCorpMgr','corp_register_view');
+
 
 alter table HOUSE_INFO.ATTACH_CORPORATION modify OWNER_TEL varchar(100) null;
+
 
 UPDATE DB_PLAT_SYSTEM.SYSTEM_PARAM set VALUE='2.5' where ID='database_version';

@@ -37,7 +37,13 @@ public class AttachCorporationList extends MultiOperatorEntityQuery<AttachCorpor
             "lower(houseSellCompany.id) = lower(#{attachCorporationList.searchKey})",
             "lower(houseSellCompany.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
             "lower(propertyCorp.id) = lower(#{attachCorporationList.searchKey})",
-            "lower(propertyCorp.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))"
+            "lower(propertyCorp.name) like lower(concat('%',#{attachCorporationList.searchKey},'%'))",
+
+            "lower(aCorp.ownerName) like lower(concat(#{attachCorporationList.searchKey},'%'))",
+            "lower(aCorp.ownerCard) like lower(concat(#{attachCorporationList.searchKey},'%'))",
+            "lower(aCorp.licenseNumber) like lower(concat(#{attachCorporationList.searchKey},'%'))",
+            "lower(aCorp.cerCode) like lower(concat(#{attachCorporationList.searchKey},'%'))",
+            "lower(aCorp.companyCode) like lower(concat(#{attachCorporationList.searchKey},'%'))"
 
     };
 
