@@ -287,7 +287,7 @@ public class AttachCorporation implements PersonEntity, java.io.Serializable {
         this.developer = developer;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "attachCorporation",cascade = CascadeType.ALL)
     public MappingCorporation getMappingCorporation() {
         return mappingCorporation;
     }

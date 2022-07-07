@@ -1573,7 +1573,11 @@
 
 
 
-
+    <end-subscribe name="CorporationSaveHouseInfoComplete" component="CorporationSaveHouseInfoComplete">
+        <description>
+            机构备案写入空间库
+        </description>
+    </end-subscribe>
 
     <end-subscribe name="MoneyBusinessOwnerKeyGen" component="moneyBusinessOwnerKeyGen">
         <description>
