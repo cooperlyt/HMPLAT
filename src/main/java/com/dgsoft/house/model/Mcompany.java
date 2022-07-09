@@ -20,7 +20,7 @@ public class Mcompany implements java.io.Serializable {
 	private String name;
 	private boolean destroyed;
 	private Set<Smsubcompany> smsubcompanies = new HashSet<Smsubcompany>(0);
-
+	private String pyCode;
 	public Mcompany() {
         destroyed = false;
 	}
@@ -71,6 +71,16 @@ public class Mcompany implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name="PYCODE",nullable = true, length = 100)
+	@Size(max = 100)
+	public String getPyCode() {
+		return pyCode;
+	}
+
+	public void setPyCode(String pyCode) {
+		this.pyCode = pyCode;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mcompany")

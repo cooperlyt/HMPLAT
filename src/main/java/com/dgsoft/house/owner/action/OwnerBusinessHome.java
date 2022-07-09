@@ -436,7 +436,13 @@ public class OwnerBusinessHome extends OwnerEntityHome<OwnerBusiness> {
         return getInstance().getEvaluate();
     }
 
-
+    /**
+     * 机构备案
+     */
+    @Deprecated
+    public BusinessCorp getBusinessCorp(){
+        return getInstance().getBusinessCorp();
+    }
     @Deprecated
     public Reason getReceive(){
         return getInstance().getReceive();

@@ -21,6 +21,7 @@ public class EvaluateCorporation implements java.io.Serializable {
 	private int version;
 	private AttachCorporation attachCorporation;
 	private String name;
+	private String pyCode;
 	private boolean destroyed;
 
 	public EvaluateCorporation() {
@@ -76,6 +77,16 @@ public class EvaluateCorporation implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name="PYCODE",nullable = true, length = 100)
+	@Size(max = 100)
+	public String getPyCode() {
+		return pyCode;
+	}
+
+	public void setPyCode(String pyCode) {
+		this.pyCode = pyCode;
 	}
 
     @Column(name = "DESTROYED",nullable = false)
