@@ -16,18 +16,18 @@ public class CorpRegisterBusinessList extends MultiOperatorEntityQuery<BusinessC
           "left join cb.ownerBusiness ob ";
 
   private static final String[] RESTRICTIONS_ROOT = {
-          "cb.type = #{corpRegisterBusinessCondition.type}",
+          "cb.type = #{corpRegisterBusinessList.type}",
   };
 
   private static final String[] RESTRICTIONS = {
-          "lower(cb.name) like lower(concat('%',#{corpRegisterBusinessCondition.searchKey},'%'))",
-          "lower(cb.ownerName) like lower(concat(#{corpRegisterBusinessCondition.searchKey},'%'))",
-          "lower(cb.ownerCard) like lower(concat(#{corpRegisterBusinessCondition.searchKey},'%'))",
-          "lower(cb.licenseNumber) like lower(concat(#{corpRegisterBusinessCondition.searchKey},'%'))",
-          "lower(cb.cerCode) like lower(concat(#{corpRegisterBusinessCondition.searchKey},'%'))",
-          "lower(cb.companyCode) like lower(concat(#{corpRegisterBusinessCondition.searchKey},'%'))",
+          "lower(cb.name) like lower(concat('%',#{corpRegisterBusinessList.searchKey},'%'))",
+          "lower(cb.ownerName) like lower(concat(#{corpRegisterBusinessList.searchKey},'%'))",
+          "lower(cb.ownerCard) like lower(concat(#{corpRegisterBusinessList.searchKey},'%'))",
+          "lower(cb.licenseNumber) like lower(concat(#{corpRegisterBusinessList.searchKey},'%'))",
+          "lower(cb.cerCode) like lower(concat(#{corpRegisterBusinessList.searchKey},'%'))",
+          "lower(cb.companyCode) like lower(concat(#{corpRegisterBusinessList.searchKey},'%'))",
 
-          "lower(ob.id) = lower(#{corpRegisterBusinessCondition.searchKey})",
+          "lower(ob.id) = lower(#{corpRegisterBusinessList.searchKey})",
   };
 
   public CorpRegisterBusinessList() {
