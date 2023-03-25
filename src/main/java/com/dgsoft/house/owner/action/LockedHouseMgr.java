@@ -99,7 +99,7 @@ public class LockedHouseMgr {
     @Transient
     public void lockHouse(){
         if (isCodeDefined()) {
-            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseCode, LockType.HOUSE_LOCKED, lockedReason, authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), new Date()));
+            ownerEntityLoader.getEntityManager().persist(new LockedHouse(houseCode, LockType.HOUSE_LOCKED, lockedReason, authInfo.getLoginEmployee().getId(), authInfo.getLoginEmployee().getPersonName(), new Date(),houseInfo.getBuildCode()));
             ownerEntityLoader.getEntityManager().flush();
             lockedHouses = null;
             lockedReason = null;
