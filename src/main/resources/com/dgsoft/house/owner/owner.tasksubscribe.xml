@@ -558,7 +558,11 @@
             房屋所有权证号查看
         </description>
     </view-subscribe>
-
+    <view-subscribe name="CardRealEstateView" page="/business/houseOwner/subscribe/CardRealEstateView.xhtml">
+        <description>
+            不动产权证号查看
+        </description>
+    </view-subscribe>
 
     <view-subscribe name="CardProjectMortgageView" page="/business/houseOwner/subscribe/CardProjectMortgageView.xhtml">
         <description>
@@ -1213,6 +1217,13 @@
                     component="">
         <description>
             房屋所有权证号编辑
+        </description>
+    </edit-subscribe>
+
+    <edit-subscribe name="CardRealEstateEdit" page="/business/houseOwner/subscribe/CardRealEstateEdit.xhtml"
+                    component="">
+        <description>
+            不动产权证号编辑
         </description>
     </edit-subscribe>
 

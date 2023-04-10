@@ -310,7 +310,7 @@
 
 
                         <p:cell colspan="4" borderWidthLeft="0" verticalAlignment="top" horizontalAlignment="left" fixedHeight="60">
-                            <p:paragraph>备注:#{_houseBusiness.afterBusinessHouse.unitNumber}  #{ownerBusinessHome.receive.reason}</p:paragraph>
+                            <p:paragraph>备注:#{ownerBusinessHome.getCardNoByType('REAL_ESTATE').number}  #{ownerBusinessHome.receive.reason}</p:paragraph>
                         </p:cell>
                     </p:table>
                 </p:cell>
